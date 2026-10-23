@@ -26,6 +26,54 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 
 The plans, their status and what each is are listed in [plans/README.md](plans/README.md); what is open, by priority and owner (what needs you first), is [todo.md](todo.md), generated from them. This document holds only what is decided and what is still a question.
 
+**Oct 22 full-plan reconciliation:** all current plans were reviewed.
+Eight superseded execution plans were archived with dated reasons, preserved
+discussions, explicit task/context destinations and not-completed disclaimers.
+Focused successors are active; independent older work is retained with dated
+questions. The [audit](audits/2026-10-22-plan-feedback-audit.md) records coverage,
+not new runtime acceptance. Implementation/image processing remain paused.
+All-category manual identity actions and protected-action unlock remain
+unfinished; current protected rename still uses confirmation.
+The user's manual prompt direction is captured for source/token/data review:
+new `0_Edit`, revised Prime/Bare, retire `1b` after verified replacement and
+leave `2b` untouched. No templates, art JSON, prompts or image placements were
+changed by this documentation pass.
+
+**Oct 22 18:04 current rename acceptance:** Draknisa's recorded person is now
+Amelia Morgan in the sandbox. Fixed-slot cast rename apply/undo now use verified
+transaction snapshots; this one contains two files totaling 44,318 bytes.
+All 275 images remain byte/path-identical; cast IDs/slot/protection, photo
+metadata, shared config and production guards are unchanged. Read-only undo
+preview passed. Index and both galleries are refreshed using the saved `.3`
+policy/cache (232 people, 2,667 review photos). HTML/index/history checks pass;
+user visual acceptance remains. Focused tests: 113 passed; final quick launcher
+validation: 495 tests plus 19/19 mutation cases passed. Other operations still
+use full backups; retention and broader write-set recovery remain planned.
+See the [latest recap](recap/2026-10-22-1640-recap.md).
+No matching/rebase/normalization or production operation ran.
+
+**Oct 22 22:30 confirmed name swaps:** the existing Review rename control now
+offers an explicit two-person confirmation for a uniquely occupied name.
+Both participants are bound in one guarded action, with swap history,
+transaction snapshots, checked pair apply/undo/rollback and fixed cast slots.
+101 focused tests and full quick validation passed, including 19/19 mutation
+cases. Sandbox galleries are refreshed; Draknoxa/Sydney Sky and Prospect
+Lia Joyce remain unchanged so the user can stage their name exchange in UAT.
+No production apply, global matching or normalization ran.
+
+**Earlier Oct 22 17:50 rename-test checkpoint (superseded above):** the authorized sandbox Draknisa
+recorded-name correction is still unapplied. Its first attempt stopped during
+full-backup creation on a long destination path, before the rename.
+The extended-path fix passes a real Windows regression, 64 focused tests,
+local-fixture launcher preview/create/verify and `bin\validate.cmd --quick`.
+A verified 276-file retry preflight passed, but the subsequent read-only
+full-backup inventory was stopped after slow filesystem metadata traversal.
+No worker remains running; reports and production are unchanged. Action-scoped
+recovery/retention are planned, not implemented. See the
+[latest recap follow-up](recap/2026-10-22-1640-recap.md#follow-up-2026-10-22-1750--0500-rename-test-safely-paused).
+The user's Cleanup/Angelica naming fixes are resolved; Lighting remains
+a future prompt-stage placeholder.
+
 **Oct 22 current likeness state:** a new true clean sandbox trial is installed
 and check-verified; the previous fragmentation run was undone first. Candidate
 formation, tier matching, category classification and write authorization are
@@ -37,7 +85,7 @@ Only sandbox outputs changed; production and the immutable Source remain
 untouched. The generated galleries use stable sandbox identity IDs, explicit
 holds and the saved clean-run centering context.
 
-The [installed-trial results and limits](plans/2026-10-21-likeness-rebaseline-and-family-naming.md#installed-unified-sandbox-trial-oct-22)
+The [installed-trial results and limits](art/likeness-sandbox-trial.md#installed-unified-sandbox-trial-oct-22)
 are the current evidence, superseding the older run counts below. Fia and
 Amara are now Angelica Review candidates, not trusted core additions. The
 ordinary post-run preview is not empty and was not applied. Reciprocal
@@ -61,7 +109,7 @@ Family naming, incremental-batch acceptance, global convergence and full CLI
 modularization remain unfinished.
 A new read-only `family-preview` command now exposes direct reference scores,
 surname reuse and collision-aware naming proposals from the saved sandbox
-scenario; see the [family/name preview evidence](plans/2026-10-21-likeness-rebaseline-and-family-naming.md#phase-2--complete-identity-names-and-define-family-metadata).
+scenario; see the [family/name preview evidence](art/likeness-sandbox-trial.md#naming-and-action-follow-up).
 Suggestions do not establish family membership or authorize renames.
 Individual photo retirement is now staged separately from rejection: a
 verified, undoable original-file archive under `_retired/photos`, excluded
@@ -77,7 +125,7 @@ export/cancel passes; no real rejection was applied.
 The overview now keeps an otherwise hidden workflow photo in slot nine with
 a dashed score-colored border; sorting recalculates the display pin.
 The reported Uma Merritt 0.53 Various hold is traced in the
-[installed trial evidence](plans/2026-10-21-likeness-rebaseline-and-family-naming.md#installed-unified-sandbox-trial-oct-22):
+[installed trial evidence](art/likeness-sandbox-trial.md#installed-unified-sandbox-trial-oct-22):
 its initial cast ambiguity and unapplied post-build assignment are distinct.
 The separate production clean-full rebuild is still required after acceptance
 and approval; there is no production adapter yet. Gallery visual acceptance
@@ -85,13 +133,14 @@ also remains open because the integrated browser refused the external B:
 location. Review the actual local HTML without treating aggregate counts as
 identity correctness.
 The latest working-day reflection is the
-[Oct 22 overnight recap](recap/2026-10-22-0038-recap.md).
+[Oct 22, 16:40 reconciliation recap](recap/2026-10-22-1640-recap.md);
+the overnight recap retains the detailed historical sequence.
 
 Oct 14 photo-library follow-up: the people gallery now shows prospect-to-sister face matches and observable photo-readiness evidence; the standard library routine archives Prospect folders with no gallery or review originals under `_retired`. Pose diversity is not scored; a calibrated readiness ranking remains open in [plans/2026-10-12-tooling-debt.md](plans/2026-10-12-tooling-debt.md).
 
 Oct 14 report update: `_reports` is organized into `library`, `runs`, `comparisons` and `analysis`; the gallery now shows each paired Angel's Sister, canonical hair color and top three eligible Prospect alternatives, with all eligible candidates ranked in `comparisons/pairings/angel-prospect-candidates.md`. Promotion remains a previewable CLI operation, not a browser action.
 
-Oct 15 working state: the photo-library run is in sync and the organized likeness reports are ready for review. Manual edit-prompt drafts are being developed under `prompts/_edit/female`; these are working references, not generated prompt outputs or approved template changes. See [plans/2026-10-15-likeness-and-edit-prompts.md](plans/2026-10-15-likeness-and-edit-prompts.md) for completed work and next steps.
+Oct 15 historical state: the photo-library run was in sync and reports ready for review. Manual drafts under `prompts/_edit/female` remain working references, not generated outputs or approved template changes. The [current migration plan](plans/2026-10-22-manual-prompts-to-art-library.md) supersedes the earlier wait-for-readiness sequence.
 
 Oct 19 working state: the verified pre-run snapshot is `B:\Sovereign Territories\_backup\library-20261019-125822`; the retry snapshot is
 `library-20261019-140638` (7,107 files / 3,868,753,524 bytes). Prime frame generation/configuration is removed and 972 library images, 9
@@ -104,7 +153,7 @@ to `_junk`. The final library check reports an empty pool, 0 active duplicate pa
 regenerated for 265 people; Camaris's current top candidates are Helena Stratton, Sabine Vale, and Uma Dunn. The Sister-first gallery
 cross-links remain active: Angel cards are ordered by pairing fit, while Prospect cards are ordered by descending gallery photo count (name
 breaks ties). See the [tooling-debt plan](plans/2026-10-12-tooling-debt.md) for gallery behavior and the [Oct 19 library
-plan](plans/2026-10-19-library-rebaseline-and-frame-retirement.md) for batch details. The sync-input step still reports missing/placeholder
+plan](plans/2026-10-22-library-upkeep.md) for batch details. The sync-input step still reports missing/placeholder
 workspace assets and a selected Female photo now in Fantasy; these were not changed. The chest crop is deferred pending a visual sample
 review. This work was subsequently separated into topic commits, pushed to
 `art/curation-and-workspaces`, and the branch is clean and in sync with its remote.
@@ -116,7 +165,7 @@ unusable, not good unmatched photos. Sisters stay fixed. Current Angel
 alternatives are report-only; the four Angel choices were made manually and
 slot names remain fixed. Automatic pairing/swapping is deferred until the
 future Demon phase and its counterpart rules are agreed. See the
-[library-management rebaseline](plans/2026-10-19-library-management-rebaseline.md).
+[library-management rebaseline](plans/2026-10-22-library-upkeep.md).
 
 Oct 20 closeout: the explicit choices are Aria Muse → Gavrielle, Ruby Eden →
 Camaris, Amethyst Montgomery → Ravaelle, and Sabine Vale → Nyxene; Angel slot
@@ -156,7 +205,7 @@ family-name assignment may be tested on an isolated copy such as
 `B:\Sovereign Territories Sandbox\`, inspected in the viewer, and rerun there
 as needed. The normal library remains a separate, reviewed and backed-up run.
 Before implementation, the new
-[rebaseline and family-naming plan](plans/2026-10-21-likeness-rebaseline-and-family-naming.md)
+[rebaseline and family-naming plan](art/likeness-processing-contract.md)
 coordinates current-plan prerequisites, source-scope and code-simplification
 audits (including Artists and legacy Model folders), name/history review,
 visual no-move scenarios, real sandbox iterations, validated routing, and a
@@ -476,7 +525,7 @@ for the recorded assignment-time scores. Production and immutable Source
 were not changed.
 
 Oct 21 scope reconciliation: the
-[Oct 21 plan's unified contract](plans/2026-10-21-likeness-rebaseline-and-family-naming.md#unified-processing-contract-oct-21-reconciliation)
+[Oct 21 plan's unified contract](art/likeness-processing-contract.md#unified-processing-contract-oct-21-reconciliation)
 now owns engine behavior across clean rebuilding and incremental intake.
 Grouping, photo/group matching, classification, core evidence and action
 authorization are separate decisions; cast protection is not a clustering

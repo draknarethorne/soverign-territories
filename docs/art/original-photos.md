@@ -85,6 +85,16 @@ the copied file list, sizes and hashes before proceeding. ComfyUI output
 renders are not included because the library routine does not modify them. To make a snapshot on demand,
 `bin\library-backup.cmd` previews by default; add `--apply` to create it, or `--verify <snapshot>` to recheck one.
 A failed copy is marked `INCOMPLETE.txt` and is not a usable snapshot.
+On Windows, snapshot copy and verification use extended-length paths so
+retained nested sandbox state can be backed up even when Windows long-path
+support is disabled. This does not exclude old run evidence or weaken hash
+verification; a failed snapshot remains incomplete and is never reused.
+Standalone fixed-slot Angel/Sister recorded-name changes are narrower:
+their action executor snapshots only the catalogue/history write set and
+records the identity inventory hash, without copying unchanged images.
+These transaction snapshots are verified by the same launcher but are not
+eligible as full-library recovery baselines. Other actions retain full backup.
+See [whole-person rename](likeness.md#whole-person-rename) for the boundary.
 
 **The short way: `bin\library.cmd`** runs, in order:
 

@@ -44,7 +44,7 @@ own and why an issue in the Prime is caught at `2_Studies` or `3_Layers` and fix
 Skip any of them when you trust the result; they are kept because they make a problem cheap to find. Experiments that did not hold up (the bare-chest study and the covering
 experiments: pasties, contoured, paint) were dropped.
 
-**Trying a simpler first shot.** The swimsuit Prime has to remove what the photo shows, and that is where leaks come from. Two experiments start from the same photo and sit in `1_Alpha/1b_Experiments/`: `neutral-base` (P2, a skin-tone base layer) and `bare-base` (P3, the bare figure with her own build). How to run and compare them is in [prime-flows.md](prime-flows.md#first-shot-experiments-p2-and-p3); the reasons are in [../plans/2026-10-11-first-shot-flows.md](../plans/2026-10-11-first-shot-flows.md).
+**Installed first-shot experiments.** Two existing variants start from the same photo in `1_Alpha/1b_Experiments/`: `neutral-base` (P2, a skin-tone base layer) and `bare-base` (P3). Their current comparison commands remain in [prime-flows.md](prime-flows.md#comparing-prime-renders). The [manual migration plan](../plans/2026-10-22-manual-prompts-to-art-library.md) now owns the next approach: new `0_Edit`, revised Prime/Bare, and retiring `1b` after replacements pass. It leaves `2b` untouched. Do not require another old winner comparison or regenerate/delete experiments merely because their plan was archived.
 
 | Phase | Folder (under `<Hero>/` in the workspace) | Incoming image | Produces |
 | --- | --- | --- | --- |

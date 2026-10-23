@@ -21,7 +21,7 @@ The folders carry the numbers of the stage folders in `data/art/_sets/<group>/<h
 | Folder | Templates | Art stage |
 | --- | --- | --- |
 | `1_Alpha/` | `pose-female-human`, `pose-male-human` (the Prime: photo to clean head-to-toe A-pose), `bare-human`, `bare-male-human` (the Bare: set the build, bare skin), `firered-prime-face-lock` (not a template: a paragraph put in front of the FireRed Prime prompt, see `docs/art/prime-flows.md`) | `1_Alpha` (Prime, Bare, Barefoot, Heels); also `3_Layers`, which re-uses the pose templates for the underlayers |
-| `1_Alpha/experiments/` | `base-bare-human` (P3: the bare figure straight from the photo), `base-neutral-human` (P2: a skin-tone base layer from the photo). Same labeled lines as the pose templates; the wearing comes from the `bare_base` / `base_layer` slots | `1_Alpha/1b_Experiments/<bare-base or neutral-base>`; see `docs/plans/2026-10-11-first-shot-flows.md` |
+| `1_Alpha/experiments/` | `base-bare-human` (P3: the bare figure straight from the photo), `base-neutral-human` (P2: a skin-tone base layer from the photo). Same labeled lines as the pose templates; the wearing comes from the `bare_base` / `base_layer` slots | Installed `1_Alpha/1b_Experiments/<bare-base or neutral-base>`; replacement/retirement is owned by the [manual migration plan](../../../docs/plans/2026-10-22-manual-prompts-to-art-library.md) |
 | `2_Studies/` | `hair-human`, `head-human` (close-up), `pose-view-human` (3/4, profile, back views) | `2_Studies` |
 | `4_Wardrobe/` | `clothing-human`, `armor-human`, `showcase-human`, `showcase-photo-human` | `4_Wardrobe` |
 | `5_Scenes/` | `scene-with-outfit`, `scene-with-companion`, `scene-glamour`, `scene-staged`, `scene-combat`, `scene-minimal` (all `-human`) | `5_Scenes` |
@@ -29,6 +29,12 @@ The folders carry the numbers of the stage folders in `data/art/_sets/<group>/<h
 | `Bench/` | `motion-human` (hair in motion, poses) | `Bench` |
 
 The first section of every template (above `prompt:`) says what image comes in and the denoise range; the denoise rule reads it from there.
+
+**Oct 22 direction, not installed changes:** the migration plan owns a new
+`0_Edit`, revised Prime/Bare and retirement of `1b` only after replacements
+pass. `2b_Experiments` stays untouched. Reconcile manual labels, shared tokens
+and reusable data before editing templates or regenerating outputs. The
+existing table describes the installed library, not the future design.
 
 Wording rule for the positive prompt: say what the picture shows, not what it lacks. A negation there ("no straps", "without changing it") can put the named thing into the picture, and FireRed has no separate negative prompt at all. What to avoid goes in the negative prompt, or comes from a piece's `negatives`. Static text lives in the template; anything that may differ per hero is a `{{TAG}}` filled from the art data, even when every hero has the same value today.
 

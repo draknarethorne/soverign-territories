@@ -1,6 +1,21 @@
 # 2026-10-09: step back on the command line (comfy_workflows.py and bin\*.cmd)
 
-**Status:** proposed (waiting for your decision; nothing is changed yet)
+**Status:** proposed (remaining folds/forwarders only; no additional consolidation approved)
+
+## Review and questions: 2026-10-22 16:26 -05:00
+
+The counts and option tables below are an Oct 9 historical inventory, not
+today's command contract. Finals Phase 6 already records preview/explicit apply,
+deploy/pull/inputs simplification and `audit.cmd`; C1/C3/C4/C5 are not unanswered
+prerequisites for those shipped slices. The remaining decisions are finals
+6.3b (command folds) and 6.5 (which forwarders to keep), informed by C2.
+Ask which current launchers the user uses before proposing any removal.
+Oct 20 H4 transfers here: preserve entry points until tested replacements
+and an explicit user decision. Read current help and caller tests first.
+
+In particular, retain existing `sync-inputs.cmd`; the historical `inputs sync`
+proposal is not an approved additional command. No new command, hidden option,
+changed default or forwarder removal is authorized by this review.
 
 An inventory of the command line and a proposal to simplify it. It is decision D7 and Phase 6 (6.3b, 6.5) of [2026-10-09-finals-and-mvp.md](2026-10-09-finals-and-mvp.md); the first steps (one preview rule, forwarders) were built there.
 What is left is the part that needs your decision: fold the overlapping commands as the tables below propose, or leave them. Tick nothing here; the boxes in the finals plan (6.3b, 6.5) carry it to `docs/todo.md`.

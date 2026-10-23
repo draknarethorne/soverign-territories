@@ -2,6 +2,17 @@
 
 **Status:** active (Phases 1 to 3.1 done; classification, Phase 3.2, is yours and grows one element at a time; Oct 11, 2026)
 
+## Review and questions: 2026-10-22 16:26 -05:00
+
+Retained independent tasks: 3.2 user profile classification and conditional
+4.4 two-image face pass. Ask which Darkness/Light profiles to classify when
+resuming; the face pass remains deferred until a concrete fidelity failure
+justifies it. It is not a chest-crop or overlay-detection task.
+Old counts, empty-pool claims, names and matcher thresholds below are historical
+execution evidence, not current routing permission. Current matching follows
+the [processing contract](../art/likeness-processing-contract.md).
+Artist provenance isolation remains required.
+
 Source: your three notes, copied word for word at the end. Report: [../art/likeness-reorg-2026-10-10.md](../art/likeness-reorg-2026-10-10.md) (the Oct 11 section). How-to: [../art/likeness.md](../art/likeness.md), [../art/original-photos.md](../art/original-photos.md).
 
 ## What you asked for
@@ -49,16 +60,16 @@ Source: your three notes, copied word for word at the end. Report: [../art/liken
 ### Phase 4: the Prime input and the templates (Oct 11, from your headshot-first thoughts)
 
 - [x] 4.1 `_templates/heroes` split by stage folder (1_Alpha ... Bench) with a README and `template_path`; 5,373 prompts byte-identical.
-- [x] 4.2 `originals` originally wrote `frame_944x1104` for partial-body photos. This generation was retired on Oct 19; see [the library rebaseline plan](2026-10-19-library-rebaseline-and-frame-retirement.md).
+- [x] 4.2 `originals` originally wrote `frame_944x1104` for partial-body photos. This generation was retired on Oct 19; see [the library rebaseline plan](2026-10-22-library-upkeep.md).
 - [x] 4.2b (corrected Oct 11) The frame experiment used a separate `flows.frame` input and `_Frame` Prime workflows beside the normal workflows. That flow and its generated assets were retired and archived on Oct 19; the normal photo flow remains.
 - [x] 4.2c FireRed identity lock: `engines.firered.primeFace` puts `1_Alpha/firered-prime-face-lock.txt` in front of the FireRed Prime prompt; Qwen is untouched.
 - [x] 4.2d `bin\compare-primes.cmd`: newest render of each variant per hero, a picture and a face score against the photo each flow started from, with the average per variant.
-The remaining active Prime-path comparison is consolidated into E6 of [the first-shot plan](2026-10-11-first-shot-flows.md): test P1/P2/P3 with Qwen and FireRed as appropriate; do not test frame variants.
+The remaining active Prime-path comparison is consolidated into E6 of [the first-shot plan](2026-10-22-manual-prompts-to-art-library.md): test P1/P2/P3 with Qwen and FireRed as appropriate; do not test frame variants.
 - [ ] **P3 ai** 4.4 If the active Prime tests show a specific need, consider a face pass with two images (bare bust plus original headshot), a beta template and a generator change. Do not add a pose-frame input.
 
 ## Result so far
 
-The person folders hold only what is live. `_archive` and `_junk` hold the rest. 107 person folders, all with a `z_` file. Next for you: open `people_index.csv` and start classifying; review the current `_junk` inventory through R11 in [the Oct 19 library plan](2026-10-19-library-rebaseline-and-frame-retirement.md).
+The person folders hold only what is live. `_archive` and `_junk` hold the rest. 107 person folders, all with a `z_` file. Next for you: open `people_index.csv` and start classifying; review the current `_junk` inventory through R11 in [the Oct 19 library plan](2026-10-22-library-upkeep.md).
 
 ## Your notes, word for word
 
@@ -114,7 +125,11 @@ That allows me a little more freedom just to grab all sorts of images and we fil
 ## Raw notes: headshot first (Oct 11)
 
 Your words, kept as written (only wrapped).
+The source filename and retired-plan link inside this historical note are
+preserved literally, not presented as current navigation. Current chest-crop
+work is upkeep U1; the conditional face pass remains 4.4 above.
 
+```text
 # Headshot-first and a pose library: my opinion (draft, no decision)
 
 Source: [dual-input-thoughts.md](dual-input-thoughts.md).
@@ -165,3 +180,4 @@ dual-image face pass) on two heroes.
 ## Templates (done today)
 
 `_templates/heroes` is now split by the stage folders the art sets use (1_Alpha, 2_Studies, 4_Wardrobe, 5_Scenes, 6_Finish, Bench), with a README; a beta or prototype template goes in its own sub-folder (`heroes/beta/`). All 5,373 prompts regenerate byte-identical.
+```

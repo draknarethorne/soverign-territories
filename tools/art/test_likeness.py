@@ -58,6 +58,11 @@ CFG = {"standardSize": [94, 110], "photos": {}, "workspaces": {}}
 
 
 class LikenessTests(unittest.TestCase):
+    def test_index_accepts_saved_policy(self):
+        with mock.patch.object(L, "cmd_index") as index:
+            L.main(["--root", "sandbox", "--cache", "cache.json", "index", "--policy", "saved-policy.json"])
+        self.assertEqual(index.call_args.args[0].policy, "saved-policy.json")
+
     def setUp(self):
         self.tmp = pathlib.Path(tempfile.mkdtemp())
         self.lib = self.tmp / "lib"

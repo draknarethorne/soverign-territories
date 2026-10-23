@@ -24,6 +24,17 @@ import comfy_workflows as cw  # noqa: E402
 CHUNK_SIZE = 1024 * 1024
 
 
+def _snapshot_path(path):
+    """Use extended Windows paths when nested backup copies exceed MAX_PATH."""
+    path = pathlib.Path(path).resolve()
+    if os.name != "nt" or str(path).startswith("\\\\?\\"):
+        return path
+    value = str(path)
+    if value.startswith("\\\\"):
+        return pathlib.Path("\\\\?\\UNC\\" + value[2:])
+    return pathlib.Path("\\\\?\\" + value)
+
+
 def _files(source, exclude_library_storage=False):
     """Yield regular files in deterministic order; refuse symlinks rather than omit data."""
     source = pathlib.Path(source)
@@ -102,7 +113,7 @@ def preview(work_root, inputs_root=None, config_path=None, extra_sources=()):
 
 def verify_backup(snapshot):
     """Verify manifest coverage, byte counts and hashes for a completed snapshot."""
-    root = pathlib.Path(snapshot).resolve()
+    root = _snapshot_path(snapshot)
     manifest_path = root / "manifest.json"
     if not manifest_path.is_file():
         raise OSError(f"no completed backup manifest: {manifest_path}")
@@ -169,16 +180,39 @@ def latest_work_root_backup(work_root):
     raise OSError(f"no complete backup exists for work root: {work}")
 
 
-def create_backup(work_root, inputs_root=None, config_path=None, stamp=None, apply=True, extra_sources=()):
+def create_backup(work_root, inputs_root=None, config_path=None, stamp=None, apply=True, extra_sources=(),
+                  *, scoped_sources=None, recovery=None):
     """Preview or create a complete snapshot; publish its manifest only after all copies verify."""
     work = pathlib.Path(work_root).resolve()
-    entries, total = preview(work, inputs_root, config_path, extra_sources)
+    if scoped_sources is None:
+        source_list = sources(work, inputs_root, config_path, extra_sources)
+    else:
+        source_list = [(label, pathlib.Path(path).resolve(), False) for label, path in scoped_sources]
+        if not source_list or len({label for label, _, _ in source_list}) != len(source_list):
+            raise ValueError("scoped backup requires nonempty, uniquely named sources")
+        if any(not label or pathlib.Path(label).name != label or label in (".", "..")
+               or any(char in label for char in "\\/:") for label, _, _ in source_list):
+            raise ValueError("unsafe scoped backup source label")
+    entries, total = [], 0
+    for label, source, exclude in source_list:
+        for path, relative in _files(source, exclude):
+            size = path.stat().st_size
+            entries.append((label, path, relative, size))
+            total += size
+    print(f"snapshot preview: {len(entries)} file(s), {total:,} bytes", flush=True)
+    for label, source, _ in source_list:
+        print(f"  {label}: {source}", flush=True)
+    if scoped_sources is None:
+        print("  excluded from work-root: _backup, _archive")
+    else:
+        print("  scope: explicit transaction sources; not a full-library snapshot")
     if not apply:
         return None
 
     stamp = stamp or datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     destination = work / "_backup" / f"library-{stamp}"
-    destination.mkdir(parents=True, exist_ok=False)
+    snapshot = _snapshot_path(destination)
+    snapshot.mkdir(parents=True, exist_ok=False)
     required = total + 256 * 1024 * 1024
     free = shutil.disk_usage(destination.parent).free
     if free < required:
@@ -191,15 +225,14 @@ def create_backup(work_root, inputs_root=None, config_path=None, stamp=None, app
 
     manifest_files = []
     try:
-        source_list = sources(work, inputs_root, config_path, extra_sources)
         root_map = {label: source for label, source, _ in source_list}
         for label, source, exclude_library_storage in source_list:
             if source.is_dir():
                 for relative in _directories(source, exclude_library_storage):
-                    (destination / label / relative).mkdir(parents=True, exist_ok=True)
+                    (snapshot / label / relative).mkdir(parents=True, exist_ok=True)
         for label, source_file, relative, expected_size in entries:
             source_root = root_map[label]
-            target = destination / label / relative
+            target = snapshot / label / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             before = source_file.stat()
             digest = hashlib.sha256()
@@ -220,7 +253,7 @@ def create_backup(work_root, inputs_root=None, config_path=None, stamp=None, app
                 raise OSError(f"backup size verification failed: {target}")
             manifest_files.append({
                 "source": str(source_file),
-                "backup": str(target.relative_to(destination)),
+                "backup": str(target.relative_to(snapshot)),
                 "size": copied,
                 "sha256": digest.hexdigest(),
             })
@@ -250,6 +283,9 @@ def create_backup(work_root, inputs_root=None, config_path=None, stamp=None, app
             ],
             "entries": manifest_files,
         }
+        if scoped_sources is not None:
+            manifest["scope"] = "transaction"
+            manifest["recovery"] = recovery
         temporary = destination / "manifest.json.tmp"
         temporary.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
         temporary.replace(destination / "manifest.json")

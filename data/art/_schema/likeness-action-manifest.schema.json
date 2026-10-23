@@ -27,7 +27,27 @@
         "expectedDisplayName": {"type": "string", "minLength": 1},
         "expectedRecordedName": {"type": "string", "minLength": 1},
         "expectedTreeSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "expectedProtected": {"type": "boolean"},
+        "swapConfirmed": {"const": true},
+        "swapWith": {"$ref": "#/definitions/swapIdentity"},
         "newName": {"type": "string", "minLength": 1, "maxLength": 100}
+      },
+      "dependencies": {
+        "swapWith": ["swapConfirmed", "expectedProtected"],
+        "swapConfirmed": ["swapWith"]
+      }
+    },
+    "swapIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["personId", "personFolder", "expectedDisplayName", "expectedRecordedName", "expectedTreeSha256", "expectedProtected"],
+      "properties": {
+        "personId": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"},
+        "personFolder": {"type": "string", "pattern": "^(Angels|Sisters|Models|Prospects|Potentials)/[^/\\\\:]+$"},
+        "expectedDisplayName": {"type": "string", "minLength": 1},
+        "expectedRecordedName": {"type": "string", "minLength": 1},
+        "expectedTreeSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "expectedProtected": {"type": "boolean"}
       }
     },
     "personAction": {

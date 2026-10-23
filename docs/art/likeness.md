@@ -11,9 +11,10 @@ The tools can preview and, with explicit `--apply`, perform selected file
 operations. Similarity is evidence for review, not proof of identity. The
 people gallery and review gallery are local HTML reports; neither moves files.
 
-For the authoritative current state and sandbox/production boundary, see
-[STATUS.md](../STATUS.md) and the active
-[likeness rebaseline plan](../plans/2026-10-21-likeness-rebaseline-and-family-naming.md).
+For current state and the sandbox/production boundary, see
+[STATUS.md](../STATUS.md), the
+[processing contract](likeness-processing-contract.md) and the active
+[engine acceptance plan](../plans/2026-10-22-likeness-engine-acceptance.md).
 The photo-library ingest routine is documented in
 [original-photos.md](original-photos.md).
 
@@ -78,7 +79,7 @@ one to four and remain active for future matching. Only eligible Prospects are
 Angel replacement candidates. The sandbox policy treats `Models` as a
 distinct active category; historical Model paths still need an explicit
 migration rule. See the
-[active plan](../plans/2026-10-21-likeness-rebaseline-and-family-naming.md).
+[active plan](likeness-processing-contract.md).
 
 ### Draft sandbox likeness policy
 
@@ -461,7 +462,22 @@ In **People view**, registered Angels, Sisters, Models, Prospects and Potentials
 choose **Stage rename**, then download, validate and preview through the same
 action launcher. **Cancel rename** removes that decision. Apply one rename
 alone; it cannot share a manifest with photo actions, identity protection or
-another rename. Swapping occupied names is not implemented.
+another rename. If the entered name belongs to exactly one other eligible
+registered identity, the same control offers a **TWO-PERSON NAME SWAP**
+confirmation showing both identities, protection states and folder/name effects.
+Declining stages nothing; confirming stages one standalone action containing
+both guarded identity snapshots. Cancel removes the entire decision.
+Ambiguous owners, unsupported references and unrelated collisions are refused.
+
+A confirmed swap exchanges recorded names, not photos or memberships.
+Angels/Sisters keep their fixed slot/folder/display/workflow references;
+non-cast folders/display names follow the exchanged names. Both history records
+explicitly record the swap. The catalogue stores both sides under one batch.
+Apply and undo validate both inventories and protection snapshots, snapshot
+the catalogue/history write set and recovery move maps, and execute both sides
+as one transaction with checked rollback. This also handles crossed non-cast
+folder destinations without overwriting either collection. An unconfirmed
+occupied-name rename is still rejected by the CLI.
 
 For Models/Prospects/Potentials this explicit user action renames the entire person folder within its current
 category and updates its catalogue display name, preserving the stable person
@@ -496,7 +512,27 @@ catalogue state still match and the old destination remains free. Save failures
 roll back the rename/history; rollback failures are surfaced with the backup.
 Regenerate reports after applying or undoing; old HTML links do not update.
 
-Whole-person merge, retirement, rejection, name swaps and saved family-link
+Fixed-slot Angel/Sister renames use a verified **transaction snapshot**:
+the affected `z_` record (if present), the pre-change catalogue, and a manifest
+with the before/after history bytes, fixed folder mapping and complete identity
+tree hash. Images are not rewritten or copied into this snapshot. Apply and
+undo revalidate the catalogue and entire affected identity before mutation.
+Undo also takes a fresh transaction snapshot. These snapshots cannot serve as
+full-library/rebase backups. Confirmed swaps use transaction snapshots covering
+both histories, catalogue and guarded recovery folder/staging maps; unchanged
+images move with their identity folder, without being rewritten. Other action types and ordinary non-cast folder renames
+still use the full snapshot; broader scope optimization remains planned.
+Use `bin\library-backup.cmd --verify SNAPSHOT` to recheck either kind.
+No snapshot pruning is automatic.
+
+For a name-only correction, refresh the index and galleries with the same root,
+cache and saved policy; do not run global matching or normalize images merely
+to refresh a name. `likeness index --policy FILE` selects that report policy.
+In the overview, the history link opens the renamed record. The Review page's
+rename field reflects the updated recorded name; user visual acceptance is
+separate from successful apply and payload validation.
+
+Whole-person merge, retirement, rejection and saved family-link
 changes remain separate unfinished work.
 
 ### Testing exported actions safely
@@ -620,7 +656,7 @@ current rules.
 Angel-to-Sister counterpart assignments are fixed by configuration. The
 People Gallery and pairing report provide recommendations only. Do not apply
 an Angel replacement from a score alone. The existing four selections are
-recorded in the [library-management plan](../plans/2026-10-19-library-management-rebaseline.md).
+recorded in the [library-management plan](../plans/2026-10-22-library-upkeep.md).
 Revisit automatic pairing/swapping only for the future Demon phase after its
 counterpart map and direction-specific rules are agreed.
 
@@ -677,7 +713,7 @@ follow the Potential rule, while scores at or above 0.30 can remain flagged
 for visual review. This threshold is an experiment, not a final identity
 rule. Draft status blocks production writes, not qualified proposal evidence.
 See the
-[active rebaseline plan](../plans/2026-10-21-likeness-rebaseline-and-family-naming.md)
+[active rebaseline plan](likeness-processing-contract.md)
 for the full configuration and remaining acceptance gates.
 
 ### Clean sandbox rebuild versus category reclassification
@@ -801,5 +837,5 @@ these workflows; duplicates may be held in `gallery_org`.
 - [Original photo library and ingest routine](original-photos.md)
 - [Likeness reorganization, Oct 9](likeness-reorg-2026-10-09.md)
 - [Likeness reorganization, Oct 10](likeness-reorg-2026-10-10.md)
-- [Likeness library self-healing plan](../plans/2026-10-20-likeness-library-self-healing.md)
-- [Likeness rebaseline and family-naming plan](../plans/2026-10-21-likeness-rebaseline-and-family-naming.md)
+- [Likeness library self-healing plan](../plans/2026-10-22-review-actions.md)
+- [Likeness rebaseline and family-naming plan](likeness-processing-contract.md)

@@ -102,6 +102,15 @@
         "undoes": {"type": "string", "pattern": "^action_[0-9a-f]{32}$"},
         "beforeState": {"$ref": "#/definitions/actionState"},
         "afterState": {"$ref": "#/definitions/actionState"},
+        "swapPartner": {
+          "allOf": [
+            {"$ref": "#/definitions/action"},
+            {
+              "properties": {"type": {"const": "person-renamed"}},
+              "not": {"required": ["swapPartner"]}
+            }
+          ]
+        },
         "workflowHero": {"type": "string", "minLength": 1},
         "workflowPhotoBefore": {"type": "string", "minLength": 1},
         "workflowPhotoAfter": {"type": "string", "minLength": 1},
@@ -122,6 +131,10 @@
         }
       },
       "allOf": [
+        {
+          "if": {"required": ["swapPartner"]},
+          "then": {"properties": {"type": {"const": "person-renamed"}}}
+        },
         {
           "if": {"properties": {"type": {"const": "person-renamed"}}, "required": ["type"]},
           "then": {"required": ["source", "destination", "renameState"]}

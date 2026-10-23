@@ -1,12 +1,43 @@
 # 2026-10-19: library management rebaseline
 
-**Status:** active
+**Status:** dropped (superseded; not completed)
+
+## Supersession record
+
+**Superseded:** 2026-10-22T16:34:08-05:00 (local offset recorded).
+
+**Reason:** the Oct 22 full-plan reconciliation separates enduring rules,
+dated evidence and focused execution owners. Later approved direction
+supersedes conflicting older sequencing/limits; remaining work is not done.
+
+**Context:** [live reference](../../art/library-reconciliation-context.md), [full reconciliation audit](../../audits/2026-10-22-plan-feedback-audit.md).
+Original user wording and historical evidence are retained below.
+The source checklist is historical; formerly open items are explicitly
+marked transferred, not checked off as implemented.
+
+## Unfinished work and successors
+
+| Source item | Live owner | Destination / disposition |
+| --- | --- | --- |
+| L1 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E6 |
+| L5 | [2026-10-22-review-actions.md](../2026-10-22-review-actions.md) | A2/A4 |
+| L8 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E8; upkeep U5 owns future Demon pairing design |
+
+## Result of reconciliation
+
+Retired as an execution owner after task and context transfer. Archival
+does not assert implementation, render approval, convergence or production
+acceptance. Live owners above retain the remaining gates and questions.
+
+## Original source record
+
+**Original status:** active
 
 This plan defines a sustainable routine for re-evaluating the whole active
 photo library, keeping low-count people available for future matches, and
 reviewing Angel replacements as the cast expands. The current ingest and
-likeness rules are documented in [likeness.md](../art/likeness.md) and
-[original-photos.md](../art/original-photos.md).
+likeness rules are documented in [likeness.md](../../art/likeness.md) and
+[original-photos.md](../../art/original-photos.md).
 
 ## Vocabulary and agreed rules
 
@@ -58,14 +89,14 @@ direction-specific likeness band are decided.
 ## Steps
 
 - [x] **P1 ai** L0 Inventory the current scan, sort, rematch, pairing, gallery, junk, and archive paths; identify how current folder names and chosen-photo references are migrated safely.
-- [ ] **P1 either** L1 Define measurable usable-photo and auto-retirement criteria. Distinguish objectively unusable files from repairable or uncertain photos; leave subjective eye-closure and angle judgments for review unless a detector is validated.
+- **Transferred, not completed:** **P1 either** L1 Define measurable usable-photo and auto-retirement criteria. Distinguish objectively unusable files from repairable or uncertain photos; leave subjective eye-closure and angle judgments for review unless a detector is validated.
 - [x] **P1 ai** L2 Design a read-only full-library re-evaluation report with proposed photo/group destinations, best matches, score margins, current/projected counts, and explicit uncertain/review outcomes.
 - [x] **P1 ai** L3 Design the migration from current low-count Prospects into Potentials and the rule that promotes a Potential at five usable photos, preserving identity, history, images, and workflow references.
 - [x] **P1 ai** L4 Define the current report-only Angel recommendation policy and defer automatic pairing/swapping to the later Demon phase. The shared eligibility and fit-plus-variety score are documented; no current Angel identity is changed automatically.
-- [ ] **P2 ai** L5 Specify how confidently unusable photos are retired while Junk remains a repair-and-resubmit path; preserve source files and provide a recovery trail.
+- **Transferred, not completed:** **P2 ai** L5 Specify how confidently unusable photos are retired while Junk remains a repair-and-resubmit path; preserve source files and provide a recovery trail.
 - [x] **P2 ai** L6 Update likeness tooling, gallery, candidate reports, runbook, and tests consistently after the rules and preview are approved.
 - [x] **P1 either** L7 Back up and review the initial migration preview, then apply only the agreed category moves. The verified backup preceded 135 Prospects-to-Potentials moves; checks and regenerated reports confirmed the resulting library. Identity/Junk suggestions stayed review-only, and all four Angel choices were explicit user selections.
-- [ ] **P2 either** L8 Validate the routine on future additions, including a later Demon set; review automatic pair/swap results and refine only from measured outcomes.
+- **Transferred, not completed:** **P2 either** L8 Validate the routine on future additions, including a later Demon set; review automatic pair/swap results and refine only from measured outcomes.
 
 ## Progress (Oct 19–20)
 
@@ -79,6 +110,10 @@ Ravaelle, and Sabine Vale → Nyxene. Angel slot names remain fixed; outgoing
 identities returned to the appropriate active category. The generated reports,
 gallery, and Angel Prime workflows were refreshed and verified.
 
+## Preserved original discussions (verbatim)
+
+<!-- markdownlint-disable MD013 -->
+````text
 ## Raw request
 
 > I like that plans it'll serve as a re-baseline I can use over time to help clean-up manage the library - for
@@ -99,3 +134,5 @@ gallery, and Angel Prime workflows were refreshed and verified.
 > have Sisters, Angels, Prospects (5+ photos) and Potentials 1-4 photos and Retired for bad photos. I'm just
 > trying to keep Prospects to the 5+ rule and Potentials as the lower number that could grow and move them
 > into a Prospect if I find more photos of them.
+````
+<!-- markdownlint-enable MD013 -->

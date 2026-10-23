@@ -2,6 +2,21 @@
 
 **Status:** active (moved here from `STATUS.md` so that one queue, [../todo.md](../todo.md), shows everything open)
 
+## Review and questions: 2026-10-22 16:26 -05:00
+
+Retained: independent game-data, deck/product, signature-item, art/video and
+documentation work. No content/runtime audit is claimed by this plan review;
+old card counts and missing-ID lists below need re-inventory before execution.
+Ask remaining product/design questions individually rather than assuming the
+art-library cleanup answers them.
+
+R8 needs a current companion-`extends` audit before implementation or closure:
+the architecture supports reuse, which does not prove every Elder Dragon and
+Sister companion has already been migrated. R12 underlayer tests are distinct
+from retiring `1b_Experiments`; R13 title/key-art/item stages are not the manual
+prompt migration. R14's broader documentation/launcher audit is not completed
+merely by reconciling plans.
+
 The game-design and data work that was a list in `STATUS.md` ("Next work", "Art and video track", steps 3 and 4 of the Oct 8 agreed steps).
 The decisions behind it stay in `STATUS.md` (the MVP is Darkness and Light, the 8 rarity tiers, the open decisions O1 to O12). The art-pipeline work is in the other plans.
 

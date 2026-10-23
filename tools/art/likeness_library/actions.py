@@ -407,10 +407,16 @@ def validate_manifest(document, root, catalog, pool_folder="Prospects/Various", 
 def print_preview(plans):
     for plan in plans:
         if plan["type"] == person_rename.ACTION:
+            if plan.get("partner"):
+                print("  confirmed two-person name swap (standalone transaction):")
+                print_preview([{k: v for k, v in plan.items() if k != "partner"}, plan["partner"]])
+                continue
             print(f"  rename identity {plan['personId']}: {plan['source']} -> {plan['destination']}")
             print(f"    recorded person name: {plan['action']['expectedRecordedName']} -> {plan['action']['newName']}")
             if plan["source"] == plan["destination"]:
                 print("    fixed character slot/folder and workflow inputs remain unchanged")
+            if "expectedProtected" in plan["action"]:
+                print(f"    identity protection remains {'ON' if plan['action']['expectedProtected'] else 'OFF'}; membership unchanged")
             print("    preserve original filenames/IDs and history; refresh reports after apply")
             continue
         if plan["type"] in person_actions.PROTECTION_ACTIONS:
@@ -602,7 +608,52 @@ def _restore_workflow_photos(plans, cfg):
         cw.repoint_photos(cfg, selections, False)
 
 
-def _create_action_backup(root, cfg, batch_id):
+def _create_action_backup(root, cfg, batch_id, *, rename_plan=None, reverse=False):
+    catalogue = metadata.path_for_root(root)
+    if (
+        rename_plan is not None and catalogue.is_file()
+        and (rename_plan.get("partner") or (
+            rename_plan["source"] == rename_plan["destination"]
+            and rename_plan["source"].parent.name in person_rename.CAST_CATEGORIES
+        ))
+    ):
+        swap = bool(rename_plan.get("partner"))
+        members = (rename_plan, rename_plan["partner"]) if swap else (rename_plan,)
+        scoped_sources = [("likeness-catalogue", catalogue)]
+        recovery_members = []
+        for index, member in enumerate(members):
+            state = member["rename"]
+            folder = member["destination"] if reverse else member["source"]
+            history = state["newHistoryPath"] if reverse else state["oldHistoryPath"]
+            if history:
+                label = f"identity-history-{index}" if swap else "identity-history"
+                scoped_sources.append((label, folder / pathlib.Path(history)))
+            recovery_members.append({
+                "personId": member["personId"],
+                "source": str(member["source"]), "destination": str(member["destination"]),
+                "renameState": copy.deepcopy(state),
+                "unchangedIdentityTreeSha256": state[
+                    "afterTreeSha256" if reverse else "beforeTreeSha256"
+                ],
+            })
+            if swap:
+                recovery_members[-1]["privateStaging"] = str(person_rename.swap_staging(rename_plan) / str(index))
+        recovery = {
+            "type": "person-name-swap" if swap else person_rename.ACTION,
+            "batchId": batch_id, "reverse": reverse,
+            "note": (
+                "Both identity trees move intact via private staging; only histories and catalogue bytes change."
+                if swap else "Fixed cast slot: only history and catalogue bytes change; images are guarded, not copied."
+            ),
+        }
+        if swap:
+            recovery["members"] = recovery_members
+        else:
+            recovery.update(recovery_members[0])
+        return library_backup.create_backup(
+            root, stamp=f"likeness-actions-{batch_id}", apply=True,
+            scoped_sources=scoped_sources, recovery=recovery,
+        )
     return library_backup.create_backup(
         root,
         cfg.get("paths", {}).get("inputsRoot"),
@@ -718,8 +769,11 @@ def apply_actions(document, root, catalog, cfg, pool_folder, *, backup_fn=None, 
     metadata.validate_catalog(updated)
 
     catalog_guard = _catalog_guard(root, catalog)
-    backup_fn = backup_fn or _create_action_backup
-    backup = backup_fn(root, cfg, batch_id)
+    rename_plan = next((plan for plan in plans if plan["type"] == person_rename.ACTION), None)
+    backup = (
+        backup_fn(root, cfg, batch_id) if backup_fn else
+        _create_action_backup(root, cfg, batch_id, rename_plan=rename_plan)
+    )
     _revalidate_catalog(catalog_guard, catalog)
     errors, checked_plans = validate_manifest(document, root, catalog, pool_folder, chosen_ids, cfg)
     if errors:
@@ -733,6 +787,7 @@ def apply_actions(document, root, catalog, cfg, pool_folder, *, backup_fn=None, 
         )
         or before.get("workflow") != after.get("workflow")
         or before.get("rename") != after.get("rename")
+        or before.get("partner") != after.get("partner")
         for before, after in zip(plans, checked_plans)
     ):
         raise ValueError("action destinations changed after backup; no actions applied")
@@ -749,6 +804,8 @@ def apply_actions(document, root, catalog, cfg, pool_folder, *, backup_fn=None, 
             rename_completed = True
             assert rename_record is not None
             rename_record["renameState"] = copy.deepcopy(rename_plan["rename"])
+            if rename_plan.get("partner"):
+                rename_record["swapPartner"]["renameState"] = copy.deepcopy(rename_plan["partner"]["rename"])
             metadata.validate_catalog(updated)
         _repoint_workflow_photos(checked_plans, cfg)
         (save_fn or metadata.save_catalog)(updated)
@@ -826,7 +883,7 @@ def plan_undo(catalog, root, batch_id=None, chosen_ids=(), cfg=None):
                 rename_plan = person_rename.undo_plan(simulated, action, root, cfg or {})
             except (OSError, ValueError) as exc:
                 return [str(exc)], None, []
-            simulated["people"][action["personId"]] = copy.deepcopy(action["beforeState"]["person"])
+            person_rename.restore_catalog(simulated, action)
             reverse_plans.append({
                 "actionRecord": action, "beforeState": action["beforeState"],
                 "renamePlan": rename_plan,
@@ -944,8 +1001,11 @@ def undo_actions(catalog, root, cfg, pool_folder, *, batch_id=None, backup_fn=No
         _require_configured_work_root(root, cfg)
     undo_batch_id = "batch_" + uuid.uuid4().hex
     catalog_guard = _catalog_guard(root, catalog)
-    backup_fn = backup_fn or _create_action_backup
-    backup = backup_fn(root, cfg, undo_batch_id)
+    rename_plan = next((item["renamePlan"] for item in reverse_plans if "renamePlan" in item), None)
+    backup = (
+        backup_fn(root, cfg, undo_batch_id) if backup_fn else
+        _create_action_backup(root, cfg, undo_batch_id, rename_plan=rename_plan, reverse=True)
+    )
     _revalidate_catalog(catalog_guard, catalog)
     errors, checked_batch, checked_plans = plan_undo(
         catalog, root, selected_batch, chosen_ids, cfg
@@ -963,7 +1023,7 @@ def undo_actions(catalog, root, cfg, pool_folder, *, batch_id=None, backup_fn=No
         person_id = action.get("personId")
         photo_id = action["photoIds"][0] if action["photoIds"] else None
         if action["type"] == person_rename.ACTION:
-            updated["people"][person_id] = copy.deepcopy(before["person"])
+            person_rename.restore_catalog(updated, action)
         elif action["type"] in person_actions.PROTECTION_ACTIONS:
             person_actions.restore_action(updated, action, root)
         elif action["type"] in WORKFLOW_ACTIONS:
@@ -1081,6 +1141,12 @@ def main(argv=None):
                 return 1
             print(f"undo batch {batch_id}: {sum('actionRecord' in item for item in undo_plans)} action(s)")
             for plan in undo_plans:
+                if "renamePlan" in plan:
+                    record = plan["actionRecord"]
+                    if record.get("swapPartner"):
+                        print("  restore both identities in the confirmed name swap:")
+                    for member in (record, record["swapPartner"]) if record.get("swapPartner") else (record,):
+                        print(f"  restore identity {member['personId']}: {member['destination']} -> {member['source']}; exact original history")
                 if "source" in plan:
                     print(f"  move back: {plan['source']} -> {plan['destination']}")
                 if plan.get("workflow"):
@@ -1125,7 +1191,11 @@ def main(argv=None):
                 print(f"apply failed: {exc}", file=sys.stderr)
                 return 1
             print(f"applied batch {batch_id}; verified backup: {backup}")
-            print("run bin\\library.cmd to refresh derived gallery files and reports")
+            if any(plan["type"] == person_rename.ACTION for plan in plans):
+                print("refresh the index and bin\\people-gallery.cmd with this root and saved cache/policy; "
+                      "rename does not require matching or image normalization")
+            else:
+                print("run bin\\library.cmd to refresh derived gallery files and reports")
         else:
             print("preview only; add --apply to create a verified backup and apply")
     return 0

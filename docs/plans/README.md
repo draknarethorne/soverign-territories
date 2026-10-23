@@ -1,7 +1,7 @@
 # Plans of action
 
 One file per piece of work we agreed to act on. This is how we work day to day, so the other documents stay clean.
-Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (generated from the plans); what is decided is [../STATUS.md](../STATUS.md); how each day went is [../recap/](../recap/).
+Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (generated from the plans); what is decided is [../STATUS.md](../STATUS.md); how each day went is [../recap/](../recap).
 
 ## The pattern
 
@@ -20,7 +20,8 @@ Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (gen
 2. **Agree and incorporate.** Update the existing owning plan, or create `YYYY-MM-DD-<slug>.md` (the date is the day we agreed), with a `**Status:**` line (`proposed`, `active`, `done`, `dropped`) and a row below. Preserve the original file text or relevant chat messages word for word at the end, with their source/date. Turn every request into a step, decision or explicitly recorded disposition; raw text alone is not a plan.
 3. **Work it.** Decisions are asked one at a time and recorded in the plan's decision table; steps are checkboxes ticked as they finish; code and doc changes follow the normal order (design rule, schema, validator or tooling, implementation, tests).
 4. **Close.** Set `**Status:** done` (or `dropped`), add a short `Result` section, `git mv` the file into `_archive/` (fix the relative links), and update the row below. A done plan has no open boxes: each is finished, dropped, or moved to a live plan.
-5. **Supersede.** A plan replaced by a newer one is archived the same way, with a line saying by which.
+5. **Supersede.** Follow the preservation and reconciliation gates below.
+   A newer date or shorter plan alone does not supersede an older plan.
 
 After incorporation, re-read the raw source and verify both verbatim preservation
 and actionable coverage. Only then may that specific feedback file be removed.
@@ -29,6 +30,74 @@ If a note spans plans, keep one complete verbatim copy in the primary plan and
 link the other owning plans to it. Unresolved or not-yet-incorporated feedback
 stays in place; an empty feedback directory is not a completion requirement.
 Never clear `feedback/` as temporary-file cleanup.
+
+## Keeping plans current without losing context
+
+Plans evolve as design decisions change and work pauses or resumes. Review
+the affected owners when that happens, not only at day-close. Reconcile one
+plan at a time; a repository-wide inventory is not a full content audit.
+
+**At each pivot:** before adding another continuation, identify the affected
+current owner, say which old decision changed, and either update that owner
+or draft a named successor. If the pivot strands work, record its destination
+immediately. Keep the index and dated questions current; don't wait for a
+large retrospective cleanup. Day-close checks should flag status/index drift,
+unowned transfers and competing active ownership, never auto-retire plans.
+
+1. **Inventory before changing.** Record the plan's status, independent scope,
+   decisions and rationale, constraints, examples/known failures, evidence,
+   dependencies, open questions, user wording, and every unfinished task.
+   Do not reduce context preservation to copying unchecked boxes.
+2. **Classify every part.** Keep it active, retain it as independent/deferred
+   work, move it to an identified successor/reference, or explicitly supersede
+   it with a dated decision and reason. A replacement decision must say which
+   older rule it replaces and why. Never infer completion from age or a newer
+   implementation summary.
+3. **Draft without changing authority.** A proposed successor is labelled
+   `proposed` and identifies the still-active source owner. It is excluded
+   from the generated execution queue. Do not run competing checklists.
+4. **Verify the transfer before activation.** Use a source-to-destination
+   ledger covering tasks and context. Re-read the source and verify complete
+   raw-text preservation, rationale, examples, decision precedence, links and
+   dependencies. Put enduring rules in canonical documentation, execution
+   work in focused plans, and dated evidence in a clearly labelled reference.
+   Current work must not require reading an ignored archive to recover a rule.
+5. **Activate coherently.** Update source dispositions, successor status,
+   index rows, references, current status and generated queue together.
+   Mark a checkbox as transferred/superseded with its destination and reason,
+   not as implemented. Validate that no unfinished scope vanished or has two
+   active owners. Preserve the source wording separately from its disposition.
+6. **Archive only after the gate passes.** Add the banner below immediately
+   after the title, a terminal status and a `Result`. Move with `git mv`;
+   fix relative links. Every formerly open item must have an explicit
+   completed, dropped-by-decision or transferred disposition. The banner
+   explains incomplete-looking checklists without pretending they were done.
+7. **When uncertain, leave it.** Keep the source in place, record the
+   uncertainty and next review step, and ask one focused question when needed.
+   Independent plans waiting for user tests remain active; record the blocker
+   rather than manufacturing work or closing them. Revisit a paused plan's
+   assumptions before resuming it.
+
+Use `done` only for delivered/accepted scope. For a plan retired because a
+replacement makes it obsolete, use `dropped (superseded; not completed)`.
+Both terminal states are excluded from the active queue; the index explains
+the distinction. No new queue/parser status is needed.
+
+Required supersession banner:
+
+```text
+Superseded: YYYY-MM-DD HH:MM:SS +/-HH:MM (local timezone/offset).
+Reason: what changed and why this is no longer an execution plan.
+Successors: links to the active plan(s) and enduring rules/evidence.
+Unfinished work: source task IDs -> destination IDs, including deferred items.
+Context: where decisions, rationale, examples, dependencies and raw words live.
+Completion: archival is not implementation or acceptance of the remaining work.
+```
+
+Keep the ledger proportionate: use a table in the owning plan or a requested
+audit, not a new management document for every small edit. Split genuinely
+unrelated work; do not fragment tightly coupled tasks merely to meet a length
+target. Source notes are never deleted as a side effect of reconciliation.
 
 ## The queue: priority and owner on every open box
 
@@ -90,19 +159,40 @@ When you get some time - I want to revise our docs/plans overall process to use 
 | Plan | Status | What it is |
 | --- | --- | --- |
 | [2026-10-09-finals-and-mvp.md](2026-10-09-finals-and-mvp.md) | active | Candidates, shots and finals for workflows, source-photo picks, the generated todo, and scaling the MVP back to Darkness and Light |
-| [2026-10-09-cli-simplification.md](2026-10-09-cli-simplification.md) | proposed | The command-line inventory and the proposal to fold overlapping commands (D7, 6.3b); waiting for your decision |
-| [2026-10-11-tidy-junk-organise.md](2026-10-11-tidy-junk-organise.md) | active | `_archive`, `_junk`, reel screenshots cleaned, prospects and artists apart, the people index and its classification (yours) |
-| [2026-10-11-first-shot-flows.md](2026-10-11-first-shot-flows.md) | active | P2 and P3 beside the swimsuit Prime P1, the experiments cleaned up; waiting for your tests |
-| [2026-10-12-prime-prompts-frames-and-inputs.md](2026-10-12-prime-prompts-frames-and-inputs.md) | active | Seeds, sync-inputs, Prime v2 prompt and canonical order, library fixes; the frame flow was retired Oct 19 |
+| [2026-10-09-cli-simplification.md](2026-10-09-cli-simplification.md) | proposed | Historical inventory supporting only the remaining command folds/forwarders (finals 6.3b/6.5); no new consolidation approved |
+| [2026-10-11-tidy-junk-organise.md](2026-10-11-tidy-junk-organise.md) | active | User profile classification and deferred two-image face-pass experiment; Artist isolation remains required |
 | [2026-10-12-artists-reset-and-auto-crop.md](2026-10-12-artists-reset-and-auto-crop.md) | active | Artists rebuilt, auto-crop, one ingest routine, prospects regrouped; waiting for your review |
-| [2026-10-12-prompt-template-standards.md](2026-10-12-prompt-template-standards.md) | active | A written standard for every prompt template, then an audit of the templates against it |
 | [2026-10-12-roadmap-and-mvp-data.md](2026-10-12-roadmap-and-mvp-data.md) | active | The MVP data track (Darkness and Light set, starter decks, rules), the Oct 8 steps 3 and 4, the art and video track |
-| [2026-10-12-tooling-debt.md](2026-10-12-tooling-debt.md) | active | What the day showed about our tools: a status command, splitting likeness.py, one place for thresholds, a day-close check, atomic writes |
-| [2026-10-15-likeness-and-edit-prompts.md](2026-10-15-likeness-and-edit-prompts.md) | active | Current likeness/report state and the working manual prompt review-to-template path |
-| [2026-10-19-library-rebaseline-and-frame-retirement.md](2026-10-19-library-rebaseline-and-frame-retirement.md) | active | Rebaseline active work, retire failed frame flow, pull Angel Primes shots, and process the current library batch |
-| [2026-10-19-library-management-rebaseline.md](2026-10-19-library-management-rebaseline.md) | active | Full-library rebaseline, Prospects and Potentials migration, report-only Angel alternatives, and future Demon-pairing policy |
-| [2026-10-20-likeness-library-self-healing.md](2026-10-20-likeness-library-self-healing.md) | active | Metadata, stable IDs, staged review actions and recovery foundations; engine integration and policy ownership transferred to the Oct 21 plan |
+| [2026-10-12-tooling-debt.md](2026-10-12-tooling-debt.md) | active | Diagnostics, read-only day-close, atomic writes, line endings, Windows suspension, readiness ranking and archive-first deactivation |
 | [2026-10-20-art-tools-structure.md](2026-10-20-art-tools-structure.md) | active | Incrementally organize art Python tools and tests while preserving `bin/*.cmd` interfaces |
-| [2026-10-21-likeness-rebaseline-and-family-naming.md](2026-10-21-likeness-rebaseline-and-family-naming.md) | active | Oct 22 clean sandbox trial installed; shared incoming/Review planner and execution wired. Whole-identity maintenance, convergence, family naming, incremental acceptance and approved production clean-full rebuild remain open |
 | [2026-10-22-gallery-review-layout.md](2026-10-22-gallery-review-layout.md) | active | Separate image, identity details and manual actions; consolidate related header/formatting feedback without expanding the engine plans |
+| [2026-10-22-likeness-engine-acceptance.md](2026-10-22-likeness-engine-acceptance.md) | active | Shared-engine calibration, convergence, incremental batch and separately approved production clean-full rebuild |
+| [2026-10-22-identity-family-naming.md](2026-10-22-identity-family-naming.md) | active | Virtual family metadata, reversible naming, collisions, viewer and user acceptance |
+| [2026-10-22-review-actions.md](2026-10-22-review-actions.md) | active | All-category manual actions, recovery, scenario testing, name swaps and future UI boundaries |
+| [2026-10-22-face-analysis-evaluation.md](2026-10-22-face-analysis-evaluation.md) | active | Explain current measurements and evaluate labelled secondary-model cases with verified licence gates |
+| [2026-10-22-manual-prompts-to-art-library.md](2026-10-22-manual-prompts-to-art-library.md) | active | Manual source/token/data migration, new `0_Edit`, revised Prime/Bare, validated `1b` retirement and untouched `2b` |
+| [2026-10-22-library-upkeep.md](2026-10-22-library-upkeep.md) | active | Chest-crop preview, current Junk/outcome review, post-action refresh, near duplicates and future Demon pairing decisions |
+
+Every retained plan has an Oct 22 review/questions block. The
+[full reconciliation audit](../audits/2026-10-22-plan-feedback-audit.md)
+records scope/task/context coverage. Revisit those questions one at a time;
+historical counts are not new runtime acceptance.
+
+### Retired in the Oct 22 reconciliation
+
+These links are historical records, not current execution instructions.
+Each superseded source has a timestamp/offset, reason, exact unfinished-task
+map, live context homes and an explicit not-completed disclaimer.
+
+| Plan | Status | Disposition |
+| --- | --- | --- |
+| [Oct 11 first-shot flows](_archive/2026-10-11-first-shot-flows.md) | dropped | Current manual migration replaces the old winner-selection sequence |
+| [Oct 12 Prime/frames/inputs](_archive/2026-10-12-prime-prompts-frames-and-inputs.md) | dropped | Prompt work to migration; missing inputs to finals; upkeep decisions preserved separately |
+| [Oct 12 prompt standards](_archive/2026-10-12-prompt-template-standards.md) | dropped | Migration owns tested standards, vocabulary mapping and incremental rollout gates |
+| [Oct 15 likeness/edit prompts](_archive/2026-10-15-likeness-and-edit-prompts.md) | dropped | Manual batch can be reviewed now; report acceptance remains a separate live task |
+| [Oct 19 management rebaseline](_archive/2026-10-19-library-management-rebaseline.md) | dropped | Quality, retirement and future intake/pairing split among engine, actions and upkeep |
+| [Oct 19 frame retirement](_archive/2026-10-19-library-rebaseline-and-frame-retirement.md) | dropped | Completed retirement evidence retained; chest crop and user outcomes transferred to upkeep |
+| [Oct 20 self-healing](_archive/2026-10-20-likeness-library-self-healing.md) | dropped | Foundations retained live; all nine open items transferred to focused owners |
+| [Oct 21 rebaseline/family](_archive/2026-10-21-likeness-rebaseline-and-family-naming.md) | dropped | Full contract/evidence retained live; all 69 open items transferred, not declared delivered |
+| [Oct 22 reconciliation](_archive/2026-10-22-plan-reconciliation.md) | done | Full current-plan review, context/task preservation, activation, archival and validated handoff |
 | [_archive/2026-10-10-names-ingest-headshots.md](_archive/2026-10-10-names-ingest-headshots.md) | done | Names that follow the photos (`z_` files), `Sisters`, the new `Various` batch, headshots, the look-alike guard |

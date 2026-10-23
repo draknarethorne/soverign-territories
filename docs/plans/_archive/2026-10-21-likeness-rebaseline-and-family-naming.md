@@ -1,6 +1,103 @@
 # 2026-10-21: likeness rebaseline, family naming, and matcher simplification
 
-**Status:** active (Oct 22 sandbox trial installed; established maintenance implemented; calibration, family naming and production clean rebase unfinished)
+**Status:** dropped (superseded; not completed)
+
+## Supersession record
+
+**Superseded:** 2026-10-22T16:34:08-05:00 (local offset recorded).
+
+**Reason:** the Oct 22 full-plan reconciliation separates enduring rules,
+dated evidence and focused execution owners. Later approved direction
+supersedes conflicting older sequencing/limits; remaining work is not done.
+
+**Context:** [live reference](../../art/likeness-processing-contract.md), [full reconciliation audit](../../audits/2026-10-22-plan-feedback-audit.md).
+Original user wording and historical evidence are retained below.
+The source checklist is historical; formerly open items are explicitly
+marked transferred, not checked off as implemented.
+
+## Unfinished work and successors
+
+| Source item | Live owner | Destination / disposition |
+| --- | --- | --- |
+| 0.3a | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E1 |
+| 0.3c | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E1 |
+| 0.4 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E6 |
+| 0.5 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E10 |
+| 1.1 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E2 |
+| 1.2 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E2 |
+| 1.3 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E2 |
+| 1.4 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E11 |
+| 1.5 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E2 |
+| 1.6 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E11 |
+| 1.7 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E11 |
+| 2.3 | [2026-10-22-identity-family-naming.md](../2026-10-22-identity-family-naming.md) | N1 |
+| 2.4 | [2026-10-22-identity-family-naming.md](../2026-10-22-identity-family-naming.md) | N2 |
+| 2.5 | [2026-10-22-identity-family-naming.md](../2026-10-22-identity-family-naming.md) | N2 |
+| 2.6 | [2026-10-22-identity-family-naming.md](../2026-10-22-identity-family-naming.md) | N3 |
+| 2.7 | [2026-10-22-identity-family-naming.md](../2026-10-22-identity-family-naming.md) | N4 |
+| 2.8 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E3 |
+| 3.1 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E4 |
+| 3.2 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E9 |
+| 3.3 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E4 |
+| 3.4 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E2 |
+| 3.5 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E4 |
+| 3.6 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E4 |
+| 3.7 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E4 |
+| 3.8 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E10 |
+| 3.9 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E4 |
+| 3.10 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E9 |
+| 4.1a | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E3 |
+| 4.2 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E6 |
+| 4.3 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E5 |
+| 4.3a | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E3 |
+| 4.3b | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E3 |
+| 4.4 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E5 |
+| 4.5 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E5 |
+| 4.6 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E5 |
+| 4.7 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E6 |
+| 4.8 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E10 |
+| 4.9 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E5 |
+| 4.10 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E3 |
+| 4.11 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E7 |
+| 4.12 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E5 |
+| 4.13 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E7 |
+| 4.14 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E8 |
+| 4.15 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E3 |
+| 4.16 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E5 |
+| 4.17 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E5 |
+| 4.18 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E5 |
+| 4.19 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E6 |
+| 4.20 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E7 |
+| 5.1 | [2026-10-22-identity-family-naming.md](../2026-10-22-identity-family-naming.md) | N5 |
+| 5.1a | [2026-10-22-identity-family-naming.md](../2026-10-22-identity-family-naming.md) | N5 |
+| 5.1b | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E3 |
+| 5.1g | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E10 |
+| 5.1k | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E9 |
+| 5.2 | [2026-10-22-identity-family-naming.md](../2026-10-22-identity-family-naming.md) | N5 |
+| 5.3 | [2026-10-22-identity-family-naming.md](../2026-10-22-identity-family-naming.md) | N6; manual actions A3 owns two-person swaps |
+| 5.4 | [2026-10-22-identity-family-naming.md](../2026-10-22-identity-family-naming.md) | N7 |
+| 5.5 | [2026-10-22-identity-family-naming.md](../2026-10-22-identity-family-naming.md) | N8 |
+| 5.6 | [2026-10-22-gallery-review-layout.md](../2026-10-22-gallery-review-layout.md) | L11 |
+| 6.1 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | P1 |
+| 6.2 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | P2 |
+| 6.3 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | P3 |
+| 6.4 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | P4 |
+| 6.5 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | P5 |
+| 7.1 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E2 |
+| 7.2 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E9 |
+| 7.3 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E11 |
+| 7.4 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E12 |
+| 7.5 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | P6 |
+
+## Result of reconciliation
+
+Retired as an execution owner after task and context transfer. Archival
+does not assert implementation, render approval, convergence or production
+acceptance. Live owners above retain the remaining gates and questions.
+
+## Original source record
+
+**Original status:** active (Oct 22 sandbox trial installed; established maintenance implemented; calibration, family naming and production clean rebase unfinished)
 
 ## Executive summary
 
@@ -295,9 +392,9 @@ before installing another threshold experiment.
 ## Calibration starting points (not production approval)
 
 The first versioned policy is
-[`data/art/likeness-engine-policy.json`](../../data/art/likeness-engine-policy.json),
+[`data/art/likeness-engine-policy.json`](../../../data/art/likeness-engine-policy.json),
 validated against
-[`likeness-engine-policy.schema.json`](../../data/art/_schema/likeness-engine-policy.schema.json).
+[`likeness-engine-policy.schema.json`](../../../data/art/_schema/likeness-engine-policy.schema.json).
 Its current status is `draft`, version `draft-2026-10-21.3`. The installed
 Oct 22 experiment uses 0.25 average-linkage grouping with minimum size one;
 it does not reuse the 0.55 cast gate for candidate formation. Runtime settings
@@ -481,7 +578,7 @@ placements.
   `work-root`, `comfy-inputs`, and `repository-config` trees plus a complete
   manifest. `library_backup.verify_backup` provides checksum verification;
   no restore has been run as part of this sandbox work.
-- [ ] **P1 ai** 0.3a Verify how to create an isolated sandbox copy of the
+- **Transferred, not completed:** **P1 ai** 0.3a Verify how to create an isolated sandbox copy of the
   selected library (using `B:\Sovereign Territories Sandbox\` if suitable).
   Inventory path/configuration/cache/launcher overrides and prove that
   sandbox commands cannot write to the normal library or its workspaces.
@@ -507,7 +604,7 @@ placements.
   `source-manifest.json` records each relative path, size, and SHA-256; every
   included file hashes identically across production source, snapshot, and
   working copy. The original library was not modified by the copy.
-- [ ] **P1 ai** 0.3c Define a sandbox-only reset allowlist for generated
+- **Transferred, not completed:** **P1 ai** 0.3c Define a sandbox-only reset allowlist for generated
   category outputs. Test that reset affects only Models, Prospects,
   Potentials, and per-run identity state, while refusing production paths,
   workspace inputs, Artists, archives, and the source snapshot.
@@ -516,11 +613,11 @@ placements.
   `Working\_sandbox-state`. It preserves Angels, Sisters, Artists, reports,
   and the embedding cache. Run-scoped identity-state cleanup remains
   undefined, so this gate stays open.
-- [ ] **P1 ai** 0.4 Build a bounded, labelled acceptance set from known
+- **Transferred, not completed:** **P1 ai** 0.4 Build a bounded, labelled acceptance set from known
   same-person, lookalike, unrelated, former-cast, and poor-quality examples.
   Include the visually reviewed Drakness/Drakniss examples as labelled cases,
   not authorization to move those photos.
-- [ ] **P1 either** 0.5 Review the remaining P1 likeness decisions in
+- **Transferred, not completed:** **P1 either** 0.5 Review the remaining P1 likeness decisions in
   `2026-10-20-likeness-library-self-healing.md`; ask only for decisions that
   block policy or source scope. Keep already approved metadata, manifest,
   backup, undo, and gallery foundations.
@@ -530,34 +627,34 @@ photo changes are made; baseline sources and known examples are reproducible.
 
 ### Phase 1 — audit and simplify the matching/sorting system
 
-- [ ] **P1 ai** 1.1 Trace all entry points and call paths for pool ingest,
+- **Transferred, not completed:** **P1 ai** 1.1 Trace all entry points and call paths for pool ingest,
   `sort`, `review`, `singles`, `rematch`, `group`, rebaseline, reconciliation,
   Artist grouping, and relevant gallery/index refreshes. Record which steps
   read, score, cluster, write, or only report.
-- [ ] **P1 ai** 1.2 Inventory active and historical source roots, including
+- **Transferred, not completed:** **P1 ai** 1.2 Inventory active and historical source roots, including
   Angels, Sisters, Prospects, Potentials, Review, Various, Artists, old Model
   folders, and any prior `Sisters (formerly Models)` paths. Verify actual path
   filters and classify each as an allowed source, explicit exclusion,
   view-only source, or unresolved legacy input. Specify a separate, new
   active Models destination; never infer that all legacy Model folders should
   be imported into it.
-- [ ] **P1 ai** 1.3 Map matching, clustering, category assignment, and
+- **Transferred, not completed:** **P1 ai** 1.3 Map matching, clustering, category assignment, and
   threshold configuration to their implementation modules and tests. Identify
   duplicated rules, special-case branches, stale compatibility paths, and
   hidden ordering dependencies.
-- [ ] **P1 ai** 1.4 Produce a sunset/deprecation matrix for overlapping or
+- **Transferred, not completed:** **P1 ai** 1.4 Produce a sunset/deprecation matrix for overlapping or
   obsolete features touched by this work: current owner, callers, data
   produced, migration/recovery needs, replacement, and tests to remove or
   retain. Remove nothing until call sites and user-facing launchers are
   verified.
-- [ ] **P1 ai** 1.5 Add regression tests for every confirmed source boundary,
+- **Transferred, not completed:** **P1 ai** 1.5 Add regression tests for every confirmed source boundary,
   especially Artist and legacy Model exclusion, archive/retired handling,
   supported category roots, and the proposed active Models destination.
-- [ ] **P2 ai** 1.6 Refactor only the confirmed complex matching seams into
+- **Transferred, not completed:** **P2 ai** 1.6 Refactor only the confirmed complex matching seams into
   small, testable functions/modules while preserving current behavior and
   `bin\*.cmd` entry points. Record behavior changes separately from
   behavior-preserving moves.
-- [ ] **P2 either** 1.7 Review the sunset matrix and approve any user-visible
+- **Transferred, not completed:** **P2 either** 1.7 Review the sunset matrix and approve any user-visible
   feature removal or permanent source-category policy not already established
   by repository rules.
 
@@ -580,7 +677,7 @@ refactor preserves baseline behavior.
   is now Jade Santos from its existing `z_jade_santos.txt` filename. The
   two existing histories were retained; the two empty files now have the
   recovered full-name line. No person folder or photo was renamed or moved.
-- [ ] **P1 ai** 2.3 Inventory case-insensitive surname reuse and folder-name
+- **Transferred, not completed:** **P1 ai** 2.3 Inventory case-insensitive surname reuse and folder-name
   collisions across the whole active person library. Classify confirmed
   lookalike reuse, unrelated reuse, and unresolved reuse in a no-write report.
   Vale already appears on six active identities; Angelica Vale is explicitly
@@ -600,22 +697,22 @@ refactor preserves baseline behavior.
   hashes, the sandbox catalogue hash and saved policy hash. Production has
   no local catalogue. This advances 2.3, not its confirmed/unrelated
   classification, the family contract, automatic naming or the family GUI.
-- [ ] **P1 either** 2.4 Specify how threshold-assigned family groups and
+- **Transferred, not completed:** **P1 either** 2.4 Specify how threshold-assigned family groups and
   below-threshold suggestions are represented, including evidence, version,
   reversibility, and surname/first-name assignment. Threshold-driven
   association and naming are approved; they must be explicit in the preview,
   not silent or confused with identity matching.
-- [ ] **P1 ai** 2.5 Specify the smallest stable-ID-based catalogue
+- **Transferred, not completed:** **P1 ai** 2.5 Specify the smallest stable-ID-based catalogue
   representation for family groups, membership history, and confirmed versus
   suggested state. Test splits, joins, promotion/demotion, and a character
   slot changing occupants without making names or slots identity keys.
-- [ ] **P1 either** 2.6 Approve a collision-safe naming/migration table for
+- **Transferred, not completed:** **P1 either** 2.6 Approve a collision-safe naming/migration table for
   existing identities, unrelated surname reuse, and new family members.
   Existing names remain unchanged until individually resolved.
-- [ ] **P2 ai** 2.7 Update the schema, validator, name/history helpers, and
+- **Transferred, not completed:** **P2 ai** 2.7 Update the schema, validator, name/history helpers, and
   focused tests only after the metadata contract is approved. Keep `z_`
   history, catalogue identity, and fixed character-slot names consistent.
-- [ ] **P1 ai** 2.8 Define a versioned JSON rebase-config schema for named,
+- **Transferred, not completed:** **P1 ai** 2.8 Define a versioned JSON rebase-config schema for named,
   ordered classifications, usable-photo bounds, score/margin predicates,
   comparison targets, output roots, source options, family naming, and
   enabled state. Validate unsupported or contradictory rules explicitly;
@@ -628,34 +725,34 @@ validated before any production rename.
 
 ### Phase 3 — build and exercise the sandbox rebase loop
 
-- [ ] **P1 ai** 3.1 Preserve the corrected cast-only Prospect/Potential
+- **Transferred, not completed:** **P1 ai** 3.1 Preserve the corrected cast-only Prospect/Potential
   counterfactual as a baseline diagnostic, verify source exclusions, and
   retain original folder/import provenance. It is a comparison aid, not the
   main iteration interface.
-- [ ] **P1 ai** 3.2 Build the people viewer from actual sandbox output
+- **Transferred, not completed:** **P1 ai** 3.2 Build the people viewer from actual sandbox output
   directories. Show each identity's classification, family, source history,
   cast/other-person likeness scores, photo count, and full-size photos;
   retain flat, source-grouped, and family views without presenting score as
   identity truth.
-- [ ] **P1 ai** 3.3 Add rebase mode/config selection for repeatable sandbox
+- **Transferred, not completed:** **P1 ai** 3.3 Add rebase mode/config selection for repeatable sandbox
   variants: cast-only identity references with all Prospect/Potential photos
   as candidates; and the same mode with an explicit option to include
   eligible low-own-core-score cast photos as candidates. Show the exact
   source set, score cutoff, anchors/protections, and exclusions per run.
   Compare actual category folders with the relevant mode/config switched,
   rather than asking the user to predict each destination.
-- [ ] **P1 ai** 3.4 Ensure Artist, legacy Model paths, archived, retired, duplicate,
+- **Transferred, not completed:** **P1 ai** 3.4 Ensure Artist, legacy Model paths, archived, retired, duplicate,
   and otherwise ineligible photos are either explicitly excluded or shown as
   excluded with a reason. Test that widening a parent path cannot pull them
   into scoring.
-- [ ] **P1 either** 3.5 Inspect actual sandbox folders and the gallery for
+- **Transferred, not completed:** **P1 either** 3.5 Inspect actual sandbox folders and the gallery for
   labelled acceptance examples, including known non-cast cases and the
   Drakness/Drakniss examples. Correct source-label or viewer defects before
   drawing conclusions from results.
-- [ ] **P1 ai** 3.6 Compare scenarios by per-photo destination, family
+- **Transferred, not completed:** **P1 ai** 3.6 Compare scenarios by per-photo destination, family
   candidate, review/hold status, new-cluster count, and source-group
   integrity. Do not use aggregate counts alone as acceptance.
-- [ ] **P1 ai** 3.7 Once the sandbox boundary and reset allowlist are verified,
+- **Transferred, not completed:** **P1 ai** 3.7 Once the sandbox boundary and reset allowlist are verified,
   run the actual
   end-to-end pipeline on a copied, representative library subset or full
   selected copy using the explicit rebaseline flag and JSON config. Rebuild
@@ -663,15 +760,15 @@ validated before any production rename.
   threshold-based family-name assignment, generate the viewer from resulting
   directories, then verify logs, undo/reset, provenance, and no writes
   outside the sandbox.
-- [ ] **P1 you** 3.8 Review the sandbox gallery and actual placements. Label
+- **Transferred, not completed:** **P1 you** 3.8 Review the sandbox gallery and actual placements. Label
   false assignments, missed family groups, surname collisions, and Review
   overload; revise the threshold or rules and rerun the sandbox as needed.
-- [ ] **P1 ai** 3.9 Support repeated clean runs with different configs and
+- **Transferred, not completed:** **P1 ai** 3.9 Support repeated clean runs with different configs and
   source modes from the same snapshot. Keep each run's config, category
   counts, assigned identity IDs, score evidence, and output manifest so
   actual destination folders can be compared without hand-identifying them.
   Re-running must not require a new user-authored photo assignment list.
-- [ ] **P1 ai** 3.10 Run the complete diagnostic suite after each sandbox
+- **Transferred, not completed:** **P1 ai** 3.10 Run the complete diagnostic suite after each sandbox
   rebase: library-wide `calibrate`, per-folder `folder` consistency for
   eligible identities in Sisters, Angels, Models, Prospects, and Potentials,
   and the existing identity-core audit. Preserve each diagnostic's own score,
@@ -862,7 +959,7 @@ machine-readable and human-readable results.
   contract above, separating grouping, matching, classification, protection,
   core evidence and authorization. Completed Oct 21 as documentation only;
   implementation and behavioral acceptance remain open below.
-- [ ] **P1 ai** 4.1a Specify category precedence for a frozen run: resolve
+- **Transferred, not completed:** **P1 ai** 4.1a Specify category precedence for a frozen run: resolve
   confident same-person matches first; hold unresolved identity cases that
   plausibly match cast for Review rather than declaring a new Model; then
   hold identities with fewer than five usable photos in Potentials; classify
@@ -882,45 +979,45 @@ machine-readable and human-readable results.
   contains Fia's Potential folder, and the earlier assignment-time run record
   is unavailable. Do not claim the post-state leave-one-out scores explain
   the original assignment.
-- [ ] **P1 either** 4.2 Calibrate and document the looks-like threshold and
+- **Transferred, not completed:** **P1 either** 4.2 Calibrate and document the looks-like threshold and
   action-specific match/margin policies against labelled and sandbox results.
   Family assignment may be automatic in the sandbox; keep production routing
   thresholds unchanged until the evidence and acceptance criteria support a
   documented change.
-- [ ] **P1 ai** 4.3 Add group-to-group and person-to-cluster comparison
+- **Transferred, not completed:** **P1 ai** 4.3 Add group-to-group and person-to-cluster comparison
   evidence where validated, retaining independent identity cores. Ensure
   multiple appearance clusters can inform a candidate without silently
   merging people or adding uncertain photos to an established core.
-- [ ] **P1 ai** 4.3a Implement the config-driven category evaluator for
+- **Transferred, not completed:** **P1 ai** 4.3a Implement the config-driven category evaluator for
   supported declarative predicates. Classify by ordered rules and frozen
   evidence; validate duplicate IDs, overlapping rules, gaps, unreachable
   classes, missing roots, and deterministic precedence. Keep algorithms in
   code and category policy in JSON.
-- [ ] **P1 ai** 4.3b Prove a sandbox-only JSON edit can change supported
+- **Transferred, not completed:** **P1 ai** 4.3b Prove a sandbox-only JSON edit can change supported
   thresholds and enable a new classification class, then rerun from the same
   snapshot to produce changed real directories. Invalid/ambiguous configs
   must fail before reset or photo writes.
-- [ ] **P1 ai** 4.4 Integrate selective Review routing into the primary
+- **Transferred, not completed:** **P1 ai** 4.4 Integrate selective Review routing into the primary
   pool-to-identity flow so uncertain plausible candidates have an explicit
   destination. Keep unrelated/no-match photos eligible to become ordinary
   Prospects/Potentials; do not send every uncertain photo to Review.
-- [ ] **P1 ai** 4.5 Use a frozen pre-run snapshot for scoring and deterministic
+- **Transferred, not completed:** **P1 ai** 4.5 Use a frozen pre-run snapshot for scoring and deterministic
   same-run candidate clustering. Provisional groups must not mutate trusted
   cores or cause order-dependent cascades; each photo is assigned at most
   once per run.
-- [ ] **P1 ai** 4.6 Add focused tests for ties, margins, small groups,
+- **Transferred, not completed:** **P1 ai** 4.6 Add focused tests for ties, margins, small groups,
   category transitions at four/five usable photos, cast-like Model
   classification versus same-person routing, Prospect-to-Prospect families,
   Potential score display, mixed-source clusters, noisy/poor photos,
   duplicate IDs, protected/anchor images, source exclusions, and repeated
   deterministic runs.
-- [ ] **P1 either** 4.7 Compare previews against user-labelled decisions and
+- **Transferred, not completed:** **P1 either** 4.7 Compare previews against user-labelled decisions and
   report action-specific precision/recall and review volume. Adjust design or
   scope until the targets agreed in Phase 4.2 are met.
-- [ ] **P1 either** 4.8 Accept or reject the sandbox-calibrated threshold
+- **Transferred, not completed:** **P1 either** 4.8 Accept or reject the sandbox-calibrated threshold
   based on viewer results and measured errors. A rejected calibration
   returns to Phase 3/4 for another sandbox iteration, not a production run.
-- [ ] **P1 ai** 4.9 Refactor the rebase classifier and ordinary likeness
+- **Transferred, not completed:** **P1 ai** 4.9 Refactor the rebase classifier and ordinary likeness
   intake to call the same engine and category-policy evaluator. Keep path
   guards, reset, run manifests, and sandbox overrides at the boundary; do not
   fork matching or merge/split behavior for sandbox. Record the shared default
@@ -929,12 +1026,12 @@ machine-readable and human-readable results.
   rematch sequence, not just adding a read-only `reconcile` command. Each
   retained legacy operation needs a documented distinct purpose or a tested
   compatibility adapter; no ordinary launcher may silently bypass policy.
-- [ ] **P1 ai** 4.10 Add declarative per-category hierarchy/order, thresholds,
+- **Transferred, not completed:** **P1 ai** 4.10 Add declarative per-category hierarchy/order, thresholds,
   match margins, merge/split/routing permissions, Review policy, core policy,
   and protection behavior. New categories such as Demons must be addable via
   validated config when they use supported rule types. Algorithms remain
   shared code; fail invalid or unsupported policy before moves.
-- [ ] **P1 ai** 4.11 Implement incremental, idempotent self-healing on newly
+- **Transferred, not completed:** **P1 ai** 4.11 Implement incremental, idempotent self-healing on newly
   ingested photos and affected identities: evaluate both directions of a
   candidate merge/split, avoid chain cascades and oscillation, retain
   provenance, and produce a preview/action manifest before any production
@@ -944,7 +1041,7 @@ machine-readable and human-readable results.
   transaction-tested. Three measured synthetic command scenarios now reach
   a no-change second pass without reset. This box stays open for labelled
   real-batch idempotence; no recursive established-core cascade is authorized.
-- [ ] **P1 ai** 4.12 Implement the agreed protection contract. Identity
+- **Transferred, not completed:** **P1 ai** 4.12 Implement the agreed protection contract. Identity
   protection blocks automatic Gallery-membership and identity changes;
   incoming identity-associated Review has separate admission permission. Photo
   protection suppresses automatic removal and Review routing but keeps the
@@ -952,44 +1049,44 @@ machine-readable and human-readable results.
   selection confers photo protection automatically. Add tests for low-score
   protected photos, independently selected anchors, protected identity
   destinations, workflow availability, and explicit gallery badges.
-- [ ] **P1 ai** 4.13 Immediately after the sandbox rebase, run the normal
+- **Transferred, not completed:** **P1 ai** 4.13 Immediately after the sandbox rebase, run the normal
   likeness process in preview mode against that result. Save the proposed
   changes and compare them with the rebase manifest; do not apply them
   automatically. Use the differences to verify the shared policy and
   incremental idempotence.
-- [ ] **P1 you** 4.14 After the initial sandbox rebase and preview comparison,
+- **Transferred, not completed:** **P1 you** 4.14 After the initial sandbox rebase and preview comparison,
   add the separate 200+ image batch to the sandbox and run ordinary likeness
   intake without reset/rebase. Review organic merges, splits, category
   transitions, Review routing, protected cases, and directory-level results.
-- [ ] **P1 ai** 4.15 Replace competing settings with one schema-validated
+- **Transferred, not completed:** **P1 ai** 4.15 Replace competing settings with one schema-validated
   effective-policy resolver. Inventory every consumed value and caller,
   distinguish comparison metrics, move behavioral defaults out of `engine.py`,
   and provide explicit migration for workspace overrides. Report provenance,
   reject conflicts before writes, and test that both modes resolve the same
   rules when given the same scope/evidence. Complete before threshold trials.
-- [ ] **P1 ai** 4.16 Preserve singleton/pair/group evidence through planning.
+- **Transferred, not completed:** **P1 ai** 4.16 Preserve singleton/pair/group evidence through planning.
   Separate group formation, action-support minimums, core viability and
   category photo counts. Define deterministic ties and robust provisional
   cores, preserve appearance subgroups, and reclassify from final planned
   memberships. Regress the perfect pair and four-to-five-photo transition.
-- [ ] **P1 ai** 4.17 Separate proposed decisions from authorization. A
+- **Transferred, not completed:** **P1 ai** 4.17 Separate proposed decisions from authorization. A
   draft/preview must expose the same qualified destinations and reasons as
   an authorized apply; approval controls writes, not similarity evidence.
   Test explicit sandbox experiment authorization, production refusal, and
   selective cast Review without cast Gallery/core admission.
-- [ ] **P1 ai** 4.18 Define, document and implement recoverable unresolved
+- **Transferred, not completed:** **P1 ai** 4.18 Define, document and implement recoverable unresolved
   holds in the manifest, filesystem adapter and both galleries. Preserve
   group IDs/alternatives; do not name every held photo as a new identity or
   split a held group. Genuine unmatched singletons/pairs remain eligible
   identities. Test no loss, no duplicate placement, retry and undo.
-- [ ] **P1 ai** 4.19 Build action-labelled regression cases before another
+- **Transferred, not completed:** **P1 ai** 4.19 Build action-labelled regression cases before another
   installation: Fia's confirmed sequence, Amara, Jacinta/Freya diagnostics,
   Sophie's mixed membership, perfect pairs, unrelated lookalikes, poor faces,
   same-shoot near-duplicates, anchors/protection and workflow selections.
   Do not use current folders as unquestioned truth. Compare the grouping
   trial values and tier-specific attachment/merge/split rules; report false
   merges, missed matches, hold/Review volume and fragmentation separately.
-- [ ] **P1 ai** 4.20 After 4.15-4.19 and shared routine integration in
+- **Transferred, not completed:** **P1 ai** 4.20 After 4.15-4.19 and shared routine integration in
   4.9-4.12, verify the full launcher path before replacing the sandbox result.
   Compare planner evidence across modes with controlled references, test
   bounded follow-up and final-core consistency, then preview normal intake
@@ -1013,18 +1110,18 @@ before treating this interval as a production rule.
 ### Phase 5 — family gallery and safe naming workflow
 
 Presentation grouping and header layout now have a bounded owner in the
-[gallery/Review layout plan](2026-10-22-gallery-review-layout.md).
+[gallery/Review layout plan](../2026-10-22-gallery-review-layout.md).
 This phase retains naming, matching evidence and transaction behavior.
 
-- [ ] **P1 ai** 5.1 Add family/lookalike grouping to the local people gallery
+- **Transferred, not completed:** **P1 ai** 5.1 Add family/lookalike grouping to the local people gallery
   using stable identity metadata. Show whether a link is suggested or
   threshold-assigned, preserve category/person filters, and retain the flat
   view. Show cast-likeness scores for Models, Prospects, and Potentials in
   candidate browsing; score visibility must not imply same-person identity.
-- [ ] **P1 ai** 5.1a Add gallery controls to include/exclude classifications
+- **Transferred, not completed:** **P1 ai** 5.1a Add gallery controls to include/exclude classifications
   and family groupings from the current view. A viewer toggle must not mutate
   person classification, directory placement, or likeness-processing config.
-- [ ] **P1 ai** 5.1b If supported in the POC viewer, allow enabling/disabling
+- **Transferred, not completed:** **P1 ai** 5.1b If supported in the POC viewer, allow enabling/disabling
   a classification for the next sandbox rebase by exporting a validated
   config file. Do not let the browser write library files or silently change
   current directories; require the explicit rebase command to apply the new
@@ -1048,7 +1145,7 @@ This phase retains naming, matching evidence and transaction behavior.
   Photo ID separately from stable person Identity ID, and expose core mode,
   size, membership, face evidence, scoring method, and applicable thresholds.
   Use bullet details and color cues; make face size/count open a cached face crop.
-- [ ] **P1 either** 5.1g Evaluate the controls and score presentation against
+- **Transferred, not completed:** **P1 either** 5.1g Evaluate the controls and score presentation against
   actual sandbox category directories, including Angels, Sisters, Models,
   Prospects, and Potentials. Confirm the nine-thumbnail view, summary/full
   switch, and full-library rankings are understandable before accepting a
@@ -1090,7 +1187,7 @@ This phase retains naming, matching evidence and transaction behavior.
   Actual sandbox reports expose controls for all 16 Models and 35 Prospects,
   never cast, Potentials or mixed sources; active catalogue and saved policy
   remain byte-identical after regeneration.
-- [ ] **P1 ai** 5.1k Show rebase diagnostic results consistently in both
+- **Transferred, not completed:** **P1 ai** 5.1k Show rebase diagnostic results consistently in both
   gallery pages. Put library-wide calibration and run-quality summaries in
   the People Gallery; repeat concise per-person consistency/quality indicators
   in both the overview card and Review heading. In Review, expose separately
@@ -1098,11 +1195,11 @@ This phase retains naming, matching evidence and transaction behavior.
   different measures distinct and do not imply that similarity proves
   identity. Consume the run's saved CSV/Markdown evidence rather than
   recomputing diagnostics when a page opens.
-- [ ] **P1 ai** 5.2 Add a read-only preview for threshold-assigned family
+- **Transferred, not completed:** **P1 ai** 5.2 Add a read-only preview for threshold-assigned family
   names. Display current `z_` name, proposed first/last name, reason, family
   members, collisions, and any source-history mismatch. Do not rename from
   browser code or infer a relationship from the surname.
-- [ ] **P1 ai** 5.3 Reuse the existing staged person-action manifest and
+- **Transferred, not completed:** **P1 ai** 5.3 Reuse the existing staged person-action manifest and
   preview/apply/backup/undo path for approved rename and family-link changes.
   Validate stale state, collisions, fixed slot paths, and preservation of
   prior `z_` history.
@@ -1117,15 +1214,15 @@ This phase retains naming, matching evidence and transaction behavior.
   Non-cast identities with unsupported workflow/workspace references are
   refused. This does not complete 5.3: name swaps, automatic
   family naming and family-link actions remain open.
-- [ ] **P1 you** 5.4 Review the sandbox family groups and assigned names in
+- **Transferred, not completed:** **P1 you** 5.4 Review the sandbox family groups and assigned names in
   the generated preview; identify exceptions and whether the threshold is
   ready for the normal-library batch. Similar first initials are preferred
   when unique, but no name may overwrite fixed character slots or erase
   recorded `z_` history.
-- [ ] **P2 ai** 5.5 Refresh the people index, gallery, and documented
+- **Transferred, not completed:** **P2 ai** 5.5 Refresh the people index, gallery, and documented
   ComfyUI-facing references after a successful apply without changing fixed
   character-slot workflow keys.
-- [ ] **P2 ai** 5.6 Show intended card-use guidance by category in the
+- **Transferred, not completed:** **P2 ai** 5.6 Show intended card-use guidance by category in the
   gallery: Models are not the user's common/uncommon choice; Potentials are
   suitable to browse for common/uncommon; Prospects are candidates for
   broader card use. This is descriptive guidance only, not automatic card
@@ -1138,26 +1235,26 @@ approve reversible names without changing matching or workflow identity.
 
 ### Phase 6 — required clean-full production rebase
 
-- [ ] **P1 ai** 6.1 After accepted sandbox clean and incremental tests,
+- **Transferred, not completed:** **P1 ai** 6.1 After accepted sandbox clean and incremental tests,
   freeze the rules, source scope and family naming output. Build the
   production clean-rebase manifest from current production inputs while
   preserving original source path, import group, identity history, and
   before/after evidence.
-- [ ] **P1 you** 6.2 Review the complete visual preview and manifest,
+- **Transferred, not completed:** **P1 you** 6.2 Review the complete visual preview and manifest,
   including hold/review groups, automatic family names, category boundaries,
   selected/protected photos, and all exceptions. Approve the exact batch or
   return it for changes.
-- [ ] **P1 ai** 6.3 Verify a fresh external-library backup and restore
+- **Transferred, not completed:** **P1 ai** 6.3 Verify a fresh external-library backup and restore
   procedure before applying; verify every manifest hash and current source
   location immediately before moves.
-- [ ] **P1 ai** 6.4 Perform the clean-full production rebuild of the approved
+- **Transferred, not completed:** **P1 ai** 6.4 Perform the clean-full production rebuild of the approved
   scope using the same engine, cast-only initial references, flattened
   candidates and approved manifest through a recoverable production adapter.
   Do not apply sandbox paths to production or substitute category-only moves.
   Log each change and verify
   resulting folder counts, identity history, catalogue references, Review
   routing, and undo.
-- [ ] **P1 you** 6.5 Inspect the refreshed gallery and selected ComfyUI
+- **Transferred, not completed:** **P1 you** 6.5 Inspect the refreshed gallery and selected ComfyUI
   references; report any false assignment or missing history before the next
   batch is considered.
 
@@ -1168,24 +1265,24 @@ for subsequent batches; no unapproved photo moves are applied.
 
 ### Phase 7 — prevent recurrence and close obsolete paths
 
-- [ ] **P1 ai** 7.1 Run labelled future-batch tests through the actual
+- **Transferred, not completed:** **P1 ai** 7.1 Run labelled future-batch tests through the actual
   `bin\library.cmd` and `bin\likeness.cmd` entry points, covering Gallery,
   Review, Various, Artists, old Model, archives, Prospect, and Potential
   boundaries. Exercise ordinary processing separately from sandbox rebase
   mode and reject sandbox reset flags against production paths.
-- [ ] **P1 ai** 7.2 Ensure generated reports explain destination and
+- **Transferred, not completed:** **P1 ai** 7.2 Ensure generated reports explain destination and
   evidence, Review receives only selected uncertain candidates, and
   unmatched identities remain manageable rather than proliferating from
   within-batch ordering.
-- [ ] **P2 ai** 7.3 Remove or retire only features approved by the sunset
+- **Transferred, not completed:** **P2 ai** 7.3 Remove or retire only features approved by the sunset
   matrix after replacement behavior, launcher compatibility, data migration,
   and focused tests are complete. Delete obsolete tests only with the feature
   and its callers; retain regression coverage for excluded sources.
-- [ ] **P1 ai** 7.4 Update the likeness guide, affected runbooks, active plan
+- **Transferred, not completed:** **P1 ai** 7.4 Update the likeness guide, affected runbooks, active plan
   checklists, `docs/STATUS.md`, and generated `docs/todo.md`. Record completed,
   transferred, superseded, and independent tasks without closing unrelated
   plans.
-- [ ] **P1 either** 7.5 Resume ordinary photo ingest only after the user
+- **Transferred, not completed:** **P1 either** 7.5 Resume ordinary photo ingest only after the user
   approves the acceptance results and the guarded incoming path is verified.
 
 **Exit:** future imports use the validated flow; retired behavior is gone
@@ -1213,10 +1310,10 @@ categories while building or testing the new Model destination.
 - Finish only existing likeness items that are genuine prerequisites. The
   independent chest-crop sample, manual prompt review, artist art review,
   game/MVP work, and unrelated workflow tasks can continue separately.
-- The [art-tools structure plan](2026-10-20-art-tools-structure.md) remains
+- The [art-tools structure plan](../2026-10-20-art-tools-structure.md) remains
   the home for broad package refactoring. This plan permits only targeted,
   behavior-preserving modularization required to simplify matching safely.
-- The [tooling-debt plan](2026-10-12-tooling-debt.md) retains independent
+- The [tooling-debt plan](../2026-10-12-tooling-debt.md) retains independent
   readiness/status work. Any likeness-specific threshold, source-scope, or
   sunset task transferred here must be marked there rather than duplicated.
 - The Oct 19 library plans stay active for independent outstanding work;
@@ -1295,6 +1392,10 @@ Open numerical calibration and naming decisions remain explicit review gates,
 not excuses for duplicate engines or for suppressing sandbox experimentation.
 The documentation reconciliation is complete; the implementation is not.
 
+## Preserved original discussions (verbatim)
+
+<!-- markdownlint-disable MD013 -->
+````text
 ## Raw user direction (Oct 21)
 
 Ok - so is this a working plan or what needs to be done to define all the details behind what we need to do - I'll go with Option A and the sub-option as my choice and want to be able to get to work on this tomorrow - which means wrapping up any of the "we must do this first" loose ends from existing work before jumping into the full body of work.
@@ -1430,3 +1531,5 @@ One more thing to clarify - the sandbox is just the test bed, but a clean-full r
 I think the policy is misguided in an attempt to use the .55 rule to trying to protect the Angels and Sisters from direct assignment and dropping them should have allowed them to cluster and/or go into review for that angel.  I did not ever think it was applied to formation of new clusters where the did not match.  It feels like we have 2 engines right now vs. a more unified system.  Wow - the work earlier today was supposed to reconcile all of this - but the clustering at 0.55 I think is conflated with other rules and now we're in a bad state due to this work and someone being ultra conservative about the sprawl that was happening.  So we need to come up with a proper approach and figure out what makes the most sense using rationale numbers and ensure that our tiered system is working and that we don't have conflicting rules engines or at least if they differ - it's a very clear reason.
 
 If you can reconcile and update the plans with proper approach that seems to unify things across the engines and doesn't conflate rules with each other that would be great.  I can't undrestand how we ended up in this spot.
+````
+<!-- markdownlint-enable MD013 -->

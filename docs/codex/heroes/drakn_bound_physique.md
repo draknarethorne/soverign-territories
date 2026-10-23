@@ -300,4 +300,4 @@ are welcome here, because the men are fighters (the limit that applies to the wo
 | Malakor | Orc, Assassin | Dense yet agile, corded muscle, bowed legs | A coiled stalker: orcish mass stripped down to speed |
 
 The same mixture (lean, heroic, heavy by element and role) is used for the Angel Primes men; see
-[angel_primes_physique.md](./angel_primes_physique.md). The sisters' rationale is in [drakn_sisters_physique.md](./drakn_sisters_physique.md).
+[angel_primes_physique.md](angel_primes_physique.md). The sisters' rationale is in [drakn_sisters_physique.md](drakn_sisters_physique.md).

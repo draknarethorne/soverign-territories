@@ -91,18 +91,43 @@ def decision(root, folder, person_id, person, cfg):
         "type": ACTION, "personId": person_id, "personFolder": folder,
         "expectedDisplayName": person["displayName"], "expectedTreeSha256": digest,
         "expectedRecordedName": people.name_of(path) or person["displayName"],
+        "expectedProtected": bool(person.get("protected", False)),
     }, ""
 
 
-def validate(document, root, catalog, cfg):
+def _check_name_available(root, catalog, name, excluded_ids):
+    import people
+
+    excluded = {_folder(root, catalog["people"][pid]["folder"]) for pid in excluded_ids}
+    for other_id, other in catalog["people"].items():
+        if other_id not in excluded_ids and (
+            other["displayName"].casefold() == name.casefold()
+            or other["folder"].split("/")[-1].casefold() == name.casefold()
+        ):
+            raise ValueError("rename collides with an existing catalogue identity; confirm a standalone name swap in Review")
+    for category in (*CAST_CATEGORIES, *CATEGORIES):
+        parent = pathlib.Path(root) / category
+        if parent.is_dir() and any(
+            path not in excluded and (
+                path.name.casefold() == name.casefold()
+                or (path.is_dir() and (people.name_of(path) or "").casefold() == name.casefold())
+            )
+            for path in parent.iterdir()
+        ):
+            raise ValueError("rename collides with an existing library entry")
+
+
+def validate(document, root, catalog, cfg, *, _participants=()):
     import people
 
     rows = [row for row in document["actions"] if row["type"] == ACTION]
     if not rows:
         return [], []
     if len(document["actions"]) != 1:
-        return ["rename must be applied alone; stage swaps and other actions separately"], []
+        return ["rename or name swap must be applied alone; stage other actions separately"], []
     action = rows[0]
+    if "swapWith" in action:
+        return _validate_swap(document, root, catalog, cfg)
     try:
         person = catalog["people"].get(action["personId"])
         if (
@@ -124,22 +149,7 @@ def validate(document, root, catalog, cfg):
             recorded_name if cast else source.name
         ).casefold():
             raise ValueError("use a new Windows-safe identity name; case-only renames are not supported")
-        for other_id, other in catalog["people"].items():
-            if other_id != action["personId"] and (
-                other["displayName"].casefold() == name.casefold()
-                or other["folder"].split("/")[-1].casefold() == name.casefold()
-            ):
-                raise ValueError("rename collides with an existing catalogue identity; swaps are not supported")
-        for category in (*CAST_CATEGORIES, *CATEGORIES):
-            parent = pathlib.Path(root) / category
-            if parent.is_dir() and any(
-                p != source and (
-                    p.name.casefold() == name.casefold()
-                    or (p.is_dir() and (people.name_of(p) or "").casefold() == name.casefold())
-                )
-                for p in parent.iterdir()
-            ):
-                raise ValueError("rename collides with an existing library entry")
+        _check_name_available(root, catalog, name, _participants or (action["personId"],))
         destination = source if cast else _folder(root, f"{source.parent.name}/{name}")
         _unreferenced(source, cfg)
         if tree_hash(source) != action["expectedTreeSha256"]:
@@ -159,7 +169,10 @@ def validate(document, root, catalog, cfg):
             history += "\n"
         new_bytes = (
             f"name: {name}\n" + history
-            + f"{datetime.date.today().isoformat()} renamed from {recorded_name} ({person['folder']})\n"
+            + f"{datetime.date.today().isoformat()} "
+            + (f"name swap with {_participants[1 - _participants.index(action['personId'])]}: "
+               if _participants else "")
+            + f"renamed from {recorded_name} ({person['folder']})\n"
         ).encode("utf-8")
         new_path = f"gallery/z_{people.slug(name)}.txt"
         new_file = source / pathlib.Path(new_path)
@@ -199,6 +212,11 @@ def catalog_action(catalog, plan, batch):
         "renameState": copy.deepcopy(plan["rename"]),
     }
     catalog["actions"].append(record)
+    if plan.get("partner"):
+        partner = catalog_action(catalog, plan["partner"], batch)
+        catalog["actions"].pop()
+        record["swapPartner"] = partner
+        record["reason"] = "explicit confirmed two-person name swap; both identities preserved"
     return record
 
 
@@ -225,6 +243,8 @@ def _write_history(folder, state, reverse):
 
 def change_files(plan, *, reverse=False):
     """Rename and change history, restoring the source if any step fails."""
+    if plan.get("partner"):
+        return _change_swap(plan, reverse=reverse)
     source, destination = plan["source"], plan["destination"]
     state = plan["rename"]
     if reverse:
@@ -252,16 +272,31 @@ def change_files(plan, *, reverse=False):
         raise
 
 
-def undo_plan(catalog, action, root, cfg):
+def undo_plan(catalog, action, root, cfg, *, _participants=()):
+    if action.get("swapPartner"):
+        partner = action["swapPartner"]
+        ids = (action["personId"], partner["personId"])
+        if ids[0] == ids[1] or action.get("batchId") != partner.get("batchId"):
+            raise ValueError("swap history has ambiguous identity or batch ownership")
+        first = undo_plan(catalog, {k: v for k, v in action.items() if k != "swapPartner"},
+                          root, cfg, _participants=ids)
+        first["partner"] = undo_plan(catalog, partner, root, cfg, _participants=ids)
+        if swap_staging(first).exists():
+            raise ValueError("swap recovery staging already exists; inspect recovery before undo")
+        return first
     person = catalog["people"].get(action["personId"])
     if person != action["afterState"]["person"]:
         raise ValueError("renamed identity catalogue state changed; cannot undo")
     source = _folder(root, action["source"])
     destination = _folder(root, action["destination"])
-    if (source != destination and source.exists()) or not destination.is_dir():
+    occupied_by_partner = any(
+        _folder(root, catalog["people"][pid]["folder"]) == source
+        for pid in _participants if pid != action["personId"]
+    )
+    if (source != destination and source.exists() and not occupied_by_partner) or not destination.is_dir():
         raise ValueError("rename undo destination is occupied or renamed folder is missing")
     if any(
-        other_id != action["personId"] and (
+        other_id != action["personId"] and other_id not in _participants and (
             other["folder"].casefold() == action["source"].casefold()
             or other["displayName"].casefold() == action["beforeState"]["person"]["displayName"].casefold()
         )
@@ -269,9 +304,128 @@ def undo_plan(catalog, action, root, cfg):
     ):
         raise ValueError("rename undo collides with another catalogue identity")
     _unreferenced(destination, cfg)
+    if _participants:
+        import people
+
+        old_bytes = base64.b64decode(action["renameState"]["oldHistoryBase64"], validate=True)
+        lines = [line.rstrip() for line in old_bytes.decode("utf-8").splitlines() if line.strip()]
+        old_path = action["renameState"]["oldHistoryPath"]
+        name = action["beforeState"]["person"]["displayName"]
+        if old_path:
+            name = people.unslug(people.Z_FILE.match(pathlib.PurePosixPath(old_path).name)[1])
+        if lines and lines[0].lower().startswith("name:"):
+            name = lines[0][5:].strip() or name
+        _check_name_available(root, catalog, name, _participants)
     if tree_hash(destination) != action["renameState"]["afterTreeSha256"]:
         raise ValueError("renamed identity files changed; cannot undo")
     return {
-        "type": ACTION, "source": source, "destination": destination,
+        "type": ACTION, "personId": action["personId"], "source": source, "destination": destination,
         "rename": action["renameState"],
     }
+
+
+def restore_catalog(catalog, record):
+    catalog["people"][record["personId"]] = copy.deepcopy(record["beforeState"]["person"])
+    if record.get("swapPartner"):
+        restore_catalog(catalog, record["swapPartner"])
+
+
+def _validate_swap(document, root, catalog, cfg):
+    action = document["actions"][0]
+    try:
+        if action.get("swapConfirmed") is not True:
+            raise ValueError("both identities and effects must be explicitly confirmed")
+        partner = action["swapWith"]
+        ids = (action["personId"], partner["personId"])
+        if ids[0] == ids[1]:
+            raise ValueError("swap requires two distinct identities")
+        for row in (action, partner):
+            person = catalog["people"].get(row["personId"], {})
+            if ("expectedProtected" not in row
+                    or bool(person.get("protected", False)) != row["expectedProtected"]):
+                raise ValueError("identity protection changed; refresh and confirm both identities")
+        clean = {k: v for k, v in action.items() if k not in ("swapWith", "swapConfirmed")}
+        if action["newName"] != partner["expectedRecordedName"]:
+            raise ValueError("swap target name is stale")
+        second = {**partner, "type": ACTION, "newName": action["expectedRecordedName"]}
+        plans = []
+        for row in (clean, second):
+            errors, result = validate({**document, "actions": [row]}, root, catalog, cfg,
+                                      _participants=ids)
+            if errors:
+                raise ValueError("; ".join(errors))
+            plans.extend(result)
+        destinations = [plan["destination"] for plan in plans]
+        if len({str(path).casefold() for path in destinations}) != 2:
+            raise ValueError("swap would collide with a fixed cast slot")
+        sources = {plan["source"] for plan in plans}
+        for plan in plans:
+            if plan["destination"].exists() and plan["destination"] not in sources:
+                raise ValueError("swap destination is occupied by a third party")
+        plans[0]["partner"] = plans[1]
+        if swap_staging(plans[0]).exists():
+            raise ValueError("swap recovery staging already exists; inspect recovery before applying")
+        return [], [plans[0]]
+    except (KeyError, OSError, ValueError) as exc:
+        return [f"name swap: {exc}"], []
+
+
+def swap_staging(plan):
+    members = (plan, plan["partner"])
+    payload = [
+        [str(member["source"]), str(member["destination"]), member["rename"]["beforeTreeSha256"]]
+        for member in members
+    ]
+    token = hashlib.sha256(json.dumps(payload, separators=(",", ":")).encode()).hexdigest()[:24]
+    return plan["source"].parent.parent / (".name-swap-" + token)
+
+
+def _change_swap(plan, *, reverse=False):
+    """Evacuate both trees privately before crossing same-category paths."""
+    members = (plan, plan["partner"])
+    stage = swap_staging(plan)
+    moves = []
+    for member in members:
+        source = member["destination"] if reverse else member["source"]
+        destination = member["source"] if reverse else member["destination"]
+        expected = member["rename"]["afterTreeSha256" if reverse else "beforeTreeSha256"]
+        if tree_hash(source) != expected:
+            raise ValueError("swap identity files changed; no swap applied")
+        moves.append((source, destination, stage / str(len(moves)), member["rename"]))
+    sources = {item[0] for item in moves}
+    if any(destination.exists() and destination not in sources for _, destination, _, _ in moves):
+        raise ValueError("swap destination appeared; no swap applied")
+    stage.mkdir()
+    evacuated, installed, histories = [], [], []
+    try:
+        for source, destination, private, state in moves:
+            source.rename(private)
+            evacuated.append((source, destination, private, state))
+        for source, destination, private, state in moves:
+            histories.append((private, state))
+            _write_history(private, state, reverse)
+            digest = tree_hash(private)
+            if reverse and digest != state["beforeTreeSha256"]:
+                raise ValueError("swap did not restore original inventory")
+            if not reverse:
+                state["afterTreeSha256"] = digest
+        for source, destination, private, state in moves:
+            private.rename(destination)
+            installed.append((destination, private))
+    except (OSError, ValueError) as exc:
+        try:
+            for destination, private in reversed(installed):
+                destination.rename(private)
+            for private, state in reversed(histories):
+                _write_history(private, state, not reverse)
+            for source, _, private, _ in reversed(evacuated):
+                private.rename(source)
+            for source, _, _, state in evacuated:
+                expected = state["afterTreeSha256" if reverse else "beforeTreeSha256"]
+                if tree_hash(source) != expected:
+                    raise OSError(f"swap rollback inventory changed: {source}")
+            stage.rmdir()
+        except (OSError, ValueError) as rollback:
+            raise OSError(f"swap failed ({exc}); rollback failed ({rollback}); recovery staging: {stage}") from exc
+        raise
+    stage.rmdir()

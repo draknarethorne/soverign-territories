@@ -297,7 +297,7 @@ The text of each field is the identity JSON (`data/art/heroes/drakn-sisters/<nam
 The ten Drakn sisters are one bloodline (the Thorne family) and the Transcendent top of the set, so they share one silhouette on purpose:
 a narrow waist, shapely hips and very long legs under the family bust (section 1). What makes each sister herself is her race, her
 phenotype (hair, eyes, skin, metals) and one of three build presets, not a different body plan. The Angel Primes are not related, so their
-builds vary much more (see [angel_primes_physique.md](./angel_primes_physique.md)). The sisters' bust and physique text is applied at the
+builds vary much more (see [angel_primes_physique.md](angel_primes_physique.md)). The sisters' bust and physique text is applied at the
 2_Bare stage; the 1_Prime stage uses the standard figure so the original photo stays recognisable.
 
 | Preset | Sisters | Reads as |

@@ -1,9 +1,9 @@
 # Angel Primes Roster: 11 Women, 11 Men (AP-001 to AP-022)
 
-The Angel Primes are the angelic counterpart to the Drakn heroes of [sovereign_dawn_codex.md](./sovereign_dawn_codex.md).
+The Angel Primes are the angelic counterpart to the Drakn heroes of [sovereign_dawn_codex.md](sovereign_dawn_codex.md).
 This page is a roster for people, not the codex: the card data and the art identities in
-[data/art/heroes/angel-primes/](../../../data/art/heroes/angel-primes/) win over anything written here.
-Build rationale is in [angel_primes_physique.md](./angel_primes_physique.md).
+[data/art/heroes/angel-primes/](../../../data/art/heroes/angel-primes) win over anything written here.
+Build rationale is in [angel_primes_physique.md](angel_primes_physique.md).
 
 Series IDs: Sovereign Dawn uses `SD-###`. The angels are planned as an exclusive `AP-###` series (a later release).
 The women are AP-001 to AP-011 and the men AP-012 to AP-022, each group in alignment order starting with the Neutral herald.
@@ -23,7 +23,7 @@ Neutral is the eleventh element slot. The Drakn sisters, the Drakn Bound heroes 
 so Neutral stays free for the cards that belong to no element: tactics, items and equipment, utility and the lower-tier cards, and
 Angelica and Angelo. The intent is that the herald pair are heroes any deck can play, whatever elements it is built on. How a Neutral
 card is allowed into a deck is a rule for the deck and combat docs and is not written there yet (see the open items). The same idea is
-recorded in [sovereign_dawn_codex.md](./sovereign_dawn_codex.md). Their Prime look is kept from the original test-bed outfit: Angelica's iridescent
+recorded in [sovereign_dawn_codex.md](sovereign_dawn_codex.md). Their Prime look is kept from the original test-bed outfit: Angelica's iridescent
 pastel colour-blocked bikini (soft rose, sky blue, mint, lilac) and Angelo's matching pearlescent trunks, a lighter sheen on a male. Their hair, eye
 and skin colours are fixed like the other angels (the colours were free to follow the photo before).
 
@@ -146,7 +146,7 @@ Each angel has a palette (primary, accents, metal, magic, gem) and a fixed hair,
 `alpha/male` and `alpha/female` are the test-bed figures of the Angel Primes workspace (Alpha phase only). They have no card, no
 element and no alignment. Their hair, eyes and skin follow the reference image on purpose, so a photo or a pose can be tried
 before it becomes an angel. They carry the whole suite in both Qwen and FireRed so the two models can be compared. See
-[data/art/heroes/angel-primes/](../../../data/art/heroes/angel-primes/) and the art README for how they are built.
+[data/art/heroes/angel-primes/](../../../data/art/heroes/angel-primes) and the art README for how they are built.
 
 ## Open items
 

@@ -2,6 +2,35 @@
 
 **Status:** active (agreed Oct 9; decisions D1 to D10 are answered in the table below; see "Today at a glance" for what is built and what is left).
 Plans follow the current [planning and feedback process](README.md): file/chat feedback becomes an agreed plan, this index lists plans, and finished plans are archived.
+
+## Review and questions: 2026-10-22 16:26 -05:00
+
+Retained: source picks, candidate/final replay, optional storage/LFS,
+multi-input future work, CLI folds/forwarders, image-size and video tests.
+Historical counts below are dated snapshots, not freshly checked inventories.
+No runtime acceptance is inferred from this documentation audit.
+Ask the user which current source/pick or render test to do next; unresolved
+CLI folds remain 6.3b/6.5, supported by the proposed CLI inventory.
+New prompt shape is owned by the
+[manual migration plan](2026-10-22-manual-prompts-to-art-library.md), not by an
+obligatory old Prime/Bare comparison. Existing final inputs remain explicit.
+
+### Inputs transferred from the Oct 12 Prime plan
+
+- [ ] **P1 you** I1 Recheck current Angel Primes inputs/renders after source
+  changes, resolving only currently missing Prime outputs. Old seven-name
+  lists are historical. The four explicit Oct 19 cast replacements remain
+  user choices, not an instruction to reapply them. Pick/re-render only when
+  current status shows it is needed, then pull the chosen input. Share the
+  current input/status inventory with existing 5b; don't execute it twice.
+- [ ] **P1 you** I2 Replace male Angel / `Male` placeholder photos with
+  chosen originals, normalize and explicitly select their workflow inputs.
+- [ ] **P2 either** I3 Inventory the two old installed-only Drakness
+  `X_Pose` MiniMax videos and Sovereign Dawn sample workflows with missing
+  inputs. Ask whether to pull videos as curated or retire recoverably;
+  resolve sample inputs. Separately decide whether `refresh` should include
+  originals normalization; don't change defaults without approval.
+
 The raw brain-dump this came from is kept word for word at the end.
 
 ## Today at a glance (Oct 9, updated as we go)

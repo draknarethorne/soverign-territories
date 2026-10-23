@@ -2,6 +2,18 @@
 
 **Status:** active (built and run; crop review received; follow-ups open)
 
+## Review and questions: 2026-10-22 16:26 -05:00
+
+Retained independent A3 crosscheck review, A4 overlay/crop improvements and
+A5 optional detection/blending decision. Ask whether the user wants the
+optional cleanup comparison before adding dependencies or modifying photos.
+Tooling D5 owns a reusable person detector; A4 owns artifact-specific crop
+acceptance, not a duplicate detector implementation.
+The Oct 12 `0.55` automatic cast-join row and second-run idempotence claim below
+describe that historical implementation, not today's permission or acceptance.
+The [current contract](../art/likeness-processing-contract.md) supersedes it:
+cast Gallery protection is separate from grouping and incoming Review.
+
 What you asked for today (your notes are at the end, word for word) and what was done. The commands are in [../art/likeness.md](../art/likeness.md), the runbook in
 [../art/original-photos.md](../art/original-photos.md).
 
@@ -18,12 +30,12 @@ What you asked for today (your notes are at the end, word for word) and what was
 | Put `_junk` back and see where it lands | `likeness junk --reset` (and `library.cmd --retry-junk`); the 37 prospect and 27 artist photos went through again, 28 are junk again (bars over her head) |
 | Pull a group of prospects back and re-sort | `likeness pullback NAME... / --small N / --all`, then the routine; `sort --assign` for a looser second look |
 | One clear, repeatable ingest process | `bin\library.cmd` does it all; the runbook is in original-photos.md |
-| Clean the tmp notes, audit the docs | Every tmp note is in a plan or a doc and `tmp/` is empty; the audit is [../audits/2026-10-12-docs-audit.md](../audits/2026-10-12-docs-audit.md); the day is in [../recap/](../recap/) |
+| Clean the tmp notes, audit the docs | Every tmp note is in a plan or a doc and `tmp/` is empty; the audit is [../audits/2026-10-12-docs-audit.md](../audits/2026-10-12-docs-audit.md); the day is in [../recap/](../recap) |
 
 ## Open
 
 - [x] A1 Reviewed the cropped photos: excellent for Angels, Sisters, Prospects and normal outfits; artist wings were cut and some reel overlays remain.
-A2's `_junk` review is consolidated into R11 of [the Oct 19 library plan](2026-10-19-library-rebaseline-and-frame-retirement.md); use the current post-run inventory rather than the Oct 12 count.
+A2's `_junk` review is consolidated into R11 of [the Oct 19 library plan](2026-10-22-library-upkeep.md); use the current post-run inventory rather than the Oct 12 count.
 - [ ] **P3 you** A3 Read `_reports\crosscheck.md` (look-alikes between artists, and between prospects and artists): only reported, nothing moved. Say if a pair should be handled.
 - [ ] **P3 ai** A4 Inspect remaining reel overlays (bottom/right edges and captions near the hairline) and other layouts (paused video play button, caption at the bottom). Adjust only reliably identified UI regions so wings and broad poses are preserved; keep manual or AI blending optional.
 - [ ] **P3 either** A5 Discuss optional local logo/text detection and cleanup
@@ -33,7 +45,7 @@ A2's `_junk` review is consolidated into R11 of [the Oct 19 library plan](2026-1
 
 ## Result
 
-Done Oct 12: the Artists were rebuilt from the Oct 9 backup and every good photo has a person; the routine `bin\library.cmd` crops, sorts and re-checks everything and is stable (a second run changes nothing). The day is reflected in [../recap/](../recap/).
+Done Oct 12: the Artists were rebuilt from the Oct 9 backup and every good photo has a person; the routine `bin\library.cmd` crops, sorts and re-checks everything and is stable (a second run changes nothing). The day is reflected in [../recap/](../recap).
 
 ## Raw notes: rework the Artists (Oct 12, first note)
 

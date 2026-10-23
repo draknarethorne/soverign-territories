@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """library_backup: complete snapshots and safety checks."""
 import json
+import os
 import pathlib
 import shutil
 import tempfile
 import unittest
 
-from library_backup import create_backup, verify_backup
+from library_backup import _snapshot_path, create_backup, verify_backup
 from likeness_library import metadata
 
 
@@ -35,6 +36,15 @@ class LibraryBackupTests(unittest.TestCase):
         self.assertIsNone(destination)
         self.assertFalse((self.work / "_backup" / "library-preview").exists())
 
+    def test_scoped_backup_rejects_unsafe_or_duplicate_labels(self):
+        for labels in (["../escape"], ["same", "same"], []):
+            with self.subTest(labels=labels):
+                with self.assertRaises(ValueError):
+                    create_backup(self.work, stamp="unsafe", scoped_sources=[
+                        (label, self.repo) for label in labels
+                    ])
+        self.assertFalse((self.work / "_backup" / "library-unsafe").exists())
+
     def test_snapshot_excludes_work_archive_and_prior_backups_but_copies_inputs_and_config(self):
         destination = create_backup(self.work, self.inputs, self.repo, stamp="test", apply=True)
         self.assertEqual((destination / "work-root/Various/gallery/incoming.jpg").read_bytes(), b"incoming")
@@ -53,6 +63,38 @@ class LibraryBackupTests(unittest.TestCase):
         with self.assertRaises(FileExistsError):
             create_backup(self.work, self.inputs, self.repo, stamp="same", apply=True)
         self.assertTrue((first / "manifest.json").exists())
+
+    def test_snapshot_path_is_absolute_and_idempotent(self):
+        path = _snapshot_path(self.work / "_backup" / "snapshot")
+        self.assertTrue(path.is_absolute())
+        self.assertEqual(_snapshot_path(path), path)
+        if os.name == "nt":
+            self.assertTrue(str(path).startswith("\\\\?\\"))
+        else:
+            self.assertEqual(path, (self.work / "_backup" / "snapshot").resolve())
+
+    @unittest.skipUnless(os.name == "nt", "Windows extended-length backup paths")
+    def test_nested_source_can_exceed_max_path_only_in_snapshot(self):
+        stamp = "likeness-actions-batch_" + "a" * 32
+        relative = pathlib.Path("_sandbox-state")
+        while len(str(self.work / "_backup" / f"library-{stamp}" / "work-root" / relative / "photo.jpg")) <= 280:
+            relative /= "nested-state"
+        source = self.work / relative / "photo.jpg"
+        self.assertLess(len(str(source)), 260)
+        source.parent.mkdir(parents=True)
+        source.write_bytes(b"retained sandbox evidence")
+
+        destination = create_backup(self.work, self.inputs, self.repo, stamp=stamp, apply=True)
+        target = _snapshot_path(destination) / "work-root" / relative / source.name
+        self.assertGreater(len(str(target)), 260)
+        self.assertEqual(target.read_bytes(), source.read_bytes())
+        manifest = json.loads((destination / "manifest.json").read_text(encoding="utf-8"))
+        entry = next(row for row in manifest["entries"] if row["source"] == str(source))
+        self.assertFalse(pathlib.Path(entry["backup"]).is_absolute())
+        self.assertTrue(verify_backup(destination))
+        target.write_bytes(b"changed")
+        with self.assertRaisesRegex(OSError, "size mismatch|checksum mismatch"):
+            verify_backup(destination)
 
     def test_verification_rejects_a_changed_snapshot_file(self):
         destination = create_backup(self.work, self.inputs, self.repo, stamp="verify", apply=True)

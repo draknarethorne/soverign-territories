@@ -1,7 +1,7 @@
 # Angel Primes Physique: Build Rationale
 
-Why each of the 22 Angel Primes has the build in their art identity. Companion to [angel_primes_codex.md](./angel_primes_codex.md);
-the identity JSON in [data/art/heroes/angel-primes/](../../../data/art/heroes/angel-primes/) is the source and wins over this page.
+Why each of the 22 Angel Primes has the build in their art identity. Companion to [angel_primes_codex.md](angel_primes_codex.md);
+the identity JSON in [data/art/heroes/angel-primes/](../../../data/art/heroes/angel-primes) is the source and wins over this page.
 
 ## Rules
 

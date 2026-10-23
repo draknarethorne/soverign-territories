@@ -2,6 +2,16 @@
 
 **Status:** active (approved Oct 20, 2026; incremental and risk-gated)
 
+## Review and questions: 2026-10-22 16:26 -05:00
+
+Retained independent structure plan, receiving Oct 20 self-healing H2.
+Existing package extractions are progress, not closure of the remaining
+high-coupling modules or a new behavior-change mandate.
+No blocking design question for inventory; ask before a proposed extraction
+requires visible CLI/default changes. General package/caller work belongs
+here; engine E11 owns engine sunset/behavior acceptance, not duplicate moves.
+Keep a bounded shared extraction list so one change is not counted twice.
+
 ## Purpose
 
 Gradually organize `tools/art/` into discoverable domain packages as work is

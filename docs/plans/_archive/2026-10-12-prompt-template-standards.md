@@ -1,6 +1,45 @@
 # 2026-10-12: prompt template standards
 
-**Status:** active (drafted from your note; the first step needs your approval of D2 and D6 in the Prime plan)
+**Status:** dropped (superseded; not completed)
+
+## Supersession record
+
+**Superseded:** 2026-10-22T16:34:08-05:00 (local offset recorded).
+
+**Reason:** the Oct 22 full-plan reconciliation separates enduring rules,
+dated evidence and focused execution owners. Later approved direction
+supersedes conflicting older sequencing/limits; remaining work is not done.
+
+**Context:** [live reference](../../art/prompt-migration-context.md), [full reconciliation audit](../../audits/2026-10-22-plan-feedback-audit.md).
+Original user wording and historical evidence are retained below.
+The source checklist is historical; formerly open items are explicitly
+marked transferred, not checked off as implemented.
+
+## Unfinished work and successors
+
+| Source item | Live owner | Destination / disposition |
+| --- | --- | --- |
+| T0 | [2026-10-22-manual-prompts-to-art-library.md](../2026-10-22-manual-prompts-to-art-library.md) | P1/P5/P6 |
+| S0 | [2026-10-22-manual-prompts-to-art-library.md](../2026-10-22-manual-prompts-to-art-library.md) | P2/P5/P6 |
+| S1 | [2026-10-22-manual-prompts-to-art-library.md](../2026-10-22-manual-prompts-to-art-library.md) | P7 |
+| S2 | [2026-10-22-manual-prompts-to-art-library.md](../2026-10-22-manual-prompts-to-art-library.md) | P3/P7 |
+| S3 | [2026-10-22-manual-prompts-to-art-library.md](../2026-10-22-manual-prompts-to-art-library.md) | P6/P7 |
+| S4 | [2026-10-22-manual-prompts-to-art-library.md](../2026-10-22-manual-prompts-to-art-library.md) | P5/P7 |
+| S5 | [2026-10-22-manual-prompts-to-art-library.md](../2026-10-22-manual-prompts-to-art-library.md) | P3 |
+| S6 | [2026-10-22-manual-prompts-to-art-library.md](../2026-10-22-manual-prompts-to-art-library.md) | P3 |
+| S7 | [2026-10-22-manual-prompts-to-art-library.md](../2026-10-22-manual-prompts-to-art-library.md) | P6 |
+| S8 | [2026-10-22-manual-prompts-to-art-library.md](../2026-10-22-manual-prompts-to-art-library.md) | P7 |
+| S9 | [2026-10-22-manual-prompts-to-art-library.md](../2026-10-22-manual-prompts-to-art-library.md) | P7 |
+
+## Result of reconciliation
+
+Retired as an execution owner after task and context transfer. Archival
+does not assert implementation, render approval, convergence or production
+acceptance. Live owners above retain the remaining gates and questions.
+
+## Original source record
+
+**Original status:** active (drafted from your note; the first step needs your approval of D2 and D6 in the Prime plan)
 
 Before you regenerate the Primes for all sisters and angels, every prompt template should follow the same standard: the format and the critical-to-know items up front, then a body that is clearly structured and puts the key items first.
 This plan is the follow-up to D6 and T9 of [2026-10-12-prime-prompts-frames-and-inputs.md](2026-10-12-prime-prompts-frames-and-inputs.md) (the canonical paragraph order), widened into a written standard that new templates follow too.
@@ -117,18 +156,22 @@ review Angelica's Qwen and FireRed renders before applying it to other heroes.
 
 ## Steps
 
-- [ ] **P1 you** T0 Finish the current Angelica comparisons; save candidate prompt refinements and outputs in `zz_Shots`. Track workflow, engine, input image, seed/settings where available, and results for Prime, Bare Figure vs Bare, BareBase and 2b.
-- [ ] **P1 you** S0 Approve or change the Prime v2 structure and the canonical order (D2 and D6 of the Prime plan, T2 and T9 there). This unblocks everything below.
-- [ ] **P2 ai** S1 After S0: write `docs/art/prompt-template-standards.md` from the topics above and the lessons in the Prime plan; link it from `prompt-pattern.md` and `docs/README.md`.
-- [ ] **P3 ai** S2 After T0 and S1: audit every template in `data/art/_templates` and `workflows/_templates` against the agreed standard. Include Bare eye/makeup inheritance and a source-to-output review of all 44 hero skin-tone descriptions. Report first, no edits.
-- [ ] **P2 you** S3 Read the audit and mark the templates to bring in line (all, or family by family).
-- [ ] **P2 either** S4 Work in small batches: change one section or family, regenerate only affected outputs, and verify unrelated outputs did not change.
-- [ ] **P2 either** S5 After T0, compare selected `female_anatomy.txt` terms with the relevant JSON inputs and generated prompts for bust, pelvic, body, makeup and skin. Report mappings and possible simplifications; do not edit data.
-- [ ] **P3 either** S6 Decide from that audit whether to create a curated `docs/art/` vocabulary reference. If useful, write only the reviewed reusable terms and explain how they map to JSON fields; keep the external source non-canonical.
-- [ ] **P2 you** S7 Approve each tested prompt/data batch before it is described as approved or rolled out to other heroes/templates; do not commit prompt-standard changes as approved before this gate.
-- [ ] **P2 ai** S8 After batch approval: complete the chosen template work, checking by bytes that unaffected outputs did not change; regenerate, run `make --engine both`, and validators.
-- [ ] **P3 ai** S9 Add a recurring check: when a template is added, run the audit against the standard (a validator rule or a line in the checklist of `docs/art/tutorial-art.md`).
+- **Transferred, not completed:** **P1 you** T0 Finish the current Angelica comparisons; save candidate prompt refinements and outputs in `zz_Shots`. Track workflow, engine, input image, seed/settings where available, and results for Prime, Bare Figure vs Bare, BareBase and 2b.
+- **Transferred, not completed:** **P1 you** S0 Approve or change the Prime v2 structure and the canonical order (D2 and D6 of the Prime plan, T2 and T9 there). This unblocks everything below.
+- **Transferred, not completed:** **P2 ai** S1 After S0: write `docs/art/prompt-template-standards.md` from the topics above and the lessons in the Prime plan; link it from `prompt-pattern.md` and `docs/README.md`.
+- **Transferred, not completed:** **P3 ai** S2 After T0 and S1: audit every template in `data/art/_templates` and `workflows/_templates` against the agreed standard. Include Bare eye/makeup inheritance and a source-to-output review of all 44 hero skin-tone descriptions. Report first, no edits.
+- **Transferred, not completed:** **P2 you** S3 Read the audit and mark the templates to bring in line (all, or family by family).
+- **Transferred, not completed:** **P2 either** S4 Work in small batches: change one section or family, regenerate only affected outputs, and verify unrelated outputs did not change.
+- **Transferred, not completed:** **P2 either** S5 After T0, compare selected `female_anatomy.txt` terms with the relevant JSON inputs and generated prompts for bust, pelvic, body, makeup and skin. Report mappings and possible simplifications; do not edit data.
+- **Transferred, not completed:** **P3 either** S6 Decide from that audit whether to create a curated `docs/art/` vocabulary reference. If useful, write only the reviewed reusable terms and explain how they map to JSON fields; keep the external source non-canonical.
+- **Transferred, not completed:** **P2 you** S7 Approve each tested prompt/data batch before it is described as approved or rolled out to other heroes/templates; do not commit prompt-standard changes as approved before this gate.
+- **Transferred, not completed:** **P2 ai** S8 After batch approval: complete the chosen template work, checking by bytes that unaffected outputs did not change; regenerate, run `make --engine both`, and validators.
+- **Transferred, not completed:** **P3 ai** S9 Add a recurring check: when a template is added, run the audit against the standard (a validator rule or a line in the checklist of `docs/art/tutorial-art.md`).
 
+## Preserved original discussions (verbatim)
+
+<!-- markdownlint-disable MD013 -->
+````text
 ## Raw notes: prompt structure (Oct 12)
 
 Your words, kept as written (only wrapped).
@@ -182,3 +225,5 @@ within docs/art so we keep it as a reference - and we can audit against the exis
 if we can't simplify some of our tags (if we can use this more concise approach).  It incorporates all high-end
 fashion and might be useable in many cases in our data/art files.  If the audit is too much to do right now - then
 we can just propose we do that audit later on so we can move onto another topic/thread I need to work on.
+````
+<!-- markdownlint-enable MD013 -->

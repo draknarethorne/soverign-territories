@@ -2,14 +2,26 @@
 
 **Status:** active (what the day showed about our tools; none of it blocks the photo work)
 
-Found while building and running the artists reset, the crop and the routine, written up in [../recap/2026-10-12-1700-recap.md](../recap/2026-10-12-1700-recap.md). Each box is small and independent.
+## Review and questions: 2026-10-22 16:26 -05:00
+
+Retained independent diagnostics, hygiene, atomic writes, line endings,
+suspended-process investigation and readiness/quality evidence.
+Ask D10 ranking acceptance from actual current pages; don't reapply old cast
+choices or assume photo count measures pose diversity. D11 owns recoverable
+false-identity deactivation/archive design, distinct from person retirement
+returning photos to Various in manual actions A2.
+Structure owns package moves; engine E3/E6 owns settings/calibration; manual
+actions own individual-photo handling. D2/D3/D12 are transfers, not old work
+to reimplement. Historical counts and line counts below are dated evidence.
+
+Found while building and running the artists reset, the crop and the routine, written up in [../recap/2026-10-12-1722-recap.md](../recap/2026-10-12-1722-recap.md). Each box is small and independent.
 
 ## Steps
 
 - [ ] **P2 ai** D1 `likeness status`: for every root and every artist, what is left loose and why (no usable face, a second person, an animal, bars over her head, held for clean-up), plus the pool, the review folders and `_junk`. The question "why are there still photos in this gallery" took a diagnostic script today; it should be one command.
-- [x] **P2 ai** D2 Moved to incremental, behavior-preserving modularization in Phase H of the [self-healing likeness plan](2026-10-20-likeness-library-self-healing.md); keep the existing tests as a behavior contract.
-- [x] **P2 ai** D3 Moved to the settings inventory and action-specific calibration in Phase H of the [self-healing likeness plan](2026-10-20-likeness-library-self-healing.md). Do not change production thresholds without measured results and a documented decision.
-- [ ] **P2 ai** D4 `bin\day-close.cmd`: the day's hygiene as one read-only check (tmp empty, every plan has a status and tagged boxes, `todo.md` is current, lint, tests, validators), so it is a command and not a memory.
+- [x] **P2 ai** D2 Transferred, not implemented by this checkbox: behavior-preserving modularization belongs to the [structure plan](2026-10-20-art-tools-structure.md), including former self-healing H2. Keep existing tests as the behavior contract.
+- [x] **P2 ai** D3 Transferred: one effective settings inventory and action-specific calibration belong to [engine E3/E6](2026-10-22-likeness-engine-acceptance.md). Do not change production thresholds without measured results and a documented decision.
+- [ ] **P2 ai** D4 `bin\day-close.cmd`: the day's hygiene as one read-only check (feedback coverage, plan status/index consistency, tagged tasks, explicit transfer owners, current queue, lint, tests and validators). Flag competing owners for review; never auto-archive a plan, clear notes or require an empty feedback/tmp directory.
 - [ ] **P3 ai** D5 A person detector for `crop` instead of the face box widened to the sides (wings, a wide stance and a low head are guesses today), and the other reel layouts (a paused video with a play button, a caption at the bottom). See also A4 in the artists plan.
 - [ ] **P3 ai** D6 Write every file the tools change whole and swap it in (a temporary name, then a rename), and log each change as it is made, as `crop` now does: scaled copies, headshots, `workspaces.json` writes and the move log. A killed process must never leave half a file or an unlogged change.
 - [ ] **P3 ai** D7 One line-ending rule in `.gitattributes`: the repo mixes CRLF and LF files, which turns a one-line edit into a whole-file diff and git warns on every command.
@@ -18,11 +30,11 @@ Found while building and running the artists reset, the crop and the routine, wr
 - [ ] **P2 you** D10 Review the refreshed gallery and Angel-to-Prospect rankings; confirm candidate ordering, fit-score explanation and preview-only promotion command are useful.
   The four current Angel choices were made manually: Aria Muse → Gavrielle, Ruby Eden → Camaris, Amethyst Montgomery → Ravaelle, and Sabine Vale → Nyxene. Do not revisit the superseded Dara Ives suggestion or infer that photo count establishes identity.
 - [ ] **P3 either** D11 Design a safe, archive-first way to deactivate an entire Prospect or Artist folder identified as a false face match. Keep the HTML static unless a trusted local action flow is approved; never delete source files.
-- [x] **P2 either** D12 Superseded by the [self-healing likeness plan](2026-10-20-likeness-library-self-healing.md): its staged Review/Reject-to-Various actions, versioned manifest, validated CLI, backup, audit history and undo cover individual-photo reprocessing. The plan retains the original recoverability requirement.
+- [x] **P2 either** D12 Transferred to the [manual-action owner](2026-10-22-review-actions.md): staged Review/Reject-to-Various, versioned manifest, validated CLI, backup, history and undo cover individual-photo reprocessing. Retain recoverability and actual-user scenario acceptance.
 
 **Oct 20 evidence check:** The saved Oct 12 gallery requests for up to nine photos in a three-column grid, clickable photos and folder links, descending Prospect photo-count order, short identity context, and an explanation of fit scores are implemented in `people_gallery.py`. Sisters and Angels now sort alphabetically, while Prospects and Potentials sort by photo count. The current tests and generated report cover that presentation. The remaining gallery review is D10; image-level exclusion is D12.
 
-`tools/art/likeness.py` is now 3,153 lines. The planned module split, a user-facing likeness status/settings command, a day-close launcher, and a validated person detector are not present; those tooling-debt items remain real. `.gitattributes` currently sets CRLF only for `.cmd` and `.bat`, so D7 is not a repository-wide line-ending policy.
+`tools/art/likeness.py` was 3,153 lines at that checkpoint. Shared modules have since been extracted; broader structure work remains open. The historical inspection did not find the proposed status/day-close/person-detector features; re-inventory before implementing them. Its `.gitattributes` observation was CRLF for `.cmd`/`.bat`, not a repository-wide policy.
 
 **Oct 14 update:** The people-gallery HTML now shows each prospect's closest sister-face matches and observable readiness evidence. The full library routine previews and archives Prospect folders that have no gallery or review originals; folders with review photos and `Various` are preserved. D9 remains open: pose diversity is not inferred from framing, and no combined readiness score is used yet.
 

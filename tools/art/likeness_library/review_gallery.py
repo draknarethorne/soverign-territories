@@ -438,6 +438,39 @@ function groupCards(items) {
           /[<>:"/\\\\|?*\\x00-\\x1f]/.test(input.value)||/[. ]$/.test(input.value)) {
           alert("Enter a Windows-safe name without leading/trailing whitespace."); return;
         }
+        const matches=Object.entries(peopleData).filter(([key,value])=>{
+          if(key===folder)return false;
+          const snapshot=value.personRenameAction;
+          return [key.split("/").pop(),snapshot?.expectedDisplayName,snapshot?.expectedRecordedName]
+            .some(name=>name?.toLowerCase()===input.value.toLowerCase());
+        });
+        if(matches.length>1) {
+          alert("That name is ambiguous. Resolve the duplicate identity names and refresh first.");return;
+        }
+        if(matches.length===1) {
+          const [otherFolder,otherInfo]=matches[0], other=otherInfo.personRenameAction;
+          if(!other||other.expectedRecordedName.toLowerCase()!==input.value.toLowerCase()) {
+            alert("That name belongs to a fixed slot or an unavailable identity. Refresh or resolve its rename guards first.");return;
+          }
+          const effects=(key,snapshot,newName)=>{
+            const fixed=/^(Angels|Sisters)\\//.test(key);
+            return key+" ["+snapshot.personId+"]\\n"+
+              snapshot.expectedRecordedName+" -> "+newName+"\\n"+
+              (fixed?"Fixed cast slot, folder, display label and workflow references stay unchanged.":
+                "Folder and display name become "+key.split("/")[0]+"/"+newName+".")+"\\n"+
+              "Protection stays "+(snapshot.expectedProtected?"ON":"OFF")+".";
+          };
+          if(!confirm("Confirm standalone TWO-PERSON NAME SWAP?\\n\\n"+
+            effects(folder,decision,other.expectedRecordedName)+"\\n\\n"+
+            effects(otherFolder,other,decision.expectedRecordedName)+"\\n\\n"+
+            "Both histories record this swap. Photos, stable IDs, membership and protection are preserved. "+
+            "Download only stages the decision; CLI preview/apply is separate."))return;
+          const {type,...snapshot}=other;
+          stagedPeople.set(decision.personId,{...decision,newName:other.expectedRecordedName,
+            swapWith:snapshot,swapConfirmed:true});
+          updateStagedCount();status.textContent="Name swap staged; download and preview both identities.";
+          return;
+        }
         if(info.identityProtected&&!confirm(
           folder+" is protected. Stage this explicit manual name change? Automatic protection will stay enabled."
         ))return;

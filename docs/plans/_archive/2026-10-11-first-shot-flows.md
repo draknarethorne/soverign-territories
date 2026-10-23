@@ -1,8 +1,38 @@
 # Plan: a simpler first shot (bare or neutral base), the Prime flows, and the clean-up
 
-**Status:** active (clean-up done; first-shot experiments built and waiting for your tests; Oct 11, 2026)
+**Status:** dropped (superseded; not completed)
 
-Source: your messages of Oct 11, copied word for word at the end. Continued on Oct 12 in [2026-10-12-prime-prompts-frames-and-inputs.md](2026-10-12-prime-prompts-frames-and-inputs.md) (seeds, inputs, initial frame gaps, pose-first Prime; the frame flow was retired Oct 19). Earlier steps of the same thread: [2026-10-11-tidy-junk-organise.md](2026-10-11-tidy-junk-organise.md) (Phase 4), [../art/prime-flows.md](../art/prime-flows.md), [../art/original-photos.md](../art/original-photos.md).
+## Supersession record
+
+**Superseded:** 2026-10-22T16:34:08-05:00 (local offset recorded).
+
+**Reason:** the Oct 22 full-plan reconciliation separates enduring rules,
+dated evidence and focused execution owners. Later approved direction
+supersedes conflicting older sequencing/limits; remaining work is not done.
+
+**Context:** [live reference](../../art/prompt-migration-context.md), [full reconciliation audit](../../audits/2026-10-22-plan-feedback-audit.md).
+Original user wording and historical evidence are retained below.
+The source checklist is historical; formerly open items are explicitly
+marked transferred, not checked off as implemented.
+
+## Unfinished work and successors
+
+| Source item | Live owner | Destination / disposition |
+| --- | --- | --- |
+| E6 | [2026-10-22-manual-prompts-to-art-library.md](../2026-10-22-manual-prompts-to-art-library.md) | P1/P5/P6 |
+| E7 | [2026-10-22-manual-prompts-to-art-library.md](../2026-10-22-manual-prompts-to-art-library.md) | P8/P9 |
+
+## Result of reconciliation
+
+Retired as an execution owner after task and context transfer. Archival
+does not assert implementation, render approval, convergence or production
+acceptance. Live owners above retain the remaining gates and questions.
+
+## Original source record
+
+**Original status:** active (clean-up done; first-shot experiments built and waiting for your tests; Oct 11, 2026)
+
+Source: your messages of Oct 11, copied word for word at the end. Continued on Oct 12 in [2026-10-12-prime-prompts-frames-and-inputs.md](2026-10-12-prime-prompts-frames-and-inputs.md) (seeds, inputs, initial frame gaps, pose-first Prime; the frame flow was retired Oct 19). Earlier steps of the same thread: [2026-10-11-tidy-junk-organise.md](../2026-10-11-tidy-junk-organise.md) (Phase 4), [../art/prime-flows.md](../../art/prime-flows.md), [../art/original-photos.md](../../art/original-photos.md).
 
 ## Why we are doing this
 
@@ -18,7 +48,7 @@ FireRed also often returns a cropped body when the original is not full length. 
 | `3_Footwear` (Barefoot, Heels), `1_Prime` swimsuit, `2_Studies`, `3_Layers` | validation: a swimsuit with footwear is a simple known thing to check; studies and layers show that the image still looks right when edited, before any wardrobe | optional; kept because they make a problem cheap to find |
 | `4_Wardrobe`, `5_Scenes` and on | the product | yes |
 
-The reasoning is also written in [../art/tutorial-art.md](../art/tutorial-art.md) ("Why the steps in between exist").
+The reasoning is also written in [../art/tutorial-art.md](../../art/tutorial-art.md) ("Why the steps in between exist").
 
 ## Decisions
 
@@ -67,13 +97,17 @@ Each had a FireRed twin (`..._FireRed_...`) at initial build. The Frame twins we
   `bin\sync-inputs.cmd` copies what deployed workflows load without retargeting anything; `refresh` and `refresh-firered` run it. The Prime Frame images and variants were archived on Oct 19; sync-inputs continues to serve active workflows.
 - [x] E12 `Female` (alpha/female): its photo had been moved out of the Fantasy artist folder (it is Sandalyn's review photo). Restored as `Various/gallery/various_image_7500732784539999043.jpg` and pointed to it; the Female first-shot workflows load it.
 E13's seven possibly missing chosen Prime renders are consolidated into T5 of the Oct 12 Prime plan; verify the current input state there rather than relying on this historical list.
-- [ ] **P1 you** E6 Your tests (alpha/female, Angelica, Drakness first; then the other sisters and angels). Decision F1 and F7.
-- [ ] **P1 ai** E7 After the decision: promote the winner to `1_Prime`, remove the losers, update the scaffolds, the templates README and the tutorial.
+- **Transferred, not completed:** **P1 you** E6 Your tests (alpha/female, Angelica, Drakness first; then the other sisters and angels). Decision F1 and F7.
+- **Transferred, not completed:** **P1 ai** E7 After the decision: promote the winner to `1_Prime`, remove the losers, update the scaffolds, the templates README and the tutorial.
 
 ## Result
 
 (to be written when the tests are done; the set-up is finished and waits on the ComfyUI runs of E6)
 
+## Preserved original discussions (verbatim)
+
+<!-- markdownlint-disable MD013 -->
+````text
 ## Your messages, word for word
 
 ### On the first shot (after the opinion)
@@ -190,3 +224,5 @@ Judge with `compare-primes` (face score against the source) and by eye: straps o
 
 For the main heroes (sisters, angels) a studio would not chain edits to keep a face: it would train a small identity LoRA or use a face-embedding adapter from the 20 to 70 photos we already have per hero, and run every image from that, with pose and wardrobe controlled separately. That is the larger investment and
 removes the Prime as a bottleneck; worth planning after the paths above, for the heroes we keep.
+````
+<!-- markdownlint-enable MD013 -->

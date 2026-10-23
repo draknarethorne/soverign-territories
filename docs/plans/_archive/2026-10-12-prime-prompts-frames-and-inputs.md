@@ -1,10 +1,47 @@
 # Plan: Prime prompts (pose first), frames, library sync, seeds and inputs
 
-**Status:** active (Oct 12, 2026; Prime frame flow retired Oct 19; prompt decisions and ComfyUI tests remain open)
+**Status:** dropped (superseded; not completed)
+
+## Supersession record
+
+**Superseded:** 2026-10-22T16:34:08-05:00 (local offset recorded).
+
+**Reason:** the Oct 22 full-plan reconciliation separates enduring rules,
+dated evidence and focused execution owners. Later approved direction
+supersedes conflicting older sequencing/limits; remaining work is not done.
+
+**Context:** [live reference](../../art/prompt-migration-context.md), [full reconciliation audit](../../audits/2026-10-22-plan-feedback-audit.md).
+Original user wording and historical evidence are retained below.
+The source checklist is historical; formerly open items are explicitly
+marked transferred, not checked off as implemented.
+
+## Unfinished work and successors
+
+| Source item | Live owner | Destination / disposition |
+| --- | --- | --- |
+| T2 | [2026-10-22-manual-prompts-to-art-library.md](../2026-10-22-manual-prompts-to-art-library.md) | P2/P4/P5/P7 |
+| T4 | [2026-10-22-manual-prompts-to-art-library.md](../2026-10-22-manual-prompts-to-art-library.md) | P5/P6 |
+| T5 | [2026-10-09-finals-and-mvp.md](../2026-10-09-finals-and-mvp.md) | I1 |
+| T6 | [2026-10-09-finals-and-mvp.md](../2026-10-09-finals-and-mvp.md) | I2 |
+| T7 | [2026-10-09-finals-and-mvp.md](../2026-10-09-finals-and-mvp.md) | I3 |
+| T9 | [2026-10-22-manual-prompts-to-art-library.md](../2026-10-22-manual-prompts-to-art-library.md) | P2/P7 |
+| L4 | [2026-10-22-library-upkeep.md](../2026-10-22-library-upkeep.md) | U3 |
+| L7 | [2026-10-22-library-upkeep.md](../2026-10-22-library-upkeep.md) | U4 |
+| T11 | [2026-10-22-manual-prompts-to-art-library.md](../2026-10-22-manual-prompts-to-art-library.md) | P9 |
+
+## Result of reconciliation
+
+Retired as an execution owner after task and context transfer. Archival
+does not assert implementation, render approval, convergence or production
+acceptance. Live owners above retain the remaining gates and questions.
+
+## Original source record
+
+**Original status:** active (Oct 12, 2026; Prime frame flow retired Oct 19; prompt decisions and ComfyUI tests remain open)
 
 This records the Oct 12 Prime, input and library work, continuing [2026-10-11-first-shot-flows.md](2026-10-11-first-shot-flows.md). The Prime frame flow and its comparison were retired on Oct 19; the remaining prompt decisions and ComfyUI tests are still open. The two plans' frame-related history is reconciled below.
 
-Source: your messages of Oct 12, copied word for word at the end. Related: [../art/prime-flows.md](../art/prime-flows.md), [../art/original-photos.md](../art/original-photos.md), [../art/likeness.md](../art/likeness.md), [../../workflows/README.md](../../workflows/README.md).
+Source: your messages of Oct 12, copied word for word at the end. Related: [../art/prime-flows.md](../../art/prime-flows.md), [../art/original-photos.md](../../art/original-photos.md), [../art/likeness.md](../../art/likeness.md), [../../workflows/README.md](../../../workflows/README.md).
 
 ## Why we are doing this
 
@@ -142,22 +179,22 @@ Notes: a scene's Environment stays last because it is the content of the scene, 
 ### Open
 
 - [x] **P2 you** T1 D1: frame threshold and frame generation are superseded by the Oct 19 decision to retire the frame flow; see [2026-10-19-library-rebaseline-and-frame-retirement.md](2026-10-19-library-rebaseline-and-frame-retirement.md).
-- [ ] **P1 you** T2 D2: your approval of the Prime v2 structure and the feet wording, then edit the four templates, add `FEET` to `gen_prompt.py` (with the footwear piece as its source), regenerate, `make --engine both`, deploy, `bin\sync-inputs.cmd --apply`, tests, validators.
+- **Transferred, not completed:** **P1 you** T2 D2: your approval of the Prime v2 structure and the feet wording, then edit the four templates, add `FEET` to `gen_prompt.py` (with the footwear piece as its source), regenerate, `make --engine both`, deploy, `bin\sync-inputs.cmd --apply`, tests, validators.
 - [x] **P1 you** T3 The proposed frame-vs-normal comparison is dropped by the Oct 19 decision to retire frames; the unrelated prompt tests remain in T2/T9 and the active manual-prompt plan.
-- [ ] **P2 you** T4 D3: test and, if warranted, shorten the FireRed lock.
-- [ ] **P1 you** T5 Recheck current Angel Primes inputs after the selected-photo changes and resolve only the Prime renders still missing from an input or output folder. The seven names and render IDs recorded here are an Oct 12 snapshot; the four explicitly chosen replacements are Aria Muse → Gavrielle, Ruby Eden → Camaris, Amethyst Montgomery → Ravaelle, and Sabine Vale → Nyxene. Re-render or re-pick only if the current status confirms it is needed, then pull the input.
-- [ ] **P1 you** T6 The male angels and `Male` still have placeholder photos; put originals in their library folders, run `originals`, `inputs set`. Owner: you.
-- [ ] **P3 you** T7 Close the loose ends the audit found: the two old Drakness `X_Pose` MiniMax videos are install-only (pull them as curated or delete); the Sovereign Dawn sample workflows load images that do not exist; decide whether `refresh` should also run `originals`.
+- **Transferred, not completed:** **P2 you** T4 D3: test and, if warranted, shorten the FireRed lock.
+- **Transferred, not completed:** **P1 you** T5 Recheck current Angel Primes inputs after the selected-photo changes and resolve only the Prime renders still missing from an input or output folder. The seven names and render IDs recorded here are an Oct 12 snapshot; the four explicitly chosen replacements are Aria Muse → Gavrielle, Ruby Eden → Camaris, Amethyst Montgomery → Ravaelle, and Sabine Vale → Nyxene. Re-render or re-pick only if the current status confirms it is needed, then pull the input.
+- **Transferred, not completed:** **P1 you** T6 The male angels and `Male` still have placeholder photos; put originals in their library folders, run `originals`, `inputs set`. Owner: you.
+- **Transferred, not completed:** **P3 you** T7 Close the loose ends the audit found: the two old Drakness `X_Pose` MiniMax videos are install-only (pull them as curated or delete); the Sovereign Dawn sample workflows load images that do not exist; decide whether `refresh` should also run `originals`.
 - [x] **P2 ai** T8 Reconcile the frame-related decisions with the first-shot plan after T3 was dropped. Completed Oct 19; both plans remain active for their unrelated, unfinished Prime tests and user decisions.
-- [ ] **P2 you** T9 D6: your approval of the canonical order, then change the templates family by family (Prime first with D2, then the male Prime, P2/P3, studies, wardrobe, scenes, motion), regenerating and checking byte for byte what should not change. Owner: me after your approval.
+- **Transferred, not completed:** **P2 you** T9 D6: your approval of the canonical order, then change the templates family by family (Prime first with D2, then the male Prime, P2/P3, studies, wardrobe, scenes, motion), regenerating and checking byte for byte what should not change. Owner: me after your approval.
 The old T10 prospect names and scores are stale after later library runs; review the current photo outcomes through R11 and candidate rankings through D10 instead.
-- [ ] **P3 either** L4 Decide whether `likeness pairs --apply` and `merge` should also finish by running `originals` (today only `library.cmd` ties the steps together). Owner: you (decision), me.
-- [ ] **P3 ai** L7 Later: `duplicates` compares bytes, so the same picture saved at another size or quality is not caught (it would show as two look-alike photos in one folder). A face-embedding check inside one folder (a score above about 0.98) could list them. Owner: me when you want it.
-- [ ] **P3 you** T11 Confirm that the variant Primes of the Oct 10 plan (5.2, a Prime B per hero) are dropped: the Prime flows replaced them. That plan is closed and archived on this assumption.
+- **Transferred, not completed:** **P3 either** L4 Decide whether `likeness pairs --apply` and `merge` should also finish by running `originals` (today only `library.cmd` ties the steps together). Owner: you (decision), me.
+- **Transferred, not completed:** **P3 ai** L7 Later: `duplicates` compares bytes, so the same picture saved at another size or quality is not caught (it would show as two look-alike photos in one folder). A face-embedding check inside one folder (a score above about 0.98) could list them. Owner: me when you want it.
+- **Transferred, not completed:** **P3 you** T11 Confirm that the variant Primes of the Oct 10 plan (5.2, a Prime B per hero) are dropped: the Prime flows replaced them. That plan is closed and archived on this assumption.
 
 ## The routine when photos move
 
-Drop new photos into `Various\gallery` and run `bin\library.cmd` (details in [../art/original-photos.md](../art/original-photos.md#the-routine)). `bin\library-check.cmd` before a batch of tests says whether the library is in step. Anything done by hand (moving a photo between folders, `likeness merge`, `retire`, `pairs --apply`) is followed by `bin\library.cmd --no-likeness` (names, duplicates, scaled copies, headshots, frames, check).
+Drop new photos into `Various\gallery` and run `bin\library.cmd` (details in [../art/original-photos.md](../../art/original-photos.md#the-routine)). `bin\library-check.cmd` before a batch of tests says whether the library is in step. Anything done by hand (moving a photo between folders, `likeness merge`, `retire`, `pairs --apply`) is followed by `bin\library.cmd --no-likeness` (names, duplicates, scaled copies, headshots, frames, check).
 
 ## Reconciling the plans
 
@@ -176,6 +213,10 @@ What each plan still holds open, and where I think it belongs. Nothing here is m
 | 2026-10-09-finals-and-mvp | 7.3, 8.5 your FireRed size and video checks | stays |
 | 2026-10-09-finals-and-mvp | 3.8, 8.6, 8.7, 6.3b, 6.5, 6.6 and the finals-size note | deferred or low priority; keep as they are |
 
+## Preserved original discussions (verbatim)
+
+<!-- markdownlint-disable MD013 -->
+````text
 ## Your messages, word for word
 
 ### On the frames
@@ -219,3 +260,5 @@ Ultimately I plan on iterating on prospects - over and over as time goes on.  So
 Maybe we need multiple complex .cmd files that just allow me to run a simple command without a lot of arguments to make things happen.  That way I don't need to remember the arguments.
 There might be some already in bin and ideally your instructions should have you running the .cmd files to always ensure they are working.  So that's yet another optimization in how we work together to ensure that both you and I can do the same thing together.
 Don't forget where you are - but take this all into account after you get through the process.
+````
+<!-- markdownlint-enable MD013 -->

@@ -4,6 +4,12 @@ The Prime (`Alpha 1 Prime`) turns a hero's chosen source photo into a clean,
 head-to-toe A-pose. The currently configured input is the hero's original,
 scaled to 944x1104 and stored in `workspaces.json` under `photos`.
 
+**Oct 22 review:** this guide describes installed paths. The
+[manual migration plan](../plans/2026-10-22-manual-prompts-to-art-library.md)
+owns the future `0_Edit` and revised Prime/Bare approach. It retires `1b` only
+after replacements pass and leaves `2b` unchanged. No new prompt order,
+input-role change or experiment removal was applied during plan reconciliation.
+
 ## Current Prime path
 
 | Workflow | Engine | Input |
@@ -43,7 +49,9 @@ Edit the file to tune it, then `bin\refresh-firered.cmd HERO alpha` (or
 Use `--all-renders` to show every render of each variant. To include the
 first-shot experiments, use `bin\compare-primes.cmd --shots all`; P2 is the
 neutral base layer and P3 is the bare figure. See
-[first-shot-flows](../plans/2026-10-11-first-shot-flows.md) for their setup.
+[prompt context](prompt-migration-context.md) for the original rationale.
+These installed comparison commands remain available, but another old
+P2/P3 winner selection is not a prerequisite to reviewing the manual batch.
 
 ## Retired frame flow
 
@@ -52,4 +60,6 @@ The partial-body frame flow was retired on Oct 19 after testing. Its
 workflow variants have been removed from active processing. Existing images
 and workflow copies were archived, not deleted. The history and execution
 record are in
-[the Oct 19 library plan](../plans/2026-10-19-library-rebaseline-and-frame-retirement.md).
+[library retirement evidence](library-reconciliation-context.md);
+[upkeep U1](../plans/2026-10-22-library-upkeep.md) owns the separate possible
+chest-crop preview.

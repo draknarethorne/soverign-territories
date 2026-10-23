@@ -18,6 +18,14 @@ See [`data/art/README.md`](../../data/art/README.md) for the full directory/arch
 
 ## Golden rules
 
+**Oct 22 review:** the block order below documents existing guidance, not an
+accepted universal rewrite of today's templates. The
+[manual prompt migration plan](../plans/2026-10-22-manual-prompts-to-art-library.md)
+owns reconciliation of the new manual order, tokens and per-stage keep/reset
+semantics. Existing generation stays unchanged until that pilot is approved.
+Explicit edit/removal instructions can accompany a positive intended result;
+do not treat the old avoidance of negative wording as a blanket ban.
+
 1. **One prompt = one stage.** Refer to the incoming image; describe ONLY what changes.
 2. The **reference-fidelity** line is mandatory on every edit/final prompt — it anchors face, body, hair.
 3. Hero-specific values (palette, eye colour, physique) come from `data/art/heroes/<hero>-thorne.json`,

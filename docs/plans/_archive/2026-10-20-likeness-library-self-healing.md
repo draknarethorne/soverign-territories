@@ -1,6 +1,43 @@
 # 2026-10-20: self-healing likeness library and review workflow
 
-**Status:** active (foundation work retained; engine scope reconciled with the Oct 21 plan)
+**Status:** dropped (superseded; not completed)
+
+## Supersession record
+
+**Superseded:** 2026-10-22T16:34:08-05:00 (local offset recorded).
+
+**Reason:** the Oct 22 full-plan reconciliation separates enduring rules,
+dated evidence and focused execution owners. Later approved direction
+supersedes conflicting older sequencing/limits; remaining work is not done.
+
+**Context:** [live reference](../../art/likeness-curation-contract.md), [full reconciliation audit](../../audits/2026-10-22-plan-feedback-audit.md).
+Original user wording and historical evidence are retained below.
+The source checklist is historical; formerly open items are explicitly
+marked transferred, not checked off as implemented.
+
+## Unfinished work and successors
+
+| Source item | Live owner | Destination / disposition |
+| --- | --- | --- |
+| C7 | [2026-10-22-review-actions.md](../2026-10-22-review-actions.md) | A5 |
+| C9 | [2026-10-22-face-analysis-evaluation.md](../2026-10-22-face-analysis-evaluation.md) | M1-M4 |
+| G1 | [2026-10-22-review-actions.md](../2026-10-22-review-actions.md) | A2 |
+| G2 | [2026-10-22-review-actions.md](../2026-10-22-review-actions.md) | A4 |
+| G3 | [2026-10-22-review-actions.md](../2026-10-22-review-actions.md) | A4 |
+| H2 | [2026-10-20-art-tools-structure.md](../2026-10-20-art-tools-structure.md) | E2/E2a-E2d |
+| H4 | [2026-10-09-cli-simplification.md](../2026-10-09-cli-simplification.md) | finals 6.3b/6.5; approval still required |
+| H5 | [2026-10-22-likeness-engine-acceptance.md](../2026-10-22-likeness-engine-acceptance.md) | E12 |
+| H6 | [2026-10-22-review-actions.md](../2026-10-22-review-actions.md) | A8; future scope |
+
+## Result of reconciliation
+
+Retired as an execution owner after task and context transfer. Archival
+does not assert implementation, render approval, convergence or production
+acceptance. Live owners above retain the remaining gates and questions.
+
+## Original source record
+
+**Original status:** active (foundation work retained; engine scope reconciled with the Oct 21 plan)
 
 ## Purpose
 
@@ -46,7 +83,7 @@ task 5.1i, separately from photo protection.
 | Report lifecycle | Keep dated report output available for inspection; after the user approves the workflow, support replacing one stable review-report directory. Link a person from the concise overview to their filtered review view when both local reports are available. |
 | Metadata | Use machine-readable JSON tied to stable photo identity, not filename grades. Preserve an audit trail and keep user decisions distinct from inferred scores. |
 | Tooling structure | Improve the workflow incrementally. Split likeness responsibilities into testable modules and simplify user-facing commands over time; do not combine this with a risky all-at-once rewrite. |
-| Python package layout | Move related, low-risk modules and tests into domain packages as work proceeds; keep `bin/*.cmd` stable and audit direct references before moves. Broader `tools/art/` organization has its own [incremental plan](2026-10-20-art-tools-structure.md). |
+| Python package layout | Move related, low-risk modules and tests into domain packages as work proceeds; keep `bin/*.cmd` stable and audit direct references before moves. Broader `tools/art/` organization has its own [incremental plan](../2026-10-20-art-tools-structure.md). |
 
 ## Proposed metadata model
 
@@ -271,8 +308,8 @@ work begins. Do not leave a broken or half-migrated state between increments.
 
 ### Phase A baseline record
 
-The command inventory is maintained in the [likeness guide](../art/likeness.md)
-and [bin help](../../bin/help.cmd). Image-changing surfaces were traced through
+The command inventory is maintained in the [likeness guide](../../art/likeness.md)
+and [bin help](../../../bin/help.cmd). Image-changing surfaces were traced through
 `bin\library.cmd` (`library_sync.py`), `bin\likeness.cmd` (`likeness.py`),
 `bin\originals.cmd` (`originals.py`), and the staged review-action CLI.
 Relevant operations include ingest/sort, review, singles/rematch, pullback,
@@ -333,7 +370,7 @@ action-specific measurements on user-labelled examples.
 ### Phase C — focused review gallery
 
 Header image/details/actions separation and formatting feedback are tracked
-in the [layout plan](2026-10-22-gallery-review-layout.md), not implicitly
+in the [layout plan](../2026-10-22-gallery-review-layout.md), not implicitly
 completed by the action implementation below.
 
 - [x] **P1 ai** C0b Verify available-action execution readiness: supported
@@ -376,7 +413,7 @@ completed by the action implementation below.
   Existing Potentials' closest-person evidence remains implemented.
   Manual standalone rename is now implemented under task 5.3a there, also
   covering Models. Name swaps and broader family-link changes remain open.
-- [ ] **P2 ai** C7 Keep dated report output available and support replacing
+- **Transferred, not completed:** **P2 ai** C7 Keep dated report output available and support replacing
   a stable output directory. The overview/review link and order consistency
   are implemented; verify stable-directory replacement without losing the
   dated reports.
@@ -386,7 +423,7 @@ completed by the action implementation below.
   Manifest and audit retain its stable destination ID; stale target ownership
   blocks apply/undo. Generated scripts compile and protected/anchor/workflow
   selections offer no reassignment. Local visual acceptance remains separate.
-- [ ] **P2 ai** C9 Investigate a local secondary face model on labelled difficult
+- **Transferred, not completed:** **P2 ai** C9 Investigate a local secondary face model on labelled difficult
   expressions, including `7515826497811991332` (Arwen Ames / Rhiannon Frost).
   Compare models and disagreement evidence before selecting any new scoring
   algorithm; do not replace SFace or add score-patching exceptions silently.
@@ -598,13 +635,13 @@ are verified on real, backed-up batches before enabling routine use.
   hashes are unchanged. Identity protection is an automatic-change gate,
   not a ban on explicit user retirement. G1-G3 remain open for the whole-person
   scope; Various/Artist sources are not stageable photo identities yet.
-- [ ] **P2 ai** G1 After Review/Reject workflows are working, expose
+- **Transferred, not completed:** **P2 ai** G1 After Review/Reject workflows are working, expose
   photo-level retirement of unusable images and whole-person retirement of
   Potentials/Prospects through explicit, distinct manifest actions.
-- [ ] **P2 ai** G2 Show each operation's destination and consequences in
+- **Transferred, not completed:** **P2 ai** G2 Show each operation's destination and consequences in
   preview. Keep photo retirement, person retirement, Review, Reject-to-Various
   and whole-folder archival distinct.
-- [ ] **P2 ai** G3 Test cancel, stale-manifest rejection, backup, apply,
+- **Transferred, not completed:** **P2 ai** G3 Test cancel, stale-manifest rejection, backup, apply,
   restore and undo for both retirement scopes against temporary libraries.
 
 **Exit:** the gallery can stage both retirement scopes without implementing
@@ -616,19 +653,19 @@ file movement in the browser or silently changing existing CLI semantics.
   empty-pool maintenance to Oct 21 tasks 4.9-4.12/4.20. The transfer is
   complete; the ordinary routine now calls shared reconciliation. Legacy
   commands remain compatibility surfaces pending their separate sunset audit.
-- [ ] **P2 ai** H2 Extract metadata, core/scoring, planning and report/action
+- **Transferred, not completed:** **P2 ai** H2 Extract metadata, core/scoring, planning and report/action
   responsibilities from `likeness.py` in small, behavior-preserving,
   test-covered changes. Do not do an all-at-once rewrite.
 - [x] **P1 ai** H3 Transfer effective behavioral-policy ownership, migration,
   provenance and calibration to Oct 21 tasks 4.15/4.19. The current split
   between code defaults, workspace settings and policy JSON is not accepted
   as completed externalization.
-- [ ] **P2 ai** H4 Simplify the user-facing workflow and CLI options only
+- **Transferred, not completed:** **P2 ai** H4 Simplify the user-facing workflow and CLI options only
   after the replacement is proven; keep current command entry points working
   until migration is verified.
-- [ ] **P2 ai** H5 Update the likeness guide, original-photo runbook, gallery
+- **Transferred, not completed:** **P2 ai** H5 Update the likeness guide, original-photo runbook, gallery
   help, tests, schema docs and generated queue after each relevant phase.
-- [ ] **P3 either** H6 Keep broader art-authoring and ComfyUI batch-execution
+- **Transferred, not completed:** **P3 either** H6 Keep broader art-authoring and ComfyUI batch-execution
   interfaces as a future GUI roadmap, not a deliverable of this likeness plan.
   Ensure the manifest and metadata design can integrate with those tools
   without introducing browser-side file access.
@@ -721,7 +758,7 @@ view.
 - Keep the proposed CLI-consolidation plan separate. Preserve current command
   entry points until any new workflow is tested and migration is verified.
 - Organize Python files under `tools/art/` incrementally under the
-  [art-tools structure plan](2026-10-20-art-tools-structure.md). The metadata
+  [art-tools structure plan](../2026-10-20-art-tools-structure.md). The metadata
   foundation is in `tools/art/likeness_library/`; the directory name avoids
   shadowing the existing `likeness.py` module.
 - The separate review gallery and local manifest are the chosen initial
@@ -750,6 +787,10 @@ view.
 | D14 | Keep the existing category roots and use virtual, stable-identity family/lookalike groups; no physical family/twin root is added in this iteration. |
 | D15 | Use shared surnames only for explicitly associated identities, keep first names distinct, and never use names or family links as matching evidence. Audit `z_` first/last names and surname collisions before any rename. |
 
+## Preserved original discussions (verbatim)
+
+<!-- markdownlint-disable MD013 -->
+````text
 ## Raw user feedback
 
 I like the recommendations, but have a few comments about each item and then we can build the plan as a whole.  1) I agree that we should keep those separate and workspaces.json can identify the comfyui photo and we'd store the other trusted identities in a new file or set of files (which ever seems the simplest - using a z_xxxx.json convention if we choose to store it in the gallery directory along side the z_xxx.txt file)
@@ -928,3 +969,5 @@ Even for angels and sisters I see "Identity ID: not catalogued" which is not use
 
 Lastly - on the details page, I think a staged action should be able to actually move the image to closest if I choose to do that as well.   I also feel like our scoring may need to be double checked and I'll get back to you on that as I have 7515826497811991332 in Arwen Ames, but the Closest Other is Rhiannon Frost ... her eyes are more closed in that picture, so what I am wondering is if there are other models we can use as a secondary face check on top of what we're doing in certain cases.  It seems like the face recognition we have might not be perfect.  We've put patches in place to try to handle the existing scoring and some of the routines
 ```
+````
+<!-- markdownlint-enable MD013 -->

@@ -3312,6 +3312,7 @@ def main(argv=None, embedder=None):
     add("undo", cmd_undo, apply=True)
     add("names", cmd_names, apply=True)
     s = add("index", cmd_index, apply=True)
+    s.add_argument("--policy", help="versioned likeness policy JSON (use the saved run policy for sandbox reports)")
     s.add_argument("--import", dest="imp", help="read the profile columns of this CSV (as written by index) back into the z_ files")
     s = add("profile", cmd_profile)
     s.add_argument("names", nargs="+", help="folders")

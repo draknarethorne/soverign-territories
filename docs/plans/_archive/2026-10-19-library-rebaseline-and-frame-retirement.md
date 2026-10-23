@@ -1,11 +1,41 @@
 # 2026-10-19: library rebaseline, frame retirement and Angel Primes shots
 
-**Status:** active (ingest complete; user review and chest-crop assessment remain)
+**Status:** dropped (superseded; not completed)
+
+## Supersession record
+
+**Superseded:** 2026-10-22T16:34:08-05:00 (local offset recorded).
+
+**Reason:** the Oct 22 full-plan reconciliation separates enduring rules,
+dated evidence and focused execution owners. Later approved direction
+supersedes conflicting older sequencing/limits; remaining work is not done.
+
+**Context:** [live reference](../../art/library-reconciliation-context.md), [full reconciliation audit](../../audits/2026-10-22-plan-feedback-audit.md).
+Original user wording and historical evidence are retained below.
+The source checklist is historical; formerly open items are explicitly
+marked transferred, not checked off as implemented.
+
+## Unfinished work and successors
+
+| Source item | Live owner | Destination / disposition |
+| --- | --- | --- |
+| R9 | [2026-10-22-library-upkeep.md](../2026-10-22-library-upkeep.md) | U1 |
+| R11 | [2026-10-22-library-upkeep.md](../2026-10-22-library-upkeep.md) | U2 |
+
+## Result of reconciliation
+
+Retired as an execution owner after task and context transfer. Archival
+does not assert implementation, render approval, convergence or production
+acceptance. Live owners above retain the remaining gates and questions.
+
+## Original source record
+
+**Original status:** active (ingest complete; user review and chest-crop assessment remain)
 
 This plan coordinates today's library ingestion and frame retirement with a
 first pass over the older plan queue. The canonical runbook is
-[original-photos.md](../art/original-photos.md); likeness matching and safety
-rules are in [likeness.md](../art/likeness.md).
+[original-photos.md](../../art/original-photos.md); likeness matching and safety
+rules are in [likeness.md](../../art/likeness.md).
 
 ## Current state
 
@@ -103,9 +133,9 @@ combine commands.
 - [x] **P1 either** R8 Reconcile every active/proposed plan against the current decisions and work. The Oct 19 review has now been rechecked against all 11 active plans and the one proposed plan.
   No active plan is ready to archive: each still has a real user decision, review, ComfyUI test, manual prompt task, game-data task, or explicitly deferred tooling follow-up. The CLI proposal remains proposed pending your decision.
   The Oct 12 scratch note was incorporated into the tooling-debt plan; completed gallery display requests were verified against the implementation, while image-level exclusion remains open there.
-- [ ] **P2 ai** R9 Design a chest-crop preview using face-anchored head/shoulder/chest bounds; assess sample full, partial and varied-pose images before deciding whether to add it to `originals`, workspace inputs or Prime workflows.
+- **Transferred, not completed:** **P2 ai** R9 Design a chest-crop preview using face-anchored head/shoulder/chest bounds; assess sample full, partial and varied-pose images before deciding whether to add it to `originals`, workspace inputs or Prime workflows.
 - [x] **P2 ai** R10 Update the likeness/runbook and Prime-flow documentation after frame retirement is implemented; ensure no active instruction implies frames will be generated.
-- [ ] **P3 you** R11 Review the post-run photo outcomes: `_junk` now contains 6 photos (3 from the earlier batch and 3 new incoming photos
+- **Transferred, not completed:** **P3 you** R11 Review the post-run photo outcomes: `_junk` now contains 6 photos (3 from the earlier batch and 3 new incoming photos
   flagged for 2+ faces), the 3 older same-ID imports in `Various\duplicates`, the 24 preserved replacement originals, 9 review photos, and
   the three protected Drakness images left active because they contain multiple faces. `_archive\Various\gallery_duplicates` contains 332
   files total, including prior history; the final active duplicate check is clean. Identify salvage or manual-resolution actions; do not
@@ -121,6 +151,10 @@ combine commands.
 - [x] **P1 you** R13 Superseded by the user-approved staged Review/Reject workflow in the [self-healing likeness plan](2026-10-20-likeness-library-self-healing.md); Sophie photo choices remain user-directed.
 - [x] **P1 ai** R14 Superseded by the combined, previewed and backup-verified processing phases in the [self-healing likeness plan](2026-10-20-likeness-library-self-healing.md). Do not make interim Sophie moves outside that workflow.
 
+## Preserved original discussions (verbatim)
+
+<!-- markdownlint-disable MD013 -->
+````text
 ## Raw request (Oct 19)
 
 I did manually clean-up the ComfyUI inputs to remove some images I did not want for Angel Primes - it wasn't as useful to have the frames
@@ -134,3 +168,5 @@ need to do - but it is a priority to get the existing Various/gallery processed,
 Primes install (before publishing) and ensure we get things cleaned up and if there are _junk files or _duplicates I want that summary. I
 know we were also updating the .html and reports as well. So, there are a lot of moving parts right now and a lot of uncommitted changes I
 need to figure out what to do with.
+````
+<!-- markdownlint-enable MD013 -->
