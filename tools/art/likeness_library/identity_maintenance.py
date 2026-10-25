@@ -24,6 +24,15 @@ def independent_count(rows, policy):
     return len(selected)
 
 
+def retained_transition_hold(root, folder):
+    """Identity-wide inventories cannot yet journal retained-set ownership."""
+    path = pathlib.Path(root) / folder / "gallery_intake"
+    original = pathlib.Path(root) / folder / "gallery_org"
+    if any(candidate.exists() or candidate.is_symlink() for candidate in (path, original)):
+        return "retained preparation holds identity-wide transition; photo membership moves remain eligible"
+    return None
+
+
 def merge_actions(space, cores, catalog, locked_ids, selected_ids, policy, root, photo_moves):
     """Choose disjoint reciprocal matches; a frozen identity participates at most once."""
     people = {}
@@ -36,6 +45,7 @@ def merge_actions(space, cores, catalog, locked_ids, selected_ids, policy, root,
         for row in photo_moves for key in ("source", "destination")
     }
     eligible = {}
+    evidence = []
     for folder, core in sorted(cores.items()):
         rules = policy["categoryPolicies"][core["category"]]
         records = people.get(folder, [])
@@ -48,8 +58,12 @@ def merge_actions(space, cores, catalog, locked_ids, selected_ids, policy, root,
         photos = space.by_key[folder]
         if any(metadata.photo_id_from_name(photo.name) in blocked for photo in photos):
             continue
+        hold = retained_transition_hold(root, folder)
+        if hold:
+            evidence.append({"sourceFolder": folder, "decision": "hold", "reason": hold})
+            continue
         eligible[folder] = records[0][0]
-    pairs, evidence = [], []
+    pairs = []
     for left in eligible:
         for right in eligible:
             if left >= right:
@@ -333,6 +347,10 @@ def category_transitions(space, cores, report, catalog, locked_ids, selected_ids
             "sourceFolder": folder, "destinationFolder": f"{category}/{folder.split('/', 1)[1]}",
             "usablePhotos": len(ids), "reason": "category follows final planned usable membership",
         }
+        hold = retained_transition_hold(root, folder)
+        if hold:
+            evidence.append({**record, "decision": "hold", "reason": hold})
+            continue
         records = by_folder.get(folder, [])
         if len(records) != 1:
             evidence.append({**record, "decision": "hold", "reason": "category transition requires one stable catalogue identity"})

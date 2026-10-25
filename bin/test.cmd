@@ -16,6 +16,11 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
+%PY% -m unittest tools.art.test_clean_preparation tools.art.test_retained_preparation
+if errorlevel 1 (
+  call "%~dp0_end.cmd" 1
+  exit /b 1
+)
 %PY% -m unittest tools.art.likeness_library.tests.test_review_gallery
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1

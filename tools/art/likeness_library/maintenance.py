@@ -4,7 +4,7 @@ import json
 import pathlib
 import uuid
 
-from . import domains, metadata, rejections
+from . import domains, metadata, rejections, retained_preparation
 from .identity_maintenance import category_destination_available, relocated_path
 from .sandbox import is_sandbox_working_path
 
@@ -92,6 +92,10 @@ def validate_moves(root, moves, identity_actions=()):
         ):
             raise ValueError("identity file move must belong to a validated folder transition")
         source, destination = paths
+        if source.parent.name in ("gallery", "review"):
+            transfer = retained_preparation.plan_transfer(root, row["source"], row["destination"])
+            if transfer:
+                retained_preparation.validate_transfers(root, [transfer])
         source_key, destination_key = str(source).casefold(), str(destination).casefold()
         if source_key in sources or destination_key in destinations:
             raise ValueError("reconciliation repeats a source or destination")
@@ -369,8 +373,17 @@ def apply_moves(root, moves, policy, cfg, *, sandbox_override=False, backup_fn=N
     updated = _metadata_catalog(
         root, catalog, _updated_catalog(catalog, moves, policy, identity_actions), metadata_actions,
     )
+    transfers = [
+        transfer for row in moves if pathlib.PurePosixPath(row["source"]).parent.name in ("gallery", "review")
+        if (transfer := retained_preparation.plan_transfer(root, row["source"], row["destination"]))
+    ]
+    auxiliary_sources = {entry["source"] for transfer in transfers for entry in transfer["files"]}
+    if any(row["source"] in auxiliary_sources for row in moves):
+        raise ValueError("identity folder inventory includes retained preparation; use photo membership moves instead")
+    retained_preparation.validate_transfers(root, transfers)
     backup = (backup_fn or _backup)(root, cfg)
     validate_moves(root, moves, identity_actions)
+    retained_preparation.validate_transfers(root, transfers)
     if _validate_permissions(root, moves, policy, cfg, identity_actions) != catalog:
         raise ValueError("catalogue changed after backup; no reconciliation moves were applied")
     _metadata_catalog(root, catalog, _updated_catalog(catalog, moves, policy, identity_actions), metadata_actions)
@@ -384,21 +397,31 @@ def apply_moves(root, moves, policy, cfg, *, sandbox_override=False, backup_fn=N
         "catalogPath": str(catalog_path),
         "identityActions": list(identity_actions),
         "metadataActions": list(metadata_actions),
+        "retainedTransfers": transfers,
     }
     _write(journal, data)
     done = []
+    retained_done = []
     try:
         for row in moves:
             source, destination = (root / row[key] for key in ("source", "destination"))
             destination.parent.mkdir(parents=True, exist_ok=True)
             source.rename(destination)
             done.append((source, destination))
+        for transfer in transfers:
+            retained_preparation.execute_transfer(root, transfer)
+            retained_done.append(transfer)
         metadata.save_catalog(updated, catalog_path)
         data["catalogAfterSHA256"] = metadata.content_sha256(catalog_path)
         data["status"] = "applied"
         _write(journal, data)
     except Exception as exc:
         failures = _rollback(done, catalog, catalog_path)
+        for transfer in reversed(retained_done):
+            try:
+                retained_preparation.execute_transfer(root, transfer, reverse=True)
+            except Exception as rollback_exc:
+                failures.append(f"retained preparation restore: {rollback_exc}")
         data["status"] = "rollback-failed" if failures else "rolled-back"
         data["rollbackErrors"] = failures
         _write(journal, data)
@@ -424,6 +447,8 @@ def undo_moves(root, journal, cfg, *, apply=False, backup_fn=None):
     ]
     reverse_actions = [{**action, "_undo": True} for action in data.get("identityActions", [])]
     validate_moves(root, reverse, reverse_actions)
+    transfers = data.get("retainedTransfers", [])
+    retained_preparation.validate_transfers(root, transfers, reverse=True)
     if data.get("metadataActions"):
         _metadata_catalog(
             root, data["catalogBefore"], json.loads(json.dumps(data["catalogBefore"])),
@@ -432,6 +457,7 @@ def undo_moves(root, journal, cfg, *, apply=False, backup_fn=None):
     if apply:
         (backup_fn or _backup)(root, cfg)
         validate_moves(root, reverse, reverse_actions)
+        retained_preparation.validate_transfers(root, transfers, reverse=True)
         if (
             metadata.path_for_root(root) != catalog_path
             or metadata.content_sha256(catalog_path) != data["catalogAfterSHA256"]
@@ -443,17 +469,26 @@ def undo_moves(root, journal, cfg, *, apply=False, backup_fn=None):
                 data["metadataActions"],
             )
         done = []
+        retained_done = []
         try:
             for row in reverse:
                 source, destination = (root / row[key] for key in ("source", "destination"))
                 destination.parent.mkdir(parents=True, exist_ok=True)
                 source.rename(destination)
                 done.append((source, destination))
+            for transfer in reversed(transfers):
+                retained_preparation.execute_transfer(root, transfer, reverse=True)
+                retained_done.append(transfer)
             metadata.save_catalog(data["catalogBefore"], catalog_path)
             data["status"] = "undone"
             _write(journal, data)
         except Exception as exc:
             failures = _rollback(done, data["catalogAfter"], catalog_path)
+            for transfer in reversed(retained_done):
+                try:
+                    retained_preparation.execute_transfer(root, transfer)
+                except Exception as rollback_exc:
+                    failures.append(f"retained preparation undo restore: {rollback_exc}")
             if failures:
                 data["status"], data["rollbackErrors"] = "undo-rollback-failed", failures
                 _write(journal, data)

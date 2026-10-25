@@ -29,7 +29,11 @@ echo                                    v16 can recommend LaMa cleanup; --apply 
 echo                                    Artists\ARTIST\gallery uses the SAME preparation and padding, retaining artist-only source scope; copies in Various cannot imply artist ownership
 echo                                    existing RUN --quarantine-junk previews eligible loose-intake moves; --apply verifies a scoped backup and moves to nested _junk, never deletes or matches
 echo                                    existing RUN --undo-junk previews exact recovery; --apply restores verified bytes; --check verifies completed disposition too. Ordinary library runs do NOT retry Junk
-echo    sandbox-rebase.cmd "SANDBOX\Working" "RUN-DIR" [--dry-run ^| --replan ^| --apply ^| --check ^| --undo]  clean cast-only rebuild; fresh cache, flattened candidates, verified backup and rollback copies
+echo    sandbox-rebase.cmd "SANDBOX\Working" "RUN-DIR" --dry-run  inventory ALL immutable inputs; no models, reports or matching
+echo                                    --intake-only --apply prepares all images and stops for review; --check verifies without writes
+echo                                    same command with no flags prepares/resumes then previews fresh-cache matching; --apply installs only a saved preview
+echo                                    originals + all kept variants follow assigned photos; cast membership retained, Artists prepared separately; --undo restores exact pre-run bytes
+echo                                    --replan reuses only this run's prepared measurements; no matcher-only legacy preview can be installed
 echo    likeness-actions.cmd validate FILE.json  check staged actions against current photo IDs, hashes, folders and catalogue
 echo    likeness-actions.cmd preview FILE.json   show intended destinations; never moves photos or edits metadata
 echo    likeness-actions.cmd apply FILE.json --apply  verified backup, then apply staged moves and metadata decisions

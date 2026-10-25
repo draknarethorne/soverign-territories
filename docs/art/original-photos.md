@@ -60,15 +60,65 @@ Centering follows the full visible subject, not only the face. Already-tight
 inputs can skip either crop; retain wider useful context when subject bounds
 are uncertain. Head/chest derivative framing is a separate later operation.
 
-The requested storage target is exact incoming bytes available through
-`gallery_org`, the accepted cleaned/composed native image in `gallery`, and
-full/head/chest padded variations derived from that accepted image. This is
-the cutover target, not installed behavior: current originals housekeeping
-archives `*_org` folders. Intake I12/upkeep U7 must explicitly protect original
-access, byte/hash and stable-ID provenance, rename/move continuity, backup,
-repeat and undo before adopting that target. Do not enable `gallery_org`
-retention by silently bypassing existing housekeeping or copying derivatives
-back over originals.
+The retained-preparation staging API publishes exact incoming bytes under the
+destination owner's `gallery_org/<set-key>/original.ext`; the accepted
+native image remains in `gallery` or `review`. Its declared variants (including
+denoise/tone, masks, previews and padded comparisons), photo detail and recipe
+are retained under `gallery_intake/<set-key>/`. The 32-hex set key covers the
+immutable source path, source photo ID, matching domain, original SHA-256 and
+full recipe; byte-identical distinct photo records are not deduplicated.
+The manifest preserves and verifies those full identity fields, not just the
+short directory key. It copies only that
+retained row's artifacts, not discarded candidates or historical runs, and
+refuses existing sets rather than overwriting evidence. This staging API does
+not itself run preparation or enable the production library cutover.
+Copied variants use short deterministic filenames directly inside the set,
+avoiding repeated SHA-256 directory names and Windows path-length failures.
+The manifest maps each exact source artifact path to its published path;
+detail links are rewritten without changing artifact bytes or checksums.
+Retained detail pages identify themselves as retained intake evidence, with
+current-native and available gallery/history return links. The shared
+`retained_preparation.refresh_detail(root, current_photo, photo_id=None)`
+refreshes navigation after viewers and maintained derivatives exist, updating
+the detail and manifest checksums together. It links full/head/chest outputs
+only when their maintained source/output hashes and recipe verify. Staging
+callers must capture their final file inventory after this refresh.
+Clean-rebase staging can pass `include_gallery_navigation=True` to include
+conventional gallery/Review/history return links before those required
+post-install pages exist; derivative links still require existing verified
+outputs. This permits capturing final retained hashes before publication,
+without mutating published evidence afterward.
+
+The bounded per-photo manifest records the original checksum, selected native
+checksum, exact current path, stable photo ID and matching domain. Overview and
+Review prefer this link only after verifying the current photo and every
+retained artifact; neither basename nor photo-ID similarity proves a move.
+Originals housekeeping preserves `gallery_org`; routine backups retain both
+retained directories rather than treating comparisons as disposable outputs.
+Same-owner originals renaming updates the manifest with rollback on failure.
+Matching moves transfer the entire verified retained set with their journal:
+the original and every declared artifact move to the new owner, the manifest
+records the new native path, and undo restores the exact previous manifest and
+bytes. Source versions are frozen before backup and checked again afterward;
+existing destination sets, changed evidence and cross-domain transfers refuse
+before mutation. Do not manually move these photos or owner folders. Derivative framing remains
+separate: never copy padded outputs back over retained originals.
+Whole-identity category transitions and merges with retained directories are
+planner holds, not partial folder moves. They leave the source set untouched
+while unrelated photo membership moves remain eligible in the same run.
+Manual photo actions use the same retained-set transfer boundary, including
+Review moves, rejection to Various, retirement and Junk. Their exact transfer
+snapshots live beside action recovery reports under `_reports/runs/`; undo
+checks those snapshots and all current retained hashes before moving anything.
+Whole-person folder renames with retained sets are explicitly held rather
+than orphaning lineage; same-slot metadata-only name changes do not move sets.
+The shared Intake runs navigator also discovers checked intake-only receipts
+under `_sandbox-state/<run>/intake.json`, using only that run's fixed
+`inputs/_reports/preparation/all` report and source mirror. Receipt input hashes,
+manifest checksum and full preparation verification must pass before links
+appear. These entries are labelled staged/intake-only, never accepted
+publication or inferred current-photo continuity. Reports outside this
+conventional run directory are not automatically discovered.
 
 Removing an external bar is not repairing text over hair. Blending/inpainting
 may synthesize plausible pixels rather than recover the true hidden image;

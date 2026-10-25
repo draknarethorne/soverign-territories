@@ -1448,12 +1448,16 @@ def cmd_crop(args):
     """Cut a photo down to the person: the app's bars of a phone screenshot, other people and animals, and the background beside and above her. All of the body that is in the picture stays.
     The uncropped original is kept in _archive (gallery_uncropped), the cropped one takes its place under the same name. A prospect's photo whose other subject cannot be cut away is set aside in her review folder."""
     from PIL import Image
+    from likeness_library import retained_preparation
     cfg, st, work, cache, space = build(args, with_mixed=True)
     embed = args.embedder or Embedder()
     if args.undo:
         return undo_crop(work, args.apply)
     done, stuck = [], []
     for p in space.photos:
+        if retained_preparation.crop_guard(work, p.path, metadata.photo_id_from_name(p.name)):
+            print(f"  prepared source: skip legacy crop for {p.key}/{p.name}")
+            continue
         if p.box is None or p.px < st["minFace"] or p.key.startswith("_"):
             continue
         reel = "_shot_" in p.name
@@ -3385,9 +3389,11 @@ def main(argv=None, embedder=None, *, domain="general"):
 
     s = add("clean-rebase", clean_rebase_command, apply=True)
     s.add_argument("--run-dir", required=True, help="new sandbox Working-local directory for the fresh cache, plan, and rollback copies")
+    s.add_argument("--intake-only", action="store_true",
+                   help="prepare all immutable inputs with --apply, then stop before matching; same run resumes")
     s.add_argument("--policy", help="versioned likeness policy JSON")
     s.add_argument("--check", action="store_true", help="verify the saved plan and installed outputs without changing photos")
-    s.add_argument("--dry-run", action="store_true", help="build the complete preview without installing outputs")
+    s.add_argument("--dry-run", action="store_true", help="inventory immutable inputs only; no preparation, downloads or matching")
     s.add_argument("--undo", action="store_true", help="restore the retained pre-run categories and withdraw this run's cast Review additions")
     s.add_argument("--replan", action="store_true", help="rebuild an unapplied preview from its own fresh measurements, with no old candidate identities")
     s = add("rebaseline", cmd_rebaseline)
@@ -3436,7 +3442,7 @@ def main(argv=None, embedder=None, *, domain="general"):
         s.add_argument(f"--{k}", help=f"only people whose {k} contains this word")
     s.add_argument("--all", action="store_true", help="also angels and sisters")
     raw = list(sys.argv[1:] if argv is None else argv)
-    if "--check" in raw:
+    if "--check" in raw and not any(token in sub.choices for token in raw):
         raw.append("scan")
     args = ap.parse_args(raw)
     if args.dry_run and (getattr(args, "apply", False) or getattr(args, "apply_categories", False)):
@@ -3447,8 +3453,8 @@ def main(argv=None, embedder=None, *, domain="general"):
         ap.error(f"{args.cmd} is not an artist-domain operation; use guarded manual actions if needed")
     if domain == "artists" and args.cmd == "folder" and args.apply:
         ap.error("artist folder inspection is read-only; use group or staged manual actions for moves")
-    if args.dry_run and args.cmd not in ("scan", "group", "artists", "junk", "crop", "undo", "policy"):
-        ap.error("--dry-run is supported for scan/group/artists/junk/crop/undo/policy only; reports write explicit outputs")
+    if args.dry_run and args.cmd not in ("scan", "group", "artists", "junk", "crop", "undo", "policy", "clean-rebase"):
+        ap.error("--dry-run is supported for scan/group/artists/junk/crop/undo/policy/clean-rebase only; reports write explicit outputs")
     args.embedder = embedder
     for k in ("apply", "sheet", "plan", "all", "outside"):
         if not hasattr(args, k):

@@ -599,10 +599,11 @@ These are conservative configurable working defaults, **not calibrated accuracy
 claims**. No real library is changed by generating a report. The reconcile JSON
 contains `metadataActions`, `protectionEvidence` and `familyEvidence`; metadata-only
 changes use the same backup, stale-state checks and journal as file moves.
-A clean rebuild refuses to regenerate non-cast identities carrying manual
-override/name/family provenance until stable-ID migration is supported, rather
-than silently discarding those decisions. Ordinary incremental reconciliation
-retains them.
+The intake-aware sandbox rebuild migrates manual override/name/family provenance
+only through verified one-to-one stable-ID continuity after matching. Ambiguous
+destinations refuse rather than discard or guess those decisions. Legacy
+matcher-only previews cannot install. Ordinary incremental reconciliation
+retains the same decisions.
 
 The person heading displays the name separately from category and photo
 location. Each usable photo shows both its leave-one-out similarity to its
@@ -674,9 +675,11 @@ its existing reprocessing semantics and does not create an exclusion.
 The permanent decision is auditable and reversible through action undo.
 Stale photo bytes must be held rather than silently discarding an exclusion.
 Metadata/protection changes cannot silently rebind that decision to new bytes.
-Clean rebuilding must refuse to regenerate non-cast identities with saved
-rejections until their stable-ID migration is supported; cast exclusions can
-be honored against retained cast IDs. This does not approve a new rebuild.
+The intake-aware clean rebuild preserves rejected stable person IDs and requires
+verified one-to-one identity continuity. Split/merged/ambiguous decisions refuse.
+Current prepared bytes may bind back to immutable originals only through exact
+retained lineage, never basename/hash similarity alone. This does not approve
+a new real rebuild.
 Installing a saved rebuild preview rechecks the source catalogue hash;
 pre-exclusion previews are refused when persistent decisions now exist.
 Legacy likeness move commands refuse photos with persistent exclusions
@@ -1006,52 +1009,80 @@ clean rebase.
 
 Use `bin\sandbox-rebase.cmd "SANDBOX\Working" "RUN-DIR" --dry-run` for the
 clean-start operation. Both paths must be absolute and the new run directory
-must be inside the isolated Working tree, outside category roots. The command:
+must be inside the isolated Working tree, outside category roots. Prefer
+`Working\_sandbox-state\<run>` so the gallery's intake-run browser discovers it.
+Use the **same run directory** at each stage:
 
-1. Verifies the immutable Source inventory and starts an empty face-embedding
-   cache in the new run directory. No old identity cache is loaded.
-2. Treats Source Model/Prospect/Potential Gallery and Review photos as one
-   unassigned pool. Artist, junk and retired trees are not candidates.
-3. Builds initial identity references from Source Angels/Sisters Gallery
-   only, honoring catalogue anchors and configured cast anchors. Old
-   Prospect/Potential memberships are not reference identities.
-4. Runs the shared reconciliation and draft category policy on the flattened
-   pool, using the policy's candidate clustering threshold. Old names may be
-   retained after matching, but never influence a match or cluster.
-5. Saves the effective policy/settings, exact initial reference list, centering
-   mean, implementation hashes, and every source/destination/hash/score/reason
-   in `run.json` and `photos.csv`, with a readable `report.md`. `policy.json`
-   and `catalog.json` preserve the exact run-local configuration and stable
-   person IDs.
+```bat
+rem Read-only inventory: no models, cache, report or directory creation.
+bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run" --dry-run
+rem Optional stop after preparing every immutable input; no matching or assignment.
+bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run" --intake-only --apply
+bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run" --check
+rem Prepare, or resume verified preparation, then save the matching preview.
+bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run"
+rem Only after reviewing that preview and verifying a complete Working backup.
+bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run" --apply
+bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run" --check
+rem Recover exactly; never delete the rebuilt outputs.
+bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run" --undo
+```
 
-Repeat the same launcher/paths with `--apply` after inspecting the preview.
-Only sandbox Working can be installed: a complete backup is verified, every
-output image is staged and hash-checked, previous generated category trees
-are retained under the run's `previous` directory, and installation failure
-rolls the categories and cast Review additions back. Cast Gallery files are
-never replaced. Suggested cast matches enter Review, not the cast core;
-ambiguous/unusable candidates remain in `Various\review`, not artificial
-Review-only Potential identities. Both galleries expose that hold location.
-Protection keeps selected source photos in their existing locations. The
-isolated `.likeness-library.json` is installed and restored with the run;
-gallery actions against Working save there, never to production metadata.
+Replace `SANDBOX` with its absolute path. This sequence is documentation, not
+approval to run the next real acceptance experiment.
 
-Repeat with `--check` to verify the saved source decisions and installed image
-hashes without changing files. Applying an already applied run is refused.
-An unapplied preview can be recomputed with `--replan`: this reuses only that
-run's freshly generated measurements, rebuilds cast references and all
-candidate memberships, and preserves the initial preview. It does not import
-old Prospect/Potential cores. The saved policy can be changed for this explicit
-replan; apply requires the saved policy and implementation to match. Read-only
-check and undo use the saved run even after the current policy has changed.
-Use `--undo` to restore the retained categories and withdraw only that run's
-unchanged cast Review additions; rebuilt outputs are retained under
-`withdrawn`, not deleted. Undo a previous installed run before applying the
-next experiment's cast Review additions. A new experiment needs a new run
-directory; it never seeds from a previous run's generated identity folders.
-Regenerate the galleries and derivatives
-against Working after installation. This launcher is sandbox-only; the
-separately approved clean-full production adapter remains unfinished.
+1. Preparation copies immutable Gallery/Review inputs to the run-local `inputs`
+   mirror and uses the ordinary renderer. The receipt binds source inventory,
+   all artifacts and the full recipe. Reusing the run verifies and resumes;
+   it never quietly recomputes reviewed output. An unfinished mirror refuses.
+2. All cast images receive outcomes without changing cast membership. Artists
+   receive preparation evidence but are excluded from general matching and
+   publication. Junk/retired trees are not candidates.
+3. A fresh run-local cache measures **selected prepared bytes**. Initial cores
+   use only Source Angels/Sisters Gallery, with verified anchors/decisions.
+   Model/Prospect/Potential and loose Various candidates are flattened; old
+   non-cast cores are never reference truth. `Various\<Name>\gallery` reuses
+   explicit named-person seeding, not inferred face-score identity.
+4. Shared reconciliation and draft category policy produce routes. Old names
+   are display provenance after scoring. Verified one-to-one membership can
+   retain stable IDs, original/current names, family and manual opt-outs.
+   Ambiguous split/merged decisions, missing catalogued inputs, unknown current
+   photos or mismatched decision bytes refuse before reset.
+5. `run.json`, `photos.csv`, `report.md`, `policy.json` and `catalog.json` record
+   policy, centering, reference folders, implementation/source/prepared hashes,
+   outcomes and routes. A reviewed matching preview is required before apply;
+   legacy matcher-only previews cannot install.
+
+Apply verifies a complete backup and freezes current native/category/auxiliary
+hashes across staging. It stages prepared natives, exact `gallery_org` originals,
+checked `gallery_intake` alternatives and standard derivatives. Prepared natives
+skip legacy source cropping/screenshot stripping, but keep face-quality and
+head/chest framing gates. See [retained storage](original-photos.md) for backup
+and move behavior.
+
+Cast Gallery **membership** is retained, not raw pixels: cast natives now receive
+the same preparation. Inferred cast additions enter Review, never the cast core.
+Ambiguous/unusable candidates remain in `Various\review`. Existing owned cast
+outputs and generated categories (including Various) are retained under
+`previous`; unknown/edited managed outputs refuse. The isolated catalogue is
+installed/restored with the run. No workflow inputs are automatically retargeted.
+People/Review are regenerated after installation; their retained detail links
+return to gallery/run browsing and expose available maintained derivatives.
+
+`--check` verifies saved input evidence and installed hashes without writes.
+Repeat apply verifies the installed result and refreshes galleries, never
+installs twice. `--replan` works only on an unapplied preview, reuses that run's
+measurements and preserves its initial preview; changed inputs/recipe need a
+new run. Apply requires saved policy and implementation hashes to match.
+Check/undo remain available after policy changes.
+
+Undo verifies installed outputs and saved prior bytes, restores categories,
+replaced cast originals/auxiliaries and catalogue, and keeps rebuilt outputs
+under `withdrawn`. Edited artifacts block automatic undo. Another experiment
+uses a new run and immutable Source, not previous generated identity cores;
+verified retained lineage allows current prepared decisions to survive.
+This launcher is sandbox-only. Optional cast release and the separately
+approved incremental/production cutover remain unfinished.
 
 The first installed clean run was
 `Working\_sandbox-state\clean-rebase-20261021-2210`. It accounts for 1,155

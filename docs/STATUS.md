@@ -26,6 +26,20 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 
 The plans, their status and what each is are listed in [plans/README.md](plans/README.md); what is open, by priority and owner (what needs you first), is [todo.md](todo.md), generated from them. This document holds only what is decided and what is still a question.
 
+**Oct 25 prepared clean-start delivery:** the existing sandbox launcher now
+offers read-only inventory, intake-only prepare/check, resume into fresh-cache
+matching preview, reviewed install and exact undo. All cast images are prepared
+with membership retained; loose/named Various use the same planner and Artists
+remain preparation-only in their domain. Exact originals/retained alternatives
+follow assigned images; gallery detail has checked current/derivative/return
+links. Prepared natives no longer undergo legacy screenshot cleanup again.
+One-to-one stable-ID decisions migrate only with verified continuity; missing,
+unknown, ambiguous, stale or concurrently edited inputs hold. Existing owned
+cast outputs and previous categories have checked reversible replacement.
+This supersedes the integration-gap statements in earlier Oct 25 checkpoints
+below. No real rebase or production change ran; visual/threshold acceptance,
+optional cast release and incremental production cutover remain gated.
+
 **Oct 25 automatic-protection/name direction:** the user requests confidence-based
 photo protection inside protected people and automatic protection of sufficiently
 established identities, alongside family naming that preserves original names.
@@ -42,8 +56,8 @@ working defaults; no real matching, catalogue migration or live change has run.
 extensions to the existing pipeline, not a new rebuild mode. The next rebase
 must prepare all supplied originals first, support intake-only review/resume or
 full matching/assignment, and retain verified original/variant/name/override
-lineage. No rebase is to run before that integration is ready. Existing commands
-do not yet deliver the combined flow; loss-prevention guards are not migration.
+lineage. No rebase is to run before that integration is ready. The prepared clean-start delivery above now implements the sandbox combined
+flow; loss-prevention guards alone are still not migration acceptance.
 Shared gallery chrome now includes a native mobile Menu and colored/versioned
 studio footer. Commit/push is authorized after clean validation and day hygiene.
 
@@ -60,8 +74,8 @@ scores, action permissions, protection or library files changed. The
 single preparation-evidence renderer, with a direct intake-detail entry or
 an explicit all-runs comparison. The v9 read-only integration preview shows
 all 12 incoming photos with 84 checked trace alternatives; sources and the
-v16 manifest are unchanged. Main People/Artist republishing and verified
-post-assignment lineage remain unfinished. Documentation classification and
+v16 manifest are unchanged. Real People/Artist republishing remains acceptance work; verified
+post-assignment lineage is now implemented by the continuation above. Documentation classification and
 safe CLI/refactoring work may continue during intake review; template/generation
 work follows the image-processing milestone, not this GUI checkpoint.
 

@@ -119,6 +119,7 @@ class PreparationIndex:
         self.history_runs = []
         self.incomplete = False
         self._load(source_paths)
+        self._load_staged()
 
     def _error(self, message):
         if len(self._errors) < MAX_ERRORS:
@@ -214,6 +215,82 @@ class PreparationIndex:
     def _href(self, target):
         return quote(os.path.relpath(target, self.page_dir).replace(os.sep, "/"), safe="/._-")
 
+    def _load_staged(self):
+        """History only: staged receipts never enter current-photo lookup maps."""
+        from image_preparation import verify
+        from .retained_preparation import _checked, _safe
+
+        try:
+            directory = _safe(self.root, "_sandbox-state")
+            if not directory.is_dir():
+                return
+            for count, run in enumerate(sorted(directory.iterdir(), key=lambda item: item.name.casefold())):
+                if count >= MAX_RUNS:
+                    break
+                entry = {
+                    "name": "_sandbox-state/" + run.name, "recipe": "", "status": "not verified",
+                    "photos": [], "href": "", "staged": True,
+                }
+                try:
+                    relative = run.relative_to(self.root).as_posix()
+                    _safe(self.root, relative)
+                    receipt_path = _safe(self.root, relative + "/intake.json")
+                    if not receipt_path.is_file():
+                        continue
+                    self.history_runs.append(entry)
+                    if receipt_path.stat().st_size > MAX_MANIFEST_BYTES:
+                        raise ValueError("staged receipt exceeds byte limit")
+                    receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+                    if (receipt.get("schemaVersion") != 1
+                            or not isinstance(receipt.get("assessmentErrors"), bool)):
+                        raise ValueError("invalid staged intake receipt schema")
+                    mirror_relative = relative + "/inputs"
+                    mirror = _safe(self.root, mirror_relative)
+                    report_relative = mirror_relative + "/_reports/preparation/all"
+                    report = _safe(self.root, report_relative)
+                    manifest = _checked(self.root, report_relative + "/manifest.json",
+                                        receipt["preparationManifestSHA256"])
+                    if manifest.stat().st_size > MAX_MANIFEST_BYTES:
+                        raise ValueError("staged manifest exceeds byte limit")
+                    preview = json.loads(manifest.read_text(encoding="utf-8"))
+                    if len(preview.get("photos", [])) > MAX_ROWS:
+                        raise ValueError("staged run exceeds photo limit")
+                    inputs = receipt["inputs"]
+                    if not isinstance(inputs, dict) or len(inputs) > MAX_ROWS:
+                        raise ValueError("invalid staged receipt inputs")
+                    expected = {}
+                    for source, digest in inputs.items():
+                        _checked(mirror, source, digest)
+                        expected[source] = digest
+                    actual = {row["source"]: row["sourceSha256"] for row in preview["photos"]}
+                    if len(actual) != len(preview["photos"]) or actual != expected:
+                        raise ValueError("staged receipt inputs differ from preparation manifest")
+                    # Check every declared path for junctions as well as verifier checks.
+                    for row in preview["photos"]:
+                        for field in ("retained", "detail"):
+                            _safe(report, row[field])
+                        for variant in row.get("variants", {}).values():
+                            for field in ("path", "thumbnail", "padded"):
+                                _safe(report, variant[field])
+                    _safe(report, "index.html")
+                    data = verify(mirror, report, current_sources=True)
+                    if data.get("root") != str(mirror):
+                        raise ValueError("staged preparation root differs from receipt mirror")
+                    if data.get("recipe") != receipt["recipe"]:
+                        raise ValueError("staged receipt recipe differs from preparation manifest")
+                    if (not isinstance(receipt.get("sourceManifestSHA256"), str)
+                            or len(receipt["sourceManifestSHA256"]) != 64
+                            or any(character not in "0123456789abcdef" for character in receipt["sourceManifestSHA256"])):
+                        raise ValueError("invalid staged source manifest checksum")
+                    self._history_record(entry, report, data)
+                    entry["status"] = "verified staged/intake-only; not accepted publication"
+                    for photo in entry["photos"]:
+                        photo["staged"] = True
+                except (OSError, ValueError, KeyError, TypeError) as exc:
+                    entry["status"] = "unverified staged receipt: " + str(exc)[:240]
+        except (OSError, ValueError) as exc:
+            self._error("Cannot discover staged intake receipts: " + str(exc))
+
     def _history_record(self, entry, run, data):
         entry.update(recipe=data.get("recipe", {}).get("id", "unknown recipe"),
                      status="verified historical artifacts")
@@ -271,6 +348,31 @@ class PreparationIndex:
         return self._hashes[key]
 
     def evidence(self, path, photo_id=None):
+        from .retained_preparation import claims_photo, verify_link
+
+        retained = verify_link(self.root, path, photo_id)
+        if retained and (
+            (retained["domain"] == "general") == (self.domain == "general")
+        ):
+            row = retained["row"]
+            href = os.path.relpath(self.root / retained["detail"], self.page_dir).replace(os.sep, "/")
+            recipe = retained["recipe"]
+            return {
+                "state": "verified",
+                "summary": "Published native photo and destination-owned retained original/variants verified by path and SHA-256",
+                "matches": [{
+                    **_summary(row), "href": quote(href, safe="/._-"),
+                    "recipe": recipe.get("id", "unknown recipe") if isinstance(recipe, dict) else str(recipe),
+                    "sourceSha256": retained["sourceSha256"], "photoId": retained["photoId"],
+                    "scope": retained["domain"], "outcome": row.get("outcome", "retained"),
+                }],
+                "historyHref": "",
+            }
+        if claims_photo(self.root, path):
+            return {
+                "state": "unverified", "matches": [], "historyHref": "",
+                "summary": "Destination-owned retained preparation is stale, invalid or outside this matching domain; links withheld",
+            }
         resolved = pathlib.Path(path).resolve()
         try:
             relative = resolved.relative_to(self.root).as_posix()

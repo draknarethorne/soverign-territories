@@ -96,6 +96,8 @@ def derivative_omissions(work):
     for relative, manifest in files.items():
         if manifest.name != derivatives.MANIFEST:
             continue
+        if any(part.casefold() in ("gallery_org", "gallery_intake") for part in manifest.relative_to(work).parts):
+            continue
         try:
             data = derivatives.load(manifest.parent)
             for output, record in data["entries"].items():

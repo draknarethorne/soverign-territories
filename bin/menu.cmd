@@ -22,7 +22,7 @@ echo   T  Preview artist-only likeness grouping in the sandbox (shared engine, n
 echo   V  Preview separate Artist gallery pages (no matching or source changes)
 echo   C  Photo library check (read only: anything waiting?)
 echo   B  Back up the photo library and ComfyUI inputs
-echo   X  Clean sandbox rebase (preview or verify; apply separately after reviewing the plan)
+echo   X  Intake-aware sandbox clean start (inventory or verify; prepare/match/apply separately)
 echo   S  Style audit (which art wording leans illustrated)
 echo   H  Help (all scripts)
 echo   Q  Quit

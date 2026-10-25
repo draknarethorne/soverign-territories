@@ -1,7 +1,8 @@
 @echo off
-rem Fresh cast-seeded rebuild; preview, replan, apply, verify, or undo the saved run.
+rem Intake-aware clean start. --dry-run inventories; --intake-only --apply prepares and stops.
+rem No flags prepares/resumes and previews matching. --apply installs an existing reviewed preview.
 if "%~2"=="" (
-  echo Usage: sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\RUN" [--dry-run ^| --replan ^| --apply ^| --check ^| --undo]
+  echo Usage: sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\RUN" [--dry-run ^| --intake-only --apply ^| --replan ^| --apply ^| --check ^| --undo]
   exit /b 2
 )
 call "%~dp0_env.cmd"

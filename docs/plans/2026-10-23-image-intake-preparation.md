@@ -1,6 +1,47 @@
 # 2026-10-23: source-preserving image intake and preparation
 
-**Status:** active (Phase 1; sandbox sidecar pilot authorized Oct 23; no gallery replacement or production apply)
+**Status:** active (Phase 1; sandbox clean-start integration implemented; real recipe/flow acceptance and production cutover remain gated)
+
+## Oct 25 continuation: one prepared clean-start flow
+
+I21/I22/I23 now have sandbox implementation, not just separate commands:
+
+- `sandbox-rebase.cmd --dry-run` inventories immutable inputs without models,
+  reports or writes. `--intake-only --apply` prepares every supplied image and
+  stops; the same run without flags resumes into a fresh-cache matching preview.
+  `--apply` installs only that saved preview. See the exact command sequence in
+  [the likeness guide](../art/likeness.md#clean-sandbox-rebuild-versus-category-reclassification).
+- All retained cast images are prepared without changing cast membership.
+  Loose and named Various inputs enter the same planner; explicit names reuse
+  the existing seeding helper. Artists receive preparation evidence but are not
+  general matching/assignment candidates. Optional cast release is still C1/C3.
+- Selected prepared bytes feed embeddings and final native images. Exact
+  originals stay in `gallery_org`; kept variants, masks, thumbnails and detail
+  stay in checked `gallery_intake` sets. No pruning/subset decision is invented.
+  Routine backup preserves these auxiliaries; only proven standard regenerable
+  derivatives use the existing omission rules.
+- Prepared natives bypass legacy source cropping and screenshot stripping in
+  full/head/chest rendering. Framing and minimum-quality checks remain active.
+  Changing a source's prepared status invalidates an old derivative proof.
+- Gallery evidence prefers the exact verified retained set, not a historical
+  experiment. Detail distinguishes retained evidence from pilot output and
+  returns to the main gallery, Review, Intake runs and current native; available
+  maintained derivatives are linked. Historical staged runs remain separate.
+- Photo moves/renames, manual actions and undo carry retained sets. Unsupported
+  whole-identity operations with overlapping auxiliaries hold explicitly.
+  Edited/missing/unknown retained assets are not silently discarded.
+- Stable identity/name/family/override decisions migrate only with verified
+  one-to-one membership continuity after matching. Missing catalogued inputs,
+  unknown current photos and ambiguous decisions refuse before reset.
+  Current native/category/auxiliary hashes are frozen across staging.
+  Existing owned cast outputs are replaced reversibly, including another
+  clean start from already-prepared inputs; unknown/edited outputs hold.
+
+No real library rebase, matching or source replacement was run. Synthetic
+end-to-end tests cover stop/check/resume, named/loose intake, retained links,
+existing derivatives, repeated rebuilds, concurrent edits and exact undo.
+Real visual acceptance remains I29/C7; incremental production integration
+remains I12/upkeep U7, not permission to run `library.cmd` against production.
 
 ## Oct 25: incremental scope and the next clean-start acceptance
 
@@ -25,9 +66,9 @@ I23 and cast C2-C6, rather than creating a second rebase or matching pipeline:
 - Commit/push is authorized after validation and day hygiene, not permission to
   include secrets, discard raw feedback, or publish unverified code.
 
-I22's intake-only/resume and I21/I23's retained-set/publication wiring remain
-explicit integration work. Current sidecar preparation plus matching commands
-must not be presented as the finished combined clean-start pipeline.
+The continuation above delivers the sandbox I21/I22/I23 wiring. Its explicit
+acceptance and production boundaries supersede the earlier integration gap;
+the old matcher-only run is not evidence for this prepared-image flow.
 
 ## Oct 25: v16 crop → crop → erase → frame, and the modular intake package
 
@@ -198,13 +239,15 @@ unverified rename. Gallery layout changes do not run intake.
 - Seeded people are ordinary (unprotected). A later reconcile may still split strong
   outliers out of them; whether a seeded folder should be anchored is the user's decision.
 
-- [ ] **P1 either** I21 Implement retained version sets (`gallery_intake`) per the proposal
-   above: decide the retained subset with the user, write it at intake, move it with the
-   identity, exclude regenerable renders from backups, and reconcile `archive_org` (U7).
-- [ ] **P1 ai** I22 Add an intake-only stop and resume to the launchers (`library.cmd`
-   or `prepare-images.cmd`), keyed by source hash and recipe, with preview and `--check`.
-- [ ] **P1 ai** I23 Build the per-photo all-versions page and link it from Review and
-   People pages through the L12 bridge; mark missing/regenerable versions explicitly.
+- [x] **P1 either** I21 Implement sandbox retained version sets (`gallery_intake`):
+   preserve all currently kept alternatives and exact originals; verified moves,
+   backup and undo retain them. No automatic pruning. Live cutover stays with U7.
+- [x] **P1 ai** I22 Add intake-only stop/check/resume to the existing clean-start
+   launcher, keyed by immutable source and full recipe, using the shared preparation
+   runner. Incremental `library.cmd` cutover remains I12/U7.
+- [x] **P1 ai** I23 Link checked retained all-versions detail from People/Review,
+   including post-assignment moves and current/derivative return links. Historical
+   comparisons remain distinct; missing or stale evidence is diagnostic.
 - [ ] **P1 you** I24 After the sandbox rebase, drop `Various\<Name>\gallery` folders of
    known people and run `bin\library.cmd`; confirm they land under that name, and decide
    whether seeded people should be protected from automatic splits.

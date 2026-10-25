@@ -2,6 +2,26 @@
 
 **Status:** active (Artist browsing/navigation prototype authorized Oct 23; broader people layout acceptance remains)
 
+## Oct 25 continuation: retained evidence is now integrated
+
+Sandbox assignment now publishes exact originals and retained alternatives
+beside the destination photo. People/Review prefer that checked retained detail
+over historical comparisons, including named and unassigned Various photos.
+Relative links are resolved against the generated gallery directory, not
+tested by searching for an absolute file URI. Historical staged intake-only
+runs remain labelled separately in the run browser.
+
+Retained detail now identifies itself as retained evidence rather than an
+unassigned pilot. It links current native, domain main gallery, Review and
+Intake runs, plus verified available full/head/chest derivatives. The shared
+move/rename/manual-action path carries the set and its return navigation.
+Missing/stale claims remain explicit; no version is regenerated on viewing.
+
+This delivers L12's stored-lineage integration in synthetic end-to-end tests.
+L19's broader separate unassigned entry experience and real gallery acceptance,
+L18's library-scale I/O and L20's pruning policy remain open. No real library
+republish or rebase was used as a substitute for those acceptance gates.
+
 ## Oct 25, 12:33: protection reasons and three-name identity display
 
 Full feedback and name-field ownership live in

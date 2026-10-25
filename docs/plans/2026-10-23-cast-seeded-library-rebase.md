@@ -2,6 +2,33 @@
 
 **Status:** active (Phase 3; blocked on accepted Phase 1 preparation and Phase 2 recovery)
 
+## Oct 25 implementation checkpoint, before real acceptance
+
+The existing launcher now supports the same all-image preparation run as
+intake-only review or preparation/resume into matching preview and reversible
+installation. C4's retained-cast implementation is delivered; it does not
+silently implement optional cast release. Exact commands and refusal conditions
+live in the [likeness guide](../art/likeness.md#clean-sandbox-rebuild-versus-category-reclassification).
+
+C2 now inventories active current inputs against immutable stable IDs and
+migrates one-to-one name/family/override decisions only after evidence-based
+routing. Missing catalogued inputs, unknown current images, stale bytes and
+ambiguous split/merged destinations hold rather than lose curation. Existing
+prepared lineage can prove the current-to-original decision binding.
+Broader real-curation coverage remains C2 acceptance work, not an inferred pass.
+
+C6 stages native prepared bytes, exact originals, retained sets and standard
+derivatives, without repeating screenshot cleanup. Existing owned cast outputs
+and prior category bytes are journaled and hash-checked for exact undo.
+Unknown/edited files refuse; concurrent native/category/auxiliary edits prevent
+installation. People/Review refresh after apply; repeat apply validates installed
+outputs and refreshes reports rather than installing twice.
+
+Synthetic tests cover the full retained-cast flow, including a second isolated
+prepared rebuild and undo. No real rebase, optional cast release, threshold
+calibration, workflow retargeting or production apply ran. C1/C3/C5/C7 and
+real C2/C6 acceptance remain open.
+
 ## Scope and dependencies
 
 **Oct 25 clarification:** the next user acceptance run is a clean supplied-image
@@ -12,7 +39,8 @@ The complete wording and I21/I22/I23 handoffs live in the
 Do not run that rebase before integrated preparation/retained-set lineage is
 ready. Matching uses a fresh reference baseline while preserving original-name,
 manual override and family decisions through verified stable-ID migration;
-current refusal guards do not count as delivering that migration.
+refusal guards alone do not count as delivering that migration. The checkpoint
+above records the implemented one-to-one path and remaining acceptance boundary.
 
 Own the new configurable cast seed/remaining-photo experiment and its sandbox
 acceptance. Do not duplicate the matching engine, enhancement algorithms or
@@ -90,10 +118,11 @@ implicitly selected here.
   policy/config resolution, permission guards and source/hash/recovery mapping.
   Preview every retained/core/released outcome before mutation; no force flag
   that bypasses protection in normal incremental processing.
-- [ ] **P1 ai** C4 Prepare all seeds and candidates through Phase 1, record
+- [x] **P1 ai** C4 Prepare all retained seeds and candidates through Phase 1, record
   source/prepared/analysis/recipe hashes and per-photo outcomes, and rebuild
   run-local face features/centering consistently. Flatten eligible non-cast
-  and released cast sources exactly once with no old non-cast reference seeds.
+  sources exactly once with no old non-cast reference seeds. Optional released
+  cast sources remain gated by C1/C3, not silently enabled.
 - [ ] **P1 ai** C5 Run repeatable sandbox scenarios from the same immutable
   source/curation snapshot and preparation recipe. Vary only declared seed
   parameters; compare cast retention, released-photo destinations, false

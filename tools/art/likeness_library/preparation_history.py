@@ -1,6 +1,7 @@
 """Static, read-only navigation over a gallery's checked intake history."""
 import html
 import json
+import pathlib
 
 from likeness_library import gallery_chrome
 
@@ -51,7 +52,8 @@ function renderPhotos(run){
   const rows=(linkedOnly.checked?scopedRows(run):run.photos).filter(p=>!q||[p.source,p.outcome,p.reason].join(" ").toLowerCase().includes(q));
   for(const p of rows.slice(0,limit)){
     const card=node("article",null,photos);card.className="history-photo";
-    if(source&&p.source===source&&(!digest||p.sha256===digest)){card.classList.add("history-current");node("strong","Linked photo",card);}
+    if(!p.staged&&source&&p.source===source&&(!digest||p.sha256===digest)){card.classList.add("history-current");node("strong","Linked photo",card);}
+    if(p.staged)node("strong","Staged/intake-only — not accepted publication",card);
     if(p.thumbnail){const image=node("img",null,card);image.src=p.thumbnail;image.alt=p.source;image.loading="lazy";
       node("p","Stored preview: "+p.preview,card);}
     else node("p","No stored preview available.",card);
@@ -98,6 +100,30 @@ if(selected&&!runs.some(r=>r.name===selected&&(!source||scopedRows(r).length))){
 }
 render();
 """
+
+
+def publish_staged(root, output_dir, *, domain="general"):
+    """Refresh intake navigation only; no matching, preparation or photo writes."""
+    from .preparation_provenance import build_index
+    from .retained_preparation import _safe
+
+    root = pathlib.Path(root).absolute()
+    output_dir = pathlib.Path(output_dir).absolute()
+    relative = output_dir.relative_to(root).as_posix()
+    output = _safe(root, relative + "/intake_runs.html")
+    payload = build_index(root, output_dir, [], domain).history_html()
+    output.parent.mkdir(parents=True, exist_ok=True)
+    pending = _safe(root, relative + "/intake_runs.pending.html")
+    if pending.exists():
+        raise ValueError("unfinished intake history publication exists")
+    try:
+        with pending.open("x", encoding="utf-8") as stream:
+            stream.write(payload)
+        pending.replace(output)
+    finally:
+        if pending.exists():
+            pending.unlink()
+    return output
 
 
 def render(index, *, standalone=False):

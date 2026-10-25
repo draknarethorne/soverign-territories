@@ -33,6 +33,23 @@ def jpeg(path, size=(60, 30), orientation=None):
 
 @unittest.skipIf(Image is None, "Pillow is not installed")
 class OriginalsTests(unittest.TestCase):
+    def test_explicit_cleanup_bypass_preserves_native_padding_and_head_framing(self):
+        source = self.tmp / "prepared.png"
+        Image.new("RGB", (400, 900), (120, 50, 25)).save(source)
+        box = [.25, .2, .2, .2]
+        with mock.patch.object(originals.screens, "is_reel_ui", return_value=True) as detect, \
+                mock.patch.object(originals.screens, "clean", side_effect=AssertionError("no source cleanup")), \
+                mock.patch.object(originals.screens, "clean_box", side_effect=AssertionError("no source cleanup")):
+            padded = io.BytesIO()
+            originals.fit(source, padded, (94, 110), box, cleanup=False)
+            head = io.BytesIO()
+            self.assertTrue(originals.headshot(source, head, (94, 110), box, cleanup=False))
+            detect.assert_not_called()
+        with Image.open(padded) as image:
+            self.assertEqual(image.size, (94, 110))
+        with Image.open(head) as image:
+            self.assertEqual(image.size, (94, 110))
+
     def test_scoped_refresh_only_generates_artist_derivatives_without_retargeting(self):
         general = self.gallery("Prospects", "General")
         artist = self.gallery("Artists/Painter", "Artist")
@@ -143,14 +160,23 @@ class OriginalsTests(unittest.TestCase):
             d.mkdir(parents=True)
             (d / f"a_{sub}.png").write_bytes(b"x")
         out = self.run_tool("--archive-old", apply=False)
-        self.assertIn("3 folder(s)", out)
+        self.assertIn("2 folder(s)", out)
         self.assertTrue((self.lib / "Angels/Angelica/gallery_org").exists(), "a preview moves nothing")
         self.run_tool("--archive-old")
-        self.assertFalse(list((self.lib / "Angels/Angelica").glob("*_org")), "nothing is left beside the live folders")
+        self.assertEqual(
+            [path.name for path in (self.lib / "Angels/Angelica").glob("*_org")],
+            ["gallery_org"], "retained originals remain beside the active person",
+        )
+        retained = self.lib / "Angels/Angelica/gallery_org/a_gallery_org.png"
+        self.assertEqual(retained.read_bytes(), b"x")
         self.assertEqual(self.names("Angels", "Angelica", "gallery_94x110_org"), ["a_gallery_94x110_org.png"])
-        self.assertEqual(self.names("Angels", "Angelica", "gallery_org"), ["a_gallery_org.png"])
+        self.assertFalse((self.lib / "_archive/Angels/Angelica/gallery_org").exists())
         self.run_tool("--undo-archive")
         self.assertTrue((self.lib / "Angels/Angelica/gallery_94x110_org/a_gallery_94x110_org.png").exists())
+        self.assertEqual(
+            (self.lib / "Angels/Angelica/headshot_94x110_org/a_headshot_94x110_org.png").read_bytes(), b"x",
+        )
+        self.assertEqual(retained.read_bytes(), b"x")
 
     def reel(self, path, size=(400, 900)):
         """A picture that looks like a phone screenshot of a Facebook reel: a red picture, the black comment bar and the light navigation bar along the bottom."""

@@ -108,6 +108,42 @@ class IdentityMaintenanceTests(unittest.TestCase):
         self.assertEqual(transitions, [])
         self.assertIn("protected", evidence[0]["reason"])
 
+    def test_retained_identity_transition_holds_without_blocking_unrelated_photo_move(self):
+        photos, space, cores = self.fixture(5)
+        auxiliary = self.root / self.folder / "gallery_intake" / ("a" * 64) / "manifest.json"
+        auxiliary.parent.mkdir(parents=True)
+        auxiliary.write_bytes(b"retained set; planner must not alter even stale evidence")
+        original = self.root / self.folder / "gallery_org" / ("a" * 64) / "original.jpg"
+        original.parent.mkdir(parents=True)
+        original.write_bytes(b"exact retained original")
+        before = {path: path.read_bytes() for path in (auxiliary, original, *(photo.path for photo in photos))}
+        incoming = self.photo(200000, "Various")
+        move = {
+            "photoId": metadata.photo_id_from_name(incoming.name),
+            "source": incoming.path.relative_to(self.root).as_posix(),
+            "destination": f"Potentials/Unrelated/gallery/{incoming.name}",
+            "sha256": metadata.content_sha256(incoming.path), "reason": "unrelated admission",
+        }
+        transitions, evidence = identities.category_transitions(
+            space, cores, {"moves": [move]}, self.catalog, set(), set(),
+            self.policy, self.root, measured_photos=photos + [incoming],
+        )
+        self.assertEqual(transitions, [])
+        self.assertEqual(evidence[0]["decision"], "hold")
+        self.assertIn("retained preparation", evidence[0]["reason"])
+        moves = identities.relocate_files(self.root, [move], transitions)
+        self.assertEqual(moves, [move])
+        journal = maintenance.apply_moves(
+            self.root, moves, self.policy, {}, identity_actions=transitions,
+            backup_fn=lambda *_: "verified",
+        )
+        self.assertIsNotNone(journal)
+        self.assertTrue((self.root / move["destination"]).is_file())
+        for path, payload in before.items():
+            self.assertEqual(path.read_bytes(), payload)
+        self.assertEqual(metadata.load_catalog(self.root / ".likeness-library.json")["people"][self.person_id]["folder"],
+                         self.folder)
+
     def test_empty_directory_shell_allows_later_category_transition_without_deletion(self):
         photos, space, cores = self.fixture(5)
         shell = self.root / "Prospects" / "Test Person" / "gallery" / "empty"

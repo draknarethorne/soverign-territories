@@ -768,9 +768,20 @@ def run(args):
     if not args.apply:
         print(f"Preview only. Add --apply to retain exact inputs and publish comparisons in {output}")
         return 0
+    return publish(root, output, selected, limit=args.limit, source_folder=source_folder, counts=counts)
+
+
+def publish(root, output, selected, *, limit=0, source_folder=None, counts=None):
+    """Publish one immutable report; sandbox orchestration supplies a verified source mirror."""
+    safe_path(root, output)
+    for source in selected:
+        safe_path(root, source)
+    if counts is None:
+        counts = {category: sum(path.relative_to(root).parts[0] == category for path in selected)
+                  for category in CATEGORIES}
     if output.exists():
         data = verify(root, output)
-        if (data["recipe"] != RECIPE or data["limit"] != args.limit
+        if (data["recipe"] != RECIPE or data["limit"] != limit
                 or [r["source"] for r in data["photos"]] != [p.relative_to(root).as_posix() for p in selected]
                 or data["inventory"] != counts or data.get("sourceFolder") != source_folder):
             raise ValueError("existing run has different inputs/recipe; choose a new --out")
@@ -778,7 +789,7 @@ def run(args):
         return int(any(row["outcome"] in ("unprocessable", "assessment-failed") for row in data["photos"]))
     output.parent.mkdir(parents=True, exist_ok=True)
     data = {"schemaVersion": 1, "root": str(root), "recipe": RECIPE,
-            "limit": args.limit, "sourceFolder": source_folder, "inventory": counts, "photos": []}
+            "limit": limit, "sourceFolder": source_folder, "inventory": counts, "photos": []}
     with tempfile.TemporaryDirectory(prefix=".preparation-", dir=output.parent) as temporary:
         stage = pathlib.Path(temporary) / "run"
         stage.mkdir()

@@ -9,6 +9,7 @@ import time
 from PIL import Image, ImageOps
 
 import originals
+from . import retained_preparation
 from likeness_library.thumbnails import crop_thumbnail
 
 SIZE = (944, 1104)
@@ -63,6 +64,7 @@ def verified(source, framing, box=None):
         raise ValueError(f"Unavailable {framing}: {source}; no usable cached face")
     if (record.get("recipe") != RECIPE or record.get("source") != source.relative_to(folder).as_posix()
             or record.get("sourceSha256") != digest(source) or record.get("sha256") != digest(target)
+            or record.get("sourcePrepared", False) != retained_preparation.source_is_prepared(source)
             or (framing != "padded" and box is not None and record.get("box") != list(box))):
         raise ValueError(f"Stale or edited maintained {framing}: {target}; run maintenance")
     return target, record
@@ -71,10 +73,11 @@ def verified(source, framing, box=None):
 def render(source, framing, box):
     """Deterministic bytes shared by maintenance, omission proof and recovery."""
     output = io.BytesIO()
+    prepared = retained_preparation.source_is_prepared(source)
     if framing == "padded":
-        originals.fit(source, output, SIZE, box)
+        originals.fit(source, output, SIZE, box, cleanup=not prepared)
     elif framing == "head":
-        if not box or not originals.headshot(source, output, SIZE, box):
+        if not box or not originals.headshot(source, output, SIZE, box, cleanup=not prepared):
             raise ValueError(f"head cannot be reproduced: {source}")
     elif framing == "chest":
         if not box:
@@ -82,7 +85,7 @@ def render(source, framing, box):
         with Image.open(source) as image:
             image = ImageOps.exif_transpose(image).convert("RGB")
             import screens
-            if screens.is_reel_ui(image):
+            if not prepared and screens.is_reel_ui(image):
                 if not screens.head_clear(box):
                     raise ValueError(f"face under screenshot UI: {source}")
                 x0, y0, x1, y1 = screens.clean_box(image.size)
@@ -135,6 +138,7 @@ def maintain(source, box, px, *, apply=False):
             data["entries"][relative.as_posix()] = {
                 "source": source.relative_to(folder).as_posix(), "sourceSha256": digest(source),
                 "sha256": digest(target), "box": list(box) if box else None, "recipe": RECIPE,
+                "sourcePrepared": retained_preparation.source_is_prepared(source),
             }
             save(folder, data)
         finally:

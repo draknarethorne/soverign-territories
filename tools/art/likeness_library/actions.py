@@ -18,7 +18,7 @@ import likeness  # noqa: E402
 import originals  # noqa: E402
 import library_backup  # noqa: E402
 import people  # noqa: E402
-from likeness_library import metadata, person_actions, person_rename, rejections  # noqa: E402
+from likeness_library import metadata, person_actions, person_rename, rejections, retained_preparation  # noqa: E402
 
 cw = likeness.cw
 
@@ -756,6 +756,67 @@ def _move_files(plans, root):
     return completed, created_directories
 
 
+def _retained_plans(root, plans):
+    transfers = []
+    for plan in plans:
+        if plan.get("type") == person_rename.ACTION:
+            for member in (plan, plan.get("partner")):
+                if member and member["source"] != member["destination"] and any(
+                        path.exists() for name in ("gallery_intake", "gallery_org")
+                        for path in [member["source"] / name]):
+                    raise ValueError("retained preparation holds whole-person folder actions; photo actions remain available")
+        source, destination = plan.get("source"), plan.get("destination")
+        if source is None or destination is None or source == destination or plan.get("type") == person_rename.ACTION:
+            continue
+        transfer = retained_preparation.plan_transfer(
+            root, _relative_file(root, source), _relative_file(root, destination))
+        if transfer:
+            transfers.append(transfer)
+    retained_preparation.validate_transfers(root, transfers)
+    return transfers
+
+
+def _retained_journal(root, batch_id):
+    if not batch_id.startswith("batch_") or any(character not in "0123456789abcdef" for character in batch_id[6:]):
+        raise ValueError("unsafe retained action batch ID")
+    return retained_preparation._safe(root, f"_reports/runs/manual-retained-{batch_id}.json")
+
+
+def _write_retained_journal(path, data):
+    pending = path.with_suffix(".pending")
+    if pending.exists():
+        raise ValueError("unfinished retained action journal")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        with pending.open("x", encoding="utf-8") as stream:
+            json.dump(data, stream, indent=2)
+        pending.replace(path)
+    finally:
+        if pending.exists():
+            pending.unlink()
+
+
+def _undo_retained(root, batch, reverse_plans):
+    journal = _retained_journal(root, batch)
+    if not journal.exists():
+        if any(retained_preparation.claims_photo(root, plan["source"])
+               for plan in reverse_plans if plan.get("source") is not None):
+            raise ValueError("retained photo action is missing its exact transfer journal")
+        return [], None
+    if journal.stat().st_size > retained_preparation.MAX_MANIFEST_BYTES:
+        raise ValueError("retained action journal exceeds byte limit")
+    data = json.loads(journal.read_text(encoding="utf-8"))
+    if data.get("batchId") != batch or data.get("status") != "applied":
+        raise ValueError("retained action journal is not applied")
+    transfers = data["transfers"]
+    pairs = {(_relative_file(root, plan["destination"]), _relative_file(root, plan["source"]))
+             for plan in reverse_plans if plan.get("source") is not None}
+    if any((transfer["sourcePhoto"], transfer["destinationPhoto"]) not in pairs for transfer in transfers):
+        raise ValueError("retained action journal differs from photo action history")
+    retained_preparation.validate_transfers(root, transfers, reverse=True)
+    return transfers, (journal, data)
+
+
 def apply_actions(document, root, catalog, cfg, pool_folder, *, backup_fn=None, save_fn=None):
     """Back up, revalidate, apply staged actions transactionally, and save an audit history."""
     root = pathlib.Path(root).resolve()
@@ -765,6 +826,7 @@ def apply_actions(document, root, catalog, cfg, pool_folder, *, backup_fn=None, 
     errors, plans = validate_manifest(document, root, catalog, pool_folder, chosen_ids, cfg)
     if errors:
         raise ValueError("cannot apply invalid manifest:\n  " + "\n  ".join(errors))
+    transfers = _retained_plans(root, plans)
     batch_id = "batch_" + uuid.uuid4().hex
     updated = copy.deepcopy(catalog)
     rename_record = None
@@ -786,6 +848,7 @@ def apply_actions(document, root, catalog, cfg, pool_folder, *, backup_fn=None, 
         _create_action_backup(root, cfg, batch_id, rename_plan=rename_plan)
     )
     _revalidate_catalog(catalog_guard, catalog)
+    retained_preparation.validate_transfers(root, transfers)
     errors, checked_plans = validate_manifest(document, root, catalog, pool_folder, chosen_ids, cfg)
     if errors:
         raise ValueError("library changed after backup; no actions applied:\n  " + "\n  ".join(errors))
@@ -804,12 +867,22 @@ def apply_actions(document, root, catalog, cfg, pool_folder, *, backup_fn=None, 
         raise ValueError("action destinations changed after backup; no actions applied")
 
     rename_plan = next((plan for plan in checked_plans if plan["type"] == person_rename.ACTION), None)
+    retained_journal = _retained_journal(root, batch_id) if transfers else None
+    retained_data = {"batchId": batch_id, "status": "applied", "transfers": transfers}
+    if retained_journal:
+        if retained_journal.exists():
+            raise ValueError("retained action journal already exists")
+        _write_retained_journal(retained_journal, {**retained_data, "status": "prepared"})
     completed, created_directories = _move_files(
         [plan for plan in checked_plans if plan["type"] != person_rename.ACTION], root,
     )
     workflow_attempted = any(plan.get("workflow") for plan in checked_plans)
     rename_completed = False
+    retained_done = []
     try:
+        for transfer in transfers:
+            retained_preparation.execute_transfer(root, transfer)
+            retained_done.append(transfer)
         if rename_plan:
             person_rename.change_files(rename_plan)
             rename_completed = True
@@ -819,6 +892,8 @@ def apply_actions(document, root, catalog, cfg, pool_folder, *, backup_fn=None, 
                 rename_record["swapPartner"]["renameState"] = copy.deepcopy(rename_plan["partner"]["rename"])
             metadata.validate_catalog(updated)
         _repoint_workflow_photos(checked_plans, cfg)
+        if retained_journal:
+            _write_retained_journal(retained_journal, retained_data)
         (save_fn or metadata.save_catalog)(updated)
     except (OSError, ValueError) as exc:
         workflow_failures = []
@@ -832,7 +907,15 @@ def apply_actions(document, root, catalog, cfg, pool_folder, *, backup_fn=None, 
                 _restore_workflow_photos(checked_plans, cfg)
             except (OSError, ValueError) as restore_exc:
                 workflow_failures.append(f"workflow rollback failed: {restore_exc}")
-        failures = _rollback_moves(completed, created_directories)
+        failures = _rollback_moves(completed, [])
+        for transfer in reversed(retained_done):
+            try:
+                retained_preparation.execute_transfer(root, transfer, reverse=True)
+            except (OSError, ValueError) as restore_exc:
+                failures.append(f"retained rollback failed: {restore_exc}")
+        failures.extend(_rollback_moves([], created_directories))
+        if retained_journal:
+            _write_retained_journal(retained_journal, {**retained_data, "status": "rollback-failed" if failures else "rolled-back"})
         failures.extend(workflow_failures)
         if failures:
             raise OSError(
@@ -1006,6 +1089,10 @@ def plan_undo(catalog, root, batch_id=None, chosen_ids=(), cfg=None):
         metadata.validate_catalog(simulated)
     except ValueError as exc:
         return [f"undo would create invalid catalogue state: {exc}"], None, []
+    try:
+        _undo_retained(root, selected_batch, reverse_plans)
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        return [f"cannot undo retained preparation: {exc}"], None, []
     return [], selected_batch, reverse_plans
 
 
@@ -1016,6 +1103,7 @@ def undo_actions(catalog, root, cfg, pool_folder, *, batch_id=None, backup_fn=No
     errors, selected_batch, reverse_plans = plan_undo(catalog, root, batch_id, chosen_ids, cfg)
     if errors:
         raise ValueError("cannot undo action batch:\n  " + "\n  ".join(errors))
+    transfers, retained_journal = _undo_retained(root, selected_batch, reverse_plans)
     if any(
         item.get("actionRecord", {}).get("type") in WORKFLOW_ACTIONS
         for item in reverse_plans
@@ -1035,6 +1123,7 @@ def undo_actions(catalog, root, cfg, pool_folder, *, batch_id=None, backup_fn=No
     if errors or checked_batch != selected_batch:
         detail = "\n  ".join(errors) if errors else "latest action batch changed"
         raise ValueError(f"action state changed after backup; no undo applied:\n  {detail}")
+    retained_preparation.validate_transfers(root, transfers, reverse=True)
 
     updated = copy.deepcopy(catalog)
     for item in checked_plans:
@@ -1094,11 +1183,18 @@ def undo_actions(catalog, root, cfg, pool_folder, *, batch_id=None, backup_fn=No
     workflow_attempted = any(item.get("workflow") for item in checked_plans)
     rename_plan = next((item["renamePlan"] for item in checked_plans if "renamePlan" in item), None)
     rename_completed = False
+    retained_done = []
     try:
+        for transfer in reversed(transfers):
+            retained_preparation.execute_transfer(root, transfer, reverse=True)
+            retained_done.append(transfer)
         if rename_plan:
             person_rename.change_files(rename_plan, reverse=True)
             rename_completed = True
         _repoint_workflow_photos(checked_plans, cfg)
+        if retained_journal:
+            path, receipt = retained_journal
+            _write_retained_journal(path, {**receipt, "status": "undone"})
         (save_fn or metadata.save_catalog)(updated)
     except (OSError, ValueError) as exc:
         workflow_failures = []
@@ -1112,7 +1208,16 @@ def undo_actions(catalog, root, cfg, pool_folder, *, batch_id=None, backup_fn=No
                 _restore_workflow_photos(checked_plans, cfg)
             except (OSError, ValueError) as restore_exc:
                 workflow_failures.append(f"workflow rollback failed: {restore_exc}")
-        failures = _rollback_moves(completed, created_directories)
+        failures = _rollback_moves(completed, [])
+        for transfer in reversed(retained_done):
+            try:
+                retained_preparation.execute_transfer(root, transfer)
+            except (OSError, ValueError) as restore_exc:
+                failures.append(f"retained undo rollback failed: {restore_exc}")
+        failures.extend(_rollback_moves([], created_directories))
+        if retained_journal:
+            path, receipt = retained_journal
+            _write_retained_journal(path, receipt)
         failures.extend(workflow_failures)
         if failures:
             raise OSError(

@@ -1,12 +1,16 @@
 """Gallery-facing verification of source-preserving preparation evidence."""
 import contextlib
+import hashlib
+from html.parser import HTMLParser
 import io
 import json
 import pathlib
+import shutil
 import sys
 import tempfile
 import unittest
 from unittest import mock
+from urllib.parse import unquote, urlsplit
 
 from PIL import Image
 
@@ -15,7 +19,7 @@ sys.path.insert(0, str(ROOT / "tools/art"))
 import image_preparation  # noqa: E402
 import artists_gallery  # noqa: E402
 import people_gallery  # noqa: E402
-from likeness_library import preparation_provenance, review_gallery  # noqa: E402
+from likeness_library import preparation_history, preparation_provenance, retained_preparation, review_gallery  # noqa: E402
 
 
 class PreparationProvenanceTests(unittest.TestCase):
@@ -66,6 +70,141 @@ class PreparationProvenanceTests(unittest.TestCase):
         self.assertEqual(match["sourceSha256"], image_preparation.sha(self.photo.read_bytes()))
         self.assertIn("pilot-v7/photos/", match["href"])
         self.assertIn("not rename proof", preparation_provenance.render_evidence(evidence))
+
+    def test_real_retained_detail_links_resolve_to_verified_artifacts_without_external_requests(self):
+        data = json.loads((self.output / "manifest.json").read_text(encoding="utf-8"))
+        row = data["photos"][0]
+        selected = row.get("processing", {}).get("final", "original")
+        selected = "original" if selected == "control" else selected
+        relative = row["retained"] if selected == "original" else row["variants"][selected]["path"]
+        destination = "Various/review/various_image_123.jpg"
+        staged = self.root / "publication"
+        native = staged / destination
+        native.parent.mkdir(parents=True)
+        native.write_bytes((self.output / relative).read_bytes())
+        retained_preparation.stage_photo(staged, destination, self.output, row, recipe=data["recipe"])
+        link = retained_preparation.verify_link(staged, native, self.photo_id)
+        self.assertIsNotNone(link)
+        detail = staged / link["detail"]
+        expected = {(staged / entry["path"]).resolve(): entry["sha256"] for entry in link["artifacts"]}
+        expected[native.resolve()] = link["currentSha256"]
+        links, scripts, styles = [], [], []
+        class Parser(HTMLParser):
+            def handle_starttag(self, tag, attrs):
+                attributes = dict(attrs)
+                if tag == "script":
+                    scripts.append(attributes)
+                for name in ("href", "src"):
+                    if name in attributes:
+                        links.append(attributes[name])
+                if "style" in attributes:
+                    styles.append(attributes["style"])
+        text = detail.read_text(encoding="utf-8")
+        Parser().feed(text)
+        self.assertTrue(links)
+        self.assertEqual(scripts, [])
+        self.assertFalse(any("url(" in style for style in styles))
+        for href in links:
+            parsed = urlsplit(href)
+            self.assertFalse(parsed.scheme, href)
+            self.assertFalse(parsed.netloc, href)
+            if not parsed.path:
+                self.assertTrue(parsed.fragment, href)
+                continue
+            target = (detail.parent / unquote(parsed.path)).resolve()
+            self.assertIn(target, expected, href)
+            self.assertEqual(hashlib.sha256(target.read_bytes()).hexdigest(), expected[target])
+        self.assertEqual(link["current"], destination)
+        self.assertEqual(link["currentSha256"], hashlib.sha256(native.read_bytes()).hexdigest())
+        self.assertEqual(link["sourceSha256"], row["sourceSha256"])
+        page_dir = staged / "_reports" / "library"
+        index = preparation_provenance.build_index(staged, page_dir, [(native, self.photo_id)])
+        evidence = index.evidence(native, self.photo_id)
+        href = evidence["matches"][0]["href"]
+        self.assertFalse(urlsplit(href).scheme)
+        self.assertEqual((page_dir / unquote(href)).resolve(), detail.resolve())
+        self.assertIn(href, preparation_provenance.render_evidence(evidence))
+        self.assertIn("entryPoint.href=matches.length===1?matches[0].href", review_gallery.SCRIPT)
+        retained_preparation.refresh_detail(staged, native, include_gallery_navigation=True)
+        planned = detail.read_text(encoding="utf-8")
+        self.assertIn("people_gallery.html", planned)
+        self.assertIn("people_gallery_review.html", planned)
+        self.assertIn("intake_runs.html", planned)
+        self.assertNotIn(">Full padded<", planned)
+        self.assertNotIn(">Head framing<", planned)
+        self.assertNotIn(">Chest framing<", planned)
+        page_dir.mkdir(parents=True)
+        for name in ("people_gallery.html", "people_gallery_review.html", "intake_runs.html"):
+            (page_dir / name).write_text("<!doctype html><title>Test navigation destination</title>", encoding="utf-8")
+        from likeness_library import derivatives
+        derivatives.maintain(native, None, 0, apply=True)
+        published = retained_preparation.refresh_detail(staged, native, self.photo_id)
+        self.assertEqual(len(published), 2)
+        refreshed = detail.read_text(encoding="utf-8")
+        self.assertIn("Retained intake evidence", refreshed)
+        self.assertNotIn("experimental, no library changes", refreshed)
+        self.assertIn("Current native photo", refreshed)
+        self.assertIn("Photo review", refreshed)
+        self.assertIn("Intake runs", refreshed)
+        self.assertIn("Full padded", refreshed)
+        self.assertNotIn(">Head framing<", refreshed)
+        self.assertNotIn(">Chest framing<", refreshed)
+        self.assertIsNotNone(retained_preparation.verify_link(staged, native, self.photo_id))
+
+    def staged_receipt(self):
+        run = self.root / "_sandbox-state" / "intake-stop"
+        mirror = run / "inputs"
+        relative = self.photo.relative_to(self.root)
+        target = mirror / relative
+        target.parent.mkdir(parents=True)
+        shutil.copyfile(self.photo, target)
+        output = mirror / "_reports" / "preparation" / "all"
+        shutil.copytree(self.output, output)
+        manifest = output / "manifest.json"
+        data = json.loads(manifest.read_text(encoding="utf-8"))
+        data["root"] = str(mirror)
+        manifest.write_text(json.dumps(data), encoding="utf-8")
+        receipt = {
+            "schemaVersion": 1,
+            "sourceManifestSHA256": "a" * 64,
+            "preparationManifestSHA256": image_preparation.sha(manifest.read_bytes()),
+            "inputs": {relative.as_posix(): image_preparation.sha(target.read_bytes())},
+            "recipe": data["recipe"], "assessmentErrors": False,
+        }
+        (run / "intake.json").write_text(json.dumps(receipt), encoding="utf-8")
+        return run, output
+
+    def test_staged_intake_receipt_is_shared_history_only_and_publishes_navigation(self):
+        run, output = self.staged_receipt()
+        self.photo.write_bytes(b"current source no longer matches mirror")
+        index = self.index()
+        staged = next(entry for entry in index.history_runs if entry.get("staged"))
+        self.assertIn("staged/intake-only", staged["status"])
+        self.assertEqual(len(staged["photos"]), 1)
+        self.assertIn("_sandbox-state/intake-stop", staged["photos"][0]["href"])
+        self.assertTrue(staged["photos"][0]["staged"])
+        self.assertEqual(index.evidence(self.photo, self.photo_id)["matches"], [])
+        before = (output / "manifest.json").read_bytes()
+        result = preparation_history.publish_staged(self.root, self.page_dir)
+        self.assertEqual(result, self.page_dir / "intake_runs.html")
+        self.assertIn("staged/intake-only", result.read_text(encoding="utf-8"))
+        self.assertEqual((output / "manifest.json").read_bytes(), before)
+        self.assertEqual(self.photo.read_bytes(), b"current source no longer matches mirror")
+
+    def test_bad_staged_receipt_hash_or_changed_mirror_withholds_detail_links(self):
+        run, output = self.staged_receipt()
+        receipt_path = run / "intake.json"
+        receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+        receipt["preparationManifestSHA256"] = "0" * 64
+        receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
+        staged = next(entry for entry in self.index().history_runs if entry.get("staged"))
+        self.assertTrue(staged["status"].startswith("unverified"))
+        self.assertEqual(staged["photos"], [])
+        receipt["preparationManifestSHA256"] = image_preparation.sha((output / "manifest.json").read_bytes())
+        receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
+        (run / "inputs" / self.photo.relative_to(self.root)).write_bytes(b"changed mirror")
+        staged = next(entry for entry in self.index().history_runs if entry.get("staged"))
+        self.assertEqual(staged["photos"], [])
 
     def test_changed_source_is_stale_and_has_no_published_link(self):
         self.photo.write_bytes(self.photo.read_bytes() + b"changed")

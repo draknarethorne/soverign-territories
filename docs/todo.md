@@ -52,7 +52,7 @@
 - [ ] U2 Review current photo outcomes using fresh inventories: ([2026-10-22](plans/2026-10-22-library-upkeep.md))
 - [ ] P10 Archive the manual source directory only after every ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 
-### Either of us (37)
+### Either of us (36)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -68,7 +68,6 @@
 - [ ] A2 Specify then implement merge, person retirement and ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] A6 Walk through the user's scenarios one at a time: ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] C1 Define approved cast seed modes and exact meaning of ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
-- [ ] I21 Implement retained version sets (`gallery_intake`) per the proposal ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I19 Compare stronger reconstruction on reviewed identical masks when a safe ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I2 Resolve I-D1, specify archive verification, stable-ID to ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I5 Choose I-D2/I-D3/I-D4 from side-by-side visual review ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
@@ -100,7 +99,7 @@
 - [ ] A7 Compare download/run versus a lightweight explicit ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] A8 Keep broader art-authoring and ComfyUI batch UI in ([2026-10-22](plans/2026-10-22-review-actions.md))
 
-### For the assistant, when you say go (83)
+### For the assistant, when you say go (80)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -133,11 +132,8 @@
 - [ ] A11 Design and implement verified action-scoped recovery ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] C2 Inventory all photos and decisions from the immutable source ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] C3 Add schema-validated optional cast-release mode and shared ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
-- [ ] C4 Prepare all seeds and candidates through Phase 1, record ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] C5 Run repeatable sandbox scenarios from the same immutable ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] C6 Install reversibly only after approved preview, then normalize ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
-- [ ] I22 Add an intake-only stop and resume to the launchers (`library.cmd` ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
-- [ ] I23 Build the per-photo all-versions page and link it from Review and ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I18 Build a reviewed mask benchmark for complete bubble/logo shapes, including ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I11 Prioritize upstream geometric preparation before further ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I12 Complete upstream crop cutover with upkeep U7 after ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))

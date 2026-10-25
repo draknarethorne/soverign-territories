@@ -149,7 +149,8 @@ def archive_old(work, roots, apply):
     """Move every *_org folder inside the library (gallery_944x1104_org, headshot_944x1104_org, gallery_org) into <work>/_archive, mirroring the path; a manifest of the files is written so it can be undone."""
     found = []
     for root in roots:
-        found += [d for d in sorted(root.rglob("*_org")) if d.is_dir()]
+        found += [d for d in sorted(root.rglob("*_org"))
+                  if d.is_dir() and d.name.casefold() != "gallery_org"]
     moves, files = [], 0
     for d in found:
         n = sum(1 for p in d.rglob("*") if p.is_file())
@@ -183,13 +184,14 @@ def undo_archive(work, apply):
         manifests[-1].rename(manifests[-1].with_suffix(".undone"))
 
 
-def fit(src, dest, size, box=None):
+def fit(src, dest, size, box=None, *, cleanup=True):
     """Scale src to fit inside size (shape kept), centre it on the cream canvas and write a PNG (through a temporary file).
-    A phone screenshot of Facebook is cut down to the picture itself (screens.py) unless the head reaches into the app's bars (box = the face as fractions)."""
+    Unless cleanup=False, a Facebook screenshot is cut to the picture (screens.py)
+    when the head clears its bars (box = face fractions). Prepared natives disable cleanup."""
     from PIL import Image, ImageOps
     with Image.open(src) as im:
         im = ImageOps.exif_transpose(im).convert("RGB")
-    if screens.is_reel_ui(im) and (not box or screens.head_clear(box)):
+    if cleanup and screens.is_reel_ui(im) and (not box or screens.head_clear(box)):
         im = screens.clean(im)
     rgba = im.convert("RGBA")
     w, h = size
@@ -234,12 +236,12 @@ def headshot_box(img_size, box, size):
     return round(x0), round(y0), round(x0 + cw_), round(y0 + ch)
 
 
-def headshot(src, dest, size, box):
-    """Write the face of src, cropped around it at the standard shape and scaled up, as a PNG. False (nothing written) when the crop is too small to scale up without turning to mush."""
+def headshot(src, dest, size, box, *, cleanup=True):
+    """Frame the face as PNG; False when too small. cleanup=False skips screenshot stripping only."""
     from PIL import Image, ImageOps
     with Image.open(src) as im:
         im = ImageOps.exif_transpose(im).convert("RGB")
-    if screens.is_reel_ui(im):
+    if cleanup and screens.is_reel_ui(im):
         # the app's bars are cut away, and a head that reaches into them gets no headshot (the bar would be in it)
         if not screens.head_clear(box):
             return False
@@ -357,7 +359,12 @@ def process_folder(folder, label, size, args, tally):
                 tally["skipped"] += 1
                 continue  # not converted either: a copy without the prefix would only be pruned on the next run
             if args.apply:
-                if case_only:
+                from likeness_library import retained_preparation
+
+                retained = folder / "gallery_intake"
+                if retained.exists():
+                    retained_preparation.rename_photo(args.work, p, gallery / new)
+                elif case_only:
                     hop = p.with_name(p.name + ".rename_tmp")
                     p.rename(hop)
                     hop.rename(gallery / new)
