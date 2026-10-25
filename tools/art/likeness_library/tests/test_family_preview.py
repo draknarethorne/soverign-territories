@@ -146,7 +146,13 @@ class FamilyPreviewTests(unittest.TestCase):
                 metadata=SimpleNamespace(
                     with_configured_anchors=mock.Mock(side_effect=lambda catalog, *_: catalog),
                     load_catalog=mock.Mock(return_value={
-                        "people": {row["personId"]: {"folder": row["folder"]} for row in self.people},
+                        "people": {row["personId"]: {
+                            "folder": row["folder"], "displayName": row["folder"].split("/")[-1],
+                            "names": {
+                                "originalName": row["recordedName"], "currentName": row["recordedName"],
+                                "originalSource": "recorded-history",
+                            },
+                        } for row in self.people},
                     }),
                     path_for_root=mock.Mock(return_value=sentinel),
                     photo_id_from_name=mock.Mock(), content_sha256=mock.Mock(),

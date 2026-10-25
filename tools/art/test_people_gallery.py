@@ -302,6 +302,12 @@ class PeopleGalleryTests(unittest.TestCase):
         }
         output = gallery.render_html([row], "now", {"Prospects": 1})
 
+        self.assertIn(gallery.gallery_chrome.CARD_USE_GUIDANCE["Prospects"], output)
+        self.assertIn("Not a rarity rule or automatic assignment.", output)
+        for category in ("Potentials", "Models"):
+            alternate = dict(row, status=category, key=f"{category}/Sydney Sky")
+            page = gallery.render_html([alternate], "now", {category: 1})
+            self.assertIn(gallery.gallery_chrome.CARD_USE_GUIDANCE[category], page)
         self.assertIn(
             'href="people_gallery_review.html?person=Prospects%2FSydney+Sky&amp;bucket=Gallery&amp;sort=identity"',
             output,
@@ -313,6 +319,12 @@ class PeopleGalleryTests(unittest.TestCase):
         self.assertIn("Prime-start score 0.800", output)
         self.assertNotIn('aria-label="Stay at Sydney Sky"', output)
         self.assertIn("people_gallery_review.html?person=Prospects%2FSydney+Sky", output)
+        with_review = gallery.render_html([dict(row, review=3)], "now", {"Prospects": 1})
+        self.assertIn(
+            'person=Prospects%2FSydney+Sky&amp;bucket=Review&amp;sort=identity', with_review,
+        )
+        self.assertIn('class="badge review-count"', with_review)
+        self.assertEqual(with_review.count("3 in review"), 1)
 
         shared_thumbnails = self.root / "people_gallery_review_files"
         shared_thumbnails.mkdir()

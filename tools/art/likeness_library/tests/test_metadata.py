@@ -84,6 +84,22 @@ class LikenessMetadataTests(unittest.TestCase):
         self.assertRegex(first, r"^person_[0-9a-f]{32}$")
         self.assertNotEqual(first, second)
 
+    def test_save_catalog_retries_transient_windows_lock(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = pathlib.Path(tmp) / "catalogue.json"
+            replace = metadata.os.replace
+            calls = []
+            def locked_once(source, destination):
+                calls.append(destination)
+                if len(calls) == 1:
+                    raise PermissionError("transient Windows scanner lock")
+                return replace(source, destination)
+            with mock.patch.object(metadata.os, "replace", side_effect=locked_once):
+                with mock.patch.object(metadata.report_assets.time, "sleep"):
+                    metadata.save_catalog(self.valid, path)
+            self.assertEqual(len(calls), 2)
+            self.assertEqual(metadata.load_catalog(path), self.valid)
+
     def test_photo_id_ignores_folder_prefix_and_scaled_suffix(self):
         first = metadata.photo_id_from_name("sophie_image_123456.jpg")
         second = metadata.photo_id_from_name("other_image_123456_944x1104.png")

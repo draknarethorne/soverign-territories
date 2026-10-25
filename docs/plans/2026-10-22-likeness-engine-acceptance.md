@@ -2,6 +2,91 @@
 
 **Status:** active (remaining acceptance and production gates; installed trial is not accepted)
 
+## Oct 25, 12:33: evidence-based automatic protection
+
+The user's new direction is to stabilize established identities and qualifying
+photos automatically rather than require manual protection on each one. Full
+feedback is preserved in [family/naming](2026-10-22-identity-family-naming.md#follow-up-chat-oct-25-2026-1233--0500-verbatim).
+This extends protection acquisition; it does not weaken protection enforcement,
+approve thresholds, permit production changes or settle rebase migration.
+
+At the planning checkpoint, the draft policy specified protection's blocking behavior, not
+automatic score/support acquisition. `0.55` is used by display/merge decisions,
+not a calibrated auto-protect gate; five usable photos is a category boundary,
+not proof of five independent observations. Family association was disabled.
+
+Implementation continuation: draft `draft-2026-10-25.1` now adds a separate
+automatic-acquisition section. Working preview gates are own-core similarity
+at least 0.55, rival margin at least 0.10, four independent OTHER core references
+and five independently qualifying observations to establish a person. These
+are explicit uncalibrated defaults, not inherited proof from category counts.
+Self/duplicate support, stale hashes, Review/multiple faces, pending membership
+changes and explicit manual opt-outs hold. A person opt-out suppresses new
+automatic photo locks. Explicit protect re-enables automation.
+
+Protection and family/name patches share the existing reconciliation metadata
+transaction and exact undo, including metadata-only runs. The frozen source
+inventory is bound once per transaction rather than repeated in every locked
+photo. Automatic locks preserve only already-eligible frozen core members;
+they do not create anchors or promote new reference authority. Gallery and CLI
+audits share that eligibility helper. Rebase refuses to erase override/name/
+family provenance until stable-ID migration is implemented. No real matching,
+protection apply or rebase has run for this feature.
+
+Proposed safety requirements for E13, pending policy approval:
+
+- Assess photos against a frozen, independently supported own-person core;
+  prevent self-inclusion and near-duplicate inflation from certifying identity.
+  Record recipe/model/core version, source hash, score, rival margin, support,
+  policy version and reason. Missing/stale/ambiguous evidence yields a visible
+  hold, never success-shaped protection.
+- Protect an established person and qualifying Gallery photos; do not blindly
+  protect every file in the folder, Review candidates, known rejects or outliers.
+  New arrivals to a protected person still respect separately permitted Review
+  admission; high score is not permission to alter protected Gallery membership.
+- Identity protection, photo protection, core eligibility and identity approval
+  stay distinct. Protection does not force core membership or prove identity.
+- Define persistent manual-unprotect opt-out before enabling automation, so a
+  user's correction is not immediately reversed. Do not overload `false`
+  (possibly merely a default) as an explicit opt-out. Preserve workflow-selected
+  protection and report conflicts rather than silently bypassing it.
+- Plan in shared reconciliation after validated membership, using frozen evidence;
+  no mid-pass core growth/protection feedback loop. Preview, recovery, stale
+  refusal, apply/undo and idempotent repeat must use existing transaction paths.
+  Rebase preserves manual decisions and name/family lineage.
+
+- [ ] **P1 either** E13 Approve photo confidence/support/rival-margin and identity
+  establishment gates plus persistent manual override semantics; then extend
+  shared policy/schema and catalogue provenance, implement preview/apply/undo,
+  and test exact boundaries, duplicates, self-scoring, protected Review, stale
+  hashes, manual opt-out, workflow conflicts and repeat/rebase preservation.
+  Calibrate on labelled sandbox cases before enabling a mutating policy.
+
+The user was unavailable for the first policy question. Working proposal:
+explicit unprotect is a persistent opt-out until explicitly re-enabled, including
+across rebase. A person opt-out suppresses new automatic photo protection within
+that identity but does not clear existing photo locks or workflow-selection
+constraints. This is implemented in the draft for review, not a production-approved default.
+Do not infer confidence/count values from existing merge/category thresholds.
+
+## Oct 23 foundation-first dependency
+
+[Intake preparation](2026-10-23-image-intake-preparation.md) is Phase 1,
+[upkeep](2026-10-22-library-upkeep.md) is Phase 2 and the focused
+[cast-seeded rebase](2026-10-23-cast-seeded-library-rebase.md) is Phase 3.
+This plan remains the Phase 4 acceptance/production owner. Labelled cases and
+boundary inventories may support earlier phases; old raw-input scores/run
+counts do not accept a new preparation recipe. Keep the installed `.3` trial
+as historical evidence, never silently overwrite it or migrate its scores.
+
+**E4 scope reconciliation:** repeatable scenario infrastructure stays here.
+Its optional eligible low-core cast-candidate design/implementation now belongs
+to cast plan C1-C7, expanded to explicit configurable seeds, retention/release
+and all-image preparation. That portion is transferred, not completed.
+Ordinary D14/D15 protection and reset boundaries remain unchanged until
+the separately previewed experiment is approved. E6/E7/E8/E10 and production
+P1-P6 consume the accepted new baseline; none has passed by this scheduling change.
+
 ## Review and questions: 2026-10-22 16:26 -05:00
 
 Activated in the full-plan reconciliation, replacing the umbrella's engine
@@ -59,7 +144,7 @@ These are verified transfers of unfinished scope, not completed implementation.
 | E1 | 0.3a, 0.3c | Complete isolation/reset and unsupported-command boundary acceptance |
 | E2 | 1.1, 1.2, 1.3, 1.5, 3.4, 7.1 | Entry points, source roots, caller inventory and regression boundaries |
 | E3 | 2.8, 4.1a, 4.3a, 4.3b, 4.10, 4.15, 5.1b | Effective policy, declarative classes, precedence and exported sandbox config |
-| E4 | 3.1, 3.3, 3.5, 3.6, 3.7, 3.9 | Repeatable clean scenarios and optional cast-candidate mode |
+| E4 | 3.1, 3.3, 3.5, 3.6, 3.7, 3.9 | Repeatable clean scenarios; optional cast-mode execution transferred to cast plan C1-C7 Oct 23 |
 | E5 | 4.3, 4.4, 4.5, 4.6, 4.9, 4.12, 4.16, 4.17, 4.18 | Shared grouping/routing/protection/hold contract and full-path tests |
 | E6 | 0.4, 4.2, 4.7, 4.19; Oct 19 management L1 | Labelled action-specific targets, quality criteria and error metrics |
 | E7 | 4.11, 4.13, 4.20 | Real-batch idempotence, bounded follow-up and final-core verification |
@@ -87,7 +172,8 @@ These are verified transfers of unfinished scope, not completed implementation.
   addition/enablement of a supported class. A viewer config export affects
   only a subsequent explicit sandbox command, never current placement.
 - [ ] **P1 ai** E4 Verify repeatable clean scenarios from the same immutable
-  snapshot, including optional eligible low-core cast candidates. Preserve
+  snapshot after Phase 3 evidence is available. Consume the cast plan's
+  optional candidate mode; do not duplicate its seed/release implementation. Preserve
   per-photo source/hash/destination, names, exclusions, config and timing.
   Keep old names only for continuity after scoring, never as reference seeds.
 - [ ] **P1 ai** E5 Complete full-path shared-engine acceptance for frozen
@@ -111,6 +197,10 @@ These are verified transfers of unfinished scope, not completed implementation.
   promotion/demotion, Review and protected cases. Keep later Demon
   classification/pairing validation explicit rather than assuming current
   tests authorize a new category or automatic swap.
+  Oct 23 update: the forthcoming batch is now 400+ images and can include
+  recovered uncropped originals from the user's separate storage. Keep their
+  import/replacement provenance and preparation version; do not mistake them
+  for unchanged already-processed photos or silently overwrite current sources.
 - [ ] **P1 ai** E9 Integrate calibration, eligible-folder consistency and
   core-audit outputs into each run manifest and both galleries. Preserve
   independent score meanings, per-photo/person CSVs, exclusions and cold/warm

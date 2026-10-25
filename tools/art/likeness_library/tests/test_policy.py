@@ -137,7 +137,8 @@ class LikenessPolicyTests(unittest.TestCase):
             self.policy["lookalikeGroups"]["suggestionMinimumSimilarity"],
             0.30,
         )
-        self.assertFalse(self.policy["lookalikeGroups"]["automaticAssociationEnabled"])
+        self.assertTrue(self.policy["lookalikeGroups"]["automaticAssociationEnabled"])
+        self.assertEqual(self.policy["lookalikeGroups"]["minimumIndependentPhotos"], 5)
         self.assertEqual(
             self.policy["identityActions"]["identityClusterMinimumSimilarity"],
             0.25,

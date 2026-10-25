@@ -33,6 +33,30 @@ def jpeg(path, size=(60, 30), orientation=None):
 
 @unittest.skipIf(Image is None, "Pillow is not installed")
 class OriginalsTests(unittest.TestCase):
+    def test_scoped_refresh_only_generates_artist_derivatives_without_retargeting(self):
+        general = self.gallery("Prospects", "General")
+        artist = self.gallery("Artists/Painter", "Artist")
+        jpeg(general / "general_image_1.jpg")
+        jpeg(artist / "artist_image_2.jpg")
+        before = (general / "general_image_1.jpg").read_bytes()
+        cfg = {**CFG, "paths": {"photoRoots": ["Artists"]}}
+        with contextlib.redirect_stdout(io.StringIO()), mock.patch.object(cw, "reconcile_photos") as repoint:
+            originals.main(["--root", str(self.lib), "--apply", "--no-repoint", "--no-headshots"],
+                           configuration=cfg)
+        repoint.assert_not_called()
+        self.assertTrue((artist.parent / "gallery_94x110/artist_image_2_94x110.png").is_file())
+        self.assertFalse((general.parent / "gallery_94x110").exists())
+        self.assertEqual((general / "general_image_1.jpg").read_bytes(), before)
+
+    def test_scoped_refresh_requires_no_repoint_before_mutating_any_image(self):
+        artist = self.gallery("Artists/Painter", "Artist")
+        jpeg(artist / "unrenamed_image_2.jpg")
+        cfg = {**CFG, "paths": {"photoRoots": ["Artists"]}}
+        with contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
+            originals.main(["--root", str(self.lib), "--apply", "--no-headshots"], configuration=cfg)
+        self.assertTrue((artist / "unrenamed_image_2.jpg").exists())
+        self.assertFalse((artist.parent / "gallery_94x110").exists())
+
     def setUp(self):
         self.tmp = pathlib.Path(tempfile.mkdtemp())
         self.lib = self.tmp / "lib"

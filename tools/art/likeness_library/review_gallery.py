@@ -4,7 +4,6 @@ import argparse
 import collections
 import datetime
 import html
-import io
 import json
 import os
 import pathlib
@@ -17,8 +16,8 @@ ROOT = pathlib.Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "tools/art"))
 import likeness  # noqa: E402
 import originals  # noqa: E402
-from likeness_library import metadata, person_rename, rejections  # noqa: E402
-from likeness_library.audit import audit_person, catalog_photo_flags, identity_order_key  # noqa: E402
+from likeness_library import domains, gallery_chrome, identity_names, metadata, person_rename, preparation_provenance, protection, rejections, report_assets  # noqa: E402
+from likeness_library.audit import audit_person, catalog_photo_flags, core_excluded_protection, identity_order_key  # noqa: E402
 from likeness_library.cross_reference import CATEGORY_ORDER, rank_identity_centroids, score_band  # noqa: E402
 from likeness_library.policy import (
     default_policy,
@@ -27,7 +26,6 @@ from likeness_library.policy import (
     render_policy_panel,
     render_score_legend,
 )  # noqa: E402
-from likeness_library.thumbnails import crop_thumbnail, face_thumbnail  # noqa: E402
 
 PAGE_SIZE = 100
 SECTIONS = CATEGORY_ORDER
@@ -35,26 +33,23 @@ GROUP_ORDER = CATEGORY_ORDER
 ACTION_ROOTS = {"Angels", "Sisters", "Models", "Prospects", "Potentials"}
 
 CSS = """
-body{font:15px Segoe UI,Arial,sans-serif;margin:20px;background:#faf8f3;color:#222}
-h1{margin:0 0 4px}.note{color:#555;max-width:1100px}.warnings{color:#8a3b16}
-.page-header{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;padding:16px 18px;background:#fff;border:1px solid #ded8ce;border-radius:10px}.page-header p{margin:5px 0 0}.header-side{text-align:right}.header-label{font-size:.75em;color:#666;text-transform:uppercase;letter-spacing:.06em}.score-legend{display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap;margin-top:5px}
-.controls{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 20px;align-items:end;margin:16px 0}
+.note{color:var(--st-muted);max-width:1100px}.warnings{color:#8a3b16}
+.controls{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 20px;align-items:end;margin:16px 0;padding:14px 16px;background:var(--st-card);border:1px solid var(--st-line);border-radius:var(--st-radius);box-shadow:var(--st-shadow)}
 .filter-controls{display:grid;gap:8px;min-width:0}.search-control{display:flex;flex-direction:column;align-items:flex-start;gap:4px;width:min(100%,520px)}
 .search-control input{width:100%;box-sizing:border-box}.filter-options{display:flex;justify-content:flex-start;gap:10px;flex-wrap:wrap}
 .sort-controls{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;align-items:flex-end}
 .controls input,.controls select,.controls button{font:inherit;padding:7px}
-.count{color:#555;white-space:nowrap}#grid{display:block;--card-min:260px}
-.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(var(--card-min),1fr));gap:12px}
-article{background:white;border:1px solid #ded8ce;border-radius:6px;padding:8px;min-width:0}
+.count{color:var(--st-muted);overflow-wrap:anywhere}#grid{display:block;--card-min:260px}
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,var(--card-min)),1fr));gap:12px}
+.preparation-evidence{font-size:.8em;margin-top:6px;overflow-wrap:anywhere}.preparation-evidence summary{cursor:pointer;color:#34495e}.preparation-evidence code{overflow-wrap:anywhere}
+article{background:var(--st-card);border:1px solid var(--st-line);border-radius:8px;padding:8px;min-width:0;box-shadow:var(--st-shadow)}
 article.primary{border:3px solid #8b6d32}
+article.review-photo{border-left:5px solid #b47d25}
+.photo-location-group{margin:12px 0 20px}.photo-location-group h3{font-size:1rem;margin:0 0 10px}
+.destination-controls{display:grid;gap:6px;margin-top:6px}.destination-controls[hidden]{display:none}
+.destination-controls label{display:block}.destination-controls select{max-width:100%}
 article img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#eee}
 article a{color:#28527a}.name{font-weight:600;overflow-wrap:anywhere;margin:7px 0}
-.badge{display:inline-block;border-radius:4px;background:#eee;padding:2px 6px;margin:0 4px 4px 0;font-size:.82em;font-weight:600}
-.category-sisters{background:#e8e0f2;color:#493365}.category-angels{background:#e4efff;color:#244f85}
-.category-models{background:#e4f2e5;color:#285b31}.category-prospects{background:#fff0d9;color:#704a12}
-.category-potentials{background:#eee;color:#555}.score-green{background:#d9efdc;color:#205b2a}
-.score-yellow{background:#fff1bd;color:#6b5200}.score-orange{background:#ffe0c2;color:#7a3f00}
-.score-red{background:#f5d6d6;color:#7b2222}.score-badge{display:inline-block;border-radius:4px;padding:2px 6px;font-size:.82em;font-weight:600}
 .relationship-list{margin:4px 0 12px;padding-left:24px}.relationship-list li{margin:4px 0}
 .badge-gallery{background:#e4efff;color:#244f85}.badge-review,.badge-possible-outlier,.badge-borderline{background:#fff0d9;color:#704a12}
 .badge-core-member,.badge-identity-anchor,.badge-consistent,.badge-gallery-photo{background:#d9efdc;color:#205b2a}
@@ -66,10 +61,15 @@ article a{color:#28527a}.name{font-weight:600;overflow-wrap:anywhere;margin:7px 
 #more{display:block;margin:18px auto;padding:8px 18px;font:inherit}
 .stage{display:block;margin-top:8px;font-size:.9em}.stage select{display:block;width:100%;font:inherit;padding:5px}
 .actions{display:flex;gap:10px;align-items:center;margin:14px 0}.actions button{font:inherit;padding:8px}
-.person-group{margin:20px 0;padding:14px;background:#f0ede6;border-radius:8px;width:100%;box-sizing:border-box}
-.person-head{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-bottom:12px}
-.person-head h2{font-size:1.15em;margin:4px 0;min-width:190px}
-.reference{max-width:190px}.reference img{aspect-ratio:4/5;object-fit:cover}
+.person-group{margin:20px 0;padding:14px;background:#efebe3;border:1px solid var(--st-line);border-radius:var(--st-radius);width:100%;box-sizing:border-box}
+.person-head{display:grid;grid-template-columns:minmax(180px,.7fr) minmax(0,1.3fr) minmax(0,1fr);gap:14px;align-items:start;margin-bottom:12px}
+.identity-panel{background:var(--st-card);border:1px solid var(--st-line);border-radius:8px;padding:12px;min-width:0;overflow-wrap:anywhere}
+.identity-panel h2{font-size:1.15em;margin:4px 0}
+.identity-panel h3{font-size:1rem;margin:0 0 10px}
+.identity-panel dl{margin:10px 0}.identity-panel dt{font-size:.8em;color:var(--st-muted);margin-top:8px}
+.identity-panel dd{margin:0}.identity-panel input{width:100%;min-width:0}
+.identity-panel button{margin:5px 5px 0 0;white-space:normal}
+.reference{max-width:260px}.reference img{aspect-ratio:4/5;object-fit:cover}
 .reference .detail{font-size:.82em}
 .identity-rankings{font-size:.88em;margin:0 0 12px;overflow-wrap:anywhere}
 .identity-rankings summary{cursor:pointer;color:#28527a}
@@ -77,15 +77,18 @@ article a{color:#28527a}.name{font-weight:600;overflow-wrap:anywhere;margin:7px 
 .policy-panel summary{cursor:pointer;font-weight:600;color:#34495e}
 .policy-panel pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:520px;overflow:auto;background:#f5f3ee;padding:10px;border-radius:4px;font-size:.9em}
 @media(max-width:1050px){.controls{grid-template-columns:minmax(0,1fr)}.sort-controls{justify-content:flex-start}}
-@media(max-width:760px){body{margin:12px}.page-header{display:block}.header-side{text-align:left;margin-top:12px}.score-legend{justify-content:flex-start}}
+@media(max-width:1050px){.person-head{grid-template-columns:minmax(160px,.7fr) minmax(0,1.3fr)}.identity-actions{grid-column:1/-1}}
+@media(max-width:600px){.person-head{grid-template-columns:minmax(0,1fr)}.identity-actions{grid-column:auto}}
 """
 
-SCRIPT = """
+SCRIPT = preparation_provenance.EVIDENCE_SCRIPT + """
 const records=JSON.parse(document.getElementById("review-data").textContent);
 const peopleData=JSON.parse(document.getElementById("people-data").textContent);
+const cardUseGuidance=JSON.parse(document.getElementById("card-use-guidance").textContent);
 const group=document.getElementById("group"), bucket=document.getElementById("bucket");
 const state=document.getElementById("state"), sort=document.getElementById("sort");
 const mode=document.getElementById("mode"), person=document.getElementById("person");
+const grouping=document.getElementById("grouping");
 const scoreCeiling=document.getElementById("score-ceiling");
 const cardSize=document.getElementById("card-size");
 const framing=document.getElementById("framing");
@@ -170,12 +173,31 @@ function card(r, readOnly=false) {
   const article=document.createElement("article");
   if(readOnly)article.className="reference";
   else if(r.primaryReference)article.className="primary";
+  if(!readOnly&&r.bucket==="Review")article.classList.add("review-photo");
   const link=document.createElement("a"); link.href=r.href; link.target="_blank"; link.rel="noopener noreferrer";
   const image=document.createElement("img");
   image.src=framing.value==="head"?r.thumbnailHead:r.thumbnail;
   image.dataset.chest=r.thumbnail; image.dataset.head=r.thumbnailHead; image.alt=r.name;
   image.title=r.name; image.loading="lazy"; image.decoding="async";
   link.append(image); article.append(link);
+  if(r.thumbnailProvenance) {
+    const sources=document.createElement("div"); sources.className="detail";
+    sources.append(document.createTextNode("Standard sources: "));
+    for(const mode of ["padded","chest","head"]) {
+      const provenance=r.thumbnailProvenance[mode];
+      if(!provenance)continue;
+      const source=document.createElement("a");
+      source.href=provenance.href; source.target="_blank"; source.rel="noopener noreferrer";
+      source.textContent=mode+" "; source.title=provenance.recipe+" · SHA-256 "+provenance.sha256;
+      sources.append(source);
+    }
+    article.append(sources);
+  }
+  appendPreparationEvidence(article,r.preparationEvidence);
+  if(r.photoProtectionInfo){
+    const note=document.createElement("p");note.className="detail protection-info";
+    note.textContent=r.photoProtectionInfo;article.append(note);
+  }
   const name=document.createElement("div"); name.className="name";
   name.textContent=readOnly?r.name:r.folder.split("/").slice(1).join("/");
   article.append(name);
@@ -191,6 +213,12 @@ function card(r, readOnly=false) {
       r.folder==="Various"?"Various is an unassigned holding area, not a person identity":
       "This folder has no registered catalogue identity";
     article.append(identityId);
+    if(r.identityNames){
+      const names=document.createElement("div");names.className="detail identity-names";
+      names.textContent="Person: "+(r.identityNames.currentPersonName||"not recorded")+
+        " · Original: "+(r.identityNames.originalPersonName||"not recorded");
+      article.append(names);
+    }
   }
   const badges=readOnly?[r.referenceLabel]:[
     r.bucket==="Gallery"?"Gallery photo":"Review photo",
@@ -306,23 +334,41 @@ function card(r, readOnly=false) {
   action.value=staged.get(r.photoId)?.type||"";
   const destination=document.createElement("select");
   destination.setAttribute("aria-label","Destination identity for "+r.name);
+  const destinationCategory=document.createElement("select");
+  destinationCategory.setAttribute("aria-label","Destination category for "+r.name);
+  const destinationControls=document.createElement("div"); destinationControls.className="destination-controls";
+  const categoryLabel=document.createElement("label"); categoryLabel.textContent="Destination category";
+  const identityLabel=document.createElement("label"); identityLabel.textContent="Destination identity";
+  categoryLabel.append(destinationCategory);identityLabel.append(destination);
+  destinationControls.append(categoryLabel,identityLabel);
   const folders=[...new Set(records.filter(item=>
     /^(Sisters|Angels|Models|Prospects|Potentials)\\//.test(item.folder)&&item.folder!==r.folder&&item.personId
   ).map(item=>item.folder))].sort();
-  for(const folder of folders)destination.add(new Option(folder,folder));
+  for(const category of categoryOrder.filter(category=>folders.some(folder=>folder.startsWith(category+"/"))))
+    destinationCategory.add(new Option(category,category));
+  const fillDestinations=()=>{
+    destination.replaceChildren();
+    for(const folder of folders.filter(folder=>folder.startsWith(destinationCategory.value+"/")))
+      destination.add(new Option(folder.slice(folder.indexOf("/")+1),folder));
+  };
   const closest=r.best_other?.match(/^(.*) \\((-?\\d+(?:\\.\\d+)?)\\)$/)?.[1];
-  destination.value=staged.get(r.photoId)?.destinationFolder||
-    (folders.includes(closest)?closest:folders[0])||"";
+  const restoreDestination=()=>{
+    const folder=staged.get(r.photoId)?.destinationFolder||
+      (folders.includes(closest)?closest:folders[0])||"";
+    destinationCategory.value=folder.split("/")[0];
+    fillDestinations();destination.value=folder;
+  };
+  restoreDestination();
   if(!folders.length) {
     const option=[...action.options].find(item=>item.value==="match-accepted");
     if(option)option.remove();
   }
-  destination.hidden=action.value!=="match-accepted";
+  destinationControls.hidden=action.value!=="match-accepted";
   const saveStage=()=>{
     if(action.value&&[...stagedPeople.values()].some(item=>item.type==="person-renamed")) {
       alert("Apply or cancel the standalone identity rename before staging photo actions.");
       action.value=staged.get(r.photoId)?.type||"";
-      destination.hidden=action.value!=="match-accepted";
+      restoreDestination();destinationControls.hidden=action.value!=="match-accepted";
       return;
     }
     if(action.value&&(stagedPeople.has(r.personId)||stagedPeople.has(
@@ -330,7 +376,7 @@ function card(r, readOnly=false) {
     )&&action.value==="match-accepted")) {
       alert("Stage identity protection separately from photo actions for that identity.");
       action.value=staged.get(r.photoId)?.type||"";
-      destination.hidden=action.value!=="match-accepted";
+      restoreDestination();destinationControls.hidden=action.value!=="match-accepted";
       return;
     }
     if(action.value)staged.set(r.photoId,{
@@ -343,11 +389,12 @@ function card(r, readOnly=false) {
     updateStagedCount();
   };
   action.addEventListener("change",()=>{
-    destination.hidden=action.value!=="match-accepted";
+    destinationControls.hidden=action.value!=="match-accepted";
     saveStage();
   });
+  destinationCategory.addEventListener("change",()=>{fillDestinations();saveStage()});
   destination.addEventListener("change",saveStage);
-  stageLabel.append(action,destination); article.append(stageLabel);
+  stageLabel.append(action);article.append(stageLabel,destinationControls);
   return article;
 }
 function updateStagedCount(){
@@ -363,6 +410,21 @@ function matchesMode(r) {
 function primaryFor(folder) {
   return records.find(r=>r.folder===folder&&r.primaryReference)||null;
 }
+function appendPhotoGroups(container,items) {
+  const groups=grouping.value==="split"?
+    ["Gallery","Review"].map(bucket=>[bucket,items.filter(item=>item.bucket===bucket)]):
+    [["",items]];
+  for(const [bucket,photos] of groups) {
+    if(!photos.length)continue;
+    const section=document.createElement("div");section.className="photo-location-group";
+    if(bucket) {
+      const heading=document.createElement("h3");heading.textContent=bucket+" · "+photos.length+" shown";
+      section.append(heading);
+    }
+    const photoGrid=document.createElement("div");photoGrid.className="photo-grid";
+    photoGrid.append(...photos.map(item=>card(item)));section.append(photoGrid);container.append(section);
+  }
+}
 function groupCards(items) {
   const grouped=new Map();
   for(const item of items) {
@@ -373,15 +435,58 @@ function groupCards(items) {
   for(const [folder,photos] of grouped) {
     const section=document.createElement("section"); section.className="person-group";
     const header=document.createElement("div"); header.className="person-head";
-    const title=document.createElement("h2"); title.textContent=folder+" · "+photos.length+" shown"; header.append(title);
     const info=peopleData[folder]||{};
-    header.append(categoryBadge(info.group||folder.split("/")[0]));
+    function panel(label,kind) {
+      const box=document.createElement("section"); box.className="identity-panel "+kind;
+      box.setAttribute("aria-label",label+" for "+folder);
+      const heading=document.createElement("h3");heading.textContent=label;box.append(heading);
+      header.append(box);return box;
+    }
+    const referencePanel=panel("Reference photo","identity-reference");
+    const detailsPanel=panel("Identity details","identity-details");
+    const actionsPanel=panel("Manual actions","identity-actions");
+    const title=document.createElement("h2"); title.textContent=folder.split("/").slice(1).join("/")||folder;
+    detailsPanel.append(title,categoryBadge(info.group||folder.split("/")[0]));
+    const allPhotos=records.filter(item=>item.folder===folder);
+    const facts=document.createElement("dl");
+    function fact(label,value) {
+      const term=document.createElement("dt");term.textContent=label;
+      const description=document.createElement("dd");description.textContent=value;facts.append(term,description);
+    }
+    const snapshot=info.personRenameAction;
+    const names=info.identityNames||{};
+    fact("Current person name",names.currentPersonName||snapshot?.expectedRecordedName||"Not available in this report");
+    fact("Original person name",names.originalPersonName||"Not recorded");
+    fact("Original-name source",names.originalNameSource||"unavailable");
+    if(names.characterName)fact("Character name",names.characterName);
+    if(names.familySurname)fact("Family surname",names.familySurname);
+    if(names.familyReason)fact("Family evidence",names.familyReason);
+    if(info.identityProtectionInfo)fact("Protection rule",info.identityProtectionInfo);
+    if(/^(Angels|Sisters)\\//.test(folder))fact("Fixed cast slot",folder.split("/").slice(1).join("/"));
+    fact("Identity ID",allPhotos.find(item=>item.personId)?.personId||
+      (folder==="Various"?"unassigned (Various hold)":"not catalogued"));
+    fact("Photos in this report",allPhotos.filter(item=>item.bucket==="Gallery").length+" Gallery · "+
+      allPhotos.filter(item=>item.bucket==="Review").length+" Review");
+    fact("Currently shown",photos.length+" of "+allPhotos.length+" (filters and page limit apply)");
+    const core=allPhotos.find(item=>item.scoreContext)?.scoreContext;
+    if(core)fact("Identity core",core.coreSize+" photos · "+
+      (core.coreMode==="trusted"?"trusted anchors":core.coreMode==="provisional"?"provisional · no trusted anchors":"no usable core"));
+    detailsPanel.append(facts);
+    const guidance=cardUseGuidance[info.group||folder.split("/")[0]];
+    if(guidance) {
+      const note=document.createElement("p");note.className="detail card-use-guidance";
+      note.textContent=guidance+" Not a rarity rule or automatic assignment.";detailsPanel.append(note);
+    }
+    const actionNote=document.createElement("p");actionNote.className="detail";
+    actionNote.textContent="Stage and download only. Validate and preview with the CLI before applying. "+
+      "Existing protection and standalone-batch safeguards still apply.";
+    actionsPanel.append(actionNote);
     if(info.identityProtected) {
       const protectedBadge=document.createElement("span");
       protectedBadge.className="badge badge-protected-identity";
       protectedBadge.textContent="Protected identity";
       protectedBadge.title="Automatic Gallery membership and category changes are blocked; Review admission is separate";
-      header.append(protectedBadge);
+      detailsPanel.append(protectedBadge);
     }
     if(info.personProtectionAction) {
       const decision=info.personProtectionAction;
@@ -390,7 +495,7 @@ function groupCards(items) {
       const select=document.createElement("select");
       select.add(new Option("No identity change",""));
       select.add(new Option(
-        decision.type==="person-protected"?"Protect identity from automatic changes":"Remove identity protection",
+        decision.type==="person-protected"?"Protect identity / re-enable auto-protection":"Unprotect identity / disable auto-protection",
         decision.type
       ));
       select.value=stagedPeople.get(decision.personId)?.type===decision.type?decision.type:"";
@@ -412,7 +517,7 @@ function groupCards(items) {
         else if(stagedPeople.get(decision.personId)?.type===decision.type)stagedPeople.delete(decision.personId);
         updateStagedCount();
       });
-      label.append(select); header.append(label);
+      label.append(select); actionsPanel.append(label);
     }
     if(info.personRenameAction) {
       const decision=info.personRenameAction;
@@ -484,17 +589,26 @@ function groupCards(items) {
         if(stagedPeople.get(decision.personId)?.type==="person-renamed")stagedPeople.delete(decision.personId);
         input.value=decision.expectedRecordedName;status.textContent="";updateStagedCount();
       });
-      label.append(scope,input,stage,cancel,status);header.append(label);
+      label.append(scope,input,stage,cancel,status);actionsPanel.append(label);
     } else if(info.personRenameReason) {
       const note=document.createElement("div");note.className="detail";
-      note.textContent="Rename unavailable: "+info.personRenameReason;header.append(note);
+      note.textContent="Rename unavailable: "+info.personRenameReason;actionsPanel.append(note);
+    }
+    if(!info.personProtectionAction&&!info.personRenameAction) {
+      const note=document.createElement("p");note.className="detail";
+      note.textContent="No supported identity action is available in this report. Photo actions remain on each photo.";
+      actionsPanel.append(note);
     }
     const reference=primaryFor(folder);
     if(reference) {
-      if(!photos.some(item=>item.photoId===reference.photoId))header.append(card(reference,true));
+      referencePanel.append(card(reference,true));
+      const score=document.createElement("div");score.className="detail";
+      score.append(document.createTextNode("Core similarity: "));
+      const mark=scoreBadge(reference.score,"Reference similarity to this person's core");
+      score.append(mark||document.createTextNode("not scored"));referencePanel.append(score);
     } else {
       const note=document.createElement("span"); note.className="detail"; note.textContent="No scored Gallery reference is available for this person.";
-      header.append(note);
+      referencePanel.append(note);
     }
     section.append(header);
     const rankings=info.identityMatches||[];
@@ -510,7 +624,7 @@ function groupCards(items) {
         const mark=scoreBadge(match.score); if(mark)entry.append(document.createTextNode(" "),mark);
         list.append(entry);
       }
-      details.append(list); section.append(details);
+      details.append(list); detailsPanel.append(details);
       const closestByCategory=new Map();
       for(const match of rankings)if(!closestByCategory.has(match.category))closestByCategory.set(match.category,match);
       const closest=document.createElement("div"); closest.className="detail";
@@ -520,15 +634,13 @@ function groupCards(items) {
         const mark=scoreBadge(match.score); if(mark)closest.append(document.createTextNode(" "),mark);
         closest.append(document.createElement("br"));
       }
-      section.insertBefore(closest,details);
+      detailsPanel.insertBefore(closest,details);
     } else {
       const note=document.createElement("div"); note.className="identity-rankings detail";
       note.textContent="No other scored identity is available for cross-reference.";
-      section.append(note);
+      detailsPanel.append(note);
     }
-    const photoGrid=document.createElement("div"); photoGrid.className="photo-grid";
-    photoGrid.append(...photos.map(item=>card(item)));
-    section.append(photoGrid); nodes.push(section);
+    appendPhotoGroups(section,photos);nodes.push(section);
   }
   return nodes;
 }
@@ -553,9 +665,7 @@ function render() {
 function draw() {
   const page=visible.slice(0,shown);
   if(mode.value==="all") {
-    const photoGrid=document.createElement("div"); photoGrid.className="photo-grid";
-    photoGrid.append(...page.map(item=>card(item)));
-    grid.replaceChildren(photoGrid);
+    grid.replaceChildren();appendPhotoGroups(grid,page);
   } else {
     grid.replaceChildren(...groupCards(page));
   }
@@ -565,7 +675,7 @@ function draw() {
   more.hidden=shown>=visible.length;
   more.textContent="Show next "+pageSize;
 }
-for(const control of [bucket,state,sort,person,scoreCeiling])control.addEventListener("change",render);
+for(const control of [bucket,state,sort,person,scoreCeiling,grouping])control.addEventListener("change",render);
 group.addEventListener("change",()=>{fillPeople();render()});
 cardSize.addEventListener("change",()=>{
   grid.style.setProperty("--card-min",cardSize.value);
@@ -626,13 +736,18 @@ def _local_photo_path(path):
 
 
 def action_options(bucket, photo_id, *, anchor=False, protected=False, stageable=True,
-                   workflow_photo=False, workflow_selected=False, registered=False):
+                   workflow_photo=False, workflow_selected=False, registered=False, folder=None):
     """Return actions valid for this photo's current location and metadata."""
     if not stageable or not photo_id:
         return []
+    junk_option = ("photo-junked", "Junk unwanted/unusable photo to _junk (explicit recovery only; no deletion)")
+    retire_option = ("photo-retired", "Retire photo to _retired/photos (recoverable; excluded from matching)")
+    movable = not protected and not anchor and not workflow_selected
+    if folder and folder.split("/", 1)[0] not in ACTION_ROOTS:
+        return [retire_option, junk_option] if movable and action_folder_supported(folder) else []
     options = [
         ("photo-unprotected" if protected else "photo-protected",
-         "Remove protection" if protected else "Protect photo"),
+         "Unprotect / disable auto-protection" if protected else "Protect / re-enable auto-protection"),
     ]
     if bucket == "Gallery":
         if workflow_photo:
@@ -654,13 +769,14 @@ def action_options(bucket, photo_id, *, anchor=False, protected=False, stageable
         if registered:
             options.append(("match-rejected", "Reject identity permanently; return to Various"))
         options.append(("match-accepted", "Move to another identity's Review (closest preselected)"))
-        options.append(("photo-retired", "Retire photo to _retired/photos (recoverable; excluded from matching)"))
+        options.append(retire_option)
+        options.append(junk_option)
     return options
 
 
 def action_folder_supported(folder):
-    """Whether a folder can be represented by the current identity catalogue schema."""
-    return folder.split("/", 1)[0] in ACTION_ROOTS
+    """Whether a folder supports identity actions or bounded terminal photo staging."""
+    return folder.split("/", 1)[0] in ACTION_ROOTS | {"Artists", "Various"}
 
 
 def score_context(photo, *, bucket, core_size, core_mode, core_member, sufficient,
@@ -706,7 +822,7 @@ def score_context(photo, *, bucket, core_size, core_mode, core_member, sufficien
         "Approve back to Gallery changes location only; it does not add photo protection or an identity anchor. "
         "Core eligibility is recomputed when the report or matcher next runs.",
         "Protect photo does not approve a Review photo or make it an anchor. "
-        "Review is never core; a protected Gallery photo is excluded from core unless it is also a valid anchor.",
+        "Review is never core. A manually protected Gallery photo is excluded unless it is also a valid anchor; automatic protection preserves only prior eligible core status.",
         "Identity protection blocks automatic Gallery membership/category changes; "
         "it does not change similarity scores or confirm a photo's identity.",
     ])
@@ -798,14 +914,13 @@ def collect_items(
     include_artists=False, embed=None, keep=0.25, policy=None,
 ):
     """Build scored image records; Review candidates never enter an identity core."""
+    if include_artists:
+        raise ValueError("Artists have a separate browser; use bin\\artists-gallery.cmd")
+    domains.require_general_space(space)
     policy = policy or default_policy()
     catalog = metadata.with_configured_anchors(catalog, cfg, space.photos)
-    category_order = (*policy["categoryOrder"], "Various")
-    groups = set(
-        category_order
-        if include_artists
-        else (category for category in category_order if category != "Artists")
-    )
+    category_order = (*(category for category in policy["categoryOrder"] if category != "Artists"), "Various")
+    groups = set(category_order)
     group_order = {group: index for index, group in enumerate(category_order)}
     folders = [
         (key, folder) for key, folder in likeness.library_people(cfg, st, work)
@@ -900,7 +1015,7 @@ def collect_items(
             [photo.vec for photo in usable],
             [metadata.photo_id_from_name(photo.name) for photo in usable],
             anchor_ids=person["identityAnchors"] if person else (),
-            protected_ids=protected_ids,
+            protected_ids=core_excluded_protection(catalog, protected_ids),
             stale_ids=stale_ids,
             ambiguous_ids=ambiguous_ids,
             minimum_core=category_policy.get("minimumUsablePhotosForOutlierActions", 3),
@@ -942,7 +1057,7 @@ def collect_items(
             [photo.vec for photo in usable],
             photo_ids,
             anchor_ids=anchors if not conflict else (),
-            protected_ids=protected_ids,
+            protected_ids=core_excluded_protection(catalog, protected_ids),
             stale_ids=stale_ids,
             ambiguous_ids=ambiguous_ids,
             minimum_core=category_policy.get("minimumUsablePhotosForOutlierActions", 3),
@@ -1041,6 +1156,9 @@ def collect_items(
                 "identityProtected": identity_protected,
                 "personProtectionAction": person_protection_action(key, person_id, person),
                 "personRenameAction": rename_action,
+                "identityNames": identity_names.presentation(person, folder, catalog=catalog),
+                "identityProtectionInfo": protection.describe(person),
+                "photoProtectionInfo": protection.describe(catalog["photos"].get(photo_id)),
                 "personRenameReason": rename_reason,
                 "workflowSelected": photo_id in selected_ids,
                 "identityAnchor": bool(
@@ -1059,7 +1177,7 @@ def collect_items(
                     and action_folder_supported(key)
                 ),
                 "stageOptions": action_options(
-                    "Gallery", photo_id, anchor=photo_id in anchors and photo_id not in stale_ids,
+                    "Gallery", photo_id, folder=key, anchor=photo_id in anchors and photo_id not in stale_ids,
                     protected=photo_id in protected_ids,
                     registered=bool(person_id),
                     workflow_photo=workflow_photo_available,
@@ -1137,6 +1255,9 @@ def collect_items(
                 "identityProtected": identity_protected,
                 "personProtectionAction": person_protection_action(key, person_id, person),
                 "personRenameAction": rename_action,
+                "identityNames": identity_names.presentation(person, folder, catalog=catalog),
+                "identityProtectionInfo": protection.describe(person),
+                "photoProtectionInfo": protection.describe(catalog["photos"].get(photo_id)),
                 "personRenameReason": rename_reason,
                 "workflowSelected": photo_id in selected_ids,
                 "identityAnchor": bool(
@@ -1150,7 +1271,7 @@ def collect_items(
                     and action_folder_supported(key)
                 ),
                 "stageOptions": action_options(
-                    "Review", photo_id, protected=photo_id in protected_ids,
+                    "Review", photo_id, folder=key, protected=photo_id in protected_ids,
                     registered=bool(person_id),
                     workflow_selected=photo_id in selected_ids,
                     stageable=(
@@ -1192,28 +1313,32 @@ def collect_items(
 
 def write_thumbnails(items, out):
     """Write/reuse named, content-keyed head and chest-up derivatives."""
-    from PIL import Image
+    from likeness_library.derivatives import thumbnail, verified
 
     thumb_dir = out / "people_gallery_review_files"
     thumb_dir.mkdir(parents=True, exist_ok=True)
     public_items = []
-
-    def thumbnail_bytes(photo, framing):
-        size = (320, 400)
-        with Image.open(photo.path) as source:
-            crop = crop_thumbnail(source, photo.box, framing, size)
-        output = io.BytesIO()
-        crop.save(output, "JPEG", quality=84)
-        return output.getvalue()
+    generated = {}
 
     for item in items:
         photo = item["_photo"]
         stem = re.sub(r"[^A-Za-z0-9_.-]+", "_", photo.path.stem).strip("._") or "photo"
         targets = {}
-        for framing in ("chest", "head"):
-            target = thumb_dir / f"{stem}_{framing}_{photo.sha[:12]}.jpg"
+        diagnostics = []
+        provenance = {}
+        for framing in ("chest", "head", "face"):
+            data, key, diagnostic = thumbnail(
+                photo.path, "head" if framing == "face" else framing, photo.box,
+                (320, 320) if framing == "face" else (320, 400))
+            if diagnostic:
+                diagnostics.append(diagnostic)
+            else:
+                source, record = verified(photo.path, "head" if framing == "face" else framing, photo.box)
+                provenance[framing] = {"href": source.resolve().as_uri(),
+                                       "sha256": record["sha256"], "recipe": record["recipe"],
+                                       "sourceSha256": record["sourceSha256"]}
+            target = thumb_dir / f"{stem}_{framing}_{key}.jpg"
             if not target.exists():
-                data = thumbnail_bytes(photo, framing)
                 temporary = None
                 try:
                     with tempfile.NamedTemporaryFile(
@@ -1232,37 +1357,24 @@ def write_thumbnails(items, out):
                     if temporary is not None and temporary.exists():
                         temporary.unlink()
             targets[framing] = (pathlib.Path(thumb_dir.name) / target.name).as_posix()
-        face_target = None
-        if photo.box:
-            target = thumb_dir / f"{stem}_face_{photo.sha[:12]}.jpg"
-            if not target.exists():
-                with Image.open(photo.path) as source:
-                    crop = face_thumbnail(source, photo.box)
-                temporary = None
-                try:
-                    with tempfile.NamedTemporaryFile(
-                        mode="wb",
-                        prefix=f".{stem}_face_",
-                        suffix=".tmp",
-                        dir=thumb_dir,
-                        delete=False,
-                    ) as output:
-                        temporary = pathlib.Path(output.name)
-                        crop.save(output, "JPEG", quality=84)
-                        output.flush()
-                        os.fsync(output.fileno())
-                    os.replace(temporary, target)
-                finally:
-                    if temporary is not None and temporary.exists():
-                        temporary.unlink()
-            targets["face"] = (pathlib.Path(thumb_dir.name) / target.name).as_posix()
+            generated[targets[framing]] = data
+        try:
+            source, record = verified(photo.path, "padded")
+            provenance["padded"] = {"href": source.resolve().as_uri(),
+                                    "sha256": record["sha256"], "recipe": record["recipe"],
+                                    "sourceSha256": record["sourceSha256"]}
+        except (OSError, ValueError, KeyError) as exc:
+            diagnostics.append(str(exc))
         public = {key: value for key, value in item.items() if key != "_photo"}
+        public["derivativeDiagnostics"] = diagnostics
+        public["thumbnailProvenance"] = provenance
+        public["reason"] = "; ".join([public.get("reason", ""), *diagnostics]).strip("; ")
         public["thumbnail"] = targets["chest"]
         public["thumbnailHead"] = targets["head"]
-        if "face" in targets:
-            public["thumbnailFace"] = targets["face"]
+        public["thumbnailFace"] = targets["face"]
         public["href"] = photo.path.resolve().as_uri()
         public_items.append(public)
+    report_assets.record(out, generated)
     return public_items, thumb_dir
 
 
@@ -1280,7 +1392,7 @@ def person_protection_action(folder, person_id, person):
     }
 
 
-def render_html(items, stamp, warnings=(), policy=None):
+def render_html(items, stamp, warnings=(), policy=None, reports_prefix="../"):
     """Render a local page with client-side filters and bounded card rendering."""
     policy = policy or default_policy()
     people_count = len({item["folder"] for item in items if item.get("group") != "Various"})
@@ -1294,6 +1406,8 @@ def render_html(items, stamp, warnings=(), policy=None):
             "identityProtected": item.get("identityProtected", False),
             "personProtectionAction": item.get("personProtectionAction"),
             "personRenameAction": item.get("personRenameAction"),
+            "identityNames": item.get("identityNames"),
+            "identityProtectionInfo": item.get("identityProtectionInfo"),
             "personRenameReason": item.get("personRenameReason", ""),
         })
     public_items = [
@@ -1302,6 +1416,7 @@ def render_html(items, stamp, warnings=(), policy=None):
     ]
     payload = json.dumps(public_items, ensure_ascii=False).replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
     people_payload = json.dumps(people_data, ensure_ascii=False).replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
+    guidance_payload = json.dumps(gallery_chrome.CARD_USE_GUIDANCE, ensure_ascii=True)
     policy_payload = json.dumps(policy, ensure_ascii=True).replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
     warning_html = ""
     if warnings:
@@ -1309,12 +1424,15 @@ def render_html(items, stamp, warnings=(), policy=None):
         warning_html = f'<ul class="warnings">{entries}</ul>'
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>People gallery review</title><style>{CSS}</style></head><body>
+<title>People gallery review</title><style>{gallery_chrome.CSS}{CSS}</style></head><body id="top">
+{gallery_chrome.masthead("People", reports_prefix, "People library")}
+<div class="site-page">
 <header class="page-header"><div><h1>People gallery review</h1>
 <p class="note">Generated {stamp} · {people_count} {people_label} · {len(items)} {photos_label}</p>
 <p class="note">Stage actions here, then download the manifest to review and apply separately.</p></div>
 <div class="header-side"><div class="header-label">Likeness</div>
 <div class="score-legend">{render_score_legend(policy)}</div></div></header>
+{gallery_chrome.navigation([("Overview", "people_gallery.html"), ("Photo review", "people_gallery_review.html"), ("Intake runs", "intake_runs.html")], "Photo review")}
 {render_policy_panel(policy)}
 <script type="application/json" id="likeness-policy-data">{policy_payload}</script>
 {warning_html}
@@ -1328,6 +1446,7 @@ def render_html(items, stamp, warnings=(), policy=None):
 <label>Thumbnail <select id="framing"><option value="chest">Chest-up</option><option value="head">Head</option></select></label>
 <label>Tile size <select id="card-size"><option value="170px">Small</option><option value="260px" selected>Medium</option><option value="340px">Large</option></select></label>
 <label>Location <select id="bucket"></select></label>
+<label>Grouping <select id="grouping"><option value="mixed">Mixed</option><option value="split">Split Gallery / Review</option></select></label>
 <label>State <select id="state"></select></label>
 </div>
 </div>
@@ -1339,17 +1458,24 @@ def render_html(items, stamp, warnings=(), policy=None):
 </div>
 <div class="actions"><button id="download" type="button" disabled>Download staged actions</button><span id="staged-count">0 actions staged</span></div>
 <div id="grid"></div><button id="more" type="button">Show next {PAGE_SIZE}</button>
+{gallery_chrome.footer("Stage and export here · Apply reviewed actions separately")}
 <script id="review-data" type="application/json">{payload}</script>
 <script id="people-data" type="application/json">{people_payload}</script>
-<script id="category-order" type="application/json">{json.dumps([*policy["categoryOrder"], "Various"])}</script>
+<script id="card-use-guidance" type="application/json">{guidance_payload}</script>
+<script id="category-order" type="application/json">{json.dumps([category for category in policy["categoryOrder"] if category != "Artists"] + ["Various"])}</script>
 <script>{SCRIPT}</script>
-</body></html>
+</div></body></html>
 """
 
 
 def main(argv=None):
+    with domains.activate("general", read_only=True):
+        return _main(argv)
+
+
+def _main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--artists", action="store_true", help="include people grouped inside artists' folders")
+    parser.add_argument("--artists", action="store_true", help="retired: use artists-gallery.cmd")
     parser.add_argument("--keep", type=float, default=0.25, help="Prospect borderline score (default: 0.25)")
     parser.add_argument("--out", help="report directory (default: <work>\\_reports\\library)")
     parser.add_argument("--root", help="photo library folder (default: workspaces.json paths.workRoot)")
@@ -1361,6 +1487,8 @@ def main(argv=None):
         help="accepted by the shared gallery launcher; this page does not load ComfyUI renders",
     )
     args = parser.parse_args(argv)
+    if args.artists:
+        parser.error("--artists no longer mixes Artists into people pages; use bin\\artists-gallery.cmd")
     policy = load_policy(args.policy)
     cfg, st, work, cache, space = likeness.build(
         types.SimpleNamespace(root=args.root, cache=args.cache, embedder=None, policy=args.policy)
@@ -1372,7 +1500,19 @@ def main(argv=None):
     )
     out = pathlib.Path(args.out) if args.out else pathlib.Path(work) / "_reports" / "library"
     out.mkdir(parents=True, exist_ok=True)
+    provenance = preparation_provenance.build_index(
+        work,
+        out,
+        [(item["_photo"].path, item.get("photoId")) for item in items],
+        "general",
+    )
+    for item in items:
+        item["preparationEvidence"] = provenance.evidence(
+            item["_photo"].path, item.get("photoId"),
+        )
     public_items, thumb_dir = write_thumbnails(items, out)
+    reports = pathlib.Path(work) / "_reports"
+    gallery_chrome.publish_banner(reports)
     report = out / "people_gallery_review.html"
     report.write_text(
         render_html(
@@ -1380,9 +1520,13 @@ def main(argv=None):
             datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
             warnings,
             policy=policy,
+            reports_prefix=gallery_chrome.reports_prefix(out, reports),
         ),
         encoding="utf-8",
     )
+    history = provenance.history_html().encode("utf-8")
+    (out / "intake_runs.html").write_bytes(history)
+    report_assets.record(out, {report.name: report.read_bytes(), "intake_runs.html": history})
     print(f"people gallery review: {len(public_items)} photo(s)")
     print(f"  {report}")
     print(f"  {thumb_dir} ({len(list(thumb_dir.glob('*.jpg')))} cached thumbnails)")

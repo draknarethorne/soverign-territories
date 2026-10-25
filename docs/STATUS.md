@@ -1,6 +1,6 @@
 # Project Status
 
-**Updated:** 2026-10-22 · This is the one working document: where the project is, what has
+**Updated:** 2026-10-25 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
@@ -25,6 +25,380 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 ## Plans and the queue
 
 The plans, their status and what each is are listed in [plans/README.md](plans/README.md); what is open, by priority and owner (what needs you first), is [todo.md](todo.md), generated from them. This document holds only what is decided and what is still a question.
+
+**Oct 25 automatic-protection/name direction:** the user requests confidence-based
+photo protection inside protected people and automatic protection of sufficiently
+established identities, alongside family naming that preserves original names.
+Engine E13 owns pending calibrated gates and manual opt-out semantics; family
+N9/N10 owns original/current/character-name provenance and gallery presentation.
+Draft `draft-2026-10-25.1` now implements independent leave-one-out protection,
+persistent manual opt-out/re-enable, original/current-name provenance and
+conservative direct-reference family association. Shared reconciliation applies
+combined metadata patches with source checks, backup and exact undo. Galleries
+show the three names and protection reasons. Thresholds remain uncalibrated
+working defaults; no real matching, catalogue migration or live change has run.
+
+**Oct 25 clean-start and studio-gallery clarification:** these are incremental
+extensions to the existing pipeline, not a new rebuild mode. The next rebase
+must prepare all supplied originals first, support intake-only review/resume or
+full matching/assignment, and retain verified original/variant/name/override
+lineage. No rebase is to run before that integration is ready. Existing commands
+do not yet deliver the combined flow; loss-prevention guards are not migration.
+Shared gallery chrome now includes a native mobile Menu and colored/versioned
+studio footer. Commit/push is authorized after clean validation and day hygiene.
+
+**Oct 25 gallery continuation:** Review has separate responsive Reference,
+Identity details and Manual actions panels. The primary reference stays visible
+under filters and alongside its actionable grid copy. Overview Review-count
+badges open the person's Review-only filter; category-use guidance is descriptive,
+not assignment or rarity policy. Tested with synthetic browser fixtures; actual
+People/Artist republishing and full overview-stat parity remain open. No intake,
+scores, action permissions, protection or library files changed. The
+[layout plan](plans/2026-10-22-gallery-review-layout.md) owns remaining work.
+
+**Oct 25 intake-detail navigation:** Review and Artist Review now share a
+single preparation-evidence renderer, with a direct intake-detail entry or
+an explicit all-runs comparison. The v9 read-only integration preview shows
+all 12 incoming photos with 84 checked trace alternatives; sources and the
+v16 manifest are unchanged. Main People/Artist republishing and verified
+post-assignment lineage remain unfinished. Documentation classification and
+safe CLI/refactoring work may continue during intake review; template/generation
+work follows the image-processing milestone, not this GUI checkpoint.
+
+**Oct 25 gallery-first clarification:** the target starts at a main gallery,
+with separate Intake/Various and assigned-person browsing and per-image detail
+reachable from each. After assignment, detail follows verified image lineage
+and shows all actually retained versions, including denoise/lighting alternatives,
+not discarded intake candidates or an undifferentiated list of old experiments.
+This is not yet delivered by the comparison bridge. Layout L19/L12 and intake
+I21/I23 own integration; manual-action A8 holds the future image-centred ComfyUI
+execution idea pending the user's write-up. No workflow execution is authorized.
+
+**Oct 25 run-history browser:** gallery navigation now includes **Intake runs**.
+Multiple exact traces open a separate searchable run/photo browser rather than
+an expanding chooser. The generator publishes it alongside People and Artist
+pages; the real v9 preview covers seven runs/84 traces. History checks runs
+individually beyond the continuity index's global budget, without relaxing
+current-source evidence or domain rules. Invalid runs stay diagnostic/unlinked.
+This is historical comparison browsing, not accepted retained-set publication.
+Run pruning remains a separate explicit-policy task; nothing is deleted.
+
+**Oct 24 composition clarification:** preparation should reduce excess
+background and center the full visible subject, not only remove overlays.
+Target sequence and storage: exact accessible original in `gallery_org` ->
+safe crop/cleanup/final composition -> accepted native image in `gallery` ->
+full/head/chest padded derivatives. Preserve visible limbs and head/hair in
+full-body references; padding, not limb-cutting, supplies the standard canvas.
+This is agreed direction, not delivered live behavior. Existing `*_org`
+archiving must be reconciled before cutover. The
+[photo-library runbook](art/original-photos.md#agreed-end-to-end-flow-and-current-cutover-boundary)
+owns the target; intake I20 owns composition and I12/upkeep U7 the storage/
+provenance cutover. No live files were changed for this clarification.
+
+**Oct 23 current priority:** source-preserving image preparation now precedes
+broad action UAT. Agreed work order: evaluate practical local cleanup and
+immutable-source recovery, integrate downstream derivatives/viewers, test an
+explicit configurable cast-seeded all-library rebase, then engine/incremental
+acceptance and separately approved production. Exact algorithms, archive
+placement, seed counts/thresholds and error/runtime targets remain undecided.
+All images, including retained Angel/Sister seeds, need a preparation outcome;
+that does not promise every image can be repaired or authorize ordinary
+automation to strip protected cast. Whole-body matching is not implemented.
+Current analysis is aligned-face YuNet/SFace. See the
+[ordered work and ownership](plans/README.md#current-library-work-order-oct-23).
+
+**Oct 23 sandbox preparation pilot delivered:** `bin\prepare-images.cmd`
+now previews, creates sidecar comparisons or verifies an existing run.
+Initial all-category output is sandbox `Working\_reports\preparation\intake-pilot-20261023-03\index.html`:
+28 retained inputs (four/category including Angels/Sisters), control/denoise/tone
+alternatives, larger per-photo pages and 84 separate padded 944x1104 examples.
+Exact source bytes are retained before decoding; current bytes may already
+be cropped, so raw provenance is not assumed. All active image inventories
+and captured catalogue/cache/policy/history hashes remain unchanged; repeating
+the run leaves all 310 report files unchanged. Focused tests and quick validation
+passed including 19/19 mutation cases. User visual/quality acceptance remains.
+No new model, overlay repair, automatic enhancement selection, Gallery
+replacement, core reassignment or ComfyUI retargeting ran. Existing people-page
+comparison integration is planned, not shipped. Already-good images should take
+an explicit no-op path; rejected enhancements preserve the last accepted source
+with explicit diagnostic/reason semantics, not a silent successful-cleanup fallback.
+Latest user clarification: readable images with overlays or failed enhancements
+continue unchanged without manual intervention; display original/enhanced and
+the reason. Overlays alone are not preparation holds. New pilot code exposes
+`sourceTreatment`; existing `-03` comparisons remain unchanged v2 evidence.
+Normal people-page integration and automatic quality selection remain planned.
+Older-original recovery can follow later, potentially in the next 400+ batch.
+See the [pilot evidence and open gates](plans/2026-10-23-image-intake-preparation.md#pilot-delivery-evidence-oct-23).
+
+**Oct 23 upstream geometry comparison delivered:** recipe v5 runs conservative
+solid-border planning before denoise/tone, retaining exact input bytes.
+New sandbox report:
+`Working\_reports\preparation\incoming-geometry-20261023-v5\index.html`.
+Fourteen incoming files: one border-only crop, 13 unchanged geometry, eight
+separate legacy screenshot-crop proposals (never recommended or fed to filters),
+64 padded views. Recommendations link original or border-only geometry, not an
+unmeasured enhancement winner. Overlay reconstruction and semantic hair-safety
+validation remain open; overlaid content passes through for ComfyUI, without a
+manual hold. All 14 input hashes/mtimes, catalogue/seven scenario files and
+5,945 active category file paths/sizes/mtimes remain unchanged; exact repeat
+preserves all 222 report files. All local links and padded dimensions verified;
+30 focused regressions and quick validation (19/19 mutation cases) pass;
+Markdown lint/whitespace checks pass, earlier reports still check. No production,
+source replacement, matching, new model or ComfyUI operation ran.
+
+**Oct 23 staged processing/face gate (v6):** new sidecar report
+`Working\_reports\preparation\incoming-trace-20261023-v6\index.html` captures
+113 current incoming files, with original/cleanup/final summaries and explicit
+five-step traces. Four report-only Junk candidates skip all transforms (two
+no-face, two below existing 60px threshold); detector failures remain errors,
+not Junk. Of 109 processed inputs, 86 have provisional border/panel crops,
+95 show rejected eraser/mask previews and 72 rejected right-side crop previews.
+Denoise/tone consume selected cleanup, with no automatic enhancement winner;
+final retains cleanup. This is review instrumentation, not a reliable hair/
+body eraser or live crop-path cutover. All 113 inputs and captured state stay
+unchanged; 114 HTML pages/794 padded dimensions verified; exact repeat preserves
+all 2,609 report files. 38 focused tests and quick validation (native exit 0,
+19/19 mutation cases) pass; Markdown/whitespace checks pass. See the
+[current pilot evidence and limits](plans/2026-10-23-image-intake-preparation.md#pilot-delivery-evidence-oct-23).
+
+**Oct 23, 21:21 visual UAT continuation (v8):** actual comparisons confirm the
+right-only eraser missed colored corner logos, top search bubbles and lower
+captions. New comparison-only run
+`_reports/preparation/visual-uat-20261023-v8/index.html` attempts four-edge
+strokes and bounded corner/top-bubble masks. 107 of 109 usable inputs now have
+eraser trials; all remain rejected for automatic use. Direct image inspection
+finds remaining logo fragments, smeared fabric/marble and partially erased
+bubbles where the hair guard excludes pixels. This is broader diagnostic
+coverage, not successful faithful reconstruction or an accepted new winner.
+50 preparation tests pass; preview/apply/check and old v7 check exit 0.
+All 113 input hashes/mtimes, catalogue/cache and 6,044 active file metadata
+records remain unchanged. New comparison evidence costs 1,991,511,772 bytes /
+2,714 files. The user authorized renewed bounded sidecar UAT, not live moves,
+quarantine, assignment, source replacement or production. The
+[visual findings and next work](plans/2026-10-23-image-intake-preparation.md#v8-result-and-direct-visual-acceptance-boundary)
+own the mask benchmark, stronger reconstruction comparison and multi-edge
+finishing-crop gaps.
+
+**Late bounded replay (v10):** 12 exact retained inputs were replayed at
+`B:\ST-v9\Sovereign Territories Sandbox\Working\_reports\preparation\v10`.
+Complete detected neutral bubbles can now be attempted across hair while
+refusing detected-face intersections; left/right/bottom mask-directed crop
+comparisons replace the fixed right-only trial. Direct visual inspection finds
+the motivating hair banner removed but replaced by an unacceptable streaked
+hair cap, and corner fills still smear. Experimental repairs/finishing crops remain automatically
+rejected; the goal of one genuinely clean final source is not complete.
+54 preparation tests and actual preview/apply/check pass; v8/v9 still verify.
+Final baseline comparison confirms all 113 live input hashes/sizes/mtimes and
+two catalogue/cache records unchanged. v9/v10 together add about 363 MB of
+retained comparison evidence. I18/I20 are partial; I19 needs an available
+stronger-reconstruction slot without interrupting the busy ComfyUI queue.
+The [late recap](recap/2026-10-23-2121-recap.md) records GUI delivery,
+visual failures, verification and next steps.
+
+**Same-mask continuation (v11):** the preparation report now compares installed
+OpenCV Telea and Navier-Stokes on identical masks/inputs, with explicit
+rejected/failure lineage. The actual 12-input v11 replay verifies; direct
+inspection finds neither local method restores convincing hair/fabric/marble.
+Final full quick validation passes 27 suites / 659 tests plus 19/19 mutations.
+Live 113-input/state preservation checks still pass. v11 adds about 206 MB
+retained evidence. The ComfyUI queue remains busy (one running / 85 pending);
+stronger reconstruction and the genuinely clean final-source goal remain open.
+
+**CPU-only outlined-banner follow-up (v12):** bounded closed outlines now
+catch the previously missed translucent top banner in `204050`, merged with
+neutral hypotheses before face refusal. Actual repair removes the banner
+but stretches the architecture, so remains rejected. 60 focused preparation
+tests, replay preview/apply/check, 822 local references and responsive browser
+UAT pass; all captured live input/state records remain unchanged. No new GPU
+jobs. The [owning plan](plans/2026-10-23-image-intake-preparation.md#cpu-only-continuation-outlined-translucent-banners)
+records the delivered safe iteration and remaining acceptance gates.
+
+**23:01 position-aware oval crop (v13):** finishing-crop comparisons can now
+use a detected oval's measured lower edge for a guarded top cut, only with
+face evidence and clearance above every expanded head margin. Rejected
+repairs never feed this crop; no new automatic selection. 62 preparation
+tests pass, including end-to-end positive-clearance and overlap/multiple-face
+refusal. Saved real examples still overlap the conservative head guard, so
+remain unresolved rather than cropping off hair. No extra large report batch,
+source changes or GPU jobs were needed.
+
+**Oct 25 v16 intake (AI decisions, to review in I29):** the second crop now
+runs before any repaint and is guarded by a Mask R-CNN person mask (at most
+0.5% of the person lost). LaMa repaints the remaining clutter on the
+second-crop output, and its result is selected. Composition frames the whole
+person and keeps the bottom when the mask stops mid-leg. The 12-photo sandbox
+run (`v16`, 155 MB) removes every GMW logo, the right icon rails, the search
+bubble and an on-body caption. Gaps (I27): picture-in-picture thumbnails,
+round avatars, a translucent ad card. The intake code is now the package
+`tools\art\intake_library\`; retired v5–v15 geometry is removed and
+`legacy.py` only lets old reports verify.
+
+**Oct 24 v14/v15 crop sequence and named folders:** earlier recipes (v6–v13)
+never auto-selected a second crop, so recommendations stayed at the original or
+the panel geometry. v14 selects a pure overlay crop that:
+
+- removes at least 95% of the mask;
+- loses at most 25% of the area;
+- keeps a body frame around every face;
+- has screenshot evidence, or the mask is one compact corner logo.
+
+Both GMW-logo samples were selected. v15 adds the agreed final framing crop
+(the gallery's existing `person_box` rule), so intake runs crop → eraser trial
+→ overlay crop → framing → enhancement comparisons. The `123511` reel is now
+framed from hair to feet without its icon rail.
+
+`likeness seed` (step 0 of `library.cmd`) restores the
+`Various\<Name>\gallery` drop. Before it, the folder scan treated Various as a
+single pool and ignored named folders.
+
+Proposed and awaiting decisions:
+
+- retained version sets (`gallery_intake`);
+- intake-only stop/resume;
+- an all-versions page;
+- a directory reckoning for future male/animal subjects (intake plan I21–I26).
+
+Tests: 67 preparation, 58 likeness, 12 library routine. Sandbox only: no source
+moves, commits or GPU jobs.
+
+**Oct 23 early Junk/artist scope:** recipe v7 records original artist/general
+scope, validated against source paths. Artists share preparation and padding,
+not identity assignment pools. Copies in Various can stay for these nonmatching
+tests; real intake uses `Artists/<artist>/gallery`. Face confidence filtering is
+not species classification: no usable human face stops transforms, while a
+human plus an animal is not automatically rejected.
+An explicit `prepare-images.cmd --quarantine-junk` mode previews or, with
+`--apply`, verifies a scoped backup and moves eligible loose intake to nested
+`_junk/<original-path>` with journal and exact `--undo-junk`. Default comparison
+apply stays sidecar-only. Registered/catalogued/selected evidence is held for
+guarded staged actions; stale paths/bytes and collisions refuse. The actual
+113-input v6 batch preview finds four candidates, zero holds; no source moves
+ran. Ordinary library runs no longer implicitly `junk --recheck`; the later
+active-photo check remains a backstop, explicit legacy retry stays available.
+Junk is not routine repair/resubmit; photo retirement is a separately recoverable
+state, neither implies deletion. Focused parent tests pass: 47 preparation,
+11 library routine and 93 action/retirement/review/metadata tests (including
+PersonProtection). Manual `photo-junked` now stages from supported gallery
+controls/CLI manifests beside photo retirement, with distinct destinations,
+typed history and existing guarded apply/undo. No identity is invented for
+Artists/Various; loose ID-less intake uses early automatic eligibility rather
+than fabricated manual IDs. New report
+`Working\_reports\preparation\incoming-scope-20261023-v7\index.html` retains
+113 inputs; all 6,167 source/state records are unchanged, 114 local HTML pages
+and 794 padded dimensions verify, exact repeat preserves 2,609 report files,
+and v6 still checks. Final quick validation passes all 25 suites (593 tests)
+plus 19/19 mutation cases, native exit 0. Markdown lint/whitespace checks pass.
+Live crop cutover and species-error acceptance remain open.
+See the [early Junk runbook](art/original-photos.md#early-junk-disposition-explicit-sandbox-opt-in)
+and intake I14/I15; registered manual Junk delivery is review-actions A9.
+
+**Oct 23 artist likeness boundary:** `bin\likeness-artists.cmd` is a thin
+entry into the same implementation, limited to Artists; ordinary likeness
+excludes Artists. Intake, models, crop/Junk rules, grouping and derivatives
+are shared, not copied. Default state is split into library-local
+`_likeness/general` and `_likeness/artists`; artist centering cannot borrow
+general/cast evidence, and stale/unstamped saved means are explicitly diagnosed.
+Legacy mixed-domain transfers/undo refuse before any moves. Scoped post-move
+originals uses `--no-repoint`; selected workflow refresh stays explicit.
+Shared library housekeeping still covers both roots, but calls the artist
+entry for artist crop/Junk/grouping, face checks and its separate index.
+Sandbox read-only previews see 279 Artist versus 2,457 general photos.
+Artist check reports 33 unusable images (exit 1), not a successful-cleanup
+claim. Captured 6,167 source/state records remain unchanged, no new state
+directory was created and existing cache/origin metadata remains unchanged.
+Initial 102 focused tests and final quick validation pass: 25 suites,
+609 tests plus 19/19 validator mutations, native exit 0. Family-preview's
+no-library-mutation contract is preserved with read-only cache handling.
+No artist/general source move, production
+apply or ComfyUI retargeting ran. See the
+[entry-point boundaries](art/likeness.md#general-and-artist-entry-points)
+and intake I16; crop cutover and real quality/threshold acceptance stay open.
+
+**Oct 23, 17:05 review handoff:** Artists will not appear in normal people
+galleries or have general/cast relationship comparisons. A separate, possibly
+simplified Artist GUI is deferred until the people gallery is settled. The CLI
+split is delivered; direct people-page builds still need general-domain scoring
+and removal of legacy Artist inclusion (intake I17/layout L13), so gallery
+isolation is not yet complete. Leave Various/gallery unprocessed until the user
+removes Artist test copies and confirms readiness. Existing v7 comparisons
+remain reviewable. Isolation and disposable-fixture integration/recovery tests
+can proceed without accepting cleanup recipes or touching that incoming batch.
+See the [review handoff](plans/2026-10-23-image-intake-preparation.md#oct-23-1705-review-handoff-and-incoming-batch-pause).
+
+**Oct 23, 17:29 follow-up delivered:** the later authorization supersedes
+Artist GUI deferral. Separate read-only Artist overview/photo-review pages now
+exist at sandbox `Working\_reports\artists`, with search, artist/group/location
+filters, lazy thumbnails, 60-card pagination and shared navigation/footer
+styling. Four artists, 71 groups, 279 photos; 279 shared 240x300 JPEG thumbnails
+use 4,427,932 bytes, complete output 4,670,943 bytes. Actual launcher
+preview/apply/check/repeat and narrow/wide browser navigation pass. Artist
+sources/metadata/derivatives (853 captured records), cache/catalogue/origin
+state stay unchanged. General people pages now build in the general scoring
+domain and explicitly refuse old mixed Artist options/spaces. Their shared
+navigation/footer code is tested; real people reports were not refreshed while
+Various/gallery is being reviewed. Detailed single-photo intake drilldown is
+specified in L12, not implemented by this browser.
+Routine backups can omit exactly manifest-owned unchanged browser payloads;
+ownership manifests, caches, original placement and identity/history metadata
+remain included. Unknown/edited/unmanifested outputs stay included; FULL and
+transaction snapshots keep generated browser files. Existing People report
+tree measures 249,127,759 bytes (199,959,674 thumbnail bytes), not a new
+generation or a claim all old files can be omitted. Full quick validation:
+26 suites / 631 tests, 19/19 mutation cases, native exit 0.
+See the [Artist browser guide](art/likeness.md#separate-artist-browser)
+and [generated-report recovery rules](art/original-photos.md#generated-browser-reports-and-backups).
+
+**Oct 23 shared gallery theme:** all gallery pages (People overview/Review,
+Artists, family preview, new intake preparation runs) now share one theme in
+`gallery_chrome.py` with a banner cropped from the ComfyUI title art and
+published once to `_reports/_assets/gallery-banner.jpg` (54 KB, replaceable,
+never overwritten). Artist pages were refreshed; real People pages were not
+(regeneration re-scores the library); themed copies are in sandbox
+`_reports/library-style-preview` for review. See
+[layout L16/L17](plans/2026-10-22-gallery-review-layout.md) and the
+[theme guide](art/likeness.md#shared-gallery-theme-and-banner).
+
+**Oct 23, 19:36 continuation:** shared badge styles now have one owner, linked
+tags have hover/focus affordances, and compact page navigation is sticky only
+on wide/tall screens. Narrow-screen count and Large-tile overflow are fixed.
+Browser checks pass at 1440/760/375/320px; 113 focused tests pass. Historical
+People preview copies retain their old evidence/scripts (including Artist rows);
+they are presentation previews, not fresh general-domain reports. Incoming
+images, cache and live People reports remain untouched; L7 count-color
+thresholds and action decisions remain open.
+
+**Oct 23, 20:18 GUI continuation:** Review now has independent Mixed/Split
+Gallery/Review grouping and category-first move destinations (layout L8/L9).
+Existing ordering, pagination, stable-ID/hash export and staging safeguards are
+preserved. 135 focused tests and 50 synthetic browser assertions pass; Split/
+Large views fit at 1440/760/375/320px. Only the historical Review preview was
+rerendered from saved evidence, with old Artist entries excluded and an explicit
+stale-evidence warning; the overview remains the older preview. No rescan,
+intake processing, action apply, live-report rebuild or cache/source change.
+Protected unlock/relock behavior and broader identity actions remain undecided.
+
+**Oct 23 full-flow clarification:** source preparation and derivative framing
+are separate. Agreed sequence: retain original -> prepare native source ->
+fresh likeness evidence/assignment -> publish/normalize Gallery reference ->
+944x1104 full/head/chest outputs -> derivative-backed viewers and explicitly
+selected ComfyUI input sync. The user uses these derivatives, not native Gallery
+files, as workflow inputs. Intake I12/upkeep U7 must retire the current
+source-overwriting crop route and account for independent screenshot crops in
+originals/maintained derivatives/viewer inspection, without removing head/chest
+framing. Cutover, chest workflow support and overlay repair are not delivered
+by the sidecar report. See the
+[full flow and installed-path inventory](art/original-photos.md#agreed-end-to-end-flow-and-current-cutover-boundary).
+
+**Oct 23 delivery versus acceptance:** standard padded/head/chest maintenance,
+derivative-backed viewers, stale-output handling and verified lean/FULL backup
+support have tested but uncommitted changes. Parent integration: 198 tests;
+FULL follow-up: 105 focused tests; normal-temp quick validation passed including
+19/19 mutation cases. Real sandbox maintenance was not applied; the final full
+preview did not finish. No whole-library output count/visual acceptance is
+claimed. Amelia's existing action undo is not settled and the pending
+Draknoxa/Lia Joyce swap is not applied. The earlier planning pass did not process
+photos; the later authorized sidecar pilot above does not replace library
+sources, alter production/Source, download models or retarget ComfyUI inputs.
 
 **Oct 22 full-plan reconciliation:** all current plans were reviewed.
 Eight superseded execution plans were archived with dated reasons, preserved

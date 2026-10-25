@@ -2,6 +2,18 @@
 
 **Status:** active (built and run; crop review received; follow-ups open)
 
+## Oct 23 ownership reconciliation
+
+The new [intake preparation plan](2026-10-23-image-intake-preparation.md)
+is the Phase 1 owner of general overlay/hair-safe preparation and cleanup
+evaluation. A4 remains this plan's Artist-specific wing/pose/layout acceptance,
+using that shared preparation rather than a separate crop engine.
+A5's optional detection/masking comparison transfers to intake I3-I5:
+transferred, not implemented or accepted. Artist isolation and A3 crosscheck
+review remain here; tooling D5 still owns reusable person detection.
+The user now requests cleanup evaluation first, not an immediate dependency
+installation or permission to modify library photos.
+
 ## Review and questions: 2026-10-22 16:26 -05:00
 
 Retained independent A3 crosscheck review, A4 overlay/crop improvements and
@@ -37,11 +49,13 @@ What you asked for today (your notes are at the end, word for word) and what was
 - [x] A1 Reviewed the cropped photos: excellent for Angels, Sisters, Prospects and normal outfits; artist wings were cut and some reel overlays remain.
 A2's `_junk` review is consolidated into R11 of [the Oct 19 library plan](2026-10-22-library-upkeep.md); use the current post-run inventory rather than the Oct 12 count.
 - [ ] **P3 you** A3 Read `_reports\crosscheck.md` (look-alikes between artists, and between prospects and artists): only reported, nothing moved. Say if a pair should be handled.
-- [ ] **P3 ai** A4 Inspect remaining reel overlays (bottom/right edges and captions near the hairline) and other layouts (paused video play button, caption at the bottom). Adjust only reliably identified UI regions so wings and broad poses are preserved; keep manual or AI blending optional.
-- [ ] **P3 either** A5 Discuss optional local logo/text detection and cleanup
+- [ ] **P3 ai** A4 Inspect remaining reel overlays (bottom/right edges and captions near the hairline) and other layouts (paused video play button, caption at the bottom). Accept Artist-specific results of intake I3-I5's shared preparation so wings and broad poses are preserved; keep manual or AI blending optional.
+- [x] **P3 either** A5 Discuss optional local logo/text detection and cleanup
   separately from likeness matching. Compare reversible masking/blending
   against cropping, preserve originals, and agree scope before implementing
   or changing generated gallery images.
+  Transferred Oct 23 to intake I3-I5, not completed; shared evaluation now
+  precedes rebase/action testing. Original request remains preserved here.
 
 ## Result
 

@@ -2,6 +2,15 @@
 
 **Status:** proposed (remaining folds/forwarders only; no additional consolidation approved)
 
+## Oct 25: continued simplification interest
+
+The [gallery continuation](2026-10-22-gallery-review-layout.md#oct-25-0913-intake-integration-and-next-safe-work)
+holds the user's new request to simplify actions/parameters after image work.
+Inventory and accurate help can proceed without intake-quality feedback. Current
+launcher help now describes v16 crop/crop/LaMa/frame and apply-only model downloads.
+No command/parameter removal, default change, `inputs sync` revival or speculative
+compatibility wrapper is implied. C2 and finals 6.3b/6.5 still gate actual folds.
+
 ## Review and questions: 2026-10-22 16:26 -05:00
 
 The counts and option tables below are an Oct 9 historical inventory, not

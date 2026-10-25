@@ -2,6 +2,28 @@
 
 **Status:** active (manual action completion and scenario acceptance remain)
 
+## Oct 25 automatic protection dependency
+
+[Engine E13](2026-10-22-likeness-engine-acceptance.md#oct-25-1233-evidence-based-automatic-protection)
+owns the requested automatic protection; user feedback and original-name work
+live in [family/naming](2026-10-22-identity-family-naming.md).
+Before enabling it, explicit unprotect needs persistent override semantics,
+separate from default unprotected state. Existing apply/undo snapshots must cover
+that provenance/override, and the GUI must explain manual versus automatic
+protection and how to resume automation. Exact opt-out/reset behavior requires
+approval, not an inferred temporary unlock. Workflow-selected constraints remain.
+
+## Oct 23 sequencing
+
+Broad A4/A6 scenario UAT follows the stable preparation/rebase baseline in the
+[ordered library work](README.md#current-library-work-order-oct-23).
+Existing rename/swap implementation and unaccepted real scenarios remain here;
+they are not superseded or silently replayed. The actual Amelia correction
+and active undo must survive any new scenario source/curation migration.
+The Draknoxa/Lia Joyce exchange remains unapplied. New source preparation
+must not silently invalidate action hashes or settle undo. Upkeep U3 owns
+that maintenance boundary; the intake/cast plans own their source migrations.
+
 ## Review and questions: 2026-10-22 16:26 -05:00
 
 Verified successor for the unfinished Oct 20/21 manual-action work.
@@ -28,6 +50,11 @@ owns the proposed protected-action unlock; the
 
 ## Delivered checkpoint
 
+Oct 25 GUI-only continuation: layout L2 moves existing identity controls into a
+separate Manual actions panel; no new actions or permissions. Existing Node
+rename/swap confirmation, cancellation and export regressions run against that
+container. A1/L6 restrictions and all unapplied real scenarios below remain open.
+
 - All ten non-workflow photo-action types have saved-JSON validate/apply/undo
   regression coverage. Workflow-photo selection deliberately refuses isolated
   sandbox roots because it changes shared configuration.
@@ -45,6 +72,16 @@ owns the proposed protected-action unlock; the
   was applied during these implementation checks. Production was untouched.
 
 ## Rules and remaining work
+
+**Oct 23 maintenance boundary:** identity transactions and derived-file
+maintenance must remain separately explainable, but the supported refresh
+must complete folder-prefix names, standard padded/head/chest outputs and
+derivative-backed thumbnails without matching. The
+[upkeep plan U1/U3/U6](2026-10-22-library-upkeep.md) owns this integration
+and reproducible-backup exclusions. An active action's undo inventory must
+not be silently invalidated. Explicit settlement requires a verified
+pre-maintenance recovery snapshot and clear restore-then-undo guidance;
+unavailable user consent means preview/check only, not implicit acceptance.
 
 Every identity category must support applicable explicit manual identity
 actions. Identity protection adds a deliberate safeguard, not a categorical
@@ -67,6 +104,7 @@ from the similarly named photo action.
 | A6 | Recap/scenario feedback | Explain and test one real scenario at a time |
 | A7 | Acceptance feedback: CLI Triggering | Bounded execution UX exploration, not an immediate local server |
 | A8 | Oct 20 H6 | Later art-authoring/ComfyUI UI, explicitly outside current delivery |
+| A9 | Oct 23 early Junk/retire clarification | Distinct manual per-photo Junk and recoverable retirement; existing action transaction/undo safeguards |
 | Structure plan | Oct 20 H2 | General package extraction, not duplicate refactor ownership here |
 | CLI proposal | Oct 20 H4 | User-facing consolidation only after approval and replacement tests |
 
@@ -75,11 +113,33 @@ from the similarly named photo action.
   transactions, not force flags. Specify protected cast operations without
   changing fixed slots accidentally. Coordinate the temporary unlock with
   layout L6; preserve automatic protection and surface unsupported references.
+- [x] **P1 ai** A9 Add manual per-photo Junk alongside recoverable retirement
+  through existing staged controls, schemas, preview/apply/history and exact
+  undo. Junk is unwanted/unusable and stays out of ordinary matching/retry;
+  retirement is recoverably set aside and can deliberately return. No permanent
+  deletion. Preserve anchor/protection/workflow, stale-state/collision and
+  transactional recovery guards; test UI export and both destinations.
+  Early unregistered incoming quarantine is intake I14, not a duplicate
+  registered action path. Full verbatim feedback is retained in the
+  [primary intake plan](2026-10-23-image-intake-preparation.md#user-feedback-verbatim).
+  Delivered Oct 23: `photo-junked`, nested source-preserving `_junk` destination,
+  UI staging, typed history and existing backed-up apply/undo. Artist/Various
+  supported-ID sources may stage either retirement or Junk without cross-root reassignment; no
+  identity or ID is invented. Loose Various Gallery is not a browser action
+  surface; unsupported IDs use I14 when automatically eligible. Parent normal-
+  temp integration passes 93 action/retirement/review/metadata tests, including
+  PersonProtection; the earlier helper's varying Windows replacement errors
+  did not reproduce. Follow-up includes 36 unregistered category/bucket/action
+  round trips for both actions, restricted controls and ID-less rejection.
+  Final quick launcher passes all 593 tests across 25 suites and 19/19 mutation
+  cases, native exit 0. No real manual action applied; user UAT remains A4/A6.
 - [ ] **P1 either** A2 Specify then implement merge, person retirement and
   person rejection as distinct operations for applicable identities.
   Preserve stable IDs, references, histories and exclusions. Distinguish
-  unusable-photo retirement from repair/resubmit Junk and recoverable
-  whole-folder archive. Existing photo retirement is not unfinished code.
+  recoverable photo retirement from unwanted/unusable Junk (excluded from
+  ordinary retry) and whole-folder archive. Oct 23 feedback supersedes
+  repair/resubmit-by-default Junk; explicit mistake recovery is still supported,
+  not permanent deletion. Existing photo retirement is not unfinished code.
 - [x] **P1 ai** A3 Implement a confirmed two-person name swap through the
   existing rename control when the entered recorded name has one registered
   owner. Show both identities, name/folder consequences and protection before
@@ -107,6 +167,11 @@ from the similarly named photo action.
   a download applies actions, or build a server without a separate decision.
 - [ ] **P3 either** A8 Keep broader art-authoring and ComfyUI batch UI in
   the future roadmap; preserve manifest integration without browser file access.
+  Oct 25 clarification: the intended future entry is a gallery image, with
+  workflow/image/output-prefix selection integrated rather than manual ComfyUI
+  searching and loading. Await the user's write-up before defining execution,
+  destination or service permissions. The complete note lives in
+  [layout's gallery-first clarification](2026-10-22-gallery-review-layout.md#oct-25-0923-gallery-first-navigation-and-retained-image-detail).
 - [ ] **P2 either** A9 Inventory explicit core-membership choices alongside
   approval, anchors and protection. Explain existing behavior and decide
   whether a separate manual core exclusion/override is needed; do not use

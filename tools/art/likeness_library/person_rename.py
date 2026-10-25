@@ -8,7 +8,7 @@ import pathlib
 import stat
 import uuid
 
-from . import metadata
+from . import identity_names, metadata
 
 
 ACTION = "person-renamed"
@@ -90,7 +90,7 @@ def decision(root, folder, person_id, person, cfg):
     return {
         "type": ACTION, "personId": person_id, "personFolder": folder,
         "expectedDisplayName": person["displayName"], "expectedTreeSha256": digest,
-        "expectedRecordedName": people.name_of(path) or person["displayName"],
+        "expectedRecordedName": (identity_names.snapshot(person, path) or {}).get("currentName") or person["displayName"],
         "expectedProtected": bool(person.get("protected", False)),
     }, ""
 
@@ -102,6 +102,7 @@ def _check_name_available(root, catalog, name, excluded_ids):
     for other_id, other in catalog["people"].items():
         if other_id not in excluded_ids and (
             other["displayName"].casefold() == name.casefold()
+            or (other.get("names") or {}).get("currentName", "").casefold() == name.casefold()
             or other["folder"].split("/")[-1].casefold() == name.casefold()
         ):
             raise ValueError("rename collides with an existing catalogue identity; confirm a standalone name swap in Review")
@@ -142,7 +143,7 @@ def validate(document, root, catalog, cfg, *, _participants=()):
             raise ValueError("rename requires an existing identity and Gallery directory")
         name = action["newName"]
         cast = source.parent.name in CAST_CATEGORIES
-        recorded_name = people.name_of(source) or person["displayName"]
+        recorded_name = (identity_names.snapshot(person, source) or {}).get("currentName") or person["displayName"]
         if recorded_name != action["expectedRecordedName"]:
             raise ValueError("recorded person name is stale; regenerate the gallery")
         if not valid_name(name) or name.casefold() == (
@@ -189,6 +190,7 @@ def validate(document, root, catalog, cfg, *, _participants=()):
         return [], [{
             "type": ACTION, "action": action, "personId": action["personId"],
             "source": source, "destination": destination, "rename": state,
+            "names": identity_names.renamed(person, name, source),
         }]
     except (OSError, ValueError) as exc:
         return [f"rename: {exc}"], []
@@ -197,6 +199,7 @@ def validate(document, root, catalog, cfg, *, _participants=()):
 def catalog_action(catalog, plan, batch):
     person = catalog["people"][plan["personId"]]
     before = copy.deepcopy(person)
+    person["names"] = copy.deepcopy(plan["names"])
     if plan["source"] != plan["destination"]:
         person["folderHistory"].append(person["folder"])
         person["folder"] = plan["destination"].parent.name + "/" + plan["destination"].name

@@ -4,7 +4,7 @@ import heapq
 
 import numpy as np
 
-from .audit import audit_person
+from .audit import audit_person, core_excluded_protection
 from .scoring import nz
 from . import rejections
 
@@ -67,7 +67,7 @@ def frozen_identity_cores(
             np.asarray([photo.vec for photo in usable]),
             photo_ids,
             anchor_ids=anchor_ids,
-            protected_ids=protected_ids,
+            protected_ids=core_excluded_protection(catalog, protected_ids),
             stale_ids=stale_ids,
             ambiguous_ids=ambiguous_ids,
             minimum_core=category_policy.get("minimumUsablePhotosForOutlierActions", 3),

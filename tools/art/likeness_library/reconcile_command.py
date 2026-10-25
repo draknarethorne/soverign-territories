@@ -3,7 +3,7 @@ import datetime
 import json
 import pathlib
 
-from . import identity_maintenance, maintenance, rejections
+from . import identity_families, identity_maintenance, maintenance, protection, rejections
 
 
 def _save_report(output, report):
@@ -117,6 +117,20 @@ def run(args, api):
     report['mergeEvidence'] = merge_evidence
     report['categoryEvidence'] = category_evidence
     report['moves'] = identity_maintenance.relocate_files(work, report['moves'], identity_actions)
+    changed_folders = {
+        pathlib.PurePosixPath(row[key]).parent.parent.as_posix()
+        for row in report['moves'] for key in ("source", "destination")
+    }
+    protection_actions, protection_evidence = protection.plan_protection(
+        space, cores, catalog, policy, root=work,
+        moving_photo_ids={row.get("photoId") for row in report['moves']},
+        moving_folders=changed_folders, selected_ids=selected_ids,
+        additional_photos=[photo for _, _, photo in review_rows if photo is not None],
+    )
+    report['metadataActions'], report['familyEvidence'] = identity_families.augment_actions(
+        protection_actions, space, cores, catalog, policy, work, changed_folders=changed_folders,
+    )
+    report['protectionEvidence'] = protection_evidence
     print(
         f"Reconciliation {'apply' if apply else 'preview'}: {report['candidateCount']} candidate(s), "
         f"{report['coreFolders']} frozen identity core(s), {report['assignedCount']} suggested destination(s), "
@@ -124,6 +138,8 @@ def run(args, api):
     )
     print(f"{len(report['moves'])} file move(s) proposed. Preview never changes images or catalogue data.")
     print(f'{len(identity_actions)} established identity action(s) proposed (merges/category transitions).')
+    print(f'{len(protection_actions)} automatic protection metadata change(s) proposed.')
+    print(f'{len(report["metadataActions"])} combined protection/name/family metadata change(s) proposed.')
     if not apply:
         print('No images or catalogue data are changed; the embedding cache may be updated.')
     print(f"likeness policy: {policy['version']} ({policy['status']})")
@@ -144,6 +160,7 @@ def run(args, api):
         journal = maintenance.apply_moves(
             work, report["moves"], policy, cfg, sandbox_override=args.sandbox_apply_draft,
             identity_actions=identity_actions,
+            metadata_actions=report['metadataActions'],
         )
         print(f'reconciliation applied: {journal}' if journal else 'reconciliation: no moves required')
         if journal:

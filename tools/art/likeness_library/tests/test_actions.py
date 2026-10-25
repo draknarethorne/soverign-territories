@@ -67,7 +67,7 @@ class LikenessActionTests(unittest.TestCase):
         action_types = {
             "anchor-added", "anchor-removed", "photo-protected", "photo-unprotected",
             "sent-to-review", "rejected-to-various", "match-rejected",
-            "review-approved", "photo-retired", "match-accepted",
+            "review-approved", "photo-retired", "photo-junked", "match-accepted",
         }
         schema = json.loads(actions.MANIFEST_SCHEMA.read_text(encoding="utf-8"))
         self.assertEqual(

@@ -25,6 +25,9 @@ Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (gen
 
 After incorporation, re-read the raw source and verify both verbatim preservation
 and actionable coverage. Only then may that specific feedback file be removed.
+When the user requests archival, move that exact note into `feedback/_archive/`
+instead of deleting it; do not overwrite an existing archived copy.
+The current intake directory is root `feedback/`, not `docs/feedback/`.
 Re-read it immediately before removal so edits made during the work are not lost.
 If a note spans plans, keep one complete verbatim copy in the primary plan and
 link the other owning plans to it. Unresolved or not-yet-incorporated feedback
@@ -154,6 +157,32 @@ Source: `feedback/revise_docs_planning_process.md`, Oct 22, 2026.
 When you get some time - I want to revise our docs/plans overall process to use the feedback/ directory for my raw .md files instead of tmp/ directory.  I've written up a couple feedback documents while you have been working and want to have those feed into our docs/plans either as updates to existing plans or a new plan and then we can remove them once the docs/plan is written.  You can revise any instructions, memory or readme.md that indicate how we work together to accept raw feedback either in a feedback/ .md file or just direct feedback in this chat that needs to be captured in the plans.  In general this is working really well using tmp/ - but I just wanted to ensure an accidental clearing of tmp/ doesn't happen and removing .md files from feedback/ only happens when we ensure the information is into a plan.
 ```
 
+## Current library work order (Oct 23)
+
+Image preparation is now the first library priority, ahead of broad action UAT.
+This is scheduling, not a new umbrella execution plan. Independent game work
+remains active; later-phase P1 tags describe blocking importance, not permission
+to bypass prerequisites. The generated queue does not resolve dependencies:
+use this order and each owning plan's gates.
+
+| Order | Focus / owner | Prerequisite and exit |
+| --- | --- | --- |
+| Phase 1 | [Image intake preparation I1-I17](2026-10-23-image-intake-preparation.md) | Sidecar trace I13, early Junk I14, artist scope I15 and entry/report boundaries I16/I17 delivered; basic Artist GUI L14 delivered for review after later authorization; current incoming batch paused for user cleanup; upstream geometry I11 partly delivered; review I10 and accept provenance/recipe; I12 replaces existing source-crop routes, not a second parallel pipeline |
+| Phase 2 | [Library upkeep U1/U3/U6/U7](2026-10-22-library-upkeep.md) | Phase 1 handoff; integrate maintenance/recovery, U7 prepared-source full/head/chest derivatives and explicitly selected ComfyUI inputs without repeated source cleanup |
+| Phase 3 | [Cast-seeded all-library rebase C1-C7](2026-10-23-cast-seeded-library-rebase.md) | Phases 1/2 accepted; approve configurable retained/core/released photo policy, then compare reproducible sandbox trials |
+| Phase 4 | [Engine acceptance E4/E6/E7/E8/E10, P1-P6](2026-10-22-likeness-engine-acceptance.md) | Accept Phase 3 evidence, convergence and separate incremental batch (now 400+ planned); production still needs its own preview, backup/restore and approval |
+| Supporting | [Face-analysis M1/M2](2026-10-22-face-analysis-evaluation.md) | Inform Phase 1 labels and face/body explanation; secondary-model M3/M4 remains conditional, not a mandatory new-model dependency |
+| After stable baseline | [Manual action A4/A6 UAT](2026-10-22-review-actions.md), [family acceptance](2026-10-22-identity-family-naming.md) | Existing rename/swap work retained; no pending swap or action-undo settlement applied by this pivot |
+| Separate downstream | [Manual prompt migration](2026-10-22-manual-prompts-to-art-library.md) | Source audit can continue; settle prepared/raw/edit input roles before new `0_Edit`/Alpha migration or retargeting |
+
+The Oct 22 run remains dated evidence, not validation of the new preparation
+recipe or cast-release policy. Do not reset the current Working tree until
+curation/history, exclusions, protection and recovery have explicit migration.
+The subsequent Oct 23 follow-up authorizes source-preserving sandbox sidecar
+comparisons, including retained cast cores without reassignment. No production
+processing or replacement of Gallery sources is authorized. Older uncropped
+original recovery is deferred; exact current inputs must be preserved meanwhile.
+
 ## Plans
 
 | Plan | Status | What it is |
@@ -165,15 +194,18 @@ When you get some time - I want to revise our docs/plans overall process to use 
 | [2026-10-12-roadmap-and-mvp-data.md](2026-10-12-roadmap-and-mvp-data.md) | active | The MVP data track (Darkness and Light set, starter decks, rules), the Oct 8 steps 3 and 4, the art and video track |
 | [2026-10-12-tooling-debt.md](2026-10-12-tooling-debt.md) | active | Diagnostics, read-only day-close, atomic writes, line endings, Windows suspension, readiness ranking and archive-first deactivation |
 | [2026-10-20-art-tools-structure.md](2026-10-20-art-tools-structure.md) | active | Incrementally organize art Python tools and tests while preserving `bin/*.cmd` interfaces |
-| [2026-10-22-gallery-review-layout.md](2026-10-22-gallery-review-layout.md) | active | Separate image, identity details and manual actions; consolidate related header/formatting feedback without expanding the engine plans |
-| [2026-10-22-likeness-engine-acceptance.md](2026-10-22-likeness-engine-acceptance.md) | active | Shared-engine calibration, convergence, incremental batch and separately approved production clean-full rebuild |
-| [2026-10-22-identity-family-naming.md](2026-10-22-identity-family-naming.md) | active | Virtual family metadata, reversible naming, collisions, viewer and user acceptance |
+| [2026-10-22-gallery-review-layout.md](2026-10-22-gallery-review-layout.md) | active | Shared theme, responsive panels and filterable run-history browser delivered; L19 main-entry/Intake navigation, L12 retained lineage, L20 pruning and L18 I/O remain |
+| [2026-10-22-likeness-engine-acceptance.md](2026-10-22-likeness-engine-acceptance.md) | active | Phase 4: calibration, convergence and production gates; E13 draft auto-protection/override implementation is tested, not calibrated or production-approved |
+| [2026-10-22-identity-family-naming.md](2026-10-22-identity-family-naming.md) | active | Draft family/name metadata, reversible transactions and N10 three-name gallery display implemented; acceptance, leave/reassignment and stable-ID rebase migration remain |
 | [2026-10-22-review-actions.md](2026-10-22-review-actions.md) | active | All-category manual actions, recovery, scenario testing, name swaps and future UI boundaries |
 | [2026-10-22-face-analysis-evaluation.md](2026-10-22-face-analysis-evaluation.md) | active | Explain current measurements and evaluate labelled secondary-model cases with verified licence gates |
 | [2026-10-22-manual-prompts-to-art-library.md](2026-10-22-manual-prompts-to-art-library.md) | active | Manual source/token/data migration, new `0_Edit`, revised Prime/Bare, validated `1b` retirement and untouched `2b` |
-| [2026-10-22-library-upkeep.md](2026-10-22-library-upkeep.md) | active | Chest-crop preview, current Junk/outcome review, post-action refresh, near duplicates and future Demon pairing decisions |
+| [2026-10-22-library-upkeep.md](2026-10-22-library-upkeep.md) | active | Phase 2: downstream naming/derivative/viewer and backup integration; tested implementation still needs real acceptance; independent Junk/near-duplicate/Demon work retained |
+| [2026-10-23-image-intake-preparation.md](2026-10-23-image-intake-preparation.md) | active | Phase 1: v16 crop/crop/LaMa/person-aware framing and shared intake history delivered for review; I21-I23 retained-set publication/stop/resume/assignment wiring and live cutover remain gated |
+| [2026-10-23-cast-seeded-library-rebase.md](2026-10-23-cast-seeded-library-rebase.md) | active | Phase 3, gated by Phases 1/2: fresh supplied-image intake-only or full matching/assignment; configurable cast retention/release and verified lineage migration before a new run |
 
-Every retained plan has an Oct 22 review/questions block. The
+The Oct 22 retained plans have review/questions blocks; affected owners now
+also record the Oct 23 foundation-first scheduling pivot. The
 [full reconciliation audit](../audits/2026-10-22-plan-feedback-audit.md)
 records scope/task/context coverage. Revisit those questions one at a time;
 historical counts are not new runtime acceptance.

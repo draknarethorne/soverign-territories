@@ -235,11 +235,30 @@ def validate_policy(policy):
         raise ValueError("identity action thresholds conflict with the review threshold")
 
     lookalikes = policy["lookalikeGroups"]
-    if set(lookalikes) != {"suggestionMinimumSimilarity", "automaticAssociationEnabled"}:
+    if not {"suggestionMinimumSimilarity", "automaticAssociationEnabled"} <= set(lookalikes) or set(lookalikes) - {
+        "suggestionMinimumSimilarity", "automaticAssociationEnabled",
+        "associationMinimumSimilarity", "associationMaximumSimilarityExclusive", "minimumIndependentPhotos", "minimumReferenceMargin",
+    }:
         raise ValueError("lookalikeGroups keys are incomplete or unsupported")
     _number(lookalikes["suggestionMinimumSimilarity"], "lookalike suggestion minimum")
     if not isinstance(lookalikes["automaticAssociationEnabled"], bool):
         raise ValueError("lookalikeGroups automaticAssociationEnabled must be boolean")
+    if lookalikes["automaticAssociationEnabled"]:
+        if not {"associationMinimumSimilarity", "associationMaximumSimilarityExclusive", "minimumIndependentPhotos", "minimumReferenceMargin"} <= set(lookalikes):
+            raise ValueError("automatic lookalike association requires explicit evidence gates")
+    if "associationMaximumSimilarityExclusive" in lookalikes:
+        maximum = _number(lookalikes["associationMaximumSimilarityExclusive"], "lookalike association maximum")
+        minimum = _number(lookalikes.get("associationMinimumSimilarity", lookalikes["suggestionMinimumSimilarity"]), "lookalike association minimum")
+        if minimum < lookalikes["suggestionMinimumSimilarity"] or maximum <= minimum:
+            raise ValueError("lookalike association band must be nonempty")
+    if "minimumReferenceMargin" in lookalikes:
+        _number(lookalikes["minimumReferenceMargin"], "lookalike reference margin", 0, 1)
+    if "minimumIndependentPhotos" in lookalikes and (
+        isinstance(lookalikes["minimumIndependentPhotos"], bool)
+        or not isinstance(lookalikes["minimumIndependentPhotos"], int)
+        or lookalikes["minimumIndependentPhotos"] < 2
+    ):
+        raise ValueError("lookalike minimumIndependentPhotos must be an integer >= 2")
 
     photo_routing = policy["photoRouting"]
     if set(photo_routing) != {
@@ -257,15 +276,33 @@ def validate_policy(policy):
     _number(photo_routing["minimumOwnCoreLead"], "photo route minimum own-core lead", 0.0, 2.0)
 
     protection = policy["protection"]
-    if set(protection) != {
+    if set(protection) - {"automatic"} != {
         "identityBlocksAutomaticMoves",
         "photoBlocksAutomaticRemoval",
         "photoBlocksReviewRouting",
         "protectedPhotoMayBeExcludedFromCore",
-    } or any(not isinstance(value, bool) for value in protection.values()):
+    } or any(not isinstance(value, bool) for key, value in protection.items() if key != "automatic"):
         raise ValueError("protection policy is incomplete or invalid")
-    if not all(protection.values()):
+    if not all(value for key, value in protection.items() if key != "automatic"):
         raise ValueError("protection policy must preserve every approved protection rule")
+    automatic = protection.get("automatic")
+    if automatic is not None:
+        if not isinstance(automatic, dict) or set(automatic) != {
+            "enabled", "recipeVersion", "minimumOwnCoreSimilarity", "minimumRivalMargin",
+            "minimumIndependentReferences", "minimumEstablishedPhotos",
+        }:
+            raise ValueError("automatic protection policy is incomplete or invalid")
+        if not isinstance(automatic["enabled"], bool) or automatic["recipeVersion"] != "independent-gallery-loo-v1":
+            raise ValueError("unsupported automatic protection recipe")
+        _number(automatic["minimumOwnCoreSimilarity"], "automatic protection own core similarity", 0, 1)
+        _number(automatic["minimumRivalMargin"], "automatic protection rival margin", 0, 2)
+        for key in ("minimumIndependentReferences", "minimumEstablishedPhotos"):
+            if isinstance(automatic[key], bool) or not isinstance(automatic[key], int) or automatic[key] < 2:
+                raise ValueError(f"automatic protection {key} must be an integer >= 2")
+        if automatic["minimumEstablishedPhotos"] <= automatic["minimumIndependentReferences"]:
+            raise ValueError("establishment must exceed leave-one-out reference count")
+        if "independentEvidenceMaximumSimilarity" not in identity:
+            raise ValueError("automatic protection requires an independent evidence similarity ceiling")
     return policy
 
 

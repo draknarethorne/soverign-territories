@@ -5,7 +5,7 @@
 
 ## Open work, by priority
 
-### Your queue: needs your hands or a decision (29)
+### Your queue: needs your hands or a decision (36)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -22,6 +22,10 @@
 - [ ] P2 Approve the exact visual preview and batch, including ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] P5 Inspect refreshed production galleries and ComfyUI ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] P6 Render/review the pilot with the agreed source images ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
+- [ ] C7 Review before/after cast seeds, hair/overlay outcomes and ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
+- [ ] I29 Review the v16 report (`_reports\preparation\v16\index.html`): ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I24 After the sandbox rebase, drop `Various\<Name>\gallery` folders of ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I10 Review the pilot's control, denoise and tone candidates. ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 
 **P2 (normal)**
 
@@ -30,6 +34,9 @@
 - [ ] R6 Answer or deliberately defer the remaining `STATUS.md` decisions O2–O11: vision-card acquisition, Transcendent legality, the Neutral deck rule, the angels' spells, the story link angel to sister, `AP-###`, roster page ... ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] R11 Compare Qwen and FireRed on scenes; decide how the two (or a FireRed render plus a Qwen polish pass) are used. ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] D10 Review the refreshed gallery and Angel-to-Prospect rankings; confirm candidate ordering, fit-score explanation and preview-only promotion command are useful. ([2026-10-12](plans/2026-10-12-tooling-debt.md))
+- [ ] L15 Review the Artist overview/photo-review navigation, ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
+- [ ] L17 Review the themed look on ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
+- [ ] I26 Decide the directory reckoning: intake root name, kind roots, role and ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 
 **P3 (later, or ideas)**
 
@@ -45,7 +52,7 @@
 - [ ] U2 Review current photo outcomes using fresh inventories: ([2026-10-22](plans/2026-10-22-library-upkeep.md))
 - [ ] P10 Archive the manual source directory only after every ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 
-### Either of us (31)
+### Either of us (37)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -53,12 +60,19 @@
 - [ ] M2 Build labelled comparisons for Florence Brookfield ([2026-10-22](plans/2026-10-22-face-analysis-evaluation.md))
 - [ ] N2 Specify and approve suggested versus threshold-assigned ([2026-10-22](plans/2026-10-22-identity-family-naming.md))
 - [ ] N3 Approve a deterministic naming/migration table, ([2026-10-22](plans/2026-10-22-identity-family-naming.md))
+- [ ] E13 Approve photo confidence/support/rival-margin and identity ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] E6 Label Fia/Amara, Jacinta/Freya, Sophie, unrelated ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] E10 Review actual sandbox placements and score ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] P6 Explicitly accept the guarded incoming path before ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] P2 Resolve QP1-QP4 one at a time. Produce a source-line ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] A2 Specify then implement merge, person retirement and ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] A6 Walk through the user's scenarios one at a time: ([2026-10-22](plans/2026-10-22-review-actions.md))
+- [ ] C1 Define approved cast seed modes and exact meaning of ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
+- [ ] I21 Implement retained version sets (`gallery_intake`) per the proposal ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I19 Compare stronger reconstruction on reviewed identical masks when a safe ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I2 Resolve I-D1, specify archive verification, stable-ID to ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I5 Choose I-D2/I-D3/I-D4 from side-by-side visual review ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I8 Verify archive restore, interrupted/repeated runs, ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 
 **P2 (normal)**
 
@@ -66,6 +80,7 @@
 - [ ] R2 D3 Starter decks and products. Rebuild `data/decks`, `data/products` and `data/manifests` around Darkness and Light (plus Neutral cards) using the starter-hero decision; include lower-level heroes and decide where bound ... ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] D9 Calibrate a report-only prospect-readiness ranking from face quality, usable-photo quantity and distinct framing; validate a pose-diversity signal and compare rankings against human review before using the score to ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] M4 Recommend whether secondary checking for ambiguous ([2026-10-22](plans/2026-10-22-face-analysis-evaluation.md))
+- [ ] L20 Define safe intake-run retention/pruning with dependency ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
 - [ ] L6 Settle relocking/staged-action behavior, then implement ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
 - [ ] L10 Audit ranking labels and explanations with the engine ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
 - [ ] P9 Refresh tutorials, art structure/template references, ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
@@ -76,26 +91,30 @@
 **P3 (later, or ideas)**
 
 - [ ] Run it once the first finals exist, and watch the size; decide Git LFS only if it grows. ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
-- [ ] A5 Discuss optional local logo/text detection and cleanup ([2026-10-12](plans/2026-10-12-artists-reset-and-auto-crop.md))
 - [ ] R5 Art for the 15 legacy heroes that lack art identities, plus full sets for Darkness and Light first, then Grass, Fire, Water and Earth. ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] R9 Library gaps: the map in `data/art/README.md` (backgrounds, props, races, creatures, unit, building and tactic art, theme gear). Do them as the sisters' scenes show what is missing, not as one big push. ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] R13 Title and key-art scene from the text-to-image templates (`ST0_*_Text`) as a card in the pipeline; an item stage for weapons and armor; use the other `ST` templates (polish, finals) to generate their own prompts. ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] D8 Background processes were suspended by Windows after about a minute (every thread "Suspended"; resuming them with `NtResumeProcess` finished the job). Find out why (power or efficiency mode, a security tool) and, if it ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] D11 Design a safe, archive-first way to deactivate an entire Prospect or Artist folder identified as a false face match. Keep the HTML static unless a trusted local action flow is approved; never delete source files. ([2026-10-12](plans/2026-10-12-tooling-debt.md))
-- [ ] U3 Decide whether manual merge/retire/pair actions should ([2026-10-22](plans/2026-10-22-library-upkeep.md))
 - [ ] U5 Before future Demon automation, define counterpart ([2026-10-22](plans/2026-10-22-library-upkeep.md))
 - [ ] A7 Compare download/run versus a lightweight explicit ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] A8 Keep broader art-authoring and ComfyUI batch UI in ([2026-10-22](plans/2026-10-22-review-actions.md))
 
-### For the assistant, when you say go (61)
+### For the assistant, when you say go (83)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] M1 Trace detection, alignment/cropping, embeddings, centering, ([2026-10-22](plans/2026-10-22-face-analysis-evaluation.md))
-- [ ] L1 Inventory the current overview and Review person-header ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
+- [ ] L19 Add gallery-first navigation with a separate Intake/Various ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
+- [ ] L12 Integrate verified preparation comparison/detail links into ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
+- [ ] N9 Specify original/current/character-name provenance and ([2026-10-22](plans/2026-10-22-identity-family-naming.md))
 - [ ] N1 Classify surname reuse as confirmed resemblance, ([2026-10-22](plans/2026-10-22-identity-family-naming.md))
 - [ ] N5 Show suggested/assigned family links, members, current ([2026-10-22](plans/2026-10-22-identity-family-naming.md))
 - [ ] N6 Wire approved family-link and family-name changes through ([2026-10-22](plans/2026-10-22-identity-family-naming.md))
+- [ ] U1 Complete maintained padded/head/chest standard derivatives ([2026-10-22](plans/2026-10-22-library-upkeep.md))
+- [ ] U3 Wire supported sandbox-aware post-action maintenance: ([2026-10-22](plans/2026-10-22-library-upkeep.md))
+- [ ] U6 Exclude proven regenerable outputs from routine snapshots, ([2026-10-22](plans/2026-10-22-library-upkeep.md))
+- [ ] U7 Integrate accepted preparation with existing derivatives ([2026-10-22](plans/2026-10-22-library-upkeep.md))
 - [ ] E1 Verify isolated roots, caches, outputs, workspace access, ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] E2 Finish the command/caller and source-root inventory. ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] E3 Audit every behavioral setting against one validated ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
@@ -112,6 +131,21 @@
 - [ ] A1 Inventory identity-level CLI and GUI actions across all ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] A4 Cover each new action through actual GUI JSON export, ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] A11 Design and implement verified action-scoped recovery ([2026-10-22](plans/2026-10-22-review-actions.md))
+- [ ] C2 Inventory all photos and decisions from the immutable source ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
+- [ ] C3 Add schema-validated optional cast-release mode and shared ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
+- [ ] C4 Prepare all seeds and candidates through Phase 1, record ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
+- [ ] C5 Run repeatable sandbox scenarios from the same immutable ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
+- [ ] C6 Install reversibly only after approved preview, then normalize ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
+- [ ] I22 Add an intake-only stop and resume to the launchers (`library.cmd` ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I23 Build the per-photo all-versions page and link it from Review and ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I18 Build a reviewed mask benchmark for complete bubble/logo shapes, including ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I11 Prioritize upstream geometric preparation before further ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I12 Complete upstream crop cutover with upkeep U7 after ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I1 Inventory all supported sources, current crop/Junk/preparation ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I3 Assemble a labelled read-only pilot: text over hair/face, ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I4 Benchmark shortlist locally on pilot copies, recording ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I6 Implement accepted preparation through shared clean/incremental ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I7 Wire accepted analysis/prepared/display hashes and recipe ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 
 **P2 (normal)**
 
@@ -121,6 +155,7 @@
 - [ ] R14 The documentation audit's other items that are not decisions, and a launcher check, now with the art and video tutorials (the audit is in `docs/audits/2026-10-12-docs-audit.md`). ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] D1 `likeness status`: for every root and every artist, what is left loose and why (no usable face, a second person, an animal, bars over her head, held for clean-up), plus the pool, the review folders and `_junk`. The question ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] D4 `bin\day-close.cmd`: the day's hygiene as one read-only check (feedback coverage, plan status/index consistency, tagged tasks, explicit transfer owners, current queue, lint, tests and validators). Flag competing owners for ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
+- [ ] D13 Review remaining non-archive documentation by current guide, ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] C2 Add or preserve compatibility entry points only where ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
 - [ ] D1 Keep a reviewed inventory of modules deferred for coupling, ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
 - [ ] D2 Verify the documented `bin/*.cmd` commands and relevant ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
@@ -134,30 +169,30 @@
 - [ ] L2 Implement a responsive reference-photo panel, identity ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
 - [ ] L3 Audit photo-detail grouping and category/name repetition, ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
 - [ ] L4 Validate both sort modes, filters, primary references, ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
-- [ ] L8 Add a presentation-only Mixed/Split grouping choice ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
-- [ ] L11 Show descriptive card-use guidance by category: Potentials ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
+- [ ] L18 Improve preparation evidence-index I/O without weakening ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
 - [ ] N4 Implement approved family schema, validators and helpers ([2026-10-22](plans/2026-10-22-identity-family-naming.md))
 - [ ] N8 Refresh the people index, galleries and documented ([2026-10-22](plans/2026-10-22-identity-family-naming.md))
-- [ ] U1 Produce a read-only chest-crop preview for varied full, ([2026-10-22](plans/2026-10-22-library-upkeep.md))
 - [ ] E11 Finish the engine sunset/replacement matrix and ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] E12 Update the command guide, original-photo runbook, ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] P3 Rationalize selected anatomy/vocabulary with existing art ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] P7 Write the accepted prompt standard and recurring audit ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] P8 After replacements pass, retire `1b_Experiments` across ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] A5 Verify stable-directory report replacement, dated report ([2026-10-22](plans/2026-10-22-review-actions.md))
+- [ ] I27 Close the v16 visual gaps: the picture-in-picture reel ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I20 Complete subject-preserving composition before/after cleanup, beyond ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 
 **P3 (later, or ideas)**
 
 - [ ] Optional (only if wanted): a contact-sheet helper that lists the source photos in use per hero, so the choice is easy to compare. ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
 - [ ] `docs/mvp/` and `deck-progression-rules.md` were checked: they only say "10 elements, cosmetic in the MVP", so nothing else needed changing. Re-check when the starter decks are rebuilt around Darkness and Light. ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
 - [ ] 4.4 If the active Prime tests show a specific need, consider a face pass with two images (bare bust plus original headshot), a beta template and a generator change. Do not add a pose-frame input. ([2026-10-11](plans/2026-10-11-tidy-junk-organise.md))
-- [ ] A4 Inspect remaining reel overlays (bottom/right edges and captions near the hairline) and other layouts (paused video play button, caption at the bottom). Adjust only reliably identified UI regions so wings and broad poses ... ([2026-10-12](plans/2026-10-12-artists-reset-and-auto-crop.md))
+- [ ] A4 Inspect remaining reel overlays (bottom/right edges and captions near the hairline) and other layouts (paused video play button, caption at the bottom). Accept Artist-specific results of intake I3-I5's shared preparation so ... ([2026-10-12](plans/2026-10-12-artists-reset-and-auto-crop.md))
 - [ ] D5 A person detector for `crop` instead of the face box widened to the sides (wings, a wide stance and a low head are guesses today), and the other reel layouts (a paused video with a play button, a caption at the bottom). See ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] D6 Write every file the tools change whole and swap it in (a temporary name, then a rename), and log each change as it is made, as `crop` now does: scaled copies, headshots, `workspaces.json` writes and the move log. A killed ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] D7 One line-ending rule in `.gitattributes`: the repo mixes CRLF and LF files, which turns a one-line edit into a whole-file diff and git warns on every command. ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] L7 Review shared theme, colors, spacing, typography, ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
-- [ ] L9 Make move selection category-first then identity while ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
 - [ ] U4 If requested, report likely resized/re-encoded near ([2026-10-22](plans/2026-10-22-library-upkeep.md))
+- [ ] I28 Delete `intake_library\legacy.py` and its `validate` ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 
 ### Completed plans (10, in [plans/_archive](plans/_archive))
 

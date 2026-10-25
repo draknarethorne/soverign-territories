@@ -16,15 +16,29 @@ echo    library.cmd                     everything; automatically makes a full p
 echo                                    draft likeness policy refuses before housekeeping; use library-preview.cmd until approved
 echo    library-preview.cmd             the same, every step as a preview ^(nothing moves^)
 echo    library-check.cmd               read only: is it in step, any duplicates, any photo waiting? Exit 1 when work is waiting
-echo    library-backup.cmd [--apply ^| --verify SNAPSHOT]  preview, create, or verify a dated library/input/config snapshot
-echo    people-gallery.cmd [--root DIR] [--cache FILE] [--out DIR] [--policy FILE] [--no-renders]  overview + review pages; nine photos, cross-references, rankings and shared crops
+echo    library-backup.cmd [--apply ^| --full ^| --verify SNAPSHOT]  preview, create, or verify a dated snapshot (^--full keeps generated derivatives)
+echo    library-backup.cmd --restore SNAPSHOT --destination NEW_DIR [--apply]  preview/materialize exact recovery with regenerated derivatives; never overwrites a live tree
+echo    people-gallery.cmd [--dry-run ^| --check ^| --apply] [--root DIR] [--cache FILE] [--out DIR] [--policy FILE]  preview/check local housekeeping; apply backs up, normalizes originals, maintains padded/head/chest and both viewers; NO matching
+echo                                    active action undo blocks apply; undo first or explicitly --settle-actions to close undo with full recovery snapshot
+echo                                    --preserve-action-undo leaves active-action identity trees untouched and maintains others; held files remain diagnostic, no settlement
 echo    people-gallery-review.cmd [--root DIR] [--cache FILE] [--out DIR] [--policy FILE] [--keep SCORE]  local Gallery + Review audit; filters, rankings and staged actions
+echo    artists-gallery.cmd [--root DIR] [--cache FILE] [--dry-run ^| --check ^| --apply]  separate Artist overview/photo review; shared small thumbnails in _reports\artists, NO matching or source changes
+echo    prepare-images.cmd --root "SANDBOX\Working" --out "Working\_reports\preparation\RUN" [--limit 28] [--dry-run ^| --apply ^| --check]  sidecar original/control/geometry/denoise/tone, larger pages and padded examples; NO source or identity changes
+echo                                    --source-folder "Various\gallery" --limit 0 compares ALL direct incoming images; face gate, crop/crop/LaMa/frame trace and masks BEFORE filter comparisons; NO live moves
+echo                                    v16 can recommend LaMa cleanup; --apply may download pinned CPU models once. --dry-run inventories only; --check verifies existing evidence.
+echo                                    Artists\ARTIST\gallery uses the SAME preparation and padding, retaining artist-only source scope; copies in Various cannot imply artist ownership
+echo                                    existing RUN --quarantine-junk previews eligible loose-intake moves; --apply verifies a scoped backup and moves to nested _junk, never deletes or matches
+echo                                    existing RUN --undo-junk previews exact recovery; --apply restores verified bytes; --check verifies completed disposition too. Ordinary library runs do NOT retry Junk
 echo    sandbox-rebase.cmd "SANDBOX\Working" "RUN-DIR" [--dry-run ^| --replan ^| --apply ^| --check ^| --undo]  clean cast-only rebuild; fresh cache, flattened candidates, verified backup and rollback copies
 echo    likeness-actions.cmd validate FILE.json  check staged actions against current photo IDs, hashes, folders and catalogue
 echo    likeness-actions.cmd preview FILE.json   show intended destinations; never moves photos or edits metadata
 echo    likeness-actions.cmd apply FILE.json --apply  verified backup, then apply staged moves and metadata decisions
 echo    likeness-actions.cmd undo [BATCH_ID] --apply  verified backup, then undo the newest action batch
 echo    likeness.cmd crops              one web page with every cropped photo, the uncropped original beside it ^(likeness.cmd crop --undo --apply reverses the last batch^)
+echo    likeness.cmd                    general roots ONLY: Angels, Sisters, Models, Prospects, Potentials, Various; Artists are excluded
+echo    likeness-artists.cmd --root "SANDBOX\Working" --dry-run group --singles  shared engine, artist-only preview; --check scans without cache/history writes
+echo                                    artist scan, junk, crop, group, folder inspection, diagnostics and index reuse the same code; artist state lives in Working\_likeness\artists
+echo                                    general state lives in Working\_likeness\general; default post-move originals stays scoped and does not retarget selected workflows
 echo    duplicates.cmd [--apply]        the same picture kept twice anywhere in the library ^(any folder, any name^)
 echo    originals.cmd --check           are the scaled copies and headshots in step with every gallery?
 echo.
@@ -52,9 +66,10 @@ echo    originals.cmd [--dry-run] [--only NAME] [--no-headshots] [--archive-old]
 echo    likeness.cmd diagnostics --out DIR [--policy FILE]  one-pass calibration + active-person folder checks; writes CSVs and a Markdown report ^(read only; explicit --root and --cache for sandbox^)
 echo    likeness.cmd family-preview [--policy FILE] [--out DIR]  direct reference scores, surname reuse and naming collisions ^(JSON + HTML; suggestions only, no library changes^)
 echo    likeness.cmd sandbox-reset       preview restoring only Models, Prospects, Potentials from the verified sandbox Source snapshot; --apply to restore ^(requires --root ...\Working^)
-echo    likeness.cmd audit-core ^| calibrate ^| folder ^| clean ^| group ^| sisters ^| pairs ^| alike ^| compare ^| like ^| sort --singles ^| reconcile ^| singles ^| junk ^| review --out ^| loosen ^| lookalikes ^| names ^| index ^| profile ^| who ^| merge ^| retire ^| retire-empty ^| archive-list ^| promote ^| rename ^| undo   faces: read-only core/outlier audit, combined Review + Various preview, one-person checks, artists into people, sisters as a family, angel-to-sister pairing, empty Various, unusable photos to _junk, look-alike guard, names, who-could-play-what table ^(previews; --apply moves; --sheet F.png^)  ^(docs\art\likeness.md^)
+echo    likeness.cmd audit-core ^| calibrate ^| folder ^| clean ^| sisters ^| pairs ^| alike ^| compare ^| like ^| sort --singles ^| reconcile ^| singles ^| junk ^| review --out ^| loosen ^| lookalikes ^| names ^| index ^| profile ^| who ^| merge ^| retire ^| retire-empty ^| archive-list ^| promote ^| rename ^| undo   general faces: read-only core/outlier audit, combined Review + Various preview, one-person checks, sisters as a family, angel-to-sister pairing, empty Various, unusable photos to _junk, look-alike guard, names, who-could-play-what table ^(previews; --apply moves; --sheet F.png^)  ^(docs\art\likeness.md^)
 echo    likeness.cmd policy                 show the validated draft shared likeness thresholds; rebaseline remains gated pending review
 echo    likeness.cmd reconcile [--out FILE.json] [--apply]  incoming, Review, outliers, identity merges and category moves; verified backup, journal and read-only final-core check; production requires approved policy
+echo                                    also previews evidence-based identity/photo protection, original-name provenance and virtual family naming; manual unprotect persists until explicitly protected again
 echo    likeness.cmd rebaseline              read-only category, routing, and cast-similarity preview; sandbox category moves require --apply-categories and a verified Working backup
 echo    denoise.cmd [--reset]; sync-inputs.cmd; organize-outputs.cmd
 echo.

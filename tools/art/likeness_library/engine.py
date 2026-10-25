@@ -11,6 +11,7 @@ import numpy as np
 
 import comfy_workflows as cw
 import originals
+from likeness_library import domains
 from likeness_library.scoring import nz
 from likeness_library.policy import effective_settings
 
@@ -34,10 +35,13 @@ class Embedder:
         import cv2
 
         models = self.model_root / "models"
-        models.mkdir(parents=True, exist_ok=True)
+        if not domains.READ_ONLY.get():
+            models.mkdir(parents=True, exist_ok=True)
         for name, url in MODEL_URLS.items():
             path = models / name
             if not path.exists():
+                if domains.READ_ONLY.get():
+                    raise ValueError(f"read-only likeness requires an existing local model: {path}")
                 import urllib.request
 
                 print(f"downloading {name} ...")
@@ -137,6 +141,7 @@ class Cache:
         data = json.loads(self.path.read_text(encoding="utf-8")) if self.path.exists() else {}
         self.stat, self.emb = data.get("stat", {}), data.get("emb", {})
         self.centering_mean = data.get("centeringMean")
+        self.centering_domain = data.get("centeringDomain")
         self.emb = {
             key: value
             for key, value in self.emb.items()
@@ -156,9 +161,12 @@ class Cache:
         return digest
 
     def save(self):
+        if domains.READ_ONLY.get():
+            return
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.path.write_text(json.dumps({
             "stat": self.stat, "emb": self.emb, "centeringMean": self.centering_mean,
+            "centeringDomain": self.centering_domain,
         }), encoding="utf-8")
 
 
@@ -244,6 +252,8 @@ def read_library(cfg, work, cache, embed, configuration, progress=True, with_mix
         todo.extend((path, group, name) for path in originals.images(folder / "gallery"))
     done = 0
     for path, group, folder in todo:
+        if domains.CURRENT.get():
+            domains.require_path(work, path)
         digest = cache.sha(path)
         if digest not in cache.emb:
             try:

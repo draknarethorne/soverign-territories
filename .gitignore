@@ -57,3 +57,6 @@ workflows/**/X_*.json
 
 # Temporary files
 tmp/
+
+# Feedback directory for plans and other notes
+feedback/

@@ -2,6 +2,17 @@
 
 **Status:** active (design and migration audit approved; no asset migration applied)
 
+## Oct 23 input dependency
+
+[Intake preparation](2026-10-23-image-intake-preparation.md) now precedes
+broad library/action testing. Source inventory here can continue, but QP2/QP3
+must map immutable raw, conservative prepared/analysis, optional repaired display
+and advanced edit outputs explicitly before migrating input roles or retargeting.
+Baseline cleanup is not a new `0_Edit` variant. Advanced masked reconstruction,
+full-body extension and artistic lighting remain this plan's ComfyUI work,
+not mandatory automatic likeness preprocessing. Keep current selected inputs
+and `2b` untouched while the upstream recipe is evaluated.
+
 ## Review and questions: 2026-10-22 16:21 -05:00
 
 The user's Oct 22 direction replaces the older wait-for-first-shot-winner

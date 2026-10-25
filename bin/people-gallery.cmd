@@ -1,9 +1,5 @@
 @echo off
-rem people-gallery   build overview and full review pages together; overview links each person to their filtered review
-rem                  includes category likeness cross-references, full rankings and Angel-to-Sister/Prospect candidates
+rem people-gallery   preview local housekeeping; --apply backs up, normalizes and builds derivatives + both reports
 call "%~dp0_env.cmd"
-%PY% tools\art\likeness_library\review_gallery.py --artists %*
-if errorlevel 1 goto end
-%PY% tools\art\people_gallery.py --artists %*
-:end
+%PY% tools\art\gallery_maintenance.py %*
 call "%~dp0_end.cmd" %errorlevel%

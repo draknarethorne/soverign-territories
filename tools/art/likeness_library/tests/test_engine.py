@@ -5,6 +5,7 @@ import os
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 import numpy as np
 
@@ -13,9 +14,27 @@ sys.path.insert(0, str(ROOT / "tools/art"))
 sys.path.insert(0, str(ROOT / "tools/workflows"))
 
 from likeness_library.engine import Cache, Photo, Space, cluster, human_rows, settings
+from likeness_library import domains
+from likeness_library.engine import Embedder
 
 
 class LikenessEngineTests(unittest.TestCase):
+    def test_read_only_domain_cannot_save_cache_or_download_missing_models(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = pathlib.Path(temporary)
+            with (
+                domains.activate("artists", read_only=True),
+                mock.patch.dict(sys.modules, {"cv2": mock.Mock()}),
+                mock.patch("urllib.request.urlretrieve") as download,
+            ):
+                cache = Cache(root / "cache.json")
+                cache.save()
+                self.assertFalse(cache.path.exists())
+                with self.assertRaisesRegex(ValueError, "existing local model"):
+                    Embedder(root).load()
+                download.assert_not_called()
+                self.assertFalse((root / "models").exists())
+
     def test_cache_reuses_content_hash_and_round_trips_embeddings(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = pathlib.Path(temporary)
@@ -28,10 +47,12 @@ class LikenessEngineTests(unittest.TestCase):
             self.assertEqual(cache.sha(photo), first_hash)
             cache.emb[first_hash] = {"faces": 1, "v": [1.0, 0.0], "s": 0.95}
             cache.centering_mean = [.2, .3]
+            cache.centering_domain = "artists"
             cache.save()
 
             loaded = Cache(cache_path)
             self.assertEqual(loaded.centering_mean, [.2, .3])
+            self.assertEqual(loaded.centering_domain, "artists")
             self.assertEqual(
                 loaded.emb[first_hash],
                 {"faces": 1, "v": [1.0, 0.0], "s": 0.95},

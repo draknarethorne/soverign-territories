@@ -3,11 +3,13 @@
 import contextlib
 import csv
 import io
+import json
 import pathlib
 import shutil
 import sys
 import tempfile
 import unittest
+import types
 import zlib
 from unittest import mock
 
@@ -15,6 +17,7 @@ import numpy as np  # noqa: E402
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/art"))
 import likeness as L  # noqa: E402
+import likeness_artists as LA  # noqa: E402
 import comfy_workflows as cw  # noqa: E402
 
 DIM = 128
@@ -58,10 +61,193 @@ CFG = {"standardSize": [94, 110], "photos": {}, "workspaces": {}}
 
 
 class LikenessTests(unittest.TestCase):
+    def test_artist_entry_point_selects_shared_artist_domain(self):
+        with mock.patch.object(L, "main", return_value=0) as shared:
+            self.assertEqual(LA.main(["--check"], embedder=self.fake), 0)
+        shared.assert_called_once_with(["--check"], embedder=self.fake, domain="artists")
+
+    def test_default_cli_excludes_artists_and_artist_cli_excludes_general(self):
+        self.add("Prospects", "General Person", "g", 3)
+        self.add("Artists/Painter", "Artist Person", "a", 3)
+        general = self.run_tool("names")
+        artists = self.run_tool("names", artists=True)
+        self.assertIn("Prospects/General Person", general)
+        self.assertNotIn("Artists/Painter", general)
+        self.assertIn("Artists/Painter/Artist Person", artists)
+        self.assertNotIn("Prospects", artists)
+        self.assertTrue((self.lib / "_likeness/general/cache.json").is_file())
+        self.assertTrue((self.lib / "_likeness/artists/cache.json").is_file())
+        self.assertIsNone(L.domains.CURRENT.get(), "domain never leaks into subsequent tools/tests")
+
+    def test_artist_centering_is_independent_of_general_population_and_old_cache_mean(self):
+        self.add("Artists/Painter", "One", "one", 3)
+        self.add("Artists/Painter", "Two", "two", 3)
+        args = types.SimpleNamespace(root=str(self.lib), cache=None, policy=None, embedder=self.fake)
+        with L.domains.activate("artists"):
+            cfg, _, _, _, first = L.build(args)
+            self.add("Sisters", "Unrelated", "different", 12)
+            _, _, _, _, second = L.build(args)
+            np.testing.assert_array_equal(first.mean, second.mean)
+            self.assertEqual(cfg["paths"]["photoRoots"], ["Artists"])
+            cache_path = self.lib / "stale.json"
+            cache_path.write_text(json.dumps({"centeringMean": [999] * DIM, "centeringDomain": "general"}))
+            args.cache = str(cache_path)
+            _, _, _, _, third = L.build(args)
+            np.testing.assert_array_equal(first.mean, third.mean)
+
+    def test_domain_configuration_does_not_mutate_workspace_configuration(self):
+        original = {"paths": {"photoRoots": ["Sisters", "Artists", "Various"]}, "photos": {"Example": "chosen.png"}}
+        before = json.dumps(original)
+        with L.domains.activate("general"):
+            cfg = L.domains.configuration(original, cw.PHOTO_ROOTS)
+            self.assertEqual(cfg["paths"]["photoRoots"], ["Sisters", "Various"])
+        self.assertEqual(json.dumps(original), before)
+        with L.domains.activate("artists"):
+            self.assertEqual(L.domains.configuration(original, cw.PHOTO_ROOTS)["paths"]["photoRoots"], ["Artists"])
+        for domain in ("general", "artists"):
+            with L.domains.activate(domain):
+                for prefix in ("", "_junk/", "_archive/", "_retired/", "_retired/photos/"):
+                    self.assertEqual(L.domains.includes(prefix + "Artists/Painter/Person"), domain == "artists")
+                    self.assertEqual(L.domains.includes(prefix + "Prospects/Person"), domain == "general")
+
+    def test_artist_dry_run_and_check_do_not_write_cache_or_origins(self):
+        self.add("Artists", "Painter", "a", 3)
+        before = sorted(str(p.relative_to(self.lib)) for p in self.lib.rglob("*") if p.is_file())
+        self.run_tool("--dry-run", "group", "--singles", artists=True)
+        self.run_tool("--check", artists=True)
+        after = sorted(str(p.relative_to(self.lib)) for p in self.lib.rglob("*") if p.is_file())
+        self.assertEqual(before, after)
+        self.assertFalse((self.lib / "_origins.json").exists())
+        self.assertFalse((self.lib / "_likeness").exists())
+
+    def test_artist_junk_includes_loose_gallery_and_ignores_general(self):
+        self.add("Artists", "Painter", "noface")
+        self.add("Prospects", "General", "noface")
+        self.run_tool("junk", apply=True, artists=True)
+        self.assertFalse(self.names("Artists", "Painter"))
+        self.assertEqual(len(self.names("Prospects", "General")), 1)
+        self.assertEqual(len(list((self.lib / "_junk/Artists").glob("*.jpg"))), 1)
+        self.assertTrue((self.lib / "_likeness/artists/likeness_moves.json").exists())
+        self.run_tool("undo", apply=True, artists=True)
+        self.assertEqual(len(self.names("Artists", "Painter")), 1)
+
+    def test_junk_reset_is_scoped_to_its_entry_point(self):
+        self.add("_junk", "Artists", "noface")
+        self.add("_junk", "Prospects", "noface")
+        for side in ("Artists", "Prospects"):
+            folder = self.lib / "_junk" / side
+            for photo in (folder / "gallery").glob("*.jpg"):
+                photo.rename(folder / photo.name)
+        self.run_tool("junk", "--reset", apply=True)
+        self.assertEqual(len(list((self.lib / "_junk/Artists").glob("*.jpg"))), 1)
+        self.assertFalse(list((self.lib / "_junk/Prospects").glob("*.jpg")))
+        self.assertEqual(len(list((self.lib / "Various/gallery").glob("*.jpg"))), 1)
+
+    def test_force_does_not_bypass_domain_write_guard(self):
+        self.add("Artists/Painter", "Artist", "a")
+        source = next((self.lib / "Artists/Painter/Artist/gallery").glob("*.jpg"))
+        photo = L.Photo(source, "Artists", "Painter/Artist", "sha", {})
+        cache = L.Cache(self.tmp / "cache.json")
+        with L.domains.activate("general"):
+            with self.assertRaisesRegex(ValueError, "general likeness cannot access"):
+                L.execute([L.Move(photo, "Prospects/General", "forced", force=True)], self.lib, True, cache)
+        with L.domains.activate("artists"):
+            with self.assertRaisesRegex(ValueError, "artists likeness cannot access"):
+                L.execute([L.Move(photo, "Prospects/General", "forced", force=True)], self.lib, True, cache)
+        self.assertTrue(source.exists())
+        self.assertFalse((self.lib / "Prospects").exists())
+
+    def test_mixed_legacy_undo_refuses_before_any_source_moves(self):
+        self.add("Prospects", "General", "g")
+        self.add("Artists/Painter", "Artist", "a")
+        general = next((self.lib / "Prospects/General/gallery").glob("*.jpg"))
+        artist = next((self.lib / "Artists/Painter/Artist/gallery").glob("*.jpg"))
+        L.DATA.mkdir(parents=True)
+        log = [{"id": "20261023-120000", "moves": [
+            {"from": str(self.lib / "Various/gallery" / general.name), "to": str(general), "sha": "g"},
+            {"from": str(self.lib / "Artists/Painter/gallery" / artist.name), "to": str(artist), "sha": "a"},
+        ]}]
+        (L.DATA / "likeness_moves.json").write_text(json.dumps(log))
+        self.assertIn("EXIT", self.run_tool("undo", apply=True))
+        self.assertTrue(general.exists() and artist.exists())
+        self.assertFalse((self.lib / "Various").exists())
+
+    def test_scoped_originals_refresh_does_not_retarget_or_include_other_domain(self):
+        args = types.SimpleNamespace(root=str(self.lib), no_originals=False)
+        with L.domains.activate("artists"), mock.patch.object(L.originals, "main") as refresh:
+            L.after_moves(args, True)
+        argv = refresh.call_args.args[0]
+        self.assertIn("--no-repoint", argv)
+        self.assertEqual(refresh.call_args.kwargs["configuration"]["paths"]["photoRoots"], ["Artists"])
+
+    def test_artist_commands_are_explicit_not_a_general_matching_backdoor(self):
+        self.assertIn("EXIT", self.run_tool("group"))
+        self.assertIn("EXIT", self.run_tool("sort", artists=True))
+        self.assertIn("EXIT", self.run_tool("merge", "A", "B", artists=True))
+
+    def test_artist_index_has_its_own_report_names(self):
+        self.add("Artists/Painter", "One", "a", 3)
+        self.run_tool("index", artists=True)
+        self.assertTrue((self.lib / "artists_index.csv").is_file())
+        self.assertFalse((self.lib / "people_index.csv").exists())
+
     def test_index_accepts_saved_policy(self):
         with mock.patch.object(L, "cmd_index") as index:
             L.main(["--root", "sandbox", "--cache", "cache.json", "index", "--policy", "saved-policy.json"])
         self.assertEqual(index.call_args.args[0].policy, "saved-policy.json")
+
+    def seed_catalog(self):
+        self.lib.mkdir(parents=True, exist_ok=True)
+        (self.lib / ".likeness-library.json").write_text(
+            json.dumps({"schemaVersion": 1, "people": {}, "photos": {}, "actions": []}), encoding="utf-8")
+
+    def test_named_various_folder_becomes_that_person_without_face_matching(self):
+        self.seed_catalog()
+        self.add("Various", "Jane Doe", "ann", 2)  # looks like Angelica, but the user named her
+        self.add("Various", "Big Set", "zed", 5)
+        pool = self.lib / "Various/gallery"
+        pool.mkdir(parents=True)
+        (pool / "various_image_900.jpg").write_text("solo|900")
+        (self.lib / "Various/review").mkdir()
+        (self.lib / "Various/gallery_94x110").mkdir()
+        self.add("Angels", "Angelica", "ann", 3)
+
+        preview = self.run_tool("seed")
+        self.assertIn("Various/Jane Doe -> Potentials/Jane Doe (NEW folder): 2 photo(s)", preview)
+        self.assertIn("Various/Big Set -> Prospects/Big Set (NEW folder): 5 photo(s)", preview)
+        self.assertIn("7 named-folder photo(s) would move", preview)
+        self.assertNotIn("Various/review", preview)
+        self.assertEqual(len(self.names("Various", "Jane Doe")), 2, "a preview moves nothing")
+
+        self.run_tool("seed", apply=True)
+        self.assertEqual(self.names("Potentials", "Jane Doe"), ["jane_doe_image_1.jpg", "jane_doe_image_2.jpg"])
+        self.assertEqual(len(self.names("Prospects", "Big Set")), 5)
+        self.assertEqual(self.names("Various", "Jane Doe"), [])
+        self.assertEqual(len(self.names("Angels", "Angelica")), 3)
+        self.assertTrue((pool / "various_image_900.jpg").is_file(), "the unnamed pool is left to reconcile")
+        history = (self.lib / "Potentials/Jane Doe/gallery/z_jane_doe.txt").read_text(encoding="utf-8")
+        self.assertIn("name: Jane Doe", history)
+        self.assertIn("+2 from Various/Jane Doe: seeded by name", history)
+
+        self.run_tool("undo", apply=True)
+        self.assertEqual(len(self.names("Various", "Jane Doe")), 2)
+
+    def test_named_folder_joins_the_existing_person_and_ambiguous_names_are_held(self):
+        self.seed_catalog()
+        self.add("Prospects", "Mia", "mia", 2)
+        self.add("Various", "mia", "mia", 1)
+        self.add("Prospects", "Ann", "ann", 1)
+        self.add("Potentials", "Ann", "ann", 1)
+        self.add("Various", "Ann", "ann", 1)
+
+        out = self.run_tool("seed", apply=True)
+        self.assertIn("Various/mia -> Prospects/Mia (existing person): 1 photo(s)", out)
+        self.assertIn("HOLD Various/Ann", out)
+        self.assertEqual(len(self.names("Prospects", "Mia")), 3)
+        self.assertEqual(len(self.names("Various", "Ann")), 1)
+
+    def test_seed_is_not_an_artist_command(self):
+        self.assertIn("EXIT", self.run_tool("seed", artists=True))
 
     def setUp(self):
         self.tmp = pathlib.Path(tempfile.mkdtemp())
@@ -95,11 +281,12 @@ class LikenessTests(unittest.TestCase):
         self.add("Prospects", "Various", "solo", 1)    # nobody
         self.add("Artists", "Fantasy", "collage", 3)   # mixed: never read
 
-    def run_tool(self, *args, apply=False):
+    def run_tool(self, *args, apply=False, artists=False):
         out = io.StringIO()
         with contextlib.redirect_stdout(out):
             try:
-                L.main(["--no-originals", "--root", str(self.lib), *args, *(["--apply"] if apply else [])], embedder=self.fake)
+                L.main(["--no-originals", "--root", str(self.lib), *args, *(["--apply"] if apply else [])],
+                       embedder=self.fake, domain="artists" if artists else "general")
             except SystemExit as e:
                 out.write(f"EXIT {e.code}")
         return out.getvalue()
@@ -223,7 +410,7 @@ class LikenessTests(unittest.TestCase):
         self.add("Prospects", "Various", "art", 2)  # looks just like the artist's person
         for i, who in enumerate(("w1", "w2", "w3", "w4")):
             self.add("Prospects", f"Person {i}", who, 3)
-        self.assertIn("kept apart", self.run_tool("merge", "Mia", "Elise") + self.run_tool("merge", "Elise", "Mia"))
+        self.assertIn("no person folder", self.run_tool("merge", "Mia", "Elise") + self.run_tool("merge", "Elise", "Mia"))
         out = self.run_tool("sort", "--singles", apply=True)
         self.assertEqual(len(self.names("Artists", "Pierre/Elise")), 4, "nothing from the pool goes to an artist's person")
         self.assertTrue(any(f"art|" in p.read_text()
@@ -429,16 +616,17 @@ class LikenessTests(unittest.TestCase):
         self.add("Models", "Draknara", "dee", 3)
         for i, who in enumerate(("w1", "w2", "w3", "w4", "w5")):
             self.add("Prospects", f"Person {i}", who, 3)  # enough different people for the library's average face to be meaningful
-        out = self.run_tool("group")
+        out = self.run_tool("group", artists=True)
         self.assertIn("2 group(s)", out)
-        self.run_tool("group", apply=True)
+        self.run_tool("group", apply=True, artists=True)
         subs = [p for p in (self.lib / "Artists/Pierre").iterdir() if p.is_dir() and p.name != "gallery"]
         self.assertEqual(len(subs), 2)
         self.assertEqual(sorted(len([p for p in (s / "gallery").iterdir() if not p.name.startswith("z_")]) for s in subs), [4, 4])
         self.assertEqual(len(self.names("Artists", "Pierre")), 1, "the photo that matches nobody stays with the artist")
         scan = self.run_tool("scan")
         self.assertIn("person folder", scan)
-        self.assertIn("Artists/Pierre/", self.run_tool("alike", "--min", "-1"), "the grouped people are people now")
+        self.assertIn("Artists/Pierre/", self.run_tool("alike", "--min", "-1", artists=True), "the grouped people are people now")
+        self.assertNotIn("Artists/Pierre/", self.run_tool("alike", "--min", "-1"), "general CLI cannot see artist people")
 
     def test_crop_box_keeps_the_main_face_and_cuts_away_the_others(self):
         main = (400, 100, 100, 120)
@@ -472,18 +660,18 @@ class LikenessTests(unittest.TestCase):
 
     def test_group_singles_places_every_good_photo_of_an_artist(self):
         for i, who in enumerate(("w1", "w2", "w3", "w4", "w5")):
-            self.add("Prospects", f"Person {i}", who, 3)
+            self.add("Artists/References", f"Person {i}", who, 3)
         self.add("Artists/Pierre", "Elise", "pa", 4)
         self.add("Artists", "Pierre", "pa", 1)      # her
         self.add("Artists", "Pierre", "lone", 1)    # nobody there: a folder of her own
         self.add("Artists", "Pierre", "noface", 1)  # stays
-        self.run_tool("group", "--singles", apply=True)
+        self.run_tool("group", "--singles", apply=True, artists=True)
         self.assertEqual(len(self.names("Artists/Pierre", "Elise")), 5)
         self.assertEqual(len(self.names("Artists", "Pierre")), 1, "only the photo with no face is left")
         subs = [p for p in (self.lib / "Artists/Pierre").iterdir() if p.is_dir() and p.name not in ("gallery", "Elise")]
         self.assertEqual(len(subs), 1)
 
-    def test_a_photo_in_the_pool_that_came_from_an_artist_goes_back_to_him_even_when_renamed(self):
+    def test_recorded_artist_photo_in_general_pool_is_held_for_explicit_intake(self):
         for i, who in enumerate(("w1", "w2", "w3")):
             self.add("Prospects", f"Person {i}", who, 3)
         self.add("Artists/Pierre", "Elise", "pa", 3)
@@ -492,9 +680,10 @@ class LikenessTests(unittest.TestCase):
         g = self.lib / "Prospects/Various/gallery"
         g.mkdir(parents=True, exist_ok=True)
         (g / f"various_{pid}.jpg").write_text("pa|777")
+        L.note_origins(self.lib)
         self.run_tool("sort", apply=True)
-        self.assertTrue((self.lib / "Artists/Pierre/gallery" / f"various_{pid}.jpg").exists() or any(pid in n for n in self.names("Artists", "Pierre")), "it went home to the artist, not to a prospect")
-        self.assertEqual(len(self.names("Prospects", "Various")), 0)
+        self.assertFalse((self.lib / "Artists/Pierre/gallery" / f"various_{pid}.jpg").exists())
+        self.assertEqual(len(self.names("Prospects", "Various")), 1, "neither CLI transfers across its domain")
 
     def test_rematch_joins_a_prospect_who_is_the_same_person_as_a_sister_to_her(self):
         self.add("Sisters", "Draknara", "dee", 4)
@@ -520,7 +709,7 @@ class LikenessTests(unittest.TestCase):
 
     def test_artists_puts_photos_back_under_their_artist_and_then_their_person(self):
         for i, who in enumerate(("w1", "w2", "w3", "w4", "w5")):
-            self.add("Prospects", f"Person {i}", who, 3)  # enough different people for the library's average face to be meaningful
+            self.add("Artists/References", f"Person {i}", who, 3)  # centering evidence must now come from Artists
         self.add("Artists/Pierre", "Elise", "pa", 5)
         g = self.lib / "Artists/Pierre/Elise/gallery"
         (g / "elise_image_901.jpg").write_text("pb|901")      # someone else
@@ -530,11 +719,11 @@ class LikenessTests(unittest.TestCase):
         cross = next((self.lib / "Artists/Maridos/gallery").iterdir())
         bk = self.tmp / "bk/Pierre/gallery"
         bk.mkdir(parents=True)
-        (bk / "pierre_image_1.jpg").write_text(cross.read_text())
-        out = self.run_tool("artists", "--from", str(self.tmp / "bk"))
+        (bk / cross.name).write_text(cross.read_text())
+        out = self.run_tool("artists", "--from", str(self.tmp / "bk"), artists=True)
         self.assertIn("preview only", out)
         self.assertTrue(cross.exists(), "a preview moves nothing")
-        self.run_tool("artists", "--from", str(self.tmp / "bk"), apply=True)
+        self.run_tool("artists", "--from", str(self.tmp / "bk"), apply=True, artists=True)
         self.assertEqual(len(self.names("Artists", "Maridos")), 0, "nothing stays under the wrong artist")
         elise = self.names("Artists", "Pierre/Elise")
         self.assertIn(cross.name, elise, "it went to her under the artist it came from")
@@ -549,7 +738,7 @@ class LikenessTests(unittest.TestCase):
         self.add("Artists", "Pierre", "pa", 2)   # her again, loose in the artist's gallery
         self.add("Artists", "Pierre", "pb", 3)   # someone new
         self.add("Artists", "Pierre", "pc", 2)
-        out = self.run_tool("group", apply=True)
+        out = self.run_tool("group", apply=True, artists=True)
         self.assertIn("Elise: +2 photos", out)
         self.assertEqual(len(self.names("Artists/Pierre", "Elise")), 7)
         subs = [p for p in (self.lib / "Artists/Pierre").iterdir() if p.is_dir() and p.name not in ("gallery", "Elise")]
@@ -642,9 +831,11 @@ class LikenessTests(unittest.TestCase):
         row = [line for line in out.splitlines() if line.strip().startswith("Azaline")][0]
         self.assertIn("Prospects/Lena Marsh", row)
         self.assertIn("artist's person", row)
-        self.run_tool("pairs", "--sister", "Draknira", "--trials", "100", apply=True)
-        self.assertEqual(len(self.names("Artists", "Pierre/Ada Frost")), 4, "her photos went back to the artist")
-        self.assertEqual(len(self.names("Angels", "azaline")), 5, "and a prospect's face is the angel now")
+        applied = self.run_tool("pairs", "--sister", "Draknira", "--trials", "100", apply=True)
+        self.assertIn("EXIT", applied, "cross-domain legacy transfer now requires explicit migration")
+        self.assertEqual(len(self.names("Artists", "Pierre/Ada Frost")), 0)
+        self.assertEqual(len(self.names("Angels", "azaline")), 4, "batch refuses before any moves")
+        self.assertEqual(len(self.names("Prospects", "Lena Marsh")), 5)
 
     def test_photos_picks_the_best_angel_photo_keeps_favourites_and_only_reports_for_sisters(self):
         self.add("Angels", "Angelica", "ann", 4)            # favourite: never changes

@@ -19,6 +19,63 @@ from tools.art.likeness_library import review_gallery
 
 
 class ReviewGalleryTests(unittest.TestCase):
+    def test_identity_header_separates_evidence_and_existing_actions(self):
+        page = review_gallery.render_html([], "now")
+        for label, kind in (("Reference photo", "identity-reference"),
+                            ("Identity details", "identity-details"),
+                            ("Manual actions", "identity-actions")):
+            self.assertIn(f'panel("{label}","{kind}")', page)
+        self.assertIn('referencePanel.append(card(reference,true))', page)
+        self.assertNotIn('if(!photos.some(item=>item.photoId===reference.photoId))', page)
+        self.assertIn('label.append(select); actionsPanel.append(label)', page)
+        self.assertIn('label.append(scope,input,stage,cancel,status);actionsPanel.append(label)', page)
+        self.assertIn('detailsPanel.append(details)', page)
+        self.assertIn('fact("Fixed cast slot"', page)
+        self.assertIn('fact("Current person name"', page)
+        self.assertIn('fact("Original person name"', page)
+        self.assertIn('" (filters and page limit apply)"', page)
+        self.assertIn('if(info.identityProtected&&!confirm(', page)
+        self.assertIn('if(staged.size||others)', page)
+        self.assertIn("No supported identity action is available", page)
+
+    def test_card_use_guidance_is_shared_and_not_an_assignment_rule(self):
+        page = review_gallery.render_html([], "now")
+        guidance = json.loads(page.split(
+            '<script id="card-use-guidance" type="application/json">'
+        )[1].split("</script>")[0])
+        self.assertEqual(guidance, review_gallery.gallery_chrome.CARD_USE_GUIDANCE)
+        self.assertEqual(set(guidance), {"Potentials", "Prospects", "Models"})
+        self.assertIn("Not a rarity rule or automatic assignment.", page)
+
+    def test_location_grouping_is_separate_from_filtering_and_sorting(self):
+        page = review_gallery.render_html([], "now")
+        self.assertIn(
+            '<label>Grouping <select id="grouping"><option value="mixed">Mixed</option>'
+            '<option value="split">Split Gallery / Review</option></select></label>', page,
+        )
+        self.assertIn("function appendPhotoGroups(container,items)", page)
+        self.assertIn('["Gallery","Review"].map(bucket=>[bucket,items.filter(item=>item.bucket===bucket)])', page)
+        self.assertIn("appendPhotoGroups(section,photos)", page)
+        self.assertIn("appendPhotoGroups(grid,page)", page)
+        self.assertIn("const page=visible.slice(0,shown)", page)
+        self.assertIn('article.classList.add("review-photo")', page)
+        self.assertIn("scoreCeiling,grouping]", page)
+        self.assertNotIn('grouping.addEventListener("change",()=>staged.clear()', page)
+
+    def test_category_first_destinations_keep_folder_keys_and_staging_guards(self):
+        page = review_gallery.render_html([], "now")
+        self.assertIn('"Destination category for "+r.name', page)
+        self.assertIn('"Destination identity for "+r.name', page)
+        self.assertIn("folder!==r.folder&&item.personId", page)
+        self.assertIn("folder.startsWith(destinationCategory.value", page)
+        self.assertIn('new Option(folder.slice(folder.indexOf("/")+1),folder)', page)
+        self.assertIn("destinationFolder:destination.value", page)
+        self.assertIn("destinationPersonId:records.find(item=>item.folder===destination.value)?.personId", page)
+        self.assertIn("destinationCategory.addEventListener", page)
+        self.assertIn('restoreDestination();destinationControls.hidden=action.value!=="match-accepted"', page)
+        self.assertIn("Apply or cancel the standalone identity rename before staging photo actions.", page)
+        self.assertIn("Stage identity protection separately from photo actions for that identity.", page)
+
     def test_person_protection_export_is_separate_from_photo_decisions(self):
         person_id = "person_" + "a" * 32
         person = {"id": person_id, "protected": False}
@@ -78,7 +135,10 @@ class ReviewGalleryTests(unittest.TestCase):
             self.assertEqual(len(items), 1)
             self.assertEqual(items[0]["folder"], "Various")
             self.assertEqual(items[0]["state"], "Hold")
-            self.assertFalse(items[0]["stageable"])
+            self.assertTrue(items[0]["stageable"])
+            self.assertEqual(
+                [kind for kind, _ in items[0]["stageOptions"]], ["photo-retired", "photo-junked"],
+            )
             self.assertFalse(items[0]["scoreContext"]["coreMember"])
             page = review_gallery.render_html(
                 [{key: value for key, value in item.items() if not key.startswith("_")} for item in items],
@@ -213,7 +273,7 @@ class ReviewGalleryTests(unittest.TestCase):
         gallery = review_gallery.action_options("Gallery", "photo:image_123")
         self.assertEqual(
             [action for action, _label in gallery],
-            ["anchor-added", "photo-protected", "sent-to-review", "rejected-to-various", "match-accepted", "photo-retired"],
+            ["anchor-added", "photo-protected", "sent-to-review", "rejected-to-various", "match-accepted", "photo-retired", "photo-junked"],
         )
         review = review_gallery.action_options("Review", "photo:image_123", protected=True)
         self.assertEqual(
@@ -231,7 +291,7 @@ class ReviewGalleryTests(unittest.TestCase):
             ),
         )
         self.assertTrue(review_gallery.action_folder_supported("Prospects/Sophie"))
-        self.assertFalse(review_gallery.action_folder_supported("Artists/Example/Person"))
+        self.assertTrue(review_gallery.action_folder_supported("Artists/Example/Person"))
         self.assertTrue(review_gallery.action_folder_supported("Models/Legacy"))
         schema_path = review_gallery.ROOT / "data/art/_schema/likeness-action-manifest.schema.json"
         schema = json.loads(schema_path.read_text(encoding="utf-8"))
@@ -368,7 +428,7 @@ class ReviewGalleryTests(unittest.TestCase):
             self.assertTrue(review_item["stageable"])
             self.assertEqual(
                 [action for action, _label in review_item["stageOptions"]],
-                ["photo-protected", "rejected-to-various", "review-approved", "match-rejected", "match-accepted", "photo-retired"],
+                ["photo-protected", "rejected-to-various", "review-approved", "match-rejected", "match-accepted", "photo-retired", "photo-junked"],
             )
             self.assertEqual(cache.saved, 1)
 
@@ -444,7 +504,7 @@ class ReviewGalleryTests(unittest.TestCase):
         self.assertIn("function groupCards(items)", page)
         self.assertIn("function primaryFor(folder)", page)
         self.assertIn("if(reference) {", page)
-        self.assertIn("if(!photos.some(item=>item.photoId===reference.photoId))", page)
+        self.assertIn("referencePanel.append(card(reference,true))", page)
         self.assertIn('sort.value==="high" ? b.score-a.score : a.score-b.score', page)
         self.assertIn('mode.value==="review"', page)
         self.assertIn('mode.value==="low"', page)
@@ -545,9 +605,12 @@ class ReviewGalleryTests(unittest.TestCase):
 
     def test_thumbnail_cache_reuses_derivative_by_content(self):
         with tempfile.TemporaryDirectory() as tmp:
-            source = pathlib.Path(tmp) / "photo.jpg"
-            Image.new("RGB", (80, 100), "white").save(source)
+            from likeness_library import derivatives
+            source = pathlib.Path(tmp) / "Person" / "gallery" / "photo.jpg"
+            source.parent.mkdir(parents=True)
+            Image.new("RGB", (800, 1000), "white").save(source)
             photo = SimpleNamespace(sha="abc123", path=source, box=(0.3, 0.2, 0.25, 0.25))
+            derivatives.maintain(source, photo.box, 250, apply=True)
             item = {
                 "folder": "Prospects/Sophie",
                 "group": "Prospects",
@@ -566,9 +629,10 @@ class ReviewGalleryTests(unittest.TestCase):
             self.assertEqual(first[0]["thumbnail"], second[0]["thumbnail"])
             self.assertEqual(first[0]["thumbnailHead"], second[0]["thumbnailHead"])
             self.assertEqual(first[0]["thumbnailFace"], second[0]["thumbnailFace"])
-            self.assertIn("photo_chest_abc123.jpg", first[0]["thumbnail"])
-            self.assertIn("photo_head_abc123.jpg", first[0]["thumbnailHead"])
-            self.assertIn("photo_face_abc123.jpg", first[0]["thumbnailFace"])
+            self.assertIn("photo_chest_", first[0]["thumbnail"])
+            self.assertIn("photo_head_", first[0]["thumbnailHead"])
+            self.assertIn("photo_face_", first[0]["thumbnailFace"])
+            self.assertEqual(first[0]["derivativeDiagnostics"], [])
             self.assertEqual(len(list((out / "people_gallery_review_files").glob("*.jpg"))), 3)
             with Image.open(out / first[0]["thumbnailFace"]) as face:
                 self.assertEqual(face.size, (320, 320))

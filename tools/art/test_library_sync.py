@@ -24,7 +24,8 @@ class LibrarySyncTests(unittest.TestCase):
     def test_a_run_applies_every_step_in_order_and_ends_with_the_check_sync_and_index(self):
         steps = ls.plan(args())
         flat = [" ".join(argv) for _t, argv, *_r in steps]
-        self.assertTrue(flat[0].endswith("originals.py --apply"))
+        self.assertTrue(flat[0].endswith("likeness.py --no-originals seed --apply"), "named folders move before originals renames them")
+        self.assertTrue(flat[1].endswith("originals.py --apply"))
         self.assertIn("tools/art/likeness.py reconcile --apply", flat)
         self.assertFalse(any(" review " in step or " sort " in step or " singles " in step or " rematch " in step for step in flat))
         self.assertIn("tools/art/likeness.py retire-empty --apply", flat)
@@ -41,12 +42,13 @@ class LibrarySyncTests(unittest.TestCase):
         flat = [" ".join(argv) for _t, argv, *_r in ls.plan(args(dry_run=True))]
         self.assertFalse(any("--apply" in f for f in flat), flat)
         self.assertTrue(any("likeness.py retire-empty" in f for f in flat))
-        self.assertTrue(flat[0].endswith("originals.py --dry-run"))
+        self.assertTrue(flat[0].endswith("likeness.py --no-originals seed"))
+        self.assertTrue(flat[1].endswith("originals.py --dry-run"))
         self.assertFalse(any("sync_inputs" in f or "index" in f for f in flat))
 
     def test_no_likeness_leaves_the_sorting_out(self):
         flat = [" ".join(argv) for _t, argv, *_r in ls.plan(args(no_likeness=True))]
-        self.assertFalse(any("likeness.py" in f for f in flat))
+        self.assertFalse(any("likeness.py" in f or "likeness_artists.py" in f for f in flat))
         self.assertTrue(any("duplicates.py" in f for f in flat) and any("originals.py --check" in f for f in flat))
 
     def test_legacy_threshold_override_is_explicitly_rejected(self):
@@ -56,12 +58,37 @@ class LibrarySyncTests(unittest.TestCase):
     def test_sorting_is_required_and_the_loose_ends_are_not(self):
         req = {t: r for t, _a, r, _i in ls.plan(args())}
         duplicate_step = next(t for t in req if t.startswith("2 duplicates"))
+        self.assertTrue(req["0 likeness seed (Various\\<Name> folders of one known person)"])
         self.assertTrue(req["1 originals: names, scaled copies and headshots"] and req["4 unified likeness reconciliation"])
         self.assertFalse(req[duplicate_step] or req["9 likeness index"])
 
     def test_the_check_only_reads(self):
         flat = [" ".join(argv) for _t, argv, *_r in ls.check_plan()]
         self.assertFalse(any("--apply" in f for f in flat), flat)
+        self.assertIn("tools/art/likeness.py seed", flat)
+
+    def test_junk_is_not_automatically_reconsidered_by_ordinary_runs(self):
+        for mode in (args(), args(dry_run=True)):
+            flat = [" ".join(argv) for _t, argv, *_r in ls.plan(mode)]
+            self.assertFalse(any("junk --recheck" in f or "junk --reset" in f for f in flat))
+            self.assertTrue(any("likeness.py junk" in f for f in flat), "retain active-photo safety check")
+        flat = [" ".join(argv) for _t, argv, *_r in ls.plan(args(retry_junk=True))]
+        self.assertTrue(any("junk --reset" in f for f in flat), "retry remains explicitly requested")
+
+    def test_artist_steps_use_separate_entry_and_both_domains_keep_shared_housekeeping(self):
+        for dry_run in (False, True):
+            flat = [" ".join(argv) for _t, argv, *_r in ls.plan(args(dry_run=dry_run))]
+            self.assertFalse(any("likeness.py group" in row for row in flat))
+            for command in ("crop", "junk", "group"):
+                self.assertTrue(any(f"likeness_artists.py {command}" in row for row in flat), command)
+            self.assertTrue(any("likeness.py reconcile" in row for row in flat))
+            self.assertTrue(any("originals.py" in row for row in flat))
+        retry = [" ".join(argv) for _t, argv, *_r in ls.plan(args(retry_junk=True))]
+        self.assertTrue(any("likeness.py junk --reset" in row for row in retry))
+        self.assertTrue(any("likeness_artists.py junk --reset" in row for row in retry))
+        apply = [" ".join(argv) for _t, argv, *_r in ls.plan(args())]
+        self.assertIn("tools/art/artists_gallery.py --apply", apply)
+        self.assertFalse(any("--artists" in row for row in apply))
 
     def test_real_run_snapshots_before_first_mutating_step(self):
         work = pathlib.Path(tempfile.mkdtemp())

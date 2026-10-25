@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """library_backup: complete snapshots and safety checks."""
+import hashlib
 import json
 import os
 import pathlib
 import shutil
 import tempfile
 import unittest
+from unittest import mock
 
-from library_backup import _snapshot_path, create_backup, verify_backup
+from library_backup import _snapshot_path, create_backup, preview, restore_backup, verify_backup
 from likeness_library import metadata
 
 
@@ -35,6 +37,252 @@ class LibraryBackupTests(unittest.TestCase):
         destination = create_backup(self.work, self.inputs, self.repo, stamp="preview", apply=False)
         self.assertIsNone(destination)
         self.assertFalse((self.work / "_backup" / "library-preview").exists())
+
+    def artist_reports(self):
+        report = self.work / "_reports" / "artists"
+        paths = {
+            "artists_gallery.html": b"generated artist browser",
+            "artists_gallery_review.html": b"generated artist review",
+            "thumbnails/" + "a" * 64 + ".jpg": b"generated thumbnail",
+        }
+        for relative, payload in paths.items():
+            target = report / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(payload)
+        manifest = {
+            "formatVersion": 1,
+            "recipe": "artists-gallery-v1",
+            "files": {relative: hashlib.sha256(payload).hexdigest() for relative, payload in paths.items()},
+            "inputs": [{"source": "Artists/Example/gallery/photo.jpg", "sha256": "b" * 64}],
+            "diagnostics": ["retained recovery context"],
+        }
+        (report / "gallery-manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+        return report, paths, manifest
+
+    def test_routine_backup_omits_only_verified_artist_outputs_and_restores_recovery_data(self):
+        report, generated, _manifest = self.artist_reports()
+        retained = {
+            "_reports/artists/gallery-manifest.json": (report / "gallery-manifest.json").read_bytes(),
+            "_reports/artists/notes.txt": b"user report notes",
+            "_reports/artists/thumbnails/user-photo.jpg": b"user asset",
+            "_reports/preparation/run/raw/source.jpg": b"raw retention original",
+            "_reports/preparation/run/report.html": b"preparation evidence",
+            "_reports/library/people_gallery.html": b"unproven legacy generated page",
+            "_reports/library/people_gallery_review_files/photo_head_123456abcdef.jpg": b"unproven cache",
+            "_likeness/artists/faces.npz": b"embedding cache",
+            "_likeness/general/history.json": b"history",
+            "Artists/Example/gallery/photo.jpg": b"original gallery photo",
+            "Artists/Example/review/review.jpg": b"original review photo",
+            "Artists/Example/metadata.json": b"placement metadata",
+        }
+        for relative, payload in retained.items():
+            target = self.work / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(payload)
+        catalogue = self.repo.parent / "catalogue.json"
+        catalogue.write_bytes(b"catalogue recovery")
+        destination = create_backup(
+            self.work, self.inputs, self.repo, stamp="artist-reports", apply=True,
+            extra_sources=[("catalogue", catalogue)],
+        )
+        manifest = json.loads((destination / "manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual(len(manifest["generatedReports"]), len(generated))
+        self.assertEqual(manifest["regenerable"], [])
+        self.assertTrue(verify_backup(destination))
+        recovered = restore_backup(destination, self.tmp / "recovered", apply=True)
+        for relative in generated:
+            self.assertFalse((recovered / "work-root" / "_reports" / "artists" / relative).exists())
+        for relative, payload in retained.items():
+            self.assertEqual((recovered / "work-root" / relative).read_bytes(), payload)
+        self.assertEqual((recovered / "catalogue" / catalogue.name).read_bytes(), catalogue.read_bytes())
+
+    def test_full_and_transaction_backups_retain_generated_artist_outputs(self):
+        _report, generated, _manifest = self.artist_reports()
+        for stamp, options, label in (
+            ("full-artists", {"include_regenerable": True}, "work-root"),
+            ("scoped-artists", {"scoped_sources": [("reports", self.work / "_reports")]}, "reports"),
+        ):
+            with self.subTest(stamp=stamp):
+                destination = create_backup(self.work, stamp=stamp, apply=True, **options)
+                manifest = json.loads((destination / "manifest.json").read_text(encoding="utf-8"))
+                self.assertEqual(manifest["generatedReports"], [])
+                for relative, payload in generated.items():
+                    prefix = "_reports/artists" if label == "work-root" else "artists"
+                    self.assertEqual((destination / label / prefix / relative).read_bytes(), payload)
+
+    def test_edited_unlisted_and_nonmanaged_manifest_entries_are_retained(self):
+        report, _generated, manifest = self.artist_reports()
+        (report / "artists_gallery.html").write_bytes(b"user-edited browser")
+        unknown = "thumbnails/" + "c" * 64 + ".jpg"
+        (report / unknown).write_bytes(b"unlisted thumbnail")
+        for relative in ("notes.txt", "../preparation/raw.jpg", "thumbnails/not-a-hash.jpg"):
+            target = report / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(b"user-owned")
+            manifest["files"][relative] = hashlib.sha256(b"user-owned").hexdigest()
+        (report / "gallery-manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+        destination = create_backup(self.work, stamp="retain-edits", apply=True)
+        for relative in ("artists_gallery.html", unknown, "notes.txt", "thumbnails/not-a-hash.jpg"):
+            self.assertEqual((destination / "work-root/_reports/artists" / relative).read_bytes(),
+                             (report / relative).read_bytes())
+        self.assertEqual((destination / "work-root/_reports/preparation/raw.jpg").read_bytes(), b"user-owned")
+
+    def test_missing_invalid_or_unsupported_artist_manifest_retains_outputs(self):
+        report, generated, manifest = self.artist_reports()
+        for index, content in enumerate((
+            None, "{", "[]", json.dumps({**manifest, "formatVersion": 2}),
+            json.dumps({**manifest, "recipe": "unknown"}), json.dumps({**manifest, "files": []}),
+        )):
+            with self.subTest(content=content):
+                manifest_path = report / "gallery-manifest.json"
+                if content is None:
+                    manifest_path.unlink()
+                else:
+                    manifest_path.write_text(content, encoding="utf-8")
+                destination = create_backup(self.work, stamp=f"invalid-artist-{index}", apply=True)
+                for relative, payload in generated.items():
+                    self.assertEqual((destination / "work-root/_reports/artists" / relative).read_bytes(), payload)
+
+    def test_preview_agrees_with_routine_artist_report_omissions(self):
+        _report, generated, _manifest = self.artist_reports()
+        entries, total = preview(self.work, self.inputs, self.repo)
+        relative_paths = {relative.as_posix() for label, _path, relative, _size in entries if label == "work-root"}
+        self.assertIn("_reports/artists/gallery-manifest.json", relative_paths)
+        self.assertTrue(all("_reports/artists/" + relative not in relative_paths for relative in generated))
+        self.assertEqual(total, sum(size for _label, _path, _relative, size in entries))
+        self.assertIsNone(create_backup(self.work, stamp="artist-preview", apply=False))
+        self.assertFalse((self.work / "_backup/library-artist-preview").exists())
+
+    def people_reports(self):
+        report = self.work / "_reports" / "library"
+        paths = {
+            "people_gallery.html": b"generated people browser",
+            "people_gallery_review.html": b"generated people review",
+            "people_gallery.md": b"generated people markdown",
+            "people_gallery_review_files/person_image_123456_head_abcdef123456.jpg": b"head thumbnail",
+            "people_gallery_review_files/person_image_123456_chest_abcdef123456.jpg": b"chest thumbnail",
+            "people_gallery_review_files/person_image_123456_face_abcdef123456.jpg": b"face thumbnail",
+        }
+        for relative, payload in paths.items():
+            target = report / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(payload)
+        manifest = {
+            "formatVersion": 1, "recipe": "people-gallery-v1",
+            "files": {relative: hashlib.sha256(payload).hexdigest() for relative, payload in paths.items()},
+        }
+        (report / "people-gallery-manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+        return report, paths, manifest
+
+    def test_verified_people_outputs_are_omitted_but_manifest_and_unknown_evidence_restore(self):
+        report, generated, manifest = self.people_reports()
+        retained = {
+            "identity-rankings.md": b"retain evidence",
+            "prospect-cast-audit.csv": b"retain audit",
+            "people_gallery_review_files/user.jpg": b"user image",
+            "people_gallery_review_files/unlisted_head_123456abcdef.jpg": b"unlisted cache",
+            "../preparation/run/raw.jpg": b"raw retention",
+        }
+        for relative, payload in retained.items():
+            target = report / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(payload)
+            manifest["files"][relative] = hashlib.sha256(payload).hexdigest()
+        del manifest["files"]["people_gallery_review_files/unlisted_head_123456abcdef.jpg"]
+        manifest_path = report / "people-gallery-manifest.json"
+        manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+        entries, _total = preview(self.work)
+        self.assertFalse(any(relative.as_posix() == "_reports/library/people_gallery.html"
+                             for _label, _path, relative, _size in entries))
+        destination = create_backup(self.work, stamp="people-owned", apply=True)
+        snapshot_manifest = json.loads((destination / "manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual(len(snapshot_manifest["generatedReports"]), len(generated))
+        self.assertTrue(all(row["recipe"] == "people-gallery-v1"
+                            and row["manifestBackup"] == "work-root/_reports/library/people-gallery-manifest.json"
+                            for row in snapshot_manifest["generatedReports"]))
+        recovered = restore_backup(destination, self.tmp / "people-recovery", apply=True)
+        for relative in generated:
+            self.assertFalse((recovered / "work-root/_reports/library" / relative).exists())
+        for relative, payload in retained.items():
+            self.assertEqual((recovered / "work-root/_reports/library" / relative).read_bytes(), payload)
+        self.assertEqual((recovered / "work-root/_reports/library/people-gallery-manifest.json").read_bytes(),
+                         manifest_path.read_bytes())
+
+    def test_people_outputs_without_supported_manifest_and_edited_files_are_retained(self):
+        report, generated, manifest = self.people_reports()
+        manifest_path = report / "people-gallery-manifest.json"
+        for index, content in enumerate((
+            None, "{", json.dumps({**manifest, "formatVersion": 2}),
+            json.dumps({**manifest, "recipe": "artists-gallery-v1"}),
+        )):
+            with self.subTest(content=content):
+                if content is None:
+                    manifest_path.unlink()
+                else:
+                    manifest_path.write_text(content, encoding="utf-8")
+                destination = create_backup(self.work, stamp=f"people-unproven-{index}", apply=True)
+                for relative, payload in generated.items():
+                    self.assertEqual((destination / "work-root/_reports/library" / relative).read_bytes(), payload)
+        manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+        edited = ("people_gallery.html", "people_gallery_review_files/person_image_123456_head_abcdef123456.jpg")
+        for relative in edited:
+            (report / relative).write_bytes(b"user edit")
+        destination = create_backup(self.work, stamp="people-edited", apply=True)
+        for relative in edited:
+            self.assertEqual((destination / "work-root/_reports/library" / relative).read_bytes(), b"user edit")
+
+    def test_full_and_transaction_people_snapshots_keep_generated_files(self):
+        report, generated, _manifest = self.people_reports()
+        for stamp, options, prefix in (
+            ("people-full", {"include_regenerable": True}, "work-root/_reports/library"),
+            ("people-transaction", {"scoped_sources": [("report", report)]}, "report"),
+        ):
+            with self.subTest(stamp=stamp):
+                destination = create_backup(self.work, stamp=stamp, apply=True, **options)
+                for relative, payload in generated.items():
+                    self.assertEqual((destination / prefix / relative).read_bytes(), payload)
+                manifest = json.loads((destination / "manifest.json").read_text(encoding="utf-8"))
+                self.assertEqual(manifest["generatedReports"], [])
+
+    def test_full_snapshot_mode_keeps_regenerable_derivatives(self):
+        omissions = {
+            "Various/gallery/incoming.jpg": {
+                "backup": "work-root/Various/gallery/incoming.jpg",
+                "sourceBackup": "work-root/Various/gallery/incoming.jpg",
+                "sourceSha256": "x",
+                "sha256": "x",
+                "recipe": 1,
+                "framing": "padded",
+                "box": None,
+                "size": 8,
+                "mtimeNs": 0,
+                "atimeNs": 0,
+            }
+        }
+        with mock.patch("library_backup.derivative_omissions", return_value=omissions), \
+                mock.patch("library_backup.verify_backup", return_value=True):
+            default = create_backup(self.work, self.inputs, self.repo, stamp="omit-default", apply=True)
+            full = create_backup(
+                self.work, self.inputs, self.repo, stamp="include-full", apply=True, include_regenerable=True
+            )
+        default_manifest = json.loads((default / "manifest.json").read_text(encoding="utf-8"))
+        full_manifest = json.loads((full / "manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual(default_manifest["regenerable"], list(omissions.values()))
+        self.assertEqual(
+            len([
+                row for row in default_manifest["entries"]
+                if row["backup"].replace("\\", "/") == "work-root/Various/gallery/incoming.jpg"
+            ]),
+            0,
+        )
+        self.assertEqual(full_manifest["regenerable"], [])
+        self.assertEqual(
+            len([
+                row for row in full_manifest["entries"]
+                if row["backup"].replace("\\", "/") == "work-root/Various/gallery/incoming.jpg"
+            ]),
+            1,
+        )
 
     def test_scoped_backup_rejects_unsafe_or_duplicate_labels(self):
         for labels in (["../escape"], ["same", "same"], []):

@@ -71,6 +71,15 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
     catalog_path = metadata.path_for_root(layout["working_root"])
     source_catalog_hash = metadata.content_sha256(catalog_path)
     catalog = metadata.load_catalog(catalog_path)
+    if any(
+        (person.get("automaticProtectionOverride") or person.get("names") or person.get("family"))
+        and person["folder"].split("/")[0] in RESET_CATEGORIES
+        for person in catalog["people"].values()
+    ):
+        raise ValueError(
+            "clean rebuild cannot regenerate identities with manual protection overrides or name/family provenance; "
+            "stable-ID migration is required before rebuilding"
+        )
     rejected = {
         person_id for photo in catalog["photos"].values()
         for person_id in photo.get("rejectedPersonIds", [])
@@ -115,6 +124,7 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
         raise ValueError("clean rebase has no usable input faces")
     mean = np.mean(usable, axis=0)
     cache.centering_mean = mean.tolist()
+    cache.centering_domain = "general"
     cache.save()
     for photo in photos:
         if photo.raw is not None:

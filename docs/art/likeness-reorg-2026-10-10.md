@@ -1,5 +1,11 @@
 # Likeness reorganisation, Oct 10, 2026
 
+> Historical run record, not current instructions. In particular, the temporary
+> Models/Sisters alias and pairing outcomes below are not today's category rules.
+> Use [likeness.md](likeness.md), [original-photos.md](original-photos.md) and
+> [../STATUS.md](../STATUS.md) for current commands, recovery and state.
+> Preserve this record as evidence; do not replay its operations.
+
 What the second pass did to your photo library (`B:\Soverign Territories`), why, and where to look next. Plan: [../plans/2026-10-10-names-ingest-headshots.md](../plans/_archive/2026-10-10-names-ingest-headshots.md). Tool guide: [likeness.md](likeness.md). The first pass is in [likeness-reorg-2026-10-09.md](likeness-reorg-2026-10-09.md).
 
 Everything was backed up first (`_backup\2026-10-10-before-names-ingest`: the Various photos, every `z_` file, `workspaces.json`, a manifest of 3,546 files). The reports and contact sheets are in `_reports\2026-10-10-names-ingest`. Nothing was deleted: folders emptied by a merge or a re-pair are in `_retired`, and a `likeness undo` reverts the last batch of moves.

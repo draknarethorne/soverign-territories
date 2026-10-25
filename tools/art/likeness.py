@@ -32,6 +32,8 @@ Workspace likeness settings retain explicit anchors and workflow metadata.
   likeness sort                       Various: photos that match an existing person move there, clusters of one new person
                                       go to a new Prospects/<invented name> folder; the rest stay
   likeness reconcile                 preview Review + Various together against one frozen identity snapshot
+  likeness seed                       Various\\<Name>\\gallery (photos of one known person): the whole folder goes to <Name>,
+                                      an existing person of that name or a new Prospects/Potentials/<Name>; no face matching
   likeness merge Mia "Eva Emily"      move every photo of one folder into another (one person under two names)
   likeness rematch                    prospect folders that are one person under two names are merged (0.48); look-alikes of an angel or sister are listed
   likeness retire-empty               archive empty Prospect folders (preview unless --apply)
@@ -72,8 +74,8 @@ import originals  # noqa: E402
 import screens  # noqa: E402
 import people  # noqa: E402
 import library_backup  # noqa: E402
-from likeness_library import metadata, rejections  # noqa: E402
-from likeness_library.audit import audit_person  # noqa: E402
+from likeness_library import domains, metadata, rejections, seeded_folders  # noqa: E402
+from likeness_library.audit import audit_person, core_excluded_protection  # noqa: E402
 from likeness_library.diagnostics import collect_diagnostics, write_report  # noqa: E402
 from likeness_library.sandbox import (  # noqa: E402
     is_sandbox_working_path,
@@ -113,6 +115,19 @@ from likeness_library.identity import (
 from likeness_library.rendering import Renders  # noqa: E402
 
 DATA = pathlib.Path(os.environ.get("LOCALAPPDATA") or (pathlib.Path.home() / ".cache")) / "sovereign-territories"
+
+
+def configuration():
+    return domains.configuration(cw.load_cfg(), cw.PHOTO_ROOTS)
+
+
+def cache_path(args, work):
+    return args.cache or domains.state_path(work, "cache.json") or DATA / "likeness_cache.json"
+
+
+def history_path(work, name, *, legacy=False):
+    path = domains.state_path(work, name) or DATA / name
+    return DATA / name if legacy and not path.exists() else path
 
 
 class Embedder(_Embedder):
@@ -231,6 +246,7 @@ def record_history(done, work):
 def execute(moves, work, apply, cache, log=True):
     """Move the files into <to>/<bucket> (gallery, or review for photos to look at; a duplicate of what is already there goes to the source folder's gallery_org in _archive, a different file with the same name is kept under a new one).
     Each destination person folder records the move in its z_ file."""
+    domains.require_moves(work, moves)
     rejections.require_legacy_moves(work, moves)
     batch = {"id": datetime.datetime.now().strftime("%Y%m%d-%H%M%S"), "moves": []}
     made, done = 0, []
@@ -260,15 +276,16 @@ def execute(moves, work, apply, cache, log=True):
     if apply:
         record_history(done, work)
     if apply and log and batch["moves"]:
-        path = DATA / "likeness_moves.json"
+        path = history_path(work, "likeness_moves.json")
         old = json.loads(path.read_text(encoding="utf-8")) if path.exists() else []
-        DATA.mkdir(parents=True, exist_ok=True)
+        path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(old + [batch], indent=1), encoding="utf-8")
     return made
 
 
 def print_plan(moves, space, work=None):
     if work is not None:
+        domains.require_moves(work, moves)
         rejections.require_legacy_moves(work, moves)
     by = collections.defaultdict(list)
     for m in moves:
@@ -283,7 +300,8 @@ def print_plan(moves, space, work=None):
 def after_moves(args, applied):
     if applied and not args.no_originals:
         print("\nrunning originals (rename, scale, prune, re-point) ...")
-        originals.main(["--apply"] + (["--root", args.root] if args.root else []))
+        originals.main(["--apply", "--no-repoint"] + (["--root", args.root] if args.root else []),
+                       configuration=configuration())
 
 
 # ---------- sheet ----------
@@ -317,14 +335,27 @@ def make_sheet(rows, out, size=(112, 140)):
 # ---------- commands ----------
 
 def build(args, with_mixed=False):
-    cfg = cw.load_cfg()
+    cfg = configuration()
     st = effective_settings(cfg, load_policy(getattr(args, "policy", None)))
     work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
     st["poolHome"] = next((k for k in st["pool"] if (work / k / "gallery").is_dir()), st["pool"][0])
-    cache = Cache(args.cache or DATA / "likeness_cache.json")
+    if is_sandbox_working_path(work):
+        require_sandbox_cache(work, cache_path(args, work))
+    cache = Cache(cache_path(args, work))
+    if domains.CURRENT.get() and cache.centering_domain != domains.CURRENT.get():
+        if cache.centering_mean is not None:
+            print(f"Ignoring saved centering from {cache.centering_domain or 'an unstamped legacy domain'}; "
+                  f"recompute inside {domains.CURRENT.get()} only.")
+        cache.centering_mean = None
+    cache.centering_domain = domains.CURRENT.get()
     embed = args.embedder or Embedder()
-    photos = read_library(cfg, work, cache, embed, st, with_mixed=with_mixed)
-    return cfg, st, work, cache, Space(photos, st, mean=cache.centering_mean)
+    photos = read_library(cfg, work, cache, embed, st,
+                          with_mixed=with_mixed or domains.CURRENT.get() == "artists")
+    mean = cache.centering_mean
+    if domains.CURRENT.get() == "artists" and mean is None:
+        population = [photo.raw for photo in photos if photo.usable(st["minFace"])]
+        mean = np.mean(population, axis=0) if population else None
+    return cfg, st, work, cache, Space(photos, st, mean=mean)
 
 
 def folder_key(space, name):
@@ -344,6 +375,7 @@ def cmd_scan(args):
     for p in bad:
         why = "no face found" if p.faces == 0 else "unreadable" if p.faces < 0 else f"face too small ({p.px}px)"
         print(f"  not usable: {p.key}/{p.name}  ({why})")
+    return int(bool(bad)) if getattr(args, "check", False) else 0
 
 
 def cmd_audit_core(args):
@@ -413,7 +445,7 @@ def cmd_audit_core(args):
             np.array([photo.vec for photo in usable]),
             photo_ids,
             anchor_ids=anchor_ids if not folder_conflict else (),
-            protected_ids=protected_ids,
+            protected_ids=core_excluded_protection(catalog, protected_ids),
             stale_ids=stale_ids,
             ambiguous_ids=ambiguous_ids,
             core_minimum=policy["categoryPolicies"][status_of(key)]["identityCoreMinimumSimilarity"],
@@ -493,7 +525,9 @@ def cmd_calibrate(args):
         for p in ps:
             rank = space.ranking(p.vec, skip=p, own=k, source=k)
             mine = next(s for s, key in rank if key == k)
-            best_other = next((s, key) for s, key in rank if key != k)
+            best_other = next(((s, key) for s, key in rank if key != k), None)
+            if best_other is None:
+                continue
             own.append(mine)
             oth.append(best_other[0])
             total += 1
@@ -503,6 +537,9 @@ def cmd_calibrate(args):
             if best_other[0] >= st["assign"] and best_other[0] - mine >= st["margin"]:
                 wrong += 1
     print(f"{len(space.person)} photos in {len(space.keys)} person folders; leave-one-out against folders with 2 or more photos ({total} photos):")
+    if not total:
+        print("Calibration needs at least two independent person folders and repeated photos; no statistics fabricated.")
+        return 1
     print(f"  the right folder is the best match: {ok}/{total} = {ok / total:.0%}")
     print(f"  own folder score  p10 {np.percentile(own, 10):.2f}  median {np.median(own):.2f}  p90 {np.percentile(own, 90):.2f}")
     print(f"  best other folder p10 {np.percentile(oth, 10):.2f}  median {np.median(oth):.2f}  p90 {np.percentile(oth, 90):.2f}")
@@ -531,7 +568,7 @@ def cmd_diagnostics(args):
     loaded = time.perf_counter()
     policy = load_policy(args.policy)
     active_categories = [
-        category for category in policy["categoryOrder"] if category != "Artists"
+        category for category in policy["categoryOrder"] if domains.includes(category)
     ]
     calibration, calibration_photos, folders, photos = collect_diagnostics(
         space, st, active_roots=active_categories
@@ -539,7 +576,8 @@ def cmd_diagnostics(args):
     scored = time.perf_counter()
 
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
-    output_dir = pathlib.Path(args.out) if args.out else work / "_reports" / "diagnostics" / f"diagnostics-{stamp}"
+    report_kind = "artists-diagnostics" if domains.CURRENT.get() == "artists" else "diagnostics"
+    output_dir = pathlib.Path(args.out) if args.out else work / "_reports" / "diagnostics" / f"{report_kind}-{stamp}"
     if sandbox_root:
         require_sandbox_output(args.root, output_dir)
     timings = {
@@ -678,6 +716,9 @@ def cmd_folder(args):
         rows = [(key.split("/", 1)[1], ps[:10])] + [(f"{s:.2f} low", [p]) for s, p in odd + mid[:6]] + [(f"{s:.2f} {p.key.split('/')[1][:11]}", [p]) for s, p in outside[:6]]
         make_sheet(rows, args.sheet)
     moves = []
+    if domains.CURRENT.get() == "artists":
+        print("Artist folder inspection is read-only; use group or staged photo actions for changes.")
+        return
     for s, p in odd:
         o = other_of(p, s)
         moves.append(Move(p, o[1] if o and o[0] >= st["assign"] else pool_home(st), f"looks like someone else than the rest of {key} ({s:.2f})"))
@@ -711,13 +752,17 @@ def cmd_sort(args):
         st["assign"] = args.assign
     taken = {name.split("/")[-1] for _, name, _ in cw.photo_folders(cfg, work)}
     moves = plan_sort(space, st, cfg, taken, singles=args.singles)
-    origins = note_origins(work)
+    origins = (json.loads((work / "_origins.json").read_text(encoding="utf-8"))
+               if (work / "_origins.json").is_file() else {})
     home = [p for p in space.photos if matches(p.key, st["pool"]) and photo_id(p.name) in origins]
     if home:
         gone = {id(p) for p in home}
         moves = [m for m in moves if id(m.photo) not in gone]
-        moves += [Move(p, f"Artists/{origins[photo_id(p.name)]}", f"came from the artist {origins[photo_id(p.name)]}", force=True) for p in home]
-        print(f"{len(home)} photo(s) in the pool came from an artist and go back to that artist's gallery")
+        if domains.CURRENT.get() is None:
+            moves += [Move(p, f"Artists/{origins[photo_id(p.name)]}", f"came from the artist {origins[photo_id(p.name)]}", force=True) for p in home]
+        print(f"{len(home)} photo(s) have recorded artist provenance; "
+              + ("held for explicit artist intake; no cross-domain transfer" if domains.CURRENT.get()
+                 else "returning to that artist's gallery"))
     pool = [p for p in space.photos if matches(p.key, st["pool"])]
     print(f"{len(pool)} photo(s) in the pool; {len(moves)} would move (assign >= {st['assign']} with a margin of {st['margin']}, or a new person of {st['minCluster']}+ photos at {st['cluster']}):")
     print_plan(moves, space, work)
@@ -744,6 +789,38 @@ def cmd_sort(args):
 def cmd_reconcile(args):
     from likeness_library.reconcile_command import run
     return run(args, sys.modules[__name__])
+
+
+def cmd_seed(args):
+    """Various/<Name>/gallery: the user knows every photo is <Name>; move the whole folder to that person (no face matching)."""
+    cfg = configuration()
+    work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
+    seeds = seeded_folders.seeded_folders(work, originals.images)
+    if not seeds:
+        print("no named folders waiting in Various (drop photos of one person into Various\\<Name>\\gallery)")
+        return 0
+    catalog = metadata.load_catalog(metadata.path_for_root(work))
+    rejected = lambda path: bool(catalog["photos"].get(metadata.photo_id_from_name(path.name), {}).get("rejectedPersonIds"))
+    existing = [f"{group}/{name}" for group, name, _ in cw.photo_folders(cfg, work) if group in seeded_folders.PERSON_ROOTS]
+    plans, held = seeded_folders.plan_seeded(seeds, existing, rejected)
+    moves = []
+    for plan in plans:
+        what = "NEW folder" if plan["new"] else "existing person"
+        print(f"  {plan['source']} -> {plan['destination']} ({what}): {len(plan['photos'])} photo(s)")
+        for path, reason in plan["skipped"]:
+            print(f"       kept in place: {path.name} ({reason})")
+        for path, bucket in plan["photos"]:
+            photo = types.SimpleNamespace(path=path, name=path.name, key=plan["source"], sha=seeded_folders.sha1(path))
+            moves.append(Move(photo, plan["destination"], f"seeded by name from {plan['source']}", bucket=bucket))
+    for row in held:
+        print(f"  HOLD {row['source']} ({row['photos']} photo(s)): {row['reason']}")
+    if not args.apply:
+        print(f"{len(moves)} named-folder photo(s) would move; preview only (add --apply)")
+        return 0
+    n = execute(moves, work, True, Cache(cache_path(args, work)))
+    print(f"{n} photo(s) moved; `likeness undo` reverses the batch")
+    after_moves(args, n > 0)
+    return 0
 
 
 def whole_folder(space, cfg, name):
@@ -815,7 +892,7 @@ def cmd_merge(args, retire=False):
 
 def cmd_archive_list(args):
     """Archive listed Prospect or Artist people as whole folders, preserving photos, derived files and z_ history."""
-    cfg = cw.load_cfg()
+    cfg = configuration()
     work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
     list_path = pathlib.Path(args.list)
     if not list_path.is_file():
@@ -831,6 +908,7 @@ def cmd_archive_list(args):
         if match[1].lower() == "x":
             continue
         relative = pathlib.Path(match[2].strip().strip("`"))
+        domains.require_path(work, work / relative)
         parts = relative.parts
         is_prospect = len(parts) == 2 and parts[0].casefold() in ("prospects", "potentials") and parts[1].casefold() != "various"
         is_artist_person = len(parts) == 3 and parts[0].casefold() == "artists"
@@ -898,7 +976,7 @@ def cmd_archive_list(args):
     except OSError as exc:
         sys.exit(f"cannot stage checklist update: {exc}")
 
-    cache = Cache(args.cache or DATA / "likeness_cache.json")
+    cache = Cache(cache_path(args, work))
     retired_hashes = set()
     source_paths = [entry["source"] for entry in entries]
     for entry in entries:
@@ -1031,14 +1109,17 @@ def cmd_promote(args):
 
 
 def cmd_undo(args):
-    path = DATA / "likeness_moves.json"
+    cfg = configuration()
+    work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
+    path = history_path(work, "likeness_moves.json", legacy=True)
     log = json.loads(path.read_text(encoding="utf-8")) if path.exists() else []
     batch = next((b for b in reversed(log) if not b.get("undone")), None)
     if not batch:
         sys.exit("nothing to undo")
-    cfg = cw.load_cfg()
-    work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
-    cache = Cache(args.cache or DATA / "likeness_cache.json")
+    for move in batch["moves"]:
+        domains.require_path(work, move["from"])
+        domains.require_path(work, move["to"])
+    cache = Cache(cache_path(args, work))
     print(f"batch {batch['id']}: {len(batch['moves'])} move(s) " + ("being undone" if args.apply else "would be undone (preview; add --apply)"))
     back = 0
     for m in batch["moves"]:
@@ -1125,7 +1206,7 @@ def photo_id(name):
     return m[1].lower() if m else None
 
 
-def note_origins(work, extra=None):
+def note_origins(work, extra=None, *, apply=True):
     """{photo id: artist} kept in <work>/_origins.json: which artist every photo of an artist came from. The id survives a rename, a move into a person's folder and a crop, so a photo that
     turns up again in Various, or in _junk, can go back to its artist. The first artist recorded for an id wins. extra: more {id: artist} (a backup)."""
     path = pathlib.Path(work) / "_origins.json"
@@ -1133,6 +1214,8 @@ def note_origins(work, extra=None):
     seen = dict(extra or {})
     root = pathlib.Path(work) / "Artists"
     for g in sorted(root.glob("*/gallery")) + sorted(root.glob("*/*/gallery")):
+        if domains.CURRENT.get():
+            domains.require_path(work, g)
         artist = g.relative_to(root).parts[0]
         for f in originals.images(g):
             if photo_id(f.name):
@@ -1140,13 +1223,14 @@ def note_origins(work, extra=None):
     new = {k: v for k, v in seen.items() if k not in known}
     if new:
         known.update(new)
-        path.write_text(json.dumps(dict(sorted(known.items())), indent=0), encoding="utf-8")
+        if apply and not domains.READ_ONLY.get():
+            path.write_text(json.dumps(dict(sorted(known.items())), indent=0), encoding="utf-8")
     return known
 
 
 def cmd_group(args):
     cfg, st, work, cache, space = build(args, with_mixed=True)
-    note_origins(work)
+    note_origins(work, apply=args.apply)
     taken = {name.split("/")[-1] for _, name, _ in cw.photo_folders(cfg, work)}
     minc = args.min_photos or st["minCluster"]
     names = [n.lower() for n in (args.names or [])]
@@ -1277,7 +1361,8 @@ def cmd_artists(args):
                 origin[cache.sha(p)] = artist
                 if photo_id(p.name):
                     origin[photo_id(p.name)] = artist
-    origin.update(note_origins(work, {k: v for k, v in origin.items() if not len(k) == 40}))
+    origin.update(note_origins(work, {k: v for k, v in origin.items() if not len(k) == 40},
+                               apply=args.apply))
     only = None
     if args.junk:
         back = [(f, origin.get(cache.sha(f)) or origin.get(photo_id(f.name))) for f in originals.images(work / "_junk" / "Artists")]
@@ -1424,8 +1509,8 @@ def cmd_crop(args):
             print("preview only; add --apply to do it")
         return
     batch = []
-    log = DATA / "likeness_crops.json"
-    DATA.mkdir(parents=True, exist_ok=True)
+    log = history_path(work, "likeness_crops.json")
+    log.parent.mkdir(parents=True, exist_ok=True)
     old_log = json.loads(log.read_text(encoding="utf-8")) if log.exists() else []
     entry = {"id": datetime.datetime.now().strftime("%Y%m%d-%H%M%S"), "crops": batch}
     for p, region, why in done:
@@ -1459,12 +1544,15 @@ def cmd_crop(args):
 
 
 def undo_crop(work, apply):
-    log = DATA / "likeness_crops.json"
+    log = history_path(work, "likeness_crops.json", legacy=True)
     data = json.loads(log.read_text(encoding="utf-8")) if log.exists() else []
     if not data:
         print("no crops to undo")
         return
     batch = data[-1]
+    for crop in batch["crops"]:
+        domains.require_path(work, crop["file"])
+        domains.require_path(work, crop["kept"])
     print(f"last batch {batch['id']}: {len(batch['crops'])} photo(s) get their uncropped original back")
     if not apply:
         print("preview only; add --apply to put them back")
@@ -1473,7 +1561,7 @@ def undo_crop(work, apply):
         if pathlib.Path(c["kept"]).exists():
             shutil.copy2(c["kept"], c["file"])
     log.write_text(json.dumps(data[:-1], indent=1), encoding="utf-8")
-    after_moves(types.SimpleNamespace(no_originals=False, root=None), True)
+    after_moves(types.SimpleNamespace(no_originals=False, root=str(work)), True)
 
 
 def cmd_crops(args):
@@ -1482,9 +1570,9 @@ def cmd_crops(args):
     import html
     import io
     from PIL import Image, ImageOps
-    cfg = cw.load_cfg()
+    cfg = configuration()
     work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
-    log = DATA / "likeness_crops.json"
+    log = history_path(work, "likeness_crops.json", legacy=True)
     batches = json.loads(log.read_text(encoding="utf-8")) if log.exists() else []
     rows = collections.OrderedDict()
     for b in batches:
@@ -1494,6 +1582,8 @@ def cmd_crops(args):
                 try:
                     rel = f.relative_to(work)
                 except ValueError:
+                    continue
+                if not domains.includes(rel.as_posix()):
                     continue
                 rows.setdefault(rel.parts[0], {})[str(f)] = (rel.as_posix(), f, k)
 
@@ -1660,7 +1750,7 @@ def retire_empty(work, keys, keep=()):
 
 def cmd_retire_empty(args):
     """Archive empty Prospect and Potential folders with no original photos in gallery or review."""
-    cfg = cw.load_cfg()
+    cfg = configuration()
     st = settings(cfg)
     work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
     pool = {p.lower() for p in st["pool"]}
@@ -2072,7 +2162,7 @@ def cmd_pairs(args):
     after_moves(args, n > 0)
     # set the recommended photo and point the angel's workflows at it
     cfg2 = cw.load_cfg()
-    cache2 = Cache(args.cache or DATA / "likeness_cache.json")
+    cache2 = Cache(cache_path(args, work))
     renames = {}
     for slot, sha in pick.items():
         if not sha:
@@ -2692,9 +2782,11 @@ def apply_category_changes(work, category_rows, allowed_categories=None):
 def reset_junk(args, cfg, st, work, cache, embed):
     """Everything in _junk goes back to be looked at again: prospects' photos to the pool (Various), an artist's photos to that artist's gallery (the _origins.json record knows which).
     Run `likeness crop` and `likeness junk` (or bin\\library.cmd) afterwards: what the rules still call junk goes back to _junk, what they can use is sorted."""
-    origins = note_origins(work)
+    origins = note_origins(work, apply=args.apply) if domains.CURRENT.get() != "general" else {}
     moves, stay = [], []
     for side_dir in sorted(p for p in (work / "_junk").iterdir() if p.is_dir()) if (work / "_junk").is_dir() else []:
+        if not domains.includes(side_dir.name):
+            continue
         for f in originals.images(side_dir):
             sha = cache.sha(f)
             ph = Photo(f, "_junk", side_dir.name, sha, cache.emb.get(sha) or {"faces": -1})
@@ -2726,6 +2818,8 @@ def recheck_junk(args, cfg, st, work, cache, embed):
             prefixes[(status_of(key), originals.prefix_of(name.split("/")[-1]))] = key
     moves, kept, stuck = [], 0, []
     for side_dir in sorted(p for p in (work / "_junk").iterdir() if p.is_dir()) if (work / "_junk").is_dir() else []:
+        if not domains.includes(side_dir.name):
+            continue
         for f in originals.images(side_dir):
             sha = cache.sha(f)
             if sha not in cache.emb:
@@ -2769,7 +2863,7 @@ def cmd_junk(args):
     items = [(p.key, p, "gallery") for p in space.photos]
     for group, name, folder in cw.photo_folders(cfg, work):
         key = f"{group}/{name}"
-        if matches(key, st["mixed"]) and not matches(key, st["pool"]):
+        if matches(key, st["mixed"]) and not matches(key, st["pool"]) and domains.CURRENT.get() != "artists":
             continue
         for f in originals.images(folder / "review"):
             sha = cache.sha(f)
@@ -2807,7 +2901,8 @@ def cmd_junk(args):
         ms = list(ms)
         if key.split("/")[-1].lower() != "various":
             people.note(work / key, f"junk: {len(ms)} photo(s) set aside in _junk ({'; '.join(sorted({m.reason.split(' (')[0] for m in ms}))})")
-    gone = retire_empty(work, [m.photo.key for m in moves], keep={k for k in space.keys if k.startswith("Angels/") or is_sister(k)} | set(st["pool"]))
+    gone = retire_empty(work, [m.photo.key for m in moves if not matches(m.photo.key, st["mixed"])],
+                        keep={k for k in space.keys if k.startswith("Angels/") or is_sister(k)} | set(st["pool"]))
     if gone:
         print("emptied folders moved to _retired: " + ", ".join(gone))
     print(f"{n} photo(s) moved")
@@ -2926,6 +3021,8 @@ def library_people(cfg, st, work):
     """[(key, path)] of every person folder (angel, sister, prospect, an artist's person), not the pool or an artist's own mixed folder."""
     out = []
     for group, name, folder in cw.photo_folders(cfg, work):
+        if domains.CURRENT.get():
+            domains.require_path(work, folder)
         key = group if group == name else f"{group}/{name}"
         if matches(key, st["mixed"]):
             continue
@@ -2964,7 +3061,8 @@ def cmd_index(args):
     order = {"Angels": 0, "Sisters": 1, "Prospects": 2, "Potentials": 3, "Artists": 4}
     rows.sort(key=lambda r: (order.get(r["status"], 9), r["folder"].lower()))
     import csv
-    csv_path, md_path = work / "people_index.csv", work / "people_index.md"
+    stem = "artists_index" if domains.CURRENT.get() == "artists" else "people_index"
+    csv_path, md_path = work / f"{stem}.csv", work / f"{stem}.md"
     with open(csv_path, "w", newline="", encoding="utf-8-sig") as f:
         w = csv.DictWriter(f, fieldnames=INDEX_COLUMNS)
         w.writeheader()
@@ -3010,7 +3108,7 @@ def import_profiles(args, cfg, st, work):
 
 def cmd_profile(args):
     """Set the profile of one or more people: likeness profile "Rhea Ives" "Mara Lowe" --type "dark elf" --roles rogue,assassin --elements Darkness --sex f (values replace; an empty value clears the key)."""
-    cfg = cw.load_cfg()
+    cfg = configuration()
     st = settings(cfg)
     work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
     people_ = library_people(cfg, st, work)
@@ -3028,7 +3126,7 @@ def cmd_profile(args):
 def cmd_who(args):
     """Who could play a part: filter the profile by sex, type, roles, elements, tier or tag (a word matches inside a value; every filter must match). Prospects and artists by default; --all adds angels and sisters.
     Reserved people (they look like a top-tier angel or sister) are marked: keep them off cards below the top tier."""
-    cfg = cw.load_cfg()
+    cfg = configuration()
     st = settings(cfg)
     work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
     want = {k: getattr(args, k).lower() for k in people.PROFILE_KEYS if getattr(args, k)}
@@ -3050,7 +3148,7 @@ def cmd_who(args):
 def cmd_names(args):
     """Who is in each folder: the z_ file of every person folder. A folder without one gets it made from the move log (the name of the person most of its photos came from, else its own name)."""
     cfg, st, work, cache, space = build(args)
-    log = DATA / "likeness_moves.json"
+    log = history_path(work, "likeness_moves.json", legacy=True)
     batches = json.loads(log.read_text(encoding="utf-8")) if log.exists() else []
     came = collections.defaultdict(lambda: collections.defaultdict(int))  # folder -> (date, source folder) -> photos
     for b in batches:
@@ -3094,7 +3192,7 @@ def cmd_family_preview(args):
 
 def cmd_rename(args):
     """Rename a Prospect or Potential folder and its recorded name, preserving history and updating photo names."""
-    cfg = cw.load_cfg()
+    cfg = configuration()
     work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
     requested = args.prospect.strip()
     requested_root = next((root for root in ("Prospects", "Potentials")
@@ -3160,15 +3258,29 @@ def cmd_rename(args):
     after_moves(args, True)
 
 
-def main(argv=None, embedder=None):
-    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+def main(argv=None, embedder=None, *, domain="general"):
+    artist_help = (
+        "Artist-only entry point into shared likeness intake, models and algorithms.\n"
+        "Sources: Artists/<artist>/gallery and Artists/<artist>/<person>/gallery.\n"
+        "No general/cast matching or cross-domain moves. Default state: <work>/_likeness/artists.\n"
+        "Preview: --root WORKING --dry-run group --singles; read-only face check: --root WORKING --check.\n"
+        "Artist folder is inspection-only; guarded photo actions handle manual retirement/Junk.\n"
+        "Preparation, derivative framing and ComfyUI acceptance gates remain separate."
+    )
+    ap = argparse.ArgumentParser(
+        description=artist_help if domain == "artists" else
+        "General library boundary (Artists excluded); use likeness-artists for Artists.\n" + __doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--root", help="the folder that holds Angels, Sisters, Prospects, Potentials, Artists and Various (default: workspaces.json paths.workRoot)")
     ap.add_argument("--cache", help="embedding cache file; sandbox analysis must keep it inside Working")
     ap.add_argument("--no-originals", action="store_true", help="after moving, do not run the originals tool")
+    ap.add_argument("--dry-run", action="store_true", help="preview only; cannot combine with --apply")
+    ap.add_argument("--check", action="store_true", help="read-only scan alias; use without a subcommand")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
     def add(name, fn, *positional, apply=False, sheet=False, **kw):
-        s = sub.add_parser(name, **kw)
+        s = (argparse.ArgumentParser(add_help=False) if domain == "artists" and name not in domains.ARTIST_COMMANDS
+             else sub.add_parser(name, **kw))
         for a in positional:
             s.add_argument(a)
         if apply:
@@ -3205,6 +3317,7 @@ def main(argv=None, embedder=None):
     s.add_argument("--plan", help="also write the moves to this JSON file")
     s.add_argument("--singles", action="store_true", help="a photo that matches nobody and has no look-alike in the pool gets a new folder of its own, so the pool ends up holding only photos with no usable face")
     s.add_argument("--assign", type=float, help="score that makes a match for this run (default: settings assign, 0.40); a lower one is a looser second look, best used after `pullback`")
+    add("seed", cmd_seed, apply=True, help="Various/<Name>/gallery: move a folder of one known person to <Name> (existing person, or a new Prospect/Potential)")
     s = add("reconcile", cmd_reconcile, apply=True)
     s.add_argument("--out", help="write the shared reconciliation proposal as JSON")
     s.add_argument("--policy", help="versioned likeness policy JSON")
@@ -3322,13 +3435,34 @@ def main(argv=None, embedder=None):
     for k in people.PROFILE_KEYS:
         s.add_argument(f"--{k}", help=f"only people whose {k} contains this word")
     s.add_argument("--all", action="store_true", help="also angels and sisters")
-    args = ap.parse_args(argv)
+    raw = list(sys.argv[1:] if argv is None else argv)
+    if "--check" in raw:
+        raw.append("scan")
+    args = ap.parse_args(raw)
+    if args.dry_run and (getattr(args, "apply", False) or getattr(args, "apply_categories", False)):
+        ap.error("--dry-run cannot be combined with apply")
+    if domain == "general" and args.cmd in ("group", "artists"):
+        ap.error(f"{args.cmd} belongs to bin\\likeness-artists.cmd; Artists are excluded from likeness")
+    if domain == "artists" and args.cmd not in domains.ARTIST_COMMANDS:
+        ap.error(f"{args.cmd} is not an artist-domain operation; use guarded manual actions if needed")
+    if domain == "artists" and args.cmd == "folder" and args.apply:
+        ap.error("artist folder inspection is read-only; use group or staged manual actions for moves")
+    if args.dry_run and args.cmd not in ("scan", "group", "artists", "junk", "crop", "undo", "policy"):
+        ap.error("--dry-run is supported for scan/group/artists/junk/crop/undo/policy only; reports write explicit outputs")
     args.embedder = embedder
     for k in ("apply", "sheet", "plan", "all", "outside"):
         if not hasattr(args, k):
             setattr(args, k, None if k not in ("apply", "all", "outside") else False)
-    args.fn(args)
+    try:
+        with domains.activate(domain, read_only=args.check or args.dry_run or args.cmd == "family-preview"):
+            if args.cache is None:
+                cfg = configuration()
+                work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
+                args.cache = str(cache_path(args, work))
+            return args.fn(args)
+    except (OSError, ValueError) as error:
+        ap.exit(1, f"likeness {domain}: {error}\n")
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main() or 0)

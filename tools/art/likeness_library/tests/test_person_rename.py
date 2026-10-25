@@ -108,7 +108,9 @@ class PersonSwapTests(unittest.TestCase):
                     after = self.catalog["people"][pid]
                     self.assertEqual(after["protected"], before["protected"])
                     if before["folder"].split("/")[0] in person_rename.CAST_CATEGORIES:
-                        self.assertEqual(after, before)
+                        self.assertEqual({key: value for key, value in after.items() if key != "names"}, before)
+                        self.assertIn("names", after)
+                        self.assertNotEqual(after["names"]["currentName"], after["names"]["originalName"])
                 self.undo()
                 self.assert_original()
 
@@ -359,9 +361,9 @@ const download=new Element("button");
         harness += "\nconst peopleData=" + json.dumps(people_data) + ";\n"
         harness += "const folder=" + json.dumps(first["personFolder"]) + ";\n"
         harness += "const secondFolder=" + json.dumps(second["personFolder"]) + ";\n"
-        harness += "const info=peopleData[folder],header=new Element('header');\n"
+        harness += "const info=peopleData[folder],actionsPanel=new Element('section');\n"
         harness += controls + "\n" + download + r"""
-const label=header.children[0];
+const label=actionsPanel.children[0];
 const input=label.children.find(node=>node.tag==="input");
 const stage=label.children.find(node=>node.textContent==="Stage rename");
 const cancel=label.children.find(node=>node.textContent==="Cancel rename");

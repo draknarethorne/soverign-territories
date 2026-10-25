@@ -104,10 +104,17 @@ metadata does not migrate or replace it.
   new incoming material. Do not give its former folder priority, while still
   allowing a normal whole-library match to find that folder if the evidence
   independently supports it.
-- **Photo retirement:** a user decision that a photo is unusable. Archive it
+- **Photo Junk:** a user decision that an image is unwanted/unusable. Retain
+  it under `_junk` with source provenance and action history; exclude it from
+  normal processing/recheck, rather than repeatedly repairing/resubmitting it.
+  Explicit mistake recovery/undo is allowed; permanent deletion is not implied.
+  Early loose-intake no-human-face/too-small-face quarantine is described in
+  the [photo-library runbook](original-photos.md#early-junk-disposition-explicit-sandbox-opt-in).
+- **Photo retirement:** a user decision to put aside a photo they may bring back. Archive it
   recoverably under a photo-specific `_retired` subtree, remove it from active
-  identity evidence and exclude it from matching. It is not Review,
-  Reject-to-Various, or deletion.
+  identity evidence and exclude it from matching. Restore is deliberate, not
+  ordinary resubmission. It is not Review, Reject-to-Various, Junk, or deletion.
+  This Oct 23 clarification supersedes treating Junk as repair/resubmit by default.
 - **Person retirement:** use the existing `likeness retire` operation to send
   the person's photos to `Various` for normal reprocessing. Label the
   destination in the preview. Keep `archive-list` whole-folder archival

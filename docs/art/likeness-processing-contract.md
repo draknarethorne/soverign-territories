@@ -9,6 +9,26 @@ additional shipped CLI contracts. Production remains unapproved.
 
 ## Latest precedence and ownership
 
+- Oct 25 autonomous implementation extends protection acquisition and virtual
+  family naming through the existing reconciliation transaction. The working
+  policy remains draft: implementing configurable defaults is not production
+  calibration or permission to apply them. Person/photo protection, own-core
+  evidence and family resemblance remain separate concepts.
+- Preserve original/current person-name provenance independently of character
+  slots. Family surnames are catalogue presentation metadata, not face evidence
+  or a reason to rename fixed directories, workflow keys or source files.
+  Recorded family changes are reversible with the reconciliation journal.
+
+- Oct 23 foundation work is ordered in the
+  [plan index](../plans/README.md#current-library-work-order-oct-23).
+  The new [intake plan](../plans/2026-10-23-image-intake-preparation.md)
+  owns proposed source-preserving preparation; the
+  [cast experiment](../plans/2026-10-23-cast-seeded-library-rebase.md)
+  owns configurable seed/retention/release design. Neither is installed policy
+  or a blanket override of D10/D14/D15. Preparation includes retained cast
+  images; membership protection does not authorize destructive preprocessing.
+  Any release requires an explicit recoverable experiment and exact preview;
+  ordinary automation retains its current protections.
 - The policy separates evidence, grouping, matching, classification and
   authorization. A cast threshold, display band or action-support count
   never becomes an unrelated candidate-grouping gate.

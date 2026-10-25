@@ -206,6 +206,10 @@
         "automaticAssociationEnabled"
       ],
       "properties": {
+        "associationMaximumSimilarityExclusive": {"$ref": "#/definitions/score"},
+        "associationMinimumSimilarity": {"$ref": "#/definitions/score"},
+        "minimumIndependentPhotos": {"type": "integer", "minimum": 2},
+        "minimumReferenceMargin": {"type": "number", "minimum": 0, "maximum": 1},
         "suggestionMinimumSimilarity": {
           "$ref": "#/definitions/score"
         },
@@ -234,6 +238,19 @@
         "protectedPhotoMayBeExcludedFromCore"
       ],
       "properties": {
+        "automatic": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["enabled", "recipeVersion", "minimumOwnCoreSimilarity", "minimumRivalMargin", "minimumIndependentReferences", "minimumEstablishedPhotos"],
+          "properties": {
+            "enabled": {"type": "boolean"},
+            "recipeVersion": {"const": "independent-gallery-loo-v1"},
+            "minimumOwnCoreSimilarity": {"type": "number", "minimum": 0, "maximum": 1},
+            "minimumRivalMargin": {"type": "number", "minimum": 0, "maximum": 2},
+            "minimumIndependentReferences": {"type": "integer", "minimum": 2},
+            "minimumEstablishedPhotos": {"type": "integer", "minimum": 3}
+          }
+        },
         "identityBlocksAutomaticMoves": {
           "const": true
         },

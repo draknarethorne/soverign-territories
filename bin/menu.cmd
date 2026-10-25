@@ -15,6 +15,11 @@ echo   9  Refresh FireRed for a hero
 echo   A  Animate a hero (video prompts, workflows, deploy)
 echo   L  Photo library: sort new photos in Various, remove duplicates, rebuild all scaled images
 echo   R  Photo review gallery (read-only Gallery and Review audit)
+echo   G  Preview gallery upkeep (rename, padded/head/chest; no matching or writes)
+echo   P  Preview sandbox image preparation comparisons (no source or identity changes)
+echo   J  Preview early Junk quarantine from a completed preparation report (no moves)
+echo   T  Preview artist-only likeness grouping in the sandbox (shared engine, no moves)
+echo   V  Preview separate Artist gallery pages (no matching or source changes)
 echo   C  Photo library check (read only: anything waiting?)
 echo   B  Back up the photo library and ComfyUI inputs
 echo   X  Clean sandbox rebase (preview or verify; apply separately after reviewing the plan)
@@ -28,9 +33,14 @@ if /i "%CH%"=="H" call "%~dp0help.cmd" & pause & goto menu
 if /i "%CH%"=="S" call "%~dp0style-audit.cmd" & pause & goto menu
 if /i "%CH%"=="L" call "%~dp0library.cmd" & pause & goto menu
 if /i "%CH%"=="R" call "%~dp0people-gallery-review.cmd" & pause & goto menu
+if /i "%CH%"=="G" call "%~dp0people-gallery.cmd" --dry-run & pause & goto menu
 if /i "%CH%"=="C" call "%~dp0library-check.cmd" & pause & goto menu
 if /i "%CH%"=="B" goto backup
 if /i "%CH%"=="X" goto sandboxrebase
+if /i "%CH%"=="P" goto preparation
+if /i "%CH%"=="J" goto preparationjunk
+if /i "%CH%"=="T" goto artistlikeness
+if /i "%CH%"=="V" goto artistgallery
 if "%CH%"=="2" goto group
 if "%CH%"=="3" goto setup
 if "%CH%"=="4" goto publish
@@ -56,6 +66,34 @@ if "%STG%"=="" (
 ) else (
   call "%~dp0%SCRIPT%" "%HERO%" "%STG%" %FLAG%
 )
+pause
+goto menu
+:preparation
+set "ROOT="
+set "RUN="
+set /p "ROOT=Sandbox Working absolute path: "
+set /p "RUN=Comparison run absolute path inside Working\_reports\preparation: "
+call "%~dp0prepare-images.cmd" --root "%ROOT%" --out "%RUN%" --dry-run
+pause
+goto menu
+:preparationjunk
+set "ROOT="
+set "RUN="
+set /p "ROOT=Sandbox Working absolute path: "
+set /p "RUN=Existing preparation run absolute path: "
+call "%~dp0prepare-images.cmd" --root "%ROOT%" --out "%RUN%" --quarantine-junk --dry-run
+pause
+goto menu
+:artistlikeness
+set "ROOT="
+set /p "ROOT=Sandbox Working absolute path: "
+call "%~dp0likeness-artists.cmd" --root "%ROOT%" --dry-run group --singles
+pause
+goto menu
+:artistgallery
+set "ROOT="
+set /p "ROOT=Sandbox Working absolute path: "
+call "%~dp0artists-gallery.cmd" --root "%ROOT%" --dry-run
 pause
 goto menu
 :sandboxrebase

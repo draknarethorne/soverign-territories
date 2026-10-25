@@ -4,7 +4,7 @@ import json
 import pathlib
 import uuid
 
-from . import metadata, rejections
+from . import domains, metadata, rejections
 from .identity_maintenance import category_destination_available, relocated_path
 from .sandbox import is_sandbox_working_path
 
@@ -74,6 +74,8 @@ def validate_moves(root, moves, identity_actions=()):
             ):
                 raise ValueError(f"unsafe reconciliation {name}: {value}")
             path = root.joinpath(*relative.parts)
+            if domains.CURRENT.get():
+                domains.require_path(root, path)
             if path.resolve() != path:
                 raise ValueError(f"reparse point in reconciliation path: {path}")
             paths.append(path)
@@ -279,6 +281,11 @@ def _updated_catalog(catalog, moves, policy, identity_actions=()):
                     "folderHistory": [], "identityAnchors": [],
                     "protected": policy["categoryPolicies"][parts[0]]["identityProtectedByDefault"],
                 }
+                if parts[0] not in ("Angels", "Sisters"):
+                    person["names"] = {
+                        "originalName": parts[-3], "currentName": parts[-3],
+                        "originalSource": "catalogue-registration",
+                    }
                 people[folder] = person
                 updated["people"][person_id] = person
         photo_record = updated["photos"].setdefault(row["photoId"], {})
@@ -304,22 +311,69 @@ def _rollback(completed, catalog, catalog_path):
     return failures
 
 
+def _metadata_catalog(root, catalog, updated, metadata_actions):
+    """Validate complete before states and frozen source bytes before metadata writes."""
+    seen = set()
+    for action in metadata_actions:
+        fields = [field for field in ("personId", "photoId") if field in action]
+        if len(fields) != 1:
+            raise ValueError("metadata action requires exactly one stable record ID")
+        field = fields[0]
+        collection = "people" if field == "personId" else "photos"
+        key = action[field]
+        if (collection, key) in seen:
+            raise ValueError("combine metadata actions affecting the same record before applying")
+        seen.add((collection, key))
+        if catalog[collection].get(key) != action["before"]:
+            raise ValueError(f"stale metadata before state: {key}")
+        if updated[collection].get(key) != action["before"]:
+            raise ValueError(f"metadata conflicts with membership changes: {key}")
+        after = action["after"]
+        if not isinstance(after, dict):
+            raise ValueError("metadata after state must be a full record")
+        checks = list(action.get("sourceChecks", ()))
+        checks.extend(
+            {"source": row["path"], "sha256": row["sha256"]}
+            for row in after.get("protectionProvenance", {}).get("sources", [])
+        )
+        for check in checks:
+            relative = pathlib.PurePosixPath(check["source"])
+            if (
+                relative.is_absolute() or "\\" in check["source"] or ":" in check["source"]
+                or any(part in ("", ".", "..") for part in check["source"].split("/"))
+            ):
+                raise ValueError("unsafe metadata evidence path")
+            path = root.joinpath(*relative.parts)
+            if path.resolve() != path or not path.is_file():
+                raise ValueError("metadata evidence disappeared or uses a reparse point")
+            if domains.CURRENT.get():
+                domains.require_path(root, path)
+            if metadata.content_sha256(path) != check["sha256"]:
+                raise ValueError(f"metadata evidence source changed: {relative}")
+        updated[collection][key] = json.loads(json.dumps(after))
+    metadata.validate_catalog(updated)
+    return updated
+
+
 def apply_moves(root, moves, policy, cfg, *, sandbox_override=False, backup_fn=None,
-                identity_actions=()):
+                identity_actions=(), metadata_actions=()):
     require_authorization(root, policy, sandbox_override)
     root = pathlib.Path(root).resolve()
     if is_sandbox_working_path(root) and not (root / ".likeness-library.json").is_file():
         raise ValueError("sandbox catalogue is not initialized; install a clean rebase before maintenance")
     validate_moves(root, moves, identity_actions)
     catalog = _validate_permissions(root, moves, policy, cfg, identity_actions)
-    if not moves:
+    if not moves and not metadata_actions:
         return None
     catalog_path = metadata.path_for_root(root)
-    updated = _updated_catalog(catalog, moves, policy, identity_actions)
+    updated = _metadata_catalog(
+        root, catalog, _updated_catalog(catalog, moves, policy, identity_actions), metadata_actions,
+    )
     backup = (backup_fn or _backup)(root, cfg)
     validate_moves(root, moves, identity_actions)
     if _validate_permissions(root, moves, policy, cfg, identity_actions) != catalog:
         raise ValueError("catalogue changed after backup; no reconciliation moves were applied")
+    _metadata_catalog(root, catalog, _updated_catalog(catalog, moves, policy, identity_actions), metadata_actions)
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%d-%H%M%S")
     journal = root / "_reports" / "runs" / f"reconcile_{stamp}_{uuid.uuid4().hex[:8]}.json"
     journal.parent.mkdir(parents=True, exist_ok=True)
@@ -329,6 +383,7 @@ def apply_moves(root, moves, policy, cfg, *, sandbox_override=False, backup_fn=N
         "catalogBefore": catalog, "catalogAfter": updated,
         "catalogPath": str(catalog_path),
         "identityActions": list(identity_actions),
+        "metadataActions": list(metadata_actions),
     }
     _write(journal, data)
     done = []
@@ -369,6 +424,11 @@ def undo_moves(root, journal, cfg, *, apply=False, backup_fn=None):
     ]
     reverse_actions = [{**action, "_undo": True} for action in data.get("identityActions", [])]
     validate_moves(root, reverse, reverse_actions)
+    if data.get("metadataActions"):
+        _metadata_catalog(
+            root, data["catalogBefore"], json.loads(json.dumps(data["catalogBefore"])),
+            data["metadataActions"],
+        )
     if apply:
         (backup_fn or _backup)(root, cfg)
         validate_moves(root, reverse, reverse_actions)
@@ -377,6 +437,11 @@ def undo_moves(root, journal, cfg, *, apply=False, backup_fn=None):
             or metadata.content_sha256(catalog_path) != data["catalogAfterSHA256"]
         ):
             raise ValueError("catalogue changed after backup; no undo moves were applied")
+        if data.get("metadataActions"):
+            _metadata_catalog(
+                root, data["catalogBefore"], json.loads(json.dumps(data["catalogBefore"])),
+                data["metadataActions"],
+            )
         done = []
         try:
             for row in reverse:

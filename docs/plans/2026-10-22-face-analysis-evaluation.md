@@ -2,6 +2,18 @@
 
 **Status:** active (Oct 20 C9 transferred; explanation and measured evaluation remain)
 
+## Oct 23 dependency and scope
+
+M1/M2 support Phase 1 [intake preparation I3-I5](2026-10-23-image-intake-preparation.md)
+and Phase 3 [cast seed evaluation](2026-10-23-cast-seeded-library-rebase.md).
+The current YuNet/SFace path detects, aligns and embeds faces, not whole-body
+identity. Explain that distinction with the existing centering/core semantics;
+body/framing quality is not a second identity model. Extend labelled cases
+to raw versus prepared images, overlays/hair and retained seed photos.
+M3/M4 stay conditional: new secondary models or body checks require measured
+benefit, rights/hardware review and separate routing approval. They are not
+an automatic prerequisite or a licence to average incompatible scores.
+
 ## Review and questions: 2026-10-22 16:26 -05:00
 
 The complete feedback below is preserved. Explain the existing pipeline first;

@@ -12,6 +12,8 @@ from datetime import datetime
 
 from jsonschema import Draft7Validator
 
+from . import report_assets
+
 ROOT = pathlib.Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "tools/workflows"))
 import comfy_workflows as cw  # noqa: E402
@@ -63,6 +65,19 @@ def validation_errors(data):
     folder_owners = {}
     anchor_owners = {}
     for person_id, person in people.items():
+        names = person.get("names")
+        if names and ((names["originalName"] is None) != (names["originalSource"] == "unavailable")):
+            errors.append(f"people/{person_id}: unavailable original names require explicit unavailable provenance")
+        family = person.get("family")
+        if family:
+            reference = people.get(family["referencePersonId"])
+            if reference is None or reference.get("mergedInto"):
+                errors.append(f"people/{person_id}: family reference must be an active registered identity")
+            if "names" not in person:
+                errors.append(f"people/{person_id}: family membership requires name provenance")
+            reference_family = (reference or {}).get("family", {})
+            if reference_family.get("id") != family["id"] or reference_family.get("surname") != family["surname"]:
+                errors.append(f"people/{person_id}: family reference must belong to the same surname/group")
         if "mergedInto" in person:
             target = people.get(person["mergedInto"])
             if target is None or target["id"] == person_id or "mergedInto" in target:
@@ -199,7 +214,7 @@ def save_catalog(data, path=None):
             output.write("\n")
             output.flush()
             os.fsync(output.fileno())
-        os.replace(temporary_path, destination)
+        report_assets.replace_file(temporary_path, destination)
     finally:
         if temporary_path is not None and temporary_path.exists():
             temporary_path.unlink()

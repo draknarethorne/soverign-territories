@@ -78,6 +78,7 @@
             "match-rejected",
             "review-approved",
             "photo-retired",
+            "photo-junked",
             "match-accepted",
             "workflow-photo-selected"
           ]
@@ -85,12 +86,16 @@
         "photoId": {"$ref": "#/definitions/photoId"},
         "contentSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
         "sourceBucket": {"enum": ["Gallery", "Review"]},
-        "personFolder": {"$ref": "#/definitions/personFolder"},
+        "personFolder": {"$ref": "#/definitions/photoSourceFolder"},
         "personId": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"},
         "destinationFolder": {"$ref": "#/definitions/personFolder"},
         "destinationPersonId": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"}
       },
       "allOf": [
+        {
+          "if": {"properties": {"type": {"enum": ["photo-junked", "photo-retired"]}}, "required": ["type"]},
+          "else": {"properties": {"personFolder": {"$ref": "#/definitions/personFolder"}}}
+        },
         {
           "if": {
             "properties": {"type": {"const": "match-rejected"}},
@@ -132,6 +137,10 @@
           "then": {"properties": {"sourceBucket": {"const": "Gallery"}}}
         }
       ]
+    },
+    "photoSourceFolder": {
+      "type": "string",
+      "pattern": "^((Angels|Sisters|Models|Prospects|Potentials|Artists)/[^/\\\\:]+(/[^/\\\\:]+)?|Various(/[^/\\\\:]+){0,2})$"
     },
     "photoId": {
       "type": "string",

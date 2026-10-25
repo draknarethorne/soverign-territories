@@ -33,6 +33,10 @@ The recap is part of the day's hygiene in [../plans/README.md](../plans/README.m
 
 | Day | File |
 | --- | --- |
+| 2026-10-25, v16 intake, integrated galleries and reversible identity metadata | [2026-10-25-0600-recap.md](2026-10-25-0600-recap.md) |
+| 2026-10-24, crop sequence and named folders | [2026-10-24-0300-recap.md](2026-10-24-0300-recap.md) |
+| 2026-10-23, 21:21 visual UAT continuation | [2026-10-23-2121-recap.md](2026-10-23-2121-recap.md) |
+| 2026-10-23, 17:08 intake review handoff | [2026-10-23-1708-recap.md](2026-10-23-1708-recap.md) |
 | 2026-10-22, 16:40 reconciliation | [2026-10-22-1640-recap.md](2026-10-22-1640-recap.md) |
 | 2026-10-22, 16:06 pause | [2026-10-22-1606-recap.md](2026-10-22-1606-recap.md) |
 | 2026-10-22 | [2026-10-22-0038-recap.md](2026-10-22-0038-recap.md) |

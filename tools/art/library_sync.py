@@ -6,17 +6,18 @@
   python tools/art/library_sync.py --check      read only: what is waiting, and is the library in step? exit 1 when work is waiting (bin\\library-check.cmd)
 
 The steps, in order (each is the normal command; run one alone if you want to look closer):
+  0  likeness seed        Various\\<Name>\\gallery holds photos of one known person: the whole folder moves to <Name> first
   1  originals            name every original after its folder, make the scaled copy and headshot
   2  duplicates           the same picture kept twice (any folder, any name) is set aside in _archive, a chosen photo and the higher folder first
-  3  likeness crop        every photo is cut down to the person: the app's bars, other people, animals and the background beside her go (all the body in the picture stays). The uncropped original is kept in _archive\\...\\gallery_uncropped
-     likeness junk       photos that cannot feed a Prime (no usable face, a second person) go to _junk; usable ones in _junk come back to Various
+  3  likeness crop        general photos use the legacy crop; likeness_artists crop/junk runs the same code on Artists separately. The uncropped original is kept in _archive\\...\\gallery_uncropped
+     likeness junk       active photos that cannot feed a Prime go to _junk; existing Junk is not implicitly reconsidered
   4  likeness reconcile   one shared policy-driven plan for incoming and Review candidates, with verified backup and a reversible move journal
-  5  likeness group       separate artist-scoped grouping; artists are never mixed with the general identity pool
+  5  likeness_artists group  shared grouping with artist-only discovery/cache/history; artists are never mixed with the general identity pool
   6  likeness retire-empty  prospects with no gallery or review photos are moved intact to _retired (previewed on --dry-run)
   7  duplicates, originals  again, because the moves create new names; then `originals --check` must say IN SYNC
   8  sync-inputs          the images the workflows load are copied into each workspace's input folder
   9  likeness crosscheck, crops, people gallery, index  look-alikes are reported; the people gallery adds sister-match and photo-readiness evidence
-  --retry-junk puts everything in _junk back first (prospects to Various, an artist's photos to that artist), so the crop and the rules look at it again; what is still junk returns to _junk.
+  --retry-junk explicitly retries legacy flat _junk buckets (prospects to Various, artists to their own gallery); nested manual/preparation Junk has its own guarded undo.
 Nothing is deleted: moved files keep their place in _archive, _junk, _retired or a person's review folder, and `likeness undo` reverses the last batch of sorted moves.
 Reports are grouped under <work>\\_reports\\library, comparisons and runs; a log of the run is saved in <work>\\_reports\\runs\\library_sync_<time>.log.
 """
@@ -43,16 +44,21 @@ BORING = re.compile(r"^(-{5,}$|\s*0 (renamed, )?(to make|made), 0 (to prune|prun
 def plan(args):
     """[(title, argv, required, info)] for the chosen mode. required: the run stops when this step fails. info: a non-zero exit only means 'something was found' (a preview that lists work)."""
     go = [] if args.dry_run else ["--apply"]
-    steps = [("1 originals: names, scaled copies and headshots", [ART + "originals.py", *(["--dry-run"] if args.dry_run else ["--apply"])], True, False),
-             ("2 duplicates (prefer updated incoming same-ID photo)", [ART + "duplicates.py", "--prefer-incoming", *go], False, args.dry_run)]
+    steps = []
+    if not args.no_likeness:
+        steps.append(("0 likeness seed (Various\\<Name> folders of one known person)", [ART + "likeness.py", "--no-originals", "seed", *go], True, False))
+    steps += [("1 originals: names, scaled copies and headshots", [ART + "originals.py", *(["--dry-run"] if args.dry_run else ["--apply"])], True, False),
+              ("2 duplicates (prefer updated incoming same-ID photo)", [ART + "duplicates.py", "--prefer-incoming", *go], False, args.dry_run)]
     if not args.no_likeness:
         if args.retry_junk:
-            steps.append(("3 likeness junk --reset (everything in _junk back to be looked at again)", [ART + "likeness.py", "junk", "--reset", *go], False, False))
+            steps += [("3 likeness junk --reset (legacy general Junk only)", [ART + "likeness.py", "junk", "--reset", *go], False, False),
+                      ("3 artist junk --reset (legacy artist Junk only)", [ART + "likeness_artists.py", "junk", "--reset", *go], False, False)]
         steps += [("3 likeness crop (bars, other people, animals, background)", [ART + "likeness.py", "crop", *go], False, False),
-                  ("3 likeness junk --recheck", [ART + "likeness.py", "junk", "--recheck", *go], False, False),
                   ("3 likeness junk", [ART + "likeness.py", "junk", *go], False, False),
+                  ("3 artist crop (shared cleanup, artist scope only)", [ART + "likeness_artists.py", "crop", *go], False, False),
+                  ("3 artist junk", [ART + "likeness_artists.py", "junk", *go], False, False),
                   ("4 unified likeness reconciliation", [ART + "likeness.py", "reconcile", *go], True, False),
-                  ("5 likeness group --singles (the artists' own galleries)", [ART + "likeness.py", "group", "--singles", "--min-photos", "2", *go], False, False),
+                  ("5 artist group --singles (the artists' own galleries)", [ART + "likeness_artists.py", "group", "--singles", "--min-photos", "2", *go], False, False),
                   ("6 likeness retire-empty (empty prospect folders)", [ART + "likeness.py", "retire-empty", *go], True, False)]
     if not args.dry_run:
         steps += [("7 duplicates again", [ART + "duplicates.py", "--apply"], False, False),
@@ -62,15 +68,19 @@ def plan(args):
         if not args.no_likeness:
             steps += [("9 likeness crosscheck (look-alikes across the lines kept apart)", [ART + "likeness.py", "crosscheck"], False, False),
                       ("9 likeness crops (a page of every crop, before and after)", [ART + "likeness.py", "crops"], False, False),
-                      ("9 people gallery review (full Gallery and Review photos)", [ART + "likeness_library/review_gallery.py", "--artists"], False, False),
-                      ("9 people gallery (a page of every person)", [ART + "people_gallery.py", "--artists"], False, False),
+                      ("9 people gallery review (full Gallery and Review photos)", [ART + "likeness_library/review_gallery.py"], False, False),
+                      ("9 people gallery (a page of every person)", [ART + "people_gallery.py"], False, False),
+                      ("9 artist gallery (separate read-only pages)", [ART + "artists_gallery.py", "--apply"], False, False),
+                      ("9 artist index", [ART + "likeness_artists.py", "index"], False, False),
                       ("9 likeness index", [ART + "likeness.py", "index"], False, False)]
     return steps
 
 
 def check_plan():
-    return [("originals --check (names, scaled copies and headshots)", [ART + "originals.py", "--check"], False, True),
+    return [("named Various\\<Name> folders waiting (preview)", [ART + "likeness.py", "seed"], False, False),
+            ("originals --check (names, scaled copies and headshots)", [ART + "originals.py", "--check"], False, True),
             ("duplicates (report)", [ART + "duplicates.py"], False, True),
+            ("artist-only usable-face check", [ART + "likeness_artists.py", "--check"], False, True),
             ("shared reconciliation preview (incoming and Review)", [ART + "likeness.py", "reconcile"], False, False)]
 
 
@@ -160,6 +170,8 @@ def main(argv=None):
             if args.check and any(re.search(r"\b[1-9]\d* would move\b|; [1-9]\d* would move", ln) for ln in lines if "photo(s) in the pool" in ln):
                 waiting = True  # the pool holds photos that `sort` would place
             if args.check and any(re.search(r"\b[1-9]\d* file move\(s\) proposed", line) for line in lines):
+                waiting = True
+            if args.check and any(re.match(r"[1-9]\d* named-folder photo\(s\) would move", line) for line in lines):
                 waiting = True
             if rc and (args.check or info):
                 waiting = waiting or args.check

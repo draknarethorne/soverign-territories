@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "draft-2026-10-22.4",
+  "version": "draft-2026-10-25.1",
   "status": "draft",
   "runtimeSettings": {
     "mixed": ["Artists/*", "Various", "Prospects/Various", "Potentials/Various"],
@@ -80,7 +80,11 @@
   },
   "lookalikeGroups": {
     "suggestionMinimumSimilarity": 0.3,
-    "automaticAssociationEnabled": false
+    "automaticAssociationEnabled": true,
+    "associationMinimumSimilarity": 0.4,
+    "associationMaximumSimilarityExclusive": 0.55,
+    "minimumIndependentPhotos": 5,
+    "minimumReferenceMargin": 0.05
   },
   "categoryPolicies": {
     "Sisters": {
@@ -172,6 +176,14 @@
     }
   },
   "protection": {
+    "automatic": {
+      "enabled": true,
+      "recipeVersion": "independent-gallery-loo-v1",
+      "minimumOwnCoreSimilarity": 0.55,
+      "minimumRivalMargin": 0.1,
+      "minimumIndependentReferences": 4,
+      "minimumEstablishedPhotos": 5
+    },
     "identityBlocksAutomaticMoves": true,
     "photoBlocksAutomaticRemoval": true,
     "photoBlocksReviewRouting": true,

@@ -198,6 +198,9 @@ def fit(src, dest, size, box=None):
     small = rgba.resize((nw, nh), Image.LANCZOS)
     canvas = Image.new("RGB", size, CREAM)
     canvas.paste(small, ((w - nw) // 2, (h - nh) // 2), small)
+    if hasattr(dest, "write"):
+        canvas.save(dest, format="PNG")
+        return
     tmp = dest.with_name(dest.name + ".tmp")
     try:
         canvas.save(tmp, format="PNG")
@@ -250,6 +253,9 @@ def headshot(src, dest, size, box):
     if dest is None:
         return True  # a check only
     out = im.crop(crop).resize(size, Image.LANCZOS)
+    if hasattr(dest, "write"):
+        out.save(dest, format="PNG")
+        return True
     tmp = dest.with_name(dest.name + ".tmp")
     try:
         out.save(tmp, format="PNG")
@@ -415,7 +421,7 @@ def process_folder(folder, label, size, args, tally):
         make_headshots(sources, folder, size, args, tally, args.faces)
 
 
-def main(argv=None, faces=None):
+def main(argv=None, faces=None, *, configuration=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--apply", action="store_true", help="really do it (default: preview only)")
     ap.add_argument("--dry-run", action="store_true", help="preview (the bin launcher adds --apply itself)")
@@ -428,6 +434,8 @@ def main(argv=None, faces=None):
     ap.add_argument("--archive-old", action="store_true", help="move the *_org folders already in the library into <work root>/_archive (mirrored paths, with a manifest)")
     ap.add_argument("--undo-archive", action="store_true", help="put the files of the last --archive-old back")
     args = ap.parse_args(argv)
+    if configuration is not None and args.apply and not (args.no_repoint or args.dry_run or args.check):
+        ap.error("scoped originals requires --no-repoint; refresh selected inputs explicitly")
     args.faces = None if args.no_headshots or args.archive_old or args.undo_archive else (faces or Faces())
     if args.dry_run or args.check:
         args.apply = False
@@ -435,7 +443,7 @@ def main(argv=None, faces=None):
         import PIL  # noqa: F401
     except ImportError:
         sys.exit("originals needs Pillow:  pip install pillow")
-    cfg = cw.load_cfg()
+    cfg = configuration if configuration is not None else cw.load_cfg()
     size = tuple(cfg.get("standardSize") or (944, 1104))
     roots = cw.photo_roots(cfg, args.root)
     if not roots:

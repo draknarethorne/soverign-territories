@@ -18,6 +18,65 @@ For current state and the sandbox/production boundary, see
 The photo-library ingest routine is documented in
 [original-photos.md](original-photos.md).
 
+## General and artist entry points
+
+`bin\likeness.cmd` now discovers only Angels, Sisters, Models, Prospects,
+Potentials and Various. `bin\likeness-artists.cmd` discovers only configured
+Artists folders. It is a thin entry point into the same implementation, not a
+second intake, detector, embedding model, cropper, Junk rule or grouping engine.
+Source layout remains `Artists/<artist>/gallery` and
+`Artists/<artist>/<person>/gallery`; no files were relocated by the split.
+The shared preparation launcher still handles either source scope explicitly.
+
+```bat
+bin\likeness-artists.cmd --root "B:\Sovereign Territories Sandbox\Working" --dry-run group --singles
+bin\likeness-artists.cmd --root "B:\Sovereign Territories Sandbox\Working" --check
+```
+
+Global `--dry-run` comes before the command, refuses apply flags, and supports
+scan/group/artists/junk/crop/undo/policy. It suppresses cache/origin writes and
+model downloads. `--check` is a read-only scan: exit 1 if an unusable image is
+found; it does not certify identity correctness, derivative freshness or
+automatic cleanup quality. Ordinary reporting commands may write requested
+reports and cache data; use their documented output paths.
+
+Both domains use the same YuNet/SFace weights and cache format, but default
+state is library-local: `<work>/_likeness/general/` versus
+`<work>/_likeness/artists/`, each with its own cache and move/crop history.
+Explicit `--cache` overrides are supported; sandbox caches must remain under
+Working. Cache centering is domain-stamped: an unstamped or different-domain
+saved mean is diagnosed and recomputed, never silently borrowed. Existing
+content embeddings are still reusable. Artist centering uses only usable
+artist photos (including incoming mixed galleries); adding general/cast photos
+cannot change artist scores. This deliberately changes the old all-library
+artist scoring baseline; real threshold/quality acceptance remains open.
+New clean general rebases stamp their saved mean for later reuse.
+
+Artist grouping still assigns only within each source artist. Read-only
+inspection/diagnostics can compare artist people; no general identities enter
+their candidate set. General `group`/`artists` calls fail with the new launcher
+name rather than quietly running artist operations. Artist cast/reconcile/
+merge/retire commands are not enabled as general-routing backdoors; use guarded
+staged photo actions where appropriate. Artist `folder` is inspection-only.
+Artists write `artists_index.csv`/`.md`, not the general `people_index` files.
+
+The move executor checks the whole batch's source and destination boundary
+before moving anything, including `force` moves and reconciliation recovery.
+An old general-pool artist return or cast-replacement batch that would write
+Artists now stops; it requires a deliberately reviewed transfer, not an
+automatic exception. Known artist-origin pool photos stay held rather than
+being transferred by legacy `sort`. Test copies in Various remain general
+inputs when their artist provenance is unknown.
+
+Undo uses its domain-local history. If only legacy history exists, it is read
+for recovery, but every recorded path must belong to this work root and domain
+before any restoration; mixed-domain batches fail intact. Historical logs and
+retained originals are not removed. Post-move originals naming/scaling/head
+generation receives the same scoped roots and `--no-repoint`: a domain command
+does not retarget selected workflows or persist a filtered workspace config.
+Run the separately reviewed full-library/input refresh when that is intended.
+No new chest/ComfyUI integration or preparation crop cutover is implied.
+
 ## Quick start
 
 | Goal | Command |
@@ -26,9 +85,67 @@ The photo-library ingest routine is documented in
 | Save calibration and all eligible folder checks together | `bin\likeness.cmd --root "<library>" --cache "<cache>" diagnostics --out "<new-report-folder>"` |
 | Preview restoring sandbox category roots | `bin\likeness.cmd --root "<sandbox>\Working" sandbox-reset` |
 | Check one person's folder consistency | `bin\likeness.cmd folder "Drakness"` |
+| Preview artist-only grouping using the same engine | `bin\likeness-artists.cmd --root "<sandbox>\Working" --dry-run group --singles` |
 | Audit active-core scores and metadata decisions | `bin\likeness.cmd audit-core` |
-| Build both review pages | `bin\people-gallery.cmd --root "<library>" --out "<reports>" --cache "<cache>"` |
+| Maintain derivatives and build both review pages (preview without `--apply`) | `bin\people-gallery.cmd --root "<library>" --out "<reports>" --cache "<cache>" --apply` |
 | Build only the full Review page | `bin\people-gallery-review.cmd --root "<library>" --out "<reports>" --cache "<cache>"` |
+| Preview separate Artist pages without decoding images | `bin\artists-gallery.cmd --root "<library>" --cache "<existing-cache>" --dry-run` |
+| Publish/check only Artist HTML and small thumbnails | `bin\artists-gallery.cmd --root "<library>" --cache "<existing-cache>" --apply` then `--check` |
+
+### Separate Artist browser
+
+Artist overview and photo review are generated at
+`<work>/_reports/artists/artists_gallery.html` and
+`artists_gallery_review.html`. Search/filter by artist, source group and
+Gallery/Review; overview links open the corresponding filtered photo list.
+Both pages share one content-addressed 240x300 JPEG per distinct source, load
+images lazily and show at most 60 cards initially. Thumbnails fit/pad the full
+oriented source, not a new identity crop or maintained ComfyUI derivative.
+Click through to the current original at full size. No original copy is made.
+
+The browser never runs matching, model inference, source cleanup, staged actions,
+renaming or metadata updates. Cached face results are informational; missing
+results are unassessed, not a successful face check. Readable/corrupt input
+errors appear as explicit diagnostics and a nonzero result. Preview writes
+nothing; `--apply` publishes reports only; `--check` recomputes expected report
+bytes in memory and writes nothing. Exact repeats preserve report mtimes.
+Generated byte counts are printed; unknown or edited obsolete assets are kept.
+
+People overview/Review builds now use only the general scoring domain and do
+not save the face cache. A supplied mixed Artist/general space is refused, not
+made safe merely by hiding Artist cards. Old `--artists` options explicitly
+direct callers to the separate browser. Normal report orchestrators no longer
+pass them. People and Artist pages share basic navigation/footer styling;
+the broader people layout/protection redesign remains separately planned.
+
+The browser ownership manifests support narrow routine-backup omissions; see
+[report backup treatment](original-photos.md#generated-browser-reports-and-backups).
+They do not replace raw-source archives, face caches or identity metadata.
+
+### Shared gallery theme and banner
+
+`tools/art/likeness_library/gallery_chrome.py` is the one shared stylesheet and
+page frame: colour/spacing variables, the banner masthead with People and Artists
+links, the page-header card, navigation and footer. People overview, People
+Review, Artist pages, the family preview and intake preparation reports all put
+it before their own page rules, so a look change belongs there.
+
+Badge sizes and category/score palettes also belong to this shared stylesheet;
+page-specific semantic state badges retain their existing meanings. Linked
+tags are underlined and show a hover border plus keyboard focus. Plain count
+labels do not become links or gain new color thresholds. On screens wider than
+760px and taller than 500px the compact page-navigation bar stays visible while
+scrolling; the large banner scrolls away. Narrow/short screens and printed pages
+use ordinary non-sticky navigation. Tiles shrink to their container when their
+preferred size would overflow, including the Large Review setting.
+
+The banner is `<work>/_reports/_assets/gallery-banner.jpg`, a 1024x360 crop
+(about 54 KB) of the ComfyUI title art
+`ST/title/SovereignTerritories_Title_00001_.png`. People and Artist `--apply`
+runs copy the packaged `likeness_library/assets/gallery-banner.jpg` there only
+when the file is missing. To use your own banner, replace that file with a wide
+JPEG of about 1024x360; it is never overwritten. Without it, pages show a plain
+gradient. The file is small and is kept in backups.
 
 Commands that can move files preview by default. Review the output first and
 add `--apply` only when you intend to make the described change. `--sheet
@@ -303,9 +420,13 @@ state, write per-run manifests, route candidates, and link diagnostics.
 
 ## People Gallery and Review Gallery
 
-Run `bin\people-gallery.cmd` to create the overview and full Review page in
+Preview with `bin\people-gallery.cmd --dry-run`, then use `--apply` to
+maintain folder-prefixed originals and standard derivatives and create both pages in
 the same report directory. Both are standalone local HTML pages; no server or
-network access is needed.
+network access is needed to view them. The
+[post-action maintenance runbook](original-photos.md#post-action-gallery-maintenance-no-matching)
+owns the read-only check, sandbox syntax and explicit action-undo settlement
+gate. Use the Review-only launcher when preserving an active undo window.
 
 ### People Gallery: relationships and overview
 
@@ -315,12 +436,16 @@ score-colored marker jumps to that person within the overview. The page
 surfaces closest category matches, Angel/Sister pairings, eligible Prospect
 alternatives, and full rankings on demand. The score legend is display-only.
 
-The category tags follow the library hierarchy: Sisters, Angels, Models,
-Prospects, Potentials, then Artists. The card tags identify category,
+The category tags follow the general library hierarchy: Sisters, Angels, Models,
+Prospects and Potentials. Artists have their own browser. The card tags identify category,
 workflow selection, photo count, and history. Angel and Sister cards show
 their recorded `Person:` name when available. A linked Workflow photo shows
 its likeness score; an otherwise hidden workflow original is pinned last
 with a dashed border, as described below.
+An amber `in review` badge follows the photo count and opens that person's
+Review-only filter. Its color means Review, not a new count/quality threshold.
+Potentials, Prospects and Models also show descriptive card-use guidance; it
+does not assign cards, change rarity rules or affect identity matching.
 
 Prime-start suitability is a photo-quality measure, separate from identity
 likeness. Head and Chest-up framing use cached thumbnails. The page is intended
@@ -333,6 +458,151 @@ It shows every Gallery and Review photo with category/person filters, a review
 queue, low-score view, flat view, selectable ordering, and cached thumbnails.
 The person's workflow photo, identity anchor, or provisional reference stays
 visible even if filters hide it.
+
+In grouped views the header has separate **Reference photo**, **Identity details**
+and **Manual actions** panels. The read-only reference stays visible even when
+the same photo is in the grid; only the grid copy has photo staging controls.
+Details distinguish recorded person name, fixed cast slot (where applicable),
+stable identity ID, core size/mode, full-report counts and currently shown counts.
+Unavailable recorded-name snapshots are labelled, never inferred from a slot name.
+Closest-category evidence and full rankings stay in Details. Actions retain the
+existing confirmation, conflict, download and separate CLI validation behavior.
+Panels stack on narrow screens. Full profile/history/overview-stat parity remains
+unfinished; historical reports acquire this layout only on a supported refresh.
+
+**Grouping** is independent of Location and Order. Mixed (the default) keeps
+the existing combined ordering; Split Gallery / Review places the currently
+shown photos in labelled location groups within each person, or in two groups
+for the flat view. Each group retains the selected order. Pagination still
+adds at most 100 photos at a time; group headings say how many are currently
+shown, not the person's full library count. Review cards have an amber left
+border as well as their explicit Review badge. Changing grouping or filters
+does not clear staged actions.
+
+For **Move to another identity's Review**, choose Destination category first,
+then Destination identity. The closest eligible existing target stays
+preselected, even when it belongs to another category. Only catalogued
+destinations in the supported general categories are listed; the source
+identity is excluded. The exported folder and stable person ID are unchanged
+by shorter option labels. Existing protection/rename conflicts still refuse
+staging; a refused destination change restores the prior selection. Choosing
+a destination stages a proposal only, not a file move or approval.
+
+### Preparation evidence: what happened and why
+
+People overview/Review and the separate Artist browser can show preparation
+comparison evidence without running intake. Each photo's current source
+path/hash, available stable photo ID and general/artist scope are checked
+against bounded existing reports. A verified entry links directly to its
+per-image comparison trace and shows recipe, cleanup decision and explanation.
+Artists never borrow preparation evidence from general or another artist's
+scope. Existing standard derivative links remain separate from native-source
+cleanup comparisons.
+
+One checked run offers **Open intake detail** directly; multiple exact runs offer
+**N intake runs**, opening a separate run browser scoped to that exact source
+path and hash, rather than an expanding list. **Intake runs** in the gallery
+navigation opens the whole domain's history. Select a run from the run list,
+search names/recipes/source filenames, filter by recipe or verification state,
+then filter its photos. A source-scoped run list still shows all photos in the
+selected run, marks the linked photo, and offers **Linked photo only** for focused
+comparison. Photos display 60 at a time with **Show next 60 photos**.
+Run URLs retain the selected run; the source-scoped page has a link back to all
+photos' history. No run is ranked as best or accepted.
+
+Each verified historical entry opens its original run overview (only when the
+entire run belongs to the current domain) and individual photo traces.
+The destination shows retained input, crops, masks, skipped steps
+and recommendation in that recipe's recorded order. People and Artist Review
+share this evidence renderer; Overview lists evidence for its displayed photos.
+Artist overview opens the group's photo browser for individual detail links.
+These features appear on supported report regeneration, not retroactively in old
+HTML. Post-assignment continuity still requires verified move/publication lineage.
+
+The history browser checks all discovered runs independently, including runs
+beyond the continuity index's global 32-run/5,000-row budget. Each run still has
+an 8 MiB manifest / 5,000-photo safety budget. Unverifiable or oversized runs
+remain named with an explicit diagnostic and no report links. This independent
+historical-artifact check does not assert current-source continuity or relax the
+gallery's fail-closed evidence rules. Artist/general photo scopes remain separate.
+Large histories still require reading and checking retained artifacts during
+regeneration; the UI's search and paged rendering do not eliminate that I/O.
+Browsing never prunes runs or regenerates images. Retention/pruning policy is
+still to be agreed; historical experiments are not the accepted retained set.
+
+| State | Meaning |
+| --- | --- |
+| Verified | Exactly one checked trace matches current source evidence; this does not mean its recommendation was applied |
+| Ambiguous | Several checked runs match; all verified alternatives are offered without inventing a latest/best winner |
+| Stale | Recorded source evidence no longer matches; do not treat that comparison as current |
+| Unverified | Evidence could not be fully checked or discovery limits/errors prevent a safe claim; links are withheld |
+| Missing | No matching preparation evidence is available; this is not proof of a clean image |
+
+The bridge does not guess continuity after a rename/move from a basename or
+identical bytes alone. Accepted publish/rename lineage is still pending.
+Opening a trace never processes, replaces, approves or assigns a photo.
+An original retained by a comparison may already have been cropped; it is not
+automatically a pristine camera source. The index is built once per report
+render and caches source hashes, but full verification of large existing runs
+can add substantial I/O (about 99 seconds in the current saved-evidence preview).
+No second image library is created for the bridge.
+
+Historical sandbox preview pages disable staged actions and warn that their
+evidence is not current action authority. Use supported current reports and
+fresh CLI validation for actual staged decisions; previews do not authorize apply.
+
+### Identity and photo evidence
+
+#### Automatic protection and original names
+
+Draft policy `draft-2026-10-25.1` adds automatic protection to ordinary
+`likeness reconcile` previews and its existing explicit apply/undo transaction.
+It does not enable production use of a draft policy. Run `bin\likeness.cmd policy`
+to inspect the effective settings; existing sandbox root/cache and draft-apply
+guards still apply.
+
+- A qualifying Gallery photo needs own-core similarity **at least 0.55**, a rival
+  lead **at least 0.10**, and **four independent other core observations**.
+  Its own image, identical bytes and near-duplicate references do not certify it.
+- **Five independently qualifying Gallery observations** establish an unprotected
+  identity. The identity and qualifying photos are protected, not every file.
+  An already protected identity can acquire qualifying photo locks without
+  requiring all its photos to qualify.
+- Review, rejected, stale, ambiguous, multi-face and membership-changing evidence
+  is held with reasons. A membership change needs a fresh subsequent reconcile;
+  it is not certified using the old frozen core in the same pass.
+- Explicit **Unprotect** disables auto-protection persistently for that item;
+  a person opt-out also suppresses new automatic photo locks within it. Existing
+  photo/workflow locks are not removed in bulk. Explicit **Protect** re-enables
+  the item. Action undo restores the prior lock/provenance/override.
+- Automatic locks preserve previously eligible core status, without creating
+  anchors or making a previously excluded photo into reference truth. Manual
+  protection remains a separate membership guard.
+
+Automatic organizational-family naming uses at least five independent current
+core photos per identity. New pairs must be reciprocal direct references with a
+0.05 lead over alternatives; the automatic band is **0.40 inclusive** to
+**min(0.55, either category's merge threshold) exclusive**. Existing-family joins
+need direct evidence to the founder; no transitive surname matching. Possible
+same-person matches, collisions and uncertain evidence are held.
+
+Families are catalogue metadata, not biological claims or physical directories.
+They preserve first names and change only the catalogue current-person surname;
+fixed cast folders, workflow keys, source filenames and history files are not
+retargeted. The gallery shows **character name**, **current person name** and
+**original person name** separately, including original-name provenance and
+family/protection explanations. Missing original names are explicitly unavailable.
+Manual rename/swap preserves original names; reconciliation undo restores exact
+prior names/family metadata. The read-only family preview remains diagnostic.
+
+These are conservative configurable working defaults, **not calibrated accuracy
+claims**. No real library is changed by generating a report. The reconcile JSON
+contains `metadataActions`, `protectionEvidence` and `familyEvidence`; metadata-only
+changes use the same backup, stale-state checks and journal as file moves.
+A clean rebuild refuses to regenerate non-cast identities carrying manual
+override/name/family provenance until stable-ID migration is supported, rather
+than silently discarding those decisions. Ordinary incremental reconciliation
+retains them.
 
 The person heading displays the name separately from category and photo
 location. Each usable photo shows both its leave-one-out similarity to its
@@ -380,8 +650,10 @@ or edits the catalogue. Review/validate the downloaded manifest with
 read-only. Only use `apply FILE.json --apply` after reviewing the preview; it
 revalidates, creates and verifies a backup, applies the actions, and records an
 audit. `undo [BATCH_ID] --apply` restores the newest active batch only when
-the recorded source files and metadata still match. Refresh derived outputs
-after a successful apply/undo with `bin\library.cmd`.
+the recorded source files and metadata still match. Refresh through the
+[bounded gallery maintenance command](original-photos.md#post-action-gallery-maintenance-no-matching),
+not global ingest/matching. Keep undo available with a Review-only refresh,
+or explicitly settle applied batches before normalizing their inventories.
 
 The explicit **Move to another identity's Review** action preselects the
 closest eligible identity and permits another existing destination. It
@@ -603,6 +875,7 @@ for review, not an identity claim or photo-move instruction.
 
 | Command | Purpose |
 | --- | --- |
+| `seed [--apply]` | Named-folder drop: every photo in `Various\<Name>\gallery` is that person. Moves the folder's photos to the existing person `<Name>`, or creates a new Prospect/Potential; preview by default. `library.cmd` runs it as step 0, before the pool scan. |
 | `sort [--singles] [--assign SCORE] [--plan FILE] [--sheet FILE.png]` | Route `Various` photos to known people or new Prospects/Potentials under current rules. |
 | `reconcile [--out FILE.json] [--policy FILE] [--apply]` | Shared incoming/Review proposal; preview by default. Apply requires an approved policy, verified backup, revalidation and a move/catalogue journal. Sandbox draft experiments require `--sandbox-apply-draft`. |
 | `reconcile --undo JOURNAL.json [--apply]` | Preview or reverse a verified reconciliation journal. Changed photos or later catalogue decisions block automatic undo; retain the full backup. |

@@ -86,6 +86,15 @@ time with its launcher and all known references updated together.
 
 ## Initial package map
 
+**Oct 25 continuation:** intake processing is isolated in `intake_library`
+(`models`, `subject`, `clutter`, `fill`, `pipeline`, `legacy`); old recipe support
+does not generate images. Gallery evidence now shares a single DOM renderer in
+`likeness_library/preparation_provenance.py`, rather than separate Review/Artist
+implementations. Existing entry points and action semantics remain unchanged.
+The [gallery continuation](2026-10-22-gallery-review-layout.md#oct-25-0913-intake-integration-and-next-safe-work)
+preserves the user's cross-workstream request. Remaining high-coupling CLI and
+image-operation extractions stay open; this is not a wholesale source move.
+
 **Oct 22 extraction progress:** shared candidate planning is in
 `likeness_library/planner.py`, policy resolution in `policy.py`, and verified
 incoming move/apply/undo transactions in `maintenance.py`; clean-rebuild

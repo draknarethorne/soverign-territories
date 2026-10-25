@@ -64,6 +64,8 @@ def apply_action(catalog, plan, batch_id):
     person = catalog["people"][person_id]
     before = {"person": copy.deepcopy(person), "photo": None}
     person["protected"] = plan["type"] == "person-protected"
+    person["automaticProtectionOverride"] = "enabled" if person["protected"] else "disabled"
+    person.pop("protectionProvenance", None)
     catalog["actions"].append({
         "id": "action_" + uuid.uuid4().hex, "batchId": batch_id,
         "timestamp": datetime.datetime.now().astimezone().isoformat(timespec="seconds"),

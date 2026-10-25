@@ -1,5 +1,11 @@
 # Likeness reorganisation, Oct 9, 2026: what was done, why, and where to look next
 
+> Historical run record, not current instructions. Counts, paths, pairings and
+> commands below describe Oct 9 only. Use [likeness.md](likeness.md) for supported
+> commands, [original-photos.md](original-photos.md) for recovery/maintenance, and
+> [../STATUS.md](../STATUS.md) for current state. Do not replay these operations
+> or restore this dated backup as a routine cleanup step.
+
 Everything in your photo library (`B:\Soverign Territories`: Angels, Models, Prospects, Artists) was sorted by the face in each photo. The sisters were checked as a family with Drakness as the anchor, and the angels were paired to the sisters. The folders on disk are already in their new shape, every name follows its folder, and the scaled 944x1104 copies are made. The angel photos are set in `workspaces.json` and in the Angel Primes workflows.
 
 This page records what happened and what is left for you to judge. The tool is described in [likeness.md](likeness.md); photo naming is in [original-photos.md](original-photos.md).
@@ -117,7 +123,7 @@ Open in ComfyUI: Angel Primes `female\<Name>\1_Alpha\1_Prime\<Name>_Qwen_Alpha_1
 | Is this folder one person, and who else looks like her | `bin\likeness.cmd folder NAME` |
 | Clean one folder (a stranger goes to the pool, a doubtful photo to `review`) | `bin\likeness.cmd clean NAME --apply` |
 | Sort a new batch dropped into `Prospects\Various` | `bin\likeness.cmd sort --singles --apply` |
-| Split an Artist's photos into people | `bin\likeness.cmd group --apply` |
+| Split an Artist's photos into people | `bin\likeness-artists.cmd group` (preview; Oct 23 entry-point split, add `--apply` only after review) |
 | Check the sisters as a family | `bin\likeness.cmd sisters` |
 | Re-pair one angel after you change her sister | `bin\likeness.cmd pairs --sister Drakneta` (then `--apply`) |
 | Put the last batch of moves back | `bin\likeness.cmd undo --apply` |

@@ -25,7 +25,7 @@ cw = likeness.cw
 MANIFEST_SCHEMA = ROOT / "data/art/_schema/likeness-action-manifest.schema.json"
 PHOTO_ROOTS = ("Angels", "Sisters", "Prospects", "Potentials", "Artists", "Models", "Various")
 IGNORED_PARTS = {"_archive", "_junk", "_retired"}
-MOVE_ACTIONS = {"sent-to-review", "rejected-to-various", "match-rejected", "review-approved", "match-accepted", "photo-retired"}
+MOVE_ACTIONS = {"sent-to-review", "rejected-to-various", "match-rejected", "review-approved", "match-accepted", "photo-retired", "photo-junked"}
 ANCHOR_ACTIONS = {"anchor-added", "anchor-removed"}
 PROTECTION_ACTIONS = {"photo-protected", "photo-unprotected"}
 WORKFLOW_ACTIONS = {"workflow-photo-selected"}
@@ -105,6 +105,8 @@ def _category_for_action(action_type):
 
 
 def _destination(action, root, pool_folder):
+    if action["type"] == "photo-junked":
+        return root / "_junk" / action["personFolder"] / action["sourceBucket"].lower()
     if action["type"] == "photo-retired":
         return root / "_retired" / "photos" / action["personFolder"] / action["sourceBucket"].lower()
     if action["type"] == "match-accepted":
@@ -226,7 +228,7 @@ def validate_manifest(document, root, catalog, pool_folder="Prospects/Various", 
             errors.append(f"{label}: unsafe person folder path")
             continue
         folder_key = relative_folder.as_posix().casefold()
-        if folder_key == pool_key:
+        if folder_key == pool_key and action["type"] not in ("photo-junked", "photo-retired"):
             errors.append(f"{label}: the unassigned pool is not a person identity folder")
         if action["type"] in WORKFLOW_ACTIONS and action["sourceBucket"] != "Gallery":
             errors.append(f"{label}: workflow photo must be selected from Gallery")
@@ -332,15 +334,16 @@ def validate_manifest(document, root, catalog, pool_folder="Prospects/Various", 
                 except ValueError as exc:
                     errors.append(f"{label}: {exc}")
                     continue
-        if action["type"] == "photo-retired":
+        if action["type"] in ("photo-retired", "photo-junked"):
+            operation = "retirement" if action["type"] == "photo-retired" else "junking"
             if protected or photo_id in anchor_owners:
-                errors.append(f"{label}: remove photo protection or identity anchor before retirement")
+                errors.append(f"{label}: remove photo protection or identity anchor before {operation}")
                 continue
             if any(
                 other["photoId"] == photo_id and other["type"] in PROTECTION_ACTIONS
                 for other in document["actions"] if "photoId" in other
             ):
-                errors.append(f"{label}: photo protection and retirement require separate manifests")
+                errors.append(f"{label}: photo protection and {operation} require separate manifests")
                 continue
         if action["type"] == "match-accepted":
             destination_folder = pathlib.PurePosixPath(action["destinationFolder"])
@@ -486,7 +489,10 @@ def _apply_catalog_action(catalog, plan, root, batch_id):
     actual_hash = metadata.content_sha256(source)
     before_person_id, _ = _person_record(catalog, action["personFolder"])
     before_state = _catalog_state(catalog, before_person_id, photo_id)
-    person_id, person = _ensure_person(catalog, action, root)
+    if action["type"] in ("photo-junked", "photo-retired"):
+        person_id, person = _person_record(catalog, action["personFolder"])
+    else:
+        person_id, person = _ensure_person(catalog, action, root)
     old_photo = catalog["photos"].get(photo_id)
     protected = bool(
         old_photo
@@ -503,8 +509,12 @@ def _apply_catalog_action(catalog, plan, root, batch_id):
         person["identityAnchors"].remove(photo_id)
     elif action_type == "photo-protected":
         photo["protected"] = True
+        photo["automaticProtectionOverride"] = "enabled"
+        photo.pop("protectionProvenance", None)
     elif action_type == "photo-unprotected":
         photo["protected"] = False
+        photo["automaticProtectionOverride"] = "disabled"
+        photo.pop("protectionProvenance", None)
     elif action_type in ("sent-to-review", "rejected-to-various", "match-rejected"):
         person["identityAnchors"] = [
             anchor for anchor in person["identityAnchors"] if anchor != photo_id
@@ -524,7 +534,6 @@ def _apply_catalog_action(catalog, plan, root, batch_id):
         "actor": "user",
         "type": action_type,
         "photoIds": [photo_id],
-        "personId": person_id,
         "contentSha256": actual_hash,
         "source": source_relative,
         "destination": destination_relative,
@@ -532,6 +541,8 @@ def _apply_catalog_action(catalog, plan, root, batch_id):
         "beforeState": before_state,
         "afterState": after_state,
     }
+    if person_id:
+        record["personId"] = person_id
     if action_type == "match-accepted":
         record["destinationPersonId"] = action["destinationPersonId"]
     catalog["actions"].append(record)
@@ -867,6 +878,17 @@ def plan_undo(catalog, root, batch_id=None, chosen_ids=(), cfg=None):
     if not active_batches:
         return ["there is no applied action batch to undo"], None, []
     selected_batch = active_batches[-1]
+    from gallery_maintenance import settled
+    settlement = settled(root).get(selected_batch)
+    if settlement:
+        return [
+            f"batch {selected_batch} was explicitly settled for gallery maintenance; "
+            f"action undo is closed. Restore the full pre-maintenance recovery snapshot "
+            f"before attempting action undo: {settlement['backup']}. "
+            f'Preview: bin\\library-backup.cmd --restore "{settlement["backup"]}" '
+            '--destination "C:\\LibraryRecovery\\before-maintenance"; add --apply to materialize, '
+            'then preview action undo against its work-root (not the live normalized library).'
+        ], None, []
     if batch_id and batch_id != selected_batch:
         return [f"only the newest active batch can be undone: {selected_batch}"], None, []
     batch_actions = groups[selected_batch]
@@ -957,7 +979,7 @@ def plan_undo(catalog, root, batch_id=None, chosen_ids=(), cfg=None):
             else:
                 simulated["photos"][photo_id] = copy.deepcopy(before["photo"])
         else:
-            if before["person"] is None:
+            if person_id and before["person"] is None:
                 after_person = action["afterState"]["person"]
                 simulated["people"][person_id] = {
                     "id": person_id,
@@ -966,7 +988,7 @@ def plan_undo(catalog, root, batch_id=None, chosen_ids=(), cfg=None):
                     "folderHistory": [],
                     "identityAnchors": [],
                 }
-            else:
+            elif person_id:
                 simulated["people"][person_id] = copy.deepcopy(before["person"])
             if before["photo"] is None:
                 simulated["photos"][photo_id] = {
@@ -1035,7 +1057,7 @@ def undo_actions(catalog, root, cfg, pool_folder, *, batch_id=None, backup_fn=No
             else:
                 updated["photos"][photo_id] = copy.deepcopy(before["photo"])
         else:
-            if before["person"] is None:
+            if person_id and before["person"] is None:
                 after_person = action["afterState"]["person"]
                 updated["people"][person_id] = {
                     "id": person_id,
@@ -1044,7 +1066,7 @@ def undo_actions(catalog, root, cfg, pool_folder, *, batch_id=None, backup_fn=No
                     "folderHistory": [],
                     "identityAnchors": [],
                 }
-            else:
+            elif person_id:
                 updated["people"][person_id] = copy.deepcopy(before["person"])
             if before["photo"] is None:
                 updated["photos"][photo_id] = {

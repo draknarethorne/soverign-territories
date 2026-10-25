@@ -6,6 +6,8 @@ import json
 import pathlib
 from urllib.parse import quote
 
+from likeness_library import gallery_chrome, identity_names
+
 
 def build_preview(identities, cores, policy):
     """Compare direct references; never infer transitive or confirmed membership."""
@@ -120,19 +122,22 @@ def build_preview(identities, cores, policy):
     }
 
 
-def render_html(report, review_page):
+def render_html(report, review_page, reports_prefix=None):
     """A static local preview; no scripts, file operations or automatic approval."""
     def escape(value):
         return html.escape(str(value if value is not None else ""))
 
     lines = [
-        '<!doctype html><html><head><meta charset="utf-8"><title>Family and name preview</title>',
-        "<style>body{font:15px Segoe UI,Arial;margin:24px;background:#faf8f3}"
-        "table{border-collapse:collapse;width:100%}td,th{border:1px solid #ddd;padding:8px;text-align:left}"
-        "td{vertical-align:top}.warning{color:#8a3b16}code{overflow-wrap:anywhere}</style></head><body>",
-        "<h1>Family-reference and name preview</h1>",
+        '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+        '<title>Family and name preview</title>',
+        f"<style>{gallery_chrome.CSS}"
+        "table{border-collapse:collapse;width:100%;background:var(--st-card)}td,th{border:1px solid var(--st-line);padding:8px;text-align:left}"
+        "th{background:#efebe3}td{vertical-align:top}.warning{color:#8a3b16}code{overflow-wrap:anywhere}</style></head><body id=\"top\">",
+        gallery_chrome.masthead("People", reports_prefix, "Analysis preview"),
+        '<div class="site-page">',
+        '<header class="page-header"><div><h1>Family-reference and name preview</h1>',
         f"<p>{report['identityCount']} identities; {len(report['suggestions'])} direct suggestions. "
-        f"Policy: {escape(report['policyVersion'])}. No changes are authorized.</p><ul>",
+        f"Policy: {escape(report['policyVersion'])}. No changes are authorized.</p></div></header><ul>",
         *[f"<li>{escape(note)}</li>" for note in report["limitations"]], "</ul>",
         "<h2>Direct reference suggestions</h2><table><tr><th>Identity</th><th>Reference</th>"
         "<th>Evidence</th><th>Name preview (not applied)</th></tr>",
@@ -164,6 +169,15 @@ def render_html(report, review_page):
     lines.extend(["</table>", "<h2>Existing surname reuse (unresolved)</h2><ul>"])
     for row in report["surnameReuse"]:
         lines.append(f"<li>{escape(row['surname'])}: {escape(', '.join(row['folders']))}</li>")
+    lines.extend(["</ul><h2>Recorded names and assigned organizational families</h2><ul>"])
+    for row in report["identities"]:
+        names = row.get("identityNames", {})
+        lines.append(
+            f"<li>{person_link(row['folder'])}: character {escape(names.get('characterName') or 'not assigned')}; "
+            f"person {escape(names.get('currentPersonName') or row.get('recordedName') or 'not recorded')}; "
+            f"original {escape(names.get('originalPersonName') or 'not recorded')}; "
+            f"family {escape(names.get('familySurname') or 'not assigned')}</li>"
+        )
     lines.extend(["</ul><h2>Existing full-name and folder collisions</h2><ul>"])
     for row in report["existingNameCollisions"]:
         lines.append(f"<li>{escape(row['name'])}: {escape(', '.join(row['folders']))}</li>")
@@ -172,7 +186,7 @@ def render_html(report, review_page):
     lines.extend(["</ul><h2>Excluded from matching suggestions</h2><ul>"])
     for row in report["excluded"]:
         lines.append(f"<li>{escape(row['folder'])}: {escape(row['reason'])}</li>")
-    lines.append("</ul></body></html>\n")
+    lines.append("</ul>" + gallery_chrome.footer("Suggestions only · No names or references are applied") + "</div></body></html>\n")
     return "\n".join(lines)
 
 
@@ -201,7 +215,8 @@ def run(args, api):
         person_id, person = owned[0] if len(owned) == 1 else (None, {})
         identities.append({
             "folder": folder, "category": api.status_of(folder), "personId": person_id,
-            "recordedName": api.people.name_of(path),
+            "recordedName": identity_names.presentation(person, path, catalog=catalog)["currentPersonName"],
+            "identityNames": identity_names.presentation(person, path, catalog=catalog),
             "catalogueName": person.get("displayName"), "mergedInto": person.get("mergedInto"),
             "usablePhotos": len(space.by_key.get(folder, [])),
         })
@@ -217,6 +232,7 @@ def run(args, api):
         output / "family-preview.json": json.dumps(report, indent=2, ensure_ascii=True) + "\n",
         output / "family-preview.html": render_html(
             report, (root / "_reports" / "library" / "people_gallery_review.html").resolve(),
+            gallery_chrome.reports_prefix(output, root / "_reports"),
         ),
     }
     for path, text in files.items():

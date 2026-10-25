@@ -31,6 +31,15 @@ Found while building and running the artists reset, the crop and the routine, wr
   The four current Angel choices were made manually: Aria Muse → Gavrielle, Ruby Eden → Camaris, Amethyst Montgomery → Ravaelle, and Sabine Vale → Nyxene. Do not revisit the superseded Dara Ives suggestion or infer that photo count establishes identity.
 - [ ] **P3 either** D11 Design a safe, archive-first way to deactivate an entire Prospect or Artist folder identified as a false face match. Keep the HTML static unless a trusted local action flow is approved; never delete source files.
 - [x] **P2 either** D12 Transferred to the [manual-action owner](2026-10-22-review-actions.md): staged Review/Reject-to-Various, versioned manifest, validated CLI, backup, history and undo cover individual-photo reprocessing. Retain recoverability and actual-user scenario acceptance.
+- [ ] **P2 ai** D13 Review remaining non-archive documentation by current guide,
+  active proposal, dated evidence or superseded material. Correct authority/index
+  links first; archive only after preserving unique decisions, examples, raw notes
+  and incoming references. Oct 25 first slice labels Oct 9/10 reorganisation
+  records historical and removes the Oct 9 report from the canonical source row.
+  Remaining inventory includes art pipeline/template-analysis point-in-time notes
+  identified in the Oct 12 audit; age alone is not proof they can be removed.
+  The latest raw request lives in the
+  [gallery continuation](2026-10-22-gallery-review-layout.md#oct-25-0913-intake-integration-and-next-safe-work).
 
 **Oct 20 evidence check:** The saved Oct 12 gallery requests for up to nine photos in a three-column grid, clickable photos and folder links, descending Prospect photo-count order, short identity context, and an explanation of fit scores are implemented in `people_gallery.py`. Sisters and Angels now sort alphabetically, while Prospects and Potentials sort by photo count. The current tests and generated report cover that presentation. The remaining gallery review is D10; image-level exclusion is D12.
 

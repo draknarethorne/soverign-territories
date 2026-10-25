@@ -4,6 +4,18 @@ import numpy as np
 from .scoring import core_scores, nz
 
 
+def core_excluded_protection(catalog, protected_ids):
+    """Automatic locking preserves prior eligibility, never grants new core membership."""
+    return {
+        photo_id for photo_id in protected_ids
+        if (
+            catalog["photos"].get(photo_id, {}).get("protectionProvenance", {}).get("recipeVersion")
+            != "independent-gallery-loo-v1"
+            or photo_id not in catalog["photos"].get(photo_id, {}).get("protectionProvenance", {}).get("frozenCorePhotoIds", ())
+        )
+    }
+
+
 def identity_order_key(is_anchor, is_core, score, name):
     """Order trusted identity anchors, core members, then remaining photos."""
     priority = 0 if is_anchor else 1 if is_core else 2 if score is not None else 3
