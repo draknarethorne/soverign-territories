@@ -1,14 +1,25 @@
 # Likeness reorganisation, Oct 9, 2026: what was done, why, and where to look next
 
+**Disposition:** archived historical evidence, reconciled 2026-10-25.
+**Result:** dated outcomes and verbatim user notes are preserved whole below.
+Enduring preferences, cache/core rationale, Artist isolation, naming and
+recovery boundaries live in the active
+[curation contract](../likeness-curation-contract.md#enduring-rationale-from-the-oct-911-reorganisation);
+pairing rationale lives in the active
+[library context](../library-reconciliation-context.md#pairing-score).
+Old pending checks are not silently completed: current intake/cast/engine and
+action plans own real acceptance. Archival neither approves historical
+thresholds nor authorizes repeating old commands, swaps or backup restores.
+
 > Historical run record, not current instructions. Counts, paths, pairings and
-> commands below describe Oct 9 only. Use [likeness.md](likeness.md) for supported
-> commands, [original-photos.md](original-photos.md) for recovery/maintenance, and
-> [../STATUS.md](../STATUS.md) for current state. Do not replay these operations
+> commands below describe Oct 9 only. Use [likeness.md](../likeness.md) for supported
+> commands, [original-photos.md](../original-photos.md) for recovery/maintenance, and
+> [STATUS.md](../../STATUS.md) for current state. Do not replay these operations
 > or restore this dated backup as a routine cleanup step.
 
 Everything in your photo library (`B:\Soverign Territories`: Angels, Models, Prospects, Artists) was sorted by the face in each photo. The sisters were checked as a family with Drakness as the anchor, and the angels were paired to the sisters. The folders on disk are already in their new shape, every name follows its folder, and the scaled 944x1104 copies are made. The angel photos are set in `workspaces.json` and in the Angel Primes workflows.
 
-This page records what happened and what is left for you to judge. The tool is described in [likeness.md](likeness.md); photo naming is in [original-photos.md](original-photos.md).
+This page records what happened and what is left for you to judge. The tool is described in [likeness.md](../likeness.md); photo naming is in [original-photos.md](../original-photos.md).
 
 ## Short version
 

@@ -36,7 +36,7 @@ data debt, and the readiness gates.
 | Runtime data contracts | `../data/schemas/*.json` | Schemas, validators, and runtime tooling are authoritative. |
 | Art-direction pipeline | `../data/art/README.md` | Authoritative for how card art is produced (identity files, components, templates, `gen_prompt.py`). |
 | How to create art and video | `art/tutorial-art.md`, `art/tutorial-video.md` | Step-by-step for writing and tuning the art and animation JSON, by hand or with an AI assistant. |
-| Original photos | `art/original-photos.md` | Supported normalization, scaled/headshot derivatives, archives, selected-photo references and recovery. Frame generation was retired Oct 19; draft production intake is paused. |
+| Original photos | `art/original-photos.md` | Flow chooser, runtime requirements, retained originals/variants, maintained full/head/chest outputs and recovery. Prepared sandbox integration exists; direct legacy originals/incremental production cutover remains gated. |
 | Proposed intake preparation and cast experiments | [plans/README.md](plans/README.md#current-library-work-order-oct-23) | Ordered focused plans own raw-source preservation, local cleanup evaluation, derivative integration and configurable cast rebase work; proposals do not change shipped protection or authorize production. |
 | Prime flows | `art/prime-flows.md` | Existing normal-photo Prime tests, Qwen/FireRed differences, input storage and face lock. Frame variants are retired. New manual migration is not yet implemented. |
 | Likeness target contract | [art/likeness-processing-contract.md](art/likeness-processing-contract.md) | One engine; distinct grouping/matching/classification/authorization; protection; source/reset boundaries; approved decisions and unresolved calibration/naming questions. |
@@ -53,6 +53,24 @@ data debt, and the readiness gates.
 | The day, reflected | `recap/README.md`, `recap/YYYY-MM-DD-HHMM-recap.md` | One reflection per working day: what was done, what was good, what was bad, what to improve, the top actions for you. |
 | Render QA | `art/output-qa-checklist.md` | Human check of rendered images (identity, anatomy, text, wardrobe). |
 | Art packs, dynamic ComfyUI prompts | `art/art-packs-and-comfy-node-proposal.md` | Proposal: zip packs of art JSON and custom nodes on one shared prompt library. |
+
+## Art reading map
+
+Use current runbooks for commands, not a dated experiment or a proposal:
+
+| Purpose | Read |
+| --- | --- |
+| Source photos, preparation, backups, selected inputs | [Original-photo runbook](art/original-photos.md#choose-the-right-flow) |
+| Inspection, prepared clean-start, galleries and staged actions | [Likeness guide](art/likeness.md) |
+| Create art/video JSON and run generation | [Art tutorial](art/tutorial-art.md), [video tutorial](art/tutorial-video.md), [workflow source of truth](../workflows/README.md) |
+| Rules and acceptance limits | [Processing contract](art/likeness-processing-contract.md), [curation foundations](art/likeness-curation-contract.md), [ordered active work](plans/README.md#current-library-work-order-oct-23) |
+| Dated observations/rationale, not current commands | [Sandbox trial](art/likeness-sandbox-trial.md), [library context](art/library-reconciliation-context.md), [prompt migration context](art/prompt-migration-context.md), [pipeline design history](art/comfyui-art-pipeline.md), [template analysis](art/template-analysis-findings.md) |
+| Unimplemented product/automation proposals | [Automation](art/comfyui-automation-proposal.md), [art packs/custom nodes](art/art-packs-and-comfy-node-proposal.md), [Thorne Studio](art/thorne-art-studio-proposal.md) |
+
+The [Oct 25 full-read/disposition ledger](plans/2026-10-12-tooling-debt.md#oct-25-full-art-document-reconciliation)
+accounts for every starting art document, including retained independent
+references and the two superseded reorganisation reports. No active guide
+requires an archive to recover a current rule.
 
 ## Phases
 
@@ -88,6 +106,7 @@ When a game rule changes, follow: design rule → schema → validator/tooling �
 - [Change management](CHANGE-MANAGEMENT.md)
 - [Release checklist](RELEASE-CHECKLIST.md)
 - [Documentation audit, Oct 12, 2026](audits/2026-10-12-docs-audit.md) (conflicts, stale statements, what was fixed)
+- [Art-document reconciliation, Oct 25, 2026](plans/2026-10-12-tooling-debt.md#oct-25-full-art-document-reconciliation) (full-read coverage, current authority and dispositions)
 - [Archive index](_archive/README.md)
 
 ## The `_archive` convention

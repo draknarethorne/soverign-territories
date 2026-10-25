@@ -18,6 +18,13 @@ For current state and the sandbox/production boundary, see
 The photo-library ingest routine is documented in
 [original-photos.md](original-photos.md).
 
+**Current boundary (Oct 25):** the prepared sandbox clean-start flow is
+implemented, including intake-only review/resume and retained detail. Real
+recipe/identity/gallery acceptance and the incremental production cutover are
+not complete. The repository policy remains draft. Use the
+[clean-start sequence](#clean-sandbox-rebuild-versus-category-reclassification),
+not a historical reset or legacy sorter, for the next reviewed experiment.
+
 ## General and artist entry points
 
 `bin\likeness.cmd` now discovers only Angels, Sisters, Models, Prospects,
@@ -34,8 +41,8 @@ bin\likeness-artists.cmd --root "B:\Sovereign Territories Sandbox\Working" --che
 ```
 
 Global `--dry-run` comes before the command, refuses apply flags, and supports
-scan/group/artists/junk/crop/undo/policy. It suppresses cache/origin writes and
-model downloads. `--check` is a read-only scan: exit 1 if an unusable image is
+scan/group/artists/junk/crop/undo/policy and clean-rebase inventory. It suppresses cache/origin writes and
+model downloads. With no explicit command, `--check` is a read-only scan: exit 1 if an unusable image is
 found; it does not certify identity correctness, derivative freshness or
 automatic cleanup quality. Ordinary reporting commands may write requested
 reports and cache data; use their documented output paths.
@@ -196,7 +203,7 @@ one to four and remain active for future matching. Only eligible Prospects are
 Angel replacement candidates. The sandbox policy treats `Models` as a
 distinct active category; historical Model paths still need an explicit
 migration rule. See the
-[active plan](likeness-processing-contract.md).
+[processing contract](likeness-processing-contract.md).
 
 ### Draft sandbox likeness policy
 
@@ -217,7 +224,10 @@ Robust provisional cores exclude red outliers. Photo-to-core attachment and
 group-to-core attachment use distinct tier thresholds; an action-support
 minimum does not erase a small candidate group.
 
-Automatic lookalike association is disabled. Lower-tier routing, merge and
+Automatic organizational-family association is enabled in the current draft
+under the independent-evidence gates described
+[below](#automatic-protection-and-original-names); this is not approved production
+behavior. Lower-tier routing, merge and
 split permissions are configured independently of cast Gallery protection.
 The shared planner now proposes usable incoming/Review destinations even
 under a draft policy; write authorization is checked separately. Operational
@@ -238,7 +248,7 @@ survivor. Name histories, Review photos and derivatives travel with the
 identity rather than being discarded. Empty directory shells are left intact
 and can be reused by a later category transition.
 
-The current `.4` draft adds a configurable `.95` near-duplicate similarity
+The current draft retains a configurable `.95` near-duplicate similarity
 ceiling for independent action support. This is a diversity heuristic, not
 labelled proof of identity or independence. A single unmatched red outlier
 may form a Potential only when its category explicitly permits it, the
@@ -259,11 +269,11 @@ convergence merely because the first transaction succeeded. Undo uses the
 original `reconcile_*.json` journal, not the check receipt.
 
 `Various` is the incoming pool beside Prospects and Potentials. The standard
-library routine, `bin\library.cmd`, runs the photo-preparation, likeness,
-sorting, and derived-image steps in order; see
-[the routine](original-photos.md#the-routine). `likeness sort` routes the pool
-is retained as a manual compatibility command, not the routine's primary
-decision path.
+incremental routine, `bin\library.cmd`, still has legacy cleanup before shared
+reconciliation and is draft-policy blocked before writes; see
+[the routine](original-photos.md#the-routine). It has not adopted the prepared
+intake sequence. `likeness sort` remains a manual compatibility command, not
+the routine's primary decision path.
 
 ## Diagnostics: calibrate and folder
 
@@ -363,9 +373,10 @@ Calibration includes folders with at least two usable photos; the folder
 verdict uses at least three, matching `likeness folder`. The two evidence sets
 are kept separate, even where both contain a photo's leave-one-out score.
 Similarity never proves identity and these reports do not move photos.
-The new rebase runner will consume this bundle and link its artifacts from
-each run manifest; until then, run `diagnostics` explicitly to measure current
-library cost and review the evidence.
+The bundle is runnable now. Earlier sandbox trials linked separately generated
+diagnostics, but the prepared clean-start runner does not automatically execute
+the full bundle or publish its timing. Run `diagnostics` explicitly against the
+saved sandbox root/cache/policy; automated bundling remains plan work.
 
 ### `likeness family-preview`: direct references and naming collisions
 
@@ -394,8 +405,9 @@ Non-cast naming proposals keep the current first name and borrow the direct
 reference's surname. Existing and proposed full-name collisions are reported
 case-insensitively, including names in Artist-person folders. Fixed cast
 names have no rename proposal. Shared-initial alternatives, approved
-membership/naming thresholds, saved family metadata and rename/apply/undo
-remain separate unfinished work. The preview does not approve a draft policy,
+membership/naming acceptance and manual family editing remain separate work.
+Automatic family metadata and reconcile apply/undo now exist under the
+[draft gates](#automatic-protection-and-original-names). The preview does not approve a draft policy,
 change `automaticAssociationEnabled`, rename anything, save the catalogue or
 move photos. It may populate the specified embedding cache.
 
@@ -414,9 +426,12 @@ configuration, or any path outside `Working`. It verifies the full snapshot
 before every preview or apply, so expect time proportional to the source
 library size.
 
-This is a guarded baseline reset, not the classifier or the complete rebase.
-The sandbox runner still needs to define and reset its run-scoped identity
-state, write per-run manifests, route candidates, and link diagnostics.
+This is a legacy guarded category reset, not the classifier or the complete
+rebase; it does not rebuild catalogue decisions or retained photo lineage.
+Do not run it over a prepared installation. Use the intake-aware
+[clean-start runner](#clean-sandbox-rebuild-versus-category-reclassification)
+for that implemented sandbox flow; its automatic diagnostics bundling is
+still separate acceptance work.
 
 ## People Gallery and Review Gallery
 
@@ -517,7 +532,8 @@ and recommendation in that recipe's recorded order. People and Artist Review
 share this evidence renderer; Overview lists evidence for its displayed photos.
 Artist overview opens the group's photo browser for individual detail links.
 These features appear on supported report regeneration, not retroactively in old
-HTML. Post-assignment continuity still requires verified move/publication lineage.
+HTML. The prepared installer now supplies verified post-assignment lineage
+through owner-local retained sets; older unlinked reports do not acquire it.
 
 The history browser checks all discovered runs independently, including runs
 beyond the continuity index's global 32-run/5,000-row budget. Each run still has
@@ -539,7 +555,11 @@ still to be agreed; historical experiments are not the accepted retained set.
 | Missing | No matching preparation evidence is available; this is not proof of a clean image |
 
 The bridge does not guess continuity after a rename/move from a basename or
-identical bytes alone. Accepted publish/rename lineage is still pending.
+identical bytes alone. Checked retained manifests now bridge exact current
+native path/hash, stable photo ID and domain to original/selected/kept variants,
+with gallery/run/maintained-derivative return navigation. Supported individual
+photo actions and same-owner normalization transfer that lineage; overlapping
+whole-identity moves hold explicitly. Real end-to-end visual acceptance remains open.
 Opening a trace never processes, replaces, approves or assigns a photo.
 An original retained by a comparison may already have been cropped; it is not
 automatically a pristine camera source. The index is built once per report
@@ -627,7 +647,9 @@ The scoring/action details explicitly distinguish approval, protection and
 identity-core evidence. **Approve back to Gallery** moves the original; it
 does not add photo protection or an anchor. **Protect photo** does not approve
 a Review photo, and Review never contributes to core. A protected Gallery
-photo is excluded from core unless it is also a valid anchor. Eligible Gallery
+photo is normally excluded from core unless it is also a valid anchor.
+Automatically protected photos may retain their recorded prior core eligibility;
+protection itself never makes an excluded photo into a reference. Eligible Gallery
 photos are reevaluated using the category's configured core threshold and
 iterative leave-one-out checks; the old displayed Review score alone does not
 guarantee membership after approval. Identity protection is a separate
@@ -973,9 +995,11 @@ and both galleries; choosing a workflow photo does not create an anchor. Run
 
 The current policy is explicitly **draft**: the familiar gallery bands remain
 green >=0.55, yellow >=0.30, orange >=0.15, red <0.15. A score >=0.30 is a
-visual lookalike/family-group suggestion, not same-person proof or automatic
-association. Candidate grouping uses the separate draft 0.25 threshold.
-Draft policy `2026-10-21.3` retains a 0.40 small-group cast
+visual lookalike/family suggestion, not same-person proof or sufficient evidence
+for automatic association. Automatic family metadata has the stronger
+[separate gates](#automatic-protection-and-original-names).
+Candidate grouping uses the separate draft 0.25 threshold.
+The policy retains a 0.40 small-group cast
 review boundary: groups with one to four usable photos and a best Angel/Sister
 score of at least 0.40 are held for review of that cast match before they can
 be classified as Potentials. Groups with five or more usable photos in the
@@ -989,7 +1013,7 @@ follow the Potential rule, while scores at or above 0.30 can remain flagged
 for visual review. This threshold is an experiment, not a final identity
 rule. Draft status blocks production writes, not qualified proposal evidence.
 See the
-[active rebaseline plan](likeness-processing-contract.md)
+[processing contract](likeness-processing-contract.md)
 for the full configuration and remaining acceptance gates.
 
 ### Clean sandbox rebuild versus category reclassification
@@ -1131,15 +1155,16 @@ detected face data keyed by image content, not folder assignment or decisions.
 - Clearing the cache by hand is rarely needed and makes the next scan slower.
 
 Only the largest detected face is compared. A face under the configured
-minimum (normally 60 px) or without a usable vector is not scored. Cropping can
-remove app bars or separate other subjects when there is a clean boundary; it
-leaves difficult overlaps for Review/Junk handling. No file is deleted by
-these workflows; duplicates may be held in `gallery_org`.
+minimum (normally 60 px) or without a usable vector is not scored. Legacy cropping can remove app bars or separate other subjects when there is a
+clean boundary. Prepared v16 adds person-aware crops and provisional LaMa repair;
+unsafe/unavailable stages remain explained holds, not guarantees of clean pixels.
+Supported actions preserve originals and recovery data. `gallery_org` is retained
+source provenance, not a generic duplicate holding folder.
 
 ## Further reading
 
 - [Original photo library and ingest routine](original-photos.md)
-- [Likeness reorganization, Oct 9](likeness-reorg-2026-10-09.md)
-- [Likeness reorganization, Oct 10](likeness-reorg-2026-10-10.md)
+- [Curation and recovery foundations](likeness-curation-contract.md)
+- [Dated library reconciliation and pairing context](library-reconciliation-context.md)
 - [Likeness library self-healing plan](../plans/2026-10-22-review-actions.md)
 - [Likeness rebaseline and family-naming plan](likeness-processing-contract.md)

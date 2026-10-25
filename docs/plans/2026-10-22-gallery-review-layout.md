@@ -568,13 +568,13 @@ Source: `feedback/feedback_on_acceptance_testing.md`, full snapshot, Oct 22.
 This is the primary verbatim copy for a note spanning several workstreams.
 The [coverage audit](../audits/2026-10-22-plan-feedback-audit.md) maps each
 request to its active owner or clearly proposed successor. Sources stay intact.
-Copied words and indentation are preserved; trailing line whitespace is
-normalized only in the documentation copy for repository formatting checks.
+The complete source text, including indentation and trailing line whitespace,
+is preserved below. The source remains safely in place.
 
 
 <!-- markdownlint-disable MD013 -->
 ```text
-I have been using the GUI while you have been finishing and I have a large amount of initial feedback.  Not sure if we can tackle all these items or what needs to be done - but some are cosmetic and other address functional gaps.  I added a priority to them all, but I feel like we need to come up with a plan on addressing these items ... and as I continue to work there will be more.  We don't need to use a formal github issue and we can just document these items somewhere in the docs/plans and eventually archive the document when it's done.
+I have been using the GUI while you have been finishing and I have a large amount of initial feedback.  Not sure if we can tackle all these items or what needs to be done - but some are cosmetic and other address functional gaps.  I added a priority to them all, but I feel like we need to come up with a plan on addressing these items ... and as I continue to work there will be more.  We don't need to use a formal github issue and we can just document these items somewhere in the docs/plans and eventually archive the document when it's done.  
 
 Here's a few items I am curious about and what is going on in looking at the latest gallery GUI results.  This feedback was done on the GUI that was deployed for testing at 10/22/2026 1:00 am - so does not account for any work that was completed during you latest coding and testing cycle.  So we can simply document these items as fixed in the new plan document to address usability feedback.  I noticed you were working on the retirement aspects while doing the work - so that's just one case where I can use this as a not to re-test any items already completed.
 
@@ -610,7 +610,7 @@ We should make that tag clickable and take you to the Review Gallery with the pr
 ## History Link
 
 Priority: Low
-Feels like the placement and color of the history link could be improved. It might be better to have it more prominent or in a consistent location across the interface.  Not sure if it should be front, but also removing the underscore from the clickable portion and just making it look like the entire thing is a clickable box instead of the standard hyperlink might be useful.
+Feels like the placement and color of the history link could be improved. It might be better to have it more prominent or in a consistent location across the interface.  Not sure if it should be front, but also removing the underscore from the clickable portion and just making it look like the entire thing is a clickable box instead of the standard hyperlink might be useful.  
 
 That formatting would apply to all tags that become clickable.  Just hover over them to see it's clickable item.
 
@@ -672,8 +672,8 @@ If you can visually inspect the section you'll see that the section isn't very u
     - Name
     - Tags
     - Photo (workflow selected with score)
-
-    - To the right of the picture we have another box with all the same stats as in the gallery - following the same layout and order.
+  
+    - To the right of the picture we have another box with all the same stats as in the gallery - following the same layout and order.  
 
 So it's two boxes side by side - the photo on the left and the stats on the right.
 
@@ -681,7 +681,7 @@ That identity overview is like a summary card for the identity, providing a quic
 
 ## Image Details
 
-We need to revisit the Image Details section and align it more closely with how we organize the image information in the Gallery page, ensuring consistency in the display of photo IDs, identity IDs, core similarity, core size, face size, and closest other matches.
+We need to revisit the Image Details section and align it more closely with how we organize the image information in the Gallery page, ensuring consistency in the display of photo IDs, identity IDs, core similarity, core size, face size, and closest other matches.  
 
 Here's currently what I see and think it could use work.
 
@@ -714,7 +714,7 @@ Closest other: Prospects: Uma Merritt 0.53
 ## Image Text
 
 Priority: Low
-I see that Identity ID: is showing up in some places as "not catalogued" in the Image Text section, even for photos that should have an associated identity. Or is this because it's photos are in Various, or is there a bug in how the identity is being displayed?
+I see that Identity ID: is showing up in some places as "not catalogued" in the Image Text section, even for photos that should have an associated identity. Or is this because it's photos are in Various, or is there a bug in how the identity is being displayed?  
 
 I also noticed that it's showing up on same line as Photo ID and wrapping, we probably need a newline for that.
 
@@ -729,7 +729,7 @@ We need to start to work on the staged actions for Identity level so I can do so
     - Rename Identity
     - Protect Identity
     - Retire Identity
-    - Reject Identity
+    - Reject Identity 
     - Merge Identity (specify target identity to merge into)
     - what else is missing that we have CLI options for at identity?
 
@@ -737,10 +737,10 @@ Some of these are high priority and others are not.
 
 ## Review photos
 
-I am wondering if we should have a separator in the box of images for the review photos to be in their own section within the same box of images if we are showing "all" images and not just Gallery or Review specific.  It's really just an easy way for me to view the gallery and review together and know which ones need review vs. which ones are alway accepted into the gallery.  If we mix them within the gallery and review photos together that makes it harder to see them.  Although maybe I do want to see that view as well if we can do something to highlight review vs. accepted.  Maybe all review images need a different border around them if we show them together in mixed as then they would position in order of other images with scores and make it easier for me to see if they are alike other images.  So - I guess I want to see it both ways as long as it's really easy for me to understand either in separate groups of gallery and review or mixed all together.
+I am wondering if we should have a separator in the box of images for the review photos to be in their own section within the same box of images if we are showing "all" images and not just Gallery or Review specific.  It's really just an easy way for me to view the gallery and review together and know which ones need review vs. which ones are alway accepted into the gallery.  If we mix them within the gallery and review photos together that makes it harder to see them.  Although maybe I do want to see that view as well if we can do something to highlight review vs. accepted.  Maybe all review images need a different border around them if we show them together in mixed as then they would position in order of other images with scores and make it easier for me to see if they are alike other images.  So - I guess I want to see it both ways as long as it's really easy for me to understand either in separate groups of gallery and review or mixed all together.  
 That should be some sort of option that we can pick apporpriately.
-Maybe it's how we call out the sorting and grouping since it's really just a sub-sort for mixed or separated.
-The Location defines which files and we have another option for Mixed or Split to define the group and the Order defines within that how to order them.
+Maybe it's how we call out the sorting and grouping since it's really just a sub-sort for mixed or separated.  
+The Location defines which files and we have another option for Mixed or Split to define the group and the Order defines within that how to order them.  
 
 ## Retire Photos
 
@@ -748,7 +748,7 @@ Priority: High
 If I wanted to retire individual photos, I don't see a staged action selection to do that.  Some photos in Review need to be retired as part of the process as they aren't really usable and that's one thing we need to support.
     - Retire individual photos for an identity
     - Retire an entire identity
-
+  
 ## Approve Photo
 
 Priority: High
@@ -773,7 +773,6 @@ If I reject a review photo, what prevents it from returning to the identity on t
 
 Priority: Low
 Could we optimize the selecting for Moving photos to be a two stage drop-down where you first pick the category and then the identity.  It's not a huge deal
-
 ```
 <!-- markdownlint-enable MD013 -->
 

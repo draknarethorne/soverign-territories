@@ -1,6 +1,6 @@
 # Likeness curation and recovery foundations
 
-**Reconciled:** 2026-10-22T16:34:08-05:00. Metadata, stable-ID, action and recovery context
+**Reconciled:** 2026-10-25. Metadata, stable-ID, action and recovery context
 retained from the Oct 20 foundation. [Runnable guide](likeness.md), schemas
 and tested implementations determine shipped command/payload behavior.
 The [action plan](../plans/2026-10-22-review-actions.md) owns remaining manual work;
@@ -24,6 +24,59 @@ automation and supersedes earlier audit-only lower-tier restrictions.
   rejection, merge, swap and family actions have independent remaining gates.
 - Earlier numerical proposals are not approved automatic-action policy.
   Metadata/recovery safety does not substitute for labelled engine acceptance.
+- The Oct 25 retained-cast prepared flow implements checked one-to-one
+  migration of identity/name/family/override decisions; ambiguous, missing,
+  unknown or stale inputs hold. This is implementation, not acceptance of real
+  curated-library migration. Direct legacy originals callers are not covered
+  by the maintained prepared-derivative guard; production/incremental cutover
+  remains pending in the intake/upkeep plans.
+
+## Enduring rationale from the Oct 9–11 reorganisation
+
+The dated reorganisation reports describe historical placements, counts,
+backups and executable examples, not today's policy. Their lasting constraints
+are retained here so current work does not depend on reading old run records:
+
+- Drakness is the story's fixed family comparison anchor; Angelica is explicitly
+  hand-chosen. Drakneta's deliberately divergent look is a user preference,
+  not an error to repair automatically. A family score or generated-render
+  mismatch never authorizes replacing one of these identities.
+- Pairing asks for a distinct face with a related look, not an identity merge.
+  Sister/Angel counterparts, fixed slots and original person names are separate.
+  Current eligibility/ranking rationale lives in the
+  [pairing context](library-reconciliation-context.md#pairing-score).
+- Compare face evidence, not outfit, figure, hair or background. Illustrated
+  sources, unusual expressions/angles and multiple visible people need separate
+  scrutiny; the Elise Frost example explains why a secondary person's face
+  must not contaminate a core. The historical blanket “any two faces is Junk”
+  rule was rejected: a small background face is not automatically another
+  primary subject. Historical folder-label calibration was not
+  independently labelled identity accuracy.
+- Removing a Gallery member must remove its influence from subsequently built
+  references. A cached embedding is a measurement of bytes, not continued
+  Gallery membership or an identity assignment. Stable IDs, hashes and explicit
+  lineage are needed when current bytes, derivatives or restored originals differ.
+- Artist grouping stays inside its provenance domain. Historical Artist-to-cast
+  pairings were later rejected; they do not authorize Artist admission today.
+  A legacy `Models` path that once meant Sisters is not a new active Model input.
+- Preserve recorded names and dated `z_` history through moves, corrections and
+  merges. A distinct lookalike/reserved-card-use note is not same-person proof
+  or permission to merge. User-confirmed “different people” decisions must
+  survive later matching rather than be inferred again from folder names.
+- Keep source photos, recoverable action history and selected workflow inputs
+  distinct. Historical runs excluded hand-made candidates/finals/curated/shots;
+  a matching or preparation result does not authorize rewriting those assets.
+  Do not restore an old full-library backup or replay an old cleanup/pair command
+  as routine maintenance. Current preview, backup, stale-state and undo rules apply.
+
+Historical render checks, old unresolved candidates and old Review counts are
+not fresh acceptance. Current action scenarios belong to the action plan;
+real preparation/rebase and labelled identity acceptance belong to the intake,
+cast and engine plans. No historical “Various empty” result is an exit criterion
+that permits forcing present holds into identities.
+Old unaccepted ComfyUI render, FireRed size, seed-replay and video checks are
+workflow/video evidence gaps, not likeness-calibration completion claims; their
+current owners must establish present acceptance separately.
 
 ## Decisions and constraints from the discussion
 
@@ -81,7 +134,7 @@ and ComfyUI workflow-photo selection in
 
 The schema must associate person identity with stable person identifiers and
 photo decisions with stable photo identifiers, not only mutable folder names
-or filenames. Before implementation, prove how identifiers survive moves,
+or filenames. Require explicit continuity evidence through moves,
 renames, cropping, deduplication, restoration and backup. Store aliases or
 content hashes as needed and reject ambiguous identities rather than guessing.
 
@@ -130,7 +183,7 @@ but some people may have fewer or more suitable references.
 
 ### Stable photo identity
 
-Before finalizing the schema, prove that a photo keeps its metadata when it is
+Require proof that a photo keeps its metadata when it is
 renamed, moved, scaled, cropped, deduplicated, restored, or found in a backup.
 The current tools recognize several source IDs and cache face data by content;
 neither fact alone proves that every transformation can be joined safely.
@@ -241,9 +294,10 @@ and apply. The supported actions should be explicit and separate, such as:
 - accept or reject a proposed match or cluster.
 - stage a Prospect/Potential name change, or explicitly pair two people for a
   collision-resolving name swap.
-- later, retire one unusable photo to the photo archive, or retire a Potential
-  or Prospect through the existing CLI operation that returns its photos to
-  `Various`. Keep retirement out of the first Review/Reject delivery.
+- retire one photo to the photo archive (delivered), or stage a separately
+  supported person-retirement operation that returns photos to `Various`.
+  Whole-person UI coverage and semantics remain action-plan gates; historical
+  first-delivery sequencing does not mean photo retirement is still unimplemented.
 
 The manifest should use stable photo IDs, expected content hashes, current
 source locations, destination intent, actor/reason and schema version. The CLI

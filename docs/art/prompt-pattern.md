@@ -1,18 +1,18 @@
 # Prompt Pattern — Hero Card Art
 
-One consistent block order for every stage's prompt, so results are predictable across heroes and
-cards. **The generator (`tools/generators/gen_prompt.py`) is the canonical production path** — it
-compiles a hero/dragon definition (`data/art/heroes/<group>/<slug>-thorne.json` or
+Historical block-order guidance for the art prompt pipeline. It is not an approved universal
+rewrite of current templates. **The generator (`tools/generators/gen_prompt.py`) is the canonical
+production path** — it
+compiles a hero/dragon definition (`data/art/heroes/<group>/<slug>.json` or
 `data/art/dragons/elder-dragons/<slug>.json`) + reusable component(s) (`data/art/{races,wardrobe,
 motion}/**/*.json`, via a card's `component`/`components` field) + a stage template
-(`data/art/_templates/<archetype>/*.txt`) into the final prompt `.txt` under
+(`data/art/_templates/<archetype>/<stage>/*.txt`) into the final prompt `.txt` under
 `prompts/<group>/<Hero>/<phase>/<family>/`. Edit the **template / component / card**, never a
-generated `.txt` by hand — regenerate instead: `python tools/generators/gen_prompt.py <card.json>`.
+generated `.txt` by hand — regenerate instead: `bin\prompts.cmd <card.json>`.
 See [`data/art/README.md`](../../data/art/README.md) for the full directory/architecture reference.
 
-> The old hand-copied `[BRACKETS]`-per-hero system (`prompts/_templates/`, `prompts/<Hero>/`) is
-> retired and archived under `prompts/_archive/` — good historical reference for wording, but no
-> longer live. Armor, Clothing, and Scene are now fully componentized (see the stage table below) —
+> The old hand-copied `[BRACKETS]`-per-hero system is retired; it is not a live production source.
+> Armor, Clothing, and Scene are now fully componentized (see the stage table below) —
 > Fantasy/Weapons(standalone)/Background(standalone)/Pets(standalone) utility stages remain
 > archive-only, not yet needed as their own generator stage.
 
@@ -30,7 +30,8 @@ do not treat the old avoidance of negative wording as a blanket ban.
 2. The **reference-fidelity** line is mandatory on every edit/final prompt — it anchors face, body, hair.
 3. Hero-specific values (palette, eye colour, physique) come from `data/art/heroes/<hero>-thorne.json`,
    not from hand-typed values in a prompt.
-4. Keep the block order **identical** across heroes/stages → consistent behaviour (see below).
+4. Keep a block order consistent only where the approved stage design requires it; the sequence below
+   is earlier guidance, not a universal standard.
 5. **Blank line between blocks** is your delimiter (keep doing this — it works, and it's what makes a
    generated prompt easy to scan: one field, one paragraph).
 6. Negatives = **three tiers**: universal (baked into the template), hero-derived (`eyeColorNegatives`,
@@ -39,9 +40,11 @@ do not treat the old avoidance of negative wording as a blanket ban.
 7. `{{TOKENS}}` are filled by the generator. Add a new style/pose by adding a **component JSON**, not
    by writing a new `.txt` from scratch.
 
-## Block order (positive prompt)
+## Earlier proposed block order (positive prompt)
 
-Universal shape, top to bottom:
+The sequence below records an earlier convention for comparing existing prompts. It is not a
+required order for new or migrated templates; use the approved source order and stage semantics
+when the active migration plan's pilot is accepted.
 
 1. **Camera & quality** — realism, shot type, lens/focus (85mm, sharp, soft DoF). *(No background here.)*
 2. **Background / Environment** — studio backdrop for base/edit stages; the in-world scene for final.
@@ -69,7 +72,10 @@ Each stage only includes the fields it actually needs — Hair stage has no Figu
 restates bust/face), Head stage only restates Hair + Eyes. What's shared must keep the same relative
 order; what's stage-specific can simply be absent.
 
-### Wardrobe slots — keep the blank lines (Armor/Clothing, not yet componentized)
+### Historical wardrobe-slot example
+
+This illustrates an earlier paragraph layout, not a claim that Armor/Clothing are awaiting
+componentization. Those stages are componentized; see [`data/art/README.md`](../../data/art/README.md).
 
 ```
 Wearing [TORSO / main piece] in [PRIMARY] with [ACCENTS], [coverage notes].
@@ -93,8 +99,8 @@ Group names match the `Drakness_Qwen_<group>` / `Drakness_X_<group>` ComfyUI wor
 **Componentized stages** (Pose, Head, Hair, Motion, Clothing, Armor, Scene) generate from
 `data/art/_templates/<archetype>/*.txt` via `gen_prompt.py`, output to
 `prompts/<group>/<Hero>/<phase>/<family>/`. **Not yet their own generator stage** (Fantasy,
-standalone Weapons/Background/Pets plates) still only exist as hand-crafted reference text,
-archived under `prompts/_archive/` — treat as reference wording, not a live template.
+standalone Weapons/Background/Pets plates) are not active generator stages; do not treat old
+hand-crafted reference text as a live template.
 
 | Group | Reference | Preserve | Change | Background | Status | Template |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -349,7 +355,7 @@ Variety comes from the **seed**, not from vague words:
    <slug>.json`) and the Drakness assembly card (`data/art/_sets/drakn-sisters/drakness/<stage>/
    <family>/<slug>.json`). It's idempotent: re-running overwrites existing entries with identical
    content and only adds new ones.
-3. Generate: `python tools/generators/gen_prompt.py <card.json>`, or loop over
+3. Generate: `bin\prompts.cmd <card.json>`, or loop over
    `data/art/_sets/drakn-sisters/drakness/<stage>/**/*.json` to regenerate everything for that stage.
 4. Validate before committing: no `{{UNRESOLVED}}` tokens, no stray `", ,"`, all JSON still valid,
    and X_Pose/X_Head (hand-authored, not script-managed) still generate cleanly.

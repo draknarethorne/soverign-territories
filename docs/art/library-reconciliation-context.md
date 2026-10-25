@@ -1,14 +1,15 @@
 # Library reconciliation: dated pairing and frame-retirement context
 
-**Preserved:** 2026-10-22T16:34:08-05:00. Historical evidence, not current counts or a
-new instruction to ingest, pair or retire anything. [Upkeep](../plans/2026-10-22-library-upkeep.md)
+**Reconciled:** 2026-10-25. The pairing rules below are retained rationale;
+the Oct 19 section is historical evidence, not current counts or a new
+instruction to ingest, pair or retire anything. [Upkeep](../plans/2026-10-22-library-upkeep.md)
 owns remaining chest-crop/Junk/refresh work. [Engine acceptance](../plans/2026-10-22-likeness-engine-acceptance.md)
 owns current quality criteria and incremental validation. [Action work](../plans/2026-10-22-review-actions.md)
 owns retirement semantics; [current guide](likeness.md) owns executable syntax.
 
 ## Pairing boundaries
 
-Current Angel changes are explicit user choices, not automatic swaps.
+The recorded Angel changes were explicit user choices, not automatic swaps.
 The Oct 19 production migration applied only 135 category moves after a
 verified backup; identity/Junk proposals remained report-only. The four
 cast choices were Aria Muse to Gavrielle, Ruby Eden to Camaris, Amethyst
@@ -17,7 +18,7 @@ do not authorize a new swap or identify every photo in their galleries.
 
 ## Pairing score
 
-Candidate selection is two-stage and shared by the global pairing command,
+The Oct 19 pairing design separates two stages, shared by the global pairing command,
 People Gallery, candidate report, and rebaseline preview:
 
 1. **Eligibility:** at least five usable photos and 0.45 cohesion.
@@ -39,22 +40,22 @@ direction-specific likeness band are decided.
 ### Historical Oct 19 state
 
 - Before the Oct 19 run, `Various\gallery` contained 787 incoming originals
-  (about 106 MB); the pool is now empty after ingestion.
+  (about 106 MB); that pool was empty after the recorded ingestion.
 - A second batch arrived later on Oct 19 with 916 incoming originals (117,332,043
   bytes). Its verified pre-run snapshot is `library-20261019-171329` (8,287
   files / 4,088,450,098 bytes); that batch has also been processed and checked.
 - A read-only preflight on Oct 16 counted 9 incoming images; that run did not
   happen because ComfyUI input files changed during both backup attempts.
   Those earlier backups are explicitly marked incomplete and are not usable.
-- The user has since cleaned Angel Primes inputs and says they should now be
-  stable. ComfyUI output generation may continue; the library tool does not
+- At that checkpoint the user had cleaned Angel Primes inputs and reported
+  them stable. ComfyUI output generation could continue; the library tool does not
   back up or alter output renders.
 - An earlier pull brought 25 Angelica `zz_Shots` into
   `workflows/_shots/angel-primes/Angelica`. The Oct 19 workspace-wide preview
   found six updates and 19 unchanged; only those six updated shot JSONs were
   imported. No candidates or finals were pulled.
-- The current repository has extensive uncommitted changes. Preserve them;
-  inspect and classify, but do not stage, commit, or overwrite unrelated work.
+- That reconciliation preserved extensive uncommitted repository changes;
+  it did not authorize staging, committing or overwriting unrelated work.
 - Two input inventories 20 seconds apart matched exactly: 192 files and the
   same size/timestamp digest. The library preflight found 787 photos in the
   `Various` pool.

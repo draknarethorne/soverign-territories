@@ -12,9 +12,14 @@ than create a second derivative generator. U2/U4/U5 retain independent scope.
 
 The Oct 23 maintenance implementation passed 198 parent integration tests;
 the FULL-backup follow-up passed 105 focused tests. Normal-temp quick validation
-passed including 19/19 mutation cases. These changes remain uncommitted.
-Real sandbox apply, prepared-input integration and user visual acceptance are
-not complete, so U1/U3/U6 remain open. The final large preview did not finish;
+passed including 19/19 mutation cases. That implementation has since been
+published, including synthetic prepared-source integration/undo coverage.
+Real sandbox apply and user visual acceptance are not complete, so U1/U3/U6
+remain open. U7 also retains direct `originals`/incremental ingest and selected
+ComfyUI-input cutover: legacy `originals` still calls screenshot-cleaning
+defaults, unlike the prepared installer and maintained derivatives. Use the
+maintained route for verified prepared photos; do not generalize its cleanup
+bypass to every old caller. The final Oct 23 large preview did not finish;
 do not report a verified whole-library generation count or `IN SYNC`.
 
 Routine/action recovery should omit only proven reproducible generated files.

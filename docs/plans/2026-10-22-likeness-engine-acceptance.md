@@ -29,8 +29,9 @@ transaction and exact undo, including metadata-only runs. The frozen source
 inventory is bound once per transaction rather than repeated in every locked
 photo. Automatic locks preserve only already-eligible frozen core members;
 they do not create anchors or promote new reference authority. Gallery and CLI
-audits share that eligibility helper. Rebase refuses to erase override/name/
-family provenance until stable-ID migration is implemented. No real matching,
+audits share that eligibility helper. The prepared sandbox rebase now migrates
+override/name/family provenance through verified one-to-one stable-ID continuity
+and refuses ambiguous destinations. No real matching,
 protection apply or rebase has run for this feature.
 
 Proposed safety requirements for E13, pending policy approval:
@@ -56,10 +57,11 @@ Proposed safety requirements for E13, pending policy approval:
   Rebase preserves manual decisions and name/family lineage.
 
 - [ ] **P1 either** E13 Approve photo confidence/support/rival-margin and identity
-  establishment gates plus persistent manual override semantics; then extend
-  shared policy/schema and catalogue provenance, implement preview/apply/undo,
-  and test exact boundaries, duplicates, self-scoring, protected Review, stale
-  hashes, manual opt-out, workflow conflicts and repeat/rebase preservation.
+  establishment gates plus persistent manual override semantics. Review the
+  delivered shared policy/schema/provenance and preview/apply/undo against
+  labelled cases, including exact boundaries, duplicates, self-scoring,
+  protected Review, stale hashes, manual opt-out, workflow conflicts and
+  repeat/rebase preservation; automated implementation tests are not calibration.
   Calibrate on labelled sandbox cases before enabling a mutating policy.
 
 The user was unavailable for the first policy question. Working proposal:

@@ -1,6 +1,6 @@
 # Likeness processing contract
 
-**Reconciled:** 2026-10-22T16:34:08-05:00. Approved target rules, not a claim that all
+**Reconciled:** 2026-10-25. Approved target rules, not a claim that all
 acceptance gates have passed. The [engine acceptance plan](../plans/2026-10-22-likeness-engine-acceptance.md)
 owns execution; [installed evidence](likeness-sandbox-trial.md) owns the
 dated run record; [likeness guide](likeness.md) owns runnable command syntax.
@@ -9,6 +9,25 @@ additional shipped CLI contracts. Production remains unapproved.
 
 ## Latest precedence and ownership
 
+- The retained-cast prepared clean-start flow is implemented (`d27098a`,
+  `2340157`): inventory, intake-only preparation/check, safe resume into a
+  fresh-cache matching preview, reviewed installation and exact undo use the
+  existing sandbox launcher. All retained cast images are prepared without
+  changing their membership; named/loose Various share the planner, while
+  Artists remain preparation-only in their domain. Verified one-to-one
+  continuity carries curation/name/family/override decisions; ambiguous,
+  missing, unknown or stale inputs hold. No real rebase or production change
+  ran. Real recipe/lineage acceptance, optional cast release and incremental
+  production cutover remain open.
+  Replacement of already-owned prepared cast outputs is individually inventoried,
+  hash-checked and reversible; it is not permission for a broad cast-root reset.
+- Prepared natives bypass legacy screenshot cleanup in the maintained
+  derivative-rendering/crop path, not in every direct legacy originals caller.
+  Keep exact original bytes and actually retained alternatives distinct from
+  generated standard derivatives; preparation does not authorize pruning.
+  The launchers use the modern CPU runtime documented in the
+  [photo-library runtime guide](original-photos.md#python-runtime-and-dependencies);
+  historical runtime assumptions are not current setup requirements.
 - Oct 25 autonomous implementation extends protection acquisition and virtual
   family naming through the existing reconciliation transaction. The working
   policy remains draft: implementing configurable defaults is not production
@@ -22,10 +41,11 @@ additional shipped CLI contracts. Production remains unapproved.
 - Oct 23 foundation work is ordered in the
   [plan index](../plans/README.md#current-library-work-order-oct-23).
   The new [intake plan](../plans/2026-10-23-image-intake-preparation.md)
-  owns proposed source-preserving preparation; the
+  owns implemented sandbox preparation and remaining real acceptance; the
   [cast experiment](../plans/2026-10-23-cast-seeded-library-rebase.md)
-  owns configurable seed/retention/release design. Neither is installed policy
-  or a blanket override of D10/D14/D15. Preparation includes retained cast
+  owns configurable seed/retention/release design. Retained-cast preparation
+  is delivered, but optional seed/release policy is not approved or a blanket
+  override of D10/D14/D15. Preparation includes retained cast
   images; membership protection does not authorize destructive preprocessing.
   Any release requires an explicit recoverable experiment and exact preview;
   ordinary automation retains its current protections.
@@ -50,7 +70,7 @@ additional shipped CLI contracts. Production remains unapproved.
 | ID | Decision |
 | --- | --- |
 | D1 | Use Option A: retain category roots and represent family/lookalike grouping virtually in the people gallery and tracked identity metadata. Do not add physical Families, Twins, or Lookalikes roots. The user wants a reintroduced active `Models/` category alongside Angels, Sisters, Prospects, and Potentials, controlled by the rebaseline classifier and distinguished from legacy Model paths. |
-| D2 | Use a shared surname for identities grouped as lookalikes/family, while retaining distinct first names and preferring a shared first initial when a unique name is available. An approved looks-like threshold may automatically associate a group and assign family names; the naming convention is never a matching rule. |
+| D2 | Use a shared surname for identities grouped as lookalikes/family while retaining distinct first names. The earlier shared-first-initial preference is not implemented by the Oct 25 draft, which preserves existing first names; new-name preference remains family-plan design/acceptance work. An approved looks-like threshold may automatically associate a group and assign family surnames; naming is never a matching rule. |
 | D3 | Apply family naming across cast, Models, Prospects, and potentially Potentials. Reuse a surname only within a threshold-associated or user-associated lookalike group; an unrelated new identity must use an unused surname. Preserve explicit user-approved existing names, including Angelica Vale, without inferring a family link from surname alone. Existing names are candidates, not evidence that people are related. |
 | D4 | Names, folder names, and family labels do not influence face matching, identity merges, character-slot assignment, or ComfyUI workflow keys. |
 | D5 | Preserve fixed Angel/Sister character-slot paths and each person's recorded `z_<name>.txt` history. Audit incomplete or conflicting records; never overwrite a person's recorded name/history based on a guess. New or renamed non-cast identities may receive threshold-assigned first/last names through the sandbox-tested naming workflow. |
@@ -218,20 +238,29 @@ before installing another threshold experiment.
 
 ## Calibration starting points (not production approval)
 
-The first versioned policy is
+The tracked versioned policy is
 [`data/art/likeness-engine-policy.json`](../../data/art/likeness-engine-policy.json),
 validated against
 [`likeness-engine-policy.schema.json`](../../data/art/_schema/likeness-engine-policy.schema.json).
-The installed scenario's saved status is `draft`, version `draft-2026-10-21.3`; a later `.4` draft is distinct. The installed
+Its current draft is `draft-2026-10-25.1`, with draft automatic protection and
+direct-reference family association enabled for authorized experiments, not
+accepted production use. The installed scenario's saved status is `draft`,
+version `draft-2026-10-21.3`; the later `.4` and Oct 25 drafts are distinct. The installed
 Oct 22 experiment uses 0.25 average-linkage grouping with minimum size one;
 it does not reuse the 0.55 cast gate for candidate formation. Runtime settings
 now resolve from the policy, and conflicting workspace overrides fail.
-The following records calibration questions, not production approval.
+The following records the older trial's calibration starting points, not an
+inventory of every current draft setting or production approval. In particular,
+its disabled family association is historical: the Oct 25 draft implements
+conservative direct-reference association and reversible catalogue presentation
+names. Earlier shared-initial/new-name proposals are not the shipped algorithm;
+the [family plan](../plans/2026-10-22-identity-family-naming.md) owns that distinction
+and labelled acceptance.
 
 | Policy area | Draft value | Meaning |
 | --- | --- | --- |
 | Display bands | Green >=0.55; yellow >=0.30; orange >=0.15; red <0.15 | Preserve the existing gallery color boundaries. |
-| Lookalike suggestions | >=0.30; automatic association off | Show distinct identities for visual review/family consideration; never treat this score as same-person evidence. |
+| Lookalike suggestions in the saved trial | >=0.30; automatic association off in that saved policy | Historical starting point, not today's draft enabled state. Family association never establishes same-person identity. |
 | Candidate grouping | Compare 0.25 average linkage, the older baseline, against 0.30/0.40 and recorded 0.55 | Trial values only. Preserve pairs; do not transplant a cast assignment gate. Validate contamination and expression coverage, not folder count alone. |
 | Category assignment | Distinct 1-4-photo identities: Potentials; 5+ and cast likeness <0.40: Prospects; 5+ and 0.40-<0.55: Model hypothesis | Apply after same-person resolution and planned-member follow-up. Count alone or crossing 0.55 does not prove identity. |
 | Lower-tier photo attachment | Compare the historical 0.40 score / 0.10 margin baseline with labelled alternatives | Separate photo-to-core calibration from grouping; preserve proposed routes when execution is not authorized. Own-core lead applies to a candidate leaving an existing identity, not an unmatched singleton. |
@@ -247,7 +276,7 @@ assumed ground truth, and the saved report conflicts with an older inline
 accuracy comment. In particular, the proposed 0.55/0.10 route is not accepted
 as an automatic-action threshold until representative gallery examples and
 action-specific error targets are reviewed. A clean sandbox run has since
-been installed, but remains unaccepted (see Phase 3); production is unchanged.
+been installed, but remains unaccepted (see the installed evidence); production is unchanged.
 The verified pre-run Working backup is
 `B:\Sovereign Territories Sandbox\Working\_backup\library-20261021-172221`
 (17,582 files; 5,827,811,555 bytes).
@@ -258,8 +287,8 @@ The verified pre-run Working backup is
 | --- | --- |
 | Person identity | One independently tracked person with stable identity and photo history. A folder name is not its stable ID. |
 | Character slot | The fixed Angel/Sister directory and workflow identity. It is not interchangeable with the recorded person name. |
-| Model | Proposed active category for a distinct, non-cast person with at least five usable photos and a qualifying resemblance to an Angel/Sister. This category conveys resemblance and card-use preference, not same-person identity. |
-| Prospect | Proposed active category for an independent person with at least five usable photos and no qualifying cast resemblance; Prospect-to-Prospect families may still be grouped. |
+| Model | Active sandbox category under draft rules for a distinct, non-cast person with at least five usable photos and a qualifying resemblance to an Angel/Sister. This category conveys resemblance and card-use preference, not same-person identity. |
+| Prospect | Category for an independent person with at least five usable photos and no qualifying cast resemblance under the draft classifier; Prospect-to-Prospect families may still be grouped. |
 | Potential | One-to-four usable photos; a holding category until the identity has enough photos for full classification. Show likeness scores without automatically promoting based on a cast resemblance. |
 | Legacy Model path | Existing/historical folder or source using a Model name before this proposal. It is not automatically an active Model identity or an eligible matching source. |
 | Family/lookalike group | A human-facing association among distinct person identities; it does not mean biological relation or one identity. |
@@ -275,6 +304,12 @@ The verified pre-run Working backup is
 | Photo Protection | Per-photo policy that blocks automatic removal and Review routing but may exclude the photo from trusted/provisional identity-core construction. |
 
 ## Sandbox rebase operating model
+
+The following is the enduring target model, including the separately gated
+optional cast-release experiment. It is not an executable recipe or a claim
+that every proposed source mode is implemented. Today's supported retained-cast,
+all-image prepared flow is described above and in the runnable guide; it
+supersedes matcher-only raw-source operation as the next acceptance run.
 
 The sandbox is the real-world proof environment. It is allowed to make actual
 directory placements and generated identity names inside the sandbox so the
@@ -333,16 +368,14 @@ Each rebase run must:
    evidence in Review. Do not combine distinct diagnostics into an unexplained
    single score.
 
-The likeness entry point should expose an explicit mode/flag plus a required
-sandbox root and config, for example a future `rebaseline --sandbox-root ...
---config ... --reset-generated --apply` interface. A separate
-`--include-low-cast-candidates` option enables the optional cast-photo source
-pool; its score cutoff, anchor/protection policy, and source selection are
-recorded in the config/run manifest. A run without that option uses
-Prospect/Potential photos only as candidates. Exact option spelling is a
-Phase 0/1 implementation decision. Production roots must be rejected by the
-sandbox apply path; a later production operation uses the separate approved
-manifest and verified-backup workflow.
+Use the existing sandbox launcher and the runnable guide for exact supported
+syntax. Earlier `rebaseline --sandbox-root ... --reset-generated` and
+`--include-low-cast-candidates` sketches were design illustrations, not shipped
+interfaces. Optional cast release still requires explicit policy/source
+selection, cutoff and anchor/protection decisions recorded with the experiment;
+the implemented prepared flow retains cast membership. Production roots must
+be rejected by the sandbox apply path; a later production operation uses the
+separate approved manifest and verified-backup workflow.
 
 The first config schema should support named classes with stable IDs, display
 names, output category roots, priority, usable-photo bounds, permitted

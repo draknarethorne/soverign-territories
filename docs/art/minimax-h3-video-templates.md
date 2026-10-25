@@ -1,6 +1,6 @@
 # MiniMax H3 video templates: what we have, what ComfyUI ships now, and what to do
 
-Analysis of Oct 9, 2026. Sources: our former template `workflows/_archive/ST6_MiniMax_Video_legacy.json`; ComfyUI's current templates `video_minimax_h3_i2v` (the "iv2" you just saved to `ComfyUI-Installs/ComfyUI/ComfyUI/user/default/workflows/`) and `video_minimax_h3_r2v` (the "rv2"); the node source in `ComfyUI/comfy_extras/nodes_minimax_h3.py` and `nodes_resolution.py`.
+Analysis of Oct 9, 2026. Sources: the former ST6 video template; ComfyUI's then-current templates `video_minimax_h3_i2v` (the "iv2" saved to a local ComfyUI workspace) and `video_minimax_h3_r2v` (the "rv2"); and the node sources `nodes_minimax_h3.py` and `nodes_resolution.py`.
 
 ## Which is which
 
@@ -46,7 +46,7 @@ Candidate sizes that keep the still's aspect (all multiples of 32):
 
 ## What we built (Oct 9, you delegated V1 to V5; the clips are for Facebook reels)
 
-Facebook reels are **9:16** (1080x1920 at best), which the 0.855 stills are not, so one size cannot serve both a reel and a clip that keeps the whole picture. There are two templates, built from our own template (same subgraph, same installed models) by `tools/workflows/video_templates.py`, which also checks every link. The old template is archived as `workflows/_archive/ST6_MiniMax_Video_legacy.json`.
+Facebook reels are **9:16** (1080x1920 at best), which the 0.855 stills are not, so one size cannot serve both a reel and a clip that keeps the whole picture. There are two templates, built from the earlier project template by `tools/workflows/video_templates.py`, which also checks every link. The current masters are listed in [`workflows/README.md`](../../workflows/README.md#stage-templates).
 
 | Template | Canvas | How | When |
 | --- | --- | --- | --- |

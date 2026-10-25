@@ -1,6 +1,6 @@
 # 2026-10-22: identity families and safe naming
 
-**Status:** active (draft metadata/naming implemented; real acceptance and rebase migration remain open)
+**Status:** active (draft metadata/naming and one-to-one rebase migration implemented; real acceptance and broader transitions remain open)
 
 ## Oct 25 implementation continuation
 
@@ -91,8 +91,9 @@ schema/display gap; N2/N3's calibration and historical migration questions remai
 
 N9 progress: schema, history recovery, rename/swap provenance, exact undo and
 combined metadata transactions are implemented and unit-tested. Stable-ID
-clean-rebase migration and explicit family leave/reassignment coverage are not
-completed; the guard refuses destructive loss rather than claiming continuity.
+clean-rebase migration is now implemented for verified one-to-one continuity.
+Ambiguous split/merged destinations still refuse; broader real-curation
+migration and explicit family leave/reassignment acceptance remain open.
 
 ## Review and questions: 2026-10-22 16:26 -05:00
 

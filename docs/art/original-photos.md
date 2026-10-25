@@ -1,6 +1,23 @@
 # Original photos: pick, rename, scale, prune
 
-How the photos you start from (the originals every angel and sister is built from) are kept, named and handed to the workflows. One command does the housekeeping; you only drop, move and delete files.
+Current runbook for source photos, retained preparation, maintained derivatives,
+backups and selected workflow inputs. Use the guarded commands, not manual
+deletion or folder moves, when a photo has catalogue decisions or retained sets.
+
+## Choose the right flow
+
+| Need | Entry point | Current boundary |
+| --- | --- | --- |
+| Inspect crop/erase candidates without changing sources | `bin\prepare-images.cmd` | Sandbox sidecars; provisional v16 recommendations, no identity assignment |
+| Prepare immutable sandbox inputs, optionally stop, then match/install | `bin\sandbox-rebase.cmd` | Implemented retained-cast flow; real acceptance still pending |
+| Maintain names/derivatives and refresh galleries without matching | `bin\people-gallery.cmd` | Preview/check/apply with backup and action-undo guards |
+| Change one photo or a recorded name deliberately | `bin\likeness-actions.cmd` | Validate/preview first; supported actions use backed-up transactions |
+| Ordinary incremental ingest | `bin\library.cmd` | Production writes paused by draft policy; upstream prepared-source cutover remains incomplete |
+
+The [likeness guide](likeness.md#clean-sandbox-rebuild-versus-category-reclassification)
+owns the exact clean-start stop/resume/install sequence. The
+[plans index](../plans/README.md#current-library-work-order-oct-23) owns acceptance
+order. No command example below authorizes a production run.
 
 ## Python runtime and dependencies
 
@@ -62,10 +79,13 @@ replace the machine-wide 3.14.3 installation.
 
 ## The library
 
-Under the work folder (`paths.workRoot` in `workflows/workspaces.json`, today `B:\Soverign Territories`):
+Under the configured work folder (`paths.workRoot` in
+`workflows/workspaces.json`; do not assume a historical drive path):
 
 ```text
 Angels\Angelica\gallery                  your originals for Angelica (jpg, png, webp, bmp)
+Angels\Angelica\gallery_org\<set-key>     exact incoming bytes retained by prepared publication
+Angels\Angelica\gallery_intake\<set-key>  checked retained alternatives, manifest and detail
 Angels\Angelica\gallery_944x1104         made by the tool: every original on a cream 944x1104 canvas, as PNG
 Angels\Angelica\headshot_944x1104        made by the tool: the face of each original, cropped around it and scaled up (see Headshots)
 Angels\Angelica\chest_944x1104           maintained chest-up crop for the viewers, not a new workflow input
@@ -79,22 +99,28 @@ _junk\Artists\Artist\gallery\image.jpg   early artist Junk; owner never becomes 
 Sisters\Draknara\...  Prospects\Anya Sloane\...  Artists\Pierre\Mara Locke\...  Various\...   the same layout in the other roots
 ```
 
-The roots are Angels, Sisters (the old name, Models, is still read), Prospects (people who are not yet an angel or sister), Artists (an artist's photos, grouped into people) and `Various`, the pool of photos not sorted yet, at the top level next to them. `paths.photoRoots` in `workspaces.json` changes the list.
+The general roots are Angels, Sisters, Models, Prospects, Potentials and Various.
+Models is a distinct draft category, not an alias for Sisters. Artists is a
+separate provenance/matching domain, with people below each artist. Various is
+the unassigned intake/hold pool, not an identity. `paths.photoRoots` configures
+housekeeping discovery; likeness entry points enforce their own domain boundary.
 
 ## The routine
 
 ### Agreed end-to-end flow and current cutover boundary
 
 The Oct 23 clarification separates **source preparation** from **derivative
-framing**. The target flow below is agreed direction, not the installed
-`library.cmd` sequence. The [intake plan](../plans/2026-10-23-image-intake-preparation.md)
+framing**. The prepared sandbox clean-start implements stages 1-5 and gallery
+refresh in stage 6. The table is not the installed incremental `library.cmd`
+sequence and does not authorize workflow retargeting. The
+[intake plan](../plans/2026-10-23-image-intake-preparation.md)
 owns upstream preparation/crop cutover; the
 [upkeep plan](../plans/2026-10-22-library-upkeep.md) owns downstream integration.
 
 | Order | Role | Output / safeguard |
 | --- | --- | --- |
-| 1 | Retain exact incoming bytes before transformations | Verified raw-source/provenance link, separate from the prepared working reference and reproducible outputs; durable storage placement still needs its gate |
-| 2 | Prepare at native geometry | Safe first crop -> targeted overlay repair if needed -> optional finishing crop -> issue-specific denoise/tone; preserve head/hair, skip unnecessary stages, retain unchanged content with reasons where unsafe/unavailable |
+| 1 | Retain exact incoming bytes before transformations | Immutable run input, then checked `gallery_org` publication alongside retained `gallery_intake` evidence |
+| 2 | Prepare at native geometry | v16 first crop -> person-aware second crop -> LaMa cleanup -> composition -> denoise/tone comparisons; preserve subject, skip unsafe/unavailable stages with reasons |
 | 3 | Analyze and assign | Fresh geometry-correct detection/features; shared likeness policy; cast membership protection remains separate from processing |
 | 4 | Publish the accepted reference | Prepared source in person `gallery` (or `review`), destination-prefix normalization with stable photo ID and history retained |
 | 5 | Generate standard 944x1104 derivatives | Full-photo fit/pad, head framing and chest framing from the accepted source; framing crops/padding remain necessary, but must not rerun source-cleanup crops |
@@ -109,7 +135,7 @@ crop cannot recreate hair already absent from the input.
 
 **Subject-preserving composition (Oct 24 clarification):** source cropping
 also removes excess background, not just screenshot clutter. The intended
-sequence is retain original -> initial safe crop -> localized cleanup ->
+sequence is retain original -> safe crops -> localized cleanup ->
 final composition crop -> publish accepted native source -> padded derivatives.
 Keep the visible person centered with breathing room, preserving head/hair,
 torso, arms/hands and legs/feet in a full-body source. Do not force a fixed
@@ -243,12 +269,13 @@ over hair/body need different safeguards. Face boxes are not hair segmentation.
 
 - `library_sync.plan` currently runs `originals` before matching and invokes
   `likeness crop`, which may replace working Gallery photos.
-- `originals.fit` can independently apply the fixed screenshot crop, even
-  without a face box; `originals.headshot` applies screenshot-specific logic.
-- Maintained padded/head output calls those helpers; maintained chest output
-  also contains screenshot cropping. Viewer framing inspection has another
-  screenshot-coordinate adjustment. These must respect one accepted geometry
-  decision instead of applying hidden cleanup a second time.
+- Direct legacy `originals` calls still use `fit`/`headshot` screenshot cleanup
+  by default. Do not use that route to regenerate prepared photos.
+- The prepared clean installer and maintained-derivative path already disable
+  screenshot stripping for verified prepared natives; `likeness crop` skips
+  those natives too. This does not complete the incremental `originals`/ingest
+  cutover. Viewer framing inspection and selected-input integration still need
+  U7 acceptance against the same prepared geometry.
 - `comfy_workflows.photo_library` enumerates full-photo scaled outputs;
   `headshot_library` recognizes deliberately selected headshots. Chest output
   generation does not yet establish complete chest selection/repoint/sync
@@ -262,14 +289,15 @@ accepted prepared bytes; old source coordinates cannot be reused after a crop.
 Version derivative recipes and verify regeneration/recovery rather than
 changing existing provenance records to bless new pixels.
 
-These are intake I12 and upkeep U7 acceptance requirements. The v5 sidecar
-pilot below has **not** performed this cutover, changed live source pixels,
-integrated overlay repair, or retargeted workflows.
+These are intake I12 and upkeep U7 acceptance requirements. The current sandbox
+prepared installer does not authorize the incremental/production cutover or
+retarget workflows. Earlier sidecar reports are experiment evidence only.
 
 ### Experimental preparation comparisons (sandbox only)
 
-This is a separate read-only-source pilot, not a change to `library.cmd` or
-permission to replace Gallery photos. It includes retained Angel/Sister cores
+This launcher reads sources without changing them and writes sidecar comparisons;
+it is not a change to `library.cmd` or permission to replace Gallery photos.
+It includes retained Angel/Sister cores
 without reassigning them. From the repo terminal:
 
 ```bat
@@ -287,12 +315,18 @@ For only the new unsorted test images, add `--source-folder "Various\gallery"
 --limit 0` to the same launcher with a new run directory. This reads all supported
 images directly in that folder, not Review, other identities or subfolders.
 It leaves the incoming files in place. The report explains every role and
-links the **original or provisional border/panel geometry candidate as a conservative
-recommendation**, with its reason. This is not a measured enhancement winner
-or semantic hair-safety guarantee. A missed screenshot heuristic does not
-mean clean. Control means oriented/sRGB only; geometry is prepared before
-denoise and tone, which are separate experiments. Padded examples are downstream
-canvas fitting, not another enhancement.
+links the **provisionally selected cleanup/composition**, with its reason.
+The v16 recipe below can select LaMa cleanup; selection is not a measured
+enhancement winner or hair-safety guarantee. A missed screenshot heuristic does
+not mean clean. Control means oriented/sRGB only. Denoise and tone remain separate
+comparison alternatives. Padded examples are downstream canvas fitting, not
+another enhancement.
+
+#### Earlier sidecar recipes (v5-v13), not current selection rules
+
+The following explains old immutable reports only. The current v16 order and
+selection rules follow this historical section; they supersede the older
+automatic-rejection statements, not the retained old evidence.
 
 Recipe v5 introduced non-mutating geometry planning: contiguous, full-span
 near-solid black/white external strips qualify (channel range <=10, black <=20
@@ -302,7 +336,7 @@ strips and content interrupted by text are left alone. This deliberately misses
 many real screenshot bars rather than interpreting dark hair as removable UI.
 Coordinates and unchanged reasons appear on each page and in the manifest.
 
-**Recipe v6 adds the per-image processing trace.** Each photo starts with three
+**Recipe v6 introduced the per-image processing trace.** Each photo starts with three
 views: original, recommended after crop/eraser, and final recommended source
 for 944x1104 generation. The table records input, attempt output, kept selection,
 status and reason for first crop, eraser, second crop, denoise and tone.
@@ -387,7 +421,7 @@ records thresholds and model hash. It is still narrow black-panel detection,
 not general app-layout, hair or body segmentation. First-crop geometry may be
 provisionally selected; unflagged/unsupported layouts retain content with reasons.
 
-The eraser is a **rejected-for-automatic-use trial**, not a shipped magic eraser.
+In v8-v13 the eraser was a **rejected-for-automatic-use trial**.
 Since v8 the old right-only search includes bounded white strokes at all
 edges, magenta lower-corner emblem envelopes, and neutral top-bubble envelopes
 on detected reel screenshots. Corner trials do not require a reel flag.
@@ -429,7 +463,7 @@ and reconstruction. The observed `204050` banner is now removed in the trial,
 but stretched replacement architecture remains unacceptable; no new automatic
 repair selection follows from this additional coverage.
 
-The v8 source-preserving UAT run is
+The historical v8 source-preserving UAT run is
 `_reports/preparation/visual-uat-20261023-v8/index.html`; earlier reports are
 immutable and remain separately verifiable. It retains about 1.99 GB of
 comparison evidence, not just regenerable viewer thumbnails. A graphic-free
@@ -446,6 +480,8 @@ The `v11/index.html` replay in that same directory adds the identical-mask
 Telea/Navier-Stokes comparison (about 206 MB retained evidence).
 The `v12/index.html` replay adds the outlined-banner correction (another
 206 MB); immutable earlier comparisons are not overwritten.
+
+#### Current v16 recipe and comparison behavior
 
 Denoise/tone consume the selected cleanup image, never a rejected eraser or
 second crop. Both are rendered for review but not automatically accepted:
@@ -478,13 +514,16 @@ fed to enhancement: a fixed rectangle may cut hair/body. The selected cleanup
 is the enhancement input. Cropping removes pixels; it does not reconstruct
 overlaid hair. Unresolved graphics still pass
 through with a reason for later ComfyUI cleanup, without a manual-intervention
-requirement. Face-guided background/other-subject cropping is not part of this pilot.
+requirement. Person-aware composition is part of v16; it is not a guarantee
+that every detected body or limb boundary is correct.
 
 Open `index.html` in that run directory. Click a candidate for the larger
 per-photo page: retained input, control/candidates, then their padded 944x1104
 examples. Candidates never replace Gallery sources or the maintained derivatives.
-All crops/eraser attempts are sidecars. No accepted reconstruction, matching,
-cache update, action settlement, model download or ComfyUI change occurs. Denoise/tone can make a
+All crops/eraser attempts from this launcher are sidecars. It does not run
+identity matching, update the likeness cache, settle actions or change ComfyUI.
+Apply may download the pinned models once and v16 may select their output
+provisionally; preview/check do not perform inference/downloads. Denoise/tone can make a
 clean image worse; neither is accepted automatically. Native geometry is separate
 from downstream padding/resizing; there is no detail-recovering superresolution.
 
@@ -495,9 +534,9 @@ The overlay heuristic is informational: retain the original, show
 `original-overlay-unremoved`, and do not block processing or require manual
 approval solely for an overlay. ComfyUI can clean it later. Filter failures
 show `original-enhancement-failed`, retaining original/control without blocking.
-`original-unassessed` is not a claim that a photo is clean. Automatic clean/
-enhanced selection and normal people-gallery attributes are still integration
-work; these treatment labels currently appear in new pilot comparisons.
+`original-unassessed` is not a claim that a photo is clean. The prepared sandbox flow publishes selected cleanup and verified retained
+evidence into People/Review. Automatic denoise/tone selection and the ordinary
+incremental production cutover remain unimplemented.
 Border/panel recommendations use `cropped-border` or
 `cropped-border-overlay-unremoved`; these describe the candidate, not a change
 to the live Gallery file. In v6 an enhancement failure retains the selected
@@ -513,13 +552,23 @@ Keep run copies until accepted recovery is arranged: they are not independent
 backups or the final immutable raw archive. Historical uncropped-source recovery
 is deferred. See the [intake plan](../plans/2026-10-23-image-intake-preparation.md)
 for publication/no-op/fallback gates and [layout L12](../plans/2026-10-22-gallery-review-layout.md)
-for later people-page integration.
+for real gallery acceptance and remaining layout work.
 
-**Ingest runbook (new photos): three commands.**
+### Legacy incremental ingest (paused, not the prepared clean-start flow)
 
-1. Drop the new photos into `Various\gallery` (any name; a photo that came from an artist and is dropped again goes back to that artist by its id, see below). Photos you know are all one person go into `Various\<Name>\gallery` instead; `likeness seed` (step 0 below) files them under that name without face matching.
-2. `bin\library-preview.cmd` shows what would happen, step by step, and moves nothing. Optional.
-3. `bin\library.cmd` does it. Read the summary at the end; the log is `<work>\_reports\runs\library_sync_<time>.log`.
+1. General incoming photos go into `Various\gallery`; known-person sets go into
+   `Various\<Name>\gallery`. Known Artist inputs belong to that artist's gallery,
+   not the general pool. Do not infer Artist provenance from an unknown copy.
+2. `bin\library-preview.cmd` previews the installed incremental steps below;
+   it is not a simulation of the new prepared-source flow.
+3. A likeness-enabled `bin\library.cmd` currently refuses before housekeeping
+   because the policy is draft. Do not approve policy merely to bypass that
+   guard. After the separate acceptance/cutover gates, the run log would be
+   `<work>\_reports\runs\library_sync_<time>.log`.
+
+For today's preparation/likeness experiment, use the
+[prepared sandbox sequence](likeness.md#clean-sandbox-rebuild-versus-category-reclassification)
+instead. It preserves explicit Artist boundaries and retained photo lineage.
 
 The preview runs each step independently against the current folders; it does not simulate the earlier steps' proposed moves. A file may therefore appear in more than one step's preview even though the real run moves it in sequence. Treat preview counts as current-state counts and use the completed run log for final results.
 
@@ -529,9 +578,8 @@ folder-prefixed original names and standard derivatives, then builds both
 `people_gallery_review.html` with the shared thumbnail cache beside them. The overview and filtered review use the same
 identity sort modes and first-nine order, plus shared Chest-up and Head
 thumbnail files. Prime-start suitability remains a photo-quality score,
-not identity confidence. Sisters and Angels
-are alphabetical, while Prospects and Potentials are ordered by usable
-gallery-photo count, largest first. Click a thumbnail to open its source, or
+not identity confidence. Use the gallery's current relationship/category
+ordering and explicit sort controls; no folder order is identity evidence. Click a thumbnail to open its source, or
 the person name to open the complete review gallery filtered to that person.
 The separate history link opens the person's `z_` file. Angel cards show their paired Sister,
 current canonical hair color and three eligible Prospect alternatives ranked by pairing fit. The full all-candidate
@@ -575,8 +623,9 @@ sisters and readiness evidence (usable faces, full-length framing, face size, re
 Those similarity values are candidates to inspect, not verified identities; framing counts do not measure pose
 variety. `<work>\_reports\library\crop_review.html` shows every cropped photo beside
 its uncropped original, and `<work>\_reports\library\crosscheck.md` who looks like whom across the lines that are kept
-apart; `bin\likeness.cmd names` and `index` list the people. Run it again whenever you like: it repeats safely,
-nothing is deleted, and a second run on a finished library changes nothing.
+apart; `bin\likeness.cmd names` and `index` list the people. A repeat can write
+reports or propose further maintenance; a successful first pass is not proof
+of no-op convergence. Preview and inspect the affected inventories first.
 Ordinary library runs keep Junk out: they no longer call `junk --recheck`.
 The later active-photo Junk test stays as a backstop for paths that did not
 run early preparation. Explicit `bin\library.cmd --retry-junk` retries only
@@ -779,7 +828,7 @@ required. Threshold changes belong in the versioned policy, not `--min`.
 | 0 `likeness seed` | every `Various\<Name>\gallery` (and `review`) folder joins the person called `<Name>` without face matching: an existing person of that name, else a new Prospect (5+ photos) or Potential; an ambiguous name is held; photos rejected for that person stay | `z_<name>.txt` history; `likeness undo` |
 | 1 `originals` | names every original after its folder, makes the scaled copy and headshot | old scaled copies: `_archive\<folder>\gallery_944x1104_org`; old headshots: `_archive\<folder>\headshot_944x1104_org` |
 | 2 `duplicates` | the same picture twice (any folder, any name) | the extra copy: `_archive\<folder>\gallery_duplicates` |
-| 3 `likeness crop` | cuts every photo down to the person: a phone's app bars, other people, animals and the background beside her; all the body in the picture stays | the uncropped photo: `_archive\<folder>\gallery_uncropped` (`likeness crop --undo` puts the last batch back) |
+| 3 `likeness crop` | legacy face-guided app-bar/other-subject/background crop for unprepared photos; verified prepared natives skip it; it cannot guarantee limbs are kept | the uncropped photo: `_archive\<folder>\gallery_uncropped` (`likeness crop --undo` puts the last batch back) |
 | 3 `likeness junk` | a photo that cannot feed a Prime (no usable face, a second person that cannot be cut away, bars over her head) goes to `_junk`. A prospect's or hero's photo that only needs clean-up goes to her `review` folder instead | `_junk\<side>`, her `review` |
 | 4 `likeness reconcile` | shared incoming/Review proposal with frozen cores, tier permissions, preserved small groups and explicit holds; approved apply revalidates after a verified backup | `_reports\runs\reconcile_*.json`, full snapshot; `likeness reconcile --undo JOURNAL --apply` |
 | 3 `likeness-artists crop`, `junk` | the same legacy crop and later Junk backstop, separately scoped to Artists; upstream preparation cutover remains pending | artist-local crop/move logs and retained uncropped originals |
@@ -813,7 +862,14 @@ usable-face scan. State, legacy undo and deliberate cross-boundary transfer
 limits are defined once in the
 [likeness entry-point contract](likeness.md#general-and-artist-entry-points).
 
-**To start a part over.** `likeness pullback NAME ...` (or `--small 2`, or `--all`) sends prospect folders back to `Various`, and the routine sorts them again; a folder with a chosen photo is never pulled back. A looser second look at the pool: `likeness sort --assign 0.35` (preview first). The artists can be rebuilt from a flat backup of their folders: `bin\likeness-artists.cmd artists --from <backup>\Artists`.
+**Legacy reprocessing commands.** `likeness pullback NAME ...` (or `--small 2`,
+or `--all`) previews returning eligible Prospect photos to Various; selected
+photos and other active protection/exclusion/retained-set guards still apply.
+Do not use legacy `sort` threshold overrides as a policy-calibration shortcut.
+The Artist-only backup grouping entry point is
+`bin\likeness-artists.cmd artists --from <backup>\Artists`; preview and confirm
+its domain/recovery conditions before any apply. None is a substitute for the
+prepared sandbox clean-start run.
 
 **What `duplicates` does** (`bin\duplicates.cmd`, also step 2): the same picture can sit in two folders or twice in one under different ids (a download saved twice, a photo moved between prospects). It finds identical bytes in every `gallery` and `review` folder and keeps one copy.
 The kept copy is a chosen photo first, then a gallery photo over a review photo, then Angels, Sisters, Prospects,
@@ -828,12 +884,19 @@ reported for you to resolve. Once the incoming set has one unambiguous file, old
 `_archive\<their folder>\gallery_replaced`, and the incoming copy stays in the pool to be classified again. Byte-identical copies remain
 ordinary duplicates. A changed file with a different ID cannot be recognized as a replacement automatically.
 
-By hand, one step at a time:
+### Deliberate photo maintenance
 
-1. Drop originals into a hero's `gallery`, or into `Various\gallery` and let `likeness sort --singles` file them (or move them from another hero's folder).
-2. Delete the ones that did not work out (in `gallery`; the tool tidies the rest).
-3. Run `bin\originals.cmd` (`bin\originals.cmd --dry-run` previews first; `--only Angelica` does one folder). `bin\originals.cmd --check` only asks: IN SYNC or OUT OF SYNC, exit 1. Run it after every move of files.
-4. Choose the photo for a hero: `bin\inputs.cmd set Angelica --photo angelica_image_<id>_944x1104.png`, then `bin\inputs.cmd reset --hero Angelica`.
+1. Keep incoming general and named-person sources in Various until their
+   supported intake/assignment step. Keep Artist inputs in their own domain.
+2. Use staged Review/Reject/retirement/Junk actions instead of deleting an
+   unwanted photo or manually moving a retained set.
+3. Preview `bin\people-gallery.cmd --dry-run` for maintained names/derivatives
+   and report refresh. Respect its action-undo/backup gates. Direct
+   `bin\originals.cmd` is the legacy Gallery-only renderer, not the prepared
+   maintenance contract.
+4. For a separately approved configured-library workflow choice:
+   `bin\inputs.cmd set Angelica --photo angelica_image_<id>_944x1104.png`, then
+   `bin\inputs.cmd reset --hero Angelica`. Do not run this against sandbox inputs.
 
 Not every photo has a headshot, by design: a headshot needs a face big enough to enlarge to 944x1104 without mush (a crop of at least 30% of the output height) and not hidden under a phone's app bars.
 
@@ -841,7 +904,7 @@ Not every photo has a headshot, by design: a headshot needs a face big enough to
 
 | Step | What |
 | --- | --- |
-| Rename | Every original is named after the **folder it is in**, so you can shuffle freely between angels, sisters, prospects and artists. The id in the name is kept; only the prefix changes (details below the table). If the new name is taken the file is left alone with a warning. |
+| Rename | Each original prefix follows its current folder; stable IDs are retained. Use supported moves rather than manually shuffling retained/catalogued photos. A collision is held with a warning. |
 | Scale | Each original is fitted inside 944x1104 (the shape is kept, EXIF rotation applied), centred on cream, saved as `<name>_944x1104.png`. A phone screenshot of Facebook (tall, with the app's light navigation bar along the bottom) is first cut down to the picture itself, without the bars, caption and icons (`tools/art/screens.py`), unless her head reaches into them. A copy already newer than its original is skipped (`--force` redoes all). |
 | Headshots | Each original with a clear face also gets `headshot_944x1104\<name>_head_944x1104.png` (see Headshots). `--no-headshots` skips this step. |
 | Prune | A scaled copy that no original in that folder makes any more is **moved to `_archive\<the folder's path>\gallery_944x1104_org`**, never deleted (a headshot goes to the matching `headshot_944x1104_org`), so the person folders stay free of old copies. `originals --archive-old --apply` moves the `_org` folders that were left in the library (with a manifest; `--undo-archive` reverses it). Other files in the scaled folder are left alone. |
@@ -881,13 +944,16 @@ The first rule that fits wins; `<n>` is the folder's name in lower case with und
 
 Three forms, then: `<n>_image_<facebook id>`, `<n>_shot_<yyyymmddhhmmss>` and `<n>_pic_<8 hex>`. Rename a folder (Pierre to `Awesome Fantasy`) and the next run renames everything in it, including descriptive names that still carry the old prefix (read from the ids in the folder's other files); move files out and they take the new folder's prefix, move them back and they take the first folder's again.
 
-Two files with the same picture id in one folder (the same screenshot saved twice) are flagged as probable duplicates; delete one.
+Two files with the same picture ID require deliberate comparison. Use the
+duplicate preview or staged recovery-aware actions; do not delete one merely
+because its filename ID matches.
 
 A chosen photo whose original is in another hero's folder, or is gone, is reported (`ELSEWHERE`, `MISSING`), never guessed. A hero whose photo is still a placeholder name is listed as `NO PHOTO`.
 
 ## Notes
 
-- It needs Pillow (`pip install pillow`); WebP is read too.
+- Use the [runtime requirements](#python-runtime-and-dependencies); Pillow
+  supports WebP too. Pillow alone is not the complete processing dependency set.
 - `rename_originals.py` and `rename_inputs.py` (a rename map for the old facebook/Screenshot names, sisters only) are superseded by this; nothing calls them.
 - A scaled image becomes a workflow input only when you choose it (`inputs set`) or run `inputs photos`; `sync-inputs.cmd` and `inputs reset` also find images in the library.
 - The old `scale_rename_prune_images.ps1` in the work folder now only forwards to `bin\originals.cmd`.

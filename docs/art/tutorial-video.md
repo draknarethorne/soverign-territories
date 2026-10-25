@@ -30,12 +30,11 @@ tool puts that prompt (and the length) into one of the two `ST6_MiniMax_*` templ
 ## The loop
 
 ```bash
-python tools/generators/gen_animation.py                                            # cards -> prompts/<group>/<Hero>/7_Video/<family>/
-python tools/workflows/comfy_workflows.py make --engine minimax --create --hero Drakness   # prompts -> workflows (tracked in git)
-python tools/workflows/comfy_workflows.py deploy --engine minimax --hero Drakness          # workflows -> the hero's home workspace in ComfyUI
+bin\videoprompts.cmd                                                                # cards -> generated video prompts
+bin\animate.cmd Drakness                                                           # prompts -> MiniMax workflows -> home workspace
 ```
 
-`bin\animate.cmd Drakness` does all three. In ComfyUI: open the workflow, check the image in the loader (it must exist in the
+`bin\animate.cmd Drakness` runs the video prompt, workflow, and deployment steps. In ComfyUI: open the workflow, check the image in the loader (it must exist in the
 shared `input` folder, so copy the render there from `output` if needed), and run it.
 
 ## What the prompt looks like
@@ -191,9 +190,10 @@ The video model **stretches** the first frame to whatever size it is given, so t
 | `match` | `ST6_MiniMax_Match` | the still's own shape, scaled to 0.95 MP in steps of 32 (a 944x1104 still gives 928x1088) | a clip that keeps the whole picture: cut-scenes, the title and key-art clips |
 
 - A reel crops about a third off the width of a 944x1104 still (it keeps the centre), so frame the hero centrally, or use `match`.
-  The size is set in the template, not in the card; there is no `size` any more. To change the canvas, edit the template's
-  Resolution Selector (reel) or Scale Image to Total Pixels (match) node; `tools/workflows/video_templates.py` rebuilds both
-  from the archived legacy template if you want the defaults regenerated.
+  The size is set in the template, not in the card; there is no `size` any more. The committed
+  `ST6_MiniMax_Reel` and `ST6_MiniMax_Match` files in `workflows/_templates/` are the current
+  masters. Keep changes there and follow the workflow sync guidance in
+  [`workflows/README.md`](../../workflows/README.md).
 - Both run **turbo** (the 8-step LoRA) for **8 seconds** by default; the length of a card is the sum of its actions (7 to 9 s in
   the examples), and the workflow takes that value. Turn turbo off in the workflow for a slower, higher-quality run.
 - Length and format are applied when a workflow is **created**. Changing them in a card later does not rewrite a workflow you
@@ -216,7 +216,7 @@ Rules: never edit prompts/ (generated). Reuse motions and transitions from data/
 only for an action we will reuse. Beats are one or two sentences, state where the action ends, and never change the camera.
 Use {{MAGIC}}-style tokens and {{she}}/{{her}} pronoun tokens, not names or fixed colours. Copy the shape of an existing card.
 Task: <e.g. "animate Draknora's Signature scene: she raises the sword, the flame wraps the blade, she looks to camera and smiles; 8 seconds">.
-Then run python tools/validators/validate_data.py and python tools/generators/gen_animation.py and show me the generated prompt.
+Then run bin\validate.cmd and bin\videoprompts.cmd and show me the generated prompt.
 ```
 
 Check the generated timeline reads in the order you want, that each action ends where the next begins, and that the intro line matches the image.
@@ -233,7 +233,7 @@ Check the generated timeline reads in the order you want, that each action ends 
 
 ## Checklist before you commit
 
-- [ ] `python tools/validators/validate_data.py` passes (it checks every file the card names and every transition).
-- [ ] `python tools/generators/gen_animation.py` ran and you read the generated prompt.
+- [ ] `bin\validate.cmd` passes (it checks every file the card names and every transition).
+- [ ] `bin\videoprompts.cmd` ran and you read the generated prompt.
 - [ ] `source.image` exists in the ComfyUI `input` folder.
-- [ ] Workflows rebuilt with `make --engine minimax --create` (or `bin\animate.cmd`), then committed; they are tracked in git.
+- [ ] Workflows refreshed with `bin\animate.cmd` and committed; generated workflows are tracked in git.

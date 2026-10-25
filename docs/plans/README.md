@@ -167,21 +167,21 @@ use this order and each owning plan's gates.
 
 | Order | Focus / owner | Prerequisite and exit |
 | --- | --- | --- |
-| Phase 1 | [Image intake preparation I1-I17](2026-10-23-image-intake-preparation.md) | Sidecar trace I13, early Junk I14, artist scope I15 and entry/report boundaries I16/I17 delivered; basic Artist GUI L14 delivered for review after later authorization; current incoming batch paused for user cleanup; upstream geometry I11 partly delivered; review I10 and accept provenance/recipe; I12 replaces existing source-crop routes, not a second parallel pipeline |
+| Phase 1 | [Image intake preparation](2026-10-23-image-intake-preparation.md) | v16 and I21-I23 prepared retained publication/stop/resume are implemented in the sandbox; I29 visual recipe acceptance and I27 residual overlays remain; I12 replaces legacy incremental source-cleanup routes rather than adding a parallel pipeline |
 | Phase 2 | [Library upkeep U1/U3/U6/U7](2026-10-22-library-upkeep.md) | Phase 1 handoff; integrate maintenance/recovery, U7 prepared-source full/head/chest derivatives and explicitly selected ComfyUI inputs without repeated source cleanup |
-| Phase 3 | [Cast-seeded all-library rebase C1-C7](2026-10-23-cast-seeded-library-rebase.md) | Phases 1/2 accepted; approve configurable retained/core/released photo policy, then compare reproducible sandbox trials |
+| Phase 3 | [Cast-seeded all-library rebase C1-C7](2026-10-23-cast-seeded-library-rebase.md) | Prepared retained-membership runner and verified one-to-one decision migration are implemented; review C2/C6/C7 against accepted inputs before real apply; optional release modes C1/C3 still need their own policy and are not prerequisites to retaining cast |
 | Phase 4 | [Engine acceptance E4/E6/E7/E8/E10, P1-P6](2026-10-22-likeness-engine-acceptance.md) | Accept Phase 3 evidence, convergence and separate incremental batch (now 400+ planned); production still needs its own preview, backup/restore and approval |
 | Supporting | [Face-analysis M1/M2](2026-10-22-face-analysis-evaluation.md) | Inform Phase 1 labels and face/body explanation; secondary-model M3/M4 remains conditional, not a mandatory new-model dependency |
 | After stable baseline | [Manual action A4/A6 UAT](2026-10-22-review-actions.md), [family acceptance](2026-10-22-identity-family-naming.md) | Existing rename/swap work retained; no pending swap or action-undo settlement applied by this pivot |
 | Separate downstream | [Manual prompt migration](2026-10-22-manual-prompts-to-art-library.md) | Source audit can continue; settle prepared/raw/edit input roles before new `0_Edit`/Alpha migration or retargeting |
 
 The Oct 22 run remains dated evidence, not validation of the new preparation
-recipe or cast-release policy. Do not reset the current Working tree until
-curation/history, exclusions, protection and recovery have explicit migration.
-The subsequent Oct 23 follow-up authorizes source-preserving sandbox sidecar
-comparisons, including retained cast cores without reassignment. No production
-processing or replacement of Gallery sources is authorized. Older uncropped
-original recovery is deferred; exact current inputs must be preserved meanwhile.
+recipe or cast-release policy. The Oct 25 prepared runner now checks/migrates
+one-to-one decisions and preserves recovery; it does not make the real acceptance
+run implicit. Review intake first, then the saved matching preview and backup
+before a deliberately approved sandbox installation. No production processing
+or workflow retargeting is authorized. Older uncropped-original recovery is
+deferred; exact current inputs and all user decisions remain protected.
 
 ## Plans
 
@@ -192,7 +192,7 @@ original recovery is deferred; exact current inputs must be preserved meanwhile.
 | [2026-10-11-tidy-junk-organise.md](2026-10-11-tidy-junk-organise.md) | active | User profile classification and deferred two-image face-pass experiment; Artist isolation remains required |
 | [2026-10-12-artists-reset-and-auto-crop.md](2026-10-12-artists-reset-and-auto-crop.md) | active | Artists rebuilt, auto-crop, one ingest routine, prospects regrouped; waiting for your review |
 | [2026-10-12-roadmap-and-mvp-data.md](2026-10-12-roadmap-and-mvp-data.md) | active | The MVP data track (Darkness and Light set, starter decks, rules), the Oct 8 steps 3 and 4, the art and video track |
-| [2026-10-12-tooling-debt.md](2026-10-12-tooling-debt.md) | active | D14 modern Python requirements/CI delivered; diagnostics, day-close, atomic writes, line endings, suspension, readiness and archive-first deactivation remain |
+| [2026-10-12-tooling-debt.md](2026-10-12-tooling-debt.md) | active | Full art-document read/disposition ledger and D14 runtime/CI delivered; remaining non-art documentation, diagnostics, day-close and tooling debt retain independent scope |
 | [2026-10-20-art-tools-structure.md](2026-10-20-art-tools-structure.md) | active | Incrementally organize art Python tools and tests while preserving `bin/*.cmd` interfaces |
 | [2026-10-22-gallery-review-layout.md](2026-10-22-gallery-review-layout.md) | active | Shared theme, run browser and verified retained-detail/return navigation implemented; L19 separate Intake entry, real UAT, L20 pruning and L18 I/O remain |
 | [2026-10-22-likeness-engine-acceptance.md](2026-10-22-likeness-engine-acceptance.md) | active | Phase 4: calibration, convergence and production gates; E13 draft auto-protection/override implementation is tested, not calibrated or production-approved |

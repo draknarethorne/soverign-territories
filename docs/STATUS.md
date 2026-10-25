@@ -12,8 +12,8 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 | --- | --- |
 | Art pipeline | Working. `data/art/` identities + pieces + templates compile to prompts via `tools/generators/gen_prompt.py`. Core wardrobe plus six theme packs (Greek, Roman, Egyptian, Norse, Celtic, Thanksgiving). Every sister has Signature, Glamour, Elegant Casting, Staged Enchanted Evening, **The Dawn** (rising in her homeland) and **Robe** scenes, each with its own background. How to add to it: [art/tutorial-art.md](art/tutorial-art.md). |
 | ComfyUI workflows | Automated prompt/workflow generation and home-workspace sync. Qwen and MiniMax are tracked; FireRed tests are local. `ST0`–`ST6` are the masters; curated workflows are never regenerated. See [the workflow model](../workflows/README.md). |
-| Face likeness | Local face checks, sorting, review, and recoverable moves run through `bin\likeness.cmd`. Current rules: [likeness guide](art/likeness.md); historical moves: [Oct 10 reorganization](art/likeness-reorg-2026-10-10.md). |
-| Original photos | `bin\originals.cmd` and `bin\library.cmd` manage naming, scaling, headshots, archives, and selected-photo references. See the [photo-library runbook](art/original-photos.md). |
+| Face likeness | Local inspection, shared reconciliation, staged actions and prepared sandbox clean-start use supported launchers. Rules/recovery: [likeness guide](art/likeness.md). Draft policy blocks production matching; real acceptance is unfinished. |
+| Original photos | Prepared sandbox publication retains originals/variants and maintained derivatives. Legacy `originals`/incremental `library` cutover and selected-input acceptance remain gated. Choose the supported flow in the [photo-library runbook](art/original-photos.md#choose-the-right-flow). |
 | Video | First pipeline built: `data/animation` cards (actions as `Motion:`/`Scene:` blocks with transitions) -> `gen_animation.py` -> MiniMax H3 workflow from `ST6_MiniMax_Reel` (9:16, the default) or `ST6_MiniMax_Match`. Three Drakness example clips are deployed; none rendered yet. Guide: [art/tutorial-video.md](art/tutorial-video.md). |
 | Sister variants | Every sister has a **Signature Shiny** (`<slug>-scene-signature-shiny`: the Signature card with a prismatic `overrides.palette` and a glitter-sheen effects line), a **Battle** scene (war gear piece plus homeland battlefield), a **Bond** scene (first meeting with her Elder Dragon) and a **Dawn Rising** video card. First new culture pack: `themes/danish` (Snow Queen inspired) with `draknira-scene-danish`. Prompts and workflows built; none rendered yet. |
 | Vision roster | 30 cards (10 Drakn sisters, 10 bound heroes, 10 Elder Dragons) plus 10 pets, all with art identities; prompts generated. |
@@ -40,6 +40,8 @@ with membership retained; loose/named Various use the same planner and Artists
 remain preparation-only in their domain. Exact originals/retained alternatives
 follow assigned images; gallery detail has checked current/derivative/return
 links. Prepared natives no longer undergo legacy screenshot cleanup again.
+This bypass applies to the prepared installer, maintained derivatives and
+guarded likeness crop, not every direct legacy `originals` caller.
 One-to-one stable-ID decisions migrate only with verified continuity; missing,
 unknown, ambiguous, stale or concurrently edited inputs hold. Existing owned
 cast outputs and previous categories have checked reversible replacement.
@@ -91,8 +93,10 @@ with separate Intake/Various and assigned-person browsing and per-image detail
 reachable from each. After assignment, detail follows verified image lineage
 and shows all actually retained versions, including denoise/lighting alternatives,
 not discarded intake candidates or an undifferentiated list of old experiments.
-This is not yet delivered by the comparison bridge. Layout L19/L12 and intake
-I21/I23 own integration; manual-action A8 holds the future image-centred ComfyUI
+The comparison bridge alone did not provide that continuity. Layout L19/L12 and
+intake I21/I23 originally owned that integration; the prepared installer now supplies
+verified retained-detail continuity. L19's separate Intake landing/real UAT and
+L12's broader acceptance remain open. Manual-action A8 holds the future image-centred ComfyUI
 execution idea pending the user's write-up. No workflow execution is authorized.
 
 **Oct 25 run-history browser:** gallery navigation now includes **Intake runs**.
@@ -103,6 +107,20 @@ individually beyond the continuity index's global budget, without relaxing
 current-source evidence or domain rules. Invalid runs stay diagnostic/unlinked.
 This is historical comparison browsing, not accepted retained-set publication.
 Run pruning remains a separate explicit-policy task; nothing is deleted.
+
+**Oct 25 documentation reconciliation:** all 21 active art documents were read
+in full and classified before the new review-first daily recap. Current guides
+now distinguish v16 prepared sandbox behavior, historical report recipes,
+proposal-only features and the still-paused incremental/production route.
+The tooling-debt D13 ledger records each disposition; unfinished acceptance is
+not closed by documentation cleanup. No sources, real rebase, identities,
+ComfyUI jobs or feedback notes changed.
+
+## Earlier checkpoints (dated evidence, not current command authority)
+
+The current delivery/acceptance boundary is above. Statements such as
+"not shipped" below describe their dated checkpoint; the current guides and
+owning plans resolve subsequent changes.
 
 **Oct 24 composition clarification:** preparation should reduce excess
 background and center the full visible subject, not only remove overlays.

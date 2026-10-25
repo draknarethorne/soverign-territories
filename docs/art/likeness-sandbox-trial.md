@@ -5,14 +5,42 @@ No run or photo action was applied during documentation reconciliation.
 The live [engine plan](../plans/2026-10-22-likeness-engine-acceptance.md) owns remaining acceptance,
 convergence and the separately approved clean-full production rebase.
 
-Later delivered checkpoint: protected recorded-name correction is committed
+## Applicability after the Oct 25 implementation
+
+The Oct 22 saved `.3` installation and later `.4` preview remain distinct
+historical evidence. The tracked draft is now `draft-2026-10-25.1`; automatic
+protection and direct-reference family association have implementation, but no
+labelled production acceptance. Old “family naming remains open” statements
+must not be read as absence of that implementation. The
+[processing contract](likeness-processing-contract.md#latest-precedence-and-ownership)
+owns current rules and the [family plan](../plans/2026-10-22-identity-family-naming.md)
+owns remaining naming acceptance.
+
+The retained-cast all-image prepared clean-start flow (`d27098a`, `2340157`)
+is implemented: inventory, intake-only check/review, resume into fresh-cache
+matching preview, reviewed install and exact undo. Retained cast membership
+does not release cast photos; Artists remain preparation-only in their domain.
+Verified one-to-one decision migration does not prove acceptance of every real
+curation case. No real prepared rebase ran. Production/incremental cutover,
+optional cast release, visual/threshold acceptance and broader migration remain
+gated in the intake/cast/engine plans.
+
+The run paths, hashes, counts, tests, runtime and residual proposals below
+describe their dated checkpoints, not a fresh filesystem check or the current
+policy. The modern CPU setup lives in the photo-library runtime guide; no old
+run timing determines current dependency requirements. Historical “open” work
+below records that checkpoint; active plans determine its present disposition.
+
+## Oct 22 protected-name correction chronology
+
+Implementation-only checkpoint: protected recorded-name correction is committed
 as `8c9acfb1fcd6d2c3b7d2d1029491a8a951bd8b99`; 219 package tests, quick
 mutation validation 19/19, scoped hooks and synthetic browser rename
 accept/decline/export/cancel were verified. Real sandbox reports expose
 161 rename controls. No Amelia Morgan correction was applied. Earlier
 test counts below describe their own checkpoints, not a fresh rerun.
 
-**18:04 current acceptance follow-up:** the single rename is now applied:
+**18:04 applied follow-up:** the single rename was applied:
 `batch_33c618e4297d4ca3bd221181bdcd724f`. The verified transaction snapshot
 contains two files/44,318 bytes, not the full library. Draknisa's `z_` record
 now says Amelia Morgan, with the old history and an appended rename event.
@@ -24,16 +52,19 @@ policy/cache. Overview history link and Review rename payload were verified;
 user visual review remains. Focused tests: 113; final quick validation: 495
 suite tests plus 19/19 mutation cases, all passed. No matching/rebase ran.
 
-**17:50 acceptance follow-up:** the user's one-rename JSON passed
+**17:50 earlier blocked follow-up:** the user's one-rename JSON passed
 validate/preview. Its first apply stopped during full backup on a long
 destination path, before mutation. The extended-path fix now has a real
 Windows regression, 64 focused passing tests, local-fixture launcher checks
 and passing repository quick validation. A retry preflight verified the
 unchanged live catalogue and all 276 Draknisa files. The read-only full-backup
 preview then encountered slow filesystem metadata traversal and was stopped
-before apply. No worker remains running. The rename remains unapplied and
-these reports were not regenerated; see
+before apply. No worker remains running. At that checkpoint the rename remained unapplied and
+those reports were not regenerated; the later 18:04 entry above supersedes that
+state. See
 [the action-test checkpoint](../plans/2026-10-22-review-actions.md#user-acceptance-protected-cast-rename-oct-22-1656--0500).
+
+## Saved Oct 22 run coordinates
 
 Source: `B:\Sovereign Territories Sandbox\Source` (immutable).
 Working: `B:\Sovereign Territories Sandbox\Working`.
@@ -41,7 +72,8 @@ Scenario: `_sandbox-state\unified-rebase-20261022-01`.
 Production: `B:\Sovereign Territories`, untouched by this work.
 Reports: `_reports\library\people_gallery.html` and
 `people_gallery_review.html` in Working.
-Catalogue SHA-256: `58536b8209c392d543736474ad68db1b2610ee1bed13541d9a4afb61d7268ed3`.
+Recorded catalogue SHA-256 (historical checkpoint, not a post-rename/current
+integrity assertion): `58536b8209c392d543736474ad68db1b2610ee1bed13541d9a4afb61d7268ed3`.
 Saved `.3` policy SHA-256: `0b048c57e71e15d608e4671ae736eaaeb1b9d29aabd3d58dcf8628bd82b20652`.
 
 ## Naming and action follow-up
@@ -58,7 +90,7 @@ the earlier implementation-only checkpoint did not apply it.
 
 ## Installed unified sandbox trial, Oct 22
 
-The fragmentation run above was verified and undone before installing
+The earlier fragmentation run was verified and undone before installing
 `Working\_sandbox-state\unified-rebase-20261022-01`. This is the current
 inspectable trial, not acceptance of all plan deliverables. Its embedding
 cache started empty, initial references were only the 21 Angel/Sister cores,
@@ -136,7 +168,7 @@ histories, Review photos and derivatives are preserved through apply/undo;
 complete source and merge-target inventories are checked again after backup.
 Empty directory shells no longer prevent a later reverse category transition.
 
-The current `.4` draft adds an independent-support diversity ceiling and
+The later Oct 22 `.4` draft added an independent-support diversity ceiling and
 explicit unmatched-outlier permissions. They are uncalibrated draft settings,
 not identity labels. The cast-review size gate is now configurable separately
 from clustering and action support. The installed trial retains its saved
@@ -164,9 +196,10 @@ The GUI now offers an explicit chosen-identity Review move with closest
 preselection, stable destination ID, protection/hash validation and undo.
 Both generated pages' executable scripts compile; all 2,376 eligible numeric
 score records have closest-other evidence, and restricted photos offer no
-reassignment. Family naming/virtual groups, the actual secondary-model
-comparison and separately approved production clean-full adapter/rebuild
-remain open.
+reassignment. At that checkpoint family naming/virtual groups, the actual
+secondary-model comparison and separately approved production clean-full
+adapter/rebuild remained open. The Oct 25 draft family implementation above
+supersedes the implementation gap, not its labelled acceptance gate.
 
 The full validation launcher passed; after the latest transaction changes
 all 148 likeness-library tests passed and the installed run's `--check`
@@ -174,7 +207,7 @@ passed. Generated HTML has machine-checked evidence, but visual/browser
 acceptance remains unverified: the integrated browser refused the external
 B: location as outside its trusted folders. Do not bypass that restriction.
 
-Current-run diagnostics are now saved under this run's `diagnostics` folder:
+Diagnostics were saved under this run's `diagnostics` folder:
 2,515 leave-one-out comparisons, 94/161 eligible active-folder checks and
 2,235 per-photo folder scores. Load/cache took 0.67 seconds, scoring 12.57,
 total 13.23. The separate `identity-core-audit.txt` covers 228 folders using
@@ -184,10 +217,15 @@ matches at 0.40/0.10. These assume current folder labels are truth; they are
 not labelled identity accuracy or a reason to move protected cast. Automatic
 diagnostic attachment to the manifest and gallery consumption remain open.
 
-**Exit:** two or more full sandbox runs from the same source snapshot produce
+**Historical trial exit target, not an accepted result:** two or more full sandbox runs from the same source snapshot produce
 real, inspectable category directories and viewer results under different
 configs/source modes; reset and isolation tests pass. The user can judge
 actual placement by scanning the directories/gallery rather than predicting
 destinations from a report or routing photos by hand. Each run also completes
 the diagnostic suite, records measured runtime and evidence, and publishes
 machine-readable and human-readable results.
+
+The next acceptance run also requires the integrated all-image preparation and
+retained-lineage flow; this historical matcher-only trial is not a substitute.
+No new run, test suite, model job or live integrity check was performed for this
+documentation reconciliation.

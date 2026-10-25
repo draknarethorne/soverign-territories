@@ -13,7 +13,10 @@ execution evidence, not current routing permission. Current matching follows
 the [processing contract](../art/likeness-processing-contract.md).
 Artist provenance isolation remains required.
 
-Source: your three notes, copied word for word at the end. Report: [../art/likeness-reorg-2026-10-10.md](../art/likeness-reorg-2026-10-10.md) (the Oct 11 section). How-to: [../art/likeness.md](../art/likeness.md), [../art/original-photos.md](../art/original-photos.md).
+Source: your three notes, copied word for word at the end. The dated Oct 10/11
+report is no longer an active guide; enduring identity/Artist rationale is in the
+[curation contract](../art/likeness-curation-contract.md).
+How-to: [likeness](../art/likeness.md), [original photos](../art/original-photos.md).
 
 ## What you asked for
 

@@ -5,9 +5,17 @@ test, or a new hero. It assumes nothing. The reference for *why* the folders are
 [data/art/README.md](../../data/art/README.md); this page is the *how*. For animation see
 [tutorial-video.md](tutorial-video.md).
 
+> **Current migration boundary (Oct 2026):** The manual prompt migration plan owns the upcoming
+> `0_Edit` stage and revised Prime/Bare prompts. They are not implemented yet. Keep current
+> generated templates and outputs unchanged until the plan's decisions and pilot are accepted;
+> this tutorial's Alpha sequence is the installed flow, not the approved target for that migration.
+> See [the active plan](../plans/2026-10-22-manual-prompts-to-art-library.md).
+
 ## The model in one minute
 
-You never write a prompt. You write small JSON files that the generator turns into prompts.
+Production prompts are generated from small JSON files; ordinary art-data work changes the
+source data and regenerates the output. Manual drafts under `prompts/_edit/` are a separate,
+active migration source, not generated output.
 
 | Kind of file | Where | What it is | Example |
 | --- | --- | --- | --- |
@@ -99,16 +107,15 @@ everything after them inherits it. Save a workflow you tuned for one render (see
 `pull --only shots`; see [workflows/README.md](../../workflows/README.md#shots-zz_shots). Cards, pieces and templates are the permanent record; shots
 are the tuned renders.
 
-## The loop you will run every time
+## The supported art-data loop
 
 ```bash
-python tools/validators/validate_data.py            # 1. is the data valid? (or bin\validate.cmd)
-python tools/generators/gen_prompt.py               # 2. cards -> prompts   (or bin\prompts.cmd)
-python tools/workflows/comfy_workflows.py make --create --hero Draknisa --stage scene   # 3. prompts -> workflows
-python tools/workflows/comfy_workflows.py deploy --hero Draknisa --stage scene          # 4. workflows -> the hero's home workspace in ComfyUI
+bin\validate.cmd                                     # 1. validate data and focused tool tests
+bin\prompts.cmd                                      # 2. cards -> generated prompts
+bin\refresh.cmd Draknisa scene                      # 3. prompts -> workflows -> home workspace
 ```
 
-`bin\refresh.cmd Draknisa scene` runs steps 2 to 4. Then open the workflow in ComfyUI, pick the A-pose input
+`bin\refresh.cmd` runs prompt generation and workflow refresh/deployment for the selected hero. Then open the workflow in ComfyUI, pick the input
 image, render, and review against [output-qa-checklist.md](output-qa-checklist.md).
 
 ## Recipe 1: add a piece
@@ -149,9 +156,9 @@ Rules that trip people up:
   with "a ..." and has no leading "She wears".
 - **Use tokens instead of colours.** `{{PRIMARY}}`, `{{ACCENT_SOFT}}`, `{{METAL}}`, `{{MAGIC}}`, `{{GEM}}` become each hero's own
   colours, which is what makes one piece reusable by all ten sisters. Hard-code a colour only for a deliberate one-off.
-- **Describe what is there, not what is not.** Models latch onto the thing you negate ("no knots" draws knots). Put bans in
-  the template's negative prompt or the card's `overrides.negativeAdd`, and describe the positive picture instead
-  ("fastening hidden behind her at the back").
+- **Prefer the intended visible result.** For reusable descriptive pieces, state what should appear.
+  Explicit removal or edit instructions can still be appropriate when a stage is meant to change the
+  incoming image; use the current stage design and negative-prompt fields deliberately.
 - **Backgrounds live under a realm folder** (`backgrounds/fantasy/...`). The folder is the realm. A hero's own scenery goes in
   `heroes/<group>/<slug>/backgrounds/fantasy/<family>/` and usually carries a `mood`.
 - **`compatibleStages`** is `["pose"]` for an A-pose underlayer, `["scene"]` for scene pieces, `["clothing"]` and so on.
@@ -159,7 +166,7 @@ Rules that trip people up:
   and write `"description": "+, with a tiny {{GEM}} sun hanging from the pendant"` (`+` appends to the base text; `{{BASE}}` puts it anywhere). Change the base and every piece built on it follows.
   See "Pieces that build on pieces" in [data/art/README.md](../../data/art/README.md). The angels' signature weapon, armor, gown, circlet and jewelry are made this way.
 - **Scene-only text belongs in the scene; anything reusable becomes a piece.** If the same sentence about a wardrobe item, a weapon, an effect or a motion appears
-  in several cards, move it into a piece (`python tools/art/extract_literals.py` finds and pulls out repeats) and reference the piece.
+  in several cards, move it into a piece (`bin\extract-literals.cmd` previews repeated text) and reference the piece.
 
 ## Recipe 2: add a scene card
 
@@ -240,8 +247,8 @@ clothing or armor, chosen from each piece's `compatibleStages`) and skips pieces
 
 ```bash
 python tools/generators/scaffold_wardrobe_tests.py --group drakn-sisters --slug drakness --hero Drakness wardrobe/clothing/gowns
-python tools/generators/gen_prompt.py --group drakn-sisters --slug drakness
-python tools/workflows/comfy_workflows.py make --hero Drakness --stage clothing --create
+bin\prompts.cmd --group drakn-sisters --slug drakness
+bin\make.cmd Drakness clothing
 ```
 
 The golden A-pose is the incoming image for scenes. The underlayer pieces are for generating alternatives to it: pick the base that
@@ -253,10 +260,8 @@ A kit file lists what to test for one sister, suited to her class and element (A
 showcase shots). The scaffold writes the cards; the workflow tool then sends her studio work to her own workspace:
 
 ```bash
-python tools/generators/scaffold_sister_studio.py --slug draknara
-python tools/generators/gen_prompt.py --group drakn-sisters --slug draknara
-python tools/workflows/comfy_workflows.py make --hero Draknara --class studio --create
-python tools/workflows/comfy_workflows.py deploy --hero Draknara --class studio
+bin\scaffold-sister.cmd draknara
+bin\refresh.cmd Draknara studio
 ```
 
 Copy `data/art/_kits/draknara.json` for the next sister and change the pieces. A **showcase** card is a studio shot on a coloured
@@ -363,11 +368,13 @@ paths, and check its work with the validator.
 
 ```text
 You are helping with the Sovereign Territories art pipeline. Read data/art/README.md and docs/art/tutorial-art.md first.
-Rules: never edit anything under prompts/ (generated). Pieces go in the narrowest sensible scope under data/art. A piece's id
+Rules: never edit generated files under `prompts/`. Manual source drafts under `prompts/_edit/` are
+not generated output; they are migration inputs and must not be changed as part of ordinary art-data
+work. Pieces go in the narrowest sensible scope under data/art. A piece's id
 equals its path. Use {{PRIMARY}}, {{ACCENT_SOFT}}, {{METAL}}, {{MAGIC}}, {{GEM}} tokens instead of hard-coded colours. Describe what
 is present, never what is absent. Copy the shape of an existing file of the same kind rather than inventing fields.
 Task: <what you want, e.g. "a Roman-theme scene for Draknora: bronze armour dress, a forum at sunset, golden dust in the air">.
-When done run python tools/validators/validate_data.py and python tools/generators/gen_prompt.py and show me the generated prompt.
+When done run bin\validate.cmd and bin\prompts.cmd and show me the generated prompt.
 ```
 
 Review what comes back: does the generated `.txt` read like something you would be happy to paste into ComfyUI, are the colours
@@ -383,7 +390,7 @@ her colours, and did the assistant touch only data files?
 
 ## Checklist before you commit
 
-- [ ] `python tools/validators/validate_data.py` passes (and `test_validate_data.py` if you changed the validator).
+- [ ] `bin\validate.cmd` passes (including the validator self-test when validator code changed).
 - [ ] Prompts regenerated and the diff under `prompts/` is only what you meant.
-- [ ] No hard-coded hero colours in a shared piece; no negations in positive text.
+- [ ] No hard-coded hero colours in a shared piece; positive edit instructions match the stage's intended changes.
 - [ ] Workflows refreshed (`bin\refresh.cmd`) if you want to render it.

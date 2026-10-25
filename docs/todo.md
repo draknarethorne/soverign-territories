@@ -11,7 +11,7 @@
 
 - [ ] I1 Recheck current Angel Primes inputs/renders after source ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
 - [ ] I2 Replace male Angel / `Male` placeholder photos with ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
-- [ ] For each top-tier card (22 angels, 10 sisters, 10 bound heroes, 10 dragons), decide the original photo; the batch results may replace some. For each selected photo, run `bin\originals.cmd`, then `inputs set HERO --photo NAME` ... ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
+- [ ] For each top-tier card (22 angels, 10 sisters, 10 bound heroes, 10 dragons), decide the original photo; batch results may replace some. After image-processing acceptance, use [supported maintenance and selected-input ... ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
 - [ ] 5b. Recheck the current Angel Primes `status` after the selected-photo changes and resolve any remaining `inputs-changed (mixed)` workflows. The old 11-hero count is an Oct 9 snapshot. A placeholder ... ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
 - [ ] 7.3 Yours: render one FireRed Bare or scene from a 944x1104 input and confirm the output is 944x1104. Flux is not used by `make`, so only check it if you use it by hand. If a size is still off, tell me which template. ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
 - [ ] 8.5 Yours: open one clip from each template in ComfyUI (I could not open them here), run it, and check it is not squeezed and the reel crop frames the hero. Tell me what to change: the megapixels, the length, turbo off, or the ... ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
@@ -99,7 +99,7 @@
 - [ ] A7 Compare download/run versus a lightweight explicit ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] A8 Keep broader art-authoring and ComfyUI batch UI in ([2026-10-22](plans/2026-10-22-review-actions.md))
 
-### For the assistant, when you say go (80)
+### For the assistant, when you say go (79)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -151,7 +151,7 @@
 - [ ] R14 The documentation audit's other items that are not decisions, and a launcher check, now with the art and video tutorials (the audit is in `docs/audits/2026-10-12-docs-audit.md`). ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] D1 `likeness status`: for every root and every artist, what is left loose and why (no usable face, a second person, an animal, bars over her head, held for clean-up), plus the pool, the review folders and `_junk`. The question ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] D4 `bin\day-close.cmd`: the day's hygiene as one read-only check (feedback coverage, plan status/index consistency, tagged tasks, explicit transfer owners, current queue, lint, tests and validators). Flag competing owners for ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
-- [ ] D13 Review remaining non-archive documentation by current guide, ([2026-10-12](plans/2026-10-12-tooling-debt.md))
+- [ ] D13 Continue the non-archive documentation review outside ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] C2 Add or preserve compatibility entry points only where ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
 - [ ] D1 Keep a reviewed inventory of modules deferred for coupling, ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
 - [ ] D2 Verify the documented `bin/*.cmd` commands and relevant ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
@@ -183,7 +183,6 @@
 - [ ] `docs/mvp/` and `deck-progression-rules.md` were checked: they only say "10 elements, cosmetic in the MVP", so nothing else needed changing. Re-check when the starter decks are rebuilt around Darkness and Light. ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
 - [ ] 4.4 If the active Prime tests show a specific need, consider a face pass with two images (bare bust plus original headshot), a beta template and a generator change. Do not add a pose-frame input. ([2026-10-11](plans/2026-10-11-tidy-junk-organise.md))
 - [ ] A4 Inspect remaining reel overlays (bottom/right edges and captions near the hairline) and other layouts (paused video play button, caption at the bottom). Accept Artist-specific results of intake I3-I5's shared preparation so ... ([2026-10-12](plans/2026-10-12-artists-reset-and-auto-crop.md))
-- [ ] D5 A person detector for `crop` instead of the face box widened to the sides (wings, a wide stance and a low head are guesses today), and the other reel layouts (a paused video with a play button, a caption at the bottom). See ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] D6 Write every file the tools change whole and swap it in (a temporary name, then a rename), and log each change as it is made, as `crop` now does: scaled copies, headshots, `workspaces.json` writes and the move log. A killed ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] D7 One line-ending rule in `.gitattributes`: the repo mixes CRLF and LF files, which turns a one-line edit into a whole-file diff and git warns on every command. ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] L7 Review shared theme, colors, spacing, typography, ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))

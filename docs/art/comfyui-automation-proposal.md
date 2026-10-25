@@ -1,15 +1,15 @@
-# ComfyUI Automation Proposal
+# ComfyUI API Automation — Remaining Proposal
 
-**Status:** Partly built · **Date:** 2026-10-03 · **Covers:** STATUS items C1 (asset delivery) and the
-"inject prompts into workflows" deferral.
+**Status:** API runner and rendered-image delivery remain proposals · **Original analysis:** 2026-10-03 · **Reviewed:** 2026-10-25
 
-> **Update (2026-10-04):** the find-or-create materializer is built as `tools/workflows/comfy_workflows.py` (prompts to
-> workflows to the home workspace of each set, with temporary copies in other workspaces on request, for Qwen, FireRed and MiniMax video); see [../../workflows/README.md](../../workflows/README.md).
-> Still open: running the workflows through the API and delivering the rendered images back to cards (C1).
+> **Current state:** Prompt-to-workflow creation, refresh, and workspace deployment are implemented by
+> `tools/workflows/comfy_workflows.py` and its launchers; see [`workflows/README.md`](../../workflows/README.md).
+> The API runner, automated ComfyUI execution, and rendered-image delivery to card assets are not implemented.
+> This proposal's option E is therefore built; options A–D remain ideas, not shipped features.
 
-The pipeline ends at "a prompt `.txt` exists". Everything after that is copy-paste: paste the prompt, load the input
-image, queue, rename the output, remember which images are now stale. This note describes what the ComfyUI API can do and
-four ways to automate it, then recommends an order.
+This note records the earlier API investigation and its unbuilt automation options. Do not treat its
+file counts, workflow exports, node IDs, or proposed output paths as current inventory. Use the
+workflow reference for supported commands and behavior.
 
 ## 1. What the ComfyUI API gives us
 
@@ -30,8 +30,9 @@ no authentication. Sources: [server routes](https://docs.comfy.org/development/c
 
 Three facts shape the design:
 
-- **`/prompt` takes API format, not the workflow you save from the UI.** All 91 files under `workflows/` are UI-format
-  (they contain `nodes` and `links`). Each needs one `Workflow > Export (API)` to become postable.
+- **`/prompt` takes API format, not the workflow you save from the UI.** At the time of this
+  investigation, the examined workflow files were UI-format (they contain `nodes` and `links`).
+  That inventory was from October 2026 and is not a current file count.
 - **A job is the whole graph.** The server executes exactly what was posted, so automation means "load template, change
   a few input values, post". The values we change are small: positive text, negative text, the `LoadImage` file name, the
   `SaveImage` prefix, and optionally the seed.
@@ -123,7 +124,7 @@ Today a prompt and its workflow are matched by hand. The names already follow a 
    opens in ComfyUI like any other workflow.
 3. **Queue.** Open it and press Queue, or hand it to the runner in A.
 
-What I found in the repo that makes this practical:
+What the earlier repository scan found (a point-in-time inventory, not current counts):
 
 - **One template covers most work.** 58 of the 91 workflows have the same structure: a `LoadImage`, a `SaveImage` and one
   "Image Edit (Qwen-Image 2511)" subgraph node. In that node `widgets_values[0]` is the positive prompt and `[1]` the
@@ -153,16 +154,20 @@ What I found in the repo that makes this practical:
 | ComfyUI Cloud API | Useful for burst volume if the local GPU becomes the bottleneck; same payload shape, so A and B port to it. Not needed yet. |
 | Fully automatic selection (an image-quality or face-similarity model picks the winner) | Tempting but unproven for identity; keep the human gate until a similarity check is validated against your own picks. |
 
-## 3. Recommendation
+## 3. Earlier recommendation and present status
+
+The materializer in option E is now part of the supported workflow tooling. The API runner,
+staleness sidecars, human-gated dependency graph, and rendered-asset delivery below remain
+unimplemented. STATUS/C1 and the active plans own current asset-delivery decisions.
 
 Build in this order; each step is useful on its own.
 
-| Step | What | Why first |
+| Step | Earlier proposal | Current status |
 | --- | --- | --- |
-| 1 | **E then A, with D**: the materializer (find or create the workflow from the prompt name), then `comfy_run.py`, sidecars and `art_stale.py`, for the A-pose and scene workflows only | E removes the copy-paste with no server, and gives A and D one lookup; A then queues and collects results. |
-| 2 | **B** (the prompt-reader node) if the id map proves fragile, otherwise skip | Cheap hardening; also gives you click-to-run from the UI by card id. |
-| 3 | **C**: stage graph, contact sheet, approval gate | The real labour saver; needs 1 to exist. |
-| 4 | Link outputs into the cards (`portraitAsset`, `fullArtAsset`) and a validator check that referenced files exist | Closes STATUS C1. |
+| 1 | **E then A, with D**: materializer, API runner, and staleness sidecars | E is built and documented in `workflows/README.md`; A and D are not built. |
+| 2 | **B** (prompt-reader node), only if a node map proves fragile | Not built or approved. |
+| 3 | **C**: stage graph, contact sheet, approval gate | Not built or approved. |
+| 4 | Link outputs into cards and validate referenced assets | Still open; resolve through current STATUS and plans before implementation. |
 
 ## 4. Open questions and risks
 

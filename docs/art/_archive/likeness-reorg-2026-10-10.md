@@ -1,12 +1,20 @@
 # Likeness reorganisation, Oct 10, 2026
 
+**Disposition:** archived historical evidence, reconciled 2026-10-25.
+**Result:** Oct 10/11 outcomes, the failed first multi-face rule and its
+refinement, naming history and then-unaccepted render checks remain whole below.
+The active [curation contract](../likeness-curation-contract.md#enduring-rationale-from-the-oct-911-reorganisation)
+preserves enduring rationale and exclusions; current action/intake/cast/engine
+plans own acceptance. Old category aliases, pairing choices, reserved labels,
+thresholds and “Various empty” outcomes are not current instructions or approval.
+
 > Historical run record, not current instructions. In particular, the temporary
 > Models/Sisters alias and pairing outcomes below are not today's category rules.
-> Use [likeness.md](likeness.md), [original-photos.md](original-photos.md) and
-> [../STATUS.md](../STATUS.md) for current commands, recovery and state.
+> Use [likeness.md](../likeness.md), [original-photos.md](../original-photos.md) and
+> [STATUS.md](../../STATUS.md) for current commands, recovery and state.
 > Preserve this record as evidence; do not replay its operations.
 
-What the second pass did to your photo library (`B:\Soverign Territories`), why, and where to look next. Plan: [../plans/2026-10-10-names-ingest-headshots.md](../plans/_archive/2026-10-10-names-ingest-headshots.md). Tool guide: [likeness.md](likeness.md). The first pass is in [likeness-reorg-2026-10-09.md](likeness-reorg-2026-10-09.md).
+What the second pass did to your photo library (`B:\Soverign Territories`), why, and where to look next. Historical plan: `2026-10-10-names-ingest-headshots`. Tool guide: [likeness.md](../likeness.md). The first pass is in [likeness-reorg-2026-10-09.md](likeness-reorg-2026-10-09.md).
 
 Everything was backed up first (`_backup\2026-10-10-before-names-ingest`: the Various photos, every `z_` file, `workspaces.json`, a manifest of 3,546 files). The reports and contact sheets are in `_reports\2026-10-10-names-ingest`. Nothing was deleted: folders emptied by a merge or a re-pair are in `_retired`, and a `likeness undo` reverts the last batch of moves.
 
@@ -26,7 +34,7 @@ Everything was backed up first (`_backup\2026-10-10-before-names-ingest`: the Va
 
 ## Your questions
 
-- **Where are the original names?** In each folder's `z_` file (see [likeness.md](likeness.md)). Sister files hold her original name; an invented prospect's file holds the invented name.
+- **Where are the original names?** In each folder's `z_` file (see [likeness.md](../likeness.md)). Sister files hold her original name; an invented prospect's file holds the invented name.
 - **Would looser matching help?** Little. `likeness loosen`: lowering the assign score from 0.45 by 0.10 frees only 3 more review photos and puts nothing in `Various` to a home (it was already empty). The settings stay; the review photos need your eyes.
 - **Prospects that look like a top-tier sister or angel?** `likeness lookalikes` found 23 prospect or artist folders at 0.30 or more against a sister or angel; each has a `reserved:` line in its `z_` file. Keep them off common, uncommon and rare cards.
 - **Sophie Lloyd as an angel?** She is coherent (16 photos, cohesion 0.70), but her closest sister is Drakneta at only 0.08, so she is not in any pairing band. She stays a prospect, a good face for a different use.
@@ -46,7 +54,7 @@ Everything was backed up first (`_backup\2026-10-10-before-names-ingest`: the Va
 
 ## Oct 11: tidy, junk, kept apart, Azaline
 
-Plan: [../plans/2026-10-11-tidy-junk-organise.md](../plans/2026-10-11-tidy-junk-organise.md).
+Plan: [2026-10-11-tidy-junk-organise.md](../../plans/2026-10-11-tidy-junk-organise.md).
 
 | Area | What happened |
 | --- | --- |

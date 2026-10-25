@@ -1,12 +1,16 @@
-# ComfyUI Art Pipeline — Hero Card Art
+# ComfyUI Art Pipeline — Historical Design Notes
 
-**Status:** Living document · **Scope:** How we generate Sovereign Dawn hero card art
-**Owner:** Draknare Thorne · **Last updated:** 2026-10-02 (paths/status refreshed against `data/art/README.md`, which is now the day-to-day authoritative reference — update there first)
+**Status:** Historical design notes; not the current runbook · **Scope:** Earlier proposals and rationale for Sovereign Dawn hero card art
+**Owner:** Art pipeline · **Last reviewed:** 2026-10-25
 
-This describes *how we manage* the art-generation process — the stages, what each one
-produces, and how images are hand-carried from one workflow to the next. It is a
-**manual, staged Qwen image-to-image pipeline**, not an automated one. Node wiring is
-intentionally out of scope here; the workflow `.json` files are the source of truth for that.
+This document preserves earlier art-pipeline design notes; its historical model choices,
+stage descriptions, paths, commands, and open questions are not authoritative instructions.
+For the current art data model and card workflow, use [`data/art/README.md`](../../data/art/README.md)
+and [`tutorial-art.md`](tutorial-art.md). For current workflow generation, deployment, inputs,
+and stage templates, use [`workflows/README.md`](../../workflows/README.md). Prompt migration
+work is governed by the [active manual migration plan](../plans/2026-10-22-manual-prompts-to-art-library.md);
+the planned `0_Edit` and revised Prime/Bare approaches are not yet implemented. Do not use this
+document to select models, migrate inputs, or change templates.
 
 ---
 
@@ -34,7 +38,6 @@ intentionally out of scope here; the workflow `.json` files are the source of tr
 | `data/art/heroes/`, `data/art/races/`, `data/art/wardrobe/`, `data/art/motion/`, `data/art/dragons/`, `data/art/backgrounds/` | **Generator source of truth** — hero/dragon identities, reusable hair/motion/wardrobe pieces, backgrounds. |
 | `data/art/_sets/<group>/<slug>/<phase>/<family>/*.json` | **Assembly cards** — glue a hero/dragon + component(s) + template together. One folder per roster group (`drakn-sisters`, `drakn-bound`, `elder-dragons`, `angel-primes`). |
 | `prompts/<group>/<Hero>/<phase>/<family>/*.txt` | **Generated, production-ready prompts** — copy straight into the matching ComfyUI workflow. Regenerate via `gen_prompt.py`; never hand-edit. |
-| `prompts/_archive/` | **Historical reference only** — the old `[BRACKETS]`/hand-copied template system and the original hand-crafted Drakness prompts. No longer live. |
 | `data/cards/sovereign-dawn/heroes/<hero>.json` | **Canon source** — name, element, class, archetype, race, sex, companion, lore, plus `art.artIdentity` linking to the art identity. Created FIRST; the art is built for the card. |
 | `data/art/heroes/<group>/<slug>.json`, `data/art/dragons/**` | **Art identity** — palette/physique (heroes) or description (dragons). Links back to its card by `cardId` and pulls name/element/sex from it. Owns the look; the card owns the mechanics. |
 | `assets/examples/` | Reference/example images. |
@@ -98,11 +101,17 @@ linked art identity (`palette`, `physique`).
 
 ---
 
-## 5. Model strategy (per stage)
+## 5. Historical model strategy (per stage)
 
-We keep a benchmark harness of single-image A-pose workflows (one per model) under
-`workflows/Experimental/` — same pose prompt, different model — to compare **speed vs output
-quality** before committing a model to a stage.
+The recommendations below were hypotheses at the time of writing, not a current engine assignment.
+The current templates and supported engines are listed in [`workflows/README.md`](../../workflows/README.md);
+the new manual Prime/Bare work remains gated by the migration plan.
+
+The original draft described a single-image A-pose benchmark harness under
+`workflows/Experimental/`. That path is not an active workflow location; current
+templates and available workflow tools are listed in
+[`workflows/README.md`](../../workflows/README.md). Do not assume the old harness or its
+model comparisons are available.
 
 ### Two latent "families" (this drives everything)
 
@@ -150,20 +159,20 @@ from the same hero data as the Prime) is switched on for every edit stage (`TEMP
 Rules of thumb for tuning: **"change one thing" stages 0.7-0.9**, **polish 0.2-0.4**, **base A-pose 1.0**. If a change does not fully take, raise it by about 0.05; if the face,
 eyes or body drift, lower it, or sharpen the likeness lines of the hero (her `palette` and `physique`). The first value that fully applies the change is the right one.
 
-```bash
-python tools/workflows/comfy_workflows.py denoise                      # preview: the table above, per stage and family, plus the template check
-python tools/workflows/comfy_workflows.py denoise --reset --dry-run    # how many workflows would change (repo and every workspace), and which are kept
-python tools/workflows/comfy_workflows.py denoise --reset [--hero H --stage S --match M]   # apply; changed workspace files are backed up first
-```
+Use the current `bin\denoise.cmd` launcher and preview before applying. Its behavior,
+supported options, and workspace safeguards are documented in
+[`workflows/README.md`](../../workflows/README.md#denoise-defaults); the historical commands
+and default behavior this section once described may no longer match the launcher.
 
 `make --create` sets the value on every new workflow; `make` without `--create` and a prompt-only `deploy` leave a workflow's denoise alone, so values you tune
 by hand survive. A `--reset` also keeps them: a workspace workflow whose denoise differs from its repo copy was changed by you, so it is listed as `KEPT` and not overwritten
 (`--force` overwrites it, with a backup), and `zz_Shots` and curated workflows are never touched. To change a default, edit the `Denoise ~lo-hi` line of the stage template or
 `denoise` in `workspaces.json` (`golden`, `pick`), regenerate the prompts, `update` the workflows and run `denoise --reset`.
 
-The Qwen and FireRed templates (`ST0`, `ST1`, `ST2`, `ST3_FireRed_Final`, `ST4_Qwen_Polish`) already expose `denoise` on the outer subgraph node, so it can be
-edited without opening the subgraph; `denoise` prints `NOT exposed` for any configured template that stops doing so. The Flux and MiniMax templates do not expose it
-(they sample through `SamplerCustomAdvanced` and `BasicScheduler`) and are not built by `make`.
+The exposure details in this paragraph were a point-in-time observation. Current denoise controls,
+engine support, and templates built by `make` are documented in
+[`workflows/README.md`](../../workflows/README.md); in particular, MiniMax workflows are now
+generated and deployed through the supported workflow tooling.
 
 ### Steps: Turbo (4) vs non-Turbo (40)
 
@@ -270,8 +279,9 @@ LoadImage → UpscaleModelLoader (4x-UltraSharp) → ImageUpscaleWithModel
 No checkpoint/UNet loads, so it barely touches VRAM — one of the most 8 GB-friendly graphs you can run.
 "Upscale 4× then shrink to target" yields the crispest result.
 
-> **⚠️ TODO — no upscaler exists yet.** None of the downloaded `workflows/Templates` include an upscale
-> workflow, and no `ST_Upscale` has been built. **Before final art rendering**, either:
+> **Upscaling status:** The project status and workflow reference say a standalone upscaler is not
+> built yet. The template-path inventory and alternatives below are historical; verify current
+> models and templates before planning an upscale. Before final art rendering, either:
 > 1. **Find one** — ComfyUI ships a built-in *Image → Upscale* example (Workflow ▸ Browse Templates), or
 >    grab a community *Ultimate SD Upscale* / ESRGAN graph, **or**
 > 2. **Build the `ST_Upscale` chain above** (LoadImage → UpscaleModelLoader → ImageUpscaleWithModel →
@@ -316,7 +326,12 @@ regenerating work. Pick the version, then go deep; don't let template-shopping s
 
 ---
 
-## 6. Current constraints & future direction
+## 6. Earlier constraints & future direction
+
+These are point-in-time notes, not a statement of current capability. Current workflow
+automation and stage coverage are documented in [`workflows/README.md`](../../workflows/README.md).
+The pending `0_Edit`/Prime/Bare migration must be completed before this guide is treated as a
+current description of the Alpha pipeline.
 
 **Current (novice / single-image phase):**
 
@@ -329,15 +344,19 @@ regenerating work. Pick the version, then go deep; don't let template-shopping s
 
 - **Multi-image input** — feed separate reference images (e.g. a weapon, an armor set) into one
   scene once comfortable, instead of carrying everything in a single image.
-- **Model comparisons** — ✅ benchmark harness in `workflows/Experimental/` (Qwen, FireRed, Flux.1,
-  Flux.2, JoyAI) compares speed/quality on a shared A-pose; per-stage picks in §5. Next: run the
-  newer Qwen 2511/2512 templates through the same harness.
+- **Model comparisons** — the earlier harness described in this draft is not an active workflow
+  path. Current model/template choices and any proposed comparisons must be checked against
+  `workflows/README.md` and the active plans.
 - **GUI auto-wiring** — connect stages into fewer graphs as ComfyUI familiarity grows.
 
-## 7. Status & open questions
+## 7. Historical status & open questions
+
+The checklist below is retained for its rationale only. Current decisions and unfinished
+work are tracked in [`docs/STATUS.md`](../STATUS.md) and the
+[manual prompt migration plan](../plans/2026-10-22-manual-prompts-to-art-library.md).
 
 - ✅ Drakness has extensive experiments across pose, hair, armor, clothing, and motion.
-- ✅ Model benchmark harness assembled (`workflows/Experimental/`).
+- The historical model benchmark harness described above is not a current status claim.
 - ⬜ **Decide the base Qwen version** — bake off Image-Edit 2511 vs 2512 (+ unused templates) before going deeper.
 - ⬜ **Missing:** the locked "intro" definition for SD-001 (armor, weapon, spell, stance, background).
 - ⬜ A repeatable **final-scene workflow** template that other heroes can reuse.
