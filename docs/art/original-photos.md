@@ -2,6 +2,64 @@
 
 How the photos you start from (the originals every angel and sister is built from) are kept, named and handed to the workflows. One command does the housekeeping; you only drop, move and delete files.
 
+## Python runtime and dependencies
+
+Use regular **64-bit CPython 3.14**, not a free-threaded build, for local image
+processing. The Oct 25 checked environment is Python **3.14.3** with NumPy 2.4.2,
+Pillow 12.1.1, OpenCV headless 4.13.0.92, JSON Schema 4.26.0, CPU PyTorch 2.10.0
+and torchvision 0.25.0. The launchers already use this runtime through `python`
+on PATH; they fall back to `py -3` only if `python` is unavailable.
+
+[Core requirements](../../requirements.txt) pin the direct validator/gallery/
+image dependencies. [Intake requirements](../../requirements-intake.txt) include
+those plus the matched CPU Torch/torchvision wheels from PyTorch's official CPU
+index. These are direct dependency pins, not a complete transitive lockfile.
+Install only one OpenCV distribution: headless provides the `cv2` DNN/image
+operations used here without desktop GUI dependencies.
+
+To set up a **new, separate** repository environment (do not overwrite an
+existing one), from the repository root:
+
+```bat
+py -3.14 -m venv .venv-processing
+call .venv-processing\Scripts\activate.bat
+python -m pip install -r requirements-intake.txt
+python -m pip install pre-commit==4.6.1
+python --version
+bin\validate.cmd --quick
+```
+
+Core-only tools can install `requirements.txt` instead. Activate the environment
+before running the normal `bin` launchers so those exact commands use it.
+The existing `.venv` is not automatically selected or repaired. Never install
+these requirements into ComfyUI's embedded Python or change its Torch/CUDA
+stack: it is a separate application environment.
+
+Python **3.12 remains the compatibility baseline**; no 3.14-only syntax/API is
+required. The Windows CI matrix now checks 3.12/3.13/3.14 with the core
+requirements and the launcher regression suite. Local full validation has run
+on 3.14; adding the matrix is not a claim that its new remote jobs have passed.
+The registered Store 3.13 interpreter was inaccessible during the local audit;
+3.12 was not installed. Optional CPU Torch native operations are checked locally
+on 3.14, not installed by every core-only CI job.
+
+The declared requirements were installed/checked in a separate 3.14.3 validation
+environment without altering the existing interpreter or `.venv`. That environment
+inherited already installed core packages read-only and installed its own exact
+CPU torchvision wheel; it was not a completely clean-room dependency build.
+All 735 launcher tests and 19/19 quick mutation cases pass with deprecation
+warnings enabled. Native checks confirm OpenCV's face APIs, CPU torchvision NMS
+and no-download Mask R-CNN construction. Core Windows wheel resolution also
+succeeds for 3.12 and 3.13; that is not execution testing on those runtimes.
+
+The official [3.13 porting notes](https://docs.python.org/3.13/whatsnew/3.13.html#porting-to-python-3-13)
+and [3.14 porting notes](https://docs.python.org/3.14/whatsnew/3.14.html#porting-to-python-3-14)
+cover removed modules/APIs, deferred annotations and changed process defaults.
+Keep those compatibility boundaries when adding optimizations. No Python 3.15,
+free-threading, GPU migration or speedup is claimed by this setup change.
+Use maintained stable 3.14 patch releases after validation; this audit did not
+replace the machine-wide 3.14.3 installation.
+
 ## The library
 
 Under the work folder (`paths.workRoot` in `workflows/workspaces.json`, today `B:\Soverign Territories`):

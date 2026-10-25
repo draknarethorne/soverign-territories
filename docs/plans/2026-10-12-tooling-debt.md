@@ -2,6 +2,16 @@
 
 **Status:** active (what the day showed about our tools; none of it blocks the photo work)
 
+## Oct 25: Python processing runtime
+
+The launchers already run Python 3.14.3. No global interpreter replacement or
+ComfyUI environment change is needed to use the installed modern image stack.
+D14 records repeatable dependency setup and expanded CI, not an unmeasured
+performance claim. Python 3.12 compatibility remains; new 3.12/3.13 CI jobs
+must pass before claiming local-equivalent validation on those interpreters.
+Canonical setup lives in the
+[photo-library runtime guide](../art/original-photos.md#python-runtime-and-dependencies).
+
 ## Review and questions: 2026-10-22 16:26 -05:00
 
 Retained independent diagnostics, hygiene, atomic writes, line endings,
@@ -18,6 +28,10 @@ Found while building and running the artists reset, the crop and the routine, wr
 
 ## Steps
 
+- [x] **P2 ai** D14 Audit the actual Python/image stack; recommend regular 64-bit
+  3.14, declare tested direct core/CPU-intake requirements and extend Windows CI
+  beyond 3.12 without dropping the compatibility baseline. Validate the existing
+  3.14 runtime and native CPU operators; do not upgrade ComfyUI or invent speedups.
 - [ ] **P2 ai** D1 `likeness status`: for every root and every artist, what is left loose and why (no usable face, a second person, an animal, bars over her head, held for clean-up), plus the pool, the review folders and `_junk`. The question "why are there still photos in this gallery" took a diagnostic script today; it should be one command.
 - [x] **P2 ai** D2 Transferred, not implemented by this checkbox: behavior-preserving modularization belongs to the [structure plan](2026-10-20-art-tools-structure.md), including former self-healing H2. Keep existing tests as the behavior contract.
 - [x] **P2 ai** D3 Transferred: one effective settings inventory and action-specific calibration belong to [engine E3/E6](2026-10-22-likeness-engine-acceptance.md). Do not change production thresholds without measured results and a documented decision.
@@ -73,3 +87,9 @@ Additionally - in the people_gallery, is there a way I could have the ability to
 Most likely is someone from a odd/side angle or in a rainstorm or some other environment and I know it's actually another person, but the facial recognition doesn't detect it - so I'd want to de-activate them from the directory and all images in that folder for ther person.
 
 I noticed that males and dragons were given female names - we haven't actually gotten to a point where our directory structure needs to handle the males, females, animals, dragons and assortment for the likeness, cropping and such.  That's one key item to address after we get to those cards.  For now, it's fine - I'll just ignore it until we get there.
+
+## Raw chat: Python runtime (Oct 25)
+
+```text
+We can upgrade python if that's a good thing to do to use newer libraries and functionality in the processing to optimize our work.  Just another thing you can do and let me know if that's done and update the requirements to use a newer version.
+```

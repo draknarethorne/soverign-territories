@@ -36,6 +36,14 @@ PowerShell policy in Phase 1:
 - `.github/workflows/quality.yml`
 - installs and runs pre-commit hooks in clean environment (including the data validation hook)
 - runs on push/PR to `main`
+- Windows matrix retains Python 3.12 and adds 3.13/3.14; image tooling recommends
+  regular 64-bit CPython 3.14, without raising the source compatibility floor
+- installs pinned core image dependencies from `requirements.txt` and runs
+  `bin\validate.cmd --quick` after the existing hooks; optional Torch/LaMa
+  dependencies and model downloads are not needed for those regression tests
+- local validation and newly configured CI coverage are distinct: see the
+  [runtime guide](art/original-photos.md#python-runtime-and-dependencies) for
+  measured versions and local interpreter limitations
 
 ### Retired: legacy schema workflow
 

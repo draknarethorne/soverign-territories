@@ -26,6 +26,13 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 
 The plans, their status and what each is are listed in [plans/README.md](plans/README.md); what is open, by priority and owner (what needs you first), is [todo.md](todo.md), generated from them. This document holds only what is decided and what is still a question.
 
+**Oct 25 Python runtime:** the launchers already use regular 64-bit Python
+3.14.3 and a working modern CPU image stack. Added direct core/intake dependency
+requirements and extended Windows CI from 3.12 to 3.12/3.13/3.14, retaining the
+3.12 compatibility baseline. No global interpreter, ComfyUI environment, GPU
+stack or image recipe changed. Runtime setup and local-versus-CI evidence live
+in the [photo-library guide](art/original-photos.md#python-runtime-and-dependencies).
+
 **Oct 25 prepared clean-start delivery:** the existing sandbox launcher now
 offers read-only inventory, intake-only prepare/check, resume into fresh-cache
 matching preview, reviewed install and exact undo. All cast images are prepared
