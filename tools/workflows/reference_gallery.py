@@ -35,6 +35,8 @@ SUPPORTED_RECIPES = {
     "manual-0c-cleanup": "0c Cleanup",
     "manual-0e-enhance": "0e Enhance",
     "manual-0f-full": "0f Full",
+    "manual-0b-background-basic": "0b Background Basic",
+    "manual-0d-deluxe-pose": "0d Deluxe Pose (clothed)",
 }
 SUPPORTED_STAGES = {"0_Edit", "1_Alpha", "2_Studies", "Bench"}
 SOURCE_DIRECTORIES = {

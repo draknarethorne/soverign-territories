@@ -5,7 +5,7 @@
 
 ## Open work, by priority
 
-### Your queue: needs your hands or a decision (38)
+### Your queue: needs your hands or a decision (39)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -27,6 +27,7 @@
 - [ ] I24 After the sandbox rebase, drop `Various\<Name>\gallery` folders of ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I10 Review the pilot's control, denoise and tone candidates. ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] R21 Try the flow on real images: filter "Needs cleanup", ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] R27 Review the large run on the Outputs page (filter batch ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R6 Accept the bounded transport pilot: two selected sources, ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 
 **P2 (normal)**
@@ -54,7 +55,7 @@
 - [ ] U2 Review current photo outcomes using fresh inventories: ([2026-10-22](plans/2026-10-22-library-upkeep.md))
 - [ ] P10 Archive the manual source directory only after every ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 
-### Either of us (39)
+### Either of us (40)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -89,6 +90,7 @@
 - [ ] A9 Inventory explicit core-membership choices alongside ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] A10 Review action-file intake and completed-batch filing. ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] A12 Provide snapshot inventory, disk estimates and ([2026-10-22](plans/2026-10-22-review-actions.md))
+- [ ] R28 Take the 23 unmapped `Various\gallery` screenshots ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R1c Correct the workspace input-directory spelling during a ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R9 Agree storage/backup/retention limits and safe run filing ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 

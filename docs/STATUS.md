@@ -78,6 +78,16 @@ pilot output was verified, and repeating it is reported as `already-pulled`.
 Manual `zz_shots` graphs are temporary transport proof, not the permanent prompt
 architecture. The first generic Female `0c_Cleanup_Basic` is now data-driven and
 generates a repository-only Qwen workflow; it was not deployed or rendered.
+
+**Oct 26 large cleanup run (R25-R28):** `render-reference.cmd overlay-scan`
+reruns intake's overlay heuristic over a raw intake mirror and maps hits to
+Gallery sources by photo key (2,741 scanned, 107 overlays, 74 mapped);
+`cleanup-batch --sources` turns the scan into requests. New bound recipes:
+`0b Background Basic` and `0d Deluxe Pose`. The `0d` recipe reuses the "Bare"
+graph's settings with a clothed re-pose prompt only; unclothed renders of
+intake photos are never produced. 190 jobs ran unattended on Sovereign
+Females; `0c Cleanup Basic` outputs were pulled back automatically, the rest
+wait for your choice on the Outputs page.
 Later edit variants, formal stage-input/promoted-output contracts and
 Alpha/Studies recipes remain manual-migration work. Edits stay optional before
 Alpha; user visual acceptance and production rollout remain gated.

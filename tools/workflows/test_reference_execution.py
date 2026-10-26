@@ -42,6 +42,18 @@ class GraphTests(unittest.TestCase):
                             entries["manual-0c-cleanup"]["label"])
         self.assertIn("Basic", entries["manual-0c-cleanup-basic"]["label"])
 
+    def test_every_bound_recipe_has_a_clothed_preservation_prompt(self):
+        for recipe in execution.RECIPES:
+            positive, negative = execution.pilot_prompts(recipe)
+            self.assertIn("fully clothed in the same outfit", positive)
+            self.assertIn("removed clothing", negative)
+        pose, _ = execution.pilot_prompts("manual-0d-deluxe-pose")
+        self.assertIn("Same outfit, fully clothed", pose)
+        with mock.patch.object(execution, "recipe_path", side_effect=ValueError("not installed")):
+            ids = {entry["id"] for entry in execution.catalog()}
+        self.assertTrue({"manual-0b-background-basic", "manual-0d-deluxe-pose"} <= ids)
+        self.assertNotIn("pending-0d_deluxe", ids)
+
     def test_one_level_binding_and_source_immutability(self):
         original = tiny_ui()
         snapshot = copy.deepcopy(original)
@@ -466,6 +478,61 @@ class ExecutionTests(unittest.TestCase):
                 execution.cleanup_batch(self.root, hints=("bogus",))
             with self.assertRaisesRegex(ValueError, "not available"):
                 execution.cleanup_batch(self.root, recipes=("pending-0d-deluxe",))
+
+    def test_cleanup_batch_source_file_replaces_hints_and_refuses_stale_paths(self):
+        photo = self.root / "Prospects" / "Ann" / "gallery" / "ann_shot_1.png"
+        photo.parent.mkdir(parents=True)
+        Image.new("RGB", (20, 30)).save(photo)
+        relative = photo.relative_to(self.root).as_posix()
+        sources = [{"path": relative, "domain": "general", "sha256": base.digest(photo.read_bytes()),
+                    "displayName": "Ann"}]
+        listing = self.root / "scan.json"
+        listing.write_text('{"mapped": [{"path": "%s"}]}' % relative, encoding="utf-8")
+        with mock.patch.object(execution, "gallery_sources", return_value=sources):
+            result = execution.cleanup_batch(self.root, samples=1, proposal_id="scan-test",
+                                             seeds=[1], source_file=listing)
+            self.assertEqual((result["sourceCount"], result["jobCount"]), (1, 1))
+            self.assertEqual(result["sourceFile"], str(listing))
+            listing.write_text('{"mapped": [{"path": "Prospects/Gone/gallery/x.png"}]}', encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "not current Gallery sources"):
+                execution.cleanup_batch(self.root, samples=1, source_file=listing)
+            listing.write_text('{"mapped": "nope"}', encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "mapped"):
+                execution.cleanup_batch(self.root, samples=1, source_file=listing)
+
+    def test_overlay_scan_maps_raw_hits_by_photo_key_and_writes_only_with_apply(self):
+        import sys
+        tools = pathlib.Path(execution.__file__).resolve().parents[1]
+        for folder in (tools / "workflows", tools / "art"):
+            if str(folder) not in sys.path:
+                sys.path.insert(0, str(folder))
+        import preparation_geometry
+        inputs = self.root / "_sandbox-state" / "run" / "inputs"
+        (inputs / "Various" / "gallery").mkdir(parents=True)
+        # Sorted scan order: the Screenshot and ann files are flagged, the plain one is not.
+        for name in ("ann_shot_20260101120000.png", "Screenshot_20260101_130000_Facebook.png",
+                     "plain_shot_20260101140000.png"):
+            Image.new("RGB", (20, 30)).save(inputs / "Various" / "gallery" / name)
+        source = {"path": "Prospects/Ann/gallery/ann_shot_20260101120000.jpg", "displayName": "Ann",
+                  "sha256": "0" * 64, "domain": "general"}
+        calls = []
+
+        def fake_plan(image):
+            calls.append(image.size)
+            return {"overlayDetected": len(calls) in (1, 2)}
+        with mock.patch.object(execution, "gallery_sources", return_value=[source]), \
+                mock.patch.object(preparation_geometry, "plan", side_effect=fake_plan):
+            preview = execution.overlay_scan(self.root, inputs, scan_id="scan-one")
+            self.assertEqual((preview["scanned"], preview["detected"]), (3, 2))
+            self.assertEqual([item["path"] for item in preview["mapped"]], [source["path"]])
+            self.assertEqual(len(preview["unmapped"]), 1)
+            self.assertFalse((self.root / "_generation" / "proposals").exists())
+            calls.clear()
+            execution.overlay_scan(self.root, inputs, True, scan_id="scan-one")
+            saved = base.read_json(self.root / "_generation" / "proposals" / "scan-one" / "overlay-scan.json")
+            self.assertEqual(saved["mapped"][0]["displayName"], "Ann")
+            with self.assertRaisesRegex(ValueError, "inside the library root"):
+                execution.overlay_scan(self.root, pathlib.Path(tempfile.gettempdir()), scan_id="scan-two")
 
     def test_manual_prefix_backup_and_repeat(self):
         workflows = self.root / "workflows"

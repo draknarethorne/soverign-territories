@@ -258,6 +258,10 @@ class ReferenceRenderingTests(unittest.TestCase):
             ["cleanup-batch", "--endpoint", "http://127.0.0.1:8188"],
             ["outputs", "--apply", "--check", "--output-root", str(comfy)],
             ["pull", "--output-root", str(comfy)],
+            ["outputs", "--sources", "scan.json"],
+            ["cleanup-batch", "--inputs", str(self.root)],
+            ["status", "first-test", "--id", "scan-x"],
+            ["overlay-scan"],
         )
         for args in refused:
             with self.subTest(args=args), contextlib.redirect_stderr(io.StringIO()) as error:

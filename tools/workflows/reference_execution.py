@@ -8,6 +8,7 @@ import json
 import os
 import pathlib
 import re
+import sys
 import time
 import urllib.error
 import urllib.parse
@@ -28,6 +29,10 @@ RECIPES = {
     "manual-0c-cleanup": ("0_Edit", "0c_Cleanup", "Angelica_Qwen_Edit_0c_Cleanup.json"),
     "manual-0e-enhance": ("0_Edit", "0e_Enhance", "Angelica_Qwen_Edit_0e_Enhance.json"),
     "manual-0f-full": ("0_Edit", "0f_Full", "Angelica_Qwen_Edit_0f_Full.json"),
+    "manual-0b-background-basic": ("0_Edit", "0b_Background", "Angelica_Qwen_Edit_0b_Background_Basic.json"),
+    # The installed 0d graphs are "Bare" pose studies; only their graph/settings are reused and
+    # the clothed-preservation prompt below replaces their prompt text.
+    "manual-0d-deluxe-pose": ("0_Edit", "0d_Deluxe", "Angelica_Qwen_Edit_0d_Deluxe_Bare.json"),
 }
 ALLOWED = {
     "LoadImage", "SaveImage", "ModelSamplingAuraFlow", "VAELoader",
@@ -56,6 +61,8 @@ def pilot_prompts(recipe):
         "manual-0c-cleanup": "Remove distracting text, icons and background clutter. Use a simple neutral studio background; preserve the existing pose.",
         "manual-0e-enhance": "Improve exposure, neutral lighting and fine photographic detail modestly. Preserve the original background, framing and pose.",
         "manual-0f-full": "Create a head-to-toe full-length photograph on a neutral studio background, extending unseen areas conservatively in the same clothing. Preserve the pose and visible identity. Unseen areas are synthesized, not recovered.",
+        "manual-0b-background-basic": "Replace only the background with a plain light-grey seamless studio backdrop and soft even lighting. Remove any text, icons or screen elements. Keep the person, clothing, pose and framing unchanged.",
+        "manual-0d-deluxe-pose": "Show the same person in a new relaxed full-length standing fashion pose: weight on one leg, one hand resting on the hip, body turned slightly toward the camera, on a plain light-grey seamless studio backdrop. Same outfit, fully clothed. Remove any text, icons or screen elements.",
     }
     if recipe not in instructions:
         raise ValueError("No reviewed clothed pilot prompt for this recipe")
@@ -157,7 +164,7 @@ def catalog():
         except (ValueError, OSError) as error:
             entries.append({"id": recipe, "label": label, "stage": stage,
                             "available": False, "reason": str(error)})
-    for stage, label in (("0_Edit", "0d Deluxe"), ("1_Alpha", "A-pose"),
+    for stage, label in (("1_Alpha", "A-pose"),
                          ("2_Studies", "Studies"), ("Bench", "Optional diagnostics")):
         entries.append({"id": "pending-" + slug(label).lower(), "label": label,
                         "stage": stage, "available": False,
@@ -875,9 +882,72 @@ def manual_prefixes(root, apply=False):
     return {**summary, "backup": str(backup)}
 
 
+def overlay_scan(root, inputs, apply=False, *, scan_id=None):
+    """Re-run intake's overlay heuristic over a raw intake mirror and map hits to Gallery sources.
+
+    Read-only for images; the scan result is the only write. Raw hits are tied to the current
+    Gallery copy by stable photo key, because that copy may already be cropped or repainted.
+    """
+    tools = pathlib.Path(__file__).resolve().parents[1]
+    for folder in (tools / "workflows", tools / "art"):
+        if str(folder) not in sys.path:
+            sys.path.insert(0, str(folder))
+    import comfy_workflows
+    import preparation_geometry
+    from PIL import ImageOps
+    root = safe_root(root)
+    inputs = pathlib.Path(inputs).resolve()
+    if not inputs.is_dir() or not inputs.is_relative_to(root.resolve()):
+        raise ValueError("Scan inputs must be an existing folder inside the library root")
+    scan_id = scan_id or "overlay-scan-" + datetime.datetime.now().strftime("%Y%m%d-%H%M")
+    if not re.fullmatch(r"[a-z0-9][a-z0-9-]{0,40}", scan_id):
+        raise ValueError("Invalid scan ID")
+    by_key = {}
+    for source in gallery_sources(root):
+        if source.get("kind"):
+            continue
+        key = comfy_workflows.photo_key(pathlib.PurePosixPath(source["path"]).name)
+        if key:
+            by_key.setdefault(key, []).append(source)
+    scanned, mapped, unmapped, errors = 0, [], [], []
+    for path in sorted(inputs.rglob("*")):
+        if path.suffix.lower() not in {".jpg", ".jpeg", ".png", ".webp"} or not path.is_file():
+            continue
+        scanned += 1
+        raw = path.relative_to(inputs).as_posix()
+        try:
+            with Image.open(path) as opened:
+                image = ImageOps.exif_transpose(opened).convert("RGB")
+            detected = preparation_geometry.plan(image)["overlayDetected"]
+        except (OSError, ValueError, Image.DecompressionBombError) as error:
+            errors.append({"raw": raw, "error": str(error)})
+            continue
+        if not detected:
+            continue
+        key = comfy_workflows.photo_key(path.name)
+        matches = by_key.get(key, []) if key else []
+        if not matches:
+            unmapped.append({"raw": raw, "photoKey": key})
+        for source in matches:
+            mapped.append({"path": source["path"], "displayName": source["displayName"],
+                           "photoKey": key, "raw": raw, "rawSha256": base.digest(path.read_bytes())})
+    destination = base.safe_path(root, f"_generation/proposals/{scan_id}")
+    result = {"schemaVersion": 1, "scanId": scan_id, "createdAt": now(), "inputs": str(inputs),
+              "heuristic": "preparation_geometry.plan overlayDetected", "scanned": scanned,
+              "detected": len(mapped) + len(unmapped), "mapped": mapped, "unmapped": unmapped,
+              "errors": errors, "file": str(destination / "overlay-scan.json"), "applied": apply}
+    if apply:
+        owned_write(destination / "overlay-scan.json", base.encode(result))
+    return result
+
+
 def cleanup_batch(root, recipes=("manual-0c-cleanup-basic",), samples=2, hints=("needs-cleanup",),
-                  apply=False, *, proposal_id=None, seeds=None):
-    """Propose (never queue) request JSON for intake images that intake left for ComfyUI cleanup."""
+                  apply=False, *, proposal_id=None, seeds=None, source_file=None):
+    """Propose (never queue) request JSON for intake images that intake left for ComfyUI cleanup.
+
+    source_file: an overlay-scan.json (or any JSON with a "mapped" list of {"path"}) that
+    replaces the published hints as the candidate list.
+    """
     if __package__:
         from . import reference_gallery as gallery
     else:
@@ -895,7 +965,19 @@ def cleanup_batch(root, recipes=("manual-0c-cleanup-basic",), samples=2, hints=(
     per_source = len(chosen) * samples
     if samples not in gallery.SAMPLE_COUNTS or per_source > MAX_RUN_JOBS:
         raise ValueError(f"Samples must be one of {gallery.SAMPLE_COUNTS} and fit {MAX_RUN_JOBS} jobs per source")
-    candidates = [source for source in gallery_sources(root) if source.get("cleanup") in hints]
+    if source_file is not None:
+        listed = base.read_json(pathlib.Path(source_file)).get("mapped")
+        if not isinstance(listed, list) or not all(isinstance(item, dict) and isinstance(item.get("path"), str)
+                                                   for item in listed):
+            raise ValueError("Source file needs a 'mapped' list of {\"path\": ...} entries")
+        wanted = {item["path"] for item in listed}
+        candidates = [{**source, "cleanup": "needs-cleanup"} for source in gallery_sources(root)
+                      if source["path"] in wanted and not source.get("kind")]
+        missing = wanted - {source["path"] for source in candidates}
+        if missing:
+            raise ValueError(f"Source file lists {len(missing)} path(s) that are not current Gallery sources; rescan")
+    else:
+        candidates = [source for source in gallery_sources(root) if source.get("cleanup") in hints]
     proposal_id = proposal_id or "cleanup-" + datetime.datetime.now().strftime("%Y%m%d-%H%M")
     if not re.fullmatch(r"[a-z0-9][a-z0-9-]{0,40}", proposal_id):
         raise ValueError("Invalid proposal ID")
@@ -913,6 +995,7 @@ def cleanup_batch(root, recipes=("manual-0c-cleanup-basic",), samples=2, hints=(
     destination = base.safe_path(root, f"_generation/proposals/{proposal_id}")
     summary = {
         "schemaVersion": 1, "proposalId": proposal_id, "createdAt": now(), "hints": list(hints),
+        "sourceFile": str(source_file) if source_file is not None else None,
         "recipes": [entry["id"] for entry in chosen], "samplesPerWorkflow": samples,
         "sourceCount": len(candidates), "jobCount": sum(item["jobs"] for item in batches),
         "queueCapacity": QUEUE_CAPACITY, "destination": str(destination),

@@ -229,6 +229,27 @@ It writes `_generation\proposals\cleanup-YYYYMMDD-HHMM\` with one request per
 64 jobs plus `proposal.json`, and never overwrites an existing proposal. Each
 request then goes through the normal prepare, compile and run steps.
 
+When no published hints exist yet (before a new-format preparation run),
+`overlay-scan` re-runs intake's overlay heuristic over a raw intake mirror,
+read-only, and maps each hit to the current Gallery copy by its stable photo
+key. The Gallery copy may already be cropped or repainted, and hits that are not
+Gallery sources yet are listed as `unmapped`. Feed the scan to `cleanup-batch`
+with `--sources`:
+
+```bat
+bin\render-reference.cmd overlay-scan --root "LIBRARY" --inputs "LIBRARY\_sandbox-state\RUN\inputs" --id overlay-scan-DATE --apply
+bin\render-reference.cmd cleanup-batch --root "LIBRARY" --sources "LIBRARY\_generation\proposals\overlay-scan-DATE\overlay-scan.json" ^
+  --recipe manual-0c-cleanup-basic --recipe manual-0d-deluxe-pose --samples 1 --id cleanup-DATE --apply
+```
+
+Bound `0_Edit` recipes: `manual-0b-background-basic`, `manual-0c-cleanup-basic`,
+`manual-0c-cleanup`, `manual-0d-deluxe-pose`, `manual-0e-enhance` and
+`manual-0f-full`. Each reuses one installed `zz_shots/Angelica/0_Edit` graph for
+its model and settings, but its prompt is always replaced by the reviewed
+clothed-preservation prompt. `0d-deluxe-pose` reuses the full-denoise
+`0d_Deluxe_Bare` graph to re-pose the person in the same outfit; it never
+produces unclothed images of intake photos.
+
 Results reference files in the configured ComfyUI output root. They are **not
 all copied back**. To keep one selected verified output outside ComfyUI:
 

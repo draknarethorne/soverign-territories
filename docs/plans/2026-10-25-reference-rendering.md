@@ -225,6 +225,62 @@ from a button. Decisions taken under the standing authority (rationale inline):
   with a 944x1104 copy and a sidecar. A repeated pull reported `already-pulled`.
   The republished Rendering page lists it as a `pulled-render` source.
 
+## Oct 26 afternoon: large unattended cleanup and pose run
+
+Asked: run everything that still needs cleanup after intake through ComfyUI
+(up to the 200-job queue), add `0d` poses for each cleanup image and several
+`0b`/`0c` runs, 1-2 samples each, automate the cleanup, document it.
+
+Finding the cleanup set. Published cleanup hints were empty (preparation
+evidence is unverified until R11), and a rescan of the 2,420 Gallery copies
+found 0 overlays, because legacy preparation had already cropped or repainted
+them. A spot check showed that leftover phone-UI pieces (inset thumbnails,
+icons, black bars) were still visible. So intake's overlay heuristic was rerun over
+the raw intake mirror of the overnight run (read-only):
+
+| Step | Count |
+| --- | --- |
+| Raw intake images scanned | 2,741 (82 s) |
+| Overlay detected | 107 |
+| Mapped to a current Gallery source by photo key | 74 (37 people: Potentials 28, Prospects 23, Angels 10, Models 7, Sisters 6) |
+| Unmapped | 33: 23 `Various\gallery` screenshots not yet in Photo Review, 10 `Artists\Fantasy` |
+
+Decisions (made unattended, reversible, for review):
+
+- `0d_Deluxe` installed graphs are all "Bare" variants. The recipe
+  `manual-0d-deluxe-pose` reuses only the graph and settings (full denoise);
+  its prompt is replaced by a clothed re-pose prompt ("same outfit, fully
+  clothed"). Unclothed renders of real people from intake photos are never
+  produced.
+- `manual-0b-background-basic` binds `0b_Background_Basic` with a plain
+  light-grey backdrop prompt.
+- `0c Cleanup Basic` is the automated cleanup: its outputs are the ones
+  pulled back automatically (see results). `0d`, `0b` and full `0c` are left
+  for the user to choose on the Outputs page.
+
+Batches (all via `bin\render-reference.cmd`, one sample each):
+
+| Proposal | Sources x recipes | Jobs | Batches |
+| --- | --- | --- | --- |
+| `cleanup-0c0d-20261026` | 74 x [`0c-cleanup-basic`, `0d-deluxe-pose`] | 148 | -01 (64), -02 (64), -03 (20) |
+| `cleanup-0b0c-20261026` | 21 (first source per person) x [`0b-background-basic`, `0c-cleanup`] | 42 | -01 |
+
+- [x] **P1 ai** R25 `overlay-scan` command and `cleanup-batch --sources/--id`
+  (tests: source list replaces hints and refuses stale paths; scan maps by
+  photo key and writes only with `--apply`; every bound recipe has a clothed
+  prompt; CLI flag scoping).
+- [x] **P1 ai** R26 Bind `0b Background Basic` and `0d Deluxe Pose (clothed)`.
+- [ ] **P1 you** R27 Review the large run on the Outputs page (filter batch
+  `cleanup-0c0d-20261026` / `cleanup-0b0c-20261026`): judge the auto-pulled
+  `0c` cleanups, pick any `0d` poses or `0b`/`0c` results worth pulling, and
+  accept or change the clothed-only `0d` rule.
+- [ ] **P2 either** R28 Take the 23 unmapped `Various\gallery` screenshots
+  through intake into Photo Review, then rerun `overlay-scan`.
+
+### Large run results
+
+(Filled in when the run finishes.)
+
 ## Outcome
 
 Select a source in Intake, People, Review or scoped Artist browsing, choose a
@@ -746,5 +802,16 @@ Coverage: C1-C9 and R17-R24 above.
 the queue limit for comfy is 200 jobs
 
 I did confirm a clean-up job did run properly.  I'm actually thinking that during the intake if we can't properly clean-up some files and comfy sovereign females workspace is running we could queue/schedule some jobs to render those items and run another job to view them and allow me to pull them back.  Or create a batch and ask me if we want to run the comfyui clean-up to attempt to remove the logos, etc... and/or other clean-up jobs.  Basically, keep some meta-data about the incoming images that need more clean-up in a generated batch.  Basically an advanced clean-up that is optional if I wish to run that batch and select from those files to bring one back - or you could even inspect them and bring the best of 4 back automated manner.  That might be a great way to put final touches on the images post the likeness process without me having to find or figure out which ones.  The other option is we use the meta-data to display them all as a filter in review gallery and I can select them some or all for clean-up.  Which means I might want a multi-type select and "select all" type setup like is available in google drive when you are viewing files.  vs. just actions on single photos.  These are all options for you to think about what fits best in our gallery views and how best to accomodate this type of automated integration with comfyui - even if it's still requires me to click a few buttons, check boxes, drop-downs, etc... But I love the integration and want to be able to use it in many different approaches.  It would allow me to select those batches of images, pick the workflows for that batch, select a number of runs for the workflows, and ultimately I'd love to be able to launch the cli with a button instead of just downloading the batch and running the command manually.  Then have another button to then review all the images in comfy, etc... we can figure out the right approach on what can be automated, what can pick best images to bring back or if I have to choose which ones to send to comfy and which to bring back - those are all great options.  I'd even like to browse ALL images in Comfy as well or filter them by workflow name or even if we can use the character names in the files to filter just for one person.  Many, many different options.  Would also like to be able to full view the images ahead of pulling them back.  We don't need to generate thumbnails, just show them scaled in the viewer until we bring them back into the gallery.  If I do bring some back, we'd need to pad/crop them to the 944x1104 versions as well, not just put into the gallery.  I'll want the files in the gallery to use the standard naming and not the workflow naming or some adaptation of it - or we need the filenames in the workflow to be more aligned to our image naming and not the way I have them named today.  Just more to think about as we work on it, there is probably something useful about the pose/workflow name to be used in the gallery so I know it's a comfy file rather than a normal original from facebook or a screenshot.  More to think about, document and execute on without my intervention.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Oct 26 large cleanup run (verbatim)
+
+Source: chat, Oct 26, 2026, about 11:00 -05:00.
+Coverage: R25-R28 and the large run section above; the combined recap.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Also, go ahead and run a bunch of jobs on the images in various that still need clean-up after the intake and let's see what happens in a larger batch.  I'll be gone so you can render up to 200 images in the queue.  So, don't stop, run the process end to end and automate the clean-up and also generate some additional 0d_ related images for each one that is in cleanup.  Run several 0_b and 0_c workflows as well.  You can run just 1 or 2 instead of 4 of each.  Whatever makes the most sense in an end-to-end run.  Cleanup usually doesn't require many iterations.  It's more the poses that drive more iterations.  So keep going, document everything and write a combined recap for the past 3 days of work into a single recap for me today with all outstanding items that require my attention, similar to yesterday but now with the additional items I need to do.
 ```
 <!-- markdownlint-enable MD013 -->
