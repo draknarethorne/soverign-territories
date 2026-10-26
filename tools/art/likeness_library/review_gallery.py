@@ -85,6 +85,7 @@ SCRIPT = preparation_provenance.EVIDENCE_SCRIPT + """
 const records=JSON.parse(document.getElementById("review-data").textContent);
 const peopleData=JSON.parse(document.getElementById("people-data").textContent);
 const cardUseGuidance=JSON.parse(document.getElementById("card-use-guidance").textContent);
+const generationIndex=JSON.parse(document.getElementById("generation-index").textContent);
 const group=document.getElementById("group"), bucket=document.getElementById("bucket");
 const state=document.getElementById("state"), sort=document.getElementById("sort");
 const mode=document.getElementById("mode"), person=document.getElementById("person");
@@ -194,6 +195,12 @@ function card(r, readOnly=false) {
     article.append(sources);
   }
   appendPreparationEvidence(article,r.preparationEvidence);
+  if(r.generationSource) {
+    const generate=document.createElement("a");
+    generate.href=generationIndex+"?source="+encodeURIComponent(r.generationSource);
+    generate.className="intake-detail-link";generate.textContent="Generate / Test";
+    article.append(generate);
+  }
   if(r.photoProtectionInfo){
     const note=document.createElement("p");note.className="detail protection-info";
     note.textContent=r.photoProtectionInfo;article.append(note);
@@ -1417,6 +1424,7 @@ def render_html(items, stamp, warnings=(), policy=None, reports_prefix="../"):
     payload = json.dumps(public_items, ensure_ascii=False).replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
     people_payload = json.dumps(people_data, ensure_ascii=False).replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
     guidance_payload = json.dumps(gallery_chrome.CARD_USE_GUIDANCE, ensure_ascii=True)
+    generation_payload = json.dumps(reports_prefix + "../_generation/index.html", ensure_ascii=True).replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
     policy_payload = json.dumps(policy, ensure_ascii=True).replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
     warning_html = ""
     if warnings:
@@ -1462,6 +1470,7 @@ def render_html(items, stamp, warnings=(), policy=None, reports_prefix="../"):
 <script id="review-data" type="application/json">{payload}</script>
 <script id="people-data" type="application/json">{people_payload}</script>
 <script id="card-use-guidance" type="application/json">{guidance_payload}</script>
+<script id="generation-index" type="application/json">{generation_payload}</script>
 <script id="category-order" type="application/json">{json.dumps([category for category in policy["categoryOrder"] if category != "Artists"] + ["Various"])}</script>
 <script>{SCRIPT}</script>
 </div></body></html>
@@ -1510,6 +1519,7 @@ def _main(argv=None):
         item["preparationEvidence"] = provenance.evidence(
             item["_photo"].path, item.get("photoId"),
         )
+        item["generationSource"] = item["_photo"].path.relative_to(work).as_posix()
     public_items, thumb_dir = write_thumbnails(items, out)
     reports = pathlib.Path(work) / "_reports"
     gallery_chrome.publish_banner(reports)

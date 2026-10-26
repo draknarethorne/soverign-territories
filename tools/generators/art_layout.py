@@ -20,7 +20,7 @@ import pathlib
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
 THEMES = {p.parent.name for p in (ROOT / "data/art/themes").rglob("theme.json")}
-LAYOUT_STAGES = {"scene", "pose", "head", "clothing", "armor", "showcase", "brand", "card", "alpha", "polish", "final"}
+LAYOUT_STAGES = {"edit", "scene", "pose", "head", "clothing", "armor", "showcase", "brand", "card", "alpha", "polish", "final"}
 STAGE_FOLDER = {"pose": "poses"}
 BRAND_FAMILIES = {"key-art": "key-art", "title": "title", "plate": "plate", "logo": "logo", "icon": "icon", "harmonize": "edit"}
 # Sister scenes are grouped into a few broad buckets. A folder only exists to hold closely related cards: a shiny or
@@ -153,6 +153,13 @@ def family(card, group, root=None):
         return brand_family(art_id)
     if stage == "card":
         return []  # mass card art sits flat in its stage folder
+    if stage == "edit":
+        ref = comps.get("edit_task", "")
+        try:
+            tags = set(json.loads((pathlib.Path(root or ROOT) / ref).read_text(encoding="utf-8")).get("tags", []))
+        except (OSError, ValueError):
+            return []
+        return next(([name] for name in ("cleanup", "background", "enhance", "full") if name in tags), [])
     if stage == "alpha":
         # The creation chain of a hero: 1 Prime (from the original photo) at the root, 1b the experiments for the first shot (1b_Experiments/<family>: a different way to
         # start from the photo, promoted to 1_Prime when it wins), 2 Bare (the figure; the celestial experiment 2b nested in bare/celestial), 3 Barefoot and Heels.
@@ -194,6 +201,8 @@ def phase_path(stage, family):
         if fam[:1] == ["bare"]:
             return ["1_Alpha", "2b_Experiments", fam[1]] if len(fam) > 1 else ["1_Alpha", "2_Bare"]
         return ["1_Alpha", "3_Footwear"] if fam[:1] == ["footwear"] else ["1_Alpha", "1_Prime"]
+    if stage == "edit":
+        return ["0_Edit", *fam]
     if stage == "poses":
         if not fam:
             return ["1_Alpha"]
@@ -239,6 +248,8 @@ def parse_dirs(dirs):
             return "alpha", ["bare", *tail]
         if sub == "3_Footwear":
             return "alpha", ["footwear"]
+    elif p == "0_Edit":
+        return "edit", rest
     elif p == "2_Studies" and rest:
         if rest[0] == "body":
             return "poses", ["views"]

@@ -54,7 +54,7 @@
   ],
   "exclude": ["X_*.json"],
   "stageTemplates": "ST?_*.json",
-  "inputRoles": {"alpha/": "photo", "alpha/base": "photo", "alpha/bare": "prime", "alpha/footwear": "bare", "head": "apose", "motion": "apose", "polish": "scene", "final": "polish", "default": "bare"},
+  "inputRoles": {"edit": "photo", "alpha/": "photo", "alpha/base": "photo", "alpha/bare": "prime", "alpha/footwear": "bare", "head": "apose", "motion": "apose", "polish": "scene", "final": "polish", "default": "bare"},
   "standardSize": [944, 1104],
   "denoise": {"pick": "high", "golden": 0.9},
   "inputs": {
@@ -134,7 +134,7 @@
     "poses": "workflows/_templates/ST1_Qwen_A_Pose.json",
     "default": "workflows/_templates/ST2_Qwen_Edit.json",
     "text": "workflows/_templates/ST0_Qwen_Text.json",
-    "byStage": {"polish": "workflows/_templates/ST4_Qwen_Polish.json"}
+    "byStage": {"edit": "workflows/_templates/ST2_Qwen_Edit.json", "polish": "workflows/_templates/ST4_Qwen_Polish.json"}
   },
   "stageEngines": {"polish": ["qwen"], "final": ["firered"]},
   "engines": {

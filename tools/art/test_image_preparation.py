@@ -282,6 +282,29 @@ class PreparationTests(unittest.TestCase):
         for _, candidate in preparation.candidates(result):
             self.assertEqual(candidate.info, {})
 
+    def test_file_decode_and_streamed_image_writes_preserve_exact_evidence(self):
+        image = Image.new("RGB", (80, 120), (24, 48, 96))
+        source_bytes = io.BytesIO()
+        image.save(source_bytes, format="PNG")
+        source = self.root / "source.png"
+        source.write_bytes(source_bytes.getvalue())
+        self.assertEqual(preparation.decode_file(source).tobytes(),
+                         preparation.decode(source_bytes.getvalue()).tobytes())
+
+        output = self.root / "streamed.png"
+        with mock.patch.object(preparation.io, "BytesIO",
+                               side_effect=AssertionError("image output must stream to disk")):
+            output_hash = preparation.save_image(output, image, "PNG")
+        self.assertEqual(output_hash, preparation.sha_file(output))
+        self.assertEqual(output_hash, preparation.sha(output.read_bytes()))
+
+    def test_pixel_change_metric_is_chunked_and_channel_averaged(self):
+        control = Image.new("RGB", (2, 2), (0, 0, 0))
+        changed = control.copy()
+        changed.putpixel((0, 0), (3, 3, 3))
+        self.assertEqual(preparation.mean_absolute_pixel_change(control, changed), 0.75)
+        self.assertIsNone(preparation.mean_absolute_pixel_change(control, Image.new("RGB", (1, 1))))
+
     def test_profiled_controls_are_byte_reproducible_without_metadata(self):
         image = Image.new("RGB", (40, 60), (90, 50, 20))
         profile = ImageCms.ImageCmsProfile(ImageCms.createProfile("sRGB")).tobytes()

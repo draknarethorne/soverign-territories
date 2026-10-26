@@ -2,6 +2,108 @@
 
 **Status:** active (design and migration audit approved; no asset migration applied)
 
+## Oct 25 reference-rendering handoff
+
+The [active reference-rendering plan](2026-10-25-reference-rendering.md)
+owns dedicated workspace, frozen per-image requests, batch/API execution and
+Gallery results. This plan retains shared female prompt/component review,
+`0_Edit` stage integration and Prime/Bare input-role semantics.
+The user-created Sovereign Females clone keeps manual `zz_shots` referencing
+Angelica; those bindings are historical experiments, not approved generic
+appearance-preserving recipes. Offline input freezing, bounded graph binding,
+scoped execution/retention and static Gallery export/results are implemented;
+permanent template/graph migration remains here and in rendering R2-R5.
+Its proposed reference-faithful versus slender/fuller-bust clothed profiles
+require explicit preserve/change behavior; do not copy fixed character colors,
+hairstyles or automatic cosmetic resets into a supposedly preserving recipe.
+An ephemeral rendering context must not change the current generic Female,
+cast identities or source manual text. A bounded existing-stage pilot can be
+reviewed separately; it does not implement `0_Edit` or accept all flow variants.
+
+## Oct 25, 21:36: Sovereign Females as the formal edit pilot
+
+Use **Sovereign Females** as the first proving ground for formal `0_Edit`,
+analogous to the image-processing sandbox. This refines the existing bounded
+migration gate, not a separate prompt system or permission for broad deployment.
+The later overnight authorization permits documented sandbox execution and
+isolated pilot publication, superseding the earlier execution-only permission
+gate below. It does not turn the manual binding into a shared generated recipe.
+This plan remains the owner of stage/schema/layout/input-role integration;
+the [rendering plan](2026-10-25-reference-rendering.md) owns isolated job
+preparation, server execution and Gallery request/result actions.
+
+1. Inventory selected manual `zz_shots` and their matching source prompts under
+   P1/P2, preserving originals. Angelica bindings are examples to disentangle,
+   not generic appearance defaults to copy.
+2. Resolve one edit variant's intended change/preservation and exact input role.
+   P4 implements the real stage across its existing consumers, rather than
+   merely publishing a folder named `0_Edit`.
+3. Publish generated pilot copies in a separate `Reference` area only after
+   source/recipe approval and the rendering root-mapping gate. Compare exact
+   input/output evidence before accepting the recipe.
+4. Roll out accepted shared recipes incrementally to explicitly selected
+   character workspaces under P6. Keep character overrides separate from
+   reference preservation; retain existing manual flows until replacements
+   are accepted. Do not change all workspaces at once.
+
+`0_Edit` is an optional, explicit ComfyUI stage, not mandatory intake cleanup
+or an automatic dependency for every Alpha job. A chosen edit result may feed
+Alpha; an already suitable photo may go directly to Alpha. No new edit variant,
+prompt, stage implementation or workflow publication is approved by recording
+this direction alone.
+
+## Oct 26 acceleration direction: migrate `0_Edit` first, then chain forward
+
+The user explicitly allows a simpler/faster delivery path: prioritize bringing
+manual `0_Edit` work back into shared generation (templates + reusable JSON +
+workflow generation) as the first major migration, then connect staged
+selection forward into Alpha/Studies/Layers/Wardrobes/Scene.
+
+This is an acceleration of existing scope, not a scope reset. Keep migration
+incremental, testable and reversible, and keep provenance boundaries that
+separate originals/core evidence from synthetic generated derivatives.
+
+- [x] **P1 ai** P10 Implement the first shared `0_Edit` data-driven migration
+  slice from `prompts/_edit/female` into `data/art/_templates`, reusable JSON
+  components and `_sets` assembly so generated workflows can run without manual
+  `zz_shots` editing. Delivered the generic Female `0c_Cleanup_Basic` slice;
+  later variants and visual acceptance remain open.
+- [ ] **P1 ai** P11 Define stage-input contracts that allow user-selected branch
+  progression (original or generated) instead of a mandatory single-chain path.
+  Document compatibility/guards per stage and align with rendering R16.
+- [ ] **P1 ai** P12 Define promoted-output directory structure for selected
+  generated images so Gallery lineage remains clear by stage and recipe while
+  preserving existing identity-core/original boundaries.
+
+## Oct 26 first shared `0_Edit` slice
+
+The generic Alpha Female `0c_Cleanup_Basic` slice now flows through the normal
+art-data pipeline:
+
+- `edit` is accepted by the card/piece schemas and is in the studio class.
+- `art_layout.py` maps its cleanup family to `0_Edit/cleanup` and parses that
+  path back to the edit stage.
+- `edit-cleanup-human.txt` and the reusable
+  `data/art/edits/cleanup/basic.json` keep preservation language in the shared
+  template and task-specific positive/negative instructions in data. The
+  original manual prompt also requested body, lighting and clothing changes;
+  those conflicting directions were deliberately excluded from this
+  appearance-preserving cleanup recipe.
+- `workspaces.json` routes `edit` to `ST2_Qwen_Edit` with the selected photo as
+  input. `comfy_workflows.py` recognizes the stage and generates the repository
+  workflow from the canonical `Female_Edit_Cleanup_Basic.txt` prompt.
+- The generated workflow is
+  `workflows/angel-primes/Female/Female_Qwen_Edit_Cleanup_Basic.json`. It stays
+  in the repository only: it was not deployed to a workspace or rendered.
+
+The first generation attempt caught a missing `EDIT_TASK_NEG` value; adding
+task-specific negatives to the reusable piece resolved it. The prompt was
+regenerated with no unresolved tokens, and the workflow preview showed exactly
+one create, no updates. A focused regression test ensures every template token
+in this pilot is supplied; `bin/validate.cmd` passed all 811 tests across 29
+suites. This closes only P10's first slice; it does not migrate the remaining
+manual edit variants, revised Alpha, Studies or later stages.
+
 ## Oct 23 input dependency
 
 [Intake preparation](2026-10-23-image-intake-preparation.md) now precedes
@@ -90,6 +192,14 @@ belongs in a hero's permanent identity.
 
 ## Work and evidence gates
 
+**Oct 25 overnight clarification:** both manual `zz_shots/0_Edit` and
+`zz_shots/1_Alpha` are the test bed to bring back into this normal data-driven
+system. A temporary hard-coded API pilot does not complete P4/P5 or authorize
+copying manual prompts forever. Rationalize tags, reusable definitions and
+sequence for Prime/Bare, then apply demonstrated structural lessons to Studies
+and later phases. Execution/Gallery work can progress independently but must
+consume the same accepted generated recipes.
+
 - [ ] **P1 ai** P1 Snapshot the selected manual files and record hashes,
   intent, tested status, labels, input/output role, engine and source notes.
   Include naming/workflow notes; flag contradictory text and duplicates.
@@ -159,6 +269,31 @@ Prior exact user discussions and historical execution logs remain preserved
 in their retired source records. All current constraints and unfinished
 decisions needed for this migration have live homes above and in the context
 reference. Archival of old plans is not completion of this migration.
+
+## Raw user direction: Oct 25, 21:36 -05:00
+
+Coverage: the Sovereign Females pilot section above refines P1/P2/P4/P6/P7:
+inventory manual work, implement one formal stage contract, prove a bounded
+generated batch, then roll accepted recipes out incrementally. Rendering owns
+execution; intake acceptance remains independent.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Maybe this is the workspace we use to incorporate the 0_Edit as the formal beginning of the 0_Edit that will get pushed out into all the other workspaces over time as well... that's a decent thought - much like a how we're using the sandbox to test the image processing updates.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Raw user direction: overnight four-track clarification
+
+Coverage: P1-P9 retain data-driven `0_Edit` and revised Alpha ownership;
+the rendering plan owns dynamic execution/Gallery integration and the intake
+plan owns processing. A hard-coded proof is not a replacement for this migration.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Ideally the 0_Edit workflows do support the same template and .json driven generation of the files and we're going to bring back the zz_shots 1_Alpha to replace our existing 1_Alpha prompts - but it needs the rationalization of the tags and etc... that we did documentin a plan.  Just want to make sure you know that my zz_shots/0_Edit and 1_Alpha are a manual test bed for what I want to bring back to our normal data driven generation - so we'd just have more generic .json files that aligned to the 0_Edit phase and 1_Alpha is more an example of the restructing of sequence and what tags are reall needed to get to the 1_Prime and 2_Bare images.  Hope this all makes sense as we're basically juggling 3 balls right now with 1) image intake/likeness processing 2) ComfyUI integration for dynamic and automatic workflow execution 3) adding 0_Edit phase and fixing 1_Alpha (and using lessons learned to adjust 2_Study and all phases for template structure) and 4) Building the GUI with so much more functionality to be the one-stop-shop for triggering the CLI and automation.  So I guess that 4 balls - lol!
+```
+<!-- markdownlint-enable MD013 -->
 
 ## Raw user direction: Oct 22, 16:21 -05:00
 

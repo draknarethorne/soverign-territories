@@ -3391,6 +3391,8 @@ def main(argv=None, embedder=None, *, domain="general"):
     s.add_argument("--run-dir", required=True, help="new sandbox Working-local directory for the fresh cache, plan, and rollback copies")
     s.add_argument("--intake-only", action="store_true",
                    help="prepare all immutable inputs with --apply, then stop before matching; same run resumes")
+    s.add_argument("--include-current-various", action="store_true",
+                   help="stage current Working Various images over matching immutable IDs and include genuinely new images")
     s.add_argument("--policy", help="versioned likeness policy JSON")
     s.add_argument("--check", action="store_true", help="verify the saved plan and installed outputs without changing photos")
     s.add_argument("--dry-run", action="store_true", help="inventory immutable inputs only; no preparation, downloads or matching")

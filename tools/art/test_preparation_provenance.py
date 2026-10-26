@@ -71,6 +71,16 @@ class PreparationProvenanceTests(unittest.TestCase):
         self.assertIn("pilot-v7/photos/", match["href"])
         self.assertIn("not rename proof", preparation_provenance.render_evidence(evidence))
 
+    def test_empty_aborted_run_folder_is_ignored_but_a_partial_one_poisons_the_index(self):
+        aborted = self.root / "_reports" / "preparation" / "aborted-v9"
+        aborted.mkdir()
+        index = self.index()
+        self.assertEqual(index.evidence(self.photo, self.photo_id)["state"], "verified")
+        self.assertEqual({run["name"]: run["status"] for run in index.history_runs}["aborted-v9"],
+                         "empty folder; ignored")
+        (aborted / "partial.json").write_text("{}")
+        self.assertEqual(self.index().evidence(self.photo, self.photo_id)["state"], "unverified")
+
     def test_real_retained_detail_links_resolve_to_verified_artifacts_without_external_requests(self):
         data = json.loads((self.output / "manifest.json").read_text(encoding="utf-8"))
         row = data["photos"][0]

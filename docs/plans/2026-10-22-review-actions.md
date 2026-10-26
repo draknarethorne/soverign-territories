@@ -103,7 +103,7 @@ from the similarly named photo action.
 | A5 | Oct 20 C7 | Stable report replacement without losing dated evidence |
 | A6 | Recap/scenario feedback | Explain and test one real scenario at a time |
 | A7 | Acceptance feedback: CLI Triggering | Bounded execution UX exploration, not an immediate local server |
-| A8 | Oct 20 H6 | Later art-authoring/ComfyUI UI, explicitly outside current delivery |
+| A8 | Oct 20 H6 and Oct 25 generation requests | Generation execution transferred to the active reference-rendering plan; broader authoring remains future scope |
 | A9 | Oct 23 early Junk/retire clarification | Distinct manual per-photo Junk and recoverable retirement; existing action transaction/undo safeguards |
 | Structure plan | Oct 20 H2 | General package extraction, not duplicate refactor ownership here |
 | CLI proposal | Oct 20 H4 | User-facing consolidation only after approval and replacement tests |
@@ -165,13 +165,12 @@ from the similarly named photo action.
   execution bridge only if needed. First improve displayed command guidance
   and batch explanations; do not add browser shell/filesystem access, imply
   a download applies actions, or build a server without a separate decision.
-- [ ] **P3 either** A8 Keep broader art-authoring and ComfyUI batch UI in
-  the future roadmap; preserve manifest integration without browser file access.
-  Oct 25 clarification: the intended future entry is a gallery image, with
-  workflow/image/output-prefix selection integrated rather than manual ComfyUI
-  searching and loading. Await the user's write-up before defining execution,
-  destination or service permissions. The complete note lives in
-  [layout's gallery-first clarification](2026-10-22-gallery-review-layout.md#oct-25-0923-gallery-first-navigation-and-retained-image-detail).
+- [x] **P3 either** A8 Transferred, not implemented: gallery-driven generation
+  now has the [active reference-rendering owner](2026-10-25-reference-rendering.md).
+  R1-R10 own workspace/input/recipe/batch execution and GUI-result delivery;
+  the preserved exploration below supplies rationale, not a competing task list.
+  Broader art-authoring remains future scope, not silently approved here.
+  A7 keeps manual-action execution UX; render requests use a distinct manifest.
 - [ ] **P2 either** A9 Inventory explicit core-membership choices alongside
   approval, anchors and protection. Explain existing behavior and decide
   whether a separate manual core exclusion/override is needed; do not use
@@ -202,6 +201,156 @@ from the similarly named photo action.
   undo dependencies, in-progress operations and required production baselines;
   show incomplete snapshots separately and require deliberate cleanup. Do not
   delete existing snapshots as part of the rename acceptance test.
+
+## Oct 25, 17:34: gallery-driven generation exploration (A8)
+
+**Status:** proposed design inside the existing roadmap owner, not an approved
+service, workspace/data migration or replacement execution plan. The user asks
+for end-to-end analysis and recommendations, not immediate queue submissions.
+No new runtime, workspace, workflow, input choice or generation was changed.
+
+**20:44 disposition:** the [focused reference-rendering proposal](2026-10-25-reference-rendering.md)
+now owns the concrete next steps. Its dedicated Reference Female workspace
+recommendation replaces the single Reference Lab suggestion below following
+the user's latest preference. Preserve this section as design history; its
+original safeguards/rationale remain relevant, but it is not a second executor
+plan and does not approve the new proposal's pending decisions.
+
+**Later Oct 25 update:** the user chose **Sovereign Females**, cloned and started
+it, then curated its workflows while keeping Alpha/manual `zz_shots`. The
+[rendering owner](2026-10-25-reference-rendering.md) is now active for offline
+input evidence and read-only server diagnostics. Earlier names above remain
+dated proposals, not current configuration. No recipe compilation, upload,
+workflow publication or render has run; root mapping and recipe approval remain
+gated there.
+
+### Current evidence and mismatch
+
+- Intake now supplies retained source/prepared evidence and maintained framing,
+  but real recipe acceptance and incremental cutover remain intake I29/I12/U7.
+  Generation experiments should be possible before identity assignment and
+  must not alter likeness/protection merely because a render succeeds.
+- `comfy_workflows.prompt_index` discovers generated prompts by set/hero;
+  `default_input` and configured `photos`/`inputs` resolve global hero roles.
+  This is good cast production machinery, not isolated per-photo job state.
+  `cmd_make --input` sets a newly created workflow's input; its existing-workflow
+  refresh branch does not apply that override. It is not an arbitrary-image runner.
+- The generic Female is deliberately a reference-adaptive test identity, but
+  its physique, palette and shared/default components still impose design.
+  Its Prime card uses `figureProfile: standard`; the template replaces pose,
+  hairstyle and some cosmetic details. Generic does not mean appearance-neutral.
+  Repointing Female's global inputs would also entangle concurrent people/tests.
+- Maintained derivatives/retained manifests prove exact sources, while
+  `sync_inputs.source_index` still selects by basename/first root and existing
+  destination names are treated as present. Preserve that legacy workflow, but
+  do not use its basename lookup as proof of an API experiment's input bytes.
+- Current ST masters are editable UI graphs, including subgraphs. ComfyUI's
+  `/prompt` endpoint expects API execution format, not these UI JSON files.
+  Prove an export/binding for each chosen graph shape rather than build a
+  speculative general UI-graph converter or a second hand-maintained master.
+- `0_Edit` is not yet a supported stage in the stage contract/layout.
+  The manual migration owner P4 must wire it through all consumers; creating
+  a folder with that name alone does not implement it.
+
+### Proposed separation: subject, recipe, job, destination
+
+1. **Subject/source:** stable person ID when assigned; otherwise a verified
+   unassigned source reference, domain, photo ID where available, exact content
+   hash and retained-run/set reference. Names/categories are display snapshots.
+2. **Recipe:** reviewed existing art components/templates, stage, variant,
+   engine, input-role contract and preserve/change intent. Separate faithful
+   reference evaluation from deliberate character/body/style design. No
+   wholesale import of the tagged manual vocabulary into identity metadata.
+3. **Job:** immutable resolved prompts/graph/input snapshot, resolved model and
+   settings, concrete seed, source recipe/framing and template hashes, run/job
+   IDs and later server prompt ID/output checksums. Reuse existing compilation
+   helpers; resolve per-run context without mutating shared hero defaults.
+4. **Destination:** an explicit configured workspace/output area and server
+   endpoint/capability profile. A workspace organizes authored workflows;
+   the selected reachable ComfyUI server executes jobs. They are not synonymous.
+
+Recommend one neutral **Reference Lab** workspace/collection, not separate
+physical workspaces for every Model/Prospect/Potential. Categories become filters;
+optional cast-slot context stays separate. The name/location are recommendations,
+not configured resources. Reuse generic Female/Male as reviewed recipe sources,
+not shared mutable placeholders or automatic casting.
+
+### Proposed gallery interaction
+
+`Generate / Test` on a verified photo/detail opens a panel for:
+source version/framing -> recipe/stage/variant -> engine/server -> explicit
+seed/count/settings -> resolved prompt/expected-change/output preview.
+Show unavailable recipes and missing prerequisites with reasons.
+
+- Start from People, Review, Intake or scoped Artist pages without requiring
+  fake cast membership or a completed family/protection decision. Preserve
+  Artist provenance and require appropriate source-use permission.
+- Full/head/chest are deliberate choices; raw/prepared/retained denoise/tone
+  comparisons are explicitly labelled experiments. Do not silently recrop,
+  substitute an unavailable derivative or use a later source with the same name.
+- A downstream phase consumes an explicitly chosen earlier result or a
+  compatible direct-input recipe. Missing approved role output blocks that
+  chain; never silently load Female's saved Prime or run every earlier phase.
+- Queue one run, show job progress/error/recovery, then show results alongside
+  exact input and settings in the originating detail page and a run browser.
+  Keep this execution state separate from the static gallery export.
+- Follow-up stages use a selected result; they do not update global workflow
+  inputs. A separate deliberate promotion may set a current cast input or
+  candidate/final through existing supported semantics.
+
+### Proposed storage and execution safeguards
+
+Use a library-local generated-work tree separate from `gallery`, `gallery_org`
+and `gallery_intake`, with stable subject/source keys and unique run/job IDs.
+Keep familiar phase labels beneath jobs, plus exact request/provenance and
+outputs. A physical root such as `_generation` is illustrative and unapproved.
+Avoid category/name-keyed ownership: reclassification/rename must not orphan jobs.
+Use server-relative, namespaced input/output paths and record actual returned
+filenames, not assumed counters or workstation absolute paths.
+
+Generated outputs are synthetic render results, not new original photographs
+or automatic identity-core observations. Never feed them back through intake,
+auto-protection or matching by directory discovery. Keep source-domain bindings;
+moving/rejecting a source changes current association, not historical run bytes.
+Specify backup, failed-run and explicit pruning policy before deleting anything.
+
+A small local execution bridge should call the same validated runner as a thin
+CLI launcher. Static HTML cannot safely become a shell or an arbitrary filesystem
+client. Bind locally, restrict origins/requests, require deliberate authorization,
+allowlist recipes/endpoints and resolve paths server-side. Remote ComfyUI requires
+an explicit protected connection and upload/privacy decision; do not expose an
+unrestricted API or transfer originals implicitly.
+
+Prepare/export and dry-run come before network execution. Inspect server node/
+model capabilities, upload the exact frozen input, queue API format, persist
+prompt ID, monitor scoped events and verify history/output bytes before success.
+Persist errors and uncertain submissions; a timeout is not proof a job was not
+queued, so do not blindly resubmit. Cancellation must not interrupt unrelated
+manual jobs sharing the server. Local concurrency/batch limits are explicit.
+
+### Suggested proof order, pending agreement
+
+1. One generic fully clothed reference/portrait recipe, one existing stage and
+   engine: export a job/workflow and manually render without changing Female
+   defaults. Verify two people/two source photos cannot cross their inputs/results.
+2. One reviewed API graph, explicit local server, exact upload and a single
+   queued job, restart/history/error handling, then results in the gallery.
+3. A small controlled comparison matrix (framing or recipe or engine, with
+   recorded seeds) and explicit selected-result continuation into another phase.
+4. Broader phase/recipe choices, batch scheduling and retention only after the
+   manual prompt migration resolves `0_Edit` and new Prime input roles.
+
+Ownership stays split: A8 execution orchestration; layout presentation/navigation;
+manual prompt migration P1-P6 recipe/stage design; upkeep U7 source/framing and
+selected-input handoff; structure owns behavior-preserving extraction.
+Next design decision is the bounded first experiment and intended keep/change
+behavior, then workspace/output/server permissions one at a time. No existing
+intake acceptance task is closed by this proposal.
+
+API facts checked against official
+[server routes](https://docs.comfy.org/development/comfyui-server/comms_routes)
+and [API examples](https://docs.comfy.org/development/comfyui-server/api-examples).
+No local server capability or API export has been exercised for this design.
 
 ## Next UAT: occupied-name correction, Oct 22 21:40 -05:00
 
@@ -344,5 +493,17 @@ Source: `feedback/update_recap_10_22.md`, Oct 22.
 <!-- markdownlint-disable MD013 -->
 ```text
 Can we update the 10-22 recap with correct time and contents of where we are at now.  That might be good for me to read at this point and ensure I know what things to test and verify - and what is still outstanding.  I'll want to test some of the actions, but moving images around and then re-running the likeness overall to see how that might impact the organize/self-healing aspects.  I probably need some notes written on what exactly happens each time we run likeness commands and when the self-healing/automatic moving will execute.  For instance, if I move a bunch of items to reject to various from several models - would it also pull back any other low scoring images from other existing identities where the likeness is a much better match to a new prospect or when does all that happen.  I know we have a lot of various functionality built in now and I need a clear understanding of certain scenarios and how it works.  We can discuss them one-by-one as I want to do them in the gui and you can run them and we can discuss the expected outcome of each.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Raw chat: gallery-driven generation, Oct 25, 17:34 -05:00
+
+Coverage: A8 exploration above; this is not approval to create a service,
+reorganize directories, alter manual prompt sources or queue a real render.
+The tagged source was `prompts/_edit/female/female_anatomy.txt`.
+
+<!-- markdownlint-disable MD013 -->
+```text
+At this point - how do you feel about the image intake and how it can lead up to working into my comfyui generation process?  If you think about the long term where I would like to use ComfyUI and post to the server to automatically start workflows for testing things out - how do things line up in the long run and how might I test Models, Prospects and people who are not assigned to a slot where we generate all sorts of workflows.  I could use the generic Female that is setup in the Angel Primes - or we come up with a new workspace for Prospects and Models so I can actually generate pictures for them without having to specifically create dedicated workflows.  Think about how that might work and how I could drive that through the Gallery GUI and being able to pick any image and ask for one of the specific workflows in the normal pattern of phases 0_Edit or 1_Alpha, etc... I need some deep thought and a look at the entire pipeline to see where we need more re-alignment, directory structure, etc...
 ```
 <!-- markdownlint-enable MD013 -->

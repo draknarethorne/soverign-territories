@@ -5,11 +5,19 @@ test, or a new hero. It assumes nothing. The reference for *why* the folders are
 [data/art/README.md](../../data/art/README.md); this page is the *how*. For animation see
 [tutorial-video.md](tutorial-video.md).
 
-> **Current migration boundary (Oct 2026):** The manual prompt migration plan owns the upcoming
-> `0_Edit` stage and revised Prime/Bare prompts. They are not implemented yet. Keep current
-> generated templates and outputs unchanged until the plan's decisions and pilot are accepted;
-> this tutorial's Alpha sequence is the installed flow, not the approved target for that migration.
-> See [the active plan](../plans/2026-10-22-manual-prompts-to-art-library.md).
+> **Current migration boundary (Oct 2026):** The `edit` stage is now supported by the schemas,
+> layout and workflow routing. One generic Female `0c_Cleanup_Basic` card, prompt template and
+> repository workflow have been generated as a pilot; it has not been deployed. The remaining
+> manual edit variants and revised Prime/Bare prompts are not migrated, and the stage-input and
+> promoted-output contracts remain open. See [the active plan](../plans/2026-10-22-manual-prompts-to-art-library.md).
+>
+> The agreed progression is image-first and branchable: the user selects a source and a compatible
+> stage, then explicitly chooses which results to advance or promote. `0_Edit` is optional, not
+> mandatory intake cleanup or a prerequisite to every Alpha job.
+>
+> The separate [Sovereign Females rendering pilot](../../workflows/README.md#offline-reference-rendering-foundation)
+> can export Gallery batches and execute isolated manual graph bindings. That live transport proof
+> and the shared data-driven edit recipe are separate paths; neither is broad recipe acceptance.
 
 ## The model in one minute
 
@@ -37,12 +45,16 @@ What the incoming image wears shows through into every later image. A low-cut dr
 celestial armor over a swimsuit keeps the straps. So the chain is built from the bottom up, and each stage picks its incoming image
 on purpose. Prompts only describe what to *add* or *change*; the incoming image supplies the rest.
 
-The original photos are varied shots (different framing, clothing, pose) and are not good enough to feed straight into the later stages.
-The first steps are therefore the **Alpha** chain, the only workflows that create a hero's likeness (the other stages edit it). **Alpha 1 Prime**
+The original photos are varied shots (different framing, clothing, pose) and may not be ready for later stages.
+The optional **0_Edit** phase can conservatively clean a selected image first; the current generic Female
+pilot is `0c_Cleanup_Basic`. Use the source directly when it is already suitable. Neither intake nor
+`0_Edit` is a mandatory path into Alpha, and generated results remain synthetic until explicitly selected.
+
+The **Alpha** chain is still the standard way to establish a clean, reproducible hero likeness. **Alpha 1 Prime**
 takes an original photo and builds the one clean, full-length A-pose in her metallic bikini (barefoot) with the standard figure, and brings the bust
 and the pose into proper shape. **Alpha 2 Bare** edits the Prime: it removes the bikini, applies her individual build and re-asserts hair, eyes, skin
 and bust. **Alpha 3 Barefoot and Heels** edit the Bare image back into the bikini on her own figure. Bare, Barefoot and Heels are the three golden
-images that every later stage starts from. You can intercept an Alpha workflow and use your own forceful wording (keep that workflow as a shot).
+images that conventional later-stage workflows use as defaults. You can intercept an Alpha workflow and use your own forceful wording (keep that workflow as a shot).
 
 **Why the steps in between exist.** The swimsuit Prime, Barefoot and Heels (`1_Prime`, `3_Footwear`), `2_Studies` and `3_Layers` are not required to get a Bare image. They are
 **validation**: a way to prove that what Alpha made behaves before it is used for anything expensive. A hero in a swimsuit with footwear is a simple, known thing to check (the
@@ -52,11 +64,12 @@ own and why an issue in the Prime is caught at `2_Studies` or `3_Layers` and fix
 Skip any of them when you trust the result; they are kept because they make a problem cheap to find. Experiments that did not hold up (the bare-chest study and the covering
 experiments: pasties, contoured, paint) were dropped.
 
-**Installed first-shot experiments.** Two existing variants start from the same photo in `1_Alpha/1b_Experiments/`: `neutral-base` (P2, a skin-tone base layer) and `bare-base` (P3). Their current comparison commands remain in [prime-flows.md](prime-flows.md#comparing-prime-renders). The [manual migration plan](../plans/2026-10-22-manual-prompts-to-art-library.md) now owns the next approach: new `0_Edit`, revised Prime/Bare, and retiring `1b` after replacements pass. It leaves `2b` untouched. Do not require another old winner comparison or regenerate/delete experiments merely because their plan was archived.
+**Installed first-shot experiments.** Two existing variants start from the same photo in `1_Alpha/1b_Experiments/`: `neutral-base` (P2, a skin-tone base layer) and `bare-base` (P3). Their current comparison commands remain in [prime-flows.md](prime-flows.md#comparing-prime-renders). The [manual migration plan](../plans/2026-10-22-manual-prompts-to-art-library.md) owns the remaining edit variants, revised Prime/Bare, and retiring `1b` only after replacements pass. It leaves `2b` untouched. Do not require another old winner comparison or regenerate/delete experiments merely because their plan was archived.
 
 | Phase | Folder (under `<Hero>/` in the workspace) | Incoming image | Produces |
 | --- | --- | --- | --- |
-| 1. Alpha | `1_Alpha/1_Prime`, `2_Bare`, `2b_Experiments`, `3_Footwear` | the original photo, then the Prime, then the Bare image | the Prime (bikini, standard figure), the Bare image (her individual build and likeness; `Alpha_2_Bare_Figure` is the main step, your hand-made `Alpha_2_Bare_Skin` shot is temporary), then Barefoot and Heels: the three golden images |
+| 0. Edit (optional) | `0_Edit/<family>` | the exact selected source image | a task-specific synthetic edit such as the generic Female cleanup pilot |
+| 1. Alpha | `1_Alpha/1_Prime`, `2_Bare`, `2b_Experiments`, `3_Footwear` | the original photo by default; a selected edit result only when the recipe/input contract supports it | the Prime (bikini, standard figure), the Bare image (her individual build and likeness; `Alpha_2_Bare_Figure` is the main step, your hand-made `Alpha_2_Bare_Skin` shot is temporary), then Barefoot and Heels: the three golden images |
 | 2. Studies | `2_Studies/head`, `hair`, `body` | the golden images | head close-ups, hair styles and turnaround views: the reference library for every later step |
 | 3. Layers | `3_Layers/<type>` (bikini, lingerie, swimwear, athletic, one-piece, backless) | the Bare image, with the body contour line on | which underlayer reads best, so it can show under an outfit on purpose |
 | 4. Wardrobe | `4_Wardrobe/clothing`, `armor`, `showcase` | the Bare image, or a layer or pose you chose | her in the outfit or armor, and the showcase shots that check it |
@@ -65,8 +78,13 @@ experiments: pasties, contoured, paint) were dropped.
 | 7. Video | `7_Video/<family>` | a finished image | the animation |
 
 `Bench/motion` is not a phase: motions and poses are point-in-time tests of a piece, run on whichever phase's image you load, to validate a reusable motion or pose before a scene uses it.
-Every phase after Alpha reads the chosen image of the one before (`_00000` names: `Hero_Qwen_Scene_00000.png` feeds Polish, `Hero_Qwen_Polish_00000.png` feeds Final),
-so skipping a phase shows up as a missing image.
+The rows describe the established character-art flow, not a required chain for every request. The target
+Gallery flow lets the user choose an original, prepared image or explicitly selected result as the next input,
+subject to a declared recipe compatibility contract; it never silently advances the newest output. The full
+stage-input and promoted-output contract remains open in manual-migration P11 and rendering R16. Until that
+contract is complete, do not assume every stage accepts every prior result. Within a conventional sequence,
+the configured input defaults still connect the Prime/Bare, wardrobe and finish steps; a missing default image
+must be resolved rather than inferred from another folder.
 
 The bikini A-pose (Prime, Barefoot or Heels) stays useful as an input on its own: feed it (or any A-pose in a bikini, lingerie or a bodysuit) when you
 want that layer to show under the outfit on purpose. The underlayer A-pose cards (`poses/<family>/`) are fed the Bare image and are for choosing which

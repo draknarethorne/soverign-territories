@@ -11,7 +11,7 @@ import uuid
 
 import numpy as np
 
-from . import clean_preparation, metadata, rejections
+from . import clean_preparation, metadata, rejections, sandbox
 from .engine import Cache, Photo, Space
 from .policy import effective_settings, load_policy
 from .reconciliation import frozen_identity_cores, plan_reconciliation
@@ -57,18 +57,62 @@ def _curation_inventory(layout, catalog=None):
         metadata.photo_id_from_name(pathlib.PurePosixPath(relative).name)
         for relative in source_rows if not relative.startswith("Artists/")
     } - {None}
+    source_hashes = collections.defaultdict(set)
+    for relative, digest in source_rows.items():
+        if not relative.startswith("Artists/"):
+            photo_id = metadata.photo_id_from_name(pathlib.PurePosixPath(relative).name)
+            if photo_id:
+                source_hashes[photo_id].add(digest)
     current, seen = {}, set()
-    for path in image_preparation.inventory(working):
-        relative = path.relative_to(working).as_posix()
-        if relative.startswith("Artists/"):
-            continue
+    current_paths = [
+        path for path in image_preparation.inventory(working)
+        if not path.relative_to(working).as_posix().startswith("Artists/")
+    ]
+    by_id = collections.defaultdict(list)
+    for path in current_paths:
         photo_id = metadata.photo_id_from_name(path.name)
         if photo_id:
-            if photo_id in seen:
-                raise ValueError(f"ambiguous current photo ID: {relative}")
-            if photo_id not in source_ids:
+            by_id[photo_id].append(path)
+    overlay_inputs = {
+        record["current"]: record
+        for record in layout.get("source_overlay_manifest", {}).get("currentVarious", [])
+    }
+    allowed_unbound = set()
+    for photo_id, paths in by_id.items():
+        if len(paths) < 2:
+            continue
+        expected_hashes = source_hashes.get(photo_id, set())
+        if len(expected_hashes) > 1:
+            raise ValueError(f"ambiguous immutable inputs share a current photo ID: {photo_id}")
+        matching = [
+            path for path in paths
+            if expected_hashes and metadata.content_sha256(path) in expected_hashes
+        ]
+        if len(matching) == 1:
+            for path in paths:
+                if path != matching[0]:
+                    relative = path.relative_to(working).as_posix()
+                    record = overlay_inputs.get(relative)
+                    if not record or not record.get("sanitized"):
+                        raise ValueError(f"duplicate current photo ID is not safely isolated: {relative}")
+                    allowed_unbound.add(relative)
+        elif len({metadata.content_sha256(path) for path in paths}) == 1:
+            pass
+        else:
+            raise ValueError(f"ambiguous current photo ID has no byte-verified source match: {photo_id}")
+    for path in current_paths:
+        relative = path.relative_to(working).as_posix()
+        photo_id = metadata.photo_id_from_name(path.name)
+        if photo_id:
+            if relative in allowed_unbound:
+                pass
+            elif photo_id not in source_ids:
+                if relative in overlay_inputs:
+                    current[relative] = metadata.content_sha256(path)
+                    continue
                 raise ValueError(f"current photo is outside immutable inputs; preserve it before rebuilding: {relative}")
-            seen.add(photo_id)
+            else:
+                seen.add(photo_id)
         elif relative not in source_rows:
             raise ValueError(f"current photo lacks immutable continuity: {relative}")
         current[relative] = metadata.content_sha256(path)
@@ -80,6 +124,271 @@ def _curation_inventory(layout, catalog=None):
                 f"review retirement/missing-source decisions before rebuilding: {sorted(missing)}"
             )
     return current
+
+
+def _current_various_overlay_rows(layout):
+    """Map active Working Various images to immutable IDs without losing either byte version."""
+    import image_preparation
+
+    source_rows = clean_preparation.inventory(layout)
+    source_ids = collections.defaultdict(list)
+    source_paths = set(source_rows)
+    for relative in source_rows:
+        if relative.startswith("Artists/"):
+            continue
+        photo_id = metadata.photo_id_from_name(pathlib.PurePosixPath(relative).name)
+        if photo_id:
+            source_ids[photo_id].append(relative)
+
+    current_paths = [
+        path for path in image_preparation.inventory(layout["working_root"])
+        if path.relative_to(layout["working_root"]).as_posix().startswith("Various/")
+    ]
+    current_ids = collections.defaultdict(list)
+    current_without_id = []
+    for path in current_paths:
+        photo_id = metadata.photo_id_from_name(path.name)
+        if photo_id:
+            current_ids[photo_id].append(path)
+        else:
+            current_without_id.append(path)
+
+    rows, assigned = [], {}
+
+    def add(path, target, photo_id, *, aliases=(), sanitized=False):
+        relative = path.relative_to(layout["working_root"]).as_posix()
+        if target in assigned:
+            raise ValueError(f"multiple current Various photos map to one immutable input: {target}")
+        assigned[target] = relative
+        rows.append({
+            "current": relative,
+            "target": target,
+            "photoId": photo_id,
+            "sha256": metadata.content_sha256(path),
+            "aliases": [
+                {"current": alias.relative_to(layout["working_root"]).as_posix(),
+                 "sha256": metadata.content_sha256(alias)}
+                for alias in aliases
+            ],
+            "sanitized": sanitized,
+        })
+
+    for photo_id, paths in sorted(current_ids.items()):
+        paths = sorted(paths, key=lambda item: item.relative_to(layout["working_root"]).as_posix().casefold())
+        immutable_matches = source_ids.get(photo_id, [])
+        if len(immutable_matches) > 1:
+            raise ValueError(f"current Various photo ID maps to multiple immutable inputs: {paths[0]}")
+        if len(paths) == 1:
+            relative = paths[0].relative_to(layout["working_root"]).as_posix()
+            target = relative if relative in source_paths or not immutable_matches else immutable_matches[0]
+            add(paths[0], target, photo_id)
+            continue
+
+        grouped = collections.defaultdict(list)
+        for path in paths:
+            grouped[metadata.content_sha256(path)].append(path)
+        if len(grouped) == 1:
+            selected = paths[0]
+            aliases = paths[1:]
+            relative = selected.relative_to(layout["working_root"]).as_posix()
+            digest = next(iter(grouped))
+            if immutable_matches and digest != layout["manifest_files"][immutable_matches[0]][1]:
+                suffix = pathlib.Path(selected.name).suffix.lower()
+                target = (pathlib.PurePosixPath(relative).parent
+                          / f"incoming-{digest[:16]}{suffix}").as_posix()
+                add(selected, target, None, aliases=aliases, sanitized=True)
+            else:
+                target = relative if relative in source_paths or not immutable_matches else immutable_matches[0]
+                add(selected, target, photo_id, aliases=aliases)
+            continue
+
+        if immutable_matches:
+            original_hash = layout["manifest_files"][immutable_matches[0]][1]
+            originals = grouped.get(original_hash, [])
+            if len(originals) != 1:
+                raise ValueError(
+                    f"duplicate current Various ID has no unique byte-verified immutable match: {photo_id}"
+                )
+            canonical = originals[0]
+            add(canonical, immutable_matches[0], photo_id)
+            for digest, duplicates in sorted(grouped.items()):
+                if digest == original_hash:
+                    continue
+                selected, *aliases = duplicates
+                relative = selected.relative_to(layout["working_root"]).as_posix()
+                suffix = pathlib.Path(selected.name).suffix.lower()
+                target = (pathlib.PurePosixPath(relative).parent
+                          / f"incoming-{digest[:16]}{suffix}").as_posix()
+                add(selected, target, None, aliases=aliases, sanitized=True)
+            continue
+
+        for digest, duplicates in sorted(grouped.items()):
+            selected, *aliases = duplicates
+            relative = selected.relative_to(layout["working_root"]).as_posix()
+            suffix = pathlib.Path(selected.name).suffix.lower()
+            target = (pathlib.PurePosixPath(relative).parent
+                      / f"incoming-{digest[:16]}{suffix}").as_posix()
+            add(selected, target, None, aliases=aliases, sanitized=True)
+
+    for path in sorted(current_without_id, key=lambda item: item.relative_to(layout["working_root"]).as_posix().casefold()):
+        relative = path.relative_to(layout["working_root"]).as_posix()
+        add(path, relative, None)
+    return source_rows, rows
+
+
+def _verify_source_overlay(layout, run):
+    """Validate a run-local overlay and its raw recovery copies before using it."""
+    overlay = pathlib.Path(run) / "source-overlay"
+    manifest_path = overlay / "overlay.json"
+    if not manifest_path.is_file() or _is_reparse_point(manifest_path):
+        raise ValueError(f"missing or unsafe source overlay receipt: {manifest_path}")
+    if _is_reparse_point(overlay):
+        raise ValueError(f"unsafe source overlay directory: {overlay}")
+    value = json.loads(manifest_path.read_text(encoding="utf-8"))
+    immutable_manifest = layout["sandbox_root"] / "source-manifest.json"
+    if value.get("schemaVersion") != 1 or value.get("immutableManifestSHA256") != metadata.content_sha256(immutable_manifest):
+        raise ValueError("source overlay does not bind to the verified immutable snapshot")
+    inputs = value.get("inputs")
+    if not isinstance(inputs, dict) or not inputs:
+        raise ValueError("source overlay has no prepared input inventory")
+
+    def verified_path(relative, label):
+        sandbox._safe_source_path(relative)
+        path = overlay.joinpath(*pathlib.PurePosixPath(relative).parts)
+        for parent in (path, *path.parents):
+            if parent == overlay.parent:
+                break
+            if _is_reparse_point(parent):
+                raise ValueError(f"linked {label}: {parent}")
+        return path
+
+    expected = {}
+    for relative, record in inputs.items():
+        path = verified_path(relative, "source overlay input")
+        if not path.is_file():
+            raise ValueError(f"source overlay input is missing or linked: {relative}")
+        digest = metadata.content_sha256(path)
+        if digest != record.get("sha256") or path.stat().st_size != record.get("bytes"):
+            raise ValueError(f"source overlay input changed: {relative}")
+        expected[relative] = (record["bytes"], digest)
+    for record in value.get("rawRecovery", []):
+        relative = record["path"]
+        path = verified_path(relative, "source overlay raw recovery copy")
+        if not path.is_file():
+            raise ValueError(f"source overlay raw recovery copy is missing or linked: {relative}")
+        if metadata.content_sha256(path) != record["sha256"]:
+            raise ValueError(f"source overlay raw recovery copy changed: {relative}")
+    for record in value.get("sidecars", []):
+        path = verified_path(record["path"], "source overlay sidecar")
+        if not path.is_file() or metadata.content_sha256(path) != record["sha256"]:
+            raise ValueError(f"source overlay sidecar changed: {record['path']}")
+    layout = dict(layout)
+    layout["source_root"] = overlay
+    layout["manifest_files"] = expected
+    layout["source_overlay_manifest"] = value
+    layout["source_overlay_sha256"] = metadata.content_sha256(manifest_path)
+    return layout
+
+
+def _create_source_overlay(layout, run):
+    """Stage immutable inputs plus current Various versions in a recoverable run-local tree."""
+    overlay = pathlib.Path(run) / "source-overlay"
+    if overlay.exists():
+        raise ValueError("unfinished or existing source overlay; inspect it and use a new run")
+    immutable_rows, current_rows = _current_various_overlay_rows(layout)
+    overlay.mkdir(parents=True)
+    raw_recovery = []
+    input_records = {}
+    for index, (relative, digest) in enumerate(immutable_rows.items(), start=1):
+        source = layout["source_root"].joinpath(*pathlib.PurePosixPath(relative).parts)
+        target = overlay.joinpath(*pathlib.PurePosixPath(relative).parts)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, target)
+        if metadata.content_sha256(target) != digest:
+            raise OSError(f"immutable source overlay copy checksum mismatch: {relative}")
+        input_records[relative] = {"bytes": target.stat().st_size, "sha256": digest}
+        if index % 250 == 0:
+            print(f"source overlay: copied {index}/{len(immutable_rows)} immutable inputs", flush=True)
+
+    for row in current_rows:
+        current = layout["working_root"].joinpath(*pathlib.PurePosixPath(row["current"]).parts)
+        target = overlay.joinpath(*pathlib.PurePosixPath(row["target"]).parts)
+        baseline = immutable_rows.get(row["target"])
+        baseline_hash = baseline
+        if baseline_hash and baseline_hash != row["sha256"]:
+            original = layout["source_root"].joinpath(*pathlib.PurePosixPath(row["target"]).parts)
+            recovery = overlay / "recovery" / "immutable-originals" / pathlib.Path(row["target"])
+            recovery.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(original, recovery)
+            raw_recovery.append({
+                "role": "immutable-original", "path": recovery.relative_to(overlay).as_posix(),
+                "source": row["target"], "sha256": baseline_hash,
+            })
+        if not baseline_hash or baseline_hash != row["sha256"]:
+            recovery = overlay / "recovery" / "working-various" / pathlib.Path(row["current"])
+            recovery.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(current, recovery)
+            if metadata.content_sha256(recovery) != row["sha256"]:
+                raise OSError(f"Working Various recovery copy checksum mismatch: {row['current']}")
+            raw_recovery.append({
+                "role": "working-various", "path": recovery.relative_to(overlay).as_posix(),
+                "source": row["current"], "sha256": row["sha256"],
+            })
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(current, target)
+            input_records[row["target"]] = {
+                "bytes": target.stat().st_size, "sha256": row["sha256"],
+            }
+        for alias in row["aliases"]:
+            alias_path = layout["working_root"].joinpath(*pathlib.PurePosixPath(alias["current"]).parts)
+            recovery = overlay / "recovery" / "working-various" / pathlib.Path(alias["current"])
+            recovery.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(alias_path, recovery)
+            if metadata.content_sha256(recovery) != alias["sha256"]:
+                raise OSError(f"Working Various duplicate recovery checksum mismatch: {alias['current']}")
+            raw_recovery.append({
+                "role": "working-various-duplicate", "path": recovery.relative_to(overlay).as_posix(),
+                "source": alias["current"], "sha256": alias["sha256"],
+            })
+
+    # Retain identity-name sidecars needed by the existing reversible installer.
+    sidecars = []
+    folders = {pathlib.PurePosixPath(relative).parent for relative in immutable_rows}
+    for folder in sorted(folders, key=lambda item: item.as_posix().casefold()):
+        source_folder = layout["source_root"].joinpath(*folder.parts)
+        for sidecar in source_folder.glob("z_*.txt"):
+            relative = sidecar.relative_to(layout["source_root"]).as_posix()
+            target = overlay.joinpath(*pathlib.PurePosixPath(relative).parts)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(sidecar, target)
+            sidecars.append({"path": relative, "sha256": metadata.content_sha256(target)})
+
+    value = {
+        "schemaVersion": 1,
+        "createdAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "immutableManifestSHA256": metadata.content_sha256(layout["sandbox_root"] / "source-manifest.json"),
+        "immutableInputCount": len(immutable_rows),
+        "workingVariousCount": sum(1 + len(row["aliases"]) for row in current_rows),
+        "replacementCount": sum(
+            1 for row in current_rows
+            if row["target"] in immutable_rows and immutable_rows[row["target"]] != row["sha256"]
+        ),
+        "newInputCount": sum(1 for row in current_rows if row["target"] not in immutable_rows),
+        "inputs": input_records,
+        "currentVarious": [
+            {"current": row["current"], "target": row["target"], "sha256": row["sha256"],
+             "photoId": row["photoId"], "sanitized": row["sanitized"]}
+            for row in current_rows
+        ] + [
+            {"current": alias["current"], "target": row["target"], "sha256": alias["sha256"],
+             "photoId": row["photoId"], "sanitized": row["sanitized"], "duplicateOf": row["current"]}
+            for row in current_rows for alias in row["aliases"]
+        ],
+        "sidecars": sidecars,
+        "rawRecovery": raw_recovery,
+    }
+    _write_json(overlay / "overlay.json", value)
+    return _verify_source_overlay(layout, run)
 
 
 def _decision_matches_input(record, source_hash, working, current):
@@ -97,11 +406,11 @@ def _migrate_continuity(catalog, rows, working, images, *, current_inputs=None):
     destinations = collections.defaultdict(set)
     owners = collections.defaultdict(set)
     membership = {}
-    current_paths = {
-        metadata.photo_id_from_name(pathlib.PurePosixPath(relative).name): working / relative
-        for relative in current_inputs or ()
-        if metadata.photo_id_from_name(pathlib.PurePosixPath(relative).name)
-    }
+    current_paths = collections.defaultdict(list)
+    for relative in current_inputs or ():
+        photo_id = metadata.photo_id_from_name(pathlib.PurePosixPath(relative).name)
+        if photo_id:
+            current_paths[photo_id].append(working / relative)
     for person_id, person in catalog["people"].items():
         for bucket in ("gallery", "review"):
             for path in images(working / person["folder"] / bucket):
@@ -111,7 +420,7 @@ def _migrate_continuity(catalog, rows, working, images, *, current_inputs=None):
                 if key in membership:
                     raise ValueError(f"ambiguous current identity ownership: {key}")
                 membership[key] = person["folder"]
-                current_paths[key] = path
+                current_paths[key].append(path)
     for row in rows:
         previous = membership.get(row.get("photoId"), row["oldFolder"])
         if previous.split("/")[0] not in RESET_CATEGORIES:
@@ -144,8 +453,9 @@ def _migrate_continuity(catalog, rows, working, images, *, current_inputs=None):
     for row in rows:
         record = catalog["photos"].get(row.get("photoId"))
         if record:
-            if not _decision_matches_input(
-                record, row["sha256"], working, current_paths.get(row["photoId"]),
+            paths = current_paths.get(row["photoId"], [])
+            if not _decision_matches_input(record, row["sha256"], working, None) and not any(
+                _decision_matches_input(record, row["sha256"], working, path) for path in paths
             ):
                 raise ValueError(f"photo decision bytes differ from immutable input: {row['source']}")
             record["contentSha256"] = row["preparedSHA256"]
@@ -507,6 +817,7 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
         "createdAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "sourceRoot": str(source), "workingRoot": str(layout["working_root"]),
         "sourceManifestSHA256": metadata.content_sha256(layout["sandbox_root"] / "source-manifest.json"),
+        "sourceOverlaySHA256": layout.get("source_overlay_sha256"),
         "policy": policy, "settings": settings, "referenceFolders": sorted(cores),
         "embeddingCache": str(cache_path), "embeddingCacheStartedEmpty": True,
         "cacheMeasurementsReusedForReplan": reuse_measurements,
@@ -943,23 +1254,44 @@ def command(args, api):
     ):
         raise ValueError("run directory must be outside identity category roots")
     intake_only = getattr(args, "intake_only", False)
+    include_various = getattr(args, "include_current_various", False)
     if intake_only and (args.undo or args.replan):
         raise ValueError("--intake-only cannot undo or replan matching")
     if args.dry_run:
-        rows = clean_preparation.inventory(layout)
-        print(f"Clean-start preview: {len(rows)} immutable images will receive preparation outcomes.")
+        if include_various:
+            rows, current = _current_various_overlay_rows(layout)
+            total = len(set(rows) | {item["target"] for item in current})
+            replaced = sum(1 for item in current if item["target"] in rows and rows[item["target"]] != item["sha256"])
+            added = sum(1 for item in current if item["target"] not in rows)
+            print(
+                f"Clean-start preview: {len(rows)} immutable images plus {added} new current Various "
+                f"images = {total} preparation outcomes; {replaced} immutable IDs use newer Working bytes."
+            )
+        else:
+            rows = clean_preparation.inventory(layout)
+            print(f"Clean-start preview: {len(rows)} immutable images will receive preparation outcomes.")
         print("No images, reports, caches or models changed. Existing cast membership stays retained.")
         print("Use --intake-only --apply to prepare and stop, or omit --dry-run for a full matched preview.")
-        return {"status": "inventory", "inputCount": len(rows)}
+        return {"status": "inventory", "inputCount": total if include_various else len(rows)}
     if intake_only and not (args.apply or args.check):
-        rows = clean_preparation.inventory(layout)
-        print(f"Intake preview: {len(rows)} inputs; use --intake-only --apply to write sidecars.")
-        return {"status": "inventory", "inputCount": len(rows)}
+        if include_various:
+            rows, current = _current_various_overlay_rows(layout)
+            total = len(set(rows) | {item["target"] for item in current})
+        else:
+            rows = clean_preparation.inventory(layout)
+            total = len(rows)
+        print(f"Intake preview: {total} inputs; use --intake-only --apply to write sidecars.")
+        return {"status": "inventory", "inputCount": total}
     if args.check or args.undo or args.replan:
         if not run.is_dir():
             raise ValueError("no saved clean-start run exists")
     else:
         run.mkdir(parents=True, exist_ok=True)
+    overlay_path = run / "source-overlay"
+    if overlay_path.exists():
+        layout = _verify_source_overlay(layout, run)
+    elif include_various and not (args.check or args.undo or args.replan):
+        layout = _create_source_overlay(layout, run)
     plan_path = run / "run.json"
     if intake_only or args.check and not plan_path.exists():
         if args.check:
@@ -980,6 +1312,8 @@ def command(args, api):
             raise ValueError("saved plan policy/root differs; use a new run directory")
         if plan["sourceManifestSHA256"] != metadata.content_sha256(layout["sandbox_root"] / "source-manifest.json"):
             raise ValueError("source manifest changed since preview")
+        if plan.get("sourceOverlaySHA256") != layout.get("source_overlay_sha256"):
+            raise ValueError("saved plan source overlay differs; use the same verified overlay")
         if args.replan:
             if (
                 plan["status"] != "preview" or not plan["embeddingCacheStartedEmpty"]

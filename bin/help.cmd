@@ -30,6 +30,7 @@ echo                                    Artists\ARTIST\gallery uses the SAME pre
 echo                                    existing RUN --quarantine-junk previews eligible loose-intake moves; --apply verifies a scoped backup and moves to nested _junk, never deletes or matches
 echo                                    existing RUN --undo-junk previews exact recovery; --apply restores verified bytes; --check verifies completed disposition too. Ordinary library runs do NOT retry Junk
 echo    sandbox-rebase.cmd "SANDBOX\Working" "RUN-DIR" --dry-run  inventory ALL immutable inputs; no models, reports or matching
+echo                                    --include-current-various adds current Working\Various inputs via a hash-bound run-local recovery overlay
 echo                                    --intake-only --apply prepares all images and stops for review; --check verifies without writes
 echo                                    same command with no flags prepares/resumes then previews fresh-cache matching; --apply installs only a saved preview
 echo                                    originals + all kept variants follow assigned photos; cast membership retained, Artists prepared separately; --undo restores exact pre-run bytes
@@ -47,6 +48,24 @@ echo    duplicates.cmd [--apply]        the same picture kept twice anywhere in 
 echo    originals.cmd --check           are the scaled copies and headshots in step with every gallery?
 echo.
 echo  WORKSPACES
+echo    render-reference.cmd preview BATCH.json --root DIR --dry-run   validate exact source-bound reference/character requests offline
+echo    render-reference.cmd prepare BATCH.json --root DIR [--apply]   freeze inputs only under _generation; NO workflows, deploy or queue
+echo    render-reference.cmd check BATCH-ID --root DIR --check         verify frozen evidence without reading current source or contacting ComfyUI
+echo    render-reference.cmd probe URL --input-root DIR --output-root DIR [--require-node CLASS]  read-only GET diagnostics; NO upload or queue
+echo    render-reference.cmd catalog                                  list provisional supported and disabled recipes by stage
+echo    render-reference.cmd compile BATCH --root DIR --endpoint URL --input-root DIR --output-root DIR [--apply]  bind/copy isolated pilot inputs and graphs; no queue
+echo    render-reference.cmd submit BATCH --root DIR --job ID [--apply] one explicit job; never silently retries uncertain submissions
+echo    render-reference.cmd run BATCH --root DIR [--limit 4] [--timeout 3600] [--queue-depth 1] [--apply]  bounded selected batch (limit up to 64); waits existing queue, no interrupt
+echo                                    --queue-depth N keeps up to N owned jobs queued at the tail (2..16); every submit refuses at the 200-job server queue capacity
+echo                                    --allow-busy-queue explicitly appends owned jobs at normal tail behind other callers; no priority or cancellation
+echo    render-reference.cmd status BATCH --root DIR [--refresh]        local receipts; refresh explicitly reads server history
+echo    render-reference.cmd reconcile BATCH --root DIR --job ID [--apply]  find one exact uncertain prompt in recent scoped history; NO resubmit
+echo    render-reference.cmd retain BATCH --root DIR --job ID --output-sha SHA [--apply]  copy ONE reviewed synthetic result outside ComfyUI
+echo    render-reference.cmd manual-prefixes --root DIR [--apply]       preview/back up clone manual save-prefix correction; no prompts/settings changed
+echo    render-reference.cmd cleanup-batch --root DIR [--hint H] [--recipe R] [--samples 2] [--apply]  requests for intake photos flagged for ComfyUI cleanup; never queues
+echo    render-reference.cmd outputs --root DIR [--workspace WS] [--dry-run ^| --check ^| --apply]  browse ALL ComfyUI outputs: filters, full view, pull-manifest export
+echo    render-reference.cmd pull MANIFEST.json --root DIR [--apply]   copy chosen outputs to _generation\library with standard names, 944x1104 copy and sidecar
+echo    render-gallery.cmd --root DIR [--dry-run ^| --check ^| --apply]  stage-grouped request export and server-output result browser
 echo    setup-workspace.cmd "WS" [--apply]   the whole job for one workspace: deploy its sets, tidy, cleanup, status (preview unless --apply)
 echo    status.cmd [filters]            repo against every workspace
 echo    workspaces.cmd                  workspaces, homes, what each accepts and what the repo holds
@@ -95,7 +114,7 @@ echo    codex-drift.cmd [--check]       compare the roster pages in docs\codex\h
 echo.
 echo  CHECKS
 echo    validate.cmd [--quick^|--full]   schema and link checks + tool tests; --quick adds a short validator self-test (under 2 min), --full all of it (about 6 min)
-echo    test.cmd                        the workflow tool tests only (routing, accepts, zz_ guards)
+echo    test.cmd                        workflow, rendering, gallery, retained-preparation and prompt tests
 echo    check.cmd                       every commit hook (or the same checks directly when pre-commit is not installed)
 echo.
 echo  See workflows\README.md for the model: one home workspace per set, temporary copies where a workspace accepts them, zz_ items mastered in the workspace.

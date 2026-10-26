@@ -2,6 +2,15 @@
 
 **Status:** active (Phase 1; sandbox clean-start integration implemented; real recipe/flow acceptance and production cutover remain gated)
 
+## Oct 26 guiding boundary for intake
+
+Intake remains the automatic source-preparation and likeness-entry point for the
+later staged generation flow. Its job is to publish trustworthy prepared/source
+evidence and gallery lineage, not to force a single downstream render sequence.
+Downstream stage routing (`0_Edit` onward) is owned by rendering/manual migration,
+but intake outputs must remain selectable as valid stage inputs with verified
+path/hash lineage.
+
 ## Oct 25 continuation: one prepared clean-start flow
 
 I21/I22/I23 now have sandbox implementation, not just separate commands:
@@ -37,11 +46,13 @@ I21/I22/I23 now have sandbox implementation, not just separate commands:
   Existing owned cast outputs are replaced reversibly, including another
   clean start from already-prepared inputs; unknown/edited outputs hold.
 
-No real library rebase, matching or source replacement was run. Synthetic
-end-to-end tests cover stop/check/resume, named/loose intake, retained links,
-existing derivatives, repeated rebuilds, concurrent edits and exact undo.
-Real visual acceptance remains I29/C7; incremental production integration
-remains I12/upkeep U7, not permission to run `library.cmd` against production.
+At the time this integration was delivered, no real library rebase, matching
+or source replacement had run. The later all-input sandbox attempt and its
+incomplete outcome are recorded below. Synthetic end-to-end tests cover
+stop/check/resume, named/loose intake, retained links, existing derivatives,
+repeated rebuilds, concurrent edits and exact undo. Real visual acceptance
+remains I29/C7; incremental production integration remains I12/upkeep U7, not
+permission to run `library.cmd` against production.
 
 ## Oct 25: incremental scope and the next clean-start acceptance
 
@@ -69,6 +80,26 @@ I23 and cast C2-C6, rather than creating a second rebase or matching pipeline:
 The continuation above delivers the sandbox I21/I22/I23 wiring. Its explicit
 acceptance and production boundaries supersede the earlier integration gap;
 the old matcher-only run is not evidence for this prepared-image flow.
+
+## Oct 26 all-input run stopped during preparation
+
+The authorized all-input run `clean-rebase-20261025-overnight` reached
+1,302/2,741 preparation outcomes, then stopped with `MemoryError` while Pillow
+encoded a padded PNG into an in-memory buffer. It did not produce the completed
+preparation manifest or `intake.json`; matching preview, backup/install and
+fresh Gallery publication were not reached. The existing partial `inputs`
+staging tree is preserved as evidence, and no clean-rebase process remains
+active.
+
+The memory fix now streams image copies/hashes and PNG outputs to disk, and
+computes pixel-change measurements in chunks. The complete repository
+validation launcher passed 29 suites / 811 tests after this change. Inspection
+of `clean_preparation.prepare` confirms that a partial `inputs` directory
+without its receipt is intentionally refused as unfinished staging; do not
+resume or clean this run in place. A future attempt must use a new run directory
+and re-inventory the immutable snapshot/current-Various overlay. At the state
+check, B: had 402.09 GB free. The full run remains unverified; this fix is not
+evidence that all 2,741 images now complete successfully.
 
 ## Oct 25: v16 crop → crop → erase → frame, and the modular intake package
 
@@ -288,6 +319,18 @@ nothing moved until it is approved:
    sex as attributes, and the per-subject folders. Then plan the migration (paths in
    `workspaces.json`, catalogue, journals, undo, galleries) as its own phase after the
    sandbox end-to-end run.
+
+**Oct 25, 20:44 clarification:** the
+[reference-rendering plan](2026-10-25-reference-rendering.md#various-subject-profiles-and-future-support)
+recommends keeping Various neutral while using dedicated rendering workspaces
+such as the user-chosen Sovereign Females (later Oct 25 decision, replacing
+proposed Reference Female). Do not rename Various to Female or add subject-kind
+children to its named-person discovery without a validated migration: a folder
+called Female could otherwise be interpreted as a supplied identity name.
+I26 still owns physical intake/category migration. Rendering-profile selection
+is independent metadata, not a sex/gender inference or directory move.
+Current human-face/no-face Junk rules are not animal-intake support; a future
+animal path must bypass those human-only decisions explicitly before use.
 
 ## Oct 23, 21:21: visual UAT and gallery trace continuation
 

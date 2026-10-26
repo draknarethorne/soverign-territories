@@ -1,6 +1,6 @@
 # Project Status
 
-**Updated:** 2026-10-25 · This is the one working document: where the project is, what has
+**Updated:** 2026-10-26 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
@@ -26,6 +26,82 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 
 The plans, their status and what each is are listed in [plans/README.md](plans/README.md); what is open, by priority and owner (what needs you first), is [todo.md](todo.md), generated from them. This document holds only what is decided and what is still a question.
 
+**Oct 25 overnight rendering integration:** Sovereign Females is running at
+`127.0.0.1:8188` (ComfyUI 0.38.2, 970 node types). Request preview/prepare/check,
+four bounded clothed-preservation edit graph bindings, capability/model checks,
+isolated workspace staging, durable submit/run/status/reconcile and explicit
+selected-output retention are implemented. Static Gallery selection exports the
+same CLI request and displays scoped results; it does not directly launch a CLI.
+Selected renders remain synthetic, excluded from original/core evidence, and
+can feed compatible pilot jobs with verified sidecars. The combined rendering
+and Photo Review regression set passed 89 tests, including timeout, deadline,
+queue-order and receipt-writer interleaving cases.
+
+The pilot explicitly uses the running clone's misspelled input root
+`Sovereigh Females`; its output root is correctly `Sovereign Females`.
+No configuration edit or restart was made. Four jobs from two frozen sandbox
+sources were compiled/staged, with editable copies under `Reference`. All four
+jobs completed sequentially at the normal queue tail and returned one output
+each. Their receipt and hashes remain under
+`Working\_generation\reference\overnight-edit-proof-02`; no output was promoted
+to Gallery or identity/core evidence. The first cleanup output visibly removed
+the source GMW mark; generative detail/pose/proportion changes still require
+user review. The server had 1 running / 13 pending unrelated jobs before the
+remaining samples were appended; none was cancelled, interrupted or reprioritized.
+Default waits for idle; the explicitly authorized append-one option puts one
+owned job at the normal tail and waits for it, without priority or interruption.
+Transient GET polling failures retry within the deadline, never POSTs.
+Backup-first correction changed only SaveImage
+prefixes in 114 installed manual workflows; all originals were hash-verified
+and all non-prefix data compared equal. Repeated preview proposes zero changes.
+Generic Female and other workspaces remain untouched.
+
+Four coordinated tracks remain separate: intake/likeness acceptance; dynamic
+execution; shared data-driven `0_Edit`/Prime/Bare/template migration; Gallery GUI.
+
+**Oct 26 outputs browser, cleanup batches and pull-back (R17-R20):** the server
+queue capacity is 200 jobs; `run` refuses to submit when it would exceed it and
+can pipeline with `--queue-depth`. One request is capped at 64 jobs. Gallery
+selection is multi-select, can pick several recipes per stage and filter by
+cleanup hint. `cleanup-batch` writes requests for intake photos flagged for
+ComfyUI cleanup and never queues. Hints come only from verified/ambiguous new
+preparation traces, so the sandbox has none until the R11 full preparation run.
+`render-reference.cmd outputs` publishes `_generation/outputs.html` (Masthead
+**Outputs**), which browses every ComfyUI output by workspace, stage, variant or
+subject, with full view and a pull-manifest export. `pull` copies only the
+chosen outputs to `_generation/library/<stage>/<variant>/` with a standard
+name (`<name>_comfy_<variant>_<sha8>`), a 944x1104 padded copy and a sidecar.
+Pulled renders are their own synthetic `pulled-render` source kind, which is
+never identity/core evidence. An empty aborted preparation-run folder no longer
+marks every photo `unverified`. A live sandbox pull of the Draknava `0c_Cleanup`
+pilot output was verified, and repeating it is reported as `already-pulled`.
+Manual `zz_shots` graphs are temporary transport proof, not the permanent prompt
+architecture. The first generic Female `0c_Cleanup_Basic` is now data-driven and
+generates a repository-only Qwen workflow; it was not deployed or rendered.
+Later edit variants, formal stage-input/promoted-output contracts and
+Alpha/Studies recipes remain manual-migration work. Edits stay optional before
+Alpha; user visual acceptance and production rollout remain gated.
+The agreed guiding principle is now image-first staged progression: automatic
+intake/likeness to gallery, explicit user stage selection/branching, and
+deterministic promoted-output lineage back into Gallery by stage/recipe.
+
+**Oct 25/26 sandbox execution:** the authorized all-input preparation run
+`clean-rebase-20261025-overnight` stopped at 1,302/2,741 outcomes with a
+`MemoryError` while Pillow encoded a padded PNG into an in-memory buffer.
+It has no complete preparation manifest or `intake.json`; matching preview,
+backup/install and fresh full-library Gallery publication were not reached.
+Its partial `inputs` tree is preserved. There is no active clean-rebase process,
+and the launcher refuses in-place continuation when staging exists without a
+receipt; use a new run directory after re-inventory. The writer now streams
+copies/hashes and PNG saves to disk and computes image differences in chunks;
+`bin\validate.cmd` passed 811 tests across 29 suites after that change. This
+does not prove full-run completion. The run originally counted 2,700 immutable
+inputs plus 41 additional preparation inputs; 74 mapped inputs use newer
+Working Various bytes with both raw versions preserved. This does not mean 41
+new people. Earlier exploratory `125/86/9` counts were not reconciled and are
+not combined with the saved overlay receipt. The rebase plan owns completion
+and recovery.
+
 **Oct 25 Python runtime:** the launchers already use regular 64-bit Python
 3.14.3 and a working modern CPU image stack. Added direct core/intake dependency
 requirements and extended Windows CI from 3.12 to 3.12/3.13/3.14, retaining the
@@ -46,8 +122,10 @@ One-to-one stable-ID decisions migrate only with verified continuity; missing,
 unknown, ambiguous, stale or concurrently edited inputs hold. Existing owned
 cast outputs and previous categories have checked reversible replacement.
 This supersedes the integration-gap statements in earlier Oct 25 checkpoints
-below. No real rebase or production change ran; visual/threshold acceptance,
-optional cast release and incremental production cutover remain gated.
+below. The later overnight sandbox preparation stopped during encoding as
+recorded above; matching and installation remain unverified. No production
+change ran; visual/threshold acceptance, optional cast release and incremental
+production cutover remain gated.
 
 **Oct 25 automatic-protection/name direction:** the user requests confidence-based
 photo protection inside protected people and automatic protection of sufficiently

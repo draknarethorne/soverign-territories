@@ -63,6 +63,15 @@ repos:
         files: ^tools/workflows/
         stages: [pre-commit, pre-push]
 
+      - id: reference-rendering-tests
+        name: Reference-rendering request, execution, gallery and outputs tests
+        entry: python -m unittest tools.workflows.test_reference_rendering tools.workflows.test_reference_execution tools.workflows.test_reference_gallery tools.workflows.test_reference_outputs
+        language: python
+        additional_dependencies: [jsonschema, pillow]
+        pass_filenames: false
+        files: ^(tools/workflows/(reference_(rendering|execution|gallery|outputs)|test_reference_(rendering|execution|gallery|outputs))\.py|data/schemas/reference-render-request\.schema\.json|bin/render-(reference|gallery)\.cmd)$
+        stages: [pre-commit, pre-push]
+
       - id: generator-tests
         name: Generator tests (piece extends)
         entry: python tools/generators/test_gen_prompt_extends.py

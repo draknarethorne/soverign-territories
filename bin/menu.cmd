@@ -23,6 +23,9 @@ echo   V  Preview separate Artist gallery pages (no matching or source changes)
 echo   C  Photo library check (read only: anything waiting?)
 echo   B  Back up the photo library and ComfyUI inputs
 echo   X  Intake-aware sandbox clean start (inventory or verify; prepare/match/apply separately)
+echo   F  Preview reference-render batch (offline, no workflow deployment or queue)
+echo   D  Refresh rendering selection/results gallery (reports only)
+echo   O  Refresh the ComfyUI outputs browser (reports only; pull is separate)
 echo   S  Style audit (which art wording leans illustrated)
 echo   H  Help (all scripts)
 echo   Q  Quit
@@ -37,6 +40,9 @@ if /i "%CH%"=="G" call "%~dp0people-gallery.cmd" --dry-run & pause & goto menu
 if /i "%CH%"=="C" call "%~dp0library-check.cmd" & pause & goto menu
 if /i "%CH%"=="B" goto backup
 if /i "%CH%"=="X" goto sandboxrebase
+if /i "%CH%"=="F" goto referencerender
+if /i "%CH%"=="D" goto rendergallery
+if /i "%CH%"=="O" goto outputsgallery
 if /i "%CH%"=="P" goto preparation
 if /i "%CH%"=="J" goto preparationjunk
 if /i "%CH%"=="T" goto artistlikeness
@@ -66,6 +72,26 @@ if "%STG%"=="" (
 ) else (
   call "%~dp0%SCRIPT%" "%HERO%" "%STG%" %FLAG%
 )
+pause
+goto menu
+:referencerender
+set "ROOT="
+set "BATCH="
+set /p "ROOT=Library absolute path: "
+set /p "BATCH=Render request JSON absolute path: "
+call "%~dp0render-reference.cmd" preview "%BATCH%" --root "%ROOT%" --dry-run
+pause
+goto menu
+:rendergallery
+set "ROOT="
+set /p "ROOT=Library absolute path: "
+call "%~dp0render-gallery.cmd" --root "%ROOT%" --apply
+pause
+goto menu
+:outputsgallery
+set "ROOT="
+set /p "ROOT=Library absolute path: "
+call "%~dp0render-reference.cmd" outputs --root "%ROOT%" --apply
 pause
 goto menu
 :preparation

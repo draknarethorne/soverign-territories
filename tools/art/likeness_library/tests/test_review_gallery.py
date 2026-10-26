@@ -19,6 +19,17 @@ from tools.art.likeness_library import review_gallery
 
 
 class ReviewGalleryTests(unittest.TestCase):
+    def test_render_navigation_and_exact_source_deep_link_are_available(self):
+        page = review_gallery.render_html([], "now")
+        self.assertIn('>Rendering</a>', page)
+        self.assertIn('generate.href=generationIndex+"?source="+encodeURIComponent(r.generationSource)', page)
+        self.assertIn('generate.textContent="Generate / Test"', page)
+        self.assertIn('id="generation-index" type="application/json">"../../_generation/index.html"</script>', page)
+
+    def test_render_deep_link_tracks_custom_report_depth(self):
+        page = review_gallery.render_html([], "now", reports_prefix="../../../")
+        self.assertIn('id="generation-index" type="application/json">"../../../../_generation/index.html"</script>', page)
+
     def test_identity_header_separates_evidence_and_existing_actions(self):
         page = review_gallery.render_html([], "now")
         for label, kind in (("Reference photo", "identity-reference"),

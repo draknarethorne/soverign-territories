@@ -428,7 +428,7 @@ def hero_of(name):
     return prefix if prefix in hero_groups() else None
 
 
-STAGE_WORDS = {"Scene": "scene", "Hair": "hair", "Motion": "motion", "Armor": "armor", "Clothing": "clothing",
+STAGE_WORDS = {"Edit": "edit", "Scene": "scene", "Hair": "hair", "Motion": "motion", "Armor": "armor", "Clothing": "clothing",
                "Head": "head", "View": "poses", "Video": "video", "Brand": "brand", "Card": "card", "Alpha": "alpha"}
 
 

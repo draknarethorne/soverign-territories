@@ -169,18 +169,20 @@ use this order and each owning plan's gates.
 | --- | --- | --- |
 | Phase 1 | [Image intake preparation](2026-10-23-image-intake-preparation.md) | v16 and I21-I23 prepared retained publication/stop/resume are implemented in the sandbox; I29 visual recipe acceptance and I27 residual overlays remain; I12 replaces legacy incremental source-cleanup routes rather than adding a parallel pipeline |
 | Phase 2 | [Library upkeep U1/U3/U6/U7](2026-10-22-library-upkeep.md) | Phase 1 handoff; integrate maintenance/recovery, U7 prepared-source full/head/chest derivatives and explicitly selected ComfyUI inputs without repeated source cleanup |
-| Phase 3 | [Cast-seeded all-library rebase C1-C7](2026-10-23-cast-seeded-library-rebase.md) | Prepared retained-membership runner and verified one-to-one decision migration are implemented; review C2/C6/C7 against accepted inputs before real apply; optional release modes C1/C3 still need their own policy and are not prerequisites to retaining cast |
+| Phase 3 | [Cast-seeded all-library rebase C1-C7](2026-10-23-cast-seeded-library-rebase.md) | Prepared retained-membership runner and verified one-to-one decision migration are implemented; overnight intake stopped at 1,302/2,741 before a manifest, so a fresh run is required before matching/apply; review C2/C6/C7 before real apply; optional release modes C1/C3 still need their own policy |
 | Phase 4 | [Engine acceptance E4/E6/E7/E8/E10, P1-P6](2026-10-22-likeness-engine-acceptance.md) | Accept Phase 3 evidence, convergence and separate incremental batch (now 400+ planned); production still needs its own preview, backup/restore and approval |
 | Supporting | [Face-analysis M1/M2](2026-10-22-face-analysis-evaluation.md) | Inform Phase 1 labels and face/body explanation; secondary-model M3/M4 remains conditional, not a mandatory new-model dependency |
 | After stable baseline | [Manual action A4/A6 UAT](2026-10-22-review-actions.md), [family acceptance](2026-10-22-identity-family-naming.md) | Existing rename/swap work retained; no pending swap or action-undo settlement applied by this pivot |
-| Separate downstream | [Manual prompt migration](2026-10-22-manual-prompts-to-art-library.md) | Source audit can continue; settle prepared/raw/edit input roles before new `0_Edit`/Alpha migration or retargeting |
+| Separate downstream | [Manual prompt migration](2026-10-22-manual-prompts-to-art-library.md) | First generic Female `0c_Cleanup_Basic` is data-driven and generated as a repository-only workflow; stage-input/promoted-output contracts, remaining edits and Alpha/later migration remain open |
+| Parallel rendering integration | [Reference rendering R0-R16](2026-10-25-reference-rendering.md) | Sovereign Females graph execution, static Gallery request/results and explicit retention implemented; four live pilot outputs completed. User visual acceptance, interrupted all-input rebase, stage-chain contract and production rollout remain open |
 
 The Oct 22 run remains dated evidence, not validation of the new preparation
 recipe or cast-release policy. The Oct 25 prepared runner now checks/migrates
 one-to-one decisions and preserves recovery; it does not make the real acceptance
 run implicit. Review intake first, then the saved matching preview and backup
-before a deliberately approved sandbox installation. No production processing
-or workflow retargeting is authorized. Older uncropped-original recovery is
+before a deliberately approved sandbox installation. The Oct 25 overnight request
+authorizes the documented sandbox run and small Sovereign Females pilot, not
+production processing or broad workflow retargeting. Older uncropped-original recovery is
 deferred; exact current inputs and all user decisions remain protected.
 
 ## Plans
@@ -199,10 +201,11 @@ deferred; exact current inputs and all user decisions remain protected.
 | [2026-10-22-identity-family-naming.md](2026-10-22-identity-family-naming.md) | active | Draft family/name metadata, reversible transactions and N10 display implemented; one-to-one sandbox stable-ID migration wired, broader acceptance and leave/reassignment remain |
 | [2026-10-22-review-actions.md](2026-10-22-review-actions.md) | active | All-category manual actions, recovery, scenario testing, name swaps and future UI boundaries |
 | [2026-10-22-face-analysis-evaluation.md](2026-10-22-face-analysis-evaluation.md) | active | Explain current measurements and evaluate labelled secondary-model cases with verified licence gates |
-| [2026-10-22-manual-prompts-to-art-library.md](2026-10-22-manual-prompts-to-art-library.md) | active | Manual source/token/data migration, new `0_Edit`, revised Prime/Bare, validated `1b` retirement and untouched `2b` |
+| [2026-10-22-manual-prompts-to-art-library.md](2026-10-22-manual-prompts-to-art-library.md) | active | First generic Female `0_Edit` slice delivered; remaining manual edits, stage-input/promoted-output contracts, revised Prime/Bare, validated `1b` retirement and untouched `2b` |
 | [2026-10-22-library-upkeep.md](2026-10-22-library-upkeep.md) | active | Phase 2: downstream naming/derivative/viewer and backup integration; tested implementation still needs real acceptance; independent Junk/near-duplicate/Demon work retained |
 | [2026-10-23-image-intake-preparation.md](2026-10-23-image-intake-preparation.md) | active | Phase 1: v16 and I21-I23 sandbox retained publication/stop/resume/assignment wired; real recipe acceptance and incremental/live cutover remain gated |
 | [2026-10-23-cast-seeded-library-rebase.md](2026-10-23-cast-seeded-library-rebase.md) | active | Phase 3: retained-cast prepared clean-start and reversible install implemented; real curation/UAT and optional configurable cast release remain gated by Phases 1/2 and C1 |
+| [2026-10-25-reference-rendering.md](2026-10-25-reference-rendering.md) | active | Four bounded Sovereign Females pilot outputs completed; the user must review them. Data-driven migration, stage-chain contract and full sandbox rebase remain open |
 
 The Oct 22 retained plans have review/questions blocks; affected owners now
 also record the Oct 23 foundation-first scheduling pivot. The

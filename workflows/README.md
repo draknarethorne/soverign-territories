@@ -52,6 +52,265 @@ every studio stage.
 
 ## Workspaces: one home per set
 
+### Offline reference-rendering foundation
+
+The running **Sovereign Females** clone from Angel Primes hosts
+generic reference tests. Character-specific requests will explicitly select
+their existing character workspace. The runner supports offline input preparation plus an explicit **bounded
+manual-Qwen transport pilot**. Four clothed preservation modes can bind the
+inspected single-subgraph graph, stage exact inputs, publish isolated
+`Reference/BATCH/JOB` UI copies and submit selected jobs. It is not a general
+UI graph converter or completed template migration.
+`probe` checks a local server read-only. No command changes Female defaults,
+cast identities or source photos. The separately explicit `manual-prefixes`
+command backs up and corrects inherited output prefixes in this clone only.
+The [rendering plan](../docs/plans/2026-10-25-reference-rendering.md) owns the
+remaining capability, workspace/server and Gallery integration gates.
+It remains outside the legacy hero-home workspace registry: generic setup,
+deploy/pull/tidy/cleanup cannot select it by default and explicitly naming it
+is refused as unknown. Use the rendering launchers for job-owned `Reference`
+paths; formal registry integration remains planned, not an `accepts: ["*"]`
+shortcut.
+
+Use [the request schema](../data/schemas/reference-render-request.schema.json).
+Example request (replace the hash with the exact SHA-256 of your selected file):
+
+```json
+{
+  "schemaVersion": 1,
+  "batchId": "female-proof-01",
+  "workspace": "Sovereign Females",
+  "jobs": [{
+    "id": "source-one",
+    "source": {
+      "path": "Various/gallery/example.png",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "domain": "general"
+    },
+    "workflowMode": "reference",
+    "recipe": "qwen-clothed-apose-v1",
+    "profile": "reference-faithful",
+    "seed": 42
+  }]
+}
+```
+
+Recipe/profile/workspace strings in an offline request express **requested
+intent**, not an executable workflow or a guarantee about image preservation.
+The example A-pose recipe above is not registered yet; `catalog` lists currently
+supported pilot recipe IDs and disabled future stages. Reference profiles are `reference-faithful` or
+`slender-fuller-bust` (future clothed adult studies); character mode requires
+`character-defined`. No prompts or body/identity attributes are generated now.
+Use concrete seeds; requests hold at most 64 jobs. IDs are short lowercase
+letters/digits/hyphens. Paths in JSON are library-relative with `/` separators,
+never absolute paths or shell commands.
+
+```bat
+bin\render-reference.cmd preview "BATCH.json" --root "B:\Photo Library" --dry-run
+bin\render-reference.cmd prepare "BATCH.json" --root "B:\Photo Library" --apply
+bin\render-reference.cmd check female-proof-01 --root "B:\Photo Library" --check
+```
+
+`prepare` without `--apply` previews. Preview/check are offline and write no
+files. Sources must be image files in active `gallery`, `review` or maintained
+`gallery_944x1104`, `headshot_944x1104`, `chest_944x1104` buckets below
+Angels/Sisters/Models/Prospects/Potentials/Various/Artists. Artists require the
+separate `artists` domain; other roots require `general`. Original/retained
+variants outside those buckets are not supported yet. No arbitrary outside
+paths, linked roots/junctions, parent traversal or underscore report trees.
+PNG/JPEG/WebP/BMP bytes are copied unchanged; no enhancement or conversion.
+
+Applying freezes `request.json`, `run.json` and `jobs/ID/input/source.EXT` under
+`LIBRARY\_generation\reference\BATCH-ID`. Every source is checked before any
+staging and checked again before publishing the batch directory. The manifest
+states `inputs-only-not-render-ready`. An unchanged repeat verifies/reuses owned
+evidence; changed/unknown files or conflicting requests refuse, never overwrite.
+Check verifies frozen inputs and evidence even after a source moves, without
+claiming the historical source is still currently assigned to the same identity.
+Hashes detect accidental changes, not malicious rewriting of all local evidence.
+Do not submit this manifest to ComfyUI or treat it as an API graph.
+
+The runner is tested by `bin\test.cmd`, `bin\validate.cmd` and its focused
+pre-commit hook. Menu **F** previews a request. No live library processing or
+rendering is implied by the temporary-fixture tests.
+
+#### Selected execution and results
+
+```bat
+bin\render-reference.cmd catalog
+bin\render-reference.cmd compile BATCH --root "LIBRARY" --endpoint http://127.0.0.1:8188 ^
+  --input-root "ACTUAL INPUT ROOT" --output-root "ACTUAL OUTPUT ROOT" --dry-run
+rem Repeat the reviewed compile with --apply to stage inputs and job-owned graphs.
+bin\render-reference.cmd run BATCH --root "LIBRARY" --limit 4 --timeout 5400 --apply
+bin\render-reference.cmd status BATCH --root "LIBRARY"
+bin\render-reference.cmd status BATCH --root "LIBRARY" --refresh
+bin\render-gallery.cmd --root "LIBRARY" --apply
+```
+
+Preparation remains offline; compile explicitly contacts the selected local
+server to validate node/model choices. It currently supports only Sovereign
+Females reference-faithful jobs with a required `displayName` from the Gallery.
+The four provisional IDs are `manual-0c-cleanup-basic`, `manual-0c-cleanup`,
+`manual-0e-enhance`, `manual-0f-full`. These reuse inspected graph/settings but
+replace manual prompt conflicts with versioned, clothed-preservation pilot
+prompts; they are **not exact migrated manual prompts**. The original graph is
+frozen as evidence. `0d`, Alpha, Studies and Bench entries remain unavailable.
+The intended destination is still shared JSON/templates, not permanent manual
+workflow copies. No clothing-removal pilot is run.
+
+`compiled.json` binds source/UI/API hashes and exact server roots.
+`execution.json` records per-job intent, prompt ID, state, errors and actual
+history-returned outputs. Submission persists uncertain intent before POST;
+timeouts/crashes never automatically resubmit. HTTP validation rejection is
+explicit; lost history holds for reconciliation.
+`reconcile BATCH --root LIBRARY --job ID` previews matching exact client intent,
+graph and batch/job metadata in the queue/recent 64 history entries; `--apply`
+binds one unique match without POSTing again. Zero/ambiguous matches retain the
+hold for operator review, never claim rejection or automatically retry.
+`run` retries transient read-only GET polling failures visibly within its
+deadline; it never retries a POST. Default submission waits for global idle.
+When deliberately sharing a busy dedicated workspace, `--allow-busy-queue`
+on `submit`/`run` appends one selected owned job at the normal queue tail and
+waits for its scoped result before the next job. It never uses front/priority,
+removes other jobs or interrupts execution. A deadline can leave an accepted
+job queued/running; refresh/resume the same receipt rather than queue it again.
+Submit, refreshed status and reconciliation serialize receipt updates through
+`submission.lock` (PID/operation/time). This prevents a stale refresh from
+erasing a newly accepted prompt ID. Local status remains read-only; a leftover
+lock is an explicit hold requiring writer/receipt verification, not permission
+to resubmit or automatically remove it. Receipt replacement uses the existing
+bounded Windows permission-error retry helper; permanent failure preserves the
+previous receipt and pending evidence. Gallery HTML is also published atomically,
+so a failed replacement leaves the previous complete page.
+
+`run` defaults to four jobs, accepts an explicit limit up to 64 and a deadline
+up to two hours. With the default `--queue-depth 1` it submits one selected job
+at a time. `--queue-depth N` (2..16) keeps up to N of the batch's own jobs at the
+normal queue tail so ComfyUI never idles between them; it still waits for other
+callers' jobs unless `--allow-busy-queue` is given. Every submission refuses when
+the server queue holds its 200-job capacity (ComfyUI's limit on this machine).
+It never clears the queue, interrupts other jobs or guesses a numbered output
+filename. `submit BATCH --job ID --apply` is available for one explicit job instead.
+
+Save prefixes use `reference/DISPLAY-NAME/BATCH/JOB/STAGE/VARIANT/...`, preserving
+the Gallery name in metadata and a filesystem-safe name in paths. They never
+route automation through `angel-primes/shots/Angelica`. `manual-prefixes --root
+LIBRARY --dry-run` previews replacing only inherited SaveImage roots under the
+clone's `zz_shots` and `alpha`; `--apply` first saves exact originals and a map
+under `_generation/workspace-backups`. It preserves all prompt/widget content
+except the changed prefixes; repeat is a no-op. Manual recipes keep their
+explicit static subject name; only job execution dynamically supplies a subject.
+
+Rendering is a static batch-first GUI at `LIBRARY\_generation\index.html`,
+reachable through the shared masthead. It uses the existing Photo Review's
+checked source/name metadata and stage-grouped catalogue. Source hashing is
+local, not a new likeness scan. It exports requests; it does not execute a shell
+or pretend a static browser page can run the CLI. Review cards link to the
+selector for the exact source. Republish Photo Review after source moves before
+refreshing the selector; stale source/hash errors are explicit.
+
+Selection works like a file browser: filter the sources (text, stage, cleanup
+hint), **Select visible** ticks every match, and several workflows can be ticked
+at once. One request holds sources x workflows x samples (1, 2, 4, 8 or 16), at
+most 64 jobs, in that order; export is disabled above the cap rather than
+truncating. Cards carry an intake cleanup hint when the published preparation
+evidence is verified: **Overlay left** (intake kept a logo/text overlay),
+**Repainted** (LaMa erased clutter; check the repaint) or **Enhancement failed**.
+
+`cleanup-batch` turns those hints into ready request files without queueing:
+
+```bat
+bin\render-reference.cmd cleanup-batch --root "LIBRARY" --dry-run
+bin\render-reference.cmd cleanup-batch --root "LIBRARY" --hint needs-cleanup --hint repainted ^
+  --recipe manual-0c-cleanup-basic --samples 2 --apply
+```
+
+It writes `_generation\proposals\cleanup-YYYYMMDD-HHMM\` with one request per
+64 jobs plus `proposal.json`, and never overwrites an existing proposal. Each
+request then goes through the normal prepare, compile and run steps.
+
+Results reference files in the configured ComfyUI output root. They are **not
+all copied back**. To keep one selected verified output outside ComfyUI:
+
+```bat
+bin\render-reference.cmd retain BATCH --root "LIBRARY" --job JOB --output-sha SHA --dry-run
+rem After review, repeat with --apply.
+```
+
+Selected bytes and provenance go to `_generation\selected\BATCH\JOB`, marked
+synthetic and ineligible for identity cores. They do not become Gallery
+originals, anchors, protection evidence or global input defaults.
+This initial storage preserves batch/job association and displayed subject
+names without guessing a current person folder after reassignment. Retained
+results appear in the Rendering selector as `source.kind: selected-render` and
+can feed another compatible pilot edit job. The input guard requires the
+retention sidecar, exact image hash, batch/job association and synthetic/core
+exclusion flags; an arbitrary `_generation` file is not accepted.
+Scene/wardrobe recipe support and a dedicated per-person synthetic collection
+remain future integration; automatic pruning is not implemented.
+
+#### Browsing every ComfyUI output and pulling chosen renders back
+
+```bat
+bin\render-reference.cmd outputs --root "LIBRARY" --dry-run
+bin\render-reference.cmd outputs --root "LIBRARY" --apply
+bin\render-reference.cmd pull "Downloads\pull-YYYYMMDDHHMMSS.json" --root "LIBRARY" --dry-run
+bin\render-reference.cmd pull "Downloads\pull-YYYYMMDDHHMMSS.json" --root "LIBRARY" --apply
+```
+
+`outputs` scans the configured output root (`workspaces.json` `paths.outputRoot`,
+or `--output-root`; `--workspace NAME` limits it) and publishes
+`_generation\outputs.html` (masthead **Outputs**). It covers manual, automated
+and legacy layouts, newest first, with filters for workspace, stage, workflow,
+subject, age and text, paging, and a full-size viewer (arrow keys, Esc). Images
+load from ComfyUI's own folders, scaled by the browser; nothing is copied or
+thumbnailed. `--check` reports whether the page is current. Tick renders, give
+an optional Gallery name (else the render's own subject), and export a pull
+manifest (up to 64 images).
+
+`pull` verifies each file's size and time against the page, then copies its exact
+bytes to `_generation\library\STAGE\WORKFLOW\NAME_comfy_WORKFLOW_ID.EXT`. Legacy
+outputs without a stage go under `Other`. It also writes a cream-padded
+`..._944x1104.png` and a `.json` sidecar. The sidecar records `kind:
+pulled-render`, the SHA-256, the source output, the PNG's prompt/workflow hashes,
+SaveImage prefixes and batch/job, plus the request receipt when the batch is
+known. The `comfy` token keeps a render distinguishable from a photo while the
+name follows Gallery naming. Pulled renders are synthetic and never identity
+evidence. They appear in the Rendering selector as `source.kind: pulled-render`,
+so any of them can feed the next stage. A repeat pull of the same bytes reports
+`already-pulled`, and different bytes at an existing name refuse.
+
+#### Read-only server diagnostics
+
+Use the exact endpoint from the running workspace, not a guessed port:
+
+```bat
+bin\render-reference.cmd probe http://127.0.0.1:8188 ^
+  --input-root "B:\Comfy-Desktop\ComfyUI-Inputs\Sovereign Females" ^
+  --output-root "B:\Comfy-Desktop\ComfyUI-Outputs\Sovereign Females" ^
+  --require-node LoadImage --require-node SaveImage --require-node UNETLoader
+```
+
+This explicit online command only uses GET `/system_stats` and `/object_info`,
+with bounded responses, timeouts, no redirects/proxy and an HTTP loopback IP
+plus explicit port. It reports runtime input/output arguments, node availability
+and loader model choices. Root mismatches or missing required nodes return
+exit 1 with blockers. A passing connection is **not render readiness**: it does
+not prove shared-folder round trips, validate a recipe's graph/models or upload
+anything. Do not use another workspace's endpoint as a substitute.
+
+The Oct 25 live check reached ComfyUI 0.38.2 with 970 node types and the basic
+load/save/Qwen loader classes, but found the input root configured as
+`Sovereigh Females` instead of `Sovereign Females`. The configured output root
+matched. The correctly spelled input directory did not exist. Correct or
+explicitly approve the intended mapping before staging inputs; the runner
+does not rename directories, edit launcher settings or restart the server.
+For the explicitly authorized overnight pilot, the actual runtime spelling
+`Sovereigh Females` is intentionally bound as the input root in the receipt,
+instead of renaming it or restarting the workspace. Output stays in
+`Sovereign Females`. A future spelling cleanup must update server configuration
+and new job profiles together; historical receipts retain their original roots.
+
 A workspace is tied to a set of cards. `homes` in `workspaces.json` says which workspace is home for which set; a deploy goes to those home workspaces and nowhere else, unless you name another
 workspace with `-w` that **accepts** the set (see below).
 There is no catch-all workspace and no fallback: a set with no home stops the command with a message instead of landing somewhere else (that silent fallback once filled the brand workspace with 174 card workflows).

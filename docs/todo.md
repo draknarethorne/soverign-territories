@@ -5,7 +5,7 @@
 
 ## Open work, by priority
 
-### Your queue: needs your hands or a decision (36)
+### Your queue: needs your hands or a decision (38)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -26,6 +26,8 @@
 - [ ] I29 Review the v16 report (`_reports\preparation\v16\index.html`): ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I24 After the sandbox rebase, drop `Various\<Name>\gallery` folders of ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I10 Review the pilot's control, denoise and tone candidates. ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] R21 Try the flow on real images: filter "Needs cleanup", ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] R6 Accept the bounded transport pilot: two selected sources, ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 
 **P2 (normal)**
 
@@ -52,7 +54,7 @@
 - [ ] U2 Review current photo outcomes using fresh inventories: ([2026-10-22](plans/2026-10-22-library-upkeep.md))
 - [ ] P10 Archive the manual source directory only after every ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 
-### Either of us (36)
+### Either of us (39)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -72,6 +74,7 @@
 - [ ] I2 Resolve I-D1, specify archive verification, stable-ID to ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I5 Choose I-D2/I-D3/I-D4 from side-by-side visual review ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I8 Verify archive restore, interrupted/repeated runs, ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] R3 Review the two proposed clothed A-pose profiles and ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 
 **P2 (normal)**
 
@@ -86,6 +89,8 @@
 - [ ] A9 Inventory explicit core-membership choices alongside ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] A10 Review action-file intake and completed-batch filing. ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] A12 Provide snapshot inventory, disk estimates and ([2026-10-22](plans/2026-10-22-review-actions.md))
+- [ ] R1c Correct the workspace input-directory spelling during a ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] R9 Agree storage/backup/retention limits and safe run filing ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 
 **P3 (later, or ideas)**
 
@@ -97,9 +102,9 @@
 - [ ] D11 Design a safe, archive-first way to deactivate an entire Prospect or Artist folder identified as a false face match. Keep the HTML static unless a trusted local action flow is approved; never delete source files. ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] U5 Before future Demon automation, define counterpart ([2026-10-22](plans/2026-10-22-library-upkeep.md))
 - [ ] A7 Compare download/run versus a lightweight explicit ([2026-10-22](plans/2026-10-22-review-actions.md))
-- [ ] A8 Keep broader art-authoring and ComfyUI batch UI in ([2026-10-22](plans/2026-10-22-review-actions.md))
+- [ ] R10 Extend to male/animal recipe profiles only after suitable ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 
-### For the assistant, when you say go (79)
+### For the assistant, when you say go (92)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -124,6 +129,8 @@
 - [ ] P1 Freeze accepted rules, source scope and approved naming ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] P3 Verify a fresh external backup, restore procedure and ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] P4 Implement and run the recoverable production adapter only ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
+- [ ] P11 Define stage-input contracts that allow user-selected branch ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
+- [ ] P12 Define promoted-output directory structure for selected ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] P1 Snapshot the selected manual files and record hashes, ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] P4 Define `0_Edit` stage/schema/layout and supported variants, ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] P5 Implement one agreed `0_Edit` plus Prime/Bare pilot using ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
@@ -142,6 +149,11 @@
 - [ ] I4 Benchmark shortlist locally on pilot copies, recording ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I6 Implement accepted preparation through shared clean/incremental ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I7 Wire accepted analysis/prepared/display hashes and recipe ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] R11 Execute the recoverable all-input sandbox run and record ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] R16 Define and implement the first publishable stage-chain ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] R2 Define request/resolved/receipt schemas, recipe capabilities, ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] R4 Implement offline preview/prepare/check and the thin launcher ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] R5 Bind one reviewed Qwen API graph to its master, preflight ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 
 **P2 (normal)**
 
@@ -176,6 +188,12 @@
 - [ ] A5 Verify stable-directory report replacement, dated report ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] I27 Close the v16 visual gaps: the picture-in-picture reel ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I20 Complete subject-preserving composition before/after cleanup, beyond ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] R15 Make isolated mutation validation and short Windows test ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] R22 Face-similarity ranking of each job's outputs against its ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] R23 Loopback local service so Gallery buttons run the ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] R24 Show pulled renders in the People drill-down per person and ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] R7 Add compatible female flow catalogue coverage and explicit ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] R8 Add Gallery export and read-only generation results through ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 
 **P3 (later, or ideas)**
 

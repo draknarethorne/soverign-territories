@@ -1032,24 +1032,33 @@ library code; a second engine under `tools/art/likeness/` is not introduced.
 clean rebase.
 
 Use `bin\sandbox-rebase.cmd "SANDBOX\Working" "RUN-DIR" --dry-run` for the
-clean-start operation. Both paths must be absolute and the new run directory
-must be inside the isolated Working tree, outside category roots. Prefer
-`Working\_sandbox-state\<run>` so the gallery's intake-run browser discovers it.
+clean-start operation. Add `--include-current-various` when the authorized
+input set includes current `Working\Various\gallery` and `review`: the preview
+then reports the unique union of immutable inputs and current inputs.
+Preparation builds a dated run-local `source-overlay`, leaves immutable
+`Source` untouched, and records raw recovery copies plus hash-bound ID/path
+mapping for every newer or newly added Various file. Exact duplicate bytes are
+prepared once but each original path is recovered. Conflicting timestamp IDs
+are isolated rather than attached to another image's identity. Carry the flag
+through the stages for an auditable command history; a saved overlay is still
+verified and reused on resume. Both paths must be absolute and the new run
+directory must be inside the isolated Working tree, outside category roots.
+Prefer `Working\_sandbox-state\<run>` so the gallery's intake-run browser discovers it.
 Use the **same run directory** at each stage:
 
 ```bat
 rem Read-only inventory: no models, cache, report or directory creation.
-bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run" --dry-run
+bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run" --include-current-various --dry-run
 rem Optional stop after preparing every immutable input; no matching or assignment.
-bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run" --intake-only --apply
-bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run" --check
+bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run" --include-current-various --intake-only --apply
+bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run" --include-current-various --check
 rem Prepare, or resume verified preparation, then save the matching preview.
-bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run"
+bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run" --include-current-various
 rem Only after reviewing that preview and verifying a complete Working backup.
-bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run" --apply
-bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run" --check
+bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run" --include-current-various --apply
+bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run" --include-current-various --check
 rem Recover exactly; never delete the rebuilt outputs.
-bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run" --undo
+bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run" --include-current-various --undo
 ```
 
 Replace `SANDBOX` with its absolute path. This sequence is documentation, not

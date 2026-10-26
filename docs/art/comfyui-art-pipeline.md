@@ -1,16 +1,17 @@
 # ComfyUI Art Pipeline — Historical Design Notes
 
 **Status:** Historical design notes; not the current runbook · **Scope:** Earlier proposals and rationale for Sovereign Dawn hero card art
-**Owner:** Art pipeline · **Last reviewed:** 2026-10-25
+**Owner:** Art pipeline · **Last reviewed:** 2026-10-26
 
 This document preserves earlier art-pipeline design notes; its historical model choices,
 stage descriptions, paths, commands, and open questions are not authoritative instructions.
 For the current art data model and card workflow, use [`data/art/README.md`](../../data/art/README.md)
 and [`tutorial-art.md`](tutorial-art.md). For current workflow generation, deployment, inputs,
 and stage templates, use [`workflows/README.md`](../../workflows/README.md). Prompt migration
-work is governed by the [active manual migration plan](../plans/2026-10-22-manual-prompts-to-art-library.md);
-the planned `0_Edit` and revised Prime/Bare approaches are not yet implemented. Do not use this
-document to select models, migrate inputs, or change templates.
+work is governed by the [active manual migration plan](../plans/2026-10-22-manual-prompts-to-art-library.md).
+The `edit` stage and one data-driven generic Female cleanup pilot are implemented; the remaining
+manual edit variants and revised Prime/Bare approaches are not. Do not use this historical document
+to select models, migrate inputs, or change templates.
 
 ---
 
@@ -28,8 +29,8 @@ document to select models, migrate inputs, or change templates.
 
 > **Structure reference:** [`data/art/README.md`](../../data/art/README.md) is the authoritative
 > explanation of how `data/art/` is organized (definitions vs. assembly layers, categories, groups,
-> sets). Read that before adding a new hero/component/set folder — the table below will be updated
-> to match once the current reorg lands.
+> sets). Read that before adding a new hero/component/set folder; the table below is historical and
+> may not match current paths.
 
 | Location | Purpose |
 | --- | --- |
@@ -330,8 +331,9 @@ regenerating work. Pick the version, then go deep; don't let template-shopping s
 
 These are point-in-time notes, not a statement of current capability. Current workflow
 automation and stage coverage are documented in [`workflows/README.md`](../../workflows/README.md).
-The pending `0_Edit`/Prime/Bare migration must be completed before this guide is treated as a
-current description of the Alpha pipeline.
+The first shared data-driven `0_Edit` cleanup recipe has been delivered, but remaining edit
+variants and the Prime/Bare migration are still open. This historical guide is not a current
+description of the Alpha pipeline.
 
 **Current (novice / single-image phase):**
 

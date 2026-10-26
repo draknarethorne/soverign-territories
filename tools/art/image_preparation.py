@@ -93,6 +93,14 @@ def sha(payload):
     return hashlib.sha256(payload).hexdigest()
 
 
+def sha_file(path):
+    digest = hashlib.sha256()
+    with pathlib.Path(path).open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def safe_path(root, path):
     """Reject linked ancestors before resolving; junctions must not escape the sandbox."""
     root, path = pathlib.Path(root), pathlib.Path(path)
@@ -176,24 +184,33 @@ def sample(root, paths, limit):
 
 def decode(payload):
     with Image.open(io.BytesIO(payload)) as opened:
-        if getattr(opened, "is_animated", False):
-            raise ValueError("animated source: preparation requires a separate frame policy")
-        if opened.width * opened.height > RECIPE["maxPixels"]:
-            raise ValueError("source exceeds the pilot's 20 megapixel limit")
-        image = ImageOps.exif_transpose(opened)
-        if "A" in image.getbands() or "transparency" in image.info:
-            if image.convert("RGBA").getchannel("A").getextrema()[0] < 255:
-                raise ValueError("transparent source: compositing is not approved")
-        profile = opened.info.get("icc_profile")
-        if profile:
-            image = ImageCms.profileToProfile(
-                image, ImageCms.ImageCmsProfile(io.BytesIO(profile)),
-                ImageCms.createProfile("sRGB"), outputMode="RGB")
-        elif image.mode == "CMYK":
-            raise ValueError("unprofiled CMYK: color conversion needs review")
-        image = image.convert("RGB")
-        image.info.clear()
-        return image
+        return decode_image(opened)
+
+
+def decode_file(path):
+    with Image.open(path) as opened:
+        return decode_image(opened)
+
+
+def decode_image(opened):
+    if getattr(opened, "is_animated", False):
+        raise ValueError("animated source: preparation requires a separate frame policy")
+    if opened.width * opened.height > RECIPE["maxPixels"]:
+        raise ValueError("source exceeds the pilot's 20 megapixel limit")
+    image = ImageOps.exif_transpose(opened)
+    if "A" in image.getbands() or "transparency" in image.info:
+        if image.convert("RGBA").getchannel("A").getextrema()[0] < 255:
+            raise ValueError("transparent source: compositing is not approved")
+    profile = opened.info.get("icc_profile")
+    if profile:
+        image = ImageCms.profileToProfile(
+            image, ImageCms.ImageCmsProfile(io.BytesIO(profile)),
+            ImageCms.createProfile("sRGB"), outputMode="RGB")
+    elif image.mode == "CMYK":
+        raise ValueError("unprofiled CMYK: color conversion needs review")
+    image = image.convert("RGB")
+    image.info.clear()
+    return image
 
 
 def candidates(image):
@@ -218,6 +235,52 @@ def write_new(path, payload):
             stream.write(payload)
     if sha(path.read_bytes()) != sha(payload):
         raise OSError(f"pilot artifact verification failed: {path}")
+
+
+def copy_new_file(path, source):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    source_hash = sha_file(source)
+    if path.exists():
+        if sha_file(path) != source_hash:
+            raise ValueError(f"refusing to overwrite different pilot artifact: {path}")
+    else:
+        with pathlib.Path(source).open("rb") as incoming, path.open("xb") as outgoing:
+            for chunk in iter(lambda: incoming.read(1024 * 1024), b""):
+                outgoing.write(chunk)
+        if sha_file(path) != source_hash:
+            raise OSError(f"pilot artifact verification failed: {path}")
+    return source_hash
+
+
+def save_image(path, image, image_format, **options):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, temporary_name = tempfile.mkstemp(prefix=".image-", dir=path.parent)
+    temporary = pathlib.Path(temporary_name)
+    try:
+        with os.fdopen(descriptor, "wb") as stream:
+            image.save(stream, format=image_format, **options)
+        candidate_hash = sha_file(temporary)
+        if path.exists():
+            if sha_file(path) != candidate_hash:
+                raise ValueError(f"refusing to overwrite different pilot artifact: {path}")
+            return candidate_hash
+        os.replace(temporary, path)
+        return candidate_hash
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+def mean_absolute_pixel_change(control, variant):
+    control_array = np.asarray(control)
+    variant_array = np.asarray(variant)
+    if control_array.shape != variant_array.shape:
+        return None
+    total = 0
+    for start in range(0, control_array.shape[0], 64):
+        end = start + 64
+        delta = variant_array[start:end].astype(np.int16) - control_array[start:end].astype(np.int16)
+        total += int(np.abs(delta).sum(dtype=np.int64))
+    return round(total / control_array.size, 4)
 
 
 def comparison_candidates(image, row):
@@ -252,10 +315,9 @@ def prepared_candidates(image, row):
 
 
 def render_photo(root, stage, source):
-    payload = source.read_bytes()
-    digest = sha(payload)
+    digest = sha_file(source)
     retained = f"originals/{digest}{source.suffix.lower()}"
-    write_new(stage / retained, payload)
+    copy_new_file(stage / retained, source)
     row = {
         "source": source.relative_to(root).as_posix(),
         "photoId": metadata.photo_id_from_name(source.name),
@@ -277,7 +339,7 @@ def render_photo(root, stage, source):
                    "use the original Artists/<artist>/gallery location for real artist-scoped processing."),
     }
     try:
-        image = decode(payload)
+        image = decode_file(source)
     except (OSError, ValueError, Image.DecompressionBombError, ImageCms.PyCMSError) as exc:
         row["outcome"] = "unprocessable"
         row["sourceTreatment"] = "unprocessable"
@@ -312,35 +374,27 @@ def render_photo(root, stage, source):
     else:
         row["diagnostics"].append("Not flagged by reel heuristic; this is not proof of no overlays.")
     previous = time.perf_counter()
-    control = np.asarray(image, dtype=np.float32)
     for name, variant in prepared_candidates(image, row):
         path = f"candidates/{digest}/{name}.png"
-        buffer = io.BytesIO()
-        variant.save(buffer, format="PNG")
-        data = buffer.getvalue()
-        write_new(stage / path, data)
+        variant_hash = save_image(stage / path, variant, "PNG")
         thumbnail = variant.copy()
         thumbnail.thumbnail((360, 480), Image.Resampling.LANCZOS)
-        buffer = io.BytesIO()
-        thumbnail.save(buffer, format="JPEG", quality=88)
         preview = f"candidates/{digest}/{name}-preview.jpg"
-        write_new(stage / preview, buffer.getvalue())
-        preview_sha = sha(buffer.getvalue())
+        preview_hash = save_image(stage / preview, thumbnail, "JPEG", quality=88)
+        thumbnail.close()
         fitted = ImageOps.contain(variant, (944, 1104), Image.Resampling.LANCZOS)
         padded = Image.new("RGB", (944, 1104), originals.CREAM)
         padded.paste(fitted, ((944 - fitted.width) // 2, (1104 - fitted.height) // 2))
-        buffer = io.BytesIO()
-        padded.save(buffer, format="PNG")
         padded_path = f"candidates/{digest}/{name}-944x1104.png"
-        write_new(stage / padded_path, buffer.getvalue())
+        padded_hash = save_image(stage / padded_path, padded, "PNG")
+        fitted.close()
+        padded.close()
         row["variants"][name] = {
-            "path": path, "sha256": sha(data), "thumbnail": preview,
-            "thumbnailSha256": preview_sha, "padded": padded_path,
-            "paddedSha256": sha(buffer.getvalue()), "size": list(variant.size),
+            "path": path, "sha256": variant_hash, "thumbnail": preview,
+            "thumbnailSha256": preview_hash, "padded": padded_path,
+            "paddedSha256": padded_hash, "size": list(variant.size),
             "seconds": round(time.perf_counter() - previous, 4),
-            "meanAbsolutePixelChange": (round(float(np.abs(
-                np.asarray(variant, dtype=np.float32) - control).mean()), 4)
-                if variant.size == image.size else None),
+            "meanAbsolutePixelChange": mean_absolute_pixel_change(image, variant),
         }
         previous = time.perf_counter()
     if row["geometry"]["changed"] and row["outcome"] != "enhancement-failed":

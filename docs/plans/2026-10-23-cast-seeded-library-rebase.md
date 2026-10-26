@@ -2,6 +2,83 @@
 
 **Status:** active (Phase 3; blocked on accepted Phase 1 preparation and Phase 2 recovery)
 
+## Oct 25 authorized all-image sandbox run (stopped; intake incomplete)
+
+The user authorized the complete, recoverable sandbox run, including current
+`Working\Various`, while keeping production cutover out of scope. The immutable
+root is `B:\Sovereign Territories Sandbox\Source`; its verified manifest still
+names production `B:\Sovereign Territories` and records 8,845 files / 5,570,978,132
+bytes. The only mutation target is `B:\Sovereign Territories Sandbox\Working`.
+Run ID: `clean-rebase-20261025-overnight`. This run performs no production or
+immutable Source writes, no ComfyUI job, and no `_generation` writes.
+
+The launcher’s read-only preview found 2,700 active immutable preparation
+inputs. Including all 134 current Working Various images requires a run-local
+copy-on-write-by-copy overlay; the immutable Source snapshot itself is never
+changed. Stable-ID mapping, exact-byte checks and duplicate handling found 74
+one-to-one ID replacements with newer Working bytes and 41 additional distinct
+input paths, for 2,741 total preparation outcomes. This is more than the
+anticipated “up to nine”: direct inventory showed only 93 current Various
+images with active-source stable-ID matches, 27 other stable IDs and 14 names
+without a parseable stable ID. Two exact duplicate files collapse to one
+prepared input while both raw paths remain in recovery; a timestamp-key
+collision with different bytes is isolated under a hash-derived name instead
+of being misidentified. The resulting count is the exact union, not a cap:
+none of the current Various files are silently omitted.
+
+The dated run-local `source-overlay` retains the original source hashes and
+the raw Working versions of every changed/new input, with a manifest binding
+each copy to `source-manifest.json`. The same run’s `inputs` mirror and
+preparation receipt must verify all 2,741 outcomes before likeness resumes.
+At 2026-10-25 23:52 local, the live intake log recorded 453 of 2,741 per-image
+terminal preparation rows: 451 `compared`, 2 `compared-overlay`, and 2,288
+not yet processed. The live process is responsive and advancing. This is
+progress only, not a claim of complete preparation. Installation and gallery
+publication have not begun.
+Before installation, create and verify a full
+pre-run Working backup. Preserve the parent’s frozen render inputs and all
+`Working\_generation` contents.
+
+Progress snapshot: at 2026-10-26 01:05:37 `-05:00`, the process had logged
+1,165/2,741 outcomes (1,109 `compared`, 48 `compared-overlay`,
+8 `junk-candidate`; 1,576 pending), without an intake receipt or preparation
+manifest. Its final observed count was 1,302/2,741, then Pillow raised
+`MemoryError` while encoding a padded PNG into a `BytesIO` buffer. The process
+terminated before the preparation receipt/manifest, matching preview,
+backup/install or Gallery publication. No active clean-rebase process remains.
+
+The preparation writer now streams file copies/hashes and image saves to disk
+and computes image differences in chunks. `bin\validate.cmd` passed 29 suites /
+811 tests after the change, but a full all-input retry has not verified it.
+The partial `inputs` mirror exists without `intake.json`; `clean_preparation`
+refuses to reuse an unfinished mirror, so preserve this run and use a new run
+directory rather than deleting or resuming it in place. The same run's
+`source-overlay` receipt remains the source of truth for its input mapping.
+At the state check B: had 402.09 GB free.
+
+A separate test-isolation follow-up made the two overlay tests independent of
+optional OpenCV: their active-image inventory boundary is mocked with a
+lightweight synthetic gallery inventory, excluding recovery trees as the
+production inventory does. The metadata pre-commit hook then passed all 287
+tests in its intentionally lightweight environment without adding OpenCV.
+This test result does not establish full input outcomes.
+
+The saved overlay receipt is the source of truth for this run: 2,700 immutable
+active inputs, 134 current Various paths, 74 same-ID changed-byte replacements,
+41 additional preparation inputs, and 2,741 unique preparation inputs. The
+previously reported `125 ID matches / 86 hash changes / 9 new` estimate remains
+unreconciled and is not used to classify this saved overlay. These 41 inputs
+are preparation inputs, not claims of 41 new people. The receipt at
+`Working\_sandbox-state\clean-rebase-20261025-overnight\source-overlay\overlay.json`
+and its recovery hashes must be rechecked before matching/apply.
+
+The first integration test exposed duplicate photo-ID continuity after adding
+collision-safe current paths; `_migrate_continuity` now retains all matching
+current paths rather than overwriting a list with one path. The focused clean
+preparation lineage/undo test and all 10 clean-rebase tests pass. Final
+prepared/held/error/install counts, preserved-file comparison and Gallery
+paths remain unverified and belong to a future fresh run.
+
 ## Oct 25 implementation checkpoint, before real acceptance
 
 The existing launcher now supports the same all-image preparation run as

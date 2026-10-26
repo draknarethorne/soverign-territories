@@ -187,6 +187,24 @@ class FirstShotTests(unittest.TestCase):
         self.assertEqual(lay.dirs_for("alpha", ["base", "neutral-base"]), ["1_Alpha", "1b_Experiments", "neutral-base"], "P2 and P3 never share a folder")
         self.assertEqual(lay.parse_dirs(["1_Alpha", "1_Prime"]), ("alpha", []), "the Prime is untouched")
 
+    def test_0_edit_card_routes_to_studio_edit_workflow_and_photo_input(self):
+        lay = cw.art_layout
+        card = {
+            "stage": "edit",
+            "artId": "female-edit-cleanup-basic",
+            "components": {"edit_task": "data/art/edits/cleanup/basic.json"},
+        }
+        family = lay.family(card, "angel-primes", cw.ROOT)
+        dirs = lay.dirs_for(lay.stage_folder("edit"), family)
+        self.assertEqual(family, ["cleanup"])
+        self.assertEqual(dirs, ["0_Edit", "cleanup"])
+        self.assertEqual(lay.parse_dirs(dirs), ("edit", ["cleanup"]))
+        self.assertEqual(cw.stage_of("Female_Qwen_Edit_Cleanup_Basic.json"), "edit")
+        self.assertEqual(cw.class_of("edit"), "studio")
+        self.assertEqual(cw.input_role(
+            {"inputs": {"Female": {}}, "inputRoles": {"edit": "photo"}},
+            "Female", "edit", family), "photo")
+
     def test_only_the_first_shots_take_the_photo(self):
         def item(stem, family=()):
             return {"stage": "alpha", "family": list(family), "stem": stem}

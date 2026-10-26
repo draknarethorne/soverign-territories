@@ -35,6 +35,22 @@ class CleanRebaseTests(unittest.TestCase):
         }
         (self.base / "source-manifest.json").write_text("{}", encoding="utf-8")
 
+    def image_inventory_mock(self):
+        categories = {"Angels", "Sisters", "Models", "Prospects", "Potentials", "Artists", "Various"}
+
+        def inventory(root):
+            root = pathlib.Path(root)
+            return sorted(
+                path for path in root.rglob("*")
+                if path.is_file()
+                and path.relative_to(root).parts[0] in categories
+                and path.parent.name in ("gallery", "review")
+                and not any(part.startswith((".", "_")) for part in path.relative_to(root).parts)
+                and path.suffix.casefold() in {".jpg", ".jpeg", ".png", ".webp", ".bmp"}
+            )
+
+        return SimpleNamespace(inventory=inventory)
+
     def plan(self):
         return {
             "status": "preview",
@@ -110,6 +126,115 @@ class CleanRebaseTests(unittest.TestCase):
         self.assertEqual(local.read_bytes(), previous)
         self.assertFalse(destination.exists())
         self.assertEqual(self.source_photo.read_bytes(), b"photo bytes")
+
+    def test_current_various_overlay_replaces_by_id_and_preserves_raw_versions(self):
+        import json
+
+        for category in ("Angels", "Sisters", "Models", "Prospects", "Potentials", "Artists", "Various"):
+            (self.source / category).mkdir(parents=True, exist_ok=True)
+            (self.working / category).mkdir(parents=True, exist_ok=True)
+        current_gallery = self.working / "Various" / "gallery"
+        current_gallery.mkdir(parents=True, exist_ok=True)
+        changed = current_gallery / "incoming_image_123456.jpg"
+        changed.write_bytes(b"new working bytes")
+        added = current_gallery / "incoming_image_654321.jpg"
+        added.write_bytes(b"new stable ID")
+        no_id = current_gallery / "incoming_without_id.jpg"
+        no_id.write_bytes(b"new unlabelled image")
+        run = self.working / "_sandbox-state" / "overlay-run"
+        run.mkdir(parents=True)
+
+        layout = {
+            **self.layout,
+            "source_root": self.source,
+            "working_root": self.working,
+            "sandbox_root": self.base,
+            "manifest_files": {self.relative: (11, self.digest)},
+        }
+        with mock.patch.dict("sys.modules", {"image_preparation": self.image_inventory_mock()}):
+            rows, current = clean_rebase._current_various_overlay_rows(layout)
+            self.assertEqual(len(rows), 1)
+            self.assertEqual(len(current), 3)
+            overlay_layout = clean_rebase._create_source_overlay(layout, run)
+        manifest = json.loads((run / "source-overlay" / "overlay.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["immutableInputCount"], 1)
+        self.assertEqual(manifest["replacementCount"], 1)
+        self.assertEqual(manifest["newInputCount"], 2)
+        overlay_path = overlay_layout["source_root"] / self.relative
+        self.assertEqual(overlay_path.read_bytes(), b"new working bytes")
+        self.assertEqual(self.source_photo.read_bytes(), b"photo bytes")
+        recovery = manifest["rawRecovery"]
+        self.assertEqual(len(recovery), 4)
+        self.assertEqual(
+            {record["role"] for record in recovery},
+            {"immutable-original", "working-various"},
+        )
+        recovered = {
+            record["role"]: (run / "source-overlay" / record["path"]).read_bytes()
+            for record in recovery
+            if record["role"] == "immutable-original"
+            or record["source"].endswith("incoming_image_123456.jpg")
+        }
+        self.assertEqual(recovered["immutable-original"], b"photo bytes")
+        self.assertEqual(recovered["working-various"], b"new working bytes")
+
+        (run / "source-overlay").joinpath(*pathlib.PurePosixPath(recovery[0]["path"]).parts).write_bytes(b"tampered")
+        with self.assertRaisesRegex(ValueError, "raw recovery copy changed"):
+            clean_rebase._verify_source_overlay(layout, run)
+
+    def test_overlay_isolates_timestamp_collisions_and_deduplicates_exact_copies(self):
+        import json
+
+        for category in ("Angels", "Sisters", "Models", "Prospects", "Potentials", "Artists", "Various"):
+            (self.source / category).mkdir(parents=True, exist_ok=True)
+            (self.working / category).mkdir(parents=True, exist_ok=True)
+        source = self.source / "Potentials" / "Lyra" / "gallery" / "lyra_caldwell_shot_20261010125400.jpg"
+        source.parent.mkdir(parents=True)
+        source.write_bytes(b"immutable Lyra photo")
+        various = self.working / "Various"
+        (various / "gallery").mkdir(parents=True)
+        (various / "review").mkdir(parents=True)
+        screenshot = various / "gallery" / "Screenshot_20261010_125400_Facebook.jpg"
+        screenshot.write_bytes(b"different screenshot sharing a timestamp")
+        lyra = various / "review" / source.name
+        lyra.write_bytes(source.read_bytes())
+        duplicate_name = "Screenshot_20260902_203835_Facebook.jpg"
+        duplicate_a = various / "gallery" / duplicate_name
+        duplicate_b = various / "gallery" / "Screenshot_20260902_203835_Facebook (1).jpg"
+        duplicate_a.write_bytes(b"same incoming image")
+        duplicate_b.write_bytes(b"same incoming image")
+        no_id = various / "gallery" / "local_image_without_id.jpg"
+        no_id.write_bytes(b"unlabelled incoming image")
+
+        run = self.working / "_sandbox-state" / "collision-run"
+        run.mkdir(parents=True)
+        relative = source.relative_to(self.source).as_posix()
+        layout = {
+            **self.layout,
+            "source_root": self.source,
+            "working_root": self.working,
+            "sandbox_root": self.base,
+            "manifest_files": {
+                self.relative: (11, self.digest),
+                relative: (source.stat().st_size, hashlib.sha256(source.read_bytes()).hexdigest()),
+            },
+        }
+        with mock.patch.dict("sys.modules", {"image_preparation": self.image_inventory_mock()}):
+            overlay_layout = clean_rebase._create_source_overlay(layout, run)
+        manifest = json.loads((run / "source-overlay" / "overlay.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["immutableInputCount"], 2)
+        self.assertEqual(manifest["newInputCount"], 3)
+        self.assertEqual(manifest["workingVariousCount"], 5)
+        self.assertTrue(any(row["sanitized"] for row in manifest["currentVarious"]))
+        self.assertEqual(
+            overlay_layout["manifest_files"][relative][1],
+            hashlib.sha256(source.read_bytes()).hexdigest(),
+        )
+        self.assertEqual(source.read_bytes(), b"immutable Lyra photo")
+        with mock.patch.dict("sys.modules", {"image_preparation": self.image_inventory_mock()}):
+            current_inputs = clean_rebase._curation_inventory(overlay_layout)
+        self.assertEqual(len(current_inputs), 5)
+        self.assertTrue(any(record["role"] == "working-various-duplicate" for record in manifest["rawRecovery"]))
 
     def test_undo_removes_created_local_catalogue(self):
         plan = self.prepare_catalogue()

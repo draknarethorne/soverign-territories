@@ -1,6 +1,6 @@
 # `data/art/` — Structure Reference
 
-**Status:** Living document · **Last updated:** 2026-10-04
+**Status:** Living document · **Last updated:** 2026-10-26
 
 This is the authoritative explanation of how `data/art/` is organized. Read this before adding any
 new hero, race, component, or card-production folder — the goal is that we never have to reshuffle
@@ -248,13 +248,14 @@ prompts/<group>/<Hero>/<phase>/<family>/<Hero>_<Stage>_<Name>.txt
 ComfyUI output: <group>/<Hero>/<phase>/<family>/<Hero>_<Engine>_<Stage>_<Name>_00001_.png   (workflows in a workspace sit in the same folders)
 ```
 
-The phases (`art_layout.phase_path`, inverse `parse_dirs`), hero first: `1_Alpha` (`1_Prime`, `2_Bare`, `2b_Experiments`, `3_Footwear`), `2_Studies` (`head`,
+The phases (`art_layout.phase_path`, inverse `parse_dirs`), hero first: optional `0_Edit` (`cleanup`, `background`, `enhance`, `full`), `1_Alpha` (`1_Prime`, `2_Bare`, `2b_Experiments`, `3_Footwear`), `2_Studies` (`head`,
 `hair`, `body`), `3_Layers` (the underlayer types), `4_Wardrobe` (`clothing`, `armor`, `showcase`), `5_Scenes`, `6_Finish` (`polish`, `final`), `7_Video`, and
 `Bench/motion` (a test run on any phase's image, not a phase). Brand and mass card art (`brand/<family>`, `<Category>/card`) have no phases and keep their
-stage folder. A card's `stage` field still names its kind of work (`pose`, `scene`, `alpha`); the table below is by stage, with the families each one uses.
+stage folder. A card's `stage` field still names its kind of work (`edit`, `pose`, `scene`, `alpha`); the table below is by stage, with the families each one uses.
 
 | Stage | Families | Notes |
 | --- | --- | --- |
+| edit | `cleanup`, `background`, `enhance`, `full` (family derived from the `edit_task` piece's tags) | Optional task-based source editing; only the generic Female `0c_Cleanup_Basic` pilot is currently migrated. |
 | scene (sisters) | `signature` (signature, shiny, holo, lineup), `glamour` (glamour, test, elegant casting, evening, robe), `story` (dawn, battle, bond), `themes` | A shiny or holo card sits beside its signature card. Other groups keep scenes flat. |
 | alpha (sisters) | the card family is `[]` (`1_Alpha/1_Prime`: `Alpha_1_Prime`, from the original photo, with its variants and tests), `bare` (`2_Bare`: `Alpha_2_Bare_Figure`) with the celestial experiment nested as `bare/celestial` (`2b_Experiments`, `Alpha_2b_Celestial<Name>`), and `footwear` (`3_Footwear`: `Alpha_3_Barefoot`, `Alpha_3_Heels`) | The creation chain of a hero, the only stage that makes her likeness. Bare, Barefoot and Heels are the golden images. |
 | poses | views; underlayer tests by piece type: `base` (neutral skin-tone layer), `backless`, `lingerie`, `athletic`, `one-piece`, `bikini`, `swimwear` | Fed the Bare image, never the photo. The type is read from the underlayer piece's tags. Dragons, bound heroes and the Angel Primes keep their X Pose at the root until they get an Alpha chain. |

@@ -49,6 +49,7 @@ def prepare(layout, run):
     value = {
         "schemaVersion": 1, "sourceManifestSHA256": metadata.content_sha256(
             layout["sandbox_root"] / "source-manifest.json"),
+        "sourceOverlaySHA256": layout.get("source_overlay_sha256"),
         "inputs": rows, "preparationManifestSHA256": metadata.content_sha256(output / "manifest.json"),
         "recipe": data["recipe"], "assessmentErrors": bool(result),
     }
@@ -83,6 +84,8 @@ def verify(layout, run):
         layout["sandbox_root"] / "source-manifest.json"
     ):
         raise ValueError("immutable source manifest changed since intake")
+    if value.get("sourceOverlaySHA256") != layout.get("source_overlay_sha256"):
+        raise ValueError("source overlay changed since intake")
     mirror = run / "inputs"
     output = mirror / "_reports" / "preparation" / "all"
     if metadata.content_sha256(output / "manifest.json") != value["preparationManifestSHA256"]:

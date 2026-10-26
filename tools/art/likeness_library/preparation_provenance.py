@@ -169,6 +169,14 @@ class PreparationIndex:
         for run in runs:
             manifest = run / "manifest.json"
             if not manifest.is_file():
+                try:
+                    empty = next(run.iterdir(), None) is None
+                except OSError:
+                    empty = False
+                if empty:
+                    # An aborted run that never wrote anything has nothing to verify or trust.
+                    history_by_name[run.name]["status"] = "empty folder; ignored"
+                    continue
                 self._error(f"{run.name}: no manifest")
                 continue
             try:

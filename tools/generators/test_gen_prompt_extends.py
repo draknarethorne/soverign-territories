@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
-"""Tests for piece `extends` in gen_prompt.load_piece, using throwaway pieces (no real art data is read).
+"""Tests for reusable piece resolution and the shared edit prompt's token contract.
 
-Run: python tools/generators/test_gen_prompt_extends.py
+Most tests use throwaway pieces; the edit-pilot integration test reads the real
+assembly card and template without writing generated output.
+
+Run: python -m unittest tools.generators.test_gen_prompt_extends
 """
 import json
 import pathlib
+import re
 import shutil
 import sys
 import tempfile
@@ -157,6 +161,20 @@ class SlugFilterTests(unittest.TestCase):
         self.assertTrue(all("/alpha/female/" in p.as_posix() for p in paths), "only the alpha test hero")
         self.assertTrue(all("/female/azaline/" not in p.as_posix() for p in paths))
         self.assertTrue(any("/female/azaline/" in p.as_posix() for p in gp.iter_card_paths(group="angel-primes", slug="azaline")), "a normal angel is still found by her slug")
+
+
+class ArtPromptIntegrationTests(unittest.TestCase):
+    def test_generic_edit_pilot_fills_every_template_token(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        card_path = "data/art/_sets/angel-primes/alpha/female/0_Edit/cleanup/female-edit-cleanup-basic.json"
+        with mock.patch.object(gp, "ROOT", root):
+            card = json.loads((root / card_path).read_text(encoding="utf-8"))
+            tokens = gp.generate(card_path, tokens_only=True)
+            template = (root / card["template"]).read_text(encoding="utf-8")
+
+        required = set(re.findall(r"{{(\w+)}}", template))
+        self.assertEqual(required - tokens.keys(), set())
+        self.assertTrue(tokens["EDIT_TASK_NEG"])
 
 
 if __name__ == "__main__":
