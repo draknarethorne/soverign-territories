@@ -1,0 +1,9 @@
+{
+  "id": "edit-policy-clothing-preserve",
+  "kind": "edit",
+  "name": "Clothed reference wardrobe",
+  "compatibleStages": ["edit"],
+  "tags": ["reference", "clothed", "preserve-source"],
+  "description": "Keep the person fully clothed in the same outfit. Preserve the fabric, colors, coverage and accessories.",
+  "negatives": ["removed clothing", "revealing outfit", "changed clothing", "added accessories"]
+}

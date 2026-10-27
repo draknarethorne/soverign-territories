@@ -150,13 +150,65 @@ bin\render-gallery.cmd --root "LIBRARY" --apply
 Preparation remains offline; compile explicitly contacts the selected local
 server to validate node/model choices. It currently supports only Sovereign
 Females reference-faithful jobs with a required `displayName` from the Gallery.
-The four provisional IDs are `manual-0c-cleanup-basic`, `manual-0c-cleanup`,
-`manual-0e-enhance`, `manual-0f-full`. These reuse inspected graph/settings but
+The provisional IDs include `manual-0c-cleanup-basic`, `manual-0c-cleanup`,
+`manual-0e-enhance`, `manual-0f-full`, `manual-0b-background-basic` and
+`manual-0d-deluxe-pose`. These reuse inspected graph/settings but
 replace manual prompt conflicts with versioned, clothed-preservation pilot
 prompts; they are **not exact migrated manual prompts**. The original graph is
-frozen as evidence. `0d`, Alpha, Studies and Bench entries remain unavailable.
+frozen as evidence. Alpha, Studies and Bench execution remains unavailable.
 The intended destination is still shared JSON/templates, not permanent manual
 workflow copies. No clothing-removal pilot is run.
+
+### Shared clothed edit recipes
+
+The Gallery and CLI catalogue also expose these generated-prompt recipes:
+
+| Recipe ID | Shared assembly / task |
+| --- | --- |
+| `shared-0b-background-basic` | Background-only grey studio edit |
+| `shared-0d-relaxed-three-quarter` | Full-length three-quarter stance, weight on one leg, hand on hip |
+| `shared-0d-grounded-three-quarter` | Both feet flat, one foot forward, forward knee bent |
+| `shared-0e-enhance-basic` | Conservative exposure/detail enhancement |
+| `shared-0f-full-clothed` | Full-length extension, continuing the source pose/outfit |
+
+These are clothed reference-preserving controls, not appearance-profile
+transforms or exact copies of the mixed manual drafts. Shared text comes from
+`data/art/_templates/heroes/0_Edit/edit-reference-human.txt` and independent
+JSON components in `data/art/edits/` and `data/art/studio/views/body/`.
+Regenerate with `bin\prompts.cmd --group angel-primes --slug female --stage edit`,
+preview `bin\make.cmd Female edit --dry-run`, then `bin\make.cmd Female edit`.
+Never hand-edit the generated prompts.
+
+Runtime compilation still reuses the inspected installed Qwen graph/settings,
+replacing its positive and negative prompt with the generated shared text.
+It freezes `prompt-source.txt` with an artifact hash alongside the exact UI/API
+graphs; later source changes cannot alter a compiled job. Missing or unresolved
+shared prompts fail explicitly. The separately generated repo workflows use
+their normal stage-template configuration; sampler tuning in a manual graph
+is not replaced by a denoise suggestion in the shared prompt header.
+
+Refresh the Rendering page to see the new entries, preview/export a bounded
+batch, then use the existing prepare/compile/run lifecycle. Compilation checks
+server compatibility; a successful catalogue/generation check alone is not a
+render-quality acceptance. Other appearance profiles remain blocked rather
+than silently compiling as reference-faithful.
+
+### Person-first automated paths
+
+New compilations publish both workflows and images under
+`reference/<Person_Name>/<stage>/<family>/`. The workflow basename is
+`<Person_Name>_Qwen_Edit_<recipe>__<UTC-stamp>__<batch-id>__<job-id>.json`;
+SaveImage uses the same stem, then ComfyUI appends its counter and image
+extension. Both shared three-quarter recipes sit in `0_Edit/0d_Deluxe/`,
+with their pose name in the filename. Batch/job IDs no longer add directories.
+
+The timestamp comes from preparation of the frozen request, not the machine's
+local timezone or a changing compile time. Exact source paths/hashes, seeds and
+full identities remain in the receipts under `_generation/reference/<batch>/`.
+Internal staged input paths retain their existing batch/job layout.
+Existing compiled batches keep their original workflow/output names; no old
+outputs are moved. The Outputs browser parses either layout, retaining
+person/stage/family and batch/job filtering. Pull-back naming is unchanged.
 
 `compiled.json` binds source/UI/API hashes and exact server roots.
 `execution.json` records per-job intent, prompt ID, state, errors and actual

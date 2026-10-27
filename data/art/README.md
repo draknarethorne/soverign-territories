@@ -823,6 +823,26 @@ and each phrase is traced to the data file it comes from, so the fix goes to the
 
 ## Eyes, makeup, expression and hair: what each stage says
 
+### Reference-preserving edit controls
+
+The generic Female `0_Edit` assemblies use explicit incoming-image policies,
+not the hero's fixed body/hair colors. The shared `edit-reference-human.txt`
+template has independent `face_policy`, `hair_policy`, `body_policy`,
+`clothing_policy`, `view`, `framing`, `background` and `edit_task` components.
+Each component supplies positive text and its own negative tokens. Component
+tags support classification/search; tags themselves are never prompt text.
+`{{DENOISE}}` exposes the assembly's existing `denoise` metadata to a template.
+
+The two approved three-quarter views live in `studio/views/body/`:
+`relaxed-three-quarter` (hand on hip) and `grounded-three-quarter` (both feet
+flat, forward foot and bent knee). They support edit and pose assemblies
+without changing the existing A-pose turnaround pieces.
+
+These initial controls preserve the source physique and clothing. They do
+not implement per-job GUI physique/hair overrides or imply a visual-quality
+approval. See [shared execution recipes](../../workflows/README.md#shared-clothed-edit-recipes)
+for the generation commands and runtime graph/settings boundary.
+
 Every studio-backdrop stage uses the **same** studio eyes and makeup, so a full-body shot and the close-up agree.
 Glow is only ever added in `scene` stages.
 

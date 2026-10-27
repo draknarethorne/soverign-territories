@@ -1,0 +1,21 @@
+{
+  "artId": "female-edit-pose-grounded-three-quarter",
+  "kind": "base-set",
+  "stage": "edit",
+  "heroArt": "data/art/heroes/angel-primes/alpha/female.json",
+  "template": "data/art/_templates/heroes/0_Edit/edit-reference-human.txt",
+  "output": "prompts/angel-primes/alpha/Female/0_Edit/pose/Female_Edit_Pose_Grounded_Three_Quarter.txt",
+  "denoise": "~0.9-1.0",
+  "edit_name": "Grounded three-quarter clothed audition",
+  "components": {
+    "edit_task": "data/art/edits/pose/clothed.json",
+    "face_policy": "data/art/edits/policies/face-preserve.json",
+    "hair_policy": "data/art/edits/policies/hair-preserve.json",
+    "body_policy": "data/art/edits/policies/body-preserve.json",
+    "clothing_policy": "data/art/edits/policies/clothing-preserve.json",
+    "view": "data/art/studio/views/body/grounded-three-quarter.json",
+    "framing": "data/art/edits/policies/framing-full-length.json",
+    "background": "data/art/backgrounds/studio/grey-even.json"
+  },
+  "notes": "Approved grounded forward-foot, bent-knee pose. Output is synthetic and never identity-core evidence. Visual acceptance is pending."
+}

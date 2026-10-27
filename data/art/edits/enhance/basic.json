@@ -1,0 +1,11 @@
+{
+  "id": "edit-enhance-basic",
+  "kind": "edit",
+  "name": "Enhance Basic",
+  "compatibleStages": ["edit"],
+  "tags": ["enhance", "basic", "preserve-source"],
+  "sourceVariant": "0e_Enhance_Basic",
+  "status": "pilot",
+  "description": "Improve exposure and fine photographic detail modestly. Reduce compression artifacts without inventing facial details, smoothing away natural skin texture or changing the direction of light.",
+  "negatives": ["over-sharpening", "waxy skin", "invented facial details"]
+}

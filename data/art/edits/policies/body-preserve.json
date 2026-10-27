@@ -1,0 +1,9 @@
+{
+  "id": "edit-policy-body-preserve",
+  "kind": "edit",
+  "name": "Reference physique control",
+  "compatibleStages": ["edit"],
+  "tags": ["reference", "physique", "preserve-source", "control"],
+  "description": "Preserve visible body proportions and muscle definition, keeping the source physique unchanged.",
+  "negatives": ["reshaped body", "changed body proportions", "exaggerated anatomy"]
+}

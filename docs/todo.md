@@ -5,7 +5,7 @@
 
 ## Open work, by priority
 
-### Your queue: needs your hands or a decision (43)
+### Your queue: needs your hands or a decision (42)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -28,7 +28,6 @@
 - [ ] I10 Review the pilot's control, denoise and tone candidates. ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] R21 Try the flow on real images: filter "Needs cleanup", ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R27 Review the large run on the Outputs page (filter batch ([2026-10-25](plans/2026-10-25-reference-rendering.md))
-- [ ] R32 Approve the three-quarter Prime variant: the names (for ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R37 Approve the staged per-person preparation (instead of ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R6 Accept the bounded transport pilot: two selected sources, ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 
@@ -59,7 +58,7 @@
 - [ ] U2 Review current photo outcomes using fresh inventories: ([2026-10-22](plans/2026-10-22-library-upkeep.md))
 - [ ] P10 Archive the manual source directory only after every ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 
-### Either of us (41)
+### Either of us (40)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -95,7 +94,6 @@
 - [ ] A10 Review action-file intake and completed-batch filing. ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] A12 Provide snapshot inventory, disk estimates and ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] R28 Take the 23 unmapped `Various\gallery` screenshots ([2026-10-25](plans/2026-10-25-reference-rendering.md))
-- [ ] R30 Republish Photo Review in the sandbox (the stale ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R1c Correct the workspace input-directory spelling during a ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R9 Agree storage/backup/retention limits and safe run filing ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 
@@ -111,7 +109,7 @@
 - [ ] A7 Compare download/run versus a lightweight explicit ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] R10 Extend to male/animal recipe profiles only after suitable ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 
-### For the assistant, when you say go (97)
+### For the assistant, when you say go (100)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -138,6 +136,7 @@
 - [ ] P4 Implement and run the recoverable production adapter only ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] P11 Define stage-input contracts that allow user-selected branch ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] P12 Define promoted-output directory structure for selected ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
+- [ ] P13 Inventory every remaining manual `0_Edit` variant and map ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] P1 Snapshot the selected manual files and record hashes, ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] P4 Define `0_Edit` stage/schema/layout and supported variants, ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] P5 Implement one agreed `0_Edit` plus Prime/Bare pilot using ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
@@ -158,6 +157,8 @@
 - [ ] I7 Wire accepted analysis/prepared/display hashes and recipe ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] R11 Execute the recoverable all-input sandbox run and record ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R16 Define and implement the first publishable stage-chain ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] R33 Add the body-pose pieces and a pose-choosing `0d` recipe ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] R40 Prepare the bounded character-audition comparison after ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R2 Define request/resolved/receipt schemas, recipe capabilities, ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R4 Implement offline preview/prepare/check and the thin launcher ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R5 Bind one reviewed Qwen API graph to its master, preflight ([2026-10-25](plans/2026-10-25-reference-rendering.md))
@@ -199,10 +200,10 @@
 - [ ] R22 Face-similarity ranking of each job's outputs against its ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R23 Loopback local service so Gallery buttons run the ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R24 Show pulled renders in the People drill-down per person and ([2026-10-25](plans/2026-10-25-reference-rendering.md))
-- [ ] R33 Add the body-pose pieces and a pose-choosing `0d` recipe ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R34 Render-assisted suggestions: a `likeness` step that ranks ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R38 `cleanup-batch --per-person N --recipe ...`: choose the ([2026-10-25](plans/2026-10-25-reference-rendering.md))
-- [ ] R39 The best-of-N scorer with a likeness drift gate for ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] R39 Rank best-of-N results with separate technical-quality, ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] R41 Add a rendered-character resemblance review using matched ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R7 Add compatible female flow catalogue coverage and explicit ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R8 Add Gallery export and read-only generation results through ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 

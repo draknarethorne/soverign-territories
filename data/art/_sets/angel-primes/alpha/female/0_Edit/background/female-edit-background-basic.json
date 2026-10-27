@@ -1,0 +1,21 @@
+{
+  "artId": "female-edit-background-basic",
+  "kind": "base-set",
+  "stage": "edit",
+  "heroArt": "data/art/heroes/angel-primes/alpha/female.json",
+  "template": "data/art/_templates/heroes/0_Edit/edit-reference-human.txt",
+  "output": "prompts/angel-primes/alpha/Female/0_Edit/background/Female_Edit_Background_Basic.txt",
+  "denoise": "~0.5-0.7",
+  "edit_name": "Background Basic",
+  "components": {
+    "edit_task": "data/art/edits/background/basic.json",
+    "face_policy": "data/art/edits/policies/face-preserve.json",
+    "hair_policy": "data/art/edits/policies/hair-preserve.json",
+    "body_policy": "data/art/edits/policies/body-preserve.json",
+    "clothing_policy": "data/art/edits/policies/clothing-preserve.json",
+    "view": "data/art/edits/policies/pose-preserve.json",
+    "framing": "data/art/edits/policies/framing-preserve.json",
+    "background": "data/art/backgrounds/studio/grey-even.json"
+  },
+  "notes": "Clothed background-only pilot. No body, pose or wardrobe redesign. Input is a selected photo or chosen render; output is synthetic, never identity evidence."
+}

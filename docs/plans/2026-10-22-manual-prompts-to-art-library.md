@@ -77,6 +77,38 @@ separate originals/core evidence from synthetic generated derivatives.
 
 ## Oct 26 first shared `0_Edit` slice
 
+### Oct 26, 21:48: complete edit migration and audition controls
+
+The user requests bringing back and optimizing the full manual `0_Edit`
+collection, with independent component-driven controls rather than fixed
+prompts. The approved three-quarter variants include a grounded, forward-foot,
+bent-knee stance. The goal is to audition character looks and select useful
+Prime inputs, not always preserve the original physique.
+The [rendering clarification](2026-10-25-reference-rendering.md#oct-26-2148-character-auditions-not-faithful-body-restoration)
+owns the complete verbatim request, audition batch and rendered-resemblance
+comparison. This plan owns reusable components, templates and input roles.
+
+- [ ] **P1 ai** P13 Inventory every remaining manual `0_Edit` variant and map
+  its preservation/change intent, input role and component slots. Optimize
+  shared non-explicit instructions against the successful clothed
+  three-quarter recipe; migrate in bounded tested families, not a blanket
+  rewrite. Include independent face, physique, hair, pose, wardrobe, framing
+  and lighting controls, both approved poses, and a preserve-physique control.
+  Review `female_anatomy.txt` as mixed source notes, not a preset to inject;
+  exclude explicit sexual content and real-person nudification. Record
+  migration/visual acceptance or exclusion for every variant. Coordinate R33
+  without duplicating ownership of batch execution.
+
+Implementation continuation: five further shared edit assemblies now cover
+background-only, conservative enhancement, clothed full-length extension and
+the two approved three-quarter pose controls. Their common template resolves
+independent face/hair/physique/wardrobe/pose/framing/background/task JSON.
+Both poses have distinct reusable view pieces rather than new hard-coded
+Python prompts. Generated repo workflows and Gallery/CLI bindings are present;
+live visual acceptance, remaining manual-variant review and per-job design
+overrides are not complete. P13 remains open rather than treating five controls
+as migration of every manual draft.
+
 The generic Alpha Female `0c_Cleanup_Basic` slice now flows through the normal
 art-data pipeline:
 

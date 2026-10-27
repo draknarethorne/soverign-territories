@@ -718,6 +718,7 @@ def generate(card_path, tokens_only=False):
         toks = tokens_for_dragon(hero)
     toks.update(resolve_component_tokens(card))
     toks.update(resolve_components_tokens(card))
+    toks["DENOISE"] = card["denoise"]
     for neg_token in ("FOOTWEAR_NEG", "UNDERLAYER_NEG", "WEARING_NEG", "EXPRESSION_NEG", "BASE_LAYER_NEG", "BARE_BASE_NEG"):
         if "{{" + neg_token + "}}" in template:
             toks.setdefault(neg_token, "")  # only a piece that carries negatives (barefoot, bareskin) fills it

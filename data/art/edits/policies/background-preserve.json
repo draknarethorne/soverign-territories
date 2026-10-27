@@ -1,0 +1,9 @@
+{
+  "id": "edit-policy-background-preserve",
+  "kind": "edit",
+  "name": "Reference background and lighting preservation",
+  "compatibleStages": ["edit"],
+  "tags": ["reference", "background", "preserve-source"],
+  "description": "Keep the existing background, environment and direction of light unchanged.",
+  "negatives": ["changed background", "changed lighting direction"]
+}

@@ -87,7 +87,7 @@ class ReferenceGalleryTests(unittest.TestCase):
         self.assertIn("group.dataset.stage !== stage", page)
         self.assertIn("provisional clothed transport pilot; not exact manual prompt migration", page)
         self.assertIn("Manual source prompts may contain contradictory instructions and are never", page)
-        self.assertIn("other catalogue entries, including 0d, stay disabled", page)
+        self.assertIn("Per-job appearance-profile changes and Prime/Studies execution remain unavailable", page)
         self.assertNotIn("Do not display this prompt", page)
         self.assertNotIn("must not leak prompt text", page)
         self.assertIn("Four coordinated tracks", page)
@@ -95,6 +95,17 @@ class ReferenceGalleryTests(unittest.TestCase):
         request = gallery.make_request(self.root, self.sources, self.recipes[0], 2, "gallery-test")
         with self.assertRaisesRegex(ValueError, "unavailable"):
             gallery.make_request(self.root, self.sources, self.recipes[4], 2, "gallery-test")
+
+    def test_shared_pose_entries_show_generated_prompt_policy(self):
+        recipes = [
+            {"id": recipe_id, "label": "unused label", "stage": "0_Edit", "available": True}
+            for recipe_id in ("shared-0d-relaxed-three-quarter", "shared-0d-grounded-three-quarter")
+        ]
+        page = gallery.build_page(self.root, self.sources, recipes)
+        self.assertIn("0d Relaxed 3/4 (shared, clothed)", page)
+        self.assertIn("0d Grounded 3/4 (shared, clothed)", page)
+        self.assertIn("shared templates/JSON; inspected Qwen transport", page)
+        self.assertIn("shared-clothed-reference-v1", page)
 
     def test_one_source_expands_samples_deterministically_and_rechecks_hashes(self):
         recipe = self.recipes[0]

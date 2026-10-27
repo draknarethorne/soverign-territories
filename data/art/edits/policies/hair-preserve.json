@@ -1,0 +1,9 @@
+{
+  "id": "edit-policy-hair-preserve",
+  "kind": "edit",
+  "name": "Reference hair preservation",
+  "compatibleStages": ["edit"],
+  "tags": ["reference", "hair", "preserve-source"],
+  "description": "Keep the incoming hairstyle, hair length, texture and color.",
+  "negatives": ["changed hairstyle", "changed hair color", "shortened hair"]
+}

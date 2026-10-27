@@ -19,8 +19,10 @@ from PIL import Image
 
 if __package__:
     from . import reference_rendering as base
+    from . import comfy_workflows as workflows
 else:
     import reference_rendering as base
+    import comfy_workflows as workflows
 
 INSTALL = pathlib.Path(r"B:\Comfy-Desktop\ComfyUI-Installs\Sovereign Females\ComfyUI")
 WORKFLOWS = INSTALL / "user" / "default" / "workflows"
@@ -33,7 +35,20 @@ RECIPES = {
     # The installed 0d graphs are "Bare" pose studies; only their graph/settings are reused and
     # the clothed-preservation prompt below replaces their prompt text.
     "manual-0d-deluxe-pose": ("0_Edit", "0d_Deluxe", "Angelica_Qwen_Edit_0d_Deluxe_Bare.json"),
+    "shared-0b-background-basic": ("0_Edit", "0b_Background_Basic", "Angelica_Qwen_Edit_0b_Background_Basic.json"),
+    "shared-0d-relaxed-three-quarter": ("0_Edit", "0d_Relaxed_Three_Quarter", "Angelica_Qwen_Edit_0d_Deluxe_Bare.json"),
+    "shared-0d-grounded-three-quarter": ("0_Edit", "0d_Grounded_Three_Quarter", "Angelica_Qwen_Edit_0d_Deluxe_Bare.json"),
+    "shared-0e-enhance-basic": ("0_Edit", "0e_Enhance_Basic", "Angelica_Qwen_Edit_0e_Enhance.json"),
+    "shared-0f-full-clothed": ("0_Edit", "0f_Full_Clothed", "Angelica_Qwen_Edit_0f_Full.json"),
 }
+SHARED_PROMPTS = {
+    "shared-0b-background-basic": "background/Female_Edit_Background_Basic.txt",
+    "shared-0d-relaxed-three-quarter": "pose/Female_Edit_Pose_Relaxed_Three_Quarter.txt",
+    "shared-0d-grounded-three-quarter": "pose/Female_Edit_Pose_Grounded_Three_Quarter.txt",
+    "shared-0e-enhance-basic": "enhance/Female_Edit_Enhance_Basic.txt",
+    "shared-0f-full-clothed": "full/Female_Edit_Full_Clothed.txt",
+}
+SHARED_PROMPT_ROOT = base.ROOT / "prompts" / "angel-primes" / "alpha" / "Female" / "0_Edit"
 ALLOWED = {
     "LoadImage", "SaveImage", "ModelSamplingAuraFlow", "VAELoader",
     "FluxKontextMultiReferenceLatentMethod", "TextEncodeQwenImageEditPlus",
@@ -49,6 +64,8 @@ MAX_QUEUE_DEPTH = 16
 
 
 def pilot_prompts(recipe):
+    if recipe in SHARED_PROMPTS:
+        return shared_prompt(recipe)[1]
     common = (
         "Edit this photograph conservatively. Preserve the same person's face, expression, "
         "hair style and color, eye color, skin tone, visible body proportions, and existing clothing. "
@@ -71,6 +88,24 @@ def pilot_prompts(recipe):
         "removed clothing, revealing outfit, distorted body, cropped hands, cropped feet, "
         "extra people, extra limbs, extra fingers, text, watermark, logo, plastic skin"
     )
+
+
+def shared_prompt(recipe):
+    path = SHARED_PROMPT_ROOT / SHARED_PROMPTS[recipe]
+    text = path.read_text(encoding="utf-8")
+    if "{{" in text or "}}" in text:
+        raise ValueError(f"Unresolved shared prompt tokens: {path}; regenerate with bin\\prompts.cmd")
+    return text, workflows.split_prompt(text)
+
+
+def reference_paths(job, batch_id, stamp):
+    person = slug(job["displayName"])
+    stage, variant, _ = RECIPES[job["recipe"]]
+    family = "0d_Deluxe" if job["recipe"].startswith("shared-0d-") else variant
+    recipe_name = job["recipe"].split("-", 1)[1].replace("-", "_")
+    stem = f"{person}_Qwen_Edit_{recipe_name}__{stamp}__{batch_id}__{job['id']}"
+    prefix = f"reference/{person}/{stage}/{family}/{stem}"
+    return prefix, prefix + ".json"
 
 
 def now():
@@ -156,9 +191,11 @@ def recipe_path(recipe):
 def catalog():
     entries = []
     for recipe, (stage, variant, _) in RECIPES.items():
-        label = variant + (" Basic" if recipe.endswith("-basic") else "")
+        label = variant + (" Basic" if recipe.endswith("-basic") and not variant.lower().endswith("basic") else "")
         try:
             path = recipe_path(recipe)
+            if recipe in SHARED_PROMPTS:
+                shared_prompt(recipe)
             entries.append({"id": recipe, "label": label, "stage": stage,
                             "available": True, "sha256": base.digest(path.read_bytes())})
         except (ValueError, OSError) as error:
@@ -426,11 +463,20 @@ def compile_batch(root, batch_id, endpoint, input_root, output_root, apply=False
     if request["workspace"] != "Sovereign Females":
         raise ValueError("Pilot only deploys to Sovereign Females")
     inputs, outputs = safe_root(input_root), safe_root(output_root)
+    if (destination / "compiled.json").is_file():
+        existing = base.read_json(destination / "compiled.json")
+        if (existing["endpoint"] != endpoint.rstrip("/") or existing["inputRoot"] != str(inputs)
+                or existing["outputRoot"] != str(outputs)):
+            raise ValueError("Compiled batch already owns different server roots or endpoint")
+        return existing
     probe = base.probe_server(endpoint, str(inputs), str(outputs))
     if probe["blockers"]:
         raise ValueError("; ".join(probe["blockers"]))
     opener = connection(endpoint)
     objects = base.server_json(opener, endpoint, "/object_info")
+    stamp = datetime.datetime.fromtimestamp(
+        (destination / "request.json").stat().st_mtime, datetime.timezone.utc
+    ).strftime("%Y%m%dT%H%M%SZ")
     artifacts = {}
     staged_inputs = {}
     jobs = {}
@@ -452,16 +498,21 @@ def compile_batch(root, batch_id, endpoint, input_root, output_root, apply=False
         fields = [item["name"] for item in group["inputs"] if item.get("widget")]
         if not {"prompt", "prompt_1"} <= set(fields):
             raise ValueError("Pilot prompt binding has changed")
-        positive, negative = pilot_prompts(job["recipe"])
+        prompt_text = None
+        if job["recipe"] in SHARED_PROMPTS:
+            prompt_text, (positive, negative) = shared_prompt(job["recipe"])
+        else:
+            positive, negative = pilot_prompts(job["recipe"])
         group["widgets_values"][fields.index("prompt")] = positive
         group["widgets_values"][fields.index("prompt_1")] = negative
         stage, variant, _ = RECIPES[job["recipe"]]
         prepared = next(value for value in run["jobs"] if value["id"] == job["id"])
         data = base.safe_path(destination, prepared["input"]).read_bytes()
         input_relative = f"reference/{batch_id}/{job['id']}/{pathlib.PurePosixPath(prepared['input']).name}"
-        prefix = f"reference/{slug(job['displayName'])}/{batch_id}/{job['id']}/{stage}/{variant}/{slug(job['displayName'])}_{variant}"
+        prefix, workflow_relative = reference_paths(job, batch_id, stamp)
         output_path = base.safe_path(outputs, prefix + "_00001_.png")
-        if len(str(output_path)) >= 240:
+        workflow_path = base.safe_path(WORKFLOWS, workflow_relative)
+        if max(len(str(output_path)), len(str(workflow_path))) >= 240:
             raise ValueError("Planned output path is too long for the pilot; shorten batch/job IDs or display label")
         ui, graph = compile_ui(workflow, input_relative, prefix, job["seed"])
         validate_graph(graph, objects)
@@ -470,14 +521,20 @@ def compile_batch(root, batch_id, endpoint, input_root, output_root, apply=False
             f"jobs/{job['id']}/workflow-ui.json": base.encode(ui),
             f"jobs/{job['id']}/workflow-api.json": base.encode(graph),
         }
+        if prompt_text is not None:
+            files[f"jobs/{job['id']}/prompt-source.txt"] = prompt_text.encode("utf-8")
         artifacts.update(files)
         jobs[job["id"]] = {
             "state": "compiled", "displayName": job["displayName"], "recipe": job["recipe"],
             "stage": stage, "variant": variant, "seed": job["seed"], "prefix": prefix,
+            "workspaceWorkflow": workflow_relative, "namingPolicy": "person-first-v2",
             "input": input_relative, "inputSha256": base.digest(data),
             "manualSource": str(path), "manualSha256": base.digest(frozen),
-            "promptPolicy": "clothed-preservation-pilot-v1",
-            "promptOverride": "Neutral preservation prompts replace manual body/color/clothing conflicts; source graph/settings retained",
+            "promptPolicy": ("shared-clothed-reference-v1" if prompt_text is not None
+                             else "clothed-preservation-pilot-v1"),
+            "promptOverride": ("Generated shared prompt replaces manual text; source graph/settings retained"
+                               if prompt_text is not None else
+                               "Neutral preservation prompts replace manual body/color/clothing conflicts; source graph/settings retained"),
             "artifacts": {name: base.digest(value) for name, value in files.items()}, "outputs": [],
         }
         staged_inputs[input_relative] = data
@@ -491,7 +548,7 @@ def compile_batch(root, batch_id, endpoint, input_root, output_root, apply=False
         for relative, data in artifacts.items():
             owned_write(base.safe_path(destination, relative), data)
         for job in request["jobs"]:
-            relative = f"Reference/{batch_id}/{job['id']}/{jobs[job['id']]['stage']}/workflow.json"
+            relative = jobs[job["id"]]["workspaceWorkflow"]
             owned_write(base.safe_path(WORKFLOWS, relative),
                         artifacts[f"jobs/{job['id']}/workflow-ui.json"])
         execution = destination / "execution.json"

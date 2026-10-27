@@ -109,6 +109,15 @@ No family relationship or rename is inferred merely from surname reuse.
 
 ## Scope and decisions
 
+**Oct 26, 21:48 clarification:** virtual-family/casting review also needs to
+show when distinct source people become lookalikes after matched Prime
+rendering. The [rendering plan](2026-10-25-reference-rendering.md#oct-26-2148-character-auditions-not-faithful-body-restoration)
+owns the verbatim request and R41's rendered comparison. These suggestions
+inform deliberate casting or virtual-family choices, not source-person merges,
+kinship claims or automatic surname changes. Existing original-photo family
+evidence rules remain unchanged; rendered resemblance must be labelled
+separately and confirmed by the user before metadata changes.
+
 This plan owns virtual family/lookalike relationships, threshold-assigned
 family naming, collisions, stable metadata and their gallery presentation.
 Keep category folders: no physical Families/Twins root. Shared surnames and

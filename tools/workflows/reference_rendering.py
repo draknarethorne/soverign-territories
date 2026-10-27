@@ -294,7 +294,7 @@ def check(root, batch_id):
     lifecycle = {"compiled.json", "execution.json", "execution.json.pending", "submission.lock"}
     for job in request["jobs"]:
         lifecycle.update(f"jobs/{job['id']}/{name}" for name in (
-            "manual-source.json", "workflow-ui.json", "workflow-api.json"))
+            "manual-source.json", "workflow-ui.json", "workflow-api.json", "prompt-source.txt"))
     if not (set(artifacts) | {"run.json"}) <= actual or actual - set(artifacts) - {"run.json"} - lifecycle:
         raise ValueError("Saved run file inventory changed")
     if "compiled.json" in actual:

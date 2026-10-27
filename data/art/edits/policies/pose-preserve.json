@@ -1,0 +1,9 @@
+{
+  "id": "edit-policy-pose-preserve",
+  "kind": "edit",
+  "name": "Reference pose preservation",
+  "compatibleStages": ["edit"],
+  "tags": ["reference", "pose", "preserve-source"],
+  "description": "Keep the existing pose, hand positions and camera angle unchanged.",
+  "negatives": ["changed pose", "changed camera angle"]
+}

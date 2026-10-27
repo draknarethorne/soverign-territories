@@ -1,5 +1,6 @@
 """Scoped execution state, graph binding and selected-output retention tests."""
 import copy
+import json
 import pathlib
 import tempfile
 import unittest
@@ -35,6 +36,88 @@ def tiny_ui():
 
 
 class GraphTests(unittest.TestCase):
+    def test_shared_compile_freezes_exact_generated_prompt_without_submission(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            destination = base.run_path(root, "audition")
+            source = root / "Various" / "gallery" / "photo.png"
+            source.parent.mkdir(parents=True)
+            Image.new("RGB", (20, 30), "blue").save(source)
+            source_bytes = source.read_bytes()
+            recipe = "shared-0d-grounded-three-quarter"
+            request = {"schemaVersion": 1, "batchId": "audition",
+                       "workspace": "Sovereign Females", "jobs": [{
+                "id": "one", "recipe": recipe, "workflowMode": "reference",
+                "profile": "reference-faithful", "displayName": "Person", "seed": 42,
+                "source": {"path": "Various/gallery/photo.png", "domain": "general",
+                           "sha256": base.digest(source_bytes)},
+            }]}
+            base.prepare(request, root)
+            ui = tiny_ui()
+            ui["nodes"][1]["inputs"].append(
+                {"name": "prompt_1", "widget": {"name": "prompt_1"}, "link": None})
+            ui["nodes"][1]["widgets_values"].append("old negative")
+            manual = root / "manual.json"
+            manual.write_bytes(base.encode(ui))
+            inputs, outputs = root / "in", root / "out"
+            inputs.mkdir()
+            outputs.mkdir()
+            with mock.patch.object(base, "probe_server", return_value={"blockers": []}), \
+                    mock.patch.object(base, "server_json", return_value={}), \
+                    mock.patch.object(execution, "validate_graph"), \
+                    mock.patch.object(execution, "recipe_path", return_value=manual), \
+                    mock.patch.object(execution, "WORKFLOWS", root / "installed"), \
+                    mock.patch.object(execution, "post_json") as post:
+                record = execution.compile_batch(root, "audition", "http://127.0.0.1:8188",
+                                                 inputs, outputs, True)
+                self.assertEqual(execution.compile_batch(root, "audition", "http://127.0.0.1:8188",
+                                                         inputs, outputs, True), record)
+                with self.assertRaisesRegex(ValueError, "already owns different"):
+                    execution.compile_batch(root, "audition", "http://127.0.0.1:8189",
+                                            inputs, outputs, True)
+                post.assert_not_called()
+            prompt = (destination / "jobs/one/prompt-source.txt").read_bytes()
+            expected_text, (positive, negative) = execution.shared_prompt(recipe)
+            self.assertEqual(prompt, expected_text.encode("utf-8"))
+            job = record["jobs"]["one"]
+            self.assertEqual(job["artifacts"]["jobs/one/prompt-source.txt"], base.digest(prompt))
+            self.assertEqual(job["promptPolicy"], "shared-clothed-reference-v1")
+            compiled = json.loads((destination / "jobs/one/workflow-ui.json").read_bytes())
+            self.assertEqual(compiled["nodes"][1]["widgets_values"], [positive, 42, negative])
+            self.assertTrue(job["prefix"].startswith("reference/Person/0_Edit/0d_Deluxe/"))
+            self.assertIn("0d_grounded_three_quarter", job["prefix"])
+            self.assertTrue((root / "installed" / job["workspaceWorkflow"]).is_file())
+            self.assertEqual(source.read_bytes(), source_bytes)
+            base.check(root, "audition")
+            (destination / "jobs/one/prompt-source.txt").write_text("tampered", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "Compiled artifact changed"):
+                base.check(root, "audition")
+
+    def test_shared_prompts_use_generated_data_and_distinct_pose_instructions(self):
+        relaxed, negative = execution.pilot_prompts("shared-0d-relaxed-three-quarter")
+        grounded, _ = execution.pilot_prompts("shared-0d-grounded-three-quarter")
+        self.assertIn("one hand resting naturally on the hip", relaxed)
+        self.assertIn("both feet flat on the floor", grounded)
+        self.assertIn("forward knee softly bent", grounded)
+        self.assertIn("tiptoe", execution.pilot_prompts("shared-0d-grounded-three-quarter")[1])
+        self.assertNotEqual(relaxed, grounded)
+        self.assertIn("removed clothing", negative)
+
+    def test_missing_or_unresolved_shared_prompts_are_explicit_errors(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            path = root / execution.SHARED_PROMPTS["shared-0d-grounded-three-quarter"]
+            path.parent.mkdir(parents=True)
+            with mock.patch.object(execution, "SHARED_PROMPT_ROOT", root):
+                with self.assertRaises(FileNotFoundError):
+                    execution.pilot_prompts("shared-0d-grounded-three-quarter")
+                path.write_text("{{VIEW}}", encoding="utf-8")
+                with self.assertRaisesRegex(ValueError, "Unresolved shared prompt tokens"):
+                    execution.pilot_prompts("shared-0d-grounded-three-quarter")
+                path.write_text("not a prompt", encoding="utf-8")
+                with self.assertRaisesRegex(ValueError, "not a generated prompt"):
+                    execution.pilot_prompts("shared-0d-grounded-three-quarter")
+
     def test_catalog_distinguishes_cleanup_basic_and_cleanup(self):
         with mock.patch.object(execution, "recipe_path", side_effect=ValueError("not installed")):
             entries = {entry["id"]: entry for entry in execution.catalog()}

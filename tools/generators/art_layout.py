@@ -159,7 +159,7 @@ def family(card, group, root=None):
             tags = set(json.loads((pathlib.Path(root or ROOT) / ref).read_text(encoding="utf-8")).get("tags", []))
         except (OSError, ValueError):
             return []
-        return next(([name] for name in ("cleanup", "background", "enhance", "full") if name in tags), [])
+        return next(([name] for name in ("cleanup", "background", "enhance", "full", "pose") if name in tags), [])
     if stage == "alpha":
         # The creation chain of a hero: 1 Prime (from the original photo) at the root, 1b the experiments for the first shot (1b_Experiments/<family>: a different way to
         # start from the photo, promoted to 1_Prime when it wins), 2 Bare (the figure; the celestial experiment 2b nested in bare/celestial), 3 Barefoot and Heels.

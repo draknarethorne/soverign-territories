@@ -1,0 +1,21 @@
+{
+  "artId": "female-edit-full-clothed",
+  "kind": "base-set",
+  "stage": "edit",
+  "heroArt": "data/art/heroes/angel-primes/alpha/female.json",
+  "template": "data/art/_templates/heroes/0_Edit/edit-reference-human.txt",
+  "output": "prompts/angel-primes/alpha/Female/0_Edit/full/Female_Edit_Full_Clothed.txt",
+  "denoise": "~0.7-0.9",
+  "edit_name": "Full-length clothed extension",
+  "components": {
+    "edit_task": "data/art/edits/full/clothed.json",
+    "face_policy": "data/art/edits/policies/face-preserve.json",
+    "hair_policy": "data/art/edits/policies/hair-preserve.json",
+    "body_policy": "data/art/edits/policies/body-preserve.json",
+    "clothing_policy": "data/art/edits/policies/clothing-preserve.json",
+    "view": "data/art/edits/policies/pose-preserve.json",
+    "framing": "data/art/edits/policies/framing-full-length.json",
+    "background": "data/art/backgrounds/studio/grey-even.json"
+  },
+  "notes": "Clothed full-length extension on grey. Input may be an original or a chosen render; hidden anatomy is synthesized and the output never becomes identity-core evidence."
+}

@@ -9,5 +9,5 @@
   "components": {
     "edit_task": "data/art/edits/cleanup/basic.json"
   },
-  "notes": "First shared 0_Edit migration slice for the generic Alpha Female. Input role is the selected source photo; generated output remains synthetic and is not an identity-core input until explicitly selected."
+  "notes": "First shared 0_Edit migration slice for the generic Alpha Female. Input role is the selected source photo; generated output remains synthetic and is never identity-core evidence, including after selection."
 }

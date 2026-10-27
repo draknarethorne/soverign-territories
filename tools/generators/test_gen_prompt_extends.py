@@ -164,6 +164,39 @@ class SlugFilterTests(unittest.TestCase):
 
 
 class ArtPromptIntegrationTests(unittest.TestCase):
+    def test_reference_edit_cards_resolve_policies_without_fixed_identity(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        cards = sorted((root / "data/art/_sets/angel-primes/alpha/female/0_Edit").rglob("*.json"))
+        self.assertEqual(len(cards), 6)
+        for path in cards:
+            card = json.loads(path.read_text(encoding="utf-8"))
+            with self.subTest(card=card["artId"]):
+                tokens = gp.generate(path.relative_to(root).as_posix(), tokens_only=True)
+                template = (root / card["template"]).read_text(encoding="utf-8")
+                required = set(re.findall(r"{{(\w+)}}", template))
+                self.assertEqual(required - tokens.keys(), set())
+                self.assertEqual(tokens["DENOISE"], card["denoise"])
+                if "face_policy" in card["components"]:
+                    self.assertIn("recognizable face", tokens["FACE_POLICY"])
+                    self.assertIn("fully clothed in the same outfit", tokens["CLOTHING_POLICY"])
+                    self.assertIn("visible body proportions", tokens["BODY_POLICY"])
+                    self.assertNotIn("Angelica", " ".join(tokens[k] for k in required))
+
+    def test_three_quarter_poses_are_distinct_and_not_locked_to_a_pose(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        folder = root / "data/art/_sets/angel-primes/alpha/female/0_Edit/pose"
+        resolved = {}
+        for path in folder.glob("*.json"):
+            card = json.loads(path.read_text(encoding="utf-8"))
+            tokens = gp.generate(path.relative_to(root).as_posix(), tokens_only=True)
+            resolved[card["artId"]] = tokens["VIEW"]
+            self.assertNotIn("same A-pose", tokens["VIEW"])
+        self.assertIn("one hand resting naturally on the hip",
+                      resolved["female-edit-pose-relaxed-three-quarter"])
+        grounded = resolved["female-edit-pose-grounded-three-quarter"]
+        self.assertIn("both feet flat on the floor", grounded)
+        self.assertIn("forward knee softly bent", grounded)
+
     def test_generic_edit_pilot_fills_every_template_token(self):
         root = pathlib.Path(__file__).resolve().parents[2]
         card_path = "data/art/_sets/angel-primes/alpha/female/0_Edit/cleanup/female-edit-cleanup-basic.json"

@@ -326,7 +326,7 @@ Batches (all via `bin\render-reference.cmd`, one sample each):
   - Full `0c` also produces a grey backdrop and can re-frame: a cut-off face
     was re-centred (invented), and one person's hair shifted toward
     blue-black. Treat both as synthetic.
-- [ ] **P2 either** R30 Republish Photo Review in the sandbox (the stale
+- [x] **P2 either** R30 Republish Photo Review in the sandbox (the stale
   `afton_north` source), then republish the Rendering page so that the 74
   pulled cleanups are listed as `pulled-render` sources.
 
@@ -385,10 +385,11 @@ and spends the prompt on the scene.
 - A scene chooses its input by role: the A-pose, the three-quarter pose, or
   any pulled image. This already matches "any image from the Gallery may feed
   any later stage".
-- [ ] **P1 you** R32 Approve the three-quarter Prime variant: the names (for
-  example `1a_Prime_Outfit_34` and `2_Bare_34`) and whether it becomes the
-  default scene seed.
-- [ ] **P2 ai** R33 Add the body-pose pieces and a pose-choosing `0d` recipe
+- [x] **P1 you** R32 Approve the three-quarter Prime variant. Approved in
+  chat Oct 26 at 21:48, including a second review pose: both feet grounded,
+  one foot forward and that knee bent. Exact naming and a universal default
+  scene seed were not approved; keep pose selectable.
+- [ ] **P1 ai** R33 Add the body-pose pieces and a pose-choosing `0d` recipe
   (data-driven `0_Edit`), with templates for the three-quarter Prime and
   Bare variants for card characters.
 
@@ -468,8 +469,199 @@ The aim is a uniform, scene-ready gallery. The question is the order.
   rendering every photo before assignment), and N per person.
 - [ ] **P2 ai** R38 `cleanup-batch --per-person N --recipe ...`: choose the
   top N assigned photos per person and build the batches.
-- [ ] **P2 ai** R39 The best-of-N scorer with a likeness drift gate for
-  automatic pull-back of the prepared set.
+- [ ] **P2 ai** R39 Rank best-of-N results with separate technical-quality,
+  source-face fidelity and cross-character resemblance signals. Facial drift
+  is a review flag, not a universal artistic rejection gate (Oct 26, 21:48
+  clarification below). Automatic pull-back still needs reviewed criteria.
+
+## Oct 26, 21:48: character auditions, not faithful-body restoration
+
+This clarification supersedes the earlier suggestion that a prepared set must
+always remain within a hard source-likeness gate. It does not change original
+photo identity evidence or authorize automatic family naming from renders.
+
+The desired product is a shortlist of promising **rendered character looks**:
+preserve the recognizable face where requested, retain an already suitable
+physique or deliberately choose a different non-explicit, clothed character
+silhouette. `0_Edit` is both optional repair and an audition space; it is not
+only cleanup, and a clean original can go directly to Prime. Testing how a
+source behaves under generation is valuable before committing it to a cast
+slot, even when generation changes its appearance.
+
+### Two distinct comparisons
+
+| Comparison | Purpose | Boundary |
+| --- | --- | --- |
+| Original-photo identity | Determine which real source photos belong to one person | Existing identity/core/anchor rules; renders never become evidence |
+| Rendered-character resemblance | Discover which candidate characters look alike after the same preparation/Prime treatment | Side-by-side artistic review, with source, recipe, profile and seed lineage; no source-person merge |
+
+The existing [family plan](2026-10-22-identity-family-naming.md) owns
+organizational resemblance groups and names. Rendering owns the comparison
+inputs. A rendered-lookalike suggestion can inform a deliberate virtual-family
+or casting choice: avoid similar-looking Angels, or intentionally choose them.
+It is not evidence of kinship or proof that two source people are the same.
+Compare across multiple outputs under matched settings before calling a
+resemblance persistent; one seed or one pose can be misleading.
+
+### Approved poses and shared controls
+
+- Keep the relaxed three-quarter pose and add the grounded staggered stance:
+  both feet on the floor, one foot forward, the forward knee softly bent,
+  natural balance, full head-to-toe framing and no forced tiptoe.
+- Face preservation, physique, hair, pose, framing, wardrobe and lighting are
+  independent controls. Preserve suitable traits; override only selected
+  traits. Tags describe/search components; resolved component text supplies
+  the actual prompt instructions.
+- Keep faithful cleanup distinct from clothed character-design auditions.
+  A recipe must not say both "preserve all proportions" and "change build".
+- The tagged `prompts/_edit/female/female_anatomy.txt` is a mixed authoring
+  reference, not an executable preset or blanket-approved prompt. Extract
+  relevant non-explicit pose, hair, lighting and clothed silhouette concepts
+  through the migration review; do not inject the whole file. Explicit sexual
+  anatomy/arousal content and real-person nudification are outside this work.
+- Full `0_Edit` optimization belongs to the
+  [manual migration plan](2026-10-22-manual-prompts-to-art-library.md).
+  Retain every source variant in the inventory, classify its intended change,
+  and record acceptance or exclusion; do not silently flatten all variants
+  into the existing faithful-cleanup recipe.
+
+### Next useful action: a bounded comparison, not another all-photo run
+
+Recommended pilot, not yet scheduled: three representative people, three
+source photos each (clear frontal, three-quarter/profile, and a more difficult
+but promising image). Reuse available outputs where they already answer a
+comparison. Do not select only the highest frontal likeness scores: source
+diversity and the user's preferred artistic result both matter.
+
+1. Use cleanup only where needed.
+2. Compare the two approved three-quarter poses under matched settings.
+3. Compare a preserve-physique control against one explicitly chosen clothed,
+   non-explicit character-design profile. This is 36 audition jobs before
+   optional repairs and finalist Prime renders, about 83 GPU minutes at the
+   observed 2.3 minutes/job; allow extra time for failures and review.
+4. Run Prime on the shortlisted results and, for comparison, a suitable
+   original directly. Keep pose/seed/profile differences visible.
+5. Review by person and original source, then compare the finalists across
+   people for rendered resemblance. Select source plus recipe/profile, not
+   merely the most attractive isolated output.
+
+The user's immediate useful input is the small source shortlist and one desired
+clothed design direction, not manually triggering workflows or settling the
+entire taxonomy. Full migration, restored Gallery freshness and render
+comparison UI are assistant work. R37's exact N and R35's default profiles
+remain open; this message is not a numerical approval.
+
+- [ ] **P1 ai** R40 Prepare the bounded character-audition comparison after
+  R33 and the migration recipe controls are available: preview exact sources,
+  resolved profiles, job count and output lineage before queueing. Include
+  both approved poses, control/design comparisons and direct-original Prime.
+- [ ] **P2 ai** R41 Add a rendered-character resemblance review using matched
+  recipe/profile comparisons, linked to the source people without changing
+  their identity evidence. Family metadata/naming remains owned by the family
+  plan; user acceptance precedes any family/cast change.
+
+### Implementation following the 21:52 continuation
+
+Delivered without changing manual source prompts:
+
+- Five new shared assemblies and generated Qwen repo workflows: Background
+  Basic, Enhance Basic, Full Clothed and both approved three-quarter poses.
+- A common edit template with independent task, face, hair, physique,
+  clothing, pose, framing and background components. The preserve-physique
+  control is implemented; selectable appearance transforms are not.
+- Five `shared-*` recipe IDs in the execution catalogue and Gallery selector.
+  Their positive/negative text comes from the generated shared prompts rather
+  than hard-coded Python pose text. Compilation freezes the exact prompt with
+  its hash in the job; original inputs remain unchanged.
+- The runtime transport still uses the inspected Qwen graph/settings.
+  Catalogue availability and successful workflow generation do not constitute
+  visual acceptance. The live pilot evidence below is separate from user
+  acceptance. No character-family assignment or cast change has been made.
+
+This closes the clothed pose/data/component portion of R33, not its later
+Prime integration or all of P13. Explicit sexual variants and real-person
+nudification are excluded from this implementation. Remaining non-explicit
+variant review, per-job design controls, Prime execution and cross-character
+comparison remain tracked work, not claimed delivered features.
+
+## Oct 26 late: person-first automated naming and exploratory sampling
+
+The user authorizes rationalizing new workflow/output names and continued
+clothed overnight sampling. Existing files and receipts stay in place.
+
+New workspace workflows and SaveImage prefixes share this layout:
+
+```text
+reference/<Person_Name>/0_Edit/<family>/
+  <Person_Name>_Qwen_Edit_<recipe>__<UTC-stamp>__<batch-id>__<job-id>
+```
+
+The workflow ends in `.json`; ComfyUI adds its counter and image extension
+to the SaveImage prefix. For example:
+
+```text
+reference/Afton_Voss/0_Edit/0d_Deluxe/
+  Afton_Voss_Qwen_Edit_0d_grounded_three_quarter__20261027T025225Z__pose-1026__job-02_00001_.png
+```
+
+- Batch/job IDs are filename lineage, no longer one directory per image.
+  The timestamp is the UTC preparation time of the frozen request file and
+  stays stable across compile previews/repeats. Display labels are filename-
+  sanitized, never inferred identities.
+- Frozen requests, inputs, hashes and receipts remain under
+  `_generation/reference/<batch>/`; staged server inputs keep their internal
+  batch/job layout. They are execution evidence, not the browsing hierarchy.
+- Newly compiled receipts record `workspaceWorkflow` and `person-first-v2`.
+  Recompiling an already compiled batch retains its original names and checks
+  the endpoint/roots; it does not migrate or overwrite old workflows.
+- The Outputs browser recognizes both layouts and retains subject, stage,
+  family and batch/job filters. Pull-back location is unchanged in this
+  iteration to preserve existing Gallery lineage contracts.
+- Long paths are checked before writes for both workflow and output roots;
+  overly long names fail explicitly with a request to shorten labels/IDs.
+
+Sampling is deliberately exploratory, not a declaration that all similar head
+shots are redundant. Outfit-preserving candidates and face-led candidates
+answer different questions. Compare source diversity, outfit, face fidelity,
+technical quality and the user's preference separately. Similar generated
+figures alone do not make different source outfits redundant. Expensive
+cleanup remains optional when conservative erasing is inadequate; the user's
+reported preference for ComfyUI is not an unmeasured universal quality score.
+
+Implemented: person-first compilation, legacy-aware output parsing and
+regression tests. New sampling uses clothed preservation controls only.
+Explicit sexual variants and clothing removal from real-person references
+are excluded; manual sources are retained unchanged.
+
+### Live pilot and overnight preparation
+
+- `pose-1026-pilot`: two completed Afton Voss renders, one per shared pose.
+  Confirmed the real installed workflow and actual output use the person-first
+  path. Relaxed view preserves the recognizable face/outfit and gives the
+  intended hand-on-hip presentation.
+- The first grounded render lifts a heel despite the flat-foot instruction.
+  Tightened the shared view piece with foot spacing and heel-to-toe floor
+  contact, regenerated its prompt/workflow, and ran `pose-1026-ground` with
+  two different seeds. Both completed but still lift a heel. This is a known
+  model-compliance limitation, not an accepted exact flat-foot pose. Keep its
+  outputs as review candidates; reliable contact may require pose conditioning
+  rather than more prompt-only retries.
+- `p1026`: 42 jobs compiled from 21 distinct clothed sources/people in the
+  prior sample, one relaxed and one grounded comparison with a matched seed.
+  All source photos were inspected on a contact sheet. No automatic pull-back
+  is authorized for these pose auditions; outputs remain for review.
+- Launched `p1026` as a detached bounded run, queue depth 8, deadline 7,200 s.
+  Readiness verified: ComfyUI HTTP 200, one running and seven pending, 34
+  jobs not yet submitted. Log: session `files/p1026-overnight.log`.
+  The worker refreshes Outputs and Rendering on successful completion and
+  stops visibly on errors; it never blindly retries submission or auto-pulls.
+  This is launch evidence, not a claim that the 42 renders have completed.
+- Photo Review refreshed: 2,399 photos. Rendering page refreshed: 2,474
+  sources, 14 catalogue entries. Outputs refreshed: 6,968 images after the
+  four pilot renders. This resolves R30 without rerunning intake/matching.
+- Full `bin\validate.cmd` passes after the shared-template/naming changes;
+  focused integration suites include generated tokens, frozen prompt hashes,
+  repeat compilation, old/new output parsing and distinct pose choices.
 
 ## Outcome
 
@@ -1046,5 +1238,30 @@ Especially if we start to apply some bust and body manipulation in the clean-up 
 
 ```text
 At the end of the day - I am wondering if the entire intake should not be oriented to use ComfyUI to generate the deluxe pose for each and every photo and then do assignments on them.  I know it would take a long time to process - but I wonder if that won't yield the best and most aligned gallery in the long run.  With all these comments, I want the deep thinking to sort it all out.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Oct 26, 21:48: character audition clarification (verbatim)
+
+Source: chat, Oct 26, 2026, 21:48 -05:00.
+Coverage: R32 approval, R33 priority and grounded pose; R39 revised ranking;
+R40-R41 audition/comparison work; migration-plan P13; R35/R37 remain open.
+
+<!-- markdownlint-disable MD013 -->
+```text
+I approve the 3/4 variants and also am thinking that a 3/4 with both feet on the ground, but with one in front and knee bent would also be good for reviews.  Ultimately, I want all the 0_Edit prompts brought back and optimized so they work as good as the ones you had done for the 3/4 promots.  I know that we do need to account for all the meta/tags to be injected and not just a straight prompt so we can adjust body, hair, pose, etc... but the work we're doing here is what is needed to be able to bring it all together.  Ultimately, I need to figure out a streamlined approach to find the best few photos for a person to start to generate the 1_Prime images that do feed the rest of the art.  All the various imaged in 0_Edit are about seeing just which images might be useful to feed into 1_Prime and how I like how the person looks in various poses with adjusted bust and body - since that's ultimately what I want in the art.  I don't want the complete original figure of the person - but mostly the face, but if they have the right body and bust already well balanced and muscle toned then I want to keep that and enhance it.  Relying on ComfyUI as a main driver for this first part is only to supplement what can't be cleaned up, but also to generate a few images of the "best options" for a person to see how things look and help me pick a starting image.  Otherwise, I am going it by hand, so even long running batches over night are still better than me having to hand-trigger large batches for images as well.  I think a main thing I am learning is that taking the original image and getting each one into a some 0_Edit and some 1_Prime poses will tell me which ones I like for the art.  Some of the 0d_deluxe tell me a bit more about the body in a scene - that's why I wanted some and those should augment the bust and body instead of just the existing.  I know it needs more thought, but this is very helpful if we can generate large batches of the photos because even if the comfyui alters them initially, ultimately it would do that during final art as well - so if a person looks like another person due to my ComfyUI rendering - I'd rather know that up front than later on after I pick someone and two people look alike - that's the Family concept I brought in so I know not to pick two people for angels unless I WANT them to look like they are similar after rendering their 1_Prime poses.  Does that make sense as well?  How does that weave into what we're doing and honestly, I need to know what my next best action is right now.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Oct 26 late: naming, sampling and overnight continuation (verbatim)
+
+Source: chat, Oct 26, 2026, following the 21:52 continuation.
+Coverage: person-first automated naming and exploratory sampling above;
+shared clothed edits and existing R27/R33/R39-R41/P13. Explicit sexual variants
+and real-person clothing removal are excluded, not silently migrated.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Lastly, what is the naming of the workflows when we automatically render the jobs?  I noticed the reference/cleanup-0c0d-202061020-02 naming and I think that we'll want to adjust the names of jobs and the file locations a bit as we go, but things are looking great and I just need to understand what we want the actualy reference workflow names/structure and output files to be named in the long run.  That's a side note - but important in the long run since we have a ton of jobs created with 1 workflow in a single directory and 1 image in a single directory in the current naming and that might not be the right long term structure.   Maybe I'd rather see the persons name after reference/person_name/0_edit/0c_cleanup/person_name_qwen_edit_0c_cleanup_basic than the way you are naming the jobs.  Not sure how it all is designed, but I would basically like to simluate it as if I did run them manually given the workflow and naming conventions already in place for all other series - if that makes sense.  This is just an autogenerationa and I like the separation of the reference for being automated, but the structure and how they land in directories is a 1-1 type job to picture and while the gallery makes it viewable, it's a lot of directory clutter.  So some rationalization of that naming will need to happen.  If we bring things all together, I want to know who is a separate person, who are very simiarly but not same (family), and which photos do yield the best image of a person.  Even if I have 100+ originals of a person, how to I choose - sometimes I want the outfit to bleed through - so having the person in a 1_Prime with their existing outfit and a gray background in the 3/4 pose might yield the best photo.  Sometimes, I need them in bare so the underlying outfit doesn't pull through but their altererd bust/body to come through.   If I have 20 photos in original that all yeild neearly the same bare figure, that doesn't help, but the unique outfits to matter.  So, it's sort of a blend of being able to sample all the intake images and figure out which ones I choose from - even if there are hundreds.  After we get through this initial phase, maybe I'll learn if I have 20 head shots they are all the same and I don't need 20 different shots to generate the same 20+ reference images.  But right now, I don't know what does make the best reference photo - so letting this continue to run on large samples helps me figure that out and we can then tune things in/out - based on the likeness scores and which image I do like for a person...   I know I might be confused now, but we can work through this all as we iterate on the solution and you can run large batches over night to help figure things out as well.  But I also noticed that the eraser we have is much less effective than the comfyUI cleanup ... in almost every case.  so if the original needs the comfyUI to do a clean-up, that's a viable path if the eraser doesn't work.  Since it can extend to get the full 3/4 prime view in the outfit - which might be more ideal in the long run.  But having a clean version of the original with and without the background with and without an outfit are both good for me.  And having at least 3-4 different deluxe views shows me how the body positions in a specific setting across the people.  It give a constant background and series of poses in bare form for viewing.   Basically all those 0_Edit views tell me if the original photo is useful and good.  So, keep on going, take what I have for feedback and continue while I go to bed and we can resume in the morning.  Feel free to run as many comfy UI jobs and change the naming convention a bit to make it so that we align more to how the names of the output and workflows are.  I understand that each one is unique, but having the name of the person in the workflow will help me see how things were run for a single person.  Date and timestamps also make sense for the runs, but not sure where that fits into the structure, but the current reference/cleanup-xxxxx/job-xx/0_edit doesn't align to a person as well as what I have for zz_shots/Angelica/0_edit/0c_cleanup/angelica_xxxxxx so reference/person/0_edit/oc_cleanup/angelica_qwen_edit_0c_cleanup_bare with the timestampe in the filename might be better for directory and timestamp naming ... I don't know if this all makes sense.  It's been a long day, but somewhere along that we can find a solution.
 ```
 <!-- markdownlint-enable MD013 -->

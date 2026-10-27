@@ -37,6 +37,11 @@ SUPPORTED_RECIPES = {
     "manual-0f-full": "0f Full",
     "manual-0b-background-basic": "0b Background Basic",
     "manual-0d-deluxe-pose": "0d Deluxe Pose (clothed)",
+    "shared-0b-background-basic": "0b Background Basic (shared)",
+    "shared-0d-relaxed-three-quarter": "0d Relaxed 3/4 (shared, clothed)",
+    "shared-0d-grounded-three-quarter": "0d Grounded 3/4 (shared, clothed)",
+    "shared-0e-enhance-basic": "0e Enhance Basic (shared)",
+    "shared-0f-full-clothed": "0f Full-length (shared, clothed)",
 }
 SUPPORTED_STAGES = {"0_Edit", "1_Alpha", "2_Studies", "Bench"}
 SOURCE_DIRECTORIES = {
@@ -203,10 +208,14 @@ def _validate_recipes(recipes):
             "available": supported and available,
             "reason": ("" if supported and available else
                        "Recipe unavailable in the current environment" if supported else
-                       "Not one of the four supported clothed-preservation modes"),
-            "kind": ("provisional clothed transport pilot; not exact manual prompt migration"
+                       "Not a supported clothed-reference mode"),
+            "kind": ("shared templates/JSON; inspected Qwen transport"
+                     if supported and recipe_id in reference_execution.SHARED_PROMPTS else
+                     "provisional clothed transport pilot; not exact manual prompt migration"
                      if supported else "target recipe" if is_safe_pending else "unavailable"),
-            "promptPolicy": "clothed-preservation-pilot-v1" if supported else "",
+            "promptPolicy": ("shared-clothed-reference-v1"
+                             if supported and recipe_id in reference_execution.SHARED_PROMPTS else
+                             "clothed-preservation-pilot-v1" if supported else ""),
         })
     return cleaned
 
@@ -567,10 +576,11 @@ code {{ overflow-wrap: anywhere; }}
 <p class="notice">Offline metadata gallery. Export creates request JSON only; it does not compile workflows,
 contact ComfyUI, copy images, or promote results. Existing result links point to files in ComfyUI Outputs.</p>
 <p class="muted">Four coordinated tracks: image intake, dynamic ComfyUI execution, stage/template migration,
-and this integrated GUI. The four enabled entries are provisional clothed transport pilots; they are not
-exact manual prompt migrations. Manual source prompts may contain contradictory instructions and are never
-previewed or copied here. After tag rationalization these modes are intended to migrate into normal shared
-templates/JSON; other catalogue entries, including 0d, stay disabled until separately graph-bound and reviewed.</p>
+and this integrated GUI. Entries labelled shared use generated templates/JSON for clothed background,
+enhancement, full-length and two three-quarter pose recipes. Manual entries retain their provisional
+clothed transport prompts. Both use inspected Qwen graph/settings.
+Manual source prompts may contain contradictory instructions and are never previewed or copied here.
+Per-job appearance-profile changes and Prime/Studies execution remain unavailable.</p>
 <p>Browse <a href="{html.escape(reports_prefix + 'library/people_gallery.html', quote=True)}">People</a> or
 <a href="{html.escape(reports_prefix + 'artists/artists_gallery.html', quote=True)}">Artists</a> galleries.</p>
 </div></header>

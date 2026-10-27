@@ -1,0 +1,11 @@
+{
+  "id": "edit-background-basic",
+  "kind": "edit",
+  "name": "Background Basic",
+  "compatibleStages": ["edit"],
+  "tags": ["background", "basic", "preserve-source"],
+  "sourceVariant": "0b_Background_Basic",
+  "status": "pilot",
+  "description": "Replace only the background with the selected studio backdrop. Preserve the subject silhouette and fine hair edges; use soft even studio lighting without changing skin tone.",
+  "negatives": ["background clutter", "colored halo", "changed pose"]
+}

@@ -64,7 +64,12 @@ def parse(relative):
             if index + 1 < len(inner):
                 info["variant"] = inner[index + 1]
             break
-    if len(inner) >= 4 and inner[0] == "reference" and inner[1] != "manual":
+    if (len(inner) == 4 and inner[0] == "reference" and STAGE.fullmatch(inner[2])):
+        info["subject"] = inner[1]
+        match = re.search(r"__(\d{8}T\d{6}Z)__([a-z0-9-]+)__([a-z0-9-]+)_\d+_\.[^.]+$", filename)
+        if match:
+            info.update(batch=match[2], job=match[3])
+    elif len(inner) >= 4 and inner[0] == "reference" and inner[1] != "manual":
         info.update(subject=inner[1], batch=inner[2], job=inner[3])
     elif not info["stage"] and len(inner) >= 3:
         # Legacy pre-stage layout: <set>/<Name>/<category>/..., e.g. drakn-sisters/Draknara/poses.

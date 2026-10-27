@@ -1,0 +1,9 @@
+{
+  "id": "studio/views/body/grounded-three-quarter",
+  "kind": "view",
+  "name": "Grounded three-quarter staggered stance",
+  "compatibleStages": ["edit", "pose"],
+  "tags": ["three-quarter", "full-body", "standing", "grounded", "bent-knee"],
+  "description": "Show a relaxed three-quarter standing pose with both feet flat on the floor, spaced hip-width apart with a clear gap between them. Place the left foot half a foot-length forward and keep the forward knee softly bent. Both heels and all toes remain visibly planted on the studio floor, with the entire sole of each foot touching the floor from heel to toe. Keep the rear leg comfortably straight, arms relaxed and the face visible toward the camera.",
+  "negatives": ["tiptoe", "raised heel", "lifted foot", "tucked foot", "crossed legs", "feet touching", "unbalanced stance", "hidden face"]
+}

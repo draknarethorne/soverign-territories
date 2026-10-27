@@ -1,0 +1,9 @@
+{
+  "id": "edit-policy-framing-preserve",
+  "kind": "edit",
+  "name": "Reference framing preservation",
+  "compatibleStages": ["edit"],
+  "tags": ["reference", "framing", "preserve-source"],
+  "description": "Keep the original framing and crop, with the same visible limbs and subject boundaries.",
+  "negatives": ["changed framing", "cropped hands", "cropped feet"]
+}

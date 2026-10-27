@@ -12,6 +12,19 @@ from tools.workflows import reference_rendering as base
 
 
 class ParseTests(unittest.TestCase):
+    def test_person_first_layout_retains_batch_job_and_complete_person_name(self):
+        job = {"id": "job-02", "displayName": "Ava Stone", "recipe": "shared-0d-grounded-three-quarter"}
+        prefix, workflow = execution.reference_paths(job, "pilot-1", "20261027T025225Z")
+        self.assertEqual(workflow, prefix + ".json")
+        parsed = outputs.parse("Sovereign Females/" + prefix + "_00001_.png")
+        self.assertEqual((parsed["subject"], parsed["stage"], parsed["variant"], parsed["batch"], parsed["job"]),
+                         ("Ava_Stone", "0_Edit", "0d_Deluxe", "pilot-1", "job-02"))
+        self.assertEqual(len(prefix.split("/")), 5, "no batch/job directories per picture")
+        self.assertIn("Ava_Stone_Qwen_Edit_0d_grounded_three_quarter", prefix)
+        other = execution.reference_paths(dict(job, id="job-03"), "pilot-1", "20261027T025225Z")[0]
+        self.assertNotEqual(prefix, other)
+        self.assertEqual(prefix.rsplit("/", 1)[0], other.rsplit("/", 1)[0])
+
     def test_manual_reference_and_unknown_layouts(self):
         manual = outputs.parse("Angel Primes/angel-primes/shots/Angelica/0_Edit/0d_Deluxe/Angelica_x_00001_.png")
         self.assertEqual((manual["workspace"], manual["stage"], manual["variant"], manual["subject"]),

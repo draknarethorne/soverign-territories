@@ -1,0 +1,21 @@
+{
+  "artId": "female-edit-enhance-basic",
+  "kind": "base-set",
+  "stage": "edit",
+  "heroArt": "data/art/heroes/angel-primes/alpha/female.json",
+  "template": "data/art/_templates/heroes/0_Edit/edit-reference-human.txt",
+  "output": "prompts/angel-primes/alpha/Female/0_Edit/enhance/Female_Edit_Enhance_Basic.txt",
+  "denoise": "~0.3-0.5",
+  "edit_name": "Enhance Basic",
+  "components": {
+    "edit_task": "data/art/edits/enhance/basic.json",
+    "face_policy": "data/art/edits/policies/face-preserve.json",
+    "hair_policy": "data/art/edits/policies/hair-preserve.json",
+    "body_policy": "data/art/edits/policies/body-preserve.json",
+    "clothing_policy": "data/art/edits/policies/clothing-preserve.json",
+    "view": "data/art/edits/policies/pose-preserve.json",
+    "framing": "data/art/edits/policies/framing-preserve.json",
+    "background": "data/art/edits/policies/background-preserve.json"
+  },
+  "notes": "Conservative clothed enhancement control. Never treats synthesized face details as recovered original pixels or identity evidence."
+}

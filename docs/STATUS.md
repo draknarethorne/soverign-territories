@@ -101,6 +101,36 @@ rebase regenerates them. Design positions for the three-quarter Prime pose,
 render-assisted identity (query only, never evidence), body edits (a design
 branch, not cleanup) and staged per-person ComfyUI preparation (instead of
 rendering every photo before assignment) are in the rendering plan (R31-R39).
+**Oct 26, 21:48 clarification:** the three-quarter variants are approved,
+including both feet grounded with one foot forward and its knee bent.
+Preparation is also a character audition: independent face/physique/hair/pose
+controls, not mandatory original-body preservation. Source-person identity
+and rendered-character resemblance are separate reviews; generated lookalikes
+can inform intentional virtual-family/casting choices, never source merges.
+A hard source-likeness rejection is not the universal artistic ranking rule.
+Full edit migration is P13; a bounded comparison and rendered-resemblance
+review are R40-R41. These are planned, not new rendered or deployed recipes.
+**Implementation continuation:** both approved poses and shared background,
+enhancement and clothed full-length controls now have JSON assemblies,
+reusable policy components, generated prompts and Qwen repo workflows.
+Five `shared-*` recipes are wired to the Gallery/CLI and freeze their generated
+prompt as a hashed compilation artifact. Runtime graph/settings transport is
+still manual-Qwen; user visual acceptance remains open. Per-job
+appearance changes, Prime execution and rendered-family review remain pending.
+New automatic compilations now use person-first workflow/output directories:
+`reference/<Person_Name>/<stage>/<family>/`, with recipe, UTC preparation
+timestamp and unique batch/job IDs in each filename. Existing compiled
+batches retain their old layout; the Outputs browser supports both. Internal
+receipts/input staging and Gallery pull-back locations remain unchanged.
+Four live shared-pose pilot renders completed and verified the new paths.
+The relaxed pose is a useful candidate; grounded candidates still raise a
+heel despite two prompt versions, so exact flat-foot compliance is unaccepted.
+The broader `p1026` comparison has 42 jobs across 21 inspected clothed sources
+and is running detached at queue depth 8 (initial check: one running, seven
+pending; 34 not yet submitted). The worker refreshes both results pages after
+completion and never auto-pulls these pose auditions. Photo Review and
+Rendering were republished (R30 resolved); Outputs
+now lists 6,968 images before the broader batch. No pose render was pulled.
 Later edit variants, formal stage-input/promoted-output contracts and
 Alpha/Studies recipes remain manual-migration work. Edits stay optional before
 Alpha; user visual acceptance and production rollout remain gated.

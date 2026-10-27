@@ -1,0 +1,32 @@
+=== {{HERO}} - 0_Edit - {{EDIT_NAME}} ===
+Incoming image: the exact user-selected source photo or selected generated image.
+Denoise {{DENOISE}}.
+
+----------------------------------------------------------------
+prompt:
+
+Edit the incoming photograph according to the task below. Keep one person
+only, with realistic photographic detail and natural skin texture.
+
+{{EDIT_TASK}}
+
+Face: {{FACE_POLICY}}
+Hair: {{HAIR_POLICY}}
+Physique: {{BODY_POLICY}}
+Clothing: {{CLOTHING_POLICY}}
+Pose: {{VIEW}}
+Framing: {{FRAMING}}
+Background and lighting: {{BACKGROUND}}
+
+Remove visible text, logos, watermarks and interface icons. Preserve visible
+hands, fingers and feet without duplicating limbs. Any newly visible anatomy,
+clothing or background is synthesized, not recovered from the original.
+
+----------------------------------------------------------------
+negative prompt:
+
+{{EDIT_TASK_NEG}}, {{FACE_POLICY_NEG}}, {{HAIR_POLICY_NEG}},
+{{BODY_POLICY_NEG}}, {{CLOTHING_POLICY_NEG}}, {{VIEW_NEG}},
+{{FRAMING_NEG}}, {{BACKGROUND_NEG}}, extra people, extra limbs, extra fingers,
+distorted hands, text, watermark, logo, plastic skin, illustration, painting,
+drawing, CGI, cartoon.
