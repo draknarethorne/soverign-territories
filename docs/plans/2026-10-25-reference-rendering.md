@@ -42,6 +42,18 @@ and removal of real people's clothing are excluded.
 
 Current continuation evidence:
 
+- Oct 27 follow-through: all 2,741 intake outcomes are verified, without
+  assessment errors. Matching preview safely exposed a current original /
+  newer Various duplicate-ID continuity edge case. The verified-recovery
+  guard and regression are recorded in the
+  [rebase owner](2026-10-23-cast-seeded-library-rebase.md#oct-27-complete-preparation-matching-preview-continuity-correction);
+  preview retry reuses this run and never installs assignments.
+- The waiting render sequencer initially treated the runner's transient
+  persisted submission intent as a terminal failure. It now holds downstream
+  work while any prerequisite is unresolved and still requires all jobs
+  completed; actual terminal failures stop it. Verified the old sequencer was
+  dead before restarting it. Cast completed all 63 jobs and the remaining pose
+  run began with its own deadline; no accepted render was interrupted.
 - Corrected Deluxe migration now provides four fully clothed bedroom views
   (seated, relaxing, side-resting, resting), with shared scene/light policies
   and neutral posing. These are not exact copies of the explicit Bare drafts.

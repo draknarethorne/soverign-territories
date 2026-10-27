@@ -182,6 +182,39 @@ class CleanRebaseTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "raw recovery copy changed"):
             clean_rebase._verify_source_overlay(layout, run)
 
+    def test_curation_retains_verified_original_beside_overlay_replacement(self):
+        original = self.working / self.relative
+        original.parent.mkdir(parents=True)
+        original.write_bytes(self.source_photo.read_bytes())
+        incoming = self.working / "Various" / "gallery" / "incoming_image_123456.jpg"
+        incoming.parent.mkdir(parents=True)
+        incoming.write_bytes(b"new working bytes")
+        with mock.patch.dict("sys.modules", {"image_preparation": self.image_inventory_mock()}):
+            layout = clean_rebase._create_source_overlay(self.layout, self.run)
+            current = clean_rebase._curation_inventory(layout)
+            self.assertEqual(current[self.relative], self.digest)
+            self.assertEqual(
+                current[incoming.relative_to(self.working).as_posix()],
+                metadata.content_sha256(incoming),
+            )
+            self.assertEqual(len(current), 2)
+
+            original.write_bytes(b"unverified original changes")
+            with self.assertRaisesRegex(ValueError, "not safely isolated"):
+                clean_rebase._curation_inventory(layout)
+            original.write_bytes(self.source_photo.read_bytes())
+
+            extra = self.working / "Models" / "Other" / "gallery" / original.name
+            extra.parent.mkdir(parents=True)
+            extra.write_bytes(original.read_bytes())
+            with self.assertRaisesRegex(ValueError, "not safely isolated"):
+                clean_rebase._curation_inventory(layout)
+            extra.unlink()
+
+            layout["source_overlay_manifest"]["currentVarious"][0]["target"] = "Various/gallery/other.jpg"
+            with self.assertRaisesRegex(ValueError, "not safely isolated"):
+                clean_rebase._curation_inventory(layout)
+
     def test_overlay_isolates_timestamp_collisions_and_deduplicates_exact_copies(self):
         import json
 

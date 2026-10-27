@@ -2,6 +2,32 @@
 
 **Status:** active (Phase 3; blocked on accepted Phase 1 preparation and Phase 2 recovery)
 
+## Oct 27: complete preparation; matching-preview continuity correction
+
+The fresh run prepared and verified all **2,741 outcomes**, with
+`assessmentErrors: false`. Its immutable preparation report and intake receipt
+are complete. No installation or assignment has been performed.
+
+The first matching preview stopped safely on a duplicate current photo ID:
+an Angelica original still exists in its assigned Gallery beside the newer
+Various screenshot that the overlay deliberately substitutes for preparation.
+Both byte versions were already preserved, but the curation guard recognized
+only isolated timestamp collisions, not this verified original/replacement pair.
+
+The guard now accepts the original **only** when its exact current path/hash
+matches the overlay's verified `immutable-original` recovery entry, and the
+unique matching Various replacement names that same target, photo ID and
+prepared-input hash. Both current paths remain in the curation snapshot.
+Unknown duplicates, changed originals and wrong replacement targets still
+refuse. No stable IDs, assignments, source bytes or overlay receipts are changed.
+The regression reproduced the real refusal before the fix; all 47 related
+rebase, clean-preparation and retained-preparation tests pass afterward.
+
+Matching preview is being retried against this same verified run, without
+`--apply`, installation or repeating preparation. Log: session
+`files/prepared-matching-retry-20261027.log`. Final preview counts remain
+pending; do not infer acceptance from the completed preparation.
+
 ## Oct 26 late: fresh all-input retry in progress
 
 The renewed end-to-end authorization is preserved in the

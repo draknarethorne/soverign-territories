@@ -182,6 +182,14 @@ wrappers were replaced; no accepted GPU job was cancelled. This prevents
 queue waiting from consuming pose's execution budget. All seven report
 surfaces now have verified shared chrome; Comparison currently shows the four
 completed pilot outputs pending the final five-batch publication.
+
+Oct 27 continuation: all 2,741 preparation outcomes are verified with no
+assessment errors. Matching preview caught a verified-original/newer-Various
+duplicate-ID edge case; a narrow recovery-bound curation fix passes 47 related
+tests, and the same prepared run is being retried as preview only.
+All 63 cast auditions completed; the remaining pose run has started.
+The downstream sequencer now holds, rather than fails, on a transient persisted
+submission intent; it never advances until every prerequisite is completed.
 The agreed guiding principle is now image-first staged progression: automatic
 intake/likeness to gallery, explicit user stage selection/branching, and
 deterministic promoted-output lineage back into Gallery by stage/recipe.

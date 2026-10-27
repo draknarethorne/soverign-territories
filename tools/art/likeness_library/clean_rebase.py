@@ -77,6 +77,11 @@ def _curation_inventory(layout, catalog=None):
         record["current"]: record
         for record in layout.get("source_overlay_manifest", {}).get("currentVarious", [])
     }
+    replaced_originals = {
+        record["source"]: record["sha256"]
+        for record in layout.get("source_overlay_manifest", {}).get("rawRecovery", [])
+        if record["role"] == "immutable-original"
+    }
     allowed_unbound = set()
     for photo_id, paths in by_id.items():
         if len(paths) < 2:
@@ -89,10 +94,16 @@ def _curation_inventory(layout, catalog=None):
             if expected_hashes and metadata.content_sha256(path) in expected_hashes
         ]
         if len(matching) == 1:
+            replacement = overlay_inputs.get(matching[0].relative_to(working).as_posix(), {})
             for path in paths:
                 if path != matching[0]:
                     relative = path.relative_to(working).as_posix()
                     record = overlay_inputs.get(relative)
+                    if (replacement.get("target") == relative
+                            and replacement.get("photoId") == photo_id
+                            and replacement.get("sha256") in expected_hashes
+                            and replaced_originals.get(relative) == metadata.content_sha256(path)):
+                        continue
                     if not record or not record.get("sanitized"):
                         raise ValueError(f"duplicate current photo ID is not safely isolated: {relative}")
                     allowed_unbound.add(relative)
