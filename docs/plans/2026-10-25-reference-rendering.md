@@ -48,7 +48,8 @@ Current continuation evidence:
   `d1027-01` freezes eight samples for Draknara/Angelica; its detached supervisor
   waits until both existing render batches complete before submitting.
   It then refreshes Outputs, Rendering and all five batches in Comparison.
-  Six-hour prerequisite wait, one-hour render deadline, no auto-pull.
+  Eight-hour cast prerequisite wait, a fresh six-hour pose run deadline,
+  then a one-hour Deluxe deadline; no auto-pull.
   Log: session `files/deluxe1027-overnight.log`.
 - The existing shared cleanup assembly is now executable as
   `shared-0c-cleanup-basic`, the default for new cleanup proposals.
@@ -102,6 +103,18 @@ Current continuation evidence:
   A five-batch Comparison refresh correctly refused an active execution
   writer; the final Deluxe supervisor will publish it after execution ends.
   No lock was bypassed and browser visual acceptance remains unclaimed.
+- Final scheduling correction: the pose runner's deadline included time
+  waiting behind cast, risking expiry before its own work could finish.
+  Verified pose had no active owned jobs and all Deluxe jobs were still
+  compiled, then replaced only those two idle controller wrappers with one
+  detached sequencer. It waits for cast, resumes the same pose receipt with
+  a fresh execution deadline, then runs Deluxe and publishes all five batches.
+  No GPU job was cancelled and cast processing continued uninterrupted.
+  Dry-run and heartbeat verified; log remains
+  session `files/deluxe1027-overnight.log`.
+  All eight installed Deluxe workflow files match their frozen artifact hashes.
+  Static checks passed across all seven report surfaces; current Comparison
+  contains the four completed pilot outputs until the final combined publish.
 
 ## Oct 26 guiding principle: image-first staged progression
 

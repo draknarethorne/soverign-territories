@@ -175,6 +175,13 @@ One corrected recovery worker is active, with a verified GET-only retry
 heartbeat. Rendering, Outputs, People Review and Artist reports have the new
 navigation; a five-batch Comparison refresh correctly waits for active receipt
 writers to finish, rather than overriding their lock.
+The final queue handoff uses one detached sequencer: wait for cast (eight-hour
+bound), resume the same pose receipt with a fresh six-hour execution deadline,
+then run Deluxe and publish the combined comparison. Only idle controller
+wrappers were replaced; no accepted GPU job was cancelled. This prevents
+queue waiting from consuming pose's execution budget. All seven report
+surfaces now have verified shared chrome; Comparison currently shows the four
+completed pilot outputs pending the final five-batch publication.
 The agreed guiding principle is now image-first staged progression: automatic
 intake/likeness to gallery, explicit user stage selection/branching, and
 deterministic promoted-output lineage back into Gallery by stage/recipe.
