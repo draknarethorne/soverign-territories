@@ -5,7 +5,7 @@
 
 ## Open work, by priority
 
-### Your queue: needs your hands or a decision (39)
+### Your queue: needs your hands or a decision (40)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -40,6 +40,7 @@
 - [ ] L15 Review the Artist overview/photo-review navigation, ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
 - [ ] L17 Review the themed look on ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
 - [ ] I26 Decide the directory reckoning: intake root name, kind roots, role and ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] R29 Choose the standard studio backdrop for the preparation ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 
 **P3 (later, or ideas)**
 
@@ -55,7 +56,7 @@
 - [ ] U2 Review current photo outcomes using fresh inventories: ([2026-10-22](plans/2026-10-22-library-upkeep.md))
 - [ ] P10 Archive the manual source directory only after every ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 
-### Either of us (40)
+### Either of us (41)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -91,6 +92,7 @@
 - [ ] A10 Review action-file intake and completed-batch filing. ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] A12 Provide snapshot inventory, disk estimates and ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] R28 Take the 23 unmapped `Various\gallery` screenshots ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] R30 Republish Photo Review in the sandbox (the stale ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R1c Correct the workspace input-directory spelling during a ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R9 Agree storage/backup/retention limits and safe run filing ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 

@@ -85,9 +85,11 @@ Gallery sources by photo key (2,741 scanned, 107 overlays, 74 mapped);
 `cleanup-batch --sources` turns the scan into requests. New bound recipes:
 `0b Background Basic` and `0d Deluxe Pose`. The `0d` recipe reuses the "Bare"
 graph's settings with a clothed re-pose prompt only; unclothed renders of
-intake photos are never produced. 190 jobs ran unattended on Sovereign
-Females; `0c Cleanup Basic` outputs were pulled back automatically, the rest
-wait for your choice on the Outputs page.
+intake photos are never produced. 190/190 jobs completed unattended on Sovereign
+Females in 7 h 16 min; all 74 `0c Cleanup Basic` outputs were pulled back
+automatically, and the other 116 wait for your choice on the Outputs page.
+The sandbox Rendering page waits on a stale Photo Review (R30). The
+preparation-stage backdrop (light grey versus cream) is open as R29.
 Later edit variants, formal stage-input/promoted-output contracts and
 Alpha/Studies recipes remain manual-migration work. Edits stay optional before
 Alpha; user visual acceptance and production rollout remain gated.

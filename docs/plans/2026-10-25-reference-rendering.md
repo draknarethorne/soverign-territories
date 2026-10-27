@@ -276,10 +276,57 @@ Batches (all via `bin\render-reference.cmd`, one sample each):
   accept or change the clothed-only `0d` rule.
 - [ ] **P2 either** R28 Take the 23 unmapped `Various\gallery` screenshots
   through intake into Photo Review, then rerun `overlay-scan`.
+- [ ] **P2 you** R29 Choose the standard studio backdrop for the preparation
+  stages (`0_Edit`, `1_Alpha`, `2_Studies`, `3_Layers`).
+  - The `0b`/`0d` prompts ask for light grey, and the renders measure about
+    RGB 172-202 (`#BEBEBE`). The current default, `studio/cream-even`, is
+    cream, and so is the intake padding (`originals.CREAM` 245,240,230).
+  - Recommended: neutral light grey for every preparation stage. It casts no
+    colour onto skin or hair, separates blonde hair and cream, white or black
+    outfits, leaves no warm halo when composited into scenes, and is the
+    studio convention for reference shots. Cream and the other backdrops stay
+    as deliberate `4_Wardrobe` showcase choices.
+  - Option: A/B the same sources on grey and on cream first.
+  - The intake padding of real photos is a separate choice (keep cream,
+    switch to the same grey, or try blurred edge extension) because changing
+    it regenerates every 944x1104 derivative. Not changed yet.
 
 ### Large run results
 
-(Filled in when the run finishes.)
+| Batch | Completed | Notes |
+| --- | --- | --- |
+| `cleanup-0c0d-20261026-01` | 64/64 | 11:46-14:18 |
+| `cleanup-0c0d-20261026-02` | 64/64 | 14:18-16:42 |
+| `cleanup-0c0d-20261026-03` | 20/20 | 16:42-17:26 |
+| `cleanup-0b0c-20261026-01` | 42/42 | 17:26-19:02 |
+
+- 190/190 jobs completed, one output each, with no held or failed jobs, in
+  7 h 16 min: about 2.3 min per job at queue depth 16. The runner's two-hour
+  timeout was reached twice; the driver resumed from the receipts without
+  resubmitting.
+- Automated cleanup: all 74 `0c Cleanup Basic` outputs were pulled back in
+  two manifests (64 + 10) to `_generation/library/0_Edit/0c_Cleanup/`, each
+  with a 944x1104 copy and a sidecar. The dry-run preview was all
+  `pull-preview`, and the apply was all `pulled`. The other 116 outputs stay
+  in ComfyUI for the user to choose.
+- Outputs page republished: 6,964 images. The Rendering page refused to
+  republish because Photo Review is stale: it lists a source that no longer
+  exists (`Various/review/afton_north_image_7518027271200184433.jpg`). The
+  pulled renders appear there after Photo Review is republished.
+- Quality from contact sheets (not user acceptance):
+  - `0c Cleanup Basic` keeps the framing, outfit and face and removes
+    overlays. A soft-focus face can come back sharper.
+  - `0d` gives a clean full-length grey-studio pose in the same outfit,
+    barefoot, fully clothed: a good prepared input for `1_Alpha`.
+  - `0b` swaps in a grey backdrop and removes inset thumbnails and black
+    bars. It usually keeps the pose but sometimes extends the framing to full
+    length.
+  - Full `0c` also produces a grey backdrop and can re-frame: a cut-off face
+    was re-centred (invented), and one person's hair shifted toward
+    blue-black. Treat both as synthetic.
+- [ ] **P2 either** R30 Republish Photo Review in the sandbox (the stale
+  `afton_north` source), then republish the Rendering page so that the 74
+  pulled cleanups are listed as `pulled-render` sources.
 
 ## Outcome
 
@@ -813,5 +860,16 @@ Coverage: R25-R28 and the large run section above; the combined recap.
 <!-- markdownlint-disable MD013 -->
 ```text
 Also, go ahead and run a bunch of jobs on the images in various that still need clean-up after the intake and let's see what happens in a larger batch.  I'll be gone so you can render up to 200 images in the queue.  So, don't stop, run the process end to end and automate the clean-up and also generate some additional 0d_ related images for each one that is in cleanup.  Run several 0_b and 0_c workflows as well.  You can run just 1 or 2 instead of 4 of each.  Whatever makes the most sense in an end-to-end run.  Cleanup usually doesn't require many iterations.  It's more the poses that drive more iterations.  So keep going, document everything and write a combined recap for the past 3 days of work into a single recap for me today with all outstanding items that require my attention, similar to yesterday but now with the additional items I need to do.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Oct 26 studio backdrop question (verbatim)
+
+Source: chat, Oct 26, 2026, 15:51 -05:00.
+Coverage: R29.
+
+<!-- markdownlint-disable MD013 -->
+```text
+What color background are you using for the deluxe, I wonder if that shouldn't be the background color we use for all our processing - a gray based instead cream colored like is done in the cropping and all of my .json file prompts and such.  What do you think is the best studio background color to be using for those shots in the long run???
 ```
 <!-- markdownlint-enable MD013 -->
