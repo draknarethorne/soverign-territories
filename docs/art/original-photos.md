@@ -397,6 +397,25 @@ means a visible skip, not permission to erase arbitrary parts of a head.
 Nearby-icon detection is a constrained shape/brightness heuristic, not
 proof that a highlight is UI. Review both masks and results.
 
+Add `--enhancements` to `--sequence` for independent native denoise, tone and
+restrained unsharp-mask comparisons on the guarded final (never on the
+unselected head reconstruction). Every candidate starts from the same input;
+no repeated filter chain. Luminance/extreme-pixel fractions and Laplacian
+variance are diagnostics, not calibrated blur/noise/exposure classifications
+or quality scores. The recommendation retains the unenhanced guarded final.
+Ineligible face assessments skip enhancements explicitly.
+
+`bin\overlay-review.cmd` accepts the same `--report`, `--sources`, `--out`
+and preview/apply/check arguments, but publishes reference proposals only.
+It searches pill shapes and magenta badge-like regions, including positions
+outside the old lower-corner heuristic. It does not erase, train a matcher,
+confirm a GMW logo or label a person. Candidate crops, binary masks and source
+coordinates/hashes remain **unconfirmed** until reviewed. Pink clothing and
+similar shapes are expected hard negatives; confirm by source and candidate
+ID in chat. At most eight candidates per row are shown with explicit truncation
+warnings. Source bytes remain untouched, repeat apply verifies, and check
+refuses missing/extra/tampered files or an attempted automatic confirmation.
+
 #### Earlier sidecar recipes (v5-v13), not current selection rules
 
 The following explains old immutable reports only. The current v16 order and

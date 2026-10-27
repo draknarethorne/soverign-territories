@@ -92,8 +92,144 @@ not the implemented panel-crop prohibition.
 **Review cadence:** pause when a new reviewable result is ready and tell the
 user exactly which report/candidate to inspect; wait for chat or feedback-file
 response before iterating beyond that review gate. The complete Fantasy
-pill/icon trial is already available and is the current pending review;
-do not queue another experimental batch while waiting.
+pill/icon trial was reviewed positively at 14:28: fairly decent and better
+than cropping. That closes the example-specific pause, not blanket head-repair
+acceptance. Proceed to the next bounded sample, then pause for that review.
+
+### Oct 27, 14:28: pattern verification and the next rebase gate
+
+The user accepts the Fantasy reconstruction as a useful candidate and wants
+the full gallery rebase as soon as sample evidence supports it. Its backend
+was still LaMa with a complete mask; do not describe it as a tested new
+advanced model. Small, well-localized opaque UI is the normal first-pass
+target. Large/translucent overlays, subject-overlapping pills and large GMW
+badges require verified masks and an escalated reconstruction comparison,
+not automatic broad repainting. Area is routing evidence, not proof of
+overlay identity; keep uncertain positives unchanged.
+
+- [ ] **P1 ai** I41 Build a versioned reference bank from confirmed GMW
+  badges and search-pill/icon examples, preserving source/hash, tight shape,
+  scale, opacity/style and reviewed positive/negative labels. Store reference
+  crops as detector evidence, not game art. Find the badge beyond lower
+  corners, comparing multiscale appearance/shape/lettering and context rather
+  than magenta alone. Test round jewellery, floral/pink garments, scenery,
+  writing on outfits and pill-like objects as hard negatives. A reference
+  match proposes a region; verify a complete silhouette mask and confidence
+  before fill. Do not copy one rectangular mask to every differently placed,
+  scaled or translucent instance. Report large/uncertain proposals visibly.
+- [ ] **P2 ai** I42 Add native-resolution enhancement comparisons after
+  source preparation: unchanged, denoise, tone and conservative sharpen,
+  with identical input lineage and no hidden repeated processing. Assess blur
+  separately from noise, under/overexposure, clipping and contrast; face-scale
+  detail and texture matter. Denoising is not deblurring; sharpening does not
+  recover missing detail. Test halos, oversmoothing, skin/fabric texture and
+  colour/exposure shifts on labelled positives and clean controls. Quality
+  measurements are diagnostics until calibrated against reviewed pairs;
+  auto-recommend an enhancement only for demonstrated benefit without
+  subject/identity damage, otherwise retain the prepared unenhanced image.
+  Keep an explicit reason, uncertainty and manual override; synthetic head
+  restoration is not automatically original/core likeness evidence.
+- [ ] **P1 ai** I43 Publish one expanded immutable pre-rebase review, targeting
+  about 100 hash-distinct sources in bounded chunks (existing launcher max64
+  per selection remains unchanged). Include all 26 named failures/known-good
+  examples, Fantasy, reviewed GMW variants across positions/scales, pills,
+  border/screenshot/subject-edge cases, at least 20 clean/no-processing
+  controls and separate un-tuned holdouts. Mark unavailable strata rather than
+  inventing labels. Show original -> safe crop -> mask -> LaMa -> optional
+  reconstruction -> composition proposal -> unchanged/denoise/tone/sharpen
+  with native/padded views and the recommendation/hold reason. Require zero
+  newly clipped labelled subject regions, zero false-positive repaint on
+  labelled negative controls and no changed originals; report unresolved
+  overlays and all failures individually. Pause at delivery for user review.
+  I37 acceptance and a fresh verified rebase preview are prerequisites to
+  full rerun/install; this request is not permission to apply the old preview.
+
+The tagged manual naming inventory was read. It remains source evidence for
+deferred prompt/workflow migration, not an instruction to rename those stages
+or conflate intake derivatives with generated `0_Edit`/`1_Alpha` art.
+
+Implementation continuation: `overlay-review.cmd` publishes unconfirmed source-
+bound pill/logo proposals, including all-position badge-like regions; it does
+not train or use these as verified repaint masks. The 100-source selection is
+frozen in two 50-row chunks: 46 prior cases (including Fantasy), 20 additional
+unconfirmed clean/no-processing candidates, 20 reserved holdouts and 14 extra
+stratum cases. Various is included; Models has zero rows in this baseline
+and is explicitly unavailable rather than silently represented. The existing
+64-source launcher bound remains intact.
+
+Reference reports `overlay-references-20261027-1` and `-2` under
+`Working\_reports\eraser-compare` contain 64 and 46 unconfirmed proposals.
+They retain exact source copies, annotated views, candidate crop/mask,
+coordinates and hashes; apply/check passed. Confirm actual GMW examples and
+reject clothing/scenery before building a confirmed reference bank. These
+are proposal reviews, not evidence of improved detector precision yet.
+
+The sequence launcher now accepts `--enhancements`, adding independent
+native denoise/tone/restrained-sharpen panels from the guarded final.
+Diagnostics are luminance, extreme-pixel fractions and Laplacian variance,
+not calibrated automatic blur/quality rankings. The unenhanced result remains
+recommended; ineligible face assessments explicitly skip these operations.
+The first larger batch exposed an ineligible row without geometry; publication
+stopped without a partial run, then the eligibility guard was fixed and
+covered by a regression. No synthetic head reconstruction enters matching/
+core evidence or automatically becomes the recommendation.
+
+The expanded sequence reports `expanded-intake-20261027-1` and `-2` are now
+published and check successfully: 50 rows each, 100 articles total, no missing
+local image assets or recorded detector errors. Ninety-nine usable rows have
+three enhancement comparisons; one ineligible row explicitly skips them.
+Final experimental counts are 66 control, 28 erased, five first-crop and one
+residual-crop. Enhancement recommendations all retain their unenhanced final;
+no full rebase or automatic face reconstruction selection occurred.
+Normal validation passed 940 tests across 30 suites, followed by the new
+ineligible-row regression and focused suite pass. This is now the next user
+review gate. I41-I46 and rebase C8/C9 remain open where calibration, actual
+Junk routing, verified references or full acceptance is not implemented.
+
+### Oct 27: unusable faces, final Junk and replacement continuity
+
+- [ ] **P1 ai** I44 Audit first-pass and final prepared-image face usability
+  gates together. Obvious no-visible-face/torso/arm-only images, unusably small
+  faces and independently verified unrepairable blur must not become new
+  Potentials or matching/core seeds. Reassess the actual final candidate:
+  an erased overlay leaving a smeared/unusable face does not pass merely
+  because the original had a detection. A back/profile pose is not automatically
+  Junk; distinguish a usable visible face from genuinely absent/unusable
+  identity evidence. Detection/model failure or uncertain quality is a
+  diagnostic hold/Review, not proof of Junk. Synthetic face completion cannot
+  supply original likeness evidence. Find the reported Drakness/Drakniss/Nyxene
+  body/arm-only photo by bounded catalogue audit rather than guessing which
+  identity; include it in regression/review evidence.
+- [ ] **P1 ai** I45 Wire verified Junk outcomes through existing reversible
+  quarantine and gallery filtering, at intake and after final reconstruction/
+  enhancement. Keep originals, reason, source/final previews, provenance and
+  restore/undo. Junk is hidden by default but explicitly viewable, distinct
+  from Review/uncertainty. Existing cast/protected/selected references must
+  surface a conflict and replacement decision rather than silently deleting
+  a workflow source or bypassing protection. Repeated intake/checks must not
+  re-promote quarantined junk or reprocess it without explicit retry.
+- [ ] **P2 ai** I46 Re-test duplicate and incoming-replacement continuity with
+  the prepared-image pipeline. Exact byte duplicates, same stable-photo-ID
+  new versions and merely similar renderings are different cases. When a
+  deliberate incoming replacement is accepted as preferable, keep it current
+  and archive the older version in the existing duplicate/recovery mechanism,
+  retaining stable identity, selected-input bindings and exact undo; do not
+  always reject the incoming version. If distinct originals produce identical
+  prepared pixels, preserve both provenance records and propose deduplication
+  rather than silently merge people. Quality preference needs explicit
+  selection or calibrated evidence, not newest timestamp alone. Junk gates
+  take priority over replacement: a newer unusable image must not displace
+  a usable protected/current reference.
+
+These are final intake acceptance requirements, not claims that a no-face
+detector or an arbitrary blur threshold proves irreparability. Reuse existing
+Junk/duplicate/replacement tooling; do not introduce a second disposition store.
+The user wants cast seeding limited to accepted high-confidence core evidence
+and/or explicitly selected workflow references, then fresh grouping/merging
+and family proposal rules. The numeric `x.xx` threshold is unspecified; use
+the owning policy's approved values and display the actual values in the
+preview, never invent a new cutoff from this message. Sandbox acceptance and
+original-name corrections precede any equivalent production-library cutover.
 
 Oct 27, 13:26 review: the user prefers LaMa over Telea/Navier-Stokes across
 the inspected same-mask comparisons. Retain the classical methods as evidence,
@@ -1938,5 +2074,29 @@ LaMa seems the best in reviewing all the images - the others don't seem to captu
 
 ```text
 ## Artists/Fantasy/gallery/fantasy_shot_20260902204526.jpg misses the oval entirely that spans the entire top and her head is covered by that oval and the arrorw icon at the top right.  So this is where the overlay on the oval detection is a good thing to look at.  There's others that just crop that way, which is fine when it doesn't cut the head off - but figuring out how the eraser can actually replace that would be awesome.  I am using the magic eraser in the google files edit application and I know it uses some AI behind the scenes to handle the erasing - there's where I was wondering if there isn't a library that does exactly that available instead of me having to select that oval by hand and let it bring back the picture and her head.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Sample acceptance and reference-based detection, Oct 27, 14:28 (verbatim)
+
+Coverage: example-specific acceptance/review gate above; I38/I40 escalation,
+I41 references/false positives, I42 enhancement recommendation, I43 expanded
+sample and I37/rebase acceptance. Implementation remains open where indicated.
+
+<!-- markdownlint-disable MD013 -->
+```text
+I think the head overlay reconstruction is fairly decent and much better than just cropping it.  So the series of crop, erase, reconstruction, composition to get to a recommended gallery photo are good for those photos that need it rather than cropping parts of the body.  I also think that some cases the advanced reconstruction even of the GMW logo could help that as well.  Using the initial simple erase should focus on areas of small icons, text and pieces that aren't large or aren't transparent of have an overlay.  Also the larger GMW circle is in other places on the image in some cases and I noticed in the larger gallery it was missed as well.  The other thing is making sure it's not a false-positive on the overlay might also be good when it's a large area it finds or thinks it finds.  We could alway keep an original of the GMW logo somewhere to check.  Same with the oval pill - just to ensure we are detecting things properly and not false positives in over lays.  What do you think about that.  I'd actually like to see the full gallery rebase done as soon as we're confident in all the updates via the samples.  If we need one more larger sampling of known images we need to test with as well as other sample of the good images that don't need any processing to make sure all the detection, cropping, erasing, recontructing and composition of the photo for the gallery are good as well as the denoise, tone and sharpen approaches to try to get to all those enhancements so I can start to figure out if any of those other enhancements after the initial cropping are necessary or not.  Ideally, if we can auto-detect blurry, figure out if denoise or tone are better due to lighting issues - we can make the final recommendation the "best" one we can detect as part of the intake.  Make sense what I want?
+```
+<!-- markdownlint-enable MD013 -->
+
+## Face usability, Junk, duplicates and cutover follow-up (verbatim)
+
+Coverage: I44/I45 usability/Junk, I46 replacement/duplicates; rebase C8/C9
+core seeds and sandbox/production gates; family N7/N9/N12 grouping/name
+correction. Original wording is retained; implementation is not implied.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Finally - if we find an image without a usable face those should also be detected and put into the _junk appropriately.  That could be a completely blurry one we can't sharpen.  A photo where the person is looking away from the camera and the face is not shown well and results in a potential without matches or matches other like faces that aren't really usable.  I don't need to have potentials where ultimately they aren't usable.  That's what the _junk was for and I think maybe we lost that somewhere as I see one picture for Drakness or Drakniss or Nyxene - I forget which one - that is in the library and doesn't even have a face it's like a cropped middle body or arm.  So that detection is also something needed at the first pass of the intake to see obvious junk as well as at the end where we just can't get a decent picture even after all the steps - like if the overlay covers the face and what we get after all the processing is a blur of a face - and cropping doesn't save it either.  That's just _junk I don't need if we can't get it right.  That's probably the final aspect of the intake processing.  It should show in the gallery if I want to see the junk as well - but most of the time I don't care about them other than making sure junk is truly junk and not a review.  Finally duplicate processing was also in place either if I drop the same image in again by accident or somehow I have two images that results in the same image.  The duplicates is probably less important than junk - but sometimes a duplicate may be that I want to just send an image back through and replace the other one if by change it comes out better.  So the older one already in a library would move to the duplicate instead of rejecting the new one.  Update the plans with this and I think we're nearly 100% complete with the intake processing and being able to do a rebase with only keeping core images with x.xx and above assigned to the Angels/Sisters or the photo workflow photo I have picked to keep those likenesses and then let the rest of the rules play out the right way - likeness grouping, auto merging in/out, family naming based on likeness groupings that don't auto merge but are so close we need to have them as models with family names tied to the angel or sister they align to.  Finally - then I can go back and work on renaming the originals that are not named correctly and getting the sandbox 100% validated so we can then re-run the processing on the production library to get that 100% accurate.
 ```
 <!-- markdownlint-enable MD013 -->

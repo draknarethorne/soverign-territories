@@ -37,6 +37,15 @@ original name. Named-folder corrections and GUI corrections need the same
 explicit intent, conflict preview and reversible transaction; merely
 re-dropping files is not claimed to implement that behavior today.
 
+Later Oct 27 clarification schedules the full sandbox grouping/near-match
+family preview before the user's original-name cleanup, then validates all
+of it before production cutover (rebase C8/C9). This changes the review order,
+not the separate original/current/character-name contracts. Near matches
+that fail same-person merge rules may be proposed as Models with a family
+relationship to an Angel/Sister, subject to existing direct-reference,
+ambiguity and user-acceptance gates; do not auto-merge them or rename cast
+slots to satisfy presentation. N12 remains required before that name cleanup.
+
 - [x] N11 User resolved the conflict: explicit forced correction replaces the
   erroneous effective original name, retaining audit history and exact undo.
   Update the enduring naming contract under N12 before implementation.

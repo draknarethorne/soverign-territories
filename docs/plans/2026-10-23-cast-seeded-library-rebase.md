@@ -4,6 +4,29 @@
 
 ## Oct 27, 11:05: intake review precedes the next rebase action
 
+Later user clarification: the next sandbox preview must expose the actual
+approved core-retention thresholds and explicitly selected workflow reference
+photos per Angel/Sister. The user's `x.xx` is not a new numeric policy.
+The existing preview retaining all 1,266 cast photos is historical evidence,
+not acceptance of the narrower next seed set. Preview demoted/non-core
+destinations and protection conflicts before any moves; preserve fixed cast
+slots, stable person IDs and reference selections.
+
+- [ ] **P1 ai** C8 Reconcile high-confidence/selected cast seeds with current
+  protections and usability gates (intake I44-I46). Show every retained,
+  demoted, Review and Junk outcome, actual policy threshold, source score/
+  domain and workflow selection; no unusable generated face used as core
+  evidence. Run remaining inputs through fresh approved matching/grouping/
+  merge-in/out rules, then separately propose near-but-not-same families
+  under N7/N9; surname resemblance is not a merge criterion.
+- [ ] **P1 ai** C9 After sample acceptance, validate the full sandbox rebase,
+  grouping/family behavior, reversible original-name correction N12 and exact
+  restore/check end to end. Only then preview equivalent production migration
+  with verified backups, accepted policy/recipe, input hashes and explicit
+  installation approval. No production changes are authorized by wanting the
+  sandbox finished soon. Report incomplete gates rather than calling the
+  sandbox or production library 100% accurate without evidence.
+
 The user has reviewed Angels and some Potentials in the completed preparation
 report and identified crop/erase/framing regressions. The bounded benchmark
 and acceptance gate now live in

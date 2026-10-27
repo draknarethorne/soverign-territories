@@ -19,6 +19,7 @@ echo   R  Photo review gallery (read-only Gallery and Review audit)
 echo   G  Preview gallery upkeep (rename, padded/head/chest; no matching or writes)
 echo   P  Preview sandbox image preparation comparisons (no source or identity changes)
 echo   U  Preview same-mask eraser A/B (LaMa vs OpenCV; comparison only)
+echo   V  Preview unconfirmed overlay reference candidates
 echo   J  Preview early Junk quarantine from a completed preparation report (no moves)
 echo   T  Preview artist-only likeness grouping in the sandbox (shared engine, no moves)
 echo   V  Preview separate Artist gallery pages (no matching or source changes)
@@ -51,6 +52,7 @@ if /i "%CH%"=="O" goto outputsgallery
 if /i "%CH%"=="E" goto referencecomparison
 if /i "%CH%"=="P" goto preparation
 if /i "%CH%"=="U" goto erasercompare
+if /i "%CH%"=="V" goto overlayreview
 if /i "%CH%"=="J" goto preparationjunk
 if /i "%CH%"=="T" goto artistlikeness
 if /i "%CH%"=="V" goto artistgallery
@@ -135,6 +137,16 @@ set /p "RUN=New run absolute path inside Working\_reports\eraser-compare: "
 call "%~dp0eraser-compare.cmd" --report "%REPORT%" --sources "%SOURCES%" --out "%RUN%" --dry-run
 pause
 goto menu
+:overlayreview
+set "REPORT="
+set "SOURCES="
+set "RUN="
+set /p "REPORT=Existing preparation report absolute path: "
+set /p "SOURCES=Source-list JSON absolute path: "
+set /p "RUN=New run absolute path inside Working\_reports\eraser-compare: "
+call "%~dp0overlay-review.cmd" --report "%REPORT%" --sources "%SOURCES%" --out "%RUN%" --dry-run
+goto menu
+
 :preparationjunk
 set "ROOT="
 set "RUN="

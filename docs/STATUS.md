@@ -74,9 +74,35 @@ subject-free borders/outside clutter on any side; do not sacrifice hair/head
 to remove a pill before restoration. LaMa remains the normal eraser, with a
 bounded advanced second-pass experiment for difficult cases, not repeated
 unconditional repainting. Preserve pre-loss input for alternate reconstruction.
-Pause at each new reviewable result; current pending review is the Fantasy
-complete-pill/icon LaMa trial. Conservative first-crop and advanced-backend
-implementation remain open; no new batch is queued while awaiting review.
+Pause at each new reviewable result. At 14:28 the user positively reviewed
+the Fantasy complete-pill/icon LaMa trial, releasing that example's pause.
+Next is one larger bounded sample with confirmed GMW/pill references,
+hard negatives/clean controls and unchanged/denoise/tone/sharpen comparisons.
+The user wants the full rebase promptly after sample confidence and review,
+not immediate installation of the old preview. Reference-based detection,
+advanced backend and calibrated enhancement recommendation remain open;
+the accepted trial used LaMa, not a separately tested advanced model.
+
+**Oct 27 Junk/replacement clarification:** assess usable visible faces before
+matching and again on the final prepared candidate. Obvious unusable inputs/
+failed restorations belong in reversible, normally hidden Junk; detector
+failure or uncertainty belongs in diagnostic hold/Review. Preserve selected/
+protected references and surface conflicts. Intentional accepted incoming
+replacements may supersede old versions with duplicate/recovery provenance;
+newer does not automatically mean better. Next rebase preview must expose
+approved core thresholds and explicitly selected workflow seeds, then group/
+merge/family rules. Full sandbox verification and original-name correction
+precede production cutover; no new numeric threshold or production apply
+was authorized.
+
+**Expanded review ready:** 100 frozen inputs in two 50-row sequence reports
+(`expanded-intake-20261027-1` / `-2` under `Working\_reports\eraser-compare`).
+Ninety-nine usable rows compare denoise/tone/sharpen, one ineligible row
+explicitly skips them; unenhanced recommendations retained. Separate
+`overlay-references-20261027-1` / `-2` reports show 110 unconfirmed reference
+proposals, not automatic GMW labels. All four apply/check workflows passed;
+full normal validation passed 940 tests/30 suites, plus focused final
+regressions. Pause for review of this sample before more batches or full rebase.
 
 **Oct 25 overnight rendering integration:** Sovereign Females is running at
 `127.0.0.1:8188` (ComfyUI 0.38.2, 970 node types). Request preview/prepare/check,

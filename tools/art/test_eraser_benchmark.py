@@ -129,13 +129,31 @@ class EraserBenchmarkTests(unittest.TestCase):
         plain = {s["name"]: s for s in self.row(self.plain)["processing"]["steps"]}
         self.assertEqual(plain["eraser"]["status"], "skipped")
 
+    def test_enhancements_share_native_input_and_do_not_rank_blur_as_quality(self):
+        import intake_sequence_benchmark as sequence
+        image = Image.new("RGB", (120, 160), (80, 90, 100))
+        before = image.tobytes()
+        row = {"experiment": {"final": "eraser"}}
+        outputs = dict(sequence.enhancement_candidates(image, row))
+        self.assertEqual(set(outputs), {"enhance-denoise", "enhance-tone", "enhance-sharpen"})
+        self.assertTrue(all(candidate.size == image.size for candidate in outputs.values()))
+        self.assertEqual(image.tobytes(), before)
+        evidence = row["experiment"]["enhancements"]
+        self.assertEqual(evidence["recommendation"], "eraser")
+        self.assertEqual(row["experiment"]["final"], "eraser")
+        self.assertEqual(evidence["diagnostics"]["laplacianVariance"], 0)
+        self.assertTrue(all(c["input"] == "eraser" and c["status"] == "comparison-only"
+                            for c in evidence["candidates"].values()))
+        self.assertNotIn("blurry", evidence["diagnostics"])
+
     def test_head_overlay_is_unselected_complete_mask_and_preserves_outside(self):
         import intake_sequence_benchmark as sequence
         image = Image.new("RGB", (400, 900), (110, 80, 60))
         mask = np.zeros((900, 400), dtype=bool)
         mask[90:130, 20:370] = True
         part = {"kind": "search-bubble", "box": [20, 90, 370, 130], "mask": mask}
-        row = {"geometry": {"overlayDetected": True}, "experiment": {"final": "control"}}
+        row = {"eligibility": {"status": "usable"}, "geometry": {"overlayDetected": True},
+               "experiment": {"final": "control"}}
         with mock.patch.object(sequence.clutter, "bubbles", return_value=[part]), \
                 mock.patch.object(sequence.clutter, "glyphs", return_value=[]), \
                 mock.patch.object(sequence.fill, "fill", side_effect=flat_fill):
@@ -163,7 +181,8 @@ class EraserBenchmarkTests(unittest.TestCase):
         image = Image.new("RGB", (400, 900))
         mask = np.zeros((900, 400), dtype=bool)
         mask[90:130, 20:370] = True
-        row = {"geometry": {"overlayDetected": True}, "experiment": {"final": "control"}}
+        row = {"eligibility": {"status": "usable"}, "geometry": {"overlayDetected": True},
+               "experiment": {"final": "control"}}
         with mock.patch.object(sequence.clutter, "bubbles",
                                return_value=[{"kind": "search-bubble", "box": [20, 90, 370, 130], "mask": mask}]), \
                 mock.patch.object(sequence.clutter, "glyphs", return_value=[]), \
@@ -172,6 +191,14 @@ class EraserBenchmarkTests(unittest.TestCase):
         self.assertNotIn("head-overlay-reconstruction", outputs)
         self.assertEqual(row["experiment"]["headOverlay"]["status"], "failed")
         self.assertIn("test failure", row["experiment"]["headOverlay"]["reason"])
+
+    def test_head_overlay_skips_ineligible_row_without_geometry(self):
+        import intake_sequence_benchmark as sequence
+        row = {"eligibility": {"status": "junk-candidate"}, "experiment": {"final": "control"}}
+        with mock.patch.object(sequence.clutter, "bubbles", side_effect=AssertionError("not eligible")):
+            self.assertEqual(list(sequence.head_overlay_candidates(Image.new("RGB", (20, 20)), row)), [])
+        self.assertEqual(row["experiment"]["headOverlay"]["status"], "skipped")
+        self.assertEqual(row["experiment"]["final"], "control")
 
     def test_sequence_preview_apply_check_repeat_and_artifact_tamper(self):
         def experiment(image, row):

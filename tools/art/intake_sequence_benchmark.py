@@ -9,11 +9,50 @@ import time
 from urllib.parse import quote
 
 import numpy as np
+from PIL import Image, ImageFilter
 import eraser_benchmark as benchmark
 from intake_library import clutter, fill, pipeline
 from likeness_library import gallery_chrome
 
 preparation = benchmark.preparation
+ENHANCEMENT_POLICY = {
+    "id": "native-comparison-v1",
+    "denoise": preparation.RECIPE["denoise"], "tone": preparation.RECIPE["tone"],
+    "sharpen": {"method": "UnsharpMask", "radius": 1.0, "percent": 75, "threshold": 3},
+    "selection": "retain unenhanced prepared input; diagnostics are not calibrated quality rankings",
+}
+
+
+def enhancement_candidates(image, row):
+    """Same native input for every candidate; low texture must not be labelled blur automatically."""
+    array = np.asarray(image)
+    gray = benchmark.cv2.cvtColor(array, benchmark.cv2.COLOR_RGB2GRAY)
+    evidence = {
+        "input": row["experiment"]["final"], "policy": ENHANCEMENT_POLICY,
+        "diagnostics": {
+            "laplacianVariance": round(float(benchmark.cv2.Laplacian(gray, benchmark.cv2.CV_64F).var()), 4),
+            "meanLuminance": round(float(gray.mean()), 4),
+            "darkFraction": round(float((gray <= 5).mean()), 6),
+            "brightFraction": round(float((gray >= 250).mean()), 6),
+        },
+        "recommendation": row["experiment"]["final"],
+        "reason": "No calibrated benefit test: keep unenhanced prepared image. Blur, noise and exposure "
+                  "are distinct; texture/scale affect diagnostics. Sharpening cannot recover hidden detail.",
+        "candidates": {},
+    }
+    row["experiment"]["enhancements"] = evidence
+    for name, candidate in preparation.candidates(image):
+        if name == "control":
+            continue
+        evidence["candidates"][name] = {
+            "input": evidence["input"], "status": "comparison-only",
+            "meanAbsolutePixelChange": preparation.mean_absolute_pixel_change(image, candidate)}
+        yield "enhance-" + name, candidate
+    sharpened = image.filter(ImageFilter.UnsharpMask(radius=1.0, percent=75, threshold=3))
+    evidence["candidates"]["sharpen"] = {
+        "input": evidence["input"], "status": "comparison-only",
+        "meanAbsolutePixelChange": preparation.mean_absolute_pixel_change(image, sharpened)}
+    yield "enhance-sharpen", sharpened
 
 
 def recipe():
@@ -45,7 +84,9 @@ def pill_icons(array, top, bottom):
 def head_overlay_candidates(image, row):
     """Unclipped UI masks for a separate, deliberately synthetic head-overlap trial."""
     array = np.asarray(image)
-    pills = clutter.bubbles(array) if row["geometry"]["overlayDetected"] else []
+    pills = (clutter.bubbles(array)
+             if row.get("eligibility", {}).get("status") == "usable"
+             and row.get("geometry", {}).get("overlayDetected") else [])
     evidence = {"status": "skipped", "reason": "No detected screenshot search pill; not proof of clean.",
                 "selected": False, "parts": [], "outsideMaskIdentical": None}
     row["experiment"]["headOverlay"] = evidence
@@ -195,6 +236,10 @@ def run(args):
         saved = verify(out, working, report, payload)
         if saved.get("headOverlayEnabled", False) != bool(args.head_overlay):
             raise ValueError("head-overlay mode differs; use the matching flag or a new output directory")
+        if saved.get("enhancementsEnabled", False) != bool(args.enhancements):
+            raise ValueError("enhancement mode differs; use matching flags or a new output directory")
+        if args.apply and args.enhancements and saved.get("enhancementPolicy") != ENHANCEMENT_POLICY:
+            raise ValueError("enhancement policy changed; use a new output directory")
         if args.apply and args.head_overlay and saved.get("headOverlayPolicy") != "full-pill-near-icon-v1":
             raise ValueError("head-overlay policy changed; use a new output directory")
         if args.apply and saved["recipe"] != recipe():
@@ -240,6 +285,14 @@ def run(args):
             if args.head_overlay:
                 for name, image in head_overlay_candidates(original, row):
                     save(name, image)
+            if args.enhancements and row.get("eligibility", {}).get("status") == "usable":
+                prepared = preparation.decode_file(stage / images[row["experiment"]["final"]]["path"])
+                for name, image in enhancement_candidates(prepared, row):
+                    save(name, image)
+            elif args.enhancements:
+                row["experiment"]["enhancements"] = {
+                    "status": "skipped", "reason": "Face assessment does not authorize enhancement.",
+                    "recommendation": row["experiment"]["final"]}
             rows.append({"source": binding["source"], "binding": binding,
                          "seconds": round(time.perf_counter() - started, 4),
                          "images": images, "evidence": row["experiment"]})
@@ -249,6 +302,8 @@ def run(args):
                 "report": {"path": str(report), "sha256": digest},
                 "selectionSha256": benchmark.sha(payload), "compositionComparisonOnly": True,
                 "headOverlayEnabled": bool(args.head_overlay),
+                "enhancementsEnabled": bool(args.enhancements),
+                "enhancementPolicy": ENHANCEMENT_POLICY if args.enhancements else None,
                 "headOverlayPolicy": "full-pill-near-icon-v1" if args.head_overlay else None, "rows": rows}
         put("index.html", page(data))
         data["files"] = files
