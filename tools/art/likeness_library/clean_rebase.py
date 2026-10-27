@@ -95,14 +95,20 @@ def _curation_inventory(layout, catalog=None):
         ]
         if len(matching) == 1:
             replacement = overlay_inputs.get(matching[0].relative_to(working).as_posix(), {})
+            target = replacement.get("target", "")
+            original_hash = replaced_originals.get(target)
+            original_matches = [
+                path for path in paths
+                if original_hash and metadata.content_sha256(path) == original_hash
+            ]
             for path in paths:
                 if path != matching[0]:
                     relative = path.relative_to(working).as_posix()
                     record = overlay_inputs.get(relative)
-                    if (replacement.get("target") == relative
+                    if (metadata.photo_id_from_name(pathlib.PurePosixPath(target).name) == photo_id
                             and replacement.get("photoId") == photo_id
                             and replacement.get("sha256") in expected_hashes
-                            and replaced_originals.get(relative) == metadata.content_sha256(path)):
+                            and original_matches == [path]):
                         continue
                     if not record or not record.get("sanitized"):
                         raise ValueError(f"duplicate current photo ID is not safely isolated: {relative}")

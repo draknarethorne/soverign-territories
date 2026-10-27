@@ -214,6 +214,13 @@ class CleanRebaseTests(unittest.TestCase):
             layout["source_overlay_manifest"]["currentVarious"][0]["target"] = "Various/gallery/other.jpg"
             with self.assertRaisesRegex(ValueError, "not safely isolated"):
                 clean_rebase._curation_inventory(layout)
+            layout["source_overlay_manifest"]["currentVarious"][0]["target"] = self.relative
+            moved = self.working / "Angels" / "Angelica" / "review" / original.name
+            moved.parent.mkdir(parents=True)
+            original.rename(moved)
+            current = clean_rebase._curation_inventory(layout)
+            self.assertEqual(current[moved.relative_to(self.working).as_posix()], self.digest)
+            self.assertEqual(len(current), 2)
 
     def test_overlay_isolates_timestamp_collisions_and_deduplicates_exact_copies(self):
         import json

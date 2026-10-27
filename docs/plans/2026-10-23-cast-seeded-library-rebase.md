@@ -14,12 +14,15 @@ Various screenshot that the overlay deliberately substitutes for preparation.
 Both byte versions were already preserved, but the curation guard recognized
 only isolated timestamp collisions, not this verified original/replacement pair.
 
-The guard now accepts the original **only** when its exact current path/hash
-matches the overlay's verified `immutable-original` recovery entry, and the
-unique matching Various replacement names that same target, photo ID and
-prepared-input hash. Both current paths remain in the curation snapshot.
-Unknown duplicates, changed originals and wrong replacement targets still
-refuse. No stable IDs, assignments, source bytes or overlay receipts are changed.
+The guard now accepts the original **only** when exactly one current file
+matches the overlay's verified `immutable-original` recovery hash, and the
+unique matching Various replacement names that recovered source target,
+photo ID and prepared-input hash. The current original may have moved into a
+cast Review folder since the source snapshot; its stable ID and bytes must
+still match. Both current paths remain in the curation snapshot.
+Unknown duplicates, duplicate original copies, changed originals and wrong
+replacement targets still refuse. No stable IDs, assignments, source bytes
+or overlay receipts are changed.
 The regression reproduced the real refusal before the fix; all 47 related
 rebase, clean-preparation and retained-preparation tests pass afterward.
 
