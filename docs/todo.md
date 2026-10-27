@@ -109,7 +109,7 @@
 - [ ] A7 Compare download/run versus a lightweight explicit ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] R10 Extend to male/animal recipe profiles only after suitable ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 
-### For the assistant, when you say go (98)
+### For the assistant, when you say go (97)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -201,7 +201,6 @@
 - [ ] R24 Show pulled renders in the People drill-down per person and ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R34 Render-assisted suggestions: a `likeness` step that ranks ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R39 Rank best-of-N results with separate technical-quality, ([2026-10-25](plans/2026-10-25-reference-rendering.md))
-- [ ] R41 Add a rendered-character resemblance review using matched ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R7 Add compatible female flow catalogue coverage and explicit ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R8 Add Gallery export and read-only generation results through ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 

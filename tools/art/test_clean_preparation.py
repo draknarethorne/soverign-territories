@@ -162,6 +162,41 @@ class CleanPreparationTests(unittest.TestCase):
         self.assertTrue(named["destination"].startswith("Potentials/Known Person/gallery/"))
         self.assertEqual(manifest.read_bytes(), unchanged)
 
+    def test_missing_id_review_collisions_preserve_both_sources_and_recover_exactly(self):
+        originals = {}
+        for relative in ("Potentials/Fia/gallery/legacy.jpg", "Various/gallery/LEGACY.JPG"):
+            source = self.source / relative
+            shutil.copy2(self.source / "Potentials/Fia/gallery/fia_image_654321.jpg", source)
+            shutil.copy2(source, self.working / relative)
+            self.inputs[relative] = (source.stat().st_size, metadata.content_sha256(source))
+            originals[relative] = source.read_bytes()
+        self.command()
+        plan = json.loads((self.run / "run.json").read_text(encoding="utf-8"))
+        held = [row for row in plan["photos"] if row["source"] in originals]
+        self.assertEqual(len(held), 2)
+        destinations = {row["source"]: row["destination"] for row in held}
+        self.assertEqual(len({value.casefold() for value in destinations.values()}), 2)
+        for row in held:
+            self.assertTrue(row["destination"].startswith("Various/review/"))
+            self.assertIsNone(metadata.photo_id_from_name(row["destination"]))
+            self.assertIn("filename disambiguated", row["reason"])
+        self.command(replan=True)
+        replanned = json.loads((self.run / "run.json").read_text(encoding="utf-8"))
+        self.assertEqual(destinations, {
+            row["source"]: row["destination"] for row in replanned["photos"] if row["source"] in originals
+        })
+        with mock.patch("library_backup.latest_work_root_backup", return_value=self.base), \
+                mock.patch("library_backup.verify_backup"):
+            self.command(apply=True)
+        for destination in destinations.values():
+            native = self.working / destination
+            self.assertTrue(native.is_file())
+            self.assertIsNotNone(retained_preparation.verify_link(self.working, native))
+        self.command(check=True)
+        self.command(undo=True)
+        for relative, content in originals.items():
+            self.assertEqual((self.working / relative).read_bytes(), content)
+
     def test_apply_retains_versions_and_originals_and_undo_restores_cast_and_pool(self):
         before = {path.relative_to(self.working).as_posix(): path.read_bytes()
                   for path in self.working.rglob("*") if path.is_file()}
@@ -251,6 +286,44 @@ class CleanPreparationTests(unittest.TestCase):
         person["folder"] = "Potentials/Fia"
         with self.assertRaisesRegex(ValueError, "cannot migrate unambiguously"):
             clean_rebase._migrate_continuity(catalog, rows, self.working, self.api.originals.images)
+
+    def test_one_to_one_identity_keeps_current_label_when_historical_label_is_occupied(self):
+        first = {"id": "person_a", "folder": "Potentials/Eloise", "folderHistory": []}
+        second = {"id": "person_b", "folder": "Potentials/Jade", "folderHistory": []}
+        catalog = {"people": {"person_a": first, "person_b": second}, "photos": {}}
+        rows = [
+            {"oldFolder": first["folder"], "photoId": "photo:image_654321",
+             "destination": "Potentials/Jade/gallery/one.jpg"},
+            {"oldFolder": second["folder"], "photoId": "photo:image_345678",
+             "destination": "Various/review/two.jpg", "bestMatch": "Potentials/Jade"},
+        ]
+        clean_rebase._migrate_continuity(catalog, rows, self.working, lambda folder: [])
+        self.assertEqual(first["folder"], "Potentials/Eloise")
+        self.assertEqual(second["folder"], "Potentials/Jade")
+        self.assertEqual(rows[0]["destination"], "Potentials/Eloise/gallery/one.jpg")
+        self.assertEqual(rows[1]["destination"], "Various/review/two.jpg")
+        self.assertEqual(rows[1]["bestMatch"], "Potentials/Eloise")
+        self.assertEqual(first["folderHistory"], [])
+
+    def test_replan_resumes_failed_matching_only_after_verified_preparation(self):
+        with mock.patch.object(clean_rebase, "_migrate_continuity",
+                               side_effect=ValueError("test: stop after measurements")):
+            with self.assertRaisesRegex(ValueError, "stop after measurements"):
+                self.command()
+        self.assertTrue((self.run / "intake.json").exists())
+        self.assertTrue((self.run / "likeness-cache.json").exists())
+        self.assertFalse((self.run / "run.json").exists())
+        self.measured.clear()
+        self.command(replan=True)
+        plan = json.loads((self.run / "run.json").read_text())
+        self.assertEqual(plan["status"], "preview")
+        self.assertTrue(plan["cacheMeasurementsReusedForReplan"])
+        self.assertEqual(self.measured, [])
+        selected = self.run / "inputs" / "_reports" / "preparation" / "all" / "manifest.json"
+        selected.write_text("{}")
+        (self.run / "run.json").unlink()
+        with self.assertRaises(ValueError):
+            self.command(replan=True)
 
     def test_unknown_current_inputs_refuse_matching_instead_of_disappearing(self):
         photo = self.working / "Various" / "gallery" / "extra_image_999999.jpg"

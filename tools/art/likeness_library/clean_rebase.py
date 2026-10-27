@@ -45,6 +45,22 @@ def _bind_preparation(rows, prepared_rows, output, api):
             prefix = api.originals.prefix_of(destination.parent.parent.name)
             key = api.cw.photo_key(pathlib.PurePosixPath(row["source"]).name)
             row["destination"] = destination.with_name(prefix + "_" + key + destination.suffix).as_posix()
+    counts = collections.Counter(row["destination"].casefold() for row in rows)
+    for row in rows:
+        destination = pathlib.PurePosixPath(row["destination"])
+        if (
+            counts[row["destination"].casefold()] > 1
+            and row.get("photoId") is None
+            and destination.parent.as_posix() == "Various/review"
+            and row["reason"] == "missing stable photo ID; held in Review, excluded from clustering"
+        ):
+            token = uuid.uuid5(uuid.NAMESPACE_URL, f"clean-rebase-review:{row['source']}").hex
+            row["destination"] = destination.with_name(
+                f"{destination.stem}_held-{token}{destination.suffix}",
+            ).as_posix()
+            row["reason"] += "; filename disambiguated by immutable source path"
+            print(f"clean rebase: preserving separate Review hold {row['source']} -> {row['destination']}",
+                  flush=True)
 
 
 def _curation_inventory(layout, catalog=None):
@@ -445,6 +461,35 @@ def _migrate_continuity(catalog, rows, working, images, *, current_inputs=None):
         folder = str(pathlib.PurePosixPath(row["destination"]).parent.parent)
         destinations[previous].add(folder)
         owners[folder].add(previous)
+    occupied = {person["folder"].casefold(): person_id
+                for person_id, person in catalog["people"].items()}
+    labels = {}
+    for person_id, person in catalog["people"].items():
+        folder = person["folder"]
+        targets = destinations.get(folder, set())
+        if len(targets) != 1 or folder.split("/")[0] not in RESET_CATEGORIES:
+            continue
+        target = next(iter(targets))
+        if (len(owners[target]) == 1 and target.split("/")[0] in RESET_CATEGORIES
+                and occupied.get(target.casefold(), person_id) != person_id
+                and not any(existing.casefold() == folder.casefold() for existing in owners)):
+            labels[target] = folder
+            print(f"clean rebase: retaining stable identity label {folder}; "
+                  f"historical label {target} belongs to another identity", flush=True)
+    if labels:
+        for row in rows:
+            path = pathlib.PurePosixPath(row["destination"])
+            folder = path.parent.parent.as_posix()
+            if folder in labels:
+                row["destination"] = (pathlib.PurePosixPath(labels[folder]) / path.parent.name / path.name).as_posix()
+            if row.get("bestMatch") in labels:
+                row["bestMatch"] = labels[row["bestMatch"]]
+        destinations = {folder: {labels.get(target, target) for target in targets}
+                        for folder, targets in destinations.items()}
+        owners = collections.defaultdict(set)
+        for folder, targets in destinations.items():
+            for target in targets:
+                owners[target].add(folder)
     for person_id, person in catalog["people"].items():
         folder = person["folder"]
         targets = destinations.get(folder, set())
@@ -457,7 +502,7 @@ def _migrate_continuity(catalog, rows, working, images, *, current_inputs=None):
         )
         unique = len(targets) == 1 and len(owners[next(iter(targets))]) == 1
         target = next(iter(targets)) if unique else None
-        if target and target.startswith(("Various/", "Angels/", "Sisters/")):
+        if target and target.split("/")[0] in ("Various", "Angels", "Sisters"):
             unique = False
         if has_decisions and not unique:
             raise ValueError(f"identity decisions cannot migrate unambiguously after matching: {folder}")
@@ -1348,16 +1393,19 @@ def command(args, api):
             )
             _write_json(plan_path, plan)
     else:
-        if args.check or args.undo or args.replan:
+        if args.check or args.undo:
             raise ValueError("no saved clean rebase plan exists")
         if args.apply:
             raise ValueError("create and review the prepared matching preview before --apply")
+        if args.replan and not ((run / "intake.json").is_file() and (run / "likeness-cache.json").is_file()):
+            raise ValueError("resuming incomplete matching requires verified preparation and saved measurements")
         preparation = clean_preparation.prepare(layout, run)
         from . import preparation_history
 
         preparation_history.publish_staged(layout["working_root"], layout["working_root"] / "_reports" / "library")
         plan = create_plan(
-            layout, run, policy, api, getattr(args, "embedder", None), preparation=preparation,
+            layout, run, policy, api, getattr(args, "embedder", None),
+            reuse_measurements=args.replan, preparation=preparation,
         )
         _write_json(plan_path, plan)
     if plan.get("preparation"):

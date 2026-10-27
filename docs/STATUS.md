@@ -1,6 +1,6 @@
 # Project Status
 
-**Updated:** 2026-10-26 · This is the one working document: where the project is, what has
+**Updated:** 2026-10-27 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
@@ -186,8 +186,25 @@ completed pilot outputs pending the final five-batch publication.
 Oct 27 continuation: all 2,741 preparation outcomes are verified with no
 assessment errors. Matching preview caught a verified-original/newer-Various
 duplicate-ID edge case; a narrow recovery-bound curation fix passes 47 related
-tests, and the same prepared run is being retried as preview only.
-All 63 cast auditions completed; the remaining pose run has started.
+tests. Subsequent naming-only continuity collisions retain current stable
+labels without changing matching, and 22 missing-ID Review holds with 11
+colliding filenames retain separate deterministic source-bound names.
+Incomplete matching can resume with `--replan` from verified intake and
+hash-keyed measurements; it never installs. The final retry saved a
+**preview**: 279 Artist inputs excluded from general matching, 1,266 retained
+cast photos, and 1,196 accounted non-cast inputs (1,048 non-cast gallery
+destinations, 40 proposed cast Review additions, 108 Various Review holds).
+The immutable manifest, overlay and live catalogue hashes remain unchanged.
+Reversible installation and curation acceptance remain gated in the rebase
+owner; the preview has not changed assignments.
+All 63 cast, 42 pose and eight Deluxe jobs completed. The published five-batch
+Comparison includes those 113 new outputs plus four pilots: **117/117
+completed**, 42 sources and 39 people, verified by read-only launcher check.
+Outputs indexes 7,081 images; Rendering is refreshed too. No new audition
+was imported. Deluxe uses the consistent clothed bedroom theme, but Angelica's
+seated output retains a top-cropped face; synthesized unseen details and
+wardrobe changes remain visual-review limitations, not accepted identity.
+Normal validation passes **885 tests in 29 suites**.
 The downstream sequencer now holds, rather than fails, on a transient persisted
 submission intent; it never advances until every prerequisite is completed.
 The agreed guiding principle is now image-first staged progression: automatic

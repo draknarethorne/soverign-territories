@@ -31,6 +31,51 @@ Matching preview is being retried against this same verified run, without
 `files/prepared-matching-retry-20261027.log`. Final preview counts remain
 pending; do not infer acceptance from the completed preparation.
 
+The matched preview subsequently exposed two historical display-label
+collisions, not a likeness-scoring failure: Eloise's one-to-one output group
+was labelled Jade, and Dahl's was labelled Afton, while those labels still
+belonged to other stable IDs. Labels are now retained from the current stable
+identity in this narrow case, only if its current folder is otherwise unused
+by the new routing. No face assignment, membership, score or other identity
+record changes. Split/merged decision-bearing identities and occupied fallback
+folders still refuse. `Various` root holds also cannot rename a stable identity.
+
+`bin\sandbox-rebase.cmd ... --include-current-various --replan` can now resume
+an incomplete matching preview without a saved `run.json`, provided this run
+has its complete verified `intake.json` and measured cache. It rechecks
+preparation, rebuilds matching from the cached content hashes, and saves only
+a preview. Missing or tampered preparation still refuses; no apply is implied.
+Both new regressions failed before the fixes; all 49 related tests pass.
+The resume log is session `files/prepared-matching-resume-20261027.log`.
+
+That retry exposed 11 case-insensitive destination collisions among 22 legacy
+photos without stable IDs. They were correctly excluded from matching and
+held in `Various/review`, but identical filenames from different source
+folders would overwrite one another. Only these colliding missing-ID holds
+now receive a deterministic `_held-<source-path-UUID>` filename suffix.
+Both copies and their preparation lineage remain separate, even when their
+bytes are identical; no new photo ID, identity assignment or deduplication
+is inferred. Protected, cast and ID-managed routing guards are unchanged.
+The regression reproduced the real refusal before the fix and verifies
+preview/replan determinism, retained evidence, install/check and exact undo.
+All 885 normal tests in 29 suites pass. Final preview retry log:
+session `files/prepared-matching-holds-20261027.log`.
+
+The final retry completed successfully as **`status: preview`**. Its 2,741
+prepared inputs comprise 2,462 general photos and 279 Artist inputs, kept
+outside general matching. The 21 Angel/Sister reference identities retain
+all 1,266 existing cast photos. Of 1,196 non-cast inputs accounted for,
+1,048 route to non-cast galleries, 40 are proposed cast **Review** additions
+(27 Angels, 13 Sisters), and 108 remain in Various Review. There are 26
+missing-ID holds, including the 22 filename-disambiguated copies.
+The source manifest, overlay and live catalogue hashes still match the
+preview bindings. No Working assignment, catalogue, cast or source bytes
+were changed. The launcher's final read-only `--check` exited 0.
+The run-local `report.md`, `photos.csv`, `policy.json`,
+`catalog.json` and `run.json` are the review evidence; measurement reuse
+is explicit in the receipt. C2/C6/R11 remain open for broader acceptance and
+approved reversible installation, not more preparation.
+
 ## Oct 26 late: fresh all-input retry in progress
 
 The renewed end-to-end authorization is preserved in the

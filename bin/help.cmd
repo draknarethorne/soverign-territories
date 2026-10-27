@@ -35,7 +35,8 @@ echo                                    --include-current-various adds current W
 echo                                    --intake-only --apply prepares all images and stops for review; --check verifies without writes
 echo                                    same command with no flags prepares/resumes then previews fresh-cache matching; --apply installs only a saved preview
 echo                                    originals + all kept variants follow assigned photos; cast membership retained, Artists prepared separately; --undo restores exact pre-run bytes
-echo                                    --replan reuses only this run's prepared measurements; no matcher-only legacy preview can be installed
+echo                                    --replan reuses only this run's prepared measurements, including a failed matching preview with verified intake; never installs
+echo                                    no matcher-only legacy preview can be installed
 echo    likeness-actions.cmd validate FILE.json  check staged actions against current photo IDs, hashes, folders and catalogue
 echo    likeness-actions.cmd preview FILE.json   show intended destinations; never moves photos or edits metadata
 echo    likeness-actions.cmd apply FILE.json --apply  verified backup, then apply staged moves and metadata decisions

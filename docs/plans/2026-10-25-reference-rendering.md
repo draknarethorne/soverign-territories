@@ -42,6 +42,25 @@ and removal of real people's clothing are excluded.
 
 Current continuation evidence:
 
+- Final Oct 27 render receipt and read-only comparison check: all **117/117**
+  outputs completed across five batches (63 cast, 42 pose, eight Deluxe and
+  four earlier pilots), covering 42 sources and 39 people. Outputs indexes
+  7,081 images; Rendering and the five-batch Comparison are published.
+  No new audition was imported. Earlier running/waiting counts below are
+  historical snapshots, not the current state.
+- Visual inspection of all eight Deluxe outputs confirms the consistent
+  clothed neutral bedroom theme, not universal pose/framing acceptance.
+  Angelica's seated result retains the source's top-cropped face; the other
+  views synthesize unseen face/body details. Choose a face-complete source
+  before using these to judge a character's appearance. Clothing colors and
+  silhouettes can survive while unseen garments, lengths and footwear change.
+  The existing framing policy already requests the whole head and feet;
+  repeating that instruction is not proof of correction. No automatic
+  promotion, identity/family assertion or cast change follows these results.
+- Normal validation after matching-recovery and collision regressions:
+  **885 tests in 29 suites**, all passing. The missing-ID Review collision
+  regression covers preview, deterministic replan, installation, retained
+  evidence, verification and exact undo on disposable fixtures.
 - Oct 27 follow-through: all 2,741 intake outcomes are verified, without
   assessment errors. Matching preview safely exposed a current original /
   newer Various duplicate-ID continuity edge case. The verified-recovery
@@ -687,10 +706,17 @@ remain open; this message is not a numerical approval.
   R33 and the migration recipe controls are available: preview exact sources,
   resolved profiles, job count and output lineage before queueing. Include
   both approved poses, control/design comparisons and direct-original Prime.
-- [ ] **P2 ai** R41 Add a rendered-character resemblance review using matched
+  The completed cast/pose comparison supplies the clothed control and
+  direct-original Prime evidence. Appearance-design comparisons remain open
+  with R35's profile decision and the migration's explicit controls; the
+  117-output report does not complete that separate scope.
+- [x] **P2 ai** R41 Add a rendered-character resemblance review using matched
   recipe/profile comparisons, linked to the source people without changing
   their identity evidence. Family metadata/naming remains owned by the family
   plan; user acceptance precedes any family/cast change.
+  Delivered by the five-batch source-bound Comparison with person/source and
+  matched-recipe views. This is advisory visual review, not automated
+  resemblance scoring or proof that two originals share an identity.
 
 ### Implementation following the 21:52 continuation
 
