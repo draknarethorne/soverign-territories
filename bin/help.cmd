@@ -1,6 +1,7 @@
 @echo off
 echo.
 echo  Sovereign Territories command scripts. Run them from a terminal, or double-click menu.cmd.
+echo    validate.cmd --isolated [--quick]  mutation validation on ONE disposable data/tools copy; private recovery journal, live repository read-only
 echo  HERO is a hero name such as Draknara. STAGE is optional: poses, head, scene, hair, motion, armor, clothing, video, or "studio" for every studio stage.
 echo  A set is deployed to its HOME workspace (see workspaces.cmd). The scripts that change files do it for real; the underlying tool previews unless you give it --apply, so add --dry-run as the last argument to preview a script.
 echo.
@@ -57,12 +58,15 @@ echo    render-reference.cmd compile BATCH --root DIR --endpoint URL --input-roo
 echo    render-reference.cmd submit BATCH --root DIR --job ID [--apply] one explicit job; never silently retries uncertain submissions
 echo    render-reference.cmd run BATCH --root DIR [--limit 4] [--timeout 3600] [--queue-depth 1] [--apply]  bounded selected batch (limit up to 64); waits existing queue, no interrupt
 echo                                    --queue-depth N keeps up to N owned jobs queued at the tail (2..16); every submit refuses at the 200-job server queue capacity
+echo                                    --timeout accepts 1..21600 seconds (six hours), including waiting behind existing jobs; default 3600
 echo                                    --allow-busy-queue explicitly appends owned jobs at normal tail behind other callers; no priority or cancellation
 echo    render-reference.cmd status BATCH --root DIR [--refresh]        local receipts; refresh explicitly reads server history
 echo    render-reference.cmd reconcile BATCH --root DIR --job ID [--apply]  find one exact uncertain prompt in recent scoped history; NO resubmit
 echo    render-reference.cmd retain BATCH --root DIR --job ID --output-sha SHA [--apply]  copy ONE reviewed synthetic result outside ComfyUI
 echo    render-reference.cmd manual-prefixes --root DIR [--apply]       preview/back up clone manual save-prefix correction; no prompts/settings changed
 echo    render-reference.cmd cleanup-batch --root DIR [--hint H] [--sources SCAN.json] [--recipe R] [--samples 2] [--id ID] [--apply]  requests for intake photos flagged for ComfyUI cleanup; never queues
+echo                                    --per-person N samples assigned original gallery photos by resolution instead of cleanup hints; exact duplicates only, no outfit elimination
+echo    render-reference.cmd compare BATCH --root DIR [--batch OTHER] [--dry-run ^| --check ^| --apply]  frozen sources beside outputs by person/recipe/seed; human review, never identity assignment
 echo    render-reference.cmd overlay-scan --root DIR --inputs RAW-DIR [--id ID] [--apply]  rescan raw intake images for overlays and map hits to Gallery sources
 echo    render-reference.cmd outputs --root DIR [--workspace WS] [--dry-run ^| --check ^| --apply]  browse ALL ComfyUI outputs: filters, full view, pull-manifest export
 echo    render-reference.cmd pull MANIFEST.json --root DIR [--apply]   copy chosen outputs to _generation\library with standard names, 944x1104 copy and sidecar

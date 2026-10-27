@@ -109,7 +109,7 @@
 - [ ] A7 Compare download/run versus a lightweight explicit ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] R10 Extend to male/animal recipe profiles only after suitable ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 
-### For the assistant, when you say go (100)
+### For the assistant, when you say go (98)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -196,12 +196,10 @@
 - [ ] A5 Verify stable-directory report replacement, dated report ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] I27 Close the v16 visual gaps: the picture-in-picture reel ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I20 Complete subject-preserving composition before/after cleanup, beyond ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
-- [ ] R15 Make isolated mutation validation and short Windows test ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R22 Face-similarity ranking of each job's outputs against its ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R23 Loopback local service so Gallery buttons run the ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R24 Show pulled renders in the People drill-down per person and ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R34 Render-assisted suggestions: a `likeness` step that ranks ([2026-10-25](plans/2026-10-25-reference-rendering.md))
-- [ ] R38 `cleanup-batch --per-person N --recipe ...`: choose the ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R39 Rank best-of-N results with separate technical-quality, ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R41 Add a rendered-character resemblance review using matched ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R7 Add compatible female flow catalogue coverage and explicit ([2026-10-25](plans/2026-10-25-reference-rendering.md))

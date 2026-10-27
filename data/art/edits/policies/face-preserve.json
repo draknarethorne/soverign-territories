@@ -2,7 +2,7 @@
   "id": "edit-policy-face-preserve",
   "kind": "edit",
   "name": "Reference face preservation",
-  "compatibleStages": ["edit"],
+  "compatibleStages": ["edit", "alpha"],
   "tags": ["reference", "face", "preserve-source"],
   "description": "Preserve the same person's recognizable face, expression, eye color and skin tone, with consistent facial features.",
   "negatives": ["changed identity", "altered facial features", "changed eye color", "changed skin tone"]

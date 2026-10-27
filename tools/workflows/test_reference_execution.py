@@ -36,6 +36,20 @@ def tiny_ui():
 
 
 class GraphTests(unittest.TestCase):
+    def test_prime_paths_are_staged_correctly_without_changing_legacy_pose_paths(self):
+        job = {"id": "one", "displayName": "Person",
+               "recipe": "shared-1a-prime-outfit-relaxed"}
+        prefix, workflow = execution.reference_paths(job, "sample", "20261027T040000Z")
+        self.assertTrue(prefix.startswith("reference/Person/1_Alpha/1_Prime/Person_Qwen_Alpha_"))
+        self.assertEqual(workflow, prefix + ".json")
+        positive, negative = execution.pilot_prompts(job["recipe"])
+        self.assertIn("clothed Prime outfit reference", positive)
+        self.assertIn("fully clothed in the same outfit", positive)
+        self.assertIn("removed clothing", negative)
+        job["recipe"] = "shared-0d-relaxed-three-quarter"
+        self.assertTrue(execution.reference_paths(job, "sample", "20261027T040000Z")[0].startswith(
+            "reference/Person/0_Edit/0d_Deluxe/"))
+
     def test_shared_compile_freezes_exact_generated_prompt_without_submission(self):
         with tempfile.TemporaryDirectory() as directory:
             root = pathlib.Path(directory)
@@ -413,6 +427,16 @@ class ExecutionTests(unittest.TestCase):
             execution.run_batch(self.root, self.batch)
             post.assert_not_called()
 
+    def test_overnight_timeout_allows_queue_wait_but_remains_bounded(self):
+        with mock.patch.object(execution, "post_json") as post:
+            preview = execution.run_batch(self.root, self.batch, timeout=18000)
+            self.assertEqual(preview["timeoutSeconds"], 18000)
+            execution.run_batch(self.root, self.batch, timeout=21600)
+            for timeout in (0, 21601):
+                with self.subTest(timeout=timeout), self.assertRaisesRegex(ValueError, "timeout"):
+                    execution.run_batch(self.root, self.batch, timeout=timeout)
+            post.assert_not_called()
+
     def test_run_waits_other_queue_then_submits_once(self):
         compiled = copy.deepcopy(self.record)
         completed = copy.deepcopy(self.record)
@@ -451,6 +475,31 @@ class ExecutionTests(unittest.TestCase):
             with self.assertRaisesRegex(TimeoutError, "uncertain POST"):
                 execution.run_batch(self.root, self.batch, True)
         submit.assert_called_once_with(self.root, self.batch, "one", True)
+
+    def test_submit_preflight_timeout_is_distinct_and_never_writes_intent(self):
+        before = (self.destination / "execution.json").read_bytes()
+        with mock.patch.object(base, "probe_server", side_effect=TimeoutError("slow GET")), \
+                mock.patch.object(execution, "post_json") as post:
+            with self.assertRaisesRegex(execution.PreflightPollUnavailable, "preflight unavailable"):
+                execution.submit(self.root, self.batch, "one", True)
+            post.assert_not_called()
+        self.assertEqual((self.destination / "execution.json").read_bytes(), before)
+
+    def test_run_retries_only_preflight_unavailable_in_sequential_and_pipelined_modes(self):
+        completed = copy.deepcopy(self.record)
+        completed["jobs"]["one"]["state"] = "completed"
+        for depth in (1, 2):
+            with self.subTest(depth=depth), \
+                    mock.patch.object(execution, "status", side_effect=[
+                        self.record, self.record, completed, completed]), \
+                    mock.patch.object(base, "server_json", return_value={}), \
+                    mock.patch.object(execution, "submit", side_effect=[
+                        execution.PreflightPollUnavailable("slow GET"),
+                        {"promptId": "accepted"}]) as submit, \
+                    mock.patch.object(execution.time, "sleep"):
+                result = execution.run_batch(self.root, self.batch, True, queue_depth=depth)
+            self.assertEqual(result["jobs"]["one"]["state"], "completed")
+            self.assertEqual(submit.call_count, 2)
 
     def test_run_does_not_submit_when_reads_cross_deadline(self):
         with mock.patch.object(execution, "status", return_value=self.record), \
@@ -553,6 +602,7 @@ class ExecutionTests(unittest.TestCase):
             first = base.read_json(folder / "cleanup-test-01.json")
             self.assertEqual(first["batchId"], "cleanup-test-01")
             self.assertEqual(len(first["jobs"]), 64)
+            self.assertEqual({job["recipe"] for job in first["jobs"]}, {"shared-0c-cleanup-basic"})
             self.assertEqual(base.read_json(folder / "proposal.json")["jobCount"], applied["jobCount"])
             with self.assertRaisesRegex(ValueError, "already exists"):
                 execution.cleanup_batch(self.root, samples=16, apply=True, proposal_id="cleanup-test",
@@ -582,6 +632,39 @@ class ExecutionTests(unittest.TestCase):
             listing.write_text('{"mapped": "nope"}', encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "mapped"):
                 execution.cleanup_batch(self.root, samples=1, source_file=listing)
+
+    def test_per_person_sampling_uses_stable_identity_not_display_name_and_keeps_distinct_sources(self):
+        sources = []
+        for folder, person, side in (("Ann", "p1", 20), ("Ann", "p1", 40),
+                                     ("Ann", "p1", 30), ("Other", "p2", 25)):
+            path = self.root / "Sisters" / folder / "gallery" / f"photo{side}.png"
+            path.parent.mkdir(parents=True, exist_ok=True)
+            Image.new("RGB", (side, side + 10), "blue").save(path)
+            sources.append({"path": path.relative_to(self.root).as_posix(), "domain": "general",
+                            "personId": person, "displayName": "Same name",
+                            "sha256": base.digest(path.read_bytes())})
+        duplicate = self.root / "Sisters" / "Ann" / "gallery" / "duplicate.png"
+        duplicate.write_bytes((self.root / sources[1]["path"]).read_bytes())
+        sources.append({**sources[1], "path": duplicate.relative_to(self.root).as_posix()})
+        sources.append({**sources[0], "path": "Various/gallery/unassigned.png", "personId": None})
+        chosen, info = execution.person_samples(self.root, list(reversed(sources)), 2)
+        self.assertEqual(len(chosen), 3)
+        self.assertEqual(info["personCount"], 2)
+        self.assertEqual(len(info["exactDuplicates"]), 1)
+        self.assertEqual(info["excluded"], ["Various/gallery/unassigned.png"])
+        self.assertEqual({source["sha256"] for source in chosen},
+                         {sources[index]["sha256"] for index in (1, 2, 3)})
+        with mock.patch.object(execution, "gallery_sources", return_value=sources):
+            preview = execution.cleanup_batch(self.root, samples=1, per_person=2,
+                                              proposal_id="person-test", seeds=[1, 2, 3])
+        self.assertEqual(preview["sourceCount"], 3)
+        self.assertEqual(preview["selection"]["perPerson"], 2)
+        self.assertFalse((self.root / "_generation" / "proposals" / "person-test").exists())
+        with self.assertRaisesRegex(ValueError, "--per-person"):
+            execution.person_samples(self.root, sources, 0)
+        sources[0]["sha256"] = "0" * 64
+        with self.assertRaisesRegex(ValueError, "hash changed"):
+            execution.person_samples(self.root, sources, 2)
 
     def test_overlay_scan_maps_raw_hits_by_photo_key_and_writes_only_with_apply(self):
         import sys

@@ -9,10 +9,14 @@ in the temp folder, so if a run is killed half-way the next run restores the fil
 
 Run: python tools/validators/test_validate_data.py            all cases (about 5 minutes)
      python tools/validators/test_validate_data.py --quick    the baseline plus one case per kind of check (about 1 minute)
+     bin\\validate.cmd --isolated --quick    mutate a single disposable copy, safe beside running intake
 """
+import argparse
 import json
+import os
 import pathlib
 import shutil
+import subprocess
 import sys
 import tempfile
 import time
@@ -21,7 +25,21 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import validate_data as vd  # noqa: E402
 
 REAL_ROOT = vd.ROOT
-JOURNAL = pathlib.Path(tempfile.gettempdir()) / "sovereign-validator-selftest" / "journal.json"
+ISOLATED_ROOT_ENV = "SOVEREIGN_VALIDATOR_ISOLATED_ROOT"
+
+
+def journal_path(root, environ):
+    isolated = environ.get(ISOLATED_ROOT_ENV)
+    if isolated is None:
+        return pathlib.Path(tempfile.gettempdir()) / "sovereign-validator-selftest" / "journal.json"
+    marker = root / ".isolated-validator"
+    if (pathlib.Path(isolated).resolve() != root.resolve() or not marker.is_file()
+            or marker.read_text(encoding="utf-8") != str(root.resolve())):
+        raise ValueError("Isolated validator root/ownership marker mismatch")
+    return root / ".validator-selftest" / "journal.json"
+
+
+JOURNAL = journal_path(REAL_ROOT, os.environ)
 _ops = []  # undo steps of the running case, newest last
 
 
@@ -257,9 +275,33 @@ QUICK = {"baseline is clean", "animation action pointing at a motion piece that 
          "scene recipes that skip an alignment rank", "celebration naming a theme pack that does not exist", "realm series asking for a role no homeland background has"}
 
 
-def main():
+def isolated_run(quick=False):
+    if ISOLATED_ROOT_ENV in os.environ:
+        raise ValueError("Nested isolated validation is not supported")
+    with tempfile.TemporaryDirectory(prefix="st-val-") as directory:
+        root = pathlib.Path(directory).resolve()
+        for folder in ("data", "tools"):
+            shutil.copytree(REAL_ROOT / folder, root / folder,
+                            ignore=shutil.ignore_patterns("__pycache__", "_archive"))
+        (root / ".isolated-validator").write_text(str(root), encoding="utf-8")
+        environment = {**os.environ, ISOLATED_ROOT_ENV: str(root)}
+        command = [sys.executable, str(root / "tools" / "validators" / "test_validate_data.py")]
+        if quick:
+            command.append("--quick")
+        print(f"Isolated mutation validation: {root}; live repository is read-only", flush=True)
+        return subprocess.run(command, cwd=root, env=environment, check=False).returncode
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--quick", action="store_true")
+    parser.add_argument("--isolated", action="store_true",
+                        help="Copy data/tools once into a disposable workspace; never mutate live files")
+    args = parser.parse_args(argv)
+    if args.isolated:
+        return isolated_run(args.quick)
     recover()
-    cases = [c for c in CASES if "--quick" not in sys.argv or c[0] in QUICK]
+    cases = [c for c in CASES if not args.quick or c[0] in QUICK]
     failures, started = 0, time.time()
     for name, mutate, needle in cases:
         errors = run_validation(mutate)

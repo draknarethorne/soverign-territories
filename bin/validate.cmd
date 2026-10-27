@@ -1,5 +1,9 @@
 @echo off
 call "%~dp0_env.cmd"
+if /i "%~1"=="--isolated" (
+  %PY% tools\validators\test_validate_data.py --isolated %2
+  exit /b
+)
 rem validate            schema and link checks + the workflow tool tests (fast)
 rem validate --quick    also a short validator self-test, one case per kind of check (under 2 minutes)
 rem validate --full     also the whole validator self-test (about 6 minutes; it changes real files in place and undoes each change)
@@ -13,7 +17,7 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% -m unittest tools.workflows.test_reference_rendering tools.workflows.test_reference_execution tools.workflows.test_reference_gallery tools.workflows.test_reference_outputs tools.workflows.test_backdrop
+%PY% -m unittest tools.workflows.test_reference_rendering tools.workflows.test_reference_execution tools.workflows.test_reference_gallery tools.workflows.test_reference_outputs tools.workflows.test_reference_comparison tools.workflows.test_backdrop
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
@@ -124,7 +128,7 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% tools\generators\test_gen_prompt_extends.py
+%PY% -m unittest tools.generators.test_gen_prompt_extends tools.generators.test_deluxe_reference tools.validators.test_validation_isolation
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1

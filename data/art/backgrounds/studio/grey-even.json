@@ -3,7 +3,7 @@
   "kind": "background",
   "name": "Studio: light-grey seamless backdrop, even light (default)",
   "description": "a plain neutral light-grey seamless studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light",
-  "compatibleStages": ["edit", "pose", "head", "hair", "motion", "armor", "clothing"],
+  "compatibleStages": ["edit", "alpha", "pose", "head", "hair", "motion", "armor", "clothing"],
   "tags": ["studio", "grey", "even-light", "default"],
   "negatives": ["colored studio backdrop", "busy background"],
   "notes": "The standard 'shot' background (vs a scene) since Oct 26, 2026: a neutral light grey casts no colour onto skin or hair, separates blonde hair and light or dark outfits, and leaves no warm halo when a cut-out is composited into a scene. Matches the 944x1104 padding (originals.STUDIO_GREY) and the 0_Edit renders."

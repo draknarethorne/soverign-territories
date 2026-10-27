@@ -15,7 +15,8 @@ BANNER_SOURCE = pathlib.Path(__file__).with_name("assets") / BANNER_NAME
 ASSETS_DIR = "_assets"
 GALLERY_VERSION = "2026.10.26.1"
 SECTIONS = (("People", "library/people_gallery.html"), ("Artists", "artists/artists_gallery.html"),
-            ("Rendering", "../_generation/index.html"), ("Outputs", "../_generation/outputs.html"))
+            ("Rendering", "../_generation/index.html"), ("Outputs", "../_generation/outputs.html"),
+            ("Comparison", "../_generation/comparison.html"))
 CARD_USE_GUIDANCE = {
     "Potentials": "Browsing guidance: consider for common/uncommon card art.",
     "Prospects": "Browsing guidance: consider for broader card-art use.",

@@ -1,0 +1,9 @@
+{
+  "id": "studio/views/body/deluxe-relaxed-recline",
+  "kind": "view",
+  "name": "Deluxe: relaxed recline",
+  "description": "Show the fully clothed person resting in a relaxed recline on top of the neatly made bed, upper back comfortably supported by pillows, legs resting naturally along the bed and arms placed neutrally at the sides. Keep the whole figure visible in a wide, full-length view.",
+  "compatibleStages": ["edit"],
+  "tags": ["deluxe", "bedroom", "reclining", "neutral", "full-body"],
+  "negatives": ["upright seated pose", "cropped feet", "suggestive pose", "dramatic foreshortening"]
+}

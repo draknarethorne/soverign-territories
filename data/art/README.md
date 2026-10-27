@@ -248,7 +248,7 @@ prompts/<group>/<Hero>/<phase>/<family>/<Hero>_<Stage>_<Name>.txt
 ComfyUI output: <group>/<Hero>/<phase>/<family>/<Hero>_<Engine>_<Stage>_<Name>_00001_.png   (workflows in a workspace sit in the same folders)
 ```
 
-The phases (`art_layout.phase_path`, inverse `parse_dirs`), hero first: optional `0_Edit` (`cleanup`, `background`, `enhance`, `full`), `1_Alpha` (`1_Prime`, `2_Bare`, `2b_Experiments`, `3_Footwear`), `2_Studies` (`head`,
+The phases (`art_layout.phase_path`, inverse `parse_dirs`), hero first: optional `0_Edit` (`cleanup`, `background`, `enhance`, `full`, `deluxe`), `1_Alpha` (`1_Prime`, `2_Bare`, `2b_Experiments`, `3_Footwear`), `2_Studies` (`head`,
 `hair`, `body`), `3_Layers` (the underlayer types), `4_Wardrobe` (`clothing`, `armor`, `showcase`), `5_Scenes`, `6_Finish` (`polish`, `final`), `7_Video`, and
 `Bench/motion` (a test run on any phase's image, not a phase). Brand and mass card art (`brand/<family>`, `<Category>/card`) have no phases and keep their
 stage folder. A card's `stage` field still names its kind of work (`edit`, `pose`, `scene`, `alpha`); the table below is by stage, with the families each one uses.
@@ -835,8 +835,19 @@ tags support classification/search; tags themselves are never prompt text.
 
 The two approved three-quarter views live in `studio/views/body/`:
 `relaxed-three-quarter` (hand on hip) and `grounded-three-quarter` (both feet
-flat, forward foot and bent knee). They support edit and pose assemblies
-without changing the existing A-pose turnaround pieces.
+flat, forward foot and bent knee). They support edit, alpha and pose assemblies
+without changing the existing A-pose turnaround pieces. A lifted heel is an
+accepted variation, not a visual rejection gate.
+New clothed three-quarter outfit auditions belong to `1_Alpha/1_Prime` and
+use `prime-outfit-reference-human.txt` with these same independent policies.
+Earlier `0d` studio pilots retain their names only for compatibility; actual
+Deluxe is a bedroom-scene family.
+The four new clothed Deluxe assemblies use `edits/deluxe/bedroom-clothed`,
+`backgrounds/modern/bedroom-soft-neutral` and independent seated, relaxed,
+side-resting or supine-resting views. They preserve the source outfit and
+physique rather than importing explicit directions from manual Bare drafts.
+Shared preservation pieces now declare `alpha` compatibility in the piece
+schema, allowing Prime reuse without duplicating their instructions.
 
 These initial controls preserve the source physique and clothing. They do
 not implement per-job GUI physique/hair overrides or imply a visual-quality

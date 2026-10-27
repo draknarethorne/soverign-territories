@@ -15,6 +15,7 @@ colour, skin tone, body shape, clothing, pose, hand position, camera angle and
 existing background. Keep the original framing except where a non-image border
 must be trimmed; extend the existing background only when needed to fill that
 trim.
+Keep the person fully clothed in the same outfit, preserving visible body proportions.
 
 Use realistic photographic detail and natural skin texture. Keep lighting
 consistent with the source image.
@@ -24,5 +25,5 @@ negative prompt:
 
 new or substituted props, changed background, cropped subject, changed identity, altered face, changed hairstyle, recoloured
 hair, recoloured eyes, changed skin tone, reshaped body, changed pose, changed
-clothing, added accessories, extra person, extra limbs, extra fingers, text,
+clothing, removed clothing, added accessories, extra person, extra limbs, extra fingers, text,
 watermark, logo, illustration, painting, drawing, CGI, cartoon.

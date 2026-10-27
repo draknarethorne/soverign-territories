@@ -2,6 +2,107 @@
 
 **Status:** active (Oct 25 overnight sandbox integration and bounded local rendering authorized; visual acceptance and production rollout remain gated)
 
+## Oct 26, 23:12 continuation: finish the whole pipeline
+
+The renewed authorization covers iterative sandbox implementation, sampled
+rendering and inspection across the existing plans, not only the last naming
+request. Keep the current `p1026` worker and its frozen receipts untouched.
+Production rollout and real identity/cast decisions remain protected.
+
+The user explicitly accepts a lifted heel in three-quarter views. This
+supersedes the pilot's exact heel-contact acceptance concern: those completed
+images remain useful audition candidates. It does not retroactively change
+their frozen prompts or claim they followed a flat-foot instruction.
+
+Three-quarter studio views belong to `1_Alpha/1_Prime` outfit auditions, not
+the scene-based `0d_Deluxe` family. Keep old recipe IDs and output paths readable;
+new Prime recipes use the correct stage. Deluxe means a consistent bedroom
+scene with its own view variants, not a renamed grey studio standing shot.
+Only non-explicit, clothed reference variants are executable; sexual variants
+and removal of real people's clothing are excluded.
+
+| Follow-through | Owner / disposition |
+| --- | --- |
+| Do not interrupt previous processing | Preserve the running worker, queue order, frozen artifacts and old outputs |
+| Same header/footer across Gallery pages | Gallery-layout owner; implementation and regression coverage |
+| Sample useful photos across sisters, angels and intake | R38/R40, source-bound previews and bounded requests; preserve distinct outfits, originals and cast |
+| Make large output sets human-reviewable | R39/R41 comparison by person, source, recipe and seed; no render-based identity or kinship assertions |
+| Correct Prime versus Deluxe meaning | New Prime-stage bindings; old `0d` studio pilots remain compatibility history, not formal Deluxe acceptance |
+| Full intake/rebase and remaining plan work | R11 and owning plans; retain incomplete recovery evidence, never resume the failed partial run in place |
+| Review rendered lookalikes before casting | Advisory artistic comparison only; originals remain identity evidence and no automatic source-person merge |
+
+- [x] **P1 ai** R42 Publish a source-bound audition comparison of frozen
+  originals and generated candidates, including incomplete states and exact
+  recipe/profile/seed lineage, with no automatic pull-back. Implemented CLI
+  `compare`; verified the live four-output pilot report and read-only check.
+- [x] **P1 ai** R43 Publish correctly staged shared clothed Prime
+  three-quarter recipes while preserving existing compiled `0d` jobs.
+  Two shared Alpha cards, generated prompts/repo workflows and executable
+  bindings are available; existing compiled artifacts were not rewritten.
+
+Current continuation evidence:
+
+- Corrected Deluxe migration now provides four fully clothed bedroom views
+  (seated, relaxing, side-resting, resting), with shared scene/light policies
+  and neutral posing. These are not exact copies of the explicit Bare drafts.
+  `d1027-01` freezes eight samples for Draknara/Angelica; its detached supervisor
+  waits until both existing render batches complete before submitting.
+  It then refreshes Outputs, Rendering and all five batches in Comparison.
+  Six-hour prerequisite wait, one-hour render deadline, no auto-pull.
+  Log: session `files/deluxe1027-overnight.log`.
+- The existing shared cleanup assembly is now executable as
+  `shared-0c-cleanup-basic`, the default for new cleanup proposals.
+  Existing manual requests/receipts keep their original binding and artifacts.
+- `cast1027-01`: 63 frozen/compiled jobs, 21 inspected clothed sources
+  (10 Sisters, 11 Angels), each with basic cleanup and two correctly staged
+  Prime outfit auditions. Per-person selection uses stable IDs and resolution,
+  not an unsupported claim of best face quality. The Gallery recipe catalogue
+  and reports were refreshed. All remain synthetic candidates.
+- A detached worker waits for the current queue before running this batch at
+  depth 8, deadline 18,000 seconds; no priority/cancellation/auto-pull.
+  Its success path refreshes Outputs, Rendering and the combined comparison.
+  The first launch was rejected before submission because the former timeout
+  cap was 7,200 seconds; the supported cap is now 21,600 seconds, with boundary
+  tests. Batch and queue limits are unchanged. The verified second launch is
+  waiting, not complete. Log: session `files/cast1027-overnight.log`.
+- Fresh all-input preparation is running separately under
+  `_sandbox-state/clean-rebase-20261027-full-intake`, intake-only. Read-only
+  preview verified 2,741 inputs, including 74 newer-byte replacements and 41
+  additions, with about 400 GiB free. First verified progress: 101/2,741.
+  It performs no matching, installation, cast or queue changes and checks its
+  receipt only after success. The failed Oct 25 run remains preserved.
+  Log: session `files/intake-full-20261027.log`.
+- The first `p1026` controller stopped at 8 completed receipt rows on a
+  read-only submission-preflight timeout, not a render failure or suspended
+  process. Scoped history refresh found 15 completed and 27 still compiled,
+  with no uncertain/failed jobs. Added typed preflight failures that the
+  bounded runner can retry before intent/POST; actual submission timeouts
+  remain held and never retried. Regression tests cover both sequential and
+  pipelined behavior. A verified replacement controller resumes the same
+  receipt, waiting behind active cast work, with no duplicate submissions.
+  Log: session `files/p1026-recovery.log`.
+- Snapshot at 2026-10-27 05:30 UTC: `p1026` 15 completed / 27 compiled;
+  cast 11 completed with seven active/queued and 45 awaiting submission at
+  the last log transition; intake 669/2,741. These are snapshots, not totals
+  of completed work. Early four-source pose review found useful outfit
+  continuity, but synthesized legs/footwear/accessories still need review.
+- A second detached supervisor waits up to eight hours for the new intake
+  receipt, refuses assessment errors, verifies it and saves a matching
+  **preview only**. No installation or cast changes are scheduled.
+  Log: session `files/prepared-rebase-preview-20261027.log`.
+- The original cast controller also encountered the same preflight timeout
+  because it was loaded before the retry fix. After verifying it had exited,
+  scoped refresh found 23 completed / 1 running / 2 queued / 37 compiled,
+  with no uncertain or failed jobs. A single corrected recovery controller
+  now follows the same receipt and queue policy; its initial heartbeat
+  demonstrates a GET timeout being retried with **no POST made**.
+  Log: session `files/cast1027-recovery.log`.
+- Final normal validation passed 881 tests in 29 suites. Rendering, Outputs,
+  People Review and Artist reports were refreshed with shared navigation.
+  A five-batch Comparison refresh correctly refused an active execution
+  writer; the final Deluxe supervisor will publish it after execution ends.
+  No lock was bypassed and browser visual acceptance remains unclaimed.
+
 ## Oct 26 guiding principle: image-first staged progression
 
 The user confirms the target end state is an image-first, gallery-driven flow:
@@ -53,10 +154,13 @@ manual decisions or unrelated server jobs. Production cutover remains separate.
   limitations, review links, decisions and remaining work; visual acceptance
   remains the user's decision. See the Oct 26 1004 recap and the completed
   pilot receipt/output paths below.
-- [ ] **P2 ai** R15 Make isolated mutation validation and short Windows test
+- [x] **P2 ai** R15 Make isolated mutation validation and short Windows test
   paths an explicit supported validation mode, reusing the existing launcher.
   It must never mutate schemas being read by an active preparation job or
-  require manually copying the repository for each check.
+  require manually copying the repository for each check. Delivered
+  `bin\validate.cmd --isolated --quick`: one disposable data/tools copy and
+  an ownership-checked private journal. All 19 quick mutation cases pass;
+  the live art-piece schema hash is unchanged before/after the test.
 - [ ] **P1 ai** R16 Define and implement the first publishable stage-chain
   contract (`0_Edit` -> `1_Alpha` -> `2_Studies` -> `3_Layers` ->
   `4_Wardrobes` -> `5_Scene`) with explicit allowed source kinds per stage,
@@ -467,8 +571,11 @@ The aim is a uniform, scene-ready gallery. The question is the order.
   after the scan reports the count.
 - [ ] **P1 you** R37 Approve the staged per-person preparation (instead of
   rendering every photo before assignment), and N per person.
-- [ ] **P2 ai** R38 `cleanup-batch --per-person N --recipe ...`: choose the
-  top N assigned photos per person and build the batches.
+- [x] **P2 ai** R38 `cleanup-batch --per-person N --recipe ...`: choose the
+  top N assigned photos per person and build the batches. Implemented
+  resolution-first sampling with stable person IDs, exact-byte duplicate
+  suppression and explicit exclusions; no claimed face/outfit quality ranking.
+  `--sources` narrows the sample; preview never writes and apply only proposes.
 - [ ] **P2 ai** R39 Rank best-of-N results with separate technical-quality,
   source-face fidelity and cross-character resemblance signals. Facial drift
   is a review flag, not a universal artistic rejection gate (Oct 26, 21:48
@@ -643,9 +750,9 @@ are excluded; manual sources are retained unchanged.
   Tightened the shared view piece with foot spacing and heel-to-toe floor
   contact, regenerated its prompt/workflow, and ran `pose-1026-ground` with
   two different seeds. Both completed but still lift a heel. This is a known
-  model-compliance limitation, not an accepted exact flat-foot pose. Keep its
-  outputs as review candidates; reliable contact may require pose conditioning
-  rather than more prompt-only retries.
+  model-compliance limitation. At 23:12 the user accepts a lifted heel, so it
+  is no longer an acceptance blocker. Keep the frozen prompts and results;
+  no further contact-only retries or pose conditioning are required.
 - `p1026`: 42 jobs compiled from 21 distinct clothed sources/people in the
   prior sample, one relaxed and one grounded comparison with a matched seed.
   All source photos were inspected on a contact sheet. No automatic pull-back
@@ -1115,6 +1222,22 @@ milestones, Various/I26 boundaries, later male/animal support and GUI integratio
 <!-- markdownlint-disable MD013 -->
 ```text
 I know we need to finish off other things in the flow to prove early versions of the intake, but wish to start to implement the process to generate the rendering of an image in ComfyUI via a dedicated workspace.  So need a concrete plan of what the workspace will be named, how we'll push photos to the inputs for it as well as how it would work to trigger ANY image as you suggested could be send into the workspace to render any of the current female flows.  But we'd want to adapt them not to override the hair, eye color etc ... but I may want to override the bust, body and a few others because many prospects may not posess those attributes that I would want in the long run.  So there may be a base of the larger bust and slender body style we do want ComfyUI to pick from.  So there's a hybrid in just taking the original vs. also seeing how the body shaping works when creating an A Pose for that person, etc... So, that's something I want to figure out and how it might impact our Various directory - not being female specific as well or naming Various to Female or something like that so we can support additional Males, Animals and other intakes and not just be oriented to the cards and images I am currently working on.  Does that all make sense.  Having a much more robust and solid proposal would help me while I need to take the time to review the other pieces and we can work both parts of the plan in parallel.  So, again, think deeply about how we can start to align the work with incremental and small changes to get to a target state where I ingest new images, get them cropped, enhanced, assigned to identities based on likeness and can then support rendering images in ComfyUI in an easier manner than having to manually to pick them from the gallery and abuse some of the current workspaces and workflows to do so.  I can setup a workspace for Females specifically so we can orient to that and later one for men, kind of like the separation for the main assigned characters, but a more generic one for unassigned Females, Males, etc...   I think we're onto something here - and even if it's generating a batch .json file for a CLI run to execute all the files moves and calls to ComfyUI for that workspace - that's till a plus.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Oct 26, 23:12: renewed end-to-end authorization (verbatim)
+
+Coverage: the continuation table and R11/R38-R43 above; Gallery-layout owner
+for consistent chrome. Rendered resemblance remains advisory. Explicit sexual
+content and real-person nudification are excluded rather than executed.
+
+<!-- markdownlint-disable MD013 -->
+```text
+I hope you didn't get interrupted with the last comment and that you did finish and I didn't distract you - sorry about that - we need to finish all outstanding work and not just focus on what I provied as the last feedback
+
+We definitely don't want to interrupt the previous processing of the entire workflow, so sorry if I might have caused you to shift - so finish off ALL the things we hae outstanding.  Yet again the authority to iterate on the complete end-to-end flow with my feedback, make decisions and tell me what I need to review when we're all done.  You can inspect the outcome, rationalize that for a human to process and then adjust things and try again, and try other variations, but I think you know the types of things I am looking for as we ingest new photos and try to figure out which ones to use in the art.  Ultimately that's what this is about.  We want to assign people by likeness and if they render the same - they are either the same person with different angles or a family member and I want to chose them for character slots intentioally and not accidentally get two people who render the same but not identified to be the same person or the same family member based on likeness.  We have a complex pipeline now and if there are steps we can omit or simplify in the long run we can do that - as I think you understand the end-goal of what we have.  In the past, when I would get 100 pictures into a person's gallery, I would manually sample and run them all manually in Comfy to test a variety of edits, poses, etc... and when I found out two people rendered the same, I would swap one out for a character manually.  So that all took day s of manual work - so automating even large number of batches of files is still a rebase process that might take days - but we can figure it out as it took weeks before manually.  So, iterate, test, code, update docs, run comfy jobs, check the naming conventions, make sure they make sense, check the output files see where we can streamline the process, make decisions, make updates and just keep going and don't stop unless I interrupt you.  I expect you're still working when I get here in the morning as you need to wait for jobs to render so there is downtime while you wait.  I want to see many various "bare" renderings as well as outfits and deluxe bare rendering and cleanup and all various 0_edit and 1_prime versions for images you feel like are good sample for the core likeness images of our characters.  Maybe the 10 sisters and 10 angels as well as the various images coming in.  So I can see how things all look in the gallery.  Also, the gallery pages all need same header/footer and such as the last render didn't seem to have the same consistent headers and footers on all .html pages.  when you're doing the 0d_deluxe it shoudl be based on the deluxe templates/prompts I have - the 3/4 view is a 1_prime view - the deluxe are in the bedroom scene.  So make sure you are figuring all that out as well in terms of the base prompts and how we're using all the 0_edit series.  and 1_prime series.  I view the 3/4 pose as part of 1_alpha/1_prime and 1_alpha/2_bare series ... but we can sort all that out later.  But the deluxe were all a theme around a scene to bring consistency into a background.  So again, keep going - get it all done and see you soon.
+
+Lifted heel on the 3/4 pose is actually ok
 ```
 <!-- markdownlint-enable MD013 -->
 

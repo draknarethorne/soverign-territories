@@ -36,12 +36,19 @@ SUPPORTED_RECIPES = {
     "manual-0e-enhance": "0e Enhance",
     "manual-0f-full": "0f Full",
     "manual-0b-background-basic": "0b Background Basic",
-    "manual-0d-deluxe-pose": "0d Deluxe Pose (clothed)",
+    "manual-0d-deluxe-pose": "0d Legacy studio pose pilot (manual, clothed)",
     "shared-0b-background-basic": "0b Background Basic (shared)",
-    "shared-0d-relaxed-three-quarter": "0d Relaxed 3/4 (shared, clothed)",
-    "shared-0d-grounded-three-quarter": "0d Grounded 3/4 (shared, clothed)",
+    "shared-0c-cleanup-basic": "0c Cleanup Basic (shared)",
+    "shared-0d-relaxed-three-quarter": "0d Legacy studio pose pilot relaxed 3/4 (shared, clothed)",
+    "shared-0d-grounded-three-quarter": "0d Legacy studio pose pilot forward-foot 3/4 (shared, clothed)",
+    "shared-0d-deluxe-seated": "Bedroom seated (shared, clothed)",
+    "shared-0d-deluxe-relaxing": "Bedroom relaxing (shared, clothed)",
+    "shared-0d-deluxe-side-resting": "Bedroom side-resting (shared, clothed)",
+    "shared-0d-deluxe-resting": "Bedroom resting (shared, clothed)",
     "shared-0e-enhance-basic": "0e Enhance Basic (shared)",
     "shared-0f-full-clothed": "0f Full-length (shared, clothed)",
+    "shared-1a-prime-outfit-relaxed": "Prime outfit relaxed (shared, clothed)",
+    "shared-1a-prime-outfit-grounded": "Prime outfit forward-foot (shared, clothed)",
 }
 SUPPORTED_STAGES = {"0_Edit", "1_Alpha", "2_Studies", "Bench"}
 SOURCE_DIRECTORIES = {
@@ -197,7 +204,8 @@ def _validate_recipes(recipes):
         if recipe_id.casefold() in seen:
             raise ValueError(f"Duplicate recipe id: {recipe_id}")
         seen.add(recipe_id.casefold())
-        supported = recipe_id in SUPPORTED_RECIPES and stage == "0_Edit"
+        supported = (recipe_id in SUPPORTED_RECIPES
+                     and stage == reference_execution.RECIPES[recipe_id][0])
         pending_label = SAFE_PENDING_LABELS.get((stage, label))
         is_safe_pending = recipe_id.startswith("pending-") and pending_label is not None
         cleaned.append({
@@ -578,9 +586,10 @@ contact ComfyUI, copy images, or promote results. Existing result links point to
 <p class="muted">Four coordinated tracks: image intake, dynamic ComfyUI execution, stage/template migration,
 and this integrated GUI. Entries labelled shared use generated templates/JSON for clothed background,
 enhancement, full-length and two three-quarter pose recipes. Manual entries retain their provisional
-clothed transport prompts. Both use inspected Qwen graph/settings.
+clothed transport prompts. The 0d studio pose pilots are legacy experiments, not bedroom Deluxe.
+Prime outfit recipes are selectable under 1_Alpha. Both use inspected Qwen graph/settings.
 Manual source prompts may contain contradictory instructions and are never previewed or copied here.
-Per-job appearance-profile changes and Prime/Studies execution remain unavailable.</p>
+Per-job appearance-profile changes and other Prime/Studies execution remain unavailable.</p>
 <p>Browse <a href="{html.escape(reports_prefix + 'library/people_gallery.html', quote=True)}">People</a> or
 <a href="{html.escape(reports_prefix + 'artists/artists_gallery.html', quote=True)}">Artists</a> galleries.</p>
 </div></header>
@@ -624,8 +633,8 @@ shown as missing; images are not copied into the library.</p>
 Use only after checking the output; this page does not run that command.</p>
 </section>
 </main>
-</div>
 {gallery_chrome.footer("Reference rendering · Metadata only; images remain in their existing roots")}
+</div>
 <script>
 "use strict";
 const sources = {sources_json};

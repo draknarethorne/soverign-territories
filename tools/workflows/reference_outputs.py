@@ -203,6 +203,7 @@ are synthetic, never identity evidence, and become selectable sources on the Ren
 <button id="next" type="button">Next</button></p>
 <div class="grid" id="grid"></div>
 </main>
+{gallery_chrome.footer("ComfyUI outputs · Browsing only; pull copies just the files you export")}
 </div>
 <div id="viewer" role="dialog" aria-modal="true" aria-label="Full-size view">
 <header><button id="v-prev" type="button">&larr;</button><button id="v-next" type="button">&rarr;</button>
@@ -210,7 +211,6 @@ are synthetic, never identity evidence, and become selectable sources on the Ren
 <button id="v-close" type="button">Close (Esc)</button></header>
 <div class="stage"><img id="viewer-image" alt=""></div>
 </div>
-{gallery_chrome.footer("ComfyUI outputs · Browsing only; pull copies just the files you export")}
 <script>
 "use strict";
 const outputRoot = {_json_script(str(comfy_root))};

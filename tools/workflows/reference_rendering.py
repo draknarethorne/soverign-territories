@@ -337,7 +337,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=("preview", "prepare", "check", "probe", "catalog",
                                             "compile", "submit", "status", "retain", "run", "reconcile", "manual-prefixes",
-                                            "cleanup-batch", "overlay-scan", "outputs", "pull"))
+                                            "cleanup-batch", "overlay-scan", "outputs", "pull", "compare"))
     parser.add_argument("request", nargs="?", help="Batch JSON, batch ID, or explicit server URL for probe")
     parser.add_argument("--root", help="Absolute library root (offline commands)")
     parser.add_argument("--input-root", help="Expected absolute ComfyUI input root (probe only)")
@@ -360,21 +360,42 @@ def main(argv=None):
     parser.add_argument("--samples", type=int, help="Samples per workflow for cleanup-batch (1, 2, 4, 8, 16)")
     parser.add_argument("--hint", action="append", default=[], help="Cleanup hint for cleanup-batch (repeatable)")
     parser.add_argument("--sources", help="overlay-scan.json whose mapped paths replace hints (cleanup-batch only)")
+    parser.add_argument("--per-person", type=int,
+                        help="Sample N assigned originals per person by resolution, not cleanup hints")
     parser.add_argument("--inputs", help="Raw intake mirror folder inside the root to rescan (overlay-scan only)")
     parser.add_argument("--id", help="Proposal or scan ID (cleanup-batch, overlay-scan)")
     parser.add_argument("--workspace", action="append", default=[], help="Output workspace folder for outputs (repeatable)")
+    parser.add_argument("--batch", action="append", default=[], help="Additional batch ID for compare (repeatable)")
     args = parser.parse_args(argv)
     try:
         if args.queue_depth is not None and args.command != "run":
             raise ValueError("--queue-depth requires run")
-        if (args.recipe or args.samples is not None or args.hint or args.sources) and args.command != "cleanup-batch":
-            raise ValueError("--recipe/--samples/--hint/--sources require cleanup-batch")
+        if args.batch and args.command != "compare":
+            raise ValueError("--batch requires compare")
+        if (args.recipe or args.samples is not None or args.hint or args.sources
+                or args.per_person is not None) and args.command != "cleanup-batch":
+            raise ValueError("--recipe/--samples/--hint/--sources/--per-person require cleanup-batch")
+        if args.per_person is not None and args.hint:
+            raise ValueError("--per-person samples assigned originals, not cleanup hints; use --sources to narrow")
         if args.inputs and args.command != "overlay-scan":
             raise ValueError("--inputs requires overlay-scan")
         if args.id and args.command not in {"cleanup-batch", "overlay-scan"}:
             raise ValueError("--id requires cleanup-batch or overlay-scan")
         if args.workspace and args.command != "outputs":
             raise ValueError("--workspace requires outputs")
+        if args.command == "compare":
+            if (not args.root or not args.request or args.apply and (args.dry_run or args.check)
+                    or any((args.endpoint, args.job, args.output_sha, args.refresh,
+                            args.input_root, args.output_root, args.require_node, args.allow_busy_queue))):
+                raise ValueError("compare takes batch ID, optional --batch, --root and --apply/--dry-run/--check only")
+            if __package__:
+                from . import reference_comparison as comparison
+            else:
+                import reference_comparison as comparison
+            result = comparison.publish(library_root(args.root), [args.request, *args.batch],
+                                        apply=args.apply, check=args.check)
+            print(json.dumps(result, indent=2))
+            return 1 if args.check and not result["current"] else 0
         if args.command in {"cleanup-batch", "overlay-scan", "outputs", "pull"}:
             if __package__:
                 from . import reference_execution as execution, reference_outputs as outputs
@@ -390,10 +411,10 @@ def main(argv=None):
                 if args.request or args.output_root or args.check:
                     raise ValueError("cleanup-batch takes no request, output root or --check")
                 result = execution.cleanup_batch(
-                    root, tuple(args.recipe) or ("manual-0c-cleanup-basic",),
+                    root, tuple(args.recipe) or ("shared-0c-cleanup-basic",),
                     2 if args.samples is None else args.samples,
                     tuple(args.hint) or ("needs-cleanup",), args.apply,
-                    proposal_id=args.id, source_file=args.sources)
+                    proposal_id=args.id, source_file=args.sources, per_person=args.per_person)
             elif args.command == "overlay-scan":
                 if args.request or args.output_root or args.check or not args.inputs:
                     raise ValueError("overlay-scan takes --inputs DIR and no request, output root or --check")

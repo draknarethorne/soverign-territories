@@ -6,11 +6,124 @@ import tempfile
 import unittest
 import contextlib
 import io
+from html.parser import HTMLParser
 from unittest import mock
+from urllib.parse import urljoin
 
 from PIL import Image
 
 from tools.workflows import reference_gallery as gallery
+
+
+class _ChromeParser(HTMLParser):
+    VOID_TAGS = {"area", "base", "br", "col", "embed", "hr", "img", "input",
+                 "link", "meta", "param", "source", "track", "wbr"}
+
+    def __init__(self, page):
+        super().__init__()
+        self.nodes = []
+        self.stack = []
+        self.feed(page)
+
+    def handle_starttag(self, tag, attrs):
+        node = {"tag": tag, "attrs": dict(attrs), "parents": tuple(self.stack)}
+        self.nodes.append(node)
+        if tag not in self.VOID_TAGS:
+            self.stack.append(node)
+
+    def handle_endtag(self, tag):
+        for index in range(len(self.stack) - 1, -1, -1):
+            if self.stack[index]["tag"] == tag:
+                del self.stack[index:]
+                break
+
+    def with_class(self, name):
+        return [node for node in self.nodes
+                if name in node["attrs"].get("class", "").split()]
+
+
+class SharedGalleryChromeTests(unittest.TestCase):
+    def pages(self):
+        import artists_gallery
+        import people_gallery
+        from likeness_library import review_gallery
+        from tools.workflows import reference_comparison, reference_outputs
+
+        root = gallery.ROOT / ".gallery-chrome-fixture"
+        return [
+            ("_reports/library/people_gallery.html", "People",
+             people_gallery.render_html([], "now", {})),
+            ("_reports/library/people_gallery_review.html", "People",
+             review_gallery.render_html([], "now")),
+            *[("_reports/artists/" + filename, "Artists",
+               artists_gallery.page([], detail=detail, stats="Empty fixture").decode("utf-8"))
+              for filename, detail in (("artists_gallery.html", False),
+                                       ("artists_gallery_review.html", True))],
+            ("_generation/index.html", "Rendering", gallery.build_page(root, [], [])),
+            ("_generation/outputs.html", "Outputs",
+             reference_outputs.build_page(root, root / "ComfyUI Outputs", [], [])),
+            ("_generation/comparison.html", "Comparison",
+             reference_comparison._page(root, [], [])),
+        ]
+
+    def test_all_main_pages_keep_shared_chrome_in_the_same_layout(self):
+        for filename, section, page in self.pages():
+            with self.subTest(page=filename):
+                dom = _ChromeParser(page)
+                self.assertEqual(page.count(gallery.gallery_chrome.CSS), 1)
+                self.assertEqual(len(dom.with_class("site-masthead")), 1)
+                self.assertEqual(len(dom.with_class("site-page")), 1)
+                self.assertEqual(len(dom.with_class("library-footer")), 1)
+                frame = dom.with_class("site-page")[0]
+                footer = dom.with_class("library-footer")[0]
+                masthead = dom.with_class("site-masthead")[0]
+                self.assertIs(footer["parents"][-1], frame)
+                self.assertEqual(masthead["parents"][-1]["tag"], "body")
+                self.assertEqual(len(dom.with_class("footer-brand")), 1)
+                self.assertIn(f"Gallery UI v{gallery.gallery_chrome.GALLERY_VERSION}", page)
+                self.assertTrue(any(node["tag"] == "a"
+                                    and node["attrs"].get("href") == "#top"
+                                    and footer in node["parents"] for node in dom.nodes))
+                self.assertEqual(len(dom.with_class("site-menu")), 1)
+                self.assertIn('<summary>Menu</summary>', page)
+                self.assertIn(f'aria-current="page">{section}</a>', page)
+
+    def test_masthead_navigation_and_banner_resolve_from_each_page(self):
+        for filename, section, page in self.pages():
+            with self.subTest(page=filename):
+                dom = _ChromeParser(page)
+                origin = "file:///library/" + filename
+                expected = {
+                    "file:///library/_reports/library/people_gallery.html",
+                    "file:///library/_reports/artists/artists_gallery.html",
+                    "file:///library/_generation/index.html",
+                    "file:///library/_generation/outputs.html",
+                    "file:///library/_generation/comparison.html",
+                }
+                for nav in dom.with_class("site-sections"):
+                    links = [node for node in dom.nodes
+                             if node["tag"] == "a" and node["parents"][-1] is nav]
+                    self.assertEqual({urljoin(origin, link["attrs"]["href"]) for link in links},
+                                     expected)
+                    active = [link for link in links
+                              if link["attrs"].get("aria-current") == "page"]
+                    self.assertEqual(len(active), 1)
+                    active_target = {
+                        "People": "_reports/library/people_gallery.html",
+                        "Artists": "_reports/artists/artists_gallery.html",
+                        "Rendering": "_generation/index.html",
+                        "Outputs": "_generation/outputs.html",
+                        "Comparison": "_generation/comparison.html",
+                    }[section]
+                    self.assertEqual(urljoin(origin, active[0]["attrs"]["href"]),
+                                     "file:///library/" + active_target)
+                    self.assertEqual([link["attrs"]["href"].rsplit("/", 1)[-1] for link in links],
+                                     ["people_gallery.html", "artists_gallery.html",
+                                      "index.html", "outputs.html", "comparison.html"])
+                masthead = dom.with_class("site-masthead")[0]
+                banner = masthead["attrs"]["style"].split('url("')[1].split('")')[0]
+                self.assertEqual(urljoin(origin, banner),
+                                 "file:///library/_reports/_assets/gallery-banner.jpg")
 
 
 class ReferenceGalleryTests(unittest.TestCase):
@@ -87,7 +200,7 @@ class ReferenceGalleryTests(unittest.TestCase):
         self.assertIn("group.dataset.stage !== stage", page)
         self.assertIn("provisional clothed transport pilot; not exact manual prompt migration", page)
         self.assertIn("Manual source prompts may contain contradictory instructions and are never", page)
-        self.assertIn("Per-job appearance-profile changes and Prime/Studies execution remain unavailable", page)
+        self.assertIn("Per-job appearance-profile changes and other Prime/Studies execution remain unavailable", page)
         self.assertNotIn("Do not display this prompt", page)
         self.assertNotIn("must not leak prompt text", page)
         self.assertIn("Four coordinated tracks", page)
@@ -96,16 +209,78 @@ class ReferenceGalleryTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unavailable"):
             gallery.make_request(self.root, self.sources, self.recipes[4], 2, "gallery-test")
 
+    def test_shared_cleanup_basic_is_selectable_and_preserves_request_id(self):
+        recipe = {"id": "shared-0c-cleanup-basic", "label": "catalogue label",
+                  "stage": "0_Edit", "available": True}
+        cleaned = gallery._validate_recipes([recipe])[0]
+        self.assertEqual(cleaned["label"], "0c Cleanup Basic (shared)")
+        self.assertTrue(cleaned["available"])
+        self.assertEqual(cleaned["promptPolicy"], "shared-clothed-reference-v1")
+        page = gallery.build_page(self.root, self.sources[:1], [recipe])
+        self.assertIn('value="shared-0c-cleanup-basic" data-available="true"', page)
+        request = gallery.make_request(self.root, self.sources[:1], recipe, 1, "cleanup-basic-test")
+        self.assertEqual(request["jobs"][0]["recipe"], recipe["id"])
+        self.assertFalse(gallery._validate_recipes([dict(recipe, stage="1_Alpha")])[0]["available"])
+
     def test_shared_pose_entries_show_generated_prompt_policy(self):
         recipes = [
             {"id": recipe_id, "label": "unused label", "stage": "0_Edit", "available": True}
             for recipe_id in ("shared-0d-relaxed-three-quarter", "shared-0d-grounded-three-quarter")
         ]
         page = gallery.build_page(self.root, self.sources, recipes)
-        self.assertIn("0d Relaxed 3/4 (shared, clothed)", page)
-        self.assertIn("0d Grounded 3/4 (shared, clothed)", page)
+        self.assertIn("0d Legacy studio pose pilot relaxed 3/4 (shared, clothed)", page)
+        self.assertIn("0d Legacy studio pose pilot forward-foot 3/4 (shared, clothed)", page)
         self.assertIn("shared templates/JSON; inspected Qwen transport", page)
         self.assertIn("shared-clothed-reference-v1", page)
+
+    def test_bedroom_deluxe_recipes_are_selectable_in_edit_and_keep_request_ids(self):
+        for pose in ("seated", "relaxing", "side-resting", "resting"):
+            recipe_id = f"shared-0d-deluxe-{pose}"
+            recipe = {"id": recipe_id, "label": "catalogue label", "stage": "0_Edit",
+                      "available": True}
+            with self.subTest(recipe=recipe_id):
+                cleaned = gallery._validate_recipes([recipe])[0]
+                self.assertEqual(cleaned["id"], recipe_id)
+                self.assertEqual(cleaned["label"], f"Bedroom {pose} (shared, clothed)")
+                self.assertTrue(cleaned["available"])
+                self.assertEqual(cleaned["stage"], "0_Edit")
+                page = gallery.build_page(self.root, self.sources[:1], [recipe])
+                self.assertIn(f'value="{recipe_id}" data-available="true"', page)
+                request = gallery.make_request(self.root, self.sources[:1], recipe, 1, "bedroom-test")
+                self.assertEqual(request["jobs"][0]["recipe"], recipe_id)
+                self.assertFalse(gallery._validate_recipes([dict(recipe, stage="1_Alpha")])[0]["available"])
+
+    def test_prime_outfit_recipes_are_selectable_only_in_alpha_and_keep_request_ids(self):
+        recipes = [
+            {"id": recipe_id, "label": "catalogue label", "stage": "1_Alpha", "available": True}
+            for recipe_id in ("shared-1a-prime-outfit-relaxed", "shared-1a-prime-outfit-grounded")
+        ]
+        page = gallery.build_page(self.root, self.sources, recipes)
+        self.assertIn("Prime outfit relaxed (shared, clothed)", page)
+        self.assertIn("Prime outfit forward-foot (shared, clothed)", page)
+        self.assertIn('<fieldset class="recipe-group" data-stage="1_Alpha">', page)
+        for recipe in recipes:
+            with self.subTest(recipe=recipe["id"]):
+                self.assertIn(f'value="{recipe["id"]}" data-available="true"', page)
+                request = gallery.make_request(self.root, self.sources[:1], recipe, 1, "prime-test")
+                self.assertEqual(request["jobs"][0]["recipe"], recipe["id"])
+                self.assertEqual(request["jobs"][0]["source"]["path"], self.sources[0]["path"])
+                self.assertFalse(gallery._validate_recipes([dict(recipe, stage="0_Edit")])[0]["available"])
+
+    def test_legacy_studio_pilots_keep_ids_and_supported_status_without_deluxe_claim(self):
+        for recipe_id in ("manual-0d-deluxe-pose", "shared-0d-relaxed-three-quarter",
+                          "shared-0d-grounded-three-quarter"):
+            with self.subTest(recipe=recipe_id):
+                recipe = {"id": recipe_id, "label": "Old Deluxe claim", "stage": "0_Edit",
+                          "available": True}
+                cleaned = gallery._validate_recipes([recipe])[0]
+                self.assertEqual(cleaned["id"], recipe_id)
+                self.assertTrue(cleaned["available"])
+                self.assertIn("Legacy studio pose pilot", cleaned["label"])
+                self.assertNotIn("Deluxe", cleaned["label"])
+                request = gallery.make_request(self.root, self.sources[:1], recipe, 1, "legacy-test")
+                self.assertEqual(request["jobs"][0]["recipe"], recipe_id)
+                self.assertFalse(gallery._validate_recipes([dict(recipe, stage="1_Alpha")])[0]["available"])
 
     def test_one_source_expands_samples_deterministically_and_rechecks_hashes(self):
         recipe = self.recipes[0]

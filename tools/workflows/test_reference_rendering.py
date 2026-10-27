@@ -262,6 +262,10 @@ class ReferenceRenderingTests(unittest.TestCase):
             ["cleanup-batch", "--inputs", str(self.root)],
             ["status", "first-test", "--id", "scan-x"],
             ["overlay-scan"],
+            ["outputs", "--per-person", "2"],
+            ["cleanup-batch", "--per-person", "2", "--hint", "needs-cleanup"],
+            ["status", "first-test", "--batch", "other"],
+            ["compare", "first-test", "--apply", "--check"],
         )
         for args in refused:
             with self.subTest(args=args), contextlib.redirect_stderr(io.StringIO()) as error:
@@ -275,6 +279,18 @@ class ReferenceRenderingTests(unittest.TestCase):
         with contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(render.main(["outputs", "--check", "--output-root", str(comfy),
                                           "--root", str(self.root)]), 1)
+
+    def test_cli_comparison_previews_applies_and_checks_frozen_sources(self):
+        render.prepare(self.request, self.root)
+        args = ["compare", "first-test", "--root", str(self.root)]
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(render.main([*args, "--dry-run"]), 0)
+            self.assertEqual(render.main([*args, "--check"]), 1)
+            self.assertFalse((self.root / "_generation" / "comparison.html").exists())
+            self.assertEqual(render.main([*args, "--apply"]), 0)
+            self.assertEqual(render.main([*args, "--check"]), 0)
+        with contextlib.redirect_stderr(io.StringIO()):
+            self.assertEqual(render.main([*args, "--batch", "first-test"]), 1)
 
     @unittest.skipUnless(__import__("os").name == "nt", "Windows launcher")
     def test_actual_launcher_readonly(self):

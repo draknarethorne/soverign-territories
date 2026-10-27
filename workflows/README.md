@@ -155,7 +155,9 @@ The provisional IDs include `manual-0c-cleanup-basic`, `manual-0c-cleanup`,
 `manual-0d-deluxe-pose`. These reuse inspected graph/settings but
 replace manual prompt conflicts with versioned, clothed-preservation pilot
 prompts; they are **not exact migrated manual prompts**. The original graph is
-frozen as evidence. Alpha, Studies and Bench execution remains unavailable.
+frozen as evidence. Studies and Bench execution remains unavailable.
+Alpha now supports the two shared clothed Prime outfit auditions below;
+other Alpha variants remain unbound.
 The intended destination is still shared JSON/templates, not permanent manual
 workflow copies. No clothing-removal pilot is run.
 
@@ -165,11 +167,39 @@ The Gallery and CLI catalogue also expose these generated-prompt recipes:
 
 | Recipe ID | Shared assembly / task |
 | --- | --- |
+| `shared-0c-cleanup-basic` | Conservative cleanup in the source setting and outfit; default for new cleanup proposals |
 | `shared-0b-background-basic` | Background-only grey studio edit |
 | `shared-0d-relaxed-three-quarter` | Full-length three-quarter stance, weight on one leg, hand on hip |
 | `shared-0d-grounded-three-quarter` | Both feet flat, one foot forward, forward knee bent |
 | `shared-0e-enhance-basic` | Conservative exposure/detail enhancement |
 | `shared-0f-full-clothed` | Full-length extension, continuing the source pose/outfit |
+| `shared-1a-prime-outfit-relaxed` | `1_Alpha/1_Prime`: relaxed three-quarter view in the incoming outfit |
+| `shared-1a-prime-outfit-grounded` | `1_Alpha/1_Prime`: forward-foot, bent-knee three-quarter view in the incoming outfit |
+| `shared-0d-deluxe-seated` | Fully clothed seated bedroom audition |
+| `shared-0d-deluxe-relaxing` | Fully clothed relaxed bedroom recline |
+| `shared-0d-deluxe-side-resting` | Fully clothed side-resting bedroom audition |
+| `shared-0d-deluxe-resting` | Fully clothed supine-resting bedroom audition |
+
+Use the `shared-1a-prime-outfit-*` recipes for new three-quarter outfit
+auditions. The older `shared-0d-*` and `manual-0d-deluxe-pose` IDs remain
+compatible studio-pose pilots, not bedroom Deluxe scenes. Deluxe migration
+is separate. A lifted heel is acceptable for the approved three-quarter
+auditions; exact floor contact is not an acceptance requirement.
+
+The four new Deluxe cards share one neutral photorealistic bedroom and soft,
+even lighting. They retain only the manual series' scene/camera principle,
+not its sexual posing, anatomy instructions or clothing removal. Face,
+hair, physique and the incoming outfit are preserved. These are deliberately
+non-explicit scene auditions, not exact migrations of the manual Bare prompts.
+Generate with `bin\prompts.cmd --group angel-primes --slug female --stage edit
+--family deluxe`, then preview/apply `bin\make.cmd Female edit`.
+The shared cleanup default likewise freezes its generated prompt; explicit
+`manual-*` recipe IDs and all already-compiled batches retain their behavior.
+
+The Prime cards reuse the same preservation/view components with the
+`prime-outfit-reference-human.txt` template under `1_Alpha`. Generate with
+`bin\prompts.cmd --group angel-primes --slug female --stage alpha`, preview
+`bin\make.cmd Female alpha --dry-run`, then `bin\make.cmd Female alpha`.
 
 These are clothed reference-preserving controls, not appearance-profile
 transforms or exact copies of the mixed manual drafts. Shared text comes from
@@ -197,10 +227,46 @@ than silently compiling as reference-faithful.
 
 New compilations publish both workflows and images under
 `reference/<Person_Name>/<stage>/<family>/`. The workflow basename is
-`<Person_Name>_Qwen_Edit_<recipe>__<UTC-stamp>__<batch-id>__<job-id>.json`;
+`<Person_Name>_Qwen_<Edit-or-Alpha>_<recipe>__<UTC-stamp>__<batch-id>__<job-id>.json`;
 SaveImage uses the same stem, then ComfyUI appends its counter and image
-extension. Both shared three-quarter recipes sit in `0_Edit/0d_Deluxe/`,
-with their pose name in the filename. Batch/job IDs no longer add directories.
+extension. New Prime outfit recipes sit in `1_Alpha/1_Prime/`; the older
+studio-pose pilot IDs keep `0_Edit/0d_Deluxe/` for compatibility.
+Batch/job IDs no longer add directories.
+
+### Per-person sampling and source comparison
+
+`bin\render-reference.cmd cleanup-batch --root ROOT --per-person 2 --recipe
+shared-1a-prime-outfit-relaxed --samples 1 --id audition --dry-run` previews
+assigned original Gallery photos across people, instead of filtering cleanup
+hints. Replace `--dry-run` with `--apply` to save requests only; nothing queues.
+`--sources SCAN.json` can narrow the source set first. Stable person IDs, not
+display names, define groups. The ranking is pixel area, shortest side, then
+source path; it is exploratory resolution-first sampling, **not face quality**.
+Only exact duplicate bytes within a person are skipped. Similar faces, poses
+or outfits are not deduplicated. Unassigned, synthetic and standard derivative
+inputs are excluded and reported. Inspect sources before compiling/rendering.
+
+`bin\render-reference.cmd compare BATCH --batch OTHER --root ROOT --dry-run`
+previews a human-review report; `--apply` publishes
+`_generation/comparison.html`, and `--check` verifies currency without writing.
+It groups exact frozen sources and outputs by person, source, recipe, profile
+and seed, with a matched-recipe view across people. Pending and failed jobs
+stay visible. Frozen artifacts and receipt-owned output hashes are verified;
+changed/missing evidence fails explicitly. It neither contacts ComfyUI nor
+imports results. Regenerate after execution advances. Rendered resemblance is
+an artistic review aid, never proof of source identity or kinship.
+
+### Validation while preparation is running
+
+Use `bin\validate.cmd --isolated --quick` for mutation tests beside a live
+intake job. It copies `data` and `tools` once into a disposable short
+`st-val-*` temporary workspace, executes the existing cases there with a
+private ownership-checked recovery journal, propagates failure and removes
+only that temporary copy. It never recovers or mutates the live self-test
+journal. Omit `--quick` for all isolated cases. The regular no-argument
+`bin\validate.cmd` still runs data validation, code tests and audits.
+Legacy `--quick`/`--full` without `--isolated` mutate live data and must not
+be used while another job reads it. Commit/push mutation hooks use isolation.
 
 The timestamp comes from preparation of the frozen request, not the machine's
 local timezone or a changing compile time. Exact source paths/hashes, seeds and
@@ -220,7 +286,11 @@ graph and batch/job metadata in the queue/recent 64 history entries; `--apply`
 binds one unique match without POSTing again. Zero/ambiguous matches retain the
 hold for operator review, never claim rejection or automatically retry.
 `run` retries transient read-only GET polling failures visibly within its
-deadline; it never retries a POST. Default submission waits for global idle.
+deadline; it never retries a POST. Its deadline defaults to 3,600 seconds and
+accepts up to 21,600 seconds (six hours), including queue wait. The longer
+bounded window accommodates 63-job auditions behind existing work; it does not
+raise the 64-job batch, 16-job owned queue or 200-job server limits.
+Default submission waits for global idle.
 When deliberately sharing a busy dedicated workspace, `--allow-busy-queue`
 on `submit`/`run` appends one selected owned job at the normal queue tail and
 waits for its scoped result before the next job. It never uses front/priority,

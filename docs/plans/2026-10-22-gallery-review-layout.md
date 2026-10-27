@@ -40,6 +40,21 @@ a dark/gold gradient footer with a stable Gallery UI version. The same renderer
 is reused by the existing gallery/intake pages; no frontend framework or external
 CSS dependency is added. Header/menu controls must not imply an execution server.
 
+Gallery, Review, Rendering and Outputs use the shared masthead outside
+`.site-page` and the shared footer inside it, keeping the footer aligned with
+page content at desktop and mobile widths. Section labels, active navigation
+and page-specific read-only guidance remain distinct; this is shared chrome,
+not a change to source scope or execution.
+
+The shared desktop header and mobile Menu include **Comparison** beside
+Rendering/Outputs, linking to `_generation/comparison.html` relative to each
+gallery surface. Comparison marks itself active and retains return links to
+the other sections; it remains a read-only human-review page.
+
+Rendering labels distinguish the existing 0d legacy studio pose pilots from
+bedroom Deluxe. The shared relaxed and forward-foot Prime outfit recipes are
+selectable under `1_Alpha`; recipe IDs and existing artifact paths are unchanged.
+
 ## Oct 25, 11:35: browsable intake-run history
 
 The complete user message is preserved at the end. This supersedes the expanding

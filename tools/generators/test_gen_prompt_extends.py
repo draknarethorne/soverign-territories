@@ -164,10 +164,25 @@ class SlugFilterTests(unittest.TestCase):
 
 
 class ArtPromptIntegrationTests(unittest.TestCase):
+    def test_prime_outfit_auditions_reuse_preservation_controls_in_the_correct_stage(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        folder = root / "data/art/_sets/angel-primes/alpha/female/1_Alpha/1_Prime"
+        cards = sorted(folder.glob("female-alpha-prime-outfit-*.json"))
+        self.assertEqual(len(cards), 2)
+        for path in cards:
+            card = json.loads(path.read_text(encoding="utf-8"))
+            tokens = gp.generate(path.relative_to(root).as_posix(), tokens_only=True)
+            template = (root / card["template"]).read_text(encoding="utf-8")
+            self.assertEqual(card["stage"], "alpha")
+            self.assertIn("/1_Alpha/1_Prime/", card["output"])
+            self.assertEqual(set(re.findall(r"{{(\w+)}}", template)) - tokens.keys(), set())
+            self.assertIn("fully clothed in the same outfit", tokens["CLOTHING_POLICY"])
+            self.assertIn("recognizable face", tokens["FACE_POLICY"])
+
     def test_reference_edit_cards_resolve_policies_without_fixed_identity(self):
         root = pathlib.Path(__file__).resolve().parents[2]
         cards = sorted((root / "data/art/_sets/angel-primes/alpha/female/0_Edit").rglob("*.json"))
-        self.assertEqual(len(cards), 6)
+        self.assertGreaterEqual(len(cards), 6)
         for path in cards:
             card = json.loads(path.read_text(encoding="utf-8"))
             with self.subTest(card=card["artId"]):

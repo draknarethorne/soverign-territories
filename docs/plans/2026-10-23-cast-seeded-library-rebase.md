@@ -2,6 +2,27 @@
 
 **Status:** active (Phase 3; blocked on accepted Phase 1 preparation and Phase 2 recovery)
 
+## Oct 26 late: fresh all-input retry in progress
+
+The renewed end-to-end authorization is preserved in the
+[rendering owner](2026-10-25-reference-rendering.md#oct-26-2312-continuation-finish-the-whole-pipeline).
+Started a **new** intake-only run
+`Working\_sandbox-state\clean-rebase-20261027-full-intake` after its read-only
+preview: 2,741 outcomes, 74 newer-byte replacements, 41 additions; about
+400 GiB available. First verified progress: 101/2,741.
+The owned detached process logs to session `files/intake-full-20261027.log`;
+on exit 0 it runs the launcher's read-only `--check`. It stops on error,
+never deletes/restarts an unfinished mirror or resumes the failed Oct 25 run.
+This is preparation only: no matching/install, cast changes, production writes
+or interference with ComfyUI. R11 and C2/C6 remain incomplete until the actual
+receipt and recovery/curation gates are verified.
+A separate bounded supervisor now waits for this run's `intake.json`, refuses
+assessment errors, runs the read-only verification and then saves the ordinary
+matching preview only. It never uses `--apply` or installs a new assignment.
+Eight-hour receipt wait; failures stop visibly in session
+`files/prepared-rebase-preview-20261027.log`. Snapshot at 05:30 UTC:
+669/2,741 prepared; no completed intake receipt yet.
+
 ## Oct 25 authorized all-image sandbox run (stopped; intake incomplete)
 
 The user authorized the complete, recoverable sandbox run, including current

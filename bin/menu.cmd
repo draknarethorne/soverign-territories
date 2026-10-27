@@ -11,6 +11,7 @@ echo   5  Clean up a workspace
 echo   6  Status
 echo   7  Workspaces
 echo   8  Validate
+echo   Y  Isolated quick mutation validation (safe beside intake)
 echo   9  Refresh FireRed for a hero
 echo   A  Animate a hero (video prompts, workflows, deploy)
 echo   L  Photo library: sort new photos in Various, remove duplicates, rebuild all scaled images
@@ -26,6 +27,7 @@ echo   X  Intake-aware sandbox clean start (inventory or verify; prepare/match/a
 echo   F  Preview reference-render batch (offline, no workflow deployment or queue)
 echo   D  Refresh rendering selection/results gallery (reports only)
 echo   O  Refresh the ComfyUI outputs browser (reports only; pull is separate)
+echo   E  Compare frozen reference sources and renders (reports only)
 echo   S  Style audit (which art wording leans illustrated)
 echo   K  Backdrop wording check (read only: old cream studio wording left in the repo or a workspace?)
 echo   H  Help (all scripts)
@@ -45,6 +47,7 @@ if /i "%CH%"=="X" goto sandboxrebase
 if /i "%CH%"=="F" goto referencerender
 if /i "%CH%"=="D" goto rendergallery
 if /i "%CH%"=="O" goto outputsgallery
+if /i "%CH%"=="E" goto referencecomparison
 if /i "%CH%"=="P" goto preparation
 if /i "%CH%"=="J" goto preparationjunk
 if /i "%CH%"=="T" goto artistlikeness
@@ -56,6 +59,7 @@ if "%CH%"=="5" goto cleanup
 if "%CH%"=="6" call "%~dp0status.cmd" & pause & goto menu
 if "%CH%"=="7" call "%~dp0workspaces.cmd" & pause & goto menu
 if "%CH%"=="8" call "%~dp0validate.cmd" & pause & goto menu
+if /i "%CH%"=="Y" call "%~dp0validate.cmd" --isolated --quick & pause & goto menu
 set "SCRIPT="
 if "%CH%"=="1" set "SCRIPT=refresh.cmd"
 if "%CH%"=="9" set "SCRIPT=refresh-firered.cmd"
@@ -94,6 +98,21 @@ goto menu
 set "ROOT="
 set /p "ROOT=Library absolute path: "
 call "%~dp0render-reference.cmd" outputs --root "%ROOT%" --apply
+pause
+goto menu
+:referencecomparison
+set "ROOT="
+set "BATCH="
+set /p "ROOT=Library absolute path: "
+set /p "BATCH=Frozen reference batch ID: "
+call "%~dp0render-reference.cmd" compare "%BATCH%" --root "%ROOT%" --dry-run
+if errorlevel 1 (
+  pause
+  goto menu
+)
+set "APPLY="
+set /p "APPLY=Publish comparison page? (y/n): "
+if /i "%APPLY%"=="y" call "%~dp0render-reference.cmd" compare "%BATCH%" --root "%ROOT%" --apply
 pause
 goto menu
 :preparation

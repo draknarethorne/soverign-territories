@@ -2,9 +2,9 @@
   "id": "edit-pose-clothed",
   "kind": "edit",
   "name": "Clothed pose audition",
-  "compatibleStages": ["edit"],
+  "compatibleStages": ["edit", "alpha"],
   "tags": ["pose", "clothed", "audition"],
-  "sourceVariant": "0d_Deluxe",
+  "sourceVariant": "1_Prime",
   "status": "pilot",
   "description": "Create a full-length clothed pose audition of the same person. Change the pose and studio presentation only, following the selected pose and framing instructions.",
   "negatives": ["removed clothing", "changed identity"]

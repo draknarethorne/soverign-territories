@@ -1,6 +1,6 @@
 # 2026-10-22: manual prompt migration into reusable art data
 
-**Status:** active (design and migration audit approved; no asset migration applied)
+**Status:** active (shared clothed edit and Prime slices implemented; remaining migration and visual acceptance open)
 
 ## Oct 25 reference-rendering handoff
 
@@ -108,6 +108,64 @@ Python prompts. Generated repo workflows and Gallery/CLI bindings are present;
 live visual acceptance, remaining manual-variant review and per-job design
 overrides are not complete. P13 remains open rather than treating five controls
 as migration of every manual draft.
+
+At 23:12 the user clarifies the studio three-quarter views are Prime outfit
+auditions, while Deluxe is a consistent bedroom scene. Two new shared Alpha
+assemblies now reuse the preservation and pose pieces under `1_Alpha/1_Prime`,
+with generated prompts, repository workflows and execution bindings. Old `0d`
+IDs remain compatibility pilots; existing frozen batches and outputs are not
+renamed. Lifted heels are accepted. The complete continuation is preserved in
+the [rendering owner](2026-10-25-reference-rendering.md#oct-26-2312-continuation-finish-the-whole-pipeline).
+The 63-job cast sample contains cleanup and both Prime views for 10 Sisters
+and 11 Angels; visual acceptance is pending, not inferred from compilation.
+
+The first shared cleanup assembly is now bound in the executable catalogue
+and is the default for new cleanup proposals; explicit manual IDs and frozen
+runs keep their behavior. Four shared Deluxe cards preserve the manual series'
+bedroom/soft-even-light/wide-camera theme using neutral clothed poses, not its
+explicit sexual content. An eight-job, two-character sample is prepared to
+follow the running cast and intake-source pose comparisons.
+
+### Manual edit inventory disposition (24 source files)
+
+All paths below are under `prompts/_edit/female/`; source text remains in
+place. Every source consumes an explicitly chosen photo or selected generated
+reference, not identity-core evidence. "Safe slice" means deliberate shared
+preservation behavior, **not** verbatim migration or visual acceptance.
+The inventory is not completion of per-job physique/hair/wardrobe controls.
+
+| Source filename | Current disposition |
+| --- | --- |
+| `0_edit_0b_background.txt` | Background safe slice; mixed appearance changes remain excluded from cleanup |
+| `0_edit_0b_background_basic.txt` | Shared background-only assembly/binding |
+| `0_edit_0b_background_bare.txt` | Real-person clothing removal excluded |
+| `0_edit_0b_background_bust.txt` | Appearance-design branch deferred, not a cleanup default |
+| `0_edit_0b_background_enhance.txt` | Existing separate Background and Enhance controls; combined preset not yet migrated |
+| `0_edit_0b_background_plus.txt` | Mixed appearance/prop changes need independent controls; not blindly injected |
+| `0_edit_0c_cleanup.txt` | Manual graph uses safe preservation override; full draft not migrated |
+| `0_edit_0c_cleanup_basic.txt` | Shared cleanup safe slice is executable and default for new proposals |
+| `0_edit_0c_cleanup_bare.txt` | Real-person clothing removal excluded |
+| `0_edit_0c_cleanup_enhance.txt` | Separate Cleanup/Enhance controls available; combined preset remains open |
+| `0_edit_0c_cleanup_plus.txt` | Prop-removal intent partly covered by shared basic; mixed appearance directions remain open |
+| `0_edit_0d_deluxe_bare.txt` | Explicit content excluded; bedroom/camera theme informs neutral clothed resting slice |
+| `0_edit_0d_deluxe_bare_lying.txt` | Explicit content excluded; neutral clothed side-resting slice |
+| `0_edit_0d_deluxe_bare_relaxing.txt` | Explicit content excluded; neutral clothed relaxing slice |
+| `0_edit_0d_deluxe_bare_resting.txt` | Explicit content excluded; neutral clothed resting slice, not anatomical posing |
+| `0_edit_0d_deluxe_bare_sitting.txt` | Explicit content excluded; neutral clothed seated slice |
+| `0_edit_0e_enhance.txt` | Conservative shared Enhance safe slice; appearance resets excluded |
+| `0_edit_0e_enhance_basic.txt` | Shared conservative enhancement assembly/binding |
+| `0_edit_0e_enhance_bare.txt` | Real-person clothing removal excluded |
+| `0_edit_0e_enhance_plus.txt` | Appearance-design branch deferred; no hidden preserve/change contradiction |
+| `0_edit_0e_enhance_pose.txt` | Pose/enhancement combination remains open; source-preserving control stays separate |
+| `0_edit_0f_full.txt` | Full-length clothed extension safe slice; source draft's clothing removal excluded |
+| `0_edit_0f_full_bare.txt` | Real-person clothing removal excluded |
+| `0_edit_0f_full_bare_pose.txt` | Real-person clothing removal excluded; pose extension is a separate clothed task |
+
+The other seven files in this source directory are Alpha drafts
+(`1_prime`, `1a_prime_outfit`, `2_bare`, `2a_bare_figure`, `prime_org`),
+mixed `female_anatomy` notes and `naming_workflows` notes. They are not another
+seven edit recipes. New clothed Prime outfit controls use source-preserving
+policies, rather than importing those drafts' fixed colors or sexual anatomy.
 
 The generic Alpha Female `0c_Cleanup_Basic` slice now flows through the normal
 art-data pipeline:

@@ -47,8 +47,8 @@ repos:
         stages: [pre-commit, pre-push]
 
       - id: validate-data-selftest
-        name: Validator self-test (mutation tests)
-        entry: python tools/validators/test_validate_data.py
+        name: Validator self-test (isolated mutation tests)
+        entry: python tools/validators/test_validate_data.py --isolated
         language: python
         additional_dependencies: [jsonschema]
         pass_filenames: false
@@ -71,20 +71,29 @@ repos:
         files: ^(tools/workflows/(test_)?backdrop\.py|bin/backdrop\.cmd|data/art/backgrounds/studio/grey-even\.json)$
 
       - id: reference-rendering-tests
-        name: Reference-rendering request, execution, gallery and outputs tests
-        entry: python -m unittest tools.workflows.test_reference_rendering tools.workflows.test_reference_execution tools.workflows.test_reference_gallery tools.workflows.test_reference_outputs
+        name: Reference-rendering request, execution, gallery, outputs and comparison tests
+        entry: python -m unittest tools.workflows.test_reference_rendering tools.workflows.test_reference_execution tools.workflows.test_reference_gallery tools.workflows.test_reference_outputs tools.workflows.test_reference_comparison
         language: python
-        additional_dependencies: [jsonschema, pillow]
+        additional_dependencies: [jsonschema, pillow, numpy, opencv-python-headless]
         pass_filenames: false
-        files: ^(tools/workflows/(reference_(rendering|execution|gallery|outputs)|test_reference_(rendering|execution|gallery|outputs))\.py|data/schemas/reference-render-request\.schema\.json|bin/render-(reference|gallery)\.cmd)$
+        files: ^(tools/workflows/(reference_(rendering|execution|gallery|outputs|comparison)|test_reference_(rendering|execution|gallery|outputs|comparison))\.py|data/schemas/reference-render-request\.schema\.json|bin/render-(reference|gallery)\.cmd)$
         stages: [pre-commit, pre-push]
 
       - id: generator-tests
         name: Generator tests (piece extends)
-        entry: python tools/generators/test_gen_prompt_extends.py
+        entry: python -m unittest tools.generators.test_gen_prompt_extends tools.generators.test_deluxe_reference
         language: python
         pass_filenames: false
         files: ^tools/generators/
+        stages: [pre-commit, pre-push]
+
+      - id: validator-isolation-tests
+        name: Validator isolation and Alpha piece-stage tests
+        entry: python -m unittest tools.validators.test_validation_isolation
+        language: python
+        additional_dependencies: [jsonschema]
+        pass_filenames: false
+        files: ^(tools/validators/(test_validate_data|test_validation_isolation)\.py|data/art/_schema/art-piece\.schema\.json|bin/validate\.cmd)$
         stages: [pre-commit, pre-push]
 
       - id: likeness-metadata-tests

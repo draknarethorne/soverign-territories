@@ -40,15 +40,29 @@ RECIPES = {
     "shared-0d-grounded-three-quarter": ("0_Edit", "0d_Grounded_Three_Quarter", "Angelica_Qwen_Edit_0d_Deluxe_Bare.json"),
     "shared-0e-enhance-basic": ("0_Edit", "0e_Enhance_Basic", "Angelica_Qwen_Edit_0e_Enhance.json"),
     "shared-0f-full-clothed": ("0_Edit", "0f_Full_Clothed", "Angelica_Qwen_Edit_0f_Full.json"),
+    "shared-1a-prime-outfit-relaxed": ("1_Alpha", "1_Prime", "Angelica_Qwen_Edit_0d_Deluxe_Bare.json"),
+    "shared-1a-prime-outfit-grounded": ("1_Alpha", "1_Prime", "Angelica_Qwen_Edit_0d_Deluxe_Bare.json"),
+    "shared-0d-deluxe-seated": ("0_Edit", "0d_Deluxe", "Angelica_Qwen_Edit_0d_Deluxe_Bare.json"),
+    "shared-0d-deluxe-relaxing": ("0_Edit", "0d_Deluxe", "Angelica_Qwen_Edit_0d_Deluxe_Bare.json"),
+    "shared-0d-deluxe-side-resting": ("0_Edit", "0d_Deluxe", "Angelica_Qwen_Edit_0d_Deluxe_Bare.json"),
+    "shared-0d-deluxe-resting": ("0_Edit", "0d_Deluxe", "Angelica_Qwen_Edit_0d_Deluxe_Bare.json"),
+    "shared-0c-cleanup-basic": ("0_Edit", "0c_Cleanup", "Angelica_Qwen_Edit_0c_Cleanup_Basic.json"),
 }
 SHARED_PROMPTS = {
-    "shared-0b-background-basic": "background/Female_Edit_Background_Basic.txt",
-    "shared-0d-relaxed-three-quarter": "pose/Female_Edit_Pose_Relaxed_Three_Quarter.txt",
-    "shared-0d-grounded-three-quarter": "pose/Female_Edit_Pose_Grounded_Three_Quarter.txt",
-    "shared-0e-enhance-basic": "enhance/Female_Edit_Enhance_Basic.txt",
-    "shared-0f-full-clothed": "full/Female_Edit_Full_Clothed.txt",
+    "shared-0b-background-basic": "0_Edit/background/Female_Edit_Background_Basic.txt",
+    "shared-0d-relaxed-three-quarter": "0_Edit/pose/Female_Edit_Pose_Relaxed_Three_Quarter.txt",
+    "shared-0d-grounded-three-quarter": "0_Edit/pose/Female_Edit_Pose_Grounded_Three_Quarter.txt",
+    "shared-0e-enhance-basic": "0_Edit/enhance/Female_Edit_Enhance_Basic.txt",
+    "shared-0f-full-clothed": "0_Edit/full/Female_Edit_Full_Clothed.txt",
+    "shared-1a-prime-outfit-relaxed": "1_Alpha/1_Prime/Female_Alpha_1_Prime_Outfit_Relaxed.txt",
+    "shared-1a-prime-outfit-grounded": "1_Alpha/1_Prime/Female_Alpha_1_Prime_Outfit_Grounded.txt",
+    "shared-0d-deluxe-seated": "0_Edit/deluxe/Female_Edit_Deluxe_Clothed_Seated.txt",
+    "shared-0d-deluxe-relaxing": "0_Edit/deluxe/Female_Edit_Deluxe_Clothed_Relaxing.txt",
+    "shared-0d-deluxe-side-resting": "0_Edit/deluxe/Female_Edit_Deluxe_Clothed_Side_Resting.txt",
+    "shared-0d-deluxe-resting": "0_Edit/deluxe/Female_Edit_Deluxe_Clothed_Resting.txt",
+    "shared-0c-cleanup-basic": "0_Edit/cleanup/Female_Edit_Cleanup_Basic.txt",
 }
-SHARED_PROMPT_ROOT = base.ROOT / "prompts" / "angel-primes" / "alpha" / "Female" / "0_Edit"
+SHARED_PROMPT_ROOT = base.ROOT / "prompts" / "angel-primes" / "alpha" / "Female"
 ALLOWED = {
     "LoadImage", "SaveImage", "ModelSamplingAuraFlow", "VAELoader",
     "FluxKontextMultiReferenceLatentMethod", "TextEncodeQwenImageEditPlus",
@@ -61,6 +75,11 @@ MISSING = object()
 QUEUE_CAPACITY = 200
 MAX_RUN_JOBS = 64
 MAX_QUEUE_DEPTH = 16
+MAX_RUN_TIMEOUT = 21600
+
+
+class PreflightPollUnavailable(TimeoutError):
+    """A read-only submission check failed before any intent or POST."""
 
 
 def pilot_prompts(recipe):
@@ -103,7 +122,8 @@ def reference_paths(job, batch_id, stamp):
     stage, variant, _ = RECIPES[job["recipe"]]
     family = "0d_Deluxe" if job["recipe"].startswith("shared-0d-") else variant
     recipe_name = job["recipe"].split("-", 1)[1].replace("-", "_")
-    stem = f"{person}_Qwen_Edit_{recipe_name}__{stamp}__{batch_id}__{job['id']}"
+    operation = "Alpha" if stage == "1_Alpha" else "Edit"
+    stem = f"{person}_Qwen_{operation}_{recipe_name}__{stamp}__{batch_id}__{job['id']}"
     prefix = f"reference/{person}/{stage}/{family}/{stem}"
     return prefix, prefix + ".json"
 
@@ -192,6 +212,10 @@ def catalog():
     entries = []
     for recipe, (stage, variant, _) in RECIPES.items():
         label = variant + (" Basic" if recipe.endswith("-basic") and not variant.lower().endswith("basic") else "")
+        if recipe.startswith("shared-1a-prime-outfit-"):
+            label = "Prime outfit " + recipe.rsplit("-", 1)[1] + " (clothed)"
+        elif recipe.startswith("shared-0d-deluxe-"):
+            label = "Deluxe bedroom " + recipe.removeprefix("shared-0d-deluxe-") + " (clothed)"
         try:
             path = recipe_path(recipe)
             if recipe in SHARED_PROMPTS:
@@ -601,16 +625,21 @@ def submit(root, batch_id, job_id, apply=False, *, allow_busy_queue=False, owned
         raise ValueError(f"Job is {job['state']}; never blindly resubmit")
     endpoint = execution["endpoint"]
     opener = connection(endpoint)
-    probe = base.probe_server(endpoint, execution["inputRoot"], execution["outputRoot"])
-    if probe["blockers"]:
-        raise ValueError("; ".join(probe["blockers"]))
-    queue = base.server_json(opener, endpoint, "/queue")
-    if len(queue_items(queue)) + 1 > QUEUE_CAPACITY:
-        raise ValueError(f"Server queue is at its {QUEUE_CAPACITY}-job capacity; wait, never cancel other jobs")
-    if not allow_busy_queue and foreign_items(queue, owned_prompts):
-        raise ValueError("Server queue is occupied; wait without cancelling unrelated jobs")
-    graph = base.read_json(destination / "jobs" / job_id / "workflow-api.json")
-    validate_graph(graph, base.server_json(opener, endpoint, "/object_info"))
+    try:
+        probe = base.probe_server(endpoint, execution["inputRoot"], execution["outputRoot"])
+        if probe["blockers"]:
+            raise ValueError("; ".join(probe["blockers"]))
+        queue = base.server_json(opener, endpoint, "/queue")
+        if len(queue_items(queue)) + 1 > QUEUE_CAPACITY:
+            raise ValueError(f"Server queue is at its {QUEUE_CAPACITY}-job capacity; wait, never cancel other jobs")
+        if not allow_busy_queue and foreign_items(queue, owned_prompts):
+            raise ValueError("Server queue is occupied; wait without cancelling unrelated jobs")
+        graph = base.read_json(destination / "jobs" / job_id / "workflow-api.json")
+        validate_graph(graph, base.server_json(opener, endpoint, "/object_info"))
+    except (TimeoutError, urllib.error.URLError) as error:
+        if isinstance(error, urllib.error.HTTPError):
+            raise
+        raise PreflightPollUnavailable(f"Read-only submission preflight unavailable: {error}") from error
     if not apply:
         return {"state": "submission-preview", "job": job_id, "prefix": job["prefix"],
                 "queuePolicy": "append-one" if allow_busy_queue else "wait-idle"}
@@ -703,10 +732,10 @@ def status(root, batch_id, refresh=False):
 
 def run_batch(root, batch_id, apply=False, limit=4, timeout=3600, interval=10, *,
               allow_busy_queue=False, queue_depth=1):
-    if (not 1 <= limit <= MAX_RUN_JOBS or not 1 <= interval <= 60 or not 1 <= timeout <= 7200
+    if (not 1 <= limit <= MAX_RUN_JOBS or not 1 <= interval <= 60 or not 1 <= timeout <= MAX_RUN_TIMEOUT
             or not 1 <= queue_depth <= MAX_QUEUE_DEPTH):
         raise ValueError(f"Run requires limit 1..{MAX_RUN_JOBS}, queue depth 1..{MAX_QUEUE_DEPTH}, "
-                         "interval 1..60s, timeout 1..7200s")
+                         f"interval 1..60s, timeout 1..{MAX_RUN_TIMEOUT}s")
     _, _, record = evidence(root, batch_id)
     if len(record["jobs"]) > limit:
         raise ValueError("Batch exceeds explicit run limit; reduce selections or raise --limit")
@@ -743,10 +772,13 @@ def run_batch(root, batch_id, apply=False, limit=4, timeout=3600, interval=10, *
                 elif allow_busy_queue or (not queue.get("queue_running") and not queue.get("queue_pending")):
                     if time.monotonic() >= deadline:
                         raise TimeoutError("Run deadline reached before submission; no POST made")
-                    if allow_busy_queue:
-                        submit(root, batch_id, job_id, True, allow_busy_queue=True)
-                    else:
-                        submit(root, batch_id, job_id, True)
+                    try:
+                        if allow_busy_queue:
+                            submit(root, batch_id, job_id, True, allow_busy_queue=True)
+                        else:
+                            submit(root, batch_id, job_id, True)
+                    except PreflightPollUnavailable as error:
+                        print(f"{now()} {error}; no POST made; retrying within run deadline", flush=True)
                 else:
                     print(f"{now()} Waiting for existing server queue: "
                           f"{len(queue.get('queue_running', []))} running, "
@@ -795,8 +827,12 @@ def _run_pipelined(root, batch_id, deadline, interval, depth, allow_busy_queue):
                 break
             if time.monotonic() >= deadline:
                 raise TimeoutError("Run deadline reached before submission; no POST made")
-            submitted = submit(root, batch_id, job_id, True, allow_busy_queue=allow_busy_queue,
-                               owned_prompts=owned)
+            try:
+                submitted = submit(root, batch_id, job_id, True, allow_busy_queue=allow_busy_queue,
+                                   owned_prompts=owned)
+            except PreflightPollUnavailable as error:
+                print(f"{now()} {error}; no POST made; retrying within run deadline", flush=True)
+                break
             owned.add(submitted["promptId"])
             total += 1
         time.sleep(interval)
@@ -998,8 +1034,46 @@ def overlay_scan(root, inputs, apply=False, *, scan_id=None):
     return result
 
 
-def cleanup_batch(root, recipes=("manual-0c-cleanup-basic",), samples=2, hints=("needs-cleanup",),
-                  apply=False, *, proposal_id=None, seeds=None, source_file=None):
+def person_samples(root, sources, count):
+    """Resolution-first exploratory samples, not a facial-quality or outfit classifier."""
+    if isinstance(count, bool) or not isinstance(count, int) or not 1 <= count <= 64:
+        raise ValueError("--per-person must be between 1 and 64")
+    groups, excluded = {}, []
+    for source in sources:
+        parts = source["path"].split("/")
+        if (source.get("kind") or not source.get("personId") or parts[0] == "Various"
+                or "gallery" not in parts[1:-1]):
+            excluded.append(source["path"])
+            continue
+        path = base.safe_path(root, source["path"])
+        if base.digest(path.read_bytes()) != source["sha256"]:
+            raise ValueError(f"Sample source hash changed; refresh Photo Review: {source['path']}")
+        with Image.open(path) as image:
+            width, height = image.size
+        groups.setdefault((source["domain"], source["personId"]), []).append(
+            (-(width * height), -min(width, height), source["path"], source))
+    selected, duplicates = [], []
+    for key in sorted(groups):
+        seen, kept = set(), 0
+        for _, _, _, source in sorted(groups[key]):
+            if source["sha256"] in seen:
+                duplicates.append(source["path"])
+                continue
+            seen.add(source["sha256"])
+            if kept < count:
+                selected.append(source)
+                kept += 1
+    return selected, {
+        "perPerson": count, "personCount": len(groups),
+        "ranking": "pixel-area descending, shortest-side descending, source-path ascending",
+        "scope": "assigned original gallery photos only; exact bytes deduplicated within each person",
+        "limitations": "Resolution is not face quality. No near-duplicate or outfit elimination; review the sample.",
+        "excluded": excluded, "exactDuplicates": duplicates,
+    }
+
+
+def cleanup_batch(root, recipes=("shared-0c-cleanup-basic",), samples=2, hints=("needs-cleanup",),
+                  apply=False, *, proposal_id=None, seeds=None, source_file=None, per_person=None):
     """Propose (never queue) request JSON for intake images that intake left for ComfyUI cleanup.
 
     source_file: an overlay-scan.json (or any JSON with a "mapped" list of {"path"}) that
@@ -1033,8 +1107,13 @@ def cleanup_batch(root, recipes=("manual-0c-cleanup-basic",), samples=2, hints=(
         missing = wanted - {source["path"] for source in candidates}
         if missing:
             raise ValueError(f"Source file lists {len(missing)} path(s) that are not current Gallery sources; rescan")
+    elif per_person is not None:
+        candidates = gallery_sources(root)
     else:
         candidates = [source for source in gallery_sources(root) if source.get("cleanup") in hints]
+    selection = None
+    if per_person is not None:
+        candidates, selection = person_samples(root, candidates, per_person)
     proposal_id = proposal_id or "cleanup-" + datetime.datetime.now().strftime("%Y%m%d-%H%M")
     if not re.fullmatch(r"[a-z0-9][a-z0-9-]{0,40}", proposal_id):
         raise ValueError("Invalid proposal ID")
@@ -1053,6 +1132,7 @@ def cleanup_batch(root, recipes=("manual-0c-cleanup-basic",), samples=2, hints=(
     summary = {
         "schemaVersion": 1, "proposalId": proposal_id, "createdAt": now(), "hints": list(hints),
         "sourceFile": str(source_file) if source_file is not None else None,
+        "selection": selection,
         "recipes": [entry["id"] for entry in chosen], "samplesPerWorkflow": samples,
         "sourceCount": len(candidates), "jobCount": sum(item["jobs"] for item in batches),
         "queueCapacity": QUEUE_CAPACITY, "destination": str(destination),

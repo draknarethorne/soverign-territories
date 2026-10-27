@@ -124,7 +124,8 @@ batches retain their old layout; the Outputs browser supports both. Internal
 receipts/input staging and Gallery pull-back locations remain unchanged.
 Four live shared-pose pilot renders completed and verified the new paths.
 The relaxed pose is a useful candidate; grounded candidates still raise a
-heel despite two prompt versions, so exact flat-foot compliance is unaccepted.
+heel despite two prompt versions. The user explicitly accepts a lifted heel
+at 23:12, so this is not a remaining acceptance blocker.
 The broader `p1026` comparison has 42 jobs across 21 inspected clothed sources
 and is running detached at queue depth 8 (initial check: one running, seven
 pending; 34 not yet submitted). The worker refreshes both results pages after
@@ -134,6 +135,46 @@ now lists 6,968 images before the broader batch. No pose render was pulled.
 Later edit variants, formal stage-input/promoted-output contracts and
 Alpha/Studies recipes remain manual-migration work. Edits stay optional before
 Alpha; user visual acceptance and production rollout remain gated.
+The late continuation adds two correctly staged shared clothed Prime outfit
+recipes under `1_Alpha/1_Prime`, preserving the old studio-pose IDs and their
+frozen paths. Deluxe is a bedroom-scene family, not the grey studio poses.
+`cleanup-batch --per-person N` now samples assigned original Gallery photos by
+resolution and stable person ID, skipping only exact duplicate bytes.
+`render-reference.cmd compare` publishes frozen source/output comparisons by
+person/source or matched recipe, with incomplete states and exact lineage.
+This is human review support, not automated identity/kinship inference.
+Rendering and Outputs now use the same shared header/footer wrapper.
+The detached `cast1027-01` worker is waiting behind existing queue work:
+63 jobs across 10 Sisters and 11 Angels (cleanup and two Prime outfit views),
+no auto-pull. A six-hour maximum bounded deadline now accommodates queue wait
+plus large selected batches; queue and batch limits are unchanged.
+Fresh intake-only preparation of all 2,741 inputs is also running under
+`clean-rebase-20261027-full-intake`; first verified progress 101/2,741.
+No matching, installation or production change is claimed.
+The later snapshot at 05:30 UTC is 669/2,741 intake outcomes and 11/63 cast
+renders completed. The original `p1026` controller stopped on a submission
+preflight GET timeout; verified history recovered 15 completed / 27 compiled,
+without uncertain jobs. A replacement controller waits behind the cast run
+and resumes only the remaining compiled jobs. Typed preflight polling failures
+now retry within the deadline; uncertain POSTs still never retry.
+Four correctly themed clothed Deluxe bedroom variants are implemented, and
+eight frozen samples for Draknara/Angelica wait until both render batches
+complete. Their supervisor then republishes a five-batch comparison.
+A separate supervisor waits for a verified, error-free intake receipt before
+saving a matching preview only; no installation or cast reassignment is
+scheduled. The shared generated Cleanup Basic is now the default for new
+cleanup proposals, preserving older explicit manual IDs and frozen runs.
+Isolated mutation validation is supported through
+`bin\validate.cmd --isolated --quick`: 19/19 cases pass with the live schema
+hash unchanged. The configured normal validation passed 881 tests in
+29 suites including the final shared-cleanup binding. Commit/push mutation
+hooks now use isolation too, avoiding live intake readers.
+The older cast controller subsequently hit the same preflight issue; verified
+recovery found 23 completed and 40 outstanding jobs without uncertain states.
+One corrected recovery worker is active, with a verified GET-only retry
+heartbeat. Rendering, Outputs, People Review and Artist reports have the new
+navigation; a five-batch Comparison refresh correctly waits for active receipt
+writers to finish, rather than overriding their lock.
 The agreed guiding principle is now image-first staged progression: automatic
 intake/likeness to gallery, explicit user stage selection/branching, and
 deterministic promoted-output lineage back into Gallery by stage/recipe.
