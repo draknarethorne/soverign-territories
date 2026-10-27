@@ -2,6 +2,100 @@
 
 **Status:** active (shared clothed edit and Prime slices implemented; remaining migration and visual acceptance open)
 
+## Oct 27: source-faithful prompt reconciliation and Female test bed
+
+The user's complete 11:05 chat is preserved at the end of this plan.
+The [intake review owner](2026-10-23-image-intake-preparation.md#oct-27-1105-review-driven-crop-erase-and-framing-refinement)
+preserves the separate feedback document and owns the immediate crop/erase/
+framing benchmark. Neither new prompt renders nor the full rebase should
+outrun that review. The previous shared preservation recipes were deliberately
+narrow pilots, **not exact migrations of the user's manual prompts**. Their
+successful transport/rendering does not accept their wording as replacements.
+
+The manual drafts' section order, specificity and separate feature instructions
+are source requirements, not suggestions to replace with a generic paragraph.
+Preserve supported wording/order unless a contradiction, explicit exclusion
+or user-reviewed A/B result justifies a documented deviation. The accepted
+three-quarter views are additional Prime variants, not replacements for the
+manual A-pose, and Deluxe remains the scene-based family.
+Existing non-explicit/reference safety boundaries still apply: real-person
+clothing removal and explicit sexual instructions remain excluded, recorded
+as exclusions rather than silently described as exact migrations.
+
+### Observed data/wording gap
+
+The existing generator already separates `keyDetails`, palette/physique,
+shared phrases and component slots. `bust` and `ownBust` both print `Bust:`,
+but resolve different sources (shared phrase versus individual physique).
+`tokens_for` omits promoted physique fields from the later figure line, so
+reuse that mechanism instead of creating parallel permanent Body/Bust fields.
+The generic edit template currently emits Face/Hair/Physique/Clothing/Pose/
+Framing/Background policies; it is not the manual Pose/Background/Lighting/
+Camera/Edit/Result/Critical-details/Likeness/feature sequence.
+Generic Female also has adaptive colour language but fixed physique defaults.
+Neither that placeholder nor fixed example-person colours should leak into
+every dynamic person's resolved prompt.
+
+- [ ] **P1 ai** P14 Complete the source-to-output fidelity ledger for all
+  31 files currently in `prompts/_edit/female` (24 edit drafts plus seven
+  Alpha/vocabulary/naming sources), re-hashing the current files before work.
+  For each supported instruction, record source file/line, exact wording,
+  section/order, preserve/change intent, input role, existing field/component/
+  token or proposed alias, and generated destination. Mark contradictory,
+  excluded, deferred and already-tested text separately. Explicitly reconcile
+  preserve-pose versus replace-pose and preserve-outfit versus change-outfit;
+  never concatenate conflicting instructions or call a safe slice complete.
+  Use the existing 24-file disposition inventory as a starting point, not
+  evidence of line-level fidelity. Source files remain untouched.
+- [ ] **P1 ai** P15 Reconcile manual labels with existing schemas/tokens before
+  adding fields. Keep independently placed Bust and Body instructions where
+  intended; map build/torso/arms/hips/legs, hair colour/style/texture, eyes/gaze,
+  skin/finish, face/expression/makeup, pose, wardrobe, camera, lighting and
+  background to their existing data homes where possible. Record ordered
+  emission and intended repetition explicitly; remove accidental duplication,
+  not purposeful emphasis. Propose a narrowly scoped extension only for
+  a demonstrated missing concept. One person identity record owns permanent
+  features; reusable defaults live in shared pieces and temporary look edits
+  in a resolved job/card override. Category/cast membership is routing, not
+  another copy of a person's anatomy or appearance. Specify precedence and
+  visible preserve/change provenance; reject unresolved/conflicting values.
+- [ ] **P1 ai** P16 Implement and test supported source-faithful template
+  families after P14/P15 mapping review, preserving the manual section order
+  and independently emitted features. Test two deliberately different
+  person-data fixtures plus generic preserve-source mode: no fixed-person
+  leakage, unintended duplicate feature blocks, unresolved tokens or mutation
+  of identity data. Snapshot ordered positive/negative prompt text and assert
+  every required supported source clause is covered. Then compare a small
+  source-faithful versus current-pilot A/B using the same source, seed, graph,
+  model and settings; document every intentional difference. Generated
+  prompts come only from the pipeline, not manual edits. P6 remains visual
+  acceptance; P11/P12 and rendering R16 still own branch/lineage contracts.
+- [ ] **P1 ai** P17 Move the generic Female test-bed assembly from
+  `data/art/_sets/angel-primes/alpha/female` to the user-requested
+  `data/art/_sets/soverign-females/female`, retaining the supplied machine-path
+  spelling while the workspace display name remains **Sovereign Females**.
+  First inventory every card, heroArt/template/component link, generator/layout
+  assumption, group/home/output mapping, default input, scaffold, validator,
+  test, launcher/help/tutorial and generated/installed consumer. Show a
+  previewed move/reference map; use `git mv` for tracked sources, preserve
+  stable art IDs where possible, and regenerate rather than hand-move outputs.
+  Decide explicitly whether the generic hero identity needs relocation;
+  do not create a duplicate identity merely to mirror the new set directory.
+  Add the real group/home mapping (currently absent from `workspaces.json`)
+  and prove generation, role routing and deployment to only Sovereign Females.
+  Preserve manual `zz_shots`, frozen receipts, selected inputs, Male/Angelo,
+  other Angel Primes assets and existing rendered files. Inspect removals and
+  path lengths before retiring proven-obsolete generated copies. The target
+  is the skeletal test set, not bulk materialization of every library person.
+
+P14/P15 are the immediate prompt work and refine P1-P3/QP4; P16 delivers the
+remaining P4/P5/P13 fidelity work. P17 is the approved direction to plan and
+execute with reference/preview gates, not a claim that the move has happened.
+New dynamic workflows should use category/person paths through
+[rendering R44](2026-10-25-reference-rendering.md#oct-27-category-aligned-workflows-and-source-faithful-recipes);
+the old `Reference`-only publication direction is superseded for new jobs,
+not retroactively for frozen batches. No other plan is closed by this change.
+
 ## Oct 25 reference-rendering handoff
 
 The [active reference-rendering plan](2026-10-25-reference-rendering.md)
@@ -390,5 +484,18 @@ Ideally the 0_Edit workflows do support the same template and .json driven gener
 <!-- markdownlint-disable MD013 -->
 ```text
 I do want to cover the entire docs/plans and I do want to archive plans in this iteration.  I am fine leaving plans that are active that make sense if they aren't superceeded by other newer plans - but Ideally we work through all the plans and If you have questions on the prompt/template work we started with, stop and ask me about it.  I do have those manual prompts I have worked on in the prompts\_edit\female and need to be brought back into the data/art/_templates library, with proper tokens added and the data/art .json files created to align with them based on the manual prompts.  We may need to create/update more reusable data/art .json files so we aren't duplicating the statements anywhere.  I ended up modifying my "tag" names for a few from the current templates - so we'll need to rationalize those updates across existing templates as well to reduce data redundancy in the data/art .json files that fill in the details of the prompts through the generation process.  There will be a new 0_Edit phase to the data/art/_sets and I do have updates that will change the existing 1_Alpha/1_Prime and 1_Alpha/2_Bare approaches we do use.  The 1b_Experiments can go away now as the new 2_Bare prompts should be able to replace them.  We'll leave the 2b_Experiments alone for now as I haven't worked on them.  I also have a more extensive C:\Soverign-Territories\soverign-territories\prompts\_edit\female\female_anatomy.txt we'll need to rationalize as well and bring back into the data/art for reusable .json that can feed into the images.  I didn't use many of them - but used AI to generate that entire set.  It does not align with our existing tokens and sometimes combines what we see as multiple art .json files into a single statement.  So that's a bit more extensive work - but it's all part of the prompting work I was doing to address the 1_Alpha prompts for ComfyUI in our generation process.  Does this all make sense?  Can you do it all at ones or do we need to work backwards from today and eventually get back to the 10-09 plans.  What makes most rationale sense to get entire coverage so that by tomorrow we have a refined, updates and accurate set of plans.  Any open questions about plans you can capture in a dated block at the top and we can then work through those one-by-one for any plans you do not archive.  That way we can clean-up our work so that I don't feel like we have so many loose ends and conflicting plans.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Oct 27 chat direction (verbatim)
+
+Source: chat, Oct 27, 11:05 -05:00. Coverage: intake I30-I37 owns the
+feedback examples, P14-P16 prompt fidelity/data reconciliation, P17 the
+generic Female move, rendering R44 category-aligned dynamic paths, and
+the updated recap/index preserve remaining work and immediate priorities.
+
+<!-- markdownlint-disable MD013 -->
+```text
+I wrote up an initial review after looking at all the angels pictures - and some of the potentials.  I have a lot of feedback, but centers on a few themes.  Please read this and let come up with a plan for what to do about these and try to work on with the cropping, erasing, cropping and framing.  For the most part things are great - but a few comments in all of this will help find tune this and re-running specific examples I called out will help see it's working along with a sampling of other images to make sure we don't break what "was" working trying to tune the process.  Please read this .md file and update existing plans with this feedback and add more items and work to do in those plans.  I don't think we need a new plan or design document, but need to alter existing ones with this feedback and changes we propose.  Think deeply and also make sure everything else we are working on that remains is properly open in the plan and the recap calls out some critical next steps.  At this point, I am going back to the beginning and working those aspects - hoever I want to ensure that all of my templates for C:\Soverign-Territories\soverign-territories\prompts\_edit\female are brought back into the art libraries properly.  What you ahve been sending to comfyui in the workflows does not match my templates exactly - however you did find a new 3/4 pose that I liked during the process, but we need to ensure that we reconcile the tags that I am using vs. existing tags or scheme for the templates so we don't end up having a .json file for a person/angel/model/etc... with redundancy.  So this work needs to be reflected in the C:\Soverign-Territories\soverign-territories\docs\plans\2026-10-22-manual-prompts-to-art-library.md as to how my specific text and instructions need to help drive re-alignment of all the templates in terms of what I called out in what order and where the bust/body are used along with all the features of a person.  That way, it's not just generic, but pulls in the data about the person proprely.  I know I used a few different terms to specifically call out the body pieces instead of a generic block because it was critical to how it worked.  I worked with AI to come up with those manual prompts and what is there should be transposed into the templates and .json files.  Lastly - now tha we have a Soverign Females workspace - we should move the C:\Soverign-Territories\soverign-territories\data\art\_sets\angel-primes\alpha\female into the C:\Soverign-Territories\soverign-territories\data\art\_sets\soverign-females\female as the "test bed" for automating the generation of images as part of the art intake process.  That would be the skeletal set of workflows and then we can add in the dynamic creation of the angels, models, prospects, potentials as we been - but instead of putting them into Reference/[person name] we should honor the categorization of them under Models/[person name], Angels/[perrson name], Prospects/, Various/, etc...  I love the way the automation into ComfyUI is working - but we need to make some adjustments to the content of the prompts and I am ok with A/B testing with the prompts - but I want more strict adherence to the contents of my prompts and how they are written when we bring them back into the automation and art libraries.  Does this all make sense as well as the feedback docum,ent?
 ```
 <!-- markdownlint-enable MD013 -->

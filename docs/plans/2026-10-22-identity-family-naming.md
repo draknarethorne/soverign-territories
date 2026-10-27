@@ -2,6 +2,96 @@
 
 **Status:** active (draft metadata/naming and one-to-one rebase migration implemented; real acceptance and broader transitions remain open)
 
+## Oct 27 feedback reconciliation: names and family status
+
+The family-status question is answered: draft family metadata, reversible
+name presentation and direct-reference suggestions are implemented; real
+calibration/acceptance, leave/reassignment and broader name migration remain
+open under N7/N9. Rendered resemblance is separate advisory evidence, not
+kinship or permission to rename/merge automatically.
+
+The new `person_names_folders.md` asks for named-folder intake, correction of
+historical original names, three-name display without duplicate labels, GUI
+rename/swap and preserved cast slots. Named intake is implemented in the
+prepared sandbox route, but is not a generally accepted production promise.
+It preserves explicit supplied-name intent with ambiguity/rejection guards;
+a folder drop is not permission to overwrite another stable person's history.
+Existing names distinguish character/current/original; original provenance
+is currently preserved through rename/swap rather than freely corrected.
+
+**Oct 27 decision, clarified by the user:** an explicit forced correction
+must replace a misassigned original name with the person's proper original
+identity/name, including bugs from earlier promotion/swaps and random
+Various intake names. It is not merely another alias beside an authoritative
+wrong original name. This supersedes immutability of the effective original
+name for that explicit correction only; ordinary rename/swap and automatic
+likeness processing must not silently rewrite it. Retain the old erroneous
+value in correction history/undo, not as the person's displayed original.
+Stable person IDs and cast slot keys remain fixed; a name correction does not
+silently merge people or move mixed-person photos.
+
+Work order: intake crop/erase/framing first, original-name correction next,
+then family/current-name presentation and acceptance. Family naming may
+change the current first/last name without overwriting the corrected
+original name. Named-folder corrections and GUI corrections need the same
+explicit intent, conflict preview and reversible transaction; merely
+re-dropping files is not claimed to implement that behavior today.
+
+- [x] N11 User resolved the conflict: explicit forced correction replaces the
+  erroneous effective original name, retaining audit history and exact undo.
+  Update the enduring naming contract under N12 before implementation.
+- [ ] **P2 ai** N12 After intake tuning, update the naming contract and
+  implement/test the approved correction through
+  existing stable-ID name transactions, GUI rename/swap and named intake.
+  Keep cast keys fixed, distinguish source evidence from generated names,
+  replace the effective original name on explicit correction (not alias-only),
+  deduplicate equivalent current/original display labels without deleting audit
+  history, and test conflicts, repeat intake, mixed identities, later family
+  first/last-name changes, rebase and exact undo. Do not promise that re-dropping
+  existing photos currently corrects their established original names.
+
+### Family-status question (verbatim)
+
+Source: `feedback/family_naming_question.md`. Answer and remaining scope above;
+incorporation, not acceptance of unfinished implementation.
+
+```text
+# Family Naming Question
+
+## Question
+
+- Where are we at with the family naming at this point?  I am losing track of some things, but do want to start to review that process and ensure we have a clear understanding of the current status and any next steps needed.
+```
+
+### Person names and folders (verbatim)
+
+Source: `feedback/person_names_folders.md`; N11 resolved by the clarification
+below; individually archived after exact preservation and coverage verification.
+
+<!-- markdownlint-disable MD013 MD009 -->
+```text
+# Person Names and Folders
+
+## Question
+
+- Are we setup that if I drop a named person folder into Various/[person name] will it pull those images and assign that persons name automatically?  
+- I also want to know where we are at with the names overall, I believe we have the Character Name if assigned to a slot of a character.  Person Name (currently assigned person name and potentially the family name if we change or assign first or last name to align with family likeness) and the Original Person Name (either automatically assigned during an intake with photos in Varous/Gallery without a name or assigned based on the Various[Person Name] folder being present so we keep that original name).
+- I want to clarify if the system will automatically update the Person Name when images are added to a Various/[person name] folder, and how it handles conflicts with existing names or Original Person Names.
+
+Ultimately, I want to make sure we've got this handled properly in the meta-data.  Because, I could take some existing images of a Prospect or Potential and place them in a Various/[person name] folder and re-process them to get that Original Person Name assigned properly - even if already assigned a ficticious name, and I want to ensure that the system correctly assigns the person's name and maintains the original name for reference.
+
+Does this all make sense in how I might want to re-baseline the original person names of someone vs. the assigned Person Name?
+
+I know it's documented somewhere, but I think things may be fragmented and as part of a rebase, I want to ensure we have a clear understanding of how the system handles Person Names, Original Person Names, and any interactions with Various/[person name] folders.
+
+We know the character slots and people assigned to them are "locked for sisters and angels", but some of the original person names are not correct and I was thinking of how to get that original person name updated as well as any assigned names along the way.  Sometimes the original person name and current/assigned person name are the same and sometimes different.  Once they are promoted to a character, then they take on the character name "Angelica, Drakness, etc.." but would still retain and show their other names.  I wouldn't want to duplicate them if both the original person name and the assigned person name are the same on the GUI.  Only if things changed during the process.
+
+Hope this all makes sense in how we have the naming and if I want to rename the assigned person name or the original person name (or both) during either the intake process using the Various/[person name] folder or the GUI rename or swap names between two.  I have a lot of clean-up I need to do over time and just want to ensure our naming meta-data, gui and handling of intake assignment of names is correct and working the way we intended it. 
+
+It's organically grown and names have swapped in early versions of the processing - so once we lock down all the functionality, I will handle the renaming and name assignements of all the existing people in the library.
+```
+<!-- markdownlint-enable MD013 MD009 -->
+
 ## Oct 25 implementation continuation
 
 The user explicitly requested implementation rather than another planning stop.
@@ -195,5 +285,16 @@ cast C2 preserves the decisions across rebase. No live batch is authorized here.
 <!-- markdownlint-disable MD013 -->
 ```text
 I would like to auto-protect photos in a protected person that reach a high enough likeness score so that I don't have to manually do that.  For an unprotected identity - if we determine that we have enough photos to establish an itentity, we should also auto-protect that person and the photos.  It'll be easier for me to unprotect and move images out and rebase if that's required in order to keep things clean - but I feel like that's a solid enough plan - and that would go along with the family relationships we establish for high likeness to another person, but not enough to merge them but establish the family name.  When we do that - I think we need to keep the original name of the person that was either provided and/or randomly assigned as well as the new person with their family name.  We display character name (with family) along with a note on the original name.  Sort of like we do with the sisters, but if we also have the person join a family we'd have the character name, person name (now) and original person name.  We'll need to update plans and get this work going as I think all this is critical in order to complete the intake and likeness process as a whole and retain the proper identities along the way and show them in the gallery views where it makes the most sesnse.  Think deeply and let's get this going.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Original-name correction clarification, Oct 27, 2026 (verbatim)
+
+Coverage: N11 decision and N12 implementation above; intake remains first.
+No live identity metadata is changed by recording this clarification.
+
+<!-- markdownlint-disable MD013 -->
+```text
+If I am forcing a change to the original name - which was mis-assigned due to bugs in our previous processing automation, I want that to replace any original name that was mis-assigned and re-establish the persons proper original identity and name.  Hope that clarifies my intent.  The reason things were mis-assigned or swapped were either early bugs in the likeness promotion process to swap prospects to angels or sisters - or I simply just dumped things into Various/gallery and let random assignments happen and now want to correct that because I was being lazy and now I know a person's real identity - even if we assigned them a random one.  Does this make sense on why I am wanting to be able to do that - after we get this intake processing for images working?  Both the image processing and re-establishment of original names is important and then making sure the family naming can happen which may change their first/last names based on how we want that to work?
 ```
 <!-- markdownlint-enable MD013 -->

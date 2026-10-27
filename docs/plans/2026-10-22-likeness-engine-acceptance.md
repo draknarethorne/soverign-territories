@@ -2,6 +2,37 @@
 
 **Status:** active (remaining acceptance and production gates; installed trial is not accepted)
 
+## Oct 27: auto-protection note incorporated
+
+`auto_protection_thoughts.md` is covered by E13 below: separately calibrated
+own-core/support/rival gates, false-positive holds, persistent manual opt-out,
+workflow constraints and recoverable metadata transactions. High similarity
+is not identity certainty or permission to freeze all candidates. Draft
+implementation exists; threshold acceptance and real self-healing/rebase
+tests remain open. No new automatic protection is enabled by archiving this
+incorporated note.
+
+### Auto-protection feedback (verbatim)
+
+Source: `feedback/auto_protection_thoughts.md`.
+
+```text
+# Auto Protection Thoughts
+
+## Overview
+
+I am wondering if it makes sense with the way we have scoring during the likeness process if we should just auto-protect high scoring images that make the person's likeness together.  Today, they are all candidates, but I don't want to have to auto-protect images that we are certain through the likeness scoring process are a cluster together.  It's really the lower scoring ones that I would not want protected and they could move in/out of galleries based on the normal self-healing and updating process we defined.
+
+## Considerations
+
+- We need to define what constitutes a "high scoring" image in the likeness process and determine the threshold for auto-protection.
+- Consider the impact on gallery management and self-healing if high scoring images are automatically protected.
+- Evaluate if there are any edge cases where high scoring images might still need to be unprotected or moved.
+- Assess the potential for false positives and ensure that auto-protection does not interfere with the normal updating process.
+- Determine if there should be a manual override option for auto-protected images in case of errors or special circumstances.
+- Consider how auto-protection interacts with other image management features, such as tagging, categorization, and user permissions.
+```
+
 ## Oct 25, 12:33: evidence-based automatic protection
 
 The user's new direction is to stabilize established identities and qualifying

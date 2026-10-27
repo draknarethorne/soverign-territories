@@ -2,6 +2,185 @@
 
 **Status:** active (Phase 1; sandbox clean-start integration implemented; real recipe/flow acceptance and production cutover remain gated)
 
+## Oct 27, 11:05: review-driven crop, erase and framing refinement
+
+The complete `feedback/image_intake_feedback.md` is preserved at the end of
+this plan; the source was individually verified and archived. The user's return to intake is the
+current priority, not a reset of downstream plans or approval of the v16
+recipe. The completed 2,741-outcome report is the frozen comparison baseline;
+the subsequent matching preview is separate and remains unapplied.
+The preparation page shows source/overlay locations, not newly accepted
+identity assignments. Current Various replacements can appear under their
+immutable target's older folder; show both origins when building the review.
+
+### Questions answered by the current implementation
+
+- `denoise: 0.314s` is elapsed processing time, not diffusion denoise strength.
+  The local bilateral filter uses diameter 5, colour sigma 15 and spatial
+  sigma 3, at the same native dimensions. `2.16/255` is mean absolute RGB
+  channel change, not a quality score, resolution gain or identity measure.
+  It can smooth noise and fine detail; neither denoise nor tone is currently
+  selected as a measured improvement. Keep selected cleanup as the default
+  ComfyUI candidate until matched-source quality comparisons justify another.
+- LaMa fills masked pixels using surrounding context. It synthesizes plausible
+  content, not the original hidden pixels. Smudging may reflect a bad mask,
+  large/ambiguous reconstruction or model limitations; classify those separately.
+  Improving mask precision precedes comparing reconstruction methods.
+- v16 currently runs border/panel crop -> edge-clutter crop -> LaMa -> final
+  composition. The screenshot app-bar exception permits up to 45% person-mask
+  loss below 4.5 face heights; that is materially different from the normal
+  0.5% guard. It explains an allowed mechanism for leg loss, not proof of
+  the cause in every named image. I32 must compare alternatives before
+  adopting a different default.
+- Magenta detection uses saturation/location/size/aspect heuristics and an
+  elliptical envelope, not GMW logo recognition. White-glyph detection is
+  also heuristic, not general OCR. The reported false positives and missed
+  coloured/cursive/Dola AI text require mask-level evidence, not wider colour
+  thresholds. Useful-looking removal of flowers or lights is not automatically
+  a correct clutter label.
+- Composition trusts a Mask R-CNN subject box plus margins and a mid-limb
+  bottom guard. It does not prove complete hair/shoe/dress coverage. Inspect
+  missed subject pixels and crop coordinates before changing framing rules.
+
+### Next bounded experiment and acceptance
+
+Oct 27, 11:44 execution authorization: start intake implementation and bounded
+A/B testing after the raw-feedback preservation/archival pass; templates
+remain deferred. I35 also compares precise versus envelope masks, native
+patch resolution and, if a repeated translucent overlay can be reliably
+modelled, alpha separation. Validate on clean originals with synthetic
+overlays so accuracy is measurable. Opaque areas still require invented
+reconstruction; no library can recover their exact hidden content from a
+single image. Add a learned model only after existing-method comparisons
+demonstrate a gap and rights/runtime requirements are checked.
+
+- [ ] **P1 ai** I30 Freeze a review manifest of every example below, resolving
+  exact source/overlay bytes and v16 artifact hashes; include a Various-origin
+  view even when replacement paths name an Angel/Potential. Publish source,
+  first crop, detections/mask, second crop, erase, final frame, native and
+  944x1104 previews with input/output coordinates, dimensions, retained area
+  and selection reasons. Every generated candidate, including
+  `ui-crop-proposal`, must appear in the options table as selected, comparison,
+  refused or failed, with a reason; image-only candidates are insufficient.
+- [ ] **P1 ai** I31 Refine solid-border detection on the named top/side/bottom
+  residuals, including partially hand-cropped sources. Preserve true dark
+  scenery/hair and compare with border-free controls. Diagnose the two-pixel
+  guard and split border rather than globally trimming extra pixels.
+- [ ] **P1 ai** I32 A/B v16 against border crop -> precise masked erase ->
+  guarded residual crop -> final framing on identical inputs. Record content
+  preserved, overlay remnants, mask damage, reconstruction artifacts, runtime
+  and every crop's subject loss. Evaluate the leg-cutting app-bar exception
+  explicitly; do not make erase-first universal or auto-select a lossy crop.
+  Try at most one additional residual-detection/erase pass as a labelled
+  candidate, with cumulative mask/face/subject guards and a visible stop
+  reason; no unbounded repaint loop or claim that redetection proves clean.
+- [ ] **P1 ai** I33 Build positive/negative clutter masks from the examples:
+  actual GMW badges versus floral/pink/red garments, flowers and lights;
+  white/coloured/cursive/Dola AI overlay text versus writing on clothing.
+  Test shape/context evidence before expanding colour thresholds. Separate
+  unwanted background-object editing from automatic overlay removal; do not
+  repaint a garment merely because one background false positive looked good.
+  Keep ambiguous areas unmodified with a visible diagnostic. This refines
+  I18/I27 rather than replacing their earlier bubble/PIP/ad-card cases.
+- [ ] **P1 ai** I34 Refine full-subject framing with evidence for high hair,
+  hands, feet/shoes, dress edges and off-centre people; test horizontal and
+  vertical positioning independently. Prefer preserved content plus padding
+  or a skipped crop when coverage is uncertain. Target 944x1104 in the
+  derivative, not by forcing native crops that amputate visible content.
+  Record mask/fallback and missed-region limitations. This is I20 follow-up.
+- [ ] **P2 ai** I35 Compare LaMa with existing local classical fills on the
+  same reviewed masks and inputs; distinguish texture/detail preservation
+  from smooth but invented content. Label face artifacts/blur/blockiness as
+  quality warnings, separately from identity and overlay detection. Compare
+  cleanup/denoise/tone on identical native and padded views; do not promise
+  recovered face detail or auto-select enhancements from pixel-change values.
+  New restoration models/dependencies require a measured need and rights/
+  hardware review; face-analysis M1/M2 remains the explanation/evaluation owner.
+- [ ] **P1 ai** I36 Run the named-case benchmark plus a deterministic,
+  hash-deduplicated control sample of at least 20 additional images, spanning
+  Various, other identities, Artists, clean/no-border photos, genuine logos,
+  screenshots, full figures and unusual poses. Keep the two explicitly good
+  controls below. Label expected preserve/remove/uncertain regions before
+  tuning and keep separate holdouts. Require zero newly clipped labelled
+  subject regions and zero newly repainted labelled garment/face regions;
+  report remaining overlays, false positives and uncertain cases individually,
+  not just an aggregate score. Run focused regressions and existing validators
+  before a reviewable new run; never overwrite v16 or rerun all 2,741 first.
+- [ ] **P1 you** I37 Review the bounded A/B report and approve/reject specific
+  crop/erase/framing rules after I30-I36. No further full-input processing,
+  revised matching, installation or production cutover until this gate.
+  I29 remains partial review, not blanket recipe acceptance.
+
+### Named-case coverage ledger
+
+Implementation checkpoint: all 26 exact case-insensitive source paths resolved
+against the frozen manifest, plus 20 additional deterministic hash-distinct
+controls (46 records). Selection/evidence JSON is retained in the session files;
+controls still need visual preserve/remove/uncertain labels and separate
+holdouts before any acceptance claim. The missing-options-table regression
+failed before the report fix, then all 61 preparation tests passed. New reports
+list UI proposals and diagnostic masks without changing processing selection.
+The frozen v16 report remains unchanged; erase-order and framing fixes are
+still open.
+
+The first same-mask reconstruction comparison is published and checked at
+`Working\_reports\eraser-compare\intake-20261027-46\index.html`.
+It binds the frozen v16 report/receipt and exact selected input/mask hashes:
+22 rows compare saved LaMa against OpenCV Telea and Navier-Stokes (radius 3);
+24 explicitly skip (17 no detected clutter, six nothing left after crop,
+one face-size Junk hold). A skip does not prove a clean image. All 46 rows
+appear in the HTML, with 242 resolved local image references and shared
+header/footer. The launcher check verifies all saved output hashes.
+No candidate is selected and no original, identity or baseline report changes.
+
+This is the post-crop reconstruction slice of I35, not I32's erase-first
+experiment or acceptance of the masks. On the first Angelica example, direct
+inspection shows conspicuous Telea smearing in the right-edge masked areas
+where the saved LaMa result looks smoother; this is one observation, not an
+aggregate method ranking or proof of recovered detail. Precise mask labels,
+ordering/border/framing fixes, synthetic-overlay ground truth and holdouts
+remain open. The integrated browser refused this B: location as untrusted;
+HTML asset validation and direct PNG inspection succeeded, but browser visual
+acceptance is not claimed.
+
+Paths below are the feedback's source paths, not assertions about identity.
+Every row is mandatory in I30/I36, including observations with pleasing results.
+
+| Source relative path | Expected investigation / control |
+| --- | --- |
+| `Angels/angelica/gallery/angelica_shot_20261010125309.jpg` | I31 split black border; I32 erase-first versus top/bottom overlay crop, preserve successful corner erase |
+| `Angels/angelica/gallery/angelica_shot_20261019151702.jpg` | I34 visible feet lost during composition |
+| `Angels/angelica/gallery/angelica_shot_20261019152041.jpg` | I31 left/right residual borders |
+| `Angels/azaline/gallery/azaline_image_7514006418998039315.jpg` | I33 explain both logo masks; no assumed logo truth |
+| `Angels/Camaris/gallery/camaris_image_7514748052075708923.jpg` | I34 protect high bun/hair above detected person |
+| `Angels/Camaris/gallery/camaris_image_7514748135775865528.jpg` | Known-good framing control; preserve successful centring |
+| `Angels/Camaris/gallery/camaris_shot_20260922114030.jpg` | I30 list UI proposal in table; I32 residual pass versus crop on complex clutter |
+| `Angels/Gavrielle/gallery/gavrielle_image_7513253800075950209.jpg` | I33 expose unexplained erase masks |
+| `Angels/Gavrielle/gallery/gavrielle_image_7513253926403921493.jpg` | I35 choppy/blended face quality, not proof of denoise benefit |
+| `Angels/Gavrielle/gallery/gavrielle_image_7513253948677345758.jpg` | I35 second face-quality case |
+| `Angels/Gavrielle/gallery/gavrielle_image_7513254229434089023.jpg` | I33 flowers are not a logo even if removal was liked |
+| `Angels/haniya/gallery/haniya_image_7513256089848621472.jpg` | I33 preserve floral garment; distinguish actual circular badge |
+| `Angels/haniya/gallery/haniya_image_7517983182019263595.jpg` | I33 background-light false positive; preferred edit is separate intent |
+| `Angels/haniya/gallery/haniya_image_7517985401479370775.jpg` | I33 protect red dress on arm |
+| `Angels/haniya/gallery/haniya_image_7517987028560998931.jpg` | I34 diagnose horizontal imbalance and side padding |
+| `Angels/Nyxene/gallery/nyxene_shot_20260830115237.jpg` | I31 residual manually cropped bottom border |
+| `Angels/Nyxene/gallery/nyxene_shot_20260830115304.jpg` | I33 protect pink dress |
+| `Angels/Ravaelle/gallery/ravaelle_image_7517982505816218878.jpg` | I33 coloured/cursive lower-left overlay text; protect subject/clothing text |
+| `Angels/sammara/gallery/sammara_image_7513253419079900707.jpg` | I34 preserve visible shoes |
+| `Angels/seraphine/gallery/seraphine_image_7515814455928183144.jpg` | I33 Dola AI text positive, not white-region removal |
+| `Angels/seraphine/gallery/seraphine_image_7515814642642047791.jpg` | I33 second Dola AI text positive |
+| `Angels/seraphine/gallery/seraphine_image_7518030909567781676.jpg` | I34 protect dress/body extent |
+| `Angels/seraphine/gallery/seraphine_image_7518031624882793107.jpg` | I31 bottom border; preserve successful top composition |
+| `Potentials/Afton Voss/gallery/afton_voss_shot_20260922114007.jpg` | I32 leg-preserving erase-first comparison |
+| `Potentials/Amara Berkley/gallery/amara_berkley_shot_20261010125440.jpg` | I32 right overlay erase versus crop |
+| `Potentials/Fia Hadley/gallery/fia_hadley_shot_20261010125509.jpg` | Known-good crop/erase/text/leg-preservation control |
+
+General Angelica cleanup approval is positive evidence for those inspected
+results only. It does not accept unknown logo masks or leg/hair loss.
+Prompt fidelity, person-data deduplication and the Sovereign Females test-bed
+move belong to [manual migration](2026-10-22-manual-prompts-to-art-library.md#oct-27-source-faithful-prompt-reconciliation-and-female-test-bed);
+dynamic category paths belong to rendering R44, not native intake renaming.
+
 ## Oct 26 guiding boundary for intake
 
 Intake remains the automatic source-preparation and likeness-entry point for the
@@ -1399,5 +1578,170 @@ day-hygiene validation and explicit commit/push authorization.
 <!-- markdownlint-disable MD013 -->
 ```text
 I hope all the items I am giving you are incremental improvements on the plans we have written and not a major departure.  Sorry that I might be bringing in scope, but I won't be re-running a rebase to test things again until we get this sorted out so that the rebase will use the new intake processing to automatically process all images and not just the likeness matching - the rebase is a clean-start as if I just provided those images the first time.  So want to make that clear in the entire scope and scheme of things.  We can do an intake only portion of the rebase or the entire intake and matching and assignment process.  The gallery should be the one-stop-shop for where you can see verything.  If that means we also need a menu with a hamburger and more advanced features on the pages to align with industry standards we can create common .css and headers and such.  I'd also lo cool footer on the bottom - not just a basic background.  Even if just colored and it should show a version, etc... just like a professional studio gallery. But, I love how it works so far.  Keep going, think deeply, update plans, update docs - commit and push when code is clean since we have a lot outstanding right now.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Oct 27 intake review (verbatim)
+
+Source: `feedback/image_intake_feedback.md`, received Oct 27, 11:05 -05:00.
+Coverage: I30-I37 and the named-case ledger above; general observations and
+questions are answered in the implementation explanation. The source remains
+in place for further review; no feedback deletion is requested.
+
+<!-- markdownlint-disable MD013 MD009 -->
+```text
+# Intake Review and Feedback - 10/27/2026
+
+I am reviewing the full intake crop/erase/crop review and have some observations.
+
+## Observations
+
+In general, I love most of the processing of images and how it's all working in the complate intake and review.  What I am wondering is whether or not this page also represent the assignments of the images or this is just taking everything and processing it based on it's current assignments of the identities?  I am guessing that's the case - but just wanted to confirm that.
+
+### Denoise Question
+
+I have a simple question about the denoise that I would like confirmed.
+
+denoise: 0.314s; pixel change 2.16/255
+
+So what impact does this have on the quality, scale or results of the image?  In looking at them, I tend to like them just as much as the results after cropping/erasing, but want to understand which of the images are better quality to feed into the pipeline for comfyui?  What did the denoise actually do with the image?
+
+### Erasing
+
+What is the technique used in erasing.  Sometimes it seems to bring the background back perfectly and other times it looks more like a smudge.  It's still better to have the logo's remove in general, but I don't know if there are things we can do to make it less smudge and more bring back the original part of the image more accurately.  Are there other techniques of erasing we could compare and contrast together?
+
+## Angels General Feedback
+
+I like how the erases is working to revmove the circle logo on those various pictures and would agree with the recommended images after the sequence.  Most don't need cropping so those being skipped are all good.  So I am pretty happy with Angelica's output overall.
+
+## Angels/angelica/gallery/angelica_shot_20261010125309.jpg
+
+- The first crop to geometry didn't entirely take the black border out, it split it leaving a small portion still visible.  
+- The second crop then took the overlay pieces on top and bottom and it remove those pieces without trying to erase and preserve the content underneath.  It did recognize it in the "Trimmed [0, 211, 1080, 1673] of the first crop: top 9 part(s), person lost 0.4%; bottom 18 part(s), person lost 7.3% (screen-wide app bar below the hips). A pure crop: no pixels invented; the person and a margin are kept." comment, which indicates that the crop was intended to remove the overlay without affecting the person significantly.
+  - But my question is whether or not we should have attempted to erase that overlay instead of cropping it, to see if we could preserve more of the original image content underneath?
+- The erase step did a good job of removing the remaining icons on the right bottom corner without affecting the underlying content.
+- The recommended photo is decent and it's not a huge loss - I just want to understand if there is some potential for preserving more of the original image content by using erasing instead of cropping in certain situations.
+
+### Cropping and Erasing A/B Testing
+
+- This cropping and erasing sequence makes me wondering if we should consider trying to erase overlays first before resorting to cropping, to see if we can preserve more of the original image content.  If we could run some A/B Testing on scenarios where overlays are present, we might be able to determine the best approach for maintaining image quality and content integrity.
+  
+## Angels/angelica/gallery/angelica_shot_20261019151702.jpg
+
+- This one seemed to crop off her feet in the composition to position her body more centrally.  What would be the cause of that as her bare feed are visible in the main picture and then cropped out at that point?  It's not a big deal, just more curious what is happening in this case as it doesn't always do that.
+
+## Angels/angelica/gallery/angelica_shot_20261019152041.jpg
+
+- There's some black borders on the right side of this picture that aren't detected and cropped away entirely it left a small strip on the right and left sides.  "Only near-solid external black/white strips removed; two-pixel boundary guard retained." We don't have many images with side borders, but looks like in this case we didn't get them all and the other checks also did not catch them after the first crop.
+
+## Angels/azaline/gallery/azaline_image_7514006418998039315.jpg
+
+- This one did some erasing on areas where I don't actually see a logo present to erase.  "LaMa repainted 2 clutter shape(s) (logo), 3.26% of the image; face boxes are never repainted. Repainted areas are plausible, not recovered; compare with the original." But I don't know what it saw in the image to trigger that as visually I don't see anything there.
+
+## Angels/Camaris/gallery/camaris_image_7514748052075708923.jpg
+
+- This one cropped the top of her hair during composition to frame the person "Framed the person [105, 343, 1074, 1920] with a small margin, widened toward 944x1104: [0, 233, 1080, 1920]. The person mask ends mid-limb, so the bottom is kept to the frame edge. Pure crop of the cleaned image." and didn't realize that it was cropping her hair that is up in a top bun or styled above her head.  It's interesting to see how the framing logic prioritizes the person's body over other elements like hair in the composition.
+
+## Angels/Camaris/gallery/camaris_image_7514748135775865528.jpg
+
+- This one did a good job at composing the image to frame the person appropriately without cutting off important elements like hair or extremities.  It seems to have balanced the framing logic well in this case, maintaining the integrity of the subject's appearance while still centering the composition effectively.  It got rid of some of the top of the picture that was causing things to be off center.  So this was a good framing.
+
+## Angels/Camaris/gallery/camaris_shot_20260922114030.jpg
+
+- This one was complex and the cropping and erasing didn't actually get rid of all the clutter and the recommended image still has stuff on it.  It does show a "ui-crop-proposal: 0.280s; pixel change not comparable (different crop dimensions)" which is actually better, but it was just a crop of the stuff that was not found on the image.
+- This feeds back to the A/B testing of cropping and erasing.  I am wondering if we might also need a second pass with erasing to check for remaining clutter not found in the first pass.  It seems that relying solely on the initial detection and cropping might leave some residual clutter that could be addressed with an additional erasing step.
+- Ultimately the "ui-crop-proposal: 0.280s; pixel change not comparable (different crop dimensions)" would have been the best proposal - but I don't see it listed in the table of options for this image.  Just as an image in the bottom section of all the images.  
+- This one needs more digging as it's one of the complex images we need to process.
+
+## Angels/Gavrielle/gallery/gavrielle_image_7513253800075950209.jpg
+
+- This one the eraser also found things to erase that I don't see a logos.  Is it just finding patterns or textures that it interprets as clutter or logos, even if they are not visually obvious to me?  It would be helpful to understand the criteria it uses to identify areas for erasing in such cases.
+
+## Angels/Gavrielle/gallery/gavrielle_image_7513253926403921493.jpg
+
+- This one her face is not well blended and a bit choppy.  It might benefit from additional blending or touch-up to ensure a smoother and more natural appearance, but not sure if we have any potential to check for photo/face quality of the images and improve them in the enhancements portion along with denoise and tone.  Neither of them caught the quality issue in this photo.
+
+## Angels/Gavrielle/gallery/gavrielle_image_7513253948677345758.jpg
+
+- Same image quality issue with this one for what her face looks like.
+
+## Angels/Gavrielle/gallery/gavrielle_image_7513254229434089023.jpg
+
+- This one erased some flowers on the image as clutter - which is actually fine.  So just more an observation that it found the same pink/purple flowers as is the main circle overlay for GMW and treated the flowers as a logo.  But that's ok and maybe that's what's happening in the other places where it find some underlying colors that are similar and blends them away.
+
+## Angels/haniya/gallery/haniya_image_7513256089848621472.jpg
+
+- This one was a bit more destructive to her outfit as it blended away what it considered junk which was just part of her flowered outfit in those same pink/purple colors.  So we may need to adapt the junk to look for more specific circular logo for GMW in the colors.  That might be what is needed for a photo like this.  I don't want to change it so it missed the logo in other images - but this is a case where it was overly agressive on the erasing.
+
+## Angels/haniya/gallery/haniya_image_7517983182019263595.jpg
+
+- This one picked up a solid white light in the background and treated it as the overlay icons, so it's likely the same color in the background, but I like how it erased it as it makes a better picture.  So this is also an example of extra erasing, but in this case it was a good outcome.
+
+## Angels/haniya/gallery/haniya_image_7517985401479370775.jpg
+
+- This one also erased part of her red dress on her arm in the lower right of the image.  It's not clutter and didn't need to be erased.
+
+## Angels/haniya/gallery/haniya_image_7517987028560998931.jpg
+
+- This one she's on the very far right of the image and it seems like the composition could have cropped some of the excess of the right side.  It's doing a great job getting rid of stuff at the top to bring the face and body into vertical postion, but the horizontal composition isn't as good.  It would ultimately result in padding a ton of the gray on the sides, but then she'd end up more in the center of that final.  This is likely happening on many other images as well, so we can use this to verify the logic on the left/right positioning of the person in the image.
+
+## Angels/Nyxene/gallery/nyxene_shot_20260830115237.jpg
+
+- This one did clean-up the bottom of the image, but it left some black border there that could have been cropped.  This was a case where I attempted to manually crop it a while ago and left some small residual on the bottom and it didn't get it all in this processing.
+
+## Angels/Nyxene/gallery/nyxene_shot_20260830115304.jpg
+
+- This one also found part of pink dress and treated it as a logo and erased it.  So I do think our logo detection needs to be tightned up.  One more example for you to inspect.  There are more I see as I scan - but I won't call them all out again, we have enough samples to work with to try and adjust how it's working compared to ones where it necessary.
+
+## Angels/Ravaelle/gallery/ravaelle_image_7517982505816218878.jpg
+
+- This one has some text on the screen in the lower left that wasn't caught as overlay.  It's a slightly different color than the typical overlay icons, so it may have been missed for that reason.  That said, I don't want to over-correct and start erasing non-text in the same colors so the type of overlay pattern for something like this need to understand it's text and not just any similarly colored area.  This may also help with blending away the overlay on the top of the screens on screenshots if we can ensure we get the right shape of overlay text or the oval areas around it.
+
+- This one was cursive writing of some comments about the image.  Again, finding "text" written would be fine to remove as overly, but not if it's on an outfit or part of the subject itself.
+
+## Angels/sammara/gallery/sammara_image_7513253419079900707.jpg
+
+- This one cropped some of her shoes off in the composition to frame her in the image.  Not sure if it's a big deal, but seems like some tuning here might be helpful in ensuring the entire both if present in the image is not cropped during the composition to frame her.  
+
+## Angels/seraphine/gallery/seraphine_image_7515814455928183144.jpg
+
+- This one missed some text on the lower right of the screen, some white "Dola AI" is written there.  Again, if we add this into the junk patter, I only want it to find text.
+
+## Angels/seraphine/gallery/seraphine_image_7515814642642047791.jpg
+
+- Same "Dola AI".  There are several more like that as well, I won't call them all out, but it's another specific patter we can find and potentially add to our junk pattern for text detection.
+
+## Angels/seraphine/gallery/seraphine_image_7518030909567781676.jpg
+
+- This one cropped some of her dress/body off in the composition/framing, so fine tuning for why or at least understanding why it chose to do that is interesting.
+
+
+## Angels/seraphine/gallery/seraphine_image_7518031624882793107.jpg
+
+- This one cropped the top properly in composition, but missed a black bottom border during the initial cropping phase.
+
+## Potentials/Afton Voss/gallery/afton_voss_shot_20260922114007.jpg
+
+- This one more agressively cropped some of the bottom of the image, potentially cutting off part of the subject's legs.  Fine tuning the cropping logic to avoid removing important parts of the subject while still handling overlays correctly would be beneficial.  I think this is an example where erasing ahead of that second crop could help preserve more of the subject while still managing the overlay effectively.
+
+## Potentials/Amara Berkley/gallery/amara_berkley_shot_20261010125440.jpg
+
+- This one seems to cropped more of the right overlays without attempting to erase them, which also suggests that erasing before the second crop would be more effective in preserving the subject while still handling overlays correctly.
+
+## Potentials/Fia Hadley/gallery/fia_hadley_shot_20261010125509.jpg
+
+- This one did a great job of cropping the overlay and the eraser did a good job of finding the text and blending it way instead of cropping off the legs.  It demonstrates a good balance between overlay removal and preserving the subject in the image.  This is a solid one to ensure we don't break when making other adjustments to the cropping and overlay removal logic.
+```
+<!-- markdownlint-enable MD013 MD009 -->
+
+## Intake restart and feedback handling, Oct 27, 11:44 (verbatim)
+
+Coverage: feedback disposition is in the plan index; I30-I37 own intake
+implementation/A-B work; template migration is deferred. N11/N12 own the
+original-name conflict subsequently resolved by the user's clarification.
+
+<!-- markdownlint-disable MD013 -->
+```text
+I would like to start on implementing the changes we need for fixing, A/B texting, etc... for the intake, we can defer work on the templates until later and I have other feedback items in the C:\Soverign-Territories\soverign-territories\feedback that I wrote up as well. Ideally, we look at that directory and ensure all feedback items are incorporated and the ones we have in docs/plans would be _archived like the others as part of our working agreement so I know what feedback has been taken and what is still "live" feedback unhandled.  Can we first take care of the C:\Soverign-Territories\soverign-territories\feedback files and then get started on the implementation of the feedback items from today.  If more recent feedback supercedes any previous feedback items - please stop and ask me about them.  Ideally the everything in the feedback is cleaned up and only have open items you have not handled active.  Which there can be a few that I just wrote and we haven't discussed.  But if it's just a question and it's answered, please update those feedback items with proper information and archive them - like the others are archived.
 ```
 <!-- markdownlint-enable MD013 -->

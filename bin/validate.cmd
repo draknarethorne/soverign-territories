@@ -47,6 +47,11 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
+%PY% tools\art\test_eraser_benchmark.py
+if errorlevel 1 (
+  call "%~dp0_end.cmd" 1
+  exit /b 1
+)
 %PY% tools\art\test_preparation_provenance.py
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1

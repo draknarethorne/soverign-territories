@@ -322,6 +322,42 @@ not mean clean. Control means oriented/sRGB only. Denoise and tone remain separa
 comparison alternatives. Padded examples are downstream canvas fitting, not
 another enhancement.
 
+#### Same-mask eraser A/B (comparison only)
+
+`bin\eraser-compare.cmd` compares the **saved LaMa eraser** of an existing
+preparation run with OpenCV Telea and Navier-Stokes inpainting (radius 3). Each
+method fills the identical saved binary `eraser-mask` on the identical
+pre-eraser input (the eraser step's traced input, never the final selection);
+outside the mask the OpenCV outputs are byte-identical to that input, and this
+is verified. List 1 to 64 exact report `source` strings in a JSON array, or
+objects with `source` and an optional `sourceSha256` that must match the report
+(no duplicates); every listed row is either compared or recorded as an explicit skip
+(no saved eraser or mask), never silently dropped.
+
+```bat
+bin\eraser-compare.cmd --report "B:\Sovereign Territories Sandbox\Working\_reports\preparation\RUN" --sources "D:\path\sources.json" --out "B:\Sovereign Territories Sandbox\Working\_reports\eraser-compare\NEW-RUN" --dry-run
+```
+
+The root comes from the report's frozen manifest: either the sandbox `Working`
+itself, or a clean-rebase intake mirror `Working\_sandbox-state\RUN\inputs` whose
+`_reports\preparation\all` report is bound by that run's `intake.json` (manifest
+hash, recipe and the complete source inventory); other roots are refused. `--out`
+must be a new run directly in the real `Working\_reports\eraser-compare`, never
+inside the intake run.
+`--dry-run` (default) writes nothing; `--apply` stages and renames one immutable
+run (native PNGs, padded 944x1104 displays, source/input/mask/baseline copies,
+`sources.json`, `manifest.json`, `index.html`; the shared gallery banner is copied
+once to `Working\_reports\_assets`) and repeating it only verifies;
+`--check` re-verifies the selection, report binding, the selected report
+artifacts, every output hash and the outside-mask rule, read-only, without
+loading a model. Only the listed rows' artifacts are hashed, not the whole report.
+
+Limits: no candidate is selected, recommended or assigned. Inside-mask pixel
+change is not quality, and every fill is synthetic reconstruction, not recovery.
+This is a post-crop reconstruction A/B, not an erase-first sequence; LaMa ran
+at patch scale with a slightly dilated model mask but pasted only inside the
+saved mask. Size or non-binary mask mismatches and any hash mismatch refuse the run.
+
 #### Earlier sidecar recipes (v5-v13), not current selection rules
 
 The following explains old immutable reports only. The current v16 order and

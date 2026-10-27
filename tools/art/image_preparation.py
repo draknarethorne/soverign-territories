@@ -509,6 +509,23 @@ def report(data, *, detail=False):
                 rows.append(f'<tr><td>{esc(s["name"])}</td><td>{esc(s["status"])}</td>'
                             f'<td>{esc(s["input"])}</td><td>{link}</td><td>{esc(s["selected"])}</td>'
                             f'<td>{esc(s["reason"])}</td></tr>')
+            traced = {s["candidate"] for s in processing["steps"] if s["candidate"]}
+            for name in row["variants"]:
+                if name in traced:
+                    continue
+                diagnostic = name.endswith("-mask")
+                if name == "ui-crop-proposal":
+                    reason = ("Legacy screenshot rectangle; comparison only, not selected. "
+                              "May remove hair, body or clothing; no inferred quality advantage.")
+                elif diagnostic:
+                    reason = "Diagnostic mask, not a photograph or a generation input."
+                else:
+                    reason = "Retained comparison/supporting image; does not change the processing decision."
+                link = f'<a href="{quote(prefix + row["variants"][name]["path"])}">{esc(name)}</a>'
+                rows.append(f'<tr><td>{esc(name)}</td>'
+                            f'<td>{"diagnostic" if diagnostic else "comparison-only"}</td>'
+                            f'<td>See recorded lineage</td><td>{link}</td>'
+                            f'<td>{esc(processing["final"])}</td><td>{esc(reason)}</td></tr>')
             processing_html = (
                 f'<h3>Decision summary (provisional, please review)</h3><div class="panels">{summaries}</div>'
                 f'<p>{esc(processing["faceAssessment"])}</p><h3>Processing trace</h3>'
@@ -550,8 +567,10 @@ def report(data, *, detail=False):
             f'{geometry_html}'
             f'{recommendation_html}'
             f'<p>Decision: processing is skipped for unusable/unassessed faces. Otherwise each step keeps its '
-            f'result when it is safe: first crop, a second crop that never cuts the person, the LaMa eraser for the '
-            f'clutter left inside, then framing. Denoise/tone are never accepted automatically.</p>'
+            f'result under the recipe guards: first crop, edge-clutter crop (the screenshot app-bar exception '
+            f'can remove part of the person), LaMa for remaining clutter, then framing. '
+            f'Person masks can miss hair, clothing and extremities; review the actual crops. '
+            f'Denoise/tone are never accepted automatically.</p>'
             f'<div class="panels">{"".join(panels)}</div>{padding}</article>')
     return (
         '<!doctype html><html lang="en"><meta charset="utf-8">'
@@ -583,7 +602,9 @@ def report(data, *, detail=False):
         'not Junk. Multiple faces and overlays alone are not rejected by this gate. Detection can miss faces.</li>'
         '<li><strong>Control:</strong> EXIF orientation and color-profile conversion to sRGB only; '
         'same content, not denoised, cropped or enhanced.</li>'
-        '<li><strong>Denoise:</strong> gentle smoothing alternative; can remove real fine detail.</li>'
+        '<li><strong>Denoise:</strong> gentle bilateral smoothing at the same native dimensions; '
+        'can remove real fine detail. Seconds measure processing time, not diffusion strength. '
+        'Pixel change is average absolute RGB channel change, not a quality score.</li>'
         '<li><strong>Tone:</strong> local light/contrast alternative, not denoise or overlay repair.</li>'
         '<li><strong>Geometry:</strong> solid borders and guarded black reel panels trimmed first; '
         'unchanged if none qualify. Denoise/tone start from the selected cleanup image.</li>'

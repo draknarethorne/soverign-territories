@@ -26,6 +26,38 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 
 The plans, their status and what each is are listed in [plans/README.md](plans/README.md); what is open, by priority and owner (what needs you first), is [todo.md](todo.md), generated from them. This document holds only what is decided and what is still a question.
 
+**Oct 27, 11:05 review pivot:** intake visual tuning is the immediate priority.
+The user's Angels/Potentials review is preserved in the intake plan, with all
+26 named examples mapped to border, mask, erase-order, framing and quality
+checks. Compare a bounded sample plus controls before changing the recipe;
+preserve the completed full-input report and leave its matching preview
+uninstalled. Crop-before-erase and the app-bar leg-loss exception are under
+review, not accepted defaults. Prompt migration must reconcile the manual
+wording, section order and independently placed features with existing person
+data, not substitute generic preservation policies as an exact migration.
+The requested generic Female move into the Sovereign Females test bed and
+category/person workflow paths are planned with reference/compatibility gates;
+no set, installed workflow or old receipt was moved by this documentation pass.
+Supported non-explicit wording remains the migration scope.
+
+**Oct 27 naming clarification:** after intake tuning, an explicit forced
+correction must replace a misassigned effective original name, not merely add
+an alias. Preserve the erroneous old value only in audit/undo history.
+Later family/current first/last-name changes remain separate from that corrected
+original identity; stable person IDs and locked cast slots do not change merely
+because a name is corrected. This decision resolves N11; implementation N12
+and family acceptance remain open. No existing identity was renamed here.
+
+**Oct 27 intake implementation:** all eight current feedback notes have been
+preserved, coverage-checked and individually archived. The preparation options
+table now includes unselected UI proposals and diagnostic masks; 61 focused
+tests pass. A new read-only-comparison launcher publishes saved-LaMa versus
+Telea/Navier-Stokes on the frozen masks: 46 selected rows, 22 compared and
+24 explicit skips, with apply/check successful. Report:
+`Working\_reports\eraser-compare\intake-20261027-46\index.html`.
+This does not fix or accept crop ordering, false masks or framing, and does
+not replace the v16 baseline or install its matching preview.
+
 **Oct 25 overnight rendering integration:** Sovereign Females is running at
 `127.0.0.1:8188` (ComfyUI 0.38.2, 970 node types). Request preview/prepare/check,
 four bounded clothed-preservation edit graph bindings, capability/model checks,

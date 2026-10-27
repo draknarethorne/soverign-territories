@@ -2,6 +2,20 @@
 
 **Status:** active (Phase 3; blocked on accepted Phase 1 preparation and Phase 2 recovery)
 
+## Oct 27, 11:05: intake review precedes the next rebase action
+
+The user has reviewed Angels and some Potentials in the completed preparation
+report and identified crop/erase/framing regressions. The bounded benchmark
+and acceptance gate now live in
+[intake I30-I37](2026-10-23-image-intake-preparation.md#oct-27-1105-review-driven-crop-erase-and-framing-refinement).
+Preserve the completed preparation and matching preview as baseline evidence;
+do not install that preview or repeat all inputs while the recipe is being
+tuned. If selected prepared bytes change after acceptance, produce a new
+versioned preparation/matching preview with all hashes and curation continuity
+reverified; the old preview is not transferable approval for changed inputs.
+C1-C3/C5-C7, R11 and Phase 2 recovery acceptance remain open. No source/cast
+decision is implied by a promising cleaned image or generated audition.
+
 ## Oct 27: complete preparation; matching-preview continuity correction
 
 The fresh run prepared and verified all **2,741 outcomes**, with

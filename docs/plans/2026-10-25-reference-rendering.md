@@ -2,6 +2,41 @@
 
 **Status:** active (Oct 25 overnight sandbox integration and bounded local rendering authorized; visual acceptance and production rollout remain gated)
 
+## Oct 27: category-aligned workflows and source-faithful recipes
+
+The 11:05 direction is preserved once in
+[manual migration](2026-10-22-manual-prompts-to-art-library.md#oct-27-chat-direction-verbatim).
+Intake I30-I37 now leads with a bounded named-case regression review; do not
+queue another broad sample while the source preparation and prompt fidelity
+are being reconciled. The 117 completed comparison outputs remain useful
+evidence, not acceptance of an exact manual-prompt migration.
+
+- [ ] **P1 ai** R44 Replace the new-job `reference/<person>/...` workflow/
+  SaveImage naming policy with verified source-category/person routing, e.g.
+  `Angels/<person>/1_Alpha/1_Prime/<name>_Qwen_Alpha_<recipe>__<timestamp>__<batch>__<job>`
+  and corresponding Models/Prospects/Potentials/Sisters paths. Define loose
+  Various placement explicitly (unknown identity must not be invented from
+  a filename); use a stable source-bound label where a person is not assigned.
+  Obtain category/person from verified request/source identity context,
+  not display-name parsing or synthetic resemblance. Freeze that context in
+  the receipt, so later recategorization does not rewrite provenance.
+  Reuse one path builder across UI/API workflows and outputs; keep internal
+  frozen inputs, request/evidence directories and batch ownership separate.
+  Handle same-name identities, slug collisions, path safety/length and
+  repeated runs without overwrites. Version the policy and keep old
+  `person-first-v2`/legacy paths readable in Outputs/Comparison/pull; never
+  rename accepted jobs, outputs or frozen receipts. Preview a small multi-
+  category batch and verify browsing, filtering, retention and stage chaining
+  before any deployment or queueing under the new policy.
+
+Manual migration P14-P16 owns wording/order, token reconciliation and person
+data resolution; P17 owns the generic Female test-bed move and workspace home.
+This plan owns consuming those exact resolved prompts, freezing their hashes/
+overrides and presenting supported deviations in the request preview.
+Existing R16/R22-R24/R33-R40, visual acceptance and GUI/local-service work stay
+open. R41's delivered human comparison is not completion of automated ranking
+or acceptance of the rendered people as identities/families.
+
 ## Oct 26, 23:12 continuation: finish the whole pipeline
 
 The renewed authorization covers iterative sandbox implementation, sampled

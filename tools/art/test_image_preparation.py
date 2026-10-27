@@ -140,7 +140,8 @@ class PreparationTests(unittest.TestCase):
         page = (self.output / "index.html").read_text(encoding="utf-8")
         self.assertIn("What each image means", page)
         self.assertIn("Original (recommended)", page)
-        self.assertIn("a second crop that never cuts the person", page)
+        self.assertIn("can remove part of the person", page)
+        self.assertNotIn("a second crop that never cuts the person", page)
 
     def test_source_folder_rejects_escape_archive_and_generated_directories(self):
         for folder in ("..", "_archive/Angels/gallery", "Angels/Fixed Slot/gallery_944x1104",
@@ -460,6 +461,23 @@ class PreparationTests(unittest.TestCase):
         mask = np.zeros((height, width), dtype=bool)
         mask[box[1]:box[3], box[0]:box[2]] = True
         return {"box": list(box), "mask": mask, "people": 1, "dropped": 0}
+
+    def test_options_table_lists_unselected_ui_proposal_and_mask_without_changing_trace(self):
+        self.assertEqual(self.call("--apply"), 0)
+        data = self.manifest()
+        row = data["photos"][0]
+        row["variants"]["ui-crop-proposal"] = dict(row["variants"]["control"])
+        row["variants"]["eraser-mask"] = dict(row["variants"]["control"])
+        before = json.dumps(row["processing"], sort_keys=True)
+        page = preparation.report(data).decode("utf-8")
+        trace = page.split("<tbody>", 1)[1].split("</tbody>", 1)[0]
+        self.assertIn(">ui-crop-proposal</a>", trace)
+        self.assertIn(">eraser-mask</a>", trace)
+        self.assertIn("comparison-only", trace)
+        self.assertIn("diagnostic", trace)
+        self.assertIn("not a quality score", page)
+        self.assertEqual(json.dumps(row["processing"], sort_keys=True), before)
+        self.assertEqual(row["processing"]["final"], "control")
 
     def test_composition_frames_person_mask_and_feeds_enhancements(self):
         self.photo.unlink()

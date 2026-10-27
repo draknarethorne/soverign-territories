@@ -5,7 +5,7 @@
 
 ## Open work, by priority
 
-### Your queue: needs your hands or a decision (42)
+### Your queue: needs your hands or a decision (43)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -23,6 +23,7 @@
 - [ ] P5 Inspect refreshed production galleries and ComfyUI ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] P6 Render/review the pilot with the agreed source images ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] C7 Review before/after cast seeds, hair/overlay outcomes and ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
+- [ ] I37 Review the bounded A/B report and approve/reject specific ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I29 Review the v16 report (`_reports\preparation\v16\index.html`): ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I24 After the sandbox rebase, drop `Various\<Name>\gallery` folders of ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I10 Review the pilot's control, denoise and tone candidates. ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
@@ -109,7 +110,7 @@
 - [ ] A7 Compare download/run versus a lightweight explicit ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] R10 Extend to male/animal recipe profiles only after suitable ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 
-### For the assistant, when you say go (97)
+### For the assistant, when you say go (110)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -134,6 +135,10 @@
 - [ ] P1 Freeze accepted rules, source scope and approved naming ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] P3 Verify a fresh external backup, restore procedure and ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] P4 Implement and run the recoverable production adapter only ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
+- [ ] P14 Complete the source-to-output fidelity ledger for all ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
+- [ ] P15 Reconcile manual labels with existing schemas/tokens before ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
+- [ ] P16 Implement and test supported source-faithful template ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
+- [ ] P17 Move the generic Female test-bed assembly from ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] P11 Define stage-input contracts that allow user-selected branch ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] P12 Define promoted-output directory structure for selected ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] P13 Inventory every remaining manual `0_Edit` variant and map ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
@@ -147,6 +152,12 @@
 - [ ] C3 Add schema-validated optional cast-release mode and shared ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] C5 Run repeatable sandbox scenarios from the same immutable ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] C6 Install reversibly only after approved preview, then normalize ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
+- [ ] I30 Freeze a review manifest of every example below, resolving ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I31 Refine solid-border detection on the named top/side/bottom ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I32 A/B v16 against border crop -> precise masked erase -> ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I33 Build positive/negative clutter masks from the examples: ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I34 Refine full-subject framing with evidence for high hair, ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I36 Run the named-case benchmark plus a deterministic, ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I18 Build a reviewed mask benchmark for complete bubble/logo shapes, including ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I11 Prioritize upstream geometric preparation before further ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I12 Complete upstream crop cutover with upkeep U7 after ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
@@ -155,6 +166,7 @@
 - [ ] I4 Benchmark shortlist locally on pilot copies, recording ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I6 Implement accepted preparation through shared clean/incremental ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I7 Wire accepted analysis/prepared/display hashes and recipe ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] R44 Replace the new-job `reference/<person>/...` workflow/ ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R11 Execute the recoverable all-input sandbox run and record ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R16 Define and implement the first publishable stage-chain ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R33 Add the body-pose pieces and a pose-choosing `0d` recipe ([2026-10-25](plans/2026-10-25-reference-rendering.md))
@@ -186,6 +198,7 @@
 - [ ] L3 Audit photo-detail grouping and category/name repetition, ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
 - [ ] L4 Validate both sort modes, filters, primary references, ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
 - [ ] L18 Improve preparation evidence-index I/O without weakening ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
+- [ ] N12 After intake tuning, update the naming contract and ([2026-10-22](plans/2026-10-22-identity-family-naming.md))
 - [ ] N4 Implement approved family schema, validators and helpers ([2026-10-22](plans/2026-10-22-identity-family-naming.md))
 - [ ] N8 Refresh the people index, galleries and documented ([2026-10-22](plans/2026-10-22-identity-family-naming.md))
 - [ ] E11 Finish the engine sunset/replacement matrix and ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
@@ -194,6 +207,7 @@
 - [ ] P7 Write the accepted prompt standard and recurring audit ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] P8 After replacements pass, retire `1b_Experiments` across ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] A5 Verify stable-directory report replacement, dated report ([2026-10-22](plans/2026-10-22-review-actions.md))
+- [ ] I35 Compare LaMa with existing local classical fills on the ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I27 Close the v16 visual gaps: the picture-in-picture reel ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I20 Complete subject-preserving composition before/after cleanup, beyond ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] R22 Face-similarity ranking of each job's outputs against its ([2026-10-25](plans/2026-10-25-reference-rendering.md))
