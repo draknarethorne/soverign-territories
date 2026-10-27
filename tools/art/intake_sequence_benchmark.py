@@ -8,8 +8,9 @@ import tempfile
 import time
 from urllib.parse import quote
 
+import numpy as np
 import eraser_benchmark as benchmark
-from intake_library import pipeline
+from intake_library import clutter, fill, pipeline
 from likeness_library import gallery_chrome
 
 preparation = benchmark.preparation
@@ -20,6 +21,66 @@ def recipe():
             "experiment": pipeline.EXPERIMENT_POLICY, "models": preparation.models.describe(),
             "pillow": benchmark.PIL.__version__, "opencv": benchmark.cv2.__version__,
             "selection": "comparison-only; never installed"}
+
+
+def pill_icons(array, top, bottom):
+    """Bounded bright outlined icon proposals beside an already detected pill, not semantic UI recognition."""
+    height, width = array.shape[:2]
+    bright = (array.min(axis=2) >= 240).astype(np.uint8)
+    region = np.zeros_like(bright)
+    region[max(0, top):min(height, bottom), int(.85 * width):] = 1
+    bright *= region
+    count, labels, stats, _ = benchmark.cv2.connectedComponentsWithStats(bright)
+    found = []
+    for label in range(1, count):
+        x, y, w, h, area = map(int, stats[label])
+        if (.025 * width <= w <= .1 * width and .01 * height <= h <= .06 * height
+                and .5 <= w / h <= 2 and .06 <= area / (w * h) <= .65
+                and y > top and y + h < bottom):
+            mask = clutter.grow(clutter.fill_holes(labels == label), max(3, round(width * .004)))
+            found.append(clutter.part("near-pill-icon-proposal", mask))
+    return found
+
+
+def head_overlay_candidates(image, row):
+    """Unclipped UI masks for a separate, deliberately synthetic head-overlap trial."""
+    array = np.asarray(image)
+    pills = clutter.bubbles(array) if row["geometry"]["overlayDetected"] else []
+    evidence = {"status": "skipped", "reason": "No detected screenshot search pill; not proof of clean.",
+                "selected": False, "parts": [], "outsideMaskIdentical": None}
+    row["experiment"]["headOverlay"] = evidence
+    if not pills:
+        return
+    mask = np.zeros(array.shape[:2], dtype=bool)
+    for item in pills:
+        mask |= item["mask"]
+        evidence["parts"].append({"kind": item["kind"], "box": item["box"]})
+    # Keep nearby icon proposals bounded to the detected pill's vertical band.
+    top = min(item["box"][1] for item in pills)
+    bottom = max(item["box"][3] for item in pills)
+    for item in clutter.glyphs(array, None, screenshot=True) + pill_icons(array, top, bottom):
+        x0, y0, x1, y1 = item["box"]
+        if x0 >= .8 * image.width and y0 >= top - .02 * image.height and y1 <= bottom + .02 * image.height:
+            mask |= clutter.grow(item["mask"], max(2, round(min(image.size) * clutter.GROW)))
+            evidence["parts"].append({"kind": "near-pill-icon-proposal", "box": [x0, y0, x1, y1]})
+    coverage = float(mask.mean())
+    evidence.update(coverage=coverage, maskPixels=int(mask.sum()))
+    if coverage > pipeline.MAX_FILL:
+        evidence.update(status="refused", reason="Complete UI mask exceeds existing maximum fill coverage.")
+        return
+    yield "head-overlay-mask", pipeline.mask_image(mask)
+    try:
+        painted = fill.fill(image, mask)
+    except (OSError, RuntimeError, benchmark.cv2.error) as exc:
+        evidence.update(status="failed", reason=f"Head-overlay reconstruction failed: {exc}")
+        return
+    if painted.size != image.size or not np.array_equal(np.asarray(painted)[~mask], array[~mask]):
+        raise ValueError("head-overlay reconstruction changed dimensions or outside-mask pixels")
+    evidence.update(status="comparison-only", outsideMaskIdentical=True,
+                    reason="Face guard deliberately bypassed ONLY for this unselected synthetic candidate. "
+                           "Hidden eyes/hair may be invented or distorted; not original/core likeness evidence. "
+                           "Icon masks are heuristic proposals, not verified UI segmentation.")
+    yield "head-overlay-reconstruction", painted
 
 
 def plan(report, data, sources, expected):
@@ -60,7 +121,10 @@ def page(data):
         notes = json.dumps({key: value for key, value in row["evidence"].items()
                             if key != "steps"}, indent=2)
         cards.append(f'<article><h2>{esc(row["source"])}</h2><p>{row["seconds"]:.3f}s; '
-                     f'experimental final: {esc(row["evidence"]["final"])}</p>'
+                              f'experimental final: {esc(row["evidence"]["final"])}</p>'
+                              + ('<p>Head-overlay reconstruction is UNSELECTED, synthetic and may alter identity.</p>'
+                                 if data.get("headOverlayEnabled") else '')
+                              +
                      f'<div class="panels">{"".join(panels)}</div>'
                      '<div class="trace"><table><thead><tr><th>Step</th><th>Status</th>'
                      '<th>Input</th><th>Candidate</th><th>Selected in experiment only</th>'
@@ -129,6 +193,10 @@ def run(args):
     planned = plan(report, baseline, sources, benchmark.parse_sources(payload)[1])
     if args.check or (args.apply and out.exists()):
         saved = verify(out, working, report, payload)
+        if saved.get("headOverlayEnabled", False) != bool(args.head_overlay):
+            raise ValueError("head-overlay mode differs; use the matching flag or a new output directory")
+        if args.apply and args.head_overlay and saved.get("headOverlayPolicy") != "full-pill-near-icon-v1":
+            raise ValueError("head-overlay policy changed; use a new output directory")
         if args.apply and saved["recipe"] != recipe():
             raise ValueError("experimental policy changed; use a new output directory")
         print(f"Verified {len(saved['rows'])} experimental sequence rows without rewriting.")
@@ -169,6 +237,9 @@ def run(args):
             started = time.perf_counter()
             for name, image in pipeline.experimental_candidates(original, row):
                 save(name, image)
+            if args.head_overlay:
+                for name, image in head_overlay_candidates(original, row):
+                    save(name, image)
             rows.append({"source": binding["source"], "binding": binding,
                          "seconds": round(time.perf_counter() - started, 4),
                          "images": images, "evidence": row["experiment"]})
@@ -176,7 +247,9 @@ def run(args):
         data = {"schemaVersion": 1, "tool": "intake-sequence-benchmark", "recipe": recipe(),
                 "root": str(root), "working": str(working), "out": str(out),
                 "report": {"path": str(report), "sha256": digest},
-                "selectionSha256": benchmark.sha(payload), "compositionComparisonOnly": True, "rows": rows}
+                "selectionSha256": benchmark.sha(payload), "compositionComparisonOnly": True,
+                "headOverlayEnabled": bool(args.head_overlay),
+                "headOverlayPolicy": "full-pill-near-icon-v1" if args.head_overlay else None, "rows": rows}
         put("index.html", page(data))
         data["files"] = files
         preparation.write_new(stage / "manifest.json", (json.dumps(data, indent=2) + "\n").encode("utf-8"))

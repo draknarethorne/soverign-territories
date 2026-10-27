@@ -110,7 +110,7 @@
 - [ ] A7 Compare download/run versus a lightweight explicit ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] R10 Extend to male/animal recipe profiles only after suitable ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 
-### For the assistant, when you say go (110)
+### For the assistant, when you say go (111)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -152,6 +152,7 @@
 - [ ] C3 Add schema-validated optional cast-release mode and shared ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] C5 Run repeatable sandbox scenarios from the same immutable ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] C6 Install reversibly only after approved preview, then normalize ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
+- [ ] I38 Add this Fantasy case to the next immutable benchmark ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I30 Freeze a review manifest of every example below, resolving ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I31 Refine solid-border detection on the named top/side/bottom ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I32 A/B v16 against border crop -> precise masked erase -> ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))

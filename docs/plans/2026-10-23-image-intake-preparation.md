@@ -44,6 +44,66 @@ immutable target's older folder; show both origins when building the review.
 
 ### Next bounded experiment and acceptance
 
+Oct 27, 13:26 review: the user prefers LaMa over Telea/Navier-Stokes across
+the inspected same-mask comparisons. Retain the classical methods as evidence,
+not the preferred replacement. This is method preference, not acceptance of
+the existing masks or crop recipe.
+
+The additional mandatory case is
+`Artists/Fantasy/gallery/fantasy_shot_20260902204526.jpg` (1080x2016).
+Direct inspection confirms a wide "Find related reels" pill over the upper
+face/hair, plus a separate top-right paper-plane icon. The frozen v16 trace
+actually detects `search-bubble` at [32,127,932,246] and marks it `refused-face`;
+it is not simply an oval-detection miss. A glyph at [520,160,654,209] is also
+refused at the face, while other lettering is filled separately. Trace the
+paper-plane icon independently; do not assume the pill mask covers it.
+
+- [ ] **P1 ai** I38 Add this Fantasy case to the next immutable benchmark
+  selection (do not edit the existing 46-source runs). Separate detected-but-
+  refused face overlap, incomplete pill/text mask and missed icon. Compare a
+  complete reviewed UI silhouette mask with the existing clipped/fragmented
+  mask. Keep no-crop/no-face-repaint as the automatic fallback. Test head-
+  overlapping fill only as an explicit synthetic-reconstruction candidate,
+  never recovered original or unreviewed likeness evidence; record changed
+  features and outside-mask preservation. Evaluate automated text/UI location
+  plus shape segmentation to avoid hand-drawing each repeated pill. Review
+  model/checkpoint rights and local hardware before adding a learned backend.
+
+Relevant source-available approaches: Inpaint Anything composes segmentation
+with LaMa or diffusion; SAM proposes masks but does not inherently know that
+a search bar is unwanted. IOPaint is a self-hosted application/backend
+collection, not a single automatic eraser model. Its documented diffusion
+options include SDXL inpainting/PowerPaint. MAT is a learned large-hole
+alternative but the upstream license is CC BY-NC 4.0, so it is not a
+drop-in commercially cleared game-production dependency. Code and checkpoint
+licenses require separate checks. No alternative was installed or run here.
+
+Sources checked: [Inpaint Anything](https://github.com/geekyutao/Inpaint-Anything),
+[IOPaint](https://github.com/Sanster/IOPaint),
+[MAT](https://github.com/fenglinglwb/MAT) and
+[MAT license](https://github.com/fenglinglwb/MAT/blob/main/LICENSE).
+No claim is made about the proprietary implementation behind Google's eraser.
+
+I38 implementation evidence: the opt-in `--sequence --head-overlay` mode
+automatically proposes the complete pill and constrained nearby outlined-icon
+mask, renders a separate LaMa candidate and records face-guard bypass,
+coverage, unchanged outside-mask pixels and explicit non-selection. It never
+changes the normal guarded final or default pipeline. The first run exposed
+a missed icon, so the second adds a tested bounded bright-outline proposal
+beside a detected pill, rather than broadly erasing white scenery.
+
+Published/checked report:
+`Working\_reports\eraser-compare\fantasy-head-overlay-icons-20261027\index.html`.
+The real mask contains the pill [32,127,932,246] and icon proposal
+[962,154,1038,224], 113893 pixels / 4.5067% of the native image.
+Outside-mask RGB is verified identical. Direct inspection confirms the pill
+and paper-plane are removed, but the obscured hair/forehead is synthesized
+and not established as faithful anatomy/identity. This is a review candidate,
+not automatic acceptance or proof of recovered head detail. Forty-one
+focused benchmark/sequence tests pass. No new model/dependency was installed.
+Remaining I38 work is evaluating semantic/generative alternatives and user
+quality acceptance; this implementation does not claim Google's quality.
+
 Oct 27, 11:44 execution authorization: start intake implementation and bounded
 A/B testing after the raw-feedback preservation/archival pass; templates
 remain deferred. I35 also compares precise versus envelope masks, native
@@ -1796,5 +1856,20 @@ original-name conflict subsequently resolved by the user's clarification.
 <!-- markdownlint-disable MD013 -->
 ```text
 I would like to start on implementing the changes we need for fixing, A/B texting, etc... for the intake, we can defer work on the templates until later and I have other feedback items in the C:\Soverign-Territories\soverign-territories\feedback that I wrote up as well. Ideally, we look at that directory and ensure all feedback items are incorporated and the ones we have in docs/plans would be _archived like the others as part of our working agreement so I know what feedback has been taken and what is still "live" feedback unhandled.  Can we first take care of the C:\Soverign-Territories\soverign-territories\feedback files and then get started on the implementation of the feedback items from today.  If more recent feedback supercedes any previous feedback items - please stop and ask me about them.  Ideally the everything in the feedback is cleaned up and only have open items you have not handled active.  Which there can be a few that I just wrote and we haven't discussed.  But if it's just a question and it's answered, please update those feedback items with proper information and archive them - like the others are archived.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Eraser preference and face-overlapping oval, Oct 27, 13:26 (verbatim)
+
+Coverage: method preference recorded above; I38 owns the additional case,
+automatic UI-mask proposal and isolated reconstruction experiment.
+
+<!-- markdownlint-disable MD013 -->
+```text
+LaMa seems the best in reviewing all the images - the others don't seem to capture enough of what the image is in the section to know how to paint it properly with removing things.  Not sure if there are other open source techniques to try as well.
+```
+
+```text
+## Artists/Fantasy/gallery/fantasy_shot_20260902204526.jpg misses the oval entirely that spans the entire top and her head is covered by that oval and the arrorw icon at the top right.  So this is where the overlay on the oval detection is a good thing to look at.  There's others that just crop that way, which is fine when it doesn't cut the head off - but figuring out how the eraser can actually replace that would be awesome.  I am using the magic eraser in the google files edit application and I know it uses some AI behind the scenes to handle the erasing - there's where I was wondering if there isn't a library that does exactly that available instead of me having to select that oval by hand and let it bring back the picture and her head.
 ```
 <!-- markdownlint-enable MD013 -->

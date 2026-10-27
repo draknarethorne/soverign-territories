@@ -381,6 +381,17 @@ padded previews and its ordered trace. The manifest binds the frozen report,
 selection, policy/model versions and output hashes. Failed publication leaves
 no partial run; repeated apply verifies instead of rerendering.
 
+For an explicitly requested head-overlapping search pill, add `--head-overlay`
+to `--sequence` and use a separate output run. This automatically proposes the
+complete detected pill and nearby outlined-icon masks without clipping them
+at the face. The supplemental reconstruction alone bypasses the face guard:
+it is never selected, never original/core likeness evidence, and may invent
+eyes/hair. Its mask, coverage, errors and outside-mask RGB preservation are
+recorded separately; the normal experimental final remains guarded. No pill
+means a visible skip, not permission to erase arbitrary parts of a head.
+Nearby-icon detection is a constrained shape/brightness heuristic, not
+proof that a highlight is UI. Review both masks and results.
+
 #### Earlier sidecar recipes (v5-v13), not current selection rules
 
 The following explains old immutable reports only. The current v16 order and

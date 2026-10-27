@@ -509,11 +509,15 @@ def main(argv=None):
     parser.add_argument("--out", required=True, help=f"absolute new Working\\_reports\\{OUTPUT_DIR}\\RUN")
     parser.add_argument("--sequence", action="store_true",
                         help="experimental erase-first sequence versus saved v16; apply uses pinned CPU models")
+    parser.add_argument("--head-overlay", action="store_true",
+                        help="with --sequence: supplemental synthetic full-pill reconstruction, never selected")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--dry-run", action="store_true", help="preview (default); writes nothing")
     mode.add_argument("--apply", action="store_true", help="publish a new immutable run; repeating verifies")
     mode.add_argument("--check", action="store_true", help="verify an existing run; read only")
     args = parser.parse_args(argv)
+    if args.head_overlay and not args.sequence:
+        parser.error("--head-overlay requires --sequence")
     try:
         if args.sequence:
             import intake_sequence_benchmark

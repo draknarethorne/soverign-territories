@@ -129,6 +129,50 @@ class EraserBenchmarkTests(unittest.TestCase):
         plain = {s["name"]: s for s in self.row(self.plain)["processing"]["steps"]}
         self.assertEqual(plain["eraser"]["status"], "skipped")
 
+    def test_head_overlay_is_unselected_complete_mask_and_preserves_outside(self):
+        import intake_sequence_benchmark as sequence
+        image = Image.new("RGB", (400, 900), (110, 80, 60))
+        mask = np.zeros((900, 400), dtype=bool)
+        mask[90:130, 20:370] = True
+        part = {"kind": "search-bubble", "box": [20, 90, 370, 130], "mask": mask}
+        row = {"geometry": {"overlayDetected": True}, "experiment": {"final": "control"}}
+        with mock.patch.object(sequence.clutter, "bubbles", return_value=[part]), \
+                mock.patch.object(sequence.clutter, "glyphs", return_value=[]), \
+                mock.patch.object(sequence.fill, "fill", side_effect=flat_fill):
+            outputs = dict(sequence.head_overlay_candidates(image, row))
+        self.assertEqual(row["experiment"]["final"], "control")
+        self.assertFalse(row["experiment"]["headOverlay"]["selected"])
+        self.assertEqual(row["experiment"]["headOverlay"]["status"], "comparison-only")
+        result = np.asarray(outputs["head-overlay-reconstruction"])
+        self.assertTrue(np.array_equal(result[~mask], np.asarray(image)[~mask]))
+        self.assertTrue(np.all(np.asarray(outputs["head-overlay-mask"])[mask] == 255))
+
+    def test_pill_icon_proposals_reject_solid_highlight_and_keep_outline(self):
+        import intake_sequence_benchmark as sequence
+        image = Image.new("RGB", (400, 900), (110, 80, 60))
+        draw = ImageDraw.Draw(image)
+        draw.rectangle((360, 95, 380, 116), outline="white", width=3)
+        found = sequence.pill_icons(np.asarray(image), 80, 140)
+        self.assertEqual(len(found), 1)
+        self.assertTrue(found[0]["mask"][105, 370], "erase hollow icon interior as well")
+        draw.rectangle((360, 95, 380, 116), fill="white")
+        self.assertEqual(sequence.pill_icons(np.asarray(image), 80, 140), [])
+
+    def test_head_overlay_model_failure_is_visible_not_success(self):
+        import intake_sequence_benchmark as sequence
+        image = Image.new("RGB", (400, 900))
+        mask = np.zeros((900, 400), dtype=bool)
+        mask[90:130, 20:370] = True
+        row = {"geometry": {"overlayDetected": True}, "experiment": {"final": "control"}}
+        with mock.patch.object(sequence.clutter, "bubbles",
+                               return_value=[{"kind": "search-bubble", "box": [20, 90, 370, 130], "mask": mask}]), \
+                mock.patch.object(sequence.clutter, "glyphs", return_value=[]), \
+                mock.patch.object(sequence.fill, "fill", side_effect=RuntimeError("test failure")):
+            outputs = dict(sequence.head_overlay_candidates(image, row))
+        self.assertNotIn("head-overlay-reconstruction", outputs)
+        self.assertEqual(row["experiment"]["headOverlay"]["status"], "failed")
+        self.assertIn("test failure", row["experiment"]["headOverlay"]["reason"])
+
     def test_sequence_preview_apply_check_repeat_and_artifact_tamper(self):
         def experiment(image, row):
             row["experiment"] = {"steps": [{"name": "control", "status": "comparison-only"}],
