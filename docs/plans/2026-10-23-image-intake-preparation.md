@@ -44,6 +44,57 @@ immutable target's older folder; show both origins when building the review.
 
 ### Next bounded experiment and acceptance
 
+Oct 27, 14:16 follow-up decision: use LaMa as the normal first eraser,
+with a bounded advanced second-pass candidate for unresolved/repeated overlay
+patterns or a crop that would lose visible subject content. This authorizes
+testing escalation, not blindly repainting every image twice or silently
+accepting invented facial detail. Preserve both the original and the first-pass
+result; compare an advanced method from the cleanest retained input with a
+sequential second pass so first-pass smearing is not mandatory input.
+
+The initial crop is preparation, not overlay removal at the expense of the
+person. On every side, remove only confidently separable borders/outside UI
+or irrelevant margins that do not cut visible person/hair/clothing. Leave a
+head-overlapping pill in place for masking/restoration before residual cropping.
+An incomplete person mask or face-only margin is not adequate safety proof.
+When uncertain, retain the native extent and pad later. This tightens I31/I32,
+not an assertion that current v16 or the experimental first crop already meets
+the rule. Existing screenshot panel heuristics can propose cuts before the
+eraser; the v2 grown-mask guard still cannot prove preservation of missed hair.
+
+I39 code slice implemented as experimental policy `erase-before-residual-v3`:
+recompute full-span solid-border geometry from retained original pixels rather
+than trusting frozen geometry that can already include panel cuts. Record
+screenshot panel proposals but never select them as the first crop. Existing
+face/subject guards still apply to solid-border candidates on all sides.
+A labelled unsegmented-hair regression failed before the change (400x800
+became 400x710) and passes after it with the original extent/hair preserved.
+All 103 focused sequence/benchmark/preparation tests pass; default v16 remains
+unchanged. No new real-image batch was run because the Fantasy review gate
+is pending. I39 remains open for real bounded acceptance and border refinements,
+not the implemented panel-crop prohibition.
+
+- [ ] **P1 ai** I39 Implement/test a conservative first-crop experiment on
+  all sides: separate border evidence from app-panel/overlay proposals; refuse
+  subject-uncertain removal before erasing. Reproduce top-pill/hair loss with
+  labelled missed-mask subject regions and border-free controls, compare exact
+  retained source coordinates and preserve no-crop fallback. Reuse I30/I36
+  cases and publish a new immutable bounded report, not a full rerun.
+- [ ] **P2 ai** I40 Add bounded advanced-erasure escalation to I38 after
+  backend/checkpoint rights and local capability checks. Trigger from explicit
+  unresolved overlay or subject-threatening crop evidence, not pixel-change
+  ranking or a residual miss. Compare first-pass LaMa, advanced reconstruction
+  from retained pre-loss input, and optional sequential second pass on repeated
+  patterns. Record masks, cumulative repainted region, feature changes, lineage,
+  failure/stop reason and outside-mask preservation; no automatic identity/core
+  promotion. At most one advanced pass for this experiment, then hold for review.
+
+**Review cadence:** pause when a new reviewable result is ready and tell the
+user exactly which report/candidate to inspect; wait for chat or feedback-file
+response before iterating beyond that review gate. The complete Fantasy
+pill/icon trial is already available and is the current pending review;
+do not queue another experimental batch while waiting.
+
 Oct 27, 13:26 review: the user prefers LaMa over Telea/Navier-Stokes across
 the inspected same-mask comparisons. Retain the classical methods as evidence,
 not the preferred replacement. This is method preference, not acceptance of
@@ -1530,6 +1581,22 @@ In summary, by focusing on image clean-up, establishing a standardized workflow,
 Sorry for getting distracted and a long winded explanation, but I wanted to make sure I captured all my thoughts on the image enhancement and clean-up process.  It's clear that we do have capabilities to enhance images already so doing that first seems to make the most sense and in that initial process we could then address junk images and move them out before running the likeness process.  
 
 I'd want you to think deeply about the end-to-end flow of the process since you've just worked on fixing up the gap in the generation of the 944x1104 images in the sandbox and now we can step back and document the existing flow and image processing from end-to-end in current state and then write up a proposed sequence for the optimized workflow, incorporating the enhancements, clean-up, and likeness evaluation steps in the most efficient and effective order.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Eraser escalation and conservative first crop, Oct 27, 14:16 (verbatim)
+
+Coverage: I39 owns conservative initial cropping; I40 owns advanced second-pass
+testing; I37 and the review cadence above own pause/review. This does not claim
+these implementation items are complete.
+
+<!-- markdownlint-disable MD013 -->
+```text
+I agree that we default to the LaMa for many items, but for items that require more advance work we'd do a second eraser pass on those items with the more advanced techniques and processing.  Being able to test how those work to get that right on the images where we have same sort of pattern would be great.  Sometimes we crop the pill away and lose a little hair so being able to deal with this before cropping would be great if we can get the right restoration of the underlying image.  We're already making multiple passes at cropping, so multiple passes at erasing with different techniques can improve the overall image we recommend.
+```
+
+```text
+One thing I am noticing is that the initial crop isn't always detecting the oval/pill at the top and sometimes it crops away the portion that would later be saved.  I think that initial crop needs to focus on the initial cropping of items that are not also cropping part of the person, hail, etc... it's an intended so that the eraser doesn't deal with that noise.  Maybe you've checked that already, but seems like we also need to ensure the first crop is less aggressive and only focus on boder and outlier items not needed for the image.  It can be all sides to simplify the eraser portion and lead into the second crop. Hope this all makes sense with everything going on.  Also, whenever you have something else for me to review, please pause and let me know about that item and I'll review and provide feedback in chat or write up a document if a lot of extra feedback.
 ```
 <!-- markdownlint-enable MD013 -->
 

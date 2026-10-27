@@ -139,6 +139,20 @@ class SequenceTests(unittest.TestCase):
         self.assertEqual(self.detector.call_count, 1)
         self.assertIn("do not establish clean", evidence["steps"][1]["reason"])
 
+    def test_initial_crop_does_not_reuse_panel_geometry_that_loses_unsegmented_hair(self):
+        self.row["geometry"]["box"] = [0, 90, 400, 800]
+        self.row["geometry"]["changed"] = True
+        # The detector misses hair above the mask; neither a zero-loss score nor
+        # the frozen screenshot geometry establishes that it is safe to remove.
+        self.image.paste((180, 90, 40), (160, 30, 240, 90))
+        with mock.patch.object(pipeline.geometry, "panel_box",
+                               return_value=((0, 90, 400, 800), "Face-margin panel proposal.")):
+            images, evidence = self.run_sequence()
+        self.assertNotIn("first-crop", images)
+        self.assertEqual(images[evidence["final"]].size, self.size)
+        self.assertEqual(images[evidence["final"]].getpixel((190, 50)), (180, 90, 40))
+        self.assertIn("comparison-only", evidence["panelAssessment"])
+
     def test_detector_errors_are_explicit_not_clean_results(self):
         self.detector.side_effect = cv2.error("detector offline")
         _, evidence = self.run_sequence()
@@ -163,8 +177,8 @@ class SequenceTests(unittest.TestCase):
         self.assertEqual(self.detector.call_count, 2)
 
     def test_first_crop_with_subject_loss_is_refused(self):
-        self.row["geometry"]["box"] = [0, 0, 400, 690]
-        images, evidence = self.run_sequence()
+        with mock.patch.object(pipeline.geometry, "border_box", return_value=(0, 0, 400, 690)):
+            images, evidence = self.run_sequence()
         self.assertNotIn("first-crop", images)
         self.assertEqual(evidence["steps"][0]["status"], "refused")
         self.assertGreater(evidence["steps"][0]["subjectLoss"], .005)
@@ -178,16 +192,16 @@ class SequenceTests(unittest.TestCase):
         self.assertEqual(evidence["detectorErrors"][0]["detector"], "face")
 
     def test_selected_first_crop_records_original_coordinate_lineage(self):
-        self.row["geometry"]["box"] = [20, 0, 400, 800]
-        images, evidence = self.run_sequence()
+        with mock.patch.object(pipeline.geometry, "border_box", return_value=(20, 0, 400, 800)):
+            images, evidence = self.run_sequence()
         self.assertEqual(images["first-crop"].size, (380, 800))
         self.assertEqual(evidence["candidates"]["first-crop"]["sourceBox"], [20, 0, 400, 800])
         self.assertEqual(evidence["steps"][0]["subjectLoss"], 0)
         self.assertEqual(self.detector.call_args.args[2], (20, 0))
 
     def test_cumulative_subject_budget_cannot_reset_after_first_crop(self):
-        self.row["geometry"]["box"] = [0, 0, 400, 798]
-        with mock.patch.object(pipeline, "second_crop", return_value=([0, 0, 400, 796], [], [])):
+        with mock.patch.object(pipeline.geometry, "border_box", return_value=(0, 0, 400, 798)), \
+                mock.patch.object(pipeline, "second_crop", return_value=([0, 0, 400, 796], [], [])):
             images, evidence = self.run_sequence()
         self.assertIn("first-crop", images)
         self.assertNotIn("residual-crop", images)

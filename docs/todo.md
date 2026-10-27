@@ -110,7 +110,7 @@
 - [ ] A7 Compare download/run versus a lightweight explicit ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] R10 Extend to male/animal recipe profiles only after suitable ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 
-### For the assistant, when you say go (111)
+### For the assistant, when you say go (113)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -152,6 +152,7 @@
 - [ ] C3 Add schema-validated optional cast-release mode and shared ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] C5 Run repeatable sandbox scenarios from the same immutable ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] C6 Install reversibly only after approved preview, then normalize ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
+- [ ] I39 Implement/test a conservative first-crop experiment on ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I38 Add this Fantasy case to the next immutable benchmark ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I30 Freeze a review manifest of every example below, resolving ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I31 Refine solid-border detection on the named top/side/bottom ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
@@ -208,6 +209,7 @@
 - [ ] P7 Write the accepted prompt standard and recurring audit ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] P8 After replacements pass, retire `1b_Experiments` across ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] A5 Verify stable-directory report replacement, dated report ([2026-10-22](plans/2026-10-22-review-actions.md))
+- [ ] I40 Add bounded advanced-erasure escalation to I38 after ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I35 Compare LaMa with existing local classical fills on the ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I27 Close the v16 visual gaps: the picture-in-picture reel ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I20 Complete subject-preserving composition before/after cleanup, beyond ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))

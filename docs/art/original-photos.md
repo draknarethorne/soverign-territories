@@ -368,8 +368,13 @@ and may download a missing model; preview/check never load models.
 
 The experimental order is first crop, guarded localized erase, one residual
 detection and subject-guarded crop, then framing. It does not use v16's
-screenshot bottom-bar exception permitting large subject loss. Residual
-clutter is evidence, not permission for an unbounded erase loop. Existing
+screenshot bottom-bar exception permitting large subject loss.
+First crop is recomputed from full-span solid-border evidence on the original
+image, not reused from the saved report's potentially panel-cropped geometry.
+Screenshot panel cuts are recorded as proposals only before erasing: face
+margins and incomplete person masks do not prove that hair is preserved.
+The existing subject/face guards still apply to proposed solid-border removal.
+Residual clutter is evidence, not permission for an unbounded erase loop. Existing
 heuristic overlay masks are not manually verified text/logo masks; face/body
 and coverage refusals remain visible. Successful processing is not visual
 acceptance, and a residual detection miss does not establish a clean photo.

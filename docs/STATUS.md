@@ -69,6 +69,15 @@ RGB for Angelica's feet and Camaris's bun. Selected crop mask loss is at most
 Report: `Working\_reports\eraser-compare\intake-sequence-v2-20261027-46\index.html`.
 Mask/border tuning and human acceptance are still open; default v16 is unchanged.
 
+**Oct 27, 14:16 direction:** first crop must only remove confidently
+subject-free borders/outside clutter on any side; do not sacrifice hair/head
+to remove a pill before restoration. LaMa remains the normal eraser, with a
+bounded advanced second-pass experiment for difficult cases, not repeated
+unconditional repainting. Preserve pre-loss input for alternate reconstruction.
+Pause at each new reviewable result; current pending review is the Fantasy
+complete-pill/icon LaMa trial. Conservative first-crop and advanced-backend
+implementation remain open; no new batch is queued while awaiting review.
+
 **Oct 25 overnight rendering integration:** Sovereign Females is running at
 `127.0.0.1:8188` (ComfyUI 0.38.2, 970 node types). Request preview/prepare/check,
 four bounded clothed-preservation edit graph bindings, capability/model checks,

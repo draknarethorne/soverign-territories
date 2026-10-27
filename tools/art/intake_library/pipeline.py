@@ -21,7 +21,8 @@ CARD_ON_BODY = .25      # a card lying this much on the person is not repainted 
 TARGET = 944 / 1104
 LIMB_WIDTH = .2         # a mask ending wider than this share of its widest row was cut off mid-leg, not at the feet
 EXPERIMENT_POLICY = (
-    "erase-before-residual-v2: original face assessment; guarded first crop; existing clutter masks and fill; "
+    "erase-before-residual-v3: original face assessment; recomputed solid-border-only first crop; "
+    "screenshot panel proposals comparison-only before erase; existing clutter masks and fill; "
     "refuse face/body/unknown and >20% coverage; one clutter redetection only after successful fill; "
     "one residual crop; cumulative grown-subject loss <=0.5%, no screenshot app-bar exception; "
     "composition proposals comparison-only, missing hair/feet completeness proof retains precomposition image; "
@@ -387,15 +388,19 @@ def experimental_candidates(image, row):
     if person is not None and method == "mask-rcnn":
         original_near = clutter.grow(person["mask"], max(4, round(min(image.size) * .01)))
     geo = row["geometry"]
-    first = tuple(geo["box"])
+    first = tuple(geometry.border_box(image))
     if geo.get("overlayDetected"):
-        first, panel_note = geometry.panel_box(image, faces, first)
-        evidence["panelAssessment"] = panel_note
+        panel, panel_note = geometry.panel_box(image, faces, first)
+        evidence["panelAssessment"] = (
+            "Panel proposal comparison-only before erase: face margins and incomplete person masks "
+            "cannot prove hair/body preservation. " + panel_note)
+        evidence["panelProposal"] = list(panel)
     if first != (0, 0, *image.size):
         if select_crop("first-crop", first):
             yield "first-crop", current
     else:
-        record("first-crop", "skipped", "No first crop proposed.", loss=0.0)
+        record("first-crop", "skipped",
+               "No confidently separable solid border; preserve all sides for overlay erasing.", loss=0.0)
     if original_near is None:
         for name in ("eraser", "residual-crop", "composition"):
             record(name, "skipped", "Person mask unavailable; uncertain body coverage is kept unchanged.")
