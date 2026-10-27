@@ -58,6 +58,17 @@ Telea/Navier-Stokes on the frozen masks: 46 selected rows, 22 compared and
 This does not fix or accept crop ordering, false masks or framing, and does
 not replace the v16 baseline or install its matching preview.
 
+**Oct 27 erase-first iteration:** the opt-in sequence experiment now compares
+all 46 frozen sources using localized erase before one guarded residual crop.
+Real output inspection caught missed hair/toes despite zero segmentation loss;
+composition proposals are therefore comparison-only, retaining the cleaned
+full input plus padding. The corrected v2 report preserves original dimensions
+for all six named hair/feet/shoes/dress/leg checks, including exact original
+RGB for Angelica's feet and Camaris's bun. Selected crop mask loss is at most
+0.3897%, with no large screenshot-loss exception or repeated fill loop.
+Report: `Working\_reports\eraser-compare\intake-sequence-v2-20261027-46\index.html`.
+Mask/border tuning and human acceptance are still open; default v16 is unchanged.
+
 **Oct 25 overnight rendering integration:** Sovereign Females is running at
 `127.0.0.1:8188` (ComfyUI 0.38.2, 970 node types). Request preview/prepare/check,
 four bounded clothed-preservation edit graph bindings, capability/model checks,

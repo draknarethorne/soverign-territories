@@ -507,12 +507,17 @@ def main(argv=None):
     parser.add_argument("--report", required=True, help="absolute existing Working\\_reports\\preparation\\RUN")
     parser.add_argument("--sources", required=True, help=f"JSON array of 1..{MAX_SOURCES} exact report row sources (strings, or objects with source/sourceSha256)")
     parser.add_argument("--out", required=True, help=f"absolute new Working\\_reports\\{OUTPUT_DIR}\\RUN")
+    parser.add_argument("--sequence", action="store_true",
+                        help="experimental erase-first sequence versus saved v16; apply uses pinned CPU models")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--dry-run", action="store_true", help="preview (default); writes nothing")
     mode.add_argument("--apply", action="store_true", help="publish a new immutable run; repeating verifies")
     mode.add_argument("--check", action="store_true", help="verify an existing run; read only")
     args = parser.parse_args(argv)
     try:
+        if args.sequence:
+            import intake_sequence_benchmark
+            return intake_sequence_benchmark.run(args)
         return run(args)
     except (OSError, ValueError, KeyError, ValidationError) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)

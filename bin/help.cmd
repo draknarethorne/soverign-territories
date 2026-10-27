@@ -32,6 +32,7 @@ echo                                    existing RUN --quarantine-junk previews 
 echo                                    existing RUN --undo-junk previews exact recovery; --apply restores verified bytes; --check verifies completed disposition too. Ordinary library runs do NOT retry Junk
 echo    eraser-compare.cmd --report "Working\_reports\preparation\RUN" --sources LIST.json --out "Working\_reports\eraser-compare\NEW" [--dry-run ^| --apply ^| --check]
 echo                                    same-mask A/B: saved LaMa vs OpenCV Telea/NS r3 on the identical pre-eraser input; 1..64 listed rows, explicit skips
+echo                                    --sequence previews/runs an EXPERIMENTAL erase-first sequence against saved v16; apply uses pinned CPU models, no default recipe change
 echo                                    comparison only: no selection, assignment, model load or source change; --check verifies every hash read-only
 echo    sandbox-rebase.cmd "SANDBOX\Working" "RUN-DIR" --dry-run  inventory ALL immutable inputs; no models, reports or matching
 echo                                    --include-current-various adds current Working\Various inputs via a hash-bound run-local recovery overlay

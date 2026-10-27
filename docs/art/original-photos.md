@@ -358,6 +358,29 @@ This is a post-crop reconstruction A/B, not an erase-first sequence; LaMa ran
 at patch scale with a slightly dilated model mask but pasted only inside the
 saved mask. Size or non-binary mask mismatches and any hash mismatch refuse the run.
 
+#### Experimental erase-first sequence
+
+The same launcher accepts `--sequence` with the same report, selection and
+output-location arguments. Use a separate new run name; preview first, then
+`--apply`, then `--check`. This does not alter v16 or any Gallery source.
+Unlike the same-mask mode, apply uses the pinned local subject/LaMa models
+and may download a missing model; preview/check never load models.
+
+The experimental order is first crop, guarded localized erase, one residual
+detection and subject-guarded crop, then framing. It does not use v16's
+screenshot bottom-bar exception permitting large subject loss. Residual
+clutter is evidence, not permission for an unbounded erase loop. Existing
+heuristic overlay masks are not manually verified text/logo masks; face/body
+and coverage refusals remain visible. Successful processing is not visual
+acceptance, and a residual detection miss does not establish a clean photo.
+Composition proposals are comparison-only: zero calculated mask loss cannot
+prove that hair, shoes or other missed subject pixels are retained. The
+experimental final keeps the pre-composition image and uses padding instead.
+Every row retains original/saved-v16 views, native experimental candidates,
+padded previews and its ordered trace. The manifest binds the frozen report,
+selection, policy/model versions and output hashes. Failed publication leaves
+no partial run; repeated apply verifies instead of rerendering.
+
 #### Earlier sidecar recipes (v5-v13), not current selection rules
 
 The following explains old immutable reports only. The current v16 order and

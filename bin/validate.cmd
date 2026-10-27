@@ -47,7 +47,7 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% tools\art\test_eraser_benchmark.py
+%PY% -m unittest tools.art.test_eraser_benchmark tools.art.test_intake_sequence
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1

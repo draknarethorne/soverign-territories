@@ -143,6 +143,59 @@ remain open. The integrated browser refused this B: location as untrusted;
 HTML asset validation and direct PNG inspection succeeded, but browser visual
 acceptance is not claimed.
 
+### Erase-first implementation and measured framing failure
+
+The opt-in `eraser-compare.cmd --sequence` mode leaves v16/default preparation
+unchanged. It binds the same frozen report and 46-source selection, then
+compares first crop -> guarded localized LaMa -> at most one residual
+detection/strict crop -> framing. The screenshot 45%-loss exception is not
+used. Coverage/face/body/unknown-kind refusals and errors remain explicit;
+failed model output cannot silently become a successful candidate.
+
+The first experimental run, `intake-sequence-20261027-46`, completed and
+hash-checked all 46 rows with no detector errors and at most one redetection.
+It preserved Afton's native 1080x2340 instead of the saved 1080x1776 result;
+the first crop was refused at 1.0618% grown-mask loss. Seraphine's named
+dress case retained 1105x1685 instead of 1105x1560, and Haniya's red-dress
+case retained 1086x1448 instead of 1064x1448. These are geometry observations,
+not proof that every overlay or false positive was fixed.
+
+Direct comparison found a decisive failure: Angelica's named feet case and
+Camaris's high-bun case still lost visible toes/hair during composition even
+though calculated mask loss was zero. This is measured evidence that the
+person mask omits real subject content, not a crop-threshold problem. Do not
+adopt that experimental run. Retain the composition proposal for inspection,
+but keep the pre-composition cleaned image as the experimental final until
+complete visible-subject coverage is established. This safe fallback implements
+I34's preserve-plus-padding preference without pretending to solve segmentation.
+The first run remains immutable evidence; publish the corrected policy under
+a new run name.
+
+The corrected `erase-before-residual-v2` policy is published and checked at
+`Working\_reports\eraser-compare\intake-sequence-v2-20261027-46\index.html`.
+All 46 rows are present; selected grown-mask crop loss is at most 0.3897%
+(limit 0.5%), maximum redetections is one, detector errors zero. Nine
+proposals are rejected and three refused; these are not counted as accepted
+crops. Composition remains available as a comparison, never the final.
+Final counts: 20 erased, 20 control, five first-crop, one residual-crop.
+
+The six named preservation checks now retain their original dimensions:
+Angelica feet 1080x1954, Camaris bun 1080x1920, Sammara shoes 1008x1792,
+Haniya red dress 1086x1448, Seraphine dress 1105x1685 and Afton 1080x2340.
+Angelica and Camaris finals are verified RGB-identical to their full original
+views, not merely zero loss against an incomplete mask. This verifies their
+reported clipping is avoided by the conservative fallback. It does not
+prove that every detected overlay/garment mask is correct or that all other
+subject regions are labelled. All HTML image assets resolve; shared
+header/footer and 46 articles are verified. The older experimental run still
+passes read-only check. Ninety-nine focused tests pass.
+
+I30/I32/I34/I35 now have runnable bounded evidence, not blanket completion:
+mask labels, coloured/cursive/Dola text detection, border-specific tuning,
+synthetic-overlay ground truth, independent holdouts and the I37 human
+acceptance gate remain open. No default recipe, full rebase, matching
+assignment or original-name metadata has been changed.
+
 Paths below are the feedback's source paths, not assertions about identity.
 Every row is mandatory in I30/I36, including observations with pleasing results.
 

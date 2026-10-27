@@ -129,6 +129,39 @@ class EraserBenchmarkTests(unittest.TestCase):
         plain = {s["name"]: s for s in self.row(self.plain)["processing"]["steps"]}
         self.assertEqual(plain["eraser"]["status"], "skipped")
 
+    def test_sequence_preview_apply_check_repeat_and_artifact_tamper(self):
+        def experiment(image, row):
+            row["experiment"] = {"steps": [{"name": "control", "status": "comparison-only"}],
+                                 "final": "control"}
+            yield "control", image.copy()
+
+        before = self.tree(self.report)
+        with mock.patch.object(preparation.pipeline, "EXPERIMENT_POLICY", {"test": True}, create=True), \
+                mock.patch.object(preparation.pipeline, "experimental_candidates", experiment, create=True):
+            self.assertEqual(self.call("--sequence", "--dry-run"), 0, self.output)
+            self.assertFalse(self.out.exists())
+            self.assertEqual(self.call("--sequence", "--apply"), 0, self.output)
+            self.assertEqual(self.call("--sequence", "--check"), 0, self.output)
+            first = self.tree(self.out)
+            self.assertEqual(self.call("--sequence", "--apply"), 0, self.output)
+            self.assertEqual(self.tree(self.out), first)
+            self.assertEqual(self.tree(self.report), before)
+            data = self.run_manifest()
+            self.assertEqual(len(data["rows"]), 2, "clean/no-eraser inputs also exercise the sequence")
+            panel = self.out / data["rows"][0]["images"]["control"]["path"]
+            panel.write_bytes(b"tampered")
+            self.assertEqual(self.call("--sequence", "--check"), 2)
+            self.assertIn("hash mismatch", self.output)
+
+    def test_sequence_refuses_changed_selection_and_failed_stage_publishes_nothing(self):
+        with mock.patch.object(preparation.pipeline, "EXPERIMENT_POLICY", {"test": True}, create=True), \
+                mock.patch.object(preparation.pipeline, "experimental_candidates",
+                                  side_effect=ValueError("experiment failed"), create=True):
+            self.assertEqual(self.call("--sequence", "--apply"), 2)
+            self.assertIn("experiment failed", self.output)
+            self.assertFalse(self.out.exists())
+            self.assertFalse(list(self.out.parent.glob(".intake-sequence-*")))
+
     def test_preview_writes_nothing_and_check_without_run_fails(self):
         before = self.tree(self.root)
         self.assertEqual(self.call("--dry-run"), 0)

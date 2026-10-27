@@ -20,13 +20,23 @@ MAX_FILL = .2           # never repaint more than a fifth of the picture
 CARD_ON_BODY = .25      # a card lying this much on the person is not repainted (it would invent the body)
 TARGET = 944 / 1104
 LIMB_WIDTH = .2         # a mask ending wider than this share of its widest row was cut off mid-leg, not at the feet
+EXPERIMENT_POLICY = (
+    "erase-before-residual-v2: original face assessment; guarded first crop; existing clutter masks and fill; "
+    "refuse face/body/unknown and >20% coverage; one clutter redetection only after successful fill; "
+    "one residual crop; cumulative grown-subject loss <=0.5%, no screenshot app-bar exception; "
+    "composition proposals comparison-only, missing hair/feet completeness proof retains precomposition image; "
+    "no second fill; detector misses never prove clean; comparison only"
+)
 
 
-def find_subject(image, faces, offset):
+def find_subject(image, faces, offset, *, detector_errors=None):
     """(subject, method, note): Mask R-CNN people, else a body frame around the faces."""
     try:
         found = subjects.detect(image)
     except (OSError, RuntimeError, ValueError) as exc:
+        if detector_errors is not None:
+            detector_errors.append({"stage": "subject", "detector": "person",
+                                    "type": type(exc).__name__, "message": str(exc)})
         found, note = None, f"Person detector unavailable ({exc}); "
     else:
         note = "" if found else "Mask R-CNN found no person; "
@@ -54,7 +64,7 @@ def cut(box, side, line):
             "left": [line, y0, x1, y1], "right": [x0, y0, line, y1]}[side]
 
 
-def second_crop(size, parts, subject, faces, offset, *, screenshot):
+def second_crop(size, parts, subject, faces, offset, *, screenshot, allow_app_bar=True):
     """(box or None, removed parts, notes): trim each side past its edge clutter where the person allows."""
     width, height = size
     guard = max(4, round(min(size) * (.015 if screenshot else .008)))
@@ -85,7 +95,7 @@ def second_crop(size, parts, subject, faces, offset, *, screenshot):
                 break
             lost = (total - int(near[trial[1]:trial[3], trial[0]:trial[2]].sum())) / total
             span = max(i["box"][2] for i in chosen) - min(i["box"][0] for i in chosen)
-            app_bar = (screenshot and side == "bottom" and trial[3] >= keep_to and lost <= .45
+            app_bar = (allow_app_bar and screenshot and side == "bottom" and trial[3] >= keep_to and lost <= .45
                        and (span >= .5 * width or any(i["kind"] == "ui-card" for i in chosen)))
             if lost > SUBJECT_LOSS and not app_bar:
                 break
@@ -281,3 +291,233 @@ def processing_candidates(image, row):
 
 def mask_image(mask):
     return Image.fromarray((mask * 255).astype(np.uint8)).convert("RGB")
+
+
+def experimental_candidates(image, row):
+    """Yield named PIL candidates; only row['experiment'] is written, never the frozen v16 evidence.
+
+    Exhaust the generator before reading final evidence. Boxes are xyxy; candidate boxes are in their
+    input's coordinates, sourceBox is in original coordinates. Mask images are diagnostic, never selected.
+    Composition proposals are emitted for comparison only; final retains the precomposition image.
+    No face/person model is rerun; at most one post-fill clutter detection and no second fill are allowed.
+    """
+    import time
+
+    started = time.perf_counter()
+    faces = row["eligibility"]["faces"]
+    evidence = row["experiment"] = {
+        "policy": EXPERIMENT_POLICY, "steps": [], "candidates": {}, "final": "control",
+        "detectorErrors": [], "detections": [], "redetections": 0,
+        "fillCoverage": None, "subject": None,
+        "faceAssessment": row["eligibility"]["reason"],
+        "limitations": ["Heuristic masks do not establish overlay identity or garment safety.",
+                        "A detector miss is not proof of clean pixels or complete subject coverage.",
+                        "Fill synthesizes plausible content, not recovered hidden pixels."],
+    }
+    current, selected = image, "control"
+    source_box = [0, 0, *image.size]
+    original_near = None
+    protected = np.zeros((image.height, image.width), dtype=bool)
+    for box in clutter.face_boxes(faces, (0, 0), image.size):
+        protected |= clutter.solid(protected.shape, box)
+
+    def candidate(name, output, parent, box=None, diagnostic=False, comparison_only=False):
+        evidence["candidates"][name] = {
+            "input": parent, "size": list(output.size), "sourceBox": list(source_box),
+            "box": box, "diagnostic": diagnostic,
+            "status": "comparison" if diagnostic or comparison_only else "selected",
+        }
+        if not diagnostic and not comparison_only:
+            if parent in evidence["candidates"]:
+                evidence["candidates"][parent]["status"] = "comparison"
+            evidence["final"] = name
+
+    def record(name, status, reason, *, box=None, loss=None, output=None):
+        entry = geometry.step(name, status, selected, output, output or selected, reason)
+        entry.update(inputSize=list(current.size), inputSourceBox=list(source_box),
+                     candidateBox=box, subjectLoss=loss,
+                     elapsedSeconds=time.perf_counter() - started)
+        evidence["steps"].append(entry)
+
+    def crop_guard(box):
+        absolute = [box[0] + source_box[0], box[1] + source_box[1],
+                    box[2] + source_box[0], box[3] + source_box[1]]
+        if not (0 <= box[0] < box[2] <= current.width and 0 <= box[1] < box[3] <= current.height):
+            return False, None, "Invalid or out-of-bounds crop."
+        x0, y0, x1, y1 = absolute
+        if int(protected[y0:y1, x0:x1].sum()) != int(protected.sum()):
+            return False, None, "Crop would remove a guarded face or refused region."
+        if original_near is None:
+            return False, None, "Subject coverage unknown; keep pixels unchanged."
+        total = max(1, int(original_near.sum()))
+        loss = (total - int(original_near[y0:y1, x0:x1].sum())) / total
+        return loss <= SUBJECT_LOSS, loss, (
+            f"Cumulative grown-subject loss {loss:.4%}; limit {SUBJECT_LOSS:.1%}; no app-bar exception.")
+
+    def select_crop(name, box):
+        nonlocal current, selected, source_box
+        allowed, loss, reason = crop_guard(box)
+        record(name, "attempted-selected" if allowed else "refused", reason,
+               box=list(box), loss=loss, output=name if allowed else None)
+        if not allowed:
+            return False
+        parent = selected
+        current = current.crop(box)
+        source_box = [source_box[0] + box[0], source_box[1] + box[1],
+                      source_box[0] + box[2], source_box[1] + box[3]]
+        selected = name
+        candidate(name, current, parent, list(box))
+        return True
+
+    candidate("control", image, None)
+    yield "control", image
+    if row["eligibility"].get("status", "usable") != "usable" or not faces:
+        if row["eligibility"].get("status") == "assessment-failed":
+            evidence["detectorErrors"].append({
+                "stage": "assessment", "detector": "face", "type": "assessment-failed",
+                "message": row["eligibility"]["reason"]})
+        for name in ("first-crop", "eraser", "residual-crop", "composition"):
+            record(name, "skipped", "Face assessment does not authorize preparation.")
+        evidence["stopReason"] = "Face assessment unavailable or ineligible."
+        evidence["elapsedSeconds"] = time.perf_counter() - started
+        return
+
+    person, method, note = find_subject(image, faces, (0, 0), detector_errors=evidence["detectorErrors"])
+    evidence["subject"] = {"method": method, "box": person["box"] if person else None, "note": note}
+    if person is not None and method == "mask-rcnn":
+        original_near = clutter.grow(person["mask"], max(4, round(min(image.size) * .01)))
+    geo = row["geometry"]
+    first = tuple(geo["box"])
+    if geo.get("overlayDetected"):
+        first, panel_note = geometry.panel_box(image, faces, first)
+        evidence["panelAssessment"] = panel_note
+    if first != (0, 0, *image.size):
+        if select_crop("first-crop", first):
+            yield "first-crop", current
+    else:
+        record("first-crop", "skipped", "No first crop proposed.", loss=0.0)
+    if original_near is None:
+        for name in ("eraser", "residual-crop", "composition"):
+            record(name, "skipped", "Person mask unavailable; uncertain body coverage is kept unchanged.")
+        evidence["stopReason"] = "No reliable person mask."
+        evidence["elapsedSeconds"] = time.perf_counter() - started
+        return
+
+    x0, y0, x1, y1 = source_box
+    body = person["mask"][y0:y1, x0:x1]
+    local_person = dict(person, mask=body, box=[
+        max(0, person["box"][0] - x0), max(0, person["box"][1] - y0),
+        min(current.width, person["box"][2] - x0), min(current.height, person["box"][3] - y0)])
+
+    def detect(stage):
+        try:
+            parts, refused = clutter.detect(current, faces, (x0, y0), local_person,
+                                            screenshot=geo.get("overlayDetected", False))
+        except (OSError, RuntimeError, ValueError, cv2.error) as exc:
+            evidence["detectorErrors"].append({"stage": stage, "detector": "clutter",
+                                               "type": type(exc).__name__, "message": str(exc)})
+            return [], [], False
+        # Copy detector-owned dictionaries; actions belong only to this experiment.
+        return [dict(i) for i in parts], [dict(i) for i in refused], True
+
+    def guard_parts(parts, refused, stage):
+        mask = np.zeros(body.shape, dtype=bool)
+        for item in refused:
+            item["action"] = "refused-face"
+        guards = protected[y0:y1, x0:x1]
+        for item in parts:
+            piece = item["mask"]
+            if item.get("action", "").startswith("refused") or item["kind"] not in {
+                    "glyph", "logo", "search-bubble", "ui-card"}:
+                item["action"] = "refused-uncertain"
+            elif (piece & guards).any():
+                item["action"] = "refused-face-or-region"
+            elif (piece & body).any():
+                item["action"] = "refused-body"
+            else:
+                item["action"] = "candidate"
+                mask |= piece
+        for item in parts + refused:
+            if item["action"].startswith("refused"):
+                guards |= item["mask"]
+        mask &= ~guards
+        evidence["detections"].append({
+            "stage": stage, "input": selected, "sourceBox": list(source_box),
+            "parts": [dict(kind=i["kind"], box=list(i["box"]), action=i["action"],
+                           reason=i.get("reason", ""), maskPixels=int(i["mask"].sum()))
+                      for i in parts + refused]})
+        return mask
+
+    parts, refused, detected = detect("initial")
+    mask = guard_parts(parts, refused, "initial")
+    coverage = float(mask.mean())
+    evidence["fillCoverage"] = coverage
+    filled = False
+    if not mask.any():
+        record("eraser", "skipped", "No accepted clutter mask; misses/refusals do not establish clean pixels.")
+    else:
+        candidate("eraser-mask", mask_image(mask), selected, diagnostic=True)
+        yield "eraser-mask", mask_image(mask)
+        if coverage > MAX_FILL:
+            record("eraser", "refused", f"Mask coverage {coverage:.2%} exceeds {MAX_FILL:.0%}.")
+        else:
+            try:
+                erased = fill.fill(current, mask)
+                if erased.size != current.size:
+                    raise ValueError("Fill changed image dimensions.")
+                # Enforce unchanged pixels outside the accepted mask, even for an imperfect filler.
+                pixels = np.asarray(current).copy()
+                pixels[mask] = np.asarray(erased)[mask]
+                erased = Image.fromarray(pixels)
+            except (OSError, RuntimeError, ValueError, cv2.error) as exc:
+                record("eraser", "failed", f"Fill failed; input retained: {type(exc).__name__}: {exc}")
+            else:
+                record("eraser", "attempted-selected",
+                       f"Accepted mask filled ({coverage:.2%}); refused regions unchanged.", output="eraser")
+                parent, selected, current = selected, "eraser", erased
+                candidate(selected, current, parent)
+                filled = True
+                yield selected, current
+
+    if filled:
+        evidence["redetections"] = 1
+        parts, refused, detected = detect("post-fill")
+        guard_parts(parts, refused, "post-fill")
+    if detected:
+        safe_parts = [i for i in parts if not i["action"].startswith("refused")]
+        frame, _, notes = second_crop(current.size, safe_parts, local_person, faces, (x0, y0),
+                                       screenshot=geo.get("overlayDetected", False), allow_app_bar=False)
+        if frame:
+            if select_crop("residual-crop", frame):
+                yield "residual-crop", current
+        else:
+            record("residual-crop", "skipped",
+                   "No residual edge crop passes the strict subject/area guards; no second fill. "
+                   + "; ".join(notes))
+    else:
+        record("residual-crop", "skipped", "Clutter detector failed; residual state unknown.")
+
+    sx, sy, ex, ey = source_box
+    sbox = [max(0, person["box"][0] - sx), max(0, person["box"][1] - sy),
+            min(current.width, person["box"][2] - sx), min(current.height, person["box"][3] - sy)]
+    if sbox[3] < current.height and cut_off_below(person["mask"]):
+        sbox[3] = current.height
+    frame = composition_box(current.size, sbox)
+    if frame:
+        _, loss, guard_reason = crop_guard(frame)
+        reason = ("Missing hair/feet completeness proof: a segmentation mask can omit visible extremities "
+                  "even when calculated subject loss is zero. Composition is comparison-only; "
+                  "the precomposition cleaned image remains selected. " + guard_reason)
+        record("composition", "attempted-rejected", reason, box=list(frame), loss=loss)
+        evidence["steps"][-1]["candidate"] = "composition"
+        proposed = current.crop(frame)
+        candidate("composition", proposed, selected, list(frame), comparison_only=True)
+        evidence["candidates"]["composition"].update(
+            sourceBox=[sx + frame[0], sy + frame[1], sx + frame[2], sy + frame[3]],
+            reason=reason)
+        yield "composition", proposed
+    else:
+        record("composition", "skipped", "No useful composition crop.")
+    evidence["stopReason"] = ("One post-fill detection completed; no further detection or fill permitted."
+                              if filled else "No successful fill; no redetection or further fill permitted.")
+    evidence["elapsedSeconds"] = time.perf_counter() - started
