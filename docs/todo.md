@@ -110,7 +110,7 @@
 - [ ] A7 Compare download/run versus a lightweight explicit ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] R10 Extend to male/animal recipe profiles only after suitable ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 
-### For the assistant, when you say go (121)
+### For the assistant, when you say go (124)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -157,6 +157,9 @@
 - [ ] I39 Implement/test a conservative first-crop experiment on ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I41 Build a versioned reference bank from confirmed GMW ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I43 Publish one expanded immutable pre-rebase review, targeting ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I48 Reopened after the Oct 27, 16:29 review: for the Angelica ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I49 Revisit confidently subject-free UI margins on all sides, ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I51 Test the v7 recipe beyond Angelica: rerun the frozen ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I44 Audit first-pass and final prepared-image face usability ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I45 Wire verified Junk outcomes through existing reversible ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I38 Add this Fantasy case to the next immutable benchmark ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))

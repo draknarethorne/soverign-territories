@@ -15,6 +15,7 @@ from intake_library import clutter, fill, pipeline
 from likeness_library import gallery_chrome
 
 preparation = benchmark.preparation
+HEAD_POLICY = "cleaned-ui-reconstruction-picture-composition-v3"
 ENHANCEMENT_POLICY = {
     "id": "native-comparison-v1",
     "denoise": preparation.RECIPE["denoise"], "tone": preparation.RECIPE["tone"],
@@ -104,6 +105,25 @@ def head_overlay_candidates(image, row):
         if x0 >= .8 * image.width and y0 >= top - .02 * image.height and y1 <= bottom + .02 * image.height:
             mask |= clutter.grow(item["mask"], max(2, round(min(image.size) * clutter.GROW)))
             evidence["parts"].append({"kind": "near-pill-icon-proposal", "box": [x0, y0, x1, y1]})
+    layout = row["experiment"].get("screenshotLayout")
+    if layout:
+        parent = row["experiment"]["final"]
+        sx, sy, _, _ = row["experiment"]["candidates"][parent]["sourceBox"]
+        face_mask = np.zeros(mask.shape, dtype=bool)
+        for box in clutter.face_boxes(row["eligibility"]["faces"], (sx, sy), image.size):
+            face_mask |= clutter.solid(mask.shape, box)
+        for item in layout["overlayParts"]:
+            bx0, by0, bx1, by1 = item["box"]
+            box = [max(0, bx0 - sx), max(0, by0 - sy),
+                   min(image.width, bx1 - sx), min(image.height, by1 - sy)]
+            if box[2] <= box[0] or box[3] <= box[1]:
+                continue
+            piece = clutter.grow(clutter.solid(mask.shape, box), max(4, round(image.width * .006)))
+            if (piece & face_mask).any():
+                evidence.setdefault("refusedParts", []).append(dict(item, reason="Face overlap outside pill."))
+                continue
+            mask |= piece
+            evidence["parts"].append(dict(item, box=box, sourceBox=item["box"]))
     coverage = float(mask.mean())
     evidence.update(coverage=coverage, maskPixels=int(mask.sum()))
     if coverage > pipeline.MAX_FILL:
@@ -122,6 +142,89 @@ def head_overlay_candidates(image, row):
                            "Hidden eyes/hair may be invented or distorted; not original/core likeness evidence. "
                            "Icon masks are heuristic proposals, not verified UI segmentation.")
     yield "head-overlay-reconstruction", painted
+
+
+def integrated_head_candidates(image, row, original, eraser_mask=None):
+    """Keep earlier cleanup and its coordinates when extending the synthetic review branch."""
+    evidence = row["experiment"]
+    parent = evidence["final"]
+    candidates = evidence.setdefault("candidates", {})
+    box = candidates.get(parent, {}).get("sourceBox", [0, 0, *original.size])
+    evidence["guardedFinal"] = parent
+    head_images = {}
+    for name, output in head_overlay_candidates(image, row):
+        head_images[name] = output
+        candidates[name] = {"input": parent, "size": list(output.size), "sourceBox": list(box),
+                            "diagnostic": name.endswith("-mask"), "status": "comparison"}
+        yield name, output
+    head = evidence["headOverlay"]
+    head.update(input=parent, sourceBox=list(box), synthetic=True, likenessEligible=False)
+    if "head-overlay-reconstruction" not in head_images:
+        return
+    selected = "head-overlay-reconstruction"
+    restored = head_images[selected]
+    head.update(selected=True, status="selected-for-review",
+                reason="Synthetic review branch, not an accepted library/core image. "
+                       "Retains prior guarded cleanup; enhancements consume this branch.")
+    candidates[selected]["status"] = "selected"
+    candidates[parent]["status"] = "comparison"
+    evidence["final"] = selected
+    evidence["steps"].append({
+        "name": selected, "status": "selected-for-review", "input": parent,
+        "candidate": selected, "selected": selected, "reason": head["reason"]})
+    cumulative = np.zeros((original.height, original.width), dtype=bool)
+    if eraser_mask is not None and "eraser" in candidates:
+        ex0, ey0, ex1, ey1 = candidates["eraser"]["sourceBox"]
+        cumulative[ey0:ey1, ex0:ex1] |= np.asarray(eraser_mask)[..., 0] > 0
+    x0, y0, x1, y1 = box
+    cumulative[y0:y1, x0:x1] |= np.asarray(head_images["head-overlay-mask"])[..., 0] > 0
+    outside = ~cumulative[y0:y1, x0:x1]
+    identical = np.array_equal(np.asarray(restored)[outside],
+                               np.asarray(original)[y0:y1, x0:x1][outside])
+    if not identical:
+        raise ValueError("integrated reconstruction differs outside cumulative source-coordinate masks")
+    head.update(cumulativeMaskPixels=int(cumulative.sum()), cumulativeOutsideMaskIdentical=True,
+                cumulativeMaskCoordinates="original source")
+    candidates["cumulative-erase-mask"] = {
+        "input": selected, "size": list(original.size), "sourceBox": [0, 0, *original.size],
+        "diagnostic": True, "status": "comparison"}
+    yield "cumulative-erase-mask", pipeline.mask_image(cumulative)
+    proposal = candidates.get("composition")
+    layout = evidence.get("screenshotLayout")
+    if layout:
+        px0, py0, px1, py1 = layout["pictureBox"]
+        frame = [px0 - x0, py0 - y0, px1 - x0, py1 - y0]
+        if not (0 <= frame[0] < frame[2] <= restored.width
+                and 0 <= frame[1] < frame[3] <= restored.height):
+            raise ValueError("screenshot composition outside prepared reconstruction")
+        proposed = restored.crop(frame)
+        candidates["head-overlay-composition"] = {
+            "input": selected, "size": list(proposed.size), "sourceBox": layout["pictureBox"],
+            "box": frame, "diagnostic": False, "status": "selected",
+            "reason": "Select observed picture boundary after reconstruction; no subject-box framing."}
+        candidates[selected]["status"] = "comparison"
+        evidence["final"] = "head-overlay-composition"
+        evidence["steps"].append({
+            "name": "head-overlay-composition", "status": "selected-for-review",
+            "input": selected, "candidate": "head-overlay-composition",
+            "selected": "head-overlay-composition",
+            "reason": candidates["head-overlay-composition"]["reason"]})
+        yield "head-overlay-composition", proposed
+    elif proposal:
+        frame = proposal["box"]
+        proposed = restored.crop(frame)
+        candidates["head-overlay-composition"] = dict(
+            proposal, input=selected, size=list(proposed.size), status="comparison",
+            reason="Rejected for automatic selection: incomplete hair/feet coverage proof; keep padding.")
+        evidence["steps"].append({
+            "name": "head-overlay-composition", "status": "attempted-rejected",
+            "input": selected, "candidate": "head-overlay-composition", "selected": selected,
+            "reason": candidates["head-overlay-composition"]["reason"]})
+        yield "head-overlay-composition", proposed
+    else:
+        evidence["steps"].append({
+            "name": "head-overlay-composition", "status": "skipped", "input": selected,
+            "candidate": None, "selected": selected, "reason": "No useful composition crop; retain padding."})
 
 
 def plan(report, data, sources, expected):
@@ -145,6 +248,8 @@ def plan(report, data, sources, expected):
 
 
 def page(data):
+    if data.get("reviewLayout") in (2, 3, 4):
+        return review_page(data)
     esc = html.escape
     cards = []
     for row in data["rows"]:
@@ -195,6 +300,79 @@ def page(data):
             + '</div></body></html>\n').encode("utf-8")
 
 
+def review_page(data):
+    esc = html.escape
+    cards = []
+    for row in data["rows"]:
+        evidence, images = row["evidence"], row["images"]
+        final = evidence["final"]
+        candidates = evidence.get("candidates", {})
+        lineage = {name: item.get("input") for name, item in candidates.items()}
+        lineage.update({name: evidence.get("enhancements", {}).get("input")
+                        for name in images if name.startswith("enhance-")})
+
+        def panel(name, label, status):
+            image = images[name]
+            consumers = [child for child, parent in lineage.items() if parent == name]
+            return (f'<figure class="{status}"><figcaption><strong>{esc(label)}</strong><br>'
+                    f'{esc(status.upper())} — {esc(name)}: {image["size"]}<br>'
+                    f'Input: {esc(str(lineage.get(name, "frozen source")))}<br>'
+                    f'Feeds: {esc(", ".join(consumers) or "none")}</figcaption>'
+                    f'<a href="{quote(image["path"])}"><img loading="lazy" '
+                    f'src="{quote(image["padded"])}" alt="{esc(label)}"></a></figure>')
+
+        summary = (panel("original", "1. Original", "source")
+                   + panel("saved-v16-final", "2. Historical v16 baseline", "baseline")
+                   + panel(final, "3. Current recommendation FOR REVIEW", "selected"))
+        details = []
+        for name in images:
+            status = ("source" if name == "original" else
+                      "baseline" if name == "saved-v16-final" else
+                      "selected" if name == final else
+                      "diagnostic" if name.endswith("-mask") else
+                      "rejected" if "composition" in name and
+                      candidates.get(name, {}).get("status") != "selected" else
+                      "comparison" if name.startswith("enhance-") else "intermediate")
+            details.append(panel(name, name, status))
+        synthetic = evidence.get("headOverlay", {}).get("selected", False)
+        cards.append(f'<article><h2>{esc(row["source"])}</h2>'
+                     f'<p>Recommendation for review: <strong>{esc(final)}</strong>. '
+                     + ('SYNTHETIC HEAD RECONSTRUCTION — not original/core likeness evidence. '
+                        if synthetic else '')
+                     + 'No library changes. Enhancement candidates are not automatically ranked.</p>'
+                     f'<div class="panels summary">{summary}</div>'
+                     f'<details><summary>All stages, masks, rejected crops and filter comparisons</summary>'
+                     f'<div class="panels">{"".join(details)}</div></details>'
+                     f'<details><summary>Ordered processing trace and source-coordinate evidence</summary>'
+                     f'<pre>{esc(json.dumps(evidence, indent=2))}</pre></details></article>')
+    prefix = gallery_chrome.reports_prefix(pathlib.Path(data["out"]),
+                                          pathlib.Path(data["working"]) / "_reports")
+    responsive = ('h2{overflow-wrap:anywhere}figure{max-width:100%;box-sizing:border-box}'
+                  if data.get("reviewLayout") in (3, 4) else '')
+    framing_note = ('Observed screenshot picture boundaries can frame the restored result; '
+                    'subject-box-only composition crops remain comparison-only to protect hair/feet. '
+                    if data.get("reviewLayout") == 4 else
+                    'composition crops remain rejected for automatic selection to protect hair/feet. ')
+    return ('<!doctype html><html lang="en"><meta charset="utf-8">'
+            '<meta name="viewport" content="width=device-width"><title>Updated intake review</title>'
+            f'<style>{gallery_chrome.CSS}article{{padding:16px;margin:12px;background:white}}'
+            '.panels{display:flex;flex-wrap:wrap;gap:12px}figure{margin:0;width:280px;padding:8px;'
+            'border:4px solid #68717c}figure.selected{border-color:#14743b}'
+            'figure.rejected{border-color:#b12424}figure.diagnostic{border-color:#76509b}'
+            'figure.comparison{border-color:#b67600}figure.intermediate{border-style:dashed}'
+            'img{max-width:100%}figcaption{overflow-wrap:anywhere}pre{white-space:pre-wrap;'
+            'overflow-wrap:anywhere}details{margin-top:16px}' + responsive + '</style><body id="top">'
+            + gallery_chrome.masthead(None, prefix, "Updated intake review", links=False)
+            + '<div class="site-page"><h1>Updated intake review</h1>'
+            f'<p>{len(data["rows"])} frozen sources. First three panels: original, historical baseline, '
+            'current recommendation for visual review. Selected does NOT mean accepted. '
+            'Small/localized cleanup precedes optional synthetic pill reconstruction; '
+            + framing_note + 'Previews fit/pad without cropping; click for native pixels. '
+            'Unresolved logo detection, face/Junk gates and quality ranking remain open.</p>'
+            + "".join(cards) + gallery_chrome.footer("Experimental evidence - no library changes")
+            + '</div></body></html>\n').encode("utf-8")
+
+
 def verify(out, working, report, payload, *, recorded_out=None):
     data = json.loads(preparation.safe_path(working, out / "manifest.json").read_text(encoding="utf-8"))
     root, _, baseline, digest, report_working = benchmark.open_report(report)
@@ -224,6 +402,39 @@ def verify(out, working, report, payload, *, recorded_out=None):
         for image in row["images"].values():
             if any(data["files"].get(image[key]) != image[key + "Sha256"] for key in ("path", "padded")):
                 raise ValueError("experimental image evidence differs from file inventory")
+        if data.get("reviewLayout") in (2, 3, 4):
+            evidence, images = row["evidence"], row["images"]
+            if evidence["final"] not in images:
+                raise ValueError("review recommendation has no image")
+            head = evidence.get("headOverlay", {})
+            if head.get("selected"):
+                final = evidence["final"]
+                restored = "head-overlay-reconstruction"
+                if (final not in (restored, "head-overlay-composition") or not head.get("synthetic")
+                        or head.get("likenessEligible") is not False
+                        or head.get("input") != evidence["guardedFinal"]):
+                    raise ValueError("synthetic review branch selection/lineage differs")
+                original = np.asarray(preparation.decode_file(out / images["original"]["path"]))
+                painted = np.asarray(preparation.decode_file(out / images[restored]["path"]))
+                mask = np.asarray(preparation.decode_file(
+                    out / images["cumulative-erase-mask"]["path"]))[..., 0] > 0
+                x0, y0, x1, y1 = head["sourceBox"]
+                outside = ~mask[y0:y1, x0:x1]
+                if (not head.get("cumulativeOutsideMaskIdentical")
+                        or int(mask.sum()) != head["cumulativeMaskPixels"]
+                        or not np.array_equal(painted[outside], original[y0:y1, x0:x1][outside])):
+                    raise ValueError("synthetic branch differs outside cumulative masks")
+                if final == "head-overlay-composition":
+                    composition = evidence["candidates"][final]
+                    if composition["input"] != restored:
+                        raise ValueError("composition does not consume reconstruction")
+                    framed = preparation.decode_file(out / images[restored]["path"]).crop(composition["box"])
+                    actual = preparation.decode_file(out / images[final]["path"])
+                    if not np.array_equal(np.asarray(framed), np.asarray(actual)):
+                        raise ValueError("composition differs from reconstructed crop")
+            enhancements = evidence.get("enhancements", {})
+            if "input" in enhancements and enhancements["input"] != evidence["final"]:
+                raise ValueError("enhancements do not consume the review recommendation")
     return data
 
 
@@ -240,7 +451,7 @@ def run(args):
             raise ValueError("enhancement mode differs; use matching flags or a new output directory")
         if args.apply and args.enhancements and saved.get("enhancementPolicy") != ENHANCEMENT_POLICY:
             raise ValueError("enhancement policy changed; use a new output directory")
-        if args.apply and args.head_overlay and saved.get("headOverlayPolicy") != "full-pill-near-icon-v1":
+        if args.apply and args.head_overlay and saved.get("headOverlayPolicy") != HEAD_POLICY:
             raise ValueError("head-overlay policy changed; use a new output directory")
         if args.apply and saved["recipe"] != recipe():
             raise ValueError("experimental policy changed; use a new output directory")
@@ -283,7 +494,10 @@ def run(args):
             for name, image in pipeline.experimental_candidates(original, row):
                 save(name, image)
             if args.head_overlay:
-                for name, image in head_overlay_candidates(original, row):
+                prepared = preparation.decode_file(stage / images[row["experiment"]["final"]]["path"])
+                mask = (preparation.decode_file(stage / images["eraser-mask"]["path"])
+                        if "eraser-mask" in images else None)
+                for name, image in integrated_head_candidates(prepared, row, original, mask):
                     save(name, image)
             if args.enhancements and row.get("eligibility", {}).get("status") == "usable":
                 prepared = preparation.decode_file(stage / images[row["experiment"]["final"]]["path"])
@@ -300,11 +514,15 @@ def run(args):
         data = {"schemaVersion": 1, "tool": "intake-sequence-benchmark", "recipe": recipe(),
                 "root": str(root), "working": str(working), "out": str(out),
                 "report": {"path": str(report), "sha256": digest},
-                "selectionSha256": benchmark.sha(payload), "compositionComparisonOnly": True,
-                "headOverlayEnabled": bool(args.head_overlay),
+                "selectionSha256": benchmark.sha(payload),
+                "compositionComparisonOnly": not any(
+                    r["evidence"]["final"] == "head-overlay-composition" for r in rows),
+                "compositionSelection": "observed screenshot picture boundary only; "
+                                        "subject-box proposals remain comparison-only",
+                "reviewLayout": 4, "headOverlayEnabled": bool(args.head_overlay),
                 "enhancementsEnabled": bool(args.enhancements),
                 "enhancementPolicy": ENHANCEMENT_POLICY if args.enhancements else None,
-                "headOverlayPolicy": "full-pill-near-icon-v1" if args.head_overlay else None, "rows": rows}
+                "headOverlayPolicy": HEAD_POLICY if args.head_overlay else None, "rows": rows}
         put("index.html", page(data))
         data["files"] = files
         preparation.write_new(stage / "manifest.json", (json.dumps(data, indent=2) + "\n").encode("utf-8"))

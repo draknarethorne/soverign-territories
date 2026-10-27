@@ -78,6 +78,14 @@ If a number or rule here disagrees with those docs, the docs win.
   while you work, and give them a bounded read-only task; never leave half-finished state (write files whole, swap them in, keep originals);
   when a process seems stuck check whether it is suspended before assuming a bug. Reflect at the end of the day (see the recap).
 - Do not create art assets; describe them for the artist or generate prompts through the pipeline.
+- **Scratch output:** write disposable logs, session files, test output and intermediate artifacts under the repository's
+  git-ignored `tmp\` (for example `tmp\session-logs\<date>\`), using an explicitly resolved absolute path when invoking
+  tools or helpers. Never create repository-root `files\` or `session files\` directories; do not confuse those names
+  with an external session folder. Scripts, tests and launchers must follow the same rule for default scratch paths.
+  Another output area is allowed only when it is explicitly designated and verified git-ignored before writing
+  (`git check-ignore`); existing ignored `reports\` is for generated review reports, not a new scratch convention.
+  Keep durable library receipts/recovery evidence in their documented library locations, not disposable `tmp\`.
+  Never treat legacy raw feedback in `tmp\` as disposable; its preservation rules above still apply.
 
 ## Commands: run the bin launchers, and make new ones
 

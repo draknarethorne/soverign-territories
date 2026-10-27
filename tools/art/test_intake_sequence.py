@@ -15,6 +15,24 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "workflows"
 from intake_library import pipeline  # noqa: E402
 
 
+class ScreenshotBoundaryTests(unittest.TestCase):
+    def test_paired_picture_bounds_ignore_status_caption_and_navigation_panels(self):
+        image = Image.new("RGB", (400, 900), "black")
+        image.paste((80, 110, 150), (0, 100, 400, 720))
+        image.paste((120, 120, 120), (40, 75, 360, 125))
+        image.paste("white", (20, 20, 80, 30))
+        image.paste("white", (30, 760, 260, 775))
+        image.paste((210, 210, 210), (0, 850, 400, 900))
+        self.assertEqual(pipeline.geometry.screenshot_picture_box(image), [0, 100, 400, 720])
+
+    def test_unpaired_or_neutral_flat_image_does_not_authorize_screenshot_crop(self):
+        image = Image.new("RGB", (400, 900), (80, 110, 150))
+        self.assertIsNone(pipeline.geometry.screenshot_picture_box(image))
+        image = Image.new("RGB", (400, 900), "black")
+        image.paste((120, 120, 120), (0, 100, 400, 720))
+        self.assertIsNone(pipeline.geometry.screenshot_picture_box(image))
+
+
 class SequenceTests(unittest.TestCase):
     def setUp(self):
         self.size = (400, 800)
@@ -96,6 +114,29 @@ class SequenceTests(unittest.TestCase):
             if step["status"] == "attempted-selected" and step["name"] != "eraser":
                 self.assertLessEqual(step["subjectLoss"], .005)
         self.assertIn("no further", evidence["stopReason"])
+
+    def test_first_crop_removes_observed_external_ui_but_retains_complete_pill(self):
+        self.image = Image.new("RGB", (400, 800), "black")
+        self.image.paste((60, 80, 100), (0, 100, 400, 650))
+        self.image.paste((120, 120, 120), (40, 70, 360, 120))
+        self.body[:] = False
+        self.body[100:660, 100:300] = True
+        pill = self.part("search-bubble", [40, 70, 360, 120])
+        fragments = [{"box": b} for b in ([50, 534, 100, 550], [120, 534, 250, 550],
+                                         [365, 434, 371, 440], [5, 34, 25, 40])]
+        with mock.patch.object(pipeline.clutter, "bubbles", return_value=[pill]), \
+                mock.patch.object(pipeline.clutter, "glyphs", return_value=fragments):
+            images, evidence = self.run_sequence()
+        self.assertEqual(evidence["screenshotLayout"]["pictureBox"], [0, 100, 400, 650])
+        self.assertEqual(evidence["candidates"]["first-crop"]["sourceBox"], [0, 66, 400, 650])
+        self.assertEqual(images["first-crop"].size, (400, 584))
+        self.assertEqual(images["first-crop"].getpixel((50, 5)), (120, 120, 120))
+        self.assertNotIn("composition", images)
+        self.assertEqual(evidence["final"], "first-crop")
+        parts = {p["kind"]: p["box"] for p in evidence["screenshotLayout"]["overlayParts"]}
+        self.assertEqual(parts["rendered-screenshot-caption"], [50, 600, 250, 616])
+        self.assertEqual(parts["rendered-screenshot-rail"], [352, 481, 392, 525])
+        self.assertEqual(parts["rendered-screenshot-ui"], [0, 80, 44, 128])
 
     def test_face_body_unknown_and_refused_masks_stay_unchanged(self):
         face = self.part("glyph", [170, 110, 190, 130])

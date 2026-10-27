@@ -186,6 +186,156 @@ ineligible-row regression and focused suite pass. This is now the next user
 review gate. I41-I46 and rebase C8/C9 remain open where calibration, actual
 Junk routing, verified references or full acceptance is not implemented.
 
+### Oct 27, 15:23: first expanded-review feedback
+
+The user explicitly supplied the archived `experimental_erase_feedback.md`;
+read it by that explicit request, without treating its archive location as
+evidence of prior incorporation. Its complete text is preserved below.
+The Angelica `20261010125309` report confirms the concern: experimental
+final is `eraser`, first crop only removes 34 top pixels, composition is
+rejected, and all enhancements consume `eraser`. The complete head-overlay
+reconstruction runs independently from the original and never feeds those
+downstream stages. The saved v16 image is historical baseline, not the current
+experimental recommendation. This is both a display defect and an incomplete
+experimental branch, not merely user confusion.
+
+- [x] **P1 ai** I47 Correct the comparison display: first three summary panels
+  must be original, saved-v16 baseline and explicitly named current experimental
+  final/recommendation. Mark every remaining image selected/intermediate/
+  diagnostic/rejected/comparison-only with visible text and distinct border,
+  not colour alone. Show source input and downstream consumers on panels,
+  and distinguish unselected reconstruction from a visually rejected result.
+  Preserve old immutable reports; publish revised pages as a new verified run.
+- [ ] **P1 ai** I48 Reopened after the Oct 27, 16:29 review: for the Angelica
+  head-overlay example, finish and visually validate the composed downstream
+  result, not just a reconstruction feeding enhancements. Build a
+  separate integrated candidate branch from the verified retained/pre-loss
+  image: safe crop -> localized cleanup -> full-pill reconstruction ->
+  guarded composition proposal -> native enhancement comparisons. Do not
+  substitute the independent original-based reconstruction and lose prior
+  cleanup. Preserve source-coordinate masks across crops and cumulative
+  changed-region/outside-mask evidence. Report branch selection explicitly;
+  restoration stays synthetic and requires visual acceptance, not original
+  likeness/core promotion. Subject-free margin tuning is still open in I49,
+  not completed by this branch integration. The single example was verified
+  first; the Oct 27, 15:40 user instruction then explicitly authorized the
+  same 100-image rerun instead of pausing after that example.
+- [ ] **P1 ai** I49 Revisit confidently subject-free UI margins on all sides,
+  without reinstating face-margin-only panel cropping or losing hair/body.
+  Angelica's integrated recommendation still retains black panels and some
+  captions/icons; integration is not acceptance of these residual overlays.
+  Compare actual original/crop/mask/final pixels and controls before loosening
+  first-crop or composition selection. Carry any remaining logo/mask misses
+  into I41 rather than treating successful reconstruction as a clean-image test.
+- [x] **P1 you** I50 Review the single `angelica-flow-v7-20261027` example,
+  including first crop, full UI mask, repaired hair, selected composition
+  and all three enhancements. Confirm the repainted handbag/background and
+  caption area, not only UI disappearance. Only then extend the corrected
+  crop/complete-mask/composition recipe to known hair/feet failures and clean
+  controls before another 100-image rerun. I48/I49 remain open for acceptance
+  and cross-image calibration; successful tests alone do not close them.
+  Oct 27, 17:24: the user approved this example as "perfect", accepting the
+  synthetic handbag/hand area as the necessary cost of removing the UI. This
+  accepts one dense-screenshot scenario only, not GMW logos or other layouts.
+- [ ] **P1 ai** I51 Test the v7 recipe beyond Angelica: rerun the frozen
+  screenshot/GMW cases and clean controls, then incoming GMW/screenshot
+  images. Inspect every stage and enlarged native final regions per row, not
+  only previews or lineage checks. Record heuristics that fail to generalize;
+  do not tune thresholds to a single image.
+
+The expanded 100-image review is not accepted. The initial border-only rule
+was intentionally conservative; the required follow-up is proven subject-free
+margin handling, not simply making its thresholds more aggressive.
+
+### Oct 27, 15:40 continuation: updated 100-image run delivered
+
+The user's instruction below supersedes only the single-example pause, not
+the safety guards or the visual acceptance gate. The integrated Angelica run
+was applied/checked first. Reconstruction now consumes its guarded `eraser`
+image (including the 34-pixel source offset), preserving earlier cleanup;
+its composition proposal and all three enhancements consume that restored
+branch. The cumulative source-coordinate mask has 281,130 pixels and the
+retained original agrees exactly outside it. Restoration is synthetic and
+excluded from original/core likeness evidence, not automatically installed.
+
+All 100 identical frozen selections were then reprocessed in two chunks.
+New `expanded-intake-v2-20261027-1` / `-2` preserve the rerendered evidence.
+Browser validation caught long source headings overflowing narrow screens;
+`expanded-intake-v3-20261027-1` / `-2` publish the responsive HTML revision
+over exact copies of those verified image results, without another model run
+or changing v2. Both final reports check successfully. Earlier original
+`expanded-intake-20261027-1` / `-2` still check without rewriting.
+
+Review locations under `Working\_reports\eraser-compare`:
+
+- `expanded-intake-v3-20261027-1\index.html`: first 50, starting with Angelica.
+- `expanded-intake-v3-20261027-2\index.html`: remaining 50.
+
+The first three panels are original, historical v16 baseline and the named
+recommendation **for review**. Visible status text/borders and input/consumer
+labels distinguish rejected crops, masks and unselected filter comparisons.
+The branch is not labelled visually rejected merely because it is synthetic.
+There are 100 unique sources, matching frozen selection bytes, no missing
+local image assets and no detector errors. Finals: four integrated synthetic
+head reconstructions, 66 controls, five first-crops, 24 ordinary erasures and
+one residual crop. All four reconstructed results pass cumulative outside-mask
+checks; 96 rows explicitly skip head reconstruction. Ninety-nine eligible
+rows have three enhancement candidates from their actual final; one row
+explicitly skips enhancement. No automatic enhancement ranking was introduced.
+
+This fixes I47 and the I48 flow, not all intake quality concerns. Initial
+cropping remains conservative (I49); residual UI/logo coverage, confirmed
+references, enhancement calibration, early/final Junk and replacement gates
+remain open. No full rebase, matching install, original-name change or
+production-library modification occurred. Pause for the updated sample review.
+
+### Oct 27, 16:29 correction: inspect every Angelica stage
+
+The user rejected the updated sample's first Angelica output. I48 was marked
+complete too early: the generated reconstructed composition was rejected,
+so enhancements still consumed the uncomposed restoration. Passing lineage,
+hash and asset tests did not establish clean or correctly framed output.
+The assistant had inspected original/reconstruction previews, not every stage
+closely enough. I48 is reopened and I49 remains open.
+
+Single-source runs `angelica-flow-v4-20261027` through `-v7-` were kept as
+immutable iteration evidence, not overwritten. The latest review is
+`Working\_reports\eraser-compare\angelica-flow-v7-20261027\index.html`.
+No new 100-image run was started.
+
+The first crop now uses paired observed screenshot picture/panel transitions,
+not face margins or a body-box crop. Angelica's measured picture rectangle
+is `[0,163,1080,1853]`; first crop is `[0,121,1080,1853]` (1080x1732),
+retaining the complete overlapping pill and removing the bottom app panels.
+Pill reconstruction occurs on that cleaned input; final composition selects
+the observed picture rectangle (1080x1690) from the reconstruction. Denoise,
+tone and sharpen all consume `head-overlay-composition`, not `eraser` or
+the uncomposed head reconstruction. The report checker verifies both the
+composition's exact pixels against the reconstructed crop and its lineage.
+
+Stage-by-stage browser screenshots included original, saved baseline, control,
+first crop, localized mask/fill, expanded reconstruction mask/fill, cumulative
+source mask, selected composition and every enhancement. Enlarged upper/lower
+inspection of the actual unenhanced recommendation caught defects that padded
+previews hid: a partial back arrow, bookmark side strokes and caption gaps.
+The masks were iterated to complete icon envelopes and a joined caption
+envelope; source badge evidence is retained across the crop. New regressions
+cover those gaps, source offsets and actual composed enhancement input.
+The latest upper/lower inspection no longer shows those UI fragments or the
+large black app panels. The reconstruction mask is about 14.22% of its input,
+below the existing 20% cap; unchanged pixels pass cumulative source-mask checks.
+Validation: 162 preparation/retention/benchmark/sequence/reference tests pass,
+including 62 focused sequence/benchmark/reference tests. New and previous
+50-row reports pass read-only launcher checks; all 13 single-example image
+artifacts exist. Markdownlint and `git diff --check` pass. Syntax checks pass.
+
+This is still a synthetic repair, not recovered source detail. The enlarged
+lower view shows synthesized background/handbag texture where the rail was;
+user acceptance of that trade-off is required. Paired boundaries and sidebar
+envelopes are screenshot heuristics, not semantic guarantees. No blanket
+relaxation of body crops, confirmed GMW classifier, default v16 change,
+original/core promotion or production install was made. Pause at I50.
+
 ### Oct 27: unusable faces, final Junk and replacement continuity
 
 - [ ] **P1 ai** I44 Audit first-pass and final prepared-image face usability
@@ -2098,5 +2248,61 @@ correction. Original wording is retained; implementation is not implied.
 <!-- markdownlint-disable MD013 -->
 ```text
 Finally - if we find an image without a usable face those should also be detected and put into the _junk appropriately.  That could be a completely blurry one we can't sharpen.  A photo where the person is looking away from the camera and the face is not shown well and results in a potential without matches or matches other like faces that aren't really usable.  I don't need to have potentials where ultimately they aren't usable.  That's what the _junk was for and I think maybe we lost that somewhere as I see one picture for Drakness or Drakniss or Nyxene - I forget which one - that is in the library and doesn't even have a face it's like a cropped middle body or arm.  So that detection is also something needed at the first pass of the intake to see obvious junk as well as at the end where we just can't get a decent picture even after all the steps - like if the overlay covers the face and what we get after all the processing is a blur of a face - and cropping doesn't save it either.  That's just _junk I don't need if we can't get it right.  That's probably the final aspect of the intake processing.  It should show in the gallery if I want to see the junk as well - but most of the time I don't care about them other than making sure junk is truly junk and not a review.  Finally duplicate processing was also in place either if I drop the same image in again by accident or somehow I have two images that results in the same image.  The duplicates is probably less important than junk - but sometimes a duplicate may be that I want to just send an image back through and replace the other one if by change it comes out better.  So the older one already in a library would move to the duplicate instead of rejecting the new one.  Update the plans with this and I think we're nearly 100% complete with the intake processing and being able to do a rebase with only keeping core images with x.xx and above assigned to the Angels/Sisters or the photo workflow photo I have picked to keep those likenesses and then let the rest of the rules play out the right way - likeness grouping, auto merging in/out, family naming based on likeness groupings that don't auto merge but are so close we need to have them as models with family names tied to the angel or sister they align to.  Finally - then I can go back and work on renaming the originals that are not named correctly and getting the sandbox 100% validated so we can then re-run the processing on the production library to get that 100% accurate.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Experimental erase first review, Oct 27, 15:23 (verbatim)
+
+Source: user-tagged `feedback/_archive/experimental_erase_feedback.md`.
+Coverage: I47 display and I48 integrated single-example branch. No source
+move or alteration was performed.
+
+<!-- markdownlint-disable MD013 -->
+```text
+# Experimental Erase Feedback
+
+In general, I'm not entirely sure what the final output recommended image is in the .html page.  I see the original, saved V16 version, control, etc... but I honestly don't know what the final one from the intake is in the report.  Would be nice to see that one as the 3rd image ... unless that's what the V16 version is - but if that's the case, then sometimes it doesn't pick the right one based on my visual.
+
+Something is off in the flow and I'm unclear what based on the output.  Here's feedback on a single one and we might have to look at this and re-do the output or check the flow to make sure things are clear to me on which images flow downstream and which are rejected.  Maybe somehow indicating that as some icon on the image or border thick red to show it's rejected so it makes more sense in how the images are shown and explained.  Maybe even wording underneath the image to indicate its status would help.  The table is clear, but confusing when I look at the images.
+
+## Angels/angelica/gallery/angelica_shot_20261010125309.jpg
+
+- It seems the first crop didn't really remove anything significant; the intended area for erasure is still visible.
+- The eraser mask did get some stuff, but because the first crop didn't pull some of the things off like the bottom controls or other pieces on the bottom and top of the image the eraser mask did have a lot to deal with.  I understand we want to leave the actual image intact, but it makes the eraser's job more challenging and less effective.  I did ask for more concervative first crop, but this might have been a bit too conservative.
+- The head reconstruction of the hair and the top bubble were actually effective, however that image did not go into composition for the final crop and getting the right picture to denoise, tone and shapen.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Updated sample rerun authorization, Oct 27, 15:40 (verbatim)
+
+Coverage: I47/I48 implementation and the updated 100-image run above.
+This explicitly replaces the prior single-example-only pause; I49 and the
+other unresolved quality/acceptance gates remain open.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Well - I do want the latest feedback to drive updates necessary and to re-do the run of the 100 images so I can very those updates and continue the validation process as a whole.
+```
+<!-- markdownlint-enable MD013 -->
+
+## First Angelica flow correction, Oct 27, 16:29 (verbatim)
+
+Coverage: reopened I48, first-crop/complete-overlay work I49, and single-example
+acceptance gate I50. This review rejects treating the previous integrated
+reconstruction as finished composition or visually validated clean output.
+
+<!-- markdownlint-disable MD013 -->
+```text
+In looking at the updated review - I still see the first crop is leaving a ton of items at the top and bottom that aren't part of the image or the bubble.  So the eraser doesn't find all the things it needs to erase and wastes time on items that would have easily been cropped on the bottom.  Now there is text and a small ball on the lower right above the black borders (that should have been cropped) that do need erasing as well as text across her thighs at the bottom.  Plus the icons on the lower right side.  So until we get the first crop reset to doing it's job - the remainder are less relaiable.  Lastly the final recommended image carrys forward those black border at the top and bottom - so while the reconstruction works - it's not cropping away all things through the process and the eraser has missed stuff due to the first crop and the final composition is still getting an image from eraser and not the reconstructed version.  The enhance denoise is not getting the headoverlay composition and looks like those enhance phases are still taking the headoverlay construction, not composition - which does attempt to crop some stuff, but since the previous stages left so much the headoverlay image still has a lot of stuff on it.  Are you actually inspecting each image yourself to ensure you believe it's makint the right choices?  Seems like you are only cherry picking some things and not actually following the output and reading the notes properly.  Please ensure you inspect each one with this feedback for the first angelica image and then we need to fix the flow again.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Angelica v7 approval, Oct 27, 17:24 (verbatim)
+
+Coverage: I50 closed for this one example; generalization is I51.
+
+<!-- markdownlint-disable MD013 -->
+```text
+That one actually looks perfect.  I understand that the area near the handbag and her hand is blurred or synthetic, but the icons and clutter had to be removed to get a clean image.  This is a very positive sign, but this is only one scenario of the overlays - but it's actually a solid test of a screenshot with a lot of extra stuff on it and the need to reconstruct the head/hair as well as cropping and erasing properly.  Once we get this done - hopefully the fixes translate to other images and aren't so specific to this one image.  But we can test that as well looking at the next series as there are several more coming in that are with the GMW logos or screenshots.
 ```
 <!-- markdownlint-enable MD013 -->

@@ -125,6 +125,36 @@ def panel_box(image, faces, base):
                  if box != base else "No panel transition passed black-band and face-margin safeguards.")
 
 
+def screenshot_picture_box(image):
+    """Paired picture/panel transitions at both side strips, not face-margin cropping."""
+    array = np.asarray(image)
+    height, width = array.shape[:2]
+    strip = max(4, round(width * .08))
+    visible = array.max(axis=2) > 40
+    edges = np.stack((visible[:, :strip].mean(axis=1),
+                      visible[:, -strip:].mean(axis=1)), axis=1)
+    picture = (edges.min(axis=1) > .35) & (visible.mean(axis=1) > .65)
+    panel = edges.max(axis=1) < .35
+    band = max(12, round(height * .008))
+    top = bottom = None
+    for y in range(max(band, int(height * .04)), int(height * .25)):
+        if (picture[y] and picture[y:y + band].mean() >= .9
+                and panel[max(0, y - 3 * band):y].mean() >= .75):
+            top = y
+            break
+    for y in range(int(height * .6), min(height - band, int(height * .94))):
+        if (panel[y] and picture[y - band:y].mean() >= .9 and panel[y:y + band].mean() >= .9):
+            bottom = y
+            break
+    if top is None or bottom is None or bottom - top < height * .4:
+        return None
+    # A neutral app panel alone is insufficient: require substantial coloured picture content.
+    core = array[top:bottom].astype(np.int16)
+    if ((core.max(axis=2) - core.min(axis=2)) > 25).mean() < .15:
+        return None
+    return [0, top, width, bottom]
+
+
 def step(name, status, source, candidate, selected, reason):
     return {"name": name, "status": status, "input": source, "candidate": candidate,
             "selected": selected, "reason": reason}

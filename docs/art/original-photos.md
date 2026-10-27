@@ -369,18 +369,23 @@ and may download a missing model; preview/check never load models.
 The experimental order is first crop, guarded localized erase, one residual
 detection and subject-guarded crop, then framing. It does not use v16's
 screenshot bottom-bar exception permitting large subject loss.
-First crop is recomputed from full-span solid-border evidence on the original
-image, not reused from the saved report's potentially panel-cropped geometry.
-Screenshot panel cuts are recorded as proposals only before erasing: face
-margins and incomplete person masks do not prove that hair is preserved.
-The existing subject/face guards still apply to proposed solid-border removal.
+First crop is recomputed from the original, not reused from saved geometry.
+For detected screenshots, paired picture/black-panel transitions at both outer
+side strips, with coloured-content evidence, can identify the picture rectangle.
+The first crop removes external UI panels while extending above the picture
+to retain the **complete pill** for reconstruction. The later composition
+removes that temporary extension. Face boxes remain protected. Person-mask
+predictions outside the observed picture rectangle are excluded from this
+panel-only crop budget; this is not the old below-hips app-bar exception.
+Unpaired/ambiguous screenshots fall back to full-span solid borders. The
+older face-margin panel heuristic remains a proposal, not selection evidence.
 Residual clutter is evidence, not permission for an unbounded erase loop. Existing
 heuristic overlay masks are not manually verified text/logo masks; face/body
 and coverage refusals remain visible. Successful processing is not visual
 acceptance, and a residual detection miss does not establish a clean photo.
-Composition proposals are comparison-only: zero calculated mask loss cannot
+Subject-box composition proposals are comparison-only: zero calculated mask loss cannot
 prove that hair, shoes or other missed subject pixels are retained. The
-experimental final keeps the pre-composition image and uses padding instead.
+ordinary experimental final keeps the pre-composition image and uses padding instead.
 Every row retains original/saved-v16 views, native experimental candidates,
 padded previews and its ordered trace. The manifest binds the frozen report,
 selection, policy/model versions and output hashes. Failed publication leaves
@@ -389,21 +394,42 @@ no partial run; repeated apply verifies instead of rerendering.
 For an explicitly requested head-overlapping search pill, add `--head-overlay`
 to `--sequence` and use a separate output run. This automatically proposes the
 complete detected pill and nearby outlined-icon masks without clipping them
-at the face. The supplemental reconstruction alone bypasses the face guard:
-it is never selected, never original/core likeness evidence, and may invent
-eyes/hair. Its mask, coverage, errors and outside-mask RGB preservation are
-recorded separately; the normal experimental final remains guarded. No pill
+at the face. New runs use the cleaned-input synthetic review branch: guarded
+crop/cleanup first, then reconstruction on that actual final, retaining prior
+cleanup and source coordinates. Successful reconstruction becomes the explicit
+**recommendation for visual review only**, never original/core likeness evidence,
+and may invent eyes/hair. The guarded fallback remains recorded. Cumulative
+source-coordinate masks and outside-mask RGB preservation are recorded and
+checked. With observed screenshot picture boundaries, reconstruction also
+compares complete sidebar/back-icon, caption-envelope and badge proposals.
+They are detected on the raw first-crop input (badges retain original-source
+evidence), not on already damaged fills. Grouping caption fragments closes
+hyphen gaps; whole icon envelopes avoid leaving outline side strokes.
+These are heuristic synthetic UI repairs, not a confirmed logo classifier,
+and can alter the handbag/background beneath UI. Face-overlapping non-pill
+proposals are refused, and the 20% fill cap remains.
+The picture-boundary composition **is selected after reconstruction**, then
+feeds all enhancements. Subject-mask-only framing remains comparison-only;
+it cannot prove complete hair/feet preservation. No pill
 means a visible skip, not permission to erase arbitrary parts of a head.
 Nearby-icon detection is a constrained shape/brightness heuristic, not
 proof that a highlight is UI. Review both masks and results.
+Earlier immutable runs retain their independent, unselected head trial and
+original page layout; `--check` continues to verify those without rewriting.
+Use a new output directory for the revised branch.
 
 Add `--enhancements` to `--sequence` for independent native denoise, tone and
-restrained unsharp-mask comparisons on the guarded final (never on the
-unselected head reconstruction). Every candidate starts from the same input;
+restrained unsharp-mask comparisons on the current review recommendation
+(the selected reconstructed composition when available, otherwise the actual
+selected reconstruction or guarded fallback).
+Every candidate starts from the same input;
 no repeated filter chain. Luminance/extreme-pixel fractions and Laplacian
 variance are diagnostics, not calibrated blur/noise/exposure classifications
-or quality scores. The recommendation retains the unenhanced guarded final.
+or quality scores. The recommendation retains the unenhanced prepared input.
 Ineligible face assessments skip enhancements explicitly.
+New pages show original, historical v16 baseline and current recommendation
+as the first three panels. All stages carry visible status/border markings
+and input/consumer labels; masks and rejected crops are not recommendations.
 
 `bin\overlay-review.cmd` accepts the same `--report`, `--sources`, `--out`
 and preview/apply/check arguments, but publishes reference proposals only.

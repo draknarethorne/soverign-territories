@@ -21,7 +21,8 @@ CARD_ON_BODY = .25      # a card lying this much on the person is not repainted 
 TARGET = 944 / 1104
 LIMB_WIDTH = .2         # a mask ending wider than this share of its widest row was cut off mid-leg, not at the feet
 EXPERIMENT_POLICY = (
-    "erase-before-residual-v3: original face assessment; recomputed solid-border-only first crop; "
+    "erase-before-residual-v4: original face assessment; paired screenshot picture/panel transitions "
+    "crop external UI while preserving complete overlapping pill; otherwise solid-border-only first crop; "
     "screenshot panel proposals comparison-only before erase; existing clutter masks and fill; "
     "refuse face/body/unknown and >20% coverage; one clutter redetection only after successful fill; "
     "one residual crop; cumulative grown-subject loss <=0.5%, no screenshot app-bar exception; "
@@ -351,7 +352,15 @@ def experimental_candidates(image, row):
         if original_near is None:
             return False, None, "Subject coverage unknown; keep pixels unchanged."
         total = max(1, int(original_near.sum()))
-        loss = (total - int(original_near[y0:y1, x0:x1].sum())) / total
+        assessed = original_near
+        layout = evidence.get("screenshotLayout")
+        if layout:
+            px0, py0, px1, py1 = layout["pictureBox"]
+            assessed = original_near.copy()
+            assessed[:py0] = False
+            assessed[py1:] = False
+            total = max(1, int(assessed.sum()))
+        loss = (total - int(assessed[y0:y1, x0:x1].sum())) / total
         return loss <= SUBJECT_LOSS, loss, (
             f"Cumulative grown-subject loss {loss:.4%}; limit {SUBJECT_LOSS:.1%}; no app-bar exception.")
 
@@ -395,6 +404,55 @@ def experimental_candidates(image, row):
             "Panel proposal comparison-only before erase: face margins and incomplete person masks "
             "cannot prove hair/body preservation. " + panel_note)
         evidence["panelProposal"] = list(panel)
+        picture = geometry.screenshot_picture_box(image)
+        if picture and original_near is not None:
+            pills = clutter.bubbles(np.asarray(image))
+            top = min([picture[1]] + [max(0, p["box"][1] - 4) for p in pills])
+            bottom = max([picture[3]] + [min(image.height, p["box"][3] + 4) for p in pills])
+            proposed = [picture[0], top, picture[2], bottom]
+            if all(proposed[0] <= fx and proposed[1] <= fy
+                   and fx + fw <= proposed[2] and fy + fh <= proposed[3]
+                   for fx, fy, fw, fh in faces):
+                evidence["screenshotLayout"] = {
+                    "pictureBox": picture, "initialBox": proposed,
+                    "reason": "Paired side-strip picture/black-panel transitions; retain complete pill "
+                              "before fill. Only observed external panels excluded from subject budget."}
+                overlay_parts = []
+                caption_boxes = []
+                cropped = np.asarray(image.crop(proposed))
+                for item in clutter.glyphs(cropped, None, screenshot=True):
+                    ix0, iy0, ix1, iy1 = item["box"]
+                    ix0, ix1 = ix0 + proposed[0], ix1 + proposed[0]
+                    iy0, iy1 = iy0 + proposed[1], iy1 + proposed[1]
+                    rail = ix0 >= .87 * image.width
+                    caption = iy0 >= picture[1] + .88 * (picture[3] - picture[1])
+                    back = ix1 <= .15 * image.width and iy1 <= picture[1] + .06 * image.height
+                    if (rail or caption or back) and iy1 > picture[1] and iy0 < picture[3]:
+                        if rail:
+                            middle = (iy0 + iy1) / 2
+                            half = max((iy1 - iy0) / 2, image.width * .055)
+                            overlay_parts.append({
+                                "kind": "rendered-screenshot-rail",
+                                "box": [int(image.width * .88), max(picture[1], int(middle - half)),
+                                        int(image.width * .98), min(picture[3], int(middle + half))]})
+                        elif caption:
+                            caption_boxes.append([ix0, iy0, ix1, iy1])
+                        else:
+                            overlay_parts.append({"kind": "rendered-screenshot-ui",
+                                                  "box": [0, max(top, picture[1] - int(image.width * .05)),
+                                                          int(image.width * .11),
+                                                          min(picture[3], picture[1] +
+                                                              int(image.width * .07))]})
+                if caption_boxes:
+                    overlay_parts.append({
+                        "kind": "rendered-screenshot-caption",
+                        "box": [min(b[0] for b in caption_boxes), min(b[1] for b in caption_boxes),
+                                max(b[2] for b in caption_boxes), max(b[3] for b in caption_boxes)]})
+                overlay_parts.extend({"kind": "screenshot-logo-proposal", "box": item["box"]}
+                                     for item in clutter.emblems(np.asarray(image))
+                                     if item["box"][1] < picture[3])
+                evidence["screenshotLayout"]["overlayParts"] = overlay_parts
+                first = tuple(proposed)
     if first != (0, 0, *image.size):
         if select_crop("first-crop", first):
             yield "first-crop", current
@@ -488,13 +546,16 @@ def experimental_candidates(image, row):
         evidence["redetections"] = 1
         parts, refused, detected = detect("post-fill")
         guard_parts(parts, refused, "post-fill")
-    if detected:
+    if detected and not evidence.get("screenshotLayout"):
         safe_parts = [i for i in parts if not i["action"].startswith("refused")]
         frame, _, notes = second_crop(current.size, safe_parts, local_person, faces, (x0, y0),
                                        screenshot=geo.get("overlayDetected", False), allow_app_bar=False)
         if frame:
             if select_crop("residual-crop", frame):
                 yield "residual-crop", current
+        elif evidence.get("screenshotLayout"):
+            record("residual-crop", "skipped",
+                   "Picture boundary retained; remaining on-picture UI needs erase, not body cropping.")
         else:
             record("residual-crop", "skipped",
                    "No residual edge crop passes the strict subject/area guards; no second fill. "
@@ -507,7 +568,7 @@ def experimental_candidates(image, row):
             min(current.width, person["box"][2] - sx), min(current.height, person["box"][3] - sy)]
     if sbox[3] < current.height and cut_off_below(person["mask"]):
         sbox[3] = current.height
-    frame = composition_box(current.size, sbox)
+    frame = composition_box(current.size, sbox) if not evidence.get("screenshotLayout") else None
     if frame:
         _, loss, guard_reason = crop_guard(frame)
         reason = ("Missing hair/feet completeness proof: a segmentation mask can omit visible extremities "
@@ -522,7 +583,8 @@ def experimental_candidates(image, row):
             reason=reason)
         yield "composition", proposed
     else:
-        record("composition", "skipped", "No useful composition crop.")
+        record("composition", "skipped", "Screenshot picture framing deferred until reconstruction."
+               if evidence.get("screenshotLayout") else "No useful composition crop.")
     evidence["stopReason"] = ("One post-fill detection completed; no further detection or fill permitted."
                               if filled else "No successful fill; no redetection or further fill permitted.")
     evidence["elapsedSeconds"] = time.perf_counter() - started

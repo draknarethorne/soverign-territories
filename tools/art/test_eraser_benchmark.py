@@ -165,6 +165,110 @@ class EraserBenchmarkTests(unittest.TestCase):
         self.assertTrue(np.array_equal(result[~mask], np.asarray(image)[~mask]))
         self.assertTrue(np.all(np.asarray(outputs["head-overlay-mask"])[mask] == 255))
 
+    def test_integrated_head_keeps_prior_cleanup_coordinates_and_feeds_enhancements(self):
+        import intake_sequence_benchmark as sequence
+        original = Image.new("RGB", (400, 900), (110, 80, 60))
+        cleaned = original.crop((10, 20, 390, 880))
+        cleaned.putpixel((8, 600), (128, 120, 110))
+        erase = np.zeros((860, 380), dtype=bool)
+        erase[600, 8] = True
+        mask = np.zeros_like(erase)
+        mask[90:130, 20:350] = True
+        row = {"eligibility": {"status": "usable"}, "geometry": {"overlayDetected": True},
+               "experiment": {"final": "eraser", "steps": [], "candidates": {
+                   "eraser": {"sourceBox": [10, 20, 390, 880]},
+                   "composition": {"box": [0, 10, 380, 850], "sourceBox": [10, 30, 390, 870]}}}}
+        with mock.patch.object(sequence.clutter, "bubbles", return_value=[
+                {"kind": "search-bubble", "box": [20, 90, 350, 130], "mask": mask}]), \
+                mock.patch.object(sequence.clutter, "glyphs", return_value=[]), \
+                mock.patch.object(sequence.fill, "fill", side_effect=flat_fill):
+            outputs = dict(sequence.integrated_head_candidates(
+                cleaned, row, original, sequence.pipeline.mask_image(erase)))
+        final = row["experiment"]["final"]
+        self.assertEqual(final, "head-overlay-reconstruction")
+        self.assertEqual(outputs[final].getpixel((8, 600)), (128, 120, 110))
+        self.assertEqual(row["experiment"]["headOverlay"]["sourceBox"], [10, 20, 390, 880])
+        self.assertTrue(row["experiment"]["headOverlay"]["cumulativeOutsideMaskIdentical"])
+        cumulative = np.asarray(outputs["cumulative-erase-mask"])[..., 0] > 0
+        self.assertTrue(cumulative[620, 18])
+        self.assertTrue(cumulative[110:150, 30:360].all())
+        self.assertEqual(int(cumulative.sum()), int(mask.sum()) + 1)
+        self.assertEqual(outputs["head-overlay-composition"].size, (380, 840))
+        self.assertEqual(row["experiment"]["candidates"]["head-overlay-composition"]["input"], final)
+        list(sequence.enhancement_candidates(outputs[final], row))
+        self.assertEqual(row["experiment"]["enhancements"]["input"], final)
+        self.assertEqual(row["experiment"]["guardedFinal"], "eraser")
+        self.assertFalse(row["experiment"]["headOverlay"]["likenessEligible"])
+
+    def test_integrated_head_failure_retains_guarded_final(self):
+        import intake_sequence_benchmark as sequence
+        image = Image.new("RGB", (400, 900))
+        mask = np.zeros((900, 400), dtype=bool)
+        mask[90:130, 20:370] = True
+        row = {"eligibility": {"status": "usable"}, "geometry": {"overlayDetected": True},
+               "experiment": {"final": "control", "steps": [],
+                              "candidates": {"control": {"sourceBox": [0, 0, 400, 900]}}}}
+        with mock.patch.object(sequence.clutter, "bubbles", return_value=[
+                {"kind": "search-bubble", "box": [20, 90, 370, 130], "mask": mask}]), \
+                mock.patch.object(sequence.clutter, "glyphs", return_value=[]), \
+                mock.patch.object(sequence.fill, "fill", side_effect=RuntimeError("test failure")):
+            outputs = dict(sequence.integrated_head_candidates(image, row, image))
+        self.assertNotIn("head-overlay-reconstruction", outputs)
+        self.assertEqual(row["experiment"]["final"], "control")
+        self.assertEqual(row["experiment"]["headOverlay"]["status"], "failed")
+
+    def test_observed_picture_composition_is_selected_after_ui_reconstruction(self):
+        import intake_sequence_benchmark as sequence
+        original = Image.new("RGB", (400, 900), (110, 80, 60))
+        prepared = original.crop((0, 70, 400, 720))
+        mask = np.zeros((650, 400), dtype=bool)
+        mask[5:55, 40:360] = True
+        row = {"eligibility": {"status": "usable", "faces": [[170, 150, 60, 70]]},
+               "geometry": {"overlayDetected": True},
+               "experiment": {"final": "first-crop", "steps": [], "candidates": {
+                   "first-crop": {"sourceBox": [0, 70, 400, 720]}},
+                   "screenshotLayout": {"pictureBox": [0, 100, 400, 720], "overlayParts": [
+                       {"kind": "rendered-screenshot-ui", "box": [355, 500, 380, 540]},
+                       {"kind": "rendered-screenshot-ui", "box": [60, 650, 300, 670]}]}}}
+        with mock.patch.object(sequence.clutter, "bubbles", return_value=[
+                {"kind": "search-bubble", "box": [40, 5, 360, 55], "mask": mask}]), \
+                mock.patch.object(sequence.clutter, "glyphs", return_value=[]), \
+                mock.patch.object(sequence.fill, "fill", side_effect=flat_fill):
+            outputs = dict(sequence.integrated_head_candidates(prepared, row, original))
+        final = row["experiment"]["final"]
+        self.assertEqual(final, "head-overlay-composition")
+        self.assertEqual(outputs[final].size, (400, 620))
+        self.assertEqual(outputs[final].tobytes(),
+                         outputs["head-overlay-reconstruction"].crop((0, 30, 400, 650)).tobytes())
+        self.assertEqual(outputs[final].getpixel((365, 420)), (128, 120, 110))
+        self.assertEqual(outputs[final].getpixel((200, 560)), (128, 120, 110))
+        list(sequence.enhancement_candidates(outputs[final], row))
+        self.assertEqual(row["experiment"]["enhancements"]["input"], final)
+        self.assertEqual(row["experiment"]["candidates"][final]["sourceBox"], [0, 100, 400, 720])
+
+    def test_review_summary_final_is_third_with_visible_status_and_lineage(self):
+        import intake_sequence_benchmark as sequence
+        image = {"path": "native.png", "padded": "padded.png", "size": [400, 900]}
+        row = {"source": "Various/gallery/test.png", "images": {
+            name: dict(image) for name in ("original", "saved-v16-final", "control",
+                                          "head-overlay-reconstruction", "composition", "eraser-mask")},
+            "evidence": {"final": "head-overlay-reconstruction", "steps": [],
+                         "headOverlay": {"selected": True}, "candidates": {
+                             "head-overlay-reconstruction": {"input": "control"}}}}
+        data = {"reviewLayout": 2, "out": str(self.out), "working": str(self.root), "rows": [row]}
+        page = sequence.page(data).decode()
+        self.assertLess(page.index("1. Original"), page.index("2. Historical"))
+        self.assertLess(page.index("2. Historical"), page.index("3. Current"))
+        self.assertIn("SELECTED — head-overlay-reconstruction", page)
+        self.assertIn("REJECTED — composition", page)
+        self.assertIn("DIAGNOSTIC — eraser-mask", page)
+        self.assertIn("Input: control", page)
+        self.assertIn("Feeds: head-overlay-reconstruction", page)
+        self.assertIn("SYNTHETIC HEAD RECONSTRUCTION", page)
+        self.assertNotIn("h2{overflow-wrap:anywhere}", page)
+        data["reviewLayout"] = 3
+        self.assertIn("h2{overflow-wrap:anywhere}", sequence.page(data).decode())
+
     def test_pill_icon_proposals_reject_solid_highlight_and_keep_outline(self):
         import intake_sequence_benchmark as sequence
         image = Image.new("RGB", (400, 900), (110, 80, 60))

@@ -102,7 +102,43 @@ explicitly skips them; unenhanced recommendations retained. Separate
 `overlay-references-20261027-1` / `-2` reports show 110 unconfirmed reference
 proposals, not automatic GMW labels. All four apply/check workflows passed;
 full normal validation passed 940 tests/30 suites, plus focused final
-regressions. Pause for review of this sample before more batches or full rebase.
+regressions. These original reports remain historical evidence.
+
+**Oct 27, 15:40 follow-up implemented:** the user authorized updating and
+rerunning all 100 after the first feedback, replacing the single-example
+pause. The corrected report names the recommendation third, with explicit
+status and lineage. Synthetic pill reconstruction now retains guarded cleanup
+and feeds its composition proposal and enhancement comparisons; it is only a
+review recommendation, never original/core likeness evidence. The same 100
+were reprocessed; the final responsive review pages are
+`Working\_reports\eraser-compare\expanded-intake-v3-20261027-1\index.html`
+and `expanded-intake-v3-20261027-2\index.html`. The v3 pages reuse exact verified
+v2 rerendered images, correcting heading overflow without another model run.
+All runs check; four integrated head results pass cumulative outside-mask
+preservation, 99 rows have correctly sourced enhancements, one skips, and no
+detector errors or missing image assets were found. First-crop/UI-margin
+tuning and remaining overlay coverage are still open (I49/I41); Junk,
+replacement and quality-ranking gates are not implemented by this rerun.
+Pause for review of the revised sample; no full rebase or production apply.
+
+**Oct 27, 16:29 review correction:** the previous first-Angelica result is
+not accepted. The initial crop retained app panels; composition was unselected
+and enhancements therefore used reconstruction, not composed output. I48 was
+closed prematurely and is reopened. The new single-source review is
+`Working\_reports\eraser-compare\angelica-flow-v7-20261027\index.html`.
+Paired observed picture boundaries now remove external UI while retaining
+the complete pill for fill. Whole caption/icon envelopes fix residual text,
+bookmark strokes and the back arrow exposed by enlarged inspection.
+Selected `head-overlay-composition` now consumes reconstruction and feeds all
+three enhancements; final geometry is 1080x1690, retaining the observed picture.
+Every stage and enlarged upper/lower recommendation regions were inspected,
+not just lineage tests. Synthetic handbag/background quality still needs user
+acceptance. Pause at I50; I48/I49 and broader intake calibration remain open.
+No new 100-image run or library installation followed this correction.
+
+**Oct 27, 17:24:** the user approved the Angelica v7 result, including its
+synthetic handbag/hand area. One dense-screenshot scenario is accepted; GMW
+logos and other layouts are untested with this recipe (I51).
 
 **Oct 25 overnight rendering integration:** Sovereign Females is running at
 `127.0.0.1:8188` (ComfyUI 0.38.2, 970 node types). Request preview/prepare/check,

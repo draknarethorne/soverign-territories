@@ -33,8 +33,8 @@ echo                                    existing RUN --undo-junk previews exact 
 echo    eraser-compare.cmd --report "Working\_reports\preparation\RUN" --sources LIST.json --out "Working\_reports\eraser-compare\NEW" [--dry-run ^| --apply ^| --check]
 echo                                    same-mask A/B: saved LaMa vs OpenCV Telea/NS r3 on the identical pre-eraser input; 1..64 listed rows, explicit skips
 echo                                    --sequence previews/runs an EXPERIMENTAL erase-first sequence against saved v16; apply uses pinned CPU models, no default recipe change
-echo                                    --sequence --head-overlay adds an UNSELECTED complete search-pill/head reconstruction; synthetic features, never original likeness evidence
-echo                                    --sequence --enhancements compares native denoise/tone/sharpen on the guarded final; diagnostics only, no automatic quality ranking
+echo                                    --sequence --head-overlay extends guarded cleanup with synthetic pill/head reconstruction FOR REVIEW; never original/core likeness evidence
+echo                                    --sequence --enhancements compares native denoise/tone/sharpen on that review recommendation; diagnostics only, no automatic quality ranking
 echo    overlay-review.cmd --report DIR --sources LIST.json --out "Working\_reports\eraser-compare\NEW" [--dry-run ^| --apply ^| --check]
 echo                                    unconfirmed logo/pill reference proposals anywhere in the image; no source repainting or automatic confirmation
 echo                                    comparison only: no selection, assignment, model load or source change; --check verifies every hash read-only
