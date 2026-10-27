@@ -11,7 +11,7 @@ Based on the authoritative `HERO_DRAKNARA_THORNE.json` schema, the Transcendent 
 * **Bust:** every sister has her own bust shape in her `bust` field (round, teardrop, conical, compact, soft and generous), all full, high and lifted, with a deep, crisp, clearly defined cleavage. The 1_Prime prompt carries a shared key detail (`bustKey` in `data/art/_settings/phrases.json`) that sets the bust before anything else, so it overrides a smaller bust in the source photo.
 * **Frame & Silhouette:** narrow waist, shapely feminine hips (gently curved) and very long legs. This is the family standard, so ten sisters read as one bloodline. What differs is the build preset (section 5), the amount of visible tone in the abs, arms and legs, and the race.
 * **Studio Base Uniform:** high-gloss metallic triangle bikini underlayer (`defaultUnderlayer`), bare feet in the A-pose (the studio default `aPoseFootwear: barefoot` in `data/art/_settings/studio.json`; each sister's signature heels are her `defaultFootwear` and appear in the Heels cards), high-gloss skin finish (`defaultSheen`).
-* **Master Canvas Standard:** `944 × 1104` with studio cream padding (`#F5F0E6`), scaling to `1080 × 1350` (4:5) for final mobile card production.
+* **Master Canvas Standard:** `944 × 1104` with studio light-grey padding (`#BEBEBE`), scaling to `1080 × 1350` (4:5) for final mobile card production.
 
 ### The Elemental Glamour Phenotype (Individualized)
 * Each sister carries an individualized racial/elemental phenotype across **hair, eyes, skin tone, cosmetics, and metals**, complete with strict negative prompts to prevent cross-bleeding (e.g., Draknara explicitly banning violet eyes and pale skin in favor of malachite-hazel and terracotta tan).

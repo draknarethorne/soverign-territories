@@ -6,7 +6,7 @@ prompt:
 
 Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
-Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
+Background: a plain neutral light-grey seamless studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
 
 A dynamic action shot, side-on to the camera.
 

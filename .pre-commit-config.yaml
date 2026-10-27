@@ -63,6 +63,13 @@ repos:
         files: ^tools/workflows/
         stages: [pre-commit, pre-push]
 
+      - id: backdrop-tests
+        name: Backdrop wording rewrite tests
+        entry: python -m unittest tools.workflows.test_backdrop
+        language: python
+        pass_filenames: false
+        files: ^(tools/workflows/(test_)?backdrop\.py|bin/backdrop\.cmd|data/art/backgrounds/studio/grey-even\.json)$
+
       - id: reference-rendering-tests
         name: Reference-rendering request, execution, gallery and outputs tests
         entry: python -m unittest tools.workflows.test_reference_rendering tools.workflows.test_reference_execution tools.workflows.test_reference_gallery tools.workflows.test_reference_outputs

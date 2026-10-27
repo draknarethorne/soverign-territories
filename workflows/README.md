@@ -291,7 +291,7 @@ manifest (up to 64 images).
 
 `pull` verifies each file's size and time against the page, then copies its exact
 bytes to `_generation\library\STAGE\WORKFLOW\NAME_comfy_WORKFLOW_ID.EXT`. Legacy
-outputs without a stage go under `Other`. It also writes a cream-padded
+outputs without a stage go under `Other`. It also writes a grey-padded
 `..._944x1104.png` and a `.json` sidecar. The sidecar records `kind:
 pulled-render`, the SHA-256, the source output, the PNG's prompt/workflow hashes,
 SaveImage prefixes and batch/job, plus the request receipt when the batch is
@@ -647,6 +647,11 @@ Add `--dry-run` as the last argument to preview. The tool behind them is `tools/
 - **`X_*` files are never mirrored** (`exclude` in `workspaces.json`, plus `.gitignore`).
 - `pull -w <Workspace>` brings workflows that only exist in a workspace into the repo; it is off for `legacy` workspaces.
 - **A new install is a clone, so clean it:** cloning a workspace copies everything it holds. Add its `homes` rule, set it `active`, deploy its set, then `cleanup -w "<Workspace>"` (preview, then `--apply`).
+- **Studio backdrop is light grey (Oct 26, 2026).** Generated prompts take it from `backgrounds/studio/grey-even`. Hand-made items
+  (`zz_Shots`, curated, captured shots, `_candidates`, `prompts/_edit`) are never regenerated, so `bin\backdrop.cmd` swaps the six
+  old cream phrases for the grey wording in place, as text: seed, inputs and toggles stay. Use `--repo`, `-w "WS"` or `--workspaces`,
+  with `--dry-run` to preview or `--check` (read only, exit 1 while any remain). Backups go to `.sync/backup/<stamp>/backdrop/`.
+  Reload ComfyUI tabs that were open during the swap; saving an old tab writes cream back.
 
 ## Where files live
 

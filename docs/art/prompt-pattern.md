@@ -112,7 +112,7 @@ hand-crafted reference text as a live template.
 | **Armor** | A-pose (bikini base) | face + body + hair | apply armor + weapon | studio | ✅ componentized | [`armor-human.txt`](../../data/art/_templates/heroes/4_Wardrobe/armor-human.txt) |
 | **Scene** (final card art) | A-pose, or a prior stage's output | likeness (+ outfit, for the two-stage path) | full scene: background, pose, effects, weapon/companion | in-world | ✅ componentized — 6 template variants for different outfit shapes (outfit/+companion/minimal/combat/glamour/staged) | [`scene-with-outfit-human.txt`](../../data/art/_templates/heroes/5_Scenes/scene-with-outfit-human.txt), [`scene-with-companion-human.txt`](../../data/art/_templates/heroes/5_Scenes/scene-with-companion-human.txt), [`scene-minimal-human.txt`](../../data/art/_templates/heroes/5_Scenes/scene-minimal-human.txt), [`scene-combat-human.txt`](../../data/art/_templates/heroes/5_Scenes/scene-combat-human.txt), [`scene-glamour-human.txt`](../../data/art/_templates/heroes/5_Scenes/scene-glamour-human.txt), [`scene-staged-human.txt`](../../data/art/_templates/heroes/5_Scenes/scene-staged-human.txt) |
 | **Dragon Pose/Head** | none — text-to-image | n/a | full dragon, generated from its own description | studio | ✅ componentized | [`pose-dragon.txt`](../../data/art/_templates/dragons/pose-dragon.txt), [`head-dragon.txt`](../../data/art/_templates/dragons/head-dragon.txt) |
-| **Fantasy** *(optional, pre-scene)* | photoreal near-final | face + outfit + hair + pose | add fantasy makeup + glowing eyes + subtle magic | cream / soft gradient | ⬜ not yet componentized | archived: `_TEMPLATE_Fantasy.txt` |
+| **Fantasy** *(optional, pre-scene)* | photoreal near-final | face + outfit + hair + pose | add fantasy makeup + glowing eyes + subtle magic | light grey / soft gradient | ⬜ not yet componentized | archived: `_TEMPLATE_Fantasy.txt` |
 | **Weapons** *(standalone utility)* | — | — | a standalone weapon prop (multi-image ref) | plain | ⬜ not yet componentized as its own stage (signature weapons instead live as `holding` pieces under `heroes/<group>/<slug>/weapons/`) | archived: `_TEMPLATE_Weapons.txt` |
 | **Background** *(standalone utility)* | — | — | a standalone scene plate | — | ⬜ not yet componentized as its own stage (backgrounds instead live under `data/art/backgrounds/`, wired into the Scene stage) | archived: `_TEMPLATE_Background.txt` |
 | **Pets** *(standalone utility)* | — | — | a summon/companion (multi-image ref) | plain | ⬜ not yet componentized as its own stage (dragons/bonded pets instead described inline or via `companion`/`dragons/` pieces) | archived: `_TEMPLATE_Pets.txt` |
@@ -140,7 +140,7 @@ should generally stay descriptive-only; natural variance there is thematically c
 
 Improvements from reviewing the Drakness prompts — apply these for more consistent output:
 
-- **Baseline = photoreal "catwalk" glamour.** Every cream-background stage (Pose, Hair, Motion,
+- **Baseline = photoreal "catwalk" glamour.** Every studio-background stage (Pose, Hair, Motion,
   Clothing, Armor) should read like a **real supermodel photo** of the hero in the outfit -
   **natural, minimal makeup** (lips, nails, eye colour only; no heavy eyeshadow/blush). The goal is
   to judge the wardrobe and pose, not the fantasy. Default lips/nails to a **light** tone (e.g. Light

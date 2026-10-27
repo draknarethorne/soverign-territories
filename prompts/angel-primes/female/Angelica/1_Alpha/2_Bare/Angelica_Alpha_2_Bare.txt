@@ -11,7 +11,7 @@ Result: she is wearing nothing but natural bare skin from head to toe, in the ma
 
 Body: shape the figure to this individual build, keeping her height, head and pose: medium height, balanced, well-proportioned build; a natural, approachable presence; natural, softly defined waist with a flat, faintly toned midriff; full, naturally rounded bust, softly enhanced - breasts lifted and centred with a gentle push-up-bra style contour, forming a narrow décolletage; soft, naturally rounded shape throughout; graceful arms with soft, gentle tone; softly rounded, balanced hips; legs of medium length in easy proportion, softly toned thighs.
 
-Preserve the face, eye appearance, skin tone, makeup, expression, pose, full-length framing from head to feet, cream studio background and lighting exactly as in the incoming Prime. Apply the requested clothing removal and body changes while keeping those Prime details unchanged.
+Preserve the face, eye appearance, skin tone, makeup, expression, pose, full-length framing from head to feet, light-grey studio background and lighting exactly as in the incoming Prime. Apply the requested clothing removal and body changes while keeping those Prime details unchanged.
 
 ----------------------------------------------------------------
 negative prompt:

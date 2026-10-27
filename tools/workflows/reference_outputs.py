@@ -4,7 +4,7 @@
 ComfyUI output root, with filters, paging, a full-size viewer and a pull manifest
 export. Nothing is copied or thumbnailed. `pull` copies only the manifest's files into
 `_generation/library/<stage>/<variant>/` with the standard `<name>_comfy_<variant>_<id>`
-name, a cream-padded 944x1104 copy and a lineage sidecar; they are synthetic and never
+name, a grey-padded 944x1104 copy and a lineage sidecar; they are synthetic and never
 identity evidence.
 """
 import datetime
@@ -33,7 +33,7 @@ PAGE_RELATIVE = "_generation/outputs.html"
 LIBRARY_RELATIVE = "_generation/library"
 IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".webp"}
 STANDARD_SIZE = (944, 1104)
-CREAM = (245, 240, 230)
+STUDIO_GREY = (190, 190, 190)
 STAGE = re.compile(r"^(?:\d[a-z]?_[A-Za-z][A-Za-z0-9_-]*|Bench|Hero)$")
 FOLDER = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$")
 MAX_PULL = 64
@@ -191,7 +191,7 @@ export the pull manifest and run <code>render-reference.cmd pull MANIFEST --root
 <datalist id="people">{names}</datalist>
 <button id="export" type="button" disabled>Export pull manifest</button>
 <p class="muted">Pull copies the exact file into <code>_generation/library/&lt;stage&gt;/&lt;workflow&gt;/</code> as
-<code>&lt;name&gt;_comfy_&lt;workflow&gt;_&lt;id&gt;</code> plus a cream-padded 944x1104 copy and a sidecar. Pulled renders
+<code>&lt;name&gt;_comfy_&lt;workflow&gt;_&lt;id&gt;</code> plus a grey-padded 944x1104 copy and a sidecar. Pulled renders
 are synthetic, never identity evidence, and become selectable sources on the Rendering page.</p>
 </div>
 <p class="pager"><button id="prev" type="button">Previous</button><span id="page-label"></span>
@@ -382,11 +382,11 @@ def padded(data):
         image = ImageOps.exif_transpose(image)
         if image.mode in ("RGBA", "LA", "P"):
             image = image.convert("RGBA")
-            canvas = Image.new("RGBA", image.size, CREAM + (255,))
+            canvas = Image.new("RGBA", image.size, STUDIO_GREY + (255,))
             canvas.alpha_composite(image)
             image = canvas
         fitted = ImageOps.contain(image.convert("RGB"), STANDARD_SIZE, Image.Resampling.LANCZOS)
-    result = Image.new("RGB", STANDARD_SIZE, CREAM)
+    result = Image.new("RGB", STANDARD_SIZE, STUDIO_GREY)
     result.paste(fitted, ((STANDARD_SIZE[0] - fitted.width) // 2, (STANDARD_SIZE[1] - fitted.height) // 2))
     stream = io.BytesIO()
     result.save(stream, "PNG")

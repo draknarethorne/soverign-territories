@@ -16,7 +16,7 @@ Skin: cool fair porcelain complexion, evenly toned, smooth and blemish-free.
 
 Body: shape the figure to this individual build, keeping her height, head and pose: ethereal, crystalline high-elven build; ultra-slender, with delicate bone structure; completely flat stomach; tight, elegant waist tapering cleanly into the hips; very slender, delicate arms; paper-fine wrists and long, slender fingers; shapely feminine hips, gently curved, narrow and elegant; extremely long, smooth, slender legs.
 
-Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the light-grey studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

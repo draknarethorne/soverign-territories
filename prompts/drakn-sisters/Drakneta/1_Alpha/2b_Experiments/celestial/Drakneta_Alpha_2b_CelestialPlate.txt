@@ -16,7 +16,7 @@ Skin: warm golden tan complexion, evenly tanned.
 
 Body: shape the figure to this individual build, keeping her height, head and pose: tall, statuesque celestial build; ultra-long-limbed, commanding and radiant; taut, perfectly flat midriff; narrow waistline with seamless transitions into the hips; long, slender arms with fine, elegant hands; shapely feminine hips, gently curved, narrow and regal, with a high-waisted line; exceptionally long, statuesque legs with sharp, clean shin contours.
 
-Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the light-grey studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

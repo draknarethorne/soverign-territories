@@ -371,7 +371,7 @@ data/art/
 │                                   scene-with-companion-human.txt, scene-minimal-human.txt,
 │                                   scene-combat-human.txt — no casting-eyes-glow line, for
 │                                   non-caster martial heroes). Naming: `<stage>-<archetype>.txt`;
-│                                   a STUDIO stage (cream backdrop) is any non-scene stage, a SCENE adds a
+│                                   a STUDIO stage (grey backdrop) is any non-scene stage, a SCENE adds a
 │                                   realm, background and effects.
 │   └── dragons/                    ✅ Archetype: Elder Dragon (pose-dragon.txt, head-dragon.txt) —
 │                                   text-to-image, NOT img2img (no incoming reference to edit;
@@ -465,7 +465,7 @@ data/art/
 │                                   A realm supplies the setting sentence ({{REALM}}) and the bans
 │                                   that keep the other world out ({{REALM_NEG}}: modern objects,
 │                                   cars, neon ... for fantasy).
-├── studio/                         ✅ CATEGORY: what makes a STUDIO render (cream backdrop, flat light)
+├── studio/                         ✅ CATEGORY: what makes a STUDIO render (grey backdrop, flat light)
 │   ├── views/body/*.json           different from a scene: camera/subject orientation for the
 │   ├── views/head/*.json           reference library — front, 3/4, profile, back, looking down, chin
 │   └── framing/*.json              up, over the shoulder ... (left/right are camera-relative), and
@@ -475,8 +475,8 @@ data/art/
     │                               citadel, never a modern city), dungeons/, elemental/, evening/,
     │                               forests/, frozen/, coast/, mountains/, highlands/, canyon/, swamp/,
     │                               temple/, tavern/, camp/ — one or more per element).
-    ├── studio/                     cream-even (default for every cream-backdrop stage),
-    │                               cream-beauty-light, white-high-key, grey-seamless — the lighting
+    ├── studio/                     grey-even (default for every studio stage, since Oct 26),
+    │                               grey-beauty-light, cream-even, cream-beauty-light, white-high-key, grey-seamless — the lighting
     │                               lives in the piece, not buried in templates.
     └── modern/                     real-world locations (city street, cornfield, kitchen, rooftop) for
                                     realism experiments only, never game art.
@@ -720,7 +720,7 @@ Uncommon **unit** card will be — they probably shouldn't share a template file
 template naming/organization will likely need a second axis beyond "archetype" (`heroes/`,
 `dragons/`) — something like **card tier/type**, so it's clear at a glance which templates are
 rich "signature/hero" cards (full effects, companions, backgrounds) vs. simpler mass-produced
-card types, vs. the existing `pose-*`/`head-*`/`armor-*` **studio-background test** stages (cream
+card types, vs. the existing `pose-*`/`head-*`/`armor-*` **studio-background test** stages (grey
 backdrop, no scene) that exist purely to validate a look before it reaches a real card. Concretely,
 once that content exists, expect to need: **building** card templates (architecture, not a figure),
 **unit/troop** templates (likely simpler than hero signature scenes — fewer unique effects), and
@@ -745,7 +745,7 @@ sex where it differs), so existing cards need no change.
 
 | Slot / token | What it is | Pieces | Default |
 | --- | --- | --- | --- |
-| `background` | Where the subject stands; for cream stages this carries the studio lighting too | `backgrounds/studio/*`, `fantasy/*`, `modern/*` | studio `cream-even` for every cream stage; **required** on scenes |
+| `background` | Where the subject stands; for studio stages this carries the studio lighting too | `backgrounds/studio/*`, `fantasy/*`, `modern/*` | studio `grey-even` (light neutral grey) for every studio stage; **required** on scenes |
 | `realm` | World rule + bans (`{{REALM}}`, `{{REALM_NEG}}`) | `realms/*.json` | `fantasy` on scenes |
 | `view` | Camera/subject orientation | `studio/views/body/*`, `studio/views/head/*` | front |
 | `framing` | How tight a head shot is | `studio/framing/*` | `bust-up` |
@@ -758,7 +758,7 @@ Pieces may carry an optional `tags` list (e.g. `studio`, `profile`, `swimwear`) 
 tags are never rendered. A piece's `negatives` list becomes a `{{<SLOT>_NEG}}` token (the realm uses this).
 
 **Studio vs scene.** Every stage has one of two classes, defined in `data/art/_schema/stages.json` (the validator
-checks it): **studio** (`poses`, `head`, `hair`, `motion`, `armor`, `clothing`, `showcase`) is a studio-backdrop render (cream, or for `showcase` a coloured backdrop with magic and flair) for clearly
+checks it): **studio** (`poses`, `head`, `hair`, `motion`, `armor`, `clothing`, `showcase`) is a studio-backdrop render (light grey, or for `showcase` a coloured backdrop with magic and flair) for clearly
 seeing the subject, an outfit or an armor piece, and may still include motion (a catwalk, a battle stance); **scene**
 (`scene`, staged scenes included) adds a realm, background and effects. Anything that is not a scene is studio. The
 class also drives workflow routing: sister studio and scene work both go to the `Drakn Sisters` workspace (and Drakness to her own as well; see `workflows/README.md`). Canon scenes are always the `fantasy` realm; the validator rejects a scene
@@ -823,7 +823,7 @@ and each phrase is traced to the data file it comes from, so the fix goes to the
 
 ## Eyes, makeup, expression and hair: what each stage says
 
-Every cream-backdrop (studio) stage uses the **same** studio eyes and makeup, so a full-body shot and the close-up agree.
+Every studio-backdrop stage uses the **same** studio eyes and makeup, so a full-body shot and the close-up agree.
 Glow is only ever added in `scene` stages.
 
 | Concern | Token | Used in | Notes |

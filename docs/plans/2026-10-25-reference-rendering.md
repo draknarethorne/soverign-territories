@@ -276,8 +276,10 @@ Batches (all via `bin\render-reference.cmd`, one sample each):
   accept or change the clothed-only `0d` rule.
 - [ ] **P2 either** R28 Take the 23 unmapped `Various\gallery` screenshots
   through intake into Photo Review, then rerun `overlay-scan`.
-- [ ] **P2 you** R29 Choose the standard studio backdrop for the preparation
-  stages (`0_Edit`, `1_Alpha`, `2_Studies`, `3_Layers`).
+- [x] **P2 you** R29 Choose the standard studio backdrop for the preparation
+  stages (`0_Edit`, `1_Alpha`, `2_Studies`, `3_Layers`). Decided Oct 26
+  evening: light grey everywhere, padding included (see "Grey studio
+  standard" below).
   - The `0b`/`0d` prompts ask for light grey, and the renders measure about
     RGB 172-202 (`#BEBEBE`). The current default, `studio/cream-even`, is
     cream, and so is the intake padding (`originals.CREAM` 245,240,230).
@@ -327,6 +329,147 @@ Batches (all via `bin\render-reference.cmd`, one sample each):
 - [ ] **P2 either** R30 Republish Photo Review in the sandbox (the stale
   `afton_north` source), then republish the Rendering page so that the 74
   pulled cleanups are listed as `pulled-render` sources.
+
+## Oct 26 evening: grey studio standard (R29 decided)
+
+The user approved light grey for every studio prompt, the hand-made
+`zz_shots`, and the 944x1104 padding. Regenerating all padded copies is
+acceptable, because the sandbox re-do rebuilds everything anyway.
+
+| Layer | Change |
+| --- | --- |
+| Pieces | New `backgrounds/studio/grey-even` (default) and `grey-beauty-light`. `cream-even` and `cream-beauty-light` are kept as optional warm looks. `grey-seamless` is now described as the darker mid-grey option. `dawn-rim-grey` no longer says "cream". |
+| Generator | `SLOT_DEFAULTS.background` is `grey-even` for pose, head, hair, motion, armor and clothing. 14 showcase references in 12 sets now point to the grey pieces. |
+| Templates | The dragon pose and head templates, the `1_Alpha` bare and preserve-Prime templates, and the celestial experiment say light grey. The showcase negative also bans "grey backdrop". |
+| Generated output | `prompts.cmd`: 5,229 OK. `update.cmd`: 3,606 repo workflows updated (preview first). |
+| Hand-made and installed | New `bin\backdrop.cmd` (`tools/workflows/backdrop.py`) swaps six exact old phrases as text, so the seed, inputs, toggles and formatting stay unchanged. Every file is backed up to `workflows/.sync/backup/<stamp>/backdrop/` first; `--dry-run` previews and `--check` is read-only. It covered 4,788 files: 545 in the repo (`_shots`, `_candidates`, `_curated`, `_test`, `prompts/_edit`) and 4,243 in the seven installs. |
+| Padding | `originals.STUDIO_GREY` = (190, 190, 190), about `#BEBEBE`, the measured `0_Edit` backdrop. Used by intake scaling, image preparation, the artists gallery and the pulled-render copies. |
+
+- Existing 944x1104 copies stay cream until they are regenerated (the rebase,
+  R11, or `--force`). New pulls and new intake are grey.
+- ComfyUI keeps open tabs in memory. A tab that was open before the rewrite
+  still shows cream, and saving it writes cream back. Reload or close open
+  tabs; `backdrop.cmd --workspaces --check` finds any regressions.
+- [ ] **P2 you** R31 Reload the open ComfyUI tabs, then render one updated
+  `zz_shots` Alpha (`1_Prime` or `2_Bare`) to confirm the grey reads well on
+  the hero workflows.
+
+## Oct 26 evening: design for render-driven intake
+
+The user's ideas from the large run are below, with the reasoning and the
+proposed order. These are design recommendations; the boxes mark the
+decisions and the work.
+
+### 1. The three-quarter pose as a Prime pose
+
+What was seen: `0d` gives a three-quarter, weight-on-one-leg, hand-on-hip
+pose on grey, in the same outfit. It reads better than a straight-on A-pose
+as the input to a scene, because the model copies the input's pose and body
+and spends the prompt on the scene.
+
+- Pose becomes a choice, not a stage. The A-pose stays the canonical
+  reference: it is frontal and symmetric, and it is what layers, wardrobe and
+  identity checks compare against. The three-quarter pose is added as a
+  variant, preferred as a scene seed.
+- Card characters, in the user's own pipeline: a three-quarter variant of
+  `1a Prime Outfit`, plus a matching `2 Bare` variant that takes the
+  three-quarter Prime as its input (the preserve-Prime template), so both
+  share one pose.
+- Real-person intake references stay clothed: `0d` and its pose set are
+  clothed-only (R27 rule). Unclothed variants exist only for card characters.
+- "Many of them": make the pose a slot. Add body-pose pieces (relaxed
+  three-quarter, walking, over-the-shoulder, seated, power stance) under
+  `studio/views/body/`. Make `0d` one data-driven recipe with a `pose`
+  choice, so a batch asks for N poses per source rather than N copies of one
+  pose. This belongs to the data-driven `0_Edit` work.
+- A scene chooses its input by role: the A-pose, the three-quarter pose, or
+  any pulled image. This already matches "any image from the Gallery may feed
+  any later stage".
+- [ ] **P1 you** R32 Approve the three-quarter Prime variant: the names (for
+  example `1a_Prime_Outfit_34` and `2_Bare_34`) and whether it becomes the
+  default scene seed.
+- [ ] **P2 ai** R33 Add the body-pose pieces and a pose-choosing `0d` recipe
+  (data-driven `0_Edit`), with templates for the three-quarter Prime and
+  Bare variants for card characters.
+
+### 2. Renders and identity re-casting
+
+The idea: a profile shot turned face-forward by ComfyUI might now match a
+person.
+
+- The risk: a frontal face made from a profile is invented for the unseen
+  half. Generated faces drift toward the model's prior and toward each other,
+  so renders cluster more tightly than real photos do. Used as evidence, they
+  cause false merges and feed themselves: a render is matched to X and then
+  "confirms" X.
+- Rule: a render is a query, never evidence.
+  - A pulled render is embedded and ranked against people, using a stricter
+    threshold and margin than real photos.
+  - The result is a suggestion on the real source photo in Review, for
+    example "render suggests Aria, 0.71, margin 0.09". It never assigns
+    automatically.
+  - Once the user accepts, the assignment is written for the source photo,
+    and the render inherits the person through its lineage sidecar.
+  - Renders never enter core, anchor or protection sets (sidecars already
+    carry `identityCoreEligible: false`).
+- The safe direction is to use likeness on renders as a drift check: after
+  assignment, reject a render whose face moved away from its person. This is
+  what makes automatic best-of-N picking trustworthy (see 4).
+- [ ] **P2 ai** R34 Render-assisted suggestions: a `likeness` step that ranks
+  pulled renders whose source is unassigned and writes suggestions on the
+  source photo for Review. Order: design rule (here), sidecar field, tool,
+  Review filter, tests.
+
+### 3. Bust and body changes in cleanup
+
+- Keep cleanup faithful. `0b`/`0c` outputs are judged for "is this photo
+  usable", and their face feeds suggestions (2), so they must change nothing
+  but overlays, backdrop and framing.
+- Body changes are a design branch: the appearance contract's clothed
+  slender and fuller-bust profiles, offered as separate recipes or as options
+  on `0d` poses. Their outputs get `designEdit: ["body"]` in the sidecar, are
+  never used for identity suggestions, and show as their own Gallery filter.
+- Real-person references stay clothed, with an explicitly selected adult
+  profile (the existing contract).
+- [ ] **P2 you** R35 Choose which body profiles, if any, are offered by
+  default on the `0d` pose set.
+- [ ] **P3 ai** R36 Add the `designEdit` lineage field and Gallery filter.
+
+### 4. Should intake render a deluxe pose for every photo first?
+
+The aim is a uniform, scene-ready gallery. The question is the order.
+
+- Against rendering before assignment:
+  - identity must be decided on real pixels (see 2);
+  - cost: 2,741 photos x 2.3 min is about 105 h for one `0d` each, and
+    about 210 h with `0c` too (9 days of GPU, 14 loads of 200 jobs);
+  - many photos are near-duplicates or weak, and rendering them wastes GPU
+    and multiplies review.
+- Recommended: staged, per-person preparation.
+  1. Intake as today, on real pixels: originals, duplicates, crop,
+     overlay scan, likeness and assignment.
+  2. Hard cases (unassigned, profile, low confidence, overlay-flagged) get an
+     optional `0b`/`0c` batch. The renders become suggestions (2) and cleaner
+     candidates.
+  3. After assignment, a "prepared set" per person: the top N source photos
+     (quality, frontal face, resolution, variety of outfit) each get
+     `0c` + `0d` (one or two poses). For example, 100 people x 5 photos x 2
+     jobs = 1,000 jobs, about 38 h now, and roughly a half to a third of that
+     on a faster GPU.
+  4. Best-of-N auto-pull: a scorer keeps renders with one face, no text,
+     full length, and a likeness drift within bounds of the person's core.
+     It pulls the best, and the rest stay in ComfyUI for the user.
+  5. The user picks from the prepared set for `1_Alpha` and beyond.
+- The rebase (R11) runs the whole library through the new intake, so
+  overlay scan and cleanup batches will cover every category, not only
+  `Various`. Queue them in loads of 200 or fewer with the resumable driver,
+  after the scan reports the count.
+- [ ] **P1 you** R37 Approve the staged per-person preparation (instead of
+  rendering every photo before assignment), and N per person.
+- [ ] **P2 ai** R38 `cleanup-batch --per-person N --recipe ...`: choose the
+  top N assigned photos per person and build the batches.
+- [ ] **P2 ai** R39 The best-of-N scorer with a likeness drift gate for
+  automatic pull-back of the prepared set.
 
 ## Outcome
 
@@ -871,5 +1014,37 @@ Coverage: R29.
 <!-- markdownlint-disable MD013 -->
 ```text
 What color background are you using for the deluxe, I wonder if that shouldn't be the background color we use for all our processing - a gray based instead cream colored like is done in the cropping and all of my .json file prompts and such.  What do you think is the best studio background color to be using for those shots in the long run???
+```
+<!-- markdownlint-enable MD013 -->
+
+## Oct 26 evening: grey everywhere and render-driven intake (verbatim)
+
+Source: chat, Oct 26, 2026, evening.
+Coverage: R29 (decided), the grey studio standard and the render-driven
+intake design sections above (R31-R39).
+
+<!-- markdownlint-disable MD013 -->
+```text
+It sould be good to adjust them all to be gray scaled in the prompts - even any shots we have downloaded and would push them out with updated prompts for the zz_shots to fix any that have cream studio.  It's great to see the better work you did without me being able to tell you what color to pick.  Also - what is the full prompt you are sending in for the 0d_ deluxe and what did you base that on?  It's a decent pose in full clothing, but deluxe were usually bare skin series.  Just curious how that was decided on the prompt as it's actually a decent full body shot with a good side angle.  
+```
+
+```text
+I feel like the pose you have in that clean-up is the proper pose for the prime outfit workflow or maybe an alternative to the prime outfit pose that I have as part of the zz_shots.  That view is much better than a straight on pose - but I probably need many of them plus the bare in that same pose vs the A Pose.   Most likely need both depending on how I want the photo to be sent into a scene or other phases.  But, it's great to see you can schedule many hours of processing with Comfy without me having to manually do all the work.  This is awesome work!!!!
+```
+
+```text
+We are going to regenerate all 944x1104 images anyway, so updating it so it works well to get the proper background is fine.  You have approvals to do that as well.  In the sandbox we will be redoing everything and sending anything to comfyui for clean-up and not just what is in various.  The rebase might send many more to comfyui for clean-up that haven't been done.  Many things have leaked into the gallery images without the proper control gates, so once we rebase it might do a lot more clean-up and processing of images.  So it's all good to think of this as a re-do on everything we have so far as no production cards have been created.
+```
+
+```text
+I'm also starting to think if we can incorporate the clean-up with comfy and fixing up the poses it might also impact the person and identity assignments since it turns a profile shot into a face foward shot and it might now find a match - so anything that goes through a process with comfy to generate a new image that we do pick to use would be available for recasting the image.  More to think about in how we actually assign things out and the sequence, but this is awesome to see how well we can work with comfy and if I get a faster GPU with more VRAM things will speed up as well.
+```
+
+```text
+Especially if we start to apply some bust and body manipulation in the clean-up ... which to be honest might be useful for many images we have as well.  More to think about gain.
+```
+
+```text
+At the end of the day - I am wondering if the entire intake should not be oriented to use ComfyUI to generate the deluxe pose for each and every photo and then do assignments on them.  I know it would take a long time to process - but I wonder if that won't yield the best and most aligned gallery in the long run.  With all these comments, I want the deep thinking to sort it all out.
 ```
 <!-- markdownlint-enable MD013 -->

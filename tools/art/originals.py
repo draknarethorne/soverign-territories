@@ -14,7 +14,7 @@ Angels, Sisters, Prospects, Artists and Various (workspaces.json paths.photoRoot
                azaline_photo_wings.jpg (another folder's prefix)                                              ->  angelica_photo_wings.jpg
              A rename that would overwrite another file is skipped with a warning, never forced; two files with the same picture id are flagged as
              probable duplicates.
-  2. SCALE   each original onto a cream 944x1104 canvas (shape kept, EXIF rotation applied) as <name>_..._944x1104.png.
+  2. SCALE   each original onto a light-grey 944x1104 canvas (shape kept, EXIF rotation applied) as <name>_..._944x1104.png.
              A copy that is already newer than its original is left alone (--force makes them all again).
   3. PRUNE   every image in gallery_944x1104 that no original in that folder's gallery makes any more (you deleted or moved the
              original, or it has an old name). They are moved into <work root>/_archive/<the folder's path>/gallery_944x1104_org, never
@@ -44,7 +44,8 @@ sys.path.insert(0, str(ROOT / "tools/workflows"))
 import comfy_workflows as cw  # noqa: E402
 import screens  # noqa: E402
 
-CREAM = (245, 240, 230)
+# Neutral light grey, the studio backdrop the 0_Edit renders and studio prompts use (was cream until Oct 26, 2026).
+STUDIO_GREY = (190, 190, 190)
 IMAGE_EXT = {".jpg", ".jpeg", ".png", ".webp", ".bmp"}
 EXT = r"(?:jpe?g|png|webp|bmp)"
 # Names that carry their own unique id keep it, whatever prefix they had before: the prefix is simply swapped for the folder's.
@@ -185,7 +186,7 @@ def undo_archive(work, apply):
 
 
 def fit(src, dest, size, box=None, *, cleanup=True):
-    """Scale src to fit inside size (shape kept), centre it on the cream canvas and write a PNG (through a temporary file).
+    """Scale src to fit inside size (shape kept), centre it on the light-grey canvas and write a PNG (through a temporary file).
     Unless cleanup=False, a Facebook screenshot is cut to the picture (screens.py)
     when the head clears its bars (box = face fractions). Prepared natives disable cleanup."""
     from PIL import Image, ImageOps
@@ -198,7 +199,7 @@ def fit(src, dest, size, box=None, *, cleanup=True):
     scale = min(w / rgba.width, h / rgba.height)
     nw, nh = max(1, round(rgba.width * scale)), max(1, round(rgba.height * scale))
     small = rgba.resize((nw, nh), Image.LANCZOS)
-    canvas = Image.new("RGB", size, CREAM)
+    canvas = Image.new("RGB", size, STUDIO_GREY)
     canvas.paste(small, ((w - nw) // 2, (h - nh) // 2), small)
     if hasattr(dest, "write"):
         canvas.save(dest, format="PNG")

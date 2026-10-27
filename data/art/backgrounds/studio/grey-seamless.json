@@ -5,5 +5,5 @@
   "description": "a neutral mid-grey seamless studio backdrop with soft, even frontal lighting and gentle falloff",
   "compatibleStages": ["pose", "head", "armor", "clothing"],
   "tags": ["studio", "grey", "neutral"],
-  "notes": "Alternative to cream when a light-coloured outfit or hair would blend into the cream backdrop."
+  "notes": "A mid-grey with gentle falloff, darker than the light-grey default (grey-even); for showcase looks that want more contrast."
 }

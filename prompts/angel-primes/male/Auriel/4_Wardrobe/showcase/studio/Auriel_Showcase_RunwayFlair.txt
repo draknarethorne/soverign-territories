@@ -27,7 +27,7 @@ Gusts of golden light and drifting motes stream along the floor either side of h
 
 Eyes: irises softly aglow with bright sunrise gold light, brightest near the pupil and fading to the natural clear sky-blue irises at the rim, iris detail still visible, a gentle bright sunrise gold catchlight.
 
-Studio backdrop: a basic cream-coloured studio backdrop. Soft beauty-dish key light from slightly above and in front with gentle fill, flattering soft shadows under the cheekbones and chin, bright natural catchlights.
+Studio backdrop: a plain neutral light-grey seamless studio backdrop. Soft beauty-dish key light from slightly above and in front with gentle fill, flattering soft shadows under the cheekbones and chin, bright natural catchlights.
 
 ----------------------------------------------------------------
 negative prompt:

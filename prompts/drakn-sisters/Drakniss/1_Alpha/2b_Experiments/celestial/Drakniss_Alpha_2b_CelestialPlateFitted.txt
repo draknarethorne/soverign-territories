@@ -16,7 +16,7 @@ Skin: warm radiant fair-golden tan complexion, evenly tanned.
 
 Body: shape the figure to this individual build, keeping her height, head and pose: lithe yet taut athletic build; firm, disciplined warrior-cleric bearing; flat, firm midriff with subtle core tone and a faint vertical linea alba; tight waist tapering into the hips; slender, defined arms; light deltoid contours and firm forearms; shapely feminine hips, gently curved, square and grounded; very long, toned athletic legs with firm quadriceps contours.
 
-Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the light-grey studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

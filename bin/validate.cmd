@@ -13,7 +13,7 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% -m unittest tools.workflows.test_reference_rendering tools.workflows.test_reference_execution tools.workflows.test_reference_gallery tools.workflows.test_reference_outputs
+%PY% -m unittest tools.workflows.test_reference_rendering tools.workflows.test_reference_execution tools.workflows.test_reference_gallery tools.workflows.test_reference_outputs tools.workflows.test_backdrop
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1

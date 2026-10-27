@@ -27,7 +27,7 @@ Gusts of swirling frost, snowflakes and ice crystals stream along the floor eith
 
 Eyes: irises softly aglow with frost blue light, brightest near the pupil and fading to the natural pale frost-blue irises at the rim, iris detail still visible, a gentle frost blue catchlight.
 
-Studio backdrop: a basic cream-coloured studio backdrop. Soft beauty-dish key light from slightly above and in front with gentle fill, flattering soft shadows under the cheekbones and chin, bright natural catchlights.
+Studio backdrop: a plain neutral light-grey seamless studio backdrop. Soft beauty-dish key light from slightly above and in front with gentle fill, flattering soft shadows under the cheekbones and chin, bright natural catchlights.
 
 ----------------------------------------------------------------
 negative prompt:

@@ -39,7 +39,7 @@ below apply universally. Companion context: [`prompt-pattern.md`](prompt-pattern
 
 | Improvement | Watch for | Lever if off |
 | --- | --- | --- |
-| Background split | Clean **cream studio backdrop** (baseline stages) | Keep Background on its own line |
+| Background split | Clean **light-grey studio backdrop** (baseline stages) | Keep Background on its own line |
 | Wardrobe slots | Every piece present (torso, arms, jewelry, back, legs, weapon) | Check the slot is filled in that file |
 | Outfit movement (Gown) | Hem / slit **sways with the step** | Add a movement phrase |
 | Outfit-aware details | Required armor pieces are present and unintended pieces are absent | Check the current outfit/card and its applicable negatives |
@@ -56,6 +56,6 @@ below apply universally. Companion context: [`prompt-pattern.md`](prompt-pattern
 
 | Improvement | Watch for | Lever if off |
 | --- | --- | --- |
-| Baseline = photoreal | Cream studio renders look like a **real photo** (not fantasy) | Keep fantasy out of baseline |
+| Baseline = photoreal | Grey studio renders look like a **real photo** (not fantasy) | Keep fantasy out of baseline |
 | Stage-appropriate effects | Glow and magic match the intended scene and card | Do not assume a separate Fantasy stage exists; follow the current template/card |
 | Dynamism | Variety across runs | **Roll the seed**; raise denoise; lower CFG a notch |

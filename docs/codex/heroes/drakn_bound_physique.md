@@ -9,7 +9,7 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 
 ### The Foundational Male Core (Universal Studio Setup)
 * **Master Studio Base Uniform:** a fitted swim brief in the hero's primary colour (`data/art/wardrobe/swimwear/trunks/swim-brief.json`), bare feet in the A-pose (`aPoseFootwear: barefoot` in `data/art/_settings/studio.json`).
-* **Render Standards:** Master Canvas `944 × 1104` with studio cream background padding (`#F5F0E6`), scaling downstream to `1080 × 1350` (4:5) for mobile UI card frames.
+* **Render Standards:** Master Canvas `944 × 1104` with studio light-grey background padding (`#BEBEBE`), scaling downstream to `1080 × 1350` (4:5) for mobile UI card frames.
 * **Structural Archetypes:** broad shoulder-to-waist V-taper, a defined functional core, clear masculine neck and jawline geometry, grounded combat-ready A-pose. Unlike the sisters, the men are not one skeleton: each has his own build, from lean duelist to heavy juggernaut (section 5).
 
 ### The Elemental Glamour Phenotype (Individualized)

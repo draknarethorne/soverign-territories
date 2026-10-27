@@ -27,7 +27,7 @@ Gusts of drifting shadow, smoke and pale starlight stream along the floor either
 
 Eyes: irises softly aglow with ember red light, brightest near the pupil and fading to the natural dark crimson irises at the rim, iris detail still visible, a gentle ember red catchlight.
 
-Studio backdrop: a basic cream-coloured studio backdrop. Soft beauty-dish key light from slightly above and in front with gentle fill, flattering soft shadows under the cheekbones and chin, bright natural catchlights.
+Studio backdrop: a plain neutral light-grey seamless studio backdrop. Soft beauty-dish key light from slightly above and in front with gentle fill, flattering soft shadows under the cheekbones and chin, bright natural catchlights.
 
 ----------------------------------------------------------------
 negative prompt:

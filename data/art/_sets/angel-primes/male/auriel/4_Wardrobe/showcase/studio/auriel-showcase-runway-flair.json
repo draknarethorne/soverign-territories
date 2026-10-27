@@ -14,7 +14,7 @@
     "wearing": "data/art/wardrobe/armor/bronze/hoplite-bronze.json",
     "back": "data/art/heroes/angel-primes/male/auriel/wings/auriel-wings.json",
     "effects": "Gusts of golden light and drifting motes stream along the floor either side of him, rising around him.",
-    "background": "data/art/backgrounds/studio/cream-beauty-light.json"
+    "background": "data/art/backgrounds/studio/grey-beauty-light.json"
   },
   "notes": "SHOWCASE: a studio shot on a coloured backdrop with magic and flair, before it becomes a scene."
 }

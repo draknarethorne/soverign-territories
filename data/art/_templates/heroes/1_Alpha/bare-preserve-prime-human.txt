@@ -11,7 +11,7 @@ Result: she is wearing {{WEARING}}
 
 Body: shape the figure to this individual build, keeping her height, head and pose: {{FIGURE}}.
 
-Preserve the face, eye appearance, skin tone, makeup, expression, pose, full-length framing from head to feet, cream studio background and lighting exactly as in the incoming Prime. Apply the requested clothing removal and body changes while keeping those Prime details unchanged.
+Preserve the face, eye appearance, skin tone, makeup, expression, pose, full-length framing from head to feet, light-grey studio background and lighting exactly as in the incoming Prime. Apply the requested clothing removal and body changes while keeping those Prime details unchanged.
 
 ----------------------------------------------------------------
 negative prompt:

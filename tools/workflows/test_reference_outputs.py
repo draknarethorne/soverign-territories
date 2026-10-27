@@ -71,7 +71,7 @@ class PullTests(unittest.TestCase):
         self.assertEqual(sidecar["comfy"]["filenamePrefixes"], ["reference/Ava_Stone/x"])
         with Image.open(destination.with_name(sidecar["padded"]["file"])) as padded:
             self.assertEqual(padded.size, (944, 1104))
-            self.assertEqual(padded.getpixel((0, 0)), outputs.CREAM)
+            self.assertEqual(padded.getpixel((0, 0)), outputs.STUDIO_GREY)
         again = outputs.pull(self.root, manifest, self.comfy, apply=True)
         self.assertEqual(again["items"][0]["state"], "already-pulled")
         source = {"path": destination.relative_to(self.root).as_posix(), "kind": "pulled-render",

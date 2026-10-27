@@ -28,7 +28,7 @@ A curtain of swirling frost, snowflakes and ice crystals hangs in the air behind
 
 Eyes: irises softly aglow with pale ice blue light, brightest near the pupil and fading to the natural pale steel-blue irises at the rim, iris detail still visible, a gentle pale ice blue catchlight.
 
-Studio backdrop: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
+Studio backdrop: a plain neutral light-grey seamless studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
 
 ----------------------------------------------------------------
 negative prompt:

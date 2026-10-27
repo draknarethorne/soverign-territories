@@ -6,7 +6,7 @@ prompt:
 
 Photo-realistic beauty glamour shot, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
-Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
+Background: a plain neutral light-grey seamless studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
 
 Medium close-up framed from the top of the head to the mid-chest: the face, the full bust and the whole length of the hair falling beside it are all visible, showing the hair's highlights and ends.
 

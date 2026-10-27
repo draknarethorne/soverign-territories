@@ -28,7 +28,7 @@ A pale spirit double of her rises from her reflection in the floor, golden light
 
 Eyes: irises softly aglow with warm golden-white light, brightest near the pupil and fading to the natural pale sky-blue irises at the rim, iris detail still visible, a gentle warm golden-white catchlight.
 
-Studio backdrop: a basic cream-coloured studio backdrop. Soft beauty-dish key light from slightly above and in front with gentle fill, flattering soft shadows under the cheekbones and chin, bright natural catchlights.
+Studio backdrop: a plain neutral light-grey seamless studio backdrop. Soft beauty-dish key light from slightly above and in front with gentle fill, flattering soft shadows under the cheekbones and chin, bright natural catchlights.
 
 ----------------------------------------------------------------
 negative prompt:

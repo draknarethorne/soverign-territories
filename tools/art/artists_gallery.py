@@ -155,7 +155,7 @@ def prepare(root, sources, cache, provenance):
             try:
                 with Image.open(io.BytesIO(payload)) as image:
                     image = ImageOps.exif_transpose(image).convert("RGB")
-                    image = ImageOps.pad(image, SIZE, color=(231, 229, 223), method=Image.Resampling.LANCZOS)
+                    image = ImageOps.pad(image, SIZE, color=originals.STUDIO_GREY, method=Image.Resampling.LANCZOS)
                     output = io.BytesIO()
                     image.save(output, "JPEG", quality=80, optimize=True)
                 assets[thumbnail] = output.getvalue()

@@ -88,8 +88,19 @@ graph's settings with a clothed re-pose prompt only; unclothed renders of
 intake photos are never produced. 190/190 jobs completed unattended on Sovereign
 Females in 7 h 16 min; all 74 `0c Cleanup Basic` outputs were pulled back
 automatically, and the other 116 wait for your choice on the Outputs page.
-The sandbox Rendering page waits on a stale Photo Review (R30). The
-preparation-stage backdrop (light grey versus cream) is open as R29.
+The sandbox Rendering page waits on a stale Photo Review (R30).
+
+**Oct 26 evening, light-grey studio standard (R29 decided):** every studio
+prompt now asks for a plain neutral light-grey seamless backdrop
+(`backgrounds/studio/grey-even` is the default; cream stays as an option), and
+the 944x1104 padding is `originals.STUDIO_GREY` (190, 190, 190). New
+`bin\backdrop.cmd` swapped the old cream wording, with backups, in 4,788
+hand-made and installed workflows and prompts, including every `zz_Shots`
+item; `--check` reports all grey. Existing padded copies change when the
+rebase regenerates them. Design positions for the three-quarter Prime pose,
+render-assisted identity (query only, never evidence), body edits (a design
+branch, not cleanup) and staged per-person ComfyUI preparation (instead of
+rendering every photo before assignment) are in the rendering plan (R31-R39).
 Later edit variants, formal stage-input/promoted-output contracts and
 Alpha/Studies recipes remain manual-migration work. Edits stay optional before
 Alpha; user visual acceptance and production rollout remain gated.
@@ -1199,7 +1210,7 @@ archive. Markdownlint's maximum line length is now 1,000 characters.
   and saved-render evidence. Photo count is a proxy for available material, not pose variety. The score
   is generic for future faction pairings; Demon counterpart direction and bands remain undecided.
 - **Art and video are data-driven (Oct 2026).** Pieces, cards and animation cards generate prompts; prompts generate workflows. Prompts
-  are never hand-edited. Work is **studio** (cream backdrop: poses, heads, hair, armor) or **scene** (realm, background, effects; video
+  are never hand-edited. Work is **studio** (light-grey backdrop since Oct 26: poses, heads, hair, armor) or **scene** (realm, background, effects; video
   counts as scene); everything goes to the one workspace per group (see the pipeline phases below).
 - **Workspaces are tied to sets of cards (Oct 2026).** Each set has a *home* workspace (`homes` in `workflows/workspaces.json`): `Drakn Sisters`
   (the whole sister pipeline; final art is made there), `Sovereign Dawn Series` (the Sovereign Dawn card set), `Sovereign Territories` (the art and brand set and the `ST?_` templates),
@@ -1250,7 +1261,7 @@ archive. Markdownlint's maximum line length is now 1,000 characters.
   get mechanical card-art prompts from their own name, element and lore (`data/art/cards/sovereign-dawn.json`,
   `tools/generators/scaffold_card_art.py`, stage `card`); they are first drafts, not hand-directed art. Reusable video effect pieces
   (ambient, element, theme) in `data/animation/motions/` feed ten theme scene videos. Nothing from these has been rendered yet.
-- **Showcase stage:** a studio-class shot on a coloured or magical backdrop (`backgrounds/studio/*`) with an effects line, between a cream
+- **Showcase stage:** a studio-class shot on a coloured or magical backdrop (`backgrounds/studio/*`) with an effects line, between a grey
   studio render and a full scene.
 - **Celestial armor and the Celestial finish (design, Oct 2026).** Every sister has her own signature celestial armor
   (`heroes/drakn-sisters/<slug>/armor/celestial-armor.json`): small ornate filigree plates in her metal and class/element motif, each a

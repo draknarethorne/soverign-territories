@@ -28,7 +28,7 @@ Gusts of swirling frost, snowflakes and ice crystals stream along the floor eith
 
 Eyes: irises softly aglow with pale ice blue light, brightest near the pupil and fading to the natural pale steel-blue irises at the rim, iris detail still visible, a gentle pale ice blue catchlight.
 
-Studio backdrop: completely replace the cream backdrop of the incoming image with a plain, flat, mid-grey seamless studio backdrop with the subject alone in the frame, lit from the right by strong low warm golden dawn light that rims her hair, shoulders and gown, with a soft cool blue fill from the left, her feet fully visible on the plain floor with a faint soft shadow.
+Studio backdrop: completely replace the studio backdrop of the incoming image with a plain, flat, mid-grey seamless studio backdrop with the subject alone in the frame, lit from the right by strong low warm golden dawn light that rims her hair, shoulders and gown, with a soft cool blue fill from the left, her feet fully visible on the plain floor with a faint soft shadow.
 
 ----------------------------------------------------------------
 negative prompt:

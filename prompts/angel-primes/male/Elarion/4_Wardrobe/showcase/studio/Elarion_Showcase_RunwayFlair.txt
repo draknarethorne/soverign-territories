@@ -27,7 +27,7 @@ Gusts of racing wind, feathers and leaves stream along the floor either side of 
 
 Eyes: irises softly aglow with pale storm-white light, brightest near the pupil and fading to the natural pale storm-grey irises at the rim, iris detail still visible, a gentle pale storm-white catchlight.
 
-Studio backdrop: a basic cream-coloured studio backdrop. Soft beauty-dish key light from slightly above and in front with gentle fill, flattering soft shadows under the cheekbones and chin, bright natural catchlights.
+Studio backdrop: a plain neutral light-grey seamless studio backdrop. Soft beauty-dish key light from slightly above and in front with gentle fill, flattering soft shadows under the cheekbones and chin, bright natural catchlights.
 
 ----------------------------------------------------------------
 negative prompt:

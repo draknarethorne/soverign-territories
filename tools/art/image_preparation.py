@@ -82,7 +82,7 @@ RECIPE = {
         "enhancementSelection": "comparison-only; retain cleanup until quality safeguards calibrated",
         "scope": "shared preparation, no assignment; Artists scoped by original artist folder, Various origin unknown",
     },
-    "padding": {"size": [944, 1104], "color": list(originals.CREAM), "crop": False},
+    "padding": {"size": [944, 1104], "color": list(originals.STUDIO_GREY), "crop": False},
     "overlayPolicy": "retain original; warn; no preparation hold or manual approval",
     "recommendationPolicy": "the last selected step: composition, else eraser, else second crop, else "
                             "first-crop geometry, else original; never the fixed UI crop or an enhancement",
@@ -383,7 +383,7 @@ def render_photo(root, stage, source):
         preview_hash = save_image(stage / preview, thumbnail, "JPEG", quality=88)
         thumbnail.close()
         fitted = ImageOps.contain(variant, (944, 1104), Image.Resampling.LANCZOS)
-        padded = Image.new("RGB", (944, 1104), originals.CREAM)
+        padded = Image.new("RGB", (944, 1104), originals.STUDIO_GREY)
         padded.paste(fitted, ((944 - fitted.width) // 2, (1104 - fitted.height) // 2))
         padded_path = f"candidates/{digest}/{name}-944x1104.png"
         padded_hash = save_image(stage / padded_path, padded, "PNG")
@@ -600,7 +600,7 @@ def report(data, *, detail=False):
         'widened toward 944x1104, to trim excess background. Skipped when it would gain little.</li>'
         '<li><strong>UI-crop-proposal:</strong> the existing screenshot crop rectangle; comparison '
         'only, never recommended because it may cut hair/body. It removes pixels, not overlaid graphics.</li>'
-        '<li><strong>Padded 944x1104:</strong> each candidate fitted without cropping onto a cream '
+        '<li><strong>Padded 944x1104:</strong> each candidate fitted without cropping onto a light-grey '
         'canvas, for downstream display; padding does not clean or repair the photo.</li></ul>'
         '<p>Recommendations are provisional, not measured quality rankings. Clutter detection is heuristic: '
         'an image where nothing was found may still have overlays (round avatar photos and picture-in-picture '

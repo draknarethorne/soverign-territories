@@ -14,7 +14,7 @@ Skin: pale olive complexion with a faint cool-grey cast, evenly toned, smooth an
 
 Professional head-to-toe, full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
 
-Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
+Background: a plain neutral light-grey seamless studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
 
 Maintain strict fidelity to the reference image's facial features and facial bone structure; the Critical details above override the reference.
 

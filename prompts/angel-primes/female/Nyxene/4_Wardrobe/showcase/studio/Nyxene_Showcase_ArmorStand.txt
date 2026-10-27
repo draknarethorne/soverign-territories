@@ -28,7 +28,7 @@ A curtain of drifting shadow, smoke and pale starlight hangs in the air behind h
 
 Eyes: irises softly aglow with dark violet light, brightest near the pupil and fading to the natural deep garnet-red irises at the rim, iris detail still visible, a gentle dark violet catchlight.
 
-Studio backdrop: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
+Studio backdrop: a plain neutral light-grey seamless studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
 
 ----------------------------------------------------------------
 negative prompt:

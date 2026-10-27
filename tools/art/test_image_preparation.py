@@ -95,7 +95,7 @@ class PreparationTests(unittest.TestCase):
                 self.assertEqual(image.size, (160, 240))
             with Image.open(self.output / variant["padded"]) as image:
                 self.assertEqual(image.size, (944, 1104))
-                self.assertEqual(image.getpixel((0, 0)), preparation.originals.CREAM)
+                self.assertEqual(image.getpixel((0, 0)), preparation.originals.STUDIO_GREY)
         self.assertEqual(self.source_tree(), self.before)
         self.assertEqual(self.call("--check"), 0)
 

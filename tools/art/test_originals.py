@@ -363,7 +363,7 @@ class OriginalsTests(unittest.TestCase):
         png = self.lib / "Angels" / "Angelica" / "gallery_94x110" / "angelica_image_1_94x110.png"
         with Image.open(png) as im:
             self.assertEqual(im.size, (94, 110))
-            self.assertEqual(im.getpixel((2, 2)), originals.CREAM, "letterboxed on cream")
+            self.assertEqual(im.getpixel((2, 2)), originals.STUDIO_GREY, "letterboxed on grey")
             blue = im.getpixel((47, 55))  # JPEG is lossy: close to pure blue
             self.assertTrue(blue[0] < 5 and blue[1] < 5 and blue[2] > 250, blue)
         again = self.run_tool()
@@ -375,7 +375,7 @@ class OriginalsTests(unittest.TestCase):
         self.run_tool()
         png = self.lib / "Angels" / "Angelica" / "gallery_94x110" / "angelica_image_1_94x110.png"
         with Image.open(png) as im:
-            self.assertEqual(im.getpixel((2, 55)), originals.CREAM, "upright: cream at the sides, not top and bottom")
+            self.assertEqual(im.getpixel((2, 55)), originals.STUDIO_GREY, "upright: grey at the sides, not top and bottom")
 
     def test_an_artists_grouped_people_are_named_after_their_own_folder(self):
         g = self.lib / "Artists" / "Pierre" / "Elanore Swift" / "gallery"

@@ -251,7 +251,7 @@ def soft_eye(glamour):
 SLOT_DEFAULTS = {
     "eye_effect": {"*": "data/art/wardrobe/effects/eyes/partial-glow.json"},
     "background": {
-        stage: "data/art/backgrounds/studio/cream-even.json"
+        stage: "data/art/backgrounds/studio/grey-even.json"
         for stage in ("pose", "head", "hair", "motion", "armor", "clothing")
     },
     "realm": {"scene": "data/art/realms/fantasy.json"},
@@ -320,7 +320,7 @@ def default_slot(slot, stage, sex):
         value = value.get(sex)
     return value
 
-# One shared studio face-styling line for every cream-backdrop stage, so makeup stays
+# One shared studio face-styling line for every studio-backdrop stage, so makeup stays
 # present-but-subtle and identical from the full-body shot to the close-up.
 def face_style(female, eyeshadow, blush, brow=None):
     p = phrases()["faceStyle"]

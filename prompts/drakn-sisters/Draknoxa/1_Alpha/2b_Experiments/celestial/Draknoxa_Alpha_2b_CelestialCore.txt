@@ -16,7 +16,7 @@ Skin: pale olive complexion with a faint cool-grey cast, evenly toned, smooth an
 
 Body: shape the figure to this individual build, keeping her height, head and pose: compact, wiry dark-elven build; predatory poise with clinical, measured precision; flat, tightly controlled midriff; narrow waistline tapering cleanly into the hips; slender, wiry arms with defined tendon lines at the wrists; steady, precise hands; shapely feminine hips, gently curved, narrow and agile; very long, wiry legs with slender calves.
 
-Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the light-grey studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

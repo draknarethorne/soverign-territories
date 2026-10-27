@@ -220,7 +220,7 @@ The dragons are text-to-image (no incoming photo). The prompts come from the tem
 
 | Template | Card | What it uses |
 | --- | --- | --- |
-| `pose-dragon.txt` | `<Name>_X_Pose` (1_Alpha) | A full-body, head-to-tail studio shot on a cream backdrop: the dragon's name, `description`, then the morphology line (silhouette, scales, wings, horns and crest, venting), standing in a neutral three-quarter stance with wings folded |
+| `pose-dragon.txt` | `<Name>_X_Pose` (1_Alpha) | A full-body, head-to-tail studio shot on a light-grey backdrop: the dragon's name, `description`, then the morphology line (silhouette, scales, wings, horns and crest, venting), standing in a neutral three-quarter stance with wings folded |
 | `head-dragon.txt` | `<Name>_X_Head` (2_Studies) | The head close-up; the morphology line uses only the head fields (`scaleTexture`, `hornsAndCrest`) |
 | `scene-lair-dragon.txt` | `<Name>_Scene_Lair` (5_Scenes) | The dragon in its lair |
 

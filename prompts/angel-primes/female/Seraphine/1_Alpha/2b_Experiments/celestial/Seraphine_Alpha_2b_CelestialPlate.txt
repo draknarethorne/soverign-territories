@@ -16,7 +16,7 @@ Skin: fair porcelain complexion with a warm rosy undertone, evenly toned and lum
 
 Body: shape the figure to this individual build, keeping her height, head and pose: tall, graceful, elegant build; long-limbed with a regal bearing; slim, softly defined waist; long, slender, graceful arms; shapely feminine hips, gently curved; very long, slender legs with a graceful line.
 
-Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the light-grey studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

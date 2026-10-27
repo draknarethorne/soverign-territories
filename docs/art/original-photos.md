@@ -86,7 +86,7 @@ Under the configured work folder (`paths.workRoot` in
 Angels\Angelica\gallery                  your originals for Angelica (jpg, png, webp, bmp)
 Angels\Angelica\gallery_org\<set-key>     exact incoming bytes retained by prepared publication
 Angels\Angelica\gallery_intake\<set-key>  checked retained alternatives, manifest and detail
-Angels\Angelica\gallery_944x1104         made by the tool: every original on a cream 944x1104 canvas, as PNG
+Angels\Angelica\gallery_944x1104         made by the tool: every original on a light-grey 944x1104 canvas, as PNG
 Angels\Angelica\headshot_944x1104        made by the tool: the face of each original, cropped around it and scaled up (see Headshots)
 Angels\Angelica\chest_944x1104           maintained chest-up crop for the viewers, not a new workflow input
 Angels\Angelica\.photo-derivatives.json exact source/output hashes and rendering recipe for maintained derivatives
@@ -905,7 +905,7 @@ Not every photo has a headshot, by design: a headshot needs a face big enough to
 | Step | What |
 | --- | --- |
 | Rename | Each original prefix follows its current folder; stable IDs are retained. Use supported moves rather than manually shuffling retained/catalogued photos. A collision is held with a warning. |
-| Scale | Each original is fitted inside 944x1104 (the shape is kept, EXIF rotation applied), centred on cream, saved as `<name>_944x1104.png`. A phone screenshot of Facebook (tall, with the app's light navigation bar along the bottom) is first cut down to the picture itself, without the bars, caption and icons (`tools/art/screens.py`), unless her head reaches into them. A copy already newer than its original is skipped (`--force` redoes all). |
+| Scale | Each original is fitted inside 944x1104 (the shape is kept, EXIF rotation applied), centred on light grey (`originals.STUDIO_GREY`, 190,190,190; cream until Oct 26), saved as `<name>_944x1104.png`. A phone screenshot of Facebook (tall, with the app's light navigation bar along the bottom) is first cut down to the picture itself, without the bars, caption and icons (`tools/art/screens.py`), unless her head reaches into them. A copy already newer than its original is skipped (`--force` redoes all). |
 | Headshots | Each original with a clear face also gets `headshot_944x1104\<name>_head_944x1104.png` (see Headshots). `--no-headshots` skips this step. |
 | Prune | A scaled copy that no original in that folder makes any more is **moved to `_archive\<the folder's path>\gallery_944x1104_org`**, never deleted (a headshot goes to the matching `headshot_944x1104_org`), so the person folders stay free of old copies. `originals --archive-old --apply` moves the `_org` folders that were left in the library (with a manifest; `--undo-archive` reverses it). Other files in the scaled folder are left alone. |
 | Re-point | With the work done, a chosen photo (`photos` in `workspaces.json`) that was renamed is found again by its id: `workspaces.json`, the generated workflows that load it (repo and workspaces; a changed workspace file is backed up first) and the workspace input folders are updated. The same step is available alone as `bin\inputs.cmd photos` (preview with `--dry-run`). |

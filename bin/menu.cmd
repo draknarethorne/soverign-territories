@@ -27,6 +27,7 @@ echo   F  Preview reference-render batch (offline, no workflow deployment or que
 echo   D  Refresh rendering selection/results gallery (reports only)
 echo   O  Refresh the ComfyUI outputs browser (reports only; pull is separate)
 echo   S  Style audit (which art wording leans illustrated)
+echo   K  Backdrop wording check (read only: old cream studio wording left in the repo or a workspace?)
 echo   H  Help (all scripts)
 echo   Q  Quit
 set "CH="
@@ -34,6 +35,7 @@ set /p "CH=Choice: "
 if /i "%CH%"=="Q" exit /b 0
 if /i "%CH%"=="H" call "%~dp0help.cmd" & pause & goto menu
 if /i "%CH%"=="S" call "%~dp0style-audit.cmd" & pause & goto menu
+if /i "%CH%"=="K" call "%~dp0backdrop.cmd" --repo --workspaces --check & pause & goto menu
 if /i "%CH%"=="L" call "%~dp0library.cmd" & pause & goto menu
 if /i "%CH%"=="R" call "%~dp0people-gallery-review.cmd" & pause & goto menu
 if /i "%CH%"=="G" call "%~dp0people-gallery.cmd" --dry-run & pause & goto menu
