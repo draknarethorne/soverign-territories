@@ -304,6 +304,14 @@ experimental branch, not merely user confusion.
 - [ ] **P1 ai** I53 Iterate on the frozen 100-image sample (after the 10-row
   sample passes) until every row is clean, inspecting each row's stages and
   native close-ups; clean controls must stay untouched. Pause for user review.
+- [ ] **P1 you** I57 Review the v11 100-image proof (`full100-v11b-20261027-1`,
+  `full100-v11-20261027-2`) and decide how I54 installs it: the gallery photo
+  becomes `processing.final`, which likeness reads, while reconstructed rows
+  (head overlay, logo, sticker) contain synthetic pixels that the plan keeps out
+  of likeness/core evidence. Options: (a) install the reconstruction as the
+  gallery photo but match likeness on the guarded (crop/erase-only) image;
+  (b) install the guarded image and keep the reconstruction as a review
+  variant; (c) install the reconstruction everywhere.
 - [ ] **P1 ai** I54 Promote the accepted recipe into library intake and rerun
   the full sandbox rebase (rebase plan C8/C9 rules).
 - [ ] **P2 ai** I55 Send 20-30 rebased images through the ComfyUI Prime pose

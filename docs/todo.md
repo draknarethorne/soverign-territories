@@ -5,7 +5,7 @@
 
 ## Open work, by priority
 
-### Your queue: needs your hands or a decision (43)
+### Your queue: needs your hands or a decision (44)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -23,6 +23,7 @@
 - [ ] P5 Inspect refreshed production galleries and ComfyUI ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] P6 Render/review the pilot with the agreed source images ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] C7 Review before/after cast seeds, hair/overlay outcomes and ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
+- [ ] I57 Review the v11 100-image proof (`full100-v11b-20261027-1`, ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I37 Review the bounded A/B report and approve/reject specific ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I29 Review the v16 report (`_reports\preparation\v16\index.html`): ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I24 After the sandbox rebase, drop `Various\<Name>\gallery` folders of ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
