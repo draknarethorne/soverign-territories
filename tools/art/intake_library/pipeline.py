@@ -9,7 +9,7 @@ import numpy as np
 from PIL import Image
 
 import preparation_geometry as geometry
-from intake_library import clutter, fill, subject as subjects
+from intake_library import clutter, fill, overlays, subject as subjects
 
 STEPS = ("first-crop", "second-crop", "eraser", "composition", "denoise", "tone")
 BANDS = {"top": .25, "bottom": .4, "left": .3, "right": .3}
@@ -21,8 +21,12 @@ CARD_ON_BODY = .25      # a card lying this much on the person is not repainted 
 TARGET = 944 / 1104
 LIMB_WIDTH = .2         # a mask ending wider than this share of its widest row was cut off mid-leg, not at the feet
 EXPERIMENT_POLICY = (
-    "erase-before-residual-v4: original face assessment; paired screenshot picture/panel transitions "
-    "crop external UI while preserving complete overlapping pill; otherwise solid-border-only first crop; "
+    "erase-before-residual-v7: original face assessment; profile-driven reel frame (overlay_profiles.json, boxed "
+    "pictures end at their black) or paired screenshot picture/panel transitions crop external UI while preserving "
+    "complete overlapping pill; otherwise solid-border and flat letterbox-bar first crop; reel parts, "
+    "structure-confirmed badges, stroke-verified corner watermarks/caption blocks, corner sparkles, "
+    "tilted stickers (polygon masks), viewer corner icons and reference-bank logos "
+    "are overlay proposals on any image; colour-blob logos are never used; "
     "screenshot panel proposals comparison-only before erase; existing clutter masks and fill; "
     "refuse face/body/unknown and >20% coverage; one clutter redetection only after successful fill; "
     "one residual crop; cumulative grown-subject loss <=0.5%, no screenshot app-bar exception; "
@@ -398,26 +402,42 @@ def experimental_candidates(image, row):
         original_near = clutter.grow(person["mask"], max(4, round(min(image.size) * .01)))
     geo = row["geometry"]
     first = tuple(geometry.border_box(image))
-    if geo.get("overlayDetected"):
+    array = np.asarray(image)
+    reel = overlays.reel_frame(array)
+    if reel:
+        evidence["overlayFrame"] = {key: reel.get(key) for key in ("profile", "layout", "pictureBox", "uiBottom", "statusBand")}
+    else:
+        bars = overlays.letterbox(array)
+        if bars and all(bars[0] <= fy and fy + fh <= bars[1] for fx, fy, fw, fh in faces):
+            first = (first[0], max(first[1], bars[0]), first[2], min(first[3], bars[1]))
+            evidence["letterbox"] = {"pattern": "letterbox", "rows": list(bars)}
+    overlay_parts = []
+    if geo.get("overlayDetected") or reel:
         panel, panel_note = geometry.panel_box(image, faces, first)
         evidence["panelAssessment"] = (
             "Panel proposal comparison-only before erase: face margins and incomplete person masks "
             "cannot prove hair/body preservation. " + panel_note)
         evidence["panelProposal"] = list(panel)
-        picture = geometry.screenshot_picture_box(image)
+        picture = reel["pictureBox"] if reel else geometry.screenshot_picture_box(image)
         if picture and original_near is not None:
             pills = clutter.bubbles(np.asarray(image))
             top = min([picture[1]] + [max(0, p["box"][1] - 4) for p in pills])
             bottom = max([picture[3]] + [min(image.height, p["box"][3] + 4) for p in pills])
             proposed = [picture[0], top, picture[2], bottom]
+            # Avatar thumbnails on the reel's own UI panel are not subject faces.
+            subject_faces = [face for face in faces
+                             if not (reel and face[1] + face[3] / 2 >= picture[3])]
             if all(proposed[0] <= fx and proposed[1] <= fy
                    and fx + fw <= proposed[2] and fy + fh <= proposed[3]
-                   for fx, fy, fw, fh in faces):
+                   for fx, fy, fw, fh in subject_faces):
                 evidence["screenshotLayout"] = {
                     "pictureBox": picture, "initialBox": proposed,
                     "reason": "Paired side-strip picture/black-panel transitions; retain complete pill "
                               "before fill. Only observed external panels excluded from subject budget."}
-                overlay_parts = []
+                if reel:
+                    evidence["screenshotLayout"]["reason"] = (
+                        f"{reel['profile']} frame anchored on bottom UI rows; retain complete pill before fill. "
+                        "Only observed external panels excluded from subject budget.")
                 caption_boxes = []
                 cropped = np.asarray(image.crop(proposed))
                 for item in clutter.glyphs(cropped, None, screenshot=True):
@@ -448,11 +468,22 @@ def experimental_candidates(image, row):
                         "kind": "rendered-screenshot-caption",
                         "box": [min(b[0] for b in caption_boxes), min(b[1] for b in caption_boxes),
                                 max(b[2] for b in caption_boxes), max(b[3] for b in caption_boxes)]})
-                overlay_parts.extend({"kind": "screenshot-logo-proposal", "box": item["box"]}
-                                     for item in clutter.emblems(np.asarray(image))
-                                     if item["box"][1] < picture[3])
+                if reel:
+                    # The profile's zone parts replace the generic glyph heuristics above.
+                    overlay_parts = [dict(item, pattern=reel["profile"])
+                                     for item in overlays.frame_parts(array, reel)]
                 evidence["screenshotLayout"]["overlayParts"] = overlay_parts
                 first = tuple(proposed)
+    for item in overlays.badges(array):
+        circle = item["confirmation"]["circle"]
+        overlay_parts.append({"kind": "confirmed-badge", "box": item["box"], "pattern": item["confirmation"]["badge"],
+                              "circle": [circle[0], circle[1], round(circle[2] * 1.12 + min(image.size) * .004, 1)]})
+    overlay_parts.extend(dict({"kind": item["kind"], "box": item["box"], "pattern": item["pattern"]},
+                              **({"polygon": item["polygon"]} if item.get("polygon") else {}))
+                         for item in overlays.watermarks(array) + overlays.sparkles(array)
+                         + overlays.tilted_stickers(array) + overlays.viewer_icons(array)
+                         + overlays.references(array))
+    evidence["overlayParts"] = overlay_parts
     if first != (0, 0, *image.size):
         if select_crop("first-crop", first):
             yield "first-crop", current
@@ -475,7 +506,7 @@ def experimental_candidates(image, row):
     def detect(stage):
         try:
             parts, refused = clutter.detect(current, faces, (x0, y0), local_person,
-                                            screenshot=geo.get("overlayDetected", False))
+                                            screenshot=geo.get("overlayDetected", False), logos="badges")
         except (OSError, RuntimeError, ValueError, cv2.error) as exc:
             evidence["detectorErrors"].append({"stage": stage, "detector": "clutter",
                                                "type": type(exc).__name__, "message": str(exc)})

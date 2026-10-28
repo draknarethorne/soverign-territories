@@ -15,7 +15,9 @@ from intake_library import clutter, fill, pipeline
 from likeness_library import gallery_chrome
 
 preparation = benchmark.preparation
-HEAD_POLICY = "cleaned-ui-reconstruction-picture-composition-v3"
+HEAD_POLICY = "pattern-overlay-reconstruction-picture-composition-v6"
+HEAD_MAX_FILL = .3      # pattern-confirmed reel UI (rail column, slider) may exceed the 20% guarded-eraser cap
+STATUS_MARGIN = 0       # full-bleed composition drops the status band only if the person mask starts below it
 ENHANCEMENT_POLICY = {
     "id": "native-comparison-v1",
     "denoise": preparation.RECIPE["denoise"], "tone": preparation.RECIPE["tone"],
@@ -88,46 +90,68 @@ def head_overlay_candidates(image, row):
     pills = (clutter.bubbles(array)
              if row.get("eligibility", {}).get("status") == "usable"
              and row.get("geometry", {}).get("overlayDetected") else [])
-    evidence = {"status": "skipped", "reason": "No detected screenshot search pill; not proof of clean.",
+    evidence = {"status": "skipped", "reason": "No pill or overlay pattern proposal; not proof of clean.",
                 "selected": False, "parts": [], "outsideMaskIdentical": None}
     row["experiment"]["headOverlay"] = evidence
-    if not pills:
+    layout = row["experiment"].get("screenshotLayout")
+    proposals = row["experiment"].get("overlayParts")
+    if proposals is None:
+        proposals = (layout or {}).get("overlayParts", [])
+    if row.get("eligibility", {}).get("status") != "usable":
+        proposals = []
+    if not pills and not proposals:
         return
     mask = np.zeros(array.shape[:2], dtype=bool)
     for item in pills:
         mask |= item["mask"]
         evidence["parts"].append({"kind": item["kind"], "box": item["box"]})
-    # Keep nearby icon proposals bounded to the detected pill's vertical band.
-    top = min(item["box"][1] for item in pills)
-    bottom = max(item["box"][3] for item in pills)
-    for item in clutter.glyphs(array, None, screenshot=True) + pill_icons(array, top, bottom):
-        x0, y0, x1, y1 = item["box"]
-        if x0 >= .8 * image.width and y0 >= top - .02 * image.height and y1 <= bottom + .02 * image.height:
-            mask |= clutter.grow(item["mask"], max(2, round(min(image.size) * clutter.GROW)))
-            evidence["parts"].append({"kind": "near-pill-icon-proposal", "box": [x0, y0, x1, y1]})
-    layout = row["experiment"].get("screenshotLayout")
-    if layout:
+    if pills:
+        # Keep nearby icon proposals bounded to the detected pill's vertical band.
+        top = min(item["box"][1] for item in pills)
+        bottom = max(item["box"][3] for item in pills)
+        for item in clutter.glyphs(array, None, screenshot=True) + pill_icons(array, top, bottom):
+            x0, y0, x1, y1 = item["box"]
+            if x0 >= .8 * image.width and y0 >= top - .02 * image.height and y1 <= bottom + .02 * image.height:
+                mask |= clutter.grow(item["mask"], max(2, round(min(image.size) * clutter.GROW)))
+                evidence["parts"].append({"kind": "near-pill-icon-proposal", "box": [x0, y0, x1, y1]})
+    if proposals:
         parent = row["experiment"]["final"]
         sx, sy, _, _ = row["experiment"]["candidates"][parent]["sourceBox"]
         face_mask = np.zeros(mask.shape, dtype=bool)
-        for box in clutter.face_boxes(row["eligibility"]["faces"], (sx, sy), image.size):
+        # A face whose centre sits inside a pattern part is that part's own avatar/thumbnail, not the subject.
+        pattern_boxes = [item["box"] for item in proposals if item.get("pattern")]
+        faces = [face for face in row["eligibility"]["faces"]
+                 if not any(b[0] <= face[0] + face[2] / 2 <= b[2] and b[1] <= face[1] + face[3] / 2 <= b[3]
+                            for b in pattern_boxes)]
+        for box in clutter.face_boxes(faces, (sx, sy), image.size):
             face_mask |= clutter.solid(mask.shape, box)
-        for item in layout["overlayParts"]:
+        for item in proposals:
             bx0, by0, bx1, by1 = item["box"]
             box = [max(0, bx0 - sx), max(0, by0 - sy),
                    min(image.width, bx1 - sx), min(image.height, by1 - sy)]
             if box[2] <= box[0] or box[3] <= box[1]:
                 continue
-            piece = clutter.grow(clutter.solid(mask.shape, box), max(4, round(image.width * .006)))
-            if (piece & face_mask).any():
+            if item.get("circle"):
+                cx, cy, radius = item["circle"]
+                disc = np.zeros(mask.shape, dtype=np.uint8)
+                benchmark.cv2.circle(disc, (round(cx - sx), round(cy - sy)), round(radius), 1, benchmark.cv2.FILLED)
+                piece = disc > 0
+            elif item.get("polygon"):
+                shape = np.zeros(mask.shape, dtype=np.uint8)
+                points = np.round(np.array(item["polygon"]) - [sx, sy]).astype(np.int32)
+                benchmark.cv2.fillPoly(shape, [points], 1)
+                piece = clutter.grow(shape > 0, max(2, round(image.width * .003)))
+            else:
+                piece = clutter.grow(clutter.solid(mask.shape, box), max(4, round(image.width * .006)))
+            if (piece & face_mask).any() and item["kind"] != "reel-search-pill":
                 evidence.setdefault("refusedParts", []).append(dict(item, reason="Face overlap outside pill."))
                 continue
             mask |= piece
             evidence["parts"].append(dict(item, box=box, sourceBox=item["box"]))
     coverage = float(mask.mean())
     evidence.update(coverage=coverage, maskPixels=int(mask.sum()))
-    if coverage > pipeline.MAX_FILL:
-        evidence.update(status="refused", reason="Complete UI mask exceeds existing maximum fill coverage.")
+    if coverage > HEAD_MAX_FILL:
+        evidence.update(status="refused", reason=f"Complete UI mask exceeds {HEAD_MAX_FILL:.0%} fill coverage.")
         return
     yield "head-overlay-mask", pipeline.mask_image(mask)
     try:
@@ -193,13 +217,19 @@ def integrated_head_candidates(image, row, original, eraser_mask=None):
     layout = evidence.get("screenshotLayout")
     if layout:
         px0, py0, px1, py1 = layout["pictureBox"]
+        reel = evidence.get("overlayFrame") or {}
+        band = reel.get("statusBand")
+        person_box = (evidence.get("subject") or {}).get("box")
+        if (reel.get("layout") == "full-bleed" and band and person_box
+                and person_box[1] >= band[3] + STATUS_MARGIN * original.height):
+            py0 = max(py0, band[3])  # the status-bar scrim leaves a seam; the person starts below it
         frame = [px0 - x0, py0 - y0, px1 - x0, py1 - y0]
         if not (0 <= frame[0] < frame[2] <= restored.width
                 and 0 <= frame[1] < frame[3] <= restored.height):
             raise ValueError("screenshot composition outside prepared reconstruction")
         proposed = restored.crop(frame)
         candidates["head-overlay-composition"] = {
-            "input": selected, "size": list(proposed.size), "sourceBox": layout["pictureBox"],
+            "input": selected, "size": list(proposed.size), "sourceBox": [px0, py0, px1, py1],
             "box": frame, "diagnostic": False, "status": "selected",
             "reason": "Select observed picture boundary after reconstruction; no subject-box framing."}
         candidates[selected]["status"] = "comparison"
@@ -248,7 +278,7 @@ def plan(report, data, sources, expected):
 
 
 def page(data):
-    if data.get("reviewLayout") in (2, 3, 4):
+    if data.get("reviewLayout") in (2, 3, 4, 5):
         return review_page(data)
     esc = html.escape
     cards = []
@@ -348,10 +378,10 @@ def review_page(data):
     prefix = gallery_chrome.reports_prefix(pathlib.Path(data["out"]),
                                           pathlib.Path(data["working"]) / "_reports")
     responsive = ('h2{overflow-wrap:anywhere}figure{max-width:100%;box-sizing:border-box}'
-                  if data.get("reviewLayout") in (3, 4) else '')
+                  if data.get("reviewLayout") in (3, 4, 5) else '')
     framing_note = ('Observed screenshot picture boundaries can frame the restored result; '
                     'subject-box-only composition crops remain comparison-only to protect hair/feet. '
-                    if data.get("reviewLayout") == 4 else
+                    if data.get("reviewLayout") in (4, 5) else
                     'composition crops remain rejected for automatic selection to protect hair/feet. ')
     return ('<!doctype html><html lang="en"><meta charset="utf-8">'
             '<meta name="viewport" content="width=device-width"><title>Updated intake review</title>'
@@ -402,7 +432,7 @@ def verify(out, working, report, payload, *, recorded_out=None):
         for image in row["images"].values():
             if any(data["files"].get(image[key]) != image[key + "Sha256"] for key in ("path", "padded")):
                 raise ValueError("experimental image evidence differs from file inventory")
-        if data.get("reviewLayout") in (2, 3, 4):
+        if data.get("reviewLayout") in (2, 3, 4, 5):
             evidence, images = row["evidence"], row["images"]
             if evidence["final"] not in images:
                 raise ValueError("review recommendation has no image")
@@ -519,7 +549,7 @@ def run(args):
                     r["evidence"]["final"] == "head-overlay-composition" for r in rows),
                 "compositionSelection": "observed screenshot picture boundary only; "
                                         "subject-box proposals remain comparison-only",
-                "reviewLayout": 4, "headOverlayEnabled": bool(args.head_overlay),
+                "reviewLayout": 5, "headOverlayEnabled": bool(args.head_overlay),
                 "enhancementsEnabled": bool(args.enhancements),
                 "enhancementPolicy": ENHANCEMENT_POLICY if args.enhancements else None,
                 "headOverlayPolicy": HEAD_POLICY if args.head_overlay else None, "rows": rows}

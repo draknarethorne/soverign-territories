@@ -237,11 +237,81 @@ experimental branch, not merely user confusion.
   Oct 27, 17:24: the user approved this example as "perfect", accepting the
   synthetic handbag/hand area as the necessary cost of removing the UI. This
   accepts one dense-screenshot scenario only, not GMW logos or other layouts.
-- [ ] **P1 ai** I51 Test the v7 recipe beyond Angelica: rerun the frozen
+- [x] **P1 ai** I51 Test the v7 recipe beyond Angelica: rerun the frozen
   screenshot/GMW cases and clean controls, then incoming GMW/screenshot
   images. Inspect every stage and enlarged native final regions per row, not
   only previews or lineage checks. Record heuristics that fail to generalize;
   do not tune thresholds to a single image.
+  Oct 27, 17:52 first sample, `sample10-v7-20261027` (10 rows, every stage
+  and native close-ups inspected): the picture-box detector fired on none of
+  the seven other phone-reel screenshots, whose picture runs under the
+  status bar (no black top panel). All seven kept the status bar, comment
+  panel and nav bar; rails and captions were partly erased into garbled
+  text, and the Facebook pill was half erased. The standalone GMW logo was
+  removed cleanly. A pink rose (Drakness) was a false-positive emblem and
+  was washed out. The clean control was untouched. Conclusion: reel layouts
+  need layout profiles anchored on the comment panel/nav bar, and emblem
+  erasing needs a confirmed GMW reference match (I41) before filling.
+  Oct 27, evening, done: with the I52 pattern profiles the same 10 rows pass
+  (`sample10-v9-20261027`, every row inspected): all seven reels have their
+  picture box (boxed and full-bleed), status bar, pill, rail, slider,
+  sticker, avatar and caption filled and the panels cropped; the GMW logo is
+  removed on its own and on two reels; the rose and the clean controls are
+  untouched. Residue left for ComfyUI: a pale smear where the Following
+  button sat (Camaris) and a faint chevron (Paige Rowe). v8 refused Amara's
+  reconstruction at 22% coverage; the reconstruction branch now allows 30%
+  for pattern-confirmed UI, and full-bleed compositions drop the status band
+  when the person starts below it.
+- [ ] **P1 ai** I52 Oct 27, 18:56: make overlay handling a reusable pattern
+  library: a data-driven profile file (phone reel frame anchored on the nav
+  bar/comment panel, boxed screenshot, side masking bands, oval/reel pill,
+  black borders, icon clusters, GMW badge/avatar, text watermarks such as
+  "Dora AI") plus a reference bank of confirmed crops outside git. A logo is
+  erased only after a reference/structure confirmation; uncertain matches are
+  refused, not filled. New patterns are added as data, not code. Simple
+  residue may slip through for ComfyUI; hair, face and feet must not be lost.
+  Oct 27 progress: `tools/art/intake_library/overlay_profiles.json` holds the
+  phone-reel frame (bottom-panel anchor, boxed/full-bleed, zones for top
+  controls, rail and caption), the `corner-text` watermark ("Dola AI" on
+  Seraphine; thin bright strokes, several letters, not touching the edge)
+  and the `gmw` badge (closed magenta ring with silver lettering; 5 true,
+  0 false on 41 labelled proposals). `overlays.py` reads it; the
+  experimental flow uses it on every image and colour-blob logos are no
+  longer erased. Still open: the reference bank of confirmed crops, side
+  masking bands and other layouts as they appear.
+  Oct 27, late, from the `full100-v9` inspection: added `corner-sparkle`
+  (pale four-point star, Brielle Carter), `letterbox` (flat dark blurred bars
+  ending at a sharp edge, Seraphine), caption blocks (stacked centred lines
+  with their title, Ravaelle "Goodnight ... x Aria"), a baseline and
+  minimum-height check on watermark letters (carpet pile on Uma Dunn was a
+  false hit) and a lower glyph brightness (the semi-transparent "Dola AI" on
+  Harlow Chase was missed). Boxed reels now end where the black under the
+  picture starts (Fia Oakes, Ruby Eden kept a black band), and a reel's own
+  avatar face no longer refuses its avatar part (Nova Foxworth, Eloise
+  Bishop). Left for the reference bank or ComfyUI: the rotated "ORDINARY"
+  music sticker on Afton Voss and the ornate "Echoes of Fantasia" artist
+  logo on Wren Ellery.
+  Oct 27, night, from the `full100-v10` inspection: both are now handled.
+  `tilted-sticker` finds rotated pale lettered cards (both Afton stickers,
+  the music one with its album thumbnail) and masks the rotated polygon; the
+  reference bank lives in git as `overlay_references/` (small logo crops
+  only; first: `echoes-of-fantasia`, 0.94 match against 0.59 for the next
+  best image, also found at 75% size); `viewer-corner-icons` removes a
+  viewer's close X and "..." dots (Harlow Chase). Boxed reels with a tall
+  black top panel now crop past the 12% cap through fully black rows (Fia
+  Oakes, Ruby Eden: top 280 -> 327). None of them hits another of the 100
+  rows except the "..." dots on three full-bleed reels, which are UI.
+- [ ] **P1 ai** I53 Iterate on the frozen 100-image sample (after the 10-row
+  sample passes) until every row is clean, inspecting each row's stages and
+  native close-ups; clean controls must stay untouched. Pause for user review.
+- [ ] **P1 ai** I54 Promote the accepted recipe into library intake and rerun
+  the full sandbox rebase (rebase plan C8/C9 rules).
+- [ ] **P2 ai** I55 Send 20-30 rebased images through the ComfyUI Prime pose
+  workflows, including the new 3/4 pose, 1-2 images per workflow, and pull the
+  results back into `gallery_generated` beside the gallery variations.
+- [ ] **P3 either** I56 Vision: one command (or a GUI pick) takes a new image
+  through intake, likeness, assignment, Prime/Prime Bare and onward into
+  2_Studies, 3_Layers, 4_ and 5_ workflows without manual iteration.
 
 The expanded 100-image review is not accepted. The initial border-only rule
 was intentionally conservative; the required follow-up is proven subject-free
@@ -2294,6 +2364,28 @@ reconstruction as finished composition or visually validated clean output.
 <!-- markdownlint-disable MD013 -->
 ```text
 In looking at the updated review - I still see the first crop is leaving a ton of items at the top and bottom that aren't part of the image or the bubble.  So the eraser doesn't find all the things it needs to erase and wastes time on items that would have easily been cropped on the bottom.  Now there is text and a small ball on the lower right above the black borders (that should have been cropped) that do need erasing as well as text across her thighs at the bottom.  Plus the icons on the lower right side.  So until we get the first crop reset to doing it's job - the remainder are less relaiable.  Lastly the final recommended image carrys forward those black border at the top and bottom - so while the reconstruction works - it's not cropping away all things through the process and the eraser has missed stuff due to the first crop and the final composition is still getting an image from eraser and not the reconstructed version.  The enhance denoise is not getting the headoverlay composition and looks like those enhance phases are still taking the headoverlay construction, not composition - which does attempt to crop some stuff, but since the previous stages left so much the headoverlay image still has a lot of stuff on it.  Are you actually inspecting each image yourself to ensure you believe it's makint the right choices?  Seems like you are only cherry picking some things and not actually following the output and reading the notes properly.  Please ensure you inspect each one with this feedback for the first angelica image and then we need to fix the flow again.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Reusable patterns, 100-image proof and Comfy end to end, Oct 27, 18:56 (verbatim)
+
+Coverage: I52 (pattern library), I53 (100-image proof), I54 (rebase), I55
+(Comfy Prime sample), I56 (end-to-end vision).
+
+<!-- markdownlint-disable MD013 -->
+```text
+Yes, we want to save what we can when we see patterns and make that a resuable approach so we can extend to other patterns we will encounter as we run through the 2000+ images.  Many are clean - but some do have variations on the patterns Dora AI as one I mentioned earlier for Seraphine and other writings on some.  It doesn't have to be 100%, but it needs to be capable of handling patterns and only allowing simlple things to slip through for ComfyUI to eventually handle.  So, go ahead and do everything that's necessary to get these 100 through and proof each of the 100 as that'll find out if we really hit all the pieces.  The larger masking areas along the sides are likey a common pattern, the oval/reel bubble, the common black borders and sometimes just icons, the GMW icon and I'm guessing others will show up over time.  Keep iterating until 100 are clean and then I think you can run the entire rebase all over again and send just 20-30 through to Comfy for the Prime pose renderings - including the new 3/4 pose.  Just 1-2 images per workflow are fine to see that image do get generated properly that we could pull back into the gallery_generated images alongside the gallery and it's other variations for use within other later stage workflows in Comfy.  Basically then we can actually take a new image, pull it in, run likeness, assign it to a person, send it through the Prime flows - take the Prime and Prime Bare and run it into 2_Studies, 3_Layers, and 4_ and 5_ for example.  Getting an end-to-end generation for a new image (or one I pick in the GUI to push the same process) and see the final scene without me having to run all the iterations by hand.  That's vision man!  Automation at work!
+```
+<!-- markdownlint-enable MD013 -->
+
+## Ten-image sample request, Oct 27, 17:52 (verbatim)
+
+Coverage: I51 first sample (`sample10-v7-20261027`) and the reference-pattern
+question (I41 and reel layout profiles).
+
+<!-- markdownlint-disable MD013 -->
+```text
+Have you re-run the 100 images we had planned to run originally through the process to prove the image processing?  You could probably run 10 of them and do the same level of inspection you just did for the one Angelica photo to see how things are progressing and whether or not we need to capture existing images for erasing patterns or if we're getting good at it without all that.
 ```
 <!-- markdownlint-enable MD013 -->
 

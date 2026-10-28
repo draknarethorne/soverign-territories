@@ -400,17 +400,36 @@ cleanup and source coordinates. Successful reconstruction becomes the explicit
 **recommendation for visual review only**, never original/core likeness evidence,
 and may invent eyes/hair. The guarded fallback remains recorded. Cumulative
 source-coordinate masks and outside-mask RGB preservation are recorded and
-checked. With observed screenshot picture boundaries, reconstruction also
-compares complete sidebar/back-icon, caption-envelope and badge proposals.
-They are detected on the raw first-crop input (badges retain original-source
-evidence), not on already damaged fills. Grouping caption fragments closes
-hyphen gaps; whole icon envelopes avoid leaving outline side strokes.
-These are heuristic synthetic UI repairs, not a confirmed logo classifier,
-and can alter the handbag/background beneath UI. Face-overlapping non-pill
-proposals are refused, and the 20% fill cap remains.
+checked. Overlay proposals come from the pattern profiles in
+`tools/art/intake_library/overlay_profiles.json`, read by `overlays.py`, on
+every eligible image (not only when a pill is found):
+
+| Pattern | Kind | Detection | Result |
+| --- | --- | --- | --- |
+| `phone-reel` frame | screenshot | Portrait (aspect >= 1.9); nav bar/comment panel/UP NEXT card rows anchor the bottom; a black top panel makes it `boxed`, otherwise `full-bleed` with a status band. A `boxed` picture ends where the black under it starts (caption lines on that black are cropped, not erased) | First crop to the picture box (the complete pill is kept); zone parts fill status glyphs, pill and its companions, top icons, rail, stickers, sliders, caption lines and avatar |
+| `corner-text` watermark | any image | Short white text line in a corner (e.g. "Dola AI"), at least 0.7% of the height: thin bright strokes over their surroundings, at least 3 separate letters on one baseline, not touching the image edge. Two or more stacked, centred lines grow into a caption block with the title line above them | Filled box per line or per caption block |
+| `corner-sparkle` | any image | Pale four-point star near the bottom-right corner: square box, tips touching the box mid-sides, empty box corners | Filled box |
+| `letterbox` | non-reel images | Flat dark bars above/below the picture (blurred fill) that end at one sharp full-width edge, 2-20% of the height each; never across a face | Joins the first crop |
+| `tilted-sticker` | any image | Rotated (8-82 degrees) flat pale card with dark lettering and straight contrast edges along its length, e.g. a music or date sticker; an end is extended over an album thumbnail when both long edges run on into it | Filled rotated polygon, not a box |
+| `viewer-corner-icons` | any image | A photo viewer's pure-white close "X" (both diagonals, no arms on the sides) and a row of three evenly spaced "..." dots in the top 10%, within 20% of a side | Filled box per icon |
+| reference logos | any image | Stored crops in `tools/art/intake_library/overlay_references/` (one per known logo, listed under `references` in the profile), matched at 0.6-1.6x relative size on a colour feature (`gold` or `white`), then confirmed by edge correlation at the same spot; first entry: `echoes-of-fantasia` | Filled box |
+| `gmw` badge | any image | Closed magenta ring with silver lettering inside (ring coverage, isolation, letter band) | Filled disc slightly larger than the ring; colour-blob "logos" are never erased |
+
+A new layout or mark is added as data in the profile file; only a new kind of
+measurement needs code. A new logo is added by saving a tight crop of it into
+`overlay_references/` and a `references` entry (feature, `shortSide` of the
+source, threshold); check it against the 100-image sample for false hits
+first. A miss is not proof of clean pixels. Face-overlapping
+proposals other than the pill are refused, except a face whose centre lies
+inside a pattern part (the reel's own avatar thumbnail); avatar faces on the
+reel's UI panel also do not block the first crop. The reconstruction branch may fill
+up to 30% of the picture (pattern-confirmed UI such as a rail column); the
+guarded eraser keeps its 20% cap. Fills may alter a handbag or background
+beneath UI.
 The picture-boundary composition **is selected after reconstruction**, then
-feeds all enhancements. Subject-mask-only framing remains comparison-only;
-it cannot prove complete hair/feet preservation. No pill
+feeds all enhancements; full-bleed reels also drop the status band when the
+person mask starts below it. Subject-mask-only framing remains comparison-only;
+it cannot prove complete hair/feet preservation. No proposal
 means a visible skip, not permission to erase arbitrary parts of a head.
 Nearby-icon detection is a constrained shape/brightness heuristic, not
 proof that a highlight is UI. Review both masks and results.

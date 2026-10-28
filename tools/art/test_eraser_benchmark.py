@@ -296,7 +296,42 @@ class EraserBenchmarkTests(unittest.TestCase):
         self.assertEqual(row["experiment"]["headOverlay"]["status"], "failed")
         self.assertIn("test failure", row["experiment"]["headOverlay"]["reason"])
 
-    def test_head_overlay_skips_ineligible_row_without_geometry(self):
+    def test_head_overlay_fills_pattern_badge_disc_without_pill(self):
+        import intake_sequence_benchmark as sequence
+        image = Image.new("RGB", (400, 600), (90, 90, 90))
+        row = {"eligibility": {"status": "usable", "faces": [[150., 100., 60., 70.]]},
+               "geometry": {"overlayDetected": False},
+               "experiment": {"final": "control", "candidates": {"control": {"sourceBox": [0, 0, 400, 600]}},
+                              "overlayParts": [
+                                  {"kind": "confirmed-badge", "box": [20, 400, 81, 461], "pattern": "gmw",
+                                   "circle": [50.0, 430.0, 30.0]},
+                                  {"kind": "watermark", "box": [150, 110, 200, 130], "pattern": "corner-text"}]}}
+        with mock.patch.object(sequence.fill, "fill",
+                               side_effect=lambda img, m: Image.fromarray(np.where(m[..., None], 0, np.asarray(img))
+                                                                          .astype(np.uint8))):
+            outputs = dict(sequence.head_overlay_candidates(image, row))
+        mask = np.asarray(outputs["head-overlay-mask"])[..., 0] > 0
+        self.assertTrue(mask[430, 50])
+        self.assertFalse(mask[402, 22])  # disc, not the bounding square
+        self.assertFalse(mask[120, 175])  # on the face: refused
+        self.assertEqual(len(row["experiment"]["headOverlay"]["refusedParts"]), 1)
+        self.assertIn("head-overlay-reconstruction", outputs)
+
+    def test_head_overlay_ignores_avatar_face_inside_pattern_part(self):
+        import intake_sequence_benchmark as sequence
+        image = Image.new("RGB", (400, 600), (90, 90, 90))
+        row = {"eligibility": {"status": "usable", "faces": [[150., 100., 60., 70.], [30., 505., 20., 25.]]},
+               "geometry": {"overlayDetected": False},
+               "experiment": {"final": "control", "candidates": {"control": {"sourceBox": [0, 0, 400, 600]}},
+                              "overlayParts": [
+                                  {"kind": "reel-avatar", "box": [20, 500, 60, 540], "pattern": "phone-reel"}]}}
+        with mock.patch.object(sequence.fill, "fill",
+                               side_effect=lambda img, m: Image.fromarray(np.where(m[..., None], 0, np.asarray(img))
+                                                                          .astype(np.uint8))):
+            outputs = dict(sequence.head_overlay_candidates(image, row))
+        mask = np.asarray(outputs["head-overlay-mask"])[..., 0] > 0
+        self.assertTrue(mask[520, 40])
+        self.assertNotIn("refusedParts", row["experiment"]["headOverlay"])
         import intake_sequence_benchmark as sequence
         row = {"eligibility": {"status": "junk-candidate"}, "experiment": {"final": "control"}}
         with mock.patch.object(sequence.clutter, "bubbles", side_effect=AssertionError("not eligible")):

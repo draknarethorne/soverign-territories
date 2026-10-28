@@ -59,7 +59,7 @@
 - [ ] U2 Review current photo outcomes using fresh inventories: ([2026-10-22](plans/2026-10-22-library-upkeep.md))
 - [ ] P10 Archive the manual source directory only after every ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 
-### Either of us (40)
+### Either of us (41)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -108,9 +108,10 @@
 - [ ] D11 Design a safe, archive-first way to deactivate an entire Prospect or Artist folder identified as a false face match. Keep the HTML static unless a trusted local action flow is approved; never delete source files. ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] U5 Before future Demon automation, define counterpart ([2026-10-22](plans/2026-10-22-library-upkeep.md))
 - [ ] A7 Compare download/run versus a lightweight explicit ([2026-10-22](plans/2026-10-22-review-actions.md))
+- [ ] I56 Vision: one command (or a GUI pick) takes a new image ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] R10 Extend to male/animal recipe profiles only after suitable ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 
-### For the assistant, when you say go (124)
+### For the assistant, when you say go (127)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -159,7 +160,9 @@
 - [ ] I43 Publish one expanded immutable pre-rebase review, targeting ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I48 Reopened after the Oct 27, 16:29 review: for the Angelica ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I49 Revisit confidently subject-free UI margins on all sides, ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
-- [ ] I51 Test the v7 recipe beyond Angelica: rerun the frozen ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I52 Oct 27, 18:56: make overlay handling a reusable pattern ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I53 Iterate on the frozen 100-image sample (after the 10-row ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I54 Promote the accepted recipe into library intake and rerun ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I44 Audit first-pass and final prepared-image face usability ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I45 Wire verified Junk outcomes through existing reversible ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I38 Add this Fantasy case to the next immutable benchmark ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
@@ -220,6 +223,7 @@
 - [ ] A5 Verify stable-directory report replacement, dated report ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] I40 Add bounded advanced-erasure escalation to I38 after ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I42 Add native-resolution enhancement comparisons after ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I55 Send 20-30 rebased images through the ComfyUI Prime pose ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I46 Re-test duplicate and incoming-replacement continuity with ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I35 Compare LaMa with existing local classical fills on the ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I27 Close the v16 visual gaps: the picture-in-picture reel ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))

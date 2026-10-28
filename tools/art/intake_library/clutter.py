@@ -212,12 +212,20 @@ def face_boxes(faces, offset, size):
     return boxes
 
 
-def detect(image, faces, offset, subject=None, *, screenshot=False):
-    """(parts, refused): complete clutter shapes in `image`; parts touching a face are refused, never filled."""
+def detect(image, faces, offset, subject=None, *, screenshot=False, logos="emblems"):
+    """(parts, refused): complete clutter shapes in `image`; parts touching a face are refused, never filled.
+
+    logos="badges" uses only structure-confirmed badges (overlays.badges) instead of colour-blob emblems.
+    """
     array = np.asarray(image)
     height, width = array.shape[:2]
     person = subject["mask"] if subject else None
-    found = glyphs(array, person, screenshot=screenshot) + emblems(array)
+    if logos == "badges":
+        from intake_library import overlays
+        marks = overlays.badges(array)
+    else:
+        marks = emblems(array)
+    found = glyphs(array, person, screenshot=screenshot) + marks
     if screenshot:
         found += bubbles(array) + panels(array)
     margin = max(2, round(min(width, height) * GROW))

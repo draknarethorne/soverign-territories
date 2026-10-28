@@ -140,6 +140,15 @@ No new 100-image run or library installation followed this correction.
 synthetic handbag/hand area. One dense-screenshot scenario is accepted; GMW
 logos and other layouts are untested with this recipe (I51).
 
+**Oct 27, night (I52/I53):** overlay handling is a data-driven pattern
+library (`tools/art/intake_library/overlay_profiles.json` plus `overlays.py`):
+phone-reel frames, corner text and caption blocks, sparkles, letterbox bars,
+tilted stickers (polygon masks), viewer corner icons, GMW badges and a
+reference bank of logo crops in `overlay_references/`. The 100-image proof
+`full100-v11` (`full100-v11b-20261027-1`, `full100-v11-20261027-2`) changed
+only the intended rows versus v10; waiting for user review before the
+recipe is promoted into intake (I54).
+
 **Oct 25 overnight rendering integration:** Sovereign Females is running at
 `127.0.0.1:8188` (ComfyUI 0.38.2, 970 node types). Request preview/prepare/check,
 four bounded clothed-preservation edit graph bindings, capability/model checks,

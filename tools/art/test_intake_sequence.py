@@ -125,6 +125,7 @@ class SequenceTests(unittest.TestCase):
         fragments = [{"box": b} for b in ([50, 534, 100, 550], [120, 534, 250, 550],
                                          [365, 434, 371, 440], [5, 34, 25, 40])]
         with mock.patch.object(pipeline.clutter, "bubbles", return_value=[pill]), \
+                mock.patch.object(pipeline.overlays, "reel_frame", return_value=None), \
                 mock.patch.object(pipeline.clutter, "glyphs", return_value=fragments):
             images, evidence = self.run_sequence()
         self.assertEqual(evidence["screenshotLayout"]["pictureBox"], [0, 100, 400, 650])
@@ -137,6 +138,48 @@ class SequenceTests(unittest.TestCase):
         self.assertEqual(parts["rendered-screenshot-caption"], [50, 600, 250, 616])
         self.assertEqual(parts["rendered-screenshot-rail"], [352, 481, 392, 525])
         self.assertEqual(parts["rendered-screenshot-ui"], [0, 80, 44, 128])
+
+    def test_reel_frame_parts_badges_and_watermarks_become_overlay_parts(self):
+        self.image = Image.new("RGB", (400, 800), (60, 80, 100))
+        self.body[:] = False
+        self.body[100:660, 100:300] = True
+        frame = {"profile": "phone-reel", "layout": "full-bleed", "pictureBox": [0, 0, 400, 700],
+                 "statusBand": [0, 0, 400, 38]}
+        badge = pipeline.clutter.part("logo", pipeline.clutter.solid((800, 400), [20, 500, 60, 540]))
+        badge["confirmation"] = {"badge": "gmw", "circle": [40.0, 520.0, 18.0]}
+        with mock.patch.object(pipeline.clutter, "bubbles", return_value=[]), \
+                mock.patch.object(pipeline.overlays, "reel_frame", return_value=frame), \
+                mock.patch.object(pipeline.overlays, "frame_parts",
+                                  return_value=[{"kind": "reel-rail", "box": [350, 400, 400, 600]}]), \
+                mock.patch.object(pipeline.overlays, "badges", return_value=[badge]), \
+                mock.patch.object(pipeline.overlays, "watermarks",
+                                  return_value=[{"kind": "watermark", "box": [300, 680, 390, 695],
+                                                 "pattern": "corner-text"}]):
+            images, evidence = self.run_sequence()
+        self.assertEqual(evidence["screenshotLayout"]["pictureBox"], [0, 0, 400, 700])
+        self.assertEqual(evidence["candidates"]["first-crop"]["sourceBox"], [0, 0, 400, 700])
+        self.assertEqual(evidence["overlayFrame"]["layout"], "full-bleed")
+        kinds = [(p["kind"], p.get("pattern")) for p in evidence["overlayParts"]]
+        self.assertEqual(kinds, [("reel-rail", "phone-reel"), ("confirmed-badge", "gmw"),
+                                 ("watermark", "corner-text")])
+        self.assertEqual(evidence["overlayParts"][1]["circle"][:2], [40.0, 520.0])
+        _, kwargs = self.detector.call_args
+        self.assertEqual(kwargs["logos"], "badges")
+
+    def test_letterbox_bars_join_the_first_crop(self):
+        self.body[:] = False
+        self.body[100:600, 100:300] = True
+        with mock.patch.object(pipeline.overlays, "reel_frame", return_value=None), \
+                mock.patch.object(pipeline.overlays, "letterbox", return_value=(40, 760)):
+            images, evidence = self.run_sequence()
+        self.assertEqual(evidence["letterbox"]["rows"], [40, 760])
+        self.assertEqual(evidence["candidates"]["first-crop"]["sourceBox"][1::2], [40, 760])
+
+    def test_letterbox_never_cuts_a_face(self):
+        with mock.patch.object(pipeline.overlays, "reel_frame", return_value=None), \
+                mock.patch.object(pipeline.overlays, "letterbox", return_value=(120, 760)):
+            images, evidence = self.run_sequence()
+        self.assertNotIn("letterbox", evidence)
 
     def test_face_body_unknown_and_refused_masks_stay_unchanged(self):
         face = self.part("glyph", [170, 110, 190, 130])
