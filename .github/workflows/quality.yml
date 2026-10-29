@@ -51,6 +51,6 @@ jobs:
       - name: Run pre-commit quality gates
         run: pre-commit run --all-files --show-diff-on-failure
 
-      - name: Run selected regressions (deep mutations only on explicit dispatch)
+      - name: Run fast gate guards (full regressions only on explicit dispatch)
         shell: cmd
         run: bin\validate.cmd --ci

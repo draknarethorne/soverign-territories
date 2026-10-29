@@ -505,3 +505,31 @@ User words (chat, Oct 29), word for word:
 Coverage: D20 owns corrected remote acceptance; D21 owns selector policy.
 The next fresh-chat D17 triage should not reopen broad test architecture
 unless measured runtime still blocks the agreed rebase/GUI milestone.
+
+## Oct 29: explicit-only slow regressions
+
+The user now explicitly approves routine fast CI and slower/full regression
+coverage only on specific demand. This supersedes D21's automatic broad
+regression fallback for PR/main CI. Routine runs retain hygiene/data checks
+and the three lightweight quality/selection/isolation modules; schema,
+unknown/shared dependencies and new-branch events cannot escalate them.
+Explicit local scoped/changed/full commands and remote dispatch retain all
+regression and mutation tests. Compatibility remains optional on dispatch.
+No tests or safety assertions are removed; unrun suites are not passing claims.
+Targeted local tests remain required when changing the relevant subsystem.
+
+The successful full PR 3.14 run took 14m35s including setup. Its clean-runner
+fixture fixes are verified remotely. D20's original automatic-matrix goal
+is superseded by explicit compatibility acceptance, not a claim that the
+older runtimes passed. PR #2 is still blocked by effective ruleset 26134794
+requiring review/code-owner approval and a `copilot` deployment. Normal merge
+was attempted; no admin override, ruleset modification or fake deployment
+is authorized. Keep the final actual state in the handoff/PR.
+
+User words (chat, Oct 29), word for word:
+
+> Let's make those CI changes to keep things fast and ensure that it would only be on a specific demand we run the slower and fuller regression suite.  If that's already done, let's continue to close out the MR and merge it and get ready to start fresh.
+
+Coverage: D21 owns fast-versus-explicit policy; PR closeout owns the pending
+merge/branch operation; D17 still owns fresh-chat plan triage. The raw
+`feedback/chasing_my_tail.md` remains preserved and unchanged.

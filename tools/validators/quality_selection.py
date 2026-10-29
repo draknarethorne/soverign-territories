@@ -105,10 +105,14 @@ def ci_selection(environ):
 
 
 def routine_ci_plan(plan):
-    """Keep regressions automated; reserve exhaustive validator corruption for dispatch."""
-    return {**plan, "mutations": False, "reasons": [
-        *plan["reasons"], "routine CI: exhaustive mutations are explicit-only",
-    ]}
+    """Run only lightweight gate guards; leave subsystem regressions explicit."""
+    return {
+        "full": False, "scopes": ["quality"], "mutations": False,
+        "reasons": [
+            *plan["reasons"],
+            "routine CI: quality/isolation guards only; subsystem/full regressions require an explicit request",
+        ],
+    }
 
 
 def commands_for(plan):

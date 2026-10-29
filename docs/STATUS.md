@@ -4,6 +4,15 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Oct 29 final CI policy:** the user explicitly requested fast routine CI
+with slower/full regression suites only on specific demand. PR/main CI now
+runs hygiene/data checks and lightweight gate/isolation guards on 3.14;
+no dependency fallback starts full image regressions. Explicit dispatch
+retains full offline regressions/mutations and optional compatibility.
+Targeted local testing and real-image sandbox acceptance remain required.
+PR #2's earlier full 3.14 run passed in 14m35s; merging is separately blocked
+by approval/deployment rules, not failing tests. No rule bypass is authorized.
+
 **Oct 29 branch-closeout decision:** publish the accumulated art/workflow
 baseline through a PR and merge only after remote checks pass, then continue
 on a fresh focused branch/chat. This does not close unfinished plans.

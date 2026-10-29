@@ -78,15 +78,17 @@ class QualitySelectionTests(unittest.TestCase):
             self.assertEqual(git.call_args.args[0], ["git", "merge-base", "base-tip", "pr-head"])
             changed.assert_called_once_with("common-ancestor", "pr-head")
 
-    def test_new_branch_uses_full_fallback(self):
+    def test_new_branch_uses_fast_guards_not_full_regressions(self):
         scratch = quality.ROOT / "tmp"
         scratch.mkdir(exist_ok=True)
         with tempfile.TemporaryDirectory(dir=scratch) as directory:
             event = pathlib.Path(directory) / "event.json"
             event.write_text(json.dumps({"before": "0" * 40}), encoding="utf-8")
-            self.assertTrue(quality.ci_selection({
+            plan = quality.ci_selection({
                 "GITHUB_EVENT_PATH": str(event), "GITHUB_EVENT_NAME": "push",
-            })["full"])
+            })
+            self.assertFalse(plan["full"])
+            self.assertEqual(plan["scopes"], ["quality"])
 
     def test_full_selection_uses_one_mutation_and_one_regression_launcher(self):
         commands = quality.commands_for(quality.select(["requirements.txt"]))
@@ -116,12 +118,21 @@ class QualitySelectionTests(unittest.TestCase):
             self.assertFalse(plan["full"])
             self.assertFalse(plan["mutations"])
 
-    def test_routine_ci_keeps_full_regressions_but_defers_exhaustive_mutations(self):
-        plan = quality.routine_ci_plan(quality.select(["data/schemas/codex-schema.json"]))
-        self.assertTrue(plan["full"])
-        self.assertFalse(plan["mutations"])
-        self.assertEqual(len(quality.commands_for(plan)), 1)
-        self.assertEqual(quality.commands_for(plan)[0][-1], "bin\\validate.cmd")
+    def test_routine_ci_never_expands_into_slow_regressions(self):
+        expected = {
+            "tools.validators.test_quality_gates",
+            "tools.validators.test_quality_selection",
+            "tools.validators.test_validation_isolation",
+        }
+        for paths in ([], ["docs/STATUS.md"], ["data/schemas/codex-schema.json"],
+                      ["tools/art/image_preparation.py"], ["unknown/source.py"]):
+            with self.subTest(paths=paths):
+                plan = quality.routine_ci_plan(quality.select(paths))
+                self.assertFalse(plan["full"])
+                self.assertFalse(plan["mutations"])
+                commands = quality.commands_for(plan)
+                self.assertEqual({command[-1] for command in commands}, expected)
+                self.assertTrue(all(command[1:3] == ["-m", "unittest"] for command in commands))
 
     def test_ci_push_uses_exact_before_and_after(self):
         scratch = quality.ROOT / "tmp"
@@ -135,7 +146,7 @@ class QualitySelectionTests(unittest.TestCase):
                     "GITHUB_REF": "refs/heads/work", "GITHUB_SHA": "def456",
                 })
             changed.assert_called_once_with("abc123", "def456")
-            self.assertEqual(plan["scopes"], [])
+            self.assertEqual(plan["scopes"], ["quality"])
 
     def test_process_failure_stops_and_children_use_ignored_scratch(self):
         with mock.patch.object(quality.subprocess, "run", return_value=mock.Mock(returncode=7)) as child:

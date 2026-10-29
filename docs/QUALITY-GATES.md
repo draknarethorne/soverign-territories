@@ -83,25 +83,27 @@ on every routine image-schema edit and again on push.
   can set `compatibility=true` to run deep checks on 3.12/3.13/3.14.
   Source compatibility is not deliberately dropped, but unrun older-runtime
   checks are not claimed as passing
-- runs routine hygiene/data hooks and `bin\validate.cmd --ci`. Branch pushes
-  compare the event's before/after commits; PRs compare the merge base with
-  the PR head. Checkout includes history. Main uses the same change selection,
-  not an automatic deep rerun after merge. New branches without a previous
-  commit conservatively select all regressions. Explicit dispatch selects
-  all regressions and exhaustive isolated mutations
+- runs routine hygiene/data hooks and `bin\validate.cmd --ci`. Automatic
+  PR/main runs execute only `test_quality_gates`, `test_quality_selection`,
+  and `test_validation_isolation`: inventory, routing, failure propagation
+  and disposable-copy safety guards, not full image processing.
+  Even schema/shared/unknown paths and new branches cannot expand routine
+  CI into slow regressions. Explicit dispatch selects all regressions and
+  exhaustive isolated mutations
 - the shared [selector](../tools/validators/quality_selection.py) prints
   reasons and exact commands, then reports elapsed time/exit per subprocess.
-  Documentation-only changes need no unit/mutation suite. Reference/workflow
+  Local explicitly requested change selection uses these dependency rules:
+  documentation-only changes need no unit/mutation suite. Reference/workflow
   changes select workflow/generator tests; shared `comfy_workflows.py` and
   prompt generation include art/library consumers. Intake changes include
   retained/rebase and exported-workflow consumers. Other art/data changes include their broad
   consumers, but do not test validator mutations. Schema/validator changes
   and unclassified infrastructure paths conservatively use all regressions.
-  Exhaustive validator mutations are explicit-only in CI, even for those
-  paths; use dispatch or local `--full` when changing validator rejection
-  behavior. Automatic schema/data validity checks remain enabled.
+  This local selection is not automatic CI coverage. Use dispatch or local
+  `--full` when full regressions/mutations are needed. Automatic schema/data
+  validity checks remain enabled.
   No timing-based success cache or image-quality inference is involved
-- selected subsystem runs include the lightweight quality/isolation guards.
+- explicitly selected local subsystem runs include the lightweight quality/isolation guards.
   Full explicit coverage runs isolated mutations once and the consolidated
   regression launcher once, not the manual hooks a second time
 - installs pinned core image dependencies from `requirements.txt`; optional
@@ -118,11 +120,15 @@ on every routine image-schema edit and again on push.
   measured versions and local interpreter limitations
 
 The first PR-wide run measured exhaustive mutations at 298-358 seconds on
-each runtime before ordinary regressions. That repetition motivated the
-explicit deep tier. Selected regressions can still take minutes for broad
-changes; there is no sub-five-minute promise. Do not silently skip a failing
-or slow safety test to make the gate green. Real inference/visual acceptance
-and full performance campaigns are manual operational acceptance, not CI.
+each runtime before ordinary regressions. The later successful broad 3.14
+run took 14m35s including setup. Slow/full regressions now require explicit
+demand, rather than a path-triggered fallback. Request remote deep coverage
+with `gh workflow run quality.yml --ref YOUR-BRANCH -f compatibility=false`;
+set `compatibility=true` only when testing all three runtimes is wanted.
+Local `--scope`, `--changed`, no-argument full regressions and `--full` remain
+explicit developer choices. No tests were removed and no unrun suite is
+reported as passed. Real inference/visual acceptance and full performance
+campaigns remain local operational acceptance, not routine CI.
 
 ### Test scratch
 

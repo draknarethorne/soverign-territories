@@ -46,10 +46,11 @@ Request the deeper hook suites explicitly:
 - `cmd /c bin\check.cmd --deep`
 
 Routine commit hooks check hygiene and data validity. Push does not rerun
-them. Unit and mutation hooks use the explicit `manual` stage; CI selects
-dependency-relevant regressions for PR/main changes, on Python 3.14.
-Exhaustive mutations and older-Python compatibility are explicitly requested;
-unknown/shared dependencies still expand regression coverage conservatively.
+them. Unit and mutation hooks use the explicit `manual` stage. Routine CI
+runs hygiene/data checks and lightweight gate/isolation guards on Python 3.14.
+Subsystem regressions, full image suites, exhaustive mutations and older-Python
+compatibility require an explicit request; no unknown/shared path can
+automatically expand routine CI into the full suite.
 Run focused tests for your changes
 before committing, rather than relying on an automatic full-suite commit.
 
@@ -73,6 +74,10 @@ CI runs on main pushes and main-targeting PRs, not duplicate feature pushes.
 Dispatch requests full deep coverage; enable its `compatibility` option for
 Python 3.12/3.13/3.14 instead of just 3.14. A successful local commit
 is not proof that CI ran or that branch protection is configured.
+For explicit remote deep coverage:
+`gh workflow run quality.yml --ref YOUR-BRANCH -f compatibility=false`.
+Run the relevant local suites for code changes before committing; fast CI
+is not a substitute for subsystem or real-image acceptance.
 
 ## Commit guidance
 
