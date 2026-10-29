@@ -5,7 +5,7 @@ echo    check.cmd             routine hygiene and data validity; no unit/mutatio
 echo    check.cmd --deep      explicit routine checks plus all manual unit/mutation hooks
 echo    validate.cmd --changed HEAD --dry-run  preview tests for tracked and non-ignored untracked work; --check executes
 echo    validate.cmd --scope workflow --check  explicit subsystem: workflow, intake, library, data, quality, full
-echo    validate.cmd --full   full offline regressions and one isolated mutation pass; CI selects by change, full on main/manual
+echo    validate.cmd --full   full offline regressions and one isolated mutation pass; CI selects regressions, deep on manual dispatch
 echo    validate.cmd --quick  isolated mutation smoke suite ONLY; all test launchers use ignored repo tmp
 echo    validate.cmd --isolated [--quick]  mutation validation on ONE disposable data/tools copy; private recovery journal, live repository read-only
 echo  HERO is a hero name such as Draknara. STAGE is optional: poses, head, scene, hair, motion, armor, clothing, video, or "studio" for every studio stage.

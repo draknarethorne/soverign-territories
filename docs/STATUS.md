@@ -12,6 +12,14 @@ deferrable work; T6 per-image recovery remains the known prerequisite before
 fresh sandbox rebase and viewer acceptance. No broad plan moves, history
 rewrite, feedback cleanup, Production change or full intake is part of closeout.
 
+**Oct 29 CI cost correction:** routine PR/main checks now use Python 3.14
+only; exhaustive mutations and optional 3.12/3.13 compatibility are explicit
+dispatch coverage. No duplicate feature-push CI. The failed PR matrix spent
+298-358 s per runtime on exhaustive mutations, then exposed three tests
+depending on a locally installed cleanup recipe. Their fixtures now install
+their own tiny recipe; 77 focused tests pass. Relevant regressions remain
+automated; no passing remote acceptance or completed merge is claimed yet.
+
 **Oct 29 quality-gate decision:** routine commits retain hygiene, script
 analysis and data validity, not unit/mutation suites. Push no longer repeats
 checks. Deep suites run explicitly through `bin\check.cmd --deep` and in CI;

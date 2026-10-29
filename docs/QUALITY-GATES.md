@@ -75,16 +75,20 @@ on every routine image-schema edit and again on push.
 
 - `.github/workflows/quality.yml`
 - installs and runs routine pre-commit hooks in a clean environment (including data validation)
-- runs on every branch push, PRs targeting `main`, or explicit
+- runs on pushes to `main`, PRs targeting `main`, or explicit
   `workflow_dispatch` for a selected branch. Concurrency cancels superseded
-  runs for the same ref; a push and its PR can still produce separate runs.
+  runs for the same ref. Feature-branch pushes do not repeat the PR run.
   Do not claim remote success until a run exists and succeeds
-- Windows matrix retains Python 3.12 and adds 3.13/3.14; image tooling recommends
-  regular 64-bit CPython 3.14, without raising the source compatibility floor
+- routine Windows checks use regular CPython 3.14 only. Explicit dispatch
+  can set `compatibility=true` to run deep checks on 3.12/3.13/3.14.
+  Source compatibility is not deliberately dropped, but unrun older-runtime
+  checks are not claimed as passing
 - runs routine hygiene/data hooks and `bin\validate.cmd --ci`. Branch pushes
   compare the event's before/after commits; PRs compare the merge base with
-  the PR head. Checkout includes history. Main pushes, manual dispatch and
-  new branches without a previous commit use full acceptance coverage
+  the PR head. Checkout includes history. Main uses the same change selection,
+  not an automatic deep rerun after merge. New branches without a previous
+  commit conservatively select all regressions. Explicit dispatch selects
+  all regressions and exhaustive isolated mutations
 - the shared [selector](../tools/validators/quality_selection.py) prints
   reasons and exact commands, then reports elapsed time/exit per subprocess.
   Documentation-only changes need no unit/mutation suite. Reference/workflow
@@ -92,11 +96,14 @@ on every routine image-schema edit and again on push.
   prompt generation include art/library consumers. Intake changes include
   retained/rebase and exported-workflow consumers. Other art/data changes include their broad
   consumers, but do not test validator mutations. Schema/validator changes
-  and unclassified infrastructure paths conservatively use full coverage.
+  and unclassified infrastructure paths conservatively use all regressions.
+  Exhaustive validator mutations are explicit-only in CI, even for those
+  paths; use dispatch or local `--full` when changing validator rejection
+  behavior. Automatic schema/data validity checks remain enabled.
   No timing-based success cache or image-quality inference is involved
 - selected subsystem runs include the lightweight quality/isolation guards.
-  Full coverage runs isolated mutations once and the consolidated regression
-  launcher once, not the manual hooks a second time
+  Full explicit coverage runs isolated mutations once and the consolidated
+  regression launcher once, not the manual hooks a second time
 - installs pinned core image dependencies from `requirements.txt`; optional
   Torch/LaMa dependencies and model downloads are not needed for those
   regression tests. Real neural inference throughput, visual quality and
@@ -109,6 +116,13 @@ on every routine image-schema edit and again on push.
 - local validation and newly configured CI coverage are distinct: see the
   [runtime guide](art/original-photos.md#python-runtime-and-dependencies) for
   measured versions and local interpreter limitations
+
+The first PR-wide run measured exhaustive mutations at 298-358 seconds on
+each runtime before ordinary regressions. That repetition motivated the
+explicit deep tier. Selected regressions can still take minutes for broad
+changes; there is no sub-five-minute promise. Do not silently skip a failing
+or slow safety test to make the gate green. Real inference/visual acceptance
+and full performance campaigns are manual operational acceptance, not CI.
 
 ### Test scratch
 

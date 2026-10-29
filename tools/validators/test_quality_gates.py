@@ -67,6 +67,9 @@ class QualityGateTests(unittest.TestCase):
         self.assertEqual(commands.count("bin\\validate.cmd --ci"), 1)
         self.assertFalse(any("--hook-stage manual" in command for command in commands))
         self.assertFalse(any("bin\\validate.cmd --quick" in command for command in commands))
+        self.assertIn('branches: [ main ]', workflow)
+        self.assertIn("fromJSON(inputs.compatibility", workflow)
+        self.assertIn("""'["3.12","3.13","3.14"]' || '["3.14"]'""", workflow)
 
     def test_launchers_route_default_test_scratch_and_retained_fixture_is_not_root(self):
         setup = (ROOT / "bin" / "_test-env.cmd").read_text(encoding="utf-8")

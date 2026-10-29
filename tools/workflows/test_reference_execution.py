@@ -210,6 +210,13 @@ class ExecutionTests(unittest.TestCase):
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)
         self.root = pathlib.Path(self.temporary.name)
+        installed = self.root / "installed"
+        recipe = installed / "zz_shots" / "0_Edit" / "0c_Cleanup" / execution.RECIPES["shared-0c-cleanup-basic"][2]
+        recipe.parent.mkdir(parents=True)
+        recipe.write_bytes(base.encode(tiny_ui()))
+        patcher = mock.patch.object(execution, "WORKFLOWS", installed)
+        patcher.start()
+        self.addCleanup(patcher.stop)
         self.batch = "pilot"
         self.destination = base.run_path(self.root, self.batch)
         self.destination.mkdir(parents=True)

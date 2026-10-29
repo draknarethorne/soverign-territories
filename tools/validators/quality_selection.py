@@ -85,23 +85,30 @@ def changed_paths(base, head=None):
 def ci_selection(environ):
     event = json.loads(pathlib.Path(environ["GITHUB_EVENT_PATH"]).read_text(encoding="utf-8"))
     kind = environ["GITHUB_EVENT_NAME"]
-    if kind == "workflow_dispatch" or environ.get("GITHUB_REF") == "refs/heads/main":
+    if kind == "workflow_dispatch":
         return {"full": True, "scopes": list(SCOPES), "mutations": True,
-                "reasons": ["main/manual: full acceptance gate"]}
+                "reasons": ["explicit dispatch: full regression and mutation gate"]}
     if kind == "pull_request":
         pr = event["pull_request"]
         base = subprocess.run(
             ["git", "merge-base", pr["base"]["sha"], pr["head"]["sha"]],
             cwd=ROOT, check=True, stdout=subprocess.PIPE, text=True,
         ).stdout.strip()
-        return select(changed_paths(base, pr["head"]["sha"]))
+        return routine_ci_plan(select(changed_paths(base, pr["head"]["sha"])))
     if kind == "push":
         base = event["before"]
         if not base or set(base) == {"0"}:
-            return {"full": True, "scopes": list(SCOPES), "mutations": True,
-                    "reasons": ["new branch: no trustworthy previous commit; full fallback"]}
-        return select(changed_paths(base, environ["GITHUB_SHA"]))
+            return routine_ci_plan({"full": True, "scopes": list(SCOPES), "mutations": True,
+                                    "reasons": ["new branch: no trustworthy previous commit; full fallback"]})
+        return routine_ci_plan(select(changed_paths(base, environ["GITHUB_SHA"])))
     raise ValueError(f"Unsupported CI event: {kind}")
+
+
+def routine_ci_plan(plan):
+    """Keep regressions automated; reserve exhaustive validator corruption for dispatch."""
+    return {**plan, "mutations": False, "reasons": [
+        *plan["reasons"], "routine CI: exhaustive mutations are explicit-only",
+    ]}
 
 
 def commands_for(plan):

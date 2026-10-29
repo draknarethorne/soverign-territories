@@ -2,9 +2,15 @@ name: Quality Gates
 
 on:
   push:
+    branches: [ main ]
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+    inputs:
+      compatibility:
+        description: Also test Python 3.12 and 3.13 (full deep checks)
+        type: boolean
+        default: false
 
 concurrency:
   group: quality-${{ github.workflow }}-${{ github.ref }}
@@ -16,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.12", "3.13", "3.14"]
+        python-version: ${{ fromJSON(inputs.compatibility && '["3.12","3.13","3.14"]' || '["3.14"]') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -45,6 +51,6 @@ jobs:
       - name: Run pre-commit quality gates
         run: pre-commit run --all-files --show-diff-on-failure
 
-      - name: Run dependency-selected tests (full on main or explicit dispatch)
+      - name: Run selected regressions (deep mutations only on explicit dispatch)
         shell: cmd
         run: bin\validate.cmd --ci

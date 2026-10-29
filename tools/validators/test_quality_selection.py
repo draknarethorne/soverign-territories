@@ -97,17 +97,31 @@ class QualitySelectionTests(unittest.TestCase):
     def test_data_edits_do_not_test_validator_mutations(self):
         self.assertFalse(quality.select(["data/art/heroes/example.json"])["mutations"])
 
-    def test_ci_main_and_dispatch_are_full(self):
+    def test_ci_dispatch_is_full_but_main_uses_changed_work_without_mutations(self):
         scratch = quality.ROOT / "tmp"
         scratch.mkdir(exist_ok=True)
         with tempfile.TemporaryDirectory(dir=scratch) as directory:
             event = pathlib.Path(directory) / "event.json"
-            event.write_text("{}", encoding="utf-8")
-            for kind, ref in (("push", "refs/heads/main"), ("workflow_dispatch", "refs/heads/work")):
+            event.write_text('{"before": "previous"}', encoding="utf-8")
+            plan = quality.ci_selection({
+                "GITHUB_EVENT_PATH": str(event), "GITHUB_EVENT_NAME": "workflow_dispatch",
+            })
+            self.assertTrue(plan["full"])
+            self.assertTrue(plan["mutations"])
+            with mock.patch.object(quality, "changed_paths", return_value=["docs/STATUS.md"]):
                 plan = quality.ci_selection({
-                    "GITHUB_EVENT_PATH": str(event), "GITHUB_EVENT_NAME": kind, "GITHUB_REF": ref,
+                    "GITHUB_EVENT_PATH": str(event), "GITHUB_EVENT_NAME": "push",
+                    "GITHUB_REF": "refs/heads/main", "GITHUB_SHA": "head",
                 })
-                self.assertTrue(plan["full"])
+            self.assertFalse(plan["full"])
+            self.assertFalse(plan["mutations"])
+
+    def test_routine_ci_keeps_full_regressions_but_defers_exhaustive_mutations(self):
+        plan = quality.routine_ci_plan(quality.select(["data/schemas/codex-schema.json"]))
+        self.assertTrue(plan["full"])
+        self.assertFalse(plan["mutations"])
+        self.assertEqual(len(quality.commands_for(plan)), 1)
+        self.assertEqual(quality.commands_for(plan)[0][-1], "bin\\validate.cmd")
 
     def test_ci_push_uses_exact_before_and_after(self):
         scratch = quality.ROOT / "tmp"

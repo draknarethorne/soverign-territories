@@ -47,8 +47,9 @@ Request the deeper hook suites explicitly:
 
 Routine commit hooks check hygiene and data validity. Push does not rerun
 them. Unit and mutation hooks use the explicit `manual` stage; CI selects
-dependency-relevant tests for branch/PR changes and full coverage for
-main/manual acceptance or conservative infrastructure fallback.
+dependency-relevant regressions for PR/main changes, on Python 3.14.
+Exhaustive mutations and older-Python compatibility are explicitly requested;
+unknown/shared dependencies still expand regression coverage conservatively.
 Run focused tests for your changes
 before committing, rather than relying on an automatic full-suite commit.
 
@@ -68,8 +69,9 @@ prefer them to bare test commands. `--quick` is now just isolated mutation
 smoke coverage, not an implicit full regression run. See the
 [quality contract](docs/QUALITY-GATES.md) for dependency/fallback rules.
 
-CI runs on branch pushes and main-targeting PRs, and can also be dispatched
-explicitly. A successful local commit
+CI runs on main pushes and main-targeting PRs, not duplicate feature pushes.
+Dispatch requests full deep coverage; enable its `compatibility` option for
+Python 3.12/3.13/3.14 instead of just 3.14. A successful local commit
 is not proof that CI ran or that branch protection is configured.
 
 ## Commit guidance

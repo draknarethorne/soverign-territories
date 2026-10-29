@@ -49,6 +49,11 @@ Found while building and running the artists reset, the crop and the routine, wr
   runtimes pass. Local Python 3.14 validation is not remote matrix acceptance.
   CLI GitHub authentication needs repair; the authenticated GitHub integration
   can read runs in the meantime.
+  Latest result: the three-version PR run failed on three machine-dependent
+  cleanup-batch fixtures, not a Python-version difference. Login is repaired.
+  Fixtures are isolated; routine CI is now 3.14 only with explicit optional
+  compatibility dispatch. Verify the corrected PR before merge; do not
+  require the retired automatic matrix or call older runtimes accepted.
 
 - [x] **P2 ai** D14 Audit the actual Python/image stack; recommend regular 64-bit
   3.14, declare tested direct core/CPU-intake requirements and extend Windows CI
@@ -451,3 +456,35 @@ Coverage: this closeout owns PR/merge/branch/handoff operations. D17 keeps
 plan triage; performance T6 and the rebase/viewer plans keep their unfinished
 acceptance gates. `feedback/chasing_my_tail.md` remains unchanged and its
 complete prior transcription above is retained.
+
+## Oct 29: measured CI cost correction
+
+The first PR-wide run failed all three runtimes because three cleanup-batch
+tests relied on a real recipe under the developer's installed ComfyUI
+workspace. The execution fixture now creates its own tiny installed recipe
+and patches the workspace root; production recipe availability remains checked.
+The targeted execution/selection/isolation/quality suites pass 77 tests in
+7.09 seconds.
+
+Before that failure, each runtime ran all 53 isolated mutations, taking
+298-358 seconds. Routine CI now uses Python 3.14, with selected regressions
+and normal hygiene/data checks. Full isolated mutations require dispatch;
+its optional compatibility input runs 3.12/3.13/3.14. Main does not force a
+second full deep pass after merge; feature pushes do not duplicate PR jobs.
+This supersedes the earlier automatic three-runtime/full-main policy.
+Broad/shared dependencies still select all regressions. No blanket removal
+of slow safety tests, weaker assertions, or unrun-as-passed claim is allowed.
+Further deep-versus-routine image-suite partitioning needs measured evidence
+and remains separate from this bounded cost/failure fix.
+
+The policy question was presented, but the user was unavailable; the chosen
+default removes demonstrated repetition while preserving regression coverage.
+PR #2 must pass its corrected actual checks before merging.
+
+User words (chat, Oct 29), word for word:
+
+> Even in CI it's taking 5 minutes for some tests - these are still excessive ... so we may need to look at what should be tested manually always vs. what is automated.  I also don't understand why it runs quality 3.12, 3.13 and 3.14 runs in the CI
+
+Coverage: D20 owns corrected remote acceptance; D21 owns selector policy.
+The next fresh-chat D17 triage should not reopen broad test architecture
+unless measured runtime still blocks the agreed rebase/GUI milestone.
