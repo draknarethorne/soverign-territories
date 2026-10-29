@@ -14,7 +14,6 @@ import json
 import os
 import pathlib
 import sys
-import tempfile
 import time
 from urllib.parse import quote
 
@@ -28,6 +27,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/art"))
 import image_preparation as preparation  # noqa: E402
 import originals  # noqa: E402
+import temporary_storage  # noqa: E402
 from likeness_library import gallery_chrome, sandbox  # noqa: E402
 
 MAX_SOURCES = 64
@@ -94,7 +94,7 @@ def open_report(report):
 def report_root(root, report, data, manifest_sha):
     """(root, report, Working): a direct sandbox Working run, or a receipt-bound clean-rebase intake mirror.
 
-    The mirror is only ``Working\\_sandbox-state\\RUN\\inputs`` with its ``_reports\\preparation\\all`` report,
+    The mirror is only ``Working\\configured sandbox-state root\\RUN\\inputs`` with its configured reports-root preparation report,
     whose manifest hash, recipe and complete source inventory are bound by that run's ``intake.json``.
     """
     if not root.is_absolute():
@@ -102,16 +102,22 @@ def report_root(root, report, data, manifest_sha):
     if sandbox.is_sandbox_working_path(root):
         root, report = preparation.locations(root, report)
         return root, report, root
-    working, run = root.parent.parent.parent, root.parent
-    if (root.name != "inputs" or run.parent.name != "_sandbox-state" or run.name.startswith((".", "_"))
+    working = next((parent for parent in root.parents if sandbox.is_sandbox_working_path(parent)), None)
+    if working is None:
+        raise ValueError("preparation manifest root is not under sandbox Working")
+    run = root.parent
+    cfg = preparation.cw.load_cfg()
+    state_root = preparation.cw.storage_root(cfg, "sandboxState", root=working)
+    if (root.name != "inputs" or run.parent != state_root or run.name.startswith((".", "_"))
             or not sandbox.is_sandbox_working_path(working)):
-        raise ValueError("report root must be sandbox Working or Working\\_sandbox-state\\RUN\\inputs")
+        raise ValueError("report root must be sandbox Working or Working's configured sandbox-state run inputs")
     if not working.is_dir():
         raise ValueError(f"sandbox Working does not exist: {working}")
     unlinked(working)
     preparation.safe_path(working, root)
-    if not root.is_dir() or report != root / "_reports" / "preparation" / "all":
-        raise ValueError("nested report must be the intake run's inputs\\_reports\\preparation\\all")
+    reports = preparation.cw.storage_root(cfg, "reports", root=root)
+    if not root.is_dir() or report != reports / "preparation" / "all":
+        raise ValueError("nested report must be the intake run's inputs/configured-reports-root/preparation/all")
     preparation.safe_path(root, report)
     receipt = preparation.safe_path(working, run / "intake.json")
     if not receipt.is_file():
@@ -127,8 +133,9 @@ def report_root(root, report, data, manifest_sha):
 
 def run_location(working, report, out):
     out = absolute(out, "--out")
-    if out.parent != working / "_reports" / OUTPUT_DIR or out.name.startswith((".", "_")):
-        raise ValueError(f"--out must be a new named run directly in Working\\_reports\\{OUTPUT_DIR}")
+    reports = preparation.cw.storage_root(preparation.cw.load_cfg(), "reports", root=working)
+    if out.parent != reports / OUTPUT_DIR or out.name.startswith((".", "_")):
+        raise ValueError(f"--out must be a new named run directly in the configured reports root\\{OUTPUT_DIR}")
     preparation.safe_path(working, out)
     sandbox.require_sandbox_output(working, out)
     if sandbox._overlaps(out.resolve(strict=False), report.resolve()):
@@ -357,7 +364,10 @@ def page(data):
             '<div class="trace"><table><thead><tr><th>Fill</th><th>Runtime</th><th>Version</th>'
             '<th>Outside mask identical</th><th>Inside-mask change (not quality)</th><th>SHA-256</th></tr></thead>'
             f'<tbody>{"".join(rows)}</tbody></table></div></article>')
-    prefix = gallery_chrome.reports_prefix(pathlib.Path(data["out"]), pathlib.Path(data["working"]) / "_reports")
+    reports = preparation.cw.storage_root(
+        preparation.cw.load_cfg(), "reports", root=pathlib.Path(data["working"])
+    )
+    prefix = gallery_chrome.reports_prefix(pathlib.Path(data["out"]), reports)
     compared = sum(entry["status"] == "compared" for entry in data["rows"])
     return (
         '<!doctype html><html lang="en"><meta charset="utf-8">'
@@ -381,8 +391,11 @@ def page(data):
 def build(root, working, report, out, data, manifest_sha, sources, sources_payload, planned):
     """Stage the whole run beside its destination, verify it, then rename it into place in one step."""
     out.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix=".eraser-compare-", dir=out.parent) as temporary:
-        stage = pathlib.Path(temporary) / "run"
+    temporary_root = preparation.cw.storage_root(
+        preparation.cw.load_cfg(), "temporary", root=working
+    )
+    with temporary_storage.staging_directory(temporary_root, ".eraser-compare-") as temporary:
+        stage = temporary / "run"
         stage.mkdir()
         files = {}
         preparation.write_new(stage / "sources.json", sources_payload)
@@ -497,16 +510,18 @@ def run(args):
         print(f"Preview only; nothing written. Add --apply to publish {out}")
         return 0
     build(root, working, report, out, data, manifest_sha, sources, payload, planned)
-    gallery_chrome.publish_banner(working / "_reports")
+    gallery_chrome.publish_banner(
+        preparation.cw.storage_root(preparation.cw.load_cfg(), "reports", root=working)
+    )
     print(f"Published eraser A/B comparison: {out / 'index.html'}")
     return 0
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--report", required=True, help="absolute existing Working\\_reports\\preparation\\RUN")
+    parser.add_argument("--report", required=True, help="absolute existing run under the configured reports root")
     parser.add_argument("--sources", required=True, help=f"JSON array of 1..{MAX_SOURCES} exact report row sources (strings, or objects with source/sourceSha256)")
-    parser.add_argument("--out", required=True, help=f"absolute new Working\\_reports\\{OUTPUT_DIR}\\RUN")
+    parser.add_argument("--out", required=True, help=f"absolute new named run under the configured reports root\\{OUTPUT_DIR}")
     parser.add_argument("--sequence", action="store_true",
                         help="experimental erase-first sequence versus saved v16; apply uses pinned CPU models")
     parser.add_argument("--head-overlay", action="store_true",

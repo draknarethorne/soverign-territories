@@ -24,8 +24,20 @@ else:
     import reference_rendering as base
     import comfy_workflows as workflows
 
-INSTALL = pathlib.Path(r"B:\Comfy-Desktop\ComfyUI-Installs\Sovereign Females\ComfyUI")
-WORKFLOWS = INSTALL / "user" / "default" / "workflows"
+
+def _storage_root(root, name):
+    return workflows.storage_root(workflows.load_cfg(), name, root=root)
+
+
+def _storage_relative(root, name):
+    return _storage_root(root, name).relative_to(root).as_posix()
+
+
+_CONFIG = workflows.load_cfg()
+REFERENCE_WORKSPACE = _CONFIG["referenceWorkspace"]
+WORKFLOWS = (
+    workflows.install_dir(_CONFIG, REFERENCE_WORKSPACE)
+)
 RECIPES = {
     "manual-0c-cleanup-basic": ("0_Edit", "0c_Cleanup", "Angelica_Qwen_Edit_0c_Cleanup_Basic.json"),
     "manual-0c-cleanup": ("0_Edit", "0c_Cleanup", "Angelica_Qwen_Edit_0c_Cleanup.json"),
@@ -264,7 +276,9 @@ def cleanup_hint(evidence):
 
 def gallery_sources(root):
     """Use the Gallery's name/identity presentation, not a filename-based identity guess."""
-    report = base.safe_path(root, "_reports/library/people_gallery_review.html")
+    report = base.safe_path(
+        root, _storage_relative(root, "reports") + "/library/people_gallery_review.html"
+    )
     if not report.is_file():
         raise ValueError("Publish People Photo Review first; no authoritative source/name inventory exists")
 
@@ -327,7 +341,7 @@ def gallery_sources(root):
         if hint:
             source["cleanup"] = hint
         sources[relative] = source
-    selected_root = base.safe_path(root, "_generation/selected")
+    selected_root = _storage_root(root, "generation") / "selected"
     if selected_root.exists():
         for metadata in sorted(selected_root.glob("*/*/*.json")):
             image = metadata.with_suffix("")
@@ -341,7 +355,7 @@ def gallery_sources(root):
             if record.get("personId"):
                 result["personId"] = record["personId"]
             sources[relative] = result
-    library = root / "_generation" / "library"
+    library = _storage_root(root, "generation") / "library"
     if library.is_dir():
         for metadata in sorted(library.glob("*/*/*.json")):
             relative = metadata.with_suffix("").relative_to(root).as_posix()
@@ -484,8 +498,8 @@ def compile_batch(root, batch_id, endpoint, input_root, output_root, apply=False
     run = base.check(root, batch_id)
     destination = base.run_path(root, batch_id)
     request = base.read_json(destination / "request.json")
-    if request["workspace"] != "Sovereign Females":
-        raise ValueError("Pilot only deploys to Sovereign Females")
+    if request["workspace"] != REFERENCE_WORKSPACE:
+        raise ValueError(f"Pilot only deploys to {REFERENCE_WORKSPACE}")
     inputs, outputs = safe_root(input_root), safe_root(output_root)
     if (destination / "compiled.json").is_file():
         existing = base.read_json(destination / "compiled.json")
@@ -892,7 +906,10 @@ def retain(root, batch_id, job_id, output_sha, apply=False):
     data = path.read_bytes()
     if base.digest(data) != output_sha:
         raise ValueError("Server output changed since review")
-    relative_target = f"_generation/selected/{batch_id}/{job_id}/{output['filename']}"
+    relative_target = (
+        f"{_storage_relative(root, 'generation')}/selected/"
+        f"{batch_id}/{job_id}/{output['filename']}"
+    )
     target = base.safe_path(root, relative_target)
     record = {"schemaVersion": 1, "batchId": batch_id, "jobId": job_id,
               "displayName": job["displayName"], "sourceOutput": str(path),
@@ -947,7 +964,9 @@ def manual_prefixes(root, apply=False):
     if not apply or not changes:
         return summary
     backup_id = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%d-%H%M%S") + "-" + uuid.uuid4().hex[:8]
-    backup = base.safe_path(root, f"_generation/workspace-backups/{backup_id}")
+    backup = base.safe_path(
+        root, f"{_storage_relative(root, 'generation')}/workspace-backups/{backup_id}"
+    )
     for item in changes:
         owned_write(base.safe_path(backup, item["relative"]), item["before"])
     owned_write(backup / "manifest.json", base.encode(summary))
@@ -1024,7 +1043,9 @@ def overlay_scan(root, inputs, apply=False, *, scan_id=None):
         for source in matches:
             mapped.append({"path": source["path"], "displayName": source["displayName"],
                            "photoKey": key, "raw": raw, "rawSha256": base.digest(path.read_bytes())})
-    destination = base.safe_path(root, f"_generation/proposals/{scan_id}")
+    destination = base.safe_path(
+        root, f"{_storage_relative(root, 'generation')}/proposals/{scan_id}"
+    )
     result = {"schemaVersion": 1, "scanId": scan_id, "createdAt": now(), "inputs": str(inputs),
               "heuristic": "preparation_geometry.plan overlayDetected", "scanned": scanned,
               "detected": len(mapped) + len(unmapped), "mapped": mapped, "unmapped": unmapped,
@@ -1128,7 +1149,9 @@ def cleanup_batch(root, recipes=("shared-0c-cleanup-basic",), samples=2, hints=(
         request = gallery.make_request(root, part, chosen, samples, batch_id, batch_seeds)
         batches.append({"batchId": batch_id, "request": f"{batch_id}.json", "jobs": count,
                         "sources": [source["path"] for source in part], "body": request})
-    destination = base.safe_path(root, f"_generation/proposals/{proposal_id}")
+    destination = base.safe_path(
+        root, f"{_storage_relative(root, 'generation')}/proposals/{proposal_id}"
+    )
     summary = {
         "schemaVersion": 1, "proposalId": proposal_id, "createdAt": now(), "hints": list(hints),
         "sourceFile": str(source_file) if source_file is not None else None,

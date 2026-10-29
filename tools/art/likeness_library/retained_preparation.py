@@ -6,7 +6,12 @@ import os
 import pathlib
 import re
 import stat
+import sys
 from urllib.parse import quote
+
+ROOT = pathlib.Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT))
+from tools.workflows import comfy_workflows as cw  # noqa: E402
 
 from . import metadata
 
@@ -43,12 +48,22 @@ def _digest(path):
     return digest.hexdigest()
 
 
-def _domain(relative):
+def _storage_prefix(root, name, cfg=None):
+    config = cfg if cfg is not None else cw.load_cfg()
+    root = pathlib.Path(root).resolve()
+    return cw.storage_root(config, name, root=root).relative_to(root).parts
+
+
+def _domain(relative, root=None, cfg=None):
     parts = pathlib.PurePosixPath(relative).parts
-    if parts[:1] == ("_junk",):
-        parts = parts[1:]
-    elif parts[:2] == ("_retired", "photos"):
-        parts = parts[2:]
+    config = cfg if cfg is not None else cw.load_cfg()
+    root = pathlib.Path(root) if root is not None else cw.work_root(config)
+    junk = _storage_prefix(root, "junk", cfg)
+    retired = _storage_prefix(root, "retired", cfg)
+    if parts[:len(junk)] == junk:
+        parts = parts[len(junk):]
+    elif parts[:len(retired) + 1] == (*retired, "photos"):
+        parts = parts[len(retired) + 1:]
     if not parts or parts[0] not in {
             "Angels", "Sisters", "Models", "Prospects", "Potentials", "Artists", "Various"}:
         raise ValueError("unsupported retained preparation owner")
@@ -59,9 +74,9 @@ def _domain(relative):
     return "general"
 
 
-def _owner(relative):
+def _owner(relative, root=None, cfg=None):
     parts = pathlib.PurePosixPath(relative).parts
-    _domain(relative)
+    _domain(relative, root, cfg)
     if len(parts) < 3 or parts[-2] not in ("gallery", "review"):
         raise ValueError("retained preparation requires a native gallery/review photo")
     return "/".join(parts[:-2])
@@ -91,9 +106,11 @@ def _detail_navigation(root, current, detail, domain, *, include_gallery_navigat
     from . import derivatives
 
     root = pathlib.Path(root).absolute()
+    reports = cw.storage_root(cw.load_cfg(), "reports", root=root)
     photo = _safe(root, current)
     target = _safe(root, detail)
-    report_folder = "_reports/artists" if domain.startswith("Artists/") else "_reports/library"
+    report_area = "artists" if domain.startswith("Artists/") else "library"
+    report_folder = (reports / report_area).relative_to(root).as_posix()
     overview = "artists_gallery.html" if domain.startswith("Artists/") else "people_gallery.html"
     review = "artists_gallery_review.html" if domain.startswith("Artists/") else "people_gallery_review.html"
     links = [("Current native photo", photo)]
@@ -170,10 +187,10 @@ def stage_photo(root, destination, preparation_root, preparation_row, *, recipe)
     root = pathlib.Path(root).absolute()
     preparation_root = pathlib.Path(preparation_root).absolute()
     destination = pathlib.Path(destination).as_posix()
-    owner = _owner(destination)
+    owner = _owner(destination, root)
     row = json.loads(json.dumps(preparation_row))
-    domain = _domain(destination)
-    if _domain(row["source"]) != domain:
+    domain = _domain(destination, root)
+    if _domain(row["source"], root) != domain:
         raise ValueError("retained preparation cannot cross artist/general domains")
     scope = row.get("sourceScope")
     if scope and scope.get("matchingDomain") != domain:
@@ -282,7 +299,7 @@ def stage_photo(root, destination, preparation_root, preparation_row, *, recipe)
 
 
 def _manifests(root, current):
-    owner = _owner(current)
+    owner = _owner(current, root)
     directory = _safe(root, f"{owner}/gallery_intake")
     if not directory.exists():
         return []
@@ -315,12 +332,12 @@ def verify_link(root, current_photo, photo_id=None):
         current = photo.relative_to(root).as_posix() if photo.is_absolute() else photo.as_posix()
         native = _safe(root, current)
         matches = []
-        owner = _owner(current)
+        owner = _owner(current, root)
         for manifest in _manifests(root, current):
             data = _load(manifest)
             if data["current"] != current:
                 continue
-            if data["domain"] != _domain(current) or (photo_id is not None and data["photoId"] != photo_id):
+            if data["domain"] != _domain(current, root) or (photo_id is not None and data["photoId"] != photo_id):
                 return None
             if _digest(native) != data["currentSha256"]:
                 return None
@@ -345,7 +362,7 @@ def verify_link(root, current_photo, photo_id=None):
                 return None
             if _digest(paths[data["original"]]) != source_hash:
                 return None
-            if row["sourceSha256"] != source_hash or _domain(row["source"]) != data["domain"]:
+            if row["sourceSha256"] != source_hash or _domain(row["source"], root) != data["domain"]:
                 return None
             scope = row.get("sourceScope")
             if scope and scope.get("matchingDomain") != data["domain"]:
@@ -377,7 +394,7 @@ def require_unretained_move(root, source):
     current = source.relative_to(root).as_posix() if source.is_absolute() else source.as_posix()
     for manifest in _manifests(root, current):
         data = _load(manifest)
-        if _owner(data["current"]) != _owner(current):
+        if _owner(data["current"], root) != _owner(current, root):
             raise ValueError("retained preparation owner changed without verified lineage")
         if data.get("current") == current:
             raise ValueError("retained preparation move requires lineage-aware publication; no files moved")
@@ -441,10 +458,10 @@ def source_is_prepared(photo):
         except (OSError, ValueError, KeyError, TypeError) as exc:
             raise ValueError(f"invalid prepared source lineage: {manifest}: {exc}") from exc
         parts = pathlib.PurePosixPath(relative).parts
-        _owner(relative)
         root = native
         for _ in parts:
             root = root.parent
+        _owner(relative, root)
         expected = _safe(root, relative)
         if expected == native:
             return crop_guard(root, native, photo_id)
@@ -462,9 +479,9 @@ def plan_transfer(root, source, destination):
     data = verify_link(root, source)
     if data is None:
         raise ValueError("cannot transfer stale or invalid retained preparation")
-    if _domain(source) != _domain(destination):
+    if _domain(source, root) != _domain(destination, root):
         raise ValueError("retained preparation cannot cross artist/general domains")
-    old_owner, new_owner = _owner(source), _owner(destination)
+    old_owner, new_owner = _owner(source, root), _owner(destination, root)
     manifest = _safe(root, data["manifest"])
     before = manifest.read_text(encoding="utf-8")
     updated = json.loads(before)
@@ -538,10 +555,10 @@ def validate_transfers(root, transfers, *, reverse=False):
             if destination in seen:
                 raise ValueError("retained preparation repeats a destination")
             seen.add(destination)
-        if _owner(transfer["sourcePhoto"]) != _owner(transfer["destinationPhoto"]):
+        if _owner(transfer["sourcePhoto"], root) != _owner(transfer["destinationPhoto"], root):
             target_photo = transfer["sourcePhoto"] if reverse else transfer["destinationPhoto"]
             for directory in ("gallery_org", "gallery_intake"):
-                folder = _safe(root, f"{_owner(target_photo)}/{directory}/{transfer['setKey']}")
+                folder = _safe(root, f"{_owner(target_photo, root)}/{directory}/{transfer['setKey']}")
                 if folder.exists():
                     raise ValueError(f"retained preparation target set exists: {folder}")
 
@@ -593,9 +610,9 @@ def execute_transfer(root, transfer, *, reverse=False):
             raise ValueError("transferred retained preparation failed verification")
         old_photo = transfer["destinationPhoto"] if reverse else transfer["sourcePhoto"]
         new_photo = transfer["sourcePhoto"] if reverse else transfer["destinationPhoto"]
-        if _owner(old_photo) != _owner(new_photo):
+        if _owner(old_photo, root) != _owner(new_photo, root):
             for directory in ("gallery_org", "gallery_intake"):
-                folder = _safe(root, f"{_owner(old_photo)}/{directory}/{transfer['setKey']}")
+                folder = _safe(root, f"{_owner(old_photo, root)}/{directory}/{transfer['setKey']}")
                 for child in sorted(folder.rglob("*"), reverse=True):
                     if child.is_dir():
                         child.rmdir()
@@ -623,13 +640,13 @@ def rename_photo(root, source, destination):
     root = pathlib.Path(root).absolute()
     source = pathlib.Path(source).relative_to(root).as_posix()
     destination = pathlib.Path(destination).relative_to(root).as_posix()
-    if _owner(source) != _owner(destination):
+    if _owner(source, root) != _owner(destination, root):
         raise ValueError("retained preparation owner moves require lineage-aware publication")
     manifests = _manifests(root, source)
     affected = []
     for path in manifests:
         data = _load(path)
-        if _owner(data["current"]) != _owner(source):
+        if _owner(data["current"], root) != _owner(source, root):
             raise ValueError("retained preparation owner changed without verified lineage")
         if data.get("current") == source:
             affected.append(path)

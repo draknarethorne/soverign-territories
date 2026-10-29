@@ -10,17 +10,18 @@ import json
 import pathlib
 import re
 import sys
-import tempfile
 import urllib.parse
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "art"))
+import temporary_storage  # noqa: E402
 from likeness_library import gallery_chrome, report_assets
 
 if __package__:
-    from . import reference_execution
+    from . import comfy_workflows as cw, reference_execution
 else:
+    import comfy_workflows as cw
     import reference_execution
 
 OUTPUT_RELATIVE = pathlib.Path("_generation") / "index.html"
@@ -75,24 +76,36 @@ def _json_script(value):
     )
 
 
-def _source_path(root, relative, kind="photo"):
+def _source_path(root, relative, kind="photo", cfg=None):
     if not isinstance(relative, str) or not relative or "\\" in relative:
         raise ValueError(f"Invalid root-relative source path: {relative!r}")
     if kind not in {"photo", "selected-render", "pulled-render"}:
         raise ValueError("Unknown source kind")
     parts = relative.split("/")
     selected = kind == "selected-render"
+    config = cfg if cfg is not None else cw.load_cfg()
+    generation_parts = cw.storage_root(
+        config, "generation", root=root
+    ).relative_to(root).parts
     if (any(not part or part in {".", ".."} for part in parts)
             or any(re.search(r'[<>:"|?*\x00-\x1f]', part) or part.endswith((" ", "."))
                    for part in parts)):
         raise ValueError(f"Unsafe source path: {relative}")
     if kind == "pulled-render":
-        if (len(parts) != 5 or parts[:2] != ["_generation", "library"]
-                or not FOLDER_PATTERN.fullmatch(parts[2]) or not FOLDER_PATTERN.fullmatch(parts[3])):
-            raise ValueError("Pulled render must use a _generation/library/<stage>/<workflow> path")
+        stage_index = len(generation_parts) + 1
+        if (len(parts) != len(generation_parts) + 4
+                or tuple(parts[:len(generation_parts)]) != generation_parts
+                or parts[len(generation_parts)] != "library"
+                or not FOLDER_PATTERN.fullmatch(parts[stage_index])
+                or not FOLDER_PATTERN.fullmatch(parts[stage_index + 1])):
+            raise ValueError("Pulled render must use the configured generation/library path")
     elif selected:
-        if (len(parts) != 5 or parts[:2] != ["_generation", "selected"]
-                or not ID_PATTERN.fullmatch(parts[2]) or not ID_PATTERN.fullmatch(parts[3])):
+        batch_index = len(generation_parts) + 1
+        if (len(parts) != len(generation_parts) + 4
+                or tuple(parts[:len(generation_parts)]) != generation_parts
+                or parts[len(generation_parts)] != "selected"
+                or not ID_PATTERN.fullmatch(parts[batch_index])
+                or not ID_PATTERN.fullmatch(parts[batch_index + 1])):
             raise ValueError("Selected render must use a retained batch/job path")
     elif (parts[0] not in SOURCE_ROOTS or len(parts) < 3
           or any(part.startswith("_") for part in parts)
@@ -126,7 +139,7 @@ def _inspect_selected(root, source):
         raise ValueError("Synthetic render source is held: missing or invalid provenance/image") from error
 
 
-def _validate_sources(root, sources):
+def _validate_sources(root, sources, cfg=None):
     if not isinstance(sources, list):
         raise ValueError("Sources must be a JSON array")
     cleaned = []
@@ -138,7 +151,7 @@ def _validate_sources(root, sources):
         if isinstance(path, str) and len(path) > 500:
             raise ValueError("Source path exceeds 500 characters")
         kind = source.get("kind", "photo")
-        file_path = _source_path(root, path, kind)
+        file_path = _source_path(root, path, kind, cfg)
         digest = source.get("sha256")
         domain = source.get("domain")
         display_name = source.get("displayName")
@@ -264,7 +277,7 @@ def _absolute_file_uri(value, allowed_root):
         return None
 
 
-def _frozen_input_uri(root, batch_id, job_id, run_job):
+def _frozen_input_uri(root, batch_id, job_id, run_job, cfg=None):
     relative = run_job.get("input") if isinstance(run_job, dict) else None
     if not isinstance(relative, str):
         return None
@@ -273,14 +286,18 @@ def _frozen_input_uri(root, batch_id, job_id, run_job):
             or parts[2] != "input" or any(part in {"", ".", ".."} for part in parts)
             or any(re.search(r'[<>:"\\|?*\x00-\x1f]', part) for part in parts)):
         return None
-    base = root / "_generation" / "reference" / batch_id
+    generation = cw.storage_root(
+        cfg if cfg is not None else cw.load_cfg(), "generation", root=root
+    )
+    base = generation / "reference" / batch_id
     path = base.joinpath(*parts)
     try:
         _reject_linked_path(base, path)
         if not path.is_file():
             return None
+        relative = base.relative_to(root).parts
         quoted = "/".join(urllib.parse.quote(part, safe="") for part in
-                          ("reference", batch_id, *parts))
+                          (*relative, *parts))
         return quoted
     except (OSError, ValueError):
         return None
@@ -290,8 +307,10 @@ def _diagnostic_batch(batch_id, message):
     return {"id": batch_id, "diagnostic": message, "jobs": []}
 
 
-def _execution_batches(root):
-    batches_dir = root / "_generation" / "reference"
+def _execution_batches(root, cfg=None):
+    batches_dir = cw.storage_root(
+        cfg if cfg is not None else cw.load_cfg(), "generation", root=root
+    ) / "reference"
     _reject_linked_path(root, batches_dir)
     if not batches_dir.is_dir():
         return []
@@ -356,7 +375,9 @@ def _execution_batches(root):
             source = frozen.get("source", {})
             source_path = source.get("path") if isinstance(source, dict) else None
             try:
-                source_file = (_source_path(root, source_path, source.get("kind", "photo"))
+                source_file = (_source_path(
+                    root, source_path, source.get("kind", "photo"), cfg
+                )
                                if isinstance(source_path, str) else None)
                 if source_file is not None and source.get("kind") in {"selected-render", "pulled-render"}:
                     _inspect_selected(root, source)
@@ -388,13 +409,19 @@ def _execution_batches(root):
                 "sourceUri": (_root_relative_uri(source_path)
                               if source_file is not None and source_file.is_file() else ""),
                 "historicalUri": ("" if source_file is not None and source_file.is_file() else
-                                  _frozen_input_uri(root, directory.name, job_id, run_jobs.get(job_id)) or ""),
+                                  _frozen_input_uri(
+                                      root, directory.name, job_id,
+                                      run_jobs.get(job_id), cfg,
+                                  ) or ""),
                 "recipe": (frozen.get("recipe") if isinstance(frozen.get("recipe"), str)
                            and frozen.get("recipe") in SUPPORTED_RECIPES else "Unsupported recipe"),
                 "seed": (frozen.get("seed") if isinstance(frozen.get("seed"), int)
                          and not isinstance(frozen.get("seed"), bool) else "unknown"),
                 "input": ("frozen source image available"
-                          if _frozen_input_uri(root, directory.name, job_id, run_jobs.get(job_id))
+                          if _frozen_input_uri(
+                              root, directory.name, job_id,
+                              run_jobs.get(job_id), cfg,
+                          )
                           else "not recorded"),
                 "state": (execution_job.get("state") if isinstance(execution_job.get("state"), str)
                           and execution_job.get("state") in {
@@ -414,8 +441,9 @@ def _execution_batches(root):
     return batches
 
 
-def make_request(root, selected_sources, recipe, sample_count, batch_id, seeds=None):
+def make_request(root, selected_sources, recipe, sample_count, batch_id, seeds=None, cfg=None):
     """Create a bounded request: each source x each recipe x samples, in that order."""
+    config = cfg if cfg is not None else cw.load_cfg()
     if sample_count not in SAMPLE_COUNTS:
         raise ValueError("Samples per source must be " + ", ".join(map(str, SAMPLE_COUNTS)))
     if not selected_sources:
@@ -434,10 +462,10 @@ def make_request(root, selected_sources, recipe, sample_count, batch_id, seeds=N
     for item in available_recipes:
         if not item["available"]:
             raise ValueError(f"Recipe is unavailable: {item['reason']}")
-    sources = _validate_sources(root, selected_sources)
+    sources = _validate_sources(root, selected_sources, config)
     jobs = []
     for source in sources:
-        path = _source_path(root, source["path"], source.get("kind", "photo"))
+        path = _source_path(root, source["path"], source.get("kind", "photo"), cfg)
         if not path.is_file():
             raise ValueError(f"Source file is missing: {source['path']}")
         actual_hash = hashlib.sha256(path.read_bytes()).hexdigest()
@@ -467,15 +495,20 @@ def make_request(root, selected_sources, recipe, sample_count, batch_id, seeds=N
     return {
         "schemaVersion": 1,
         "batchId": batch_id,
-        "workspace": "Sovereign Females",
+        "workspace": config["referenceWorkspace"],
         "jobs": jobs,
     }
 
 
-def build_page(root, sources, recipes):
+def build_page(root, sources, recipes, cfg=None):
     """Render the self-contained selector and read-only results gallery."""
     root = pathlib.Path(root).resolve()
-    sources = _validate_sources(root, sources)
+    config = cfg if cfg is not None else cw.load_cfg()
+    reference_workspace = config["referenceWorkspace"]
+    reference_workspace_json = json.dumps(reference_workspace)
+    generation = cw.storage_root(config, "generation", root=root)
+    reports = cw.storage_root(config, "reports", root=root)
+    sources = _validate_sources(root, sources, config)
     recipes = _validate_recipes(recipes)
     stages = sorted({recipe["stage"] for recipe in recipes}, key=str.casefold)
     source_cards = []
@@ -534,22 +567,19 @@ def build_page(root, sources, recipes):
         f'<option value="{html.escape(key, quote=True)}">{html.escape(CLEANUP_LABELS[key])}</option>'
         for key in reference_execution.CLEANUP_HINTS
     )
-    result_batches = _execution_batches(root)
+    result_batches = _execution_batches(root, config)
     results_json = _json_script(result_batches)
     sources_json = _json_script(sources)
     recipes_json = _json_script(recipes)
     source_cards_html = "".join(source_cards) or '<p class="empty">No source cards supplied.</p>'
-    reports_prefix = gallery_chrome.reports_prefix(
-        root / "_generation", root / "_reports"
-    )
-    if reports_prefix is None:
-        reports_prefix = "../_reports/"
+    reports_prefix = gallery_chrome.reports_prefix(generation, reports)
+    section_links = gallery_chrome.configured_sections(root, config)
     return f"""<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sovereign Females — Reference Gallery</title>
+<title>{html.escape(reference_workspace)} — Reference Gallery</title>
 <style>
 {gallery_chrome.CSS}
 .notice {{ border-left: 4px solid var(--st-gold); background: var(--st-card); padding: .8rem 1rem; }}
@@ -577,10 +607,13 @@ code {{ overflow-wrap: anywhere; }}
 </style>
 </head>
 <body id="top">
-{gallery_chrome.masthead("Rendering", reports_prefix, "Sovereign Females · Rendering")}
+{gallery_chrome.masthead(
+    "Rendering", reports_prefix, f"{reference_workspace} · Rendering",
+    section_links=section_links,
+)}
 <div class="site-page">
 <header class="page-header"><div>
-<h1>Sovereign Females — Reference Gallery</h1>
+<h1>{html.escape(reference_workspace)} — Reference Gallery</h1>
 <p class="notice">Offline metadata gallery. Export creates request JSON only; it does not compile workflows,
 contact ComfyUI, copy images, or promote results. Existing result links point to files in ComfyUI Outputs.</p>
 <p class="muted">Four coordinated tracks: image intake, dynamic ComfyUI execution, stage/template migration,
@@ -726,7 +759,7 @@ exportButton.addEventListener("click", () => {{
   }}
   const batchId = makeBatchId();
   downloadJson(`${{batchId}}.json`, {{
-    schemaVersion: 1, batchId, workspace: "Sovereign Females", jobs
+    schemaVersion: 1, batchId, workspace: {reference_workspace_json}, jobs
   }});
 }});
 const resultsRoot = document.getElementById("results");
@@ -868,7 +901,7 @@ def main(argv=None):
     parser.add_argument("--sources", help="Optional source JSON override (array or {sources: [...]})")
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--dry-run", action="store_true", help="Render/validate without writing (default)")
-    modes.add_argument("--apply", action="store_true", help="Write _generation/index.html")
+    modes.add_argument("--apply", action="store_true", help="Write the configured generation gallery")
     modes.add_argument("--check", action="store_true", help="Read-only compare with existing generated page")
     args = parser.parse_args(argv)
     try:
@@ -883,8 +916,9 @@ def main(argv=None):
                    else reference_execution.gallery_sources(root))
         recipes = (_load_array(args.catalog, "recipes") if args.catalog
                    else reference_execution.catalog())
-        page = build_page(root, sources, recipes)
-        output = root / OUTPUT_RELATIVE
+        cfg = cw.load_cfg()
+        page = build_page(root, sources, recipes, cfg)
+        output = cw.storage_root(cfg, "generation", root=root) / "index.html"
         _reject_linked_path(root, output)
         if args.check:
             if not output.is_file():
@@ -894,16 +928,11 @@ def main(argv=None):
             print(f"Gallery page is current: {output}")
         elif args.apply:
             output.parent.mkdir(parents=True, exist_ok=True)
-            stage = None
-            try:
-                with tempfile.NamedTemporaryFile(dir=output.parent, prefix=".render-gallery-",
-                                                 suffix=".tmp", delete=False) as stream:
-                    stage = pathlib.Path(stream.name)
-                    stream.write(page.encode("utf-8"))
+            temporary_root = cw.storage_root(cfg, "temporary", root=root)
+            with temporary_storage.staging_directory(temporary_root, ".render-gallery-") as staging:
+                stage = staging / "index.html"
+                stage.write_bytes(page.encode("utf-8"))
                 report_assets.replace_file(stage, output)
-            finally:
-                if stage is not None and stage.exists():
-                    stage.unlink()
             print(f"Wrote metadata-only gallery: {output}")
         else:
             print(f"Validated {len(sources)} sources and {len(recipes)} recipes; "

@@ -66,6 +66,7 @@ def plan(root, report, data, cfg):
     catalog_path = root / ".likeness-library.json"
     if not catalog_path.is_file():
         raise ValueError("automatic sandbox Junk requires a Working-local catalogue")
+    junk_prefix = cw.storage_root(cfg, "junk", root=root).relative_to(root).as_posix()
     catalog = metadata.load_catalog(catalog_path)
     moves, holds = [], []
     for row in data["photos"]:
@@ -76,7 +77,7 @@ def plan(root, report, data, cfg):
         if why:
             holds.append({"source": row["source"], "reason": why})
             continue
-        target_relative = "_junk/" + row["source"]
+        target_relative = junk_prefix + "/" + row["source"]
         target = read_path(root, target_relative)
         if target.exists():
             raise ValueError(f"Junk destination already exists; refusing overwrite: {target}")
@@ -89,17 +90,21 @@ def plan(root, report, data, cfg):
             "catalogueSha256": digest(catalog_path)}
 
 
-def verified_journal(root, report):
+def verified_journal(root, report, cfg=None):
     path = report / JOURNAL
     if not path.exists():
         return None
+    config = cfg if cfg is not None else cw.load_cfg()
+    junk_prefix = cw.storage_root(config, "junk", root=root).relative_to(root).as_posix()
+    backup_prefix = cw.storage_root(config, "backup", root=root).relative_to(root).as_posix()
     data = json.loads(path.read_text(encoding="utf-8"))
     if (not isinstance(data, dict) or not {"version", "root", "reportSha256", "status", "moves", "holds", "snapshot"} <= data.keys()
             or data.get("version") != 1 or data.get("root") != str(root)
             or data.get("reportSha256") != digest(report / "manifest.json")
             or data.get("status") not in ("applied", "undone")
             or not isinstance(data["moves"], list) or not isinstance(data["holds"], list)
-            or not isinstance(data["snapshot"], str) or not data["snapshot"].startswith("_backup/")):
+            or not isinstance(data["snapshot"], str)
+            or not data["snapshot"].startswith(backup_prefix + "/")):
         raise ValueError(f"incomplete/unsupported Junk journal: {path}; inspect recovery snapshot")
     manifest = json.loads((report / "manifest.json").read_text(encoding="utf-8"))
     rows = {r["source"]: r for r in manifest["photos"] if r["outcome"] == "junk-candidate"}
@@ -111,7 +116,7 @@ def verified_journal(root, report):
         source = read_path(root, move["source"])
         target = read_path(root, move["target"])
         if (move["source"] in seen or move["source"] not in rows
-                or move["target"] != "_junk/" + move["source"]
+                or move["target"] != junk_prefix + "/" + move["source"]
                 or move["sha256"] != rows[move["source"]]["sourceSha256"]):
             raise ValueError("Junk journal does not match eligible report sources")
         seen.add(move["source"])
@@ -158,7 +163,7 @@ def move_exact(source, target, expected):
 
 def route(root, report, data, cfg, *, apply=False, undo=False):
     journal_path = report / JOURNAL
-    existing = verified_journal(root, report)
+    existing = verified_journal(root, report, cfg)
     if existing:
         if (undo and existing["status"] == "undone") or (not undo and existing["status"] == "applied"):
             print(f"Junk disposition already {existing['status']}; verified without rewriting.")
@@ -215,5 +220,5 @@ def route(root, report, data, cfg, *, apply=False, undo=False):
         transaction["status"] = prior
         save(journal_path, transaction)
         raise
-    verified_journal(root, report)
+    verified_journal(root, report, cfg)
     return int(bool(transaction["holds"]))

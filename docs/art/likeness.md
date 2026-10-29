@@ -89,7 +89,7 @@ No new chest/ComfyUI integration or preparation crop cutover is implied.
 | Goal | Command |
 | --- | --- |
 | Inspect overall scoring reliability | `bin\likeness.cmd calibrate` |
-| Save calibration and all eligible folder checks together | `bin\likeness.cmd --root "<library>" --cache "<cache>" diagnostics --out "<new-report-folder>"` |
+| Save calibration and all eligible folder checks together | `bin\likeness.cmd --root "<library>" --cache "<cache>" diagnostics --out "<library>\_reports\diagnostics\<run>"` |
 | Preview restoring sandbox category roots | `bin\likeness.cmd --root "<sandbox>\Working" sandbox-reset` |
 | Check one person's folder consistency | `bin\likeness.cmd folder "Drakness"` |
 | Preview artist-only grouping using the same engine | `bin\likeness-artists.cmd --root "<sandbox>\Working" --dry-run group --singles` |
@@ -98,6 +98,15 @@ No new chest/ComfyUI integration or preparation crop cutover is implied.
 | Build only the full Review page | `bin\people-gallery-review.cmd --root "<library>" --out "<reports>" --cache "<cache>"` |
 | Preview separate Artist pages without decoding images | `bin\artists-gallery.cmd --root "<library>" --cache "<existing-cache>" --dry-run` |
 | Publish/check only Artist HTML and small thumbnails | `bin\artists-gallery.cmd --root "<library>" --cache "<existing-cache>" --apply` then `--check` |
+
+Diagnostics output must be a new directory under the selected work root's
+configured `storageRoots.reports`; arbitrary external `--out` paths are refused.
+The report includes a storage-configuration receipt.
+
+People, Review and Prime comparison `--out` overrides must also stay within
+that library's configured reports root. Escaping paths and reparse-point
+destinations are refused; configure the reports root instead of writing
+arbitrary external report copies.
 
 ### Separate Artist browser
 
@@ -167,8 +176,9 @@ sandbox instead.
 ### Face vectors and similarity
 
 The local pipeline detects the main face and turns it into an identity vector
-using OpenCV YuNet and SFace. The two model files are downloaded once to
-`%LOCALAPPDATA%\sovereign-territories\models`; photo data is not sent elsewhere.
+using OpenCV YuNet and SFace. The two model files are downloaded once to the
+configured `modelCacheRoot\models` (default
+`%LOCALAPPDATA%\sovereign-territories\models`); photo data is not sent elsewhere.
 Vectors are cached by image content, so moving or renaming a photo does not
 require another face detection.
 
@@ -178,6 +188,28 @@ galleries and reconciliation reuse it: moving a photo does not silently change
 its scoring space. Ordinary caches without a saved mean retain their existing
 population-based behavior. Similarity is a ranking signal within this library,
 not a universal identity probability.
+
+For each scored human face, the engine also saves the lossless PNG returned by
+the same `FaceRecognizerSF.alignCrop` call whose array is passed directly to
+`feature()`. The library Review gallery links this exact input beside the
+photo's score; it never substitutes a headshot derivative or an intake preview.
+Evidence is stored locally under
+`<work>\_likeness\<general-or-artists>\face-evidence\`, excluded from Git, and
+bound to the scored source SHA-256, aligned-crop SHA-256, YuNet/SFace model-file
+SHA-256 values, model identity and OpenCV version. The gallery verifies those
+hashes before exposing a link and shows the scored source path/hash and model
+provenance without embedding image data in the report. When a retained
+preparation set is published, the current gallery photo is the verified
+selected native image; the existing Preparation detail remains the source for
+recipe and variant history.
+
+Older cache entries are re-embedded when a normal likeness command encounters
+missing or invalid alignment evidence, updating the vector and crop together.
+The read-only Review gallery may recompute a missing crop in memory to report
+the current model/source provenance, but it does not persist it; run a normal
+`bin\likeness.cmd scan` to save it. `--check` and all other read-only scans
+write neither cache nor evidence. An absent/invalid crop is labelled explicitly
+and is never replaced with a proxy.
 
 | Score | Gallery color | Interpretation |
 | --- | --- | --- |
@@ -432,6 +464,49 @@ Do not run it over a prepared installation. Use the intake-aware
 [clean-start runner](#clean-sandbox-rebuild-versus-category-reclassification)
 for that implemented sandbox flow; its automatic diagnostics bundling is
 still separate acceptance work.
+
+For a read-only full-Working reset boundary preview, run:
+
+```cmd
+bin\likeness.cmd --root "B:\Sovereign Territories Sandbox\Working" sandbox-reset --full
+```
+
+`--full` verifies the immutable Source manifest and hashes the managed
+Production baseline, reporting the exact Working target and Production
+changes since the snapshot. It excludes configured operational storage roots
+and reserved `_archive` from the proposed baseline. `_junk` and `_retired`
+remain part of Production because they hold user-dispositioned photos with
+provenance and deliberate restore semantics. Unclassified Production roots,
+active-path byte conflicts, or an unfinished reset transaction make
+`resetReady` false. The preview inventories Working without changing either
+tree and classifies active-file content absent from Production. Unique photos
+stay at their current relative paths. Unique non-image metadata goes to the
+non-active `_reports\reset-review-bundle`; identical content already active in
+Production needs no carry-forward, and same-path byte conflicts block apply.
+Production, Source, and Working reparse points are refused.
+
+After reviewing a fresh preview with `resetReady: true`, add `--apply` to
+replace exactly `Working` with the current Production baseline. The apply
+revalidates the preview, copies and hashes every staged file, carries forward
+the approved unique active photos and metadata, and writes a configuration
+receipt under `_reports\reset-review-bundle`. A same-volume transaction journal
+and owner lock allow an interrupted swap to roll back or finish cleanup on the
+next apply. Sandbox-only generated reports, backups, run evidence, undo data,
+and old `_junk`/`_retired` contents are not carried forward; the current
+Production `_junk` and `_retired` contents are. Production, the immutable
+Source snapshot, and sibling `ST-v9` are outside the target. An apply can still
+be blocked by Windows handles or permissions; close report viewers before
+retrying rather than bypassing the transaction guard.
+
+A visible Explorer tab is not sufficient evidence that the path is unlocked:
+hidden tabs can retain directory handles. In the Oct 29 rehearsal, Microsoft's
+Handle utility identified two Explorer handles to `_reports\library`; gracefully
+closing that window released them. Do not force-close individual handles.
+Rollback cleanup uses Windows extended-length paths because moving old nested
+backups into staging can exceed MAX_PATH even when their original paths did not.
+If the journal says `committed`, rerunning the same apply finishes cleanup and
+returns the existing receipt; it does not reset Working a second time or discard
+the carried metadata bundle.
 
 ## People Gallery and Review Gallery
 
@@ -1044,6 +1119,28 @@ through the stages for an auditable command history; a saved overlay is still
 verified and reused on resume. Both paths must be absolute and the new run
 directory must be inside the isolated Working tree, outside category roots.
 Prefer `Working\_sandbox-state\<run>` so the gallery's intake-run browser discovers it.
+
+**For a newly reset Production-gallery rehearsal, use `--baseline working`.**
+The default above intentionally replays historical Source; it cannot represent
+arbitrary newer Gallery/Review additions, edits or removals outside Various.
+The Working mode freezes all current assigned Gallery/Review inputs, including
+Artists in their separate scope, then overlays current Various with the same
+stable-ID, duplicate and raw-recovery checks. It does not resurrect Source-only
+photos or modify Source. Generated reports, backups and derivatives are not
+intake candidates. The saved overlay records `baselineMode: working`, and its
+hash binds preparation and matching; an explicit conflicting mode on resume
+is refused. Source remains verified historical boundary evidence.
+
+Overlay construction and initial input copying publish from owner-locked
+configured temporary staging. A failed copy does not publish a partial mirror.
+A retry can reuse a byte-verified complete mirror and a verified published
+preparation report after a receipt interruption, without rendering it again.
+Unknown, changed or incomplete mirrors are refused rather than silently reused.
+
+For the fresh-baseline path, substitute `--baseline working` for
+`--include-current-various` throughout the sequence below. Include
+`--cast-seeds core` on preview, matching and apply when auditing eligible
+non-core releases under the existing protected/core/workflow-selected rules.
 Use the **same run directory** at each stage:
 
 ```bat
@@ -1064,18 +1161,61 @@ bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepare
 Replace `SANDBOX` with its absolute path. This sequence is documentation, not
 approval to run the next real acceptance experiment.
 
+Sandbox run history has a separate, dependency-aware retention ledger under
+`Working\_sandbox-state\retention-manifest.json`. New intake/rebase receipts
+register automatically as review/keep. Inventory and check it with:
+
+```bat
+bin\storage-retention.cmd --root "SANDBOX\Working" preview
+bin\storage-retention.cmd --root "SANDBOX\Working" check
+```
+
+Legacy receipt-backed runs can be registered with `register --all --apply`;
+directories without supported receipts remain unregistered and are never
+prune candidates. Accept only a reviewed, successfully applied run with
+`accept RUN --reason "..." --review-cleared --audit-cleared --apply`.
+The newest accepted run per pipeline and every unaccepted/incomplete run stay
+retained. Only an older accepted run can be superseded, and prune approval
+requires explicit review, undo and audit clearance:
+
+```bat
+bin\storage-retention.cmd --root "SANDBOX\Working" supersede RUN --reason "..." --review-cleared --undo-cleared --audit-cleared --apply
+bin\storage-retention.cmd --root "SANDBOX\Working" preview
+bin\storage-retention.cmd --root "SANDBOX\Working" delete RUN --apply
+bin\storage-retention.cmd --root "SANDBOX\Working" repair-history RUN --apply
+```
+
+Superseding fingerprints the complete run tree. Preview and deletion recheck
+that fingerprint and scan Working text files for dependencies; generated intake
+history pages are refreshed after deletion. Each deletion is a separate
+explicit apply and writes a receipt under `_reports\storage-retention`.
+If deletion completes but history publication fails, `repair-history` retries
+only the report refresh and receipt closure; it never restores or deletes run
+data.
+Production, `Source`, active galleries, and trees outside the exact sandbox
+`Working` root are out of scope.
+
 1. Preparation copies immutable Gallery/Review inputs to the run-local `inputs`
    mirror and uses the ordinary renderer. The receipt binds source inventory,
    all artifacts and the full recipe. Reusing the run verifies and resumes;
    it never quietly recomputes reviewed output. An unfinished mirror refuses.
-2. All cast images receive outcomes without changing cast membership. Artists
-   receive preparation evidence but are excluded from general matching and
-   publication. Junk/retired trees are not candidates.
+2. All cast images receive preparation outcomes. By default,
+   `--cast-seeds all` retains existing cast membership. The explicit
+   `--cast-seeds core` preview can release unprotected, unselected cast Gallery
+   photos outside their current configured identity cores for fresh matching;
+   existing cast Review images remain staged. Artists receive preparation
+   evidence but are excluded from general matching and publication.
+   Junk/retired trees are not candidates.
 3. A fresh run-local cache measures **selected prepared bytes**. Initial cores
    use only Source Angels/Sisters Gallery, with verified anchors/decisions.
    Model/Prospect/Potential and loose Various candidates are flattened; old
    non-cast cores are never reference truth. `Various\<Name>\gallery` reuses
    explicit named-person seeding, not inferred face-score identity.
+   Core-seed release uses the configured core similarity and minimum usable
+   photo gates without changing them. Protected identities/photos, identity
+   anchors, and workflow-selected photos stay in place. Unusable prepared faces
+   are excluded from reference cores; unresolved anchors or insufficient
+   evidence refuse release rather than inventing a threshold.
 4. Shared reconciliation and draft category policy produce routes. Old names
    are display provenance after scoring. Verified one-to-one membership can
    retain stable IDs, original/current names, family and manual opt-outs.
@@ -1093,12 +1233,17 @@ skip legacy source cropping/screenshot stripping, but keep face-quality and
 head/chest framing gates. See [retained storage](original-photos.md) for backup
 and move behavior.
 
-Cast Gallery **membership** is retained, not raw pixels: cast natives now receive
-the same preparation. Inferred cast additions enter Review, never the cast core.
-Ambiguous/unusable candidates remain in `Various\review`. Existing owned cast
-outputs and generated categories (including Various) are retained under
-`previous`; unknown/edited managed outputs refuse. The isolated catalogue is
-installed/restored with the run. No workflow inputs are automatically retargeted.
+By default, cast Gallery **membership** is retained, not raw pixels: cast natives
+now receive the same preparation. With `--cast-seeds core`, each source image's
+retained/released status, source score, configured thresholds, protection and
+workflow-selection reasons, and final Review/routing outcome are previewed in
+`run.json`, `photos.csv` and `report.md` before apply. Released candidates use
+ordinary matching and category thresholds; inferred cast additions enter Review,
+never the cast core. Ambiguous/unusable candidates remain in `Various\review`.
+Existing owned cast outputs and generated categories (including Various) are
+retained under `previous`; unknown/edited managed outputs refuse. The isolated
+catalogue is installed/restored with the run. No workflow inputs are
+automatically retargeted.
 People/Review are regenerated after installation; their retained detail links
 return to gallery/run browsing and expose available maintained derivatives.
 
@@ -1114,8 +1259,9 @@ replaced cast originals/auxiliaries and catalogue, and keeps rebuilt outputs
 under `withdrawn`. Edited artifacts block automatic undo. Another experiment
 uses a new run and immutable Source, not previous generated identity cores;
 verified retained lineage allows current prepared decisions to survive.
-This launcher is sandbox-only. Optional cast release and the separately
-approved incremental/production cutover remain unfinished.
+This launcher is sandbox-only. Cast release is implemented as an opt-in preview
+mode, but its sample acceptance and the separately approved
+incremental/production cutover remain unfinished.
 
 The first installed clean run was
 `Working\_sandbox-state\clean-rebase-20261021-2210`. It accounts for 1,155
@@ -1155,8 +1301,9 @@ independent of the closest Angel match above.
 
 ## Cache, photos, and limits
 
-The cache (`%LOCALAPPDATA%\sovereign-territories\likeness_cache.json`) stores
-detected face data keyed by image content, not folder assignment or decisions.
+The cache (`modelCacheRoot\likeness_cache.json`) stores detected face data keyed
+by image content, not folder assignment or decisions; the default root is
+`%LOCALAPPDATA%\sovereign-territories`.
 
 - Moving or renaming a photo does not require a cache reset.
 - Editing/cropping an image changes its content and causes fresh detection.

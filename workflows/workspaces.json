@@ -1,11 +1,26 @@
 {
+  "schemaVersion": 1,
   "installsRoot": "B:/Comfy-Desktop/ComfyUI-Installs",
   "workflowsSubpath": "ComfyUI/user/default/workflows",
+  "referenceWorkspace": "Sovereign Females",
   "paths": {
-    "workRoot": "B:/Sovereign Territories",
+    "productionRoot": "B:/Sovereign Territories",
+    "sandboxWorkingRoot": "B:/Sovereign Territories Sandbox/Working",
+    "modelCacheRoot": "%LOCALAPPDATA%/sovereign-territories",
     "inputsRoot": "B:/Comfy-Desktop/ComfyUI-Inputs",
     "outputRoot": "B:/Comfy-Desktop/ComfyUI-Outputs",
     "outputFolders": {"drakn-sisters": "Sovereign Territories", "drakn-bound": "Sovereign Territories", "elder-dragons": "Sovereign Territories", "sovereign-territories": "Sovereign Territories", "angel-primes": "Angel Primes", "sovereign-dawn": "Sovereign Dawn Series"}
+  },
+  "storageRoots": {
+    "backup": "_backup",
+    "generation": "_generation",
+    "reports": "_reports",
+    "likeness": "_likeness",
+    "actions": "_actions",
+    "junk": "_junk",
+    "retired": "_retired",
+    "sandboxState": "_sandbox-state",
+    "temporary": "_tmp"
   },
   "sharedInput": "B:/Comfy-Desktop/ComfyUI-Shared/input",
   "sharedOutput": "B:/Comfy-Desktop/ComfyUI-Shared/output",

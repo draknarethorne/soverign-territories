@@ -3,6 +3,7 @@
 import argparse
 import collections
 import datetime
+import hashlib
 import html
 import json
 import os
@@ -99,6 +100,45 @@ const stagedCount=document.getElementById("staged-count"), download=document.get
 const pageSize=100; let visible=[], shown=pageSize;
 const staged=new Map();
 const stagedPeople=new Map();
+function appendAlignmentEvidence(article,evidence) {
+  const details=document.createElement("details");details.className="preparation-evidence alignment-evidence";
+  const summary=document.createElement("summary");
+  summary.textContent="Exact SFace aligned input";
+  details.append(summary);
+  const state=document.createElement("p");state.className="detail";
+  const states={
+    missing:"No persisted aligned crop is available. Run likeness scan outside --check to refresh this cache entry.",
+    "read-only-not-persisted":"The crop was computed for this read-only review but was not persisted. Run likeness scan outside --check to save it.",
+    invalid:"Aligned-face evidence failed source or artifact verification; no crop link is shown.",
+    "no-face":"No human face was selected, so SFace received no aligned crop.",
+    unreadable:"No SFace crop was produced for this unreadable or unusable source."
+  };
+  state.textContent=states[evidence?.state]||"Exact aligned-crop evidence is unavailable.";
+  details.append(state);
+  if(evidence?.sourcePath) {
+    const source=document.createElement("p");source.className="detail";
+    source.textContent="Scored source: "+evidence.sourcePath+" · SHA-256 "+(evidence.sourceSha256||"unavailable");
+    details.append(source);
+  }
+  if(evidence?.model) {
+    const model=document.createElement("p");model.className="detail";
+    model.textContent="Model identity: "+(evidence.modelId||"unavailable")+
+      " · YuNet SHA-256 "+(evidence.model.detector?.sha256||"unavailable")+
+      " · SFace SHA-256 "+(evidence.model.recognizer?.sha256||"unavailable")+
+      " · OpenCV "+(evidence.model.opencv||"unavailable");
+    details.append(model);
+  }
+  if(evidence?.state==="verified"&&evidence.href) {
+    const crop=document.createElement("a");crop.href=evidence.href;crop.target="_blank";
+    crop.rel="noopener noreferrer";crop.textContent="Open exact alignCrop PNG sent to SFace";
+    details.append(crop);
+    const digest=document.createElement("p");digest.className="detail";
+    digest.textContent="Crop SHA-256 "+evidence.alignmentSha256+
+      " · "+evidence.width+" × "+evidence.height+" · score uses this source's cached SFace vector";
+    details.append(digest);
+  }
+  article.append(details);
+}
 function fill(select, values, label, sortValues=true) {
   select.replaceChildren(new Option("All "+label,""));
   const unique=[...new Set(values)];
@@ -195,6 +235,7 @@ function card(r, readOnly=false) {
     article.append(sources);
   }
   appendPreparationEvidence(article,r.preparationEvidence);
+  appendAlignmentEvidence(article,r.alignmentEvidence);
   if(r.generationSource) {
     const generate=document.createElement("a");
     generate.href=generationIndex+"?source="+encodeURIComponent(r.generationSource);
@@ -747,8 +788,8 @@ def action_options(bucket, photo_id, *, anchor=False, protected=False, stageable
     """Return actions valid for this photo's current location and metadata."""
     if not stageable or not photo_id:
         return []
-    junk_option = ("photo-junked", "Junk unwanted/unusable photo to _junk (explicit recovery only; no deletion)")
-    retire_option = ("photo-retired", "Retire photo to _retired/photos (recoverable; excluded from matching)")
+    junk_option = ("photo-junked", "Junk unwanted/unusable photo to configured junk storage (explicit recovery only; no deletion)")
+    retire_option = ("photo-retired", "Retire photo to configured retired storage (recoverable; excluded from matching)")
     movable = not protected and not anchor and not workflow_selected
     if folder and folder.split("/", 1)[0] not in ACTION_ROOTS:
         return [retire_option, junk_option] if movable and action_folder_supported(folder) else []
@@ -1318,7 +1359,104 @@ def collect_items(
     return items, warnings
 
 
-def write_thumbnails(items, out):
+def alignment_evidence(photo, work, out):
+    """Expose only a source- and artifact-verified persisted alignCrop image."""
+    data = getattr(photo, "alignment_evidence", None)
+    if work is None:
+        return {"state": "missing"}
+    try:
+        source_path = photo.path.resolve().relative_to(pathlib.Path(work).resolve()).as_posix()
+        source_sha256 = metadata.content_sha256(photo.path)
+    except (OSError, ValueError):
+        return {"state": "invalid"}
+    result = {
+        "state": "missing",
+        "sourcePath": source_path,
+        "sourceSha256": source_sha256,
+    }
+    if photo.faces == 0:
+        result["state"] = "no-face"
+        return result
+    if photo.faces < 0:
+        result["state"] = "unreadable"
+        return result
+    if not isinstance(data, dict):
+        return result
+    result.update({
+        "model": data.get("model"),
+        "modelId": data.get("modelId"),
+        "alignmentSha256": data.get("alignmentSha256"),
+        "width": data.get("width"),
+        "height": data.get("height"),
+    })
+    if data.get("state") == "read-only-not-persisted":
+        result["state"] = "read-only-not-persisted"
+        return result
+    model_id = data.get("modelId")
+    artifact = data.get("artifact")
+    model = data.get("model")
+    detector = model.get("detector") if isinstance(model, dict) else None
+    recognizer = model.get("recognizer") if isinstance(model, dict) else None
+    try:
+        expected_model_id = hashlib.sha256(
+            json.dumps(model, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        ).hexdigest()
+    except (TypeError, ValueError):
+        expected_model_id = None
+    if (
+        data.get("state") != "persisted"
+        or data.get("sourceSha256") != source_sha256
+        or not isinstance(detector, dict)
+        or detector.get("name") != "YuNet"
+        or not isinstance(recognizer, dict)
+        or recognizer.get("name") != "SFace"
+        or model.get("alignment") != "FaceRecognizerSF.alignCrop"
+        or not isinstance(model.get("opencv"), str)
+        or not isinstance(model_id, str)
+        or not re.fullmatch(r"[0-9a-f]{64}", model_id)
+        or model_id != expected_model_id
+        or artifact != f"{source_sha256}-{model_id}.png"
+        or data.get("artifactSha256") != data.get("alignmentSha256")
+    ):
+        result["state"] = "invalid"
+        return result
+    domain = "artists" if photo.group == "Artists" else "general"
+    library_root = pathlib.Path(work).resolve()
+    likeness_root = likeness.cw.storage_root(
+        likeness.cw.load_cfg(), "likeness", root=library_root
+    )
+    evidence_root = likeness_root / domain / "face-evidence"
+    target = evidence_root / artifact
+    try:
+        evidence_root.resolve().relative_to(library_root)
+        if (
+            any(likeness.cw.is_reparse_point(path) for path in (
+                likeness_root,
+                likeness_root / domain,
+                evidence_root,
+                target,
+            ))
+            or target.resolve().parent != evidence_root.resolve()
+            or not target.is_file()
+            or hashlib.sha256(target.read_bytes()).hexdigest() != data["artifactSha256"]
+        ):
+            result["state"] = "invalid"
+            return result
+    except (OSError, ValueError):
+        result["state"] = "invalid"
+        return result
+    relative = os.path.relpath(target, out).replace(os.sep, "/")
+    from urllib.parse import quote
+
+    result.update(
+        state="verified",
+        href=quote(relative, safe="/._-"),
+        alignmentSha256=data["alignmentSha256"],
+    )
+    return result
+
+
+def write_thumbnails(items, out, work=None):
     """Write/reuse named, content-keyed head and chest-up derivatives."""
     from likeness_library.derivatives import thumbnail, verified
 
@@ -1375,6 +1513,7 @@ def write_thumbnails(items, out):
         public = {key: value for key, value in item.items() if key != "_photo"}
         public["derivativeDiagnostics"] = diagnostics
         public["thumbnailProvenance"] = provenance
+        public["alignmentEvidence"] = alignment_evidence(photo, work, out)
         public["reason"] = "; ".join([public.get("reason", ""), *diagnostics]).strip("; ")
         public["thumbnail"] = targets["chest"]
         public["thumbnailHead"] = targets["head"]
@@ -1399,8 +1538,15 @@ def person_protection_action(folder, person_id, person):
     }
 
 
-def render_html(items, stamp, warnings=(), policy=None, reports_prefix="../"):
+def render_html(
+    items, stamp, warnings=(), policy=None, reports_prefix="../", section_links=None,
+):
     """Render a local page with client-side filters and bounded card rendering."""
+    if section_links is None:
+        cfg = likeness.cw.load_cfg()
+        section_links = gallery_chrome.configured_sections(
+            likeness.cw.work_root(cfg), cfg
+        )
     policy = policy or default_policy()
     people_count = len({item["folder"] for item in items if item.get("group") != "Various"})
     people_label = "person" if people_count == 1 else "people"
@@ -1424,7 +1570,15 @@ def render_html(items, stamp, warnings=(), policy=None, reports_prefix="../"):
     payload = json.dumps(public_items, ensure_ascii=False).replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
     people_payload = json.dumps(people_data, ensure_ascii=False).replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
     guidance_payload = json.dumps(gallery_chrome.CARD_USE_GUIDANCE, ensure_ascii=True)
-    generation_payload = json.dumps(reports_prefix + "../_generation/index.html", ensure_ascii=True).replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
+    generation_link = next(
+        (href for label, href in (section_links or ()) if label == "Rendering"), None
+    )
+    generation_href = (
+        reports_prefix + generation_link
+        if reports_prefix is not None and generation_link is not None
+        else ""
+    )
+    generation_payload = json.dumps(generation_href, ensure_ascii=True).replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
     policy_payload = json.dumps(policy, ensure_ascii=True).replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
     warning_html = ""
     if warnings:
@@ -1433,7 +1587,9 @@ def render_html(items, stamp, warnings=(), policy=None, reports_prefix="../"):
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>People gallery review</title><style>{gallery_chrome.CSS}{CSS}</style></head><body id="top">
-{gallery_chrome.masthead("People", reports_prefix, "People library")}
+{gallery_chrome.masthead(
+    "People", reports_prefix, "People library", section_links=section_links
+)}
 <div class="site-page">
 <header class="page-header"><div><h1>People gallery review</h1>
 <p class="note">Generated {stamp} · {people_count} {people_label} · {len(items)} {photos_label}</p>
@@ -1486,8 +1642,8 @@ def _main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--artists", action="store_true", help="retired: use artists-gallery.cmd")
     parser.add_argument("--keep", type=float, default=0.25, help="Prospect borderline score (default: 0.25)")
-    parser.add_argument("--out", help="report directory (default: <work>\\_reports\\library)")
-    parser.add_argument("--root", help="photo library folder (default: workspaces.json paths.workRoot)")
+    parser.add_argument("--out", help="report folder under the configured reports root (relative paths start there)")
+    parser.add_argument("--root", help="photo library folder (default: workspaces.json paths.productionRoot)")
     parser.add_argument("--cache", help="embedding cache file (default: the user-local likeness cache)")
     parser.add_argument("--policy", help="versioned likeness policy JSON")
     parser.add_argument(
@@ -1502,12 +1658,13 @@ def _main(argv=None):
     cfg, st, work, cache, space = likeness.build(
         types.SimpleNamespace(root=args.root, cache=args.cache, embedder=None, policy=args.policy)
     )
+    reports = likeness.cw.storage_root(cfg, "reports", root=work)
+    out = likeness.cw.storage_output_path(cfg, "reports", args.out or "library", root=work)
     catalog = metadata.load_catalog(metadata.path_for_root(work))
     items, warnings = collect_items(
         cfg, st, work, cache, space, catalog,
         include_artists=args.artists, keep=args.keep, policy=policy
     )
-    out = pathlib.Path(args.out) if args.out else pathlib.Path(work) / "_reports" / "library"
     out.mkdir(parents=True, exist_ok=True)
     provenance = preparation_provenance.build_index(
         work,
@@ -1520,8 +1677,7 @@ def _main(argv=None):
             item["_photo"].path, item.get("photoId"),
         )
         item["generationSource"] = item["_photo"].path.relative_to(work).as_posix()
-    public_items, thumb_dir = write_thumbnails(items, out)
-    reports = pathlib.Path(work) / "_reports"
+    public_items, thumb_dir = write_thumbnails(items, out, work)
     gallery_chrome.publish_banner(reports)
     report = out / "people_gallery_review.html"
     report.write_text(
@@ -1531,6 +1687,7 @@ def _main(argv=None):
             warnings,
             policy=policy,
             reports_prefix=gallery_chrome.reports_prefix(out, reports),
+            section_links=gallery_chrome.configured_sections(work, cfg),
         ),
         encoding="utf-8",
     )

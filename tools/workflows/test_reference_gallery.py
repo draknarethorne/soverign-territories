@@ -542,6 +542,32 @@ class ReferenceGalleryTests(unittest.TestCase):
         catalog.assert_called_once_with()
         discovery.assert_called_once_with(self.root.resolve())
 
+    def test_configured_storage_roots_route_gallery_output_and_navigation(self):
+        config = gallery.cw.load_cfg()
+        config = {
+            **config,
+            "storageRoots": {
+                **config["storageRoots"],
+                "generation": "_generated",
+                "reports": "_history",
+            },
+        }
+        catalog_path = self.root / "catalog.json"
+        sources_path = self.root / "sources.json"
+        catalog_path.write_text(json.dumps({"recipes": self.recipes}), encoding="utf-8")
+        sources_path.write_text(json.dumps({"sources": self.sources}), encoding="utf-8")
+        args = ["--root", str(self.root), "--catalog", str(catalog_path),
+                "--sources", str(sources_path), "--apply"]
+        with mock.patch.object(gallery.cw, "load_cfg", return_value=config), \
+                contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(gallery.main(args), 0)
+        output = self.root / "_generated" / "index.html"
+        self.assertTrue(output.is_file())
+        page = output.read_text(encoding="utf-8")
+        self.assertIn("../_history/library/people_gallery.html", page)
+        self.assertIn("../_history/artists/artists_gallery.html", page)
+        self.assertFalse((self.root / "_generation").exists())
+
     def test_failed_gallery_publication_preserves_previous_whole_page(self):
         output = self.root / "_generation" / "index.html"
         output.parent.mkdir(parents=True)
@@ -552,7 +578,8 @@ class ReferenceGalleryTests(unittest.TestCase):
                 contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
             self.assertEqual(gallery.main(["--root", str(self.root), "--apply"]), 1)
         self.assertEqual(output.read_text(encoding="utf-8"), "previous whole page")
-        self.assertEqual(list(output.parent.glob(".render-gallery-*.tmp")), [])
+        temporary_root = gallery.cw.storage_root(gallery.cw.load_cfg(), "temporary", root=self.root)
+        self.assertEqual(list(temporary_root.glob(".render-gallery-*")), [])
 
     def test_build_page_does_not_guess_display_name_from_filename(self):
         source = dict(self.sources[0], displayName=None, personId=None)

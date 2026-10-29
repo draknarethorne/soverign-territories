@@ -59,6 +59,7 @@ repos:
         name: Workflow tool tests (homes, accepts and zz_ guards)
         entry: python tools/workflows/test_comfy_workflows.py
         language: python
+        additional_dependencies: [jsonschema]
         pass_filenames: false
         files: ^tools/workflows/
         stages: [pre-commit, pre-push]
@@ -67,6 +68,7 @@ repos:
         name: Backdrop wording rewrite tests
         entry: python -m unittest tools.workflows.test_backdrop
         language: python
+        additional_dependencies: [jsonschema]
         pass_filenames: false
         files: ^(tools/workflows/(test_)?backdrop\.py|bin/backdrop\.cmd|data/art/backgrounds/studio/grey-even\.json)$
 

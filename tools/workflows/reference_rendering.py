@@ -7,9 +7,7 @@ import json
 import os
 import pathlib
 import re
-import shutil
 import sys
-import tempfile
 import urllib.parse
 import urllib.request
 
@@ -19,7 +17,12 @@ from PIL import Image
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCHEMA = ROOT / "data" / "schemas" / "reference-render-request.schema.json"
 sys.path.insert(0, str(ROOT / "tools" / "art"))
+import temporary_storage  # noqa: E402
 from likeness_library import report_assets
+if __package__:
+    from . import comfy_workflows as cw
+else:
+    import comfy_workflows as cw
 
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -159,11 +162,20 @@ def inspect_source(root, job):
     allowed = {"Angels", "Sisters", "Models", "Prospects", "Potentials", "Various", "Artists"}
     pulled = kind == "pulled-render"
     selected = kind == "selected-render" or pulled
+    generation_parts = cw.storage_root(
+        cw.load_cfg(), "generation", root=root
+    ).relative_to(root).parts
     if pulled:
-        if len(parts) != 5 or parts[:2] != ["_generation", "library"]:
-            raise ValueError("Pulled render must live in _generation/library/<stage>/<workflow>/")
+        stage_index = len(generation_parts) + 1
+        if (len(parts) != len(generation_parts) + 4
+                or tuple(parts[:len(generation_parts)]) != generation_parts
+                or parts[len(generation_parts)] != "library"):
+            raise ValueError("Pulled render must live under the configured generation library")
     elif selected:
-        if len(parts) != 5 or parts[:2] != ["_generation", "selected"]:
+        batch_index = len(generation_parts) + 1
+        if (len(parts) != len(generation_parts) + 4
+                or tuple(parts[:len(generation_parts)]) != generation_parts
+                or parts[len(generation_parts)] != "selected"):
             raise ValueError("Selected render must be an explicitly retained output")
     elif parts[0] not in allowed or any(p.startswith("_") for p in parts):
         raise ValueError(f"Source is outside active photo roots: {relative}")
@@ -181,7 +193,8 @@ def inspect_source(root, job):
         if (provenance.get("kind") != "pulled-render" or provenance.get("synthetic") is not True
                 or provenance.get("identityCoreEligible") is not False
                 or provenance.get("sha256") != job["source"]["sha256"]
-                or provenance.get("stage") != parts[2] or provenance.get("variant") != parts[3]
+                or provenance.get("stage") != parts[stage_index]
+                or provenance.get("variant") != parts[stage_index + 1]
                 or provenance.get("domain", "general") != job["source"]["domain"]):
             raise ValueError("Pulled-render provenance does not match the library copy")
     elif selected:
@@ -189,7 +202,8 @@ def inspect_source(root, job):
         if (provenance.get("synthetic") is not True
                 or provenance.get("identityCoreEligible") is not False
                 or provenance.get("sha256") != job["source"]["sha256"]
-                or provenance.get("batchId") != parts[2] or provenance.get("jobId") != parts[3]
+                or provenance.get("batchId") != parts[batch_index]
+                or provenance.get("jobId") != parts[batch_index + 1]
                 or provenance.get("domain", "general") != job["source"]["domain"]):
             raise ValueError("Selected-render provenance does not match the retained output")
     with Image.open(io.BytesIO(data)) as image:
@@ -232,12 +246,18 @@ def request_plan(request, root):
         "libraryRoot": str(root), "state": "inputs-only-not-render-ready",
         "requestSha256": digest(artifacts["request.json"]), "jobs": jobs,
         "artifacts": {name: digest(data) for name, data in artifacts.items()},
+        "configurationReceipt": cw.storage_configuration_receipt(
+            cw.load_cfg(), root, {"referenceRunDirectory": run_path(root, request["batchId"])},
+        ),
     }
     return run, artifacts
 
 
 def run_path(root, batch_id):
-    return safe_path(root, f"_generation/reference/{batch_id}")
+    relative = cw.storage_root(
+        cw.load_cfg(), "generation", root=root
+    ).relative_to(root).as_posix()
+    return safe_path(root, f"{relative}/reference/{batch_id}")
 
 
 def check(root, batch_id):
@@ -281,7 +301,29 @@ def check(root, batch_id):
         "state": "inputs-only-not-render-ready", "requestSha256": digest(artifacts["request.json"]),
         "jobs": jobs, "artifacts": {name: digest(data) for name, data in artifacts.items()},
     }
-    if read_json(destination / "run.json") != expected:
+    saved = read_json(destination / "run.json")
+    if "configurationReceipt" in saved:
+        receipt = saved["configurationReceipt"]
+        jsonschema.validate(receipt, {
+            "type": "object",
+            "additionalProperties": False,
+            "required": ["configurationPath", "sourceConfigurationSha256",
+                         "effectiveConfigurationSha256", "environmentOverrides", "resolvedPaths"],
+            "properties": {
+                "configurationPath": {"type": "string", "minLength": 1},
+                "sourceConfigurationSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+                "effectiveConfigurationSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+                "environmentOverrides": {"type": "object", "additionalProperties": {"type": "string"}},
+                "resolvedPaths": {"type": "object", "additionalProperties": {"type": "string"}},
+            },
+        })
+        if (not pathlib.Path(receipt["configurationPath"]).is_absolute()
+                or not all(pathlib.Path(path).is_absolute() for path in receipt["resolvedPaths"].values())
+                or receipt["resolvedPaths"].get("libraryRoot") != str(root.resolve())
+                or receipt["resolvedPaths"].get("referenceRunDirectory") != str(destination.resolve())):
+            raise ValueError("Saved configuration receipt paths changed or are invalid")
+        expected["configurationReceipt"] = receipt
+    if saved != expected:
         raise ValueError("Saved run evidence changed")
     if (destination / "run.json").read_bytes() != encode(expected):
         raise ValueError("Frozen run bytes changed")
@@ -313,12 +355,13 @@ def prepare(request, root):
     destination = run_path(root, request["batchId"])
     if destination.exists():
         checked = check(root, request["batchId"])
-        if checked != run:
+        if ({key: value for key, value in checked.items() if key != "configurationReceipt"}
+                != {key: value for key, value in run.items() if key != "configurationReceipt"}):
             raise ValueError("Batch ID is already owned by a different request")
         return checked
     destination.parent.mkdir(parents=True, exist_ok=True)
-    staging = pathlib.Path(tempfile.mkdtemp(prefix=".reference-", dir=destination.parent))
-    try:
+    temporary_root = cw.storage_root(cw.load_cfg(), "temporary", root=root)
+    with temporary_storage.staging_directory(temporary_root, ".reference-") as staging:
         for relative, data in {**artifacts, "run.json": encode(run)}.items():
             target = staging / pathlib.PurePosixPath(relative)
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -327,9 +370,6 @@ def prepare(request, root):
         if request_plan(request, root)[0] != run:
             raise ValueError("Inputs changed during preparation")
         os.rename(staging, destination)
-    finally:
-        if staging.exists():
-            shutil.rmtree(staging)
     return check(root, request["batchId"])
 
 

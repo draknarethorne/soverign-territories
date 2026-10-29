@@ -19,7 +19,6 @@ import json
 import os
 import pathlib
 import sys
-import tempfile
 from urllib.parse import quote
 
 import cv2
@@ -32,6 +31,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/art"))
 import eraser_benchmark as benchmark  # noqa: E402
 import image_preparation as preparation  # noqa: E402
+import temporary_storage  # noqa: E402
 from intake_library import clutter  # noqa: E402
 from likeness_library import gallery_chrome, sandbox  # noqa: E402
 
@@ -231,7 +231,10 @@ def page(data):
             + figure("Source (exact retained bytes)", entry["copy"]["path"])
             + figure("Candidate boxes (display copy)", entry["annotated"]["path"], 420)
             + '</div>' + body + '</article>')
-    prefix = gallery_chrome.reports_prefix(pathlib.Path(data["out"]), pathlib.Path(data["working"]) / "_reports")
+    reports = benchmark.preparation.cw.storage_root(
+        benchmark.preparation.cw.load_cfg(), "reports", root=pathlib.Path(data["working"])
+    )
+    prefix = gallery_chrome.reports_prefix(pathlib.Path(data["out"]), reports)
     total = sum(len(e.get("candidates", ())) for e in data["rows"])
     truncated = sum(e.get("truncated", 0) for e in data["rows"])
     return (
@@ -256,8 +259,11 @@ def page(data):
 def build(root, working, report, out, data, manifest_sha, sources, sources_payload, planned):
     """Stage the whole run beside its destination, verify it, then rename it into place in one step."""
     out.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix=".overlay-review-", dir=out.parent) as temporary:
-        stage = pathlib.Path(temporary) / "run"
+    temporary_root = preparation.cw.storage_root(
+        preparation.cw.load_cfg(), "temporary", root=working
+    )
+    with temporary_storage.staging_directory(temporary_root, ".overlay-review-") as temporary:
+        stage = temporary / "run"
         stage.mkdir()
         files = {}
         preparation.write_new(stage / "sources.json", sources_payload)
@@ -387,17 +393,21 @@ def run(args):
     for entry in manifest["rows"]:
         if entry.get("truncated"):
             print(f"WARNING: {entry['source']}: {entry['warning']}")
-    gallery_chrome.publish_banner(working / "_reports")
+    gallery_chrome.publish_banner(
+        benchmark.preparation.cw.storage_root(
+            benchmark.preparation.cw.load_cfg(), "reports", root=working
+        )
+    )
     print(f"Published unconfirmed overlay reference candidates: {out / 'index.html'}")
     return 0
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--report", required=True, help="absolute existing Working\\_reports\\preparation\\RUN")
+    parser.add_argument("--report", required=True, help="absolute existing run under the configured reports root")
     parser.add_argument("--sources", required=True, help=f"JSON array of 1..{benchmark.MAX_SOURCES} exact report "
                         "row sources (strings, or objects with source/sourceSha256)")
-    parser.add_argument("--out", required=True, help=f"absolute new Working\\_reports\\{benchmark.OUTPUT_DIR}\\RUN")
+    parser.add_argument("--out", required=True, help=f"absolute new named run under the configured reports root\\{benchmark.OUTPUT_DIR}")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--dry-run", action="store_true", help="preview (default); writes nothing")
     mode.add_argument("--apply", action="store_true", help="publish a new immutable run; repeating verifies")

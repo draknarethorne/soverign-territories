@@ -115,7 +115,8 @@ def run(args, cfg):
     unsettled = [batch for batch in active_batches(catalog) if batch not in settlements]
     library = folders(cfg, root)
     held_folders = undo_folders(catalog, unsettled, library, root) if args.preserve_action_undo else set()
-    output = pathlib.Path(args.out).resolve() if args.out else root / "_reports" / "library"
+    reports_root = cw.storage_root(cfg, "reports", root=root)
+    output = pathlib.Path(args.out).resolve() if args.out else reports_root / "library"
     if any(folder == location or folder in location.parents
            for folder in held_folders for location in (output, cache_path.resolve())):
         raise ValueError("report/cache writes must remain outside action-held identity trees")
@@ -239,7 +240,7 @@ def run(args, cfg):
     if args.check:
         reports_pending = False
         if not args.no_reports:
-            out = pathlib.Path(args.out) if args.out else root / "_reports" / "library"
+            out = pathlib.Path(args.out) if args.out else reports_root / "library"
             state_path = out / ".gallery-maintenance-report-state.json"
             state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.is_file() else {}
             reports_pending = state.get("inputs") != report_state(root, library, cache_path, args.policy)
@@ -263,7 +264,7 @@ def run(args, cfg):
             shared += ["--out", args.out]
         review_gallery.main(shared)
         people_gallery.main(shared)
-        out = pathlib.Path(args.out) if args.out else root / "_reports" / "library"
+        out = pathlib.Path(args.out) if args.out else reports_root / "library"
         state = {"inputs": report_state(root, library, cache_path, args.policy),
                  "reports": {name: derivatives.digest(out / name)
                              for name in ("people_gallery_review.html", "people_gallery.html")}}

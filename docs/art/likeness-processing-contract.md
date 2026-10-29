@@ -1,6 +1,6 @@
 # Likeness processing contract
 
-**Reconciled:** 2026-10-25. Approved target rules, not a claim that all
+**Reconciled:** 2026-10-28. Approved target rules, not a claim that all
 acceptance gates have passed. The [engine acceptance plan](../plans/2026-10-22-likeness-engine-acceptance.md)
 owns execution; [installed evidence](likeness-sandbox-trial.md) owns the
 dated run record; [likeness guide](likeness.md) owns runnable command syntax.
@@ -9,6 +9,20 @@ additional shipped CLI contracts. Production remains unapproved.
 
 ## Latest precedence and ownership
 
+- Oct 28 authorizes full sandbox iteration using final recommended prepared
+  pixels consistently for Gallery, likeness and ComfyUI. Keep exact originals,
+  masks/history and the exact aligned SFace input face with content/model
+  binding accessible per photo. Reconstructed pixels remain labelled synthetic;
+  using them for matching does not assert recovered identity or automatically
+  replace protected anchors. Opt-in `--cast-seeds core` implements the scoped
+  low-core experiment: existing core thresholds, protection, identity anchors
+  and workflow selections apply; unprotected non-core cast photos can regroup.
+  Inspect changed images, actual moves and borderline Review reasons before
+  installation. Do not lower thresholds to force zero Review. Production and
+  incremental cutover remain separate acceptance gates.
+  Pixel-based quality checks must read the same selected image as face
+  detection/alignment; original-image coordinates and prepared-image coordinates
+  must not be mixed. Source identity/path provenance remains immutable.
 - The retained-cast prepared clean-start flow is implemented (`d27098a`,
   `2340157`): inventory, intake-only preparation/check, safe resume into a
   fresh-cache matching preview, reviewed installation and exact undo use the
@@ -17,7 +31,7 @@ additional shipped CLI contracts. Production remains unapproved.
   Artists remain preparation-only in their domain. Verified one-to-one
   continuity carries curation/name/family/override decisions; ambiguous,
   missing, unknown or stale inputs hold. No real rebase or production change
-  ran. Real recipe/lineage acceptance, optional cast release and incremental
+  ran at that implementation checkpoint. Real recipe/lineage acceptance and incremental
   production cutover remain open.
   Replacement of already-owned prepared cast outputs is individually inventoried,
   hash-checked and reversible; it is not permission for a broad cast-root reset.
@@ -44,7 +58,7 @@ additional shipped CLI contracts. Production remains unapproved.
   owns implemented sandbox preparation and remaining real acceptance; the
   [cast experiment](../plans/2026-10-23-cast-seeded-library-rebase.md)
   owns configurable seed/retention/release design. Retained-cast preparation
-  is delivered, but optional seed/release policy is not approved or a blanket
+  is delivered; the Oct 28 core-seed experiment is explicitly scoped, not a blanket
   override of D10/D14/D15. Preparation includes retained cast
   images; membership protection does not authorize destructive preprocessing.
   Any release requires an explicit recoverable experiment and exact preview;
@@ -88,6 +102,7 @@ additional shipped CLI contracts. Production remains unapproved.
 | D17 | The sandbox is a test environment, not the product boundary. A clean-full production rebase of the approved scope is required after acceptance; sandbox-only installation and category-only reclassification are insufficient. |
 | D18 | Separate evidence, candidate grouping, identity matching, category assignment, and action authorization. Cast protection and cast-match thresholds must not become candidate-clustering thresholds. A minimum evidence count for an action must not discard valid pair/singleton evidence. |
 | D19 | This reference owns the unified engine contract. The focused engine, action, family and layout plans own execution; metadata/manifest/recovery remain shared foundations. Earlier audit-only limits do not override tier-aware automation. |
+| D20 | Final recommended prepared pixels are the operational input to Gallery, likeness and ComfyUI. Retain exact originals, processing history/masks, and the exact aligned matching face with content/model binding. Mark synthetic reconstruction explicitly; it is not original identity evidence or permission to replace a protected anchor. |
 
 ## Unified processing contract (Oct 21 reconciliation)
 

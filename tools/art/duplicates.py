@@ -54,13 +54,15 @@ def scan(folders):
     return out
 
 
-def scan_junk(work):
-    """Same-ID evidence in _junk for incoming replacements; junk is not a duplicate-keeper source."""
+def scan_junk(work, cfg=None):
+    """Same-ID evidence in the configured junk area; junk is not a duplicate-keeper source."""
     out = []
-    root = pathlib.Path(work) / "_junk"
+    work = pathlib.Path(work).resolve()
+    root = cw.storage_root(cfg or cw.load_cfg(), "junk", root=work)
     if root.is_dir():
         for side in sorted(p for p in root.iterdir() if p.is_dir()):
-            out.extend((p, f"_junk/{side.name}", side, "junk") for p in originals.images(side))
+            label = f"{root.relative_to(work).as_posix()}/{side.name}"
+            out.extend((p, label, side, "junk") for p in originals.images(side))
     return out
 
 
@@ -188,13 +190,13 @@ def prefer_incoming(ids, work, apply):
 def run(cfg, work, folders, apply, prefer_incoming_copies=False):
     """Scan, report and (with apply) resolve. Returns (identical groups found, same-id lists)."""
     files = scan(folders)
-    ids = same_ids(files + scan_junk(work) if prefer_incoming_copies else files)
+    ids = same_ids(files + scan_junk(work, cfg) if prefer_incoming_copies else files)
     replaced = []
     if prefer_incoming_copies:
         ids, replaced = prefer_incoming(ids, work, apply)
         if apply:
             files = scan(folders)
-            ids = same_ids(files + scan_junk(work))
+            ids = same_ids(files + scan_junk(work, cfg))
     identical = same_pictures(files)
     print(f"duplicates: {len(files)} original(s) read; {len(identical)} picture(s) kept twice, {len(ids)} id(s) shared by different files")
     resolve(identical, work, chosen_stems(cfg), apply)
@@ -209,7 +211,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--apply", action="store_true", help="move the extra copies of identical pictures to _archive (default: report only)")
     ap.add_argument("--prefer-incoming", action="store_true", help="replace an existing same-ID version with one different incoming copy from Various, archiving the old file")
-    ap.add_argument("--root", help="the folder that holds Angels, Sisters, Prospects, Artists and Various (default: workspaces.json paths.workRoot)")
+    ap.add_argument("--root", help="the folder that holds Angels, Sisters, Prospects, Artists and Various (default: workspaces.json paths.productionRoot)")
     args = ap.parse_args(argv)
     cfg = cw.load_cfg()
     work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)

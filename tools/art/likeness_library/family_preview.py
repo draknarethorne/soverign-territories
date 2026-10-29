@@ -122,7 +122,7 @@ def build_preview(identities, cores, policy):
     }
 
 
-def render_html(report, review_page, reports_prefix=None):
+def render_html(report, review_page, reports_prefix=None, section_links=None):
     """A static local preview; no scripts, file operations or automatic approval."""
     def escape(value):
         return html.escape(str(value if value is not None else ""))
@@ -133,7 +133,10 @@ def render_html(report, review_page, reports_prefix=None):
         f"<style>{gallery_chrome.CSS}"
         "table{border-collapse:collapse;width:100%;background:var(--st-card)}td,th{border:1px solid var(--st-line);padding:8px;text-align:left}"
         "th{background:#efebe3}td{vertical-align:top}.warning{color:#8a3b16}code{overflow-wrap:anywhere}</style></head><body id=\"top\">",
-        gallery_chrome.masthead("People", reports_prefix, "Analysis preview"),
+        gallery_chrome.masthead(
+            "People", reports_prefix, "Analysis preview",
+            section_links=section_links,
+        ),
         '<div class="site-page">',
         '<header class="page-header"><div><h1>Family-reference and name preview</h1>',
         f"<p>{report['identityCount']} identities; {len(report['suggestions'])} direct suggestions. "
@@ -224,15 +227,17 @@ def run(args, api):
     report["coreDiagnostics"] = diagnostics
     report["generatedAt"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
-    output = pathlib.Path(args.out) if args.out else root / "_reports" / "analysis" / ("families-" + stamp)
+    reports_root = api.cw.storage_root(cfg, "reports", root=root)
+    output = pathlib.Path(args.out) if args.out else reports_root / "analysis" / ("families-" + stamp)
     if sandbox:
         api.require_sandbox_output(args.root, output)
     output.mkdir(parents=True, exist_ok=True)
     files = {
         output / "family-preview.json": json.dumps(report, indent=2, ensure_ascii=True) + "\n",
         output / "family-preview.html": render_html(
-            report, (root / "_reports" / "library" / "people_gallery_review.html").resolve(),
-            gallery_chrome.reports_prefix(output, root / "_reports"),
+            report, (reports_root / "library" / "people_gallery_review.html").resolve(),
+            gallery_chrome.reports_prefix(output, reports_root),
+            gallery_chrome.configured_sections(root, cfg),
         ),
     }
     for path, text in files.items():

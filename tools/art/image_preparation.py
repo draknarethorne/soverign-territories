@@ -21,23 +21,30 @@ from jsonschema.exceptions import ValidationError
 from PIL import Image, ImageCms, ImageOps
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "tools/workflows"))
 sys.path.insert(0, str(ROOT / "tools/art"))
+import comfy_workflows as cw  # noqa: E402
 import gallery_maintenance as upkeep  # noqa: E402
 import originals  # noqa: E402
 import preparation_geometry  # noqa: E402
 import preparation_junk  # noqa: E402
 import screens  # noqa: E402
-from intake_library import legacy, models, pipeline  # noqa: E402
+import temporary_storage  # noqa: E402
+from intake_library import legacy, models, pipeline, reconstruction  # noqa: E402
 from likeness_library import gallery_chrome, metadata, sandbox  # noqa: E402
 
 CATEGORIES = ("Angels", "Sisters", "Models", "Prospects", "Potentials", "Artists", "Various")
 SCHEMA = ROOT / "data/art/_schema/image-preparation-pilot.schema.json"
-STEPS = pipeline.STEPS
-CURRENT = "preparation-comparison-v16"
+STEPS = pipeline.PREPARED_STEPS
+CURRENT = "preparation-comparison-v21"
+# Measured Oct 28 on a 6-core/12-thread Ryzen 5 5500: 1 worker 7.0 s/image, 2 about 5.0, 3 about 4.5, 4 no faster.
+MAX_WORKERS = 3
+WORKER_MEMORY_GB = 2.5
+PARALLEL_MIN_IMAGES = 16
 
 
 def step_names(recipe_id):
-    """The current order; published v6-v15 reports keep the order they were traced with."""
+    """The current order; published v6-v20 reports keep their traced step order."""
     return list(STEPS) if recipe_id == CURRENT else legacy.step_names(recipe_id)
 
 
@@ -49,11 +56,21 @@ RECIPE = {
     "denoise": {"method": "bilateral", "diameter": 5, "sigmaColor": 15, "sigmaSpace": 3},
     "tone": {"method": "LAB-L CLAHE blend", "clipLimit": 1.5, "grid": [8, 8], "blend": 0.35},
     "maxPixels": 20000000,
-    "crop": "solid borders plus guarded black reel panels; legacy fixed UI crop is comparison-only",
+    "crop": "verified v11 erase-first sequence, observed reel picture boundaries, no app-bar body-loss exception",
     "geometry": {"method": "full-span-solid-border-v1", "maxRange": 10,
                  "blackMax": 20, "whiteMin": 235, "minStrip": 5,
                  "maxFraction": 0.2, "boundaryGuard": 2},
-    "reconstruction": "LaMa (big-lama TorchScript) patch fill of the clutter left after the second crop; selected",
+    "reconstruction": "guarded LaMa then pattern-confirmed reconstruction and observed-picture composition; "
+                      "final prepared pixels used for Gallery, likeness and ComfyUI; original/masks retained",
+    "sequencePolicy": pipeline.EXPERIMENT_POLICY,
+    "headOverlayPolicy": reconstruction.HEAD_POLICY,
+    "overlayProfilesSha256": hashlib.sha256(
+        pipeline.overlays.PROFILES.read_bytes()).hexdigest(),
+    "overlayReferences": {
+        item["file"]: hashlib.sha256(
+            (pipeline.overlays.REFERENCES / item["file"]).read_bytes()).hexdigest()
+        for item in pipeline.overlays.profiles().get("references", [])
+    },
     "matching": False,
     "trialPolicy": {
         "faceModelSha256": preparation_geometry.model_evidence(),
@@ -61,31 +78,27 @@ RECIPE = {
         "faceDetection": "local YuNet .7/.5, shared human_rows, max1600; no recognition/cache",
         "eligibility": "no detected human face or largest minimum face dimension<60: report-only Junk candidate; "
                        "missing/failed detector: assessment error; no transforms for either",
-        "panelDetection": "reel-only; dark<=35; top .08-.22, 20 rows>=.98, 10 picture rows<.75; "
-                          "bottom .65-.93, 24 rows>=.88, sustained tail>=.7; face guards .45/1.5h",
+        "panelDetection": "profile-driven observed picture boundary; preserve complete overlapping pill; "
+                          "boxed panels trimmed, full-bleed status band removed only below subject start",
         "subject": "Mask R-CNN v2 (COCO person, score>=.5, 800px): largest person plus companions>=20% of its "
                    "area; small figures (ad thumbnails) ignored; no person: body frame around the faces",
-        "clutter": "pure-white glyphs (>=50% of strokes>=245) with dark edges in the outer 20%/bottom 30%, "
-                   "rendered text kept even over the body; magenta corner badges (hue>=150) reaching an outer "
-                   "third; screenshots also: top-fifth search bubbles and lower ui-cards (contours or paired "
-                   "long edges); a part touching a face box is clipped there, one covering it is refused",
-        "secondCrop": "before any fill; sides top/bottom/left/right, bands 25/40/30/30%; largest edge-inward run "
-                      "of parts whose removal loses <=0.5% of the person mask (grown 1%), guard 1.5% "
-                      "(screenshots) or 0.8%; keeps >=50% area, aspect .4-2; screenshot bottom app bar "
-                      "(>=50% wide or a ui-card) may cut legs below 4.5 face heights, person loss<=45%",
-        "eraser": "LaMa fills every remaining part on the second-crop output (dilate 3px, patches<=768px); "
-                  "face boxes never filled; ui-cards >25% on the person and coverage>20% are not filled; "
-                  "selected automatically",
-        "composition": "Mask R-CNN subject box + 6% sides / 4% top / 3% bottom (min 12px), widened toward "
-                       "944x1104; the bottom stays at the frame edge when the mask ends wider than 20% of its widest "
-                       "row (legs lost mid-limb); skipped when it keeps >=92% of the area or no person mask",
+        "clutter": "confirmed profile patterns: reel UI, structured GMW ring/letters, baseline-verified "
+                   "corner text/caption blocks, sparkle, tilted polygon stickers, viewer icons and reference logos",
+        "secondCrop": "after guarded fill; cumulative grown-subject loss <=0.5%, no app-bar exception; "
+                      "observed screenshot composition deferred until reconstruction",
+        "eraser": "guarded LaMa refuses body/face/unknown regions and coverage>20%; one post-fill detection; "
+                  "pattern-confirmed reconstruction coverage<=30%, face guard except detected head pill; "
+                  "outside cumulative source-coordinate masks must remain identical",
+        "composition": "select observed screenshot picture boundary after reconstruction; subject-mask "
+                       "framing is comparison-only because complete hair/feet coverage is not proven",
         "enhancementSelection": "comparison-only; retain cleanup until quality safeguards calibrated",
         "scope": "shared preparation, no assignment; Artists scoped by original artist folder, Various origin unknown",
     },
     "padding": {"size": [944, 1104], "color": list(originals.STUDIO_GREY), "crop": False},
-    "overlayPolicy": "retain original; warn; no preparation hold or manual approval",
-    "recommendationPolicy": "the last selected step: composition, else eraser, else second crop, else "
-                            "first-crop geometry, else original; never the fixed UI crop or an enhancement",
+    "overlayPolicy": "retain exact original and masks; reconstructed prepared source eligible for matching "
+                     "and generation, not an automatic protected-core replacement",
+    "recommendationPolicy": "v11 sequence final shared by Gallery, likeness and ComfyUI; never a diagnostic "
+                            "mask, rejected subject composition or uncalibrated enhancement",
 }
 
 
@@ -125,9 +138,9 @@ def locations(root, output):
     for part in (root, *root.parents):
         if sandbox._is_reparse_point(part):
             raise ValueError(f"refusing linked sandbox root: {part}")
-    base = root / "_reports" / "preparation"
+    base = cw.storage_root(cw.load_cfg(), "reports", root=root) / "preparation"
     if output.parent != base or output.name.startswith("."):
-        raise ValueError("--out must be a named run directly in Working\\_reports\\preparation")
+        raise ValueError("--out must be a named run directly under the configured reports root")
     safe_path(root, output)
     return root, output
 
@@ -258,6 +271,9 @@ def save_image(path, image, image_format, **options):
     temporary = pathlib.Path(temporary_name)
     try:
         with os.fdopen(descriptor, "wb") as stream:
+            if image_format == "PNG":
+                # Level 3 encodes ~33% faster than Pillow's 6 for ~4% larger files; pixels are identical.
+                options.setdefault("compress_level", 3)
             image.save(stream, format=image_format, **options)
         candidate_hash = sha_file(temporary)
         if path.exists():
@@ -295,7 +311,7 @@ def comparison_candidates(image, row):
 
 def prepared_candidates(image, row):
     images = {}
-    for name, candidate in pipeline.processing_candidates(image, row):
+    for name, candidate in pipeline.recommended_candidates(image, row):
         images[name] = candidate
         yield name, candidate
     selected = row["processing"]["cleanup"]
@@ -374,18 +390,19 @@ def render_photo(root, stage, source):
     else:
         row["diagnostics"].append("Not flagged by reel heuristic; this is not proof of no overlays.")
     previous = time.perf_counter()
+    folder_key = digest if CURRENT in legacy.ids(5, 16) else digest[:24]
     for name, variant in prepared_candidates(image, row):
-        path = f"candidates/{digest}/{name}.png"
+        path = f"candidates/{folder_key}/{name}.png"
         variant_hash = save_image(stage / path, variant, "PNG")
         thumbnail = variant.copy()
         thumbnail.thumbnail((360, 480), Image.Resampling.LANCZOS)
-        preview = f"candidates/{digest}/{name}-preview.jpg"
+        preview = f"candidates/{folder_key}/{name}-preview.jpg"
         preview_hash = save_image(stage / preview, thumbnail, "JPEG", quality=88)
         thumbnail.close()
         fitted = ImageOps.contain(variant, (944, 1104), Image.Resampling.LANCZOS)
         padded = Image.new("RGB", (944, 1104), originals.STUDIO_GREY)
         padded.paste(fitted, ((944 - fitted.width) // 2, (1104 - fitted.height) // 2))
-        padded_path = f"candidates/{digest}/{name}-944x1104.png"
+        padded_path = f"candidates/{folder_key}/{name}-944x1104.png"
         padded_hash = save_image(stage / padded_path, padded, "PNG")
         fitted.close()
         padded.close()
@@ -397,7 +414,14 @@ def render_photo(root, stage, source):
             "meanAbsolutePixelChange": mean_absolute_pixel_change(image, variant),
         }
         previous = time.perf_counter()
-    if row["geometry"]["changed"] and row["outcome"] != "enhancement-failed":
+    if row["processing"].get("sequence"):
+        sequence = row["processing"]["sequence"]
+        row["sourceTreatment"] = ("prepared-reconstruction" if sequence.get("headOverlay", {}).get("selected")
+                                  else "prepared-cleanup" if sequence["final"] != "control"
+                                  else "original-unassessed")
+        for error in sequence["detectorErrors"]:
+            row["diagnostics"].append(f"Preparation detector error: {error}")
+    elif row["geometry"]["changed"] and row["outcome"] != "enhancement-failed":
         row["sourceTreatment"] = ("cropped-border-overlay-unremoved"
                                   if row["geometry"]["overlayDetected"] else "cropped-border")
     row["diagnostics"].append(row["processing"]["faceAssessment"])
@@ -411,6 +435,15 @@ def recommendation(row):
         return {"use": "none", "reason": "Input could not be prepared; exact bytes retained. See diagnostic."}
     if row.get("processing"):
         selected = row["processing"]["final"]
+        if row["processing"].get("sequence"):
+            return {"use": "original" if selected == "control" else selected,
+                    "reason": "Final prepared source shared by Gallery, likeness and ComfyUI: "
+                              + selected + ". Exact original, source-coordinate masks and processing "
+                              "history retained. Reconstructed pixels are plausible, not recovered; "
+                              + ("enhancement failed; retained prepared source. "
+                                 if row["outcome"] == "enhancement-failed" else "")
+                              +
+                              "enhancements remain comparison-only."}
         if selected == "composition":
             return {"use": "composition", "reason": (
                 "Framed cleanup: the cleaned image cropped to the person found by Mask R-CNN (whole body, hands "
@@ -532,6 +565,12 @@ def report(data, *, detail=False):
                 '<div class="trace"><table><thead><tr><th>Step</th><th>Result</th><th>Input</th>'
                 '<th>Attempt output</th><th>Kept</th><th>Reason / limitations</th></tr></thead>'
                 f'<tbody>{"".join(rows)}</tbody></table></div>')
+            if processing.get("sequence"):
+                processing_html += (
+                    '<details><summary>Retained source-coordinate preparation evidence</summary>'
+                    '<p>Includes overlay proposals, refusal/failure reasons, candidate lineage and '
+                    'cumulative-mask preservation checks. Synthetic pixels are not recovered source detail.</p>'
+                    f'<pre>{esc(json.dumps(processing["sequence"], indent=2))}</pre></details>')
             comparison = processing.get("reconstructionComparison")
             if comparison:
                 candidate = comparison["candidate"]
@@ -545,10 +584,11 @@ def report(data, *, detail=False):
         advice = row.get("recommendation")
         recommendation_html = ""
         if advice:
-            if advice["use"] in ("geometry", "second-crop", "eraser", "composition"):
+            if advice["use"] in row["variants"]:
                 label = {"second-crop": "Graphic-free second crop", "composition": "Framed cleanup",
                          "eraser": "Cleaned (crop + LaMa eraser)",
-                         "geometry": "Border/panel geometry"}[advice["use"]] + " (provisional recommendation)"
+                         "geometry": "Border/panel geometry"}.get(
+                             advice["use"], "Prepared source: " + advice["use"]) + " (provisional recommendation)"
                 target = f'<a href="{quote(prefix + row["variants"][advice["use"]]["path"])}">{label}</a>'
             else:
                 target = (f'<a href="{quote(prefix + row["retained"])}">Original (recommended)</a>'
@@ -567,8 +607,10 @@ def report(data, *, detail=False):
             f'{geometry_html}'
             f'{recommendation_html}'
             f'<p>Decision: processing is skipped for unusable/unassessed faces. Otherwise each step keeps its '
-            f'result under the recipe guards: first crop, edge-clutter crop (the screenshot app-bar exception '
-            f'can remove part of the person), LaMa for remaining clutter, then framing. '
+            f'result under the recorded recipe guards. Current runs use guarded first crop, erase, '
+            f'residual crop, confirmed-pattern reconstruction and observed-picture composition. '
+            f'Historical runs retain their recorded order and exceptions; their app-bar exception '
+            f'can remove part of the person. '
             f'Person masks can miss hair, clothing and extremities; review the actual crops. '
             f'Denoise/tone are never accepted automatically.</p>'
             f'<div class="panels">{"".join(panels)}</div>{padding}</article>')
@@ -608,24 +650,25 @@ def report(data, *, detail=False):
         '<li><strong>Tone:</strong> local light/contrast alternative, not denoise or overlay repair.</li>'
         '<li><strong>Geometry:</strong> solid borders and guarded black reel panels trimmed first; '
         'unchanged if none qualify. Denoise/tone start from the selected cleanup image.</li>'
-        '<li><strong>Second-crop:</strong> runs before any repaint. Each side (top, bottom, left, right) is '
-        'trimmed past its edge clutter only as far as the person allows (Mask R-CNN person mask plus a margin; '
-        'at most 0.5% of the person lost). On screenshots a screen-wide app bar may cut the legs well below the hips. '
-        'A pure crop: no pixels invented.</li>'
-        '<li><strong>Eraser / eraser-mask:</strong> LaMa repaints the clutter the crop could not reach (white icons '
-        'and captions, the search bubble over the hair, corner logo badges) on the second-crop output, and the '
-        'result is kept. White mask pixels are what was repainted. Faces are never repainted; cards lying on the '
-        'body and anything over a fifth of the picture are left. Repainted hair and background are plausible, '
-        'not recovered: compare with the original.</li>'
-        '<li><strong>Composition:</strong> frames the whole person (hands, legs, dress) with a small margin, '
-        'widened toward 944x1104, to trim excess background. Skipped when it would gain little.</li>'
+        '<li><strong>Residual crop:</strong> after guarded erase, trims edge clutter only within cumulative '
+        'person-preservation limits. No current screenshot app-bar body-loss exception. Historical second-crop '
+        'candidates retain their own recorded order. A pure crop invents no pixels.</li>'
+        '<li><strong>Eraser / masks:</strong> LaMa repaints accepted small-clutter masks. Separate '
+        'confirmed-pattern reconstruction can remove larger logos and head-overlapping pills under its '
+        'recorded mask and coverage guards. White mask pixels identify synthetic areas; outside cumulative '
+        'source-coordinate masks pixels must remain identical. Repairs are plausible, not recovered truth.</li>'
+        '<li><strong>Composition:</strong> current selected composition uses the observed screenshot picture '
+        'boundary after reconstruction. Subject-mask framing remains comparison-only because complete '
+        'hair/feet coverage is not proven. Review actual pixels, not merely the selected label.</li>'
         '<li><strong>UI-crop-proposal:</strong> the existing screenshot crop rectangle; comparison '
         'only, never recommended because it may cut hair/body. It removes pixels, not overlaid graphics.</li>'
         '<li><strong>Padded 944x1104:</strong> each candidate fitted without cropping onto a light-grey '
         'canvas, for downstream display; padding does not clean or repair the photo.</li></ul>'
         '<p>Recommendations are provisional, not measured quality rankings. Clutter detection is heuristic: '
-        'an image where nothing was found may still have overlays (round avatar photos and picture-in-picture '
-        'thumbnails are not detected yet). No image is labelled clean just because detection missed it.</p></details>'
+        'an image where nothing was found may still have overlays, including round avatars or picture-in-picture '
+        'outside a confirmed phone-reel frame. Nested reel insets are proposed only when a small secondary face, '
+        'visible side edges, a bright top bezel and a dark header agree. No image is labelled clean just because '
+        'detection missed it.</p></details>'
         '<p>Pixel change is not image quality or likeness confidence. Existing crops cannot '
         'recover lost hair; retained input may already be cropped. No candidate is published '
         'to Gallery/Review or ComfyUI. Local copies are not an independent backup.</p>'
@@ -662,6 +705,42 @@ def validate_processing(row, *, same_mask_comparison=False, names=legacy.OLD_STE
             raise ValueError(f"cleanup selection disagrees with trace: {row['source']}")
     if processing["final"] != selected:
         raise ValueError(f"final selection disagrees with trace: {row['source']}")
+    sequence = processing.get("sequence")
+    if sequence is not None:
+        candidates = sequence["candidates"]
+        if (sequence["final"] != selected or processing["cleanup"] != selected
+                or selected not in candidates or candidates[selected]["diagnostic"]):
+            raise ValueError(f"prepared sequence selection mismatch: {row['source']}")
+        expected = set(candidates) | {s["candidate"] for s in steps if s["candidate"]}
+        if set(variants) != expected:
+            raise ValueError(f"prepared sequence variants mismatch: {row['source']}")
+        width, height = variants["control"]["size"]
+        for name, record in candidates.items():
+            box = record["sourceBox"]
+            if (not (0 <= box[0] < box[2] <= width and 0 <= box[1] < box[3] <= height)
+                    or record["size"] != variants[name]["size"]
+                    or record["size"] != [box[2] - box[0], box[3] - box[1]]):
+                raise ValueError(f"invalid prepared source coordinates: {row['source']}: {name}")
+            parent = record["input"]
+            if parent is not None and parent not in candidates:
+                raise ValueError(f"missing prepared candidate parent: {row['source']}: {name}")
+            visited = {name}
+            while parent is not None:
+                if parent in visited:
+                    raise ValueError(f"cyclic prepared lineage: {row['source']}")
+                visited.add(parent)
+                parent = candidates[parent]["input"]
+        head = sequence["headOverlay"]
+        if head.get("selected") and (
+                not head.get("cumulativeOutsideMaskIdentical")
+                or "cumulative-erase-mask" not in variants):
+            raise ValueError(f"reconstruction missing preservation evidence: {row['source']}")
+        for name in ("denoise", "tone"):
+            if name in variants and variants[name]["size"] != variants[selected]["size"]:
+                raise ValueError(f"enhancement does not consume prepared final: {row['source']}")
+        if row["recommendation"]["use"] != ("original" if selected == "control" else selected):
+            raise ValueError(f"prepared recommendation mismatch: {row['source']}")
+        return
     expected = {"control", "geometry"}
     if row["geometry"]["uiCropBox"]:
         expected.add("ui-crop-proposal")
@@ -739,7 +818,8 @@ def validate(data):
             if not geometry or not row.get("recommendation"):
                 raise ValueError(f"missing geometry/recommendation: {row['source']}")
         if geometry:
-            if "control" not in row["variants"] or "geometry" not in row["variants"]:
+            sequence = row.get("processing", {}).get("sequence")
+            if "control" not in row["variants"] or (not sequence and "geometry" not in row["variants"]):
                 raise ValueError(f"missing geometry/control candidate: {row['source']}")
             width, height = row["variants"]["control"]["size"]
             for box in (geometry["box"], geometry["uiCropBox"]):
@@ -750,7 +830,7 @@ def validate(data):
             if geometry["overlayDetected"] != (geometry["uiCropBox"] is not None):
                 raise ValueError(f"overlay and UI proposal disagree: {row['source']}")
             box = geometry["box"]
-            if row["variants"]["geometry"]["size"] != [box[2] - box[0], box[3] - box[1]]:
+            if not sequence and row["variants"]["geometry"]["size"] != [box[2] - box[0], box[3] - box[1]]:
                 raise ValueError(f"geometry dimensions disagree with crop box: {row['source']}")
         if row.get("recommendation", {}).get("use") == "geometry":
             if (not geometry or not geometry["changed"] or "geometry" not in row["variants"]
@@ -843,11 +923,90 @@ def run(args):
     if not args.apply:
         print(f"Preview only. Add --apply to retain exact inputs and publish comparisons in {output}")
         return 0
-    return publish(root, output, selected, limit=args.limit, source_folder=source_folder, counts=counts)
+    return publish(root, output, selected, limit=args.limit, source_folder=source_folder, counts=counts,
+                   workers=args.workers)
 
 
-def publish(root, output, selected, *, limit=0, source_folder=None, counts=None):
+def available_memory_gb():
+    try:
+        import ctypes
+
+        class Status(ctypes.Structure):
+            _fields_ = [("length", ctypes.c_ulong), ("load", ctypes.c_ulong),
+                        ("total", ctypes.c_ulonglong), ("available", ctypes.c_ulonglong),
+                        ("pageTotal", ctypes.c_ulonglong), ("pageAvailable", ctypes.c_ulonglong),
+                        ("virtualTotal", ctypes.c_ulonglong), ("virtualAvailable", ctypes.c_ulonglong),
+                        ("extended", ctypes.c_ulonglong)]
+
+        status = Status(length=ctypes.sizeof(Status))
+        if ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(status)):
+            return status.available / 2 ** 30
+    except (AttributeError, OSError):
+        pass
+    try:
+        return os.sysconf("SC_AVPHYS_PAGES") * os.sysconf("SC_PAGE_SIZE") / 2 ** 30
+    except (AttributeError, ValueError, OSError):
+        return None
+
+
+def default_workers():
+    """ST_INTAKE_WORKERS overrides; otherwise up to MAX_WORKERS, one per WORKER_MEMORY_GB of free memory
+    (a worker peaks near 1.7 GB), so a run started beside ComfyUI uses fewer."""
+    try:
+        wanted = int(os.environ.get("ST_INTAKE_WORKERS", "0"))
+    except ValueError:
+        wanted = 0
+    if wanted > 0:
+        return wanted
+    free = available_memory_gb()
+    cores = max(1, (os.cpu_count() or 1) // 4)
+    return max(1, min(MAX_WORKERS, cores, int(free // WORKER_MEMORY_GB) if free is not None else 1))
+
+
+def _start_worker(threads):
+    os.environ["ST_INTAKE_THREADS"] = str(threads)
+    cv2.setNumThreads(threads)
+
+
+def _render_worker(render, root, stage, sources):
+    return [render(root, stage, source) for source in sources]
+
+
+def rendered_rows(root, stage, selected, workers, render=None):
+    """Yield (index, row) in input order. Byte-identical inputs share retained/candidate paths,
+    so each digest group renders in one task, exactly as in a serial run."""
+    render = render or render_photo
+    if workers <= 1 or len(selected) <= 1:
+        for index, source in enumerate(selected):
+            yield index, render(root, stage, source)
+        return
+    import concurrent.futures
+    import multiprocessing
+
+    groups = {}
+    for index, source in enumerate(selected):
+        groups.setdefault(sha_file(source), []).append(index)
+    threads = max(1, (os.cpu_count() or 2) // workers)
+    done = {}
+    following = 0
+    with concurrent.futures.ProcessPoolExecutor(
+            max_workers=workers, mp_context=multiprocessing.get_context("spawn"),
+            initializer=_start_worker, initargs=(threads,)) as pool:
+        futures = {pool.submit(_render_worker, render, root, stage, [selected[i] for i in group]): group
+                   for group in groups.values()}
+        for future in concurrent.futures.as_completed(futures):
+            done.update(zip(futures[future], future.result()))
+            while following in done:
+                yield following, done.pop(following)
+                following += 1
+
+
+def publish(root, output, selected, *, limit=0, source_folder=None, counts=None, workers=None):
     """Publish one immutable report; sandbox orchestration supplies a verified source mirror."""
+    if workers is None:
+        # Each worker loads its own models (~10 s); small batches stay serial.
+        workers = default_workers() if len(selected) >= PARALLEL_MIN_IMAGES else 1
+    workers = max(1, workers)
     safe_path(root, output)
     for source in selected:
         safe_path(root, source)
@@ -863,13 +1022,22 @@ def publish(root, output, selected, *, limit=0, source_folder=None, counts=None)
         print(f"Existing run verified without rewriting: {output / 'index.html'}")
         return int(any(row["outcome"] in ("unprocessable", "assessment-failed") for row in data["photos"]))
     output.parent.mkdir(parents=True, exist_ok=True)
+    cfg = cw.load_cfg()
+    temporary_root = cw.storage_root(cfg, "temporary", root=root)
     data = {"schemaVersion": 1, "root": str(root), "recipe": RECIPE,
-            "limit": limit, "sourceFolder": source_folder, "inventory": counts, "photos": []}
-    with tempfile.TemporaryDirectory(prefix=".preparation-", dir=output.parent) as temporary:
-        stage = pathlib.Path(temporary) / "run"
+            "limit": limit, "sourceFolder": source_folder, "inventory": counts, "photos": [],
+            "configurationReceipt": cw.storage_configuration_receipt(
+                cfg,
+                root,
+                {"runOutput": output, "temporaryRoot": temporary_root},
+            )}
+    safe_path(root, temporary_root)
+    with temporary_storage.staging_directory(temporary_root, ".preparation-") as temporary:
+        stage = temporary / "run"
         stage.mkdir()
-        for index, source in enumerate(selected, 1):
-            row = render_photo(root, stage, source)
+        print(f"Preparing {len(selected)} images with {workers} worker process(es).", flush=True)
+        for index, row in rendered_rows(root, stage, selected, workers):
+            index += 1
             row["recommendation"] = recommendation(row)
             row["detail"] = f"photos/{sha(row['source'].encode('utf-8'))}.html"
             detail = report({**data, "photos": [row]}, detail=True)
@@ -891,9 +1059,11 @@ def publish(root, output, selected, *, limit=0, source_folder=None, counts=None)
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", required=True, help="absolute sandbox Working directory")
-    parser.add_argument("--out", required=True, help="absolute Working\\_reports\\preparation\\RUN")
+    parser.add_argument("--out", required=True, help="absolute configured reports root\\preparation\\RUN")
     parser.add_argument("--limit", type=int, default=28, help="round-robin sample size; 0 = all active sources")
     parser.add_argument("--source-folder", help="one active Gallery/Review folder below Working; no recursion")
+    parser.add_argument("--workers", type=int, help="parallel preparation processes (default ST_INTAKE_WORKERS, "
+                        f"else up to {MAX_WORKERS} by free memory); each gets an equal share of the CPU threads")
     disposition = parser.add_mutually_exclusive_group()
     disposition.add_argument("--quarantine-junk", action="store_true",
                              help="preview report-bound loose-intake Junk moves; --apply backs up and moves, no deletion")
@@ -911,6 +1081,8 @@ def main(argv=None):
         parser.error("Junk disposition uses the immutable report scope, not --source-folder/--limit")
     if args.limit < 0:
         parser.error("--limit must be non-negative")
+    if args.workers is not None and args.workers < 1:
+        parser.error("--workers must be at least 1")
     try:
         return run(args)
     except (OSError, ValueError, ValidationError) as exc:

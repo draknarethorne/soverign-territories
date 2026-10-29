@@ -148,7 +148,22 @@ class PersonSwapTests(unittest.TestCase):
                 )
                 self.assertEqual(launched.returncode, 0, launched.stdout + launched.stderr)
         output = io.StringIO()
-        with mock.patch.object(actions.likeness.cw, "load_cfg", return_value={}), \
+        config = actions.likeness.cw.load_cfg()
+        base = pathlib.Path(self.temp.name)
+        config["paths"].update({
+            "productionRoot": str(self.root),
+            "sandboxWorkingRoot": str(base / "sandbox" / "Working"),
+            "inputsRoot": str(base / "inputs"),
+            "outputRoot": str(base / "outputs"),
+            "modelCacheRoot": str(base / "models"),
+        })
+        config.update({
+            "installsRoot": str(base / "installs"),
+            "sharedInput": str(base / "shared-input"),
+            "sharedOutput": str(base / "shared-output"),
+            "photos": {},
+        })
+        with mock.patch.object(actions.likeness.cw, "load_cfg", return_value=config), \
                 contextlib.redirect_stdout(output):
             for command in ("validate", "preview"):
                 self.assertEqual(actions.main([command, str(path), "--root", str(self.root)]), 0)
@@ -407,9 +422,11 @@ process.stdout.write(JSON.stringify(confirmed));
 
 class PersonRenameTests(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory()
+        scratch = actions.ROOT / "tmp"
+        scratch.mkdir(exist_ok=True)
+        self.temp = tempfile.TemporaryDirectory(prefix="person-rename-", dir=scratch)
         self.addCleanup(self.temp.cleanup)
-        self.root = pathlib.Path(self.temp.name)
+        self.root = pathlib.Path(self.temp.name) / "library"
         self.folder = self.root / "Prospects" / "Old Name"
         (self.folder / "gallery").mkdir(parents=True)
         (self.folder / "review").mkdir()

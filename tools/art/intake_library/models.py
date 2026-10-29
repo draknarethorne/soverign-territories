@@ -5,6 +5,8 @@ import os
 import pathlib
 import urllib.request
 
+import comfy_workflows as cw
+
 MODELS = {
     "person": {
         "file": "maskrcnn_resnet50_fpn_v2_coco-73cbd019.pth",
@@ -20,8 +22,7 @@ MODELS = {
 
 
 def folder():
-    base = pathlib.Path(os.environ.get("LOCALAPPDATA", pathlib.Path.home() / ".cache"))
-    return base / "sovereign-territories" / "models"
+    return cw.model_cache_root() / "models"
 
 
 def digest(path):
@@ -40,12 +41,23 @@ def path(kind):
         target.parent.mkdir(parents=True, exist_ok=True)
         partial = target.with_name(target.name + ".part")
         print(f"Downloading the {kind} model {spec['file']} once into {target.parent} ...")
-        urllib.request.urlretrieve(spec["url"], partial)
-        if digest(partial) != spec["sha256"]:
-            partial.unlink()
-            raise OSError(f"downloaded {spec['file']} does not match its pinned sha256")
-        partial.replace(target)
+        try:
+            urllib.request.urlretrieve(spec["url"], partial)
+            if digest(partial) != spec["sha256"]:
+                raise OSError(f"downloaded {spec['file']} does not match its pinned sha256")
+            partial.replace(target)
+        finally:
+            partial.unlink(missing_ok=True)
     return target
+
+
+def threads():
+    """Torch threads per process; parallel intake workers split the cores through ST_INTAKE_THREADS."""
+    try:
+        wanted = int(os.environ.get("ST_INTAKE_THREADS", "0"))
+    except ValueError:
+        wanted = 0
+    return max(1, wanted or min(8, os.cpu_count() or 1))
 
 
 def describe():
@@ -58,7 +70,7 @@ def person_detector():
     import torch
     from torchvision.models.detection import maskrcnn_resnet50_fpn_v2
 
-    torch.set_num_threads(max(1, min(8, os.cpu_count() or 1)))
+    torch.set_num_threads(threads())
     net = maskrcnn_resnet50_fpn_v2(weights=None, weights_backbone=None)
     net.load_state_dict(torch.load(path("person"), map_location="cpu"))
     return net.eval()
@@ -68,5 +80,5 @@ def person_detector():
 def fill_model():
     import torch
 
-    torch.set_num_threads(max(1, min(8, os.cpu_count() or 1)))
+    torch.set_num_threads(threads())
     return torch.jit.load(str(path("fill")), map_location="cpu").eval()

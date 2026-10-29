@@ -2,6 +2,7 @@ import json
 import pathlib
 import tempfile
 import unittest
+from unittest import mock
 
 from PIL import Image, PngImagePlugin
 
@@ -100,6 +101,54 @@ class PullTests(unittest.TestCase):
         report.write_text('<script id="review-data" type="application/json">[]</script>')
         listed = execution.gallery_sources(self.root)
         self.assertEqual([(item["kind"], item["displayName"]) for item in listed], [("pulled-render", "Ava Stone")])
+
+    def test_configured_storage_roots_route_pulls_sources_and_gallery(self):
+        config = outputs.cw.load_cfg()
+        config = {
+            **config,
+            "storageRoots": {
+                **config["storageRoots"],
+                "generation": "_generated",
+                "reports": "_history",
+            },
+        }
+        with mock.patch.object(outputs.cw, "load_cfg", return_value=config):
+            result = outputs.pull(
+                self.root, self.manifest(displayName="Ava Stone"), self.comfy, apply=True
+            )
+            destination = self.root / result["items"][0]["destination"]
+            self.assertTrue(destination.is_file())
+            self.assertEqual(
+                destination.parent.relative_to(self.root).as_posix(),
+                "_generated/library/0_Edit/0c_Cleanup",
+            )
+            sidecar = base.read_json(destination.with_suffix(".png.json"))
+            base.inspect_source(self.root, {"source": {
+                "path": destination.relative_to(self.root).as_posix(),
+                "kind": "pulled-render",
+                "sha256": sidecar["sha256"],
+                "domain": "general",
+            }})
+
+            report = self.root / "_history" / "library" / "people_gallery_review.html"
+            report.parent.mkdir(parents=True)
+            report.write_text(
+                '<script id="review-data" type="application/json">[]</script>',
+                encoding="utf-8",
+            )
+            self.assertEqual(
+                [item["kind"] for item in execution.gallery_sources(self.root)],
+                ["pulled-render"],
+            )
+
+            published = outputs.publish(self.root, self.comfy, apply=True)
+            self.assertEqual(
+                pathlib.Path(published["page"]).relative_to(self.root).as_posix(),
+                "_generated/outputs.html",
+            )
+            page = pathlib.Path(published["page"]).read_text(encoding="utf-8")
+            self.assertIn("_generated/library", page)
+            self.assertIn("../_history/", page)
 
     def test_changed_output_manifest_root_and_tampered_sidecar_refuse(self):
         manifest = self.manifest()

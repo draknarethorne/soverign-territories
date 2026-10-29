@@ -4,6 +4,7 @@ import pathlib
 import shutil
 
 from . import metadata, sandbox
+from tools.art import temporary_storage
 
 
 def inventory(layout):
@@ -23,7 +24,7 @@ def inventory(layout):
     return rows
 
 
-def prepare(layout, run):
+def prepare(layout, run, workers=None):
     """Copy inputs once, then use the ordinary preparation runner without live writes."""
     import image_preparation
 
@@ -32,39 +33,56 @@ def prepare(layout, run):
     if receipt.exists():
         return verify(layout, run)
     mirror = run / "inputs"
-    if mirror.exists():
-        raise ValueError("unfinished intake staging exists; inspect it and use a new run")
     rows = inventory(layout)
-    mirror.mkdir(parents=True)
-    for relative, expected in rows.items():
-        target = mirror.joinpath(*pathlib.PurePosixPath(relative).parts)
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(layout["source_root"] / relative, target)
-        if metadata.content_sha256(target) != expected:
-            raise OSError(f"intake staging checksum mismatch: {relative}")
-    output = mirror / "_reports" / "preparation" / "all"
+    cfg = metadata.cw.load_cfg()
+    temporary_root = metadata.cw.storage_root(cfg, "temporary", root=layout["working_root"])
+    if mirror.exists():
+        if sandbox._is_reparse_point(mirror) or inventory({
+            **layout, "source_root": mirror,
+        }) != rows:
+            raise ValueError("existing intake mirror differs; inspect it and use a new run")
+        print(f"Reusing verified intake input mirror: {mirror}", flush=True)
+    else:
+        with temporary_storage.staging_directory(temporary_root, "intake-inputs-") as stage:
+            for relative, expected in rows.items():
+                target = stage.joinpath(*pathlib.PurePosixPath(relative).parts)
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(layout["source_root"] / relative, target)
+                if metadata.content_sha256(target) != expected:
+                    raise OSError(f"intake staging checksum mismatch: {relative}")
+            stage.rename(mirror)
+    output = metadata.cw.storage_root(cfg, "reports", root=mirror) / "preparation" / "all"
     paths = [mirror / relative for relative in rows]
-    result = image_preparation.publish(mirror, output, paths)
+    result = image_preparation.publish(mirror, output, paths, workers=workers)
     data = image_preparation.verify(mirror, output)
+    source_manifest = layout["sandbox_root"] / "source-manifest.json"
     value = {
-        "schemaVersion": 1, "sourceManifestSHA256": metadata.content_sha256(
-            layout["sandbox_root"] / "source-manifest.json"),
+        "schemaVersion": 1, "sourceManifestSHA256": metadata.content_sha256(source_manifest),
         "sourceOverlaySHA256": layout.get("source_overlay_sha256"),
         "inputs": rows, "preparationManifestSHA256": metadata.content_sha256(output / "manifest.json"),
         "recipe": data["recipe"], "assessmentErrors": bool(result),
+        "configurationReceipt": metadata.cw.storage_configuration_receipt(
+            cfg,
+            layout["working_root"],
+            {
+                "runDirectory": run,
+                "inputMirror": mirror,
+                "preparationOutput": output,
+                "sourceSnapshotRoot": layout["source_root"],
+                "sourceManifest": source_manifest,
+            },
+        ),
     }
-    metadata.report_assets.replace_file(
-        _stage_json(receipt, value), receipt,
+    with temporary_storage.staging_directory(temporary_root, "intake-receipt-") as stage:
+        staged_receipt = stage / receipt.name
+        staged_receipt.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
+        metadata.report_assets.replace_file(staged_receipt, receipt)
+    from . import storage_retention
+
+    storage_retention.register_runs(
+        layout["working_root"], cfg, run_names=[run.name]
     )
     return verify(layout, run)
-
-
-def _stage_json(target, value):
-    stage = target.with_suffix(".tmp")
-    with stage.open("x", encoding="utf-8") as output:
-        json.dump(value, output, indent=2)
-        output.write("\n")
-    return stage
 
 
 def verify(layout, run):
@@ -87,7 +105,9 @@ def verify(layout, run):
     if value.get("sourceOverlaySHA256") != layout.get("source_overlay_sha256"):
         raise ValueError("source overlay changed since intake")
     mirror = run / "inputs"
-    output = mirror / "_reports" / "preparation" / "all"
+    output = metadata.cw.storage_root(
+        metadata.cw.load_cfg(), "reports", root=mirror
+    ) / "preparation" / "all"
     if metadata.content_sha256(output / "manifest.json") != value["preparationManifestSHA256"]:
         raise ValueError("intake manifest changed since preparation")
     data = image_preparation.verify(mirror, output)

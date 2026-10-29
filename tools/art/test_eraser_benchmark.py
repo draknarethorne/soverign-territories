@@ -19,7 +19,7 @@ sys.path.insert(0, str(ROOT / "tools/art"))
 import eraser_benchmark as benchmark  # noqa: E402
 import image_preparation as preparation  # noqa: E402
 
-SCRATCH = ROOT / "reports"
+SCRATCH = ROOT / "tmp"
 PERSON = (0, 0, 400, 580)
 
 
@@ -61,7 +61,12 @@ class EraserBenchmarkTests(unittest.TestCase):
             path = root / relative
             path.parent.mkdir(parents=True, exist_ok=True)
             image.save(path)
-        with mock.patch.object(preparation.preparation_geometry, "detect_faces",
+        with mock.patch.object(preparation, "CURRENT", "preparation-comparison-v16"), \
+                mock.patch.object(preparation, "STEPS", preparation.pipeline.STEPS), \
+                mock.patch.dict(preparation.RECIPE, {"id": "preparation-comparison-v16"}), \
+                mock.patch.object(preparation.pipeline, "recommended_candidates",
+                                  preparation.pipeline.processing_candidates), \
+                mock.patch.object(preparation.preparation_geometry, "detect_faces",
                                return_value=([[140., 180., 60., 70.]], "One local test face")), \
                 mock.patch.object(preparation.pipeline.subjects, "detect",
                                   side_effect=lambda image: person(image.size, PERSON)), \
@@ -268,6 +273,15 @@ class EraserBenchmarkTests(unittest.TestCase):
         self.assertNotIn("h2{overflow-wrap:anywhere}", page)
         data["reviewLayout"] = 3
         self.assertIn("h2{overflow-wrap:anywhere}", sequence.page(data).decode())
+        data["out"] = str(
+            self.root / "operations" / "archive" / "reports" / "eraser-compare" / "sequence"
+        )
+        with mock.patch.object(
+            preparation.cw,
+            "load_cfg",
+            return_value={"storageRoots": {"reports": "operations/archive/reports"}},
+        ):
+            self.assertIn("../../_assets/gallery-banner.jpg", sequence.page(data).decode())
 
     def test_pill_icon_proposals_reject_solid_highlight_and_keep_outline(self):
         import intake_sequence_benchmark as sequence
@@ -556,6 +570,19 @@ class EraserBenchmarkTests(unittest.TestCase):
         self.assertIn("../../_assets/gallery-banner.jpg", (self.out / "index.html").read_text(encoding="utf-8"))
         self.assertEqual(self.call("--check"), 0, self.output)
 
+    def test_configured_reports_root_routes_output_and_banner(self):
+        reports = self.root / "operations" / "reports"
+        reports.parent.mkdir(parents=True)
+        (self.root / "_reports").rename(reports)
+        self.report = reports / "preparation" / "pilot"
+        self.out = reports / "eraser-compare" / "ab"
+        config = {"storageRoots": {"reports": "operations/reports"}}
+        with mock.patch.object(preparation.cw, "load_cfg", return_value=config):
+            self.assertEqual(self.call("--apply"), 0, self.output)
+            self.assertEqual(self.call("--check"), 0, self.output)
+        self.assertTrue((reports / "_assets" / "gallery-banner.jpg").is_file())
+        self.assertFalse((self.root / "_reports").exists())
+
 
 class NestedIntakeRootTests(EraserBenchmarkTests.__base__):
     """A clean-rebase intake mirror (Working\\_sandbox-state\\RUN\\inputs) bound by the run's intake.json."""
@@ -634,6 +661,28 @@ class NestedIntakeRootTests(EraserBenchmarkTests.__base__):
         for out in (self.mirror / "_reports" / "eraser-compare" / "ab", self.run / "eraser-compare" / "ab"):
             self.assertEqual(self.call("--apply", out=out), 2, out)
         self.assertFalse((self.mirror / "_reports" / "eraser-compare").exists())
+
+    def test_configured_state_and_reports_roots_accept_nested_input(self):
+        state_root = self.working / "o" / "s"
+        state_root.parent.mkdir(parents=True)
+        (self.working / "_sandbox-state").rename(state_root)
+        self.run = state_root / "r"
+        self.mirror = self.run / "inputs"
+        reports = self.mirror / "r"
+        (self.mirror / "_reports").rename(reports)
+        self.report = reports / "preparation" / "all"
+        self.bind(self.mirror, self.report)
+        self.out = self.working / "r" / "eraser-compare" / "ab"
+        config = {
+            "storageRoots": {
+                "sandboxState": "o/s",
+                "reports": "r",
+            },
+        }
+        with mock.patch.object(preparation.cw, "load_cfg", return_value=config):
+            self.assertEqual(self.call("--apply"), 0, self.output)
+            self.assertEqual(self.call("--check"), 0, self.output)
+        self.assertTrue((self.working / "r" / "_assets" / "gallery-banner.jpg").is_file())
 
     def forged(self):
         self.assertEqual(self.call("--dry-run"), 2, self.output)

@@ -90,11 +90,15 @@ class DiagnosticsTests(unittest.TestCase):
             paths = write_report(
                 output, calibration, calibration_photos, folders, photos,
                 {"load_seconds": 1.0, "score_seconds": 0.5, "total_seconds": 1.5},
+                storage_receipt={"fixture": True},
             )
+            self.assertIn('"fixture": true', paths["storage_receipt"].read_text(encoding="utf-8"))
             self.assertEqual(set(paths), {
                 "markdown", "folder_csv", "photo_csv", "calibration_csv",
                 "calibration_photo_csv",
+                "storage_receipt",
             })
+            self.assertTrue(paths["storage_receipt"].is_file())
             self.assertIn("folder-consistency-photos.csv", paths["markdown"].read_text(encoding="utf-8"))
             with paths["photo_csv"].open(encoding="utf-8-sig", newline="") as stream:
                 self.assertEqual(len(list(csv.DictReader(stream))), 9)
@@ -104,6 +108,7 @@ class DiagnosticsTests(unittest.TestCase):
                 write_report(
                     output, calibration, calibration_photos, folders, photos,
                     {"load_seconds": 1.0, "score_seconds": 0.5, "total_seconds": 1.5},
+                    storage_receipt={"fixture": True},
                 )
 
     def test_configured_active_categories_include_added_tiers(self):

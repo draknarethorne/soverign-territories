@@ -80,6 +80,77 @@ class SequenceTests(unittest.TestCase):
         self.assertLessEqual(self.filler.call_count, 1)
         return images, evidence
 
+    def test_promoted_recipe_uses_the_same_final_pixels_and_retains_source_masks(self):
+        import image_preparation as preparation
+        import intake_sequence_benchmark as benchmark
+
+        self.row["source"] = "Various/gallery/test.png"
+        self.row["outcome"] = "compared"
+        self.row["geometry"]["uiCropAssessment"] = "Test proposal."
+        proposed = {"kind": "watermark", "box": [320, 650, 370, 700], "pattern": "test-pattern"}
+        self.filler.side_effect = lambda image, mask: Image.fromarray(
+            np.where(mask[..., None], np.array([128, 128, 128], dtype=np.uint8), np.asarray(image)))
+        with mock.patch.object(pipeline.overlays, "watermarks", return_value=[proposed]):
+            expected_row = copy.deepcopy(self.row)
+            expected = dict(pipeline.experimental_candidates(self.image, expected_row))
+            expected.update(benchmark.integrated_head_candidates(
+                expected[expected_row["experiment"]["final"]], expected_row, self.image,
+                expected.get("eraser-mask")))
+            actual = dict(preparation.prepared_candidates(self.image, self.row))
+        processing = self.row["processing"]
+        final = processing["final"]
+        self.assertEqual(final, expected_row["experiment"]["final"])
+        self.assertTrue(np.array_equal(np.asarray(actual[final]), np.asarray(expected[final])))
+        self.assertIn("cumulative-erase-mask", actual)
+        self.assertTrue(processing["sequence"]["headOverlay"]["likenessEligible"])
+        self.assertNotIn("experiment", self.row)
+        self.assertEqual([s["name"] for s in processing["steps"]], list(preparation.STEPS))
+        self.assertEqual(actual["denoise"].size, actual[final].size)
+        self.row["variants"] = {name: {"size": list(image.size)} for name, image in actual.items()}
+        self.row["recommendation"] = preparation.recommendation(self.row)
+        preparation.validate_processing(self.row, names=preparation.STEPS)
+        bad = copy.deepcopy(self.row)
+        bad["processing"]["sequence"]["final"] = "control"
+        with self.assertRaisesRegex(ValueError, "selection mismatch"):
+            preparation.validate_processing(bad, names=preparation.STEPS)
+
+    def test_promoted_clean_control_is_pixel_identical_and_not_reconstructed(self):
+        import image_preparation as preparation
+
+        self.row["outcome"] = "compared"
+        outputs = dict(preparation.prepared_candidates(self.image, self.row))
+        self.assertEqual(self.row["processing"]["final"], "control")
+        self.assertTrue(np.array_equal(np.asarray(outputs["control"]), np.asarray(self.image)))
+        self.assertNotIn("head-overlay-reconstruction", outputs)
+        self.filler.assert_not_called()
+
+    def test_unconfirmed_glyphs_on_an_ordinary_photo_are_not_erased(self):
+        self.row["geometry"]["overlayDetected"] = False
+        self.detector.return_value = ([self.part("glyph", [20, 200, 45, 230])], [])
+        images, evidence = self.run_sequence()
+        self.assertEqual(evidence["final"], "control")
+        self.assertTrue(np.array_equal(np.asarray(images["control"]), np.asarray(self.image)))
+        self.filler.assert_not_called()
+        self.assertEqual(evidence["detections"][0]["parts"][0]["action"], "refused-unconfirmed-glyph")
+
+    def test_confirmed_screenshot_glyphs_still_use_guarded_erasing(self):
+        self.detector.side_effect = [([self.part("glyph", [20, 200, 45, 230])], []), ([], [])]
+        images, evidence = self.run_sequence()
+        self.assertEqual(evidence["final"], "eraser")
+        self.assertIn("eraser", images)
+        self.filler.assert_called_once()
+
+    def test_published_v17_keeps_its_trace_order_after_recipe_upgrade(self):
+        import image_preparation as preparation
+
+        for published in ("preparation-comparison-v17", "preparation-comparison-v18"):
+            with self.subTest(published=published):
+                self.assertNotEqual(preparation.CURRENT, published)
+                self.assertEqual(preparation.step_names(published), list(pipeline.PREPARED_STEPS))
+                self.assertIn(published, preparation.legacy.TRACED)
+                self.assertIn(published, preparation.legacy.SCOPED)
+                self.assertIn(published, preparation.legacy.GEOMETRY)
+
     def test_screenshot_preserves_legs_and_default_v16_stays_lossy(self):
         bar = self.part("ui-card", [0, 700, 400, 780])
         faces = self.row["eligibility"]["faces"]

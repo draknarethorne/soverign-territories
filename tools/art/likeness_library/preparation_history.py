@@ -102,7 +102,7 @@ render();
 """
 
 
-def publish_staged(root, output_dir, *, domain="general"):
+def publish_staged(root, output_dir, *, domain="general", cfg=None):
     """Refresh intake navigation only; no matching, preparation or photo writes."""
     from .preparation_provenance import build_index
     from .retained_preparation import _safe
@@ -111,7 +111,7 @@ def publish_staged(root, output_dir, *, domain="general"):
     output_dir = pathlib.Path(output_dir).absolute()
     relative = output_dir.relative_to(root).as_posix()
     output = _safe(root, relative + "/intake_runs.html")
-    payload = build_index(root, output_dir, [], domain).history_html()
+    payload = build_index(root, output_dir, [], domain, cfg=cfg).history_html()
     output.parent.mkdir(parents=True, exist_ok=True)
     pending = _safe(root, relative + "/intake_runs.pending.html")
     if pending.exists():
@@ -130,8 +130,9 @@ def render(index, *, standalone=False):
     """Use already verified records; never run preparation, infer identity or prune."""
     runs = [run for run in index.history_runs if run["photos"] or run["status"].startswith("unverified")]
     payload = json.dumps(runs, ensure_ascii=True).replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
-    prefix = gallery_chrome.reports_prefix(index.page_dir, index.root / "_reports")
+    prefix = gallery_chrome.reports_prefix(index.page_dir, index.reports_root)
     masthead_prefix = None if standalone else prefix
+    section_links = gallery_chrome.configured_sections(index.root, index.cfg)
     overview = "artists_gallery.html" if index.domain == "artists" else "people_gallery.html"
     back_label = "Overview"
     if standalone:
@@ -145,7 +146,10 @@ def render(index, *, standalone=False):
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Intake runs</title><style>{gallery_chrome.CSS}{CSS}</style></head><body id="top">
-{gallery_chrome.masthead("Artists" if index.domain == "artists" else "People", masthead_prefix)}
+{gallery_chrome.masthead(
+    "Artists" if index.domain == "artists" else "People", masthead_prefix,
+    section_links=section_links,
+)}
 <div class="site-page"><header class="page-header"><div><h1>Intake runs</h1>
 <p>Search run names, recipes and source filenames. Select a run to browse its photos.</p>
 <p>Read-only history. No processing, assignment or pruning is performed.</p></div></header>

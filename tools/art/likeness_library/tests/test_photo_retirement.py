@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from unittest import mock
 
-from tools.art.likeness_library import actions, metadata, review_gallery
+from tools.art.likeness_library import actions, metadata, retained_preparation, review_gallery
 
 
 class PhotoRetirementTests(unittest.TestCase):
@@ -54,10 +54,46 @@ class PhotoRetirementTests(unittest.TestCase):
         self.backups.append(copy.deepcopy(self.catalog))
         return "verified-backup"
 
-    def apply(self, **kwargs):
+    def apply(self, cfg=None, **kwargs):
         return actions.apply_actions(
-            self.manifest, self.root, self.catalog, {}, "Various",
+            self.manifest, self.root, self.catalog,
+            cfg if cfg is not None else {}, "Various",
             backup_fn=self.backup, save_fn=self.save, **kwargs,
+        )
+
+    def test_configured_retired_root_round_trips(self):
+        name = "retired" if self.action_type == "photo-retired" else "junk"
+        root_name = "_retired_custom" if name == "retired" else "_quarantine"
+        prefix = root_name + ("/photos" if name == "retired" else "")
+        cfg = {"storageRoots": {name: root_name}}
+        self.destination = (
+            self.root.joinpath(*prefix.split("/"), "Prospects", "Example", "review", self.source.name)
+        )
+        with mock.patch.object(actions.cw, "load_cfg", return_value=cfg), \
+                mock.patch.object(retained_preparation.cw, "load_cfg", return_value=cfg):
+            batch, _ = self.apply(cfg=cfg)
+            self.assertEqual(self.destination.read_bytes(), b"original photo bytes")
+            self.assertEqual(
+                self.catalog["actions"][-1]["destination"],
+                f"{prefix}/Prospects/Example/review/{self.source.name}",
+            )
+            actions.undo_actions(
+                self.catalog, self.root, cfg, "Various", batch_id=batch,
+                backup_fn=self.backup, save_fn=self.save,
+            )
+        self.assertTrue(self.source.is_file())
+        self.assertFalse(self.destination.exists())
+
+    def test_retained_journal_uses_configured_reports_root(self):
+        cfg = {"storageRoots": {"reports": "operations/reports"}}
+        batch = "batch_" + "a" * 32
+
+        journal = actions._retained_journal(self.root, batch, cfg)
+
+        self.assertEqual(
+            journal,
+            self.root / "operations" / "reports" / "runs"
+            / f"manual-retained-{batch}.json",
         )
 
     def test_schema_preview_and_cancel_are_nonmutating_and_show_archive_destination(self):
@@ -207,7 +243,7 @@ class PhotoRetirementTests(unittest.TestCase):
         for bucket in ("Gallery", "Review"):
             options = review_gallery.action_options(bucket, self.photo_id)
             self.assertIn(self.action_type, dict(options))
-            self.assertIn(self.destination_root, dict(options)[self.action_type])
+            self.assertIn("configured", dict(options)[self.action_type])
             for restrictions in (
                 {"protected": True}, {"anchor": True}, {"workflow_selected": True},
                 {"stageable": False},

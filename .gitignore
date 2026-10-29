@@ -59,5 +59,8 @@ workflows/**/X_*.json
 # Temporary files
 tmp/
 
+# Local likeness caches and aligned face evidence
+_likeness/
+
 # Feedback directory for plans and other notes
 feedback/

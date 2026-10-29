@@ -43,8 +43,13 @@ def reel_frame(array, profile=None):
     dark = (high <= rule["darkMax"]).mean(axis=1)
     grey = ((low >= rule["greyMin"]) & (high - low <= rule["greyChroma"])).mean(axis=1)
     ui = (dark >= rule["uiRowFraction"]) | (grey >= rule["uiRowFraction"])
-    if not ui[-max(3, height // 200):].all():
+    nav_height = max(3, height // 200)
+    if not ui[-nav_height:].all():
         return None  # no nav bar or panel at the very bottom
+    # Dark clothing can span the whole bottom; a navigation panel is horizontally flat.
+    nav_spread = np.ptp(np.percentile(array[-nav_height:], [5, 95], axis=1), axis=0)
+    if np.any(nav_spread > 4):
+        return None
     card = ((high <= rule["cardMax"]) & (high - low <= rule["greyChroma"])).mean(axis=1)
     panel = (dark >= rule["panelRowFraction"]) | (grey >= rule["uiRowFraction"]) | (card >= rule["cardRowFraction"])
     gap = round(rule["gapTolerance"] * height)
@@ -197,7 +202,181 @@ def sliders(array, region, rule):
     return found
 
 
-def frame_parts(array, frame, profile=None):
+def outlined_pills(array, region):
+    """Paired horizontal outlines with both rounded caps, only inside confirmed reel controls."""
+    height, width = array.shape[:2]
+    low, high = array.min(axis=2), array.max(axis=2)
+    white = (low >= 205) & (high.astype(np.int16) - low <= 30)
+    x0, y0, x1, y1 = region
+    edges = np.zeros_like(white, dtype=np.uint8)
+    edges[y0:y1, x0:x1] = white[y0:y1, x0:x1]
+    lines = clutter.long_rows(edges, .35 * width)
+    found = []
+    for index, upper in enumerate(lines):
+        for lower in lines[index + 1:]:
+            top, bottom = upper["first"], lower["row"]
+            diameter = bottom - top
+            left = (upper["start"] + lower["start"]) / 2
+            right = (upper["end"] + lower["end"]) / 2
+            if not (.025 * height <= diameter <= .07 * height
+                    and .4 * width <= right - left <= .85 * width
+                    and (right - left) / diameter >= 5
+                    and abs(upper["start"] - lower["start"]) <= .02 * width
+                    and abs(upper["end"] - lower["end"]) <= .02 * width):
+                continue
+            radius, middle = diameter / 2, (top + bottom) / 2
+            tolerance = max(3, round(.35 * radius))
+            confirmed = True
+            for anchor, direction in ((left, -1), (right, 1)):
+                hits = 0
+                for fraction in np.linspace(-.65, .65, 7):
+                    y = round(middle + fraction * radius)
+                    x = round(anchor + direction * radius * np.sqrt(1 - fraction * fraction))
+                    hits += bool(white[y, max(0, x - tolerance):min(width, x + tolerance + 1)].any())
+                if hits < 6:
+                    confirmed = False
+                    break
+            if confirmed:
+                guard = max(3, round(width * .006))
+                found.append(pad([left - radius, top, right + radius, bottom], guard, guard, (width, height)))
+    return found
+
+
+def playback_controls(array, rule):
+    """A central play triangle is UI only when both aligned skip rings also confirm."""
+    height, width = array.shape[:2]
+    white = ((array.min(axis=2) >= 225)
+             & (array.max(axis=2).astype(np.int16) - array.min(axis=2) <= 25)).astype(np.uint8)
+    contours, _ = cv2.findContours(white, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    near = cv2.dilate(white, np.ones((5, 5), np.uint8)) > 0
+    angles = np.linspace(0, 2 * np.pi, 72, endpoint=False)
+    for contour in contours:
+        x, y, w, h = cv2.boundingRect(contour)
+        if not (rule["centreX"][0] * width <= x <= rule["centreX"][1] * width
+                and rule["centreY"][0] * height <= y <= rule["centreY"][1] * height
+                and rule["triangleWidth"][0] * width <= w <= rule["triangleWidth"][1] * width
+                and rule["triangleHeight"][0] * height <= h <= rule["triangleHeight"][1] * height
+                and .65 <= w / h <= 1.1):
+            continue
+        polygon = cv2.approxPolyDP(contour, .06 * cv2.arcLength(contour, True), True).reshape(-1, 2)
+        if len(polygon) != 3:
+            continue
+        left = polygon[np.argsort(polygon[:, 0])[:2]]
+        tip = polygon[np.argmax(polygon[:, 0])]
+        if np.ptp(left[:, 0]) > .2 * w or not y + .2 * h <= tip[1] <= y + .8 * h:
+            continue
+        cx, cy = x + w / 2, y + h / 2
+        centres = [cx - rule["skipOffset"] * width, cx + rule["skipOffset"] * width]
+        confirmed = True
+        for centre in centres:
+            coverage = []
+            for radius in np.linspace(*[v * width for v in rule["ringRadius"]], 11):
+                xs = np.round(centre + radius * np.cos(angles)).astype(int)
+                ys = np.round(cy + radius * np.sin(angles)).astype(int)
+                coverage.append(float(near[ys, xs].mean()))
+            if max(coverage) < rule["ringCoverage"]:
+                confirmed = False
+                break
+        if confirmed:
+            found = []
+            for centre, radius in ((centres[0], rule["skipRadius"] * width),
+                                   (cx, rule["mainRadiusHeight"] * h),
+                                   (centres[1], rule["skipRadius"] * width)):
+                found.append({"kind": "reel-playback", "circle": [centre, cy, radius],
+                              "box": pad([centre - radius, cy - radius, centre + radius, cy + radius],
+                                         0, 0, (width, height))})
+            return found
+    return []
+
+
+def caption_buttons(array, region, text_rule, rule):
+    """A caption button needs a complete rectangular perimeter and several rendered letters inside."""
+    height, width = array.shape[:2]
+    gray = cv2.cvtColor(array, cv2.COLOR_RGB2GRAY)
+    edges = cv2.Canny(gray, *rule["edgeThresholds"])
+    contours, _ = cv2.findContours(edges, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    near = cv2.dilate(edges, np.ones((5, 5), np.uint8)) > 0
+    found = []
+    for contour in contours:
+        x, y, w, h = cv2.boundingRect(contour)
+        if not (region[1] <= y and y + h <= region[3]
+                and rule["width"][0] * width <= w <= rule["width"][1] * width
+                and rule["height"][0] * height <= h <= rule["height"][1] * height
+                and rule["aspect"][0] <= w / h <= rule["aspect"][1]
+                and cv2.contourArea(cv2.convexHull(contour)) >= rule["hullFill"] * w * h):
+            continue
+        dx, dy = max(3, round(.2 * w)), max(3, round(.2 * h))
+        sides = (near[y, x + dx:x + w - dx], near[y + h - 1, x + dx:x + w - dx],
+                 near[y + dy:y + h - dy, x], near[y + dy:y + h - dy, x + w - 1])
+        if any(float(side.mean()) < rule["edgeCoverage"] for side in sides):
+            continue
+        inside = [x + 4, y + 4, x + w - 4, y + h - 4]
+        if not text_lines(rendered(array, inside, text_rule), text_rule, (width, height)):
+            continue
+        box = pad([x, y, x + w, y + h], .008 * width, .008 * width, (width, height))
+        if not any(abs(box[0] - old[0]) + abs(box[1] - old[1]) < .02 * width for old in found):
+            found.append(box)
+    return found
+
+
+def picture_in_picture(array, frame, faces, rule):
+    """Confirm a lower-left nested reel screen using its small face and visible phone-frame edges."""
+    height, width = array.shape[:2]
+    px0, py0, px1, py1 = frame["pictureBox"]
+    picture_height = py1 - py0
+    if not faces:
+        return []
+
+    largest = max((w * h for _, _, w, h in faces), default=0)
+    if largest <= 0:
+        return []
+
+    gray = cv2.cvtColor(array, cv2.COLOR_RGB2GRAY)
+    edges = cv2.Canny(gray, *rule["edgeThresholds"]) > 0
+    found = []
+    for x, y, face_width, face_height in faces:
+        cx, cy = x + face_width / 2, y + face_height / 2
+        if not (rule["faceWidth"][0] * width <= face_width <= rule["faceWidth"][1] * width
+                and rule["faceHeight"][0] * height <= face_height <= rule["faceHeight"][1] * height
+                and face_width * face_height <= largest * rule["maxFaceRatio"]
+                and cx <= rule["centerXMax"] * width
+                and py0 + rule["centerYMin"] * picture_height <= cy <= py1):
+            continue
+
+        x0 = max(0, round(x - rule["leftFaceMargin"] * face_width))
+        x1 = min(width, round(x + face_width + rule["rightFaceMargin"] * face_width))
+        y0 = max(py0, round(y - rule["topFaceMargin"] * face_height))
+        y1 = min(py1, round(y + face_height + rule["bottomFaceMargin"] * face_height))
+        box_width, box_height = x1 - x0, y1 - y0
+        if not (rule["width"][0] * width <= box_width <= rule["width"][1] * width
+                and rule["heightMin"] * height <= box_height <= rule["heightMax"] * height):
+            continue
+
+        border = max(3, round(rule["borderFraction"] * width))
+        inset = round(rule["innerFraction"] * box_width)
+        edge_y0, edge_y1 = y0 + border, y1 - border
+        header_y0 = round(y - rule["headerStart"] * face_height)
+        header_y1 = round(header_y0 + rule["headerHeight"] * face_height)
+        if (edge_y1 <= edge_y0 or header_y1 <= header_y0 or header_y0 < y0
+                or header_y1 > y1 or x0 + inset >= x1 - inset):
+            continue
+
+        top = gray[y0:y0 + border, x0 + inset:x1 - inset]
+        left = edges[edge_y0:edge_y1, max(0, x0 - border):min(width, x0 + border)]
+        right = edges[edge_y0:edge_y1, max(0, x1 - border):min(width, x1 + border)]
+        header = gray[header_y0:header_y1, x0 + inset:x1 - inset]
+        if (top.size == 0 or header.size == 0
+                or float((top >= rule["topBrightMin"]).mean()) < rule["topBrightShare"]
+                or float(left.mean()) < rule["edgeCoverageMin"]
+                or float(right.mean()) < rule["edgeCoverageMin"]
+                or float((header <= rule["headerDarkMax"]).mean()) < rule["headerDarkShare"]):
+            continue
+        found.append({"kind": "reel-picture-in-picture", "box": [x0, y0, x1, y1],
+                      "pattern": "phone-reel"})
+    return found
+
+
+def frame_parts(array, frame, profile=None, *, faces=()):
     """Envelopes of rendered UI inside the picture box, by zone; boxes in input coordinates.
 
     Lines and icon clusters are boxed separately so legs/feet between captions are not swept into one block.
@@ -219,6 +398,14 @@ def frame_parts(array, frame, profile=None):
             for left, right in profile["pillCompanions"]:
                 parts.append({"kind": "reel-pill-companion",
                               "box": pad([left * width, y0, right * width, y1], 0, edge, size)})
+    if not any(item["kind"] == "reel-search-pill" for item in parts):
+        extended_top = [top[0], max(0, round(top[1] - .1 * height)), top[2],
+                        min(height, round(top[3] + rule["pillReach"] * height))]
+        for box in outlined_pills(array, extended_top):
+            parts.append({"kind": "reel-search-pill", "box": box})
+            for left, right in profile["pillCompanions"]:
+                parts.append({"kind": "reel-pill-companion",
+                              "box": pad([left * width, box[1], right * width, box[3]], 0, edge, size)})
     icons = []
     status_end = frame["statusBand"][3] if frame.get("statusBand") else top[1]
     for box in group(rendered(array, top, rule), rule["iconGap"] * width, rule["iconGap"] * width):
@@ -256,6 +443,20 @@ def frame_parts(array, frame, profile=None):
                  for box in sliders(array, [round(profile["slider"]["x"] * width), top[1], width, rail[3]],
                                     profile["slider"]))
     meta = area["reel-meta"]
+    parts.extend({"kind": "reel-caption-button", "box": box}
+                 for box in caption_buttons(array, meta, rule, profile["captionButton"]))
+    playback = playback_controls(array, profile["playback"])
+    parts.extend(playback)
+    if profile.get("pictureInPicture"):
+        parts.extend(picture_in_picture(array, frame, faces, profile["pictureInPicture"]))
+    if playback:
+        timecode = profile["playback"]["timecode"]
+        region = [0, round(timecode["fromY"] * height), round(timecode["span"] * width), meta[3]]
+        timer_rule = dict(rule, lineMinAspect=timecode["lineMinAspect"])
+        for box in text_lines(rendered(array, region, timer_rule), timer_rule, size):
+            if timecode["height"][0] * height <= box[3] - box[1] <= timecode["height"][1] * height:
+                parts.append({"kind": "reel-timecode",
+                              "box": pad([box[0], box[1], region[2], box[3]], edge, edge, size)})
     lines = text_lines(rendered(array, meta, rule), rule, size)
     for box in lines:
         parts.append({"kind": "reel-meta-line", "box": pad(box, edge, edge, size)})
@@ -709,17 +910,27 @@ def score_circle(magenta, silver, cx, cy, radius, badge):
 
     return {"ringCoverage": hits / len(ANGLES), "silverFraction": share(inner, local_silver),
             "letterBand": share(band, local_silver), "offBand": share(inner & ~band, local_silver),
+            "magentaLetterBand": share(band, local_magenta),
+            "magentaOffBand": share(inner & ~band, local_magenta),
             "innerMagenta": share(distance < .85 * radius, local_magenta),
             "outerMagenta": share((distance > 1.2 * radius) & (distance < 1.5 * radius), local_magenta)}
 
 
 def accepted(score, badge):
     rule = badge["structure"]
+    transparent = rule.get("transparentLettering")
+    # A transparent badge inherits pale couch/stone pixels outside its letters. In that case the
+    # magenta centre letter, not raw background silver, must corroborate a much more complete ring.
+    lettering = (score["letterBand"] >= rule["letterBandRatio"] * score["offBand"]
+                 or (transparent is not None
+                     and score["ringCoverage"] >= transparent["ringCoverageMin"]
+                     and score["magentaLetterBand"] >= transparent["bandMin"]
+                     and score["magentaLetterBand"] >= transparent["bandRatio"] * score["magentaOffBand"]))
     return (score["ringCoverage"] >= badge["ringCoverageMin"]
             and score["silverFraction"] >= badge["silverFractionMin"]
             and score["innerMagenta"] <= rule["innerMagentaMax"]
             and score["outerMagenta"] <= rule["outerMagentaMax"]
-            and score["letterBand"] >= rule["letterBandRatio"] * score["offBand"])
+            and lettering)
 
 
 def circles(magenta, low, high):

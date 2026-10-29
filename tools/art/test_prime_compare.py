@@ -25,6 +25,24 @@ class PrimeCompareTests(unittest.TestCase):
         self.tmp = pathlib.Path(tempfile.mkdtemp())
         self.addCleanup(shutil.rmtree, self.tmp, True)
 
+    def test_report_output_is_validated_before_render_discovery(self):
+        cfg = {**CFG, "storageRoots": {"reports": "operations/reports"}}
+        scorer = types.SimpleNamespace(work=self.tmp)
+        with mock.patch.object(cw, "load_cfg", return_value=cfg), \
+                mock.patch.object(pc, "Scorer", return_value=scorer), \
+                mock.patch.object(pc, "renders", side_effect=RuntimeError("render boundary")) as renders, \
+                mock.patch.object(pc, "source_photo", return_value=None):
+            for output in (self.tmp / "Various" / "gallery" / "sheet.png",
+                           self.tmp.parent / "outside.png", "..\\outside.png"):
+                with self.subTest(output=output), self.assertRaises(ValueError):
+                    pc.main(["--out", str(output)])
+            renders.assert_not_called()
+            with mock.patch.object(cw, "storage_output_path", wraps=cw.storage_output_path) as resolve:
+                with self.assertRaisesRegex(RuntimeError, "render boundary"):
+                    pc.main(["--out", "custom.png"])
+                resolve.assert_called_once_with(cfg, "reports", "custom.png", root=self.tmp)
+        self.assertFalse((self.tmp / "operations").exists())
+
     def test_a_hero_has_two_prime_variants_per_configured_flow(self):
         self.assertEqual([(lab, name) for lab, name, _f, _e in pc.variants(CFG, "Alice")],
                          [("Qwen", "Alice_Qwen_Alpha_1_Prime"), ("FireRed", "Alice_FireRed_Alpha_1_Prime"),

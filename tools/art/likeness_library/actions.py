@@ -104,11 +104,15 @@ def _category_for_action(action_type):
     return None
 
 
-def _destination(action, root, pool_folder):
+def _storage_root(root, cfg, name):
+    return cw.storage_root(cfg if cfg is not None else cw.load_cfg(), name, root=root)
+
+
+def _destination(action, root, pool_folder, cfg=None):
     if action["type"] == "photo-junked":
-        return root / "_junk" / action["personFolder"] / action["sourceBucket"].lower()
+        return _storage_root(root, cfg, "junk") / action["personFolder"] / action["sourceBucket"].lower()
     if action["type"] == "photo-retired":
-        return root / "_retired" / "photos" / action["personFolder"] / action["sourceBucket"].lower()
+        return _storage_root(root, cfg, "retired") / "photos" / action["personFolder"] / action["sourceBucket"].lower()
     if action["type"] == "match-accepted":
         return root / action["destinationFolder"] / "review"
     if action["type"] == "sent-to-review":
@@ -382,7 +386,7 @@ def validate_manifest(document, root, catalog, pool_folder="Prospects/Various", 
             except (OSError, ValueError) as exc:
                 errors.append(f"{label}: {exc}")
                 continue
-        destination = _destination(action, root, pool_folder)
+        destination = _destination(action, root, pool_folder, cfg)
         if destination is not None:
             try:
                 destination.resolve().relative_to(root)
@@ -776,10 +780,14 @@ def _retained_plans(root, plans):
     return transfers
 
 
-def _retained_journal(root, batch_id):
+def _retained_journal(root, batch_id, cfg=None):
     if not batch_id.startswith("batch_") or any(character not in "0123456789abcdef" for character in batch_id[6:]):
         raise ValueError("unsafe retained action batch ID")
-    return retained_preparation._safe(root, f"_reports/runs/manual-retained-{batch_id}.json")
+    root = pathlib.Path(root).resolve()
+    reports = _storage_root(root, cfg, "reports").relative_to(root).as_posix()
+    return retained_preparation._safe(
+        root, f"{reports}/runs/manual-retained-{batch_id}.json"
+    )
 
 
 def _write_retained_journal(path, data):
@@ -796,8 +804,8 @@ def _write_retained_journal(path, data):
             pending.unlink()
 
 
-def _undo_retained(root, batch, reverse_plans):
-    journal = _retained_journal(root, batch)
+def _undo_retained(root, batch, reverse_plans, cfg=None):
+    journal = _retained_journal(root, batch, cfg)
     if not journal.exists():
         if any(retained_preparation.claims_photo(root, plan["source"])
                for plan in reverse_plans if plan.get("source") is not None):
@@ -867,7 +875,7 @@ def apply_actions(document, root, catalog, cfg, pool_folder, *, backup_fn=None, 
         raise ValueError("action destinations changed after backup; no actions applied")
 
     rename_plan = next((plan for plan in checked_plans if plan["type"] == person_rename.ACTION), None)
-    retained_journal = _retained_journal(root, batch_id) if transfers else None
+    retained_journal = _retained_journal(root, batch_id, cfg) if transfers else None
     retained_data = {"batchId": batch_id, "status": "applied", "transfers": transfers}
     if retained_journal:
         if retained_journal.exists():
@@ -1090,7 +1098,7 @@ def plan_undo(catalog, root, batch_id=None, chosen_ids=(), cfg=None):
     except ValueError as exc:
         return [f"undo would create invalid catalogue state: {exc}"], None, []
     try:
-        _undo_retained(root, selected_batch, reverse_plans)
+        _undo_retained(root, selected_batch, reverse_plans, cfg)
     except (OSError, ValueError, KeyError, TypeError) as exc:
         return [f"cannot undo retained preparation: {exc}"], None, []
     return [], selected_batch, reverse_plans
@@ -1103,7 +1111,7 @@ def undo_actions(catalog, root, cfg, pool_folder, *, batch_id=None, backup_fn=No
     errors, selected_batch, reverse_plans = plan_undo(catalog, root, batch_id, chosen_ids, cfg)
     if errors:
         raise ValueError("cannot undo action batch:\n  " + "\n  ".join(errors))
-    transfers, retained_journal = _undo_retained(root, selected_batch, reverse_plans)
+    transfers, retained_journal = _undo_retained(root, selected_batch, reverse_plans, cfg)
     if any(
         item.get("actionRecord", {}).get("type") in WORKFLOW_ACTIONS
         for item in reverse_plans
@@ -1234,12 +1242,12 @@ def main(argv=None):
     for command in ("validate", "preview", "apply"):
         subparser = subparsers.add_parser(command, help=f"{command} a staged action manifest")
         subparser.add_argument("manifest", help="JSON file downloaded from the review gallery")
-        subparser.add_argument("--root", help="photo library root (default: workspaces.json paths.workRoot)")
+        subparser.add_argument("--root", help="photo library root (default: workspaces.json paths.productionRoot)")
         if command == "apply":
             subparser.add_argument("--apply", action="store_true", help="create a verified backup and apply the manifest")
     undo_parser = subparsers.add_parser("undo", help="preview or undo the newest action batch")
     undo_parser.add_argument("batch_id", nargs="?", help="batch ID printed by apply (defaults to the newest active batch)")
-    undo_parser.add_argument("--root", help="photo library root (default: workspaces.json paths.workRoot)")
+    undo_parser.add_argument("--root", help="photo library root (default: workspaces.json paths.productionRoot)")
     undo_parser.add_argument("--apply", action="store_true", help="create a verified backup and undo the batch")
     args = parser.parse_args(argv)
 

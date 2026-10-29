@@ -25,26 +25,34 @@ echo                                    --preserve-action-undo leaves active-act
 echo    people-gallery-review.cmd [--root DIR] [--cache FILE] [--out DIR] [--policy FILE] [--keep SCORE]  local Gallery + Review audit; filters, rankings and staged actions
 echo    artists-gallery.cmd [--root DIR] [--cache FILE] [--dry-run ^| --check ^| --apply]  separate Artist overview/photo review; shared small thumbnails in _reports\artists, NO matching or source changes
 echo    prepare-images.cmd --root "SANDBOX\Working" --out "Working\_reports\preparation\RUN" [--limit 28] [--dry-run ^| --apply ^| --check]  sidecar original/control/geometry/denoise/tone, larger pages and padded examples; NO source or identity changes
-echo                                    --source-folder "Various\gallery" --limit 0 compares ALL direct incoming images; face gate, crop/crop/LaMa/frame trace and masks BEFORE filter comparisons; NO live moves
-echo                                    v16 can recommend LaMa cleanup; --apply may download pinned CPU models once. --dry-run inventories only; --check verifies existing evidence.
+echo                                    --source-folder "Various\gallery" --limit 0 compares ALL direct incoming images; v21 crop/erase/residual-crop/reconstruct/compose trace and masks BEFORE filters; NO live moves
+echo                                    confirmed-pattern reconstruction is synthetic; final recommended pixels feed sandbox matching. --apply may download pinned CPU models once; --check verifies evidence.
 echo                                    Artists\ARTIST\gallery uses the SAME preparation and padding, retaining artist-only source scope; copies in Various cannot imply artist ownership
 echo                                    existing RUN --quarantine-junk previews eligible loose-intake moves; --apply verifies a scoped backup and moves to nested _junk, never deletes or matches
 echo                                    existing RUN --undo-junk previews exact recovery; --apply restores verified bytes; --check verifies completed disposition too. Ordinary library runs do NOT retry Junk
 echo    eraser-compare.cmd --report "Working\_reports\preparation\RUN" --sources LIST.json --out "Working\_reports\eraser-compare\NEW" [--dry-run ^| --apply ^| --check]
 echo                                    same-mask A/B: saved LaMa vs OpenCV Telea/NS r3 on the identical pre-eraser input; 1..64 listed rows, explicit skips
 echo                                    --sequence previews/runs an EXPERIMENTAL erase-first sequence against saved v16; apply uses pinned CPU models, no default recipe change
-echo                                    --sequence --head-overlay extends guarded cleanup with synthetic pill/head reconstruction FOR REVIEW; never original/core likeness evidence
+echo                                    --sequence --head-overlay extends guarded cleanup with synthetic pill/head reconstruction FOR REVIEW; no assignment or automatic core promotion
 echo                                    --sequence --enhancements compares native denoise/tone/sharpen on that review recommendation; diagnostics only, no automatic quality ranking
 echo    overlay-review.cmd --report DIR --sources LIST.json --out "Working\_reports\eraser-compare\NEW" [--dry-run ^| --apply ^| --check]
 echo                                    unconfirmed logo/pill reference proposals anywhere in the image; no source repainting or automatic confirmation
 echo                                    comparison only: no selection, assignment, model load or source change; --check verifies every hash read-only
 echo    sandbox-rebase.cmd "SANDBOX\Working" "RUN-DIR" --dry-run  inventory ALL immutable inputs; no models, reports or matching
+echo                                    --baseline working freezes current galleries plus Various for a fresh Production-like rehearsal; historical Source stays untouched
 echo                                    --include-current-various adds current Working\Various inputs via a hash-bound run-local recovery overlay
 echo                                    --intake-only --apply prepares all images and stops for review; --check verifies without writes
+echo                                    --workers N sets parallel intake processes ^(default: up to 3 by free memory; ST_INTAKE_WORKERS overrides^); matching stays single-process
 echo                                    same command with no flags prepares/resumes then previews fresh-cache matching; --apply installs only a saved preview
-echo                                    originals + all kept variants follow assigned photos; cast membership retained, Artists prepared separately; --undo restores exact pre-run bytes
+echo                                    originals + all kept variants follow assigned photos; --cast-seeds all retains cast membership ^(default^); Artists prepared separately; --undo restores exact pre-run bytes
+echo                                    --cast-seeds core retains protected/core/workflow-selected cast photos and previews non-core release with existing thresholds; inspect moves before apply
 echo                                    --replan reuses only this run's prepared measurements, including a failed matching preview with verified intake; never installs
 echo                                    no matcher-only legacy preview can be installed
+echo    storage-retention.cmd --root "SANDBOX\Working" preview       read-only inventory; unknown, incomplete, latest accepted and report-linked runs stay
+echo    storage-retention.cmd --root "SANDBOX\Working" register --all --apply  register receipt-backed runs as review/keep; unsupported directories stay unregistered
+echo                                    accept RUN --reason TEXT --review-cleared --audit-cleared --apply; supersede RUN --reason TEXT --review-cleared --undo-cleared --audit-cleared --apply
+echo                                    delete RUN --apply is separate; rechecks report references and approved content fingerprint, refreshes intake history, writes a receipt
+echo                                    repair-history RUN --apply retries history publication only after a recorded deletion; never restores or deletes run data
 echo    likeness-actions.cmd validate FILE.json  check staged actions against current photo IDs, hashes, folders and catalogue
 echo    likeness-actions.cmd preview FILE.json   show intended destinations; never moves photos or edits metadata
 echo    likeness-actions.cmd apply FILE.json --apply  verified backup, then apply staged moves and metadata decisions
@@ -104,6 +112,7 @@ echo    originals.cmd [--dry-run] [--only NAME] [--no-headshots] [--archive-old]
 echo    likeness.cmd diagnostics --out DIR [--policy FILE]  one-pass calibration + active-person folder checks; writes CSVs and a Markdown report ^(read only; explicit --root and --cache for sandbox^)
 echo    likeness.cmd family-preview [--policy FILE] [--out DIR]  direct reference scores, surname reuse and naming collisions ^(JSON + HTML; suggestions only, no library changes^)
 echo    likeness.cmd sandbox-reset       preview restoring only Models, Prospects, Potentials from the verified sandbox Source snapshot; --apply to restore ^(requires --root ...\Working^)
+echo    likeness.cmd sandbox-reset --full  read-only exact Working reset preview against current Production; --apply stages and verifies the baseline, preserves unique active photos and review metadata
 echo    likeness.cmd audit-core ^| calibrate ^| folder ^| clean ^| sisters ^| pairs ^| alike ^| compare ^| like ^| sort --singles ^| reconcile ^| singles ^| junk ^| review --out ^| loosen ^| lookalikes ^| names ^| index ^| profile ^| who ^| merge ^| retire ^| retire-empty ^| archive-list ^| promote ^| rename ^| undo   general faces: read-only core/outlier audit, combined Review + Various preview, one-person checks, sisters as a family, angel-to-sister pairing, empty Various, unusable photos to _junk, look-alike guard, names, who-could-play-what table ^(previews; --apply moves; --sheet F.png^)  ^(docs\art\likeness.md^)
 echo    likeness.cmd policy                 show the validated draft shared likeness thresholds; rebaseline remains gated pending review
 echo    likeness.cmd reconcile [--out FILE.json] [--apply]  incoming, Review, outliers, identity merges and category moves; verified backup, journal and read-only final-core check; production requires approved policy

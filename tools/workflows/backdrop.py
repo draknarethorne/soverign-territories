@@ -14,17 +14,20 @@ that changes between the scan and the write is skipped. --check is read-only and
 import argparse
 import datetime
 import hashlib
-import json
 import os
 import pathlib
 import shutil
 import sys
 import time
 
+if __package__:
+    from . import comfy_workflows as cw
+else:
+    import comfy_workflows as cw
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 WF = ROOT / "workflows"
 PROMPTS = ROOT / "prompts"
-CFG_PATH = WF / "workspaces.json"
 BACKUPS = WF / ".sync" / "backup"
 SKIP_PARTS = {"_archive", ".sync"}
 SUFFIXES = {".json", ".txt"}
@@ -64,8 +67,8 @@ def targets(args):
     if args.repo:
         out += [("repo workflows", WF), ("repo prompts", PROMPTS)]
     if args.w or args.workspaces:
-        cfg = json.loads(CFG_PATH.read_text(encoding="utf-8"))
-        installs = pathlib.Path(cfg["installsRoot"])
+        cfg = cw.load_cfg()
+        installs = cw.installs_root(cfg)
         names = args.w or sorted(p.name for p in installs.iterdir() if p.is_dir())
         for name in names:
             folder = installs / name / cfg["workflowsSubpath"]

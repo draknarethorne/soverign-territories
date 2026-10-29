@@ -434,7 +434,7 @@ def main(argv=None, faces=None, *, configuration=None):
     ap.add_argument("--apply", action="store_true", help="really do it (default: preview only)")
     ap.add_argument("--dry-run", action="store_true", help="preview (the bin launcher adds --apply itself)")
     ap.add_argument("--only", action="append", help="a folder name or pattern, e.g. Angelica or 'Drakn*' (repeatable)")
-    ap.add_argument("--root", help="the folder that holds Angels, Sisters, Prospects, Artists and Various (default: workspaces.json paths.workRoot)")
+    ap.add_argument("--root", help="the folder that holds Angels, Sisters, Prospects, Artists and Various (default: workspaces.json paths.productionRoot)")
     ap.add_argument("--force", action="store_true", help="make every copy again, even ones newer than their original")
     ap.add_argument("--no-repoint", action="store_true", help="do not re-point chosen photos in workspaces.json and the workflows")
     ap.add_argument("--no-headshots", action="store_true", help="do not make the headshot_944x1104 copies (the face, cropped and scaled up)")

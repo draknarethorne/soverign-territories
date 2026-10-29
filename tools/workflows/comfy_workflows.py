@@ -48,23 +48,30 @@ import argparse
 import collections
 import datetime
 import fnmatch
+import hashlib
 import json
+import os
 import pathlib
 import re
 import shutil
+import stat
 import struct
 import sys
 import uuid
 
+from jsonschema import Draft7Validator
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "generators"))
 import art_layout  # noqa: E402  (phase_path: the pipeline folders of a workflow and its output)
+sys.path.insert(0, str(ROOT / "tools" / "art"))
+import temporary_storage  # noqa: E402
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import finals  # noqa: E402  (candidates and finals: tolerant name parsing and slots)
 WF = ROOT / "workflows"
 PROMPTS = ROOT / "prompts"
 CFG_PATH = WF / "workspaces.json"
-BACKUPS = WF / ".sync" / "backup"
+CFG_SCHEMA_PATH = WF / "workspaces.schema.json"
 CURATED = WF / "_curated"
 TEST = WF / "_test"
 # Curated workflow files carry this prefix so they sort to the bottom of a workspace list; a name with a render counter
@@ -104,19 +111,224 @@ def curated_name(name):
 # ---------- configuration ----------
 
 def load_cfg():
-    return json.loads(CFG_PATH.read_text(encoding="utf-8"))
+    return validate_config(json.loads(CFG_PATH.read_text(encoding="utf-8")))
+
+
+CONFIG_ROOT_OVERRIDES = (
+    "SOVEREIGN_TERRITORIES_PRODUCTION_ROOT",
+    "SOVEREIGN_TERRITORIES_SANDBOX_WORKING_ROOT",
+    "SOVEREIGN_TERRITORIES_MODEL_CACHE_ROOT",
+    "SOVEREIGN_TERRITORIES_INSTALLS_ROOT",
+    "SOVEREIGN_TERRITORIES_INPUTS_ROOT",
+    "SOVEREIGN_TERRITORIES_OUTPUT_ROOT",
+    "SOVEREIGN_TERRITORIES_SHARED_INPUT_ROOT",
+    "SOVEREIGN_TERRITORIES_SHARED_OUTPUT_ROOT",
+)
+
+
+def configuration_receipt(cfg, resolved_paths, configuration_path=None):
+    """Fingerprint validated configuration together with its effective paths."""
+    validate_config(cfg)
+    paths = {
+        str(name): str(pathlib.Path(path).expanduser().resolve(strict=False))
+        for name, path in sorted(resolved_paths.items())
+    }
+    overrides = {
+        name: os.environ[name]
+        for name in CONFIG_ROOT_OVERRIDES
+        if os.environ.get(name)
+    }
+    canonical_config = json.dumps(
+        cfg, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    effective_config = json.dumps(
+        {
+            "configuration": cfg,
+            "environmentOverrides": overrides,
+            "resolvedPaths": paths,
+        },
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    path = CFG_PATH if configuration_path is None else pathlib.Path(configuration_path)
+    return {
+        "configurationPath": str(path.expanduser().resolve(strict=False)),
+        "sourceConfigurationSha256": hashlib.sha256(canonical_config).hexdigest(),
+        "effectiveConfigurationSha256": hashlib.sha256(effective_config).hexdigest(),
+        "environmentOverrides": overrides,
+        "resolvedPaths": paths,
+    }
+
+
+def storage_configuration_receipt(cfg, root, additional_paths=None):
+    """Include shared external roots and every configured library storage root."""
+    root = pathlib.Path(root).expanduser().resolve(strict=False)
+    resolved_paths = {
+        "libraryRoot": root,
+        "productionRoot": production_root(cfg),
+        "sandboxWorkingRoot": sandbox_work_root(cfg),
+        "modelCacheRoot": model_cache_root(cfg),
+        "installsRoot": installs_root(cfg),
+        "inputsRoot": comfy_input_root(cfg),
+        "outputRoot": comfy_output_root(cfg),
+        "sharedInput": shared_input_root(cfg),
+        "sharedOutput": shared_output_root(cfg),
+    }
+    resolved_paths.update({
+        f"storageRoots.{name}": storage_root(cfg, name, root=root)
+        for name in STORAGE_ROOT_DEFAULTS
+    })
+    if additional_paths:
+        for name, path in additional_paths.items():
+            if name in resolved_paths:
+                raise ValueError(f"duplicate configuration receipt path name: {name}")
+            resolved_paths[name] = path
+    return configuration_receipt(cfg, resolved_paths)
+
+
+def validate_config(cfg):
+    schema = json.loads(CFG_SCHEMA_PATH.read_text(encoding="utf-8"))
+    errors = sorted(
+        Draft7Validator(schema).iter_errors(cfg),
+        key=lambda error: tuple(str(part) for part in error.absolute_path),
+    )
+    if errors:
+        detail = "; ".join(
+            f"{'.'.join(map(str, error.absolute_path)) or '<root>'}: {error.message}"
+            for error in errors[:8]
+        )
+        raise ValueError(f"invalid {CFG_PATH.name}: {detail}")
+    installs_root(cfg)
+    comfy_input_root(cfg)
+    comfy_output_root(cfg)
+    shared_input_root(cfg)
+    shared_output_root(cfg)
+    workflow_subpath = pathlib.PureWindowsPath(cfg["workflowsSubpath"])
+    if workflow_subpath.is_absolute() or workflow_subpath.drive or ".." in workflow_subpath.parts:
+        raise ValueError(f"workflowsSubpath must be a contained relative path: {cfg['workflowsSubpath']}")
+    reference_workspace = pathlib.PureWindowsPath(cfg["referenceWorkspace"])
+    if reference_workspace.name != cfg["referenceWorkspace"] or cfg["referenceWorkspace"] in {".", ".."}:
+        raise ValueError(f"referenceWorkspace must be a single folder name: {cfg['referenceWorkspace']}")
+    production = production_root(cfg).resolve(strict=False)
+    sandbox = sandbox_work_root(cfg).resolve(strict=False)
+    if _roots_overlap(production, sandbox):
+        raise ValueError("productionRoot and sandboxWorkingRoot must not overlap")
+    external_roots = {
+        "modelCacheRoot": model_cache_root(cfg).resolve(strict=False),
+        "installsRoot": installs_root(cfg).resolve(strict=False),
+        "inputsRoot": comfy_input_root(cfg).resolve(strict=False),
+        "outputRoot": comfy_output_root(cfg).resolve(strict=False),
+        "sharedInput": shared_input_root(cfg).resolve(strict=False),
+        "sharedOutput": shared_output_root(cfg).resolve(strict=False),
+    }
+    protected_roots = {"productionRoot": production, "sandboxWorkingRoot": sandbox}
+    for label, root in external_roots.items():
+        for protected_label, protected in protected_roots.items():
+            if _roots_overlap(root, protected):
+                raise ValueError(f"{label} must not overlap {protected_label}")
+    names = list(external_roots)
+    for index, first in enumerate(names):
+        for second in names[index + 1:]:
+            if _roots_overlap(external_roots[first], external_roots[second]):
+                raise ValueError(f"{first} and {second} must not overlap")
+    storage_root(cfg, "reports", root=production)
+    return cfg
+
+
+def _roots_overlap(first, second):
+    return first == second or first in second.parents or second in first.parents
+
+
+def _configured_absolute_path(value, label):
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(f"{label} must be configured")
+    expanded = os.path.expandvars(value).strip()
+    if re.search(r"%[^%]+%|\$\{[^}]+\}|\$[A-Za-z_][A-Za-z0-9_]*", expanded):
+        raise ValueError(f"{label} contains an unset environment variable: {value}")
+    path = pathlib.Path(expanded).expanduser()
+    if not path.is_absolute():
+        raise ValueError(f"{label} must be absolute: {path}")
+    return path
+
+
+def production_root(cfg):
+    """The canonical production photo library root, overridable per machine."""
+    paths = cfg.get("paths", {})
+    configured = (
+        os.environ.get("SOVEREIGN_TERRITORIES_PRODUCTION_ROOT")
+        or paths.get("productionRoot")
+        or paths.get("workRoot")
+    )
+    if not isinstance(configured, str) or not configured.strip():
+        raise ValueError("paths.productionRoot must be configured")
+    root = _configured_absolute_path(configured, "paths.productionRoot")
+    if "SOVEREIGN_TERRITORIES_PRODUCTION_ROOT" not in os.environ:
+        old = pathlib.Path(str(root).replace("Sovereign", "Soverign"))
+        if not root.exists() and old.exists():
+            return old
+    return root
 
 
 def work_root(cfg):
-    """The working drive folder that holds Sisters (originals) and Masters; accepts the old misspelled folder until it is renamed."""
-    want = pathlib.Path(cfg.get("paths", {}).get("workRoot", "B:/Sovereign Territories"))
-    old = pathlib.Path(str(want).replace("Sovereign", "Soverign"))
-    return want if want.exists() or not old.exists() else old
+    """Backward-compatible name for the production photo library root."""
+    return production_root(cfg)
+
+
+def sandbox_work_root(cfg):
+    """Configured sandbox Working directory, overridable per machine."""
+    paths = cfg.get("paths", {})
+    configured = (
+        os.environ.get("SOVEREIGN_TERRITORIES_SANDBOX_WORKING_ROOT")
+        or paths.get("sandboxWorkingRoot")
+    )
+    if not isinstance(configured, str) or not configured.strip():
+        raise ValueError("paths.sandboxWorkingRoot must be configured")
+    return _configured_absolute_path(configured, "paths.sandboxWorkingRoot")
+
+
+def model_cache_root(cfg=None):
+    """Local model/cache root, with environment override and portable per-user fallback."""
+    cfg = load_cfg() if cfg is None else cfg
+    paths = cfg.get("paths", {})
+    configured = (
+        os.environ.get("SOVEREIGN_TERRITORIES_MODEL_CACHE_ROOT")
+        or paths.get("modelCacheRoot")
+    )
+    if configured:
+        return _configured_absolute_path(configured, "paths.modelCacheRoot")
+    base = pathlib.Path(os.environ.get("LOCALAPPDATA") or pathlib.Path.home() / ".cache")
+    return base / "sovereign-territories"
+
+
+def installs_root(cfg):
+    value = os.environ.get("SOVEREIGN_TERRITORIES_INSTALLS_ROOT") or cfg.get("installsRoot")
+    return _configured_absolute_path(value, "installsRoot")
+
+
+def comfy_input_root(cfg):
+    value = os.environ.get("SOVEREIGN_TERRITORIES_INPUTS_ROOT") or cfg.get("paths", {}).get("inputsRoot")
+    return _configured_absolute_path(value, "paths.inputsRoot")
+
+
+def comfy_output_root(cfg):
+    value = os.environ.get("SOVEREIGN_TERRITORIES_OUTPUT_ROOT") or cfg.get("paths", {}).get("outputRoot")
+    return _configured_absolute_path(value, "paths.outputRoot")
+
+
+def shared_input_root(cfg):
+    value = os.environ.get("SOVEREIGN_TERRITORIES_SHARED_INPUT_ROOT") or cfg.get("sharedInput")
+    return _configured_absolute_path(value, "sharedInput")
+
+
+def shared_output_root(cfg):
+    value = os.environ.get("SOVEREIGN_TERRITORIES_SHARED_OUTPUT_ROOT") or cfg.get("sharedOutput")
+    return _configured_absolute_path(value, "sharedOutput")
 
 
 def output_root(cfg):
     """The parent of every project output folder (ComfyUI-Outputs)."""
-    return pathlib.Path(cfg.get("paths", {}).get("outputRoot") or cfg["sharedOutput"])
+    return comfy_output_root(cfg)
 
 
 def output_home(cfg, group):
@@ -127,30 +339,166 @@ def output_home(cfg, group):
 
 def output_roots(cfg):
     """Existing output folders to search: the new root and the old shared one."""
-    return [p for p in (output_root(cfg), pathlib.Path(cfg["sharedOutput"])) if p.is_dir()]
+    return [p for p in (output_root(cfg), shared_output_root(cfg)) if p.is_dir()]
+
+
+STORAGE_ROOT_DEFAULTS = {
+    "backup": "_backup",
+    "generation": "_generation",
+    "reports": "_reports",
+    "likeness": "_likeness",
+    "actions": "_actions",
+    "junk": "_junk",
+    "retired": "_retired",
+    "sandboxState": "_sandbox-state",
+    "temporary": "_tmp",
+}
+PROTECTED_LIBRARY_CATEGORIES = (
+    "Angels", "Sisters", "Models", "Prospects", "Potentials", "Artists", "Various",
+)
+
+
+def is_reparse_point(path):
+    try:
+        info = path.lstat()
+    except FileNotFoundError:
+        return False
+    attributes = getattr(info, "st_file_attributes", 0)
+    return path.is_symlink() or bool(
+        attributes & getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0x400)
+    )
+
+
+def _resolve_storage_root(base, name, value):
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(f"storageRoots.{name} must be a non-empty path")
+    base = pathlib.Path(base).expanduser()
+    if not base.is_absolute():
+        raise ValueError(f"working root must be absolute: {base}")
+    if is_reparse_point(base):
+        raise ValueError(f"working root cannot be a junction or reparse point: {base}")
+    resolved_base = base.resolve()
+    path = pathlib.Path(value).expanduser()
+    raw_candidate = path if path.is_absolute() else base / path
+    candidate = raw_candidate.resolve()
+    if candidate == resolved_base:
+        raise ValueError(f"storageRoots.{name} cannot be the working root itself")
+    try:
+        candidate.relative_to(resolved_base)
+    except ValueError as exc:
+        raise ValueError(
+            f"storageRoots.{name} must remain under the working root {resolved_base}"
+        ) from exc
+    for category in PROTECTED_LIBRARY_CATEGORIES:
+        protected = resolved_base / category
+        if (
+            candidate == protected
+            or candidate in protected.parents
+            or protected in candidate.parents
+        ):
+            raise ValueError(
+                f"storageRoots.{name} cannot overlap active photo category {category}"
+            )
+    archive = resolved_base / "_archive"
+    if candidate == archive or candidate in archive.parents or archive in candidate.parents:
+        raise ValueError(f"storageRoots.{name} cannot overlap reserved photo archive {archive}")
+    try:
+        relative = raw_candidate.relative_to(base)
+    except ValueError:
+        relative = candidate.relative_to(resolved_base)
+    if ".." in relative.parts:
+        raise ValueError(f"storageRoots.{name} cannot contain '..' path segments")
+    current = base
+    for part in relative.parts:
+        current /= part
+        if is_reparse_point(current):
+            raise ValueError(
+                f"storageRoots.{name} cannot cross a junction or reparse point: {current}"
+            )
+    return candidate
+
+
+def storage_root(cfg, name, root=None):
+    """Resolve non-overlapping configured storage directories beneath Working."""
+    if name not in STORAGE_ROOT_DEFAULTS:
+        raise ValueError(f"unknown storage root: {name}")
+    configured = cfg.get("storageRoots", {})
+    if not isinstance(configured, dict):
+        raise ValueError("storageRoots must be an object")
+    unknown = set(configured) - set(STORAGE_ROOT_DEFAULTS)
+    if unknown:
+        raise ValueError(f"unknown storageRoots entries: {', '.join(sorted(unknown))}")
+    base = pathlib.Path(root) if root is not None else work_root(cfg)
+    roots = {
+        storage_name: _resolve_storage_root(
+            base,
+            storage_name,
+            configured.get(storage_name, default),
+        )
+        for storage_name, default in STORAGE_ROOT_DEFAULTS.items()
+    }
+    names = list(roots)
+    for index, first in enumerate(names):
+        for second in names[index + 1:]:
+            first_path, second_path = roots[first], roots[second]
+            if (
+                first_path == second_path
+                or first_path in second_path.parents
+                or second_path in first_path.parents
+            ):
+                raise ValueError(
+                    f"storageRoots.{first} and storageRoots.{second} overlap"
+                )
+    return roots[name]
+
+
+def storage_output_path(cfg, name, output, root=None):
+    """Resolve an output beneath its configured storage root, refusing linked paths."""
+    base = storage_root(cfg, name, root=root)
+    path = pathlib.Path(output).expanduser()
+    candidate = path if path.is_absolute() else base / path
+    try:
+        relative = candidate.relative_to(base)
+        candidate.resolve().relative_to(base)
+    except ValueError as exc:
+        raise ValueError(f"output must remain under the configured {name} root: {base}") from exc
+    if ".." in relative.parts:
+        raise ValueError("output cannot contain '..' path segments")
+    for ancestor in (candidate, *candidate.parents):
+        if is_reparse_point(ancestor):
+            raise ValueError(f"output cannot cross a junction or reparse point: {ancestor}")
+    return candidate.resolve()
 
 
 def input_dir(cfg, ws):
     """A workspace's own input folder when it exists, else the old shared one."""
-    own = pathlib.Path(cfg.get("paths", {}).get("inputsRoot", "")) / ws
-    return own if own.is_dir() else pathlib.Path(cfg["sharedInput"])
+    own = comfy_input_root(cfg) / ws
+    return own if own.is_dir() else shared_input_root(cfg)
 
 
 def input_dirs(cfg):
     """Every input folder in use: the shared one and each per-workspace one."""
-    out = [pathlib.Path(cfg["sharedInput"])]
-    root = pathlib.Path(cfg.get("paths", {}).get("inputsRoot", ""))
+    out = [shared_input_root(cfg)]
+    root = comfy_input_root(cfg)
     if root.is_dir():
         out += sorted(p for p in root.iterdir() if p.is_dir())
     return [p for p in out if p.is_dir()]
 
 
 def install_dir(cfg, ws, root=None):
-    return pathlib.Path(root or cfg["installsRoot"]) / ws / cfg["workflowsSubpath"]
+    install_root = (
+        _configured_absolute_path(os.fspath(root), "install root override")
+        if root is not None else installs_root(cfg)
+    )
+    return install_root / ws / cfg["workflowsSubpath"]
 
 
 def install_exists(cfg, ws, root=None):
-    return (pathlib.Path(root or cfg["installsRoot"]) / ws / "ComfyUI").is_dir()
+    install_root = (
+        _configured_absolute_path(os.fspath(root), "install root override")
+        if root is not None else installs_root(cfg)
+    )
+    return (install_root / ws / "ComfyUI").is_dir()
 
 
 def workspace_ready(cfg, ws, root=None):
@@ -1080,10 +1428,51 @@ def cmd_status(args):
             print("    lint: " + line)
 
 
-def backup(stamp, ws, name, src):
-    b = BACKUPS / stamp / ws / name
+def record_backup_receipt(cfg, stamp, src, destination):
+    storage_root_base = work_root(cfg)
+    backup_root = storage_root(cfg, "backup")
+    run_root = backup_root / stamp
+    receipt_path = run_root / "storage-configuration-receipt.json"
+    storage_receipt = storage_configuration_receipt(
+        cfg, storage_root_base, {
+            "comfyWorkflowBackupRoot": backup_root,
+            "comfyWorkflowBackupRun": run_root,
+        }
+    )
+    receipt = {
+        "schemaVersion": 1,
+        "storageConfigurationReceipt": storage_receipt,
+        "backups": [],
+    }
+    if receipt_path.exists():
+        existing = json.loads(receipt_path.read_text(encoding="utf-8"))
+        backups = existing.get("backups")
+        if (
+            existing.get("storageConfigurationReceipt") != storage_receipt
+            or not isinstance(backups, list)
+        ):
+            raise ValueError(f"backup run has an invalid or changed storage receipt: {run_root}")
+        receipt["backups"] = backups
+    backup_entry = {
+        "source": str(pathlib.Path(src).resolve()),
+        "backupPath": str(pathlib.Path(destination).resolve()),
+    }
+    if backup_entry not in receipt["backups"]:
+        receipt["backups"].append(backup_entry)
+    with temporary_storage.staging_directory(run_root, ".backup-receipt-") as stage:
+        staged_receipt = stage / receipt_path.name
+        staged_receipt.write_text(
+            json.dumps(receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        os.replace(staged_receipt, receipt_path)
+
+
+def backup(cfg, stamp, ws, name, src):
+    backup_root = storage_root(cfg, "backup")
+    b = backup_root / stamp / ws / name
     b.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(src, b)
+    record_backup_receipt(cfg, stamp, src, b)
 
 
 def cmd_deploy(args):
@@ -1117,7 +1506,7 @@ def cmd_deploy(args):
                 elif args.overwrite:
                     print(f"  template {ws}/{name} (replace)")
                     if not args.dry_run:
-                        backup(stamp, ws, name, inst[name])
+                        backup(cfg, stamp, ws, name, inst[name])
                         shutil.copy2(p, inst[name])
                     tally["updated"] += 1
                 else:
@@ -1157,7 +1546,7 @@ def cmd_deploy(args):
                     continue
                 print(f"  {'size' if stale_size else 'seed'}     {ws}/{name}  ({'total pixels set to the standard size' if stale_size else 'seed set to randomize'}; prompt, seed value and input untouched)")
                 if not args.dry_run:
-                    backup(stamp, ws, name, inst[name])
+                    backup(cfg, stamp, ws, name, inst[name])
                     swf = read_wf(inst[name])
                     align_size(swf, cfg)
                     if reseed:
@@ -1171,7 +1560,7 @@ def cmd_deploy(args):
                 continue
             print(f"  {'replace ' if replace else 'prompt  '} {ws}/{name}" + ("" if replace else f"  (keeps input {input_image(read_wf(inst[name]))})"))
             if not args.dry_run:
-                backup(stamp, ws, name, inst[name])
+                backup(cfg, stamp, ws, name, inst[name])
                 if replace:
                     write_wf(inst[name], read_wf(p))
                 else:
@@ -1206,7 +1595,7 @@ def cmd_deploy(args):
                 elif args.overwrite:
                     print(f"  curated  {ws}/{name} (replace)")
                     if not args.dry_run:
-                        backup(stamp, ws, name, inst[name])
+                        backup(cfg, stamp, ws, name, inst[name])
                         write_wf(inst[name], read_wf(p))
                     tally["curated"] += 1
                 else:
@@ -1228,7 +1617,7 @@ def cmd_deploy(args):
                 elif args.overwrite:
                     print(f"  shot     {ws}/{SHOTS_DIR}/{rel} (replace)")
                     if not args.dry_run:
-                        backup(stamp, ws, p.name, have)
+                        backup(cfg, stamp, ws, p.name, have)
                         write_wf(have, read_wf(p))
                     tally["shots"] += 1
                 else:
@@ -1274,9 +1663,11 @@ def cleanup_orphans(cfg, args):
             moved += 1
             gone.append(p)
             if apply:
-                b = BACKUPS / stamp / (ws + " (orphans)") / rel
+                b = storage_root(cfg, "backup") / stamp / (ws + " (orphans)") / rel
                 b.parent.mkdir(parents=True, exist_ok=True)
                 shutil.move(str(p), str(b))
+                record_backup_receipt(cfg, stamp, p, b)
+                record_backup_receipt(cfg, stamp, p, b)
         if gone:
             for folder in (prune_empty_dirs(d, apply) if apply else empty_dirs(d, gone)):
                 print(f"  {'removed' if apply else 'would remove'} empty folder  {ws}: {folder.relative_to(d).as_posix()}")
@@ -1351,9 +1742,10 @@ def cmd_cleanup(args):
         tally["duplicates"] += 1
         gone.append(p)
         if apply:
-            b = BACKUPS / stamp / (src + " (cleaned)") / name
+            b = storage_root(cfg, "backup") / stamp / (src + " (cleaned)") / name
             b.parent.mkdir(parents=True, exist_ok=True)
             shutil.move(str(p), str(b))
+            record_backup_receipt(cfg, stamp, p, b)
     for why, names in kept.items():
         print(f"  KEEP {len(names):4}  {why}")
         for n in names[: args.show]:
@@ -1398,9 +1790,10 @@ def prune_shots(cfg, args, stamp, seen, scanned):
             continue
         print(f"  prune  {p.relative_to(ROOT).as_posix()} (no longer in the pulled workspaces)" + (" (dry run)" if args.dry_run else ""))
         if not args.dry_run:
-            b = BACKUPS / stamp / "shots (pruned)" / h / rel
+            b = storage_root(cfg, "backup") / stamp / "shots (pruned)" / h / rel
             b.parent.mkdir(parents=True, exist_ok=True)
             shutil.move(str(p), str(b))
+            record_backup_receipt(cfg, stamp, p, b)
 
 
 def cmd_pull(args):
@@ -1464,7 +1857,7 @@ def cmd_pull(args):
                 wf = read_wf(p)
                 prefix_fix = set_prefix(wf, make_prefix(groups[h], h, name))  # writes to <group>/<Hero>/_curated/ or _test/
                 if prefix_fix and not args.dry_run:
-                    backup(stamp, ws, name, p)
+                    backup(cfg, stamp, ws, name, p)
                     write_wf(p, wf)  # the workspace copy gets the same prefix so the two stay identical
                 if read_wf(store[name][2]) == wf:
                     skipped += 1
@@ -1489,12 +1882,12 @@ def cmd_pull(args):
                 prefix = (test_prefix if dst.is_relative_to(TEST) else curated_prefix)(groups[h], h, name)
                 print(f"           output folder: {prefix.rsplit('/', 1)[0]}/")
                 if set_prefix(wf, prefix) and not args.dry_run:
-                    backup(stamp, ws, name, p)
+                    backup(cfg, stamp, ws, name, p)
                     write_wf(p, wf)
             if not args.dry_run:
                 write_wf(dst, wf)
                 if dst.name != name:  # the workspace copy takes the curated name too, so the two stay one workflow
-                    backup(stamp, ws, name, p)
+                    backup(cfg, stamp, ws, name, p)
                     write_wf(p.with_name(dst.name), wf)
                     p.unlink()
             done += 1
@@ -1739,7 +2132,7 @@ def reset_inputs(cfg, args, workspaces=None, include_repo=True):
         if args.dry_run:
             return
         if ws:
-            backup(stamp, ws, p.name, p)
+            backup(cfg, stamp, ws, p.name, p)
         ln["widgets_values"][0] = want
         if isinstance(ln.get("widgets_values_named"), dict) and "image" in ln["widgets_values_named"]:
             ln["widgets_values_named"]["image"] = want
@@ -1833,8 +2226,21 @@ def dump_cfg(v, level=0):
     return json.dumps(v, ensure_ascii=False)
 
 
+def write_cfg_text(text):
+    cfg = json.loads(text)
+    validate_config(cfg)
+    staging_root = storage_root(cfg, "temporary", root=ROOT / "tmp") / "config-staging"
+    with temporary_storage.staging_directory(staging_root, ".workspaces-") as stage:
+        temporary_path = stage / CFG_PATH.name
+        with temporary_path.open("w", encoding="utf-8", newline="\n") as output:
+            output.write(text)
+            output.flush()
+            os.fsync(output.fileno())
+        os.replace(temporary_path, CFG_PATH)
+
+
 def write_cfg(cfg):
-    CFG_PATH.write_text(dump_cfg(cfg) + "\n", encoding="utf-8")
+    write_cfg_text(dump_cfg(cfg) + "\n")
 
 
 PLACEHOLDER_IMAGE = re.compile(r"_00001_\.png$")
@@ -2093,7 +2499,7 @@ def repoint_photos(cfg, renames, dry_run, root=None):
                 touched[ws or "repo"] += 1
                 if not dry_run:
                     if ws:
-                        backup(stamp, ws, p.name, p)
+                        backup(cfg, stamp, ws, p.name, p)
                     ln["widgets_values"][0] = newp.name
                     if isinstance(ln.get("widgets_values_named"), dict) and "image" in ln["widgets_values_named"]:
                         ln["widgets_values_named"]["image"] = newp.name
@@ -2180,7 +2586,7 @@ def cmd_denoise(args):
         if args.dry_run:
             continue
         if ws:
-            backup(stamp, ws, p.name, p)
+            backup(cfg, stamp, ws, p.name, p)
         set_denoise(wf, wanted[stem][4])
         write_wf(p, wf)
     for ws, names in kept.items():
@@ -2350,10 +2756,9 @@ def final_image_source(cfg, wf, counter):
     if not counter or not s:
         return None
     prefix = s["widgets_values"][0]
-    paths = cfg.get("paths", {})
-    project = paths.get("outputFolders", {}).get(prefix.split("/")[0])
-    base = paths.get("outputRoot") or cfg.get("sharedOutput")
-    roots = ([pathlib.Path(base) / project] if base and project else []) + [pathlib.Path(x) for x in (base, cfg.get("sharedOutput")) if x]
+    project = cfg.get("paths", {}).get("outputFolders", {}).get(prefix.split("/")[0])
+    base = output_root(cfg)
+    roots = ([base / project] if project else []) + [base, shared_output_root(cfg)]
     for r in roots:
         if (r / f"{prefix}_{counter}_.png").is_file():
             return r / f"{prefix}_{counter}_.png"
@@ -2376,9 +2781,11 @@ def capture_final_image(cfg, wf, parsed, master_wf, stamp, dry_run):
         return "same"
     if not dry_run:
         if dst.exists():
-            b = BACKUPS / stamp / "assets (replaced)" / dst.relative_to(ASSETS)
+            b = storage_root(cfg, "backup") / stamp / "assets (replaced)" / dst.relative_to(ASSETS)
             b.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(dst, b)
+            record_backup_receipt(cfg, stamp, dst, b)
+            record_backup_receipt(cfg, stamp, dst, b)
         dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, dst)
     print(f"  image     {src.name} ({src.stat().st_size // 1024} KB) -> {dst.relative_to(ROOT).as_posix()}" + (" (replaces the earlier image)" if dst.exists() else ""))
@@ -2451,7 +2858,7 @@ def finals_sort(cfg, ws, args, stamp):
             if same_workflow(want, p):
                 print(f"  duplicate {ws}/{rel}: the proper copy is already at {want.relative_to(d).as_posix()}; this one goes to backup")
                 if args.apply:
-                    backup(stamp, ws, p.name, p)
+                    backup(cfg, stamp, ws, p.name, p)
                     p.unlink()
                 dup += 1
             else:
@@ -2709,9 +3116,11 @@ def finals_reclassify(cfg, args, stamp):
             if same_workflow(dst, p):
                 print(f"  duplicate {rel}: the proper copy is already at {dst.relative_to(ROOT).as_posix()}; this one goes to backup")
                 if args.apply:
-                    b = BACKUPS / stamp / "repo duplicates" / p.relative_to(WF)
+                    b = storage_root(cfg, "backup") / stamp / "repo duplicates" / p.relative_to(WF)
                     b.parent.mkdir(parents=True, exist_ok=True)
                     shutil.move(str(p), str(b))
+                    record_backup_receipt(cfg, stamp, p, b)
+                    record_backup_receipt(cfg, stamp, p, b)
                 dup += 1
             else:
                 print(f"  CONFLICT {rel} differs from {dst.relative_to(ROOT).as_posix()}; left where it is")

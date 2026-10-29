@@ -186,6 +186,19 @@ class OverlayReferenceReviewTests(unittest.TestCase):
         self.assertFalse(any(p.name.startswith(".overlay-review-") for p in self.out.parent.iterdir()))
         self.no_model.assert_not_called()
 
+    def test_configured_reports_root_routes_overlay_page_and_banner(self):
+        reports = self.root / "operations" / "reports"
+        reports.parent.mkdir(parents=True)
+        (self.root / "_reports").rename(reports)
+        self.report = reports / "preparation" / "pilot"
+        self.out = reports / "eraser-compare" / "refs"
+        config = {"storageRoots": {"reports": "operations/reports"}}
+        with mock.patch.object(preparation.cw, "load_cfg", return_value=config):
+            self.assertEqual(self.call("--apply"), 0, self.output)
+            self.assertEqual(self.call("--check"), 0, self.output)
+        self.assertTrue((reports / "_assets" / "gallery-banner.jpg").is_file())
+        self.assertFalse((self.root / "_reports").exists())
+
     def test_repeat_apply_is_read_only_and_check_passes(self):
         self.assertEqual(self.call("--apply"), 0, self.output)
         before = self.tree(self.out)

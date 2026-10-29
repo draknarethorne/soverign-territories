@@ -31,7 +31,7 @@ import sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import comfy_workflows as cw  # noqa: E402
 
-MAP = cw.ROOT / "tools/art/originals_rename_map.json"
+LEGACY_MAP = cw.ROOT / "tools" / "art" / "originals_rename_map.json"
 ORIGINAL = re.compile(r"^(?P<owner>[a-z]+)_(image|screenshot)_")
 KEEP_AS_IS_GROUPS = {"angel-primes"}
 
@@ -39,7 +39,11 @@ KEEP_AS_IS_GROUPS = {"angel-primes"}
 def old_to_new():
     """{old name: new name}; a photo kept in two hero folders belongs to the hero whose copy is in its root folder."""
     out, rank = {}, {}
-    for r in json.loads(MAP.read_text(encoding="utf-8"))["renames"]:
+    cfg = cw.load_cfg()
+    map_path = cw.storage_root(cfg, "actions") / "originals_rename_map.json"
+    if not map_path.is_file():
+        map_path = LEGACY_MAP
+    for r in json.loads(map_path.read_text(encoding="utf-8"))["renames"]:
         r_rank = 0 if "/" not in r["folder"] else 1
         if r["old"] not in out or r_rank < rank[r["old"]]:
             out[r["old"]], rank[r["old"]] = r["new"], r_rank
@@ -139,7 +143,7 @@ def main():
             curated = rel[0] == "_curated"
             hero = cw.hero_of(p.name)
             targets.append(("repo", p, hero, groups.get(hero), not curated and rel[0] not in ("_templates",)))
-    installs_root = pathlib.Path(cfg["installsRoot"])
+    installs_root = cw.installs_root(cfg)
     for d in sorted(installs_root.iterdir()):
         sub = d / cfg["workflowsSubpath"]
         if d.is_dir() and d.name != "ComfyUI" and sub.is_dir():
@@ -164,7 +168,7 @@ def main():
             per_hero[hero] += 1
         if args.apply:
             if where != "repo":
-                cw.backup(stamp, where, p.name, p)
+                cw.backup(cfg, stamp, where, p.name, p)
             cw.write_wf(p, wf)
     for (where, what), n in sorted(tally.items()):
         if n:
@@ -175,7 +179,7 @@ def main():
         text = cw.CFG_PATH.read_text(encoding="utf-8")
         for hero, (old, new) in retarget.items():
             text = text.replace(f'"{hero}": "{old}"', f'"{hero}": "{new}"')
-        cw.CFG_PATH.write_text(text, encoding="utf-8")
+        cw.write_cfg_text(text)
     print("done" if args.apply else "preview only; use --apply")
 
 

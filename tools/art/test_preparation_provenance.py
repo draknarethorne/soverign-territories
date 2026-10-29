@@ -48,9 +48,18 @@ class PreparationProvenanceTests(unittest.TestCase):
                 "--root", str(self.root), "--out", str(self.output), "--apply",
             ])
         self.assertEqual(result, 0)
+        manifest = json.loads((self.output / "manifest.json").read_text())
+        receipt = manifest["configurationReceipt"]
+        self.assertEqual(len(receipt["effectiveConfigurationSha256"]), 64)
+        self.assertEqual(
+            receipt["resolvedPaths"]["libraryRoot"], str(self.root.resolve())
+        )
+        self.assertEqual(
+            receipt["resolvedPaths"]["runOutput"], str(self.output.resolve())
+        )
         self.page_dir = self.root / "_reports" / "library"
         self.page_dir.mkdir(parents=True)
-        self.photo_id = json.loads((self.output / "manifest.json").read_text())["photos"][0]["photoId"]
+        self.photo_id = manifest["photos"][0]["photoId"]
 
     def index(self, photo=None, photo_id=None, domain="general"):
         photo = photo or self.photo
@@ -233,11 +242,20 @@ class PreparationProvenanceTests(unittest.TestCase):
         legacy_manifest = self.output / "manifest.json"
         legacy = json.loads(legacy_manifest.read_text(encoding="utf-8"))
         legacy["recipe"]["id"] = "preparation-comparison-v6"
-        legacy["photos"][0].pop("sourceScope", None)
-        processing = legacy["photos"][0]["processing"]
-        order = image_preparation.legacy.OLD_STEPS
-        processing["steps"] = sorted(
-            (s for s in processing["steps"] if s["name"] in order), key=lambda s: order.index(s["name"]))
+        row = legacy["photos"][0]
+        row.pop("sourceScope", None)
+        row["variants"]["geometry"] = dict(row["variants"]["control"])
+        processing = row["processing"]
+        current_steps = {step["name"]: step for step in processing["steps"]}
+        processing.pop("sequence", None)
+        processing["steps"] = [
+            current_steps["first-crop"],
+            current_steps["eraser"],
+            {"name": "second-crop", "status": "skipped", "input": "control",
+             "candidate": None, "selected": "control", "reason": "No crop was selected."},
+            current_steps["denoise"],
+            current_steps["tone"],
+        ]
         legacy_manifest.write_text(json.dumps(legacy), encoding="utf-8")
         evidence = self.index().evidence(self.photo, self.photo_id)
         self.assertEqual(evidence["state"], "ambiguous")

@@ -5,7 +5,9 @@ import fnmatch
 import hashlib
 import itertools
 import json
+import os
 import pathlib
+import uuid
 
 import numpy as np
 
@@ -24,12 +26,56 @@ HUMAN_BEST, HUMAN_MIN = 0.9, 0.85
 SETTINGS = effective_settings({})
 
 
+class AlignmentEvidenceError(ValueError):
+    """A requested exact SFace alignment could not be safely persisted."""
+
+
 class Embedder:
     """Find faces and return normalized identity vectors using local OpenCV models."""
 
     def __init__(self, model_root):
         self.model_root = pathlib.Path(model_root)
         self.det = self.rec = None
+        self.evidence_root = None
+        self.library_root = None
+        self.model_provenance = None
+        self.model_id = None
+
+    def configure_evidence(self, evidence_root, library_root=None):
+        self.evidence_root = pathlib.Path(evidence_root)
+        self.library_root = (
+            pathlib.Path(library_root)
+            if library_root is not None
+            else self.evidence_root.parents[2]
+        )
+
+    def _model_identity(self, cv2):
+        models = self.model_root / "models"
+        try:
+            files = {
+                name: hashlib.sha256((models / name).read_bytes()).hexdigest()
+                for name in MODEL_URLS
+            }
+        except OSError as error:
+            raise ValueError(f"cannot fingerprint local face models in {models}: {error}") from error
+        provenance = {
+            "detector": {
+                "name": "YuNet",
+                "file": "face_detection_yunet_2023mar.onnx",
+                "sha256": files["face_detection_yunet_2023mar.onnx"],
+            },
+            "recognizer": {
+                "name": "SFace",
+                "file": "face_recognition_sface_2021dec.onnx",
+                "sha256": files["face_recognition_sface_2021dec.onnx"],
+            },
+            "opencv": cv2.__version__,
+            "alignment": "FaceRecognizerSF.alignCrop",
+        }
+        identity = hashlib.sha256(
+            json.dumps(provenance, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        ).hexdigest()
+        return provenance, identity
 
     def load(self):
         import cv2
@@ -45,13 +91,21 @@ class Embedder:
                 import urllib.request
 
                 print(f"downloading {name} ...")
-                urllib.request.urlretrieve(url, path)
-        self.det = cv2.FaceDetectorYN.create(
-            str(models / "face_detection_yunet_2023mar.onnx"), "", (320, 320), 0.7, 0.3, 5000
-        )
-        self.rec = cv2.FaceRecognizerSF.create(
-            str(models / "face_recognition_sface_2021dec.onnx"), ""
-        )
+                try:
+                    urllib.request.urlretrieve(url, path)
+                except Exception as error:
+                    raise ValueError(f"cannot download local face model {name}: {error}") from error
+        self.model_provenance, self.model_id = self._model_identity(cv2)
+        try:
+            self.det = cv2.FaceDetectorYN.create(
+                str(models / "face_detection_yunet_2023mar.onnx"), "", (320, 320), 0.7, 0.3, 5000
+            )
+            self.rec = cv2.FaceRecognizerSF.create(
+                str(models / "face_recognition_sface_2021dec.onnx"), ""
+            )
+        except Exception as error:
+            self.det = self.rec = None
+            raise ValueError(f"cannot initialize local YuNet/SFace models: {error}") from error
 
     def __call__(self, path):
         import cv2
@@ -78,8 +132,10 @@ class Embedder:
         humans = human_rows(faces)
         face = max(humans, key=lambda row: row[2] * row[3])
         areas = sorted((float(row[2] * row[3]) for row in humans), reverse=True)
-        vector = self.rec.feature(self.rec.alignCrop(small, face))[0]
+        aligned = self.rec.alignCrop(small, face)
+        vector = self.rec.feature(aligned)[0]
         vector = vector / np.linalg.norm(vector)
+        evidence = self._save_alignment(path, aligned)
         return {
             "faces": int(len(humans)),
             "an": int(len(faces) - len(humans)),
@@ -93,7 +149,116 @@ class Embedder:
                 round(float(face[3]) / sh, 4),
             ],
             "px": int(min(face[2], face[3]) / scale),
+            "alignmentEvidence": evidence,
         }
+
+    def needs_alignment_evidence(self, data, path):
+        """Return whether a cache entry needs a fresh vector/crop pair."""
+        if not isinstance(data, dict) or data.get("faces", -1) <= 0:
+            return False
+        evidence = data.get("alignmentEvidence") if isinstance(data, dict) else None
+        if not isinstance(evidence, dict) or evidence.get("state") != "persisted":
+            return True
+        try:
+            source_sha256 = hashlib.sha256(path.read_bytes()).hexdigest()
+            artifact = evidence.get("artifact")
+            model = evidence.get("model")
+            model_id = evidence.get("modelId")
+            expected_model_id = hashlib.sha256(
+                json.dumps(model, sort_keys=True, separators=(",", ":")).encode("utf-8")
+            ).hexdigest()
+            detector = model.get("detector") if isinstance(model, dict) else None
+            recognizer = model.get("recognizer") if isinstance(model, dict) else None
+            expected_name = f"{source_sha256}-{model_id}.png"
+            target = self.evidence_root / expected_name
+            return (
+                evidence.get("sourceSha256") != source_sha256
+                or not isinstance(detector, dict)
+                or detector.get("name") != "YuNet"
+                or not isinstance(recognizer, dict)
+                or recognizer.get("name") != "SFace"
+                or model.get("alignment") != "FaceRecognizerSF.alignCrop"
+                or not isinstance(model.get("opencv"), str)
+                or model_id != expected_model_id
+                or artifact != expected_name
+                or evidence.get("artifactSha256") != evidence.get("alignmentSha256")
+                or not target.is_file()
+                or hashlib.sha256(target.read_bytes()).hexdigest() != evidence.get("artifactSha256")
+            )
+        except (OSError, TypeError):
+            return True
+
+    def _save_alignment(self, source, aligned):
+        import cv2
+
+        try:
+            source_sha256 = hashlib.sha256(source.read_bytes()).hexdigest()
+            height, width = aligned.shape[:2]
+            success, encoded = cv2.imencode(".png", aligned)
+            if not success:
+                raise AlignmentEvidenceError(f"cannot encode exact SFace alignment for {source.name}")
+        except AlignmentEvidenceError:
+            raise
+        except Exception as error:
+            raise AlignmentEvidenceError(f"cannot prepare exact SFace alignment for {source.name}: {error}") from error
+        payload = encoded.tobytes()
+        artifact_sha256 = hashlib.sha256(payload).hexdigest()
+        record = {
+            "version": 1,
+            "state": "read-only-not-persisted" if domains.READ_ONLY.get() else "persisted",
+            "sourceSha256": source_sha256,
+            "modelId": self.model_id,
+            "model": self.model_provenance,
+            "alignment": "OpenCV FaceRecognizerSF.alignCrop output passed directly to feature()",
+            "alignmentSha256": artifact_sha256,
+            "artifactSha256": artifact_sha256,
+            "width": int(width),
+            "height": int(height),
+            "format": "PNG",
+        }
+        if domains.READ_ONLY.get():
+            return record
+        if self.evidence_root is None:
+            raise AlignmentEvidenceError("alignment evidence output is not configured")
+        artifact = f"{source_sha256}-{self.model_id}.png"
+        partial = None
+        try:
+            library_root = self.library_root.resolve()
+            evidence_root = self.evidence_root.resolve()
+            relative = evidence_root.relative_to(library_root)
+            current = self.library_root
+            if cw.is_reparse_point(current):
+                raise AlignmentEvidenceError("linked likeness evidence path is not permitted")
+            for part in relative.parts:
+                current /= part
+                if cw.is_reparse_point(current):
+                    raise AlignmentEvidenceError("linked likeness evidence path is not permitted")
+            self.evidence_root.mkdir(parents=True, exist_ok=True)
+            target = self.evidence_root / artifact
+            if cw.is_reparse_point(target):
+                raise AlignmentEvidenceError(f"linked aligned-face evidence is not permitted: {target}")
+            if target.is_file():
+                if hashlib.sha256(target.read_bytes()).hexdigest() != artifact_sha256:
+                    raise AlignmentEvidenceError(f"existing aligned-face evidence is corrupt: {target}")
+            else:
+                partial = target.with_name(f".{target.name}.{uuid.uuid4().hex}.part")
+                with partial.open("xb") as output:
+                    output.write(payload)
+                    output.flush()
+                    os.fsync(output.fileno())
+                os.replace(partial, target)
+        except AlignmentEvidenceError:
+            raise
+        except OSError as error:
+            raise AlignmentEvidenceError(f"cannot persist aligned-face evidence for {source.name}: {error}") from error
+        finally:
+            try:
+                if partial is not None and partial.exists():
+                    partial.unlink()
+            except OSError as error:
+                raise AlignmentEvidenceError(f"cannot clean partial aligned-face evidence: {error}") from error
+        record["artifact"] = artifact
+        return record
 
     def faces(self, image):
         """Return human and non-human face boxes in the source image's pixels."""
@@ -180,6 +345,7 @@ class Photo:
         self.raw = np.array(data["v"], float) if data and data.get("v") else None
         self.box = (data or {}).get("box")
         self.px = (data or {}).get("px", 0)
+        self.alignment_evidence = (data or {}).get("alignmentEvidence")
         self.name = path.name
         self.vec = None
 
@@ -244,6 +410,14 @@ def matches(key, patterns):
 
 def read_library(cfg, work, cache, embed, configuration, progress=True, with_mixed=False):
     """Read person folders and the pool, optionally including other mixed folders."""
+    configure_evidence = getattr(embed, "configure_evidence", None)
+    if callable(configure_evidence):
+        configure_evidence(
+            cw.storage_root(cfg, "likeness", root=work)
+            / (domains.CURRENT.get() or "general")
+            / "face-evidence",
+            library_root=work,
+        )
     photos, todo = [], []
     for group, name, folder in cw.photo_folders(cfg, work):
         key = f"{group}/{name}"
@@ -255,10 +429,16 @@ def read_library(cfg, work, cache, embed, configuration, progress=True, with_mix
         if domains.CURRENT.get():
             domains.require_path(work, path)
         digest = cache.sha(path)
-        if digest not in cache.emb:
+        needs_evidence = getattr(embed, "needs_alignment_evidence", None)
+        regenerate = digest not in cache.emb or (
+            callable(needs_evidence) and needs_evidence(cache.emb[digest], path)
+        )
+        if regenerate:
             try:
                 cache.emb[digest] = embed(path) or {"faces": -1}
             except Exception as error:  # A single unreadable photo must not stop a library scan.
+                if isinstance(error, ValueError):
+                    raise
                 print(f"  cannot read {path.name}: {error}")
                 cache.emb[digest] = {"faces": -1}
             done += 1

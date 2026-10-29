@@ -25,6 +25,27 @@ class PeopleGalleryTests(unittest.TestCase):
         import shutil
         shutil.rmtree(self.tmp, ignore_errors=True)
 
+    def test_explicit_report_output_refuses_source_or_external_paths_before_collecting(self):
+        cfg = {"storageRoots": {"reports": "operations/reports"}}
+        space = types.SimpleNamespace(cfg=cfg, st={}, work=self.root)
+        for output in (self.root / "Various" / "gallery", self.tmp / "outside", "..\\outside"):
+            with self.subTest(output=output), mock.patch.object(gallery, "collect") as collect:
+                with self.assertRaises(ValueError):
+                    gallery.main(["--out", str(output), "--no-renders"], space=space)
+                collect.assert_not_called()
+        self.assertFalse(self.root.exists())
+
+    def test_explicit_report_output_uses_configured_root(self):
+        cfg = {"storageRoots": {"reports": "operations/reports"}}
+        space = types.SimpleNamespace(cfg=cfg, st={}, work=self.root)
+        with mock.patch.object(gallery, "collect", side_effect=RuntimeError("collection boundary")), \
+                mock.patch.object(gallery.cw, "storage_output_path",
+                                  wraps=gallery.cw.storage_output_path) as resolve:
+            with self.assertRaisesRegex(RuntimeError, "collection boundary"):
+                gallery.main(["--out", "custom", "--no-renders"], space=space)
+            resolve.assert_called_once_with(cfg, "reports", "custom", root=self.root)
+        self.assertTrue((self.root / "operations" / "reports" / "custom").is_dir())
+
     def test_models_are_a_distinct_active_category_not_a_sister_alias(self):
         self.assertEqual(gallery.likeness.status_of("Models/Freya"), "Models")
         self.assertFalse(gallery.likeness.is_sister("Models/Freya"))

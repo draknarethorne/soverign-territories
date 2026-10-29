@@ -8,7 +8,12 @@ When the file is missing the masthead falls back to a gradient.
 import html
 import os
 import pathlib
+import sys
 import tempfile
+
+ROOT = pathlib.Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT))
+from tools.workflows import comfy_workflows as cw
 
 BANNER_NAME = "gallery-banner.jpg"
 BANNER_SOURCE = pathlib.Path(__file__).with_name("assets") / BANNER_NAME
@@ -87,7 +92,31 @@ def reports_prefix(page_dir, reports_dir):
     return "" if relative == "." else relative.rstrip("/") + "/"
 
 
-def masthead(section=None, prefix="../", tagline="Local photo library", links=True):
+def configured_sections(work_root, cfg=None):
+    """Resolve local gallery links from the configured report and generation roots."""
+    config = cfg if cfg is not None else cw.load_cfg()
+    reports = cw.storage_root(config, "reports", root=work_root)
+    generation = cw.storage_root(config, "generation", root=work_root)
+    targets = (
+        ("People", reports / "library" / "people_gallery.html"),
+        ("Artists", reports / "artists" / "artists_gallery.html"),
+        ("Rendering", generation / "index.html"),
+        ("Outputs", generation / "outputs.html"),
+        ("Comparison", generation / "comparison.html"),
+    )
+    try:
+        return [
+            (label, pathlib.Path(os.path.relpath(target, reports)).as_posix())
+            for label, target in targets
+        ]
+    except ValueError:
+        return None
+
+
+def masthead(
+    section=None, prefix="../", tagline="Local photo library", links=True,
+    section_links=None,
+):
     """Banner header. ``prefix`` leads from the page to _reports; None drops banner and links."""
     style = ""
     if prefix is not None:
@@ -99,13 +128,14 @@ def masthead(section=None, prefix="../", tagline="Local photo library", links=Tr
     )
     show_links = links and prefix is not None
     if show_links:
+        sections = SECTIONS if section_links is None else section_links
         home = html.escape(prefix + SECTIONS[0][1], quote=True)
         brand = f'<a class="site-brand" href="{home}">{brand}</a>'
         sections = '<nav class="site-sections" aria-label="Libraries">' + "".join(
             f'<a href="{html.escape(prefix + href, quote=True)}"'
             + (' aria-current="page"' if label == section else "")
             + f'>{html.escape(label)}</a>'
-            for label, href in SECTIONS
+            for label, href in sections
         ) + "</nav>"
         sections += (
             '<details class="site-menu"><summary>Menu</summary>'

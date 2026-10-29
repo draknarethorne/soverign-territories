@@ -8,7 +8,6 @@ import json
 import pathlib
 import re
 import sys
-import tempfile
 from urllib.parse import urlencode
 
 from PIL import Image, ImageOps
@@ -17,6 +16,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/art"))
 import likeness  # noqa: E402
 import originals  # noqa: E402
+import temporary_storage  # noqa: E402
 from likeness_library import domains, gallery_chrome, metadata, preparation_provenance, report_assets  # noqa: E402
 from likeness_library.sandbox import is_sandbox_working_path, require_sandbox_cache  # noqa: E402
 
@@ -113,7 +113,7 @@ def inventory(root):
     return result
 
 
-def page(records, *, detail, stats):
+def page(records, *, detail, stats, section_links=None):
     title = "Artist photo review" if detail else "Artists gallery"
     current = "Photo review" if detail else "Overview"
     links = [("Overview", "artists_gallery.html"), ("Photo review", "artists_gallery_review.html"),
@@ -123,7 +123,9 @@ def page(records, *, detail, stats):
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title><style>{gallery_chrome.CSS}{CSS}</style></head>
 <body id="top" data-view="{'detail' if detail else 'overview'}">
-{gallery_chrome.masthead("Artists", "../", "Artist library")}
+{gallery_chrome.masthead(
+    "Artists", "../", "Artist library", section_links=section_links
+)}
 <div class="site-page">
 <header class="page-header"><div><div class="eyebrow">Artist library · separate from People</div><h1>{title}</h1>
 <p>Browse Artist-local folders and originals. No people relationships, matching, staged actions or source changes.</p>
@@ -145,6 +147,9 @@ def page(records, *, detail, stats):
 
 def prepare(root, sources, cache, provenance):
     assets, records, inputs, diagnostics = {}, [], {}, []
+    section_links = gallery_chrome.configured_sections(
+        root, getattr(provenance, "cfg", None)
+    )
     for artist, folder, bucket, source in sources:
         payload = source.read_bytes()
         sha = digest(payload)
@@ -192,8 +197,12 @@ def prepare(root, sources, cache, provenance):
         })
     thumb_bytes = sum(len(value) for value in assets.values())
     stats = f"{len(groups)} groups · {len(records)} photos · {len(assets)} thumbnails / {thumb_bytes / 1048576:.2f} MiB"
-    assets["artists_gallery.html"] = page(groups, detail=False, stats=stats)
-    assets["artists_gallery_review.html"] = page(records, detail=True, stats=stats)
+    assets["artists_gallery.html"] = page(
+        groups, detail=False, stats=stats, section_links=section_links
+    )
+    assets["artists_gallery_review.html"] = page(
+        records, detail=True, stats=stats, section_links=section_links
+    )
     manifest = {
         "formatVersion": 1, "recipe": RECIPE, "inputs": inputs,
         "files": {name: digest(value) for name, value in sorted(assets.items())},
@@ -206,8 +215,13 @@ def prepare(root, sources, cache, provenance):
 def run(args):
     cfg = likeness.cw.load_cfg()
     root = pathlib.Path(args.root or likeness.cw.work_root(cfg)).expanduser().resolve(strict=True)
-    out = safe_path(root, root / "_reports" / "artists")
-    cache_path = pathlib.Path(args.cache) if args.cache else root / "_likeness" / "artists" / "cache.json"
+    reports_root = likeness.cw.storage_root(cfg, "reports", root=root)
+    out = safe_path(root, reports_root / "artists")
+    cache_path = (
+        pathlib.Path(args.cache)
+        if args.cache
+        else likeness.cw.storage_root(cfg, "likeness", root=root) / "artists" / "cache.json"
+    )
     if is_sandbox_working_path(root):
         require_sandbox_cache(root, cache_path)
     safe_path(root, cache_path)
@@ -239,7 +253,7 @@ def run(args):
     if args.check:
         return int(bool(stale or manifest["diagnostics"]))
     out.mkdir(parents=True, exist_ok=True)
-    gallery_chrome.publish_banner(safe_path(root, root / "_reports"))
+    gallery_chrome.publish_banner(safe_path(root, reports_root))
     previous_path = out / MANIFEST
     previous = json.loads(previous_path.read_text(encoding="utf-8")) if previous_path.is_file() else {}
     for name in stale:
@@ -249,8 +263,8 @@ def run(args):
             or previous.get("files", {}).get(name) != digest(target.read_bytes())
         ):
             raise ValueError(f"preserved edited/unowned report file; choose how to recover it before refresh: {target}")
-    with tempfile.TemporaryDirectory(prefix=".artists-stage-", dir=out.parent) as stage_name:
-        stage = pathlib.Path(stage_name)
+    temporary_root = likeness.cw.storage_root(cfg, "temporary", root=root)
+    with temporary_storage.staging_directory(temporary_root, ".artists-stage-") as stage:
         for name in stale:
             target = stage / name
             target.parent.mkdir(parents=True, exist_ok=True)

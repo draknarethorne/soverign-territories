@@ -30,8 +30,37 @@ class Links(HTMLParser):
 
 class PreparationTests(unittest.TestCase):
     def setUp(self):
-        self.tmp = tempfile.TemporaryDirectory()
+        # Published v16 reports must remain verifiable after the recipe changes.
+        for patch in (
+            mock.patch.object(preparation, "CURRENT", "preparation-comparison-v16"),
+            mock.patch.object(preparation, "STEPS", preparation.pipeline.STEPS),
+            mock.patch.dict(preparation.RECIPE, {"id": "preparation-comparison-v16"}),
+            mock.patch.object(preparation.pipeline, "recommended_candidates",
+                              preparation.pipeline.processing_candidates),
+        ):
+            patch.start()
+            self.addCleanup(patch.stop)
+        (ROOT / "tmp").mkdir(exist_ok=True)
+        self.tmp = tempfile.TemporaryDirectory(prefix="preparation-tests-", dir=ROOT / "tmp")
         self.root = pathlib.Path(self.tmp.name) / "Sovereign Territories Sandbox" / "Working"
+        base = pathlib.Path(self.tmp.name)
+        self.cfg = preparation.cw.load_cfg()
+        self.cfg["paths"].update({
+            "productionRoot": str(base / "production"),
+            "sandboxWorkingRoot": str(self.root),
+            "inputsRoot": str(base / "inputs"),
+            "outputRoot": str(base / "outputs"),
+            "modelCacheRoot": str(base / "models"),
+        })
+        self.cfg.update({
+            "installsRoot": str(base / "installs"),
+            "sharedInput": str(base / "shared-input"),
+            "sharedOutput": str(base / "shared-output"),
+            "photos": {},
+        })
+        config = mock.patch.object(preparation.cw, "load_cfg", return_value=self.cfg)
+        config.start()
+        self.addCleanup(config.stop)
         self.output = self.root / "_reports" / "preparation" / "pilot"
         self.photo = self.put("Angels/Fixed Slot/gallery/old_name_image_123.jpg")
         (self.root / ".likeness-library.json").write_text('{"curation":"unchanged"}', encoding="utf-8")
@@ -69,8 +98,11 @@ class PreparationTests(unittest.TestCase):
                 for p in self.root.rglob("*") if p.is_file() and "_reports" not in p.parts}
 
     def call(self, *flags):
-        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
-            return preparation.main(["--root", str(self.root), "--out", str(self.output), *flags])
+        errors = io.StringIO()
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(errors):
+            code = preparation.main(["--root", str(self.root), "--out", str(self.output), *flags])
+        self.errors = errors.getvalue()
+        return code
 
     def manifest(self):
         return json.loads((self.output / "manifest.json").read_text(encoding="utf-8"))
@@ -166,6 +198,40 @@ class PreparationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "named run"):
             preparation.locations(self.root, self.root / "_reports" / "preparation")
 
+    def test_preparation_reports_follow_configured_reports_root(self):
+        cfg = {"storageRoots": {"reports": "operations/reports"}}
+        output = self.root / "operations" / "reports" / "preparation" / "configured-run"
+        with mock.patch.object(preparation.cw, "load_cfg", return_value=cfg):
+            self.assertEqual(preparation.locations(self.root, output), (self.root, output))
+            with self.assertRaisesRegex(ValueError, "named run"):
+                preparation.locations(self.root, self.output)
+
+    def test_model_cache_paths_follow_workspace_configuration(self):
+        cache = pathlib.Path(self.tmp.name) / "configured-model-cache"
+        cfg = {"paths": {"modelCacheRoot": str(cache)}}
+        with mock.patch.object(preparation.cw, "load_cfg", return_value=cfg):
+            self.assertEqual(preparation.models.folder(), cache / "models")
+            self.assertEqual(
+                preparation.preparation_geometry.local_model(),
+                cache / "models" / "face_detection_yunet_2023mar.onnx",
+            )
+
+    def test_failed_model_download_removes_partial_file(self):
+        cache = pathlib.Path(self.tmp.name) / "configured-model-cache"
+        cfg = {"paths": {"modelCacheRoot": str(cache)}}
+
+        def partial_download(_url, target):
+            pathlib.Path(target).write_bytes(b"partial")
+            raise OSError("network interrupted")
+
+        with mock.patch.object(preparation.cw, "load_cfg", return_value=cfg), \
+                mock.patch.object(preparation.models.urllib.request, "urlretrieve",
+                                  side_effect=partial_download):
+            with self.assertRaisesRegex(OSError, "network interrupted"):
+                preparation.models.path("person")
+        self.assertFalse((cache / "models" /
+                          (preparation.models.MODELS["person"]["file"] + ".part")).exists())
+
     def test_reparse_path_rejected_before_writes(self):
         actual = preparation.sandbox._is_reparse_point
         with mock.patch.object(preparation.sandbox, "_is_reparse_point",
@@ -179,7 +245,10 @@ class PreparationTests(unittest.TestCase):
         original_decode = preparation.decode
 
         def checked_decode(payload):
-            preserved = list(self.output.parent.glob(".preparation-*/run/originals/*"))
+            temporary_root = preparation.cw.storage_root(
+                preparation.cw.load_cfg(), "temporary", root=self.root
+            )
+            preserved = list(temporary_root.glob(".preparation-*/run/originals/*"))
             self.assertEqual(preserved[0].read_bytes(), payload)
             return original_decode(payload)
 
@@ -191,6 +260,25 @@ class PreparationTests(unittest.TestCase):
         self.assertGreater(len(row["diagnostics"]), 1)
         self.assertEqual((self.output / row["retained"]).read_bytes(), b"not a picture")
         self.assertEqual(self.call("--check"), 1)
+
+    def test_render_failure_cleans_owned_staging_before_publication(self):
+        with mock.patch.object(preparation, "rendered_rows", side_effect=OSError("render stopped")):
+            self.assertEqual(self.call("--apply"), 1)
+        temporary_root = preparation.cw.storage_root(
+            preparation.cw.load_cfg(), "temporary", root=self.root
+        )
+        self.assertEqual(list(temporary_root.glob(".preparation-*")), [])
+        self.assertFalse(self.output.exists())
+        self.assertEqual(self.source_tree(), self.before)
+
+    def test_publish_failure_cleans_owned_staging_without_replacing_output(self):
+        with mock.patch.object(preparation.os, "rename", side_effect=OSError("publish stopped")):
+            self.assertEqual(self.call("--apply"), 1)
+        temporary_root = preparation.cw.storage_root(
+            preparation.cw.load_cfg(), "temporary", root=self.root
+        )
+        self.assertEqual(list(temporary_root.glob(".preparation-*")), [])
+        self.assertFalse(self.output.exists())
 
     def test_transparency_is_held_not_silently_composited(self):
         self.photo.unlink()
@@ -584,6 +672,11 @@ class PreparationTests(unittest.TestCase):
         legacy = preparation.legacy
         self.assertEqual(preparation.step_names("preparation-comparison-v14"), list(legacy.OLD_STEPS))
         self.assertEqual(preparation.step_names("preparation-comparison-v15"), list(legacy.V15_STEPS))
+        traced_steps = ["first-crop", "eraser", "residual-crop", "reconstruction",
+                        "composition", "denoise", "tone"]
+        for version in range(17, 21):
+            recipe_id = f"preparation-comparison-v{version}"
+            self.assertEqual(preparation.step_names(recipe_id), traced_steps)
         self.assertEqual(preparation.step_names(preparation.RECIPE["id"]), list(preparation.STEPS))
         self.assertEqual(preparation.STEPS[:3], ("first-crop", "second-crop", "eraser"), "crop before any fill")
 
@@ -737,7 +830,7 @@ class PreparationTests(unittest.TestCase):
         original = self.photo.read_bytes()
         mtime = self.photo.stat().st_mtime_ns
         catalog = (self.root / ".likeness-library.json").read_bytes()
-        with mock.patch.object(preparation_junk.metadata.cw, "load_cfg", return_value={}):
+        with mock.patch.object(preparation_junk.metadata.cw, "load_cfg", return_value=self.cfg):
             self.assertEqual(self.call("--quarantine-junk", "--dry-run"), 0)
             self.assertTrue(self.photo.exists())
             self.assertFalse((self.output / preparation_junk.JOURNAL).exists())
@@ -765,13 +858,28 @@ class PreparationTests(unittest.TestCase):
         row = self.manifest()["photos"][0]
         self.assertEqual(row["sourceScope"]["matchingDomain"], "Artists/Test Painter")
         self.assertEqual(row["outcome"], "junk-candidate")
-        with mock.patch.object(preparation_junk.metadata.cw, "load_cfg", return_value={}):
+        with mock.patch.object(preparation_junk.metadata.cw, "load_cfg", return_value=self.cfg):
             self.assertEqual(self.call("--quarantine-junk", "--apply"), 0)
             target = self.root / "_junk/Artists/Test Painter/gallery" / self.photo.name
             self.assertTrue(target.is_file())
             self.assertFalse((self.root / "Various").exists())
             self.assertEqual(self.call("--undo-junk", "--apply"), 0)
         self.assertTrue(self.photo.is_file())
+
+    def test_configured_junk_root_routes_quarantine_and_undo(self):
+        config = {**self.cfg, "storageRoots": {**self.cfg["storageRoots"], "junk": "_quarantine"}}
+        with mock.patch.object(preparation_junk.cw, "load_cfg", return_value=config):
+            self.loose_junk_run()
+            self.assertEqual(self.call("--quarantine-junk", "--apply"), 0)
+            target = self.root / "_quarantine" / "Various" / "gallery" / self.photo.name
+            self.assertTrue(target.is_file())
+            self.assertFalse(self.photo.exists())
+            journal = json.loads((self.output / preparation_junk.JOURNAL).read_text())
+            self.assertEqual(journal["moves"][0]["target"],
+                             "_quarantine/Various/gallery/" + self.photo.name)
+            self.assertEqual(self.call("--undo-junk", "--apply"), 0)
+        self.assertTrue(self.photo.is_file())
+        self.assertFalse(target.exists())
 
     def test_source_artist_scope_cannot_be_forged_into_general_pool(self):
         self.loose_junk_run(category="Artists")
@@ -783,7 +891,7 @@ class PreparationTests(unittest.TestCase):
     def test_junk_refuses_collision_stale_source_failed_backup_and_workflow_choice(self):
         self.loose_junk_run()
         target = self.root / "_junk/Various/gallery" / self.photo.name
-        with mock.patch.object(preparation_junk.metadata.cw, "load_cfg", return_value={}):
+        with mock.patch.object(preparation_junk.metadata.cw, "load_cfg", return_value=self.cfg):
             target.parent.mkdir(parents=True)
             target.write_bytes(b"existing")
             self.assertEqual(self.call("--quarantine-junk", "--apply"), 1)
@@ -791,10 +899,11 @@ class PreparationTests(unittest.TestCase):
             target.unlink()
             with mock.patch.object(preparation_junk.library_backup, "create_backup", side_effect=OSError("disk full")):
                 self.assertEqual(self.call("--quarantine-junk", "--apply"), 1)
+                self.assertIn("disk full", self.errors)
             self.assertTrue(self.photo.is_file())
             self.assertFalse((self.output / preparation_junk.JOURNAL).exists())
         with mock.patch.object(preparation_junk.metadata.cw, "load_cfg",
-                               return_value={"photos": {"Test": "incoming_image_123_944x1104.png"}}):
+                               return_value={**self.cfg, "photos": {"Test": "incoming_image_123_944x1104.png"}}):
             self.assertEqual(self.call("--quarantine-junk", "--apply"), 1)
             self.assertTrue(self.photo.is_file())
         self.photo.write_bytes(b"changed")
@@ -824,7 +933,7 @@ class PreparationTests(unittest.TestCase):
                 raise OSError("simulated second move failure")
             return original(source, target, expected)
 
-        with mock.patch.object(preparation_junk.metadata.cw, "load_cfg", return_value={}):
+        with mock.patch.object(preparation_junk.metadata.cw, "load_cfg", return_value=self.cfg):
             with mock.patch.object(preparation_junk, "move_exact", side_effect=fail_second):
                 self.assertEqual(self.call("--quarantine-junk", "--apply"), 1)
         self.assertTrue(self.photo.exists())
@@ -835,7 +944,7 @@ class PreparationTests(unittest.TestCase):
 
     def test_junk_changed_quarantined_bytes_or_backup_block_check_and_undo(self):
         self.loose_junk_run()
-        with mock.patch.object(preparation_junk.metadata.cw, "load_cfg", return_value={}):
+        with mock.patch.object(preparation_junk.metadata.cw, "load_cfg", return_value=self.cfg):
             self.assertEqual(self.call("--quarantine-junk", "--apply"), 0)
             target = self.root / "_junk/Various/gallery" / self.photo.name
             raw = target.read_bytes()
@@ -862,14 +971,27 @@ class PreparationTests(unittest.TestCase):
         for row in rows:
             self.assertEqual(row["processing"]["cleanup"], "control")
             for variant in row["variants"].values():
-                self.assertEqual(Image.open(self.output / variant["padded"]).size, (944, 1104))
+                with Image.open(self.output / variant["padded"]) as image:
+                    self.assertEqual(image.size, (944, 1104))
         self.assertFalse(self.manifest()["recipe"]["matching"])
 
     def test_junk_workflow_configuration_race_after_backup_refuses_before_moves(self):
         self.loose_junk_run()
-        changed = {"photos": {"Test": "incoming_image_123_944x1104.png"}}
-        with mock.patch.object(preparation_junk.cw, "load_cfg", side_effect=[{}, changed]):
+        changed = {**self.cfg, "photos": {"Test": "incoming_image_123_944x1104.png"}}
+        current = [self.cfg]
+        create_backup = preparation_junk.library_backup.create_backup
+
+        def change_after_backup(*args, **kwargs):
+            snapshot = create_backup(*args, **kwargs)
+            current[0] = changed
+            return snapshot
+
+        with mock.patch.object(preparation_junk.cw, "load_cfg", side_effect=lambda: current[0]), \
+                mock.patch.object(preparation_junk.library_backup, "create_backup",
+                                  side_effect=change_after_backup) as backup:
             self.assertEqual(self.call("--quarantine-junk", "--apply"), 1)
+            backup.assert_called_once()
+            self.assertIn("workflow configuration changed during Junk backup", self.errors)
         self.assertTrue(self.photo.exists())
         self.assertFalse((self.output / preparation_junk.JOURNAL).exists())
 
@@ -920,6 +1042,39 @@ class PreparationTests(unittest.TestCase):
             self.assertEqual(self.call("--check"), 1)
         (self.output / "manifest.json").write_text(json.dumps({**data, "photos": []}), encoding="utf-8")
         self.assertEqual(self.call("--check"), 1)
+
+
+def slow_fake_render(root, stage, source):
+    """Picklable stand-in for render_photo; early inputs finish last."""
+    import os
+    import time
+
+    time.sleep(0.05 * (5 - int(source.stem[-1])))
+    return {"source": source.name, "pid": os.getpid()}
+
+
+class ParallelPreparationTests(unittest.TestCase):
+    def test_parallel_rows_keep_input_order_and_render_duplicates_in_one_task(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = pathlib.Path(temporary)
+            sources = []
+            for index, payload in enumerate((b"a", b"b", b"a", b"c", b"d")):
+                path = root / f"p{index}.jpg"
+                path.write_bytes(payload)
+                sources.append(path)
+            rows = list(preparation.rendered_rows(root, root, sources, 2, render=slow_fake_render))
+        self.assertEqual([index for index, _ in rows], [0, 1, 2, 3, 4])
+        self.assertEqual([row["source"] for _, row in rows], [p.name for p in sources])
+        self.assertEqual(rows[0][1]["pid"], rows[2][1]["pid"])
+
+    def test_worker_count_honours_override_and_free_memory(self):
+        with mock.patch.dict("os.environ", {"ST_INTAKE_WORKERS": "5"}):
+            self.assertEqual(preparation.default_workers(), 5)
+        with mock.patch.dict("os.environ", {"ST_INTAKE_WORKERS": ""}), mock.patch("os.cpu_count", return_value=12):
+            with mock.patch.object(preparation, "available_memory_gb", return_value=3.0):
+                self.assertEqual(preparation.default_workers(), 1)
+            with mock.patch.object(preparation, "available_memory_gb", return_value=16.0):
+                self.assertEqual(preparation.default_workers(), preparation.MAX_WORKERS)
 
 
 if __name__ == "__main__":

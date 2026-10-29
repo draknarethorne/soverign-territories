@@ -130,6 +130,12 @@ claiming the historical source is still currently assigned to the same identity.
 Hashes detect accidental changes, not malicious rewriting of all local evidence.
 Do not submit this manifest to ComfyUI or treat it as an API graph.
 
+New batches also retain a validated storage-configuration receipt. Its frozen
+paths and hashes remain historical evidence after the live configuration
+changes; checking an old batch does not require today's configuration to
+match it. Older receipt-less batches remain readable, but a malformed receipt
+is rejected rather than ignored.
+
 The runner is tested by `bin\test.cmd`, `bin\validate.cmd` and its focused
 pre-commit hook. Menu **F** previews a request. No live library processing or
 rendering is implied by the temporary-fixture tests.

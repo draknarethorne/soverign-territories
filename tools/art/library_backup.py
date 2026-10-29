@@ -2,13 +2,14 @@
 """Create a dated, integrity-manifested snapshot before photo-library changes.
 
   python tools/art/library_backup.py              preview the full snapshot
-  python tools/art/library_backup.py --apply       copy it under <work>\\_backup
+  python tools/art/library_backup.py --apply       copy it under <work>\\<storageRoots.backup>
 
 The snapshot includes the work root except prior backups and the work-root
 archive, configured ComfyUI inputs and the repository workspace configuration.
 Routine snapshots omit hash-verified People and Artist browser outputs, retaining
 their manifests; restore requires rebuilding those views. --full keeps outputs.
 ComfyUI output renders are not changed by the library pipeline and are not copied.
+The default backup root remains <work>\\_backup.
 """
 import argparse
 import datetime
@@ -27,9 +28,11 @@ import comfy_workflows as cw  # noqa: E402
 CHUNK_SIZE = 1024 * 1024
 
 
-def generated_report_omissions(work):
+def generated_report_omissions(work, reports_root=None):
     """Omit only unchanged, manifest-owned browser outputs, not report evidence."""
     work = pathlib.Path(work).resolve()
+    reports_root = pathlib.Path(reports_root) if reports_root else cw.storage_root(
+        cw.load_cfg(), "reports", root=work)
     omissions = {}
     for folder, manifest_name, recipe, pages, thumbnail_pattern in (
         ("artists", "gallery-manifest.json", "artists-gallery-v1",
@@ -40,14 +43,14 @@ def generated_report_omissions(work):
          r"people_gallery_review_files/[A-Za-z0-9_.-]+_(?:chest|head|face)_[0-9a-f]{12}\.jpg"),
     ):
         omissions.update(_owned_report_omissions(
-            work, folder, manifest_name, recipe, pages, thumbnail_pattern))
+            work, reports_root, folder, manifest_name, recipe, pages, thumbnail_pattern))
     return omissions
 
 
-def _owned_report_omissions(work, folder, manifest_name, recipe, pages, thumbnail_pattern):
-    report = work / "_reports" / folder
+def _owned_report_omissions(work, reports_root, folder, manifest_name, recipe, pages, thumbnail_pattern):
+    report = reports_root / folder
     manifest = report / manifest_name
-    if any(path.is_symlink() for path in (work / "_reports", report, manifest)):
+    if any(path.is_symlink() for path in (reports_root, report, manifest)):
         return {}
     try:
         data = json.loads(manifest.read_text(encoding="utf-8"))
@@ -214,10 +217,18 @@ def _files(source, exclude_library_storage=False):
         return
     if not source.is_dir():
         raise FileNotFoundError(f"backup source does not exist: {source}")
+    excluded = set()
+    if exclude_library_storage:
+        excluded = {pathlib.Path("_backup"), pathlib.Path("_archive")}
+        backup_root = cw.storage_root(cw.load_cfg(), "backup", root=source)
+        excluded.add(backup_root.relative_to(source))
     for current, dirs, names in os.walk(source, followlinks=False):
         current_path = pathlib.Path(current)
-        if exclude_library_storage and current_path == source:
-            dirs[:] = [name for name in dirs if name.casefold() not in {"_backup", "_archive"}]
+        relative_current = current_path.relative_to(source)
+        for name in list(dirs):
+            relative = relative_current / name
+            if any(relative == item or item in relative.parents for item in excluded):
+                dirs.remove(name)
         for name in list(dirs):
             item = current_path / name
             if item.is_symlink():
@@ -235,12 +246,20 @@ def _directories(source, exclude_library_storage=False):
     if not source.is_dir():
         return []
     out = [pathlib.Path()]
+    excluded = set()
+    if exclude_library_storage:
+        excluded = {pathlib.Path("_backup"), pathlib.Path("_archive")}
+        backup_root = cw.storage_root(cw.load_cfg(), "backup", root=source)
+        excluded.add(backup_root.relative_to(source))
     for current, dirs, _names in os.walk(source, followlinks=False):
         current_path = pathlib.Path(current)
-        if exclude_library_storage and current_path == source:
-            dirs[:] = [name for name in dirs if name.casefold() not in {"_backup", "_archive"}]
         for name in list(dirs):
             item = current_path / name
+            relative = item.relative_to(source)
+            if any(relative == excluded_root or excluded_root in relative.parents
+                   for excluded_root in excluded):
+                dirs.remove(name)
+                continue
             if item.is_symlink():
                 raise OSError(f"refusing to back up symbolic link: {item}")
         dirs.sort(key=str.casefold)
@@ -283,7 +302,8 @@ def preview(work_root, inputs_root=None, config_path=None, extra_sources=()):
     print("  excluded from work-root: _backup, _archive")
     print(f"  omitted {len(omissions)} exactly reproducible managed derivatives; edited/unproven files retained")
     print(f"  omitted {len(report_omissions)} hash-verified generated browser files; report manifest retained")
-    print("  destination: <work-root>\\_backup\\library-<timestamp>")
+    backup_root = cw.storage_root(cw.load_cfg(), "backup", root=pathlib.Path(work_root).resolve())
+    print(f"  destination: {backup_root}\\library-<timestamp>")
     return entries, total
 
 
@@ -330,7 +350,7 @@ def verify_backup(snapshot):
 def latest_work_root_backup(work_root):
     """Return the newest complete snapshot that includes this exact work root."""
     work = pathlib.Path(work_root).expanduser().resolve()
-    backup_root = work / "_backup"
+    backup_root = cw.storage_root(cw.load_cfg(), "backup", root=work)
     if not backup_root.is_dir():
         raise OSError(f"no backup directory exists for work root: {work}")
     candidates = sorted(
@@ -407,7 +427,9 @@ def create_backup(work_root, inputs_root=None, config_path=None, stamp=None, app
         return None
 
     stamp = stamp or datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-    destination = work / "_backup" / f"library-{stamp}"
+    cfg = cw.load_cfg()
+    backup_root = cw.storage_root(cfg, "backup", root=work)
+    destination = backup_root / f"library-{stamp}"
     snapshot = _snapshot_path(destination)
     snapshot.mkdir(parents=True, exist_ok=False)
     required = total + 256 * 1024 * 1024
@@ -492,6 +514,17 @@ def create_backup(work_root, inputs_root=None, config_path=None, stamp=None, app
             "entries": manifest_files,
             "regenerable": list(omissions.values()),
             "generatedReports": list(report_omissions.values()),
+            "configurationReceipt": cw.storage_configuration_receipt(
+                cfg,
+                work,
+                {
+                    "backupDestination": destination,
+                    **{
+                        f"backupSource.{label}": source
+                        for label, source, _exclude in source_list
+                    },
+                },
+            ),
         }
         if scoped_sources is not None:
             manifest["scope"] = "transaction"
@@ -524,7 +557,7 @@ def main(argv=None):
     parser.add_argument("--destination", help="new nonexisting recovery directory; live data is never overwritten")
     parser.add_argument("--full", action="store_true",
                         help="include managed derivatives and generated browser files (complete monthly snapshots)")
-    parser.add_argument("--root", help="photo library root (default: workspaces.json paths.workRoot)")
+    parser.add_argument("--root", help="photo library root (default: workspaces.json paths.productionRoot)")
     parser.add_argument("--inputs", help="ComfyUI inputs root (default: workspaces.json paths.inputsRoot)")
     args = parser.parse_args(argv)
     if args.restore:

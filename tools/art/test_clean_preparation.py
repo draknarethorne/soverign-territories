@@ -61,7 +61,8 @@ class CleanPreparationTests(unittest.TestCase):
         )
         self.api = SimpleNamespace(
             cw=SimpleNamespace(
-                load_cfg=lambda: {}, photo_key=likeness.cw.photo_key,
+                load_cfg=lambda: {}, storage_root=likeness.cw.storage_root,
+                photo_key=likeness.cw.photo_key,
                 photo_folders=likeness.cw.photo_folders,
             ),
             originals=likeness.originals, nz=likeness.nz, chosen_keys=lambda cfg: set(),
@@ -77,7 +78,8 @@ class CleanPreparationTests(unittest.TestCase):
         for patch in (
             mock.patch.object(image_preparation.preparation_geometry, "detect_faces",
                               return_value=([[50., 40., 60., 70.]], "Test face")),
-            mock.patch.object(image_preparation.pipeline.subjects, "detect", return_value=None),
+            mock.patch.object(image_preparation.pipeline.subjects, "detect",
+                              side_effect=self.subject),
             mock.patch.object(image_preparation.pipeline.fill, "fill",
                               side_effect=AssertionError("No clutter in fixture; do not load eraser")),
             mock.patch.object(clean_rebase, "validate_sandbox", return_value=self.layout),
@@ -88,6 +90,12 @@ class CleanPreparationTests(unittest.TestCase):
         ):
             patch.start()
             self.addCleanup(patch.stop)
+
+    @staticmethod
+    def subject(image):
+        mask = np.zeros((image.height, image.width), dtype=bool)
+        mask[35:850, 35:600] = True
+        return {"box": [35, 35, 600, 850], "mask": mask, "people": 1, "dropped": 0}
 
     @staticmethod
     def matches(candidates, cores, **kwargs):
@@ -143,6 +151,68 @@ class CleanPreparationTests(unittest.TestCase):
         self.assertFalse((self.run / "inputs").exists())
         self.assertFalse((self.run / "likeness-cache.json").exists())
 
+    @unittest.skipUnless(os.name == "nt", "Windows launcher")
+    def test_launcher_forwards_more_than_nine_arguments_including_dry_run(self):
+        result = subprocess.run(
+            ["cmd", "/c", str(pathlib.Path(__file__).resolve().parents[2] / "bin" / "sandbox-rebase.cmd"),
+             str(self.working), str(self.run), "--baseline", "working", "--cast-seeds", "core",
+             "--workers", "1", "--include-current-various", "--dry-run"],
+            capture_output=True, text=True, timeout=30,
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("current Working assigned images", result.stdout)
+        self.assertIn("Cast-seed policy: core.", result.stdout)
+        self.assertFalse((self.run / "source-overlay").exists())
+        self.assertFalse((self.run / "inputs").exists())
+
+    def test_input_copy_failure_removes_stage_without_publishing_partial_mirror(self):
+        with mock.patch.object(clean_preparation.shutil, "copy2", side_effect=OSError("copy failed")):
+            with self.assertRaisesRegex(OSError, "copy failed"):
+                clean_preparation.prepare(self.layout, self.run)
+        self.assertFalse((self.run / "inputs").exists())
+        self.assertEqual(list((self.working / "_tmp").iterdir()), [])
+
+    def test_resume_after_receipt_interruption_reuses_verified_artifacts(self):
+        self.command(intake_only=True, apply=True)
+        (self.run / "intake.json").unlink()
+        with mock.patch.object(
+            image_preparation, "rendered_rows",
+            side_effect=AssertionError("verified published intake must not render again"),
+        ):
+            result = self.command(intake_only=True, apply=True)
+        self.assertEqual(result["inputCount"], 5)
+        self.assertTrue((self.run / "intake.json").is_file())
+        self.assertEqual(list((self.working / "_tmp").iterdir()), [])
+
+    def test_candidate_quality_reads_selected_pixels_without_changing_source_identity(self):
+        self.command(intake_only=True, apply=True)
+        output, data = clean_preparation.verify(self.layout, self.run)
+        selected = {
+            pathlib.PurePosixPath(row["source"]).name:
+            clean_preparation.selected_path(output, row)
+            for row in data["photos"]
+        }
+        source_folders = {
+            pathlib.PurePosixPath(row["source"]).name:
+            pathlib.PurePosixPath(row["source"]).parent.parent.as_posix()
+            for row in data["photos"]
+        }
+        checked = []
+
+        def quality_reason(photo, settings):
+            checked.append(photo.name)
+            self.assertEqual(photo.path, selected[photo.name])
+            self.assertEqual(photo.key, source_folders[photo.name])
+            return None
+
+        self.api.junk_reason = quality_reason
+        self.command()
+        self.assertEqual(checked, ["fia_image_654321.jpg", "incoming_image_345678.jpg"])
+        plan = json.loads((self.run / "run.json").read_text(encoding="utf-8"))
+        row = next(row for row in plan["photos"] if row["photoId"] == "photo:image_654321")
+        self.assertEqual(row["source"], "Potentials/Fia/gallery/fia_image_654321.jpg")
+        self.assertEqual(row["oldFolder"], "Potentials/Fia")
+
     def test_intake_stop_check_resume_uses_selected_bytes_and_includes_named_pool_and_artists(self):
         self.assertEqual(self.command(intake_only=True, apply=True)["status"], "intake")
         self.assertFalse(self.measured)
@@ -153,6 +223,13 @@ class CleanPreparationTests(unittest.TestCase):
         with mock.patch.object(image_preparation, "publish", side_effect=AssertionError("Do not repeat intake")):
             self.command()
         plan = json.loads((self.run / "run.json").read_text(encoding="utf-8"))
+        retention = json.loads(
+            (self.working / "_sandbox-state" / "retention-manifest.json").read_text(encoding="utf-8")
+        )
+        registered = retention["runs"][self.run.name]
+        self.assertEqual(registered["retentionClass"], "review")
+        self.assertIn("intake.json", registered["manifestHashes"])
+        self.assertIn("run.json", registered["manifestHashes"])
         self.assertEqual(plan["preparation"]["inputCount"], 5)
         self.assertEqual(plan["preparation"]["artistCount"], 1)
         self.assertEqual(len(plan["photos"]), 4)
@@ -311,12 +388,26 @@ class CleanPreparationTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "stop after measurements"):
                 self.command()
         self.assertTrue((self.run / "intake.json").exists())
+        intake = json.loads((self.run / "intake.json").read_text(encoding="utf-8"))
+        receipt = intake["configurationReceipt"]
+        self.assertEqual(len(receipt["sourceConfigurationSha256"]), 64)
+        self.assertEqual(len(receipt["effectiveConfigurationSha256"]), 64)
+        self.assertEqual(receipt["resolvedPaths"]["runDirectory"], str(self.run.resolve()))
+        self.assertEqual(
+            receipt["resolvedPaths"]["preparationOutput"],
+            str((self.run / "inputs" / "_reports" / "preparation" / "all").resolve()),
+        )
         self.assertTrue((self.run / "likeness-cache.json").exists())
         self.assertFalse((self.run / "run.json").exists())
         self.measured.clear()
         self.command(replan=True)
         plan = json.loads((self.run / "run.json").read_text())
         self.assertEqual(plan["status"], "preview")
+        self.assertEqual(len(plan["configurationReceipt"]["effectiveConfigurationSha256"]), 64)
+        self.assertEqual(
+            plan["configurationReceipt"]["resolvedPaths"]["runDirectory"],
+            str(self.run.resolve()),
+        )
         self.assertTrue(plan["cacheMeasurementsReusedForReplan"])
         self.assertEqual(self.measured, [])
         selected = self.run / "inputs" / "_reports" / "preparation" / "all" / "manifest.json"

@@ -28,6 +28,15 @@ def _write_json(path, value):
     temporary = path.with_suffix(".tmp")
     temporary.write_text(json.dumps(value, indent=2), encoding="utf-8")
     temporary.replace(path)
+    if pathlib.Path(path).name == "run.json" and isinstance(value.get("workingRoot"), str):
+        working_root = pathlib.Path(value["workingRoot"])
+        if sandbox.is_sandbox_working_path(working_root):
+            from . import storage_retention
+
+            storage_retention.register_runs(
+                working_root, metadata.cw.load_cfg(),
+                run_names=[pathlib.Path(path).parent.name],
+            )
 
 
 def _bind_preparation(rows, prepared_rows, output, api):
@@ -159,11 +168,35 @@ def _curation_inventory(layout, catalog=None):
     return current
 
 
-def _current_various_overlay_rows(layout):
+def _working_baseline(layout):
+    """Bind current assigned inputs without reviving historical Source-only photos."""
+    import image_preparation
+
+    working = layout["working_root"]
+    records = {}
+    for path in image_preparation.inventory(working):
+        relative = path.relative_to(working).as_posix()
+        if relative.startswith("Various/"):
+            continue
+        for parent in (path, *path.parents):
+            if parent == working:
+                break
+            if _is_reparse_point(parent):
+                raise ValueError(f"linked Working baseline input: {parent}")
+        records[relative] = (path.stat().st_size, metadata.content_sha256(path))
+    return {
+        **layout,
+        "source_root": working,
+        "manifest_files": records,
+    }, {relative: record[1] for relative, record in records.items()}
+
+
+def _current_various_overlay_rows(layout, source_rows=None):
     """Map active Working Various images to immutable IDs without losing either byte version."""
     import image_preparation
 
-    source_rows = clean_preparation.inventory(layout)
+    if source_rows is None:
+        source_rows = clean_preparation.inventory(layout)
     source_ids = collections.defaultdict(list)
     source_paths = set(source_rows)
     for relative in source_rows:
@@ -323,13 +356,26 @@ def _verify_source_overlay(layout, run):
     return layout
 
 
-def _create_source_overlay(layout, run):
-    """Stage immutable inputs plus current Various versions in a recoverable run-local tree."""
+def _create_source_overlay(layout, run, *, current_working=False):
+    from tools.art import temporary_storage
+
     overlay = pathlib.Path(run) / "source-overlay"
     if overlay.exists():
         raise ValueError("unfinished or existing source overlay; inspect it and use a new run")
-    immutable_rows, current_rows = _current_various_overlay_rows(layout)
-    overlay.mkdir(parents=True)
+    cfg = metadata.cw.load_cfg()
+    temporary_root = metadata.cw.storage_root(cfg, "temporary", root=layout["working_root"])
+    with temporary_storage.staging_directory(temporary_root, "source-overlay-") as stage:
+        _build_source_overlay(layout, stage, current_working=current_working)
+        stage.rename(overlay)
+    return _verify_source_overlay(layout, run)
+
+
+def _build_source_overlay(layout, overlay, *, current_working=False):
+    if current_working:
+        layout, baseline_rows = _working_baseline(layout)
+        immutable_rows, current_rows = _current_various_overlay_rows(layout, baseline_rows)
+    else:
+        immutable_rows, current_rows = _current_various_overlay_rows(layout)
     raw_recovery = []
     input_records = {}
     for index, (relative, digest) in enumerate(immutable_rows.items(), start=1):
@@ -341,7 +387,8 @@ def _create_source_overlay(layout, run):
             raise OSError(f"immutable source overlay copy checksum mismatch: {relative}")
         input_records[relative] = {"bytes": target.stat().st_size, "sha256": digest}
         if index % 250 == 0:
-            print(f"source overlay: copied {index}/{len(immutable_rows)} immutable inputs", flush=True)
+            label = "Working baseline" if current_working else "immutable"
+            print(f"source overlay: copied {index}/{len(immutable_rows)} {label} inputs", flush=True)
 
     for row in current_rows:
         current = layout["working_root"].joinpath(*pathlib.PurePosixPath(row["current"]).parts)
@@ -400,7 +447,9 @@ def _create_source_overlay(layout, run):
         "schemaVersion": 1,
         "createdAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "immutableManifestSHA256": metadata.content_sha256(layout["sandbox_root"] / "source-manifest.json"),
-        "immutableInputCount": len(immutable_rows),
+        "baselineMode": "working" if current_working else "source",
+        "baselineInputCount": len(immutable_rows),
+        "immutableInputCount": 0 if current_working else len(immutable_rows),
         "workingVariousCount": sum(1 + len(row["aliases"]) for row in current_rows),
         "replacementCount": sum(
             1 for row in current_rows
@@ -421,7 +470,6 @@ def _create_source_overlay(layout, run):
         "rawRecovery": raw_recovery,
     }
     _write_json(overlay / "overlay.json", value)
-    return _verify_source_overlay(layout, run)
 
 
 def _decision_matches_input(record, source_hash, working, current):
@@ -586,9 +634,58 @@ def _verify_routes(plan, source):
             and relative.parent == destination.parent
             and relative.stem == destination.stem
         )
+        if (
+            plan.get("castSeedPolicy", "all") == "core"
+            and relative.parts[0] in ("Angels", "Sisters")
+            and relative.parts[2] == "gallery"
+        ):
+            required_evidence = {
+                "retainedCast", "releasedCast", "castSeedScore", "castSeedThreshold",
+                "castSeedCore", "castSeedAnchor", "castSeedProtectedIdentity",
+                "castSeedProtectedPhoto", "castSeedWorkflowSelected",
+                "castSeedDecision", "castSeedReason",
+            }
+            category = relative.parts[0]
+            expected_threshold = plan["policy"]["categoryPolicies"][category][
+                "identityCoreMinimumSimilarity"
+            ]
+            score = row.get("castSeedScore")
+            if (
+                not required_evidence <= set(row)
+                or row.get("castSeedThreshold") != expected_threshold
+                or row.get("castSeedDecision") not in ("retained", "released")
+                or row.get("retainedCast") is not (row.get("castSeedDecision") == "retained")
+                or row.get("releasedCast") is not (row.get("castSeedDecision") == "released")
+                or not isinstance(row.get("castSeedReason"), str)
+                or not row["castSeedReason"].strip()
+                or (
+                    score is not None
+                    and (
+                        isinstance(score, bool) or not isinstance(score, (int, float))
+                        or not -1 <= score <= 1
+                    )
+                )
+            ):
+                raise ValueError(f"cast seed decision lacks complete policy evidence: {relative}")
+        released_cast = (
+            relative.parts[0] in ("Angels", "Sisters")
+            and row.get("releasedCast") is True
+            and plan.get("castSeedPolicy", "all") == "core"
+        )
+        if released_cast:
+            category = relative.parts[0]
+            expected_threshold = plan["policy"]["categoryPolicies"][category][
+                "identityCoreMinimumSimilarity"
+            ]
+            if (
+                row.get("retainedCast") is not False
+                or row.get("castSeedThreshold") != expected_threshold
+                or not row.get("castSeedReason")
+            ):
+                raise ValueError(f"released cast photo lacks bound seed-policy evidence: {relative}")
         if destination.parts[0] in ("Angels", "Sisters") and destination.parts[2] != "review" and not retained_cast:
             raise ValueError("cast candidates may only enter Review, never the cast core")
-        if relative.parts[0] in ("Angels", "Sisters") and not retained_cast:
+        if relative.parts[0] in ("Angels", "Sisters") and not (retained_cast or released_cast):
             raise ValueError("cast preparation cannot change cast membership")
         if row["source"] in sources or row["destination"].casefold() in destinations:
             raise ValueError("duplicate source or destination in clean rebase")
@@ -599,8 +696,199 @@ def _verify_routes(plan, source):
             raise ValueError(f"source changed since preview: {path}")
 
 
-def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=False, preparation=None):
+def _cast_seed_outcomes(
+    entries, cores, catalog, selected, policy, api, seed_policy, min_face,
+    quality_exclusions=None,
+):
+    """Split cast Gallery inputs into retained seeds and ordinary matching candidates."""
+    if seed_policy not in {"all", "core"}:
+        raise ValueError("cast seed policy must be all or core")
+    if seed_policy == "all":
+        retained = []
+        for relative, photo, _bucket, digest in entries:
+            retained.append({
+                "source": relative, "destination": relative, "oldFolder": photo.key,
+                "photoId": metadata.photo_id_from_name(photo.name), "sha256": digest,
+                "retainedCast": True, "releasedCast": False,
+                "reason": "Cast membership retained by the default all-seeds policy",
+            })
+        return retained, {}, {}
+
+    quality_exclusions = quality_exclusions or {}
+    people_by_folder = collections.defaultdict(list)
+    for person_id, person in catalog["people"].items():
+        if person["folder"].split("/", 1)[0] in ("Angels", "Sisters"):
+            people_by_folder[person["folder"]].append((person_id, person))
+    entries_by_folder = collections.defaultdict(list)
+    digest_by_path = {}
+    id_locations = collections.defaultdict(list)
+    for relative, photo, bucket, _digest in entries:
+        digest_by_path[relative] = _digest
+        photo_id = metadata.photo_id_from_name(photo.name)
+        if photo_id:
+            id_locations[photo_id].append((photo.key, relative))
+        if bucket != "gallery":
+            continue
+        entries_by_folder[photo.key].append((relative, photo))
+    duplicates = sorted(photo_id for photo_id, locations in id_locations.items() if len(locations) > 1)
+    if duplicates:
+        raise ValueError(f"cast seed selection has ambiguous photo IDs: {duplicates[:10]}")
+
+    retained, released, evidence = [], {}, {}
+    for folder, gallery in sorted(entries_by_folder.items()):
+        owners = people_by_folder.get(folder, [])
+        if len(owners) > 1:
+            raise ValueError(f"cast seed release has ambiguous identity ownership: {folder}")
+        person_id, person = owners[0] if owners else (None, None)
+        anchor_ids = set(person.get("identityAnchors", [])) if person else set()
+        gallery_ids = {
+            metadata.photo_id_from_name(photo.name): (photo, relative)
+            for relative, photo in gallery
+            if metadata.photo_id_from_name(photo.name)
+        }
+        missing_anchors = anchor_ids - set(gallery_ids)
+        if missing_anchors:
+            raise ValueError(
+                f"cast seed release cannot resolve configured anchors in {folder}: "
+                f"{sorted(missing_anchors)}"
+            )
+        usable_ids = {
+            photo_id for photo_id, (photo, relative) in gallery_ids.items()
+            if photo.usable(min_face)
+            and relative not in quality_exclusions
+        }
+        core = cores.get(folder)
+        if core is None and not (
+            person and person.get("protected")
+            or all(
+                (person and person.get("protected"))
+                or catalog["photos"].get(metadata.photo_id_from_name(photo.name), {}).get("protected")
+                or metadata.photo_id_from_name(photo.name) in anchor_ids
+                or api.cw.photo_key(photo.name) in selected
+                for _relative, photo in gallery
+            )
+        ):
+            raise ValueError(
+                f"cast seed release cannot score {folder}: no eligible identity core under current policy"
+            )
+        core = core or {}
+        core_ids = set(core.get("corePhotoIds", []))
+        unusable_core_ids = {
+            metadata.photo_id_from_name(photo.name)
+            for relative, photo in gallery if relative in quality_exclusions
+        } & core_ids
+        if unusable_core_ids:
+            raise ValueError(
+                f"cast seed release refuses unusable faces in the current core for {folder}: "
+                f"{sorted(unusable_core_ids)}"
+            )
+        unusable_anchors = anchor_ids - usable_ids
+        excluded_anchors = (anchor_ids & usable_ids) - core_ids
+        if excluded_anchors:
+            raise ValueError(
+                f"cast seed release refuses anchors excluded by the current core in {folder}: "
+                f"{sorted(excluded_anchors)}"
+            )
+        threshold = policy["categoryPolicies"][folder.split("/", 1)[0]][
+            "identityCoreMinimumSimilarity"
+        ]
+        minimum_usable = policy["categoryPolicies"][folder.split("/", 1)[0]][
+            "minimumUsablePhotosForOutlierActions"
+        ]
+        releasable = [
+            photo for _relative, photo in gallery
+            if not (
+                person and person.get("protected")
+                or catalog["photos"].get(metadata.photo_id_from_name(photo.name), {}).get("protected")
+                or metadata.photo_id_from_name(photo.name) in anchor_ids
+                or api.cw.photo_key(photo.name) in selected
+                or metadata.photo_id_from_name(photo.name) in core_ids
+            )
+        ]
+        if releasable and len(usable_ids) < minimum_usable:
+            raise ValueError(
+                f"cast seed release refused for {folder}: {len(usable_ids)} usable Gallery photos "
+                f"are below the configured {minimum_usable}-photo outlier-action minimum"
+            )
+        if releasable and unusable_anchors:
+            raise ValueError(
+                f"cast seed release refused for {folder}: configured anchors are not usable core evidence "
+                f"({sorted(unusable_anchors)})"
+            )
+        for relative, photo in gallery:
+            photo_id = metadata.photo_id_from_name(photo.name)
+            photo_record = catalog["photos"].get(photo_id, {})
+            score = (
+                None if relative in quality_exclusions
+                else core.get("photoScores", {}).get(photo.name)
+            )
+            anchor = bool(photo_id and photo_id in anchor_ids)
+            core_member = bool(photo_id and photo_id in core_ids)
+            identity_protected = bool(person and person.get("protected"))
+            photo_protected = bool(photo_record.get("protected"))
+            workflow_selected = api.cw.photo_key(photo.name) in selected
+            reasons = []
+            if identity_protected:
+                reasons.append("protected identity")
+            if photo_protected:
+                reasons.append("protected photo")
+            if anchor:
+                reasons.append("configured identity anchor")
+            if workflow_selected:
+                reasons.append("workflow-selected photo")
+            if core_member:
+                reasons.append("member of the current configured identity core")
+            keep = bool(
+                identity_protected or photo_protected or anchor or workflow_selected or core_member
+            )
+            reason = "; ".join(reasons) if keep else (
+                "below configured identity-core similarity minimum"
+                if score is not None and score < threshold else
+                "excluded from current identity core by its configured eligibility gates"
+            )
+            row = {
+                "source": relative, "destination": relative, "oldFolder": photo.key,
+                "photoId": photo_id, "sha256": digest_by_path[relative],
+                "retainedCast": keep, "releasedCast": not keep,
+                "castSeedScore": score, "castSeedThreshold": threshold,
+                "castSeedUsableCount": len(usable_ids),
+                "castSeedMinimumUsablePhotos": minimum_usable,
+                "castSeedQualityReason": quality_exclusions.get(relative),
+                "castSeedCore": core_member, "castSeedAnchor": anchor,
+                "castSeedProtectedIdentity": identity_protected,
+                "castSeedProtectedPhoto": photo_protected,
+                "castSeedWorkflowSelected": workflow_selected,
+                "castSeedDecision": "retained" if keep else "released",
+                "castSeedReason": reason,
+                "reason": reason if keep else "Released from cast core for fresh matching: " + reason,
+            }
+            if keep:
+                retained.append(row)
+            else:
+                released[relative] = (photo, "gallery", row["sha256"])
+                evidence[relative] = {key: value for key, value in row.items()
+                                      if key.startswith("castSeed") or key in ("retainedCast", "releasedCast")}
+    # Existing cast Review images remain staged; they are not core candidates.
+    for relative, photo, bucket, digest in entries:
+        if bucket == "review":
+            retained.append({
+                "source": relative, "destination": relative, "oldFolder": photo.key,
+                "photoId": metadata.photo_id_from_name(photo.name), "sha256": digest,
+                "retainedCast": True, "releasedCast": False,
+                "castSeedDecision": "retained-review",
+                "castSeedReason": "Existing cast Review image remains staged outside core release",
+                "reason": "Existing cast Review image remains staged outside core release",
+            })
+    return retained, released, evidence
+
+
+def create_plan(
+    layout, run, policy, api, embedder=None, *, reuse_measurements=False,
+    preparation=None, cast_seeds="all",
+):
     """Flatten source photos before building any non-cast identity references."""
+    if cast_seeds not in {"all", "core"}:
+        raise ValueError("cast seed policy must be all or core")
     source = layout["source_root"]
     cache_path = run / "likeness-cache.json"
     if cache_path.exists() and not reuse_measurements:
@@ -635,9 +923,20 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
     settings = effective_settings(cfg, policy)
     cache = Cache(cache_path)
     embed = embedder or api.Embedder()
+    configure_evidence = getattr(embed, "configure_evidence", None)
+    if callable(configure_evidence):
+        configure_evidence(
+            api.cw.storage_root(
+                cfg, "likeness", root=layout["working_root"]
+            ) / "general" / "face-evidence",
+            library_root=layout["working_root"],
+        )
+    needs_alignment_evidence = getattr(embed, "needs_alignment_evidence", None)
     photos, records = [], {}
+    quality_photos = {}
     prepared_rows = {row["source"]: row for row in preparation[1]["photos"]} if preparation else {}
-    cast_rows = []
+    cast_entries = []
+    cast_quality_exclusions = {}
     manifest = layout["manifest_files"]
     if preparation:
         folders = {}
@@ -664,18 +963,32 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
                     raise ValueError(f"missing preparation outcome: {relative}")
                 analysis_path = clean_preparation.selected_path(preparation[0], prepared) if prepared else path
                 digest = cache.sha(analysis_path)
-                if digest not in cache.emb:
+                refresh_evidence = (
+                    digest in cache.emb
+                    and callable(needs_alignment_evidence)
+                    and needs_alignment_evidence(cache.emb[digest], analysis_path)
+                )
+                if digest not in cache.emb or refresh_evidence:
                     cache.emb[digest] = embed(analysis_path) or {"faces": -1}
                 photo = Photo(path, group, name, digest, cache.emb[digest])
                 photos.append(photo)
+                quality_photo = copy.copy(photo)
+                quality_photo.path = analysis_path
+                quality_photos[relative] = quality_photo
+                if cast_seeds == "core" and category in ("Angels", "Sisters") and bucket == "gallery":
+                    junk_reason = getattr(api, "junk_reason", None)
+                    if callable(junk_reason):
+                        reason = junk_reason(quality_photo, settings)
+                        if reason:
+                            cast_quality_exclusions[relative] = reason
                 if category in (*RESET_CATEGORIES, "Various"):
                     records[relative] = (photo, bucket, manifest[relative][1])
-                elif preparation:
-                    cast_rows.append({
-                        "source": relative, "destination": relative, "oldFolder": photo.key,
-                        "photoId": metadata.photo_id_from_name(path.name), "sha256": manifest[relative][1],
-                        "retainedCast": True, "reason": "Cast membership retained; image prepared before analysis",
-                    })
+                elif category in ("Angels", "Sisters"):
+                    digest = (
+                        manifest[relative][1] if relative in manifest
+                        else metadata.content_sha256(path)
+                    )
+                    cast_entries.append((relative, photo, bucket, digest))
                 if len(photos) % 25 == 0:
                     print(f"clean rebase: measured {len(photos)} photos", flush=True)
                     cache.save()
@@ -696,7 +1009,11 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
     space.photos = cast_photos
     space.by_key = collections.defaultdict(list)
     for photo in cast_photos:
-        if photo.usable(settings["minFace"]):
+        relative = photo.path.relative_to(source).as_posix()
+        if (
+            photo.usable(settings["minFace"])
+            and relative not in cast_quality_exclusions
+        ):
             space.by_key[photo.key].append(photo)
     space.keys = sorted(space.by_key)
     catalog = metadata.with_configured_anchors(catalog, cfg, cast_photos)
@@ -724,6 +1041,11 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
     if not cores or any(not key.startswith(("Angels/", "Sisters/")) for key in cores):
         raise ValueError("clean rebuild must start with Angel/Sister cores only")
     selected = api.chosen_keys(cfg)
+    cast_rows, released_cast, cast_seed_evidence = _cast_seed_outcomes(
+        cast_entries, cores, core_catalog, selected, policy, api, cast_seeds,
+        settings["minFace"], cast_quality_exclusions,
+    )
+    records.update(released_cast)
     protected_folders = {
         person["folder"] for person in catalog["people"].values() if person.get("protected")
     }
@@ -736,6 +1058,7 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
             "source": relative, "sha256": sha256, "photoId": photo_id,
             "oldFolder": photo.key,
         }
+        base.update(cast_seed_evidence.get(relative, {}))
         if relative in named:
             destination, reason = named[relative]
             preserved.append({**base, "destination": destination, "reason": reason})
@@ -761,7 +1084,9 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
         if photo_id in by_id:
             raise ValueError(f"duplicate candidate photo ID: {relative}")
         by_id[photo_id] = base
-        quality_reason = api.junk_reason(photo, settings) if hasattr(api, "junk_reason") else None
+        quality_reason = cast_quality_exclusions.get(relative)
+        if not quality_reason and hasattr(api, "junk_reason"):
+            quality_reason = api.junk_reason(quality_photos[relative], settings)
         if not photo.usable(settings["minFace"]) or quality_reason:
             unusable.append({
                 **base,
@@ -881,6 +1206,23 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
         "sourceManifestSHA256": metadata.content_sha256(layout["sandbox_root"] / "source-manifest.json"),
         "sourceOverlaySHA256": layout.get("source_overlay_sha256"),
         "policy": policy, "settings": settings, "referenceFolders": sorted(cores),
+        "castSeedPolicy": cast_seeds,
+        "castSeedThresholds": {
+            category: {
+                "identityCoreMinimumSimilarity": policy["categoryPolicies"][category][
+                    "identityCoreMinimumSimilarity"
+                ],
+                "minimumUsablePhotosForOutlierActions": policy["categoryPolicies"][category][
+                    "minimumUsablePhotosForOutlierActions"
+                ],
+            }
+            for category in ("Angels", "Sisters")
+        },
+        "castSeedUsability": {
+            "minimumFacePixels": settings["minFace"],
+            "multiFaceRatio": settings.get("multiFace"),
+            "qualityGate": "configured junk_reason plus usable face vector",
+        },
         "embeddingCache": str(cache_path), "embeddingCacheStartedEmpty": True,
         "cacheMeasurementsReusedForReplan": reuse_measurements,
         "centeringMean": mean.tolist(), "candidateCount": len(records),
@@ -904,6 +1246,18 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
         }
         for name in ("clean_preparation.py", "retained_preparation.py", "derivatives.py", "metadata.py"):
             plan["implementationHashes"][name] = metadata.content_sha256(pathlib.Path(__file__).with_name(name))
+    cfg = metadata.cw.load_cfg()
+    source_manifest = layout["sandbox_root"] / "source-manifest.json"
+    plan["configurationReceipt"] = metadata.cw.storage_configuration_receipt(
+        cfg,
+        layout["working_root"],
+        {
+            "runDirectory": run,
+            "embeddingCache": cache_path,
+            "sourceSnapshotRoot": layout["source_root"],
+            "sourceManifest": source_manifest,
+        },
+    )
     _verify_routes(plan, source)
     return plan
 
@@ -1306,6 +1660,9 @@ def _refresh_galleries(working, run):
 def command(args, api):
     if sum(bool(flag) for flag in (args.apply, args.check, args.dry_run, args.undo, args.replan)) > 1:
         raise ValueError("choose only one of --apply, --check, --dry-run, --undo, or --replan")
+    cast_seeds = getattr(args, "cast_seeds", "all")
+    if cast_seeds not in {"all", "core"}:
+        raise ValueError("--cast-seeds must be all or core")
     policy = load_policy(args.policy)
     layout = validate_sandbox(args.root)
     run = require_sandbox_output(args.root, args.run_dir)
@@ -1317,27 +1674,49 @@ def command(args, api):
         raise ValueError("run directory must be outside identity category roots")
     intake_only = getattr(args, "intake_only", False)
     include_various = getattr(args, "include_current_various", False)
+    baseline = getattr(args, "baseline", None)
+    if baseline not in {None, "source", "working"}:
+        raise ValueError("--baseline must be source or working")
+    current_working = baseline == "working"
+    include_various = include_various or current_working
     if intake_only and (args.undo or args.replan):
         raise ValueError("--intake-only cannot undo or replan matching")
     if args.dry_run:
         if include_various:
-            rows, current = _current_various_overlay_rows(layout)
+            if current_working:
+                baseline_layout, baseline_rows = _working_baseline(layout)
+                rows, current = _current_various_overlay_rows(baseline_layout, baseline_rows)
+            else:
+                rows, current = _current_various_overlay_rows(layout)
             total = len(set(rows) | {item["target"] for item in current})
             replaced = sum(1 for item in current if item["target"] in rows and rows[item["target"]] != item["sha256"])
             added = sum(1 for item in current if item["target"] not in rows)
             print(
-                f"Clean-start preview: {len(rows)} immutable images plus {added} new current Various "
-                f"images = {total} preparation outcomes; {replaced} immutable IDs use newer Working bytes."
+                f"Clean-start preview: {len(rows)} {'current Working assigned' if current_working else 'immutable'} "
+                f"images plus {added} new current Various "
+                f"images = {total} preparation outcomes; {replaced} baseline IDs use newer Various bytes."
             )
         else:
             rows = clean_preparation.inventory(layout)
             print(f"Clean-start preview: {len(rows)} immutable images will receive preparation outcomes.")
-        print("No images, reports, caches or models changed. Existing cast membership stays retained.")
+        print("No images, reports, caches or models changed.")
+        if cast_seeds == "all":
+            print("Cast-seed policy: all. The matched preview will retain existing cast membership.")
+        else:
+            print(
+                "Cast-seed policy: core. The matched preview will evaluate protected/core/workflow-selected "
+                "cast retention and eligible releases under configured thresholds."
+            )
+        print("Inventory only: no cast retention/release decisions or matching were evaluated.")
         print("Use --intake-only --apply to prepare and stop, or omit --dry-run for a full matched preview.")
         return {"status": "inventory", "inputCount": total if include_various else len(rows)}
     if intake_only and not (args.apply or args.check):
         if include_various:
-            rows, current = _current_various_overlay_rows(layout)
+            if current_working:
+                baseline_layout, baseline_rows = _working_baseline(layout)
+                rows, current = _current_various_overlay_rows(baseline_layout, baseline_rows)
+            else:
+                rows, current = _current_various_overlay_rows(layout)
             total = len(set(rows) | {item["target"] for item in current})
         else:
             rows = clean_preparation.inventory(layout)
@@ -1352,26 +1731,36 @@ def command(args, api):
     overlay_path = run / "source-overlay"
     if overlay_path.exists():
         layout = _verify_source_overlay(layout, run)
+        saved_baseline = layout["source_overlay_manifest"].get("baselineMode", "source")
+        if baseline is not None and baseline != saved_baseline:
+            raise ValueError("saved run baseline differs; use the same baseline or a new run")
     elif include_various and not (args.check or args.undo or args.replan):
-        layout = _create_source_overlay(layout, run)
+        layout = _create_source_overlay(layout, run, current_working=current_working)
     plan_path = run / "run.json"
     if intake_only or args.check and not plan_path.exists():
         if args.check:
             output, data = clean_preparation.verify(layout, run)
         elif args.apply:
-            output, data = clean_preparation.prepare(layout, run)
+            output, data = clean_preparation.prepare(layout, run, getattr(args, "workers", None))
             from . import preparation_history
 
-            preparation_history.publish_staged(layout["working_root"], layout["working_root"] / "_reports" / "library")
+            storage_cfg = api.cw.load_cfg()
+            reports_root = api.cw.storage_root(
+                storage_cfg, "reports", root=layout["working_root"]
+            )
+            preparation_history.publish_staged(
+                layout["working_root"], reports_root / "library", cfg=storage_cfg
+            )
         print(f"Intake verified: {len(data['photos'])} outcomes. Review {output / 'index.html'}")
         print("Stopped before matching/assignment. The same run resumes without repeating preparation.")
         return {"status": "intake", "inputCount": len(data["photos"]), "report": str(output / "index.html")}
     if plan_path.exists():
         plan = json.loads(plan_path.read_text(encoding="utf-8"))
         if (
-            plan["policy"] != policy and not (args.replan or args.undo or args.check)
+            (plan["policy"] != policy or plan.get("castSeedPolicy", "all") != cast_seeds)
+            and not (args.replan or args.undo or args.check)
         ) or plan["workingRoot"] != str(layout["working_root"]):
-            raise ValueError("saved plan policy/root differs; use a new run directory")
+            raise ValueError("saved plan policy, cast-seed mode, or root differs; use a new run directory")
         if plan["sourceManifestSHA256"] != metadata.content_sha256(layout["sandbox_root"] / "source-manifest.json"):
             raise ValueError("source manifest changed since preview")
         if plan.get("sourceOverlaySHA256") != layout.get("source_overlay_sha256"):
@@ -1390,6 +1779,7 @@ def command(args, api):
                 layout, run, policy, api, getattr(args, "embedder", None),
                 reuse_measurements=True,
                 preparation=clean_preparation.verify(layout, run) if plan.get("preparation") else None,
+                cast_seeds=cast_seeds,
             )
             _write_json(plan_path, plan)
     else:
@@ -1399,13 +1789,20 @@ def command(args, api):
             raise ValueError("create and review the prepared matching preview before --apply")
         if args.replan and not ((run / "intake.json").is_file() and (run / "likeness-cache.json").is_file()):
             raise ValueError("resuming incomplete matching requires verified preparation and saved measurements")
-        preparation = clean_preparation.prepare(layout, run)
+        preparation = clean_preparation.prepare(layout, run, getattr(args, "workers", None))
         from . import preparation_history
 
-        preparation_history.publish_staged(layout["working_root"], layout["working_root"] / "_reports" / "library")
+        storage_cfg = api.cw.load_cfg()
+        reports_root = api.cw.storage_root(
+            storage_cfg, "reports", root=layout["working_root"]
+        )
+        preparation_history.publish_staged(
+            layout["working_root"], reports_root / "library", cfg=storage_cfg
+        )
         plan = create_plan(
             layout, run, policy, api, getattr(args, "embedder", None),
             reuse_measurements=args.replan, preparation=preparation,
+            cast_seeds=cast_seeds,
         )
         _write_json(plan_path, plan)
     if plan.get("preparation"):
@@ -1433,11 +1830,33 @@ def command(args, api):
         _check_publication(layout["working_root"], plan)
     if not args.check:
         _write_json(run / "policy.json", plan["policy"])
+        cast_seed_thresholds = plan.get("castSeedThresholds", {
+            category: {
+                "identityCoreMinimumSimilarity": plan["policy"]["categoryPolicies"][category][
+                    "identityCoreMinimumSimilarity"
+                ],
+                "minimumUsablePhotosForOutlierActions": plan["policy"]["categoryPolicies"][category][
+                    "minimumUsablePhotosForOutlierActions"
+                ],
+            }
+            for category in ("Angels", "Sisters")
+        })
+        cast_seed_usability = plan.get("castSeedUsability", {
+            "minimumFacePixels": plan["settings"]["minFace"],
+            "multiFaceRatio": plan["settings"].get("multiFace"),
+            "qualityGate": "configured junk_reason plus usable face vector",
+        })
         with (run / "photos.csv").open("w", encoding="utf-8-sig", newline="") as stream:
             fields = (
                 "source", "destination", "photoId", "sha256", "bestMatch", "bestScore",
                 "score", "initialBestCast", "initialBestCastScore", "initialSecondCast",
-                "initialCastMargin", "reason", "preparedSHA256", "preparedPath", "preparationOutcome",
+                "initialCastMargin", "reason", "retainedCast", "releasedCast",
+                "castSeedScore", "castSeedThreshold", "castSeedUsableCount",
+                "castSeedMinimumUsablePhotos", "castSeedCore", "castSeedAnchor",
+                "castSeedProtectedIdentity", "castSeedProtectedPhoto",
+                "castSeedWorkflowSelected", "castSeedDecision", "castSeedReason",
+                "castSeedQualityReason",
+                "preparedSHA256", "preparedPath", "preparationOutcome",
             )
             writer = csv.DictWriter(stream, fieldnames=fields, extrasaction="ignore")
             writer.writeheader()
@@ -1449,12 +1868,16 @@ def command(args, api):
             f"Fresh embedding cache: {plan['embeddingCacheStartedEmpty']}",
             f"Initial reference identities: {len(plan['referenceFolders'])} (Angels/Sisters only)",
             f"Candidate photos accounted for: {plan['candidateCount']}",
+            f"Cast seed policy: {plan.get('castSeedPolicy', 'all')}",
             f"Policy: {plan['policy']['version']}",
             f"Candidate clustering minimum: {plan['policy']['identityActions']['identityClusterMinimumSimilarity']}",
             "",
             "Every source, destination, hash, match score, and reason is in photos.csv.",
             "The exact policy, centering mean, references, and per-photo decisions are in run.json.",
             "Review additions never enter an Angel/Sister gallery or identity core.",
+            "",
+            "Cast-seed decisions, source scores, protection/workflow conflicts and actual thresholds "
+            "are recorded per photo in photos.csv.",
             "Previous category directories are retained in previous/ after installation.",
             "",
             "## Initial reference folders", "",
@@ -1472,6 +1895,33 @@ def command(args, api):
             f"| Specific cast Review margin | {plan['policy']['photoRouting']['minimumMargin']} |",
             f"| Candidate clustering minimum | {plan['policy']['identityActions']['identityClusterMinimumSimilarity']} |",
             f"| Minimum initial cluster size | {plan['settings']['minCluster']} |",
+            *[
+                f"| {category} identity-core minimum similarity | "
+                f"{cast_seed_thresholds[category]['identityCoreMinimumSimilarity']} |"
+                for category in ("Angels", "Sisters")
+            ],
+            *[
+                f"| {category} minimum usable photos for outlier actions | "
+                f"{cast_seed_thresholds[category]['minimumUsablePhotosForOutlierActions']} |"
+                for category in ("Angels", "Sisters")
+            ],
+            f"| Minimum usable face pixels | {cast_seed_usability['minimumFacePixels']} |",
+            f"| Second-face size ratio | {cast_seed_usability['multiFaceRatio']} |",
+            "",
+            "## Cast seed outcomes",
+            "",
+            "| Outcome | Photos |",
+            "| --- | ---: |",
+            *[
+                f"| {name} | {count} |"
+                for name, count in sorted(collections.Counter(
+                    row.get("castSeedDecision", "retained-default")
+                    for row in plan["photos"] if row.get("retainedCast") or row.get("releasedCast")
+                ).items())
+            ],
+            "",
+            "The per-photo audit lists all retained, released, protected, workflow-selected, and "
+            "Review outcomes before apply. No threshold is adjusted to avoid Review.",
             "", "## Actual destinations", "",
             "| Category / identity / bucket | Photos |", "| --- | ---: |",
         ] + [

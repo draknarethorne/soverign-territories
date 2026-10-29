@@ -51,7 +51,13 @@ class FinalsTests(unittest.TestCase):
         self.w.master("Alice_Qwen_Alpha_1_Prime.json", PRIME)
         self.w.master("Alice_Qwen_Alpha_2_Bare_Figure.json", BARE)
         self.w.master("Alice_Qwen_Scene_Glamour.json", SCENE)
-        self.w.cfg["paths"] = {"outputRoot": str(self.w.tmp / "out"), "outputFolders": {"set-a": "Proj"}, "inputsRoot": str(self.w.tmp / "in")}
+        self.w.cfg["paths"].update(
+            {
+                "outputRoot": str(self.w.tmp / "out"),
+                "outputFolders": {"set-a": "Proj"},
+                "inputsRoot": str(self.w.tmp / "in"),
+            }
+        )
         for name in ("A-Home", "Alice-Own"):
             (self.w.tmp / "in" / name).mkdir(parents=True)
         self.w.cfg["inputs"] = {"Alice": {"prime": "old.png"}}
@@ -105,7 +111,7 @@ class FinalsTests(unittest.TestCase):
         self.w.put("A-Home", "zz_Final/Alice_Qwen_Alpha_1_Prime_00001_.json", {"nodes": [], "id": "a"})
         self.w.run("finals", "sort", "-w", "A-Home", "--apply")
         self.assertEqual(self.names(), [proper])
-        self.assertTrue(list((self.w.tmp / "backup").rglob("Alice_Qwen_Alpha_1_Prime_00001_.json")))
+        self.assertTrue(list(cw.storage_root(self.w.cfg, "backup").rglob("Alice_Qwen_Alpha_1_Prime_00001_.json")))
         self.w.put("A-Home", "zz_Final/Alice_Qwen_Alpha_1_Prime_00001_.json", {"nodes": [], "id": "b"})
         out, _ = self.w.run("finals", "sort", "-w", "A-Home", "--apply")
         self.assertIn("CONFLICT", out)
@@ -186,7 +192,7 @@ class FinalsTests(unittest.TestCase):
         self.w.run("pull", "-w", "A-Home")
         image = self.w.tmp / "assets" / "art" / "set-a" / "Alice" / "1_Alpha" / "1_Prime" / "Alice_Qwen_Alpha_1_Prime.png"
         self.assertEqual(image.read_bytes(), b"second")
-        self.assertEqual([f.read_bytes() for f in (self.w.tmp / "backup").rglob("Alice_Qwen_Alpha_1_Prime.png")], [b"first"])
+        self.assertEqual([f.read_bytes() for f in cw.storage_root(self.w.cfg, "backup").rglob("Alice_Qwen_Alpha_1_Prime.png")], [b"first"])
 
     def test_images_action_catches_up_on_finals_already_in_the_repo(self):
         self.render("set-a/Alice/1_Alpha/1_Prime/Alice_Qwen_Alpha_1_Prime_00007_.png", b"img")
@@ -288,7 +294,7 @@ class FinalsTests(unittest.TestCase):
         self.assertTrue((r / "_shots/set-a/Alice/armor/Alice_Qwen_Alpha_1_Prime_00005_.json").exists(), "a shot in a subfolder was deliberate and stays")
         self.assertTrue((r / "_candidates/set-a/Alice/1_Alpha/2_Bare/Alice_Qwen_Alpha_2_Bare_Figure_00006_.json").exists())
         self.assertFalse((r / "_candidates/set-a/Alice/Alice_Qwen_Alpha_2_Bare_Figure_00006_.json").exists())
-        self.assertTrue(list((self.w.tmp / "backup").rglob("Alice_Qwen_Alpha_2_Bare_Figure_00006_.json")), "the duplicate went to backup, not away")
+        self.assertTrue(list(cw.storage_root(self.w.cfg, "backup").rglob("Alice_Qwen_Alpha_2_Bare_Figure_00006_.json")), "the duplicate went to backup, not away")
         self.assertTrue((r / "_final/set-a/Alice/1_Alpha/1_Prime/Alice_Qwen_Alpha_1_Prime_00008_.json").exists(), "typo corrected")
         self.assertTrue((r / "_candidates/set-a/Alice/Mystery_Qwen_Nothing_00001_.json").exists(), "an unplaceable name stays exactly where it is")
         self.assertTrue((r / "_shots/set-a/Alice/1_Alpha/2_Bare/Alice_Qwen_Alpha_2_Bare_Figure.json").exists(), "a plain top-level shot is filed by phase and keeps its name")

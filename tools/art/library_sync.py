@@ -19,7 +19,8 @@ The steps, in order (each is the normal command; run one alone if you want to lo
   9  likeness crosscheck, crops, people gallery, index  look-alikes are reported; the people gallery adds sister-match and photo-readiness evidence
   --retry-junk explicitly retries legacy flat _junk buckets (prospects to Various, artists to their own gallery); nested manual/preparation Junk has its own guarded undo.
 Nothing is deleted: moved files keep their place in _archive, _junk, _retired or a person's review folder, and `likeness undo` reverses the last batch of sorted moves.
-Reports are grouped under <work>\\_reports\\library, comparisons and runs; a log of the run is saved in <work>\\_reports\\runs\\library_sync_<time>.log.
+Reports are grouped under the configured reports root (default <work>\\_reports);
+run logs are saved in its runs folder.
 """
 import argparse
 import datetime
@@ -136,7 +137,7 @@ def main(argv=None):
         ap.error("--min is obsolete; configure tier thresholds in likeness-engine-policy.json")
     cfg = cw.load_cfg()
     work = cw.work_root(cfg)
-    reports = work / "_reports"
+    reports = cw.storage_root(cfg, "reports", root=work)
     run_reports = reports / "runs"
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     if not args.check and not args.dry_run:

@@ -38,9 +38,9 @@ class DuplicatesTests(unittest.TestCase):
             groups, ids = duplicates.run({"photos": {f"h{i}": n for i, n in enumerate(chosen)}}, self.work, self.folders(), apply)
         return groups, ids, out.getvalue()
 
-    def run_prefer_incoming(self, apply=True):
+    def run_prefer_incoming(self, apply=True, cfg=None):
         with contextlib.redirect_stdout(io.StringIO()) as out:
-            groups, ids = duplicates.run({}, self.work, self.folders(), apply, prefer_incoming_copies=True)
+            groups, ids = duplicates.run(cfg or {}, self.work, self.folders(), apply, prefer_incoming_copies=True)
         return groups, ids, out.getvalue()
 
     def test_identical_bytes_under_two_ids_keep_one_and_archive_the_other(self):
@@ -108,6 +108,21 @@ class DuplicatesTests(unittest.TestCase):
         incoming = self.photo("Various", "Various", "various_shot_20261014123456.jpg", b"fixed version")
         _, ids, _ = self.run_prefer_incoming()
         archive = self.work / "_archive/_junk/Prospects/gallery_replaced/mia_wolfe_shot_20261014123456.jpg"
+        self.assertTrue(incoming.exists())
+        self.assertFalse(old.exists())
+        self.assertEqual(archive.read_bytes(), b"old junk version")
+        self.assertEqual(ids, [])
+
+    def test_incoming_replacement_reads_configured_junk_root(self):
+        junk = self.work / "_quarantine/Prospects"
+        junk.mkdir(parents=True)
+        old = junk / "mia_wolfe_shot_20261014123456.jpg"
+        old.write_bytes(b"old junk version")
+        incoming = self.photo("Various", "Various", "various_shot_20261014123456.jpg", b"fixed version")
+        _, ids, _ = self.run_prefer_incoming(
+            cfg={"storageRoots": {"junk": "_quarantine"}},
+        )
+        archive = self.work / "_archive/_quarantine/Prospects/gallery_replaced/mia_wolfe_shot_20261014123456.jpg"
         self.assertTrue(incoming.exists())
         self.assertFalse(old.exists())
         self.assertEqual(archive.read_bytes(), b"old junk version")

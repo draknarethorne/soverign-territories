@@ -139,6 +139,7 @@ class FamilyPreviewTests(unittest.TestCase):
             sentinel = root / ".likeness-library.json"
             sentinel.write_bytes(b"catalogue unchanged")
             api = SimpleNamespace(
+                cw=SimpleNamespace(storage_root=mock.Mock(return_value=root / "_reports")),
                 load_policy=mock.Mock(return_value=self.policy),
                 build=mock.Mock(return_value=({}, {}, root, None, SimpleNamespace(
                     photos=[], by_key={},

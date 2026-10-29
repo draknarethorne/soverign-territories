@@ -544,7 +544,8 @@ def relationship_link(category, name, review_href, score=None):
 
 def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairings/angel-prospect-candidates.md",
                 review_href="people_gallery_review.html", thumbnail_dir=None,
-                identity_report_href="identity-rankings.md", policy=None, reports_prefix="../"):
+                identity_report_href="identity-rankings.md", policy=None, reports_prefix="../",
+                section_links=None):
     policy = policy or default_policy()
     sections = [
         (category, "Artists' people" if category == "Artists" else category)
@@ -555,7 +556,10 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
     people_label = "person" if len(rows) == 1 else "people"
     photos_label = "photo" if photo_count == 1 else "photos"
     out = ["<!doctype html>", '<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>People gallery</title>',     f'<style>{gallery_chrome.CSS}{CSS}</style></head><body id="top">',
-               gallery_chrome.masthead("People", reports_prefix, "People library"),
+               gallery_chrome.masthead(
+                   "People", reports_prefix, "People library",
+                   section_links=section_links,
+               ),
                '<div class="site-page">',
                '<header class="page-header"><div><h1>People gallery</h1>'
            f'<p class="meta">Generated {html.escape(stamp)} · {len(rows)} {people_label} · {photo_count} {photos_label}</p>'
@@ -1055,8 +1059,8 @@ def main(argv=None, space=None):
 def _main(argv=None, space=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--artists", action="store_true", help="retired: use artists-gallery.cmd")
-    ap.add_argument("--out", help="folder for the report (default: <work>\\_reports\\library)")
-    ap.add_argument("--root", help="the photo library folder (default: workspaces.json paths.workRoot)")
+    ap.add_argument("--out", help="report folder under the configured reports root (relative paths start there)")
+    ap.add_argument("--root", help="the photo library folder (default: workspaces.json paths.productionRoot)")
     ap.add_argument("--cache", help="embedding cache file (default: the user-local likeness cache)")
     ap.add_argument("--policy", help="versioned likeness policy JSON")
     ap.add_argument("--no-renders", action="store_true", help="ignore saved ComfyUI face renders, matching `likeness pairs --no-renders`")
@@ -1078,8 +1082,8 @@ def _main(argv=None, space=None):
         domains.require_general_space(space)
         cfg, st, work = space.cfg, space.st, space.work
         rend = None if args.no_renders else getattr(space, "renders", None)
-    reports = work / "_reports"
-    out = pathlib.Path(args.out) if args.out else reports / "library"
+    reports = cw.storage_root(cfg, "reports", root=work)
+    out = cw.storage_output_path(cfg, "reports", args.out or "library", root=work)
     out.mkdir(parents=True, exist_ok=True)
     rows = collect(cfg, st, work, space, groups, rend=rend, policy=policy)
     provenance_sources = [
@@ -1109,6 +1113,7 @@ def _main(argv=None, space=None):
             rows, stamp, counts, report_href.as_posix(), thumbnail_dir=out,
             identity_report_href=identity_report.name, policy=policy,
             reports_prefix=gallery_chrome.reports_prefix(out, reports),
+            section_links=gallery_chrome.configured_sections(work, cfg),
         ),
         encoding="utf-8",
     )

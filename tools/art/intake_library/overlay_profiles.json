@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "description": "Data-driven overlay patterns for intake. Fractions are of image width (w) or height (h). Add new patterns here; see docs/art/original-photos.md.",
+  "description": "Data-driven overlay patterns for intake. Fractions are of image width (w) or height (h); *_Margin and *_Ratio values multiply detected face geometry. Add new patterns here; see docs/art/original-photos.md.",
   "frames": [
     {
       "id": "phone-reel",
@@ -25,6 +25,9 @@
              "iconMinSize": 0.025, "lineMinGlyphs": 3, "lineMinAspect": 2.5, "rowGap": 0.25, "statusCentre": [0.45, 0.6], "topSlotHalf": 0.022,
              "railGap": 0.03, "railLeft": 0.85, "railMinGlyph": 0.015, "railVivid": 140, "wordGap": 0.08, "lineGap": 0.004,
              "nameStart": [0.07, 0.2], "avatarLeft": 0.005, "avatarRight": 0.145, "avatarRadius": 0.045},
+      "pictureInPicture": {"faceWidth": [0.015, 0.06], "faceHeight": [0.01, 0.04], "centerXMax": 0.35, "centerYMin": 0.72, "maxFaceRatio": 0.4, "leftFaceMargin": 3.5, "rightFaceMargin": 3.5, "topFaceMargin": 2.5, "bottomFaceMargin": 1.0, "width": [0.12, 0.28], "heightMin": 0.04, "heightMax": 0.18, "borderFraction": 0.01, "innerFraction": 0.12, "edgeThresholds": [50, 120], "edgeCoverageMin": 0.035, "topBrightMin": 205, "topBrightShare": 0.4, "headerStart": 1.4, "headerHeight": 0.8, "headerDarkMax": 60, "headerDarkShare": 0.3},
+      "captionButton": {"width": [0.2, 0.5], "height": [0.02, 0.06], "aspect": [2.5, 7], "edgeThresholds": [60, 120], "hullFill": 0.85, "edgeCoverage": 0.75},
+      "playback": {"centreX": [0.4, 0.6], "centreY": [0.3, 0.6], "triangleWidth": [0.025, 0.08], "triangleHeight": [0.015, 0.05], "skipOffset": 0.195, "ringRadius": [0.025, 0.035], "ringCoverage": 0.55, "mainRadiusHeight": 1.8, "skipRadius": 0.065, "timecode": {"fromY": 0.8, "span": 0.37, "lineMinAspect": 2.2, "height": [0.015, 0.035]}},
       "zones": [
         {"kind": "reel-top-controls", "from": "pictureTop", "y": [0.0, 0.1], "x": [0.0, 1.0]},
         {"kind": "reel-rail", "from": "pictureBottom", "y": [-0.62, 0.0], "x": [0.83, 1.0]},
@@ -89,6 +92,13 @@
       "file": "echoes-of-fantasia.png", "feature": "gold", "shortSide": 1365,
       "scales": [0.6, 0.75, 0.9, 1.0, 1.15, 1.35, 1.6], "work": 0.5,
       "threshold": 0.75, "edgeMin": 0.45, "pad": 0.01
+    },
+    {
+      "id": "dola-ai",
+      "note": "White 'Dola AI' generator watermark, usually bottom right, sometimes faint. Reference crop from Drakniss (Oct 28). Calibrated on all 2,741 r20 inputs: 51 true hits scored >=0.644 (edge >=0.59); the best non-watermark scored 0.565 with negative edge correlation. The corner-text rule missed most of these.",
+      "file": "dola-ai.png", "feature": "white", "shortSide": 1119,
+      "scales": [0.7, 0.8, 0.9, 1.0, 1.1, 1.25, 1.4], "work": 0.5,
+      "threshold": 0.62, "edgeMin": 0.5, "pad": 0.01
     }
   ],
   "letterbox": {
@@ -99,13 +109,14 @@
   "badges": [
     {
       "id": "gmw",
-      "note": "Girls Most Wanted badge/avatar: closed magenta ring with silver lettering inside. Validated Oct 27 on 41 labelled proposals (6 true, 35 false: flowers, roses, pink clothing, hair, a handbag).",
+      "note": "Girls Most Wanted badge/avatar: closed magenta ring with silver lettering inside. Transparent variants on pale backgrounds require a more complete ring and concentrated central magenta lettering instead of silver/background contrast. Validated on 41 labelled proposals (6 true, 35 false: flowers, roses, pink clothing, hair, a handbag) plus two transparent-background misses.",
       "magenta": {"redMin": 150, "blueMin": 90, "redMinusGreen": 70, "blueMinusGreen": 20},
       "silver": {"min": 150, "chromaMax": 45},
       "ringCoverageMin": 0.47,
       "silverFractionMin": 0.1,
       "innerRadius": 0.62,
-      "structure": {"innerMagentaMax": 0.2, "outerMagentaMax": 0.15, "letterBandRatio": 1.5},
+      "structure": {"innerMagentaMax": 0.2, "outerMagentaMax": 0.15, "letterBandRatio": 1.5,
+                    "transparentLettering": {"ringCoverageMin": 0.75, "bandMin": 0.25, "bandRatio": 2.0}},
       "minRadius": 0.022,
       "maxRadius": 0.2
     }

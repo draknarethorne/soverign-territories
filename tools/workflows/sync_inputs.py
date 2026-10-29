@@ -40,7 +40,7 @@ def referenced(wf):
 def source_index(cfg):
     """{file name: path}, first folder wins."""
     new_out = cw.output_root(cfg)
-    legacy = [pathlib.Path(cfg["sharedInput"]), pathlib.Path(cfg["sharedOutput"])]  # last: old renders must never shadow new ones
+    legacy = [cw.shared_input_root(cfg), cw.shared_output_root(cfg)]  # last: old renders must never shadow new ones
     sisters = [cw.work_root(cfg) / n for n in cw.SISTER_ROOTS]
     roots = [*sisters, cw.work_root(cfg) / "Masters", *[p for p in cw.photo_roots(cfg) if p.name not in cw.SISTER_ROOTS], new_out, *legacy]
     index = {}
@@ -58,7 +58,7 @@ def main():
     ap.add_argument("--apply", action="store_true")
     args = ap.parse_args()
     cfg = cw.load_cfg()
-    inputs_root = pathlib.Path(cfg["paths"]["inputsRoot"])
+    inputs_root = cw.comfy_input_root(cfg)
     index = source_index(cfg)
     total_missing = {}
     for ws in args.workspace or list(cfg["workspaces"]):

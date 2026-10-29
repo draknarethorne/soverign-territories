@@ -1,9 +1,9 @@
 """Synthetic frozen-image/receipt fixtures; no real photos or server access."""
 import copy
 import pathlib
-import shutil
+import tempfile
 import unittest
-import uuid
+from unittest import mock
 from unittest import mock
 
 from PIL import Image
@@ -15,10 +15,9 @@ from tools.workflows import reference_rendering as base
 
 class ComparisonTests(unittest.TestCase):
     def setUp(self):
-        self.root = pathlib.Path(__file__).resolve().parents[2] / (
-            ".test-reference-comparison-" + uuid.uuid4().hex)
-        self.root.mkdir()
-        self.addCleanup(shutil.rmtree, self.root)
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.root = pathlib.Path(temporary.name)
         self.source = self.root / "Various" / "gallery" / "source.png"
         self.source.parent.mkdir(parents=True)
         Image.new("RGB", (16, 24), "blue").save(self.source)
@@ -147,6 +146,26 @@ class ComparisonTests(unittest.TestCase):
         self.assertNotIn(self.source.as_uri(), page)
         self.assertIn(pathlib.Path(self.record()["jobs"]["job-0"]["outputs"][0]["path"]).as_uri(), page)
         self.assertNotIn("fetch(", page)
+
+    def test_configured_storage_roots_receive_comparison_artifacts(self):
+        config = execution.workflows.load_cfg()
+        config = {
+            **config,
+            "storageRoots": {
+                **config["storageRoots"],
+                "generation": "_generated",
+                "reports": "_history",
+            },
+        }
+        with mock.patch.object(execution.workflows, "load_cfg", return_value=config):
+            self.batch("custom-batch", states=("completed",))
+            result = comparison.publish(self.root, ["custom-batch"], apply=True)
+            self.assertEqual(
+                pathlib.Path(result["page"]).relative_to(self.root).as_posix(),
+                "_generated/comparison.html",
+            )
+            page = pathlib.Path(result["page"]).read_text(encoding="utf-8")
+            self.assertIn("../_history/", page)
         self.assertNotIn("<canvas", page)
         self.assertNotIn("faceScore", page)
 

@@ -2,7 +2,12 @@
 import contextlib
 import copy
 import pathlib
+import sys
 from contextvars import ContextVar
+
+ROOT = pathlib.Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT))
+from tools.workflows import comfy_workflows as cw  # noqa: E402
 
 
 CURRENT = ContextVar("likeness_domain", default=None)
@@ -27,16 +32,25 @@ def activate(domain, *, read_only=False):
         READ_ONLY.reset(read_token)
 
 
-def includes(key):
+def includes(key, work=None, cfg=None):
     domain = CURRENT.get()
     parts = pathlib.PurePosixPath(str(key).replace("\\", "/")).parts
     if not parts or ".." in parts or parts[0] in ("/", "."):
         return False
-    if parts[0] in ("_junk", "_retired", "_archive"):
-        retired = parts[0] == "_retired"
-        parts = parts[1:]
-        if retired and parts[:1] == ("photos",):
-            parts = parts[1:]
+    prefixes = [(("_junk",), False), (("_retired",), True), (("_archive",), False)]
+    if work is not None:
+        config = cfg if cfg is not None else cw.load_cfg()
+        root = pathlib.Path(work).resolve()
+        prefixes = [
+            (cw.storage_root(config, name, root=root).relative_to(root).parts, retired)
+            for name, retired in (("junk", False), ("retired", True))
+        ] + [(("_archive",), False)]
+    for prefix, retired in prefixes:
+        if parts[:len(prefix)] == prefix:
+            parts = parts[len(prefix):]
+            if retired and parts[:1] == ("photos",):
+                parts = parts[1:]
+            break
     if not parts:
         return False
     return domain is None or (parts[0].casefold() == "artists") == (domain == "artists")
@@ -59,7 +73,7 @@ def require_path(work, path):
     root = pathlib.Path(work).resolve()
     path = pathlib.Path(path)
     relative = path.resolve().relative_to(root)
-    if not includes(relative.as_posix()):
+    if not includes(relative.as_posix(), root):
         raise ValueError(f"{CURRENT.get()} likeness cannot access {relative}; use the owning entry point")
     for parent in (path, *path.parents):
         if parent.is_symlink() or (hasattr(parent, "is_junction") and parent.is_junction()):
@@ -76,10 +90,15 @@ def require_moves(work, moves):
         require_path(work, pathlib.Path(work) / move.to / move.bucket / move.photo.name)
 
 
-def state_path(work, name):
+def state_path(work, name, storage_root=None):
     if CURRENT.get() is None:
         return None
-    return pathlib.Path(work) / "_likeness" / CURRENT.get() / name
+    root = (
+        pathlib.Path(storage_root)
+        if storage_root is not None
+        else cw.storage_root(cw.load_cfg(), "likeness", root=work)
+    )
+    return root / CURRENT.get() / name
 
 
 def require_general_space(space):

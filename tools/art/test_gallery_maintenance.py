@@ -6,8 +6,8 @@ import json
 import pathlib
 import shutil
 import sys
+import tempfile
 import unittest
-import uuid
 from unittest import mock
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -19,7 +19,10 @@ from likeness_library import actions, derivatives, metadata, person_rename, revi
 
 class MaintenanceTests(unittest.TestCase):
     def setUp(self):
-        self.root = ROOT / (".maintenance-test-" + uuid.uuid4().hex)
+        (ROOT / "tmp").mkdir(exist_ok=True)
+        self.temporary = tempfile.TemporaryDirectory(prefix="maintenance-", dir=ROOT / "tmp")
+        base = pathlib.Path(self.temporary.name)
+        self.root = base / "library"
         self.folder = self.root / "Angels" / "Fixed Slot"
         self.gallery = self.folder / "gallery"
         self.gallery.mkdir(parents=True)
@@ -33,10 +36,23 @@ class MaintenanceTests(unittest.TestCase):
         }}), encoding="utf-8")
         self.catalog = {"schemaVersion": 1, "people": {}, "photos": {}, "actions": []}
         (self.root / ".likeness-library.json").write_text(json.dumps(self.catalog), encoding="utf-8")
-        self.cfg = {"paths": {"workRoot": str(self.root)}, "photos": {}, "workspaces": {}}
+        self.cfg = upkeep.cw.load_cfg()
+        self.cfg["paths"].update({
+            "productionRoot": str(self.root),
+            "sandboxWorkingRoot": str(base / "Sovereign Territories Sandbox" / "Working"),
+            "inputsRoot": str(base / "inputs"),
+            "outputRoot": str(base / "outputs"),
+            "modelCacheRoot": str(base / "models"),
+        })
+        self.cfg.update({
+            "installsRoot": str(base / "installs"),
+            "sharedInput": str(base / "shared-input"),
+            "sharedOutput": str(base / "shared-output"),
+            "photos": {},
+        })
 
     def tearDown(self):
-        shutil.rmtree(self.root)
+        self.temporary.cleanup()
 
     def call(self, *args):
         with mock.patch.object(upkeep.cw, "load_cfg", return_value=self.cfg), contextlib.redirect_stdout(io.StringIO()):
@@ -150,7 +166,7 @@ class MaintenanceTests(unittest.TestCase):
         self.assertEqual(self.tree(), before)
 
     def test_isolated_cache_and_output_must_stay_inside_root(self):
-        self.cfg["paths"]["workRoot"] = str(self.root / "configured-production")
+        self.cfg["paths"]["productionRoot"] = str(self.root / "configured-production")
         with mock.patch.object(upkeep.cw, "load_cfg", return_value=self.cfg):
             self.assertEqual(upkeep.main([
                 "--root", str(self.root), "--cache", str(self.root.parent / "cache.json"), "--check"]), 2)
@@ -181,7 +197,7 @@ class MaintenanceTests(unittest.TestCase):
         self.cache.write_text(json.dumps(cache), encoding="utf-8")
         arguments = ["--root", str(self.root), "--cache", str(self.cache)]
         with mock.patch.object(upkeep.cw, "load_cfg", return_value=self.cfg), \
-                mock.patch.object(likeness, "Embedder", return_value=mock.Mock(
+                mock.patch.object(likeness, "Embedder", return_value=mock.Mock(spec=[],
                     side_effect=AssertionError("must use the cached detector result"))), \
                 contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(upkeep.main([*arguments, "--apply"]), 0)
@@ -264,7 +280,7 @@ class MaintenanceTests(unittest.TestCase):
         self.assertEqual(selected, batch)
         self.assertEqual(self.call("--apply", "--settle-actions"), 0)
         recovery = pathlib.Path(upkeep.settled(self.root)[batch]["backup"]) / "work-root"
-        restored = ROOT / (".maintenance-restore-" + uuid.uuid4().hex)
+        restored = self.root.parent / "restored"
         try:
             materialized = restored.with_name(restored.name + "-snapshot")
             upkeep.library_backup.restore_backup(recovery.parent, materialized, apply=True)

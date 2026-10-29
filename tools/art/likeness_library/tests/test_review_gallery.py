@@ -15,10 +15,199 @@ from PIL import Image
 
 from tools.art import likeness
 from tools.art.likeness_library.cross_reference import score_band
+from tools.art.likeness_library import engine
 from tools.art.likeness_library import review_gallery
 
 
 class ReviewGalleryTests(unittest.TestCase):
+    def test_report_output_is_validated_before_catalog_or_collection(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory) / "library"
+            cfg = {"storageRoots": {"reports": "operations/reports"}}
+            with mock.patch.object(review_gallery.likeness, "build",
+                                   return_value=(cfg, {}, root, None, None)), \
+                    mock.patch.object(review_gallery.metadata, "load_catalog",
+                                      side_effect=RuntimeError("catalog boundary")) as catalog:
+                for output in (root / "Various" / "gallery", root.parent / "outside", "..\\outside"):
+                    with self.subTest(output=output), self.assertRaises(ValueError):
+                        review_gallery.main(["--out", str(output)])
+                catalog.assert_not_called()
+                with mock.patch.object(review_gallery.likeness.cw, "storage_output_path",
+                                       wraps=review_gallery.likeness.cw.storage_output_path) as resolve:
+                    with self.assertRaisesRegex(RuntimeError, "catalog boundary"):
+                        review_gallery.main(["--out", "custom"])
+                    resolve.assert_called_once_with(cfg, "reports", "custom", root=root)
+            self.assertFalse(root.exists())
+
+    def test_exact_alignment_is_the_lossless_crop_passed_to_sface(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            models = root / "model-cache" / "models"
+            models.mkdir(parents=True)
+            (models / "face_detection_yunet_2023mar.onnx").write_bytes(b"detector")
+            (models / "face_recognition_sface_2021dec.onnx").write_bytes(b"recognizer")
+            source = root / "prepared-final.png"
+            source.write_bytes(b"final prepared source")
+            aligned = np.arange(60, dtype=np.uint8).reshape((4, 5, 3))
+            seen = {}
+
+            class Detector:
+                def setInputSize(self, _size):
+                    pass
+
+                def setScoreThreshold(self, _threshold):
+                    pass
+
+                def detect(self, _image):
+                    row = [0, 0, 20, 20] + [0] * 10 + [0.99]
+                    return None, np.asarray([row], dtype=float)
+
+            class Recognizer:
+                def alignCrop(self, _image, _face):
+                    return aligned
+
+                def feature(self, crop):
+                    seen["feature"] = crop
+                    return np.asarray([np.r_[1.0, np.zeros(127)]])
+
+            def encode(_extension, crop):
+                seen["encoded"] = crop.copy()
+                return True, np.frombuffer(b"png" + crop.tobytes(), dtype=np.uint8)
+
+            cv2 = SimpleNamespace(
+                __version__="test-opencv",
+                IMREAD_COLOR=1,
+                imdecode=lambda _raw, _mode: np.zeros((100, 100, 3), dtype=np.uint8),
+                imencode=encode,
+            )
+            embedder = engine.Embedder(root / "model-cache")
+            embedder.configure_evidence(root / "library" / "_likeness" / "general" / "face-evidence")
+            embedder.det, embedder.rec = Detector(), Recognizer()
+            embedder.model_provenance, embedder.model_id = embedder._model_identity(cv2)
+            with mock.patch.dict("sys.modules", {"cv2": cv2}):
+                result = embedder(source)
+
+            evidence = result["alignmentEvidence"]
+            target = embedder.evidence_root / evidence["artifact"]
+            self.assertIs(seen["feature"], aligned)
+            np.testing.assert_array_equal(seen["encoded"], seen["feature"])
+            self.assertEqual(target.read_bytes(), b"png" + aligned.tobytes())
+            self.assertEqual(evidence["sourceSha256"], hashlib.sha256(source.read_bytes()).hexdigest())
+            self.assertEqual(evidence["alignmentSha256"], hashlib.sha256(target.read_bytes()).hexdigest())
+            self.assertFalse(embedder.needs_alignment_evidence(result, source))
+
+    def test_read_only_embedding_does_not_persist_exact_crop(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            source = root / "source.png"
+            source.write_bytes(b"source")
+            evidence_root = root / "_likeness" / "general" / "face-evidence"
+            embedder = engine.Embedder(root / "model-cache")
+            embedder.configure_evidence(evidence_root)
+            crop = np.ones((3, 3, 3), dtype=np.uint8)
+            embedder.model_id = "a" * 64
+            embedder.model_provenance = {"recognizer": {"name": "SFace"}}
+            cv2 = SimpleNamespace(
+                __version__="test-opencv",
+                IMREAD_COLOR=1,
+                imdecode=lambda _raw, _mode: np.zeros((100, 100, 3), dtype=np.uint8),
+                imencode=lambda _extension, _image: (True, np.frombuffer(b"png", dtype=np.uint8)),
+            )
+            detector = SimpleNamespace(
+                setInputSize=lambda _size: None,
+                setScoreThreshold=lambda _threshold: None,
+                detect=lambda _image: (None, np.asarray([[0, 0, 20, 20] + [0] * 10 + [0.99]])),
+            )
+            recognizer = SimpleNamespace(
+                alignCrop=lambda _image, _face: crop,
+                feature=lambda _aligned: np.asarray([np.r_[1.0, np.zeros(127)]]),
+            )
+            embedder.det, embedder.rec = detector, recognizer
+            with likeness.domains.activate("general", read_only=True), mock.patch.dict("sys.modules", {"cv2": cv2}):
+                result = embedder(source)
+            self.assertEqual(result["alignmentEvidence"]["state"], "read-only-not-persisted")
+            self.assertFalse(evidence_root.exists())
+
+    def test_legacy_cache_entry_is_recomputed_and_saved_with_alignment_evidence(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            source = root / "Prospects" / "Example" / "gallery" / "photo.jpg"
+            source.parent.mkdir(parents=True)
+            source.write_bytes(b"prepared source")
+            cache = engine.Cache(root / "_likeness" / "general" / "cache.json")
+            digest = cache.sha(source)
+            cache.emb[digest] = {
+                "faces": 1, "s": 0.95, "v": [1.0] * 128, "box": [0.2, 0.2, 0.4, 0.4], "px": 30,
+            }
+
+            class RefreshingEmbedder:
+                calls = 0
+
+                def needs_alignment_evidence(self, data, _path):
+                    return "alignmentEvidence" not in data
+
+                def __call__(self, _path):
+                    self.calls += 1
+                    return {
+                        "faces": 1, "s": 0.95, "v": [0.5] * 128,
+                        "box": [0.2, 0.2, 0.4, 0.4], "px": 30,
+                        "alignmentEvidence": {"state": "persisted", "sourceSha256": "source-bound"},
+                    }
+
+            embedder = RefreshingEmbedder()
+            with mock.patch.object(
+                engine.cw, "photo_folders", return_value=[("Prospects", "Example", source.parent.parent)]
+            ), likeness.domains.activate("general"):
+                engine.read_library({}, root, cache, embedder, {"mixed": [], "pool": []}, progress=False)
+
+            saved = json.loads(cache.path.read_text(encoding="utf-8"))
+            self.assertEqual(embedder.calls, 1)
+            self.assertEqual(saved["emb"][digest]["alignmentEvidence"]["state"], "persisted")
+            self.assertEqual(saved["emb"][digest]["v"], [0.5] * 128)
+
+    def test_gallery_links_only_verified_source_and_crop_provenance(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            source = root / "Prospects" / "Example" / "gallery" / "photo.jpg"
+            source.parent.mkdir(parents=True)
+            source.write_bytes(b"source image")
+            out = root / "_reports" / "library"
+            evidence_root = root / "_likeness" / "general" / "face-evidence"
+            evidence_root.mkdir(parents=True)
+            source_sha = hashlib.sha256(source.read_bytes()).hexdigest()
+            model = {
+                "detector": {
+                    "name": "YuNet", "file": "yunet.onnx", "sha256": "b" * 64,
+                },
+                "recognizer": {
+                    "name": "SFace", "file": "sface.onnx", "sha256": "c" * 64,
+                },
+                "opencv": "test",
+                "alignment": "FaceRecognizerSF.alignCrop",
+            }
+            model_id = hashlib.sha256(
+                json.dumps(model, sort_keys=True, separators=(",", ":")).encode("utf-8")
+            ).hexdigest()
+            crop = b"lossless aligned crop"
+            artifact = f"{source_sha}-{model_id}.png"
+            (evidence_root / artifact).write_bytes(crop)
+            crop_sha = hashlib.sha256(crop).hexdigest()
+            photo = likeness.Photo(source, "Prospects", "Example", "cache-key", {
+                "faces": 1,
+                "alignmentEvidence": {
+                    "state": "persisted", "sourceSha256": source_sha, "modelId": model_id,
+                    "artifact": artifact, "artifactSha256": crop_sha, "alignmentSha256": crop_sha,
+                    "model": model,
+                    "width": 5, "height": 4,
+                },
+            })
+            evidence = review_gallery.alignment_evidence(photo, root, out)
+            self.assertEqual(evidence["state"], "verified")
+            self.assertEqual(evidence["sourceSha256"], source_sha)
+            self.assertNotIn("base64", json.dumps(evidence).lower())
+            (evidence_root / artifact).write_bytes(b"tampered")
+            self.assertEqual(review_gallery.alignment_evidence(photo, root, out)["state"], "invalid")
+
     def test_render_navigation_and_exact_source_deep_link_are_available(self):
         page = review_gallery.render_html([], "now")
         self.assertIn('>Rendering</a>', page)

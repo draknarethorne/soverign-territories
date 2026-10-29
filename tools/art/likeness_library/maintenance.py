@@ -7,6 +7,7 @@ import uuid
 from . import domains, metadata, rejections, retained_preparation
 from .identity_maintenance import category_destination_available, relocated_path
 from .sandbox import is_sandbox_working_path
+from tools.workflows import comfy_workflows as cw
 
 
 def require_authorization(root, policy, sandbox_override=False):
@@ -388,7 +389,11 @@ def apply_moves(root, moves, policy, cfg, *, sandbox_override=False, backup_fn=N
         raise ValueError("catalogue changed after backup; no reconciliation moves were applied")
     _metadata_catalog(root, catalog, _updated_catalog(catalog, moves, policy, identity_actions), metadata_actions)
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%d-%H%M%S")
-    journal = root / "_reports" / "runs" / f"reconcile_{stamp}_{uuid.uuid4().hex[:8]}.json"
+    journal = (
+        cw.storage_root(cfg, "reports", root=root)
+        / "runs"
+        / f"reconcile_{stamp}_{uuid.uuid4().hex[:8]}.json"
+    )
     journal.parent.mkdir(parents=True, exist_ok=True)
     data = {
         "schemaVersion": 1, "root": str(root), "policy": policy,

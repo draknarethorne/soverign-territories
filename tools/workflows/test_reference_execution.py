@@ -36,6 +36,13 @@ def tiny_ui():
 
 
 class GraphTests(unittest.TestCase):
+    def test_reference_workspace_uses_the_shared_install_configuration(self):
+        config = execution.workflows.load_cfg()
+        expected = execution.workflows.install_dir(
+            config, config["referenceWorkspace"]
+        )
+        self.assertEqual(execution.WORKFLOWS, expected)
+
     def test_prime_paths_are_staged_correctly_without_changing_legacy_pose_paths(self):
         job = {"id": "one", "displayName": "Person",
                "recipe": "shared-1a-prime-outfit-relaxed"}

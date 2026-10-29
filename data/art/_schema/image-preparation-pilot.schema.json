@@ -15,6 +15,31 @@
     "limit": {"type": "integer", "minimum": 0},
     "sourceFolder": {"type": ["string", "null"]},
     "reportSha256": {"$ref": "#/definitions/hash"},
+    "configurationReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "configurationPath",
+        "sourceConfigurationSha256",
+        "effectiveConfigurationSha256",
+        "environmentOverrides",
+        "resolvedPaths"
+      ],
+      "properties": {
+        "configurationPath": {"type": "string", "minLength": 1},
+        "sourceConfigurationSha256": {"$ref": "#/definitions/hash"},
+        "effectiveConfigurationSha256": {"$ref": "#/definitions/hash"},
+        "environmentOverrides": {
+          "type": "object",
+          "additionalProperties": {"type": "string"}
+        },
+        "resolvedPaths": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {"type": "string", "minLength": 1}
+        }
+      }
+    },
     "photos": {
       "type": "array",
       "items": {
@@ -41,14 +66,14 @@
           "outcome": {"enum": ["compared", "overlay-held", "compared-overlay", "enhancement-failed", "unprocessable", "junk-candidate", "assessment-failed"]},
           "sourceTreatment": {
             "description": "Current source disposition, not an automatic quality or identity decision. Optional for older pilot reports.",
-            "enum": ["original-unassessed", "original-overlay-unremoved", "original-clean", "original-enhancement-failed", "cropped-border", "cropped-border-overlay-unremoved", "enhanced", "unprocessable"]
+            "enum": ["original-unassessed", "original-overlay-unremoved", "original-clean", "original-enhancement-failed", "cropped-border", "cropped-border-overlay-unremoved", "prepared-cleanup", "prepared-reconstruction", "enhanced", "unprocessable"]
           },
           "recommendation": {
             "type": "object",
             "additionalProperties": false,
             "required": ["use", "reason"],
             "properties": {
-              "use": {"enum": ["original", "geometry", "second-crop", "eraser", "composition", "none"]},
+              "use": {"enum": ["original", "geometry", "first-crop", "second-crop", "residual-crop", "eraser", "composition", "head-overlay-reconstruction", "head-overlay-composition", "none"]},
               "reason": {"type": "string", "minLength": 1}
             }
           },
@@ -72,12 +97,12 @@
             "required": ["steps", "cleanup", "final", "faceAssessment"],
             "properties": {
               "steps": {
-                "type": "array", "minItems": 5, "maxItems": 6,
+                "type": "array", "minItems": 5, "maxItems": 7,
                 "items": {
                   "type": "object", "additionalProperties": false,
                   "required": ["name", "status", "input", "candidate", "selected", "reason"],
                   "properties": {
-                    "name": {"enum": ["first-crop", "eraser", "second-crop", "composition", "denoise", "tone"]},
+                    "name": {"enum": ["first-crop", "eraser", "second-crop", "residual-crop", "reconstruction", "composition", "denoise", "tone"]},
                     "status": {"enum": ["skipped", "attempted-selected", "attempted-rejected", "failed"]},
                     "input": {"type": "string"},
                     "candidate": {"type": ["string", "null"]},
@@ -89,6 +114,18 @@
               "cleanup": {"type": "string"},
               "final": {"type": "string"},
               "faceAssessment": {"type": "string"},
+              "sequence": {
+                "type": "object",
+                "required": ["policy", "steps", "candidates", "final", "detectorErrors", "headOverlay"],
+                "properties": {
+                  "policy": {"type": "string", "minLength": 1},
+                  "steps": {"type": "array"},
+                  "candidates": {"type": "object"},
+                  "final": {"type": "string"},
+                  "detectorErrors": {"type": "array"},
+                  "headOverlay": {"type": "object"}
+                }
+              },
               "subject": {
                 "type": "object", "additionalProperties": false,
                 "required": ["method", "box", "people", "note"],
@@ -143,6 +180,12 @@
             "properties": {
               "control": {"$ref": "#/definitions/variant"},
               "geometry": {"$ref": "#/definitions/variant"},
+              "first-crop": {"$ref": "#/definitions/variant"},
+              "residual-crop": {"$ref": "#/definitions/variant"},
+              "head-overlay-mask": {"$ref": "#/definitions/variant"},
+              "head-overlay-reconstruction": {"$ref": "#/definitions/variant"},
+              "head-overlay-composition": {"$ref": "#/definitions/variant"},
+              "cumulative-erase-mask": {"$ref": "#/definitions/variant"},
               "ui-crop-proposal": {"$ref": "#/definitions/variant"},
               "eraser": {"$ref": "#/definitions/variant"},
               "eraser-ns": {"$ref": "#/definitions/variant"},

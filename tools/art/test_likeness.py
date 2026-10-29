@@ -61,10 +61,43 @@ CFG = {"standardSize": [94, 110], "photos": {}, "workspaces": {}}
 
 
 class LikenessTests(unittest.TestCase):
+    def test_domain_state_path_defaults_to_configured_likeness_root(self):
+        config = {**self.cfg, "storageRoots": {**self.cfg["storageRoots"], "likeness": "_embeddings"}}
+        with mock.patch.object(L.domains.cw, "load_cfg", return_value=config), L.domains.activate("artists"):
+            path = L.domains.state_path(self.lib, "cache.json")
+        self.assertEqual(path, self.lib / "_embeddings" / "artists" / "cache.json")
+
     def test_artist_entry_point_selects_shared_artist_domain(self):
         with mock.patch.object(L, "main", return_value=0) as shared:
             self.assertEqual(LA.main(["--check"], embedder=self.fake), 0)
         shared.assert_called_once_with(["--check"], embedder=self.fake, domain="artists")
+
+    def test_junk_uses_configured_storage_root(self):
+        config = {**self.cfg, "storageRoots": {**self.cfg["storageRoots"], "junk": "_quarantine"}}
+        self.add("Prospects", "No Face", "noface")
+        with mock.patch.object(cw, "load_cfg", return_value=config):
+            self.run_tool("junk", apply=True)
+        self.assertEqual(len(list((self.lib / "_quarantine/Prospects").glob("*.jpg"))), 1)
+        self.assertFalse((self.lib / "_junk").exists())
+
+    def test_junk_reset_reads_configured_storage_root(self):
+        config = {**self.cfg, "storageRoots": {**self.cfg["storageRoots"], "junk": "_quarantine"}}
+        folder = self.lib / "_quarantine/Prospects"
+        folder.mkdir(parents=True)
+        (folder / "prospects_image_1.jpg").write_text("person|1")
+        with mock.patch.object(cw, "load_cfg", return_value=config):
+            self.run_tool("junk", "--reset", apply=True)
+        self.assertFalse(list(folder.glob("*.jpg")))
+        self.assertEqual(len(list((self.lib / "Various/gallery").glob("*.jpg"))), 1)
+
+    def test_empty_person_retirement_uses_configured_storage_root(self):
+        folder = self.lib / "Prospects/Empty"
+        folder.mkdir(parents=True)
+        config = {**self.cfg, "storageRoots": {**self.cfg["storageRoots"], "retired": "_archives"}}
+        with mock.patch.object(cw, "load_cfg", return_value=config):
+            self.assertEqual(L.retire_empty(self.lib, ["Prospects/Empty"]), ["Prospects/Empty"])
+        self.assertTrue((self.lib / "_archives/Prospects/Empty").is_dir())
+        self.assertFalse(folder.exists())
 
     def test_default_cli_excludes_artists_and_artist_cli_excludes_general(self):
         self.add("Prospects", "General Person", "g", 3)
@@ -250,10 +283,31 @@ class LikenessTests(unittest.TestCase):
         self.assertIn("EXIT", self.run_tool("seed", artists=True))
 
     def setUp(self):
-        self.tmp = pathlib.Path(tempfile.mkdtemp())
+        (ROOT / "tmp").mkdir(exist_ok=True)
+        self.temporary = tempfile.TemporaryDirectory(prefix="likeness-tests-", dir=ROOT / "tmp")
+        self.tmp = pathlib.Path(self.temporary.name)
         self.lib = self.tmp / "lib"
         self.fake = Fake()
-        self.patches = [mock.patch.object(cw, "load_cfg", lambda: dict(CFG)), mock.patch.object(L, "DATA", self.tmp / "data")]
+        self.cfg = cw.load_cfg()
+        self.cfg["paths"].update({
+            "productionRoot": str(self.lib),
+            "sandboxWorkingRoot": str(self.tmp / "sandbox" / "Working"),
+            "inputsRoot": str(self.tmp / "inputs"),
+            "outputRoot": str(self.tmp / "outputs"),
+            "modelCacheRoot": str(self.tmp / "models"),
+        })
+        self.cfg.update({
+            "installsRoot": str(self.tmp / "installs"),
+            "sharedInput": str(self.tmp / "shared-input"),
+            "sharedOutput": str(self.tmp / "shared-output"),
+            "photos": {},
+            "standardSize": CFG["standardSize"],
+        })
+        self.patches = [
+            mock.patch.object(cw, "load_cfg", lambda: dict(self.cfg)),
+            mock.patch.object(L.domains.cw, "load_cfg", lambda: dict(self.cfg)),
+            mock.patch.object(L, "DATA", self.tmp / "data"),
+        ]
         for p in self.patches:
             p.start()
         self.n = 0
@@ -261,7 +315,7 @@ class LikenessTests(unittest.TestCase):
     def tearDown(self):
         for p in self.patches:
             p.stop()
-        shutil.rmtree(self.tmp, ignore_errors=True)
+        self.temporary.cleanup()
 
     def add(self, root, folder, person, count=1):
         g = self.lib / root / folder / "gallery"
@@ -532,7 +586,7 @@ class LikenessTests(unittest.TestCase):
     def test_a_photo_chosen_in_workspaces_json_is_never_sorted_away(self):
         self.standard_library()
         keep = self.names("Prospects", "Various")[0]
-        cfg = dict(CFG, photos={"Angelica": keep.replace(".jpg", "_944x1104.png")})
+        cfg = dict(self.cfg, photos={"Angelica": keep.replace(".jpg", "_944x1104.png")})
         with mock.patch.object(cw, "load_cfg", lambda: cfg):
             self.run_tool("sort", apply=True)
         self.assertIn(keep, self.names("Prospects", "Various"))
@@ -766,7 +820,7 @@ class LikenessTests(unittest.TestCase):
         self.add("Models", "Drakness", "dk", 5)
         g = self.lib / "Models/Drakness/gallery"
         (g / "drakness_image_950.jpg").write_text("zz|950")
-        cfg = dict(CFG, photos={"Drakness": "drakness_image_950_944x1104.png"})
+        cfg = dict(self.cfg, photos={"Drakness": "drakness_image_950_944x1104.png"})
         with mock.patch.object(cw, "load_cfg", lambda: cfg):
             self.run_tool("clean", "Drakness", apply=True)
         self.assertIn("drakness_image_950.jpg", self.names("Models", "Drakness"))
@@ -858,7 +912,7 @@ class LikenessTests(unittest.TestCase):
             g.mkdir(parents=True, exist_ok=True)
             for s in stems:
                 (g / f"{s}_94x110.png").write_bytes(b"x")
-        cfg = dict(CFG, photos={"Angelica": "angelica_image_1_94x110.png", "Azaline": "azaline_image_1_94x110.png", "Draknara": "draknara_image_1_94x110.png"}, likeness={"keepPhoto": ["Angelica"]})
+        cfg = dict(self.cfg, photos={"Angelica": "angelica_image_1_94x110.png", "Azaline": "azaline_image_1_94x110.png", "Draknara": "draknara_image_1_94x110.png"}, likeness={"keepPhoto": ["Angelica"]})
         calls = []
         with mock.patch.object(cw, "load_cfg", lambda: cfg), mock.patch.object(cw, "repoint_photos", lambda c, r, d, root=None: calls.append(r) or {"repo": 1}):
             out = self.run_tool("photos")

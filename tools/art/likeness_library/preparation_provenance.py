@@ -6,6 +6,8 @@ import os
 import pathlib
 from urllib.parse import quote, urlencode
 
+from tools.workflows import comfy_workflows as cw
+
 
 MAX_RUNS = 32
 MAX_ROWS = 5000
@@ -107,9 +109,14 @@ def _summary(row):
 class PreparationIndex:
     """Index verified reports once, then hash only current files named by those reports."""
 
-    def __init__(self, root, page_dir, source_paths, domain):
+    def __init__(self, root, page_dir, source_paths, domain, cfg=None):
         self.root = pathlib.Path(root).resolve(strict=True)
         self.page_dir = pathlib.Path(page_dir).resolve()
+        self.cfg = cfg if cfg is not None else cw.load_cfg()
+        self.reports_root = cw.storage_root(self.cfg, "reports", root=self.root)
+        self.sandbox_state_root = cw.storage_root(
+            self.cfg, "sandboxState", root=self.root
+        )
         self.domain = domain
         self._sources = {}
         self._report_by_path = {}
@@ -139,7 +146,7 @@ class PreparationIndex:
                 current_by_id.setdefault(str(photo_id), set()).add(_key(relative))
         self._sources = current_by_path
 
-        reports = self.root / "_reports" / "preparation"
+        reports = self.reports_root / "preparation"
         if not reports.is_dir():
             return
         try:
@@ -229,14 +236,16 @@ class PreparationIndex:
         from .retained_preparation import _checked, _safe
 
         try:
-            directory = _safe(self.root, "_sandbox-state")
+            state_relative = self.sandbox_state_root.relative_to(self.root).as_posix()
+            directory = _safe(self.root, state_relative)
             if not directory.is_dir():
                 return
             for count, run in enumerate(sorted(directory.iterdir(), key=lambda item: item.name.casefold())):
                 if count >= MAX_RUNS:
                     break
                 entry = {
-                    "name": "_sandbox-state/" + run.name, "recipe": "", "status": "not verified",
+                    "name": state_relative + "/" + run.name,
+                    "recipe": "", "status": "not verified",
                     "photos": [], "href": "", "staged": True,
                 }
                 try:
@@ -254,7 +263,12 @@ class PreparationIndex:
                         raise ValueError("invalid staged intake receipt schema")
                     mirror_relative = relative + "/inputs"
                     mirror = _safe(self.root, mirror_relative)
-                    report_relative = mirror_relative + "/_reports/preparation/all"
+                    mirror_reports = cw.storage_root(
+                        self.cfg, "reports", root=mirror
+                    ).relative_to(mirror).as_posix()
+                    report_relative = (
+                        mirror_relative + "/" + mirror_reports + "/preparation/all"
+                    )
                     report = _safe(self.root, report_relative)
                     manifest = _checked(self.root, report_relative + "/manifest.json",
                                         receipt["preparationManifestSHA256"])
@@ -328,7 +342,7 @@ class PreparationIndex:
         for entry in self.history_runs:
             if entry["status"] != "not verified":
                 continue
-            run = self.root / "_reports" / "preparation" / entry["name"]
+            run = self.reports_root / "preparation" / entry["name"]
             try:
                 manifest = run / "manifest.json"
                 if manifest.stat().st_size > MAX_MANIFEST_BYTES:
@@ -468,9 +482,9 @@ class PreparationIndex:
         }
 
 
-def build_index(root, page_dir, source_paths, domain="general"):
+def build_index(root, page_dir, source_paths, domain="general", cfg=None):
     """Build one read-only report index for a single page generation."""
-    return PreparationIndex(root, page_dir, source_paths, domain)
+    return PreparationIndex(root, page_dir, source_paths, domain, cfg=cfg)
 
 
 def render_evidence(evidence):

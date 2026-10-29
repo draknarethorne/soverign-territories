@@ -8,10 +8,13 @@ removes what a workspace is not home for and only when the home workspace has an
 Run: python tools/workflows/test_comfy_workflows.py
 """
 import contextlib
+import copy
 import io
 import json
+import os
 import pathlib
 import shutil
+import subprocess
 import sys
 import tempfile
 import types
@@ -34,7 +37,8 @@ class World:
     def __enter__(self):
         self.tmp = pathlib.Path(tempfile.mkdtemp())
         self.repo = self.tmp / "repo"
-        self.cfg = {
+        self.cfg = copy.deepcopy(cw.load_cfg())
+        self.cfg.update({
             "installsRoot": str(self.tmp / "installs"),
             "workflowsSubpath": SUBPATH,
             "exclude": ["X_*.json"],
@@ -56,18 +60,27 @@ class World:
                 {"groups": ["set-planned"], "workspace": "Planned"},
                 {"groups": ["set-ghost"], "workspace": "Ghost"},
             ],
-        }
+        })
+        self.cfg["paths"].update({
+            "productionRoot": str(self.tmp / "production"),
+            "sandboxWorkingRoot": str(self.tmp / "sandbox" / "Working"),
+            "modelCacheRoot": str(self.tmp / "models"),
+            "inputsRoot": str(self.tmp / "inputs"),
+            "outputRoot": str(self.tmp / "outputs"),
+        })
+        self.cfg["sharedInput"] = str(self.tmp / "shared-input")
+        self.cfg["sharedOutput"] = str(self.tmp / "shared-output")
         for ws in self.cfg["workspaces"]:
             if ws != "Ghost":
                 self.dir(ws).mkdir(parents=True)
         self.masters = {}
+        self.cfg["storageRoots"]["backup"] = "_backup"
         self.patches = [
             mock.patch.object(cw, "load_cfg", lambda: self.cfg),
             mock.patch.object(cw, "hero_groups", lambda: dict(self.HEROES)),
             mock.patch.object(cw, "repo_files", lambda cfg: dict(self.masters)),
             mock.patch.object(cw, "curated_files", lambda folder=None: {}),
             mock.patch.object(cw, "shot_files", lambda: {}),
-            mock.patch.object(cw, "BACKUPS", self.tmp / "backup"),
             mock.patch.object(cw, "WF", self.repo),
         ]
         for p in self.patches:
@@ -112,6 +125,301 @@ class World:
 
     def folders(self, ws):
         return sorted(p.relative_to(self.dir(ws)).as_posix() for p in self.dir(ws).rglob("*") if p.is_dir())
+
+
+class StorageRootTests(unittest.TestCase):
+    def test_storage_output_paths_are_relative_to_configured_root_and_refuse_escape(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            cfg = {"storageRoots": {"reports": "operations/reports"}}
+            reports = root / "operations" / "reports"
+            for output in ("library", reports / "custom" / "page.html"):
+                expected = reports / output if not pathlib.Path(output).is_absolute() else output
+                self.assertEqual(cw.storage_output_path(cfg, "reports", output, root), expected)
+            for output in ("../outside", root / "Various" / "gallery",
+                           reports / ".." / "reports" / "page.html", root / "operations" / "reports-other"):
+                with self.subTest(output=output), self.assertRaises(ValueError):
+                    cw.storage_output_path(cfg, "reports", output, root)
+            self.assertFalse(reports.exists())
+
+    def test_storage_output_paths_refuse_reparse_points_even_inside_reports(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            output = root / "_reports" / "linked" / "page.html"
+            real = cw.is_reparse_point
+            with mock.patch.object(cw, "is_reparse_point",
+                                   side_effect=lambda path: path == output.parent or real(path)):
+                with self.assertRaisesRegex(ValueError, "reparse point"):
+                    cw.storage_output_path({}, "reports", output, root)
+
+    def test_workspace_config_matches_versioned_schema(self):
+        config = cw.load_cfg()
+        self.assertEqual(config["schemaVersion"], 1)
+        invalid = dict(config)
+        invalid["storageRoots"] = {
+            key: value for key, value in config["storageRoots"].items() if key != "backup"
+        }
+        with self.assertRaisesRegex(ValueError, "storageRoots"):
+            cw.validate_config(invalid)
+        invalid = dict(config)
+        invalid["workflowsSubpath"] = "../outside"
+        with self.assertRaisesRegex(ValueError, "contained relative path"):
+            cw.validate_config(invalid)
+        invalid["workflowsSubpath"] = "C:outside"
+        with self.assertRaisesRegex(ValueError, "contained relative path"):
+            cw.validate_config(invalid)
+        invalid = dict(config)
+        invalid["referenceWorkspace"] = "../outside"
+        with self.assertRaisesRegex(ValueError, "single folder name"):
+            cw.validate_config(invalid)
+        invalid = copy.deepcopy(config)
+        invalid["paths"]["outputRoot"] = invalid["paths"]["inputsRoot"]
+        with self.assertRaisesRegex(ValueError, "inputsRoot and outputRoot must not overlap"):
+            cw.validate_config(invalid)
+        invalid = copy.deepcopy(config)
+        invalid["sharedOutput"] = invalid["paths"]["productionRoot"]
+        with self.assertRaisesRegex(ValueError, "sharedOutput must not overlap productionRoot"):
+            cw.validate_config(invalid)
+
+    def test_environment_root_overrides_and_model_cache_expansion(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            cfg = {"paths": {
+                "productionRoot": "B:/production",
+                "sandboxWorkingRoot": "B:/sandbox/Working",
+                "modelCacheRoot": "%LOCALAPPDATA%/sovereign-territories",
+            }}
+            with mock.patch.dict(os.environ, {
+                "SOVEREIGN_TERRITORIES_PRODUCTION_ROOT": str(root / "production"),
+                "SOVEREIGN_TERRITORIES_SANDBOX_WORKING_ROOT": str(root / "sandbox" / "Working"),
+                "SOVEREIGN_TERRITORIES_MODEL_CACHE_ROOT": str(root / "models"),
+            }):
+                self.assertEqual(cw.production_root(cfg), root / "production")
+                self.assertEqual(cw.sandbox_work_root(cfg), root / "sandbox" / "Working")
+                self.assertEqual(cw.model_cache_root(cfg), root / "models")
+            with mock.patch.dict(os.environ, {
+                "LOCALAPPDATA": str(root / "local"),
+                "SOVEREIGN_TERRITORIES_MODEL_CACHE_ROOT": "",
+            }, clear=False):
+                self.assertEqual(
+                    cw.model_cache_root({"paths": {"modelCacheRoot": "%LOCALAPPDATA%/sovereign-territories"}}),
+                    root / "local" / "sovereign-territories",
+                )
+            config = cw.load_cfg()
+            overrides = {
+                "SOVEREIGN_TERRITORIES_INSTALLS_ROOT": str(root / "installs"),
+                "SOVEREIGN_TERRITORIES_INPUTS_ROOT": str(root / "inputs"),
+                "SOVEREIGN_TERRITORIES_OUTPUT_ROOT": str(root / "outputs"),
+                "SOVEREIGN_TERRITORIES_SHARED_INPUT_ROOT": str(root / "shared-input"),
+                "SOVEREIGN_TERRITORIES_SHARED_OUTPUT_ROOT": str(root / "shared-output"),
+            }
+            with mock.patch.dict(os.environ, overrides):
+                self.assertEqual(cw.installs_root(config), root / "installs")
+                self.assertEqual(cw.comfy_input_root(config), root / "inputs")
+                self.assertEqual(cw.comfy_output_root(config), root / "outputs")
+                self.assertEqual(cw.shared_input_root(config), root / "shared-input")
+                self.assertEqual(cw.shared_output_root(config), root / "shared-output")
+            with self.assertRaisesRegex(ValueError, "must be absolute"):
+                cw.install_dir(config, "Sovereign Females", root="relative/installs")
+
+    def test_configured_environment_roots_must_be_absolute(self):
+        with self.assertRaisesRegex(ValueError, "must be absolute"):
+            cw.production_root({"paths": {"productionRoot": "relative/production"}})
+        with self.assertRaisesRegex(ValueError, "unset environment variable"):
+            cw.model_cache_root({"paths": {"modelCacheRoot": "%MISSING_MODEL_ROOT%/models"}})
+
+    def test_configuration_receipt_fingerprints_effective_roots(self):
+        config = cw.load_cfg()
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            overrides = {name: "" for name in cw.CONFIG_ROOT_OVERRIDES}
+            with mock.patch.dict(os.environ, overrides, clear=False):
+                first_paths = {
+                    "productionRoot": cw.production_root(config),
+                    "sandboxWorkingRoot": cw.sandbox_work_root(config),
+                    "inputsRoot": root / "inputs-a",
+                }
+                first = cw.configuration_receipt(config, first_paths)
+                reordered = cw.configuration_receipt(
+                    config, dict(reversed(list(first_paths.items())))
+                )
+                self.assertEqual(
+                    first["effectiveConfigurationSha256"],
+                    reordered["effectiveConfigurationSha256"],
+                )
+                self.assertEqual(
+                    first["sourceConfigurationSha256"],
+                    reordered["sourceConfigurationSha256"],
+                )
+                self.assertEqual(len(first["effectiveConfigurationSha256"]), 64)
+                self.assertEqual(
+                    first["resolvedPaths"]["inputsRoot"],
+                    str((root / "inputs-a").resolve()),
+                )
+                storage = cw.storage_configuration_receipt(
+                    config,
+                    root / "sandbox" / "Working",
+                    {"runOutput": root / "sandbox" / "Working" / "_reports" / "run"},
+                )
+                self.assertEqual(
+                    storage["resolvedPaths"]["libraryRoot"],
+                    str((root / "sandbox" / "Working").resolve()),
+                )
+                self.assertEqual(
+                    {
+                        name.removeprefix("storageRoots.")
+                        for name in storage["resolvedPaths"]
+                        if name.startswith("storageRoots.")
+                    },
+                    set(cw.STORAGE_ROOT_DEFAULTS),
+                )
+
+                with mock.patch.dict(os.environ, {
+                    "SOVEREIGN_TERRITORIES_INPUTS_ROOT": str(root / "inputs-b"),
+                }):
+                    second_paths = dict(first_paths)
+                    second_paths["inputsRoot"] = cw.comfy_input_root(config)
+                    second = cw.configuration_receipt(config, second_paths)
+
+                self.assertEqual(
+                    first["sourceConfigurationSha256"],
+                    second["sourceConfigurationSha256"],
+                )
+                self.assertNotEqual(
+                    first["effectiveConfigurationSha256"],
+                    second["effectiveConfigurationSha256"],
+                )
+                self.assertEqual(
+                    second["environmentOverrides"][
+                        "SOVEREIGN_TERRITORIES_INPUTS_ROOT"
+                    ],
+                    str(root / "inputs-b"),
+                )
+
+    def test_config_writes_validate_and_publish_atomically(self):
+        config = cw.load_cfg()
+        with tempfile.TemporaryDirectory() as directory:
+            target = pathlib.Path(directory) / "workspaces.json"
+            target.write_text("previous configuration\n", encoding="utf-8")
+            original_storage_root = cw.storage_root
+            with mock.patch.object(cw, "CFG_PATH", target), mock.patch.object(
+                cw,
+                "storage_root",
+                side_effect=lambda cfg, name, root=None: (
+                    pathlib.Path(directory) / "staging"
+                    if name == "temporary"
+                    else original_storage_root(cfg, name, root)
+                ),
+            ):
+                cw.write_cfg_text(json.dumps(config) + "\n")
+                saved = target.read_text(encoding="utf-8")
+                self.assertEqual(json.loads(saved), config)
+                invalid = dict(config)
+                invalid["storageRoots"] = {}
+                with self.assertRaisesRegex(ValueError, "storageRoots"):
+                    cw.write_cfg_text(json.dumps(invalid) + "\n")
+                self.assertEqual(target.read_text(encoding="utf-8"), saved)
+                with mock.patch.object(cw.os, "replace", side_effect=PermissionError("locked")):
+                    with self.assertRaisesRegex(PermissionError, "locked"):
+                        cw.write_cfg_text(saved)
+                self.assertEqual(target.read_text(encoding="utf-8"), saved)
+            self.assertEqual(
+                list((pathlib.Path(directory) / "staging" / "config-staging").iterdir()),
+                [],
+            )
+
+    def test_defaults_and_relative_overrides_resolve_beneath_working_root(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            cfg = {"paths": {"workRoot": str(root)}}
+            self.assertEqual(cw.storage_root(cfg, "reports"), root / "_reports")
+            cfg["storageRoots"] = {"reports": "operations/reports"}
+            self.assertEqual(cw.storage_root(cfg, "reports"), root / "operations" / "reports")
+            self.assertEqual(cw.storage_root(cfg, "backup", root=root / "sandbox"),
+                             root / "sandbox" / "_backup")
+
+    def test_absolute_override_must_stay_beneath_working_root(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            cfg = {"storageRoots": {"reports": str(root / "custom-reports")}}
+            self.assertEqual(cw.storage_root(cfg, "reports", root=root),
+                             root / "custom-reports")
+            cfg["storageRoots"]["reports"] = str(root.parent / "outside")
+            with self.assertRaisesRegex(ValueError, "must remain under"):
+                cw.storage_root(cfg, "reports", root=root)
+
+    def test_invalid_names_and_configuration_fail_explicitly(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            with self.assertRaisesRegex(ValueError, "unknown storage root"):
+                cw.storage_root({}, "unknown", root=root)
+            with self.assertRaisesRegex(ValueError, "must be an object"):
+                cw.storage_root({"storageRoots": []}, "reports", root=root)
+            with self.assertRaisesRegex(ValueError, "non-empty path"):
+                cw.storage_root({"storageRoots": {"reports": ""}}, "reports", root=root)
+            with self.assertRaisesRegex(ValueError, "must remain under"):
+                cw.storage_root({"storageRoots": {"reports": "../outside"}}, "reports", root=root)
+            with self.assertRaisesRegex(ValueError, "cannot be the working root"):
+                cw.storage_root({"storageRoots": {"reports": "."}}, "reports", root=root)
+
+    def test_storage_roots_must_not_overlap(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            cfg = {"storageRoots": {
+                "reports": "operations",
+                "backup": "operations/backups",
+            }}
+            with self.assertRaisesRegex(ValueError, "overlap"):
+                cw.storage_root(cfg, "reports", root=root)
+
+    def test_storage_roots_cannot_overlap_active_photo_categories(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            for value in ("Prospects", "Prospects/Seed"):
+                cfg = {"storageRoots": {"reports": value}}
+                with self.subTest(value=value):
+                    with self.assertRaisesRegex(ValueError, "overlap active photo category"):
+                        cw.storage_root(cfg, "reports", root=root)
+
+    def test_storage_roots_cannot_overlap_reserved_photo_archive(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            for value in ("_archive", "_archive/junk"):
+                cfg = {"storageRoots": {"junk": value}}
+                with self.subTest(value=value):
+                    with self.assertRaisesRegex(ValueError, "reserved photo archive"):
+                        cw.storage_root(cfg, "junk", root=root)
+
+    def test_storage_roots_reject_unknown_configuration_entries(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            cfg = {"storageRoots": {"report": "reports"}}
+            with self.assertRaisesRegex(ValueError, "unknown storageRoots entries"):
+                cw.storage_root(cfg, "reports", root=root)
+
+    def test_storage_roots_reject_reparse_points(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            target = root / "target"
+            target.mkdir()
+            junction = root / "alias"
+            if os.name == "nt":
+                result = subprocess.run(
+                    ["cmd", "/c", "mklink", "/J", str(junction), str(target)],
+                    capture_output=True,
+                    text=True,
+                    check=False,
+                )
+                if result.returncode:
+                    self.skipTest(f"directory junctions are unavailable: {result.stderr}")
+            else:
+                try:
+                    os.symlink(target, junction, target_is_directory=True)
+                except (OSError, NotImplementedError) as exc:
+                    self.skipTest(f"directory symlinks are unavailable: {exc}")
+            cfg = {"storageRoots": {"reports": "alias/reports"}}
+            with self.assertRaisesRegex(ValueError, "junction or reparse point"):
+                cw.storage_root(cfg, "reports", root=root)
 
 
 class FlowTests(unittest.TestCase):
@@ -409,7 +717,7 @@ class HandMadeGuardTests(unittest.TestCase):
             w.run("cleanup", "--orphans", "--match", "Alice_Qwen_Scene_", "-w", "A-Home", "--apply")
             self.assertTrue(hand.exists())
             self.assertFalse((w.dir("A-Home") / "scene").exists(), "the emptied folders are pruned")
-            moved = list((w.tmp / "backup").rglob("Alice_Qwen_Scene_Old.json"))
+            moved = list(cw.storage_root(w.cfg, "backup").rglob("Alice_Qwen_Scene_Old.json"))
             self.assertEqual(len(moved), 1)
 
 
@@ -491,7 +799,7 @@ class CleanupTests(unittest.TestCase):
             self.assertIn("would remove  Bob_Qwen_Scene_One.json", out)
             self.assertIn("preview; use --apply", out)
             self.assertEqual((w.names("Guest"), w.folders("Guest")), before)
-            self.assertFalse((w.tmp / "backup").exists())
+            self.assertFalse(cw.storage_root(w.cfg, "backup").exists())
 
     def test_apply_removes_only_what_is_safe(self):
         with World() as w:
@@ -505,8 +813,24 @@ class CleanupTests(unittest.TestCase):
             self.assertIn("hand-made", out)
             self.assertIn("no home workspace is configured for it", out)
             self.assertTrue((w.dir("Guest") / "zz_Curated" / "Alice_Qwen_Scene_Four.json").exists())
-            backed = sorted(p.name for p in (w.tmp / "backup").rglob("*.json"))
+            backed = sorted(
+                p.name
+                for p in cw.storage_root(w.cfg, "backup").rglob("*.json")
+                if p.name != "storage-configuration-receipt.json"
+            )
             self.assertEqual(backed, ["Alice_Qwen_Scene_One.json", "Bob_Qwen_Scene_One.json"], "removed files are moved to backup, not deleted")
+            receipt_paths = list(
+                cw.storage_root(w.cfg, "backup").rglob("storage-configuration-receipt.json")
+            )
+            self.assertEqual(len(receipt_paths), 1)
+            receipt = json.loads(receipt_paths[0].read_text(encoding="utf-8"))
+            self.assertEqual(
+                {pathlib.Path(item["source"]).name for item in receipt["backups"]},
+                {"Alice_Qwen_Scene_One.json", "Bob_Qwen_Scene_One.json"},
+            )
+            self.assertTrue(
+                all(pathlib.Path(item["backupPath"]).is_file() for item in receipt["backups"])
+            )
 
     def test_apply_prunes_emptied_folders_but_not_zz_or_folders_with_files(self):
         with World() as w:
@@ -774,7 +1098,10 @@ class PhotoRepointTests(unittest.TestCase):
             self.assertEqual(cw.input_image(cw.read_wf(w.path)), self.NEW)
             self.assertEqual(cw.input_image(cw.read_wf(w.masters[self.PRIME][2])), self.NEW)
             self.assertTrue((w.tmp / "shared-input" / self.NEW).exists(), "the scaled photo is copied to the input folder")
-            self.assertTrue(list((w.tmp / "backup").rglob(self.PRIME)), "the changed workspace file is backed up")
+            self.assertTrue(
+                list(cw.storage_root(w.cfg, "backup").rglob(self.PRIME)),
+                "the changed workspace file is backed up",
+            )
             out, _ = w.run("inputs", "photos")
             self.assertIn("every chosen photo is where", out)
         finally:

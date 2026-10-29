@@ -25,10 +25,11 @@ from likeness_library import gallery_chrome, report_assets  # noqa: E402
 
 if __package__:
     from . import reference_rendering as base
+    from . import comfy_workflows as cw
 else:
     import reference_rendering as base
+    import comfy_workflows as cw
 
-WORKSPACES = ROOT / "workflows" / "workspaces.json"
 PAGE_RELATIVE = "_generation/outputs.html"
 LIBRARY_RELATIVE = "_generation/library"
 IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".webp"}
@@ -41,7 +42,7 @@ PAGE_SIZES = (60, 120, 240)
 
 
 def configured_output_root():
-    return pathlib.Path(base.read_json(WORKSPACES)["paths"]["outputRoot"])
+    return cw.comfy_output_root(cw.load_cfg())
 
 
 def output_root(value=None):
@@ -132,7 +133,12 @@ def people(root):
 
 
 def build_page(root, comfy_root, items, known_people):
-    reports_prefix = gallery_chrome.reports_prefix(root / "_generation", root / "_reports") or "../_reports/"
+    cfg = cw.load_cfg()
+    generation = cw.storage_root(cfg, "generation", root=root)
+    reports = cw.storage_root(cfg, "reports", root=root)
+    reports_prefix = gallery_chrome.reports_prefix(generation, reports)
+    section_links = gallery_chrome.configured_sections(root, cfg)
+    library_relative = generation.relative_to(root).as_posix() + "/library"
     options = lambda key: "".join(  # noqa: E731
         f'<option value="{html.escape(value, quote=True)}">{html.escape(value)}</option>'
         for value in sorted({item[key] for item in items if item[key]}, key=str.casefold))
@@ -166,7 +172,10 @@ label.control {{ display: grid; gap: .25rem; }}
 </style>
 </head>
 <body id="top">
-{gallery_chrome.masthead("Outputs", reports_prefix, "ComfyUI outputs · browse and pull back")}
+{gallery_chrome.masthead(
+    "Outputs", reports_prefix, "ComfyUI outputs · browse and pull back",
+    section_links=section_links,
+)}
 <div class="site-page">
 <header class="page-header"><div>
 <h1>ComfyUI outputs</h1>
@@ -195,7 +204,7 @@ export the pull manifest and run <code>render-reference.cmd pull MANIFEST --root
 <input id="pull-name" list="people" placeholder="Gallery name" maxlength="100"></label>
 <datalist id="people">{names}</datalist>
 <button id="export" type="button" disabled>Export pull manifest</button>
-<p class="muted">Pull copies the exact file into <code>_generation/library/&lt;stage&gt;/&lt;workflow&gt;/</code> as
+<p class="muted">Pull copies the exact file into <code>{html.escape(library_relative)}/&lt;stage&gt;/&lt;workflow&gt;/</code> as
 <code>&lt;name&gt;_comfy_&lt;workflow&gt;_&lt;id&gt;</code> plus a grey-padded 944x1104 copy and a sidecar. Pulled renders
 are synthetic, never identity evidence, and become selectable sources on the Rendering page.</p>
 </div>
@@ -322,7 +331,7 @@ refilter();
 def publish(root, comfy_root, workspaces=None, apply=False, check=False):
     items = scan(comfy_root, workspaces)
     page = build_page(root, comfy_root, items, people(root))
-    target = base.safe_path(root, PAGE_RELATIVE)
+    target = cw.storage_root(cw.load_cfg(), "generation", root=root) / "outputs.html"
     summary = {"page": str(target), "images": len(items), "outputRoot": str(comfy_root),
                "workspaces": sorted({item["workspace"] for item in items}, key=str.casefold)}
     if check:
@@ -376,7 +385,7 @@ def _receipt_job(root, batch_id, job_id):
     if not batch_id or not job_id or not re.fullmatch(r"[a-z0-9][a-z0-9-]{0,47}", batch_id):
         return None
     try:
-        request = base.read_json(base.safe_path(root, f"_generation/reference/{batch_id}/request.json"))
+        request = base.read_json(base.run_path(root, batch_id) / "request.json")
     except (OSError, ValueError):
         return None
     return next((job for job in request.get("jobs", []) if job.get("id") == job_id), None)
@@ -399,7 +408,7 @@ def padded(data):
 
 
 def _existing_pulls(root):
-    library = root / pathlib.Path(LIBRARY_RELATIVE)
+    library = cw.storage_root(cw.load_cfg(), "generation", root=root) / "library"
     found = {}
     if library.is_dir():
         for sidecar in library.glob("*/*/*.json"):
@@ -431,6 +440,9 @@ def pull(root, manifest_path, comfy_root, apply=False):
     if not 1 <= len(manifest["items"]) <= MAX_PULL:
         raise ValueError(f"Pull 1..{MAX_PULL} images per manifest")
     existing = _existing_pulls(root)
+    generation_relative = cw.storage_root(
+        cw.load_cfg(), "generation", root=root
+    ).relative_to(root).as_posix()
     planned, results = [], []
     for entry in manifest["items"]:
         relative = entry.get("output") if isinstance(entry, dict) else None
@@ -462,7 +474,7 @@ def pull(root, manifest_path, comfy_root, apply=False):
         variant = _folder(info["variant"], "unsorted")
         suffix = pathlib.PurePosixPath(relative).suffix.lower().replace(".jpeg", ".jpg")
         stem = f"{name_prefix(display)}_comfy_{variant.lower()}_{hashlib.sha1(data).hexdigest()[:8]}"
-        folder = f"{LIBRARY_RELATIVE}/{stage}/{variant}"
+        folder = f"{generation_relative}/library/{stage}/{variant}"
         target = base.safe_path(root, f"{folder}/{stem}{suffix}")
         square = padded(data)
         record = {

@@ -188,7 +188,11 @@ def _page(root, rows, batch_ids):
         return "".join(f'<option value="{_text(key)}">{_text(label)}</option>'
                        for key, label in sorted(values.items()))
 
-    prefix = gallery_chrome.reports_prefix(root / "_generation", root / "_reports")
+    cfg = execution.workflows.load_cfg()
+    generation = execution.workflows.storage_root(cfg, "generation", root=root)
+    reports = execution.workflows.storage_root(cfg, "reports", root=root)
+    prefix = gallery_chrome.reports_prefix(generation, reports)
+    section_links = gallery_chrome.configured_sections(root, cfg)
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -209,7 +213,10 @@ figure {{ margin:0; min-width:0; }} figcaption {{ font-size:.8rem; }}
 .state {{ font-weight:600; }} [hidden] {{ display:none !important; }}
 @media(max-width:600px) {{ .pair,.matched-grid,.matched-grid .pair {{ grid-template-columns:1fr; }} }}
 </style></head><body id="top">
-{gallery_chrome.masthead("Comparison", prefix, "Source/render comparison · human review only")}
+{gallery_chrome.masthead(
+    "Comparison", prefix, "Source/render comparison · human review only",
+    section_links=section_links,
+)}
 <div class="site-page"><main><h1>Source/render comparison</h1>
 <p>Explicit batches: <code>{_text(", ".join(batch_ids))}</code>. {len(rows)} jobs.
 Frozen inputs and receipt-owned outputs only. Images are browser-scaled originals; no derivatives created.</p>
@@ -268,7 +275,10 @@ def publish(root: pathlib.Path, batch_ids: list[str], apply=False, check=False):
     batch_ids = sorted(batch_ids)
     rows, receipts = _collect(root, batch_ids)
     payload = _page(root, rows, batch_ids).encode("utf-8")
-    target = base.safe_path(root, PAGE_RELATIVE)
+    generation = execution.workflows.storage_root(
+        execution.workflows.load_cfg(), "generation", root=root
+    )
+    target = generation / "comparison.html"
     current = target.is_file() and target.read_bytes() == payload
     if apply and not current:
         # Revalidate immediately before publication; execution may have advanced.
@@ -276,7 +286,7 @@ def publish(root: pathlib.Path, batch_ids: list[str], apply=False, check=False):
         if rows != refreshed or receipts != refreshed_receipts:
             raise ValueError("Reference evidence changed during comparison; retry")
         target.parent.mkdir(parents=True, exist_ok=True)
-        pending = base.safe_path(root, f"_generation/.comparison-{uuid.uuid4().hex}.pending")
+        pending = generation / f".comparison-{uuid.uuid4().hex}.pending"
         try:
             with pending.open("xb") as stream:
                 stream.write(payload)

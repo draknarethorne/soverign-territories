@@ -5,6 +5,16 @@ No run or photo action was applied during documentation reconciliation.
 The live [engine plan](../plans/2026-10-22-likeness-engine-acceptance.md) owns remaining acceptance,
 convergence and the separately approved clean-full production rebase.
 
+## Oct 28 applicability
+
+The dated installations below remain historical evidence. The new
+`r17-20261028` all-image sandbox intake is running with recipe v17; no new
+matching preview or installation is yet accepted. Final prepared pixels,
+exact face evidence and opt-in core-cast release follow the
+[current processing contract](likeness-processing-contract.md#latest-precedence-and-ownership).
+The older retained-cast-only limitations below describe their checkpoint,
+not the scope of the newly authorized sandbox experiment.
+
 ## Applicability after the Oct 25 implementation
 
 The Oct 22 saved `.3` installation and later `.4` preview remain distinct

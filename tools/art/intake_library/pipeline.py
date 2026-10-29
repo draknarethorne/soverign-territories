@@ -1,8 +1,8 @@
-"""Recipe v16 intake steps: first crop -> second crop -> eraser -> composition.
+"""Recipe v21 sequence: first crop -> eraser -> residual crop -> reconstruction -> composition.
 
-The second crop runs before the eraser and may trim every side, but only where it costs (almost) no part of the
-person; whatever clutter is left inside is filled by LaMa, and that fill is kept. Composition then frames the
-person (whole body, hands and dress included) for the 944x1104 derivatives. Denoise and tone are compared later.
+The eraser handles confirmed clutter before the residual subject-guarded crop. Confirmed patterns may use a
+separate masked reconstruction path; composition uses the repaired image and observed picture boundary.
+Denoise and tone are compared later.
 """
 import cv2
 import numpy as np
@@ -12,6 +12,7 @@ import preparation_geometry as geometry
 from intake_library import clutter, fill, overlays, subject as subjects
 
 STEPS = ("first-crop", "second-crop", "eraser", "composition", "denoise", "tone")
+PREPARED_STEPS = ("first-crop", "eraser", "residual-crop", "reconstruction", "composition", "denoise", "tone")
 BANDS = {"top": .25, "bottom": .4, "left": .3, "right": .3}
 MAX_CROP_LOSS = .5      # the second crop keeps at least half the image
 SUBJECT_LOSS = .005     # ... and at most 0.5% of the person plus a margin
@@ -21,14 +22,19 @@ CARD_ON_BODY = .25      # a card lying this much on the person is not repainted 
 TARGET = 944 / 1104
 LIMB_WIDTH = .2         # a mask ending wider than this share of its widest row was cut off mid-leg, not at the feet
 EXPERIMENT_POLICY = (
-    "erase-before-residual-v7: original face assessment; profile-driven reel frame (overlay_profiles.json, boxed "
+    "erase-before-residual-v10: original face assessment; profile-driven reel frame (overlay_profiles.json, "
+    "bottom navigation rows require horizontal flatness, paired rounded outlines confirm transparent pills, boxed "
     "pictures end at their black) or paired screenshot picture/panel transitions crop external UI while preserving "
     "complete overlapping pill; otherwise solid-border and flat letterbox-bar first crop; reel parts, "
-    "structure-confirmed badges, stroke-verified corner watermarks/caption blocks, corner sparkles, "
+    "structure-confirmed badges including transparent ring/central-letter verification, "
+    "three-control playback/timecodes, lower-left nested-reel screen confirmed by a secondary face and phone-frame "
+    "edges, perimeter-and-letter confirmed caption buttons, "
+    "stroke-verified corner watermarks/caption blocks, corner sparkles, "
     "tilted stickers (polygon masks), viewer corner icons and reference-bank logos "
     "are overlay proposals on any image; colour-blob logos are never used; "
     "screenshot panel proposals comparison-only before erase; existing clutter masks and fill; "
-    "refuse face/body/unknown and >20% coverage; one clutter redetection only after successful fill; "
+    "refuse unconfirmed glyphs on ordinary photos, face/body/unknown and >20% coverage; "
+    "one clutter redetection only after successful fill; "
     "one residual crop; cumulative grown-subject loss <=0.5%, no screenshot app-bar exception; "
     "composition proposals comparison-only, missing hair/feet completeness proof retains precomposition image; "
     "no second fill; detector misses never prove clean; comparison only"
@@ -299,6 +305,59 @@ def mask_image(mask):
     return Image.fromarray((mask * 255).astype(np.uint8)).convert("RGB")
 
 
+def recommended_candidates(image, row):
+    """Run the proven sequence once; retain its full source-coordinate evidence per photo."""
+    from intake_library import reconstruction
+
+    images = {}
+    for name, output in experimental_candidates(image, row):
+        images[name] = output
+        yield name, output
+    evidence = row["experiment"]
+    for name, output in reconstruction.integrated_head_candidates(
+            images[evidence["final"]], row, image, images.get("eraser-mask")):
+        images[name] = output
+        yield name, output
+    head = evidence.get("headOverlay", {})
+    if head.get("selected"):
+        head.update(status="selected", likenessEligible=True,
+                    reason="Approved prepared source for Gallery, likeness and ComfyUI; "
+                           "masked pixels are synthetic, exact original and masks retained.")
+    selected = "control"
+    trace = []
+    stages = (
+        ("first-crop", "first-crop"),
+        ("eraser", "eraser"),
+        ("residual-crop", "residual-crop"),
+        ("reconstruction", "head-overlay-reconstruction"),
+        ("composition", "head-overlay-composition"),
+    )
+    final = evidence["final"]
+    ancestors = set()
+    current = final
+    while current is not None:
+        ancestors.add(current)
+        current = evidence["candidates"][current]["input"]
+    for stage, name in stages:
+        record = evidence["candidates"].get(name)
+        used = name in ancestors
+        reason = (record.get("reason") or "Selected verified prepared sequence output.") if record else (
+            "No accepted candidate; retain preceding prepared pixels. See sequence evidence.")
+        if stage == "reconstruction":
+            reason = head.get("reason", reason)
+        trace.append(geometry.step(stage, "attempted-selected" if used else
+                                   "attempted-rejected" if record else "skipped",
+                                   selected, name if record else None, name if used else selected, reason))
+        if used:
+            selected = name
+    if selected != final:
+        raise ValueError("prepared sequence final is absent from the processing trace")
+    row["processing"] = {
+        "steps": trace, "cleanup": final, "final": final,
+        "faceAssessment": row["eligibility"]["reason"], "sequence": row.pop("experiment"),
+    }
+
+
 def experimental_candidates(image, row):
     """Yield named PIL candidates; only row['experiment'] is written, never the frozen v16 evidence.
 
@@ -471,7 +530,7 @@ def experimental_candidates(image, row):
                 if reel:
                     # The profile's zone parts replace the generic glyph heuristics above.
                     overlay_parts = [dict(item, pattern=reel["profile"])
-                                     for item in overlays.frame_parts(array, reel)]
+                                     for item in overlays.frame_parts(array, reel, faces=faces)]
                 evidence["screenshotLayout"]["overlayParts"] = overlay_parts
                 first = tuple(proposed)
     for item in overlays.badges(array):
@@ -524,6 +583,8 @@ def experimental_candidates(image, row):
             if item.get("action", "").startswith("refused") or item["kind"] not in {
                     "glyph", "logo", "search-bubble", "ui-card"}:
                 item["action"] = "refused-uncertain"
+            elif item["kind"] == "glyph" and not (geo.get("overlayDetected") or reel):
+                item["action"] = "refused-unconfirmed-glyph"
             elif (piece & guards).any():
                 item["action"] = "refused-face-or-region"
             elif (piece & body).any():

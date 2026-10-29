@@ -170,8 +170,13 @@ def _write_csv(path, rows, fields):
         writer.writerows(rows)
 
 
-def write_report(output_dir, calibration, calibration_photo_rows, folder_rows, photo_rows, timings):
+def write_report(
+    output_dir, calibration, calibration_photo_rows, folder_rows, photo_rows, timings, *,
+    storage_receipt,
+):
     """Write a new run directory; refuse to overwrite prior diagnostic evidence."""
+    import json
+
     output_dir = pathlib.Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=False)
     summary_path = output_dir / "folder-consistency.csv"
@@ -281,11 +286,16 @@ def write_report(output_dir, calibration, calibration_photo_rows, folder_rows, p
         f"Calibration metrics: [{calibration_path.name}]({calibration_path.name}).",
         "",
     ]
-    (output_dir / "diagnostics.md").write_text("\n".join(lines), encoding="utf-8")
+    (output_dir / "diagnostics.md").write_text(    "\n".join(lines), encoding="utf-8"
+    )
+    storage_receipt_path = output_dir / "storage-configuration-receipt.json"
+    storage_receipt_path.write_text(
+    json.dumps(storage_receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return {
         "markdown": output_dir / "diagnostics.md",
         "folder_csv": summary_path,
         "photo_csv": photos_path,
         "calibration_csv": calibration_path,
         "calibration_photo_csv": calibration_photos_path,
+        "storage_receipt": storage_receipt_path,
     }

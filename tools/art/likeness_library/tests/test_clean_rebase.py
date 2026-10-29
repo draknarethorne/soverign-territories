@@ -1,5 +1,7 @@
 """Clean rebase must flatten old groups, isolate references, and stage reversibly."""
+import contextlib
 import hashlib
+import io
 import pathlib
 import tempfile
 import unittest
@@ -60,6 +62,140 @@ class CleanRebaseTests(unittest.TestCase):
                 "sha256": self.digest,
             }],
         }
+
+    def test_inventory_preview_explains_cast_seed_mode_without_evaluating_it(self):
+        for mode in ("all", "core"):
+            with self.subTest(mode=mode):
+                args = SimpleNamespace(
+                    root=str(self.working), run_dir=str(self.run), policy=None,
+                    apply=False, check=False, dry_run=True, undo=False, replan=False,
+                    cast_seeds=mode,
+                )
+                output = io.StringIO()
+                with mock.patch.object(clean_rebase, "validate_sandbox", return_value=self.layout), \
+                        mock.patch.object(clean_rebase, "require_sandbox_output", return_value=self.run), \
+                        mock.patch.object(clean_rebase.clean_preparation, "inventory", return_value={
+                            self.relative: self.digest,
+                        }), \
+                        mock.patch.object(clean_rebase, "create_plan") as matching, \
+                        mock.patch.object(clean_rebase, "_cast_seed_outcomes") as seeds, \
+                        contextlib.redirect_stdout(output):
+                    result = clean_rebase.command(args, SimpleNamespace())
+                self.assertEqual(result, {"status": "inventory", "inputCount": 1})
+                matching.assert_not_called()
+                seeds.assert_not_called()
+                self.assertIn(f"Cast-seed policy: {mode}.", output.getvalue())
+                self.assertIn("no cast retention/release decisions or matching were evaluated", output.getvalue())
+                if mode == "core":
+                    self.assertIn("eligible releases under configured thresholds", output.getvalue())
+                    self.assertNotIn("retain existing cast membership", output.getvalue())
+                else:
+                    self.assertIn("retain existing cast membership", output.getvalue())
+
+    def test_core_seed_policy_preserves_protection_and_releases_only_noncore_cast(self):
+        folder = "Angels/Angelica"
+        names = {
+            "anchor": "angelica_image_111111.jpg",
+            "core": "angelica_image_222222.jpg",
+            "protected": "angelica_image_333333.jpg",
+            "workflow": "angelica_image_444444.jpg",
+            "low": "angelica_image_555555.jpg",
+        }
+        entries = []
+        for key, name in names.items():
+            path = self.source / folder / "gallery" / name
+            entries.append((
+                path.relative_to(self.source).as_posix(),
+                clean_rebase.Photo(
+                    path, "Angels", "Angelica", key,
+                    {"v": [1., 0.], "faces": 1, "px": 100},
+                ),
+                "gallery",
+                key,
+            ))
+        ids = {key: metadata.photo_id_from_name(name) for key, name in names.items()}
+        catalog = {
+            "people": {
+                "angelica": {
+                    "folder": folder, "identityAnchors": [ids["anchor"]], "protected": False,
+                },
+            },
+            "photos": {ids["protected"]: {"protected": True}},
+        }
+        core = {
+            "corePhotoIds": [ids["anchor"], ids["core"]],
+            "photoScores": {
+                names["anchor"]: .8, names["core"]: .7, names["protected"]: .6,
+                names["workflow"]: .5, names["low"]: .1,
+            },
+        }
+        api = SimpleNamespace(cw=SimpleNamespace(
+            photo_key=lambda name: pathlib.Path(name).stem,
+        ))
+        retained, released, evidence = clean_rebase._cast_seed_outcomes(
+            entries, {folder: core}, catalog,
+            {pathlib.Path(names["workflow"]).stem}, load_policy(), api, "core", 60,
+        )
+        self.assertEqual(len(retained), 4)
+        self.assertEqual(set(released), {f"{folder}/gallery/{names['low']}"})
+        low = evidence[f"{folder}/gallery/{names['low']}"]
+        self.assertFalse(low["retainedCast"])
+        self.assertTrue(low["releasedCast"])
+        self.assertEqual(low["castSeedScore"], .1)
+        self.assertEqual(low["castSeedThreshold"], .3)
+        self.assertTrue(any(row["castSeedAnchor"] for row in retained))
+        self.assertTrue(any(row["castSeedProtectedPhoto"] for row in retained))
+        self.assertTrue(any(row["castSeedWorkflowSelected"] for row in retained))
+
+    def test_core_seed_policy_refuses_undersized_unprotected_identity(self):
+        folder = "Sisters/Drakniss"
+        name = "drakniss_image_123456.jpg"
+        path = self.source / folder / "gallery" / name
+        photo = clean_rebase.Photo(
+            path, "Sisters", "Drakniss", "digest",
+            {"v": [1., 0.], "faces": 1, "px": 100},
+        )
+        entry = (path.relative_to(self.source).as_posix(), photo, "gallery", "digest")
+        core = {
+            "corePhotoIds": [], "photoScores": {name: .1},
+        }
+        api = SimpleNamespace(cw=SimpleNamespace(photo_key=lambda value: value))
+        with self.assertRaisesRegex(ValueError, "below the configured 4-photo"):
+            clean_rebase._cast_seed_outcomes(
+                [entry], {folder: core}, {"people": {}, "photos": {}},
+                set(), load_policy(), api, "core", 60,
+            )
+
+    def test_released_cast_routes_require_core_policy_and_threshold_evidence(self):
+        relative = "Angels/Angelica/gallery/angelica_image_123456.jpg"
+        path = self.source / pathlib.Path(relative)
+        path.parent.mkdir(parents=True)
+        path.write_bytes(b"cast source")
+        row = {
+            "source": relative,
+            "destination": "Various/review/angelica_image_123456.jpg",
+            "sha256": hashlib.sha256(b"cast source").hexdigest(),
+            "retainedCast": False,
+            "releasedCast": True,
+            "castSeedScore": .12,
+            "castSeedThreshold": load_policy()["categoryPolicies"]["Angels"][
+                "identityCoreMinimumSimilarity"
+            ],
+            "castSeedCore": False,
+            "castSeedAnchor": False,
+            "castSeedProtectedIdentity": False,
+            "castSeedProtectedPhoto": False,
+            "castSeedWorkflowSelected": False,
+            "castSeedDecision": "released",
+            "castSeedReason": "outside current core",
+        }
+        plan = {
+            "photos": [row], "castSeedPolicy": "core", "policy": load_policy(),
+        }
+        clean_rebase._verify_routes(plan, self.source)
+        plan["castSeedPolicy"] = "all"
+        with self.assertRaisesRegex(ValueError, "cannot change cast membership"):
+            clean_rebase._verify_routes(plan, self.source)
 
     def test_install_preserves_cast_core_and_old_categories_and_checks_every_copy(self):
         old = self.working / "Potentials" / "Old" / "gallery"
@@ -181,6 +317,50 @@ class CleanRebaseTests(unittest.TestCase):
         (run / "source-overlay").joinpath(*pathlib.PurePosixPath(recovery[0]["path"]).parts).write_bytes(b"tampered")
         with self.assertRaisesRegex(ValueError, "raw recovery copy changed"):
             clean_rebase._verify_source_overlay(layout, run)
+
+    def test_working_baseline_covers_current_galleries_and_excludes_source_only_inputs(self):
+        import json
+
+        current = self.working / self.relative
+        current.parent.mkdir(parents=True)
+        current.write_bytes(b"current assigned bytes")
+        historical_only = self.source / "Angels/Old/gallery/old_image_888888.jpg"
+        historical_only.parent.mkdir(parents=True)
+        historical_only.write_bytes(b"no longer active")
+        added_relative = "Artists/Painter/New/gallery/new_image_777777.jpg"
+        added = self.working / added_relative
+        added.parent.mkdir(parents=True)
+        added.write_bytes(b"new assigned artist")
+        incoming = self.working / "Various/gallery/incoming_image_123456.jpg"
+        incoming.parent.mkdir(parents=True)
+        incoming.write_bytes(b"new incoming replacement")
+        (self.working / "_reports").mkdir()
+        (self.working / "_reports/not_an_input.jpg").write_bytes(b"generated")
+
+        with mock.patch.dict("sys.modules", {"image_preparation": self.image_inventory_mock()}):
+            layout = clean_rebase._create_source_overlay(self.layout, self.run, current_working=True)
+            rows = clean_rebase.clean_preparation.inventory(layout)
+            curation = clean_rebase._curation_inventory(layout)
+
+        self.assertEqual(set(rows), {self.relative, added_relative})
+        self.assertEqual(rows[self.relative], metadata.content_sha256(incoming))
+        self.assertEqual(curation[self.relative], metadata.content_sha256(current))
+        self.assertNotIn(historical_only.relative_to(self.source).as_posix(), rows)
+        self.assertEqual(self.source_photo.read_bytes(), b"photo bytes")
+        receipt = json.loads((self.run / "source-overlay/overlay.json").read_text())
+        self.assertEqual(receipt["baselineMode"], "working")
+        self.assertEqual(receipt["baselineInputCount"], 2)
+        self.assertEqual(receipt["immutableInputCount"], 0)
+        self.assertEqual(list((self.working / "_tmp").iterdir()), [])
+
+    def test_overlay_copy_failure_cleans_owner_locked_stage(self):
+        with mock.patch.dict("sys.modules", {"image_preparation": self.image_inventory_mock()}), \
+                mock.patch.object(clean_rebase.shutil, "copy2", side_effect=OSError("copy failed")):
+            with self.assertRaisesRegex(OSError, "copy failed"):
+                clean_rebase._create_source_overlay(self.layout, self.run)
+
+        self.assertFalse((self.run / "source-overlay").exists())
+        self.assertEqual(list((self.working / "_tmp").iterdir()), [])
 
     def test_curation_retains_verified_original_beside_overlay_replacement(self):
         original = self.working / self.relative
@@ -306,6 +486,7 @@ class CleanRebaseTests(unittest.TestCase):
         api = SimpleNamespace(
             cw=SimpleNamespace(
                 load_cfg=lambda: {},
+                storage_root=likeness.cw.storage_root,
                 photo_folders=lambda cfg, root: [
                     ("Potentials", "Fia", self.source_photo.parent.parent),
                     ("Angels", "Angelica", cast_folder),
@@ -338,25 +519,185 @@ class CleanRebaseTests(unittest.TestCase):
 
         with mock.patch.object(clean_rebase, "frozen_identity_cores", side_effect=fake_cores), \
                 mock.patch.object(clean_rebase, "plan_reconciliation", side_effect=fake_plan):
+            class FixtureEmbedder:
+                evidence_root = None
+
+                def configure_evidence(self, root, library_root=None):
+                    self.evidence_root = pathlib.Path(root)
+
+                def __call__(self, path):
+                    return {
+                        "v": [1., 0.] if "fia" in path.name else [0., 1.],
+                        "faces": 1, "s": .95, "px": 100,
+                    }
+
+            fixture_embedder = FixtureEmbedder()
             result = clean_rebase.create_plan(
                 self.layout, self.run, load_policy(), api,
-                embedder=lambda path: {
-                    "v": [1., 0.] if "fia" in path.name else [0., 1.],
-                    "faces": 1, "s": .95, "px": 100,
-                },
+                embedder=fixture_embedder,
             )
-            with mock.patch.object(api, "Embedder", create=True, return_value=mock.Mock(
+            self.assertEqual(
+                fixture_embedder.evidence_root,
+                self.working / "_likeness" / "general" / "face-evidence",
+            )
+            unused_embedder = mock.Mock(
                 side_effect=AssertionError("replan must reuse its own measurements"),
-            )):
+            )
+            unused_embedder.needs_alignment_evidence.return_value = False
+            with mock.patch.object(api, "Embedder", create=True, return_value=unused_embedder):
                 replanned = clean_rebase.create_plan(
                     self.layout, self.run, load_policy(), api, reuse_measurements=True,
                 )
             self.assertTrue(replanned["cacheMeasurementsReusedForReplan"])
+            class EvidenceRefreshingEmbedder:
+                def __init__(self):
+                    self.calls = []
+                    self.evidence_root = None
+
+                def configure_evidence(self, root, library_root=None):
+                    self.evidence_root = pathlib.Path(root)
+
+                def needs_alignment_evidence(self, data, _path):
+                    return data.get("alignmentEvidence") != {"state": "persisted"}
+
+                def __call__(self, path):
+                    self.calls.append(pathlib.Path(path))
+                    return {
+                        "v": [1., 0.] if "fia" in path.name else [0., 1.],
+                        "faces": 1, "s": .95, "px": 100,
+                        "alignmentEvidence": {"state": "persisted"},
+                    }
+
+            refreshing_embedder = EvidenceRefreshingEmbedder()
+            clean_rebase.create_plan(
+                self.layout, self.run, load_policy(), api, embedder=refreshing_embedder,
+                reuse_measurements=True,
+            )
+            self.assertEqual(len(refreshing_embedder.calls), 2)
+            self.assertEqual(
+                refreshing_embedder.evidence_root,
+                self.working / "_likeness" / "general" / "face-evidence",
+            )
+            import json
+            saved_cache = json.loads((self.run / "likeness-cache.json").read_text(encoding="utf-8"))
+            self.assertTrue(all(
+                row["alignmentEvidence"] == {"state": "persisted"}
+                for row in saved_cache["emb"].values()
+            ))
         self.assertTrue(result["embeddingCacheStartedEmpty"])
         self.assertEqual(result["referenceFolders"], ["Angels/Angelica"])
         self.assertEqual(result["candidateCount"], 1)
         with self.assertRaisesRegex(ValueError, "empty embedding cache"):
             clean_rebase.create_plan(self.layout, self.run, load_policy(), api)
+
+    def test_creation_core_seed_policy_routes_released_cast_images_as_candidates(self):
+        cast_folder = self.source / "Angels" / "Angelica"
+        cast_names = [
+            "angelica_image_111111.jpg", "angelica_image_222222.jpg",
+            "angelica_image_333333.jpg", "angelica_image_444444.jpg",
+            "angelica_image_555555.jpg", "angelica_image_666666.jpg",
+        ]
+        cast_digests = {}
+        for index, name in enumerate(cast_names):
+            path = cast_folder / "gallery" / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            data = f"cast image {index}".encode()
+            path.write_bytes(data)
+            cast_digests[name] = hashlib.sha256(data).hexdigest()
+            relative = path.relative_to(self.source).as_posix()
+            self.layout["manifest_files"][relative] = (len(data), cast_digests[name])
+
+        anchor_id = metadata.photo_id_from_name(cast_names[0])
+        protected_id = metadata.photo_id_from_name(cast_names[4])
+        person_id = "person_" + "a" * 32
+        catalog_path = self.working / ".likeness-library.json"
+        metadata.save_catalog({
+            "schemaVersion": 1,
+            "people": {
+                person_id: {
+                    "id": person_id, "folder": "Angels/Angelica",
+                    "displayName": "Angelica", "folderHistory": [],
+                    "identityAnchors": [anchor_id], "protected": False,
+                },
+            },
+            "photos": {
+                anchor_id: {
+                    "contentSha256": cast_digests[cast_names[0]], "protected": False,
+                },
+                protected_id: {
+                    "contentSha256": cast_digests[cast_names[4]], "protected": True,
+                },
+            },
+            "actions": [],
+        }, catalog_path)
+        api = SimpleNamespace(
+            cw=SimpleNamespace(
+                load_cfg=lambda: {},
+                photo_folders=lambda cfg, root: [
+                    ("Potentials", "Fia", self.source_photo.parent.parent),
+                    ("Angels", "Angelica", cast_folder),
+                ],
+                photo_key=likeness.cw.photo_key,
+            ),
+            settings=likeness.settings, originals=likeness.originals,
+            nz=likeness.nz,
+            junk_reason=lambda photo, _settings: (
+                "synthetic unusable face" if photo.name == cast_names[3] else None
+            ),
+            chosen_keys=lambda cfg: {likeness.cw.photo_key(cast_names[5])},
+            invent_name=lambda seed, taken: f"New-{seed[-6:]}",
+        )
+
+        def fake_cores(_space, _catalog, **_kwargs):
+            ids = [metadata.photo_id_from_name(name) for name in cast_names]
+            return {
+                "Angels/Angelica": {
+                    "vector": np.array([1., 0.]), "side": "Prospects",
+                    "category": "Angels", "personIds": [person_id],
+                    "identityProtected": False, "mode": "trusted",
+                    "corePhotoIds": [ids[0], ids[1], ids[2], ids[4]],
+                    "photoScores": {
+                        name: (.1 if name == cast_names[3] else .8)
+                        for name in cast_names
+                    },
+                },
+            }, set(), []
+
+        def fake_plan(candidates, cores, **_kwargs):
+            self.assertEqual(len(candidates), 1)
+            self.assertEqual(candidates[0]["photoId"], metadata.photo_id_from_name("fia_image_123456.jpg"))
+            self.assertEqual(set(cores), {"Angels/Angelica"})
+            return {
+                "assignments": [], "clusters": [],
+                "held": [{
+                    "photoId": candidate["photoId"],
+                    "reason": "review candidate",
+                } for candidate in candidates],
+            }
+
+        with mock.patch.object(clean_rebase.metadata, "path_for_root", return_value=catalog_path), \
+                mock.patch.object(clean_rebase, "frozen_identity_cores", side_effect=fake_cores), \
+                mock.patch.object(clean_rebase, "plan_reconciliation", side_effect=fake_plan):
+            result = clean_rebase.create_plan(
+                self.layout, self.run, load_policy(), api,
+                embedder=lambda _path: {
+                    "v": [1., 0.], "faces": 1, "s": .95, "px": 100,
+                },
+                cast_seeds="core",
+            )
+
+        by_id = {row["photoId"]: row for row in result["photos"]}
+        self.assertEqual(result["castSeedPolicy"], "core")
+        self.assertTrue(by_id[anchor_id]["retainedCast"])
+        self.assertTrue(by_id[protected_id]["retainedCast"])
+        self.assertTrue(by_id[metadata.photo_id_from_name(cast_names[5])]["retainedCast"])
+        released_id = metadata.photo_id_from_name(cast_names[3])
+        self.assertTrue(by_id[released_id]["releasedCast"])
+        self.assertFalse(by_id[released_id]["retainedCast"])
+        self.assertIsNone(by_id[released_id]["castSeedScore"])
+        self.assertEqual(by_id[released_id]["destination"].split("/")[0], "Various")
+        self.assertEqual(by_id[released_id]["castSeedQualityReason"], "synthetic unusable face")
+        self.assertIn("quality hold", by_id[released_id]["reason"])
 
     def test_unmatched_photos_do_not_recreate_their_old_shared_membership(self):
         other = self.source_photo.with_name("fia_image_987654.jpg")

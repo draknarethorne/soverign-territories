@@ -47,6 +47,21 @@ class MaintenanceTests(unittest.TestCase):
         self.assertEqual(metadata.content_sha256(self.root / row["source"]), row["sha256"])
         self.assertEqual(json.loads(journal.read_text())["status"], "undone")
 
+    def test_journal_uses_configured_reports_root(self):
+        row = self.move()
+        cfg = {"storageRoots": {"reports": "operations/reports"}}
+
+        journal = maintenance.apply_moves(
+            self.root, [row], self.policy, cfg, backup_fn=lambda *_: "verified",
+        )
+
+        self.assertEqual(
+            journal.parent.parent,
+            self.root / "operations" / "reports",
+        )
+        maintenance.undo_moves(self.root, journal, cfg, apply=True, backup_fn=lambda *_: "verified")
+        self.assertTrue((self.root / row["source"]).is_file())
+
     def test_draft_gate_precedes_backup_or_writes(self):
         row = self.move()
         self.policy["status"] = "draft"

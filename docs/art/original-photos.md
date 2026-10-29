@@ -8,7 +8,7 @@ deletion or folder moves, when a photo has catalogue decisions or retained sets.
 
 | Need | Entry point | Current boundary |
 | --- | --- | --- |
-| Inspect crop/erase candidates without changing sources | `bin\prepare-images.cmd` | Sandbox sidecars; provisional v16 recommendations, no identity assignment |
+| Inspect crop/erase candidates without changing sources | `bin\prepare-images.cmd` | Sandbox sidecars; v20 recommended sequence, no identity assignment |
 | Prepare immutable sandbox inputs, optionally stop, then match/install | `bin\sandbox-rebase.cmd` | Implemented retained-cast flow; real acceptance still pending |
 | Maintain names/derivatives and refresh galleries without matching | `bin\people-gallery.cmd` | Preview/check/apply with backup and action-undo guards |
 | Change one photo or a recorded name deliberately | `bin\likeness-actions.cmd` | Validate/preview first; supported actions use backed-up transactions |
@@ -26,6 +26,20 @@ processing. The Oct 25 checked environment is Python **3.14.3** with NumPy 2.4.2
 Pillow 12.1.1, OpenCV headless 4.13.0.92, JSON Schema 4.26.0, CPU PyTorch 2.10.0
 and torchvision 0.25.0. The launchers already use this runtime through `python`
 on PATH; they fall back to `py -3` only if `python` is unavailable.
+
+Intake preparation runs in parallel worker processes on the CPU: by default one
+worker per 2.5 GB of free memory, up to 3 (each peaks near 1.7 GB), with the
+cores split between them. Start a big run after closing ComfyUI to get all three,
+or pass `--workers N` / set `ST_INTAKE_WORKERS`. Batches under 16 images stay
+serial. Outputs are byte-identical to a serial run; measurements are in the
+[intake performance plan](../plans/2026-10-28-intake-performance.md).
+
+Preparation output is built in a same-volume `.preparation-*` staging directory
+with a sidecar OS lock. Success, ordinary failure and Ctrl+C remove it in the
+current process; if the process is hard-stopped, the next preparation run
+removes only a recognized staging directory whose lock is released. Active
+locks are preserved, and a staging directory without its ownership lock is
+reported for manual inspection rather than deleted.
 
 [Core requirements](../../requirements.txt) pin the direct validator/gallery/
 image dependencies. [Intake requirements](../../requirements-intake.txt) include
@@ -79,7 +93,7 @@ replace the machine-wide 3.14.3 installation.
 
 ## The library
 
-Under the configured work folder (`paths.workRoot` in
+Under the configured Production library folder (`paths.productionRoot` in
 `workflows/workspaces.json`; do not assume a historical drive path):
 
 ```text
@@ -105,6 +119,26 @@ separate provenance/matching domain, with people below each artist. Various is
 the unassigned intake/hold pool, not an identity. `paths.photoRoots` configures
 housekeeping discovery; likeness entry points enforce their own domain boundary.
 
+Storage roots and the reference ComfyUI workspace are configured in
+`workflows/workspaces.json`, validated against
+`workflows/workspaces.schema.json`; configuration edits validate and publish
+through same-volume owner-locked staging. `paths.productionRoot`,
+`paths.sandboxWorkingRoot`, and `paths.modelCacheRoot` can be overridden with
+`SOVEREIGN_TERRITORIES_PRODUCTION_ROOT`,
+`SOVEREIGN_TERRITORIES_SANDBOX_WORKING_ROOT`, and
+`SOVEREIGN_TERRITORIES_MODEL_CACHE_ROOT`. ComfyUI paths also support
+`SOVEREIGN_TERRITORIES_INSTALLS_ROOT`, `SOVEREIGN_TERRITORIES_INPUTS_ROOT`,
+`SOVEREIGN_TERRITORIES_OUTPUT_ROOT`,
+`SOVEREIGN_TERRITORIES_SHARED_INPUT_ROOT`, and
+`SOVEREIGN_TERRITORIES_SHARED_OUTPUT_ROOT`. Storage directory names are mapped
+by `storageRoots` beneath the selected library root; paths that escape it are
+rejected. Defaults retain established names such as `_backup`, `_reports`,
+`_generation`, `_likeness`, `_actions`, `_junk`, `_retired`,
+`_sandbox-state`, and `_tmp`. Preparation reports, library-sync reports,
+library snapshots, and migrated run staging resolve through these configured
+roots. Keep the configured roots disjoint; do not repoint them while a run is
+active.
+
 ## The routine
 
 ### Agreed end-to-end flow and current cutover boundary
@@ -120,7 +154,7 @@ owns upstream preparation/crop cutover; the
 | Order | Role | Output / safeguard |
 | --- | --- | --- |
 | 1 | Retain exact incoming bytes before transformations | Immutable run input, then checked `gallery_org` publication alongside retained `gallery_intake` evidence |
-| 2 | Prepare at native geometry | v16 first crop -> person-aware second crop -> LaMa cleanup -> composition -> denoise/tone comparisons; preserve subject, skip unsafe/unavailable stages with reasons |
+| 2 | Prepare at native geometry | v20 guarded first crop -> eraser -> residual crop -> confirmed-pattern reconstruction -> composition -> denoise/tone comparisons; preserve subject, skip unsafe/unavailable stages with reasons |
 | 3 | Analyze and assign | Fresh geometry-correct detection/features; shared likeness policy; cast membership protection remains separate from processing |
 | 4 | Publish the accepted reference | Prepared source in person `gallery` (or `review`), destination-prefix normalization with stable photo ID and history retained |
 | 5 | Generate standard 944x1104 derivatives | Full-photo fit/pad, head framing and chest framing from the accepted source; framing crops/padding remain necessary, but must not rerun source-cleanup crops |
@@ -298,7 +332,9 @@ retarget workflows. Earlier sidecar reports are experiment evidence only.
 This launcher reads sources without changing them and writes sidecar comparisons;
 it is not a change to `library.cmd` or permission to replace Gallery photos.
 It includes retained Angel/Sister cores
-without reassigning them. From the repo terminal:
+without reassigning them. The example uses the default reports root; use the
+configured `storageRoots.reports` path if it has been changed. From the repo
+terminal:
 
 ```bat
 bin\prepare-images.cmd --root "B:\Sovereign Territories Sandbox\Working" --out "B:\Sovereign Territories Sandbox\Working\_reports\preparation\YOUR-NEW-RUN" --limit 28 --dry-run
@@ -316,7 +352,7 @@ For only the new unsorted test images, add `--source-folder "Various\gallery"
 images directly in that folder, not Review, other identities or subfolders.
 It leaves the incoming files in place. The report explains every role and
 links the **provisionally selected cleanup/composition**, with its reason.
-The v16 recipe below can select LaMa cleanup; selection is not a measured
+The v20 recipe below can select masked cleanup/reconstruction; selection is not a measured
 enhancement winner or hair-safety guarantee. A missed screenshot heuristic does
 not mean clean. Control means oriented/sRGB only. Denoise and tone remain separate
 comparison alternatives. Padded examples are downstream canvas fitting, not
@@ -463,7 +499,7 @@ refuses missing/extra/tampered files or an attempted automatic confirmation.
 
 #### Earlier sidecar recipes (v5-v13), not current selection rules
 
-The following explains old immutable reports only. The current v16 order and
+The following explains old immutable reports only. The v16 order and
 selection rules follow this historical section; they supersede the older
 automatic-rejection statements, not the retained old evidence.
 
@@ -620,14 +656,54 @@ Telea/Navier-Stokes comparison (about 206 MB retained evidence).
 The `v12/index.html` replay adds the outlined-banner correction (another
 206 MB); immutable earlier comparisons are not overwritten.
 
-#### Current v16 recipe and comparison behavior
+#### Current v20 recipe and comparison behavior
+
+The current recipe is `preparation-comparison-v20`. It promotes the proven
+100-image sequence through shared code, rather than maintaining a separate
+benchmark implementation:
+
+**guarded first crop -> eraser -> residual crop -> confirmed-pattern
+reconstruction -> composition -> enhancement comparisons**.
+
+The first crop removes confirmed exterior borders/panels while preserving
+the person and repairable hair. Small confirmed clutter is erased before the
+residual subject-guarded crop. Confirmed head/pattern overlays can take a
+separate masked reconstruction path; masks and synthetic provenance remain
+visible. The final composition uses the repaired image and observed screenshot
+picture boundary, not a stale eraser candidate or a subject-only crop. The
+complete candidate graph and selected ancestry are retained in the report.
+Clean controls retain their original bytes for publication.
+Version 18 strengthens transparent GMW ring/central-letter confirmation and
+requires horizontal flatness at the bottom of a phone navigation panel.
+Dark clothing alone cannot establish that external panel. Published v17-v19
+reports remain readable with their recorded decisions and pixels; they are
+not silently regenerated with the new detectors.
+Inside an already confirmed phone frame, paired bright horizontal outlines
+must also have both rounded caps before they can confirm a transparent search
+pill. Parallel lines or a rectangle alone are insufficient.
+V20 also proposes a lower-left nested reel inset only inside an already
+confirmed phone-reel frame, and only when a small secondary face, visible
+bilateral side edges, a bright top bezel and a dark inner header agree. The
+detected box is clipped to the observed picture boundary. This does not cover
+phone overlays on ordinary photos or other inset layouts; misses remain
+unresolved rather than being labelled clean. The targeted eight-image proof
+is awaiting visual review; Ruby's lower-left fill is visibly soft and Harlow's
+clothing artifact remains open. Published v17-v19 reports keep their recorded
+recipes and pixels and remain readable.
+
+Final recommended pixels are the shared input for Gallery, likeness and
+ComfyUI in the authorized sandbox rebuild. Exact originals, variants, masks
+and processing history follow the assigned photo; matching also retains its
+exact aligned face separately. Reconstruction does not claim recovered
+identity or automatically replace protected cast anchors. See the
+[likeness guide](likeness.md) for matching evidence and rebase safeguards.
 
 Denoise/tone consume the selected cleanup image, never a rejected eraser or
 second crop. Both are rendered for review but not automatically accepted:
 there is no calibrated benefit/detail-preservation test yet. A filter failure
 retains the last safe cleanup selection rather than reverting a good crop.
 
-From v14 a pure overlay crop can become the cleanup. From v16
+**Published v16 compatibility:** from v14 a pure overlay crop can become the cleanup. From v16
 (`preparation-comparison-v16`, `tools\art\intake_library\`) the order is
 **first crop → second crop → eraser → composition → enhancement comparisons**:
 
@@ -641,11 +717,13 @@ From v14 a pure overlay crop can become the cleanup. From v16
 - **Composition** frames the whole person with a small margin, widened
   toward 944x1104. When the mask stops mid-leg, the bottom is kept.
 
-The two models download once, with pinned hashes, into
-`%LOCALAPPDATA%\sovereign-territories\models` (about 400 MB; `torch` and
+The two models download once, with pinned hashes, into the configured
+`modelCacheRoot\models` (default
+`%LOCALAPPDATA%\sovereign-territories\models`; about 400 MB; `torch` and
 `torchvision` must be installed; CPU is enough, about 20 s per photo).
-Older reports (v5–v15) still verify through `intake_library\legacy.py`.
-Results, decisions and known gaps are in the intake plan (v16 section).
+Older reports (v5-v19) still verify through `intake_library\legacy.py`;
+their recipes and artifacts are not rewritten. Results, decisions and known
+gaps are in the intake plan.
 
 For detected reel screenshots, `ui-crop-proposal` also shows the existing
 `screens.clean_box` rectangle. It is **comparison only**, never recommended or
@@ -653,7 +731,7 @@ fed to enhancement: a fixed rectangle may cut hair/body. The selected cleanup
 is the enhancement input. Cropping removes pixels; it does not reconstruct
 overlaid hair. Unresolved graphics still pass
 through with a reason for later ComfyUI cleanup, without a manual-intervention
-requirement. Person-aware composition is part of v16; it is not a guarantee
+requirement. Person-aware framing is not a guarantee
 that every detected body or limb boundary is correct.
 
 Open `index.html` in that run directory. Click a candidate for the larger
@@ -661,7 +739,7 @@ per-photo page: retained input, control/candidates, then their padded 944x1104
 examples. Candidates never replace Gallery sources or the maintained derivatives.
 All crops/eraser attempts from this launcher are sidecars. It does not run
 identity matching, update the likeness cache, settle actions or change ComfyUI.
-Apply may download the pinned models once and v16 may select their output
+Apply may download the pinned models once and the recipe may select their output
 provisionally; preview/check do not perform inference/downloads. Denoise/tone can make a
 clean image worse; neither is accepted automatically. Native geometry is separate
 from downstream padding/resizing; there is no detail-recovering superresolution.
@@ -778,18 +856,22 @@ you might bring back; neither operation requests permanent deletion.
 
 ### Report folders
 
-`<work>\_reports` is grouped by purpose. The library routine keeps its current reports in `library`,
-dated run logs in `runs`, Angel/Sister/Prospect likeness work in `comparisons\pairings`, historical
-comparison material in `comparisons\history`, comparison sheets in `comparisons\images`, Prime sheets
-in `comparisons\primes`, and move plans in `analysis`. Routine commands overwrite their current reports;
-dated logs are retained. Old reports have been moved into these folders without deleting them.
+The configured reports root (default `<work>\_reports`) is grouped by purpose.
+The library routine keeps its current reports in `library`, dated run logs in
+`runs`, Angel/Sister/Prospect likeness work in `comparisons\pairings`,
+historical comparison material in `comparisons\history`, comparison sheets in
+`comparisons\images`, Prime sheets in `comparisons\primes`, and move plans in
+`analysis`. Routine commands overwrite their current reports; dated logs are
+retained. Old reports have been moved into these folders without deleting them.
 
 **Backups before a real run.** `bin\library.cmd` creates a dated snapshot before changing files; if backup
-fails, the routine stops before processing. The snapshot is written under `_backup\library-<timestamp>` and
-contains the work root except `_archive` and older `_backup` snapshots, the configured ComfyUI inputs, and
-`workflows\workspaces.json`. Its `manifest.json` lists each copied file with size and SHA-256; every run verifies
-the copied file list, sizes and hashes before proceeding. ComfyUI output
-renders are not included because the library routine does not modify them. To make a snapshot on demand,
+fails, the routine stops before processing. The snapshot is written under the
+configured backup root (default `_backup\library-<timestamp>`) and contains the
+work root except `_archive` and older backups, the configured ComfyUI inputs,
+and `workflows\workspaces.json`. Its `manifest.json` lists each copied file
+with size and SHA-256; every run verifies the copied file list, sizes and
+hashes before proceeding. ComfyUI output renders are not included because the
+library routine does not modify them. To make a snapshot on demand,
 `bin\library-backup.cmd` previews by default; add `--apply` to create it, or `--verify <snapshot>` to recheck one.
 Routine/action backups omit only proven regenerable managed derivatives.
 For a complete monthly snapshot that also stores generated derivatives, use

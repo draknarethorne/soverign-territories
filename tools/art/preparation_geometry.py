@@ -9,6 +9,7 @@ import pathlib
 import cv2
 import numpy as np
 
+import comfy_workflows as cw
 import screens
 from likeness_library.engine import human_rows
 
@@ -60,8 +61,7 @@ def plan(image):
 
 
 def local_model():
-    base = pathlib.Path(os.environ.get("LOCALAPPDATA", pathlib.Path.home() / ".cache"))
-    return base / "sovereign-territories" / "models" / "face_detection_yunet_2023mar.onnx"
+    return cw.model_cache_root() / "models" / "face_detection_yunet_2023mar.onnx"
 
 
 def model_evidence():

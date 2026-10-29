@@ -13,7 +13,9 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "art"))
 import library_backup  # noqa: E402
 import originals  # noqa: E402
-from likeness_library import maintenance, preparation_provenance, retained_preparation as retained  # noqa: E402
+from likeness_library import (
+    domains, maintenance, preparation_provenance, retained_preparation as retained,
+)  # noqa: E402
 from likeness_library import metadata  # noqa: E402
 from likeness_library.policy import load_policy  # noqa: E402
 
@@ -70,6 +72,38 @@ class RetainedPreparationTests(unittest.TestCase):
     def stage(self):
         return retained.stage_photo(
             self.root, self.destination, self.prep, self.row, recipe={"id": "test-v16"})
+
+    def test_configured_junk_and_retired_roots_preserve_domain_classification(self):
+        config = retained.cw.load_cfg()
+        config = {
+            **config,
+            "storageRoots": {
+                **config["storageRoots"],
+                "junk": "_quarantine",
+                "retired": "_retired_custom",
+            },
+        }
+        with mock.patch.object(retained.cw, "load_cfg", return_value=config):
+            self.assertEqual(
+                retained._domain(
+                    "_quarantine/Prospects/Example/gallery/image.jpg", self.root
+                ),
+                "general",
+            )
+            self.assertEqual(
+                retained._domain(
+                    "_retired_custom/photos/Artists/Example/gallery/image.jpg", self.root
+                ),
+                "Artists/Example",
+            )
+        with mock.patch.object(domains.cw, "load_cfg", return_value=config):
+            with domains.activate("artists"):
+                self.assertTrue(domains.includes(
+                    "_retired_custom/photos/Artists/Example/gallery/image.jpg", self.root
+                ))
+                self.assertFalse(domains.includes(
+                    "_retired_custom/photos/Prospects/Example/gallery/image.jpg", self.root
+                ))
 
     def test_retains_exact_original_all_actual_variants_detail_and_no_unlisted_extras(self):
         published = self.stage()
@@ -353,7 +387,7 @@ class RetainedPreparationTests(unittest.TestCase):
 
     def test_reparse_refusal_and_rename_failure_preserve_original_mapping(self):
         with mock.patch.object(pathlib.Path, "is_symlink", return_value=True):
-            with self.assertRaisesRegex(ValueError, "linked"):
+            with self.assertRaisesRegex(ValueError, "linked|reparse point"):
                 self.stage()
         self.stage()
         before = self.root / self.destination

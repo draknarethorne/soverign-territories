@@ -7,9 +7,13 @@ import pathlib
 import shutil
 import tempfile
 import unittest
+import copy
 from unittest import mock
 
-from library_backup import _snapshot_path, create_backup, preview, restore_backup, verify_backup
+import library_backup
+from library_backup import (
+    _snapshot_path, create_backup, latest_work_root_backup, preview, restore_backup, verify_backup,
+)
 from likeness_library import metadata
 
 
@@ -88,6 +92,14 @@ class LibraryBackupTests(unittest.TestCase):
         manifest = json.loads((destination / "manifest.json").read_text(encoding="utf-8"))
         self.assertEqual(len(manifest["generatedReports"]), len(generated))
         self.assertEqual(manifest["regenerable"], [])
+        receipt = manifest["configurationReceipt"]
+        self.assertEqual(len(receipt["effectiveConfigurationSha256"]), 64)
+        self.assertEqual(
+            receipt["resolvedPaths"]["libraryRoot"], str(self.work.resolve())
+        )
+        self.assertEqual(
+            receipt["resolvedPaths"]["backupDestination"], str(destination.resolve())
+        )
         self.assertTrue(verify_backup(destination))
         recovered = restore_backup(destination, self.tmp / "recovered", apply=True)
         for relative in generated:
@@ -305,6 +317,49 @@ class LibraryBackupTests(unittest.TestCase):
         self.assertEqual(manifest["files"], 3)
         self.assertTrue(manifest["sources"][0]["exclude_library_storage"])
         self.assertEqual(len(manifest["entries"][0]["sha256"]), 64)
+
+    def test_configured_storage_roots_are_used_and_backup_is_not_copied_into_itself(self):
+        backup_root = self.work / "operations" / "backups"
+        prior = backup_root / "prior" / "snapshot"
+        prior.parent.mkdir(parents=True)
+        prior.write_bytes(b"old snapshot")
+        report = self.work / "operations" / "reports" / "artists"
+        report.mkdir(parents=True)
+        generated = b"managed browser page"
+        (report / "artists_gallery.html").write_bytes(generated)
+        (report / "gallery-manifest.json").write_text(json.dumps({
+            "formatVersion": 1,
+            "recipe": "artists-gallery-v1",
+            "files": {"artists_gallery.html": hashlib.sha256(generated).hexdigest()},
+        }), encoding="utf-8")
+        (report / "notes.txt").write_text("retain report notes", encoding="utf-8")
+        cfg = copy.deepcopy(library_backup.cw.load_cfg())
+        cfg["installsRoot"] = str(self.tmp / "installs")
+        cfg["paths"].update({
+            "productionRoot": str(self.tmp / "production"),
+            "sandboxWorkingRoot": str(self.tmp / "sandbox"),
+            "modelCacheRoot": str(self.tmp / "models"),
+            "inputsRoot": str(self.tmp / "configured-inputs"),
+            "outputRoot": str(self.tmp / "configured-outputs"),
+        })
+        cfg["sharedInput"] = str(self.tmp / "shared-input")
+        cfg["sharedOutput"] = str(self.tmp / "shared-output")
+        cfg["storageRoots"].update({
+            "backup": "operations/backups",
+            "reports": "operations/reports",
+        })
+        with mock.patch("library_backup.cw.load_cfg", return_value=cfg):
+            destination = create_backup(self.work, self.inputs, self.repo, stamp="configured", apply=True)
+            latest = latest_work_root_backup(self.work)
+        self.assertEqual(destination, backup_root / "library-configured")
+        self.assertEqual(latest, destination)
+        self.assertFalse((destination / "work-root/operations/backups").exists())
+        self.assertFalse((destination / "work-root/operations/reports/artists/artists_gallery.html").exists())
+        self.assertTrue((destination / "work-root/operations/reports/artists/gallery-manifest.json").is_file())
+        self.assertEqual(
+            (destination / "work-root/operations/reports/artists/notes.txt").read_text(encoding="utf-8"),
+            "retain report notes",
+        )
 
     def test_existing_snapshot_is_never_overwritten(self):
         first = create_backup(self.work, self.inputs, self.repo, stamp="same", apply=True)

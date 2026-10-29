@@ -47,6 +47,59 @@ class ReferenceRenderingTests(unittest.TestCase):
         self.source.rename(self.source.with_name("renamed.png"))
         self.assertEqual(render.check(self.root, "first-test"), run)
 
+    def test_frozen_configuration_receipt_survives_later_configuration_changes(self):
+        run = render.prepare(self.request, self.root)
+        receipt = run["configurationReceipt"]
+        self.assertEqual(receipt["resolvedPaths"]["libraryRoot"], str(self.root.resolve()))
+        self.assertEqual(receipt["resolvedPaths"]["referenceRunDirectory"],
+                         str(render.run_path(self.root, "first-test").resolve()))
+        self.assertEqual(len(receipt["sourceConfigurationSha256"]), 64)
+        self.assertEqual(len(receipt["effectiveConfigurationSha256"]), 64)
+        cfg = copy.deepcopy(render.cw.load_cfg())
+        cfg["storageRoots"]["reports"] = "_changed_reports"
+        with mock.patch.object(render.cw, "load_cfg", return_value=cfg):
+            self.assertEqual(render.check(self.root, "first-test"), run)
+            self.assertEqual(render.prepare(self.request, self.root), run)
+
+    def test_legacy_frozen_run_without_configuration_receipt_still_checks_and_repeats(self):
+        run = render.prepare(self.request, self.root)
+        run.pop("configurationReceipt")
+        manifest = render.run_path(self.root, "first-test") / "run.json"
+        manifest.write_bytes(render.encode(run))
+        self.assertEqual(render.check(self.root, "first-test"), run)
+        self.assertEqual(render.prepare(self.request, self.root), run)
+        self.assertEqual(manifest.read_bytes(), render.encode(run))
+
+    def test_malformed_frozen_configuration_receipt_is_not_treated_as_legacy(self):
+        run = render.prepare(self.request, self.root)
+        manifest = render.run_path(self.root, "first-test") / "run.json"
+        for receipt in (None, {}, {**run["configurationReceipt"], "sourceConfigurationSha256": "bad"}):
+            with self.subTest(receipt=receipt):
+                manifest.write_bytes(render.encode({**run, "configurationReceipt": receipt}))
+                with self.assertRaises(render.jsonschema.ValidationError):
+                    render.check(self.root, "first-test")
+        receipt = copy.deepcopy(run["configurationReceipt"])
+        receipt["resolvedPaths"]["referenceRunDirectory"] = str(self.root)
+        manifest.write_bytes(render.encode({**run, "configurationReceipt": receipt}))
+        with self.assertRaisesRegex(ValueError, "receipt paths"):
+            render.check(self.root, "first-test")
+
+    def test_configured_generation_root_routes_frozen_batch(self):
+        config = render.cw.load_cfg()
+        config = {
+            **config,
+            "storageRoots": {
+                **config["storageRoots"],
+                "generation": "_generated",
+            },
+        }
+        with mock.patch.object(render.cw, "load_cfg", return_value=config):
+            run = render.prepare(self.request, self.root)
+            destination = self.root / "_generated" / "reference" / "first-test"
+            self.assertEqual(render.run_path(self.root, "first-test"), destination)
+            self.assertTrue((destination / "request.json").is_file())
+            self.assertEqual(render.check(self.root, "first-test"), run)
+
     def test_source_change_refused_before_writes(self):
         self.source.write_bytes(b"changed")
         with self.assertRaisesRegex(ValueError, "hash changed"):
@@ -200,6 +253,8 @@ class ReferenceRenderingTests(unittest.TestCase):
             with self.assertRaisesRegex(PermissionError, "fixture lock"):
                 render.prepare(self.request, self.root)
         self.assertEqual(list((self.root / "_generation" / "reference").iterdir()), [])
+        temporary_root = render.cw.storage_root(render.cw.load_cfg(), "temporary", root=self.root)
+        self.assertEqual(list(temporary_root.glob(".reference-*")), [])
         self.assertTrue(self.source.exists())
 
     def test_check_does_not_write(self):
@@ -304,6 +359,18 @@ class ReferenceRenderingTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn("Inputs only", result.stdout)
         self.assertFalse((self.root / "_generation").exists())
+        render.prepare(self.request, self.root)
+        destination = render.run_path(self.root, self.request["batchId"])
+        before = {item: item.read_bytes() for item in destination.rglob("*") if item.is_file()}
+        result = subprocess.run(
+            ["cmd", "/c", str(render.ROOT / "bin" / "render-reference.cmd"),
+             "check", self.request["batchId"], "--root", str(self.root), "--check"],
+            cwd=render.ROOT, capture_output=True, text=True,
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(
+            {item: item.read_bytes() for item in destination.rglob("*") if item.is_file()}, before,
+        )
 
 
 if __name__ == "__main__":

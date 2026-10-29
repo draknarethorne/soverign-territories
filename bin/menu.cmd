@@ -26,6 +26,7 @@ echo   V  Preview separate Artist gallery pages (no matching or source changes)
 echo   C  Photo library check (read only: anything waiting?)
 echo   B  Back up the photo library and ComfyUI inputs
 echo   X  Intake-aware sandbox clean start (inventory or verify; prepare/match/apply separately)
+echo   N  Preview sandbox run-retention decisions (read only)
 echo   F  Preview reference-render batch (offline, no workflow deployment or queue)
 echo   D  Refresh rendering selection/results gallery (reports only)
 echo   O  Refresh the ComfyUI outputs browser (reports only; pull is separate)
@@ -46,6 +47,7 @@ if /i "%CH%"=="G" call "%~dp0people-gallery.cmd" --dry-run & pause & goto menu
 if /i "%CH%"=="C" call "%~dp0library-check.cmd" & pause & goto menu
 if /i "%CH%"=="B" goto backup
 if /i "%CH%"=="X" goto sandboxrebase
+if /i "%CH%"=="N" goto retention
 if /i "%CH%"=="F" goto referencerender
 if /i "%CH%"=="D" goto rendergallery
 if /i "%CH%"=="O" goto outputsgallery
@@ -179,6 +181,12 @@ if /i "%VERIFY%"=="y" (
 ) else (
   call "%~dp0sandbox-rebase.cmd" "%ROOT%" "%RUN%" --dry-run
 )
+pause
+goto menu
+:retention
+set "ROOT="
+set /p "ROOT=Sandbox Working absolute path: "
+call "%~dp0storage-retention.cmd" --root "%ROOT%" preview
 pause
 goto menu
 :group

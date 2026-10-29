@@ -105,7 +105,7 @@ def main(argv=None, embedder=None, cache=None):
     ap.add_argument("heroes", nargs="*", help="heroes (default: every hero with a render)")
     ap.add_argument("--all-renders", action="store_true", help="every render of each variant, not only the newest")
     ap.add_argument("--shots", default="prime", help="first shots to compare, comma separated or 'all': prime (P1 swimsuit), neutral (P2), bare (P3). Default: prime")
-    ap.add_argument("--out", help="the picture to write (default: <work root>/_reports/comparisons/primes/prime_compare.png)")
+    ap.add_argument("--out", help="picture under the configured reports root (relative paths start there)")
     args = ap.parse_args(argv)
     shots = list(SHOTS) if args.shots == "all" else [s.strip() for s in args.shots.split(",") if s.strip()]
     bad = [s for s in shots if s not in SHOTS]
@@ -113,6 +113,10 @@ def main(argv=None, embedder=None, cache=None):
         sys.exit(f"unknown shot(s) {bad}; known: {list(SHOTS)}")
     cfg = cw.load_cfg()
     scorer = Scorer(embedder, cache)
+    out = cw.storage_output_path(
+        cfg, "reports", args.out or pathlib.Path("comparisons") / "primes" / "prime_compare.png",
+        root=scorer.work,
+    )
     heroes = [h for h in sorted(cfg.get("photos", {})) if not args.heroes or h.lower() in {x.lower() for x in args.heroes}]
     rows, totals = [], {}
     for hero in heroes:
@@ -137,7 +141,6 @@ def main(argv=None, embedder=None, cache=None):
     print("\naverage face score against the photo each flow started from (more is closer; 0.55 and up is the same person):")
     for label, vals in sorted(totals.items()):
         print(f"  {label:20} {sum(vals) / len(vals):.2f}   over {len(vals)} render(s)")
-    out = pathlib.Path(args.out) if args.out else scorer.work / "_reports" / "comparisons" / "primes" / "prime_compare.png"
     out.parent.mkdir(parents=True, exist_ok=True)
     sheet(rows, out)
     print(f"picture: {out}")
