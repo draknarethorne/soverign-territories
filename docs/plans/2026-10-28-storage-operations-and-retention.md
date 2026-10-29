@@ -1,0 +1,649 @@
+# Storage operations, retention and clean sandbox
+
+**Status:** active
+
+This plan turns the current ad hoc locations for runs, reports, backups and
+temporary files into a predictable, configurable and auditable system. It also
+covers the one-time cleanup and the eventual clean sandbox recreation needed
+before the production rebase.
+
+## Non-negotiable safety boundary
+
+**Never prune active photo-source directories or alter their contents as part
+of storage cleanup.** This includes `Angels`, `Sisters`, `Models`, `Prospects`,
+`Potentials`, `Artists`, `Various`, and any active `gallery` or `review`
+folders. A photo appearing in a generated report or run does not make the
+canonical source disposable.
+
+Cleanup may target only files proven to be generated, obsolete, temporary, or
+backups no longer needed for recovery. Before removal, prove there is no
+dependency from an active run, undo journal, history page, report link, source
+manifest, or planned production operation. No production photo or production
+backup is in scope for the first manual cleanup.
+
+## Current evidence
+
+- The verified v21b intake contains 2,741 outcomes for the 2,700 immutable
+  inputs plus 41 current Various inputs. Its report is under
+  `B:\Sovereign Territories Sandbox\Working\_sandbox-state\r21b-20261028`.
+- Earlier full intake runs include `clean-rebase-20261027-full-intake` (v16),
+  `r17-20261028` (v17), `r20-20261028` (v20), and the completed `r21b-20261028`
+  (v21). Full runs are expensive to retain; report-only pilots also accumulate
+  under `Working\_reports\preparation`.
+- The stopped `r21-20261028` has no intake receipt. Its preparation output
+  directory had an orphan `.preparation-n1y5a5ps` staging directory. After the
+  reboot, no related worker or ownership lock remained; the exact temporary
+  directory was removed. It had no intake receipt and no durable report was
+  removed.
+- `B:\ST-v9\Sovereign Territories Sandbox\Working` is a separate old tree with
+  a subset of `Various\gallery`, preparation reports `v9` through `v16`, and a
+  gallery-intake preview. It is not the active sandbox Working root. Compare
+  every photo against active sources by content hash before treating any copy
+  as redundant; verify report references before pruning it.
+- The hash comparison is complete: all 12 photos in the old `ST-v9` tree are
+  exact matches for files in current `Working\Various`; there are no unique
+  photos in that subset. The old tree still has report/history files, so it
+  was retained pending the dependency and value review below.
+- A second read-only link check found seven preparation manifests (v9, v10,
+  v11, v12, v14c, v15 and v16) and a two-page gallery-intake preview in the
+  old tree. The preview links to its run histories using relative paths, and
+  the manifests identify `B:\ST-v9\Sovereign Territories Sandbox\Working` as
+  their library root. No literal `ST-v9` reference was found in the current
+  Working `_reports` HTML, JSON, Markdown, text or CSV files searched. The old
+  tree is therefore an internally linked historical bundle, not a live input
+  to current reports; deleting it would break those old report links. The
+  tree is classified as a self-contained historical bundle, not a live input
+  or a source of unique photos. Keep it outside the Working reset; decide
+  whether to retire it through S10's dependency-aware retention policy. No
+  files were removed.
+- The sandbox's immutable `Source` manifest identifies
+  `B:\Sovereign Territories` as its source root and lists 8,845 files totaling
+  5.19 GiB. It was created on 2026-10-21 UTC and has been reverified against
+  its manifest. It remains immutable historical evidence, not the current
+  Production baseline.
+- The read-only `likeness sandbox-reset --full` preview verified all 8,845
+  Source files against the manifest and confirmed the exact target is
+  `B:\Sovereign Territories Sandbox\Working`. The Production root contains
+  65,259 files (27,044,732,226 bytes); the preview excludes 56,059 files
+  (21,429,886,503 bytes) in configured operational roots and reserved
+  `_archive`, while preserving `_junk` and `_retired` as deliberate
+  photo/provenance stores. The managed Production baseline is 9,200 files
+  (5,614,845,723 bytes): 8,842 Source paths unchanged, three removed under
+  `_junk`, 358 additions under active `Various`, and no changed or unclassified
+  paths. The Source copy is intact but stale; it must not seed a fresh Working
+  tree as though it were current Production.
+- Reset-boundary dependencies were checked against
+  `workflows/workspaces.json` and the shared path validator. `Working` is the
+  only future replacement target. Its sibling `Source` tree and
+  `source-manifest.json`, and sibling Production root, remain outside that
+  target. ComfyUI installs and workflows resolve under configured
+  `installsRoot`; selected input filenames resolve under configured
+  `inputsRoot` / `sharedInput`, and workflow outputs under `outputRoot` /
+  `sharedOutput`. These roots are configured separately from Working and
+  validated against overlap. Workspace input selections are external
+  filenames, not paths into Working. The historical `ST-v9` tree is separate;
+  its 12 photos duplicate active Working content and its report links remain
+  internal to that old tree.
+- SHA-256 comparison of active photo categories found 106 Working files whose
+  content is absent from Production's active categories (79,661,819 bytes):
+  89 JPEG source photos in `Working\Various\gallery` and 17 small gallery
+  metadata files. None of those contents are in the old Source snapshot.
+  Working has no same-path modified files in those categories; many other
+  files have moved to different Production paths. Preserve the 89 active
+  photos through reset. Carry the 17 metadata files in a non-active review
+  bundle so a clean rebase does not silently reapply old sandbox assignments;
+  one records Amelia Morgan history and 16 explicitly refer to a discarded
+  clean-rebuild `run.json`.
+- The existing `sandbox-reset` command only restores Models, Prospects and
+  Potentials from Source. It is not a full Working rebuild or a current
+  Production comparison.
+- The `sandbox-reset --full` preview reports `resetReady: true`, with no path
+  conflicts or unknown Production roots. Its configured-root exclusions must
+  not discard `_junk` or `_retired`, which contain deliberately retained
+  photos.
+  Working currently contains 270,191 files (146,857,778,934 bytes), including
+  6,044 active-category files (3,187,790,265 bytes). Of 675 active Working
+  entries whose paths/content differ from Production, 569 exact contents
+  already exist at another active Production path; the unique carry-forward
+  set is exactly 89 JPEG photos (79,660,386 bytes) plus 17 metadata files
+  (1,433 bytes). None of those 106 hashes occur in Source. Carry the photos
+  into their same relative paths and retain metadata in a non-active review
+  bundle. No data was changed by the preview.
+- The current sandbox `Working` has distinct `_backup`, `_generation`,
+  `_reports`, `_likeness`, `_actions`, `_junk`, `_retired`, and
+  `_sandbox-state` areas. Their contents are not interchangeable: backups and
+  action journals may be required for undo; generation outputs and report
+  histories may have downstream links.
+- The active intake implementation already uses a temporary staging
+  directory, but an abrupt process stop can leave it behind. The parallel
+  v21b run used 3 workers and completed its 2,741-row manifest; no intake
+  process remains active.
+
+These are inventory observations, not permission to delete a directory.
+
+### Writer/reader map (verified foundations; inventory remains open)
+
+| Area | Writers and readers | Lifecycle and dependency |
+|---|---|---|
+| Active category galleries | User-owned originals; `originals`, intake publication, likeness actions; gallery, likeness, and workflow-input discovery | Canonical sources. Never a storage-cleanup target; only explicit, reviewed library actions may move a photo. |
+| `_backup` | `library_backup` and action/maintenance transactions; restore and undo commands | Recovery snapshots are durable until their dependent operation is explicitly settled. |
+| `_reports` | Preparation, library, likeness, benchmark, gallery, and ComfyUI review publishers; browser pages, manifests, and history readers | Reports can link to detail pages, source photos, and run evidence. No age- or name-only pruning. |
+| `_sandbox-state` | Sandbox rebase/preparation runs; matching, review, and resume readers | Contains large run copies and receipts. Recovery is waived for the eventual Working rebuild, but the tree remains untouched until the exact reset preview is verified. |
+| `_likeness` / `_actions` | Likeness caches and aligned-face evidence; staged action writers; reconciliation and undo readers | Cache data is content-derived; action journals can remain required for undo. |
+| `_generation` | ComfyUI output gallery and selected synthetic-result publishers; page, lineage, and review readers | Generated results are not identity evidence and may have downstream pages/sidecars. Discard only at the approved full Working rebuild or through a dependency-aware policy. |
+| `_tmp` | Image preparation, report publishers, benchmarks, reference rendering, and configuration writes through `temporary_storage.staging_directory` | Same-volume owner-locked stages clean in `finally`; a later invocation removes a released orphan. Live locks and unknown stages are preserved/refused. |
+| Model cache | Intake and likeness model loaders under configured `modelCacheRoot` | Downloaded model weights are reusable external cache data, not library sources; failed pinned downloads remove partial files. |
+| ComfyUI installs and shared folders | Workflow deploy/sync, `sync_inputs`, and reference-rendering tools; workspace and output browsers | Roots are now configurable and validated; deployment backups and rendered outputs have their own readers and are outside the photo-library cleanup boundary. |
+
+### Post-reboot B: performance check (2026-10-28)
+
+- B: maps to a Samsung PSSD T7 over USB, formatted exFAT. Windows reports
+  `Healthy`/`Online` and about 266 GB free. Read-only `chkdsk B:` found no
+  filesystem problems and 0 KB in bad sectors; it warned that another process
+  had the volume open, but completed its verification.
+- A controlled 256 MiB write-through test measured 301 MiB/s on B: and
+  336 MiB/s on C:. The 2,000-file create/enumerate/delete test measured
+  1.11 s / 6.1 ms / 0.44 s on B:, versus 5.52 s / 10.6 ms / 3.65 s on C:.
+  Reads were buffered and cache-dominated; this was a single comparative run,
+  not a long-term benchmark.
+- `chkdsk` reports 982,517 files and 114,834 indexes across all of B:. A
+  read-only no-follow inventory of generated Working roots found 266,337 files
+  in 29,866 directories, totaling about 135.5 GiB: `_sandbox-state` 196,156
+  files / 109.00 GiB; `_reports` 37,705 / 19.52 GiB; `_backup` 27,653 /
+  6.21 GiB; `_generation` 1,744 / 0.27 GiB; `_likeness` 2,448 / 0.06 GiB;
+  `_retired` 630 / 0.47 GiB; `_actions` and `_junk` were negligible.
+- Walking those trees and `lstat`-ing every file took 50.88 s for
+  `_sandbox-state`, 52.93 s for `_reports`, and 34.95 s for `_backup`. A
+  second pass took 56.18 s, 53.01 s, and 33.73 s respectively. Repeated
+  recursive metadata work remains expensive even after the first pass; the
+  generated file count/tree shape is a material cost for inventory, copy and
+  cleanup operations, but not evidence of failed bulk throughput or filesystem
+  corruption.
+- Four full intake runs under `_sandbox-state` account for about 174,569 files
+  and 101.97 GiB: the v16 run (29.43 GiB), v17 (23.99 GiB), v20 (23.92 GiB),
+  and v21b (24.63 GiB). The v21 run has 5,934 files / 1.03 GiB but no intake
+  receipt. These are generated run copies, not the canonical active galleries.
+  Since sandbox recovery is waived, retaining these runs is not a prerequisite
+  for rebuilding Working.
+- The prior interrupted `.preparation-n1y5a5ps` staging directory had 2,657
+  files and about 2.0 GiB. With no related worker, linked path, or ownership
+  lock present, that exact temporary directory was removed after the reboot;
+  B: free space rose from 265.83 to 267.75 GiB. Its unusually slow earlier
+  cleanup did not recur; the removal completed within the 120-second command
+  window. No active source folders or durable reports were removed.
+
+## Work and acceptance
+
+### Oct 29: clean-sandbox rehearsal authorization
+
+The user authorizes resolving the reset blocker without waiting for another
+confirmation, preserving the sandbox-only Various additions, and treating the
+fresh Working tree as a Production-gallery rehearsal. Production, historical
+Source and ST-v9 remain outside the reset target. Old generated Working
+reports/recovery state may be discarded, not active source photos.
+
+The reset's `WinError 5` is now explained by observed open handles, not a drive
+fault: Microsoft Sysinternals Handle identified Explorer PID 12768 holding
+`Working\_reports\library` twice, despite its visible window showing Production.
+Gracefully closing that Explorer window released both handles; a new query
+found none. A disposable B: fixture also proved populated cross-parent directory
+renames work. The reset then committed successfully. Its first cleanup hit
+MAX_PATH (Windows long paths are disabled); the existing backup extended-path
+helper fixed deletion of the deeply nested rollback tree. Committed recovery
+now finishes cleanup without starting another reset. See S14's exact audit.
+
+- [ ] **P1 ai** S20 Measure fresh-baseline inventory, preparation, matching and
+  report verification separately. Record worker count, input/output counts,
+  configuration/recipe bindings and cleanup state. Compare with the measured
+  old run without attributing recipe, population or cache differences to disk
+  cleanup alone. Verify fresh intake covers current Working galleries rather
+  than silently treating historical Source as current Production.
+- [ ] **P1 ai** S21 Finish the Oct 27/28 retrospective and Oct 29 run recap,
+  reconcile feedback coverage and plans, run validators/tests/markdownlint,
+  and commit/push coherent validated batches. Leave unfinished acceptance and
+  storage lifecycle gaps explicit.
+
+### 1. Complete the storage and dependency inventory
+
+- [ ] **P1 ai** S1 Map every writer and reader for `Working` outputs,
+  sandbox-state runs, report roots, backups, action/undo journals, likeness
+  caches, ComfyUI workspaces/results, generated gallery images, scratch files,
+  model downloads, and any external `B:\ST-v9` tree. For each, record the
+  owner, configured or hard-coded root, creation mechanism, downstream
+  dependencies, and cleanup behavior on success, error, Ctrl+C and hard stop.
+- [x] **P1 ai** S2 Inventory the current sandbox and the approved Production
+  source baseline without altering either. Focus on active source trees,
+  immutable source manifests, source-only additions and the exact reset
+  boundary. Compare candidate source copies by SHA-256, not by name.
+- [x] **P1 ai** S3 Map only dependencies that cross the planned reset boundary:
+  active source bytes, the immutable Source manifest, external workflow/input
+  references, and the configuration needed to recreate Working. The user has
+  waived recovery of sandbox-generated reports, backups, run evidence and
+  undo data; do not spend effort preserving those outputs for the reset.
+
+### 2. Establish configuration as the path authority
+
+- [ ] **P1 ai** S4 Define one validated configuration contract for environment
+  roots and per-area destinations: sandbox/production roots, run state,
+  reports, backups, temporary staging, generated outputs, and local model
+  cache. Preserve explicit CLI overrides for exceptional runs, but print and
+  receipt every resolved path and configuration hash.
+- [ ] **P1 ai** S5 Route every relevant writer and reader through the shared
+  path resolver. Keep machine-specific absolute paths out of shared defaults;
+  support the existing Windows workspace and allow tests to supply isolated
+  temporary roots. Validate that resolved paths cannot cross into protected
+  source roots or escape their configured base.
+- [x] **P1 ai** S6 Add schema validation and focused tests for missing roots,
+  invalid/overlapping roots, path overrides, path separators, and Windows
+  junction/reparse points. Update launchers and docs to expose the same
+  defaults.
+
+Configuration groundwork (2026-10-29): `workflows/workspaces.json` has a
+`storageRoots` map. `comfy_workflows.storage_root` rejects unknown root names,
+overlapping or escaping destinations, overlap with active photo categories or
+the reserved `_archive`, and reparse points (including junctions). Preparation
+and library-sync reports, library backup snapshots, reference generation and
+output galleries, selected gallery reports, likeness caches and aligned-face
+evidence, sandbox reset staging, retained action journals, configured
+junk/retired operations and their domain readers, incoming duplicate checks,
+likeness reports, eraser/intake-sequence benchmarks, and overlay-review
+reports now use configured roots. Nested intake report validation resolves
+the sandbox-state root by its configured path rather than assuming a fixed
+folder depth. The reset helper also rejects a staging root outside Working.
+
+Focused verification passed: 74 duplicate/likeness tests and a 77-test
+storage-root regression set covering retained-preparation classification,
+photo retirement/junk, and workflow storage roots. Seven focused regression
+tests for the latest benchmark/report routing changes passed. The full
+`bin\test.cmd` launcher passed after those changes (339 tests across seven
+suites).
+
+Oct 29 configuration progress: the versioned schema now covers the
+`referenceWorkspace` and the Production, sandbox, model-cache, install,
+ComfyUI input/output, and shared input/output roots. Matching environment
+overrides are resolved and validated; invalid or overlapping roots, a
+drive-relative/escaping workflow subpath, and a multi-component reference
+workspace are rejected. Configuration mutations validate before an atomic
+same-volume publish through owner-locked staging under the repository's
+ignored `tmp` directory. Workflow deployment, input synchronization,
+backdrop workspaces, reference execution, and output browsing use the shared
+root helpers instead of the prior hard-coded reference install.
+`comfy_workflows.configuration_receipt` fingerprints the validated source
+configuration and its effective resolved paths, including environment
+overrides. `storage_configuration_receipt` is now attached to the full reset
+preview, library-backup manifests, and image-preparation manifests; the
+preparation schema accepts and validates the receipt. The follow-up routing
+pass sends ComfyUI config staging through the configured temporary root under
+ignored `tmp`; workflow backup operations use the configured backup root and
+record source/destination entries in per-stamp receipts. Original-photo rename
+maps use the configured actions root, include a configuration receipt, and
+retain a legacy-map read fallback. Likeness diagnostics constrain explicit
+`--out` paths to the configured reports root and publish a receipt with the
+report. The complete writer/reader inventory and remaining storage receipts
+remain part of S4-S5. The configured active work root still resolves to
+Production by default, so no live storage operation was run during this pass.
+
+Verification: the full `bin\test.cmd` launcher passed 363 tests across eight
+suites. Focused post-pass tests passed for the workflow backup receipt entries,
+final-command backup paths (23 tests), configured/legacy rename maps (2 tests),
+and diagnostics receipts/output containment (4 tests). Tests used temporary
+roots; no Production operation or Working reset was applied.
+
+Verification: 77 workflow-configuration tests, 40 preparation/backup tests,
+and 13 sandbox-reset tests passed. The full `bin\test.cmd` launcher passed
+358 tests across eight suites. A refreshed read-only full-reset preview
+reported both 64-character hashes and all 20 resolved paths. Its baseline
+remains 9,200 managed Production files (5,614,845,723 bytes), with 56,059
+storage files excluded; carry-forward remains 89 active photos and 17 metadata
+files. It is reset-ready with no blockers. The receipt is at
+`tmp\storage\full-reset-preview-receipt-20261029-postreceipts.json`; no reset
+was applied. S4-S5, the remaining storage inventory and receipts, S10-S11,
+and the actual Working rebuild remain open. S6's schema, runtime validation,
+environment overrides, path-safety and reparse-point regressions passed.
+S12's read-only preview is complete.
+
+Fresh-rehearsal follow-up: People, Review and Prime comparison explicit output
+paths now share report-root containment and reparse checks. Reference runs
+retain frozen configuration receipts; valid historical receipts remain usable
+after a configuration change, while malformed receipts refuse. The bounded
+follow-up passed 151 focused tests and the reference launcher preview/check.
+Clean-rebase overlay, input-mirror and intake-receipt publication now use
+owner-locked configured staging. A failed input copy leaves no published
+partial mirror; a verified published report can resume after an interrupted
+receipt without re-rendering. The related baseline/preparation/reset/staging
+set passed 69 tests.
+
+S1/S4/S5 are deliberately still open. Destination-local scratch in Review,
+report assets, gallery chrome and metadata needs consistent hard-stop/orphan
+handling; People multi-file publication is not fully transactional, and its
+remaining report manifests do not all carry complete configuration receipts.
+Input-mirror staging/resume is no longer one of those outstanding gaps.
+
+### 3. Make temporary data lifecycle-safe
+
+- [x] **P1 ai** S7 Give each run a unique staging area on the same volume as its
+  final destination when atomic publication requires it. Record ownership and
+  state; clean it in `finally` on success, ordinary failure, and Ctrl+C.
+- [x] **P1 ai** S8 For image-preparation staging, use a sidecar OS lock to
+  distinguish a live process from a hard-stopped orphan. At the next run,
+  automatically remove only an orphan with the tool's reserved staging name
+  and a released owner lock; log the exact path. Preserve active locks and
+  refuse unknown staging without a lock. This is temporary-run cleanup, not
+  pruning of durable reports or backups.
+- [x] **P1 ai** S9 Verify staging cleanup on success, ordinary failure,
+  KeyboardInterrupt, a released lock after terminating another process, and
+  while another process still holds the lock.
+
+Future staging work beyond image preparation remains in S1 and S4-S8: inventory
+other tools' scratch paths, migrate them to the shared storage policy, and
+provide an explicit preview/check/apply interface for durable-output pruning.
+- [x] **P1 ai** S9b Verify interruption and resume behavior with tests for
+  failure before publication, failure during publication, cancellation, stale
+  staging, and a live concurrent run. Preserve a clear error if cleanup itself
+  fails.
+
+Verification: `test_image_preparation` covers render failure before publish
+and publication failure without replacing an existing result;
+`test_temporary_storage` covers normal/error/KeyboardInterrupt cleanup,
+released-orphan recovery, explicit cleanup failure, unknown-stage refusal, and
+a concurrently locked live stage. Both passed in the Oct 29 focused
+staging/report-publisher run.
+
+### 4. Retention, deduplication and one-time cleanup
+
+- [x] **P1 ai** S10 Define and implement a versioned run retention manifest
+  and dependency-aware policy. Receipt-backed new runs register as review/keep;
+  unsupported and unregistered directories remain held. Only successfully
+  applied runs can be accepted. Keep the latest accepted run per pipeline and
+  every unaccepted/incomplete run. An older accepted run requires explicit
+  review, undo and audit clearance, a full-tree content fingerprint, a clean
+  Working text-reference scan, a second explicit deletion apply, a durable
+  receipt, and refresh of generated intake-history pages. A completed deletion
+  with failed history publication has a report-only repair path. A changed run
+  manifest/content or partial deletion blocks cleanup pending review.
+
+Verification (2026-10-29): added `storage-retention.cmd` preview/check/register/
+accept/supersede/delete surfaces, automatic registration from intake and
+rebase receipt writers, and focused retention tests. The full
+`cmd /c bin\test.cmd` suite passed 363 tests across eight suites; the five
+retention tests plus the automatic registration regression passed (6 tests).
+CLI help and `git diff --check`
+passed. The read-only B: preview found 10 unregistered runs and kept all of
+them; no existing run was registered or deleted. An initial no-candidate
+preview took 162 seconds while redundantly walking Working, so the preview was
+changed to defer tree fingerprints/reference scans until an approved prune is
+actually eligible. The same live preview then completed in 0.59 seconds.
+- [ ] **P1 ai** S11 Measure duplicate bytes across per-run source mirrors,
+  retained originals, source overlays, thumbnails, padded PNGs, generated
+  images and reports. Prototype content-addressed sharing or same-volume
+  hardlinks only where validation and recovery semantics remain exact; retain
+  copy fallback where links are unavailable. Measure B: I/O and disk savings
+  before adopting.
+
+Verification (2026-10-29, read-only): the full Working scan covered 270,191
+files / 146,857,778,934 bytes with no inventory errors or reparse entries.
+SHA-256 was computed for all 239,555 files in repeated-size groups
+(113,344,624,911 bytes). It found 49,952 exact-duplicate groups and 172,244
+redundant copies, representing 81,028,741,928 duplicate bytes (about 75.5
+GiB, 55.2% of total Working bytes); the scan took 815.9 seconds. Largest
+buckets were 43,439,609,499
+duplicate bytes within `_sandbox-state`, 15,103,288,656 across `_reports` and
+`_sandbox-state`, and 4,726,132,748 within `_reports`. This measures byte
+identity only: no files were deleted, deduplicated, or hardlinked. S11 remains
+open to test storage-sharing and recovery semantics and measure actual B: I/O
+and savings before adopting any optimization. B: is healthy and formatted
+exFAT, so NTFS
+hardlinks are unavailable. A content-addressed store was not adopted because
+its reference, update, and recovery semantics are not yet validated across all
+readers and writers.
+- [x] **P1 ai** S12 Prepare a read-only reset preview naming the exact
+  sandbox target, the approved Production/Source baseline, counts and bytes,
+  and every active source file present only in the current sandbox. Do not
+  copy sandbox recovery outputs. The 89 Working-only `Various` JPEGs must be
+  carried into the new Working tree; carry the 17 unique gallery metadata
+  files in a non-active review bundle unless they are separately reconciled.
+  Do not apply until the target boundary and a fresh current-Production
+  baseline are verified.
+
+Verification (2026-10-29): `bin\likeness.cmd --root "B:\Sovereign
+Territories Sandbox\Working" sandbox-reset --full` produced a fresh,
+hash-bound preview with `resetReady: true`. The final policy excludes eight
+configured operational/reserved roots (`_actions`, `_archive`, `_backup`,
+`_generation`, `_likeness`, `_reports`, `_sandbox-state`, `_tmp`) and keeps
+Production `_junk`/`_retired`. The managed baseline is 9,200 files
+(5,614,845,723 bytes); 56,059 storage files (21,429,886,503 bytes) are
+excluded. It records 358 additions, 3 removals, no changed/unclassified paths,
+and the exact carry-forward hashes: 89 active photos and 17 metadata files.
+The 569 identical items already active in Production need no copy.
+- [x] **P1 ai** S13 Classify `B:\ST-v9` and verify whether its `Various` images
+  are exact copies of active sources and whether its reports are still linked.
+  Do not remove the tree until S2/S3 prove the disposition.
+
+Verification (2026-10-29): S2/S3 show all 12 photos are byte-identical to
+current Working sources, seven old preparation manifests and the gallery
+preview link only within `ST-v9`, and no searched current-Working report
+references `ST-v9`. Preserve the old tree until S10's retention preview can
+show its full dependency/space impact; no external cleanup was applied.
+
+### 5. Recreate the sandbox and prepare production
+
+- [x] **P1 ai** S14 After the storage policy and writer migration are in use,
+  recreate sandbox Working from the verified Production/Source baseline using
+  its manifest. The user prefers replacing the generated sandbox wholesale
+  rather than manually pruning old runs and does not require sandbox recovery
+  copies. Preserve or explicitly disposition any sandbox-only active source
+  before replacing Working; keep the immutable Source baseline and Production
+  outside the reset target.
+
+Reset apply implementation (2026-10-29): `sandbox-reset --full --apply` now
+stages current Production under the configured Working-local `_tmp`, verifies
+the full copied file/hash set, carries the 89 approved active photos and 17
+metadata files, and writes a configuration receipt into the new
+`_reports\reset-review-bundle`. A sidecar lock and transaction journal support
+rollback after a failed swap and recovery after a hard stop. The focused reset
+and staging tests pass (28 tests, including long-path cleanup and avoiding a
+second reset after committed recovery). The two original denied swaps rolled
+back. After releasing Explorer's confirmed report handles, the next attempt
+installed the verified baseline but could not delete nested old backup paths
+beyond 260 characters. Extended Windows paths resolved that cleanup failure;
+the same apply resumed the committed journal and completed in 106.25 seconds
+without another reset.
+
+The post-reset SHA-256 audit verified the exact installed file set: 9,307 files /
+5,694,510,002 bytes, consisting of 9,200 managed Production files, 89 unique
+active photos, 17 non-active metadata files and the reset receipt. All six
+operational output roots were empty; the temporary journal, stage and lock
+were gone. Historical Source reverified all 8,845 files / 5,570,978,132 bytes.
+The current Production baseline remained 9,200 files with the same 358
+additions, three removals and no changed paths. Production and ST-v9 were not
+mutation targets. Logical Working bytes fell by 141,163,268,932 (131.47 GiB),
+with 260,884 fewer files. Fresh pipeline outputs now grow from this baseline,
+not the old reports. Verification took 168.35 seconds including Source and
+Production checks, not just Working enumeration.
+
+The audit was subsequently copied, with matching SHA-256, into
+`Working\_reports\reset-review-bundle\reset-verification-20261029.json`.
+It records the pre-intake baseline, not the growing live run. This durable
+evidence adds one report file after the audited 9,307-file snapshot; the
+disposable `tmp` copy is not the sole record.
+
+An input-boundary gap was also found: the old clean-rebase default still
+replays historical Source plus optional Various. New `--baseline working`
+freezes current assigned galleries plus Various into the run-local verified
+overlay; Source remains unchanged. Preview: 2,700 assigned inputs plus 372
+new Various outcomes = 3,072, with 75 baseline IDs substituted by newer
+Various bytes. This includes the preserved sandbox-only additions. The
+supported launcher inventory took 55.68 seconds. Matching has not been
+accepted merely because reset/inventory passed.
+- [ ] **P1 ai** S15 Run the final sandbox dry-run, audit source counts, protected
+  Angels/Sisters retention, candidate moves, review counts, backups, and undo.
+  No Production install in this step.
+- [ ] **P1 ai** S16 Write the Production runbook with exact source snapshot,
+  configuration, destination roots, backups, validation gates, rollback and
+  post-run verification. Production execution remains separately gated.
+
+### 6. Related category configuration feedback
+
+The attached category/configuration feedback describes a broader refactor:
+category metadata (type, rank, path, protection, thresholds and other logic
+drivers) and global defaults should replace category-name conditionals and
+hard-coded policy paths. This is related to S4/S5 but must not be hidden inside
+storage cleanup.
+
+- [ ] **P2 ai** S17 Map current category-name conditionals and existing policy
+  sources; identify the authoritative schema/config owner and the behavior of
+  each category before changing logic.
+- [ ] **P2 ai** S18 Propose a versioned category/global configuration contract,
+  validate it, migrate one low-risk consumer at a time, and test that current
+  category routing, protection and likeness thresholds remain unchanged.
+- [ ] **P2 either** S19 Review the configuration proposal before broad
+  category-driven logic migration. Adding a category must not silently change
+  storage paths, protection or matching behavior.
+
+## Scope and guardrails
+
+- The user has waived recovery of generated sandbox state. This changes the
+  planned cleanup from selective report/backup pruning to a whole-Working
+  rebuild once the storage layout is ready; it does not waive protection for
+  active source photos or authorize changes to Production.
+- The existing Source snapshot predates current Production. Refresh it only
+  through an explicit, hash-verified baseline operation; the old snapshot is
+  not a current-production copy. The active Working-only photos and metadata
+  are a separate carry-forward set, not sandbox recovery data.
+- The reset preview must distinguish `Working` from its sibling immutable
+  `Source` snapshot. Do not delete the whole Sandbox parent or Source as an
+  interpretation of "reset Working."
+- The exact reset target, Production baseline, full Working apply and
+  post-reset hash audit are verified under S14. The fresh pipeline/move/undo
+  acceptance remains open under S15/S20.
+- No production cleanup, source mutation, or production rebase is authorized
+  by this plan.
+- No deletion based solely on a name, age, recipe version, or apparent duplicate.
+- Durable-output pruning must have a read-only preview, a check mode, an
+  explicit apply, a durable receipt and a recovery story. The narrow exception
+  is owner-locked temporary staging: removing a released lock's ephemeral run
+  directory at next preparation is automatic and logged.
+- Related plans remain owners of their domain details: gallery history/pruning
+  navigation in `2026-10-22-gallery-review-layout.md`, ComfyUI output retention
+  and gallery return in `2026-10-25-reference-rendering.md`, and category/code
+  organization in `2026-10-20-art-tools-structure.md`. This plan coordinates
+  their storage-root contract and the sandbox reset.
+
+## Preserved user feedback
+
+<!-- markdownlint-disable MD013 MD046 -->
+
+Oct 28 chat, 21:32:56:
+
+> Is it still running in the background? Also, we can probably drop all older
+> runs that are on code we don't care about history for. At least a little
+> pruning is good as we're still doing work and iterating on the large sets of
+> data.
+
+Oct 28 chat, 22:04:27:
+
+> We also have B:\ST-v9 that I don't know what it is as well as many other things in B:\Sovereign Territories Sandbox\Working in _ directories that I don't know if are necessary as well.  Older backups and such that may be invalid.  Ideally we keep only what we need for the work.  B:\Sovereign Territories Sandbox\Working\_backup  and B:\Sovereign Territories Sandbox\Working\_generation and B:\Sovereign Territories Sandbox\Working\_reports and I don't know what is needed ... maybe other places as well.  As things were running to test various changes lots of residual files were left behind as we progressed.  Lots of interim fragments of files clutter the Working directory.  I do want to keep what is necessary, but ultimately need a clean-house when we get to the Production working directory and not have files left that aren't needed after things are run.  It seems the location of backups and reports and such has changed over time and isn't driven from a configuration file and when left to a command line the input changes based on our prompts we work on together so there may not be a rigorious system in place that we need to knowing what is where and what can be pruned over time.  So we need to 1) clean things up and 2) fix it with configuration so it's predictable, tracked well and can be pruned properly and 3) ensure that after a run, temporary files are removed - even when runs fail or we stop them.  A system needs to be put in place.  If we need a plan for all this, then we'd better write one for that as well so we can build the system after a manual clean-up effort.  Once the sandbox runs are complete and fully functional, we could just remove everything in the sandbox, re-create it from Production and test one last time - but prior to that we need that structured system in place to handle ongoing updates and not exploding the directory size.  If we are creating temporary places to put files, clean them up, if we need files - can we compress things, store them more efficiently or directly reference same files where we can do that instead of multiple copies.  There has to be a system we can think of.  Might take quite a bit of inspection because many of the tools write to different places and I am not sure how we controlled all the destinations in the past.  I'm also sure the structure stores things inefficiently as well - which also slows the performance of the B: drive overall with so many files.
+
+Oct 28 chat, 22:06:21:
+
+> Just to be clear - we shouldn't prune directories that include active source
+> files even after we put them into the gallery like Angels, Sister, Various
+> or others - it's really the backups, copies, old reports no longer valid,
+> temporary files used only during process and not after. It's both short term
+> clean-up and long term strategy.
+
+Oct 28 chat, 23:33:26:
+
+> If I need to just delete directories manually in windows explorer - I can do that
+
+Oct 28 chat, 23:33:40:
+
+> I don't care about data recovery in the sandbox
+> I am ready to want to just delete the entire sandbox and start fresh after we figure out the proper way to have out files structured
+
+`feedback/cleanup_backups_reports.md`, word for word:
+
+```markdown
+As we have worked there are many different and out-dated versions of reports in the sandbox and I am sure we have many copies of thumbnails that are no longer necessary and we will want to reset the entire sandbox as a copy of the production environment to ensure we are working with the most current and relevant data for a dry-run after all the code is completed.
+
+We should have a snapshot of that in the B:\Sovereign Territories Sandbox\Source but there is not any likeness that is established yet, so we'll need to figure out how to reset our sandbox working directory and start just like we would if we had a production copy.  We'll want to figure out the right approach to give it another try.
+
+Do we just need to copy the directories from C:\Soverign Territories to the Sandbox as a fresh copy of Production and just run the rebase commands the right way - since it has likeness already in cache somewhere and we'll need to handle the process of just keeping the core for Angels and Sisters as we want to run that and figure out how to write up a document for the Production run when it's time for that.
+
+There's also clean-up in production we need to do as many copies of things are stored and I don't think are useful given where we are at.
+
+I also noticed a b:\ST-v9 directory I think we can clean-up but I don't know what that is.
+
+Basically it's a clean-up and get Sandbox in the dry-run for Production run, test and confirm a few key aspects one again, the write up a proper playbook for the Production run, create proper backups, execute the Production run and verify things are clean.
+```
+
+`feedback/categories_and_code.md`, word for word:
+
+```markdown
+# Categories and Code Organization
+
+This document outlines the approach for managing categories and organizing code in a way that reduces hard-coded dependencies and ensures that logic is driven by configuration files.
+
+## Hard Coding Categories
+
+In reading some code, I see hard-coded references to "Sisters, Models, Angels, Prospects, Potentials and Artists" in logic areas and such.  While that is some of my direct statements, what we need to do is get the categories setup with properties that are defined that drive the decisions about logic instead of the literal about the category name.  
+
+Things like
+    - Category Name
+    - Description
+    - Type (person, animal, artist, etc...)
+    - Rank (priority or importance of the category)
+    - Path (path to storage)
+    - Default Protected (is this protected by default)
+    - Thresholds (for likeness comparison)
+    - Required Min Number Photos (or whatever is appropriate)
+    - Additional Properties (any other relevant properties for the category)
+    - Logic Drivers (any specific logic that depends on this category)
+
+Basically anything driving a logic piece that is based on the name right now, needs to be based on logic around the categories and if we add Demons we only really need to add
+
+We'd have some global properties that are part of the entire project scope for all pieces for things we need as well for things like
+    - Base Storage Path
+    - Default Thresholds (for likeness comparison)
+    - Default Min Number Photos (for likeness comparison)
+
+In short, I think we have at least some .json files for how things work already - but I still see code with hard-coded references as well as places where C:\Soverign-Territories\soverign-territories\data\art\likeness-engine-policy.json being used.  So we're probably a bit fragile in how logic isn't always driven from a config.
+
+As you do the analysis, you can probably figure out the logic and what it's trying to do based on category names and we can enhance the properties and ensure that all things are setup properly.
+
+Basically, it's sort of like defining a workspace in comfyui which has default behaviour that you can adjust and setup properties for specifically.  In our case, the categories and global properties act as the configuration for the system, and we should aim to drive all logic from these configurations rather than hard-coded values.
+
+## Code Organization
+
+When organizing code, it's important to separate concerns and ensure that each module or component has a clear responsibility. For our project, we should consider:
+
+- **Category Management**: Handling the creation, modification, and retrieval of category properties.
+- **Global Configuration**: Managing global properties and ensuring they are accessible throughout the system.
+- **Image Processing**: Handling the intake, processing, and likeness comparison of images.
+- **Likeness Comparison**: Implementing the logic for comparing images based on likeness thresholds and other relevant criteria.
+- **Logic Drivers**: Implementing the logic that depends on category properties and global configurations.
+- **Utilities**: Any helper functions or common utilities that are used across multiple modules.
+
+By organizing code in this manner, we can reduce hard-coded dependencies and make the system more maintainable and extensible.
+
+We have an outstanding task of refactoring the existing code to remove hard-coded category references and ensure that all logic is driven by the configuration defined in the category and global property files. This will involve:
+    - Identifying all instances of hard-coded category names.
+    - Mapping the logic to the appropriate category properties.
+    - Updating the code to use the configuration files for decision-making.
+    - Ensuring that any new categories can be added without modifying the core logic.
+```
+
+    <!-- markdownlint-enable MD013 -->
+
+    Coverage: old run pruning and active-source protection -> safety boundary,
+S10-S13; output path/configuration -> S4-S6; interrupted staging -> S7-S9;
+deduplication and B: I/O -> S11; `ST-v9` -> S13; sandbox reset and eventual
+Production runbook -> S14-S16; category/global configuration -> S17-S19.
+
+### Oct 29 overnight authorization (chat, verbatim)
+
+<!-- markdownlint-disable MD013 -->
+
+> I'm giving you full authority to get the sandbox setup cleanly again and I noticed you saw there are files in the sandbox Various that aren't in production - that's correct I pulled files into there for the work we were doing.  That's a great catch.  I really want to know if all the files in the sandbox are also impacting the intake processing for the work we were doing with the latest version - so I feel like if you can get the sandbox back we need to ensure the process is documented and consider this a dry run of a new/fresh sandbox which looks like Production from the galleries.  We'll lose all the previous reports and such - so we'll need to confirm what the performance is now on running the intake and likeness processes that produce all the reports - and hopefully we can get a new baseline and verify all the output locations, clean-up and other pieces we did get ready are in place and what else is truly remaining from the management of all the files in the sandbox as we wrote up the design for.  So, you can complete that along with validating the intake processing and that it catches all the issues that were to be addressed.  I am heading to bed, so it work you can do can handle all the tasks until I wake in the morning.  Getting to the point where we can run the clean rebase in the sandbox and see how all the new various files land and how all the cropping, masking and other enhancements we made are working.  So complete all the work that makes sense given all the issues we've had and check performance of evertyhing running and see if things will be faster after the clean snapshot and sandbox.  I'll want a complete recap written up as well - we didn't even get the recap from 10-27 written, so now we'll miss 10-28 and likely to generate the recap on 10-29 shortly.  Given it's nearly 12:00 am CST where I am at and working.  Finall if we get a clean codebase - we should commit and push all the files in batches for all this work since it's about 2 days worth of work.
+
+<!-- markdownlint-enable MD013 -->

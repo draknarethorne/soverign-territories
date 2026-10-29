@@ -2,6 +2,286 @@
 
 **Status:** active (Phase 1; sandbox clean-start integration implemented; real recipe/flow acceptance and production cutover remain gated)
 
+## Oct 28: approved prepared-image matching and full sandbox iteration
+
+The user authorizes the next sandbox run on every immutable input, including
+already assigned photos. The final recommended pixels are shared by Gallery,
+likeness and ComfyUI. This supersedes I57's pending choice and the earlier
+blanket prohibition on reconstructed pixels entering matching. Reconstructed
+pixels remain labelled synthetic; exact originals, masks and processing lineage
+must remain available from the assigned photo's Gallery view, independently of
+the historical run report. Removing a logo away from the face is not equivalent
+to inventing facial features; audit face-affecting repairs and actual assignments.
+
+The v11 proof is accepted as the basis for promotion, not proof that all unseen
+library images are clean. Full-run changed images and identity moves need
+inspection. Do not force Review to zero by lowering thresholds or guessing.
+Use existing secondary checks where justified; investigate large Review queues
+and preserve explicit unresolved outcomes. Sandbox authorization does not extend
+to production. Retain protected Angel/Sister anchors and workflow selections;
+unprotected low-scoring photos may leave cast identities under existing policy.
+Models, Prospects and Potentials can regroup organically. Near-but-distinct
+clusters can carry changeable family associations, never a merge based on surname.
+
+- [x] I58 Promote v11 through shared reconstruction code, version the
+  recipe and schema, retain compatibility with published v16 reports, and prove
+  actual preparation recommends the same pixels as the benchmark.
+- [ ] **P1 ai** I59 Persist the exact aligned SFace input face, content/model
+  binding and score context; link it and retained intake history from each
+  assigned photo in Gallery. Keep people images outside git and checks read-only.
+- [ ] **P1 ai** I60 Audit all changed full-run outputs for false positives and
+  incomplete cleanup; audit identity moves and borderline Review reasons under
+  rebase C8/C9. Validate artifacts, recovery and deterministic repeat behavior
+  before the downstream I55 Prime sample.
+- [ ] **P2 ai** I61 Close/archive only genuinely completed intake plans after
+  checking all independent scope and preserving feedback; transfer unfinished
+  work explicitly rather than calling the whole plan done.
+
+Coverage: I58/I54 (all-image preparation and final-image matching), I59
+(per-image history and exact face), I60/C8/C9 (moves, borderline checks and
+iteration), family N7/N9 (non-hierarchical resemblance), I55 (representative
+Prime renders), I61 (plan hygiene). Existing calibrated thresholds remain the
+baseline; configuration changes require recorded evidence and rationale.
+
+Oct 29 reset continuation: the authorized fresh rehearsal freezes current
+Working galleries and Various with `--baseline working`; historical Source
+remains immutable. Storage S14 verified the reset and S20 owns the new
+3,072-input measurement. The removed v16/bounded pilot reports are not live
+review destinations. Their unresolved cleanup/selection checks transfer to
+I60 below; this retires obsolete report gates, not visual acceptance.
+
+Implementation evidence, Oct 28:
+
+- v17 production-vs-benchmark tests verify exact recommended-pixel equality,
+  retained repair masks, final-composition enhancement ancestry and unchanged
+  clean controls. The real one-photo `v17proof-20261028` publication verifies
+  through `prepare-images.cmd --check`.
+- Combined preparation, benchmark/sequence, retained history/undo, clean
+  rebase and Review suites pass **197 tests** after both matcher integrations;
+  isolated quick schema mutation validation passes **19/19**.
+- Exact aligned-face persistence and opt-in `--cast-seeds core` are implemented
+  and regression-tested. I59 stays open until actual installed Gallery/history
+  and face links are verified; these unit results are not full-run acceptance.
+- All 2,741 inputs completed preparation in `r17-20261028`, and the saved
+  intake passed the launcher's artifact check. Outcomes: 2,626 compared,
+  104 compared-overlay and 11 junk candidates; no assessment/processing errors.
+  Recommendations: 2,294 originals, 308 masked reconstruction/composition,
+  128 other cleanup/crop outputs and 11 with no usable recommendation.
+  The guarded continuation independently checks intake again before matching.
+  Installation and the new Prime sample have not happened.
+- Initial visual audit: Angelica `7508202904299473073` removes the lower-right
+  GMW circle while retaining framing. Camaris `shot_20260922114030` removes
+  the screenshot panels and side icons, but leaves a visible horizontal
+  translucent caption/pill edge at the bottom. Record this as incomplete
+  cleanup under I60, not a fully clean acceptance or permission to install.
+  These two inspections do not constitute an audit of all 436 changed outputs.
+- The first core-cast matching preview completed with 21 cast reference
+  identities, 1,209 matched/clustering candidates, 13 cast releases and 158
+  Review destinations. All 13 releases are from Angelica; no other cast
+  identity released a photo. Original/prepared/exact-face comparisons expose
+  remaining GMW misses on `7513772466838834360` and a partial GMW removal on
+  `7518039923121523507`. These are intake defects, not evidence that the whole
+  library is clean. Reviewing faces does not establish identity truth.
+- Audit found 55 repaired `head-overlay-composition` screenshots held by a
+  quality check that opened the original while using prepared-image face
+  coordinates. A failing regression reproduced that source mismatch.
+  Quality now reads the same selected pixels as detection/embedding while
+  preserving immutable source identity/path provenance. A matching-only
+  `--replan` completed using the same verified intake and measurements;
+  the initial preview is preserved. No threshold change or install is involved.
+  Review fell from 158 to 89, with zero stale app-bar holds; normal grouping
+  also changed other decisions. All 39 focused regressions pass.
+- All 2,448 persisted exact-face artifacts passed SHA-256 verification and
+  selected-source content binding checks. One measured cache entry has no
+  persisted face; missing evidence is not substituted with a fake crop.
+- Paired contact-sheet screening now covers all 106
+  `head-overlay-composition` outcomes, not all 436 changed recommendations.
+  Most improve exterior UI, but several retain top search-pill text/edges,
+  isolated playback icons, caption fragments or inset thumbnails. Representative
+  follow-ups: Amethyst Gilbert `shot_20261010124013`, Arden West
+  `shot_20261010123458`, Eloise Bishop `shot_20261010124613`, Harlow Chase
+  `shot_20261010124314`, Ruby Eden `shot_20261010123331`. Contact-sheet
+  screening is not a full-resolution clean verdict for every row.
+- Two definite false-positive phone-frame detections were found: clean
+  Draknora boat portrait `image_7500598405393768314` and Odette Hart
+  `image_7502019261952095048`. Dark clothing at the bottom was mistaken for a
+  phone navigation panel, leading to real-image cropping and spurious UI fill.
+  A failing synthetic regression reproduced this. Frame confirmation now
+  requires horizontal bottom-panel flatness; compressed uniform panels still
+  qualify. All other 104 real composition frames retain confirmation.
+- Supported launcher proof `frameguard-r1` previews/applies/checks both clean
+  negatives against the frozen baseline. Both now retain full-size unchanged
+  control pixels, rather than crop/reconstruct. The shared sequence policy is
+  versioned v8 so future recipe receipts differ; existing full-run artifacts
+  are not rewritten or accepted for installation. Frame/sequence tests: 29 pass.
+  GMW residual hardening is separate in-progress work; the current full-run
+  preview still uses the frozen old prepared pixels and remains uninstalled.
+
+### Oct 28 v18 targeted correction and review boundary
+
+The GMW follow-up now confirms transparent badges from ring coverage and
+concentrated central magenta lettering, preserving the existing silver-letter
+and isolation safeguards. Both missed Angelica logos are removed in the
+seven-source launcher proof `gmw-r17-focused-20261028-2`; known-positive masks
+are unchanged, targets preserve dimensions and pixels outside their masks,
+and clean controls remain identical. Mask coverage is 3.225% and 3.091%.
+The existing labelled corpus retains 6 positive and 35 negative decisions;
+the two new targets detect at 75%, 100% and 125% scale. These bounded results
+do not establish a library-wide false-positive rate.
+
+Three missed search pills have paired bright top/bottom lines but fail the
+old filled-grey/closed-contour detector because the pill is transparent over
+texture. Within an already confirmed phone frame, new confirmation requires
+paired horizontal outlines with matching spans and both rounded caps; parallel
+lines/rectangles alone are refused. Boxed-frame checks reach above the observed
+picture start so a pill crossing the boundary is retained before repair.
+This fixes Amethyst Gilbert `shot_20261010124013`, Arden West
+`shot_20261010123458` and Eloise Bishop `shot_20261010124613` in the
+six-source `pillguard-r18-r1` launcher proof. Full-resolution inspection
+confirms those top pills are gone; this is not a claim that every remaining
+caption/icon or synthesized patch is perfect. The Ruby control still has a
+tiny isolated light mark near the thighs, and broader residual audits stay open.
+Both clean-photo controls remain full-size and pixel-identical.
+
+Preparation is now `preparation-comparison-v18`; sequence policy v8 records
+the new panel/pill/badge confirmation. V17 step order and metadata verification
+remain supported, and its 2,741 frozen outcomes validate without rewriting.
+All **186** integrated preparation/overlay/sequence/benchmark/rebase tests
+pass. The actual `prepare-images.cmd` preview/apply/check of
+`v18proof-20261028` also passes. Updated report explanations describe current
+erase/residual-crop/reconstruction ancestry and distinguish old app-bar rules.
+
+The focused GMW and pill reports are the next bounded review item. No new
+all-image v18 run, installation, identity move or Prime batch has occurred.
+Any further preparation needs new receipts; the old matching preview must
+not be installed as if it used these corrected pixels. Full 436-output
+acceptance, unresolved captions/icons and destination/core/family audits
+remain I60/C8/C9 rather than disappearing behind the new version number.
+- This plan still owns independent work (including incremental cutover,
+  enhancement selection and full-run acceptance). It is not complete and must
+  not be archived merely because the 100-image proof and recipe promotion pass.
+
+Disposition: logo crops and reusable non-person configuration may be tracked.
+The single crop is Echoes of Fantasia; GMW/reel/sticker patterns use structural
+profiles rather than cached person-containing crops. The raw feedback file stays
+in place; no deletion or bulk archival is needed.
+
+## Oct 28 v20: nested-reel PiP proof and review gate
+
+The profile-driven inset detector is limited to an already confirmed
+`phone-reel` frame. It requires a lower-left secondary face substantially
+smaller than the main face, both side-edge cues, a partially bright top bezel
+and a dark inner header. The reported mask ends at the observed picture
+boundary; it does not claim to detect phone overlays in ordinary photos.
+Preparation, sequence and head-reconstruction policies are versioned v20/v10/v8;
+published v17-v19 reports retain their original step order and verify.
+
+- The fresh eight-source report at
+  `B:\Sovereign Territories Sandbox\Working\_reports\ruby-pip-v20-p3\Working\_reports\preparation\ruby-pip-v20-p3\index.html`
+  uses exact hashes from `r17-20261028`. Only Ruby's embedded phone-reel screen
+  produced `reel-picture-in-picture`, box `[88, 1579, 308, 1738]`. Its stored
+  head-overlay evidence reports `outsideMaskIdentical` and
+  `cumulativeOutsideMaskIdentical` true.
+- Haniya, Draknora and Odette remain `control`; decoded RGB pixels are exactly
+  identical to their retained sources. Camaris and Angelica look substantially
+  clean at full size. Amethyst retains a soft patch near the hand. Harlow still
+  has the conspicuous dark chest patch and remains a blocking cleanup defect.
+- The current Working Ruby replacement is a different source (`6b4b0beb…`,
+  950x1415) and did not confirm a phone-reel frame; its separate `p1` report
+  therefore leaves the phone overlay outside this detector's scope. Whether
+  to extend PiP detection to non-reel photos needs user review.
+- Focused overlay tests (33) and preparation/sequence/provenance tests (109)
+  pass. The report passes `image_preparation.verify(..., current_sources=True)`.
+  This bounded proof is not a full preparation run or visual acceptance.
+
+I62 (review the eight-image report before any full run) was superseded on
+Oct 28, 11:41. The user asked to stop polishing single images and process the
+whole library, so that common gaps surface at scale. The remaining Ruby, Harlow
+and Amethyst defects are handled by the fallback ladder below instead of
+blocking the run. PiP detection stays limited to confirmed reels. Non-reel phone
+overlays are treated as a pattern only if the full run shows that they are
+common.
+
+## Oct 28, 11:41: full v20 intake-only run and the repair-quality fallback ladder
+
+Run: `sandbox-rebase.cmd "...\Working" "...\_sandbox-state\r20-20261028"
+--include-current-various --intake-only --apply` (2,741 outcomes; 2,700
+immutable inputs and 41 current Various inputs). It prepares the images and
+stops before matching. The log is
+`tmp\session-logs\2026-10-28\r20-intake.log`.
+
+Every image still goes through intake. When the result is in doubt, the
+pipeline falls back to a less invasive option instead of blocking:
+
+1. **Erase**: small icons, text, logos and opaque UI elements. This is the
+   existing behavior.
+2. **Reconstruct**: confirmed large overlays such as the oval/reel bubble, the
+   GMW circle or side bands, only where the head or body must be recovered.
+3. **Crop away instead of repair**: if a repaired area is visibly synthetic
+   (for example a flat or discolored patch, or a texture or color mismatch
+   with its surroundings) and lies away from the face, crop it off when the
+   face and framing survive. Harlow's chest patch and Ruby's lower-left field
+   are the test cases.
+4. **Junk**: if the face itself is covered, blurred or unusable after
+   erasing, reconstruction and cropping, send the image to `_junk` with its
+   reason and keep its history.
+
+- [ ] **P1 ai** I63 Triage the r20 output by detected pattern and outcome
+  (control, erased, reconstructed, cropped, junk). Inspect every changed
+  image in buckets. Group the misses into reusable patterns and fix the
+  common ones first; rare one-offs can be left for ComfyUI.
+- [ ] **P1 ai** I64 Add an automatic repair-quality score for the masked
+  region (seam, color and texture mismatch against a ring of surrounding
+  pixels). It drives the crop-away (step 3) and junk (step 4) fallbacks, and
+  each fallback decision is stored in the image's trace.
+- [ ] **P2 you** I65 Agree on the fallback thresholds: how much of the
+  frame may be cropped away before a repair is preferred, and when a
+  synthetic repair near the face becomes Junk. Base the decision on the r20
+  buckets, not on single images.
+
+No rebase matching, assignment install, production write or Prime submission
+has occurred.
+
+### r20 result and triage (Oct 28, 16:44)
+
+The run took about 5 hours. All 2,741 outcomes were verified.
+
+| Bucket | Count | Finding |
+| --- | --- | --- |
+| Unchanged (`original`) | 2,382 | Spot sample of controls pixel-identical; one faint Grok mark missed (I66) |
+| GMW badge (alone or with text) | 104 + 16 in reels | Detection right; **ghost of the logo repainted** in many fills |
+| Corner text only | 81 | Mostly clean |
+| Phone reel screenshots | 104 | Crop and erase consistent at sheet level |
+| Border crop only | 32 | Correct black/white border removal |
+| Sticker, sparkle, viewer icons, reference logo | 27 | Clean |
+| Junk candidates | 11 | 10 obvious (no face, tiny faces, faceless crops); `various_image_7517986669563913378` has a usable 56.8px face just under the 60px floor |
+
+Two common defects were fixed in recipe v21 (head policy v9):
+
+- **GMW ghost.** The fitted circle stops at the ring, but the badge's glow and
+  anti-aliased rim lie outside it, so the fill copied them back as a pink/silver
+  ghost. A/B on four cases: zeroing the masked pixels changed nothing; growing
+  the disc by 0.75% of the short side (`BADGE_GROW`) removed every ghost.
+- **"Dola AI" watermark.** The corner-text rule caught it only on some
+  images. A stored reference (`overlay_references/dola-ai.png`) scanned
+  against all 2,741 inputs gave 51 true hits at score >= 0.644 (edge >= 0.59).
+  The best unrelated match scored 0.565 with negative edge correlation, so the
+  threshold is 0.62 with edgeMin 0.5. Families: Harlow Chase, Seraphine,
+  Drakniss and Davina Banks.
+
+A 16-image v21 sample (4 ghost cases, 8 Dola images, 4 controls) showed all
+ghosts and watermarks gone, one tiny speck in a pool, and the controls
+unchanged. The full v21 run is `_sandbox-state\r21-20261028` (log
+`tmp\session-logs\2026-10-28\r21-intake.log`).
+
+- [ ] **P2 ai** I66 Build a Grok watermark reference. The faint grey Grok mark
+  sits over mixed backgrounds, so a plain crop matches any light/dark edge (a
+  test scan gave hundreds of false hits above 0.93). It needs a glyph-only
+  (masked) template. Small corner mark; ComfyUI can absorb it until then.
+- [ ] **P2 you** I67 Decide whether a usable face slightly under the 60px floor
+  (example: `various_image_7517986669563913378`, 56.8px) should go to review
+  instead of Junk.
+
 ## Oct 27, 11:05: review-driven crop, erase and framing refinement
 
 The complete `feedback/image_intake_feedback.md` is preserved at the end of
@@ -304,7 +584,7 @@ experimental branch, not merely user confusion.
 - [ ] **P1 ai** I53 Iterate on the frozen 100-image sample (after the 10-row
   sample passes) until every row is clean, inspecting each row's stages and
   native close-ups; clean controls must stay untouched. Pause for user review.
-- [ ] **P1 you** I57 Review the v11 100-image proof (`full100-v11b-20261027-1`,
+- [x] I57 Review the v11 100-image proof (`full100-v11b-20261027-1`,
   `full100-v11-20261027-2`) and decide how I54 installs it: the gallery photo
   becomes `processing.final`, which likeness reads, while reconstructed rows
   (head overlay, logo, sticker) contain synthetic pixels that the plan keeps out
@@ -312,6 +592,9 @@ experimental branch, not merely user confusion.
   gallery photo but match likeness on the guarded (crop/erase-only) image;
   (b) install the guarded image and keep the reconstruction as a review
   variant; (c) install the reconstruction everywhere.
+  Resolved Oct 28: use the final recommended prepared image for Gallery,
+  likeness and ComfyUI; retain original/history, exact matching face and cast
+  protections. I58-I60 own implementation and full-run verification.
 - [ ] **P1 ai** I54 Promote the accepted recipe into library intake and rerun
   the full sandbox rebase (rebase plan C8/C9 rules).
 - [ ] **P2 ai** I55 Send 20-30 rebased images through the ComfyUI Prime pose
@@ -581,10 +864,11 @@ demonstrate a gap and rights/runtime requirements are checked.
   report remaining overlays, false positives and uncertain cases individually,
   not just an aggregate score. Run focused regressions and existing validators
   before a reviewable new run; never overwrite v16 or rerun all 2,741 first.
-- [ ] **P1 you** I37 Review the bounded A/B report and approve/reject specific
-  crop/erase/framing rules after I30-I36. No further full-input processing,
-  revised matching, installation or production cutover until this gate.
-  I29 remains partial review, not blanket recipe acceptance.
+- [x] I37 Superseded as a pre-run gate by the Oct 28 full-sandbox
+  authorization and Oct 29 fresh reset. Transfer unresolved crop/erase/framing
+  checks from the retired bounded A/B report to I60's current-run AI audit
+  and rebase C7-C9. This is not blanket recipe acceptance; installation
+  evidence and Production cutover remain gated.
 
 ### Named-case coverage ledger
 
@@ -859,9 +1143,11 @@ against its original:
    card in `204050`, and faint caption specks. Contour and line-pair
    detectors were tried for the thumbnail and were too fragile; a learned
    UI-element detector or template matching is the next try.
-- [ ] **P1 you** I29 Review the v16 report (`_reports\preparation\v16\index.html`):
-   accept or reject LaMa auto-selection, and the app-bar rule that may cut legs
-   well below the face (`204050`).
+- [x] I29 Retired v16-specific approval after the Oct 29 authorized reset.
+   The current recipe already removes the app-bar body-loss exception; retain
+   `204050` as a regression case rather than approving the old leg-cut rule.
+   Transfer unresolved LaMa repair-quality/selection acceptance to I60/I64
+   and fallback policy I65. Historical partial review is not blanket approval.
 - [ ] **P3 ai** I28 Delete `intake_library\legacy.py` and its `validate`
    branches when the last v5–v15 report is removed from the sandbox.
 
@@ -1422,9 +1708,11 @@ historical 200+ test is a minimum, not a reason to omit the larger new batch.
   matching, identity changes or original overwrite in this first slice.
   Delivered Oct 23: launcher, schema-validated manifest, exact retained inputs,
   control/denoise/tone pages and per-photo detail/padded views. See evidence below.
-- [ ] **P1 you** I10 Review the pilot's control, denoise and tone candidates.
-  Label improvements/regressions and overlay/hair cases before enabling a
-  recipe, selecting masks/models or publishing prepared sources to galleries.
+- [ ] **P1 you** I10 Review current-run control, denoise and tone comparisons
+  after I60's initial AI screening. Label remaining improvement/regression
+  and overlay/hair cases before accepting automatic enhancement preference.
+  The old pilot report is retired; this is not a new block on the cleanup
+  and matching rehearsal already authorized under I58.
 - [ ] **P1 ai** I11 Prioritize upstream geometric preparation before further
   denoise/tone tuning. Extract/reuse the existing crop planner without its
   Gallery replacement, metadata writes, matching or Review moves; show explicit
@@ -2406,3 +2694,23 @@ Coverage: I50 closed for this one example; generalization is I51.
 That one actually looks perfect.  I understand that the area near the handbag and her hand is blurred or synthetic, but the icons and clutter had to be removed to get a clean image.  This is a very positive sign, but this is only one scenario of the overlays - but it's actually a solid test of a screenshot with a lot of extra stuff on it and the need to reconstruct the head/hair as well as cropping and erasing properly.  Once we get this done - hopefully the fixes translate to other images and aren't so specific to this one image.  But we can test that as well looking at the next series as there are several more coming in that are with the GMW logos or screenshots.
 ```
 <!-- markdownlint-enable MD013 -->
+
+## Preserved Oct 28 feedback
+
+<!-- markdownlint-disable MD013 -->
+
+### User feedback, Oct 28, 00:16 (verbatim)
+
+I am convinced that it's ok to run every images through the new intake process, some of which won't be changed as they are good images anyway.  Others may get updated and we'll need to validate those ones so we don't have false positives and such with the entire rebase of all images.  I'm also onboard with rebuilding the likeness from the recommended images and not the originals.  All you comments about preserving originals, history and such are also important so I can see that via the gallery to drive into the image if I need to - not just the intake processing report view.  That's a historical view of an intake run - but I also want to preserve history tied to each image as well so I can pull up that same sort of a view if/when I need to.  It would also be good to capture what "face" went into the likeness so I can even see that crop along with all the various scoring details I have.  The only people I truly care about trying to preserve the core likeness are the Sisters and Angels and for the most part those images won't be altered in the likeness process - other than some GMW logos and maybe some screenshot content.  If the Models, Prospects and Potentials are re-aligned - well that should follow the way we designed the self-healing process to rebuild things - which can involve taking unprotected and low scoring images from an Angel or Sister and moving them to a Prospect.  This might pull out poor quality or even a few mis-assigned images into an Angel or Sister if I copied some to a wrong spot a long time ago.  I want to trust the likeness score and how we have setup the thresholds and IF we run the rebase and there are issues when you look at them - as you should verify things just like you did for the intake when a major assignment or re-assignment happens to bring things in/out of angels - that it makes sense.  Really, any file that has been processed and has a person tied to it and it moves it a candidate to understand why and if it was good, bad or not.  I also don't want to see hundreds of files in review - if that's happening, then we must have some threshold or config mis-assigned and that's where I wanted the additional check on likeness in place to handle those borderline conditions and make a second recommendation before leaving something in review for me to manually do the work on.  I don't believe that secondary review is in place or well designed, but what I would say is when you runn the full rebase and you look what happened, inspect images, look at the face crops used (assumeing we now will store those) I feel like you might help figure out additional things we can do in the process ... just like we did to get the crop, erase, crop, rebuild, crop flow down for the intake.  Likeness is just the initial work we have come up with to get similarity, core and other things in place and the protection, workflow assigned photo and other things will help as we get to a point where we have enough confidence in the scoring, thresholds, secondary checks and finally assignments and in the best case - 0 images in review because we know where they should go.  I know that some things come up because some images that are assigned to people now are based on AI or enhanced pictures and they may not be actual photo quality of the person - but if they fall in/out of an identity, it's also likely that Comfy will not render those the same as they would a core image of a person - and hence that's where the Family name concept came from.  So say, that 10 photos fell out of Drakness due to a low score during the rebase, but they still score high enough as a new person to be associated to Drakness - then I want them promoted to a Model and the "looks like" another person and adopts the family naming convention will let me choose whether or not to use them based on knowing they are very similar to another person.  In fact, this association can happen just among Prospects, Potentials etc... where a small cluster of images may be the same person -but altered in ways with AI that make them render differently.  So - that's where we were heading with being able to "group" or "tie" those clusters together with family names without trying to create a hierarchy and other ways to organize them because the family names could change over time if a cluster grows away from one person to another.  Ideally there isn't a circular loop, but the organic growth and additions of hundreds of new photos will result in shifts - especially in the lower tier categories of images.  Does that all make sense and assuming so - you can start the work, validate the resutls, update plans, make decisions on my behalf as you know pretty well how I think now, and iterate on however many verions of the rebase are needed to get to the point where we're confident in the outputs to generate the ComfyUI flows for a series of Sisters, Angels, Models, etc... sampling of a few into the prime flows for me to review.  Hopefully that's not too much work to handle and it likely brings in more work from existing docs/plans as you encounter and see things happening - so you can always use those docs/plans to guide you but if you determine that a better decision would result in better next step - you can do so just like you did with the overlay decision.  What we have in docs/plans are just plans and ideas and concepts.  When the real work happens we adapt, change and move forward along with documenting rationale of why we are changing and how it's better.  It took many iterations on the image intake processing to get there and the same will be with the likeness and entire rebase.  Even when we're done - there are othe items we'll need to revisit with the entire process, but we can just deal with these items as many of the things I mentioned are somewhat called out in plans already.  Which reminds me - the plans related to intake that are complete can be archived and other plans updated with results.
+
+<!-- markdownlint-enable MD013 -->
+
+### User feedback, Oct 28, 11:41 (verbatim)
+
+It just seems like the iterations and thinking are slower than normal, so that's why I wanted to check in to verify we can get through these issues and onto processing all the images - where we may find more gaps in the cropping and erasing as there are thousand of originally processed images before all these features in the intake.
+
+I don't want to skip images that do need work - but maybe we need to determine if cropping out certain difficult parts and/or rejecting images with overlays that don't erase well and cause issues with the final picture.  So the gates on just how much we can do would be something to discuss as we go.  But I do want to continue to find easy and common patterns of overlays and stuff on images to clean-up and fix as we can do that.
+
+### feedback/overlay_reference.md (verbatim; approved)
+
+All overlay references including any other configs we need can stay in git - it's mainly the actual images of the people we would not store in git.  So if there are others for things like GMW logo or other things we snapped into a cache or other directories - they can be in git.  Really anything that is input into the process can be stored in git where it make sense.  When I checked, I only saw one overlay reference in the git location you pointed me to.

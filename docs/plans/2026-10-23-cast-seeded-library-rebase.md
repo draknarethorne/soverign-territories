@@ -1,6 +1,78 @@
 # 2026-10-23: all-image preparation and cast-seeded rebase experiments
 
-**Status:** active (Phase 3; blocked on accepted Phase 1 preparation and Phase 2 recovery)
+**Status:** active (Phase 3; v17 intake and corrected matching preview complete; visual/move/continuity acceptance remains)
+
+## Oct 28: renewed sandbox authorization
+
+The user's complete direction is preserved in
+[intake's Oct 28 continuation](2026-10-23-image-intake-preparation.md#oct-28-approved-prepared-image-matching-and-full-sandbox-iteration).
+Match the final recommended prepared pixels, not the obscured original.
+Retain protected/core/workflow-selected Sister/Angel anchors, but allow
+unprotected low-scoring cast photos to re-enter normal grouping under C8.
+Inspect every identity move and changed intake output, including exact aligned
+face evidence. Non-cast identities may regroup and carry mutable family
+associations without same-person merging or hierarchy. A large Review queue
+requires diagnosis and evidence-based secondary checks, not a threshold cut
+or invented confident assignments. Rebase iterations and small downstream
+Prime samples are authorized; production is not.
+
+Run `r17-20261028` starts with all 2,741 inputs. Immutable-source preflight
+found 134 unlisted additions; all original manifest entries were exact and all
+extra bytes were bound by the previous intake receipt. A separate durable
+`_source-recovery/20261028-v17/receipt.json` records their non-destructive
+relocation outside Source. The immutable manifest was unchanged and the
+supported launcher's inventory then passed.
+
+### Oct 28 matching audit and corrected preview
+
+The initial preview has 21 cast reference identities and accounts for 1,209
+candidate-pool photos, with 1,253 cast photos retained and 13 released. Artists
+account for the remaining 279 intake outcomes and are not generally matched.
+The initial 158 Review destinations included 55 repaired screenshots rejected
+because quality read the original while using prepared-image face coordinates.
+A regression reproduced this mismatch; quality now reads the selected pixels
+without changing source identity/path provenance.
+
+The matching-only replan preserves `initial-preview.json`, intake artifacts,
+measurements, model evidence and thresholds. It completed with **89 Review
+destinations**, down from 158, and **zero original-app-bar holds**. Normal
+grouping changes also resolve some other small-group holds, so the net change
+is 69, not simply 55. There are 168 changed preview destinations; these are
+proposals, not applied moves. Remaining Review reasons:
+
+| Reason | Photos |
+| --- | ---: |
+| Small-group cast resemblance | 48 |
+| High cast similarity requiring same-person review | 5 |
+| Ambiguous matches across cast identities | 5 |
+| Missing stable photo ID | 26 |
+| No face | 1 |
+| Face below configured minimum | 2 |
+| Multiple usable faces | 2 |
+
+No threshold was lowered and no forced assignment replaces these holds.
+The quality-input fix passes 39 focused clean-preparation/rebase tests.
+All 2,448 persisted exact-face artifacts and their selected-source bindings
+verify by SHA-256; the remaining cache entry has no detected face/vector.
+
+All 13 cast releases are from Angelica. All original/prepared/exact-face
+triples have received an initial visual inspection, but destination-cluster
+and protected-core comparisons are still required before acceptance.
+The inspected face crops are face-bearing and aligned; that is not proof
+that different photos represent the same identity. Release is based on
+configured core eligibility, not solely the displayed 0.3 score threshold;
+a score above 0.3 alone does not establish current core membership.
+
+Intake defects found during that audit: GMW survives on
+`7513772466838834360`, and partial lettering/ring survives on
+`7518039923121523507`. The separate Camaris bottom-pill residual is recorded
+under intake I60. These prevent declaring every input clean.
+The 11 intake junk candidates were visually inspected: eight are Artist
+fantasy/dragon/scene images, which remain separate preparation-only evidence,
+not blanket permission to discard art without a human face. Three are Various
+inputs (animal screenshot, collage and below-threshold face). Their final
+disposition remains subject to the existing scoped Junk/recovery policy.
+Nothing has been installed and no new Prime batch has been submitted.
 
 ## Oct 27, 11:05: intake review precedes the next rebase action
 

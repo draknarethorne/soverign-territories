@@ -99,7 +99,9 @@ remain unchanged.
 
 - [ ] **P2 either** L20 Define safe intake-run retention/pruning with dependency
   checks for retained sets and gallery links, disk estimates, preview/check and
-  explicit apply. Do not delete runs while reviewing the policy.
+  explicit apply. Do not delete runs while reviewing the policy. Oct 28 sizes:
+  ~85 GB under `Working\_sandbox-state` (full intake runs 24-29 GB each), ~8 GB
+  of pilot reports; see T4 in the [intake performance plan](2026-10-28-intake-performance.md).
 
 ## Oct 25, 09:23: gallery-first navigation and retained image detail
 

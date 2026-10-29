@@ -5,6 +5,13 @@ Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (gen
 
 ## The pattern
 
+**Oct 29 execution priority:** finish the fresh sandbox rebase, then validate
+the actual Gallery/Overview/Review and per-photo intake/face history. Only
+verified blockers should interrupt that milestone. Plan deferral/`_holding`
+triage is tracked as D17 in
+[tooling debt](2026-10-12-tooling-debt.md); no wholesale moves or assumption
+that all storage lifecycle work is complete are authorized by this note.
+
 | Kind of document | Where | Rule |
 | --- | --- | --- |
 | Raw feedback and draft thinking | `feedback/<topic>.md` (git-ignored), or directly in chat | Brain-dumps, review notes and drafts, free-form. Preserve each file until its complete text is captured word for word in the owning plan and coverage is verified. Never bulk-clear this directory |
@@ -191,14 +198,14 @@ use this order and each owning plan's gates.
 
 | Order | Focus / owner | Prerequisite and exit |
 | --- | --- | --- |
-| Phase 1 | [Image intake preparation](2026-10-23-image-intake-preparation.md) | Oct 27 I30-I37: replay all 26 review examples plus controls, compare erase/crop order and fix border/mask/framing damage before another full run; v16 remains baseline, not accepted; I12 incremental cutover stays open |
+| Phase 1 | [Image intake preparation](2026-10-23-image-intake-preparation.md) | Oct 28 I58-I60: v20 nested-reel PiP proof awaits review; full preparation/rebase and changed-image audit remain gated. Final prepared pixels feed Gallery/likeness/ComfyUI; preserve per-photo history/exact face. I12 incremental cutover stays open |
 | Phase 2 | [Library upkeep U1/U3/U6/U7](2026-10-22-library-upkeep.md) | Phase 1 handoff; integrate maintenance/recovery, U7 prepared-source full/head/chest derivatives and explicitly selected ComfyUI inputs without repeated source cleanup |
-| Phase 3 | [Cast-seeded all-library rebase C1-C7](2026-10-23-cast-seeded-library-rebase.md) | All 2,741 inputs prepared and matching preview checked; leave it unapplied during Oct 27 recipe review. Revised prepared bytes require a new versioned preview and continuity checks; C2/C6/C7 acceptance and optional C1/C3 release modes remain open |
+| Phase 3 | [Cast-seeded all-library rebase C1-C9](2026-10-23-cast-seeded-library-rebase.md) | Oct 28 full sandbox iteration authorized after v17 intake; protected/core/workflow-selected cast retained, unprotected poor matches may regroup. Inspect identity moves, family links and Review reasons before install; older v16 preview remains unapplied |
 | Phase 4 | [Engine acceptance E4/E6/E7/E8/E10, P1-P6](2026-10-22-likeness-engine-acceptance.md) | Accept Phase 3 evidence, convergence and separate incremental batch (now 400+ planned); production still needs its own preview, backup/restore and approval |
 | Supporting | [Face-analysis M1/M2](2026-10-22-face-analysis-evaluation.md) | Inform Phase 1 labels and face/body explanation; secondary-model M3/M4 remains conditional, not a mandatory new-model dependency |
 | After stable baseline | [Manual action A4/A6 UAT](2026-10-22-review-actions.md), [family acceptance](2026-10-22-identity-family-naming.md) | Existing rename/swap work retained; no pending swap or action-undo settlement applied by this pivot |
 | Separate downstream | [Manual prompt migration](2026-10-22-manual-prompts-to-art-library.md) | P14-P17: exact supported source/order mapping, feature/token deduplication and generic Female test-bed relocation; shared pilots are not complete manual migrations. Later-stage contracts and visual acceptance stay open |
-| Parallel rendering integration | [Reference rendering](2026-10-25-reference-rendering.md) | 117-output comparison completed; R44 category/person routing must consume reconciled generated prompts and preserve old receipts. No new broad queueing before intake/prompt review; stage chaining, GUI execution and production remain open |
+| Parallel rendering integration | [Reference rendering](2026-10-25-reference-rendering.md) | 117-output comparison preserved. After verified rebase, 20-30 source-bound Prime samples including three-quarter views are authorized; R44 routing/prompt fidelity and frozen receipts still apply. Stage chaining, GUI execution and production remain open |
 
 The Oct 22 run remains dated evidence, not validation of the new preparation
 recipe or cast-release policy. The Oct 25 prepared runner now checks/migrates
@@ -227,9 +234,11 @@ deferred; exact current inputs and all user decisions remain protected.
 | [2026-10-22-face-analysis-evaluation.md](2026-10-22-face-analysis-evaluation.md) | active | Explain current measurements and evaluate labelled secondary-model cases with verified licence gates |
 | [2026-10-22-manual-prompts-to-art-library.md](2026-10-22-manual-prompts-to-art-library.md) | active | P14-P17 source-faithful wording/order, person-feature/token reconciliation and Female test-bed move; remaining migration, stage contracts, validated `1b` retirement and untouched `2b` |
 | [2026-10-22-library-upkeep.md](2026-10-22-library-upkeep.md) | active | Phase 2: downstream naming/derivative/viewer and backup integration; tested implementation still needs real acceptance; independent Junk/near-duplicate/Demon work retained |
-| [2026-10-23-image-intake-preparation.md](2026-10-23-image-intake-preparation.md) | active | Phase 1: Oct 27 I30-I37 named-example/control benchmark for borders, erase/crop ordering, masks and subject framing; recipe acceptance and incremental/live cutover remain gated |
-| [2026-10-23-cast-seeded-library-rebase.md](2026-10-23-cast-seeded-library-rebase.md) | active | Phase 3: retained-cast prepared clean-start and reversible install implemented; real curation/UAT and optional configurable cast release remain gated by Phases 1/2 and C1 |
+| [2026-10-23-image-intake-preparation.md](2026-10-23-image-intake-preparation.md) | active | Phase 1: v20 nested-reel proof awaits user review; full preparation/rebase, Harlow cleanup, changed-image audit, exact-face/history acceptance and incremental/live cutover remain open |
+| [2026-10-23-cast-seeded-library-rebase.md](2026-10-23-cast-seeded-library-rebase.md) | active | Phase 3: Oct 28 core/protected cast retention and non-core regrouping authorized for sandbox iteration; move/Review audits and reversible install acceptance still required |
 | [2026-10-25-reference-rendering.md](2026-10-25-reference-rendering.md) | active | 117-output comparison completed; R44 category/person paths pending source-faithful recipe reconciliation, with acceptance, GUI execution and later-stage contracts still open |
+| [2026-10-28-intake-performance.md](2026-10-28-intake-performance.md) | active | Parallel intake (auto up to 3 workers, byte-identical output, ~35% faster on the benchmark) delivered; full-run proof, chin-crop answer and generated-output storage routed to L20/R9 |
+| [2026-10-28-storage-operations-and-retention.md](2026-10-28-storage-operations-and-retention.md) | active | Map and configure storage roots, clean only verified generated outputs, preserve active sources, remove abandoned staging safely, and rebuild the sandbox from production |
 
 The Oct 22 retained plans have review/questions blocks; affected owners now
 also record the Oct 23 foundation-first scheduling pivot. The

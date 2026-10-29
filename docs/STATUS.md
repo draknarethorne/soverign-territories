@@ -1,6 +1,6 @@
 # Project Status
 
-**Updated:** 2026-10-27 · This is the one working document: where the project is, what has
+**Updated:** 2026-10-29 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
@@ -25,6 +25,176 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 ## Plans and the queue
 
 The plans, their status and what each is are listed in [plans/README.md](plans/README.md); what is open, by priority and owner (what needs you first), is [todo.md](todo.md), generated from them. This document holds only what is decided and what is still a question.
+
+**Oct 28 prepared-image decision:** final intake recommendations now supply
+Gallery, likeness and ComfyUI; the obscured original is not preferred merely
+because it is original. Keep exact originals, processing history/masks and the
+exact aligned face used by SFace accessible per photo. Reconstructed pixels
+remain labelled synthetic; assignment is not automatic replacement of a
+protected identity anchor. Full sandbox iteration is authorized, including
+non-core cast release and family regrouping under existing thresholds.
+Investigate Review volume and inspect moves; do not lower thresholds to force
+zero Review. Production remains separate.
+
+**Oct 28 storage decision:** after the storage roots and writer routing are
+structured, the user prefers to recreate the sandbox Working tree wholesale
+from the verified Production/Source baseline rather than manually retain or
+prune old sandbox reports, run outputs, backups or undo data. Sandbox recovery
+copies are not required. This does not authorize deleting the sibling immutable
+`Source` snapshot, Production, or active source photos that exist only in the
+current Working tree. Inventory those source deltas and confirm the exact reset
+boundary before applying it. The Oct 21 Source snapshot still matches all
+8,842 shared Production files, but Production has 358 additions and three
+removed `_junk` files, so it is not the current baseline. A hash comparison
+found 89 Working-only `Various` JPEGs and 17 gallery metadata files (none in
+Source); preserve the photos and carry the metadata for review before any
+Working rebuild. See the [storage and retention plan](plans/2026-10-28-storage-operations-and-retention.md).
+
+Storage-path migration is underway, not complete. The shared resolver rejects
+unknown, overlapping, escaping, active-category-overlapping, reserved
+`_archive`-overlapping, and reparse-point destinations. Reference workflows,
+selected reports, likeness caches/evidence, retained action journals,
+junk/retired operations and readers, and incoming duplicate checks now route
+through configured roots. Likeness reports, eraser/intake-sequence benchmarks,
+and overlay-review reports now also resolve configured destinations; nested
+intake validation handles configured sandbox-state roots at arbitrary depth.
+Focused verification passed: 74 duplicate/likeness tests, a 77-test
+storage-root regression set, and seven targeted regressions for the latest
+report routing. The full `bin\test.cmd` launcher passed after those changes
+(339 tests across seven suites). The configuration schema/receipt contract
+and full writer/reader inventory remain open. That checkpoint preceded the
+Oct 29 reset recorded below; its Production baseline and read-only full-reset
+preview were verified.
+
+**Oct 29 storage configuration progress:** the versioned schema now covers
+the reference ComfyUI workspace and the Production, sandbox, model-cache,
+install, input/output and shared roots. Those roots have matching environment
+overrides and runtime checks for absolute paths, overlap, escaping workflow
+subpaths, and safe workspace names. Workflow deployment, input synchronization,
+backdrop workspaces, reference execution and output browsing use the shared
+resolvers; workspace configuration edits validate and publish atomically from
+owner-locked staging under ignored `tmp`. Configuration receipts are now
+included in full reset previews, library-backup manifests and
+image-preparation manifests. Focused coverage passed for workflow
+configuration (77 tests), preparation/backup (40 tests), and sandbox reset
+(13 tests); the full `bin\test.cmd` launcher passed 358 tests across eight
+suites.
+
+The refreshed read-only `sandbox-reset --full` preview confirms the exact
+Working target and current managed Production baseline of 9,200 files
+(5,614,845,723 bytes), excluding 56,059 files (21,429,886,503 bytes) in the
+configured operational roots `_actions`, `_archive`, `_backup`, `_generation`,
+`_likeness`, `_reports`, `_sandbox-state` and `_tmp`. Production `_junk` and
+`_retired` remain in the baseline because they hold user-dispositioned photos
+and provenance. The preview found 358 Production additions, 3 removed `_junk`
+files, no changed or unclassified paths, and the expected 89 Working-only
+photos plus 17 metadata files to preserve. Its receipt contains both
+64-character configuration hashes; reset readiness is true with no blockers.
+The verified report is
+`tmp\storage\full-reset-preview-protected-photo-roots-20261029.json`. S3, S10,
+S12 and S13 are complete. The versioned retention ledger
+automatically registers new intake/rebase runs; unregistered or incomplete
+runs default to keep, only applied runs can be accepted, and only older
+accepted runs can reach explicit prune approval. Pruning rechecks a complete
+tree fingerprint and Working text dependencies, writes a receipt, and
+refreshes regenerable intake-history pages; a report-only repair command can
+close an interrupted history publication without restoring deleted run data.
+The full fast suite passed 363
+tests across eight suites; the latest retention/history-refresh and
+auto-registration regressions passed 6 tests.
+The live read-only B: retention preview found 10 unregistered runs, kept all,
+and wrote nothing. After removing unnecessary tree/reference scans for
+no-candidate previews, the measured preview duration fell from 162 seconds to
+0.59 seconds. No existing Working run has been registered or deleted. A read-only duplicate
+measurement covered 270,191 files / 146,857,778,934 bytes and found 81,028,741,928
+bytes of exact duplicates; no deduplication was applied, and S11 remains open
+for storage-sharing/recovery validation and B: I/O measurement. S4-S5,
+remaining storage receipts and the writer/reader inventory remain open; the
+Working rebuild is now verified below. `ST-v9` remains a self-contained historical
+bundle; the current retention tool is scoped to the exact sandbox Working
+root, so `ST-v9` remains untouched.
+
+The Oct 29 routing follow-up now sends ComfyUI config staging through the
+configured temporary root under ignored `tmp`; workflow backup writers use the
+configured backup root and record source/destination paths in per-stamp
+receipts. Original-photo rename maps use the configured actions root with a
+receipt and legacy-read fallback. Likeness diagnostics restrict explicit
+`--out` paths to the configured reports root and publish a receipt. The full
+`bin\test.cmd` suite passed 363 tests; focused routing checks also passed.
+These checks used temporary roots only. The configured active root still
+defaults to Production.
+
+The full-reset apply is implemented with configured-root exclusions, staged
+hash verification, a receipt, an owner lock, and rollback/recovery tests.
+**The clean Working reset is now installed and hash-verified.** Explorer's
+hidden handles to `_reports\library` caused the two original denied swaps.
+Gracefully closing its window released them. The next swap committed, then
+hit Windows MAX_PATH while removing nested old backups. Reusing the backup
+extended-path helper fixed cleanup; committed recovery now returns the existing
+receipt without starting a second reset. Reset/staging regressions pass
+28 tests.
+
+The exact fresh baseline was 9,307 files / 5,694,510,002 bytes: 9,200 managed
+Production files, all 89 sandbox-only active photos, 17 metadata files in
+`_reports\reset-review-bundle`, and its receipt. Six operational roots,
+including the temporary root, were empty after cleanup. This removes 260,884 old
+files and 131.47 GiB of logical bytes. Source reverified all 8,845 historical
+files; Production and ST-v9 remain untouched. See storage S14 for timings.
+
+Fresh rehearsal uses new `--baseline working`, not the historical Source
+default: current assigned galleries plus current Various are frozen in a
+hash-bound run-local overlay. The supported dry-run counted 3,072 outcomes
+(2,700 assigned inputs plus 372 additions; 75 newer-byte substitutions).
+The full v21 intake is running as `fresh-r21-20261029` with three workers.
+Source stays immutable. Generated reports are not input candidates; their old
+volume affects recursive inventories/history verification, not the canonical
+candidate enumeration. Overlay/input-copy and receipt staging now use owned
+configured temporary roots; verified complete mirrors/reports can resume after
+a receipt interruption. S4-S5 lifecycle/publication gaps, fresh-run validation,
+matching/move/visual audits and final performance comparison remain open.
+
+The v11 sequence is promoted as preparation recipe v17 through shared masked
+reconstruction code; published v16 evidence remains readable. The new
+`r17-20261028` sandbox run previews 2,741 outcomes (2,700 immutable images plus
+41 additions, 74 newer-byte replacements). Intake-only preparation and its
+artifact check completed: 2,294 original recommendations, 436 prepared outputs
+and 11 junk candidates; no processing-error outcomes. Full visual/move audit
+and installation remain pending; successful artifact verification is not
+visual acceptance.
+The core-cast matching preview completed; audit found and fixed quality checks
+mixing original pixels with prepared-image face coordinates. A matching-only
+replan using unchanged measurements/thresholds reduces Review from 158 to 89
+and removes all 55 stale app-bar holds. Thirteen non-core cast photos are
+released in the preview; none have moved. Remaining cleanup misses and
+destination/core/family audits still gate installation and new Prime samples.
+Targeted v18 proofs now remove the two missed transparent GMW logos and three
+missed outlined search pills, while preserving clean photo controls. A
+bottom-panel flatness guard also stops two clean portraits being cropped as
+phone UI. All 186 integrated tests and a real preparation-launcher proof pass;
+v17 reports remain readable. This is bounded correction evidence, not a new
+all-image v18 rebuild or full cleanup acceptance. Focused visual review,
+remaining residuals and assignment audits still gate the next rebuild/install.
+Before starting, validation found 134 unlisted additions in immutable Source.
+All 8,845 original manifest entries were byte-exact and all extra bytes appeared
+in the prior intake receipt. The extras were moved without deletion to
+`B:\Sovereign Territories Sandbox\_source-recovery\20261028-v17` with a hash-bound
+receipt; the original manifest was unchanged and full snapshot validation passed.
+This recovery is not a new identity decision or a production write.
+
+**Oct 28 v20 targeted PiP proof:** preparation recipe v20 adds a conservative
+lower-left inset detector inside a confirmed phone-reel frame. It requires a
+small secondary face plus bilateral edge, top-bezel and dark-header evidence;
+the mask is clipped at the detected picture boundary. A fresh eight-image
+report over exact `r17-20261028` inputs detects Ruby Eden's inset at
+`[88, 1579, 308, 1738]`, records outside-mask identity, and leaves the three
+clean controls Haniya, Draknora and Odette pixel-identical. Full-size review
+shows a soft synthetic patch by Ruby's hand/field; Harlow's chest patch also
+remains unresolved. The current Working Ruby replacement has a different hash
+and no confirmed reel frame, so this rule does not activate there. User review
+must decide whether to broaden detection to non-reel phone overlays. The report
+is at `B:\Sovereign Territories Sandbox\Working\_reports\ruby-pip-v20-p3\Working\_reports\preparation\ruby-pip-v20-p3\index.html`.
+No full v20 preparation, rebase, install, production change or Prime submission
+has run.
 
 **Oct 27, 11:05 review pivot:** intake visual tuning is the immediate priority.
 The user's Angels/Potentials review is preserved in the intake plan, with all

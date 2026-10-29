@@ -33,6 +33,9 @@ The recap is part of the day's hygiene in [../plans/README.md](../plans/README.m
 
 | Day | File |
 | --- | --- |
+| 2026-10-29, 07:12 - fresh reset verified; intake still running | [2026-10-29-0712-recap.md](2026-10-29-0712-recap.md) |
+| 2026-10-29, 06:21 — retrospective for Oct 28 | [2026-10-29-0621-recap.md](2026-10-29-0621-recap.md) |
+| 2026-10-29, 06:20 — retrospective for Oct 27 | [2026-10-29-0620-recap.md](2026-10-29-0620-recap.md) |
 | 2026-10-26, 17:00 combined Oct 24-26: everything that needs you, and the large cleanup run | [2026-10-26-1700-recap.md](2026-10-26-1700-recap.md) |
 | 2026-10-26, 16:30 outputs browser, cleanup batches and pull-back | [2026-10-26-1630-recap.md](2026-10-26-1630-recap.md) |
 | 2026-10-26, 10:04 pilot results and preparation interruption | [2026-10-26-1004-recap.md](2026-10-26-1004-recap.md) |

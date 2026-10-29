@@ -35,7 +35,7 @@ Found while building and running the artists reset, the crop and the routine, wr
 - [ ] **P2 ai** D1 `likeness status`: for every root and every artist, what is left loose and why (no usable face, a second person, an animal, bars over her head, held for clean-up), plus the pool, the review folders and `_junk`. The question "why are there still photos in this gallery" took a diagnostic script today; it should be one command.
 - [x] **P2 ai** D2 Transferred, not implemented by this checkbox: behavior-preserving modularization belongs to the [structure plan](2026-10-20-art-tools-structure.md), including former self-healing H2. Keep existing tests as the behavior contract.
 - [x] **P2 ai** D3 Transferred: one effective settings inventory and action-specific calibration belong to [engine E3/E6](2026-10-22-likeness-engine-acceptance.md). Do not change production thresholds without measured results and a documented decision.
-- [ ] **P2 ai** D4 `bin\day-close.cmd`: the day's hygiene as one read-only check (feedback coverage, plan status/index consistency, tagged tasks, explicit transfer owners, current queue, lint, tests and validators). Flag competing owners for review; never auto-archive a plan, clear notes or require an empty feedback/tmp directory.
+- [ ] **P2 ai** D4 `bin\day-close.cmd`: the day's hygiene as one read-only check (feedback coverage, plan status/index consistency, tagged tasks, explicit transfer owners, current queue, lint, tests and validators). Run automated verification first and report its evidence separately from the remaining manual reviews or decisions. Flag competing owners for review; never auto-archive a plan, clear notes or require an empty feedback/tmp directory.
 - [x] **P3 ai** D5 Transferred, not a new legacy-crop implementation: v16 now
   has person-mask framing. Remaining limb/overlay acceptance and cutover belong
   to intake I27/I29/I12 and upkeep U7. Do not add a second person detector to
@@ -155,3 +155,79 @@ the separate remaining non-art documentation scope. No source feedback is remove
 ```text
 We've done a lot lately - can you create a daily recap following the instructions and at the top focus on all the things I need to verify and what remains from the plans that's a key item for this work.  Then you can document all that's been done.  I still see a lot of docs in docs/art that may not all be up to date and accurate any more.  Do that before the recap - read each one line-by-line instaead of scanning/searching and determine what to combine, what to archive and what to update.  Thanks again. Don't stop until we've at a solid and clean-state with all docs and coding.  Then write the recap in the manner I described.
 ```
+
+## Oct 29 follow-up: automation-first review and recap lifecycle
+
+The user's Oct 27 recap feedback is preserved verbatim below. Coverage:
+
+- The request to define requirements and verification up front, automate the
+  initial verification passes, and present only the remaining manual checks
+  is recorded in D4's day-close verification summary. Passing automated checks
+  must remain distinct from visual acceptance, user decisions, and unresolved
+  cases.
+- The request to keep important recaps accessible and archive older recaps is
+  not implemented. No recap or source feedback is archived by this update.
+  D16 tracks the still-open recap pin/archive policy and its safe review flow.
+
+- [ ] **P2 either** D16 Define and implement recap index lifecycle behavior:
+  make important recaps visibly pinned/current and provide a clear archive
+  path for superseded recaps, with explicit criteria and a reviewable list
+  before any move. Preserve chronological links and historical access; do not
+  automatically archive or delete recaps or raw feedback. Coordinate the
+  review-first recap's verification summary with D4 so automated evidence is
+  completed first and only unresolved manual checks or decisions are handed to
+  the user. Keep this task open until the policy and behavior are agreed and
+  implemented; existing recaps and `feedback/recap_10_27.md` remain in place.
+
+### Raw feedback: recap and verification follow-up (Oct 27)
+
+Source: `feedback/recap_10_27.md`. Preserve the source file until its coverage
+and verbatim preservation are verified; no archival or deletion is authorized
+by this incorporation.
+
+The transcription preserves every word and paragraph. Two trailing spaces
+after the paragraph ending "as we learn." are omitted for whitespace checks;
+the original source remains unchanged.
+
+```text
+We'll need to write a recap for 10-27-2026 of all that was done, where we are, what I need to validate, etc... following the standard practice, but ensuring we also highlight the big wins, gotchas, remaining items and manual verification I need to do as well as all the automated verification you were doing all the way to speed this up.
+
+This tells me that as we move into additional phases - including the likeness comparison that as long as we work it similar to how we did the intake that you can do the initial verification passes on all the outstanding items we need to work on and not just rely on me for all the manual work and present me with the final list of things you couldn't verify or need me to do manually.
+
+I'm finding out that getting our requirements, plans and verification processes clearly defined upfront is crucial to ensure smooth progress and minimize the need for extensive manual intervention later on. This approach allows us to catch potential issues early, streamline the verification workflow, and maintain a high level of accuracy and efficiency throughout the project.
+Moving forward, we should continue to refine our processes, document any changes, and ensure that both manual and automated verification steps are well-integrated and consistently applied. This will help us maintain momentum and reduce the risk of errors as we tackle more complex phases of the project.
+
+Our feedback loop we have has been working well and we can just continue to improve on it, update our instructions, docs and working agreement together and that will make the continued work on this very effective.
+
+I'll also want to start to archive older recaps that aren't important any more.  Keep ones that are still important (like pinning them) so that ongoing the recaps are things I still need to pay attention to.  It's sort of like how we have active feedback .md files until we get them into plans and archive the feedback.  Same with active plans and how we archive completed or obsolete or superceeded ones as we learn.
+
+Basically just document management hygeine. We want to make sure that our recaps, feedback, and plans are all organized, easily accessible, and that outdated or irrelevant information is properly archived to avoid clutter and confusion.
+```
+
+## Oct 29: finish-first priority feedback
+
+The next operational milestone is the fresh sandbox rebase and its actual
+Gallery/Overview/Review history and face-evidence acceptance, not another
+unrelated tooling expansion. Storage reset is verified; remaining storage
+lifecycle gaps are explicitly open under S1/S4/S5/S11, not presumed finished.
+
+- [ ] **P1 ai** D17 Triage active plans against the rebase/GUI acceptance
+  milestone. Identify real prerequisites, defer independent work with an
+  explicit reason and resume condition, and update the plan index/queue.
+  Evaluate `_holding` and status handling before moving anything; preserve
+  each plan's independent context and unfinished tasks. Do not start that
+  broader reorganization merely to complete the requested commit/push.
+
+Source: `feedback/chasing_my_tail.md`; retained unchanged. Full wording:
+
+<!-- markdownlint-disable MD013 -->
+```text
+I feel like I've been chasing my tail these past few days and haven't made progress that I thought I would and keep finding things that need fixing or reworking, which makes it hard to feel like I'm moving forward.  We've been making things work, like I love the updates to the intake process - then we run into either diskspace/directory structure or some issue that is causing us to jump to our storage work.  That's been the pattern of most days - I don't actually finish the work of the previous day entirely and get pulled into a new issue that seems like it needs to be fixed to get back to previous day and not I am at least since 10-09 that I have open and unfinished plans.  Some mostly done, others not even touched.  Some overlap eachother and get superceeded because we move on to the next pressing issue before fully resolving the previous one.  It's a cycle that makes it hard to feel a sense of completion or progress.
+
+How can we figure out which plans need priority vs. which ones can wait and maybe we move them into _holding until we have the bandwidth to address them properly?  If they are critical to be done they must stay in the plans and active.  But if we truly think they can wait, we should update their status accordingly and ensure that we leave proper notes/reason for the decision.
+
+The README.md needs to reflect that and the decision.  Then I need to figure out which if the plans comes next.  For me, it'll be critical to get back to the rebase and see it working, then validate the GUI and how it can see all the features from intake, overview, review and seeing all the details of how it worked (or didn't work right and we need to address those issues).  So the questions - does that make sense given all the plans or is there necessary work to finish ahead of that - and I'm assuming you addressed all the storage issues.
+
+I guess that's what I am thinking as I prepare to go to bed!
+```
+<!-- markdownlint-enable MD013 -->

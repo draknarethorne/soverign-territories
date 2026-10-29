@@ -5,7 +5,7 @@
 
 ## Open work, by priority
 
-### Your queue: needs your hands or a decision (44)
+### Your queue: needs your hands or a decision (43)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -23,11 +23,8 @@
 - [ ] P5 Inspect refreshed production galleries and ComfyUI ([2026-10-22](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] P6 Render/review the pilot with the agreed source images ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] C7 Review before/after cast seeds, hair/overlay outcomes and ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
-- [ ] I57 Review the v11 100-image proof (`full100-v11b-20261027-1`, ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
-- [ ] I37 Review the bounded A/B report and approve/reject specific ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
-- [ ] I29 Review the v16 report (`_reports\preparation\v16\index.html`): ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I24 After the sandbox rebase, drop `Various\<Name>\gallery` folders of ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
-- [ ] I10 Review the pilot's control, denoise and tone candidates. ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I10 Review current-run control, denoise and tone comparisons ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] R21 Try the flow on real images: filter "Needs cleanup", ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R27 Review the large run on the Outputs page (filter batch ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R37 Approve the staged per-person preparation (instead of ([2026-10-25](plans/2026-10-25-reference-rendering.md))
@@ -42,6 +39,8 @@
 - [ ] D10 Review the refreshed gallery and Angel-to-Prospect rankings; confirm candidate ordering, fit-score explanation and preview-only promotion command are useful. ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] L15 Review the Artist overview/photo-review navigation, ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
 - [ ] L17 Review the themed look on ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
+- [ ] I65 Agree on the fallback thresholds: how much of the ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I67 Decide whether a usable face slightly under the 60px floor ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I26 Decide the directory reckoning: intake root name, kind roots, role and ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] R31 Reload the open ComfyUI tabs, then render one updated ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R35 Choose which body profiles, if any, are offered by ([2026-10-25](plans/2026-10-25-reference-rendering.md))
@@ -60,7 +59,7 @@
 - [ ] U2 Review current photo outcomes using fresh inventories: ([2026-10-22](plans/2026-10-22-library-upkeep.md))
 - [ ] P10 Archive the manual source directory only after every ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 
-### Either of us (41)
+### Either of us (44)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -87,6 +86,7 @@
 - [ ] I3 Inventory the two old installed-only Drakness ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
 - [ ] R2 D3 Starter decks and products. Rebuild `data/decks`, `data/products` and `data/manifests` around Darkness and Light (plus Neutral cards) using the starter-hero decision; include lower-level heroes and decide where bound ... ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] D9 Calibrate a report-only prospect-readiness ranking from face quality, usable-photo quantity and distinct framing; validate a pose-diversity signal and compare rankings against human review before using the score to ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
+- [ ] D16 Define and implement recap index lifecycle behavior: ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] M4 Recommend whether secondary checking for ambiguous ([2026-10-22](plans/2026-10-22-face-analysis-evaluation.md))
 - [ ] L20 Define safe intake-run retention/pruning with dependency ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
 - [ ] L6 Settle relocking/staged-action behavior, then implement ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
@@ -98,6 +98,7 @@
 - [ ] R28 Take the 23 unmapped `Various\gallery` screenshots ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R1c Correct the workspace input-directory spelling during a ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R9 Agree storage/backup/retention limits and safe run filing ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] S19 Review the configuration proposal before broad ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 
 **P3 (later, or ideas)**
 
@@ -111,11 +112,13 @@
 - [ ] A7 Compare download/run versus a lightweight explicit ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] I56 Vision: one command (or a GUI pick) takes a new image ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] R10 Extend to male/animal recipe profiles only after suitable ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] T3 For human review only, show a wider context crop (with ([2026-10-28](plans/2026-10-28-intake-performance.md))
 
-### For the assistant, when you say go (127)
+### For the assistant, when you say go (144)
 
 **P1 (blocks other work, or cheap and valuable)**
 
+- [ ] D17 Triage active plans against the rebase/GUI acceptance ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] M1 Trace detection, alignment/cropping, embeddings, centering, ([2026-10-22](plans/2026-10-22-face-analysis-evaluation.md))
 - [ ] L19 Add gallery-first navigation with a separate Intake/Various ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
 - [ ] L12 Integrate verified preparation comparison/detail links into ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
@@ -156,6 +159,10 @@
 - [ ] C3 Add schema-validated optional cast-release mode and shared ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] C5 Run repeatable sandbox scenarios from the same immutable ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] C6 Install reversibly only after approved preview, then normalize ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
+- [ ] I59 Persist the exact aligned SFace input face, content/model ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I60 Audit all changed full-run outputs for false positives and ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I63 Triage the r20 output by detected pattern and outcome ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I64 Add an automatic repair-quality score for the masked ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I39 Implement/test a conservative first-crop experiment on ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I41 Build a versioned reference bank from confirmed GMW ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I43 Publish one expanded immutable pre-rebase review, targeting ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
@@ -189,6 +196,14 @@
 - [ ] R2 Define request/resolved/receipt schemas, recipe capabilities, ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R4 Implement offline preview/prepare/check and the thin launcher ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R5 Bind one reviewed Qwen API graph to its master, preflight ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] S20 Measure fresh-baseline inventory, preparation, matching and ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
+- [ ] S21 Finish the Oct 27/28 retrospective and Oct 29 run recap, ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
+- [ ] S1 Map every writer and reader for `Working` outputs, ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
+- [ ] S4 Define one validated configuration contract for environment ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
+- [ ] S5 Route every relevant writer and reader through the shared ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
+- [ ] S11 Measure duplicate bytes across per-run source mirrors, ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
+- [ ] S15 Run the final sandbox dry-run, audit source counts, protected ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
+- [ ] S16 Write the Production runbook with exact source snapshot, ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 
 **P2 (normal)**
 
@@ -197,7 +212,7 @@
 - [ ] R8 Step 4: one canonical companion piece per Elder Dragon from its identity file, and each sister's piece extends it with only the scene placement (today the sisters' dragon companions are copied text). ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] R14 The documentation audit's other items that are not decisions, and a launcher check, now with the art and video tutorials (the audit is in `docs/audits/2026-10-12-docs-audit.md`). ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] D1 `likeness status`: for every root and every artist, what is left loose and why (no usable face, a second person, an animal, bars over her head, held for clean-up), plus the pool, the review folders and `_junk`. The question ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
-- [ ] D4 `bin\day-close.cmd`: the day's hygiene as one read-only check (feedback coverage, plan status/index consistency, tagged tasks, explicit transfer owners, current queue, lint, tests and validators). Flag competing owners for ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
+- [ ] D4 `bin\day-close.cmd`: the day's hygiene as one read-only check (feedback coverage, plan status/index consistency, tagged tasks, explicit transfer owners, current queue, lint, tests and validators). Run automated verification ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] D13 Continue the non-archive documentation review outside ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] C2 Add or preserve compatibility entry points only where ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
 - [ ] D1 Keep a reviewed inventory of modules deferred for coupling, ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
@@ -222,6 +237,8 @@
 - [ ] P7 Write the accepted prompt standard and recurring audit ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] P8 After replacements pass, retire `1b_Experiments` across ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] A5 Verify stable-directory report replacement, dated report ([2026-10-22](plans/2026-10-22-review-actions.md))
+- [ ] I61 Close/archive only genuinely completed intake plans after ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I66 Build a Grok watermark reference. The faint grey Grok mark ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I40 Add bounded advanced-erasure escalation to I38 after ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I42 Add native-resolution enhancement comparisons after ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I55 Send 20-30 rebased images through the ComfyUI Prime pose ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
@@ -236,6 +253,8 @@
 - [ ] R39 Rank best-of-N results with separate technical-quality, ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R7 Add compatible female flow catalogue coverage and explicit ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R8 Add Gallery export and read-only generation results through ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] S17 Map current category-name conditionals and existing policy ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
+- [ ] S18 Propose a versioned category/global configuration contract, ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 
 **P3 (later, or ideas)**
 

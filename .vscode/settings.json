@@ -1,4 +1,11 @@
 {
     "editor.wordWrapColumn": 500,
-    "editor.wordWrapIndicator": true
+    "editor.wordWrapIndicator": true,
+    "python-envs.pythonProjects": [
+        {
+            "path": ".",
+            "envManager": "ms-python.python:venv",
+            "packageManager": "ms-python.python:pip"
+        }
+    ]
 }

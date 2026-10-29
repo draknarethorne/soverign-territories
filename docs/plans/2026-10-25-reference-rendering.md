@@ -2,6 +2,18 @@
 
 **Status:** active (Oct 25 overnight sandbox integration and bounded local rendering authorized; visual acceptance and production rollout remain gated)
 
+## Oct 28: post-rebase Prime sample
+
+After the final-prepared-image rebase and move audits, the user authorizes
+20-30 representative source images across cast and non-cast categories,
+with 1-2 examples per workflow and the new three-quarter Prime views.
+Keep source-bound requests, frozen recipe/provenance and old receipts;
+return selected outputs to `gallery_generated` through the existing guarded
+pullback. This is I55/R38/R40 follow-through, not acceptance of R44 routing,
+permission to rewrite old jobs or production authorization.
+The complete direction and likeness/history requirements live in
+[intake's Oct 28 continuation](2026-10-23-image-intake-preparation.md#oct-28-approved-prepared-image-matching-and-full-sandbox-iteration).
+
 ## Oct 27: category-aligned workflows and source-faithful recipes
 
 The 11:05 direction is preserved once in
