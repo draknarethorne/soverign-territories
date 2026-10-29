@@ -5,6 +5,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   quality:
@@ -38,6 +39,9 @@ jobs:
 
       - name: Run pre-commit quality gates
         run: pre-commit run --all-files --show-diff-on-failure
+
+      - name: Run explicit deep quality gates
+        run: pre-commit run --hook-stage manual --all-files --show-diff-on-failure
 
       - name: Run image processing and launcher regression tests
         shell: cmd

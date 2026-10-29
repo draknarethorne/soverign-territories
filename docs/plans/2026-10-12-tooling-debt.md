@@ -28,6 +28,13 @@ Found while building and running the artists reset, the crop and the routine, wr
 
 ## Steps
 
+- [x] **P1 ai** D18 Separate routine commit safety checks from explicit
+  unit/mutation suites. Keep hygiene and data validity on commit, remove
+  duplicate push execution, retain all deep hooks under `manual` and in CI,
+  update the supported check launcher/runbooks, and verify stage selection,
+  failures and measured routine duration. This is a bounded publication
+  bottleneck fix, not broad plan reorganization.
+
 - [x] **P2 ai** D14 Audit the actual Python/image stack; recommend regular 64-bit
   3.14, declare tested direct core/CPU-intake requirements and extend Windows CI
   beyond 3.12 without dropping the compatibility baseline. Validate the existing
@@ -231,3 +238,47 @@ The README.md needs to reflect that and the decision.  Then I need to figure out
 I guess that's what I am thinking as I prepare to go to bed!
 ```
 <!-- markdownlint-enable MD013 -->
+
+## Oct 29: routine versus deep quality gates
+
+The prior schema edit triggered full isolated mutation testing on commit
+and again on push. The last push took about seven minutes overall; the logs
+identify the mutation suite as the long active hook, not a precisely timed
+exclusive seven-minute CPU measurement. Each mutation revalidates the full
+data/link set; this tests validator rejection, not normal image processing.
+Ordinary tracked Git status took 0.18 seconds during that wait.
+
+Decision: retain routine hygiene/data checks, move unit and mutation hooks
+to explicit `manual` execution, and keep both stages in CI. No success cache,
+silent skip-on-error, weakening of data validity, or permanent bypass.
+The [quality contract](../QUALITY-GATES.md) owns commands and exact policy.
+Targeted development testing remains required. Main/PR CI coverage does not
+mean a feature-branch push automatically ran CI.
+
+Validation: the supported all-file routine launcher passed in 48.33 seconds
+(including PowerShell analysis and full data validity). A representative
+schema/code/docs commit selection passed in 12.95 seconds; data validation
+accounted for 9.27 seconds. The actual pre-push stage selected no checks and
+returned in 1.05 seconds. An explicit `manual` validator-isolation hook passed.
+Configuration assertions verified all eight former unit/mutation hooks still
+exist under `manual`, and CI explicitly invokes routine, manual and existing
+regression stages. No full manual suite or GitHub CI run is claimed for this
+configuration-only change. The full mutation suite had just passed on both
+commit and push before this policy change.
+
+An actual stage-selection check caught upstream hooks with explicit stages
+that override `default_stages`; each routine hook is therefore explicitly
+commit-only. No cache or inferred test success was used to skip push work.
+Unsupported launcher arguments fail with exit 2; missing pre-commit is an
+explicit error, not a misleading partial-success fallback.
+
+User words (chat, Oct 29), word for word:
+
+> Maybe the precommit hook needs to be optimized and looked at for what it's doing and whether or not it's truly valuable on every commit - as we use it for other things and it seems to be taking too much time now.
+
+Follow-up:
+
+> Maybe we have one that is a deeper validation that only runs when we ask for that specifically and we either skip or have a faster approach to validation steps on a normal basis - the precommit should focus on things that are required for the pipeline success.  Unit tests and other pieces should be run separately and not a pre-commit on every one.  At least not until we are at a point where we would truly want that.  We're spending countless cycles on things that might not be right in a precommit hook and could be caught in the pipeline itself after the commit - running on someone else's CPU ... but we should be running unit tests for our specific changes, so in theory that's most likely a better trade-off.
+
+Coverage: D18 owns stage/launcher/CI changes and verification; the existing
+rebase/GUI milestone remains the next operational delivery.

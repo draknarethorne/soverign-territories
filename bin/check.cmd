@@ -1,32 +1,26 @@
 @echo off
 call "%~dp0_env.cmd"
-rem Every commit hook. Uses pre-commit when it is installed; otherwise runs the same checks directly.
+rem Routine commit checks; --deep also runs the explicit test/mutation hooks.
+set "ST_DEEP_CHECK="
+if "%~1"=="" goto argumentsready
+if /i "%~1"=="--deep" (
+  set "ST_DEEP_CHECK=1"
+  goto argumentsready
+)
+echo ERROR: usage: bin\check.cmd [--deep]
+call "%~dp0_end.cmd" 2
+exit /b 2
+:argumentsready
 %PY% -m pre_commit --version >nul 2>nul
-if not errorlevel 1 (
-  %PY% -m pre_commit run --all-files
-  call "%~dp0_end.cmd" %errorlevel%
-  exit /b %errorlevel%
+if errorlevel 1 (
+  echo ERROR: pre-commit is required. Install it with python -m pip install pre-commit.
+  call "%~dp0_end.cmd" 1
+  exit /b 1
 )
-echo pre-commit is not installed ^(pip install pre-commit^); running the equivalent checks directly.
-%PY% tools\validators\validate_data.py
+%PY% -m pre_commit run --hook-stage pre-commit --all-files
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% tools\workflows\test_comfy_workflows.py
-if errorlevel 1 (
-  call "%~dp0_end.cmd" 1
-  exit /b 1
-)
-%PY% -m unittest tools.workflows.test_reference_rendering tools.workflows.test_reference_execution tools.workflows.test_reference_gallery tools.workflows.test_reference_outputs tools.workflows.test_backdrop
-if errorlevel 1 (
-  call "%~dp0_end.cmd" 1
-  exit /b 1
-)
-%PY% tools\generators\test_gen_prompt_extends.py
-if errorlevel 1 (
-  call "%~dp0_end.cmd" 1
-  exit /b 1
-)
-%PY% tools\validators\test_validate_data.py
+if defined ST_DEEP_CHECK %PY% -m pre_commit run --hook-stage manual --all-files
 call "%~dp0_end.cmd" %errorlevel%

@@ -4,6 +4,14 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Oct 29 quality-gate decision:** routine commits retain hygiene, script
+analysis and data validity, not unit/mutation suites. Push no longer repeats
+checks. Deep suites run explicitly through `bin\check.cmd --deep` and in CI;
+targeted tests remain required during development. Representative schema/code
+checks measured 12.95 s, empty push selection 1.05 s. CI still runs on main/PR
+or explicit dispatch, not every feature-branch push. See the
+[quality contract](QUALITY-GATES.md) and tooling D18.
+
 **Oct 29, overlay-first checkpoint:** current preparation v22 checks overlay/
 border proposals before person segmentation. A paired 128-image worker profile
 took 524.48 s eager versus 302.50 s gated (42.3% less elapsed), avoiding 90 of

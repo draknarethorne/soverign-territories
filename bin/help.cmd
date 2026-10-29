@@ -1,6 +1,8 @@
 @echo off
 echo.
 echo  Sovereign Territories command scripts. Run them from a terminal, or double-click menu.cmd.
+echo    check.cmd             routine hygiene and data validity; no unit/mutation tests or push rerun
+echo    check.cmd --deep      explicit routine checks plus all manual unit/mutation hooks; CI runs both
 echo    validate.cmd --isolated [--quick]  mutation validation on ONE disposable data/tools copy; private recovery journal, live repository read-only
 echo  HERO is a hero name such as Draknara. STAGE is optional: poses, head, scene, hair, motion, armor, clothing, video, or "studio" for every studio stage.
 echo  A set is deployed to its HOME workspace (see workspaces.cmd). The scripts that change files do it for real; the underlying tool previews unless you give it --apply, so add --dry-run as the last argument to preview a script.

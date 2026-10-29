@@ -18,28 +18,60 @@ Configured in `.pre-commit-config.yaml`:
 - file hygiene: large files, merge conflicts, YAML/JSON validity, EOF newline
 - markdown linting via `.markdownlint.json`
 - PowerShell analysis via `scripts/Invoke-QualityChecks.ps1`
-- workflow tool tests (`tools/workflows/test_comfy_workflows.py`, on changes under `tools/workflows/`) and generator tests (`tools/generators/test_gen_prompt_extends.py`, on changes under `tools/generators/`)
+- data/schema/link validation when data or validator files change
+
+Routine commits do **not** run unit suites or mutation self-tests. Those run
+explicitly during development and in CI. Hooks are restricted to `pre-commit`;
+the installed pre-push hook has no selected checks, so pushing does not
+repeat the commit's validation. No cached-success shortcut or hook bypass
+is involved.
 
 PowerShell policy in Phase 1:
 
 - blocking: `Error` severity findings
 - non-blocking (tracked debt): `Warning` severity findings
 
-### Data validation hook (pre-commit and pre-push)
+### Data validation hook (pre-commit only)
 
 - `tools/validators/validate_data.py` validates every schema-covered JSON file (gameplay cards, art identities, art pieces, art assembly cards) against its own schema and enforces cross-file integrity (card <-> art identity link is bidirectional, referenced pieces exist, generated outputs are unique)
-- `tools/validators/test_validate_data.py` is a mutation self-test that corrupts a temp copy of `data/` and asserts the validator catches each case, so the gate cannot silently go dead
 - the coverage report lists areas with no fitting schema yet (tracked debt, not hidden)
+
+### Explicit deeper validation
+
+- `cmd /c bin\check.cmd` runs routine checks across all files.
+- `cmd /c bin\check.cmd --deep` additionally runs the `manual` hook stage:
+  isolated full mutation tests plus workflow, backdrop, reference, generator,
+  validator-isolation, likeness and codex unit suites.
+- `python -m pre_commit run --hook-stage manual HOOK-ID --files PATH ...`
+  selects an individual deep hook. Existing file filters still apply.
+- Run the smallest relevant unit suites for each change before committing;
+  moving them out of hooks does not waive testing.
+- The broader image/launcher regressions remain available through
+  `bin\validate.cmd`; `bin\validate.cmd --isolated --quick` is the bounded
+  validator smoke suite. Neither is automatically run by commit/push.
+- `bin\check.cmd` now requires pre-commit explicitly; its old fallback was
+  neither equivalent to the hook set nor quick, and ran live mutation tests.
+  Missing tooling is an explicit error with the installation command.
+
+The mutation self-test corrupts an isolated copy and verifies rejection.
+It protects the validator itself, not just the current data. It remains
+valuable for schema/validator changes and deep validation, but need not repeat
+on every routine image-schema edit and again on push.
 
 ### CI quality workflow
 
 - `.github/workflows/quality.yml`
 - installs and runs pre-commit hooks in clean environment (including the data validation hook)
-- runs on push/PR to `main`
+- runs on push/PR to `main`, or explicit `workflow_dispatch` for a selected
+  branch. Feature-branch pushes without a main-targeting PR do not
+  automatically run this workflow; do not claim remote coverage until a run
+  exists and succeeds
 - Windows matrix retains Python 3.12 and adds 3.13/3.14; image tooling recommends
   regular 64-bit CPython 3.14, without raising the source compatibility floor
+- runs both routine and explicit `manual` hooks, preserving all former hook
+  test coverage on GitHub runners
 - installs pinned core image dependencies from `requirements.txt` and runs
-  `bin\validate.cmd --quick` after the existing hooks; optional Torch/LaMa
+  `bin\validate.cmd --quick` after both hook stages; optional Torch/LaMa
   dependencies and model downloads are not needed for those regression tests
 - local validation and newly configured CI coverage are distinct: see the
   [runtime guide](art/original-photos.md#python-runtime-and-dependencies) for

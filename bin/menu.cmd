@@ -12,6 +12,8 @@ echo   6  Status
 echo   7  Workspaces
 echo   8  Validate
 echo   Y  Isolated quick mutation validation (safe beside intake)
+echo   Z  Routine commit checks (use bin\check.cmd --deep for explicit test hooks)
+echo   0  Deep quality checks (explicit unit and mutation hooks; slower)
 echo   9  Refresh FireRed for a hero
 echo   A  Animate a hero (video prompts, workflows, deploy)
 echo   L  Photo library: sort new photos in Various, remove duplicates, rebuild all scaled images
@@ -66,6 +68,8 @@ if "%CH%"=="6" call "%~dp0status.cmd" & pause & goto menu
 if "%CH%"=="7" call "%~dp0workspaces.cmd" & pause & goto menu
 if "%CH%"=="8" call "%~dp0validate.cmd" & pause & goto menu
 if /i "%CH%"=="Y" call "%~dp0validate.cmd" --isolated --quick & pause & goto menu
+if /i "%CH%"=="Z" call "%~dp0check.cmd" & pause & goto menu
+if "%CH%"=="0" call "%~dp0check.cmd" --deep & pause & goto menu
 set "SCRIPT="
 if "%CH%"=="1" set "SCRIPT=refresh.cmd"
 if "%CH%"=="9" set "SCRIPT=refresh-firered.cmd"

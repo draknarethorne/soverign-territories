@@ -37,17 +37,28 @@ PowerShell contributors also need PSScriptAnalyzer:
 
 Quality policy is documented in `docs/QUALITY-GATES.md`.
 
-Run all local gates:
+Run routine local checks (no unit or mutation suites):
 
-- `.venv\\Scripts\\pre-commit.exe run --all-files --show-diff-on-failure`
+- `cmd /c bin\check.cmd`
+
+Request the deeper hook suites explicitly:
+
+- `cmd /c bin\check.cmd --deep`
+
+Routine commit hooks check hygiene and data validity. Push does not rerun
+them. Unit and mutation hooks use the explicit `manual` stage; CI runs both
+stages plus image/launcher regression tests. Run focused tests for your changes
+before committing, rather than relying on an automatic full-suite commit.
 
 Run focused checks while iterating:
 
 - `pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/Invoke-QualityChecks.ps1`
 - `python tools/validators/validate_data.py` (schemas + card<->art link integrity)
-- `python tools/validators/test_validate_data.py` (proves the validator can still fail)
+- `cmd /c bin\validate.cmd --isolated --quick` (validator smoke mutations on a copy)
 
-Local hooks improve feedback speed. CI is the non-bypassable source of truth.
+CI is the remote quality gate on main pushes and main-targeting PRs; it can
+also be dispatched explicitly for another branch. A successful local commit
+is not proof that CI ran or that branch protection is configured.
 
 ## Commit guidance
 
