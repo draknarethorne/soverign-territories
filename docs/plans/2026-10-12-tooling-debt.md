@@ -34,6 +34,16 @@ Found while building and running the artists reset, the crop and the routine, wr
   update the supported check launcher/runbooks, and verify stage selection,
   failures and measured routine duration. This is a bounded publication
   bottleneck fix, not broad plan reorganization.
+- [x] **P1 ai** D19 Audit actual CI test selection, add omitted offline
+  modules and a coverage-drift guard, avoid running the same deep suites
+  twice, and enable remote checks for working-branch pushes. Keep routine
+  commit checks fast and push duplication disabled. Verify the consolidated
+  launcher and distinguish local evidence from remote CI status.
+- [ ] **P1 either** D20 Inspect the first expanded remote CI matrix run and
+  resolve any clean-runner/Python 3.12 or 3.13 failures before claiming those
+  runtimes pass. Local Python 3.14 validation is not remote matrix acceptance.
+  CLI GitHub authentication needs repair; the authenticated GitHub integration
+  can read runs in the meantime.
 
 - [x] **P2 ai** D14 Audit the actual Python/image stack; recommend regular 64-bit
   3.14, declare tested direct core/CPU-intake requirements and extend Windows CI
@@ -282,3 +292,51 @@ Follow-up:
 
 Coverage: D18 owns stage/launcher/CI changes and verification; the existing
 rebase/GUI milestone remains the next operational delivery.
+
+## Oct 29: CI coverage follow-up (D19)
+
+The command inventory found five modules absent from CI: overlay detection,
+dragon companions, rename-map storage, storage retention and temporary staging.
+Four library suites (audit, diagnostics, diagnostics routing and reset) ran only
+through the manual discovery hook, while most other library/workflow/generator
+tests ran through both hooks and the regression launcher.
+
+The consolidated `bin\validate.cmd` now selects every active test module:
+explicit top-level suites plus one likeness-library discovery. A new
+`test_quality_gates` test fails on future inventory drift and verifies the CI
+commands. The previously unguarded People test exit now fails the launcher
+before the next suite can mask its failure.
+
+CI runs routine checks, one full isolated mutation pass, then the consolidated
+regressions/audits. No extra manual-hook or quick-mutation pass is needed.
+Branch pushes now trigger CI, with per-ref superseded-run cancellation;
+main-targeting PR and manual dispatch triggers remain. This is the pragmatic
+default because branch work previously received no automatic remote checks.
+The user was unavailable to answer the trigger-scope question.
+
+Validation: the five omitted modules plus the initial inventory/CI guard
+passed 63 tests in 16.27 seconds; new Python syntax passed. The exact
+consolidated `bin\validate.cmd` passed **1,125 tests across 28 runners**, plus
+data/link and audit checks, with zero test-failure markers. The final explicit
+validator-isolation/coverage hook passed nine tests, including negative
+coverage-drift cases. Workflow parsing verified triggers, cancellation and
+the Python 3.12/3.13/3.14 matrix. Existing resource warnings were not hidden
+or mistaken for failures.
+
+CLI run/PR queries returned HTTP 401 (bad credentials), but the authenticated
+GitHub integration could read workflow runs: **zero Quality Gates runs existed
+for this working branch** before expanding triggers. Git transport, CLI API
+and integration authentication are separate. Remote matrix acceptance stays
+explicitly open as D20, not inferred from local results.
+
+User words (chat, Oct 29), word for word:
+
+> our CI may need updates for testing all the new stuff ... that might be a gap
+
+Follow-up:
+
+> If some steps in the pre-commit were fast and valuable as a quick check - those would be fine to leave - it's really the double-dipping on commit and push as well as the long running "tests" that we can always run manually as part of our own cycles.
+
+Coverage: D19 owns CI inventory/consolidation and trigger coverage; D18's
+routine-versus-deep local policy is preserved. No new intake quality or
+Production acceptance is claimed by CI wiring.

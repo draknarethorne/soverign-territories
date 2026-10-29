@@ -60,11 +60,12 @@
 - [ ] U2 Review current photo outcomes using fresh inventories: ([2026-10-22](plans/2026-10-22-library-upkeep.md))
 - [ ] P10 Archive the manual source directory only after every ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 
-### Either of us (47)
+### Either of us (48)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] R1 G1 Darkness and Light set (the MVP). Only 4 Darkness and 4 Light cards exist (sister, bound hero, dragon, pet each) and no legacy heroes; Fire has 53, Water 46. Define heroes, units and tactics for both in the codex, then ... ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
+- [ ] D20 Inspect the first expanded remote CI matrix run and ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] M2 Build labelled comparisons for Florence Brookfield ([2026-10-22](plans/2026-10-22-face-analysis-evaluation.md))
 - [ ] N2 Specify and approve suggested versus threshold-assigned ([2026-10-22](plans/2026-10-22-identity-family-naming.md))
 - [ ] N3 Approve a deterministic naming/migration table, ([2026-10-22](plans/2026-10-22-identity-family-naming.md))

@@ -47,7 +47,8 @@ Request the deeper hook suites explicitly:
 
 Routine commit hooks check hygiene and data validity. Push does not rerun
 them. Unit and mutation hooks use the explicit `manual` stage; CI runs both
-stages plus image/launcher regression tests. Run focused tests for your changes
+equivalent deep coverage through one isolated mutation pass and the complete
+regression launcher. Run focused tests for your changes
 before committing, rather than relying on an automatic full-suite commit.
 
 Run focused checks while iterating:
@@ -56,8 +57,8 @@ Run focused checks while iterating:
 - `python tools/validators/validate_data.py` (schemas + card<->art link integrity)
 - `cmd /c bin\validate.cmd --isolated --quick` (validator smoke mutations on a copy)
 
-CI is the remote quality gate on main pushes and main-targeting PRs; it can
-also be dispatched explicitly for another branch. A successful local commit
+CI runs on branch pushes and main-targeting PRs, and can also be dispatched
+explicitly. A successful local commit
 is not proof that CI ran or that branch protection is configured.
 
 ## Commit guidance

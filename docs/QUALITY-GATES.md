@@ -61,18 +61,27 @@ on every routine image-schema edit and again on push.
 ### CI quality workflow
 
 - `.github/workflows/quality.yml`
-- installs and runs pre-commit hooks in clean environment (including the data validation hook)
-- runs on push/PR to `main`, or explicit `workflow_dispatch` for a selected
-  branch. Feature-branch pushes without a main-targeting PR do not
-  automatically run this workflow; do not claim remote coverage until a run
-  exists and succeeds
+- installs and runs routine pre-commit hooks in a clean environment (including data validation)
+- runs on every branch push, PRs targeting `main`, or explicit
+  `workflow_dispatch` for a selected branch. Concurrency cancels superseded
+  runs for the same ref; a push and its PR can still produce separate runs.
+  Do not claim remote success until a run exists and succeeds
 - Windows matrix retains Python 3.12 and adds 3.13/3.14; image tooling recommends
   regular 64-bit CPython 3.14, without raising the source compatibility floor
-- runs both routine and explicit `manual` hooks, preserving all former hook
-  test coverage on GitHub runners
-- installs pinned core image dependencies from `requirements.txt` and runs
-  `bin\validate.cmd --quick` after both hook stages; optional Torch/LaMa
-  dependencies and model downloads are not needed for those regression tests
+- runs routine hygiene/data hooks, full isolated mutations once via
+  `bin\validate.cmd --isolated`, then all offline regressions/audits once via
+  `bin\validate.cmd`. It does not repeat the manual hook suites and a second
+  quick mutation pass. All former manual-hook test modules remain covered
+  by the consolidated launcher
+- installs pinned core image dependencies from `requirements.txt`; optional
+  Torch/LaMa dependencies and model downloads are not needed for those
+  regression tests. Real neural inference throughput, visual quality and
+  sandbox/Production acceptance are not CI claims
+- `tools/validators/test_quality_gates.py` compares all active `test_*.py`
+  modules under `tools` with the launcher's explicit modules/library discovery
+  and fails if a new module is omitted. New tests elsewhere require extending
+  that inventory contract. Library test discovery includes reset, audit and
+  diagnostics without duplicating them in a separate CI hook pass
 - local validation and newly configured CI coverage are distinct: see the
   [runtime guide](art/original-photos.md#python-runtime-and-dependencies) for
   measured versions and local interpreter limitations

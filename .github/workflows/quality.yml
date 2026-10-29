@@ -2,10 +2,13 @@ name: Quality Gates
 
 on:
   push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   quality:
@@ -40,9 +43,10 @@ jobs:
       - name: Run pre-commit quality gates
         run: pre-commit run --all-files --show-diff-on-failure
 
-      - name: Run explicit deep quality gates
-        run: pre-commit run --hook-stage manual --all-files --show-diff-on-failure
-
-      - name: Run image processing and launcher regression tests
+      - name: Run full isolated validator mutation tests
         shell: cmd
-        run: bin\validate.cmd --quick
+        run: bin\validate.cmd --isolated
+
+      - name: Run all offline regression tests and audits
+        shell: cmd
+        run: bin\validate.cmd

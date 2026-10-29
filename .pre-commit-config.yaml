@@ -100,12 +100,12 @@ repos:
         stages: [manual]
 
       - id: validator-isolation-tests
-        name: Validator isolation and Alpha piece-stage tests
-        entry: python -m unittest tools.validators.test_validation_isolation
+        name: Validator isolation and CI coverage tests
+        entry: python -m unittest tools.validators.test_validation_isolation tools.validators.test_quality_gates
         language: python
         additional_dependencies: [jsonschema]
         pass_filenames: false
-        files: ^(tools/validators/(test_validate_data|test_validation_isolation)\.py|data/art/_schema/art-piece\.schema\.json|bin/validate\.cmd)$
+        files: ^(tools/validators/(test_validate_data|test_validation_isolation|test_quality_gates)\.py|data/art/_schema/art-piece\.schema\.json|bin/validate\.cmd|\.github/workflows/quality\.yml)$
         stages: [manual]
 
       - id: likeness-metadata-tests

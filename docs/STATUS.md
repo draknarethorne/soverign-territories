@@ -8,8 +8,13 @@ been decided, what is open, and what is next. Rules live in the canonical docs l
 analysis and data validity, not unit/mutation suites. Push no longer repeats
 checks. Deep suites run explicitly through `bin\check.cmd --deep` and in CI;
 targeted tests remain required during development. Representative schema/code
-checks measured 12.95 s, empty push selection 1.05 s. CI still runs on main/PR
-or explicit dispatch, not every feature-branch push. See the
+checks measured 12.95 s, empty push selection 1.05 s. The CI coverage follow-up
+adds branch pushes, all five omitted offline modules and a test-inventory
+guard; full mutations run once, and unit regressions no longer repeat through
+both manual hooks and the launcher. The consolidated launcher passed 1,125
+tests locally. CLI GitHub authentication fails, but the authenticated
+integration can read runs; remote matrix acceptance remains tooling D20.
+See the
 [quality contract](QUALITY-GATES.md) and tooling D18.
 
 **Oct 29, overlay-first checkpoint:** current preparation v22 checks overlay/

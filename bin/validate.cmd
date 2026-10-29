@@ -4,7 +4,7 @@ if /i "%~1"=="--isolated" (
   %PY% tools\validators\test_validate_data.py --isolated %2
   exit /b
 )
-rem validate            schema and link checks + the workflow tool tests (fast)
+rem validate            schema/link checks, all offline regression modules and audits
 rem validate --quick    also a short validator self-test, one case per kind of check (under 2 minutes)
 rem validate --full     also the whole validator self-test (about 6 minutes; it changes real files in place and undoes each change)
 %PY% tools\validators\validate_data.py
@@ -47,7 +47,7 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% -m unittest tools.art.test_eraser_benchmark tools.art.test_intake_sequence tools.art.test_overlay_reference_review
+%PY% -m unittest tools.art.test_eraser_benchmark tools.art.test_intake_sequence tools.art.test_overlay_reference_review tools.art.test_overlays
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
@@ -77,27 +77,16 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% tools\art\likeness_library\tests\test_metadata.py
-if errorlevel 1 (
-  call "%~dp0_end.cmd" 1
-  exit /b 1
-)
-%PY% tools\art\likeness_library\tests\test_engine.py
-if errorlevel 1 (
-  call "%~dp0_end.cmd" 1
-  exit /b 1
-)
-%PY% tools\art\likeness_library\tests\test_identity.py
-if errorlevel 1 (
-  call "%~dp0_end.cmd" 1
-  exit /b 1
-)
-%PY% -m unittest tools.art.likeness_library.tests.test_clean_rebase tools.art.likeness_library.tests.test_policy tools.art.likeness_library.tests.test_reconciliation tools.art.likeness_library.tests.test_review_gallery tools.art.likeness_library.tests.test_maintenance tools.art.likeness_library.tests.test_identity_maintenance tools.art.likeness_library.tests.test_actions tools.art.likeness_library.tests.test_family_preview tools.art.likeness_library.tests.test_photo_retirement tools.art.likeness_library.tests.test_rejections tools.art.likeness_library.tests.test_person_rename tools.art.likeness_library.tests.test_protection tools.art.likeness_library.tests.test_identity_names
+%PY% -m unittest discover -s tools/art/likeness_library/tests -p test_*.py
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
 %PY% tools\art\test_people.py
+if errorlevel 1 (
+  call "%~dp0_end.cmd" 1
+  exit /b 1
+)
 %PY% tools\art\test_people_gallery.py
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
@@ -133,7 +122,12 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% -m unittest tools.generators.test_gen_prompt_extends tools.generators.test_deluxe_reference tools.validators.test_validation_isolation
+%PY% -m unittest tools.generators.test_gen_prompt_extends tools.generators.test_deluxe_reference tools.validators.test_validation_isolation tools.validators.test_quality_gates
+if errorlevel 1 (
+  call "%~dp0_end.cmd" 1
+  exit /b 1
+)
+%PY% -m unittest tools.art.test_dragon_companions tools.art.test_rename_originals_storage tools.art.test_storage_retention tools.art.test_temporary_storage
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
