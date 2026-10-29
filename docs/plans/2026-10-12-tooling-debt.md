@@ -481,6 +481,17 @@ The policy question was presented, but the user was unavailable; the chosen
 default removes demonstrated repetition while preserving regression coverage.
 PR #2 must pass its corrected actual checks before merging.
 
+The corrected single-runtime run fixed the recipe failures and reached
+clean-preparation recovery tests: seven failed because gallery refresh
+constructed a real YuNet/SFace embedder, despite matching using the fixture's
+fake embedder. The clean-preparation fixture now supplies that fake to both
+paths, without skipping gallery generation or recovery assertions. Model
+installation is not a prerequisite for offline regression tests. This is
+another clean-runner fixture dependency, not permission to hide failed tests.
+The complete clean-preparation suite passes all 26 tests with the fixture
+fix (377.47 s locally). It is still an expensive integration suite; no claim
+that removing model dependence makes all regression runs fast is made.
+
 User words (chat, Oct 29), word for word:
 
 > Even in CI it's taking 5 minutes for some tests - these are still excessive ... so we may need to look at what should be tested manually always vs. what is automated.  I also don't understand why it runs quality 3.12, 3.13 and 3.14 runs in the CI

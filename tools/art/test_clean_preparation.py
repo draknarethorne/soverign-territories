@@ -76,6 +76,7 @@ class CleanPreparationTests(unittest.TestCase):
 
         self.embed = embed
         for patch in (
+            mock.patch.object(likeness, "Embedder", return_value=self.embed),
             mock.patch.object(image_preparation.preparation_geometry, "detect_faces",
                               return_value=([[50., 40., 60., 70.]], "Test face")),
             mock.patch.object(image_preparation.pipeline.subjects, "detect",
