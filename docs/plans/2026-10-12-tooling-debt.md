@@ -239,6 +239,11 @@ lifecycle gaps are explicitly open under S1/S4/S5/S11, not presumed finished.
   Evaluate `_holding` and status handling before moving anything; preserve
   each plan's independent context and unfinished tasks. Do not start that
   broader reorganization merely to complete the requested commit/push.
+  Oct 29 closeout decision: perform that bounded triage in the fresh chat,
+  before implementation on the continuation branch. Start with T6 recovery,
+  then fresh sandbox rebase and viewer acceptance; independent work may be
+  deferred only with a recorded reason/resume condition. Do not equate
+  merging this branch with completing these plans or all storage work.
 
 Source: `feedback/chasing_my_tail.md`; retained unchanged. Full wording:
 
@@ -411,3 +416,38 @@ Coverage: D21 owns scoped validation and scratch; D20 owns remote acceptance
 and CLI access. Memory attribution stays performance T10; exact clutter
 review stays storage S22. Fresh-chat handoff is prepared; merge/new-branch
 publication requires separate approval and is not a claimed performance fix.
+
+## Oct 29: approved branch closeout and fresh-chat boundary
+
+The user now authorizes a PR, checked merge, new continuation branch and
+safe local branch pruning. Preserve the existing 144-commit development
+history with a merge commit rather than rewriting it. Merge only after the
+PR's actual CI checks succeed; a successful local suite is not remote matrix
+acceptance. CLI login and API access are now verified working.
+
+The branch is an accumulated art/workflow/library baseline, not a declaration
+that all active plans are complete. D17 plan-wide reconciliation is deliberately
+left to the fresh chat: first identify real rebase/GUI prerequisites and explicit
+deferrals, without discarding independent tasks or raw context. T6 recovery
+remains the first known implementation prerequisite. No new full intake starts
+during branch closeout; Production and immutable Source remain untouched.
+
+Local pruning is limited to branches already reachable from merged main;
+retain unrelated remote branches. Removing a branch pointer does not remove
+shared commit history, and no meaningful disk/RAM speedup is promised. No
+force deletion, history rewrite, object pruning, cache/session deletion or
+feedback cleanup is part of this reset. The ignored handoff records the actual
+PR/merge/new-branch result after verification.
+
+User words (chat, Oct 29), word for word:
+
+<!-- markdownlint-disable MD013 -->
+```text
+Since you have the most context - I'm wondering if it doesn't make more sense to close out the work on this branch and work through a PR to get it merged and start a new one and update the tmp handoff document with any final updates so I can start fresh and get things cleaned up.  If that also means pruning local git branches to free up local space for all that history, that's also fine.  Whatever we need to do as a reset and re-baseline for the new branch and chat.  We can focus the new branch on the remaining work in docs plans - which is substantial, but if we can organize out thoughts - as in my chasing_my_tail.md - then we might make solid decisions and progress.  IF the chasing my tail work is too much for this current situation - we'll have the new chat do that work and it might help the new chat get familiar with the scope of everything as well.  Make a decision on how best to get things going.
+```
+<!-- markdownlint-enable MD013 -->
+
+Coverage: this closeout owns PR/merge/branch/handoff operations. D17 keeps
+plan triage; performance T6 and the rebase/viewer plans keep their unfinished
+acceptance gates. `feedback/chasing_my_tail.md` remains unchanged and its
+complete prior transcription above is retained.

@@ -11,6 +11,11 @@ verified blockers should interrupt that milestone. Plan deferral/`_holding`
 triage is tracked as D17 in
 [tooling debt](2026-10-12-tooling-debt.md); no wholesale moves or assumption
 that all storage lifecycle work is complete are authorized by this note.
+The Oct 29 branch closeout is authorized separately: PR/checks/merge, then a
+fresh continuation branch and chat. D17 reconciliation belongs to that fresh
+chat, not a broad last-minute rewrite. Start by confirming T6 recovery as the
+rebase prerequisite, and record reasons/resume conditions for any deferred
+work before changing statuses or moving plans.
 
 | Kind of document | Where | Rule |
 | --- | --- | --- |

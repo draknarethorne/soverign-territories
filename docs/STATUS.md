@@ -4,6 +4,14 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Oct 29 branch-closeout decision:** publish the accumulated art/workflow
+baseline through a PR and merge only after remote checks pass, then continue
+on a fresh focused branch/chat. This does not close unfinished plans.
+Fresh-chat D17 triage should separate true prerequisites from independent
+deferrable work; T6 per-image recovery remains the known prerequisite before
+fresh sandbox rebase and viewer acceptance. No broad plan moves, history
+rewrite, feedback cleanup, Production change or full intake is part of closeout.
+
 **Oct 29 quality-gate decision:** routine commits retain hygiene, script
 analysis and data validity, not unit/mutation suites. Push no longer repeats
 checks. Deep suites run explicitly through `bin\check.cmd --deep` and in CI;
