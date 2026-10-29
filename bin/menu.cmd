@@ -10,7 +10,7 @@ echo   4  Publish a temporary copy to another workspace
 echo   5  Clean up a workspace
 echo   6  Status
 echo   7  Workspaces
-echo   8  Validate
+echo   8  Preview tests for changed work (HEAD; bin\validate.cmd --changed HEAD --check executes)
 echo   Y  Isolated quick mutation validation (safe beside intake)
 echo   Z  Routine commit checks (use bin\check.cmd --deep for explicit test hooks)
 echo   0  Deep quality checks (explicit unit and mutation hooks; slower)
@@ -66,7 +66,7 @@ if "%CH%"=="4" goto publish
 if "%CH%"=="5" goto cleanup
 if "%CH%"=="6" call "%~dp0status.cmd" & pause & goto menu
 if "%CH%"=="7" call "%~dp0workspaces.cmd" & pause & goto menu
-if "%CH%"=="8" call "%~dp0validate.cmd" & pause & goto menu
+if "%CH%"=="8" call "%~dp0validate.cmd" --changed HEAD --dry-run & pause & goto menu
 if /i "%CH%"=="Y" call "%~dp0validate.cmd" --isolated --quick & pause & goto menu
 if /i "%CH%"=="Z" call "%~dp0check.cmd" & pause & goto menu
 if "%CH%"=="0" call "%~dp0check.cmd" --deep & pause & goto menu

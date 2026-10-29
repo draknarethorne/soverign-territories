@@ -101,11 +101,11 @@ repos:
 
       - id: validator-isolation-tests
         name: Validator isolation and CI coverage tests
-        entry: python -m unittest tools.validators.test_validation_isolation tools.validators.test_quality_gates
+        entry: python -m unittest tools.validators.test_validation_isolation tools.validators.test_quality_gates tools.validators.test_quality_selection
         language: python
         additional_dependencies: [jsonschema]
         pass_filenames: false
-        files: ^(tools/validators/(test_validate_data|test_validation_isolation|test_quality_gates)\.py|data/art/_schema/art-piece\.schema\.json|bin/validate\.cmd|\.github/workflows/quality\.yml)$
+        files: ^(tools/validators/(test_validate_data|test_validation_isolation|test_quality_gates|test_quality_selection|quality_selection)\.py|data/art/_schema/art-piece\.schema\.json|bin/(validate|_test-env)\.cmd|\.github/workflows/quality\.yml)$
         stages: [manual]
 
       - id: likeness-metadata-tests

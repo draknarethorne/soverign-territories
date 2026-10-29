@@ -1,5 +1,8 @@
 @echo off
+setlocal
 call "%~dp0_env.cmd"
+call "%~dp0_test-env.cmd"
+if errorlevel 1 exit /b 1
 rem Routine commit checks; --deep also runs the explicit test/mutation hooks.
 set "ST_DEEP_CHECK="
 if "%~1"=="" goto argumentsready

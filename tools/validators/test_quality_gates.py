@@ -59,14 +59,25 @@ class QualityGateTests(unittest.TestCase):
             uncovered_tests(ROOT, launcher),
         )
 
-    def test_ci_selects_mutations_once_and_all_regressions(self):
+    def test_ci_uses_shared_selector_instead_of_duplicate_suites(self):
         workflow = (ROOT / ".github" / "workflows" / "quality.yml").read_text(encoding="utf-8")
         commands = re.findall(r"(?m)^\s+run: (.+)$", workflow)
-        self.assertIn("bin\\validate.cmd --isolated", commands)
-        self.assertIn("bin\\validate.cmd", commands)
-        self.assertEqual(commands.count("bin\\validate.cmd --isolated"), 1)
+        self.assertIn("bin\\validate.cmd --ci", commands)
+        self.assertNotIn("bin\\validate.cmd --isolated", commands)
+        self.assertEqual(commands.count("bin\\validate.cmd --ci"), 1)
         self.assertFalse(any("--hook-stage manual" in command for command in commands))
         self.assertFalse(any("bin\\validate.cmd --quick" in command for command in commands))
+
+    def test_launchers_route_default_test_scratch_and_retained_fixture_is_not_root(self):
+        setup = (ROOT / "bin" / "_test-env.cmd").read_text(encoding="utf-8")
+        self.assertIn('set "TEMP=%%~fI"', setup)
+        self.assertIn('set "TMP=%TEMP%"', setup)
+        for name in ("validate", "test", "check"):
+            launcher = (ROOT / "bin" / f"{name}.cmd").read_text(encoding="utf-8")
+            self.assertIn('call "%~dp0_test-env.cmd"', launcher)
+            self.assertIn("setlocal", launcher)
+        fixture = (ROOT / "tools" / "art" / "test_retained_preparation.py").read_text(encoding="utf-8")
+        self.assertNotIn("TemporaryDirectory(dir=ROOT)", fixture)
 
     def test_people_failure_is_checked_before_the_next_suite(self):
         launcher = (ROOT / "bin" / "validate.cmd").read_text(encoding="utf-8")

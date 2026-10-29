@@ -26,7 +26,9 @@ def sha(payload):
 
 class RetainedPreparationTests(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(dir=ROOT)
+        scratch = ROOT / "tmp"
+        scratch.mkdir(exist_ok=True)
+        self.temp = tempfile.TemporaryDirectory(dir=scratch)
         self.addCleanup(self.temp.cleanup)
         self.base = pathlib.Path(self.temp.name)
         self.root = self.base / "library"

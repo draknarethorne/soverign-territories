@@ -28,6 +28,11 @@ Found while building and running the artists reset, the crop and the routine, wr
 
 ## Steps
 
+- [x] **P1 ai** D21 Make local/CI regression selection change-aware, retain
+  explicit full acceptance coverage and conservative shared/unknown-path
+  fallback, and fix repository-root test scratch instead of masking it with
+  ignores. Verify workflow-only execution, mutation isolation, complete
+  inventory and failing selection/process behavior; document scratch scope.
 - [x] **P1 ai** D18 Separate routine commit safety checks from explicit
   unit/mutation suites. Keep hygiene and data validity on commit, remove
   duplicate push execution, retain all deep hooks under `manual` and in CI,
@@ -340,3 +345,69 @@ Follow-up:
 Coverage: D19 owns CI inventory/consolidation and trigger coverage; D18's
 routine-versus-deep local policy is preserved. No new intake quality or
 Production acceptance is claimed by CI wiring.
+
+## Oct 29: change-aware validation and test scratch (D21)
+
+D21 supersedes D19's unconditional full branch-CI execution, not its complete
+offline inventory or D18's fast routine commit checks. Local changed-work
+selection and CI use the same selector; the
+[quality contract](../QUALITY-GATES.md) owns commands and routing policy.
+Full acceptance remains explicit, on main/manual CI, and for schema,
+validator or unknown infrastructure dependencies. Shared art/library changes
+include workflow consumers because report assets and temporary storage are
+also used by rendering. Reference-workflow-only selection omits image and
+likeness suites. Routine all-file CI hygiene/data validity remains unchanged.
+
+The root `tmpxxxxxx` observation had a concrete cause:
+`test_retained_preparation` explicitly passed the repository root to
+`TemporaryDirectory`. It now uses ignored `tmp`; test launchers additionally
+scope inherited `TEMP`/`TMP`/`TMPDIR` there, without changing production
+launchers or globally monkeypatching Python. Bare external unittest invocation
+still follows the caller's environment. No blanket root ignore was added.
+
+Focused evidence: retained-preparation passed 18 tests (76.67 s).
+The workflow-only selector passed 323 tests across 17 runners (113.11 s
+summed runner test time), without image/library suites or full mutations.
+Selection guards cover full inventory, missing bases, PR merge base, push
+before/after, new-branch fallback, conservative dependencies and failure
+propagation. Full validation is previewed, not redundantly rerun here.
+Remote matrix acceptance remains D20; run 148 was still in progress when
+checked, not accepted as successful.
+Final quality/isolation guards passed 26 tests, including a real subprocess
+whose default tempfile resolved under repository `tmp`. The supported
+`validate --quick` command passed all 19 isolated mutation cases in 215 s;
+it is smoke coverage, not a short-duration guarantee. Routine all-file
+hygiene/data checks and queue generation passed. Root inspection after the
+fixture run found only the intended `tmp` directory, not root `tmpxxxxxx`.
+
+Git object storage measured roughly 100 MiB, with six tiny orphan temporary
+objects totalling 8 KiB; the earlier tracked status took 0.18 s.
+This does not establish history as the slowdown. Transient untracked output
+can create watcher/scanning work without becoming tracked files. A merge/new
+branch does not remove history, chat state or extension memory. No merge,
+prune, cache cleanup or session deletion is authorized or performed.
+CLI credentials were verified invalid (401); browser reauthentication is a
+separate user action, not repaired by successful Git transport.
+
+User words (chat, Oct 29), word for word:
+
+<!-- markdownlint-disable MD013 -->
+```text
+Hmmmm - I did get my credentials updated - or can you tell me how to do that and what I need to do so you can invoke the commands?
+
+IS the VS Code memory required do to the amount of chat history?
+
+I might also ask do we need full validation on every CI run and even when running locally?  Especially since we know that some of the new validation runs excessively long compared to what we did prior to all these updates???
+
+It seems like those are only necessary when we're actually working on those aspects of the system and not required later on if we're working on comfy workflows - so running those tests every time feels like it'll slow down normal working as well as git pushes that trigger CI ... We need to think more deeply about this and address both the local runs as well as the CI runs.
+
+during the tests, I see dozens of files written to tmpxxxxxx/ instead of into tmp/xxxxx/ so there's a path problem that's triggering things in git to track them temporarily - then they are all removed.  That's a bit excessive work for git tracking locally.
+
+I'm starting to think that the git history is also a problem and maybe we need to merge this branch and start a new one as well as a new chat instead of just a new chat.  Getting a much more clean baseline after we fix the output of the tests to the tmp directory properly.  Things as just out of control and I am thinking that if we clean-up local VS Code, git tracking, chat history and other files we might stand to have better results in the long run.
+```
+<!-- markdownlint-enable MD013 -->
+
+Coverage: D21 owns scoped validation and scratch; D20 owns remote acceptance
+and CLI access. Memory attribution stays performance T10; exact clutter
+review stays storage S22. Fresh-chat handoff is prepared; merge/new-branch
+publication requires separate approval and is not a claimed performance fix.

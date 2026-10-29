@@ -49,6 +49,19 @@ PowerShell policy in Phase 1:
 - The broader image/launcher regressions remain available through
   `bin\validate.cmd`; `bin\validate.cmd --isolated --quick` is the bounded
   validator smoke suite. Neither is automatically run by commit/push.
+- Preview relevant tests with `cmd /c bin\validate.cmd --changed HEAD --dry-run`,
+  then execute with `cmd /c bin\validate.cmd --changed HEAD --check`.
+  This includes tracked changes against the base plus non-ignored untracked
+  files. Use a branch-point SHA instead of `HEAD` to cover an entire branch.
+  Selection errors stop explicitly; a missing Git base never means success.
+- `cmd /c bin\validate.cmd --scope workflow --dry-run` previews one subsystem;
+  replace `--dry-run` with `--check` to execute. Other explicit scopes are
+  `intake`, `library`, `data`, `quality`, and `full`. Explicit scopes are a
+  developer override; automatic selection includes shared consumers.
+- `cmd /c bin\validate.cmd --full` runs full regressions plus one full
+  **isolated** mutation pass. `--quick` now means only the isolated mutation
+  smoke suite, not a full regression run followed by smoke mutations.
+  The no-argument launcher retains the full regression/audit contract.
 - `bin\check.cmd` now requires pre-commit explicitly; its old fallback was
   neither equivalent to the hook set nor quick, and ran live mutation tests.
   Missing tooling is an explicit error with the installation command.
@@ -68,11 +81,22 @@ on every routine image-schema edit and again on push.
   Do not claim remote success until a run exists and succeeds
 - Windows matrix retains Python 3.12 and adds 3.13/3.14; image tooling recommends
   regular 64-bit CPython 3.14, without raising the source compatibility floor
-- runs routine hygiene/data hooks, full isolated mutations once via
-  `bin\validate.cmd --isolated`, then all offline regressions/audits once via
-  `bin\validate.cmd`. It does not repeat the manual hook suites and a second
-  quick mutation pass. All former manual-hook test modules remain covered
-  by the consolidated launcher
+- runs routine hygiene/data hooks and `bin\validate.cmd --ci`. Branch pushes
+  compare the event's before/after commits; PRs compare the merge base with
+  the PR head. Checkout includes history. Main pushes, manual dispatch and
+  new branches without a previous commit use full acceptance coverage
+- the shared [selector](../tools/validators/quality_selection.py) prints
+  reasons and exact commands, then reports elapsed time/exit per subprocess.
+  Documentation-only changes need no unit/mutation suite. Reference/workflow
+  changes select workflow/generator tests; shared `comfy_workflows.py` and
+  prompt generation include art/library consumers. Intake changes include
+  retained/rebase and exported-workflow consumers. Other art/data changes include their broad
+  consumers, but do not test validator mutations. Schema/validator changes
+  and unclassified infrastructure paths conservatively use full coverage.
+  No timing-based success cache or image-quality inference is involved
+- selected subsystem runs include the lightweight quality/isolation guards.
+  Full coverage runs isolated mutations once and the consolidated regression
+  launcher once, not the manual hooks a second time
 - installs pinned core image dependencies from `requirements.txt`; optional
   Torch/LaMa dependencies and model downloads are not needed for those
   regression tests. Real neural inference throughput, visual quality and
@@ -85,6 +109,22 @@ on every routine image-schema edit and again on push.
 - local validation and newly configured CI coverage are distinct: see the
   [runtime guide](art/original-photos.md#python-runtime-and-dependencies) for
   measured versions and local interpreter limitations
+
+### Test scratch
+
+The test launchers (`validate`, `test`, `check`) scope `TEMP`, `TMP`, and
+`TMPDIR` to the absolute ignored repository `tmp` directory. Child Python
+processes and default `tempfile` fixtures inherit it; the environment is
+restored when the launcher returns. Explicit fixtures must also stay below
+ignored scratch. The retained-preparation fixture no longer passes the
+repository root as `TemporaryDirectory(dir=...)`.
+
+Use the supported launcher for default scratch routing. A bare
+`python -m unittest ...` outside it still uses the caller's tempfile
+environment; the launchers do not install a global Python monkeypatch.
+Generated untracked trees can trigger editor/Git scans, but are not
+automatically tracked or committed. Do not mask misplaced output with a
+blanket root `tmp*` ignore rule.
 
 ### Retired: legacy schema workflow
 

@@ -46,9 +46,10 @@ Request the deeper hook suites explicitly:
 - `cmd /c bin\check.cmd --deep`
 
 Routine commit hooks check hygiene and data validity. Push does not rerun
-them. Unit and mutation hooks use the explicit `manual` stage; CI runs both
-equivalent deep coverage through one isolated mutation pass and the complete
-regression launcher. Run focused tests for your changes
+them. Unit and mutation hooks use the explicit `manual` stage; CI selects
+dependency-relevant tests for branch/PR changes and full coverage for
+main/manual acceptance or conservative infrastructure fallback.
+Run focused tests for your changes
 before committing, rather than relying on an automatic full-suite commit.
 
 Run focused checks while iterating:
@@ -56,6 +57,16 @@ Run focused checks while iterating:
 - `pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/Invoke-QualityChecks.ps1`
 - `python tools/validators/validate_data.py` (schemas + card<->art link integrity)
 - `cmd /c bin\validate.cmd --isolated --quick` (validator smoke mutations on a copy)
+- `cmd /c bin\validate.cmd --changed HEAD --dry-run` (preview changed-work selection)
+- `cmd /c bin\validate.cmd --changed HEAD --check` (run that selection)
+- `cmd /c bin\validate.cmd --scope workflow --check` (explicit subsystem override)
+- `cmd /c bin\validate.cmd --full` (full regressions and isolated mutations)
+
+Replace `HEAD` with the branch-point SHA to include committed branch changes.
+Test launchers route inherited temporary files under ignored repository `tmp`;
+prefer them to bare test commands. `--quick` is now just isolated mutation
+smoke coverage, not an implicit full regression run. See the
+[quality contract](docs/QUALITY-GATES.md) for dependency/fallback rules.
 
 CI runs on branch pushes and main-targeting PRs, and can also be dispatched
 explicitly. A successful local commit

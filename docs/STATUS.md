@@ -14,6 +14,14 @@ guard; full mutations run once, and unit regressions no longer repeat through
 both manual hooks and the launcher. The consolidated launcher passed 1,125
 tests locally. CLI GitHub authentication fails, but the authenticated
 integration can read runs; remote matrix acceptance remains tooling D20.
+Change-aware follow-up: local `validate --changed BASE` and CI share a
+conservative selector. Workflow-only work no longer runs image/library
+suites; shared/infrastructure dependencies expand coverage, main/manual
+acceptance remains full, and isolated mutations run for schema/validator
+changes or full fallback. Test launchers now scope default temporary files
+under ignored repository `tmp`; the retained fixture's explicit root scratch
+bug is fixed. No Git history rewrite, merge, cache/session deletion or
+Production operation is part of this fix.
 See the
 [quality contract](QUALITY-GATES.md) and tooling D18.
 
@@ -56,7 +64,7 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 | Sister variants | Every sister has a **Signature Shiny** (`<slug>-scene-signature-shiny`: the Signature card with a prismatic `overrides.palette` and a glitter-sheen effects line), a **Battle** scene (war gear piece plus homeland battlefield), a **Bond** scene (first meeting with her Elder Dragon) and a **Dawn Rising** video card. First new culture pack: `themes/danish` (Snow Queen inspired) with `draknira-scene-danish`. Prompts and workflows built; none rendered yet. |
 | Vision roster | 30 cards (10 Drakn sisters, 10 bound heroes, 10 Elder Dragons) plus 10 pets, all with art identities; prompts generated. |
 | Gameplay cards | `data/cards/sovereign-dawn/`: 219 cards, ids `SD-001`..`SD-219`. `SD-041`+ is legacy content (Fire/Water/Earth + Neutral). |
-| Validation | `tools/validators/validate_data.py` (schemas + card/art links) and its mutation self-test run in pre-commit and CI. The self-test changes real files in place and undoes them (a copy of `data/` per case cost a minute on Windows): `--quick` takes under 2 minutes, the full run about 6 (it was 15). |
+| Validation | Routine commits check schemas/card-art links, not mutations or unit suites; push does not repeat hooks. Local/CI dependency-selected suites and explicit isolated full validation follow [QUALITY-GATES.md](QUALITY-GATES.md). Mutations operate on a disposable copy, not live data. |
 | Starter decks, packs, manifests | **Broken** (see Data debt). |
 | Unity client, backend | Not started. |
 

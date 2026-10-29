@@ -1,12 +1,22 @@
 @echo off
+setlocal
 call "%~dp0_env.cmd"
-if /i "%~1"=="--isolated" (
-  %PY% tools\validators\test_validate_data.py --isolated %2
-  exit /b
+call "%~dp0_test-env.cmd"
+if errorlevel 1 exit /b 1
+if /i "%~1"=="--scope" goto scoped
+if /i "%~1"=="--changed" goto scoped
+if /i "%~1"=="--ci" goto scoped
+if /i "%~1"=="--full" goto scoped
+if /i "%~1"=="--quick" goto quick
+if /i "%~1"=="--isolated" goto isolated
+if not "%~1"=="" (
+  echo ERROR: unknown validation option: %~1
+  call "%~dp0_end.cmd" 2
+  exit /b 2
 )
 rem validate            schema/link checks, all offline regression modules and audits
-rem validate --quick    also a short validator self-test, one case per kind of check (under 2 minutes)
-rem validate --full     also the whole validator self-test (about 6 minutes; it changes real files in place and undoes each change)
+rem validate --quick    isolated short mutation smoke suite only
+rem validate --full     all regressions plus one full isolated mutation pass
 %PY% tools\validators\validate_data.py
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
@@ -122,7 +132,7 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% -m unittest tools.generators.test_gen_prompt_extends tools.generators.test_deluxe_reference tools.validators.test_validation_isolation tools.validators.test_quality_gates
+%PY% -m unittest tools.generators.test_gen_prompt_extends tools.generators.test_deluxe_reference tools.validators.test_validation_isolation tools.validators.test_quality_gates tools.validators.test_quality_selection
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
@@ -167,6 +177,16 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-if /i "%~1"=="--quick" %PY% tools\validators\test_validate_data.py --quick
-if /i "%~1"=="--full" %PY% tools\validators\test_validate_data.py
+call "%~dp0_end.cmd" %errorlevel%
+exit /b %errorlevel%
+:scoped
+%PY% tools\validators\quality_selection.py %*
+call "%~dp0_end.cmd" %errorlevel%
+exit /b %errorlevel%
+:quick
+%PY% tools\validators\test_validate_data.py --isolated --quick
+call "%~dp0_end.cmd" %errorlevel%
+exit /b %errorlevel%
+:isolated
+%PY% tools\validators\test_validate_data.py --isolated %2
 call "%~dp0_end.cmd" %errorlevel%

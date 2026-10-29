@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -43,10 +45,6 @@ jobs:
       - name: Run pre-commit quality gates
         run: pre-commit run --all-files --show-diff-on-failure
 
-      - name: Run full isolated validator mutation tests
+      - name: Run dependency-selected tests (full on main or explicit dispatch)
         shell: cmd
-        run: bin\validate.cmd --isolated
-
-      - name: Run all offline regression tests and audits
-        shell: cmd
-        run: bin\validate.cmd
+        run: bin\validate.cmd --ci

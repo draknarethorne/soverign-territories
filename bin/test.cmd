@@ -1,5 +1,8 @@
 @echo off
+setlocal
 call "%~dp0_env.cmd"
+call "%~dp0_test-env.cmd"
+if errorlevel 1 exit /b 1
 rem Fast code tests for workflow tools, prompt generation and photo-library galleries.
 %PY% -m unittest tools.workflows.test_reference_rendering tools.workflows.test_reference_execution tools.workflows.test_reference_gallery tools.workflows.test_reference_outputs tools.workflows.test_reference_comparison tools.workflows.test_backdrop
 if errorlevel 1 (
