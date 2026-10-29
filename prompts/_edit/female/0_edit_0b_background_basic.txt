@@ -1,0 +1,22 @@
+Pose: exact same pose and body position; exact same body angle;
+same head, neck, chest, arm, hands, leg and feet positions (whatever is present in the incoming image);
+
+Background: a plain neutral light-grey seamless studio backdrop.
+Lighting: even, soft, neutral frontal studio lighting - a flat, clean key light.
+Professional beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+
+Edit the incoming image: remove all logos, icons, overlays;
+remove all props, accessories, purses, cups, glasses; food items in hands;
+crop top and bottom borders that are not part of the background, extend/create additional background as needed.
+
+Result: wearing her same outfit;
+hands free of cups and food; body is free of purses, accessories and jewelry;
+
+Critical details - these must be followed:
+Bust: large voluptuous breasts, heavy natural volume, hard nipples, aroused, deep cleavage, soft curve, prominent silhouette, full and heavy profile, detailed anatomy;
+Body: haute couture physique, extremely lean frame, sharp collarbones, angular shoulders, very long slender limbs, runway model proportions, editorial styling, detailed anatomy;
+
+Likeness: maintain strict fidelity to the reference image's facial features, facial bone structure.
+Wearing: her existing contoured outfit, tightly fitting to show bust.
+
+Keep the face, expression, makeup, entire body, chest, and body position.

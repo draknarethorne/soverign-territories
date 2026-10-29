@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/staves/gnarled-oak-staff",
+  "kind": "holding",
+  "name": "Gnarled Oak Staff",
+  "description": "a tall gnarled oak staff with a knotted crook at the top, polished smooth where it is gripped, held upright in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "stave",
+    "oak",
+    "nature"
+  ]
+}

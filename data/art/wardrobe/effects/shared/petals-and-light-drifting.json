@@ -1,0 +1,11 @@
+{
+  "id": "wardrobe/effects/shared/petals-and-light-drifting",
+  "kind": "effects",
+  "name": "Petals and light",
+  "description": "Soft petals drift past her in a light breeze, each one catching a thread of {{MAGIC}} light.",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "notes": "A shared scene effect; edit it here and every scene that uses it follows."
+}

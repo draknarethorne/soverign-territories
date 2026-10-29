@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/darkness/moor-hamlet-lamplight",
+  "kind": "background",
+  "name": "Moor hamlet lamplight",
+  "description": "a huddle of grey stone cottages on a moor at dusk, a few lamplit windows and smoke bending in the fog, a black wood behind",
+  "mood": "wary, quiet",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "darkness",
+    "settlement",
+    "realistic"
+  ],
+  "notes": "The darkness homeland (realms/darkness-lands). Role 'settlement' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

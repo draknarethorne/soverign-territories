@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/lips/heart-shaped-lip",
+  "kind": "makeup",
+  "name": "Heart-Shaped Lip",
+  "description": "a heart-shaped lip - the cupid's bow sharply defined and the lip colour kept soft at the edges, in {{LIP}}, with a clean lid and fresh skin",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "lips"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

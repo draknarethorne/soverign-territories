@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/flats/mary-jane-flats",
+  "kind": "legs_feet",
+  "name": "Mary Jane Flats",
+  "description": "{{PRIMARY}} leather Mary Jane flats with a round toe and a single {{METAL}}-buckled strap",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "flats",
+    "female"
+  ]
+}

@@ -1,0 +1,370 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Likeness Engine Policy",
+  "description": "Versioned category hierarchy, score bands, action thresholds, and protection behavior for shared rebase and incremental likeness processing.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "version",
+    "status",
+    "runtimeSettings",
+    "categoryOrder",
+    "scoreBands",
+    "categoryAssignmentRules",
+    "highCastSimilarityMinimum",
+    "castReviewMinimum",
+    "smallGroupCastReviewMinimum",
+    "photoRouting",
+    "identityActions",
+    "lookalikeGroups",
+    "categoryPolicies",
+    "protection"
+  ],
+  "properties": {
+    "smallGroupMaximumUsablePhotos": {"type": "integer", "minimum": 1},
+    "runtimeSettings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mixed", "pool", "minCluster", "odd", "alike", "minFace", "multiFace", "singles", "rematch", "rematchCast", "different", "castMerge"],
+      "properties": {
+        "mixed": {"$ref": "#/definitions/pathPatterns"},
+        "pool": {"$ref": "#/definitions/pathPatterns"},
+        "minCluster": {"const": 1},
+        "odd": {"$ref": "#/definitions/score"},
+        "alike": {"$ref": "#/definitions/score"},
+        "minFace": {"type": "integer", "minimum": 1},
+        "multiFace": {"$ref": "#/definitions/score"},
+        "singles": {"$ref": "#/definitions/score"},
+        "rematch": {"$ref": "#/definitions/score"},
+        "rematchCast": {"$ref": "#/definitions/score"},
+        "different": {
+          "type": "array",
+          "items": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "string", "minLength": 1}}
+        },
+        "castMerge": {"$ref": "#/definitions/score"}
+      }
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "approved"
+      ]
+    },
+    "categoryOrder": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z][A-Za-z0-9_-]*$"
+      }
+    },
+    "scoreBands": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "green",
+        "yellow",
+        "orange",
+        "red"
+      ],
+      "properties": {
+        "green": {
+          "$ref": "#/definitions/minimumBand"
+        },
+        "yellow": {
+          "$ref": "#/definitions/minimumBand"
+        },
+        "orange": {
+          "$ref": "#/definitions/minimumBand"
+        },
+        "red": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "maximumExclusive"
+          ],
+          "properties": {
+            "maximumExclusive": {
+              "$ref": "#/definitions/score"
+            }
+          }
+        }
+      }
+    },
+    "categoryAssignmentRules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/categoryAssignmentRule"
+      }
+    },
+    "highCastSimilarityMinimum": {
+      "$ref": "#/definitions/score"
+    },
+    "castReviewMinimum": {
+      "$ref": "#/definitions/score"
+    },
+    "smallGroupCastReviewMinimum": {
+      "$ref": "#/definitions/score"
+    },
+    "photoRouting": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reviewMinimum",
+        "automaticRouteMinimum",
+        "minimumMargin",
+        "minimumOwnCoreLead"
+      ],
+      "properties": {
+        "reviewMinimum": {
+          "$ref": "#/definitions/score"
+        },
+        "automaticRouteMinimum": {
+          "$ref": "#/definitions/score"
+        },
+        "minimumMargin": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "minimumOwnCoreLead": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        }
+      }
+    },
+    "identityActions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identityClusterMinimumSimilarity",
+        "matchReviewMinimum",
+        "autoMergeMinimum",
+        "autoMergeMinimumMargin",
+        "autoMergeMinimumIndependentPhotos",
+        "splitReviewMaximum",
+        "splitMinimumAlternativeSimilarity",
+        "splitMinimumMargin",
+        "splitMinimumIndependentPhotos"
+      ],
+      "properties": {
+        "identityClusterMinimumSimilarity": {
+          "$ref": "#/definitions/score"
+        },
+        "independentEvidenceMaximumSimilarity": {
+          "$ref": "#/definitions/score"
+        },
+        "matchReviewMinimum": {
+          "$ref": "#/definitions/score"
+        },
+        "autoMergeMinimum": {
+          "$ref": "#/definitions/score"
+        },
+        "autoMergeMinimumMargin": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "autoMergeMinimumIndependentPhotos": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "splitReviewMaximum": {
+          "$ref": "#/definitions/score"
+        },
+        "splitMinimumAlternativeSimilarity": {
+          "$ref": "#/definitions/score"
+        },
+        "splitMinimumMargin": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "splitMinimumIndependentPhotos": {
+          "type": "integer",
+          "minimum": 2
+        }
+      }
+    },
+    "lookalikeGroups": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "suggestionMinimumSimilarity",
+        "automaticAssociationEnabled"
+      ],
+      "properties": {
+        "associationMaximumSimilarityExclusive": {"$ref": "#/definitions/score"},
+        "associationMinimumSimilarity": {"$ref": "#/definitions/score"},
+        "minimumIndependentPhotos": {"type": "integer", "minimum": 2},
+        "minimumReferenceMargin": {"type": "number", "minimum": 0, "maximum": 1},
+        "suggestionMinimumSimilarity": {
+          "$ref": "#/definitions/score"
+        },
+        "automaticAssociationEnabled": {
+          "type": "boolean"
+        }
+      }
+    },
+    "categoryPolicies": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^[A-Za-z][A-Za-z0-9_-]*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/categoryPolicy"
+      }
+    },
+    "protection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identityBlocksAutomaticMoves",
+        "photoBlocksAutomaticRemoval",
+        "photoBlocksReviewRouting",
+        "protectedPhotoMayBeExcludedFromCore"
+      ],
+      "properties": {
+        "automatic": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["enabled", "recipeVersion", "minimumOwnCoreSimilarity", "minimumRivalMargin", "minimumIndependentReferences", "minimumEstablishedPhotos"],
+          "properties": {
+            "enabled": {"type": "boolean"},
+            "recipeVersion": {"const": "independent-gallery-loo-v1"},
+            "minimumOwnCoreSimilarity": {"type": "number", "minimum": 0, "maximum": 1},
+            "minimumRivalMargin": {"type": "number", "minimum": 0, "maximum": 2},
+            "minimumIndependentReferences": {"type": "integer", "minimum": 2},
+            "minimumEstablishedPhotos": {"type": "integer", "minimum": 3}
+          }
+        },
+        "identityBlocksAutomaticMoves": {
+          "const": true
+        },
+        "photoBlocksAutomaticRemoval": {
+          "const": true
+        },
+        "photoBlocksReviewRouting": {
+          "const": true
+        },
+        "protectedPhotoMayBeExcludedFromCore": {
+          "const": true
+        }
+      }
+    }
+  },
+  "definitions": {
+    "pathPatterns": {
+      "type": "array", "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "score": {
+      "type": "number",
+      "minimum": -1,
+      "maximum": 1
+    },
+    "minimumBand": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "minimum"
+      ],
+      "properties": {
+        "minimum": {
+          "$ref": "#/definitions/score"
+        }
+      }
+    },
+    "categoryPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "photoRouteMinimum",
+        "photoRouteMargin",
+        "reviewAdmissionEnabled",
+        "mergeMinimum",
+        "identityProtectedByDefault",
+        "automaticMergeEnabled",
+        "automaticSplitEnabled",
+        "automaticPhotoRoutingEnabled",
+        "identityCoreMinimumSimilarity",
+        "reviewSuggestionBelowSimilarity",
+        "splitCandidateBelowSimilarity",
+        "minimumUsablePhotosForOutlierActions"
+      ],
+      "properties": {
+        "photoRouteMinimum": {"$ref": "#/definitions/score"},
+        "unmatchedOutlierSplitEnabled": {"type": "boolean"},
+        "photoRouteMargin": {"type": "number", "minimum": 0, "maximum": 2},
+        "reviewAdmissionEnabled": {"type": "boolean"},
+        "mergeMinimum": {"$ref": "#/definitions/score"},
+        "identityProtectedByDefault": {
+          "type": "boolean"
+        },
+        "automaticMergeEnabled": {
+          "type": "boolean"
+        },
+        "automaticSplitEnabled": {
+          "type": "boolean"
+        },
+        "automaticPhotoRoutingEnabled": {
+          "type": "boolean"
+        },
+        "identityCoreMinimumSimilarity": {
+          "$ref": "#/definitions/score"
+        },
+        "reviewSuggestionBelowSimilarity": {
+          "$ref": "#/definitions/score"
+        },
+        "splitCandidateBelowSimilarity": {
+          "$ref": "#/definitions/score"
+        },
+        "minimumUsablePhotosForOutlierActions": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "categoryAssignmentRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "category",
+        "minimumUsablePhotos"
+      ],
+      "properties": {
+        "category": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]*$"
+        },
+        "minimumUsablePhotos": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maximumUsablePhotos": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "minimumCastSimilarity": {
+          "$ref": "#/definitions/score"
+        },
+        "maximumCastSimilarityExclusive": {
+          "$ref": "#/definitions/score"
+        }
+      }
+    }
+  }
+}

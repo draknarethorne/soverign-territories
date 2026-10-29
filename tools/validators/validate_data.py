@@ -26,6 +26,9 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "tools" / "
 import art_layout  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "tools/art"))
+import likeness_library.metadata as likeness_metadata  # noqa: E402
+
 SCHEMAS = ROOT / "data/schemas"
 ART_SCHEMAS = ROOT / "data/art/_schema"
 
@@ -69,6 +72,10 @@ def art_piece_files():
     out = []
     for p in rglob("data/art/**/*.json"):
         parts = p.relative_to(ROOT / "data/art").parts
+        if parts == ("likeness-library.json",):
+            continue  # operational identity metadata, validated with its own schema below
+        if parts == ("likeness-engine-policy.json",):
+            continue  # shared likeness engine policy, validated with its own schema below
         if parts[0] in ("_schema", "_sets", "_kits", "_settings"):
             continue
         if parts[0] == "heroes" and (len(parts) == 3 or (len(parts) == 4 and parts[2] in art_layout.divisions(parts[1]))):
@@ -79,6 +86,8 @@ def art_piece_files():
             continue  # pet identities, not pieces
         if parts[0] in ("brand", "cards"):
             continue  # brand and card-art identities, not pieces
+        if parts[0] == "finals":
+            continue  # settings of the finals (data/art/finals/<set>.json), checked against their own schema
         if parts[0] == "themes" and parts[-1] == "theme.json":
             continue  # theme manifest, not a piece
         out.append(p)
@@ -103,6 +112,9 @@ REGISTRY = [
     ("art pieces", art_piece_files, ART_SCHEMAS / "art-piece.schema.json"),
     ("art themes", lambda: rglob("data/art/themes/**/theme.json"), ART_SCHEMAS / "theme.schema.json"),
     ("art assembly cards", lambda: rglob("data/art/_sets/**/*.json"), ART_SCHEMAS / "art-card.schema.json"),
+    ("art finals records", lambda: rglob("data/art/finals/*.json"), ART_SCHEMAS / "finals-record.schema.json"),
+    ("likeness library metadata", lambda: [ROOT / "data/art/likeness-library.json"], ART_SCHEMAS / "likeness-library.schema.json"),
+    ("likeness engine policy", lambda: [ROOT / "data/art/likeness-engine-policy.json"], ART_SCHEMAS / "likeness-engine-policy.schema.json"),
 ]
 
 # Known, tracked debt: files with no schema that actually fits them yet.
@@ -153,6 +165,21 @@ def check_instances(report, counts):
             for err in sorted(validator.iter_errors(data), key=lambda e: list(e.absolute_path)):
                 loc = "/".join(str(x) for x in err.absolute_path) or "<root>"
                 report.error(rel(f), f"[{schema_path.name}] {loc}: {err.message[:160]}")
+
+
+def check_likeness_library_references(report):
+    """Validate references between stable person, photo, and action records."""
+    path = ROOT / "data/art/likeness-library.json"
+    try:
+        data = load(path)
+    except (OSError, ValueError):
+        return  # The JSON/schema error is reported by check_instances.
+    schema_path = ART_SCHEMAS / "likeness-library.schema.json"
+    schema = load(schema_path)
+    if not Draft7Validator(schema).is_valid(data):
+        return  # The schema error is reported by check_instances.
+    for error in likeness_metadata.validation_errors(data):
+        report.error(rel(path), error)
 
 
 def check_card_art_links(report):
@@ -449,6 +476,20 @@ def check_piece_refs(report):
                 report.error(rel(f / "theme.json"), f"id must be 'themes/{group.name}/{f.name}'")
     for f in art_piece_files():
         d = load(f)
+        inc = d.get("includes")
+        if inc:
+            if d.get("description") or d.get("extends"):
+                report.error(rel(f), "a set (includes) takes its description from the pieces it includes: no description and no extends of its own")
+            for ref in inc:
+                target = ROOT / ref
+                if not target.exists():
+                    report.error(rel(f), f"includes {ref}, which does not exist")
+                    continue
+                t = load(target)
+                if t.get("kind") != d.get("kind"):
+                    report.error(rel(f), f"includes {ref} of kind {t.get('kind')!r}, but this set is kind {d.get('kind')!r}")
+                if ref == rel(f) or rel(f) in (t.get("includes") or []):
+                    report.error(rel(f), f"includes {ref}, which includes it back")
         base = d.get("extends")
         if base:
             chain, cur = [rel(f)], base
@@ -503,6 +544,10 @@ def check_piece_refs(report):
         ds = load(f).get("art", {}).get("defaultSheen")
         if ds and not (ROOT / ds).exists():
             report.error(rel(f), f"defaultSheen {ds} does not exist")
+        for key in ("defaultBaseLayer", "defaultBareBase"):
+            piece = load(f).get("art", {}).get(key)
+            if piece and not (ROOT / piece).exists():
+                report.error(rel(f), f"{key} {piece} does not exist")
         if "hairHighlights" in pal:
             if not (ROOT / pal["hairHighlights"]).exists():
                 report.error(rel(f), f"hairHighlights {pal['hairHighlights']} does not exist")
@@ -537,17 +582,85 @@ def coverage(report, counts, cards, identity_of):
         print("            without art yet: " + ", ".join(unlinked[:8]) + (" ..." if len(unlinked) > 8 else ""))
 
 
+def check_scene_recipes(report):
+    """data/art/_settings/scene-recipes.json drives the character scenes: every alignment rank, element and sister class must have a recipe, and its pieces must exist."""
+    path = ROOT / "data/art/_settings/scene-recipes.json"
+    if not path.exists():
+        return
+    where, r = rel(path), load(path)
+    elements = {"Darkness", "Fire", "Grass", "Ice", "Water", "Light", "Earth", "Lightning", "Wind", "Poison", "Neutral"}
+    for kind in ("duty", "quiet"):
+        ranks = [n for x in r.get(kind, []) for n in range(x["ranks"][0], x["ranks"][1] + 1)]
+        if sorted(ranks) != list(range(1, 11)):
+            report.error(where, f"{kind} recipes must cover alignment ranks 1 to 10 exactly once; they cover {sorted(ranks)}")
+    ids = [x["id"] for k in ("duty", "quiet") for x in r.get(k, [])]
+    if len(ids) != len(set(ids)) or {"domain", "craft", "lineup"} & set(ids):
+        report.error(where, "recipe ids must be unique and must not reuse domain, craft or lineup")
+    missing = elements - {x["element"] for x in r.get("domain", [])}
+    if missing:
+        report.error(where, f"domain has no recipe for {', '.join(sorted(missing))}")
+    missing = elements - set(r.get("celebration", {}))
+    if missing:
+        report.error(where, f"celebration maps no theme pack for {', '.join(sorted(missing))}")
+    packs = {p.parent.name for p in rglob("data/art/themes/*/*/theme.json")}
+    for element, pack in r.get("celebration", {}).items():
+        if pack not in packs:
+            report.error(where, f"celebration for {element} names the theme pack {pack!r}, which does not exist")
+    classes = {load(f).get("class") for f in rglob("data/cards/sovereign-dawn/heroes/hero-drakn*-thorne.json")} | {load(f).get("class") for f in rglob("data/cards/sovereign-dawn/heroes/hero-drakness-thorne.json")}
+    missing = {c for c in classes if c} - {x["class"] for x in r.get("craft", [])}
+    if missing:
+        report.error(where, f"craft has no recipe for the class {', '.join(sorted(missing))}")
+    roles = {x["role"] for x in r.get("realm", [])}
+    rids = [x["id"] for x in r.get("realm", [])] + ([r["haunt"]["id"]] if r.get("haunt") else [])
+    if len(rids) != len(set(rids)) or set(rids) & set(ids) | (set(rids) & {"domain", "craft", "lineup"}):
+        report.error(where, "realm and haunt recipe ids must be unique and must not reuse a duty, quiet, domain, craft or lineup id")
+    for element in elements:
+        if not (ROOT / f"data/art/realms/{element.lower()}-lands.json").exists():
+            report.error(where, f"no realm data/art/realms/{element.lower()}-lands.json for the element {element}")
+        have = {role for f in rglob(f"data/art/backgrounds/fantasy/country/{element.lower()}/*.json") for role in (load(f).get("tags") or [])}
+        if roles - have:
+            report.error(where, f"the {element} homeland has no background for the role(s) {', '.join(sorted(roles - have))} (tag it in backgrounds/fantasy/country/{element.lower()}/)")
+    for klass in {c for c in classes if c}:
+        if not rglob(f"data/art/backgrounds/fantasy/haunts/{klass.lower().replace(' ', '-')}/*.json"):
+            report.error(where, f"no haunt backgrounds for the class {klass} (data/art/backgrounds/fantasy/haunts/{klass.lower().replace(' ', '-')}/)")
+    for x in [y for k in ("duty", "quiet", "domain", "craft", "realm") for y in r.get(k, [])] + ([r["haunt"]] if r.get("haunt") else []):
+        for key in ("holding", "realm"):
+            val = x.get(key)
+            if isinstance(val, str) and val.endswith(".json") and not (ROOT / val).exists():
+                report.error(where, f"{x.get('id') or x.get('element') or x.get('class')}: {key} {val} does not exist")
+        for folder in x.get("background", []) or []:
+            if not (ROOT / "data/art/backgrounds/fantasy" / folder).is_dir():
+                report.error(where, f"{x.get('id') or x.get('element') or x.get('class')}: background folder {folder!r} does not exist")
+
+
+def check_finals_records(report):
+    """Every record in data/art/finals/<set>.json names a workflow some prompt of that set generates (Hero_Engine_Stage <- prompts/<set>/**/Hero_Stage.txt)."""
+    for path in rglob("data/art/finals/*.json"):
+        group, where = path.stem, rel(path)
+        have = {f.stem for f in (ROOT / "prompts" / group).rglob("*.txt")} if (ROOT / "prompts" / group).is_dir() else set()
+        if not have:
+            report.error(where, f"no prompts/{group}/ folder: the file name must be a prompt set")
+            continue
+        for name in load(path).get("finals", {}):
+            hero, _engine, stage = name.split("_", 2)
+            if f"{hero}_{stage}" not in have:
+                report.error(where, f"{name}: no prompt {hero}_{stage}.txt in prompts/{group}/")
+
+
 def main():
     report = Report()
     counts = {}
     check_schemas_valid(report)
     check_instances(report, counts)
+    check_likeness_library_references(report)
     cards, identity_of = check_card_art_links(report)
     check_art_cards(report)
     check_variants(report, cards)
     check_kits(report)
     check_pets(report)
     check_piece_refs(report)
+    check_scene_recipes(report)
+    check_finals_records(report)
     check_animation_cards(report)
     coverage(report, counts, cards, identity_of)
     if report.errors:

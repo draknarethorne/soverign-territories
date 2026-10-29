@@ -1,0 +1,21 @@
+{
+  "artId": "female-edit-deluxe-clothed-reclining",
+  "kind": "base-set",
+  "stage": "edit",
+  "heroArt": "data/art/heroes/angel-primes/alpha/female.json",
+  "template": "data/art/_templates/heroes/0_Edit/edit-reference-human.txt",
+  "output": "prompts/angel-primes/alpha/Female/0_Edit/deluxe/Female_Edit_Deluxe_Clothed_Relaxing.txt",
+  "denoise": "~0.7-0.8",
+  "edit_name": "Deluxe fully-clothed bedroom: relaxed recline",
+  "components": {
+    "edit_task": "data/art/edits/deluxe/bedroom-clothed.json",
+    "face_policy": "data/art/edits/policies/face-preserve.json",
+    "hair_policy": "data/art/edits/policies/hair-preserve.json",
+    "body_policy": "data/art/edits/policies/body-preserve.json",
+    "clothing_policy": "data/art/edits/policies/clothing-preserve.json",
+    "view": "data/art/studio/views/body/deluxe-relaxed-recline.json",
+    "framing": "data/art/edits/policies/framing-full-length.json",
+    "background": "data/art/backgrounds/modern/bedroom-soft-neutral.json"
+  },
+  "notes": "Select an original or chosen render as input. Output is synthetic and never identity-core evidence. Keeps the same fully clothed outfit in every audition. The source prompt contributes only a photorealistic bedroom, soft even neutral frontal light and wide full-figure framing; its original pose and wardrobe directions are excluded."
+}

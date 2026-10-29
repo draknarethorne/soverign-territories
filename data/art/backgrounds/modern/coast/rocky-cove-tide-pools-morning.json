@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/coast/rocky-cove-tide-pools-morning",
+  "kind": "background",
+  "name": "Modern: rocky cove, morning",
+  "description": "a rocky cove at low tide in the early morning, dark wet rocks and shallow tide pools, pale sea mist and a soft grey-blue sky",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "coast"
+  ],
+  "notes": "Real-world location for realistic scenes; pair with components.realm = realms/modern.json."
+}

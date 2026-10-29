@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
-"""Tests for piece `extends` in gen_prompt.load_piece, using throwaway pieces (no real art data is read).
+"""Tests for reusable piece resolution and the shared edit prompt's token contract.
 
-Run: python tools/generators/test_gen_prompt_extends.py
+Most tests use throwaway pieces; the edit-pilot integration test reads the real
+assembly card and template without writing generated output.
+
+Run: python -m unittest tools.generators.test_gen_prompt_extends
 """
 import json
 import pathlib
+import re
 import shutil
 import sys
 import tempfile
@@ -36,6 +40,21 @@ class ExtendsTests(unittest.TestCase):
     def test_a_piece_without_extends_is_unchanged(self):
         p = self.put("a.json", description=self.BASE)
         self.assertEqual(gp.load_piece(p)["description"], self.BASE)
+
+    def test_a_set_joins_the_descriptions_of_the_pieces_it_includes(self):
+        self.put("ring.json", description="a slim {{METAL}} band.")
+        self.put("ear.json", description="small {{METAL}} studs")
+        p = self.put("set.json", includes=["ring.json", "ear.json"])
+        out = gp.load_piece(p)
+        self.assertEqual(out["description"], "a slim {{METAL}} band; small {{METAL}} studs")
+        self.assertNotIn("includes", out)
+
+    def test_a_set_can_include_a_piece_that_extends_a_frame(self):
+        self.put("base.json", description="a pendant of [[SHAPE]]")
+        self.put("hero.json", extends="base.json", vars={"SHAPE": "a curved feather"})
+        self.put("ring.json", description="a slim band")
+        p = self.put("set.json", includes=["hero.json", "ring.json"])
+        self.assertEqual(gp.load_piece(p)["description"], "a pendant of a curved feather; a slim band")
 
     def test_base_placeholder_splices_the_base_text(self):
         self.put("base.json", description=self.BASE)
@@ -142,6 +161,68 @@ class SlugFilterTests(unittest.TestCase):
         self.assertTrue(all("/alpha/female/" in p.as_posix() for p in paths), "only the alpha test hero")
         self.assertTrue(all("/female/azaline/" not in p.as_posix() for p in paths))
         self.assertTrue(any("/female/azaline/" in p.as_posix() for p in gp.iter_card_paths(group="angel-primes", slug="azaline")), "a normal angel is still found by her slug")
+
+
+class ArtPromptIntegrationTests(unittest.TestCase):
+    def test_prime_outfit_auditions_reuse_preservation_controls_in_the_correct_stage(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        folder = root / "data/art/_sets/angel-primes/alpha/female/1_Alpha/1_Prime"
+        cards = sorted(folder.glob("female-alpha-prime-outfit-*.json"))
+        self.assertEqual(len(cards), 2)
+        for path in cards:
+            card = json.loads(path.read_text(encoding="utf-8"))
+            tokens = gp.generate(path.relative_to(root).as_posix(), tokens_only=True)
+            template = (root / card["template"]).read_text(encoding="utf-8")
+            self.assertEqual(card["stage"], "alpha")
+            self.assertIn("/1_Alpha/1_Prime/", card["output"])
+            self.assertEqual(set(re.findall(r"{{(\w+)}}", template)) - tokens.keys(), set())
+            self.assertIn("fully clothed in the same outfit", tokens["CLOTHING_POLICY"])
+            self.assertIn("recognizable face", tokens["FACE_POLICY"])
+
+    def test_reference_edit_cards_resolve_policies_without_fixed_identity(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        cards = sorted((root / "data/art/_sets/angel-primes/alpha/female/0_Edit").rglob("*.json"))
+        self.assertGreaterEqual(len(cards), 6)
+        for path in cards:
+            card = json.loads(path.read_text(encoding="utf-8"))
+            with self.subTest(card=card["artId"]):
+                tokens = gp.generate(path.relative_to(root).as_posix(), tokens_only=True)
+                template = (root / card["template"]).read_text(encoding="utf-8")
+                required = set(re.findall(r"{{(\w+)}}", template))
+                self.assertEqual(required - tokens.keys(), set())
+                self.assertEqual(tokens["DENOISE"], card["denoise"])
+                if "face_policy" in card["components"]:
+                    self.assertIn("recognizable face", tokens["FACE_POLICY"])
+                    self.assertIn("fully clothed in the same outfit", tokens["CLOTHING_POLICY"])
+                    self.assertIn("visible body proportions", tokens["BODY_POLICY"])
+                    self.assertNotIn("Angelica", " ".join(tokens[k] for k in required))
+
+    def test_three_quarter_poses_are_distinct_and_not_locked_to_a_pose(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        folder = root / "data/art/_sets/angel-primes/alpha/female/0_Edit/pose"
+        resolved = {}
+        for path in folder.glob("*.json"):
+            card = json.loads(path.read_text(encoding="utf-8"))
+            tokens = gp.generate(path.relative_to(root).as_posix(), tokens_only=True)
+            resolved[card["artId"]] = tokens["VIEW"]
+            self.assertNotIn("same A-pose", tokens["VIEW"])
+        self.assertIn("one hand resting naturally on the hip",
+                      resolved["female-edit-pose-relaxed-three-quarter"])
+        grounded = resolved["female-edit-pose-grounded-three-quarter"]
+        self.assertIn("both feet flat on the floor", grounded)
+        self.assertIn("forward knee softly bent", grounded)
+
+    def test_generic_edit_pilot_fills_every_template_token(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        card_path = "data/art/_sets/angel-primes/alpha/female/0_Edit/cleanup/female-edit-cleanup-basic.json"
+        with mock.patch.object(gp, "ROOT", root):
+            card = json.loads((root / card_path).read_text(encoding="utf-8"))
+            tokens = gp.generate(card_path, tokens_only=True)
+            template = (root / card["template"]).read_text(encoding="utf-8")
+
+        required = set(re.findall(r"{{(\w+)}}", template))
+        self.assertEqual(required - tokens.keys(), set())
+        self.assertTrue(tokens["EDIT_TASK_NEG"])
 
 
 if __name__ == "__main__":

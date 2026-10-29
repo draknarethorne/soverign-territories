@@ -1,0 +1,184 @@
+# Likeness reorganisation, Oct 9, 2026: what was done, why, and where to look next
+
+**Disposition:** archived historical evidence, reconciled 2026-10-25.
+**Result:** dated outcomes and verbatim user notes are preserved whole below.
+Enduring preferences, cache/core rationale, Artist isolation, naming and
+recovery boundaries live in the active
+[curation contract](../likeness-curation-contract.md#enduring-rationale-from-the-oct-911-reorganisation);
+pairing rationale lives in the active
+[library context](../library-reconciliation-context.md#pairing-score).
+Old pending checks are not silently completed: current intake/cast/engine and
+action plans own real acceptance. Archival neither approves historical
+thresholds nor authorizes repeating old commands, swaps or backup restores.
+
+> Historical run record, not current instructions. Counts, paths, pairings and
+> commands below describe Oct 9 only. Use [likeness.md](../likeness.md) for supported
+> commands, [original-photos.md](../original-photos.md) for recovery/maintenance, and
+> [STATUS.md](../../STATUS.md) for current state. Do not replay these operations
+> or restore this dated backup as a routine cleanup step.
+
+Everything in your photo library (`B:\Soverign Territories`: Angels, Models, Prospects, Artists) was sorted by the face in each photo. The sisters were checked as a family with Drakness as the anchor, and the angels were paired to the sisters. The folders on disk are already in their new shape, every name follows its folder, and the scaled 944x1104 copies are made. The angel photos are set in `workspaces.json` and in the Angel Primes workflows.
+
+This page records what happened and what is left for you to judge. The tool is described in [likeness.md](../likeness.md); photo naming is in [original-photos.md](../original-photos.md).
+
+## Short version
+
+| Question | Answer |
+| --- | --- |
+| Are the sisters one family? | Mostly. Drakness (the anchor) is the middle of a spread; **Drakneta** is the one furthest from her (her photos score -0.41 against Drakness, the lowest of any person in the library), **Drakniya** is also in the bottom 10%. No sister was swapped (see "Sisters"). |
+| Did the sister folders hold other people? | Yes, in one case. **Draknoxa**: 24 of her 39 photos were clearly another woman. They left her folder (she keeps 4, with 12 set aside to review). That other woman is now **Ravaelle's** face. |
+| Angels | 7 of 10 angel slots got a new face paired to her sister (Ravaelle, Haniya, Gavrielle, Sandalyn, Remiah, Sammara, Nyxene); 3 have no good candidate yet and stayed as they were (Seraphine, Azaline, Camaris). Angelica was left alone. |
+| `Prospects\Various` | Empty. Every photo with a usable face is in a named person folder (invented names where needed). |
+| Artists | Grouped by face into people inside each artist's folder (20 people, e.g. `Pierre\Mara Locke`). |
+| Safety | A full copy of every folder as it was is in `_backup\2026-10-09-before-likeness-reorg`. Nothing was deleted. |
+
+## Safety net
+
+- **Backup:** `B:\Soverign Territories\_backup\2026-10-09-before-likeness-reorg` holds all 990 photos (galleries, `gallery_org`, `review`) exactly as they were, with `manifest.json` (path, size and hash of each file) and the old `workspaces.json`.
+- **`review` folders:** a photo that was doubtful stayed with its person, in a `review` folder next to `gallery` (Drakness 14, Draknoxa 12, Drakneta 8, Draknava 6, and a few elsewhere). Look at these first; move the good ones back into `gallery` and run `bin\originals.cmd`.
+- **`_retired`:** a person folder that was emptied (because all her photos became an angel) was moved to `B:\Soverign Territories\_retired`, not deleted: Prospects Adrianna Cruz, Tove North, Iris Nash, Lia Joyce, and Artists Fantasy\Jade Beck and Pierre\Xena Orr.
+- **`gallery_944x1104_org`:** scaled copies of anything that moved are archived here. **Undo:** `bin\likeness.cmd undo --apply` puts back the last batch of moves (each batch is logged); the backup restores everything.
+- **Reports and contact sheets** (the face grids): `B:\Soverign Territories\_reports\2026-10-09-likeness-reorg`.
+
+## What was done, in order, and why
+
+1. **Backup first** (above), then the tool was extended: `clean`, `group`, `sisters`, `pairs` and `sort --singles`, with tests. The reasoning behind each is below.
+2. **Calibrated the scores on your library.** The face model rates almost every glamour face as alike unless the library's average face is subtracted; with that done, the right folder is the best match for 91% of photos. All scores below use that, so read them as a ranking inside your library (0.55 and up is the same person; 0.30 to 0.45 is very alike; below 0.15 is different people).
+3. **Anchored each person on what you chose**, not on the folder's average, so a few strangers cannot drag her identity away. Her chosen photo and her ComfyUI renders (the sisters' old `X_Pose` renders, the angels' saved candidates) are the anchor. Angelica's anchor is the three photos you named (`likeness.anchors` in `workspaces.json`). If her renders look like someone else than her chosen photo, nothing is sent away; the doubtful photos go to `review` instead.
+4. **Cleaned the sisters** (`clean --group Models`). A sister's folder only loses a photo that is clearly someone else (score below 0.05); photos in between go to her `review` folder. Result: 26 left the sister folders for the pool, 47 went to `review`.
+5. **Cleaned the angels and prospects** the same way (6 and 12 photos). Angelica's 9 photos all agree with your three anchors, so she did not change.
+6. **Grouped each Artist folder by face** (`group`): Fantasy 10 people, Her Legends 1, Maridos 2, Pierre 7. A group needs 3 or more photos; anything else stays with the artist. The names are invented but stable, and renaming a folder renames its files.
+7. **Emptied `Prospects\Various`** (`sort --singles`): 72 photos (the original 44, plus the 26 sent away from the sisters, plus 2). 3 matched an existing angel (2 to Angelica, 1 to Remiah); the rest became new Prospect folders, 12 of them with a single photo each because that face appears once.
+8. **Checked the sisters as a family** (`sisters`), then **paired the angels** (`pairs`): see below.
+9. **Ran the rename script** (`originals`) after every step, so all names follow their folders, the scaled copies are current, and the chosen photos are re-pointed.
+
+## Sisters
+
+Drakness is the anchor, as in the story. A sister is flagged "vastly unlike" when she is in the bottom 10% of the library against Drakness; the sisters are different women, so only the extremes matter.
+
+| Sister | Photos | Her old renders match her photos | Photos vs Drakness | Library percentile | Verdict |
+| --- | --- | --- | --- | --- | --- |
+| Drakness | 78 | 0.67 | anchor | - | ok |
+| Draknara | 40 | 0.60 | -0.15 | 25% | ok; looks like Draknoxa 0.35 |
+| Draknava | 41 | 0.60 | -0.06 | 52% | ok |
+| Drakneta | 32 | **0.25** | -0.41 | **0%** | far from Drakness; her renders do not match her photos |
+| Draknira | 34 | 0.42 | -0.03 | 57% | ok; looks like Draknisa 0.37 |
+| Draknisa | 28 | 0.73 | -0.14 | 30% | ok |
+| Drakniss | 55 | 0.70 | -0.08 | 42% | ok |
+| Drakniya | 24 | 0.67 | -0.27 | 10% | far from Drakness |
+| Draknora | 26 | 0.55 | 0.03 | 78% | ok; the closest to Drakness |
+| Draknoxa | 4 (+12 to review) | 0.63 | 0.04 | 78% | ok, but a thin folder now |
+
+What to know:
+
+- **Draknoxa** lost most of her folder: the 24 photos that did not match her chosen photo or her renders were another woman. Her real set is 4 clear photos and 12 in `review`. If you want more of her, look at `Models\Draknoxa\review`.
+- **Drakneta** is your favourite look (the hook and the subtle divergence as the lightning sister), so she is **kept as she is**: her photo is in `likeness.keepPhoto` and no tool will change it. For the record, her photos score lowest against Drakness (-0.41), and the renders you liked for her look like a different woman than her photos (0.25). That is the divergence you like, not a defect. Her angel Remiah was paired against her as she is.
+- **Drakniya** is in the bottom 10%; treat like Drakneta if you want a tighter family.
+- The renders the sisters made look like their own photos at 0.55 to 0.73, so the Qwen workflow keeps the face reasonably well; for Drakneta and Draknira (0.25, 0.42) it drifts.
+
+## Angels
+
+Each angel is paired to the sister of her element (from the codex). The target is similar but not the same: 0.15 to 0.40 against the sister (the library average is 0.0, and 0.30 is already in the top 5% of pairs); not alike any other angel or sister; coherent (a person needs 4 or more photos that agree on one face). An angel only changed when the replacement is in that band. An angel who was a near twin of a fixed angel (Angelica) was replaced even below the band.
+
+| Angel | Sister | Was (vs sister) | Now (vs sister) | Source of the new face | Note |
+| --- | --- | --- | --- | --- | --- |
+| Angelica | none (neutral herald) | unchanged | unchanged | your 3 photos | all 9 photos agree; resembles Draknoxa 0.33 |
+| Seraphine | Drakniss | 0.03 | 0.03 | unchanged | **no candidate in the band**; closest is Draknisa 0.37 (a different sister) |
+| Ravaelle | Draknisa | 0.03 | 0.14 | Prospects\Lia Joyce (23 photos) | was 0.68 like Angelica; new face is the woman who was in Draknoxa's folder |
+| Haniya | Drakniya | 0.04 | 0.23 | Prospects\Kylie Voss (6) | |
+| Gavrielle | Draknava | -0.03 | 0.11 | Prospects\Iris Nash (6) | was 0.54 like Angelica and 0.49 like Draknoxa; below the band |
+| Sandalyn | Draknara | 0.16 | 0.21 | Artists\Fantasy\Jade Beck (5) | AI art; check |
+| Remiah | Drakneta | -0.11 | 0.19 | Artists\Pierre\Xena Orr (6) | stylised silver-haired art; check |
+| Azaline | Draknira | -0.10 | -0.10 | unchanged | **no candidate in the band** (best Pierre\Mara Locke 0.13) |
+| Camaris | Draknora | -0.04 | -0.04 | unchanged | **no candidate in the band** (best Xena Quill 0.05) |
+| Sammara | Draknoxa | 0.50 | 0.33 | Prospects\Adrianna Cruz (6) | was too alike her sister |
+| Nyxene | Drakness | 0.09 | 0.28 | Prospects\Tove North (6) | close to Drakness on purpose; check she is not too close |
+
+- **Published:** the angel's folder (`Angels\<name>\gallery`) holds all the photos of the new face, and `Angels\<name>\review` holds the photos she had before. The best single photo of the new face (clear, single face, large, portrait) was set as the angel's photo in `workspaces.json`, copied to `ComfyUI-Inputs\Angel Primes`, and written into the repo and Angel Primes `Alpha_1_Prime` workflows.
+Check: all 11 angel workflows load the photo named in the config, and all 11 files exist in the input folder.
+- **Hand-made workflows** (candidates, finals, curated, shots) were not changed, so your saved candidates still load the photos you used.
+- **Male angels** were not touched: no photos yet, and the pairing is woman-to-sister only.
+- The sheet `pairs_final.png` shows each sister above her angel's photos.
+
+## The library now
+
+- **Angels** (all 11 folders keep their names): Angelica 11, Ravaelle 23, Sammara 10, Haniya 7, Gavrielle 6, Nyxene 6, Remiah 6, Sandalyn 5, Seraphine 1, Azaline 1, Camaris 1.
+- **Models** (sisters): Drakness 78, Draknava 41, Draknara 40, Drakniss 55, Draknisa 28, Draknora 26, Draknira 34, Drakneta 32, Drakniya 24, Draknoxa 4.
+- **Prospects:** about 29 named people; the larger ones are Mia 36, Amira Vale 21, Brielle 23, Rachel Pizzilato 21, Aria Muse 20, Eva Emily 18, Sophie 16, Elria Monroe 9, Charlotte Hayes 8, and about 18 small new folders with invented names. `Various` is empty.
+- **Artists:** each artist folder keeps the photos that matched no one; the people are inside (e.g. Pierre: Mara Locke 98, Elise Frost 14, Gia West 9, Vera Lane 4, Xena Orr 6 now retired, Jules Thorn 3, Maren Cole 3; Maridos: Odette Hart 38, Freya Marsh 10; Fantasy: 10 people of 3 to 9).
+- 917 photos in galleries in total.
+
+## Ready to regenerate the 1_Prime images (checked the same evening)
+
+`bin\likeness.cmd photos` picked the 1_Prime photo for every angel: each already holds her best photo, so nothing changed. The sisters keep the photos you chose (a better-scoring photo in three folders was a different look, so it was only reported). Drakness, Angelica and Drakneta are locked.
+
+For all 11 women angels (Angel Primes) and all 10 sisters (Drakn Sisters) it was checked that: the photo named in `workspaces.json` exists in that workspace's input folder at 944x1104; the `Alpha_1_Prime` workflow in the workspace loads exactly that photo; and the repo copy does too. All 21 passed. The 11 men have placeholder photos, so there is nothing to render for them yet.
+
+Open in ComfyUI: Angel Primes `female\<Name>\1_Alpha\1_Prime\<Name>_Qwen_Alpha_1_Prime`, or Drakn Sisters `<Sister>\1_Alpha\1_Prime\<Sister>_Qwen_Alpha_1_Prime`. Reload the workflow list first.
+
+## Where to look next (in this order)
+
+1. **Review the pairs** in `pairs_final.png`: are the new angel faces what you want next to their sisters? Anything you dislike, send back with `likeness retire NAME` (or move photos by hand) and run `bin\likeness.cmd pairs --sister <Sister> --apply` to pick again.
+2. **Bring candidates for Seraphine, Azaline and Camaris**, and better ones for Ravaelle and Gavrielle (below the band). Drop new photos into `Prospects\Various\gallery`, then `bin\likeness.cmd sort --singles --apply`, then `pairs`.
+3. **Drakniya** is in the bottom 10% against Drakness; keep her unless you want a tighter family (Drakneta is kept on purpose).
+4. **Open the `review` folders** (Drakness 14, Draknoxa 12, Drakneta 8, Draknava 6) and move the good ones back to `gallery`.
+5. **Draknoxa:** decide if 4 clear photos are enough.
+6. **Run a few renders** in ComfyUI for the 7 angels whose photo changed (Ravaelle, Haniya, Gavrielle, Sandalyn, Remiah, Sammara, Nyxene): their Alpha 1 Prime workflows load the new photo already.
+7. **Check the two AI-art faces** (Sandalyn and Remiah): the face model is less reliable on illustration, so look at them yourself.
+8. The 5 Artist groups below 0.45 agreement were not used as candidates (Nia Nash, Una Ames, Wren Ellery, Gia West, Vera Lane): they may be more than one person.
+
+## Doing it again
+
+| You want to | Command |
+| --- | --- |
+| Is this folder one person, and who else looks like her | `bin\likeness.cmd folder NAME` |
+| Clean one folder (a stranger goes to the pool, a doubtful photo to `review`) | `bin\likeness.cmd clean NAME --apply` |
+| Sort a new batch dropped into `Prospects\Various` | `bin\likeness.cmd sort --singles --apply` |
+| Split an Artist's photos into people | `bin\likeness-artists.cmd group` (preview; Oct 23 entry-point split, add `--apply` only after review) |
+| Check the sisters as a family | `bin\likeness.cmd sisters` |
+| Re-pair one angel after you change her sister | `bin\likeness.cmd pairs --sister Drakneta` (then `--apply`) |
+| Put the last batch of moves back | `bin\likeness.cmd undo --apply` |
+
+## Follow-up, Oct 10
+
+- **Review photos:** `likeness review --apply` moved 19 of the 71 photos in `review` folders. Draknoxa's 12 other-woman photos went to Ravaelle (the same face as her new one), 3 to Angelica, 1 to `Artists\Maridos\Freya Marsh`, and 1 each to Draknara, Drakneta and Draknora. 52 stay in `review` (Drakness 14, Drakneta 7, Draknava 5, Drakniya 3, and a few more).
+- **Is "Sabine Vale" a better Seraphine? No.** "Sabine Vale" is the name the simulation invented for 8 of Drakness's 14 `review` photos, one tanned brunette (agreement 0.68); she is not a folder. Against Seraphine's sister **Drakniss** she scores -0.12, below the band (Seraphine today: 0.03), because she is the opposite of Drakniss's fair blonde look.
+- **Where she would fit:** she looks like **Drakness** (0.29) and **Draknoxa** (0.27), so she would suit the Nyxene slot (Drakness's pair) about as well as Tove North (0.28), and she is only 0.16 from Nyxene's current face.
+- **Seraphine still needs a candidate:** the closest existing people to Drakniss are Angelica (0.22; fixed, so not eligible), `Pierre\Maren Cole` (0.19, 3 photos of art) and Prospects Ivy Drake and Elria Monroe (0.11). Bring photos of a fair, sun-kissed blonde and run `sort --singles`, then `pairs --sister Drakniss`.
+
+## Limits
+
+- The face model was trained on real photos. It separates the people in this library well (91% right) but is less reliable on illustrated or heavily stylised art, closed eyes and turned heads; two faces in a picture are marked "unsure".
+- "Similar but not the same" is a score band (0.15 to 0.40), not a judgement of looks; change `pairLow`, `pairHigh` or `--target` to move it. A face that looks right to you at 0.10 or 0.35 is allowed.
+- Hair colour, outfit and background are ignored on purpose: the angel prompts set hair and eye colours themselves, so only the face is compared.
+
+## Raw notes: the cache (Oct 9)
+
+Your words, kept as written (only wrapped).
+
+If I remove a file from a directory like `B:\Soverign Territories\Prospects\Rhea Ives`, will it also be removed from any cache that might be storing it?  Basically, if I clean-up any files from a gallery, what impact will that have on the cached versions?  Will they be automatically updated or do I need to manually
+clear the cache to reflect the changes?  And what outcome will that have on matching - like if I find a photo that has a picture of multiple people one male and one female and then I see other pictures of males dropping into the females folder because of the male that was also in her folder.  How do I handle that to
+get things clean.  That's the Elise Frost problem I am noticing.  I havent' checked enough other ones to validate - but I did see it there and it's a possibilty when I pull more art files it's likely to happen.  I need to understand the cache behavior to ensure that my clean-up efforts are effective and that the
+matching remains accurate.
+
+## Raw notes: can the tool tell if faces match (Oct 9)
+
+Your words, kept as written (only wrapped).
+
+I'm wondering if there is a way for you to analyze images and whether or not they are the same likeness in images or are different people - the reason is that I think some are different people and some are same - but I am guessing and in some cases the output from comfyui for two different angels look very close -
+specifically angelica and azaline ... even within angelica I am not sure if they are all same person or different.  I imagine that's complex and not sure if that can be done - or if it's just for me to eyeball if they end up looking same and pick another prospect and move that back into various.  Basically - I want to
+know if the faces match - less about the outfits, figures, etc... will the faces come across the same.  We can focus on angelica and azaline as the test bed - but ideally if we can script things, we'd re-organize some photos based on likeness of the faces somehow.  IF that all makes sense?  That would make things
+easier for how I am trying things out - sometimes I put in images that I know are different to test with - sometimes I think they are all going to render similar because I know they are different.  But it's all eyeballing things, testing and then worrying about one sister or angel looking the same because I
+accidentally used the same person in the original across the workflows.  If it's complex - then I'll just continue to eyeball and shuffle pictures around myself - but automating things would help if somehow that is possible.
+
+## Raw notes: the sisters against Drakness (Oct 9)
+
+Your words, kept as written (only wrapped).
+
+Circle back on all the sisters and see if they are all similar enough to be sisters.  If any look too vastly different, we can consider changing the sister to another one. Since the story is based on Drakness - she's always the same and if we compare them as a group - she's the anchor sister.  That's how the story
+starts and is written up in the initial bible.md - I believe.  So we're trying to build the images that will align to the story, ensuring we have proper sisters and angel pairs.  Exception is Angelica who is also one I have hand chosen for her as well.  Basically Drakness drives almost everything with Angelica my prime
+angel.
+
+I know we may iterate, reorg and such - but I think this is a systematic way to get things re-organized and if I chose poorly on angels, we're fixing that up.  If I chose good on sisters, that's great.  If not, we can revisit any sister and then iterate again on angel pairs.
+
+This process will also help if I just bring in a new batch of Various photos and want to evaluate using them. It'll help with any Prospect as well and Artist that I want to learn from.  Building out a comprehensive library of scaled photos for me to play with.

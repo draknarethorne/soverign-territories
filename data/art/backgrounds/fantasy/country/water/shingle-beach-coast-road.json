@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/water/shingle-beach-coast-road",
+  "kind": "background",
+  "name": "Shingle beach coast road",
+  "description": "a narrow coast road above a shingle beach with a low stone wall, sea thrift and grey-green waves, thin salt mist and pale light",
+  "mood": "open, salty",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "water",
+    "road",
+    "realistic"
+  ],
+  "notes": "The water homeland (realms/water-lands). Role 'road' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

@@ -1,0 +1,48 @@
+=== Drakneta Thorne · Alpha 1b Bare Base: the first shot as a bare figure (group: Alpha, experiment) — Build (img2img) ===
+Incoming image: a real/AI source photo of the subject (the full photo, a frame, or a headshot). Builds her bare, head-to-toe A-pose figure directly: the face and skin tone from the photo, her build from the art data, nothing to take off later. The Bare Figure step is not needed after this one: this image is the body master. Experiment: compare with the swimsuit Prime and the neutral base. Denoise ~1.0.
+
+----------------------------------------------------------------
+prompt:
+
+Remove the source outfit and build the full figure from the reference image in the bare-skin result described below.
+
+Critical details - these must be clearly visible:
+Hair: light golden-brown dark-blonde hair, sleek and sultry, a few bold, sharp electric white-silver streaks forked like lightning bolts through the lengths, noticeably bright against the base colour and catching the light, tone-on-tone dimension.
+Bust: full, generous, well-rounded bust, firm and high with a pronounced inner curve, generous natural detail, lifted and pressed toward the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
+Eyes: dark storm-charcoal, almost black irises with radiating white-hot gold striations and a thin bright electric-gold limbal ring.
+Skin: warm golden tan complexion, evenly tanned.
+
+Professional head-to-toe, full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+
+Background: a plain neutral light-grey seamless studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
+
+Maintain strict fidelity to the reference image's facial features and facial bone structure; the Critical details above override the reference.
+
+Face: copied exactly from the reference image: the same bone structure, eye shape and spacing, brows, nose, lips and jawline.
+
+From the reference: her face and her skin tone. Everything else is built as described here.
+
+Head: facing the camera squarely, as the same person, even when it is turned or tilted in the reference.
+
+Framing: the whole body from the top of the head to the feet in the picture, standing; where the reference shows only her head and upper body, continue the figure downward to the feet.
+
+Standing A-pose: upright, feet apart, arms relaxed slightly away from the sides, open hands; head level and facing the camera squarely, shoulders square and relaxed (replace the source photo's pose, head tilt and body angle entirely).
+
+Body: shape the figure to this individual build, whatever the reference shows: tall, statuesque celestial build; ultra-long-limbed, commanding and radiant; taut, perfectly flat midriff; narrow waistline with seamless transitions into the hips; long, slender arms with fine, elegant hands; shapely feminine hips, gently curved, narrow and regal, with a high-waisted line; exceptionally long, statuesque legs with sharp, clean shin contours.
+
+Wearing: nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping her natural skin tone (warm golden tan complexion, evenly tanned), including the shoulders, arms, back, stomach, hips, thighs, legs and bare feet; the natural shape, fullness and cleavage of the bust stay clearly visible.
+
+Hair: hair fully let down and loose, parted in the exact centre, the front sections swept slightly back and away from the face so the eyes, brows and temples are fully clear, the rest falling forward over the front of both shoulders to rest on the shoulders and upper arms beside the breasts, full length and ends visible, keeping the subject's own natural texture; chest and décolletage open; a very slight lift from a light breeze below (fully replace the source photo's hairstyle).
+
+Makeup: soft and natural - champagne-gold-toned eyeshadow, a light natural golden peach blush, groomed golden-brown brows, softly defined eyes. Reset any heavy makeup from the source photo. Fingernails and toenails natural or Light Gold.
+
+Eyes: both eyes matched, level and symmetrical, wide open and looking straight at the camera, crisp catchlights; dark brown lush lashes.
+
+Lips: natural, subtle golden-peach-tinted satin - keep lips natural.
+
+Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth, the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open, chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
+
+----------------------------------------------------------------
+negative prompt:
+
+bikini, black bikini, swimsuit, bra, panties, thong, straps, strings, ties, waistband, lingerie, lace, fabric, chains, jewelry, shoes, pasties, stickers, body paint, painted body, white spots, polka dots, dark clothing, headshot, close-up, cropped body, cropped feet, censored, blurred, mosaic, extra people, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, amber eyes, topaz eyes, light brown eyes, wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, pout, asymmetrical eyes, crossed eyes, eyes looking away, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, hair covering breasts, ponytail, bun, updo, braids, hair tied back, hair pulled up, pinned-up hair, bangs, side part, hair covering eyes, hair across the face, all-over blue hair, all-over cyan hair, fully dyed hair, pale skin, fair skin, washed-out skin, heavy makeup, illustration, painting, 3d render, cgi, cartoon, anime, airbrushed, plastic skin, text, watermark, logo.

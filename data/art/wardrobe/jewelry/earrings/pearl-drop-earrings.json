@@ -1,0 +1,19 @@
+{
+  "id": "wardrobe/jewelry/earrings/pearl-drop-earrings",
+  "kind": "jewelry",
+  "name": "Pearl Drop Earrings",
+  "description": "pearl drop earrings on short {{METAL}} posts, each pearl a soft white",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "earring",
+    "pearl",
+    "drop",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

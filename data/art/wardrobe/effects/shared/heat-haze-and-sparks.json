@@ -1,0 +1,11 @@
+{
+  "id": "wardrobe/effects/shared/heat-haze-and-sparks",
+  "kind": "effects",
+  "name": "Heat haze and sparks",
+  "description": "A faint heat shimmer rises around her and a few small {{MAGIC}} sparks float upward and fade.",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "notes": "A shared scene effect; edit it here and every scene that uses it follows."
+}

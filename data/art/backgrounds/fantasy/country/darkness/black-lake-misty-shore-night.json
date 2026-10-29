@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/darkness/black-lake-misty-shore-night",
+  "kind": "background",
+  "name": "Black lake misty shore night",
+  "description": "the shore of a black lake at night under a thin moon, mist lying on the water and dead reeds, a drowned stone jetty",
+  "mood": "still, cold",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "darkness",
+    "night",
+    "realistic"
+  ],
+  "notes": "The darkness homeland (realms/darkness-lands). Role 'night' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

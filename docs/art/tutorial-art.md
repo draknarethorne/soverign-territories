@@ -5,16 +5,32 @@ test, or a new hero. It assumes nothing. The reference for *why* the folders are
 [data/art/README.md](../../data/art/README.md); this page is the *how*. For animation see
 [tutorial-video.md](tutorial-video.md).
 
+> **Current migration boundary (Oct 2026):** The `edit` stage is now supported by the schemas,
+> layout and workflow routing. One generic Female `0c_Cleanup_Basic` card, prompt template and
+> repository workflow have been generated as a pilot; it has not been deployed. The remaining
+> manual edit variants and revised Prime/Bare prompts are not migrated, and the stage-input and
+> promoted-output contracts remain open. See [the active plan](../plans/2026-10-22-manual-prompts-to-art-library.md).
+>
+> The agreed progression is image-first and branchable: the user selects a source and a compatible
+> stage, then explicitly chooses which results to advance or promote. `0_Edit` is optional, not
+> mandatory intake cleanup or a prerequisite to every Alpha job.
+>
+> The separate [Sovereign Females rendering pilot](../../workflows/README.md#offline-reference-rendering-foundation)
+> can export Gallery batches and execute isolated manual graph bindings. That live transport proof
+> and the shared data-driven edit recipe are separate paths; neither is broad recipe acceptance.
+
 ## The model in one minute
 
-You never write a prompt. You write small JSON files that the generator turns into prompts.
+Production prompts are generated from small JSON files; ordinary art-data work changes the
+source data and regenerates the output. Manual drafts under `prompts/_edit/` are a separate,
+active migration source, not generated output.
 
 | Kind of file | Where | What it is | Example |
 | --- | --- | --- | --- |
 | Identity | `data/art/heroes/<group>/<slug>-thorne.json` | Who she is: colours, eyes, skin, build | `draknisa-thorne.json` |
 | Piece | `data/art/wardrobe`, `cosmetics`, `themes`, `races`, `backgrounds`, `heroes/.../<slug>/` | One reusable chunk of description | a bikini, a gown, a throne room |
 | Card | `data/art/_sets/<group>/<slug>/<phase>/<family>/` | A recipe: which pieces to use, in which template | `draknisa-scene-robe.json` |
-| Template | `data/art/_templates/heroes/*.txt` | Static prompt scaffolding with `{{TOKENS}}` | `scene-with-outfit-human.txt` |
+| Template | `data/art/_templates/heroes/<stage>/*.txt` | Static prompt scaffolding with `{{TOKENS}}` | `scene-with-outfit-human.txt` |
 
 ```text
 piece + piece + identity --(card + template)--> prompt .txt --> workflow .json --> ComfyUI --> image
@@ -29,15 +45,31 @@ What the incoming image wears shows through into every later image. A low-cut dr
 celestial armor over a swimsuit keeps the straps. So the chain is built from the bottom up, and each stage picks its incoming image
 on purpose. Prompts only describe what to *add* or *change*; the incoming image supplies the rest.
 
-The original photos are varied shots (different framing, clothing, pose) and are not good enough to feed straight into the later stages.
-The first steps are therefore the **Alpha** chain, the only workflows that create a hero's likeness (the other stages edit it). **Alpha 1 Prime**
+The original photos are varied shots (different framing, clothing, pose) and may not be ready for later stages.
+The optional **0_Edit** phase can conservatively clean a selected image first; the current generic Female
+pilot is `0c_Cleanup_Basic`. Use the source directly when it is already suitable. Neither intake nor
+`0_Edit` is a mandatory path into Alpha, and generated results remain synthetic until explicitly selected.
+
+The **Alpha** chain is still the standard way to establish a clean, reproducible hero likeness. **Alpha 1 Prime**
 takes an original photo and builds the one clean, full-length A-pose in her metallic bikini (barefoot) with the standard figure, and brings the bust
 and the pose into proper shape. **Alpha 2 Bare** edits the Prime: it removes the bikini, applies her individual build and re-asserts hair, eyes, skin
 and bust. **Alpha 3 Barefoot and Heels** edit the Bare image back into the bikini on her own figure. Bare, Barefoot and Heels are the three golden
-images that every later stage starts from. You can intercept an Alpha workflow and use your own forceful wording (keep that workflow as a shot).
+images that conventional later-stage workflows use as defaults. You can intercept an Alpha workflow and use your own forceful wording (keep that workflow as a shot).
+
+**Why the steps in between exist.** The swimsuit Prime, Barefoot and Heels (`1_Prime`, `3_Footwear`), `2_Studies` and `3_Layers` are not required to get a Bare image. They are
+**validation**: a way to prove that what Alpha made behaves before it is used for anything expensive. A hero in a swimsuit with footwear is a simple, known thing to check (the
+face, the figure, the bust, the pose). The studies (heads, hair, turnaround views) show that the same image still looks right when it is edited, and the layers put her in a wider
+variety of underlayers before any full wardrobe. Footwear and bare-skin looks were found to bleed into later barefoot shots and wardrobe, which is why each step is checked on its
+own and why an issue in the Prime is caught at `2_Studies` or `3_Layers` and fixed there, instead of being found in a `4_Wardrobe` or `5_Scenes` image after the work is done.
+Skip any of them when you trust the result; they are kept because they make a problem cheap to find. Experiments that did not hold up (the bare-chest study and the covering
+experiments: pasties, contoured, paint) were dropped.
+
+**Installed first-shot experiments.** Two existing variants start from the same photo in `1_Alpha/1b_Experiments/`: `neutral-base` (P2, a skin-tone base layer) and `bare-base` (P3). Their current comparison commands remain in [prime-flows.md](prime-flows.md#comparing-prime-renders). The [manual migration plan](../plans/2026-10-22-manual-prompts-to-art-library.md) owns the remaining edit variants, revised Prime/Bare, and retiring `1b` only after replacements pass. It leaves `2b` untouched. Do not require another old winner comparison or regenerate/delete experiments merely because their plan was archived.
+
 | Phase | Folder (under `<Hero>/` in the workspace) | Incoming image | Produces |
 | --- | --- | --- | --- |
-| 1. Alpha | `1_Alpha/1_Prime`, `2_Bare`, `2b_Experiments`, `3_Footwear` | the original photo, then the Prime, then the Bare image | the Prime (bikini, standard figure), the Bare image (her individual build and likeness; `Alpha_2_Bare_Figure` is the main step, your hand-made `Alpha_2_Bare_Skin` shot is temporary), then Barefoot and Heels: the three golden images |
+| 0. Edit (optional) | `0_Edit/<family>` | the exact selected source image | a task-specific synthetic edit such as the generic Female cleanup pilot |
+| 1. Alpha | `1_Alpha/1_Prime`, `2_Bare`, `2b_Experiments`, `3_Footwear` | the original photo by default; a selected edit result only when the recipe/input contract supports it | the Prime (bikini, standard figure), the Bare image (her individual build and likeness; `Alpha_2_Bare_Figure` is the main step, your hand-made `Alpha_2_Bare_Skin` shot is temporary), then Barefoot and Heels: the three golden images |
 | 2. Studies | `2_Studies/head`, `hair`, `body` | the golden images | head close-ups, hair styles and turnaround views: the reference library for every later step |
 | 3. Layers | `3_Layers/<type>` (bikini, lingerie, swimwear, athletic, one-piece, backless) | the Bare image, with the body contour line on | which underlayer reads best, so it can show under an outfit on purpose |
 | 4. Wardrobe | `4_Wardrobe/clothing`, `armor`, `showcase` | the Bare image, or a layer or pose you chose | her in the outfit or armor, and the showcase shots that check it |
@@ -46,8 +78,13 @@ images that every later stage starts from. You can intercept an Alpha workflow a
 | 7. Video | `7_Video/<family>` | a finished image | the animation |
 
 `Bench/motion` is not a phase: motions and poses are point-in-time tests of a piece, run on whichever phase's image you load, to validate a reusable motion or pose before a scene uses it.
-Every phase after Alpha reads the chosen image of the one before (`_00000` names: `Hero_Qwen_Scene_00000.png` feeds Polish, `Hero_Qwen_Polish_00000.png` feeds Final),
-so skipping a phase shows up as a missing image.
+The rows describe the established character-art flow, not a required chain for every request. The target
+Gallery flow lets the user choose an original, prepared image or explicitly selected result as the next input,
+subject to a declared recipe compatibility contract; it never silently advances the newest output. The full
+stage-input and promoted-output contract remains open in manual-migration P11 and rendering R16. Until that
+contract is complete, do not assume every stage accepts every prior result. Within a conventional sequence,
+the configured input defaults still connect the Prime/Bare, wardrobe and finish steps; a missing default image
+must be resolved rather than inferred from another folder.
 
 The bikini A-pose (Prime, Barefoot or Heels) stays useful as an input on its own: feed it (or any A-pose in a bikini, lingerie or a bodysuit) when you
 want that layer to show under the outfit on purpose. The underlayer A-pose cards (`poses/<family>/`) are fed the Bare image and are for choosing which
@@ -57,16 +94,15 @@ bikini or lingerie reads best.
 
 | Incoming image | Result |
 | --- | --- |
-| Bare (your shot `Alpha_2_Bare_Skin`, or `Alpha_2_Bare_Figure`, `Alpha_2_Bare_Chest`) | cleanest outfits: nothing underneath bleeds through, and low-cut or sheer pieces are really low cut or sheer |
+| Bare (your shot `Alpha_2_Bare_Skin`, or `Alpha_2_Bare_Figure`) | cleanest outfits: nothing underneath bleeds through, and low-cut or sheer pieces are really low cut or sheer |
 | Bikini, lingerie or bodysuit A-pose | that layer shows under the outfit on purpose |
 | Celestial (`Alpha_2b_CelestialCore`, `_CelestialSuit`, `_CelestialPlate`, `_CelestialPlateFitted`) | her celestial form carries into the scene or the next outfit |
-| Pasties, contoured or paint (`Alpha_2b_Pasties`, `_Contoured`, `_Paint`) | minimal coverage; check for bleed, and add the `remove-coverings` strip line on the next card if it shows |
+| Pasties, contoured or paint | dropped (they bled into the wardrobe and swimwear shots); a minimal-coverage incoming image is better made as a layer in `3_Layers` |
 
-**The bare looks** (all edit-only prompts in `data/art/_templates/heroes/bare-human.txt`, one short removal instruction plus a result paragraph
+**The bare look** (an edit-only prompt in `data/art/_templates/heroes/1_Alpha/bare-human.txt`, one short removal instruction plus a result paragraph
 with each area on its own semicolon-separated clause, and "change nothing else"):
-`Alpha_2_Bare_Figure` and `Alpha_2_Bare_Chest` (figure wording, model-chosen rendering) sit flat in `1_Alpha/2_Bare/` beside your own `Alpha_2_Bare_Skin` shot;
-the experiments are Alpha 2b and nested beside it: `1_Alpha/2b_Experiments/coverings/` (`Alpha_2b_Pasties`, `_Contoured` (sheer, nylon-like), `_Paint` and `_PaintColour`,
-small painted areas) and `1_Alpha/2b_Experiments/celestial/`. The celestial core paints only the three small designs; the suit forks it into an open-filigree
+`Alpha_2_Bare_Figure` sits flat in `1_Alpha/2_Bare/` beside your own `Alpha_2_Bare_Skin` shot (the bare-chest study was dropped: it was an experiment);
+the one experiment kept is Alpha 2b, nested beside it in `1_Alpha/2b_Experiments/celestial/`, because it becomes a type of body armor in the wardrobe. The celestial core paints only the three small designs; the suit forks it into an open-filigree
 design over the whole body; the plate versions are the original small plates, and `Alpha_2b_CelestialPlateFitted` shapes them to the body. Your own hand-written bare workflows are kept as shots (see below) and stay your own.
 
 **Switches that apply to the whole chain** (`data/art/_settings/studio.json`, then regenerate):
@@ -75,7 +111,7 @@ design over the whole body; the plate versions are the original small plates, an
 | --- | --- |
 | `aPoseFootwear` | `barefoot` (default): no shoes in any A-pose; each outfit adds its own. `signature`: her heels again. `x-pose-heels` cards keep the heeled pose |
 | `bodyContour` | on by default (`fitted-contour`, `armor-contour` for armor): outfits follow the body in the incoming image, so her form shows through the fit. A card sets `components.body_contour` to `sheer-contour` (real body through thin fabric) or `"off"` |
-| `components.strip` on a card | an optional line that removes what the incoming image wears first (`remove-original`, `replace-original`, `remove-coverings`) |
+| `components.strip` on a card | an optional line that removes what the incoming image wears first (`remove-original`, `replace-original`) |
 
 **Scenes, two ways.** A *complete* scene (`<hero>-scene-<name>`) describes the outfit and everything else, and takes an A-pose as input, so
 you choose how much of the A-pose shows through. A *staged* scene (`-staged-` in the name) takes an already-dressed image from stage 4 and
@@ -86,19 +122,18 @@ A-pose supplies the layer under them. Fully pre-staged scenes (a finished bone-a
 **Render and keep.** Qwen is the default engine; FireRed (local, not in git) is the photoreal comparison and takes the positive prompt only, so the
 negatives in a card do not apply to it. Run the A-pose and bare stages in non-Turbo mode overnight when you want the most realistic base, since
 everything after them inherits it. Save a workflow you tuned for one render (seed, Turbo or not) in the workspace under `zz_Shots/` and run
-`pull --shots`; see [workflows/README.md](../../workflows/README.md#shots-zz_shots). Cards, pieces and templates are the permanent record; shots
+`pull --only shots`; see [workflows/README.md](../../workflows/README.md#shots-zz_shots). Cards, pieces and templates are the permanent record; shots
 are the tuned renders.
 
-## The loop you will run every time
+## The supported art-data loop
 
 ```bash
-python tools/validators/validate_data.py            # 1. is the data valid? (or bin\validate.cmd)
-python tools/generators/gen_prompt.py               # 2. cards -> prompts   (or bin\prompts.cmd)
-python tools/workflows/comfy_workflows.py make --create --hero Draknisa --stage scene   # 3. prompts -> workflows
-python tools/workflows/comfy_workflows.py deploy --hero Draknisa --stage scene          # 4. workflows -> the hero's home workspace in ComfyUI
+bin\validate.cmd                                     # 1. validate data and focused tool tests
+bin\prompts.cmd                                      # 2. cards -> generated prompts
+bin\refresh.cmd Draknisa scene                      # 3. prompts -> workflows -> home workspace
 ```
 
-`bin\refresh.cmd Draknisa scene` runs steps 2 to 4. Then open the workflow in ComfyUI, pick the A-pose input
+`bin\refresh.cmd` runs prompt generation and workflow refresh/deployment for the selected hero. Then open the workflow in ComfyUI, pick the input
 image, render, and review against [output-qa-checklist.md](output-qa-checklist.md).
 
 ## Recipe 1: add a piece
@@ -139,9 +174,9 @@ Rules that trip people up:
   with "a ..." and has no leading "She wears".
 - **Use tokens instead of colours.** `{{PRIMARY}}`, `{{ACCENT_SOFT}}`, `{{METAL}}`, `{{MAGIC}}`, `{{GEM}}` become each hero's own
   colours, which is what makes one piece reusable by all ten sisters. Hard-code a colour only for a deliberate one-off.
-- **Describe what is there, not what is not.** Models latch onto the thing you negate ("no knots" draws knots). Put bans in
-  the template's negative prompt or the card's `overrides.negativeAdd`, and describe the positive picture instead
-  ("fastening hidden behind her at the back").
+- **Prefer the intended visible result.** For reusable descriptive pieces, state what should appear.
+  Explicit removal or edit instructions can still be appropriate when a stage is meant to change the
+  incoming image; use the current stage design and negative-prompt fields deliberately.
 - **Backgrounds live under a realm folder** (`backgrounds/fantasy/...`). The folder is the realm. A hero's own scenery goes in
   `heroes/<group>/<slug>/backgrounds/fantasy/<family>/` and usually carries a `mood`.
 - **`compatibleStages`** is `["pose"]` for an A-pose underlayer, `["scene"]` for scene pieces, `["clothing"]` and so on.
@@ -149,7 +184,7 @@ Rules that trip people up:
   and write `"description": "+, with a tiny {{GEM}} sun hanging from the pendant"` (`+` appends to the base text; `{{BASE}}` puts it anywhere). Change the base and every piece built on it follows.
   See "Pieces that build on pieces" in [data/art/README.md](../../data/art/README.md). The angels' signature weapon, armor, gown, circlet and jewelry are made this way.
 - **Scene-only text belongs in the scene; anything reusable becomes a piece.** If the same sentence about a wardrobe item, a weapon, an effect or a motion appears
-  in several cards, move it into a piece (`python tools/art/extract_literals.py` finds and pulls out repeats) and reference the piece.
+  in several cards, move it into a piece (`bin\extract-literals.cmd` previews repeated text) and reference the piece.
 
 ## Recipe 2: add a scene card
 
@@ -170,7 +205,7 @@ A card chooses a template and fills its slots. Real example, `draknisa-scene-rob
     "background": "data/art/heroes/drakn-sisters/draknisa/backgrounds/fantasy/sanctum/enchanted-tide-pool-atrium.json",
     "holding": "data/art/heroes/drakn-sisters/draknisa/weapons/tidepearl-staff.json"
   },
-  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "template": "data/art/_templates/heroes/5_Scenes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Draknisa/5_Scenes/glamour/Draknisa_Scene_Robe.txt",
   "denoise": "~0.5-0.7"
 }
@@ -215,7 +250,7 @@ An A-pose card is one line of difference from the base card. This is the whole o
   "kind": "base-set",
   "stage": "pose",
   "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
-  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "template": "data/art/_templates/heroes/1_Alpha/pose-female-human.txt",
   "output": "prompts/drakn-sisters/Drakness/poses/Drakness_X_Pose_Lace.txt",
   "denoise": "~1.0",
   "components": { "underlayer": "data/art/wardrobe/swimwear/lingerie/lace-bralette-set.json" }
@@ -230,8 +265,8 @@ clothing or armor, chosen from each piece's `compatibleStages`) and skips pieces
 
 ```bash
 python tools/generators/scaffold_wardrobe_tests.py --group drakn-sisters --slug drakness --hero Drakness wardrobe/clothing/gowns
-python tools/generators/gen_prompt.py --group drakn-sisters --slug drakness
-python tools/workflows/comfy_workflows.py make --hero Drakness --stage clothing --create
+bin\prompts.cmd --group drakn-sisters --slug drakness
+bin\make.cmd Drakness clothing
 ```
 
 The golden A-pose is the incoming image for scenes. The underlayer pieces are for generating alternatives to it: pick the base that
@@ -243,10 +278,8 @@ A kit file lists what to test for one sister, suited to her class and element (A
 showcase shots). The scaffold writes the cards; the workflow tool then sends her studio work to her own workspace:
 
 ```bash
-python tools/generators/scaffold_sister_studio.py --slug draknara
-python tools/generators/gen_prompt.py --group drakn-sisters --slug draknara
-python tools/workflows/comfy_workflows.py make --hero Draknara --class studio --create
-python tools/workflows/comfy_workflows.py deploy --hero Draknara --class studio
+bin\scaffold-sister.cmd draknara
+bin\refresh.cmd Draknara studio
 ```
 
 Copy `data/art/_kits/draknara.json` for the next sister and change the pieces. A **showcase** card is a studio shot on a coloured
@@ -353,11 +386,13 @@ paths, and check its work with the validator.
 
 ```text
 You are helping with the Sovereign Territories art pipeline. Read data/art/README.md and docs/art/tutorial-art.md first.
-Rules: never edit anything under prompts/ (generated). Pieces go in the narrowest sensible scope under data/art. A piece's id
+Rules: never edit generated files under `prompts/`. Manual source drafts under `prompts/_edit/` are
+not generated output; they are migration inputs and must not be changed as part of ordinary art-data
+work. Pieces go in the narrowest sensible scope under data/art. A piece's id
 equals its path. Use {{PRIMARY}}, {{ACCENT_SOFT}}, {{METAL}}, {{MAGIC}}, {{GEM}} tokens instead of hard-coded colours. Describe what
 is present, never what is absent. Copy the shape of an existing file of the same kind rather than inventing fields.
 Task: <what you want, e.g. "a Roman-theme scene for Draknora: bronze armour dress, a forum at sunset, golden dust in the air">.
-When done run python tools/validators/validate_data.py and python tools/generators/gen_prompt.py and show me the generated prompt.
+When done run bin\validate.cmd and bin\prompts.cmd and show me the generated prompt.
 ```
 
 Review what comes back: does the generated `.txt` read like something you would be happy to paste into ComfyUI, are the colours
@@ -373,7 +408,7 @@ her colours, and did the assistant touch only data files?
 
 ## Checklist before you commit
 
-- [ ] `python tools/validators/validate_data.py` passes (and `test_validate_data.py` if you changed the validator).
+- [ ] `bin\validate.cmd` passes (including the validator self-test when validator code changed).
 - [ ] Prompts regenerated and the diff under `prompts/` is only what you meant.
-- [ ] No hard-coded hero colours in a shared piece; no negations in positive text.
+- [ ] No hard-coded hero colours in a shared piece; positive edit instructions match the stage's intended changes.
 - [ ] Workflows refreshed (`bin\refresh.cmd`) if you want to render it.

@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/ice/pine-valley-blizzard",
+  "kind": "background",
+  "name": "Pine valley blizzard",
+  "description": "a pine valley in a driving blizzard, snow streaming sideways, dark trunks half-lost in white and a faint lantern glow in the distance",
+  "mood": "fierce, blinding",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "ice",
+    "weather",
+    "realistic"
+  ],
+  "notes": "The ice homeland (realms/ice-lands). Role 'weather' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

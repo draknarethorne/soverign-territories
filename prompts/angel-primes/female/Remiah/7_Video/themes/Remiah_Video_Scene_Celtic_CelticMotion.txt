@@ -1,6 +1,6 @@
 === Remiah Stormcrown · Video: CelticMotion (group: Video) — MiniMax H3 image-to-video ===
 Source image: Remiah_Qwen_Scene_Celtic_00001_.png
-Size: 640x960
+Format: reel
 Length: 7
 
 ----------------------------------------------------------------

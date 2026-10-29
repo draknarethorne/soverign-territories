@@ -1,0 +1,45 @@
+angel-primes/female/Angelica/0_Edit/0a_xxxx/Angelica_Qwen_Edit_0a_xxxx
+angel-primes/female/Angelica/0_Edit/0b_Background/Angelica_Qwen_Edit_0b_Background
+
+0_Edit
+    0a_xxxx
+        Angelica_Qwen_Edit_0a_xxxxx
+    0b_Background
+        x Angelica_Qwen_Edit_0b_Background_Bare - change background, remove items, remove clothing, bust critical feature, keep body and pose.
+        x Angelica_Qwen_Edit_0b_Background_Basic - change background, remove items, bust critical feature, keep body and pose.
+        x Angelica_Qwen_Edit_0b_Background_Enhance - change background, expand camera, remove items, bust critical feature, keep body and pose.
+        x Angelica_Qwen_Edit_0b_Background_Plus - change background, remove items, trim clothing, bust critical feature, keep body and pose.
+        x Angelica_Qwen_Edit_0b_Background - change background, remove items, keep body and pose.
+    0c_Cleanup
+        - Angelica_Qwen_Edit_0c_Cleanup - crop and cleanup, remove items, critical features.
+        - Angelica_Qwen_Edit_0c_Cleanup_Basic - crop and cleanup, remove items, no adjustments.
+        - Angelica_Qwen_Edit_0c_CleanUp_Bare - crop and cleanup, remove items and clothing, critical features.
+    0d_Deluxe
+        ? Angelica_Qwen_Edit_0d_Deluxe
+        x Angelica_Qwen_Edit_0d_Deluxe_Bare_Lying - change background, remove items and clothing, adjust pose
+        x Angelica_Qwen_Edit_0d_Deluxe_Bare_Relaxing - change background, remove items and clothing, adjust pose
+        x Angelica_Qwen_Edit_0d_Deluxe_Bare_Resting - change background, remove items and clothing, adjust pose
+        x Angelica_Qwen_Edit_0d_Deluxe_Bare_Sitting - change background, remove items and clothing, adjust pose
+        x Angelica_Qwen_Edit_0d_Deluxe_Bare - change background, remove items and clothing, adjust pose
+    0e_Enhance
+        - Angelica_Qwen_Edit_0e_Enhance - cleanup, remove items, critical features, add high heels to extend photo
+        - Angelica_Qwen_Edit_0e_Enhance_Bare - cleanup, remove items and clothing, enhance features, add high heels to extend photo
+        - Angelica_Qwen_Edit_0e_Enhance_Pose - cleanup, remove items, critical features, adjust pose
+    0f_Full
+        Angelica_Qwen_Edit_0f_Full - cleanup and make full body
+        Angelica_Qwen_Edit_Of_Full_Bare
+        Angelica_Qwen_Edit_Of_Full_Pose
+    0l_Lighting
+        Angelica_Qwen_Edit_0l_Lighting - change background and lighting
+
+
+angel-primes/female/Angelica/1_Alpha/1_Prime/Angelica_Qwen_Alpha_1_Prime
+angel-primes/female/Angelica/1_Alpha/1b_Experiments/bare-base/Angelica_Qwen_Alpha_1b_BareBase
+
+1_Alpha
+    1_Prime
+        Angelica_Qwen_Alpha_1_Prime
+        Angelica_Qwen_Alpha_1_Prime_Outfit
+    1b_Experiments
+        bare-base
+            Angelica_Qwen_Alpha_1b_BareBase

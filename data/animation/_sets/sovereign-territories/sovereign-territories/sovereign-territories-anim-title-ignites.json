@@ -18,7 +18,7 @@
     {"beat": "The carved obsidian letters ignite from within with molten gold, a wave of dawn light sweeping across them from left to right.", "seconds": 3, "transition": "blend"},
     {"beat": "The glow settles into a steady shimmer and the tagline brightens beneath the title.", "seconds": 2, "transition": "settle"}
   ],
-  "size": [832, 480],
+  "format": "match",
   "output": "prompts/sovereign-territories/SovereignTerritories/7_Video/title/SovereignTerritories_Video_TitleLockup_TitleIgnites.txt",
   "template": "data/animation/_templates/video-minimax.txt",
   "notes": "Title-screen sting and reel opener. Feed the rendered title lockup as the source image."

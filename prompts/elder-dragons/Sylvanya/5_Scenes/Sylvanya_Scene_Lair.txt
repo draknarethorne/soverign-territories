@@ -16,9 +16,9 @@ Lair: a hollow beneath a vast enchanted tree in a sun-dappled grove, towering mo
 
 Hoard: heaps of mossy gold coins wrapped in living vines, emeralds and peridots, carved wooden idols and antlers, baskets of glowing seeds, fairy lanterns and ancient seed-vaults.
 
-A few drifting leaves and soft motes of pollen glow in the sunbeams - understated, nothing busy.
+A few drifting leaves and soft motes of pollen glow in the sunbeams - understated.
 
-A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic; nothing from the modern world.
+A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

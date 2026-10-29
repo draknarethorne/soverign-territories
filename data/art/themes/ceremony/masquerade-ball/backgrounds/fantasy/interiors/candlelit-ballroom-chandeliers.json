@@ -1,0 +1,14 @@
+{
+  "id": "themes/ceremony/masquerade-ball/backgrounds/fantasy/interiors/candlelit-ballroom-chandeliers",
+  "kind": "background",
+  "name": "Candlelit Ballroom",
+  "description": "a grand ballroom lit by hundreds of candles in crystal chandeliers, a polished parquet floor, tall mirrors and masked guests as soft blurs",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "masquerade-ball",
+    "background"
+  ],
+  "mood": "romantic, glittering"
+}

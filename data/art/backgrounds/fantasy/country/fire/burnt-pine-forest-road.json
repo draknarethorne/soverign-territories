@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/fire/burnt-pine-forest-road",
+  "kind": "background",
+  "name": "Burnt pine forest road",
+  "description": "a road through a burnt pine forest after a fire, blackened trunks and ash-grey ground, new green shoots, smoky low sunlight",
+  "mood": "bleak, hopeful",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "fire",
+    "road",
+    "realistic"
+  ],
+  "notes": "The fire homeland (realms/fire-lands). Role 'road' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

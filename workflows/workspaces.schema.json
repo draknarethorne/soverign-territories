@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Sovereign Territories workspace and storage configuration",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "installsRoot",
+    "workflowsSubpath",
+    "referenceWorkspace",
+    "paths",
+    "storageRoots",
+    "sharedInput",
+    "sharedOutput",
+    "workspaces",
+    "homes"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "installsRoot": {
+      "type": "string",
+      "minLength": 1,
+      "description": "ComfyUI installs root; overridable by SOVEREIGN_TERRITORIES_INSTALLS_ROOT."
+    },
+    "workflowsSubpath": {
+      "type": "string",
+      "minLength": 1
+    },
+    "referenceWorkspace": {
+      "type": "string",
+      "minLength": 1,
+      "description": "ComfyUI install used by the manual reference-rendering pilot; may be a legacy install outside deployable workspaces."
+    },
+    "paths": {
+      "type": "object",
+      "required": [
+        "productionRoot",
+        "sandboxWorkingRoot",
+        "modelCacheRoot",
+        "inputsRoot",
+        "outputRoot"
+      ],
+      "properties": {
+        "productionRoot": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Canonical active photo-library root; overridable by SOVEREIGN_TERRITORIES_PRODUCTION_ROOT."
+        },
+        "sandboxWorkingRoot": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Sandbox Working root; overridable by SOVEREIGN_TERRITORIES_SANDBOX_WORKING_ROOT."
+        },
+        "modelCacheRoot": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Per-user model/cache root; supports environment variables and SOVEREIGN_TERRITORIES_MODEL_CACHE_ROOT."
+        },
+        "workRoot": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Deprecated alias for productionRoot."
+        },
+        "inputsRoot": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Per-workspace ComfyUI input root; overridable by SOVEREIGN_TERRITORIES_INPUTS_ROOT."
+        },
+        "outputRoot": {
+          "type": "string",
+          "minLength": 1,
+          "description": "ComfyUI output root; overridable by SOVEREIGN_TERRITORIES_OUTPUT_ROOT."
+        },
+        "outputFolders": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "storageRoots": {
+      "type": "object",
+      "required": [
+        "backup",
+        "generation",
+        "reports",
+        "likeness",
+        "actions",
+        "junk",
+        "retired",
+        "sandboxState",
+        "temporary"
+      ],
+      "properties": {
+        "backup": {"type": "string", "minLength": 1},
+        "generation": {"type": "string", "minLength": 1},
+        "reports": {"type": "string", "minLength": 1},
+        "likeness": {"type": "string", "minLength": 1},
+        "actions": {"type": "string", "minLength": 1},
+        "junk": {"type": "string", "minLength": 1},
+        "retired": {"type": "string", "minLength": 1},
+        "sandboxState": {"type": "string", "minLength": 1},
+        "temporary": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "sharedInput": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Legacy shared input directory; overridable by SOVEREIGN_TERRITORIES_SHARED_INPUT_ROOT."
+    },
+    "sharedOutput": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Legacy shared output directory; overridable by SOVEREIGN_TERRITORIES_SHARED_OUTPUT_ROOT."
+    },
+    "workspaces": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "homes": {
+      "type": "array"
+    }
+  },
+  "additionalProperties": true
+}

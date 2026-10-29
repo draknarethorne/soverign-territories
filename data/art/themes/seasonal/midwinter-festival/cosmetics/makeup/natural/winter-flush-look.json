@@ -1,0 +1,19 @@
+{
+  "id": "themes/seasonal/midwinter-festival/cosmetics/makeup/natural/winter-flush-look",
+  "kind": "makeup",
+  "name": "Winter Flush",
+  "description": "a winter-flush finish - rosy cheeks and nose, a soft frosted {{EYESHADOW}} lid, brushed brows, curled lashes and a berry {{LIP}} stain",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "midwinter-festival",
+    "makeup"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/glam/glitter-lid-party",
+  "kind": "makeup",
+  "name": "Glitter Lid",
+  "description": "a party eye - fine glitter pressed on the lids over {{EYESHADOW}} shadow, defined lashes, a flushed {{BLUSH}} cheek and a glossy {{LIP}} lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "glam"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

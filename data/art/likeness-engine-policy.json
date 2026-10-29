@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "version": "draft-2026-10-25.1",
+  "status": "draft",
+  "runtimeSettings": {
+    "mixed": ["Artists/*", "Various", "Prospects/Various", "Potentials/Various"],
+    "pool": ["Various", "Prospects/Various", "Potentials/Various"],
+    "minCluster": 1,
+    "odd": 0.15,
+    "alike": 0.3,
+    "minFace": 60,
+    "multiFace": 0.3,
+    "singles": 0.35,
+    "rematch": 0.48,
+    "rematchCast": 0.5,
+    "different": [["Prospects/Brielle Carter", "Sisters/Draknara"]],
+    "castMerge": 0.55
+  },
+  "categoryOrder": [
+    "Sisters",
+    "Angels",
+    "Models",
+    "Prospects",
+    "Potentials",
+    "Artists"
+  ],
+  "scoreBands": {
+    "green": {
+      "minimum": 0.55
+    },
+    "yellow": {
+      "minimum": 0.3
+    },
+    "orange": {
+      "minimum": 0.15
+    },
+    "red": {
+      "maximumExclusive": 0.15
+    }
+  },
+  "categoryAssignmentRules": [
+    {
+      "category": "Potentials",
+      "minimumUsablePhotos": 1,
+      "maximumUsablePhotos": 4
+    },
+    {
+      "category": "Models",
+      "minimumUsablePhotos": 5,
+      "minimumCastSimilarity": 0.4,
+      "maximumCastSimilarityExclusive": 0.55
+    },
+    {
+      "category": "Prospects",
+      "minimumUsablePhotos": 5,
+      "maximumCastSimilarityExclusive": 0.4
+    }
+  ],
+  "highCastSimilarityMinimum": 0.55,
+  "castReviewMinimum": 0.3,
+  "smallGroupMaximumUsablePhotos": 4,
+  "smallGroupCastReviewMinimum": 0.4,
+  "photoRouting": {
+    "reviewMinimum": 0.3,
+    "automaticRouteMinimum": 0.4,
+    "minimumMargin": 0.1,
+    "minimumOwnCoreLead": 0.1
+  },
+  "identityActions": {
+    "independentEvidenceMaximumSimilarity": 0.95,
+    "identityClusterMinimumSimilarity": 0.25,
+    "matchReviewMinimum": 0.3,
+    "autoMergeMinimum": 0.55,
+    "autoMergeMinimumMargin": 0.1,
+    "autoMergeMinimumIndependentPhotos": 2,
+    "splitReviewMaximum": 0.15,
+    "splitMinimumAlternativeSimilarity": 0.3,
+    "splitMinimumMargin": 0.1,
+    "splitMinimumIndependentPhotos": 2
+  },
+  "lookalikeGroups": {
+    "suggestionMinimumSimilarity": 0.3,
+    "automaticAssociationEnabled": true,
+    "associationMinimumSimilarity": 0.4,
+    "associationMaximumSimilarityExclusive": 0.55,
+    "minimumIndependentPhotos": 5,
+    "minimumReferenceMargin": 0.05
+  },
+  "categoryPolicies": {
+    "Sisters": {
+      "photoRouteMinimum": 0.55,
+      "photoRouteMargin": 0.1,
+      "reviewAdmissionEnabled": true,
+      "mergeMinimum": 0.65,
+      "identityProtectedByDefault": true,
+      "automaticMergeEnabled": false,
+      "automaticSplitEnabled": false,
+      "automaticPhotoRoutingEnabled": false,
+      "identityCoreMinimumSimilarity": 0.3,
+      "reviewSuggestionBelowSimilarity": 0.15,
+      "splitCandidateBelowSimilarity": 0.15,
+      "minimumUsablePhotosForOutlierActions": 4
+    },
+    "Angels": {
+      "photoRouteMinimum": 0.55,
+      "photoRouteMargin": 0.1,
+      "reviewAdmissionEnabled": true,
+      "mergeMinimum": 0.65,
+      "identityProtectedByDefault": true,
+      "automaticMergeEnabled": false,
+      "automaticSplitEnabled": false,
+      "automaticPhotoRoutingEnabled": false,
+      "identityCoreMinimumSimilarity": 0.3,
+      "reviewSuggestionBelowSimilarity": 0.15,
+      "splitCandidateBelowSimilarity": 0.15,
+      "minimumUsablePhotosForOutlierActions": 4
+    },
+    "Models": {
+      "unmatchedOutlierSplitEnabled": true,
+      "photoRouteMinimum": 0.5,
+      "photoRouteMargin": 0.15,
+      "reviewAdmissionEnabled": true,
+      "mergeMinimum": 0.55,
+      "identityProtectedByDefault": false,
+      "automaticMergeEnabled": true,
+      "automaticSplitEnabled": true,
+      "automaticPhotoRoutingEnabled": true,
+      "identityCoreMinimumSimilarity": 0.3,
+      "reviewSuggestionBelowSimilarity": 0.3,
+      "splitCandidateBelowSimilarity": 0.15,
+      "minimumUsablePhotosForOutlierActions": 5
+    },
+    "Prospects": {
+      "unmatchedOutlierSplitEnabled": true,
+      "photoRouteMinimum": 0.4,
+      "photoRouteMargin": 0.1,
+      "reviewAdmissionEnabled": true,
+      "mergeMinimum": 0.48,
+      "identityProtectedByDefault": false,
+      "automaticMergeEnabled": true,
+      "automaticSplitEnabled": true,
+      "automaticPhotoRoutingEnabled": true,
+      "identityCoreMinimumSimilarity": 0.15,
+      "reviewSuggestionBelowSimilarity": 0.3,
+      "splitCandidateBelowSimilarity": 0.15,
+      "minimumUsablePhotosForOutlierActions": 4
+    },
+    "Potentials": {
+      "unmatchedOutlierSplitEnabled": true,
+      "photoRouteMinimum": 0.4,
+      "photoRouteMargin": 0.1,
+      "reviewAdmissionEnabled": true,
+      "mergeMinimum": 0.48,
+      "identityProtectedByDefault": false,
+      "automaticMergeEnabled": true,
+      "automaticSplitEnabled": true,
+      "automaticPhotoRoutingEnabled": true,
+      "identityCoreMinimumSimilarity": 0.15,
+      "reviewSuggestionBelowSimilarity": 0.3,
+      "splitCandidateBelowSimilarity": 0.15,
+      "minimumUsablePhotosForOutlierActions": 4
+    },
+    "Artists": {
+      "photoRouteMinimum": 0.5,
+      "photoRouteMargin": 0.15,
+      "reviewAdmissionEnabled": true,
+      "mergeMinimum": 0.55,
+      "identityProtectedByDefault": false,
+      "automaticMergeEnabled": false,
+      "automaticSplitEnabled": false,
+      "automaticPhotoRoutingEnabled": false,
+      "identityCoreMinimumSimilarity": 0.15,
+      "reviewSuggestionBelowSimilarity": 0.15,
+      "splitCandidateBelowSimilarity": 0.15,
+      "minimumUsablePhotosForOutlierActions": 4
+    }
+  },
+  "protection": {
+    "automatic": {
+      "enabled": true,
+      "recipeVersion": "independent-gallery-loo-v1",
+      "minimumOwnCoreSimilarity": 0.55,
+      "minimumRivalMargin": 0.1,
+      "minimumIndependentReferences": 4,
+      "minimumEstablishedPhotos": 5
+    },
+    "identityBlocksAutomaticMoves": true,
+    "photoBlocksAutomaticRemoval": true,
+    "photoBlocksReviewRouting": true,
+    "protectedPhotoMayBeExcludedFromCore": true
+  }
+}

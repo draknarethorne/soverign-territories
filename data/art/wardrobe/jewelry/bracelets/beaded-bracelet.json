@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/jewelry/bracelets/beaded-bracelet",
+  "kind": "arms",
+  "name": "Beaded Bracelet",
+  "description": "a bracelet of small {{GEM}} beads on elastic cord on each wrist",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "bracelet",
+    "beads",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

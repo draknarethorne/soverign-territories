@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/lightning/open-plain-thunderhead",
+  "kind": "background",
+  "name": "Open plain thunderhead",
+  "description": "an open plain of farmland and low hills under a towering anvil thunderhead, a curtain of rain in the distance and gold sun breaking along the horizon",
+  "mood": "huge, charged",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "lightning",
+    "establishing",
+    "realistic"
+  ],
+  "notes": "The lightning homeland (realms/lightning-lands). Role 'establishing' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/glam/halo-eye-shimmer",
+  "kind": "makeup",
+  "name": "Halo Eye",
+  "description": "a halo eye - a pale shimmer in the centre of the lid deepened with {{EYESHADOW}} at the inner and outer corners, defined lashes and a soft {{LIP}} lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "glam"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

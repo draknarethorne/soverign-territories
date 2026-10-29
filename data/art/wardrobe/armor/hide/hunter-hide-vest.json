@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/armor/hide/hunter-hide-vest",
+  "kind": "wearing",
+  "name": "Hunter's Hide Vest",
+  "description": "a close-fitting vest of tanned hide laced at the front over a {{PRIMARY}} cloth shirt, leather bracers and a fur-lined collar",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "hide",
+    "vest",
+    "ranger",
+    "unisex"
+  ]
+}

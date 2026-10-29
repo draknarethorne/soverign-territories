@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/jewelry/necklaces/bar-necklace",
+  "kind": "jewelry",
+  "name": "Bar Necklace",
+  "description": "a delicate {{METAL}} chain with a thin horizontal bar pendant",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "necklace",
+    "minimal",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

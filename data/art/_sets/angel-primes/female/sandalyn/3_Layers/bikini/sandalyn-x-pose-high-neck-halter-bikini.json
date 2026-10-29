@@ -3,7 +3,7 @@
   "kind": "base-set",
   "stage": "pose",
   "heroArt": "data/art/heroes/angel-primes/female/sandalyn.json",
-  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "template": "data/art/_templates/heroes/1_Alpha/pose-female-human.txt",
   "output": "prompts/angel-primes/female/Sandalyn/3_Layers/bikini/Sandalyn_X_Pose_HighNeckHalterBikini.txt",
   "denoise": "~1.0",
   "components": {

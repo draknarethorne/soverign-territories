@@ -4,7 +4,7 @@
   "stage": "motion",
   "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
   "component": "data/art/motion/romantic/sultry-over-shoulder.json",
-  "template": "data/art/_templates/heroes/motion-human.txt",
+  "template": "data/art/_templates/heroes/Bench/motion-human.txt",
   "output": "prompts/drakn-sisters/Drakness/Bench/motion/romantic/Drakness_Motion_Romantic_SultryOverShoulder.txt",
   "denoise": "~0.4-0.6"
 }

@@ -16,9 +16,9 @@ Lair: a vast sea-cave grotto opening onto a moonlit ocean, glittering tide pools
 
 Hoard: strands and heaps of pearls, shipwreck treasure chests spilling coins, barnacled anchors and ship's bells, coral crowns, sapphires and sea-glass, old bottles and rusted cutlasses.
 
-A few droplets of water hang in the air, faint bioluminescent light rippling across the hoard - understated, nothing busy.
+A few droplets of water hang in the air, faint bioluminescent light rippling across the hoard - understated.
 
-A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic; nothing from the modern world.
+A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

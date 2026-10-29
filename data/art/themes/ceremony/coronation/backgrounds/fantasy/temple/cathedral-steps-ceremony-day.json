@@ -1,0 +1,14 @@
+{
+  "id": "themes/ceremony/coronation/backgrounds/fantasy/temple/cathedral-steps-ceremony-day",
+  "kind": "background",
+  "name": "Cathedral Steps, Ceremony Day",
+  "description": "the wide steps of a great cathedral on a ceremony day, a line of guards and banners, petals on the stone and crowds out of focus beyond, bright morning light",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "coronation",
+    "background"
+  ],
+  "mood": "festive, formal"
+}

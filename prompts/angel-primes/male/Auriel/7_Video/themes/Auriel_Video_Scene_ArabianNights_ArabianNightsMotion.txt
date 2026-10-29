@@ -1,6 +1,6 @@
 === Auriel Solspire · Video: ArabianNightsMotion (group: Video) — MiniMax H3 image-to-video ===
 Source image: Auriel_Qwen_Scene_ArabianNights_00001_.png
-Size: 640x960
+Format: reel
 Length: 7.5
 
 ----------------------------------------------------------------

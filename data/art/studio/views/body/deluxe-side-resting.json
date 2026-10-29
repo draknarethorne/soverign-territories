@@ -1,0 +1,9 @@
+{
+  "id": "studio/views/body/deluxe-side-resting",
+  "kind": "view",
+  "name": "Deluxe: side resting",
+  "description": "Show the fully clothed person resting comfortably on one side on top of the neatly made bed, head supported by a pillow, legs naturally relaxed and arms resting neutrally in front of the torso. Keep the whole figure visible in a wide, full-length view.",
+  "compatibleStages": ["edit"],
+  "tags": ["deluxe", "bedroom", "side-resting", "neutral", "full-body"],
+  "negatives": ["upright seated pose", "cropped feet", "suggestive pose", "dramatic foreshortening"]
+}

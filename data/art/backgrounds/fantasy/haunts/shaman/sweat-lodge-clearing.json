@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/shaman/sweat-lodge-clearing",
+  "kind": "background",
+  "name": "Sweat lodge clearing",
+  "description": "a smoke-blackened hide-and-timber lodge in a forest clearing, bundles of herbs hanging at the door and a ring of stones around a fire pit",
+  "mood": "earthy, quiet",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "shaman",
+    "realistic"
+  ],
+  "notes": "A place a shaman spends her time, in realistic wording (use with an element realm)."
+}

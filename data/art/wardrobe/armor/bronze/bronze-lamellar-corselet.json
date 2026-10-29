@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/bronze/bronze-lamellar-corselet",
+  "kind": "wearing",
+  "name": "Bronze Lamellar Corselet",
+  "description": "a corselet of overlapping bronze lamellae laced over a {{PRIMARY}} linen tunic, bronze shoulder guards and a skirt of leather strips",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "bronze",
+    "lamellar",
+    "unisex"
+  ]
+}

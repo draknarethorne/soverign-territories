@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/earth/dust-plain-storm-front",
+  "kind": "background",
+  "name": "Dust plain storm front",
+  "description": "a flat red plain under a rolling wall of dust and storm cloud, scrub grass bending in the wind, a lone track running to the horizon, bruised light",
+  "mood": "ominous, wild",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "earth",
+    "weather",
+    "realistic"
+  ],
+  "notes": "The earth homeland (realms/earth-lands). Role 'weather' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

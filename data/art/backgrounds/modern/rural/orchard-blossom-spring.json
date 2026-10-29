@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/rural/orchard-blossom-spring",
+  "kind": "background",
+  "name": "Modern: blossom orchard, spring",
+  "description": "an orchard in full spring blossom, rows of white and pink flowering trees, petals on the grass, bright soft daylight",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "rural"
+  ],
+  "notes": "Real-world location for realistic scenes; pair with components.realm = realms/modern.json."
+}

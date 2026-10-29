@@ -1,0 +1,20 @@
+=== {{HERO}} · Alpha 2 Bare: {{NAME}} (group: Alpha, edit step on the Prime A-pose) — Edit (img2img) ===
+Incoming image: the Prime A-pose of {{HERO}}. This pass removes clothing, applies her individual build and sets her likeness (hair, eyes, skin, bust) for every later stage. Feed the result to Barefoot, Heels and the armor and showcase stages. Denoise ~0.8-0.9.
+
+----------------------------------------------------------------
+prompt:
+
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
+
+Result: she is wearing {{WEARING}}
+
+?{{KEY_BLOCK}}
+
+Body: shape the figure to this individual build, keeping her height, head and pose: {{FIGURE}}.
+
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the light-grey studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+
+----------------------------------------------------------------
+negative prompt:
+
+{{WEARING_NEG}}, extra people, extra limbs, extra digits, deformed hands, changed face, {{HAIR_NEG}}, {{EYE_NEG}}, changed pose, {{FIGURE_NEG}}, {{SKIN_NEG}}, text, watermark, logo.

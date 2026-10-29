@@ -13,7 +13,7 @@ Hair: dark auburn hair, short and windswept.
 Eyes: molten amber irises with faint ember striations and a dark charcoal limbal ring.
 Skin: warm sun-bronzed complexion, evenly tanned.
 
-Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
 Wearing fitted Ember Red-toned banded leather armor across the chest and shoulders, Burnished Bronze stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; scorch-marked leather plates, an ember-glow sigil branded over the heart.
 
@@ -23,13 +23,13 @@ He stands angled about 45 degrees to the camera in a heroic three-quarter pose, 
 
 Holding a heavy two-handed broadsword, its bronze-edged blade wreathed in flickering Ember Red flame, Ember Red-wrapped hilt.
 
-A few warm fiery orange embers drift upward around him - understated, nothing busy.
+A few warm fiery orange embers drift upward around him - understated.
 
-Eyes: the natural molten amber irises kept intact, with a faint fiery orange glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+Eyes: the natural molten amber irises kept intact, with a faint fiery orange glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated.
 
 Environment: a scorched ancient stone courtyard in a high-fantasy realm, a soft gradient of rising flames glowing upward behind them, warm amber and red light washing across the ground.
 
-Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

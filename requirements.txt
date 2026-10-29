@@ -1,0 +1,6 @@
+# Direct dependencies for validators, galleries and image/likeness processing.
+# Python 3.12 compatibility retained; regular 64-bit CPython 3.14 recommended.
+jsonschema==4.26.0
+numpy==2.4.2
+opencv-python-headless==4.13.0.92
+Pillow==12.1.1

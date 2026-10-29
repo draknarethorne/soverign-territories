@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/lips/lip-oil-gloss",
+  "kind": "makeup",
+  "name": "Lip Oil",
+  "description": "a lip-oil finish - a clear, high-shine tinted oil on the lips, minimal skin makeup, soft brows and curled lashes",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "lips"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

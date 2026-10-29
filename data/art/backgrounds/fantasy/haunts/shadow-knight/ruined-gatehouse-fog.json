@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/shadow-knight/ruined-gatehouse-fog",
+  "kind": "background",
+  "name": "Ruined gatehouse fog",
+  "description": "a ruined stone gatehouse in thick fog, a broken portcullis and scattered rubble, a faint torch glow somewhere beyond",
+  "mood": "grim, still",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "shadow-knight",
+    "realistic"
+  ],
+  "notes": "A place a shadow knight spends her time, in realistic wording (use with an element realm)."
+}

@@ -1,0 +1,265 @@
+# 2026-10-09 plan: finals, candidates, source photos and the MVP scope
+
+**Status:** active (agreed Oct 9; decisions D1 to D10 are answered in the table below; see "Today at a glance" for what is built and what is left).
+Plans follow the current [planning and feedback process](README.md): file/chat feedback becomes an agreed plan, this index lists plans, and finished plans are archived.
+
+## Review and questions: 2026-10-22 16:26 -05:00
+
+Retained: source picks, candidate/final replay, optional storage/LFS,
+multi-input future work, CLI folds/forwarders, image-size and video tests.
+Historical counts below are dated snapshots, not freshly checked inventories.
+No runtime acceptance is inferred from this documentation audit.
+Ask the user which current source/pick or render test to do next; unresolved
+CLI folds remain 6.3b/6.5, supported by the proposed CLI inventory.
+New prompt shape is owned by the
+[manual migration plan](2026-10-22-manual-prompts-to-art-library.md), not by an
+obligatory old Prime/Bare comparison. Existing final inputs remain explicit.
+
+### Inputs transferred from the Oct 12 Prime plan
+
+- [ ] **P1 you** I1 Recheck current Angel Primes inputs/renders after source
+  changes, resolving only currently missing Prime outputs. Old seven-name
+  lists are historical. The four explicit Oct 19 cast replacements remain
+  user choices, not an instruction to reapply them. Pick/re-render only when
+  current status shows it is needed, then pull the chosen input. Share the
+  current input/status inventory with existing 5b; don't execute it twice.
+- [ ] **P1 you** I2 Replace male Angel / `Male` placeholder photos with
+  chosen originals, normalize and explicitly select their workflow inputs.
+- [ ] **P2 either** I3 Inventory the two old installed-only Drakness
+  `X_Pose` MiniMax videos and Sovereign Dawn sample workflows with missing
+  inputs. Ask whether to pull videos as curated or retire recoverably;
+  resolve sample inputs. Separately decide whether `refresh` should include
+  originals normalization; don't change defaults without approval.
+
+The raw brain-dump this came from is kept word for word at the end.
+
+## Today at a glance (Oct 9, updated as we go)
+
+| Done | Where |
+| --- | --- |
+| Candidates, shots, curated and finals; `finals` command; images of finals into `assets/art`; repo and workspaces converged (72 candidates filed) | Phase 2, 2b, 2c |
+| Finals' settings recorded in `data/art/finals` and replayed by `make`; `promote --use-as`; the generated `docs/todo.md` | Phase 3, 4 |
+| MVP rescoped to Darkness and Light (Fire, Grass, Water, Earth next); docs updated | Phase 5 |
+| Command-line step-back: preview unless `--apply`, simpler `deploy`, `pull`, `inputs`, old switches removed, `audit.cmd` | Phase 6 |
+| Template sizes: FireRed and Flux no longer shrink a 944x1104 image; applied to the repo, `make` and all five workspaces | Phase 7 |
+| Roster pages brought in line with the data, with a drift check; angels slender-to-varied, colours forced, AP numbering, Neutral | earlier the same day |
+
+| Open | Who |
+| --- | --- |
+| Pick the original photo per angel and sister, then Prime and Bare, saving candidates and promoting finals | you (Phase 1) |
+| Confirm ComfyUI keeps a replayed seed (set the control to fixed once if not) | you, after the first replay |
+| Fold `tidy`, `finals sort`, `finals reclassify` into one `tidy`, `list` into `status`, `--class` into `--stage` | later (6.3b) |
+| Watch the size of `assets/art`; decide Git LFS only if it grows | you, as finals appear |
+| Several input images per workflow (backgrounds, wardrobe, weapons as separate images) | deferred to the next art phase (3.8) |
+| Confirm a FireRed render comes out 944x1104 (7.3); try one clip from each video template (8.5) | you |
+| Run `finals record`, `finals images` and `todo` after you promote your first finals | whenever you have finals |
+
+## The six threads
+
+| # | Thread | Touches |
+| --- | --- | --- |
+| 1 | MVP scope: Darkness and Light only, beta-test the whole flow with friends, add the next four elements as part of the real release; decide Grass now | STATUS (O1, G1, Next work), `docs/mvp/`, the staged-rollout bullet in `sovereign_dawn_codex.md` |
+| 2 | `docs/todo.md`: a checklist for the top-tier cards (photo, Prime, Bare, golden pose, ...), driven by automation instead of hand-ticked | New file, new report tool |
+| 3 | Candidates vs finals: everything saved so far is provisional; `zz_Final` is the workflow you decide on, with its seed and denoise | Workflow tooling |
+| 4 | Organized, not flat: the file name says where a save belongs, even if it is misspelled, in the wrong folder or dropped straight into `zz_Final` | `art_layout`, `tidy`, `pull` |
+| 5 | Source photos: the 200-render alpha batches may give better starting photos for angels and sisters | `workspaces.json` `photos`, `inputs pull` |
+| 6 | Regeneration loop: identity JSON edits mean new batches and new picks; nothing is decided yet | Process |
+
+## Vocabulary: what each kind of workflow is
+
+| Name | What it is | Prompt text | In the repo |
+| --- | --- | --- | --- |
+| (no prefix) | Generated by `make` from the art JSON | Generated | `workflows/<set>/` |
+| `zz_Candidates` | A generated workflow kept for a render, with only small changes: seed, denoise, input image, Turbo, toggles. Numbered ComfyUI saves (`..._00015_`) are candidates. Provisional | Same as generated | `workflows/_candidates/<set>/<Hero>/` (new) |
+| `zz_Shots` | Started from a generated prompt, then revised more heavily (may carry explicit wording); can be fed back in as an input. Between a candidate and a curated one | Edited | `workflows/_shots/<set>/<Hero>/` (exists) |
+| `zz_Curated` | The older originals, or written from scratch by hand | Hand-written | `workflows/_curated/` (exists) |
+| `zz_Final` | The candidate (or shot) you chose in the end: the workflow you treat as the final one, with seed, denoise and input | Whatever it was | `workflows/_final/<set>/<Hero>/` (new) |
+| `test_` | Temporary experiments | Edited | `workflows/_test/` (exists) |
+
+**Candidate or shot is decided by where you save it, not by comparing prompts.** A numbered ComfyUI save left loose or in `zz_Candidates` is a candidate; what you save into `zz_Shots` is a shot. (A prompt comparison would mislabel every older candidate once the identity JSON changes and the prompts are regenerated.)
+A final is never guessed: it exists only because you promoted it.
+
+**One final per slot.** A slot is hero × engine × stage, because Qwen and FireRed are being compared. First slots: photo, Prime, Bare, golden A-pose (the four default inputs the pipeline already uses).
+Scenes and key shots come after. Promoting a new final for a slot archives the old one (never deletes it).
+
+**Layout mirrors the main tree**, so nothing is flat: `zz_Candidates/female/Remiah/1_Alpha/1_Prime/...` in a shared workspace (one folder per hero level as the workspace already does), and the same under `zz_Final`.
+
+## Steps
+
+### Phase 0: decisions
+
+| ID | Question | Recommendation | Answer |
+| --- | --- | --- | --- |
+| D1 | Folder names and the four-way split above | Settled by your description: `zz_Candidates`, `zz_Shots`, `zz_Curated`, `zz_Final` | Settled (Oct 9) |
+| D2 | Final slots | hero x engine x stage; photo, Prime, Bare, golden pose first | Decided (Oct 9): yes, and a final can come from **any** stage (scenes, themes, any workflow) to keep its seed, denoise and input; status lists them as `+N other` |
+| D3 | Do finals also copy the chosen image into the repo? | The workflow only; images stay in ComfyUI outputs | Decided (Oct 9), **changed**: yes, the image of a final is saved into `assets/art/...` automatically (the size will be monitored; Git LFS or external storage is the fallback) |
+| D4 | MVP element set | Darkness and Light only; confirm which four elements follow in the release | Decided (Oct 9): Darkness and Light for the MVP; Fire, Grass, Water and Earth are the next cycle |
+| D5 | Grass | Decide its placement now (Fire, Grass, Water, Earth cycle) and defer building it | Decided (Oct 9): Grass is in the next cycle with Fire, Water and Earth; directions and multipliers stay open in the combat spec |
+| D6 | Shots with explicit wording: keep them in git or keep them out? | Your call; today `_shots` is tracked | Decided (Oct 9): the wording is fine in git; **no images are kept for `zz_Shots`**, only for `zz_Final` (including the Bare) |
+| D7 | Step back on the command line (`comfy_workflows.py` options and `bin\*.cmd`)? | Yes: inventory first, then simplify with old names forwarding | Decided (Oct 9): add it to today's plan (Phase 6); draft in [2026-10-09-cli-simplification.md](2026-10-09-cli-simplification.md) |
+| D8 | Phase 3: where do a final's seed and denoise live? | In the art data, a small generated file per set that you can also edit | Decided (Oct 9): in the art data (`data/art/finals/<set>.json`), generated from the finals, hand-editable; `make` applies it |
+| D9 | Phase 3: does a final's image feed the workflows after it? | Yes, as a default you choose, never forced | Decided (Oct 9), **refined later the same day**: a final can be the default source of an input role, but only when you choose it; any workflow may take any image (or several) instead. See 3.4 |
+| D10 | Phase 4: which cards does the todo table list? | All 52 plus the alpha test heroes | Decided (Oct 9): 22 angels, 10 sisters, 10 bound men, 10 dragons and the two alpha heroes, each with the slots it really has |
+| D11 | Video size and duration (added Oct 9, you raised it) | Two templates: `ST6_MiniMax_Reel` (9:16, the default, for Facebook reels) and `ST6_MiniMax_Match` (the still's shape), picked by the card's `format`; 8 s, turbo on, fp16 VAE | Decided (you delegated it); you try them (8.5) |
+
+### Phase 1: source photos and picks (you, existing tools)
+
+- [x] Tooling built Oct 9: `bin\originals.cmd` keeps the photo library in step (names follow the folder an original is in, scaled copies are made, copies of removed originals move to `gallery_944x1104_org`) and re-points a chosen photo that was renamed (`inputs photos`). Guide: [docs/art/original-photos.md](../art/original-photos.md). Run on the whole library the same day: 28 originals renamed, 976 copies made at 944x1104, the previous scaled folders kept as `gallery_944x1104_org`,
+  11 angels' photos re-pointed.
+- [x] Likeness reorganisation ran Oct 9; enduring rationale is retained in the [curation contract](../art/likeness-curation-contract.md). Backup first (`B:\Soverign Territories\_backup`); sister and angel folders cleaned; Artists grouped into 20 people; `Prospects\Various` emptied; sisters checked around Drakness; 7 angels paired to their sisters by face and set in `workspaces.json` and the Angel Primes workflows; 3 angels kept for lack of a candidate. These are dated outcomes, not current counts or permissions.
+- [x] **P1 you** The Oct 9 pair audit and `pairs_final.png` are superseded by the Oct 19 library rebaseline. Review current post-run photo outcomes through R11 and current Angel-to-Prospect rankings through D10; do not use the old Draknoxa counts or candidate list.
+- [x] **P1 you** The original-photo procedure is consolidated into the top-tier-card selection below. The old count of 12 heroes without photos is an Oct 9 snapshot, not current state.
+- [ ] **P1 you** For each top-tier card (22 angels, 10 sisters, 10 bound heroes, 10 dragons), decide the original photo; batch results may replace some. After image-processing acceptance, use [supported maintenance and selected-input steps](../art/original-photos.md#deliberate-photo-maintenance), then `inputs set HERO --photo NAME` and `inputs reset --hero HERO` for an approved configured-library selection. Use `inputs photos --dry-run` for the missing-photo list; do not run legacy `originals` over prepared sandbox photos.
+- [ ] **P2 you** Set it in the workspace and run `inputs pull -w "<workspace>"` so it is written into `workspaces.json`.
+- [ ] **P2 you** Settle the identity JSON first, then re-run Prime and Bare in batches and pick; keep saving candidates until then.
+- [ ] **P3 ai** Optional (only if wanted): a contact-sheet helper that lists the source photos in use per hero, so the choice is easy to compare.
+
+### Phase 2: candidate and final convention (tool change; built Oct 9 on the provisional D2 and D3)
+
+Built as `comfy_workflows.py finals ...` (`bin\finals.cmd`), with `tools/workflows/finals.py` for the name rules; documented in `workflows/README.md` ("Candidates and finals").
+
+- [x] 2.1 Config: slots and aliases are optional under `finals` in `workflows/workspaces.json`; the defaults are in the code (Prime, Bare, golden pose; `X_Pose` is the Prime).
+- [x] 2.2 Name parser: hero, engine and stage matched to what exists, tolerant of case and typos, ambiguous matches refused (`test_finals.py`, 9 tests).
+- [x] 2.3 Classifier, **changed**: a prompt comparison would call every older candidate a shot once the identity JSON changes and prompts are regenerated. So a numbered save is always a candidate, and a shot is only what you save into `zz_Shots`.
+- [x] 2.4 `finals sort`: files loose numbered saves into `zz_Candidates`, misplaced files into their proper subfolder, shots saved straight into `zz_Shots` by phase. **What cannot be placed is left exactly where it is** (no `zz_Unsorted`), in every `zz_` folder and in the repo. Moves only, nothing deleted: an identical duplicate goes to backup, a different file is a conflict.
+- [x] 2.5 Guards: any `zz_` folder is already hand-made, so `deploy`, `cleanup`, `tidy` and `denoise --reset` never touch these (tested).
+- [x] 2.6 `pull` keeps candidates and finals in the repo (`_candidates`, `_final`); `finals reclassify` cleans what is already in git.
+- [x] 2.7 `finals promote NAME`: copies into `zz_Final`, archives the earlier final of that slot in `zz_Final/_previous/<stamp>/`.
+- [x] 2.8 `finals status`: candidates, finals, shots, not placeable, files to re-file, and a per-hero slot table.
+- [x] 2.9 Docs, `bin\finals.cmd`, `bin\help.cmd`, `validate.cmd` runs the new tests (47 existing + 9 + 14).
+- [x] 2.10 `setup` runs `finals sort` and `finals deploy`, and `pull` runs `finals pull`, so the loop is: save anywhere, pull, setup.
+
+### Phase 2b: converge the repo and the workspaces (a few rounds of reclassify, pull and push)
+
+Run in this order; each step previews first, and everything is recoverable (git for the repo, `workflows/.sync/backup/` for the rest).
+
+- [x] 1. `finals reclassify --apply` (done Oct 9, commit `a5e0f5881`, pure renames): the 72 numbered saves in `_shots` (8 of them old `X_Pose` saves, resolved as Primes) are now in `_candidates/<set>/<Hero>/<phase>/`.
+- [x] 2. `pull` previewed for all five workspaces (Oct 9): nothing new to keep; the 72 candidates are already in `_candidates` (identical to the workspace copies after step 1).
+- [x] 3. `finals reclassify` again: 0 to move, 0 duplicates.
+- [x] 4. Applied on the live Angel Primes workspace (with your go-ahead, Oct 9): `finals sort -w "Angel Primes" --apply` moved the 72 numbered saves into `zz_Candidates/<female|male>/<Hero>/1_Alpha/...`; a second preview shows 0 to move and `pull` shows them already in the repo. `cleanup` and `tidy` previews are clean for every workspace (nothing to remove or move). Drakn Sisters, Drakness, Sovereign Dawn Series and Sovereign Territories had nothing to file.
+- [x] 5. Decided (Oct 9): keep the Drakn Sisters copy of `Drakness_Qwen_Alpha_2_Bare_Skin` (seed 517397163969845). It is in the repo; the Drakness workspace copy (seed 119517098111188) was backed up to `workflows/.sync/backup/20261009-125558/Drakness/` and replaced.
+- [ ] **P1 you** 5b. Recheck the current Angel Primes `status` after the selected-photo changes and resolve any remaining `inputs-changed (mixed)` workflows. The old 11-hero count is an Oct 9 snapshot. A placeholder `<Hero>_Qwen_Alpha_1_Prime_00000.png` means "not chosen yet"; nothing is overwritten, and `inputs reset` stops while inputs are unresolved.
+  When you settle a hero's Prime, record it with `finals promote NAME --use-as prime --apply` (Phase 3.4) or `inputs set HERO --prime NAME --apply`.
+- [ ] **P3 you** 6. Later rounds: `_curated` and `_test` in the repo are not rearranged (hand-written names); structure them only if a name resolves and you want it.
+
+### Phase 2c: a final keeps its image (built Oct 9, D3)
+
+- [x] `pull` (or `finals images --apply`) copies the render of every final into `assets/art/<set>/<Hero>/<phase>/<Hero>_<Engine>_<Stage>.png`; a newer final of the same stage replaces it (the old image goes to backup); candidates and shots never get an image (D6). `finals images` also reports the PNG total of `assets/art` for the size watch.
+- [x] A final can be any stage: `promote` and `status` do not limit it to the four slots.
+- [ ] **P3 either** Run it once the first finals exist, and watch the size; decide Git LFS only if it grows.
+
+### Phase 3: finals feed the art data
+
+What a final already holds: in the Qwen workflow's `KSampler` the seed (set to randomize), steps, CFG, sampler and denoise, the Lightning LoRA (Turbo), and the Load Image name. Today `make` and `deploy` never set a seed and `deploy` only updates the prompt text, so a rebuilt workflow forgets your composition. The aim: after you change an identity JSON and regenerate, the workflow for a stage you finalised replays the same seed (fixed) with the new prompt.
+
+Template check (Oct 9, you asked): the Qwen, FireRed and MageFlow templates still expose `seed` and `denoise` on the outer node (the repo's `workflows/_templates` are identical to the Sovereign Territories workspace copies; `denoise` shows it too). The Flux templates and MiniMax expose no denoise, but nothing we generate for edits uses them. What cannot be exposed is the seed's *control* (fixed or randomize):
+ComfyUI refuses to promote it, so `make` sets the inner sampler's control to fixed and the first run of a replayed workflow uses the record's seed; to keep it for later runs, set the seed widget to `fixed` in the UI once. If you find a way to expose it in your copy, pull it back with `pull --only templates -w "Sovereign Territories" --apply` and every generated workflow gets it.
+
+- [x] 3.1 Built Oct 9: `data/art/finals/<set>.json` (schema `data/art/_schema/finals-record.schema.json`, validated, and the validator checks each record names a workflow some prompt of the set generates). A record holds `seed`, `denoise`, `turbo`, `steps`, `cfg`, `sampler`, `scheduler`, `inputs` (every image loaded), `render` and `date`.
+- [x] 3.2 Built Oct 9: `finals record [--apply] [--hero H] [--force]` reads each final kept in the repo and writes or updates its record; a record you edited by hand is kept while its render is still the final. Run it after `pull`.
+- [x] 3.3 Built Oct 9: `make` builds or refreshes a stage's workflow with its record: seed (the control set to fixed), denoise and turbo. Not replayed: the input image (nothing forced) and steps and cfg (the template sets them from turbo). Checked on a real Qwen and FireRed workflow. One thing only you can confirm: that ComfyUI keeps the seed after a run (in the UI, set the seed control to `fixed` if it still changes it).
+- [x] 3.4 Built Oct 9: `finals promote NAME --use-as prime|bare|apose|heels|scene|polish [--apply]` makes a final's render the hero's default image for that role: the PNG is copied into the input folder of each workspace that is home for the hero and `workspaces.json` `inputs.<hero>.<role>` is set; then `inputs reset --hero H --apply` points the workflows at it.
+  **Nothing is forced:** a plain promote changes no default, any workflow can load any image, and `inputs reset` never touches `zz_` items. The flow it serves: 1_Prime takes the original photo, 2_Bare takes a 1_Prime image, and what goes downstream varies (a Bare_Figure into one scene, a 4_Wardrobe into another, a raw original in an experiment). The original photo stays `inputs set HERO --photo`. A final's record keeps every input it loaded.
+  - A hero's default image for a role (`photo`, `prime`, `bare`, `apose` ...) is something you **choose**, recorded with `finals promote NAME --use-as prime|bare|apose` (it copies the final's render into the input folder and into `workspaces.json`), or `inputs set` for the original photo. A promote on its own does not change any default.
+  - The original photo is a slot of its own: the golden photo you settle on for each angel and sister replaces `photos` in `workspaces.json` (through `inputs set HERO --photo`).
+  - Any workflow can load any other image: a candidate, shot or final keeps whatever you picked, and `inputs reset` never touches `zz_` items (already true).
+  - A final's record stores **every** input it used (the list of Load Image nodes), not just the first.
+- [x] 3.5 Engines: a Qwen and a FireRed final of a stage each keep their own record, and the engine that feeds the next stage is simply the engine of the final you promote with `--use-as`, so no extra setting is needed: promote the FireRed Prime `--use-as prime` to test the FireRed chain.
+- [x] 3.6 Tests (Oct 9): record round trip, hand edits kept, `make` replay, record lookup, `--use-as` (a plain promote changes no default), todo smoke tests. Still to add if wanted: extra Load Image nodes surviving `inputs reset` (the code only touches the first, and was not changed).
+- [x] 3.7 Docs: workflows README (finals, record, images, `--use-as`), art README (`finals/`), help and launchers. tutorial-art.md is not changed yet.
+- [ ] **P3 you** 3.8 **Deferred (Oct 9, your call):** several input images belong to a next phase of artwork, only if scenes made as they are today do not give a good result.
+  It means rendering weapons, backgrounds and wardrobe individually instead of as part of a scene, so nothing here is built until you have been through the current process. What exists: the Qwen and FireRed subgraphs already accept three images (`image`, `image2`, `image3`; Flux has two Load Image nodes) but the generated workflows wire only one Load Image, and the tool only repoints the first.
+  Today extra Load Image nodes you add by hand are left alone. If you want them generated, a card could list its inputs by role (background, person, wardrobe, weapon) and `make` would add and wire the nodes; decide after you have tried a few multi-image scenes by hand.
+
+### Phase 4: `docs/todo.md`, driven by automation (D10)
+
+`bin\todo.cmd` (`tools/art/todo_report.py`) writes `docs/todo.md` from data, never from hand ticks, and a drift check fails if the committed file is out of date (like `codex_drift`).
+
+- [x] 4.1 The table, one row per card: 22 angels, 10 sisters, 10 bound men, 10 dragons, and the two alpha test heroes. Columns are the slots that card really has: photo (from `workspaces.json` `photos`), Prime, Bare, golden pose and heels for the women and the sisters; photo, Prime and Bare for the angel men (they have no Barefoot or Heels); the bound men's single Prime (`X_Pose`) until they move to the 1_Alpha chain; the dragons' pose, head and lair.
+  Each cell is `FINAL` (with the engine), `c<N>` (candidates kept) or empty, read from the repo's `_final` and `_candidates`; `other finals` counts scenes and themes.
+- [x] 4.2 Open work: the unchecked boxes of every `Status: active` plan in `docs/plans/`, grouped by plan and phase, so the list of what is left is always the plan's own.
+- [x] 4.3 Your notes: a section between `<!-- notes -->` markers that the tool never rewrites.
+- [x] 4.4 Slots per group live in `workspaces.json` (`finals.slots`, now per group), so adding a stage to the table is a config change.
+- [x] 4.5 Decided while building: no drift check in `validate.cmd`. The table changes every time you save a render, so a committed copy is always a little behind by nature; regenerate it with `bin\todo.cmd` (after `pull`) when you want it fresh.
+- [x] 4.6 Built Oct 9 (`tools/art/todo_report.py`, `bin\todo.cmd`, `docs/todo.md`, 4 smoke tests): one table per kind of card (angel women, angel men, alpha test heroes, sisters, bound men, dragons) with the stages each really has; photo (shortened name), `FINAL` or `cN` per engine, other finals and candidates; then the open boxes of the active plans; then your notes between markers.
+
+### Phase 5: MVP rescope (docs only; needs your approval before I edit)
+
+- [x] D4 and D5 confirmed.
+- [x] STATUS: the element decision, O1 (answered), and the "Next work" list now say Darkness and Light first.
+- [x] `sovereign_dawn_codex.md` and `game-bible.md` staged-rollout text, and the `copilot-instructions.md` element line.
+- [x] `combat-calculation-spec.md`: Grass is recorded in the next cycle with Fire, Water and Earth; the MVP only needs the Light and Darkness duality.
+- [ ] **P3 ai** `docs/mvp/` and `deck-progression-rules.md` were checked: they only say "10 elements, cosmetic in the MVP", so nothing else needed changing. Re-check when the starter decks are rebuilt around Darkness and Light.
+- [x] Angels keep going in parallel as the test bed; no full Fire/Grass/Water/Earth deck in the MVP.
+
+### Phase 6: step back on the command line (D7)
+
+The zz_ ideas (candidates, shots, curated, finals, test) all still hold; the question is whether the options and launchers around them are still all needed. Draft with the numbers and proposals: [2026-10-09-cli-simplification.md](2026-10-09-cli-simplification.md).
+
+- [x] 6.1 Inventory: 12 sub-commands, 123 long options (the same six filters repeated on six commands), 43 launchers.
+- [x] 6.2 Answers (Oct 9): C1 yes, preview by default everywhere with `--apply` (the launchers add `--apply`, so your habits do not change); C2 left to me (I chose the launcher changes below); C3 one `audit` front door (my recommendation: it lists what exists and runs the cheap checks, and the old `*-audit` launchers keep working); C4 yes, `inputs` as actions; C5 yes, `status` shows candidates and finals.
+- [x] 6.3 Built Oct 9, and the old switches removed (you chose to break old habits): every changing command previews unless `--apply` (`--dry-run` always previews); `deploy --include curated,shots,tests,staged,finals` and `--mode patch|new|existing|overwrite` (replace 8 switches); `pull --only shots|templates|finals` (replaces 2); `inputs status|pull|reset|fix|set HERO` (replaces 5 flags); `status` lists candidates and finals;
+  `setup` uses the new spellings; `bin\audit.cmd NAME|all`; the launchers add `--apply` and the shots, curated and templates ones use the new options. Tests: `test_cli_surface.py` (9) plus the 47 existing ones, updated to the new spellings (the old switches are rejected, tested).
+- [ ] **P3 you** 6.3b Not done on purpose (needs a separate decision): folding `tidy`, `finals sort` and `finals reclassify` into one `tidy` (`tidy --repo`), folding `list` into `status`, and removing the `--class` flag in favour of `--stage scene|studio`.
+- [x] 6.4 `bin\help.cmd` and `workflows/README.md` describe the new spellings (a note at the top explains preview-by-default and the replacements).
+- [ ] **P3 you** 6.5 After a few weeks, remove the forwarders you no longer type.
+
+### Phase 7: image and video sizes (added Oct 9, you raised it)
+
+Stills should keep the standard size (`workspaces.json` `standardSize`, 944x1104, both sides multiples of 16) until the final upscale. ComfyUI counts a megapixel as 1024 x 1024 pixels, so the right `megapixels` value is 0.993896 (not 1.042176). What each template does with a 944x1104 input:
+
+| Template | Size mechanism | Before | Now |
+| --- | --- | --- | --- |
+| Qwen edit and polish (`ST1_Qwen_A_Pose`, `ST2_Qwen_Edit`, `ST4_Qwen_Polish`) | `FluxKontextImageScale` snaps to a preferred size; 944x1104 is one | 944x1104 (you saw it snapping) | unchanged |
+| FireRed final (`ST3_FireRed_Final`, used for scenes and finals) | `ResizeImageMaskNode`, scale total pixels = 1 MP | 947x1107 (1.0 MP = 1,048,576 pixels) | 0.993896 MP, so exactly 944x1104 |
+| Flux final and polish (`ST3_Flux_Final`, `ST4_Flux_Polish`; not used by `make`) | `ImageScaleToTotalPixels` 1 MP, resolution step 1; the 1024x1024 empty latent is linked to the scaled image, so it is unused | 947x1107, not a multiple of 16 | 0.993896 MP, step 16: 944x1104 |
+| MageFlow (`ST2_MageFlow_Edit`, not used) | `ImageScaleToTotalPixels`, megapixels driven by another node | n/a | left alone (it is linked) |
+| Qwen B pose (`ST1_Qwen_B_Pose`, not used) | empty latent 1024x1024, linked to the input | n/a | left alone |
+| Text to image (`ST0_*_Text`, brand set) | empty latent 1024x1280 (4:5), overridden per prompt by its `Size:` line | by design | unchanged |
+
+- [x] 7.1 Inventory above (Oct 9).
+- [x] 7.2 Fix: `tools/workflows/align_templates.py` sets the resize nodes of the repo templates; `make` applies the same policy to every edit workflow it builds or refreshes; `deploy` applies it to the workflows a workspace already holds (prompt, seed and input untouched, a backup first). Run on all five workspaces: 1,593 FireRed workflows refreshed; Qwen workflows needed nothing.
+  **Correction (same day):** my first pass used 1.042176, counting a megapixel as 1,000,000; ComfyUI counts 1024 x 1024, which would have made FireRed 967x1130. It is corrected to 0.993896 and re-applied everywhere (the check below now tests the real arithmetic).
+  `test_templates.py` fails if a template pulled back from a workspace undoes it (then run `align_templates.py --apply`).
+- [ ] **P1 you** 7.3 Yours: render one FireRed Bare or scene from a 944x1104 input and confirm the output is 944x1104. Flux is not used by `make`, so only check it if you use it by hand. If a size is still off, tell me which template.
+- 7.4 Note: the FireRed brand workflows in Sovereign Territories came from the same edit template and also moved from 1.0 MP to 0.993896 MP (about 5% fewer pixels than before, since 1 MP is 1,048,576); harmless, and brand plates are set by their own prompts.
+- 7.5 Video size and duration moved to Phase 8 (built; try the two templates).
+
+### Phase 8: video (added Oct 9, you raised it; the new iv2 template)
+
+Full analysis: [docs/art/minimax-h3-video-templates.md](../art/minimax-h3-video-templates.md). In short: our old `ST6_MiniMax_Video` was the older image-to-video template, not the r2v; the iv2 you saved is its newer version. The old one is archived as `workflows/_archive/ST6_MiniMax_Video_legacy.json`.
+
+- [x] 8.1 Analysis (Oct 9): ST6 against iv2 (a `ResolutionSelector`, landscape 1344x768 and 5 s defaults, turbo off, the int8 video VAE which is not installed, a cleaner outer node, notes, and two unconnected helper nodes that could read the size from the image); the node source for the constraints; the r2v for later.
+- [x] 8.2 The finding that matters: `MiniMaxH3ImageToVideo` takes sizes in steps of 32 and **stretches the first frame to the canvas**. Our default 640x960 (2:3) against 944x1104 stills (0.855) squeezed the picture by about 22%. `ResolutionSelector` has no aspect near 0.855 (nearest 3:4 = 12% off). Our 944x1104 is not a multiple of 32, so a clip that keeps the still's shape needs its own size: 928x1088 (0.853) at 0.95 MP.
+- [x] 8.3 Decided (you delegated it; the videos are for Facebook reels): two templates instead of one, picked by the card's `format`. `ST6_MiniMax_Reel` (default): 9:16, 640x1152, the still cover-cropped to it. `ST6_MiniMax_Match`: the still's shape, 928x1088 for a 944x1104 still. Both: 8 s, turbo on, the video VAE we have installed (fp16). The iv2's int8 video VAE is not needed.
+- [x] 8.4 Built: `tools/workflows/video_templates.py` (builds both from the legacy template and checks the links), `video_template()` and `set_video` in `comfy_workflows.py` (a wired width or height is left alone), a `Format:` header in the video prompts, the card `size` field retired (the title and key-art clips use `"format": "match"`), `tools/workflows/test_video_templates.py`.
+  All 102 video prompts and workflows regenerated and deployed over the existing ones in the four workspaces that hold them (the two stale `X_Pose` Drakness copies in the repo were dropped; the workspaces still have them under `7_Video/poses`).
+- [ ] **P1 you** 8.5 Yours: open one clip from each template in ComfyUI (I could not open them here), run it, and check it is not squeezed and the reel crop frames the hero. Tell me what to change: the megapixels, the length, turbo off, or the crop.
+- [ ] **P3 you** 8.6 Later, with the multi-image phase (3.8): test the r2v (reference to video) with a background, a Bare_Skin image and armor as separate references.
+- [ ] **P3 you** 8.7 Later (backlog): game animation and animated cards. A different approach from the reels: PNG sequences that Unity plays, not MiniMax clips. Listed in STATUS Deferred.
+
+## The daily pattern (my view)
+
+The [plans README](README.md) owns the current intake, lifecycle and hygiene
+rules. It supersedes this plan's original tmp-only draft, STATUS-listing and
+finished-plan retention proposal. Raw feedback is now kept safely in
+`feedback/` until verified incorporation; direct chat feedback is captured too.
+
+## Raw thoughts (kept word for word)
+
+I think the open question about Grass should be decided now and it will fold into Fire/Water/Earth cycle and that does add one more element to the MVP - but maybe we scale back the initial MVP to just Dark and Light - so we just have two elements we worry about building the deck for - so we can test the game play and such.
+It may not be a full game published to public, but something we can beta test with friends and work out the complete end-to-end flow.
+I'd then be able to add the art for the next 4 elements as part of the actual release so there's enough elements to give variety at the start.
+But the initial quests would be about dark and light.
+That's a bigger documentation and planning change - but after working on the art for our sisters and angels - I can see just how much work there will be to get a full set of cards for just 1 element.
+So scaling the MVP back to 2 elements makes the most sense.
+I'll continue to work on all angels in parallel to test things out - but we won't build a complete deck for fire/grass/water/earth cycle.
+I also need to create a docs/todo.md that is a check-list for me about a bunch of work I need to do for all the top-tier cards - like making final decision on the original photo for each angel, sister, bound and dragons to start from.
+and then picking the prime and bare shots.
+What I have saved and pulled back are all still "in progress" works as I need to generate more batches - I am just saving all the candidates at this time, so nothing is actually decided - even with ones I snapped back as we're still working on adjusting their primary .json files and I'll be re-generating based on that and picking new images.
+So items that are saved in the main workflows directory in comfyui are just zz_candidates and if save them into zz_final - that's the one I will consider my final workflow with seed, denoise, etc...
+does this all make sense?
+We'll need to break this thought into a series of steps to proceed as it touches a ton of things.
+I've got a lot moving around in my head as I think this through today and after seeing the results of the batch runs of 200 renderings in comfyui - these all come to mind.
+I ran a ton of alpha with many different sources and I think some of them might actually replace the images I am using for angels - and possibly sisters.
+I still need to play around with that, but that's something I need to push more on today as well.

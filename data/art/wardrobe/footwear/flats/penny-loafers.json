@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/flats/penny-loafers",
+  "kind": "legs_feet",
+  "name": "Penny Loafers",
+  "description": "polished {{PRIMARY}} leather penny loafers with a low stacked heel and a {{METAL}} detail across the saddle",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "flats",
+    "unisex"
+  ]
+}

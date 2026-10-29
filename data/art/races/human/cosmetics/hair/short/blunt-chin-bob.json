@@ -1,0 +1,16 @@
+{
+  "id": "hair/short/blunt-chin-bob",
+  "kind": "hair",
+  "name": "Blunt Chin Bob (female)",
+  "a_pose_style": "a blunt, straight chin-length bob with a sharp edge",
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is cut into a straight, blunt chin-length bob with a sharp edge.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "tags": [
+    "female"
+  ]
+}

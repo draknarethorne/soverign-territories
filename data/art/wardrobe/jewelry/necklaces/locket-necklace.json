@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/jewelry/necklaces/locket-necklace",
+  "kind": "jewelry",
+  "name": "Locket Necklace",
+  "description": "a long {{METAL}} chain with an oval locket resting at the sternum",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "necklace",
+    "locket",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

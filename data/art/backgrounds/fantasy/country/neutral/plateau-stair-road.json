@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/neutral/plateau-stair-road",
+  "kind": "background",
+  "name": "Plateau stair road",
+  "description": "a worn white-stone road running across a high plateau between low stone markers, short grass and wide empty sky, calm even light",
+  "mood": "calm, steady",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "neutral",
+    "road",
+    "realistic"
+  ],
+  "notes": "The neutral homeland (realms/neutral-lands). Role 'road' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

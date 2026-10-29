@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/bold/ombre-gradient-lip",
+  "kind": "makeup",
+  "name": "Gradient Lip",
+  "description": "a gradient lip - a deeper {{LIP}} at the centre softened outward to the edges, a bare lid, defined lashes and a soft {{BLUSH}} blush",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "bold"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

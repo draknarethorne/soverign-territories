@@ -1,0 +1,9 @@
+{
+  "id": "edit-policy-framing-full-length",
+  "kind": "edit",
+  "name": "Full-length reference framing",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["reference", "framing", "full-body"],
+  "description": "Show the complete person from head to both feet with comfortable space around the silhouette. Keep the camera level and proportions natural.",
+  "negatives": ["cropped head", "cropped hands", "cropped feet", "foreshortened legs"]
+}

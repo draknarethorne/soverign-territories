@@ -16,9 +16,9 @@ Lair: the ruined nave of a vast cathedral open to the sky, soaring white stone a
 
 Hoard: piles of gold and rose-gold coins, jewelled reliquaries and chalices, shards of stained glass, polished mirrors and golden candelabra, radiant crowns and sunburst medallions.
 
-Soft golden motes drift through the shafts of light like dust in sunlight - understated, nothing busy.
+Soft golden motes drift through the shafts of light like dust in sunlight - understated.
 
-A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic; nothing from the modern world.
+A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

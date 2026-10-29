@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/clothing/robes/ragged-funeral-robe",
+  "kind": "wearing",
+  "name": "Funeral Robe",
+  "description": "a long black and {{PRIMARY}} robe of heavy matte cloth with a high collar and long draped sleeves, the hem worn and tattered, a plain {{METAL}} clasp at the throat",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "clothing",
+    "robe",
+    "black",
+    "tattered",
+    "mourning"
+  ],
+  "notes": "Library robe: realistic garment wording (fabric, cut, trim) so the render stays grounded; pair it with a headwear/hoods piece when a hood is wanted."
+}

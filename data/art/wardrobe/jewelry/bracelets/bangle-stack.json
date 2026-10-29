@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/jewelry/bracelets/bangle-stack",
+  "kind": "arms",
+  "name": "Bangle Stack",
+  "description": "a stack of thin {{METAL}} bangles on each wrist",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "bracelet",
+    "bangle",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

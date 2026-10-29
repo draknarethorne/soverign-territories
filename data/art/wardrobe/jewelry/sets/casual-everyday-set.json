@@ -1,0 +1,21 @@
+{
+  "id": "wardrobe/jewelry/sets/casual-everyday-set",
+  "kind": "jewelry",
+  "name": "Casual Everyday Set",
+  "includes": [
+    "data/art/wardrobe/jewelry/necklaces/cord-charm-necklace.json",
+    "data/art/wardrobe/jewelry/earrings/huggie-earrings.json",
+    "data/art/wardrobe/jewelry/rings/simple-band-ring.json"
+  ],
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "set",
+    "casual"
+  ],
+  "notes": "A set of real pieces (includes): edit a piece and every set that includes it follows."
+}

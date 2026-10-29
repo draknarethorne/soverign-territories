@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/poison/stilted-village-over-water",
+  "kind": "background",
+  "name": "Stilted village over water",
+  "description": "a village of stilted timber houses over dark water, rope bridges and moored flat-bottomed boats, drying herbs hanging under the eaves",
+  "mood": "close, lived-in",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "poison",
+    "settlement",
+    "realistic"
+  ],
+  "notes": "The poison homeland (realms/poison-lands). Role 'settlement' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

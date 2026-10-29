@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/flats/oxford-brogues",
+  "kind": "legs_feet",
+  "name": "Oxford Brogues",
+  "description": "polished {{PRIMARY}} leather oxford brogues with decorative perforations and flat waxed laces",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "flats",
+    "male"
+  ]
+}

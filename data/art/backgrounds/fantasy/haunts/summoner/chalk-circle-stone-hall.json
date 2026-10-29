@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/summoner/chalk-circle-stone-hall",
+  "kind": "background",
+  "name": "Chalk circle stone hall",
+  "description": "a bare stone hall with a large chalk circle of glyphs drawn on the floor, candles at its edges and tall narrow windows letting in grey light",
+  "mood": "tense, focused",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "summoner",
+    "realistic"
+  ],
+  "notes": "A place a summoner spends her time, in realistic wording (use with an element realm)."
+}

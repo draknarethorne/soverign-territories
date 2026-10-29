@@ -1,0 +1,15 @@
+{
+  "id": "themes/adventure/siege-defense/wardrobe/headwear/helms/siege-open-helm",
+  "kind": "headwear",
+  "name": "Siege Open Helm",
+  "description": "an open steel helm with a nasal bar, dented and scratched from use",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "siege-defense",
+    "headwear"
+  ]
+}

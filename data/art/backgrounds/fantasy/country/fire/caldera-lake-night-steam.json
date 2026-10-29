@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/fire/caldera-lake-night-steam",
+  "kind": "background",
+  "name": "Caldera lake night steam",
+  "description": "the steaming edge of a caldera lake at night, orange glow reflecting in the water, rocks crusted with sulphur, stars through drifting steam",
+  "mood": "eerie, glowing",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "fire",
+    "night",
+    "realistic"
+  ],
+  "notes": "The fire homeland (realms/fire-lands). Role 'night' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

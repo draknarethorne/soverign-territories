@@ -25,7 +25,7 @@
       "hairHighlights": "data/art/cosmetics/highlights/gradient/ombre-to-ends.json",
       "hairHighlightColor": "warm burnished gold",
       "hairColorNegatives": ["all-over blonde hair", "fully dyed hair"],
-      "skinTone": "Warm sun-bronzed olive tan complexion, evenly tanned, no pale areas",
+      "skinTone": "Warm sun-bronzed olive tan complexion, evenly tanned",
       "eyeColorNegatives": [
         "blue eyes",
         "green eyes",
@@ -43,10 +43,10 @@
     },
     "physique": {
       "build": "Lithe, statuesque build with a balanced, dignified bearing",
-      "torso": "Smooth flat stomach with soft natural curves into the hips; narrow waist, no abdominal cuts",
-      "bust": "Very full, generous bust, firm and lifted with a deep rounded curve, generous natural detail, pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail",
+      "torso": "Smooth flat stomach with soft natural curves into the hips; narrow waist",
+      "bust": "Very full, generous bust, firm and lifted with a deep rounded curve, generous natural detail, pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
       "arms": "Slender, smooth arms with soft natural curves; unblemished hands",
-      "hips": "Shapely feminine hips, gently curved (not wide), with a natural hourglass silhouette",
+      "hips": "Shapely feminine hips, gently curved, with a natural hourglass silhouette",
       "legs": "Very long, gracefully proportioned legs with smooth contours",
       "distinguishingMarks": [],
       "raceAlignment": "Human presentation aligned to high human evoker characteristics (noble, poised, radiant warmth)"

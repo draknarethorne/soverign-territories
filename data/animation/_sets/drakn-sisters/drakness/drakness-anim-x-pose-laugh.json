@@ -8,10 +8,6 @@
     "image": "Drakness_Qwen_X_Pose_00142_.png"
   },
   "look": "data/animation/looks/cinematic-photoreal.json",
-  "size": [
-    640,
-    960
-  ],
   "template": "data/animation/_templates/video-minimax.txt",
   "notes": "What she does right after the photo is taken: a candid break from the A-pose.",
   "actions": [

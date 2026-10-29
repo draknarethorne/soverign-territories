@@ -1,0 +1,9 @@
+{
+  "id": "studio/views/body/relaxed-three-quarter",
+  "kind": "view",
+  "name": "Relaxed three-quarter fashion stance",
+  "compatibleStages": ["edit", "pose", "alpha"],
+  "tags": ["three-quarter", "full-body", "standing", "relaxed"],
+  "description": "Show a relaxed three-quarter standing pose, body turned about 45 degrees toward the camera, weight on one leg, one hand resting naturally on the hip and the other arm relaxed. Keep the face visible toward the camera.",
+  "negatives": ["straight-on rigid A-pose", "hidden face", "unbalanced stance"]
+}

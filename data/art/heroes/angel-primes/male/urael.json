@@ -21,13 +21,31 @@
       "metal": "blackened gold",
       "magicColor": "molten orange",
       "gemColor": "garnet",
-      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
-      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
-      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour",
-      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone",
-      "eyeColorNegatives": [],
-      "skinColorNegatives": [],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/pulled-back/wrapped-ponytail.json"
+      "eyeColor": "Molten orange-amber irises with faint ember striations and a dark charcoal limbal ring",
+      "eyeColorGlamour": "Molten orange-amber irises with faint ember striations and a dark charcoal limbal ring",
+      "hairColor": "Dark auburn-black hair with ember-red lights",
+      "skinTone": "Deep bronzed warm complexion, evenly toned",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "green eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/pulled-back/wrapped-ponytail.json",
+      "hairColorNegatives": [
+        "blonde hair",
+        "brown hair",
+        "grey hair",
+        "uniform flat one-tone hair"
+      ]
     },
     "physique": {
       "build": "Heavily muscled, broad warrior build",

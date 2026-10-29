@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/alchemist/apothecary-market-stall",
+  "kind": "background",
+  "name": "Apothecary market stall",
+  "description": "a covered market stall of small labelled jars, scales and bundles of dried herbs, canvas awning and a crowded lane behind",
+  "mood": "colourful, crowded",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "alchemist",
+    "realistic"
+  ],
+  "notes": "A place a alchemist spends her time, in realistic wording (use with an element realm)."
+}

@@ -16,9 +16,9 @@ Lair: a fetid fen grotto of twisted roots and still black water, glowing toxic m
 
 Hoard: shelves and heaps of glass vials, alembics and corked potion flasks, venom-etched daggers, jars of strange specimens, tarnished brass goblets, uncut pink tourmalines and poisoned jewels.
 
-A few faint tendrils of toxic mist curl across the hoard, glowing softly - understated, nothing busy.
+A few faint tendrils of toxic mist curl across the hoard, glowing softly - understated.
 
-A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic; nothing from the modern world.
+A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

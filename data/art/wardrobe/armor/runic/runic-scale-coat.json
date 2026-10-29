@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/runic/runic-scale-coat",
+  "kind": "wearing",
+  "name": "Runic Scale Coat",
+  "description": "a coat of small steel scales etched with fine runes that glow faintly {{MAGIC}}, a high collar and a leather belt",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "runic",
+    "scale",
+    "unisex"
+  ]
+}

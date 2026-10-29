@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/coast/boardwalk-pier-evening-lights",
+  "kind": "background",
+  "name": "Modern: boardwalk pier, evening",
+  "description": "a wooden seaside boardwalk and pier at dusk, strings of warm lights coming on, the sea a deep blue behind the railing",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "coast"
+  ],
+  "notes": "Real-world location for realistic scenes; pair with components.realm = realms/modern.json."
+}

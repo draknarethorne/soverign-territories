@@ -8,7 +8,7 @@
     "pose": "The dragon crouches on a broken pillar above its treasure, wings half-spread against the storm, head raised and turned toward the camera with a fierce, electric gaze.",
     "background": "data/art/backgrounds/fantasy/lairs/lightning-storm-peak-temple.json",
     "hoard": "data/art/hoards/lightning-hoard.json",
-    "effects": "A few small sparks of static dance across the hoard - understated, nothing busy."
+    "effects": "A few small sparks of static dance across the hoard - understated."
   },
   "template": "data/art/_templates/dragons/scene-lair-dragon.txt",
   "output": "prompts/elder-dragons/Fulgora/5_Scenes/Fulgora_Scene_Lair.txt",

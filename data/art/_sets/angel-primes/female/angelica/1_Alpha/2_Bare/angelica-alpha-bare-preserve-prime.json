@@ -1,0 +1,14 @@
+{
+  "artId": "angelica-alpha-bare-preserve-prime",
+  "kind": "base-set",
+  "stage": "alpha",
+  "heroArt": "data/art/heroes/angel-primes/female/angelica.json",
+  "template": "data/art/_templates/heroes/1_Alpha/bare-preserve-prime-human.txt",
+  "output": "prompts/angel-primes/female/Angelica/1_Alpha/2_Bare/Angelica_Alpha_2_Bare.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Bare edit: preserve Prime face and skin",
+  "components": {
+    "wearing": "data/art/wardrobe/swimwear/base/edit/bare-skin-study-prime-match.json"
+  },
+  "notes": "A/B comparison variant for Alpha 2 Bare: same Prime input, bare result and individual build as Bare Figure, but omit character-specific positive eye and skin details and preserve the incoming Prime appearance."
+}

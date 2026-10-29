@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/glam/rhinestone-face-gems",
+  "kind": "makeup",
+  "name": "Face Gems",
+  "description": "a festival glam - tiny {{GEM}} face gems along the outer eye and cheekbone, a soft {{EYESHADOW}} lid, defined lashes and a glossy lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "glam"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

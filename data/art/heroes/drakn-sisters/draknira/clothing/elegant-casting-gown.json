@@ -2,7 +2,7 @@
   "id": "heroes/drakn-sisters/draknira/clothing/elegant-casting-gown",
   "kind": "wearing",
   "name": "Elegant Casting Gown (Draknira signature)",
-  "description": "a floor-length gown of icy {{PRIMARY}} crystal-beaded organza over a nude underlayer, a deep V neckline, sheer sleeves frosted with tiny crystals, a high slit, a cape-like train of frosted tulle, {{METAL}} filigree frost patterns along the bodice and hem, no headwear and her hair fully visible",
+  "description": "a floor-length gown of icy {{PRIMARY}} crystal-beaded organza over a nude underlayer, a deep V neckline, sheer sleeves frosted with tiny crystals, a high slit, a cape-like train of frosted tulle, {{METAL}} filigree frost patterns along the bodice and hem, her hair fully visible",
   "compatibleStages": ["scene"],
   "notes": "Cryomancer casting outfit: frosted organza and crystals, hands-only casting."
 }

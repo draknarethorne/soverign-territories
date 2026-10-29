@@ -1,0 +1,21 @@
+=== {{HERO}} · Alpha 2b Celestial Experiment: {{NAME}} (group: Alpha, edit from the Prime A-pose) — Edit (img2img) ===
+Incoming image: the Prime A-pose of {{HERO}}. Replace its source outfit with the celestial design specified in Result below while preserving the subject's likeness, skin tone, body and pose.
+Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Replace the source outfit completely with the celestial design described in Result below. Apply the design directly to the body, matching its specified placement and coverage; keep every area described as bare skin visibly natural skin.
+
+Result: {{WEARING}}
+
+?{{KEY_BLOCK}}
+
+Body: shape the figure to this individual build, keeping her height, head and pose: {{FIGURE}}.
+
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the light-grey studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+
+----------------------------------------------------------------
+negative prompt:
+
+{{WEARING_NEG}}, extra people, extra limbs, extra digits, deformed hands, changed face, {{HAIR_NEG}}, {{EYE_NEG}}, changed pose, {{FIGURE_NEG}}, {{SKIN_NEG}}, text, watermark, logo.

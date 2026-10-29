@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/midwinter-festival/backgrounds/fantasy/tavern/festival-hall-long-tables",
+  "kind": "background",
+  "name": "Festival Hall",
+  "description": "a timber festival hall decked with evergreen garlands and candles, long tables laid for a feast and a great fire burning in the hearth",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "midwinter-festival",
+    "background"
+  ],
+  "mood": "cosy, communal"
+}

@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/retro/seventies-warm-glow",
+  "kind": "makeup",
+  "name": "1970s Warm Glow",
+  "description": "a 1970s look - warm copper shadow on the lids, a peach blush swept along the cheekbones, a glossy nude lip and soft brows",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "retro"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

@@ -1,0 +1,11 @@
+{
+  "id": "wardrobe/capes/drapes/ethereal-waist-drapes",
+  "kind": "back",
+  "name": "Ethereal Waist Drapes",
+  "description": "an ethereal wrap of sheer fabric that flows around her waist and legs, frosted {{ACCENT_SOFT}} over a matte underlayer, with delicate {{ACCENT_SOFT}} and silver glowing fibre-optic threads woven throughout",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "notes": "Cross-cutting wardrobe piece, reusable by any hero in her own palette. Grounded in the hand-made workflow zz_Curated_Drakness_Qwen_Armor_Elegant (workflows/_curated/drakn-sisters/Drakness)."
+}

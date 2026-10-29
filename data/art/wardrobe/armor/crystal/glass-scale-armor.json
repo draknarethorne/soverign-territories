@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/armor/crystal/glass-scale-armor",
+  "kind": "wearing",
+  "name": "Glass Scale Armor",
+  "description": "a coat of small overlapping panes of thick tinted glass on a leather backing, each scale catching the light in {{ACCENT_SOFT}}",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "crystal",
+    "glass",
+    "scale",
+    "unisex"
+  ]
+}

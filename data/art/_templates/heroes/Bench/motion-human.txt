@@ -1,0 +1,37 @@
+=== {{HERO}} · Motion (group: Motion) — Edit (img2img) ===
+Incoming image: an A-pose of {{HERO}} (chosen hair). Change ONLY the pose/motion; keep face, body, hair, and outfit from the incoming image. Denoise ~0.85-0.95.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Background: {{BACKGROUND}}.
+
+{{EDITORIAL}}
+
+{{KEEP_LINE}}
+
+?{{KEY_BLOCK}}
+
+Maintain the existing outfit and hairstyle expressly.
+
+{{BREEZE}}
+
+Body: {{BODY}}
+
+Head: {{HEAD}}
+
+Gaze: {{GAZE}}
+
+Expression: {{EXPRESSION}}
+
+Eyes: natural studio eyes.
+
+Pose: {{POSE}}
+{{EXTRAS}}
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, {{EYE_NEG}}, {{HERO_NEG}}, {{FIGURE_NEG}}, text, wording, watermark, logo.

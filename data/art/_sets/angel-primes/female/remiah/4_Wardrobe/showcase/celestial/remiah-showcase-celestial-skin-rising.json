@@ -11,7 +11,7 @@
     "effects": "data/art/wardrobe/effects/shared/celestial-starlight-rising.json",
     "background": "data/art/backgrounds/studio/starfield-indigo.json"
   },
-  "template": "data/art/_templates/heroes/showcase-human.txt",
+  "template": "data/art/_templates/heroes/4_Wardrobe/showcase-human.txt",
   "denoise": "~0.5-0.7",
   "output": "prompts/angel-primes/female/Remiah/4_Wardrobe/showcase/celestial/Remiah_Showcase_CelestialSkinRising.txt",
   "notes": "CELESTIAL SKIN ARMOR SHOWCASE: the thin metallic-design version; feed the Bare_Celestial image (or the A-pose) as the incoming image."

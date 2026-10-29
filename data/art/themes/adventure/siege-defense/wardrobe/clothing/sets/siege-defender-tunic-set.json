@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/siege-defense/wardrobe/clothing/sets/siege-defender-tunic-set",
+  "kind": "wearing",
+  "name": "Siege Defender Set",
+  "description": "a {{PRIMARY}} padded gambeson over a linen shirt with leather bracers, fitted dark trousers and a wide belt, a quilted collar turned up at the neck",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "siege-defense",
+    "wearing"
+  ]
+}

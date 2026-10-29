@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Rename the original reference photos to <hero>_image_<id> / <hero>_screenshot_<date>_<time>_<app> (preview unless --apply).
 
+SUPERSEDED by tools/art/originals.py (bin\\originals.cmd), which names originals after the folder they are in, for every library root,
+and also scales and prunes; see docs/art/original-photos.md. Kept for the rename map it wrote.
+
 The library has one folder per hero (Draknara/, Drakness/ ...) with an optional gallery/ inside. Files keep their folder; only the
 name changes, so a photo is never confused with another hero's once it is uploaded to ComfyUI:
 
@@ -27,7 +30,27 @@ sys.path.insert(0, str(ROOT / "tools/workflows"))
 import comfy_workflows as cw  # noqa: E402
 
 DEFAULT_MODELS = cw.work_root(cw.load_cfg()) / "Models"
-MAP = ROOT / "tools/art/originals_rename_map.json"
+LEGACY_MAP = ROOT / "tools" / "art" / "originals_rename_map.json"
+
+
+def action_map_path(cfg):
+    return cw.storage_root(cfg, "actions") / "originals_rename_map.json"
+
+
+def load_action_map(cfg):
+    configured_path = action_map_path(cfg)
+    source_path = configured_path if configured_path.is_file() else LEGACY_MAP
+    if not source_path.is_file():
+        return configured_path, {"renames": []}
+    return configured_path, json.loads(source_path.read_text(encoding="utf-8"))
+
+
+def write_action_map(cfg, map_path, record):
+    record["storageConfigurationReceipt"] = cw.storage_configuration_receipt(
+        cfg, cw.work_root(cfg), {"originalsRenameMap": map_path}
+    )
+    map_path.parent.mkdir(parents=True, exist_ok=True)
+    map_path.write_text(json.dumps(record, indent=1) + "\n", encoding="utf-8")
 FACEBOOK = re.compile(r"^facebook_(?P<ts>\d+)_(?P<id>\d+)(?P<ext>\.\w+)$")
 SCREENSHOT = re.compile(r"^Screenshot_(?P<date>\d{8})_(?P<time>\d{6})_(?P<app>.+?)(?P<ext>\.\w+)$", re.I)
 
@@ -64,6 +87,7 @@ def plan(models):
 
 
 def main():
+    cfg = cw.load_cfg()
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--models", default=str(DEFAULT_MODELS), help="original photo library (default: %(default)s)")
     ap.add_argument("--apply", action="store_true", help="really rename (default: preview)")
@@ -71,7 +95,7 @@ def main():
     ap.add_argument("--show", type=int, default=3)
     args = ap.parse_args()
     models = pathlib.Path(args.models)
-    rec = json.loads(MAP.read_text(encoding="utf-8")) if MAP.exists() else {"renames": []}
+    map_path, rec = load_action_map(cfg)
     if args.undo:
         done = 0
         for r in reversed(rec["renames"]):
@@ -83,7 +107,7 @@ def main():
                 done += 1
         if args.apply:
             rec["renames"] = []
-            MAP.write_text(json.dumps(rec, indent=1) + "\n", encoding="utf-8")
+            write_action_map(cfg, map_path, rec)
         print(f"{done} file(s) " + ("restored" if args.apply else "would be restored"))
         return
     todo = plan(models)
@@ -99,8 +123,8 @@ def main():
         for hero, folder, old, new in todo:
             (folder / old).rename(folder / new)
             rec["renames"].append({"hero": hero, "folder": str(folder.relative_to(models)).replace("\\", "/"), "old": old, "new": new})
-        MAP.write_text(json.dumps(rec, indent=1) + "\n", encoding="utf-8")
-        print(f"map saved: {MAP.relative_to(ROOT).as_posix()}")
+        write_action_map(cfg, map_path, rec)
+        print(f"map saved: {map_path}")
 
 
 if __name__ == "__main__":

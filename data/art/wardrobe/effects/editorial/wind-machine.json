@@ -2,7 +2,7 @@
   "id": "wardrobe/effects/editorial/wind-machine",
   "kind": "effects",
   "name": "Editorial: wind machine",
-  "description": "A fashion wind machine from the side: hair streams across the frame and the fabric of the outfit billows and ripples, caught mid-movement. No magical effects, only fashion lighting.",
+  "description": "A fashion wind machine from the side: hair streams across the frame and the fabric of the outfit billows and ripples, caught mid-movement. Fashion lighting only.",
   "compatibleStages": [
     "showcase"
   ],

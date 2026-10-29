@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/grass/meadow-wildflower-rainstorm",
+  "kind": "background",
+  "name": "Meadow wildflower rainstorm",
+  "description": "a wildflower meadow in a sudden summer rainstorm, grass and flowers beaded with water, a dark sky behind and sun breaking at the edge",
+  "mood": "fresh, soaked",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "grass",
+    "weather",
+    "realistic"
+  ],
+  "notes": "The grass homeland (realms/grass-lands). Role 'weather' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

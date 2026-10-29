@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/wizard/rooftop-observatory-wizard",
+  "kind": "background",
+  "name": "Rooftop observatory wizard",
+  "description": "a stone observatory balcony with brass instruments and a telescope under a star-filled sky, a half-open book on the parapet",
+  "mood": "cold, curious",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "wizard",
+    "realistic"
+  ],
+  "notes": "A place a wizard spends her time, in realistic wording (use with an element realm)."
+}

@@ -23,7 +23,12 @@
         "fair skin",
         "washed-out skin"
       ],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json",
+      "hairColorNegatives": [
+        "black hair",
+        "blonde hair",
+        "red hair"
+      ]
     },
     "physique": {
       "build": "Massive, raw-boned barbarian powerhouse; thick, heavy frame with colossal functional mass",

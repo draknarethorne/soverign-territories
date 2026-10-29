@@ -1,0 +1,19 @@
+{
+  "id": "wardrobe/jewelry/earrings/feather-earrings",
+  "kind": "jewelry",
+  "name": "Feather Earrings",
+  "description": "{{METAL}} earrings shaped like small feathers, hanging below the ear",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "earring",
+    "feather",
+    "drop",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

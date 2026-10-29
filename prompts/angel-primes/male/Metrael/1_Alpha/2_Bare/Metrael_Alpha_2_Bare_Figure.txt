@@ -4,20 +4,20 @@ Incoming image: the Prime A-pose of Metrael Rimeward. This pass removes clothing
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
-Result: he is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; the only covering is one small, smooth, form-fitting nude-tone covering over the pelvic area only, in a soft tapered shape that follows the contour of the body, perfectly flat with no bump and no straps; Everywhere else: completely bare natural skin with no clothing, no paint and no tint, keeping his natural skin tone (natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone), including the shoulders, arms, chest, back, stomach, hips, thighs, legs and bare feet; his natural muscular shape and definition stay clearly visible
+Result: he is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping his natural skin tone (cool fair complexion, evenly toned and smooth), including the shoulders, arms, chest, back, stomach, hips, thighs, legs and bare feet; his natural muscular shape and definition stay clearly visible
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: ash-grey silver hair, fine and neat.
+Eyes: pale frost-blue irises with faint ice-white striations and a deep slate limbal ring.
+Skin: cool fair complexion, evenly toned and smooth.
 
 Body: shape the figure to this individual build, keeping his height, head and pose: tall, slim, poised, scholarly-athletic build; lean, even, lightly defined chest; long, slim, precise arms; narrow, straight waist; long, slim legs.
 
-Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the light-grey studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:
 
-swim trunks, swim brief, shorts, underwear, straps, strings, ties, waistband, fabric, chains, jewelry, shoes, stickers, body paint, painted body, white spots, polka dots, dark clothing, bump on the pelvic area, raised bump, square patch, headshot, close-up, cropped body, cropped feet, censored, blurred, mosaic, extra people, extra limbs, extra digits, deformed hands, changed face, changed pose, text, watermark, logo.
+swim trunks, swim brief, shorts, underwear, straps, strings, ties, waistband, fabric, chains, jewelry, shoes, stickers, body paint, painted body, white spots, polka dots, dark clothing, headshot, close-up, cropped body, cropped feet, censored, blurred, mosaic, extra people, extra limbs, extra digits, deformed hands, changed face, blonde hair, black hair, brown hair, red hair, uniform flat one-tone hair, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, changed pose, tanned skin, bronze skin, sun-weathered skin, ruddy skin, text, watermark, logo.

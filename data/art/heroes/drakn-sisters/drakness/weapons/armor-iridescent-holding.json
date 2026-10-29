@@ -2,7 +2,7 @@
   "id": "heroes/drakn-sisters/drakness/weapons/armor-iridescent-holding",
   "kind": "holding",
   "name": "Iridescent - holding",
-  "description": "nothing in hand, fingers relaxed at her side",
+  "description": "a loose open hand, fingers relaxed at her side",
   "compatibleStages": [
     "armor",
     "scene"

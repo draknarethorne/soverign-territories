@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/flats/pointed-toe-flats",
+  "kind": "legs_feet",
+  "name": "Pointed-Toe Flats",
+  "description": "sleek {{PRIMARY}} leather pointed-toe flats with a low vamp and a thin {{METAL}} trim",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "flats",
+    "female"
+  ]
+}

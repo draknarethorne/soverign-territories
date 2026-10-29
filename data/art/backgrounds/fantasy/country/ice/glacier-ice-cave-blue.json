@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/ice/glacier-ice-cave-blue",
+  "kind": "background",
+  "name": "Glacier ice cave blue",
+  "description": "the mouth of a glacier ice cave, translucent blue walls and hanging icicles, a snowfield and jagged peaks beyond, thin bright cold light",
+  "mood": "vast, cold",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "ice",
+    "establishing",
+    "realistic"
+  ],
+  "notes": "The ice homeland (realms/ice-lands). Role 'establishing' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

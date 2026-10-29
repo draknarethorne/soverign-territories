@@ -1,0 +1,11 @@
+{
+  "id": "wardrobe/effects/shared/silver-moonlight-glow",
+  "kind": "effects",
+  "name": "Silver moonlight glow",
+  "description": "A cool silver glow like moonlight falls across her and her surroundings, with a faint {{MAGIC}} shimmer at the edges of the light.",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "notes": "A shared scene effect; edit it here and every scene that uses it follows."
+}

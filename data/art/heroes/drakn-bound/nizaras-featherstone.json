@@ -23,7 +23,12 @@
         "ruddy skin",
         "overly tanned skin"
       ],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json",
+      "hairColorNegatives": [
+        "black hair",
+        "all-over green hair",
+        "blonde hair"
+      ]
     },
     "physique": {
       "build": "Lithe, sinewy wood-elven scout build; ultra-lean, flexible and long-limbed",

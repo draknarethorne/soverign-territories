@@ -4,7 +4,7 @@
   "name": "Gold-Beaded Long Braids",
   "a_pose_style": "dozens of fine long braids parted in the centre and hanging in front of both shoulders to below the bust, gold beads and small gold cuffs threaded along the braids, the face and eyes completely clear and the chest uncovered",
   "a_pose_negatives": ["ponytail", "bangs", "hair across the face", "hair covering eyes"],
-  "breeze": "No breeze.",
+  "breeze": "Still air.",
   "hair_change": "Hair becomes dozens of fine centre-parted braids with gold beads and cuffs, falling in front of the shoulders beside the chest.",
   "extras": [],
   "compatibleStages": ["pose", "hair"],

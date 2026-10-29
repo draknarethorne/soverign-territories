@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/clothing/robes/ceremonial-court-robe",
+  "kind": "wearing",
+  "name": "Ceremonial Court Robe",
+  "description": "a floor-length {{PRIMARY}} brocade court robe with a wide {{METAL}}-embroidered collar and long hanging sleeves, closed with an {{ACCENT_SOFT}} sash",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "clothing",
+    "robe",
+    "brocade",
+    "ceremonial"
+  ],
+  "notes": "Library robe: realistic garment wording (fabric, cut, trim) so the render stays grounded; pair it with a headwear/hoods piece when a hood is wanted."
+}

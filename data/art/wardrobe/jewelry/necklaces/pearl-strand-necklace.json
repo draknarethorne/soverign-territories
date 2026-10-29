@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/jewelry/necklaces/pearl-strand-necklace",
+  "kind": "jewelry",
+  "name": "Pearl Strand Necklace",
+  "description": "a single strand of small white pearls with a {{METAL}} clasp",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "necklace",
+    "pearl",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

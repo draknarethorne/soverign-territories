@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/armor/bone/skull-pauldron-harness",
+  "kind": "wearing",
+  "name": "Skull Pauldron Harness",
+  "description": "a leather chest harness with large bone pauldrons, a small skull at each shoulder, over a {{PRIMARY}} shirt",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "bone",
+    "harness",
+    "gothic",
+    "unisex"
+  ]
+}

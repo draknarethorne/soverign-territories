@@ -1,0 +1,14 @@
+{
+  "id": "cosmetics/highlights/gradient/soft-sombre",
+  "kind": "highlights",
+  "name": "Soft Sombre",
+  "description": "a soft sombre - the base colour melting gently into {{HIGHLIGHT_COLOR}} through the mid-lengths and ends, no hard lines",
+  "compatibleStages": [
+    "pose",
+    "head"
+  ],
+  "tags": [
+    "highlights",
+    "gradient"
+  ]
+}

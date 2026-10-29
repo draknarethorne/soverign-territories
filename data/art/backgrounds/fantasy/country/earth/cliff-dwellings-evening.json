@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/earth/cliff-dwellings-evening",
+  "kind": "background",
+  "name": "Cliff dwellings evening",
+  "description": "ancient stone cliff dwellings tucked into a canyon wall at nightfall, ladders and small doorways lit by a few fires, the rock deep orange against a darkening sky",
+  "mood": "quiet, ancient",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "earth",
+    "night",
+    "realistic"
+  ],
+  "notes": "The earth homeland (realms/earth-lands). Role 'night' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

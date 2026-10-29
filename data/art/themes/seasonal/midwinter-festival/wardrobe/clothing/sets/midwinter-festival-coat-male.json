@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/midwinter-festival/wardrobe/clothing/sets/midwinter-festival-coat-male",
+  "kind": "wearing",
+  "name": "Midwinter Festival Coat",
+  "description": "a heavy {{PRIMARY}} wool coat with a fur collar and {{ACCENT_SOFT}} embroidered cuffs over a knitted jumper, dark trousers and winter boots",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "midwinter-festival",
+    "wearing",
+    "male"
+  ]
+}

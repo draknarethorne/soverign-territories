@@ -1,0 +1,16 @@
+{
+  "id": "hair/short/side-part-taper",
+  "kind": "hair",
+  "name": "Side-Part Taper (male)",
+  "a_pose_style": "a neat side part with the sides tapered short and the top combed over",
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is cut into a neat side part, tapered short at the sides and combed over on top.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "tags": [
+    "male"
+  ]
+}

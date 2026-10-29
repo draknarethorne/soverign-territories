@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/sandals/cork-footbed-sandals",
+  "kind": "legs_feet",
+  "name": "Cork Footbed Sandals",
+  "description": "contoured cork-footbed sandals with two {{PRIMARY}} leather straps and a {{METAL}} buckle",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "sandals",
+    "unisex"
+  ]
+}

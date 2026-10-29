@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/clothing/robes/plush-terry-robe",
+  "kind": "wearing",
+  "name": "Plush Terry Robe",
+  "description": "a thick, soft white terry-cloth robe with a shawl collar and a loosely tied belt, mid-calf length",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "clothing",
+    "robe",
+    "terry",
+    "lounge",
+    "modern"
+  ],
+  "notes": "Library robe: realistic garment wording (fabric, cut, trim) so the render stays grounded; pair it with a headwear/hoods piece when a hood is wanted."
+}

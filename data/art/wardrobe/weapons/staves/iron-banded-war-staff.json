@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/staves/iron-banded-war-staff",
+  "kind": "holding",
+  "name": "Iron-Banded War Staff",
+  "description": "a heavy staff of dark wood bound with {{METAL}} bands and capped with an iron head, held across the body in both hands",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "stave",
+    "war",
+    "two-handed"
+  ]
+}

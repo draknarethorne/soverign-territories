@@ -1,0 +1,18 @@
+{
+  "id": "edit-deluxe-bedroom-clothed",
+  "kind": "edit",
+  "name": "Deluxe fully-clothed bedroom pose audition",
+  "compatibleStages": ["edit"],
+  "sourceVariant": "0d_Deluxe",
+  "tags": ["deluxe", "bedroom", "fully-clothed", "preserve-source"],
+  "status": "pilot",
+  "description": "Create a neutral, full-length pose audition of the same person, fully clothed in the exact same outfit. Change only the pose and bedroom presentation specified by the selected view. Preserve every garment with its original coverage, fit, color, layers and accessories. Use ordinary relaxed body language and a neutral, non-suggestive pose.",
+  "negatives": [
+    "removed or changed clothing",
+    "added accessories",
+    "cropped subject",
+    "dramatic or suggestive posing",
+    "sexualized direction or anatomy"
+  ],
+  "notes": "Retains only the source concept's photorealistic bedroom setting, soft even neutral frontal lighting and wide full-figure composition. The original pose and wardrobe directions are intentionally excluded."
+}

@@ -21,18 +21,37 @@
       "metal": "tarnished brass",
       "magicColor": "toxic violet-green",
       "gemColor": "amethyst",
-      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
-      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
-      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour",
-      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone",
-      "eyeColorNegatives": [],
-      "skinColorNegatives": [],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/sleek-side-part.json"
+      "eyeColor": "Deep orchid-violet irises with radiating acid-green striations and a blackened plum limbal ring",
+      "eyeColorGlamour": "Deep orchid-violet irises with radiating acid-green striations and a blackened plum limbal ring",
+      "hairColor": "Glossy deep plum-black hair with a faint violet sheen, long and sleek",
+      "skinTone": "Fair cool-ivory complexion with a faint violet undertone, evenly toned and smooth",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "amber eyes",
+        "red eyes"
+      ],
+      "skinColorNegatives": [
+        "tanned skin",
+        "bronze skin",
+        "sun-weathered skin",
+        "ruddy skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/sleek-side-part.json",
+      "hairColorNegatives": [
+        "blonde hair",
+        "brown hair",
+        "red hair",
+        "grey hair",
+        "uniform flat one-tone hair"
+      ]
     },
     "physique": {
       "build": "Slender, sinuous, flexible build; sleek and sensual",
-      "torso": "Narrow, supple waist",
-      "bust": "Full, firm, rounded bust with a sleek high lift and a pronounced inner curve, natural medium detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail",
+      "torso": "Narrow, supple waist with a flat midriff and faint ab lines",
+      "bust": "Full, firm, rounded bust with a sleek high lift and a pronounced inner curve, natural medium detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
       "arms": "Slender, supple arms",
       "hips": "Softly curved, swaying hips",
       "legs": "Long, slender, sinuous legs",

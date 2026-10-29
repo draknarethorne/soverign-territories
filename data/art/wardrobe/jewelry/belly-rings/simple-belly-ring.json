@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/jewelry/belly-rings/simple-belly-ring",
+  "kind": "jewelry",
+  "name": "Simple Belly Ring",
+  "description": "a small polished {{METAL}} belly-button ring",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "belly-ring",
+    "plain",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

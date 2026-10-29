@@ -1,0 +1,14 @@
+{
+  "id": "themes/ceremony/masquerade-ball/wardrobe/clothing/gowns/masquerade-ball-gown",
+  "kind": "wearing",
+  "name": "Masquerade Ball Gown",
+  "description": "a full-skirted {{PRIMARY}} satin ball gown with a fitted bodice, an off-the-shoulder neckline and layered tulle, {{ACCENT_SOFT}} appliqué scattered over the skirt",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "masquerade-ball",
+    "wearing"
+  ]
+}

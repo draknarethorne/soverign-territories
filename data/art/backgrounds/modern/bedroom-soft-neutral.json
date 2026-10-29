@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/modern/bedroom-soft-neutral",
+  "kind": "background",
+  "name": "Bedroom: plain, soft neutral light",
+  "description": "a simple, tidy, photorealistic bedroom with a neatly made bed, plain light-neutral bedding and an uncluttered softly rendered background; evenly lit by soft neutral frontal light with gentle natural fill, no dramatic shadows or colored cast",
+  "compatibleStages": ["edit"],
+  "tags": ["bedroom", "photorealistic", "neutral", "soft-even-light"],
+  "negatives": ["grey studio backdrop", "busy decor", "dramatic lighting", "colored lighting", "clutter"]
+}

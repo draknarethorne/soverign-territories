@@ -10,11 +10,11 @@ Maintain strict fidelity to the incoming image: the subject's face, eye colour, 
 
 Critical details - these must be clearly visible:
 Hair: icy platinum-ash blonde hair, sleek and sultry with a subtle silver-frost sheen, a noticeable frosted cool smoky ash-grey shading through the roots and the last third of the lengths, like frost spreading across the hair, clearly distinct from the lighter base colour and catching the light.
-Bust: full, noticeably enlarged bust with a high, slightly conical, pointed shape - delicate natural detail, lifted high and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: full, noticeably enlarged bust with a high, slightly conical, pointed shape - delicate natural detail, lifted high and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: glacial cyan irises with radiating frost-silver striations and a deep navy limbal ring.
 Skin: cool fair porcelain complexion, evenly toned, smooth and blemish-free.
 
-Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
 Wearing a Glacial Cyan chiffon high-low dress, short at the front to the knee and long at the back to the ankle, with a fitted bodice, thin straps and a floaty layered skirt.
 
@@ -23,11 +23,11 @@ Legs & feet: open-toed Glacial Cyan heeled sandals with thin straps across the f
 
 A candid high-fashion editorial shot, dynamic spinning motion, fabric and hair in flow. Motion-generated breeze, swirling around her. captured mid-twirl, torso rotating, skirt or drape flaring outward. turned with the spin, following the motion. bright, joyful, glancing toward the camera. joyful, carefree, laughing smile. arms extended slightly for balance, caught mid-spin.
 
-A fashion wind machine from the side: hair streams across the frame and the fabric of the outfit billows and ripples, caught mid-movement. No magical effects, only fashion lighting.
+A fashion wind machine from the side: hair streams across the frame and the fabric of the outfit billows and ripples, caught mid-movement. Fashion lighting only.
 
-Eyes: natural glacial cyan irises, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
+Eyes: natural glacial cyan irises, exactly as in the incoming image, calm and clear with crisp catchlights.
 
-Studio backdrop: a clean seamless white studio backdrop with bright, even high-key lighting, minimal shadows, soft floor reflection; no backlight or rim light.
+Studio backdrop: a clean seamless white studio backdrop with bright, even high-key lighting, minimal shadows, soft floor reflection.
 
 ----------------------------------------------------------------
 negative prompt:

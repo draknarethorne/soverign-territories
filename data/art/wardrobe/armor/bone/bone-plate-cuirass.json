@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/bone/bone-plate-cuirass",
+  "kind": "wearing",
+  "name": "Bone Plate Cuirass",
+  "description": "a cuirass of overlapping curved bone plates strapped with leather, a {{PRIMARY}} cloth under-tunic showing at the neck and waist",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "bone",
+    "cuirass",
+    "unisex"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "wardrobe/armor/bikini/ornate-bikini-armor",
+  "kind": "wearing",
+  "name": "Ornate Bikini Armor",
+  "description": "skimpy {{PRIMARY}} bikini armor of ornate design with {{ACCENT_SOFT}} and {{METAL}} detail, most of her breasts exposed and her belly exposed; a skimpy matching bikini bottom, her legs exposed",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "notes": "Cross-cutting wardrobe piece, reusable by any hero in her own palette. Grounded in the hand-made workflow zz_Curated_Drakness_Qwen_Armor_Elegant (workflows/_curated/drakn-sisters/Drakness)."
+}

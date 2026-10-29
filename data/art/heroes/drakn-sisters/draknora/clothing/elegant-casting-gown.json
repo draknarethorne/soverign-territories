@@ -2,7 +2,7 @@
   "id": "heroes/drakn-sisters/draknora/clothing/elegant-casting-gown",
   "kind": "wearing",
   "name": "Elegant Casting Gown (Draknora signature)",
-  "description": "a daring backless {{PRIMARY}} satin halter gown with a deep plunging V, the fitted bodice flaring into a tiered skirt of flame-cut petals graded to {{ACCENT_SOFT}} at the hem, high thigh slits on both sides, a {{METAL}} chain harness across the waist and ember-glow edging, no headwear and her hair fully visible",
+  "description": "a daring backless {{PRIMARY}} satin halter gown with a deep plunging V, the fitted bodice flaring into a tiered skirt of flame-cut petals graded to {{ACCENT_SOFT}} at the hem, high thigh slits on both sides, a {{METAL}} chain harness across the waist and ember-glow edging, her hair fully visible",
   "compatibleStages": ["scene"],
   "notes": "Pyromancer casting outfit: flame-petal skirt, hands-only casting."
 }

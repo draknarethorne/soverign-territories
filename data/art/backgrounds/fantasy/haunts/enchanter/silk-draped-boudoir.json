@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/enchanter/silk-draped-boudoir",
+  "kind": "background",
+  "name": "Silk draped boudoir",
+  "description": "a quiet boudoir hung with silk drapes, a vanity with small bottles and a lit candle, warm low light",
+  "mood": "intimate, warm",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "enchanter",
+    "realistic"
+  ],
+  "notes": "A place a enchanter spends her time, in realistic wording (use with an element realm)."
+}

@@ -25,10 +25,10 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import art_layout  # noqa: E402
+from template_paths import template_path  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 ART = ROOT / "data/art"
-TPL = "data/art/_templates/heroes"
 NECKLACE = "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json"
 DEFAULT_SHOWCASE = {
     "jewelry": NECKLACE,
@@ -91,7 +91,7 @@ def main():
         art_id = f"{slug}-{stage}-{short}"
         wr.write(stage, art_id, {"artId": art_id, "kind": "base-set", "stage": stage, "heroArt": ident, "name": piece["name"],
                 "aesthetic": f"a clean studio presentation of the {piece['name'].lower()}", "components": comps,
-                "template": f"{TPL}/{stage}-human.txt", "denoise": "~0.5-0.7",
+                "template": template_path(f"{stage}-human.txt"), "denoise": "~0.5-0.7",
                 "output": out(stage, f"{hero}_{stage.capitalize()}_{camel(short)}"), "notes": note})
 
     celestial = f"data/art/heroes/{group}/{slug}/armor/celestial-armor.json"
@@ -103,7 +103,7 @@ def main():
         sex = "male" if "male" in json.loads((ROOT / path).read_text(encoding="utf-8")).get("tags", []) else "female"
         art_id = f"{slug}-x-pose-{short}"
         wr.write("pose", art_id, {"artId": art_id, "kind": "base-set", "stage": "pose", "heroArt": ident,
-                 "template": f"{TPL}/pose-{sex}-human.txt", "output": out("poses", f"{hero}_X_Pose_{camel(short)}"),
+                 "template": template_path(f"pose-{sex}-human.txt"), "output": out("poses", f"{hero}_X_Pose_{camel(short)}"),
                  "denoise": "~1.0", "components": {"underlayer": path},
                  "notes": "UNDERLAYER TEST. Same original photo as the base A-pose; only the underlayer piece differs."})
     for path in kit.get("clothing", []):
@@ -120,7 +120,7 @@ def main():
         fam, short = pathlib.Path(path).parent.name, pathlib.Path(path).stem
         art_id = f"{slug}-motion-{short}"
         wr.write(f"motion/{fam}", art_id, {"artId": art_id, "kind": "base-set", "stage": "motion", "heroArt": ident,
-                 "component": path, "template": f"{TPL}/motion-human.txt", "denoise": "~0.4-0.6",
+                 "component": path, "template": template_path("motion-human.txt"), "denoise": "~0.4-0.6",
                  "output": out("/".join(art_layout.dirs_for("motion", [fam])), f"{hero}_Motion_{camel(fam)}_{camel(short)}")})
 
     for s in kit.get("showcase", []):
@@ -129,7 +129,7 @@ def main():
         short = re.sub(r"[^a-z0-9]+", "-", s["name"].lower()).strip("-")
         art_id = f"{slug}-showcase-{short}"
         wr.write("showcase", art_id, {"artId": art_id, "kind": "base-set", "stage": "showcase", "heroArt": ident, "name": s["name"],
-                 "components": comps, "template": f"{TPL}/showcase-human.txt", "denoise": "~0.5-0.7",
+                 "components": comps, "template": template_path("showcase-human.txt"), "denoise": "~0.5-0.7",
                  "output": out("showcase", f"{hero}_Showcase_{camel(short)}"),
                  "notes": s.get("notes", "SHOWCASE: a studio shot on a coloured backdrop with magic and flair, before it becomes a scene.")})
 

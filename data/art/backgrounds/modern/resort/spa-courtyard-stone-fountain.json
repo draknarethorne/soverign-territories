@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/resort/spa-courtyard-stone-fountain",
+  "kind": "background",
+  "name": "Modern: spa courtyard",
+  "description": "a quiet spa courtyard of pale stone with a small trickling fountain, bamboo, folded white towels and soft diffused daylight",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "resort"
+  ],
+  "notes": "Real-world location for realistic scenes; pair with components.realm = realms/modern.json."
+}

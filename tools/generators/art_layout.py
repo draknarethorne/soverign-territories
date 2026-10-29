@@ -20,7 +20,7 @@ import pathlib
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
 THEMES = {p.parent.name for p in (ROOT / "data/art/themes").rglob("theme.json")}
-LAYOUT_STAGES = {"scene", "pose", "head", "clothing", "armor", "showcase", "brand", "card", "alpha", "polish", "final"}
+LAYOUT_STAGES = {"edit", "scene", "pose", "head", "clothing", "armor", "showcase", "brand", "card", "alpha", "polish", "final"}
 STAGE_FOLDER = {"pose": "poses"}
 BRAND_FAMILIES = {"key-art": "key-art", "title": "title", "plate": "plate", "logo": "logo", "icon": "icon", "harmonize": "edit"}
 # Sister scenes are grouped into a few broad buckets. A folder only exists to hold closely related cards: a shiny or
@@ -32,6 +32,30 @@ SCENE_BUCKETS = {
     "glamour": ["glamour", "glamour-test", "elegant-casting", "robe"],
     "story": ["the-dawn", "battle", "bond"],
 }
+
+
+def _character_scene_ids():
+    """Scenes that come from a hero's own character (alignment, element, class), named in data/art/_settings/scene-recipes.json; they share one folder, 5_Scenes/character/."""
+    path = ROOT / "data/art/_settings/scene-recipes.json"
+    if not path.exists():
+        return []
+    recipes = json.loads(path.read_text(encoding="utf-8"))
+    return [r["id"] for kind in ("duty", "quiet") for r in recipes.get(kind, [])] + ["domain", "craft"]
+
+
+SCENE_BUCKETS["character"] = _character_scene_ids()
+
+
+def _realm_scene_ids():
+    """The realm series (a hero's homeland, by role) and her haunt share 5_Scenes/realm/."""
+    path = ROOT / "data/art/_settings/scene-recipes.json"
+    if not path.exists():
+        return []
+    recipes = json.loads(path.read_text(encoding="utf-8"))
+    return [r["id"] for r in recipes.get("realm", [])] + ([recipes["haunt"]["id"]] if recipes.get("haunt") else [])
+
+
+SCENE_BUCKETS["realm"] = _realm_scene_ids()
 
 
 # Real-world photo showcases group by mood; showcases on a studio backdrop group by kind (celestial armor, elemental magic, studio display, editorial).
@@ -129,14 +153,23 @@ def family(card, group, root=None):
         return brand_family(art_id)
     if stage == "card":
         return []  # mass card art sits flat in its stage folder
+    if stage == "edit":
+        ref = comps.get("edit_task", "")
+        try:
+            tags = set(json.loads((pathlib.Path(root or ROOT) / ref).read_text(encoding="utf-8")).get("tags", []))
+        except (OSError, ValueError):
+            return []
+        return next(([name] for name in ("cleanup", "background", "deluxe", "enhance", "full", "pose") if name in tags), [])
     if stage == "alpha":
-        # The creation chain of a hero: 1 Prime (from the original photo) at the root, 2 Bare (the figure and chest looks flat in bare/; the experiments
-        # 2b nested in bare/celestial and bare/coverings), 3 Barefoot and Heels.
+        # The creation chain of a hero: 1 Prime (from the original photo) at the root, 1b the experiments for the first shot (1b_Experiments/<family>: a different way to
+        # start from the photo, promoted to 1_Prime when it wins), 2 Bare (the figure; the celestial experiment 2b nested in bare/celestial), 3 Barefoot and Heels.
         if art_id.endswith(("-alpha-barefoot", "-alpha-heels")):
             return ["footwear"]
+        if "-alpha-1b-" in art_id:
+            return ["base", art_id.split("-alpha-1b-", 1)[1]]
         if "-alpha-2b-celestial" in art_id:
             return ["bare", "celestial"]
-        return ["bare", "coverings"] if "-alpha-2b-" in art_id else ["bare"] if "-alpha-bare-" in art_id else []
+        return ["bare"] if "-alpha-bare-" in art_id else []
     if stage == "pose":
         if "view" in comps:
             return ["views"]
@@ -163,9 +196,13 @@ def phase_path(stage, family):
     """Folders below the hero for a workflow and its output, from the prompt's stage folder and family folders; None for stages outside the hero chain."""
     fam = list(family)
     if stage == "alpha":
+        if fam[:1] == ["base"] and len(fam) > 1:
+            return ["1_Alpha", "1b_Experiments", fam[1]]
         if fam[:1] == ["bare"]:
             return ["1_Alpha", "2b_Experiments", fam[1]] if len(fam) > 1 else ["1_Alpha", "2_Bare"]
         return ["1_Alpha", "3_Footwear"] if fam[:1] == ["footwear"] else ["1_Alpha", "1_Prime"]
+    if stage == "edit":
+        return ["0_Edit", *fam]
     if stage == "poses":
         if not fam:
             return ["1_Alpha"]
@@ -203,12 +240,16 @@ def parse_dirs(dirs):
         sub, tail = rest[0], rest[1:]
         if sub == "1_Prime":
             return "alpha", []
+        if sub == "1b_Experiments":
+            return "alpha", ["base", *tail]
         if sub == "2_Bare":
             return "alpha", ["bare"]
         if sub == "2b_Experiments":
             return "alpha", ["bare", *tail]
         if sub == "3_Footwear":
             return "alpha", ["footwear"]
+    elif p == "0_Edit":
+        return "edit", rest
     elif p == "2_Studies" and rest:
         if rest[0] == "body":
             return "poses", ["views"]

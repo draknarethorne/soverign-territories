@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/jewelry/rings/twisted-wire-ring",
+  "kind": "jewelry",
+  "name": "Twisted Wire Ring",
+  "description": "a ring of twisted {{METAL}} wire wrapped twice around the finger",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "ring",
+    "wire",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

@@ -1,0 +1,11 @@
+{
+  "id": "edit-full-clothed",
+  "kind": "edit",
+  "name": "Full-length clothed extension",
+  "compatibleStages": ["edit"],
+  "tags": ["full", "clothed", "extension"],
+  "sourceVariant": "0f_Full",
+  "status": "pilot",
+  "description": "Extend the photograph to a full head-to-toe view, continuing the existing pose and outfit naturally. Newly visible regions are synthesized, not a reconstruction of hidden original details.",
+  "negatives": ["removed clothing", "changed pose", "disconnected limbs"]
+}

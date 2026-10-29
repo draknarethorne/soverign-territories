@@ -21,21 +21,39 @@
       "metal": "antique bronze",
       "magicColor": "warm amber",
       "gemColor": "amber",
-      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
-      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
-      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour",
-      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone",
-      "eyeColorNegatives": [],
-      "skinColorNegatives": [],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/braided/braided-crown.json"
+      "eyeColor": "Warm amber-brown irises with radiating golden-sand striations and a dark bronze limbal ring",
+      "eyeColorGlamour": "Warm amber-brown irises with radiating golden-sand striations and a dark bronze limbal ring",
+      "hairColor": "Deep chestnut-brown hair with soft copper lights, thick and glossy",
+      "skinTone": "Warm medium-brown complexion with a golden undertone, evenly toned and glowing",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "green eyes",
+        "grey eyes",
+        "hazel eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/half-up-half-down.json",
+      "hairColorNegatives": [
+        "blonde hair",
+        "black hair",
+        "red hair",
+        "grey hair",
+        "uniform flat one-tone hair"
+      ]
     },
     "physique": {
-      "build": "Strong, sturdy hourglass build with solid shoulders and thighs",
-      "torso": "Firm, defined waist",
-      "bust": "Very full, heavy, firmly rounded bust with a strong supportive shape and generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail",
-      "arms": "Strong, capable arms",
-      "hips": "Wide, strong feminine hips",
-      "legs": "Strong, muscular legs with solid thighs",
+      "build": "Medium-tall, soft hourglass build with a grounded, steady bearing",
+      "torso": "Defined, softly curved waist with a soft, lightly toned midriff",
+      "bust": "Full, firm, softly rounded bust with a supportive shape and generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
+      "arms": "Soft, graceful arms",
+      "hips": "Wide, softly rounded feminine hips",
+      "legs": "Shapely legs with softly rounded thighs and a steady stance",
       "distinguishingMarks": [],
       "raceAlignment": "Human - standard human presentation (angelic only through wings, light and bearing)"
     },

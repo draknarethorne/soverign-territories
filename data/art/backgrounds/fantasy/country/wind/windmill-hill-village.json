@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/wind/windmill-hill-village",
+  "kind": "background",
+  "name": "Windmill hill village",
+  "description": "a hill village with stone cottages and two stone windmills, sails turning, washing flapping on lines and a wide sky behind",
+  "mood": "bright, airy",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "wind",
+    "settlement",
+    "realistic"
+  ],
+  "notes": "The wind homeland (realms/wind-lands). Role 'settlement' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

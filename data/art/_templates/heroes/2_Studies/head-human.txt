@@ -1,0 +1,26 @@
+=== {{HERO}} · Head / Close-up (group: X_Head) — Edit (img2img) ===
+Incoming image: an A-pose (or hair variant) of {{HERO}}. Zoom in to a studio head shot; keep the face, body, hair, and wardrobe from the incoming image. This zoom-in forces the clean, canonical eyes / lashes / iris / lip detail the full-body A-pose is too small to resolve. Denoise ~0.7-0.8.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic beauty glamour shot, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Background: {{BACKGROUND}}.
+
+{{FRAMING}}.
+
+{{VIEW}}
+
+{{KEEP_LINE}} Keep the wardrobe exactly as in the incoming image.
+
+?{{KEY_BLOCK}}
+
+Expression: {{EXPRESSION}}.
+
+Eyes: natural studio eyes, both eyes matched, crisp corneal catchlights; {{LASH}} lush lashes, defined lash line.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, studio equipment, props, extra limbs, extra digits, deformed hands, extra clothing, extra hair, recolored eyes, glowing eyes, {{EYE_NEG}}, {{EXPRESSION_NEG}}, {{HERO_NEG}}, mismatched eyes, squinting, crossed eyes, backlight, rim light, text, watermark, logo.

@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/wizard/tower-study-candlelight",
+  "kind": "background",
+  "name": "Tower study candlelight",
+  "description": "a round stone tower study at night, floor-to-ceiling bookshelves, a heavy desk piled with books and a lectern, candles and a high arched window",
+  "mood": "scholarly, warm",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "wizard",
+    "realistic"
+  ],
+  "notes": "A place a wizard spends her time, in realistic wording (use with an element realm)."
+}

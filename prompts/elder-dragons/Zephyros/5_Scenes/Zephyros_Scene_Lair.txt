@@ -16,9 +16,9 @@ Lair: a mountaintop eyrie above a sea of clouds, broken wind-carved stone arches
 
 Hoard: drifts of feathers and silk sails, wind chimes and silver bells, shining kites and pennants, glass lenses and polished silver trinkets, jade and cloud-glass gems.
 
-A few feathers and wisps of cloud drift past on the breeze - understated, nothing busy.
+A few feathers and wisps of cloud drift past on the breeze - understated.
 
-A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic; nothing from the modern world.
+A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

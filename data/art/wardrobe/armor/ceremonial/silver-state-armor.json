@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/ceremonial/silver-state-armor",
+  "kind": "wearing",
+  "name": "Silver State Armor",
+  "description": "a polished silver state cuirass engraved with fine scrollwork, a {{PRIMARY}} sash across the chest and a plain silver gorget",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "ceremonial",
+    "state",
+    "unisex"
+  ]
+}

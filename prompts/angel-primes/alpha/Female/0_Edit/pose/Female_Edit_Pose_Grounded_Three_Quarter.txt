@@ -1,0 +1,32 @@
+=== Alpha Female - 0_Edit - Grounded three-quarter clothed audition ===
+Incoming image: the exact user-selected source photo or selected generated image.
+Denoise ~0.9-1.0.
+
+----------------------------------------------------------------
+prompt:
+
+Edit the incoming photograph according to the task below. Keep one person
+only, with realistic photographic detail and natural skin texture.
+
+Create a full-length clothed pose audition of the same person. Change the pose and studio presentation only, following the selected pose and framing instructions.
+
+Face: Preserve the same person's recognizable face, expression, eye color and skin tone, with consistent facial features.
+Hair: Keep the incoming hairstyle, hair length, texture and color.
+Physique: Preserve visible body proportions and muscle definition, keeping the source physique unchanged.
+Clothing: Keep the person fully clothed in the same outfit. Preserve the fabric, colors, coverage and accessories.
+Pose: Show a relaxed three-quarter standing pose with both feet flat on the floor, spaced hip-width apart with a clear gap between them. Place the left foot half a foot-length forward and keep the forward knee softly bent. Both heels and all toes remain visibly planted on the studio floor, with the entire sole of each foot touching the floor from heel to toe. Keep the rear leg comfortably straight, arms relaxed and the face visible toward the camera.
+Framing: Show the complete person from head to both feet with comfortable space around the silhouette. Keep the camera level and proportions natural.
+Background and lighting: a plain neutral light-grey seamless studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light
+
+Remove visible text, logos, watermarks and interface icons. Preserve visible
+hands, fingers and feet without duplicating limbs. Any newly visible anatomy,
+clothing or background is synthesized, not recovered from the original.
+
+----------------------------------------------------------------
+negative prompt:
+
+removed clothing, changed identity, changed identity, altered facial features, changed eye color, changed skin tone, changed hairstyle, changed hair color, shortened hair,
+reshaped body, changed body proportions, exaggerated anatomy, removed clothing, revealing outfit, changed clothing, added accessories, tiptoe, raised heel, lifted foot, tucked foot, crossed legs, feet touching, unbalanced stance, hidden face,
+cropped head, cropped hands, cropped feet, foreshortened legs, colored studio backdrop, busy background, extra people, extra limbs, extra fingers,
+distorted hands, text, watermark, logo, plastic skin, illustration, painting,
+drawing, CGI, cartoon.

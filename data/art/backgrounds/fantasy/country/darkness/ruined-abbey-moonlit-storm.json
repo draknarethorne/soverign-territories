@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/darkness/ruined-abbey-moonlit-storm",
+  "kind": "background",
+  "name": "Ruined abbey moonlit storm",
+  "description": "a ruined abbey on a headland in a night storm, rain driving past broken arches and moonlight tearing through black cloud",
+  "mood": "gothic, turbulent",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "darkness",
+    "weather",
+    "realistic"
+  ],
+  "notes": "The darkness homeland (realms/darkness-lands). Role 'weather' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

@@ -7,7 +7,7 @@
   "components": {
     "view": "data/art/studio/views/head/profile-left.json"
   },
-  "template": "data/art/_templates/heroes/head-human.txt",
+  "template": "data/art/_templates/heroes/2_Studies/head-human.txt",
   "output": "prompts/drakn-sisters/Draknara/2_Studies/head/views/Draknara_Head_profile_left.txt",
   "denoise": "~0.4-0.6",
   "notes": "Reference-library head view, zoomed from the A-pose. Scaffolded."

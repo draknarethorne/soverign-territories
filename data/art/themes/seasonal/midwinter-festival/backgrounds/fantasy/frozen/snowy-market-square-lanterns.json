@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/midwinter-festival/backgrounds/fantasy/frozen/snowy-market-square-lanterns",
+  "kind": "background",
+  "name": "Snowy Market Square",
+  "description": "a snowy market square at dusk with wooden stalls hung with lanterns and evergreen garlands, light snow falling and steam rising from a food stall",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "midwinter-festival",
+    "background"
+  ],
+  "mood": "warm, cold-air festive"
+}

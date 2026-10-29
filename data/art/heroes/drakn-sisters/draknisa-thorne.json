@@ -25,7 +25,7 @@
       "hairHighlights": "data/art/cosmetics/highlights/tips/dip-dye-tips.json",
       "hairHighlightColor": "teal",
       "hairColorNegatives": ["all-over teal hair", "all-over blue hair", "fully dyed hair"],
-      "skinTone": "Warm sun-kissed medium tan complexion, evenly tanned, no pale areas",
+      "skinTone": "Warm sun-kissed medium tan complexion, evenly tanned",
       "eyeColorNegatives": [
         "green eyes",
         "brown eyes",
@@ -44,10 +44,10 @@
     },
     "physique": {
       "build": "Lithe, supple dancer physique with flowing, serpentine human grace",
-      "torso": "Soft, completely flat midriff tapering smoothly into an exceptionally narrow waist; no muscle cuts",
-      "bust": "Full, firm, classically proportioned bust, softly rounded and well supported with natural medium detail, lifted high and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail",
+      "torso": "Soft, completely flat midriff tapering smoothly into an exceptionally narrow waist",
+      "bust": "Full, firm, classically proportioned bust, softly rounded and well supported with natural medium detail, lifted high and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
       "arms": "Smooth, slender arms with graceful wrists",
-      "hips": "Shapely feminine hips, gently curved (not wide), with supple, pronounced curves",
+      "hips": "Shapely feminine hips, gently curved, with supple, pronounced curves",
       "legs": "Very long, smooth, slender legs with dancer-like fluid lines",
       "distinguishingMarks": [],
       "raceAlignment": "Human presentation aligned to courtly enchanter characteristics (alluring, serpentine, hypnotic ease)"

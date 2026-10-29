@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/druid/hedgerow-lane-wildflowers",
+  "kind": "background",
+  "name": "Hedgerow lane wildflowers",
+  "description": "a narrow lane between high hedgerows full of wildflowers and bees, a stone stile and a warm late-afternoon light",
+  "mood": "pastoral, gentle",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "druid",
+    "realistic"
+  ],
+  "notes": "A place a druid spends her time, in realistic wording (use with an element realm)."
+}

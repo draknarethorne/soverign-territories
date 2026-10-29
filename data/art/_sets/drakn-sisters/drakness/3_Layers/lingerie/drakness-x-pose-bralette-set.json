@@ -3,7 +3,7 @@
   "kind": "base-set",
   "stage": "pose",
   "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
-  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "template": "data/art/_templates/heroes/1_Alpha/pose-female-human.txt",
   "denoise": "~1.0",
   "components": {
     "underlayer": "data/art/wardrobe/swimwear/lingerie/bralette-set.json"

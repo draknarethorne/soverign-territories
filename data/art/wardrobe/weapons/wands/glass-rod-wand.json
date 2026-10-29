@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/weapons/wands/glass-rod-wand",
+  "kind": "holding",
+  "name": "Glass Rod Wand",
+  "description": "a clear glass rod wand with a thin thread of {{MAGIC}} light inside it, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "wand",
+    "glass"
+  ]
+}

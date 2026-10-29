@@ -1,5 +1,6 @@
 minimum_pre_commit_version: "4.6.1"
 default_install_hook_types: [pre-commit, pre-push]
+default_stages: [pre-commit]
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -7,13 +8,19 @@ repos:
     hooks:
       - id: check-added-large-files
         args: [--maxkb=1000]
+        stages: [pre-commit]
       - id: check-merge-conflict
+        stages: [pre-commit]
       - id: check-yaml
+        stages: [pre-commit]
       - id: check-json
+        stages: [pre-commit]
       - id: end-of-file-fixer
         exclude: "^workflows/_archive/"
+        stages: [pre-commit]
       - id: trailing-whitespace
         exclude: ".*\\.md$"
+        stages: [pre-commit]
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.45.0
@@ -21,6 +28,7 @@ repos:
       - id: markdownlint
         args: ["--config", ".markdownlint.json"]
         files: "\\.md$"
+        stages: [pre-commit]
 
   - repo: local
     hooks:
@@ -36,6 +44,7 @@ repos:
         language: system
         files: \.(ps1|psm1|psd1)$
         pass_filenames: false
+        stages: [pre-commit]
 
       - id: validate-data
         name: Validate data (schemas + card<->art links)
@@ -44,29 +53,74 @@ repos:
         additional_dependencies: [jsonschema]
         pass_filenames: false
         files: ^(data/|tools/validators/)
-        stages: [pre-commit, pre-push]
+        stages: [pre-commit]
 
       - id: validate-data-selftest
-        name: Validator self-test (mutation tests)
-        entry: python tools/validators/test_validate_data.py
+        name: Validator self-test (isolated mutation tests)
+        entry: python tools/validators/test_validate_data.py --isolated
         language: python
         additional_dependencies: [jsonschema]
         pass_filenames: false
         files: ^(tools/validators/|data/schemas/codex-schema\.json|data/art/_schema/)
-        stages: [pre-commit, pre-push]
+        stages: [manual]
 
       - id: workflow-tool-tests
         name: Workflow tool tests (homes, accepts and zz_ guards)
         entry: python tools/workflows/test_comfy_workflows.py
         language: python
+        additional_dependencies: [jsonschema]
         pass_filenames: false
         files: ^tools/workflows/
-        stages: [pre-commit, pre-push]
+        stages: [manual]
+
+      - id: backdrop-tests
+        name: Backdrop wording rewrite tests
+        entry: python -m unittest tools.workflows.test_backdrop
+        language: python
+        additional_dependencies: [jsonschema]
+        pass_filenames: false
+        files: ^(tools/workflows/(test_)?backdrop\.py|bin/backdrop\.cmd|data/art/backgrounds/studio/grey-even\.json)$
+        stages: [manual]
+
+      - id: reference-rendering-tests
+        name: Reference-rendering request, execution, gallery, outputs and comparison tests
+        entry: python -m unittest tools.workflows.test_reference_rendering tools.workflows.test_reference_execution tools.workflows.test_reference_gallery tools.workflows.test_reference_outputs tools.workflows.test_reference_comparison
+        language: python
+        additional_dependencies: [jsonschema, pillow, numpy, opencv-python-headless]
+        pass_filenames: false
+        files: ^(tools/workflows/(reference_(rendering|execution|gallery|outputs|comparison)|test_reference_(rendering|execution|gallery|outputs|comparison))\.py|data/schemas/reference-render-request\.schema\.json|bin/render-(reference|gallery)\.cmd)$
+        stages: [manual]
 
       - id: generator-tests
         name: Generator tests (piece extends)
-        entry: python tools/generators/test_gen_prompt_extends.py
+        entry: python -m unittest tools.generators.test_gen_prompt_extends tools.generators.test_deluxe_reference
         language: python
         pass_filenames: false
         files: ^tools/generators/
-        stages: [pre-commit, pre-push]
+        stages: [manual]
+
+      - id: validator-isolation-tests
+        name: Validator isolation and CI coverage tests
+        entry: python -m unittest tools.validators.test_validation_isolation tools.validators.test_quality_gates tools.validators.test_quality_selection
+        language: python
+        additional_dependencies: [jsonschema]
+        pass_filenames: false
+        files: ^(tools/validators/(test_validate_data|test_validation_isolation|test_quality_gates|test_quality_selection|quality_selection)\.py|data/art/_schema/art-piece\.schema\.json|bin/(validate|_test-env)\.cmd|\.github/workflows/quality\.yml)$
+        stages: [manual]
+
+      - id: likeness-metadata-tests
+        name: Likeness library tests
+        entry: python -m unittest discover -s tools/art/likeness_library/tests -p test_*.py
+        language: python
+        additional_dependencies: [jsonschema, numpy, pillow]
+        pass_filenames: false
+        files: ^(tools/art/likeness_library/|data/art/_schema/likeness-(library|engine-policy)\.schema\.json$|data/art/likeness-(library|engine-policy)\.json$)
+        stages: [manual]
+
+      - id: codex-audit-tests
+        name: Codex roster audit tests
+        entry: python tools/art/audits/tests/test_codex_drift.py
+        language: python
+        pass_filenames: false
+        files: ^(tools/art/audits/|docs/codex/heroes/|data/cards/sovereign-dawn/|data/art/(heroes|dragons)/)
+        stages: [manual]

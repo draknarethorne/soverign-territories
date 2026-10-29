@@ -1,0 +1,15 @@
+{
+  "id": "themes/adventure/victory-feast/wardrobe/clothing/sets/victory-feast-doublet-male",
+  "kind": "wearing",
+  "name": "Victory Feast Doublet",
+  "description": "a {{PRIMARY}} velvet doublet with slashed sleeves and {{METAL}} buttons over a white shirt, dark hose and a short cloak pinned at one shoulder",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "victory-feast",
+    "wearing",
+    "male"
+  ]
+}

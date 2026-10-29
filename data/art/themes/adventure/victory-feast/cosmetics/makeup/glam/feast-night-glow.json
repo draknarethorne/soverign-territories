@@ -1,0 +1,19 @@
+{
+  "id": "themes/adventure/victory-feast/cosmetics/makeup/glam/feast-night-glow",
+  "kind": "makeup",
+  "name": "Feast-Night Glow",
+  "description": "a feast-night finish - warm bronzed lids with a gold highlight, flushed cheeks, defined lashes and a glossy {{LIP}} lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "victory-feast",
+    "makeup"
+  ]
+}

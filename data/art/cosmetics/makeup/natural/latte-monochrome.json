@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/natural/latte-monochrome",
+  "kind": "makeup",
+  "name": "Latte Makeup",
+  "description": "a latte monochrome - warm brown tones on the lids, cheeks and lips, softly blended, a neutral glossy mouth and brushed-up brows",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "natural"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

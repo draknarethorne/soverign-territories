@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/glam/rosy-draped-blush",
+  "kind": "makeup",
+  "name": "Draped Blush",
+  "description": "a romantic finish - blush draped from the cheekbones up toward the temples, a soft {{EYESHADOW}} lid, feathered brows and a rose {{LIP}} lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "glam"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

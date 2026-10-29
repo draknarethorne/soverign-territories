@@ -1,0 +1,14 @@
+{
+  "id": "cosmetics/highlights/depth/depth-lowlights",
+  "kind": "highlights",
+  "name": "Depth Lowlights",
+  "description": "darker lowlights woven through the lengths for depth, with a few {{HIGHLIGHT_COLOR}} highlights on top for dimension",
+  "compatibleStages": [
+    "pose",
+    "head"
+  ],
+  "tags": [
+    "highlights",
+    "depth"
+  ]
+}

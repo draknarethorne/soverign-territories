@@ -1,0 +1,9 @@
+{
+  "id": "studio/views/body/deluxe-seated-upright",
+  "kind": "view",
+  "name": "Deluxe: seated upright",
+  "description": "Show the fully clothed person seated upright near the edge of the bed, torso comfortably straight, shoulders relaxed, feet resting naturally on the floor and hands resting neutrally on the lap. Keep the whole figure visible in a wide, level full-length view.",
+  "compatibleStages": ["edit"],
+  "tags": ["deluxe", "bedroom", "seated", "neutral", "full-body"],
+  "negatives": ["standing pose", "reclining pose", "cropped feet", "suggestive pose"]
+}

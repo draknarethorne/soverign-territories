@@ -1,0 +1,14 @@
+{
+  "id": "cosmetics/highlights/ribbons/ribbon-streaks",
+  "kind": "highlights",
+  "name": "Ribbon Streaks",
+  "description": "thin ribbons of {{HIGHLIGHT_COLOR}} twisted through the lengths and ends, catching the light in long strands",
+  "compatibleStages": [
+    "pose",
+    "head"
+  ],
+  "tags": [
+    "highlights",
+    "ribbons"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/neutral/white-stone-plateau-dawn",
+  "kind": "background",
+  "name": "White stone plateau dawn",
+  "description": "a wide plateau of pale stone and short grass at dawn, a clear sky with a thin line of gold at the horizon and nothing built for miles",
+  "mood": "clean, open",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "neutral",
+    "establishing",
+    "realistic"
+  ],
+  "notes": "The neutral homeland (realms/neutral-lands). Role 'establishing' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

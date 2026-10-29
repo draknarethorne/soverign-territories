@@ -16,7 +16,7 @@
     "holding": "data/art/heroes/drakn-sisters/draknisa/weapons/tidepearl-staff.json",
     "makeup": "data/art/themes/ancient/egyptian/cosmetics/makeup/kohl/winged-kohl-gold.json"
   },
-  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "template": "data/art/_templates/heroes/5_Scenes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Draknisa/5_Scenes/themes/Draknisa_Scene_Egyptian.txt",
   "denoise": "~0.5-0.7",
   "notes": "Egyptian Enchanter: complete scene from the A-pose, every item a library piece (also pre-stageable through draknisa-clothing-egyptian)."

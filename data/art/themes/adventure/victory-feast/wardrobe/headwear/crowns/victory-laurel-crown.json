@@ -1,0 +1,15 @@
+{
+  "id": "themes/adventure/victory-feast/wardrobe/headwear/crowns/victory-laurel-crown",
+  "kind": "headwear",
+  "name": "Victory Laurel Crown",
+  "description": "a laurel crown of gilded leaves resting on the brow",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "victory-feast",
+    "headwear"
+  ]
+}

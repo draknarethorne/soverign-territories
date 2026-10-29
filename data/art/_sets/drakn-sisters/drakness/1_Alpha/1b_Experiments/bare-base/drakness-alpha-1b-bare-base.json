@@ -1,0 +1,10 @@
+{
+  "artId": "drakness-alpha-1b-bare-base",
+  "kind": "base-set",
+  "stage": "alpha",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "template": "data/art/_templates/heroes/1_Alpha/experiments/base-bare-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/1_Alpha/1b_Experiments/bare-base/Drakness_Alpha_1b_BareBase.txt",
+  "denoise": "~1.0",
+  "notes": "Alpha 1b Bare Base (experiment P3): the first shot as a bare figure, her own build from the art data. It is the body master; no Bare Figure step after it."
+}

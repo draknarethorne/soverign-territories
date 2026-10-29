@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/dramatic/monochrome-tone-on-tone",
+  "kind": "makeup",
+  "name": "Monochrome",
+  "description": "a monochrome look - the same {{PRIMARY}}-toned colour on the lids, cheeks and lips, matte skin and defined lashes",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "dramatic"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

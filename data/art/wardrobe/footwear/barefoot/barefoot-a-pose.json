@@ -2,7 +2,7 @@
   "id": "wardrobe/footwear/barefoot/barefoot-a-pose",
   "kind": "legs_feet",
   "name": "Barefoot (A-pose)",
-  "description": "bare feet planted flat on the floor, slightly apart with the toes pointing forward, natural relaxed toes, no shoes",
+  "description": "bare feet planted flat on the floor, slightly apart with the toes pointing forward, natural relaxed toes",
   "negatives": ["shoes", "heels", "high heels", "sandals", "boots", "footwear", "socks", "stockings"],
   "compatibleStages": ["pose"],
   "tags": ["footwear", "barefoot", "a-pose", "female"],

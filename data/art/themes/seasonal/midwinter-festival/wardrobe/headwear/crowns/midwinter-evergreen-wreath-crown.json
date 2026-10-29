@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/midwinter-festival/wardrobe/headwear/crowns/midwinter-evergreen-wreath-crown",
+  "kind": "headwear",
+  "name": "Evergreen Wreath Crown",
+  "description": "a wreath of evergreen sprigs and red winter berries worn as a crown",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "midwinter-festival",
+    "headwear"
+  ]
+}

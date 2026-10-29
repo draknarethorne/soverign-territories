@@ -3,7 +3,7 @@
   "kind": "base-set",
   "stage": "showcase",
   "heroArt": "data/art/heroes/angel-primes/male/auriel.json",
-  "template": "data/art/_templates/heroes/showcase-human.txt",
+  "template": "data/art/_templates/heroes/4_Wardrobe/showcase-human.txt",
   "output": "prompts/angel-primes/male/Auriel/4_Wardrobe/showcase/studio/Auriel_Showcase_RunwayFlair.txt",
   "denoise": "~0.5-0.7",
   "name": "Runway Flair",
@@ -14,7 +14,7 @@
     "wearing": "data/art/wardrobe/armor/bronze/hoplite-bronze.json",
     "back": "data/art/heroes/angel-primes/male/auriel/wings/auriel-wings.json",
     "effects": "Gusts of golden light and drifting motes stream along the floor either side of him, rising around him.",
-    "background": "data/art/backgrounds/studio/cream-beauty-light.json"
+    "background": "data/art/backgrounds/studio/grey-beauty-light.json"
   },
   "notes": "SHOWCASE: a studio shot on a coloured backdrop with magic and flair, before it becomes a scene."
 }

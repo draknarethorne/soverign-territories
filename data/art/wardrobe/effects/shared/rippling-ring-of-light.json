@@ -1,0 +1,11 @@
+{
+  "id": "wardrobe/effects/shared/rippling-ring-of-light",
+  "kind": "effects",
+  "name": "Rippling ring of light",
+  "description": "A thin ring of {{MAGIC}} light ripples outward from her feet along the ground and fades.",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "notes": "A shared scene effect; edit it here and every scene that uses it follows."
+}

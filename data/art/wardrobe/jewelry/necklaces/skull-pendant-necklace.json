@@ -1,0 +1,20 @@
+{
+  "id": "wardrobe/jewelry/necklaces/skull-pendant-necklace",
+  "kind": "jewelry",
+  "name": "Skull Pendant Necklace",
+  "description": "a {{METAL}} chain necklace with a small polished skull pendant",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "necklace",
+    "skull",
+    "gothic",
+    "pendant",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

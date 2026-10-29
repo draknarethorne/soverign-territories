@@ -1,0 +1,5 @@
+# CPU-only person segmentation and LaMa cleanup; not ComfyUI's environment.
+--extra-index-url https://download.pytorch.org/whl/cpu
+-r requirements.txt
+torch==2.10.0+cpu
+torchvision==0.25.0+cpu

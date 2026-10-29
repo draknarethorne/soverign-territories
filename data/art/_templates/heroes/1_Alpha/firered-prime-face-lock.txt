@@ -1,0 +1,5 @@
+Face: the face in the reference photo is the face of the result, copied exactly: the same bone structure, eye shape and spacing, brows, nose, lips, jawline and skin.
+
+Head: facing the camera squarely, as the same person photographed straight on, keeping those same features, even when the head in the reference is turned, tilted or seen at an angle.
+
+Framing: the whole body from the top of the head to the feet, standing; where the reference shows only her head and upper body, continue the figure downward to the feet.

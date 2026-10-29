@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/victory-feast/backgrounds/fantasy/tavern/great-hall-victory-banquet",
+  "kind": "background",
+  "name": "Great Hall Banquet",
+  "description": "a great timber hall packed with long banquet tables heaped with food, tankards raised, torches and banners and a roaring hearth, warm golden light",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "victory-feast",
+    "background"
+  ],
+  "mood": "joyful, loud"
+}

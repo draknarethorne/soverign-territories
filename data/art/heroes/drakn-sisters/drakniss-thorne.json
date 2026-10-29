@@ -25,7 +25,7 @@
       "hairHighlights": "data/art/cosmetics/highlights/classic/foil-highlights.json",
       "hairHighlightColor": "bright sun-gold",
       "hairColorNegatives": ["all-over yellow hair", "all-over pink hair", "fully dyed hair"],
-      "skinTone": "Warm radiant fair-golden tan complexion, evenly tanned, no pale areas",
+      "skinTone": "Warm radiant fair-golden tan complexion, evenly tanned",
       "eyeColorNegatives": [
         "blue eyes",
         "green eyes",
@@ -45,9 +45,9 @@
     "physique": {
       "build": "Lithe yet taut athletic build; firm, disciplined warrior-cleric bearing",
       "torso": "Flat, firm midriff with subtle core tone and a faint vertical linea alba; tight waist tapering into the hips",
-      "bust": "Very full, ample bust with a generous, softly rounded shape and a heavy natural swell, generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail",
+      "bust": "Very full, ample bust with a generous, softly rounded shape and a heavy natural swell, generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
       "arms": "Slender, defined arms; light deltoid contours and firm forearms",
-      "hips": "Shapely feminine hips, gently curved (not wide), square and grounded",
+      "hips": "Shapely feminine hips, gently curved, square and grounded",
       "legs": "Very long, toned athletic legs with firm quadriceps contours",
       "distinguishingMarks": [],
       "raceAlignment": "Human presentation aligned to holy crusader characteristics (disciplined, steadfast, enduring light)"

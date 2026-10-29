@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/studio/grey-beauty-light",
+  "kind": "background",
+  "name": "Studio: light-grey backdrop, beauty-dish light",
+  "description": "a plain neutral light-grey seamless studio backdrop. Soft beauty-dish key light from slightly above and in front with gentle fill, flattering soft shadows under the cheekbones and chin, bright natural catchlights",
+  "compatibleStages": ["head", "hair", "motion"],
+  "tags": ["studio", "grey", "beauty-light", "glamour", "close-up"],
+  "notes": "Glamour close-up variant of grey-even: sculpts cheeks, lips and dimples. Select with components.background."
+}

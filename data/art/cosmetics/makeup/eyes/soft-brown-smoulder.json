@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/eyes/soft-brown-smoulder",
+  "kind": "makeup",
+  "name": "Soft Brown Smoulder",
+  "description": "a soft smoulder - smudged warm brown shadow lining the upper and lower lash line, curled lashes, a flush of {{BLUSH}} and a nude-brown lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "eyes"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

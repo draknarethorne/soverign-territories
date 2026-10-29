@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/clothing/robes/priestess-vestment-robe",
+  "kind": "wearing",
+  "name": "Vestment Robe",
+  "description": "a long, flowing ivory vestment robe with a high collar and wide sleeves, {{METAL}} embroidered trim along the front and hem, a {{PRIMARY}} stole draped over the shoulders",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "clothing",
+    "robe",
+    "vestment",
+    "ceremonial"
+  ],
+  "notes": "Library robe: realistic garment wording (fabric, cut, trim) so the render stays grounded; pair it with a headwear/hoods piece when a hood is wanted."
+}

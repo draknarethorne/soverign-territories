@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/bronze/bronze-scale-hauberk",
+  "kind": "wearing",
+  "name": "Bronze Scale Hauberk",
+  "description": "a knee-length hauberk of small overlapping bronze scales over a {{PRIMARY}} tunic, a wide leather belt with an {{ACCENT_SOFT}} buckle",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "bronze",
+    "scale",
+    "unisex"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "themes/ceremony/coronation/wardrobe/headwear/crowns/coronation-state-crown",
+  "kind": "headwear",
+  "name": "Coronation State Crown",
+  "description": "a heavy {{METAL}} coronation crown set with {{GEM}} stones, raised arches meeting at the top over a velvet cap",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "coronation",
+    "headwear"
+  ]
+}

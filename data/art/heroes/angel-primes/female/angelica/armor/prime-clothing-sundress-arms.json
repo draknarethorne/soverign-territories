@@ -2,7 +2,7 @@
   "id": "heroes/angel-primes/female/angelica/armor/prime-clothing-sundress-arms",
   "kind": "arms",
   "name": "Sundress - arms",
-  "description": "bare arms, no bracelets",
+  "description": "bare arms",
   "compatibleStages": [
     "clothing",
     "scene"

@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/darkness/moor-fog-standing-stones",
+  "kind": "background",
+  "name": "Moor fog standing stones",
+  "description": "a fogbound moor at twilight with a ring of standing stones rising from the mist, dark heather and a pale low moon",
+  "mood": "brooding, vast",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "darkness",
+    "establishing",
+    "realistic"
+  ],
+  "notes": "The darkness homeland (realms/darkness-lands). Role 'establishing' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

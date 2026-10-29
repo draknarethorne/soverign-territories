@@ -1,0 +1,131 @@
+"""Focused tests for cached face data and identity-space operations."""
+
+import pathlib
+import os
+import sys
+import tempfile
+import unittest
+from unittest import mock
+
+import numpy as np
+
+ROOT = pathlib.Path(__file__).resolve().parents[4]
+sys.path.insert(0, str(ROOT / "tools/art"))
+sys.path.insert(0, str(ROOT / "tools/workflows"))
+
+from likeness_library.engine import Cache, Photo, Space, cluster, human_rows, settings
+from likeness_library import domains
+from likeness_library.engine import Embedder
+
+
+class LikenessEngineTests(unittest.TestCase):
+    def test_read_only_domain_cannot_save_cache_or_download_missing_models(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = pathlib.Path(temporary)
+            with (
+                domains.activate("artists", read_only=True),
+                mock.patch.dict(sys.modules, {"cv2": mock.Mock()}),
+                mock.patch("urllib.request.urlretrieve") as download,
+            ):
+                cache = Cache(root / "cache.json")
+                cache.save()
+                self.assertFalse(cache.path.exists())
+                with self.assertRaisesRegex(ValueError, "existing local model"):
+                    Embedder(root).load()
+                download.assert_not_called()
+                self.assertFalse((root / "models").exists())
+
+    def test_cache_reuses_content_hash_and_round_trips_embeddings(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = pathlib.Path(temporary)
+            photo = root / "photo.jpg"
+            cache_path = root / "cache.json"
+            photo.write_bytes(b"first")
+
+            cache = Cache(cache_path)
+            first_hash = cache.sha(photo)
+            self.assertEqual(cache.sha(photo), first_hash)
+            cache.emb[first_hash] = {"faces": 1, "v": [1.0, 0.0], "s": 0.95}
+            cache.centering_mean = [.2, .3]
+            cache.centering_domain = "artists"
+            cache.save()
+
+            loaded = Cache(cache_path)
+            self.assertEqual(loaded.centering_mean, [.2, .3])
+            self.assertEqual(loaded.centering_domain, "artists")
+            self.assertEqual(
+                loaded.emb[first_hash],
+                {"faces": 1, "v": [1.0, 0.0], "s": 0.95},
+            )
+            previous_stat = photo.stat()
+            photo.write_bytes(b"other")
+            os.utime(
+                photo,
+                ns=(previous_stat.st_atime_ns, previous_stat.st_mtime_ns + 1_000_000_000),
+            )
+            self.assertNotEqual(loaded.sha(photo), first_hash)
+
+    def test_space_centers_vectors_and_excludes_source_side(self):
+        photos = [
+            Photo(pathlib.Path("prospect.jpg"), "Prospects", "One", "a", {
+                "faces": 1, "v": [1.0, 0.0], "px": 100
+            }),
+            Photo(pathlib.Path("artist.jpg"), "Artists/Studio", "Person", "b", {
+                "faces": 1, "v": [0.0, 1.0], "px": 100
+            }),
+            Photo(pathlib.Path("angel.jpg"), "Angels", "Ari", "c", {
+                "faces": 1, "v": [0.8, 0.2], "px": 100
+            }),
+        ]
+        configuration = settings({"likeness": {"minFace": 60}})
+        space = Space(photos, configuration)
+
+        self.assertEqual(
+            space.keys,
+            ["Angels/Ari", "Artists/Studio/Person", "Prospects/One"],
+        )
+        self.assertEqual(
+            space.ranking(
+                photos[0].vec,
+                skip=photos[0],
+                own="Prospects/One",
+                source="Prospects/One",
+            )[0][1],
+            "Angels/Ari",
+        )
+        self.assertNotIn(
+            "Artists/Studio/Person",
+            [
+                key
+                for _, key in space.ranking(
+                    photos[0].vec,
+                    skip=photos[0],
+                    own="Prospects/One",
+                    source="Prospects/One",
+                )
+            ],
+        )
+
+    def test_average_linkage_and_human_face_filtering(self):
+        vectors = np.array([[1.0, 0.0], [0.99, 0.01], [-1.0, 0.0]])
+        self.assertEqual(len(cluster(vectors, 0.9)), 2)
+
+        rows = [[0, 0, 1, 1, 0.95], [0, 0, 1, 1, 0.80]]
+        self.assertEqual(human_rows(rows), [rows[0]])
+
+    def test_saved_centering_mean_keeps_vectors_stable_when_folders_change(self):
+        photo = Photo(pathlib.Path("photo.jpg"), "Prospects", "One", "a", {
+            "faces": 1, "v": [1., 0.], "px": 100,
+        })
+        st = settings({})
+        Space([photo], st, mean=[.2, .3])
+        vector = photo.vec.copy()
+        photo.group, photo.folder, photo.key = "Various", "Various", "Various"
+        Space([photo], st, mean=[.2, .3])
+        np.testing.assert_allclose(photo.vec, vector)
+        with self.assertRaisesRegex(ValueError, "embedding dimensions"):
+            Space([photo], st, mean=[0., 0., 0.])
+
+
+if __name__ == "__main__":
+    unittest.main()

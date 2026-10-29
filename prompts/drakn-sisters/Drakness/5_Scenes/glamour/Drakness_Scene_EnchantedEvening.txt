@@ -10,11 +10,11 @@ Maintain strict fidelity to the incoming image: the subject's face, eye colour, 
 
 Critical details - these must be clearly visible:
 Hair: rich black hair with warm espresso depth, noticeable, vibrant deep plum-amethyst bold face-framing streaks that catch the light, tone-on-tone dimension.
-Bust: full, rounded, naturally heavy bust with a soft inner swell and a smooth, weighted curve, generous natural detail, lifted and pressed toward the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: full, rounded, naturally heavy bust with a soft inner swell and a smooth, weighted curve, generous natural detail, lifted and pressed toward the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
-Skin: warm deep sun-kissed golden-bronze tan complexion, evenly tanned, no pale areas.
+Skin: warm deep sun-kissed golden-bronze tan complexion, evenly tanned.
 
-Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
 Wearing a form-fitting full-length Midnight Violet evening gown with Vibrant Amethyst and Polished Silver accents and swirls - covering the mid-section entirely; thin straps, straight across the top; modest décolletage, breasts partially exposed; slit on both sides to the knee.
 
@@ -23,15 +23,15 @@ Legs & feet: Midnight-Violet evening high heels with high straps.
 
 A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. alluring, confident; lips slightly parted; expressive, sultry brows. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
 
-a faint amethyst glow lingers softly, ambient and understated, nothing overtly magical.
+a faint amethyst glow lingers softly, ambient and understated.
 
-Eyes: irises softly aglow with amethyst light, brightest near the pupil and fading to the natural deep violet irises at the rim, iris detail still visible, a gentle amethyst catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with amethyst light, brightest near the pupil and fading to the natural deep violet irises at the rim, iris detail still visible, a gentle amethyst catchlight.
 
 Companion: her aligned Elder Dragon, Umbrath, barely visible in the distant night sky beyond the terrace, a silhouette of dark wings against the moonlight.
 
 Environment: an elegant gothic stone balcony with carved balustrades and trailing black roses, overlooking a moonlit cemetery of white mausoleums, candles flickering in iron lanterns, a silver moon and a gentle violet haze drifting low.
 
-Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

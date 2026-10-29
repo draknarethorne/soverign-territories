@@ -1,0 +1,15 @@
+{
+  "id": "themes/adventure/siege-defense/wardrobe/armor/plate/siege-defender-plate",
+  "kind": "wearing",
+  "name": "Siege Defender Plate",
+  "description": "a battered steel breastplate and pauldrons over a {{PRIMARY}} padded gambeson, plate vambraces and a dented steel gorget",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "siege-defense",
+    "wearing",
+    "unisex"
+  ]
+}

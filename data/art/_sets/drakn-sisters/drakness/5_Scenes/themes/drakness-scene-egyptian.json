@@ -16,7 +16,7 @@
     "effects": "data/art/heroes/drakn-sisters/drakness/effects/cold-necromantic-mist-curls-low-around-her.json",
     "background": "data/art/themes/ancient/egyptian/backgrounds/fantasy/temple/hypostyle-hall-torchlit.json"
   },
-  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "template": "data/art/_templates/heroes/5_Scenes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Drakness/5_Scenes/themes/Drakness_Scene_Egyptian.txt",
   "denoise": "~0.5-0.7",
   "notes": "Egyptian theme expansion (necromancer: Anubis priestess). Feed the A-pose or the hair-stage image for themes/egyptian hair."

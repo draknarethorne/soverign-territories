@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/fire/obsidian-field-ember-wind",
+  "kind": "background",
+  "name": "Obsidian field ember wind",
+  "description": "a field of black obsidian glass and cinders with thin steam vents, a hot wind lifting embers, a red sun low through ash haze",
+  "mood": "harsh, windy",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "fire",
+    "weather",
+    "realistic"
+  ],
+  "notes": "The fire homeland (realms/fire-lands). Role 'weather' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

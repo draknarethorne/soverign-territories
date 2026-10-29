@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/crystal/quartz-plate-armor",
+  "kind": "wearing",
+  "name": "Quartz Plate Armor",
+  "description": "plates of polished clear quartz set in a steel frame over a {{PRIMARY}} cloth tunic, the plates throwing soft reflections",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "crystal",
+    "quartz",
+    "unisex"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/clothing/robes/fur-trimmed-winter-robe",
+  "kind": "wearing",
+  "name": "Fur-Trimmed Winter Robe",
+  "description": "a heavy {{PRIMARY}} wool robe lined with thick white fur at the collar, cuffs and hem, closed with a wide wool belt",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "clothing",
+    "robe",
+    "winter",
+    "fur",
+    "wool"
+  ],
+  "notes": "Library robe: realistic garment wording (fabric, cut, trim) so the render stays grounded; pair it with a headwear/hoods piece when a hood is wanted."
+}

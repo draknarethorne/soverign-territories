@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/brows/sharp-sculpted-brows",
+  "kind": "makeup",
+  "name": "Sculpted Brows",
+  "description": "a brow-sculpted look - sharply defined, tapered {{BROW}} brows, a softly blended lid, a satin cheek and a neutral lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "brows"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

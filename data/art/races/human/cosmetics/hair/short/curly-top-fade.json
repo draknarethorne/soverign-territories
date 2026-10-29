@@ -1,0 +1,16 @@
+{
+  "id": "hair/short/curly-top-fade",
+  "kind": "hair",
+  "name": "Curly Top Fade (male)",
+  "a_pose_style": "defined curls on top with a clean skin fade at the sides",
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is defined curls on top with a clean fade at the sides.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "tags": [
+    "male"
+  ]
+}

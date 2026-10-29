@@ -2,8 +2,8 @@
   "id": "heroes/angel-primes/male/angelo/wearing/angelic-pastel-trunks",
   "kind": "wearing",
   "name": "Angelic Pastel Trunks (Angelo test-bed underlayer)",
-  "description": "only fitted mid-thigh swim trunks in {{PRIMARY}} with iridescent pastel colour-blocked side panels in soft rose, sky blue, mint and lilac, {{ACCENT_SOFT}} waistband and a small {{ACCENT_SOFT}} feather emblem on the left hip; chest, abdomen, and lower legs bare; bare feet",
+  "description": "only fitted mid-thigh swim trunks in {{PRIMARY}} with softly pearlescent pastel colour-blocked side panels in soft rose, sky blue, mint and lilac, {{ACCENT_SOFT}} waistband and a small {{ACCENT_SOFT}} feather emblem on the left hip; chest, abdomen, and lower legs bare; bare feet",
   "compatibleStages": ["pose"],
   "tags": ["swimwear", "trunks", "decorative", "angel", "test-bed"],
-  "notes": "Colourful and asymmetric on purpose, so a change of view is obvious in the render."
+  "notes": "Colourful and asymmetric on purpose, so a change of view is obvious in the render. Angelica's bikini says 'iridescent'; his trunks say 'softly pearlescent' so the sheen stays lighter on a male. If the trunks look odd in a render, tune this wording first."
 }

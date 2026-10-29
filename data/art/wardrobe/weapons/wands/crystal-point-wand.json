@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/weapons/wands/crystal-point-wand",
+  "kind": "holding",
+  "name": "Crystal Point Wand",
+  "description": "a short wand tipped with a polished clear {{GEM}} crystal point, held lightly in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "wand",
+    "crystal"
+  ]
+}

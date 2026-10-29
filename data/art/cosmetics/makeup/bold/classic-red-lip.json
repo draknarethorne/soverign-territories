@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/bold/classic-red-lip",
+  "kind": "makeup",
+  "name": "Classic Red Lip",
+  "description": "a classic finish - a matte true red lip, a thin clean black liner, defined lashes, softly sculpted cheeks and groomed brows",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "bold"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

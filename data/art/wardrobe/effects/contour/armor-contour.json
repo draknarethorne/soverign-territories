@@ -2,7 +2,7 @@
   "id": "wardrobe/effects/contour/armor-contour",
   "kind": "effects",
   "name": "Contour: armor shaped to the body",
-  "description": "Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the breastplate or bodice is moulded over the bust, lifting and supporting it into a full, firm, rounded form with a crisp, clearly defined cleavage line at the centre, never a flat, boxy or concealing plate; the waist is cinched and defined and the hips follow their natural curve.",
+  "description": "Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the breastplate or bodice is moulded over the bust, lifting and supporting it into a full, firm, rounded form with a crisp, clearly defined cleavage line at the centre; the waist is cinched and defined and the hips follow their natural curve.",
   "compatibleStages": [
     "armor",
     "clothing",

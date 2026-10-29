@@ -1,0 +1,19 @@
+{
+  "id": "wardrobe/jewelry/earrings/gem-stud-earrings",
+  "kind": "jewelry",
+  "name": "Gem Stud Earrings",
+  "description": "small {{METAL}} stud earrings, each set with a {{GEM}} stone",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "earring",
+    "stud",
+    "gem",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

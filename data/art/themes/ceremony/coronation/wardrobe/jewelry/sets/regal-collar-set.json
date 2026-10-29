@@ -1,0 +1,19 @@
+{
+  "id": "themes/ceremony/coronation/wardrobe/jewelry/sets/regal-collar-set",
+  "kind": "jewelry",
+  "name": "Regal Collar Set",
+  "includes": [
+    "data/art/wardrobe/jewelry/necklaces/gem-collar.json",
+    "data/art/wardrobe/jewelry/earrings/chandelier-earrings.json",
+    "data/art/wardrobe/jewelry/rings/statement-cocktail-ring.json"
+  ],
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "coronation",
+    "jewelry"
+  ]
+}

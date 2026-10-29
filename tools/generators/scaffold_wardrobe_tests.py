@@ -21,10 +21,10 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import art_layout  # noqa: E402
+from template_paths import template_path  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 ART = ROOT / "data/art"
-TEMPLATES = "data/art/_templates/heroes"
 BAREFOOT = "data/art/wardrobe/footwear/barefoot/barefoot.json"
 DEFAULTS = {
     "arms": "bare arms",
@@ -89,7 +89,7 @@ def main():
                 continue
             if stage == "pose":
                 card = {"artId": art_id, "kind": "base-set", "stage": "pose", "heroArt": ident,
-                        "template": f"{TEMPLATES}/pose-{sex}-human.txt", "denoise": "~1.0",
+                        "template": template_path(f"pose-{sex}-human.txt"), "denoise": "~1.0",
                         "components": {"underlayer": pid}}
             else:
                 comps = {"wearing": pid, "arms": DEFAULTS["arms"], "jewelry": DEFAULTS["jewelry"], "legs_feet": BAREFOOT}
@@ -97,7 +97,7 @@ def main():
                     comps.update(back=DEFAULTS["back"], holding=DEFAULTS["holding"])
                 card = {"artId": art_id, "kind": "base-set", "stage": stage, "heroArt": ident, "name": piece["name"],
                         "aesthetic": f"a clean studio presentation of the {piece['name'].lower()}",
-                        "components": comps, "template": f"{TEMPLATES}/{stage}-human.txt", "denoise": "~0.5-0.7"}
+                        "components": comps, "template": template_path(f"{stage}-human.txt"), "denoise": "~0.5-0.7"}
             card["output"] = "/".join(filter(None, ["prompts", args.group, args.division, args.hero, folder, out_name + ".txt"]))
             if card["output"] in outputs:
                 skipped += 1

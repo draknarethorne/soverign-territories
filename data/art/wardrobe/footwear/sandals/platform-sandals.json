@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/sandals/platform-sandals",
+  "kind": "legs_feet",
+  "name": "Platform Sandals",
+  "description": "{{PRIMARY}} platform sandals with a thick cork sole, thin straps over the foot and a buckled ankle strap",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "sandals",
+    "female"
+  ]
+}

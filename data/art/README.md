@@ -1,6 +1,6 @@
 # `data/art/` — Structure Reference
 
-**Status:** Living document · **Last updated:** 2026-10-04
+**Status:** Living document · **Last updated:** 2026-10-26
 
 This is the authoritative explanation of how `data/art/` is organized. Read this before adding any
 new hero, race, component, or card-production folder — the goal is that we never have to reshuffle
@@ -10,6 +10,23 @@ productions get added. **New here? Start with the how-to:** [`docs/art/tutorial-
 
 Referenced from [`docs/art/comfyui-art-pipeline.md`](../../docs/art/comfyui-art-pipeline.md) and
 [`docs/art/prompt-pattern.md`](../../docs/art/prompt-pattern.md).
+
+The git-tracked [`likeness-library.json`](likeness-library.json) is operational
+photo-library metadata, not generated art direction. Its schema records
+stable person/photo references, trusted identity anchors, user-protected
+photos and auditable actions; ComfyUI source-photo selection remains in
+`workflows/workspaces.json`. Its code and focused tests live under
+`tools/art/likeness_library/`; `load_catalog` validates reads and
+`save_catalog` validates and atomically writes only the catalogue.
+The review gallery exports staged actions using
+[`_schema/likeness-action-manifest.schema.json`](_schema/likeness-action-manifest.schema.json);
+`bin\likeness-actions.cmd validate|preview` checks those downloads against
+current photo IDs, hashes, folders and catalogue ownership without applying
+file or metadata changes.
+Validation prevents two people from claiming the same current folder or
+identity anchor. `likeness audit-core` reports moved-folder and stale-hash
+mismatches, and ignores duplicate source IDs for identity decisions.
+`bin\validate.cmd` includes the focused tests.
 
 ---
 
@@ -127,6 +144,12 @@ and let each hero fill the gaps. The frame is a normal piece whose text holds `[
 `varsFrom` points at a `kind: "design"` file that holds only `vars` (`METAL_NAME`, `BREAST`, `HIP`, `ENGRAVING`, `GEM` ...), so the four celestial pieces of a hero share one set of values and a hero's look is
 edited in one place; a piece's own `vars` win over the design's. Every slot must be filled and every `vars` key must fill a slot (the validator checks both). Fixes to the frame reach all ten heroes.
 
+**Sets: real pieces, composed (`includes`).** A card slot holds one piece, so a jewellery look used to be one pasted sentence ("a necklace, matching earrings and rings"). Write each item as its own piece (one ring, one pair of earrings, one pendant, one belly ring)
+and let a *set* name them: `"includes": ["data/art/wardrobe/jewelry/necklaces/pendant-necklace.json", "data/art/wardrobe/jewelry/earrings/gem-stud-earrings.json", ...]` in place of a description. The set's text is theirs joined with a semicolon,
+so the slot, the template and every tool still see one piece, but an edit to a ring reaches every set that includes it, and a hero's own ring can `extend` the library ring. Included pieces must be the same `kind` as the set (the validator checks that, and that they exist).
+Items use the palette tokens (`{{METAL}}`, `{{GEM}}`, `{{PRIMARY}}`) instead of a fixed metal, so one earring is gold on one hero and silver on the next. The library has 31 such pieces (rings, earrings, necklaces, bracelets, belly rings, anklets) and four sets
+(`jewelry/sets/classic-gem-set`, `pearl-set`, `skull-set`, `fine-chain-set`); the older bundled pieces stay until a card is moved over, and `library_audit.py` lists them under SHORTCUTS.
+
 **Signature items for the angels.** Every angel owns a signature weapon, armor, gown (or attire), circlet and jewelry plus an elemental drift under
 `heroes/angel-primes/<division>/<slug>/<kind>/`, each extending a library piece and adding the angel's element motif and an alignment tone (pristine for the
 lawful ranks, tattered for the fallen). `scaffold_angel_library.py` writes them and the angel's showcases and scenes use them, the same way each Drakn sister
@@ -189,16 +212,27 @@ The core library is the D&D mass every theme and hero draws on; themes sit on to
 | Area | Now | Gap and where it lands |
 | --- | --- | --- |
 | `themes/` (packs) | 26 in 7 groups: ancient (greek, roman, egyptian, aztec), northern (norse, celtic, danish), eastern (samurai, ninja, steppe, imperial-dynasty), southern (arabian-nights, savanna-kingdoms, tropical-isles), western (frontier, chivalry) | each group is the place to add the next pack of its kind |
-| `themes/` (events and genres) | seasonal (halloween, christmas, spring, autumn, thanksgiving, summer-solstice), adventure (pirate, alchemist, peasant, eclipse) | northern: slavic winter, fey court; ancient: persian, indian; seasonal: valentine, lunar new year; adventure: gaslamp, circus, vampire gothic, jungle explorer; one theme per element realm later |
-| `backgrounds/fantasy/` | 27 families, 104 pieces (3-10 per family; `lairs` 10) | more variety inside a family as scenes need it; modern and studio realms are separate |
-| `wardrobe/armor/` | 69 pieces across the class and material families | per-class sets as bound heroes and units need them |
-| `wardrobe/weapons/` | 33 pieces in 13 families | two-handed swords and maces, spears, more wands and staves; held items live in `props/` |
+| `themes/` (events and genres) | seasonal (halloween, christmas, spring, autumn, thanksgiving, summer-solstice, **midwinter-festival**), adventure (pirate, alchemist, peasant, eclipse, **siege-defense**, **victory-feast**), **ceremony** (**coronation**, **masquerade-ball**); 31 packs in all | each new pack: gown, male outfit, crown or mask, jewelry set, makeup, two backgrounds. Next: valentine, lunar new year, slavic winter, fey court, gaslamp, circus, jungle explorer |
+| `realms/` | 17: fantasy, fantasy-cinematic, **fantasy-gothic**, **fantasy-pastoral**, modern, studio, and **eleven realistic element homelands** (`<element>-lands`: red-rock canyonlands, ashen volcanic badlands, tidal coast and reefs, glacial highlands, windswept highlands, storm plains, ancient greenwood, mangrove bayou, radiant uplands, fogbound moors and crypts, meridian highlands) | each sets a place's light, weather, materials and palette; next: noir city, historic, desert, storm |
+| `backgrounds/fantasy/` | 27 families, 104 pieces (3-10 per family; `lairs` 10), plus **`country/<element>/`** (5 realistic homeland environments per element, tagged by role) and **`haunts/<class>/`** (3 per class) | more variety inside a family as scenes need it; modern and studio realms are separate |
+| `wardrobe/armor/` | 97 pieces across the class and material families (bone, bronze, ceremonial, crystal, hide and runic each grew by 3, and the angel cards now spread across them) | per-class sets as bound heroes and units need them; padded, shadow and wood are still 2-3 pieces |
+| `wardrobe/clothing/` | gowns 21, dresses 24, sets 43, **robes 16** (was 1: the 11 female angels all wore `silk-robe`; now 15 fabric-and-cut robes, matched to each angel's element) | more robe families when a theme needs them (monastic, desert, court); the lounge robes (silk, satin kimono, terry, peignoir) are the glamour ones |
+| `wardrobe/jewelry/`, `headwear/`, `accessories/`, `capes/` | 62, 24, 15 and 14 pieces (jewelry was 22: now 31 atomic items and nine sets that compose them; the angel editorial, glamour and city-street showcases wear an occasion set in their own metal and gem) | the older jewelry pieces are shortcuts (bundles, `matching-...` stand-ins, a hard-coded gold or silver): replace them with the real pieces as cards are moved over. Thin: `bracelets`, `earrings`, `circlets`, `hats`, `hoods` (3 each) |
+| `cosmetics/` | highlights 20, **makeup 50** (was 3): natural, glam, bold, dramatic, retro, editorial, eyes, lips and brows looks in palette tokens (glass skin, siren and fox eyes, chrome lids, blurred lips, laminated brows ...); the female angels' occasion showcases each wear one | more looks as trends move; one lip and nail colour per identity (no per-outfit colour); only showcase and scene templates render makeup |
+| `backgrounds/modern/` | 32 pieces: `coast` 8, `resort` 7, `rural` 8, `interior` 5, `urban` 4 (was 14; every angel shared one beach, one pool and one garden) | `urban` and `interior` are next if the daily-photo set needs more city and indoor settings |
+| `motion/` | 100 pieces; `gaze` 3, `expressions/playful` 3 | `expressions/scene` and `expressions/studio` (10 pieces) are unused |
+| `wardrobe/weapons/` | 45 pieces in 13 families (`staves` 8 and `wands` 7, up from 2 and 1, matched to the angels' elements) | two-handed swords and maces, spears; held items live in `props/` |
 | `wardrobe/props/` | 28 pieces (instruments, holy symbols, orbs, reagent kits, lanterns, banners, books ...) | grow with scenes |
 | `races/` | 8 race pieces (`races/<race>/race.json`: human, high, wood and dark elf, orc, dwarf, celestial, barbarian) plus human hair (46) | not yet wired into the templates; planned `{{RACE}}` slot in the Figure line for bound heroes and non-human units; per-race hair when needed |
 | creatures | 10 elder dragons, hoards and lairs | pets are covered by card art (below); summoned beasts and elementals as `creatures/<kind>/` when a card needs hand-directed art |
 | card art (units, pets, buildings, tactics, equipment, workers) | all 174 gameplay cards, mechanical: `cards/sovereign-dawn.json` (style, element palette and effect, category framing) plus `scaffold_card_art.py`; prompts in `prompts/sovereign-dawn/<Category>/card/` | prompts use only each card's name, element and lore, so they are first drafts; give a card hand-directed art by adding a richer identity and template for that category |
 | brand and title | `brand/sovereign-territories.json`, 16 art cards (key art, plates, title, logo, icons) and 2 videos | render and review |
 | theme gear for bounds and dragons | theme pieces read as female sister outfits | a theme pack also needs male pieces for the bound heroes (tagged `male`) and a `dragons/` folder (barding, horn caps, banners, theme lairs) so one theme can serve 10 sisters, 10 bounds and 10 dragons; not started |
+
+**Measure the gaps, do not guess them:** `python tools/art/library_audit.py` (or `bin\library-audit.cmd`; `--scope wardrobe`, `--unused`, `--thin 2`) walks every library folder and reports three things.
+**Over-used:** one piece does most of a folder's work for many heroes (everyone in the same robe), a sign the folder needs more variation. Sharing that is on purpose (a studio default, every sister in one base robe for a unified picture) goes in `data/art/_settings/library-audit.json` under `intentional`, with the reason, and is then shown as intentional, not as a gap.
+**Thin:** few pieces and not over-used yet, so growth candidates for when a scene needs them. **Shortcuts:** pieces that paste several items into one sentence or hard-code a metal, to be replaced by real pieces and a set. Unused pieces are information only (`--unused`): pieces are written ahead of the scenes that need them.
+Identity trees, themes and the per-set card folders (sister, angel and later bound sets) are left out; they are authored per character, not drawn from. New library folders are picked up automatically.
 
 Video effect pieces live in `data/animation/motions/`: `ambient/` (snow, rain, mist, embers, fireflies, petals, leaves, sparkles, candlelight, banners, aurora ...), `elements/` (one surge per element) and `themes/<theme>/` (tree lights, bats, runes, sea spray ...). A video card combines a theme piece, an element piece and an ambient piece, so a new scene video needs no new text.
 
@@ -214,15 +248,16 @@ prompts/<group>/<Hero>/<phase>/<family>/<Hero>_<Stage>_<Name>.txt
 ComfyUI output: <group>/<Hero>/<phase>/<family>/<Hero>_<Engine>_<Stage>_<Name>_00001_.png   (workflows in a workspace sit in the same folders)
 ```
 
-The phases (`art_layout.phase_path`, inverse `parse_dirs`), hero first: `1_Alpha` (`1_Prime`, `2_Bare`, `2b_Experiments`, `3_Footwear`), `2_Studies` (`head`,
+The phases (`art_layout.phase_path`, inverse `parse_dirs`), hero first: optional `0_Edit` (`cleanup`, `background`, `enhance`, `full`, `deluxe`), `1_Alpha` (`1_Prime`, `2_Bare`, `2b_Experiments`, `3_Footwear`), `2_Studies` (`head`,
 `hair`, `body`), `3_Layers` (the underlayer types), `4_Wardrobe` (`clothing`, `armor`, `showcase`), `5_Scenes`, `6_Finish` (`polish`, `final`), `7_Video`, and
 `Bench/motion` (a test run on any phase's image, not a phase). Brand and mass card art (`brand/<family>`, `<Category>/card`) have no phases and keep their
-stage folder. A card's `stage` field still names its kind of work (`pose`, `scene`, `alpha`); the table below is by stage, with the families each one uses.
+stage folder. A card's `stage` field still names its kind of work (`edit`, `pose`, `scene`, `alpha`); the table below is by stage, with the families each one uses.
 
 | Stage | Families | Notes |
 | --- | --- | --- |
+| edit | `cleanup`, `background`, `enhance`, `full` (family derived from the `edit_task` piece's tags) | Optional task-based source editing; only the generic Female `0c_Cleanup_Basic` pilot is currently migrated. |
 | scene (sisters) | `signature` (signature, shiny, holo, lineup), `glamour` (glamour, test, elegant casting, evening, robe), `story` (dawn, battle, bond), `themes` | A shiny or holo card sits beside its signature card. Other groups keep scenes flat. |
-| alpha (sisters) | the card family is `[]` (`1_Alpha/1_Prime`: `Alpha_1_Prime`, from the original photo, with its variants and tests), `bare` (`2_Bare`: `Alpha_2_Bare_Figure`, `Alpha_2_Bare_Chest`) with the experiments nested as `bare/coverings` and `bare/celestial` (`2b_Experiments`, `Alpha_2b_<Name>`), and `footwear` (`3_Footwear`: `Alpha_3_Barefoot`, `Alpha_3_Heels`) | The creation chain of a hero, the only stage that makes her likeness. Bare, Barefoot and Heels are the golden images. |
+| alpha (sisters) | the card family is `[]` (`1_Alpha/1_Prime`: `Alpha_1_Prime`, from the original photo, with its variants and tests), `bare` (`2_Bare`: `Alpha_2_Bare_Figure`) with the celestial experiment nested as `bare/celestial` (`2b_Experiments`, `Alpha_2b_Celestial<Name>`), and `footwear` (`3_Footwear`: `Alpha_3_Barefoot`, `Alpha_3_Heels`) | The creation chain of a hero, the only stage that makes her likeness. Bare, Barefoot and Heels are the golden images. |
 | poses | views; underlayer tests by piece type: `base` (neutral skin-tone layer), `backless`, `lingerie`, `athletic`, `one-piece`, `bikini`, `swimwear` | Fed the Bare image, never the photo. The type is read from the underlayer piece's tags. Dragons, bound heroes and the Angel Primes keep their X Pose at the root until they get an Alpha chain. |
 | head | golden head at the root; `views`; `closeups` (framing and expressions) | |
 | clothing | `dresses`, `gowns`, `sets` for library pieces; a sister's own pieces stay in the stage folder | |
@@ -319,13 +354,16 @@ extension changed: `prompts/drakn-sisters/Drakniya/5_Scenes/themes/Drakniya_Scen
 defines the prompt path, the image path is derived, not stored twice; a tool (or the validator, later) can check that
 it exists, and Unity import can mirror the folder. Large binaries should use Git LFS or external storage. Still to
 decide (STATUS C1): how the gameplay card's `portraitAsset` / `fullArtAsset` fields point at these.
+**Finals (Oct 9, 2026):** the render of every workflow you save as a final (`zz_Final`, see [workflows/README.md](../../workflows/README.md#candidates-and-finals-zz_candidates-zz_final)) is copied here automatically, from any stage, as
+`assets/art/<set>/[<division>/]<Hero>/<phase>/<Hero>_<Engine>_<Stage>.png`: the same path rule, with the engine in the name because Qwen and FireRed finals of one stage are both kept. Images of candidates and shots are not kept. The settings of those finals (seed, denoise, turbo, the images they loaded) are kept in `data/art/finals/<set>.json` by `finals record` and replayed by `make`.
 
 ## Directory map
 
 ```text
 data/art/
-├── _templates/                     Stage templates — static scaffolding, {{TOKEN}} placeholders.
-│   └── heroes/                     Archetype: humanoid. (pose-female-human.txt, pose-male-human.txt,
+├── _templates/                     Stage templates — static scaffolding, {{TOKEN}} placeholders. Layout and rules: _templates/README.md
+│   └── heroes/                     Archetype: humanoid, in stage folders 1_Alpha, 2_Studies, 4_Wardrobe, 5_Scenes, 6_Finish, Bench
+│                                   (pose-female-human.txt, pose-male-human.txt,
 │                                   pose-view-human.txt (turnaround from the A-pose),
 │                                   head-human.txt (any angle/framing/expression), hair-human.txt,
 │                                   motion-human.txt, armor-human.txt, clothing-human.txt,
@@ -333,7 +371,7 @@ data/art/
 │                                   scene-with-companion-human.txt, scene-minimal-human.txt,
 │                                   scene-combat-human.txt — no casting-eyes-glow line, for
 │                                   non-caster martial heroes). Naming: `<stage>-<archetype>.txt`;
-│                                   a STUDIO stage (cream backdrop) is any non-scene stage, a SCENE adds a
+│                                   a STUDIO stage (grey backdrop) is any non-scene stage, a SCENE adds a
 │                                   realm, background and effects.
 │   └── dragons/                    ✅ Archetype: Elder Dragon (pose-dragon.txt, head-dragon.txt) —
 │                                   text-to-image, NOT img2img (no incoming reference to edit;
@@ -427,7 +465,7 @@ data/art/
 │                                   A realm supplies the setting sentence ({{REALM}}) and the bans
 │                                   that keep the other world out ({{REALM_NEG}}: modern objects,
 │                                   cars, neon ... for fantasy).
-├── studio/                         ✅ CATEGORY: what makes a STUDIO render (cream backdrop, flat light)
+├── studio/                         ✅ CATEGORY: what makes a STUDIO render (grey backdrop, flat light)
 │   ├── views/body/*.json           different from a scene: camera/subject orientation for the
 │   ├── views/head/*.json           reference library — front, 3/4, profile, back, looking down, chin
 │   └── framing/*.json              up, over the shoulder ... (left/right are camera-relative), and
@@ -437,8 +475,8 @@ data/art/
     │                               citadel, never a modern city), dungeons/, elemental/, evening/,
     │                               forests/, frozen/, coast/, mountains/, highlands/, canyon/, swamp/,
     │                               temple/, tavern/, camp/ — one or more per element).
-    ├── studio/                     cream-even (default for every cream-backdrop stage),
-    │                               cream-beauty-light, white-high-key, grey-seamless — the lighting
+    ├── studio/                     grey-even (default for every studio stage, since Oct 26),
+    │                               grey-beauty-light, cream-even, cream-beauty-light, white-high-key, grey-seamless — the lighting
     │                               lives in the piece, not buried in templates.
     └── modern/                     real-world locations (city street, cornfield, kitchen, rooftop) for
                                     realism experiments only, never game art.
@@ -469,6 +507,23 @@ folder: `<slug>-companion.json` (the identity's description with `[[PLACEMENT]]`
 for scenes that word the dragon themselves). The sister's piece (`heroes/drakn-sisters/<sister>/companion/*.json`) `extends` a frame and sets `vars` for where the dragon is,
 and her scene cards name that piece. Change a dragon's look in its identity, then run `python tools/art/dragon_companions.py --apply` and regenerate; the validator
 rejects a sister companion piece that does not extend a dragon frame, and a scene card that types the dragon instead of naming a piece.
+
+### Scenes: series, character, theme
+
+Scenes come in three tiers, and a card's tier decides who shares it:
+
+| Tier | Cards | Shared across | Purpose |
+| --- | --- | --- | --- |
+| **Series** | Lineup, The Dawn, The Bond, Robe, Casting (elegant-casting), Battle, Enchanted Evening, Signature | every angel and every sister, same pose, framing and template | the consolidated marketing pictures: the same scene for all of them, side by side or composited (the Lineup is the flat-backdrop cut-out made for compositing, the others differ only in her own outfit, effect and element realm) |
+| **Character** | per hero: *duty* and *quiet* (angels, by alignment rank), *domain* (angels and sisters, by element), *craft* and the *realm series* (sisters, by class and element) | no one: it is what she is doing because of who she is | unique cards for each hero, not only signature cards |
+| **Theme** | one folder per theme pack, plus a *celebration* scene per hero from her element's pack (coronation, masquerade ball, midwinter festival, siege defense, victory feast) | heroes of the same element share a pack, never a scene | holidays, ceremonies, battles and celebrations |
+
+The character tier is **data, not code**: `data/art/_settings/scene-recipes.json` holds a recipe per scene (the pose, the effect, what she wears and holds, which backgrounds, an optional realm) and `bin\scaffold-characters.cmd` writes the cards from it (re-runnable; existing cards are kept).
+*Duty* and *quiet* follow the angel's alignment rank: pristine angels keep **Vigil** and sit in a **Cloister**, the fallen walk out of the **Reckoning** and sit in a **Ruin**, with Blessing and Garden, Judgment and Study, Reckoning and Watch Fire between. The darker bands also use the gothic realm and the gentle ones the pastoral realm.
+*Domain* is the element at work in its realm (eleven recipes), *craft* is what a Shaman, Shadow Knight, Bard, Necromancer, Summoner, Wizard, Enchanter, Cleric, Druid, Magician or Alchemist does, and *celebration* maps an element to a theme pack. To add a scene type, add a recipe; the validator checks every rank, element and class is covered.
+**The realm series** (`5_Scenes/realm/`, the sisters; opt-in for the angels with `scaffold_angel_set.py --realm`) puts a hero in her own country as a place, scene by scene: *Homeland* (establishing), *Wayfarer* (on the road), *Settlement*, *Weather* and *Nightfall*, plus her class's *Haunt*.
+Each scene asks for a background by **role** from `backgrounds/fantasy/country/<element>/` and sets the realistic `realms/<element>-lands`, so the same places serve the sisters, the males and later common and uncommon cards.
+`{mat}` in a recipe is the element's material phrase (plural, so use plural verbs) and `{{MAGIC}}` her magic colour; the cards write in `5_Scenes/character/`.
 
 ### Complete vs staged scenes
 
@@ -665,7 +720,7 @@ Uncommon **unit** card will be — they probably shouldn't share a template file
 template naming/organization will likely need a second axis beyond "archetype" (`heroes/`,
 `dragons/`) — something like **card tier/type**, so it's clear at a glance which templates are
 rich "signature/hero" cards (full effects, companions, backgrounds) vs. simpler mass-produced
-card types, vs. the existing `pose-*`/`head-*`/`armor-*` **studio-background test** stages (cream
+card types, vs. the existing `pose-*`/`head-*`/`armor-*` **studio-background test** stages (grey
 backdrop, no scene) that exist purely to validate a look before it reaches a real card. Concretely,
 once that content exists, expect to need: **building** card templates (architecture, not a figure),
 **unit/troop** templates (likely simpler than hero signature scenes — fewer unique effects), and
@@ -690,7 +745,7 @@ sex where it differs), so existing cards need no change.
 
 | Slot / token | What it is | Pieces | Default |
 | --- | --- | --- | --- |
-| `background` | Where the subject stands; for cream stages this carries the studio lighting too | `backgrounds/studio/*`, `fantasy/*`, `modern/*` | studio `cream-even` for every cream stage; **required** on scenes |
+| `background` | Where the subject stands; for studio stages this carries the studio lighting too | `backgrounds/studio/*`, `fantasy/*`, `modern/*` | studio `grey-even` (light neutral grey) for every studio stage; **required** on scenes |
 | `realm` | World rule + bans (`{{REALM}}`, `{{REALM_NEG}}`) | `realms/*.json` | `fantasy` on scenes |
 | `view` | Camera/subject orientation | `studio/views/body/*`, `studio/views/head/*` | front |
 | `framing` | How tight a head shot is | `studio/framing/*` | `bust-up` |
@@ -703,7 +758,7 @@ Pieces may carry an optional `tags` list (e.g. `studio`, `profile`, `swimwear`) 
 tags are never rendered. A piece's `negatives` list becomes a `{{<SLOT>_NEG}}` token (the realm uses this).
 
 **Studio vs scene.** Every stage has one of two classes, defined in `data/art/_schema/stages.json` (the validator
-checks it): **studio** (`poses`, `head`, `hair`, `motion`, `armor`, `clothing`, `showcase`) is a studio-backdrop render (cream, or for `showcase` a coloured backdrop with magic and flair) for clearly
+checks it): **studio** (`poses`, `head`, `hair`, `motion`, `armor`, `clothing`, `showcase`) is a studio-backdrop render (light grey, or for `showcase` a coloured backdrop with magic and flair) for clearly
 seeing the subject, an outfit or an armor piece, and may still include motion (a catwalk, a battle stance); **scene**
 (`scene`, staged scenes included) adds a realm, background and effects. Anything that is not a scene is studio. The
 class also drives workflow routing: sister studio and scene work both go to the `Drakn Sisters` workspace (and Drakness to her own as well; see `workflows/README.md`). Canon scenes are always the `fantasy` realm; the validator rejects a scene
@@ -756,9 +811,50 @@ element's hue (Dorian is a darker "Storm Gold" so he is not a twin of Drakneta).
   `wardrobe/swimwear/triangle-bikini.json`; outfits and scenes can also override colour directly in their own pieces.
 - Eyes avoid repeating the primary where it would blur the identity (Draknava silver-grey, Drakneta espresso-brown).
 
+## Write positives, not negations
+
+An image model reads a negation as the thing it names: "do not recolour" recolours, "no squint" squints, "not glowing" glows, "rather than drooping" droops. So the positive prompt says only what should be there.
+Say "natural studio eyes", not "eyes, not glowing"; "evenly tanned", not "evenly tanned, no pale areas"; "keep the face, expression and pose", not "change nothing else"; "still air", not "no breeze".
+If the positive half is already in the sentence, drop the negative half. What must be kept out belongs in the piece's `negatives` list (the negative prompt, which the Qwen workflows have; FireRed has none, so a FireRed prompt has to be a positive).
+`python tools/art/negation_audit.py` (`bin\negation-audit.cmd`, run by `validate.cmd`) scans every generated positive prompt: **command** phrases (do not, never, avoid) and a list of known **flip-risk** qualifiers fail the check, any other no/not/nothing/without is listed under `--review` for a look,
+and each phrase is traced to the data file it comes from, so the fix goes to the source. `data/art/_settings/negation-audit.json` holds the rules and the allowlist (video prompts, which have no negative prompt; gameplay-card lore; brand text).
+`python tools/art/identity_audit.py` (`bin\identity-audit.cmd`, run by `validate.cmd`) checks that every angel, sister and bound hero defines hair, eye and skin colour (with negatives) and that the Prime prompt carries them, so no prompt needs a hand edit; for angels it also checks that the Bare prompt applies the individual build and that no female build uses a body-builder word (toned abs, arms and legs are fine).
+`python tools/art/codex_drift.py` (`bin\codex-drift.cmd`, run by `validate.cmd`) compares the roster pages in `docs/codex/heroes` (the SD roster tables, the sister, bound, dragon and angel pages) with the cards and identity JSON. The JSON wins, so a difference means the page needs updating; change the data first, then the page.
+
 ## Eyes, makeup, expression and hair: what each stage says
 
-Every cream-backdrop (studio) stage uses the **same** studio eyes and makeup, so a full-body shot and the close-up agree.
+### Reference-preserving edit controls
+
+The generic Female `0_Edit` assemblies use explicit incoming-image policies,
+not the hero's fixed body/hair colors. The shared `edit-reference-human.txt`
+template has independent `face_policy`, `hair_policy`, `body_policy`,
+`clothing_policy`, `view`, `framing`, `background` and `edit_task` components.
+Each component supplies positive text and its own negative tokens. Component
+tags support classification/search; tags themselves are never prompt text.
+`{{DENOISE}}` exposes the assembly's existing `denoise` metadata to a template.
+
+The two approved three-quarter views live in `studio/views/body/`:
+`relaxed-three-quarter` (hand on hip) and `grounded-three-quarter` (both feet
+flat, forward foot and bent knee). They support edit, alpha and pose assemblies
+without changing the existing A-pose turnaround pieces. A lifted heel is an
+accepted variation, not a visual rejection gate.
+New clothed three-quarter outfit auditions belong to `1_Alpha/1_Prime` and
+use `prime-outfit-reference-human.txt` with these same independent policies.
+Earlier `0d` studio pilots retain their names only for compatibility; actual
+Deluxe is a bedroom-scene family.
+The four new clothed Deluxe assemblies use `edits/deluxe/bedroom-clothed`,
+`backgrounds/modern/bedroom-soft-neutral` and independent seated, relaxed,
+side-resting or supine-resting views. They preserve the source outfit and
+physique rather than importing explicit directions from manual Bare drafts.
+Shared preservation pieces now declare `alpha` compatibility in the piece
+schema, allowing Prime reuse without duplicating their instructions.
+
+These initial controls preserve the source physique and clothing. They do
+not implement per-job GUI physique/hair overrides or imply a visual-quality
+approval. See [shared execution recipes](../../workflows/README.md#shared-clothed-edit-recipes)
+for the generation commands and runtime graph/settings boundary.
+
+Every studio-backdrop stage uses the **same** studio eyes and makeup, so a full-body shot and the close-up agree.
 Glow is only ever added in `scene` stages.
 
 | Concern | Token | Used in | Notes |

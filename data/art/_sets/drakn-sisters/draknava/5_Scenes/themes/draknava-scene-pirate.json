@@ -16,7 +16,7 @@
     "holding": "data/art/heroes/drakn-sisters/draknava/weapons/gale-rapier.json",
     "makeup": "data/art/themes/adventure/pirate/cosmetics/makeup/pirate/salt-kohl-and-sunburn.json"
   },
-  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "template": "data/art/_templates/heroes/5_Scenes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Draknava/5_Scenes/themes/Draknava_Scene_Pirate.txt",
   "denoise": "~0.5-0.7",
   "notes": "Pirate Bard: complete scene from the A-pose, every item a library piece (also pre-stageable through draknava-clothing-pirate)."

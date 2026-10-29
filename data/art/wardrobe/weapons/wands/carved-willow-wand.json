@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/wands/carved-willow-wand",
+  "kind": "holding",
+  "name": "Carved Willow Wand",
+  "description": "a slim carved willow wand with a spiral grip and a faint {{MAGIC}} glow at the tip, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "wand",
+    "willow",
+    "nature"
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "description": "Data-driven overlay patterns for intake. Fractions are of image width (w) or height (h); *_Margin and *_Ratio values multiply detected face geometry. Add new patterns here; see docs/art/original-photos.md.",
+  "frames": [
+    {
+      "id": "phone-reel",
+      "note": "Portrait phone screenshot of a reel: light or dark nav bar at the bottom, black comment/up-next panel above it, optional black status panel at the top; otherwise the picture runs under the status bar.",
+      "minAspect": 1.9,
+      "bottom": {"searchFrom": 0.8, "uiRowFraction": 0.8, "panelRowFraction": 0.5, "darkMax": 28,
+                 "greyMin": 190, "greyChroma": 14, "gapTolerance": 0.02, "minHeight": 0.04,
+                 "cardMax": 80, "cardRowFraction": 0.7},
+      "top": {"stripWidth": 0.025, "darkMax": 28, "stripDarkFraction": 0.9, "gapTolerance": 0.02,
+              "minHeight": 0.03, "maxHeight": 0.12, "fullDark": 0.98},
+      "statusBand": 0.047,
+      "pillSpan": [0.03, 0.86],
+      "pillCompanions": [[0.0, 0.07], [0.87, 0.99]],
+      "topSlots": [[0.0, 0.08], [0.77, 0.99]],
+      "sticker": {"x": 0.7, "saturationMin": 140, "valueMin": 150, "width": [0.1, 0.28], "minHeight": 0.03,
+                  "maxHeight": 0.09, "fill": 0.4, "letterShare": 0.02},
+      "slider": {"x": 0.8, "chromaMax": 60, "grayRange": [110, 200], "textureMax": 5, "width": [0.04, 0.13],
+                 "minHeight": 0.1, "minAspect": 3, "fill": 0.6, "edgeMargin": 0.015},
+      "ui": {"whiteMin": 215, "whiteChroma": 40, "darkEdge": 110, "contrastReach": 0.006, "minArea": 6,
+             "plainWhiteMin": 235, "plainWhiteChroma": 25,
+             "maxWidth": 0.2, "maxHeight": 0.05, "pad": 0.008, "pillReach": 0.02, "iconGap": 0.02,
+             "iconMinSize": 0.025, "lineMinGlyphs": 3, "lineMinAspect": 2.5, "rowGap": 0.25, "statusCentre": [0.45, 0.6], "topSlotHalf": 0.022,
+             "railGap": 0.03, "railLeft": 0.85, "railMinGlyph": 0.015, "railVivid": 140, "wordGap": 0.08, "lineGap": 0.004,
+             "nameStart": [0.07, 0.2], "avatarLeft": 0.005, "avatarRight": 0.145, "avatarRadius": 0.045},
+      "pictureInPicture": {"faceWidth": [0.015, 0.06], "faceHeight": [0.01, 0.04], "centerXMax": 0.35, "centerYMin": 0.72, "maxFaceRatio": 0.4, "leftFaceMargin": 3.5, "rightFaceMargin": 3.5, "topFaceMargin": 2.5, "bottomFaceMargin": 1.0, "width": [0.12, 0.28], "heightMin": 0.04, "heightMax": 0.18, "borderFraction": 0.01, "innerFraction": 0.12, "edgeThresholds": [50, 120], "edgeCoverageMin": 0.035, "topBrightMin": 205, "topBrightShare": 0.4, "headerStart": 1.4, "headerHeight": 0.8, "headerDarkMax": 60, "headerDarkShare": 0.3},
+      "captionButton": {"width": [0.2, 0.5], "height": [0.02, 0.06], "aspect": [2.5, 7], "edgeThresholds": [60, 120], "hullFill": 0.85, "edgeCoverage": 0.75},
+      "playback": {"centreX": [0.4, 0.6], "centreY": [0.3, 0.6], "triangleWidth": [0.025, 0.08], "triangleHeight": [0.015, 0.05], "skipOffset": 0.195, "ringRadius": [0.025, 0.035], "ringCoverage": 0.55, "mainRadiusHeight": 1.8, "skipRadius": 0.065, "timecode": {"fromY": 0.8, "span": 0.37, "lineMinAspect": 2.2, "height": [0.015, 0.035]}},
+      "zones": [
+        {"kind": "reel-top-controls", "from": "pictureTop", "y": [0.0, 0.1], "x": [0.0, 1.0]},
+        {"kind": "reel-rail", "from": "pictureBottom", "y": [-0.62, 0.0], "x": [0.83, 1.0]},
+        {"kind": "reel-meta", "from": "pictureBottom", "y": [-0.17, 0.0], "x": [0.0, 0.83]}
+      ]
+    }
+  ],
+  "watermarks": [
+    {
+      "id": "corner-text",
+      "note": "Generator watermarks such as \"Dola AI\": a short white text line in a corner, often semi-transparent. Seen on Seraphine (Oct 27).",
+      "regions": [[0.6, 0.86, 1.0, 1.0], [0.0, 0.86, 0.4, 1.0], [0.6, 0.0, 1.0, 0.1], [0.0, 0.0, 0.4, 0.1]],
+      "text": {"plainWhiteMin": 205, "plainWhiteChroma": 20, "lineMinGlyphs": 4, "lineMinAspect": 3.0,
+               "wordGap": 0.03, "rowGap": 0.05},
+      "minLineHeight": 0.007,
+      "maxLineHeight": 0.035,
+      "maxLineWidth": 0.35,
+      "pad": 0.01,
+      "block": {"reachX": 0.25, "reachUp": 0.15, "align": 0.08, "lineGap": 2.5, "titleHeight": 5},
+      "stroke": {"brightMin": 225, "strokeHat": 30, "strokeShare": 0.9, "glyphHat": 40, "glyphHeight": 0.4,
+                 "glyphWidth": 0.5, "minGlyphs": 3, "baseline": 0.15}
+    }
+  ],
+  "sparkles": [
+    {
+      "id": "corner-sparkle",
+      "note": "Generator sparkle mark: a pale four-point star near the bottom-right corner. Seen on Brielle Carter (Oct 27).",
+      "regions": [[0.6, 0.7, 1.0, 1.0]],
+      "hatWidth": 0.08,
+      "hatMin": 30,
+      "size": [0.025, 0.1],
+      "squareTolerance": 0.15,
+      "fill": [0.25, 0.5],
+      "tipSpan": 0.85,
+      "cornerEmpty": 0.25,
+      "chromaMax": 40,
+      "pad": 0.01
+    }
+  ],
+  "tiltedStickers": [
+    {
+      "id": "tilted-sticker",
+      "note": "Rotated flat pale cards with dark lettering: music stickers (\"ORDINARY / ALEX WARREN\" plus album art) and date stickers (\"3 MONDAY\"). Seen on Afton Voss (Oct 27). An end is extended over the album thumbnail when both long edges run on into it.",
+      "grayMin": 130, "chromaMax": 18, "varianceMax": 40, "close": 15,
+      "area": [0.003, 0.05], "tilt": [8, 82], "hullFill": 0.7,
+      "textShare": [0.05, 0.6], "textDarkMax": 120, "textDark": 0.3,
+      "edgeOffset": 0.008, "edgeValid": 0.4, "edgeContrast": 25, "pad": 0.008
+    }
+  ],
+  "viewerIcons": {
+    "id": "viewer-corner-icons",
+    "note": "A photo viewer's close X (top left) and ... menu (top right): pure white, small, in the top corners. Seen on Harlow Chase (Oct 27).",
+    "band": 0.1, "corner": 0.2, "whiteMin": 215, "chromaMax": 25, "pad": 0.008,
+    "close": {"size": [0.02, 0.06], "squareTolerance": 0.25, "fill": [0.12, 0.45], "diagonal": 0.6},
+    "dots": {"size": [0.004, 0.015], "squareTolerance": 0.35, "fill": 0.55, "count": 3, "alignTolerance": 0.4,
+             "spacing": [1.4, 3.0]}
+  },
+  "references": [
+    {
+      "id": "echoes-of-fantasia",
+      "note": "Gold script creator logo (crescent, 'Echoes of Fantasia'), bottom left. Reference crop from Wren Ellery (Oct 27). shortSide is the source image's short side, so scale 1.0 means the same relative size.",
+      "file": "echoes-of-fantasia.png", "feature": "gold", "shortSide": 1365,
+      "scales": [0.6, 0.75, 0.9, 1.0, 1.15, 1.35, 1.6], "work": 0.5,
+      "threshold": 0.75, "edgeMin": 0.45, "pad": 0.01
+    },
+    {
+      "id": "dola-ai",
+      "note": "White 'Dola AI' generator watermark, usually bottom right, sometimes faint. Reference crop from Drakniss (Oct 28). Calibrated on all 2,741 r20 inputs: 51 true hits scored >=0.644 (edge >=0.59); the best non-watermark scored 0.565 with negative edge correlation. The corner-text rule missed most of these.",
+      "file": "dola-ai.png", "feature": "white", "shortSide": 1119,
+      "scales": [0.7, 0.8, 0.9, 1.0, 1.1, 1.25, 1.4], "work": 0.5,
+      "threshold": 0.62, "edgeMin": 0.5, "pad": 0.01
+    }
+  ],
+  "letterbox": {
+    "note": "Flat dark bars above/below the picture (blurred letterbox fill) that end at a sharp full-width edge. Seen on Seraphine (Oct 27).",
+    "flatMax": 1.5, "darkMax": 60, "rowStdMax": 10, "edgeStep": 12, "edgeShare": 0.3, "edgeReach": 0.006,
+    "minHeight": 0.02, "maxHeight": 0.2, "blockGap": 2
+  },
+  "badges": [
+    {
+      "id": "gmw",
+      "note": "Girls Most Wanted badge/avatar: closed magenta ring with silver lettering inside. Transparent variants on pale backgrounds require a more complete ring and concentrated central magenta lettering instead of silver/background contrast. Validated on 41 labelled proposals (6 true, 35 false: flowers, roses, pink clothing, hair, a handbag) plus two transparent-background misses.",
+      "magenta": {"redMin": 150, "blueMin": 90, "redMinusGreen": 70, "blueMinusGreen": 20},
+      "silver": {"min": 150, "chromaMax": 45},
+      "ringCoverageMin": 0.47,
+      "silverFractionMin": 0.1,
+      "innerRadius": 0.62,
+      "structure": {"innerMagentaMax": 0.2, "outerMagentaMax": 0.15, "letterBandRatio": 1.5,
+                    "transparentLettering": {"ringCoverageMin": 0.75, "bandMin": 0.25, "bandRatio": 2.0}},
+      "minRadius": 0.022,
+      "maxRadius": 0.2
+    }
+  ]
+}

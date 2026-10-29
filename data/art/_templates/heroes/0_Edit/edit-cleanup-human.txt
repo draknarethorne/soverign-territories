@@ -1,0 +1,29 @@
+=== {{HERO}} · 0_Edit · Cleanup Basic ===
+Incoming image: the exact user-selected source image; keep its source bytes unchanged.
+Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Make a conservative edit of the incoming image, preserving the person and the
+photographic character of the source.
+
+{{EDIT_TASK}}
+
+Preserve the person's identity, face, expression, hairstyle, hair colour, eye
+colour, skin tone, body shape, clothing, pose, hand position, camera angle and
+existing background. Keep the original framing except where a non-image border
+must be trimmed; extend the existing background only when needed to fill that
+trim.
+Keep the person fully clothed in the same outfit, preserving visible body proportions.
+
+Use realistic photographic detail and natural skin texture. Keep lighting
+consistent with the source image.
+
+----------------------------------------------------------------
+negative prompt:
+
+{{EDIT_TASK_NEG}}, changed identity, altered face, changed hairstyle, recoloured
+hair, recoloured eyes, changed skin tone, reshaped body, changed pose, changed
+clothing, removed clothing, added accessories, extra person, extra limbs, extra fingers, text,
+watermark, logo, illustration, painting, drawing, CGI, cartoon.

@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/druid/sacred-grove-ancient-yew",
+  "kind": "background",
+  "name": "Sacred grove ancient yew",
+  "description": "a sacred grove around an enormous ancient yew, roots like walls, moss and ferns, soft green light and a ring of small offerings",
+  "mood": "ancient, living",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "druid",
+    "realistic"
+  ],
+  "notes": "A place a druid spends her time, in realistic wording (use with an element realm)."
+}

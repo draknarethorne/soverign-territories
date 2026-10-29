@@ -13,7 +13,7 @@ Hair: silvery-blonde hair, short and windswept.
 Eyes: pale sky-blue irises with faint cyan striations and a silver limbal ring.
 Skin: fair, cool-toned complexion, evenly toned.
 
-Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
 Wearing fitted Windswept Jade-toned banded leather armor across the chest and shoulders, Cloud White stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; a feathered half-cloak at one shoulder, wind-sigils stitched along the collar.
 
@@ -23,13 +23,13 @@ He stands angled about 45 degrees to the camera in a heroic three-quarter pose, 
 
 Holding a curved single-edged saber, its white-edged blade trailing wisps of Windswept Jade wind, Windswept Jade-wrapped hilt, gripped in one hand.
 
-A playful breeze lifts his half-cloak, faint pale silver-jade light glinting in the wind - understated, nothing busy.
+A playful breeze lifts his half-cloak, faint pale silver-jade light glinting in the wind - understated.
 
-Eyes: the natural pale sky-blue irises kept intact, with a faint pale silver-jade glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+Eyes: the natural pale sky-blue irises kept intact, with a faint pale silver-jade glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated.
 
 Environment: windswept high-fantasy highland cliffs above a sea of clouds, tall standing stones and a lone ruined watchtower, long grass and banners streaming in the wind, bright open sky.
 
-Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

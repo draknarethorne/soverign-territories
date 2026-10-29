@@ -9,11 +9,11 @@
     "wearing": "data/art/heroes/drakn-bound/dorian/clothing/armor-default-wearing.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/dorian-stormstrike/weapons/storm-wrapped-fists.json",
-    "effects": "A few small {{MAGIC}} sparks of static dance along his knuckles and the ends of his hair - understated, nothing busy.",
+    "effects": "A few small {{MAGIC}} sparks of static dance along his knuckles and the ends of his hair - understated.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/backgrounds/fantasy/mountains/storm-peak-ruins.json"
   },
-  "template": "data/art/_templates/heroes/scene-glamour-human.txt",
+  "template": "data/art/_templates/heroes/5_Scenes/scene-glamour-human.txt",
   "output": "prompts/drakn-bound/Dorian/5_Scenes/Dorian_Scene_Glamour.txt",
   "denoise": "~0.5-0.7",
   "notes": "Daily-post glamour shot: signature armor, heroic three-quarter pose, element-matched background, light magic only."

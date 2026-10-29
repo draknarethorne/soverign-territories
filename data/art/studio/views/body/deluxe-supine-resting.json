@@ -1,0 +1,9 @@
+{
+  "id": "studio/views/body/deluxe-supine-resting",
+  "kind": "view",
+  "name": "Deluxe: supine resting",
+  "description": "Show the fully clothed person resting comfortably on their back on top of the neatly made bed, head supported by a pillow, legs resting naturally and arms placed neutrally alongside the body. Use a wide, moderately elevated full-length view that keeps the whole figure visible without distortion.",
+  "compatibleStages": ["edit"],
+  "tags": ["deluxe", "bedroom", "supine-resting", "neutral", "full-body"],
+  "negatives": ["upright seated pose", "cropped feet", "suggestive pose", "dramatic foreshortening"]
+}

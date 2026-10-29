@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/armor/bone/ribcage-breastplate",
+  "kind": "wearing",
+  "name": "Ribcage Breastplate",
+  "description": "a breastplate shaped from a carved ribcage of pale bone, polished and lashed together, over a dark cloth tunic",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "bone",
+    "breastplate",
+    "gothic",
+    "unisex"
+  ]
+}

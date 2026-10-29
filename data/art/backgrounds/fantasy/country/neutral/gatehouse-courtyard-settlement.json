@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/neutral/gatehouse-courtyard-settlement",
+  "kind": "background",
+  "name": "Gatehouse courtyard settlement",
+  "description": "the quiet courtyard of a pale stone gatehouse with a well and a few shuttered houses, swallows overhead and soft midday light",
+  "mood": "peaceful, still",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "neutral",
+    "settlement",
+    "realistic"
+  ],
+  "notes": "The neutral homeland (realms/neutral-lands). Role 'settlement' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

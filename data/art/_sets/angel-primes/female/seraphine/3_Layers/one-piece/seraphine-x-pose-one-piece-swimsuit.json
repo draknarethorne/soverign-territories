@@ -3,7 +3,7 @@
   "kind": "base-set",
   "stage": "pose",
   "heroArt": "data/art/heroes/angel-primes/female/seraphine.json",
-  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "template": "data/art/_templates/heroes/1_Alpha/pose-female-human.txt",
   "output": "prompts/angel-primes/female/Seraphine/3_Layers/one-piece/Seraphine_X_Pose_OnePieceSwimsuit.txt",
   "denoise": "~1.0",
   "components": {

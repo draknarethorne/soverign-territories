@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/lips/cherry-cola-lip",
+  "kind": "makeup",
+  "name": "Cherry Cola Lip",
+  "description": "a cherry-cola lip - a deep red-brown lip with a glossy centre, a soft bronzed lid, defined lashes and groomed brows",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "lips"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

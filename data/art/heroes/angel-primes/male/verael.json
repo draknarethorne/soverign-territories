@@ -21,13 +21,31 @@
       "metal": "antique bronze",
       "magicColor": "leaf green",
       "gemColor": "emerald",
-      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
-      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
-      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour",
-      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone",
-      "eyeColorNegatives": [],
-      "skinColorNegatives": [],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/braided/side-braid.json"
+      "eyeColor": "Warm hazel-green irises with faint golden striations and a dark moss limbal ring",
+      "eyeColorGlamour": "Warm hazel-green irises with faint golden striations and a dark moss limbal ring",
+      "hairColor": "Chestnut-brown hair with a faint green-bronze sheen",
+      "skinTone": "Warm tan complexion, evenly toned",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "brown eyes",
+        "grey eyes",
+        "amber eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "washed-out skin",
+        "ruddy skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json",
+      "hairColorNegatives": [
+        "blonde hair",
+        "black hair",
+        "red hair",
+        "grey hair",
+        "uniform flat one-tone hair"
+      ]
     },
     "physique": {
       "build": "Big, broad, powerfully built; bear-strong and solid",

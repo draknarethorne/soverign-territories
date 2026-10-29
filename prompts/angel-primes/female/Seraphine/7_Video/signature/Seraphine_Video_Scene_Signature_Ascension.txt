@@ -1,6 +1,6 @@
 === Seraphine Solspire · Video: Ascension (group: Video) — MiniMax H3 image-to-video ===
 Source image: Seraphine_Qwen_Scene_Signature_00001_.png
-Size: 640x960
+Format: reel
 Length: 8
 
 ----------------------------------------------------------------
@@ -8,7 +8,7 @@ prompt:
 
 Live-action cinematic fantasy film footage: photorealistic skin, hair and fabric with natural movement, fine film grain, shallow depth of field, soft cinematic lighting.
 
-Scene: The first frame shows Seraphine Solspire, wearing a layered ethereal gown of sheer fabric that flows around her, in a sunlit white marble terrace with gold-veined columns; a tiny dawn-light fairy no bigger than a hand, translucent gold-and-pink dragonfly wings.
+Scene: The first frame shows Seraphine Solspire, wearing a layered ethereal gown of sheer fabric that flows around her, in a sunlit white marble terrace with gold-veined columns; a tiny dawn-light fairy the size of a hand, translucent gold-and-pink dragonfly wings.
 
 Timeline:
 [0s-2.5s] Motion: Warm golden light blooms outward from her, glowing motes rising through the air and a soft halo gathering behind her; at the same time, great shafts of light slide slowly across the scene through breaks in the clouds, catching mist and dust as they sweep.

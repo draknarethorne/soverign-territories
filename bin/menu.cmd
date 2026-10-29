@@ -10,10 +10,31 @@ echo   4  Publish a temporary copy to another workspace
 echo   5  Clean up a workspace
 echo   6  Status
 echo   7  Workspaces
-echo   8  Validate
+echo   8  Preview tests for changed work (HEAD; bin\validate.cmd --changed HEAD --check executes)
+echo   Y  Isolated quick mutation validation (safe beside intake)
+echo   Z  Routine commit checks (use bin\check.cmd --deep for explicit test hooks)
+echo   0  Deep quality checks (explicit unit and mutation hooks; slower)
 echo   9  Refresh FireRed for a hero
 echo   A  Animate a hero (video prompts, workflows, deploy)
+echo   L  Photo library: sort new photos in Various, remove duplicates, rebuild all scaled images
+echo   R  Photo review gallery (read-only Gallery and Review audit)
+echo   G  Preview gallery upkeep (rename, padded/head/chest; no matching or writes)
+echo   P  Preview sandbox image preparation comparisons (no source or identity changes)
+echo   U  Preview same-mask eraser A/B (LaMa vs OpenCV; comparison only)
+echo   V  Preview unconfirmed overlay reference candidates
+echo   J  Preview early Junk quarantine from a completed preparation report (no moves)
+echo   T  Preview artist-only likeness grouping in the sandbox (shared engine, no moves)
+echo   V  Preview separate Artist gallery pages (no matching or source changes)
+echo   C  Photo library check (read only: anything waiting?)
+echo   B  Back up the photo library and ComfyUI inputs
+echo   X  Intake-aware sandbox clean start (inventory or verify; prepare/match/apply separately)
+echo   N  Preview sandbox run-retention decisions (read only)
+echo   F  Preview reference-render batch (offline, no workflow deployment or queue)
+echo   D  Refresh rendering selection/results gallery (reports only)
+echo   O  Refresh the ComfyUI outputs browser (reports only; pull is separate)
+echo   E  Compare frozen reference sources and renders (reports only)
 echo   S  Style audit (which art wording leans illustrated)
+echo   K  Backdrop wording check (read only: old cream studio wording left in the repo or a workspace?)
 echo   H  Help (all scripts)
 echo   Q  Quit
 set "CH="
@@ -21,13 +42,34 @@ set /p "CH=Choice: "
 if /i "%CH%"=="Q" exit /b 0
 if /i "%CH%"=="H" call "%~dp0help.cmd" & pause & goto menu
 if /i "%CH%"=="S" call "%~dp0style-audit.cmd" & pause & goto menu
+if /i "%CH%"=="K" call "%~dp0backdrop.cmd" --repo --workspaces --check & pause & goto menu
+if /i "%CH%"=="L" call "%~dp0library.cmd" & pause & goto menu
+if /i "%CH%"=="R" call "%~dp0people-gallery-review.cmd" & pause & goto menu
+if /i "%CH%"=="G" call "%~dp0people-gallery.cmd" --dry-run & pause & goto menu
+if /i "%CH%"=="C" call "%~dp0library-check.cmd" & pause & goto menu
+if /i "%CH%"=="B" goto backup
+if /i "%CH%"=="X" goto sandboxrebase
+if /i "%CH%"=="N" goto retention
+if /i "%CH%"=="F" goto referencerender
+if /i "%CH%"=="D" goto rendergallery
+if /i "%CH%"=="O" goto outputsgallery
+if /i "%CH%"=="E" goto referencecomparison
+if /i "%CH%"=="P" goto preparation
+if /i "%CH%"=="U" goto erasercompare
+if /i "%CH%"=="V" goto overlayreview
+if /i "%CH%"=="J" goto preparationjunk
+if /i "%CH%"=="T" goto artistlikeness
+if /i "%CH%"=="V" goto artistgallery
 if "%CH%"=="2" goto group
 if "%CH%"=="3" goto setup
 if "%CH%"=="4" goto publish
 if "%CH%"=="5" goto cleanup
 if "%CH%"=="6" call "%~dp0status.cmd" & pause & goto menu
 if "%CH%"=="7" call "%~dp0workspaces.cmd" & pause & goto menu
-if "%CH%"=="8" call "%~dp0validate.cmd" & pause & goto menu
+if "%CH%"=="8" call "%~dp0validate.cmd" --changed HEAD --dry-run & pause & goto menu
+if /i "%CH%"=="Y" call "%~dp0validate.cmd" --isolated --quick & pause & goto menu
+if /i "%CH%"=="Z" call "%~dp0check.cmd" & pause & goto menu
+if "%CH%"=="0" call "%~dp0check.cmd" --deep & pause & goto menu
 set "SCRIPT="
 if "%CH%"=="1" set "SCRIPT=refresh.cmd"
 if "%CH%"=="9" set "SCRIPT=refresh-firered.cmd"
@@ -46,6 +88,109 @@ if "%STG%"=="" (
 ) else (
   call "%~dp0%SCRIPT%" "%HERO%" "%STG%" %FLAG%
 )
+pause
+goto menu
+:referencerender
+set "ROOT="
+set "BATCH="
+set /p "ROOT=Library absolute path: "
+set /p "BATCH=Render request JSON absolute path: "
+call "%~dp0render-reference.cmd" preview "%BATCH%" --root "%ROOT%" --dry-run
+pause
+goto menu
+:rendergallery
+set "ROOT="
+set /p "ROOT=Library absolute path: "
+call "%~dp0render-gallery.cmd" --root "%ROOT%" --apply
+pause
+goto menu
+:outputsgallery
+set "ROOT="
+set /p "ROOT=Library absolute path: "
+call "%~dp0render-reference.cmd" outputs --root "%ROOT%" --apply
+pause
+goto menu
+:referencecomparison
+set "ROOT="
+set "BATCH="
+set /p "ROOT=Library absolute path: "
+set /p "BATCH=Frozen reference batch ID: "
+call "%~dp0render-reference.cmd" compare "%BATCH%" --root "%ROOT%" --dry-run
+if errorlevel 1 (
+  pause
+  goto menu
+)
+set "APPLY="
+set /p "APPLY=Publish comparison page? (y/n): "
+if /i "%APPLY%"=="y" call "%~dp0render-reference.cmd" compare "%BATCH%" --root "%ROOT%" --apply
+pause
+goto menu
+:preparation
+set "ROOT="
+set "RUN="
+set /p "ROOT=Sandbox Working absolute path: "
+set /p "RUN=Comparison run absolute path inside Working\_reports\preparation: "
+call "%~dp0prepare-images.cmd" --root "%ROOT%" --out "%RUN%" --dry-run
+pause
+goto menu
+:erasercompare
+set "REPORT="
+set "SOURCES="
+set "RUN="
+set /p "REPORT=Existing preparation run absolute path: "
+set /p "SOURCES=Sources JSON list absolute path: "
+set /p "RUN=New run absolute path inside Working\_reports\eraser-compare: "
+call "%~dp0eraser-compare.cmd" --report "%REPORT%" --sources "%SOURCES%" --out "%RUN%" --dry-run
+pause
+goto menu
+:overlayreview
+set "REPORT="
+set "SOURCES="
+set "RUN="
+set /p "REPORT=Existing preparation report absolute path: "
+set /p "SOURCES=Source-list JSON absolute path: "
+set /p "RUN=New run absolute path inside Working\_reports\eraser-compare: "
+call "%~dp0overlay-review.cmd" --report "%REPORT%" --sources "%SOURCES%" --out "%RUN%" --dry-run
+goto menu
+
+:preparationjunk
+set "ROOT="
+set "RUN="
+set /p "ROOT=Sandbox Working absolute path: "
+set /p "RUN=Existing preparation run absolute path: "
+call "%~dp0prepare-images.cmd" --root "%ROOT%" --out "%RUN%" --quarantine-junk --dry-run
+pause
+goto menu
+:artistlikeness
+set "ROOT="
+set /p "ROOT=Sandbox Working absolute path: "
+call "%~dp0likeness-artists.cmd" --root "%ROOT%" --dry-run group --singles
+pause
+goto menu
+:artistgallery
+set "ROOT="
+set /p "ROOT=Sandbox Working absolute path: "
+call "%~dp0artists-gallery.cmd" --root "%ROOT%" --dry-run
+pause
+goto menu
+:sandboxrebase
+set "ROOT="
+set "RUN="
+set /p "ROOT=Sandbox Working absolute path: "
+set /p "RUN=New run directory inside Working (or existing run to verify): "
+set "VERIFY="
+set /p "VERIFY=Verify existing run only? (y/n): "
+if /i "%VERIFY%"=="y" (
+  call "%~dp0sandbox-rebase.cmd" "%ROOT%" "%RUN%" --check
+) else (
+  call "%~dp0sandbox-rebase.cmd" "%ROOT%" "%RUN%" --dry-run
+)
+pause
+goto menu
+:retention
+set "ROOT="
+set /p "ROOT=Sandbox Working absolute path: "
+call "%~dp0storage-retention.cmd" --root "%ROOT%" preview
 pause
 goto menu
 :group
@@ -88,5 +233,13 @@ set /p "APPLY=Apply (n = preview only)? (y/n): "
 set "FLAG="
 if /i "%APPLY%"=="y" set "FLAG=--apply"
 call "%~dp0cleanup.cmd" "%WS%" %FLAG%
+pause
+goto menu
+:backup
+set "APPLY="
+set "FLAG="
+set /p "APPLY=Create the snapshot now? (n = preview only): "
+if /i "%APPLY%"=="y" set "FLAG=--apply"
+call "%~dp0library-backup.cmd" %FLAG%
 pause
 goto menu

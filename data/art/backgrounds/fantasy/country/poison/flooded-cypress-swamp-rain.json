@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/poison/flooded-cypress-swamp-rain",
+  "kind": "background",
+  "name": "Flooded cypress swamp rain",
+  "description": "a flooded cypress swamp in steady rain, hanging moss dripping, rings spreading on the black water and a grey-green light",
+  "mood": "dripping, grey",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "poison",
+    "weather",
+    "realistic"
+  ],
+  "notes": "The poison homeland (realms/poison-lands). Role 'weather' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

@@ -1,0 +1,19 @@
+{
+  "id": "wardrobe/jewelry/rings/skull-ring",
+  "kind": "jewelry",
+  "name": "Skull Ring",
+  "description": "a small {{METAL}} skull ring with {{GEM}} eye sockets",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "ring",
+    "skull",
+    "gothic",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

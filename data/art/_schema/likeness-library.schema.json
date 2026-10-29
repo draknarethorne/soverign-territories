@@ -1,0 +1,265 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Likeness Library Metadata",
+  "description": "Git-tracked user decisions about person identity anchors, protected photos, and recoverable likeness actions. ComfyUI photo selection remains in workflows/workspaces.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "people", "photos", "actions"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "people": {
+      "type": "object",
+      "propertyNames": {"pattern": "^person_[0-9a-f]{32}$"},
+      "additionalProperties": {"$ref": "#/definitions/person"}
+    },
+    "photos": {
+      "type": "object",
+      "propertyNames": {"pattern": "^photo:(image_[0-9]+|shot_[0-9]{14}|pic_[0-9a-f]{8})$"},
+      "additionalProperties": {"$ref": "#/definitions/photo"}
+    },
+    "actions": {
+      "type": "array",
+      "items": {"$ref": "#/definitions/action"}
+    }
+  },
+  "definitions": {
+    "protectionProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["recipeVersion", "policyVersion", "model", "coreVersion", "reason", "independentSupport"],
+      "properties": {
+        "recipeVersion": {"type": "string", "minLength": 1},
+        "policyVersion": {"type": "string", "minLength": 1},
+        "model": {"type": "string", "minLength": 1},
+        "coreVersion": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "reason": {"type": "string", "minLength": 1},
+        "independentSupport": {"type": "integer", "minimum": 0},
+        "score": {"type": ["number", "null"], "minimum": -1, "maximum": 1},
+        "rivalMargin": {"type": ["number", "null"], "minimum": -2, "maximum": 2},
+        "contentSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "frozenCorePhotoIds": {
+          "type": "array", "uniqueItems": true,
+          "items": {"$ref": "#/definitions/photoId"}
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["photoId", "path", "sha256"],
+            "properties": {
+              "photoId": {"$ref": "#/definitions/photoId"},
+              "path": {"type": "string", "minLength": 1},
+              "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+            }
+          }
+        }
+      }
+    },
+    "person": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "displayName", "folder", "folderHistory", "identityAnchors"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"},
+        "displayName": {"type": "string", "minLength": 1},
+        "names": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["originalName", "currentName", "originalSource"],
+          "properties": {
+            "originalName": {"type": ["string", "null"], "minLength": 1},
+            "currentName": {"type": "string", "minLength": 1},
+            "originalSource": {"enum": ["recorded-history", "rename-history", "catalogue-registration", "unavailable"]}
+          }
+        },
+        "family": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "referencePersonId", "surname", "score", "policyVersion", "previousPersonName", "reason"],
+          "properties": {
+            "id": {"type": "string", "pattern": "^family_[0-9a-f]{32}$"},
+            "referencePersonId": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"},
+            "surname": {"type": "string", "minLength": 1},
+            "score": {"type": "number", "minimum": -1, "maximum": 1},
+            "policyVersion": {"type": "string", "minLength": 1},
+            "previousPersonName": {"type": "string", "minLength": 1},
+            "reason": {"type": "string", "minLength": 1}
+          }
+        },
+        "folder": {"$ref": "#/definitions/personFolder"},
+        "folderHistory": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/personFolder"}
+        },
+        "identityAnchors": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/definitions/photoId"}
+        },
+        "protected": {"type": "boolean"},
+        "automaticProtectionOverride": {"enum": ["disabled", "enabled"]},
+        "protectionProvenance": {"$ref": "#/definitions/protectionProvenance"},
+        "mergedInto": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"}
+      }
+    },
+    "photo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contentSha256", "protected"],
+      "properties": {
+        "contentSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "protected": {"type": "boolean"},
+        "automaticProtectionOverride": {"enum": ["disabled", "enabled"]},
+        "protectionProvenance": {"$ref": "#/definitions/protectionProvenance"},
+        "rejectedPersonIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"}
+        }
+      }
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "timestamp", "actor", "type", "photoIds"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^action_[0-9a-f]{32}$"},
+        "batchId": {"type": "string", "pattern": "^batch_[0-9a-f]{32}$"},
+        "timestamp": {"type": "string", "format": "date-time"},
+        "actor": {"type": "string", "enum": ["user", "tool", "assistant"]},
+        "type": {
+          "type": "string",
+          "enum": [
+            "anchor-added",
+            "anchor-removed",
+            "photo-protected",
+            "photo-unprotected",
+            "sent-to-review",
+            "rejected-to-various",
+            "review-approved",
+            "match-accepted",
+            "match-rejected",
+            "photo-retired",
+            "photo-junked",
+            "person-retired",
+            "person-renamed",
+            "person-protected",
+            "person-unprotected",
+            "action-undone",
+            "workflow-photo-selected"
+          ]
+        },
+        "photoIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/definitions/photoId"}
+        },
+        "personId": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"},
+        "destinationPersonId": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"},
+        "contentSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "source": {"type": "string", "minLength": 1},
+        "destination": {"type": "string", "minLength": 1},
+        "reason": {"type": "string", "minLength": 1},
+        "undoes": {"type": "string", "pattern": "^action_[0-9a-f]{32}$"},
+        "beforeState": {"$ref": "#/definitions/actionState"},
+        "afterState": {"$ref": "#/definitions/actionState"},
+        "swapPartner": {
+          "allOf": [
+            {"$ref": "#/definitions/action"},
+            {
+              "properties": {"type": {"const": "person-renamed"}},
+              "not": {"required": ["swapPartner"]}
+            }
+          ]
+        },
+        "workflowHero": {"type": "string", "minLength": 1},
+        "workflowPhotoBefore": {"type": "string", "minLength": 1},
+        "workflowPhotoAfter": {"type": "string", "minLength": 1},
+        "workflowSourceBefore": {"type": "string", "minLength": 1},
+        "workflowSourceAfter": {"type": "string", "minLength": 1},
+        "renameState": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["beforeTreeSha256", "afterTreeSha256", "oldHistoryPath", "oldHistoryBase64", "newHistoryPath", "newHistoryBase64"],
+          "properties": {
+            "beforeTreeSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+            "afterTreeSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+            "oldHistoryPath": {"type": ["string", "null"]},
+            "oldHistoryBase64": {"type": "string"},
+            "newHistoryPath": {"type": "string"},
+            "newHistoryBase64": {"type": "string"}
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {"required": ["swapPartner"]},
+          "then": {"properties": {"type": {"const": "person-renamed"}}}
+        },
+        {
+          "if": {"properties": {"type": {"const": "person-renamed"}}, "required": ["type"]},
+          "then": {"required": ["source", "destination", "renameState"]}
+        },
+        {
+          "if": {
+            "properties": {"type": {"enum": ["person-protected", "person-unprotected", "person-renamed"]}},
+            "required": ["type"]
+          },
+          "then": {
+            "required": ["personId", "beforeState", "afterState"],
+            "properties": {"photoIds": {"maxItems": 0}}
+          },
+          "else": {
+            "if": {
+              "properties": {"type": {"const": "action-undone"}},
+              "required": ["type"]
+            },
+            "else": {"properties": {"photoIds": {"minItems": 1}}}
+          }
+        },
+        {
+          "if": {
+            "properties": {"type": {"const": "workflow-photo-selected"}},
+            "required": ["type"]
+          },
+          "then": {
+            "required": [
+              "workflowHero",
+              "workflowPhotoBefore",
+              "workflowPhotoAfter",
+              "workflowSourceBefore",
+              "workflowSourceAfter"
+            ]
+          }
+        }
+      ]
+    },
+    "actionState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["person", "photo"],
+      "properties": {
+        "person": {
+          "oneOf": [
+            {"type": "null"},
+            {"$ref": "#/definitions/person"}
+          ]
+        },
+        "photo": {
+          "oneOf": [
+            {"type": "null"},
+            {"$ref": "#/definitions/photo"}
+          ]
+        }
+      }
+    },
+    "photoId": {
+      "type": "string",
+      "pattern": "^photo:(image_[0-9]+|shot_[0-9]{14}|pic_[0-9a-f]{8})$"
+    },
+    "personFolder": {
+      "type": "string",
+      "pattern": "^(Angels|Sisters|Models|Prospects|Potentials)/[^/]+(/[^/]+)?$"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/enchanter/moonlit-glasshouse",
+  "kind": "background",
+  "name": "Moonlit glasshouse",
+  "description": "an old glasshouse at night with pale moonlight through the panes, climbing plants and white flowers, a small iron table",
+  "mood": "delicate, silver",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "enchanter",
+    "realistic"
+  ],
+  "notes": "A place a enchanter spends her time, in realistic wording (use with an element realm)."
+}

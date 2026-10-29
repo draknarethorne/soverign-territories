@@ -1,0 +1,240 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Sandbox image preparation comparison report (not a routing manifest)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "root", "recipe", "inventory", "limit", "photos", "reportSha256"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "root": {"type": "string", "minLength": 1},
+    "recipe": {"type": "object"},
+    "inventory": {
+      "type": "object",
+      "additionalProperties": {"type": "integer", "minimum": 0}
+    },
+    "limit": {"type": "integer", "minimum": 0},
+    "sourceFolder": {"type": ["string", "null"]},
+    "reportSha256": {"$ref": "#/definitions/hash"},
+    "configurationReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "configurationPath",
+        "sourceConfigurationSha256",
+        "effectiveConfigurationSha256",
+        "environmentOverrides",
+        "resolvedPaths"
+      ],
+      "properties": {
+        "configurationPath": {"type": "string", "minLength": 1},
+        "sourceConfigurationSha256": {"$ref": "#/definitions/hash"},
+        "effectiveConfigurationSha256": {"$ref": "#/definitions/hash"},
+        "environmentOverrides": {
+          "type": "object",
+          "additionalProperties": {"type": "string"}
+        },
+        "resolvedPaths": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source", "photoId", "sourceSha256", "retained", "outcome", "diagnostics", "variants", "detail", "detailSha256"],
+        "properties": {
+          "source": {"type": "string", "minLength": 1},
+          "photoId": {"type": ["string", "null"]},
+          "sourceScope": {
+            "type": "object", "additionalProperties": false,
+            "required": ["category", "artist", "matchingDomain", "reason"],
+            "properties": {
+              "category": {"enum": ["Angels", "Sisters", "Models", "Prospects", "Potentials", "Artists", "Various"]},
+              "artist": {"type": ["string", "null"]},
+              "matchingDomain": {"type": "string", "minLength": 1},
+              "reason": {"type": "string", "minLength": 1}
+            }
+          },
+          "sourceSha256": {"$ref": "#/definitions/hash"},
+          "retained": {"type": "string", "minLength": 1},
+          "detail": {"type": "string", "minLength": 1},
+          "detailSha256": {"$ref": "#/definitions/hash"},
+          "outcome": {"enum": ["compared", "overlay-held", "compared-overlay", "enhancement-failed", "unprocessable", "junk-candidate", "assessment-failed"]},
+          "sourceTreatment": {
+            "description": "Current source disposition, not an automatic quality or identity decision. Optional for older pilot reports.",
+            "enum": ["original-unassessed", "original-overlay-unremoved", "original-clean", "original-enhancement-failed", "cropped-border", "cropped-border-overlay-unremoved", "prepared-cleanup", "prepared-reconstruction", "enhanced", "unprocessable"]
+          },
+          "recommendation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["use", "reason"],
+            "properties": {
+              "use": {"enum": ["original", "geometry", "first-crop", "second-crop", "residual-crop", "eraser", "composition", "head-overlay-reconstruction", "head-overlay-composition", "none"]},
+              "reason": {"type": "string", "minLength": 1}
+            }
+          },
+          "geometry": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["box", "method", "changed", "reason", "overlayDetected", "uiCropBox", "uiCropAssessment"],
+            "properties": {
+              "box": {"$ref": "#/definitions/box"},
+              "method": {"enum": ["full-span-solid-border-v1", "reel-panels-and-solid-border-v2"]},
+              "changed": {"type": "boolean"},
+              "reason": {"type": "string"},
+              "overlayDetected": {"type": "boolean"},
+              "uiCropBox": {"anyOf": [{"type": "null"}, {"$ref": "#/definitions/box"}]},
+              "uiCropAssessment": {"type": "string"}
+            }
+          },
+          "processing": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["steps", "cleanup", "final", "faceAssessment"],
+            "properties": {
+              "steps": {
+                "type": "array", "minItems": 5, "maxItems": 7,
+                "items": {
+                  "type": "object", "additionalProperties": false,
+                  "required": ["name", "status", "input", "candidate", "selected", "reason"],
+                  "properties": {
+                    "name": {"enum": ["first-crop", "eraser", "second-crop", "residual-crop", "reconstruction", "composition", "denoise", "tone"]},
+                    "status": {"enum": ["skipped", "attempted-selected", "attempted-rejected", "failed"]},
+                    "input": {"type": "string"},
+                    "candidate": {"type": ["string", "null"]},
+                    "selected": {"type": "string"},
+                    "reason": {"type": "string", "minLength": 1}
+                  }
+                }
+              },
+              "cleanup": {"type": "string"},
+              "final": {"type": "string"},
+              "faceAssessment": {"type": "string"},
+              "sequence": {
+                "type": "object",
+                "required": ["policy", "steps", "candidates", "final", "detectorErrors", "headOverlay"],
+                "properties": {
+                  "policy": {"type": "string", "minLength": 1},
+                  "steps": {"type": "array"},
+                  "candidates": {"type": "object"},
+                  "final": {"type": "string"},
+                  "detectorErrors": {"type": "array"},
+                  "preflight": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["status", "patternCount", "glyphCount", "subjectRequired", "reason"],
+                    "properties": {
+                      "status": {"enum": ["proposals", "no-proposals"]},
+                      "patternCount": {"type": "integer", "minimum": 0},
+                      "glyphCount": {"type": "integer", "minimum": 0},
+                      "subjectRequired": {"type": "boolean"},
+                      "reason": {"type": "string", "minLength": 1}
+                    }
+                  },
+                  "headOverlay": {"type": "object"}
+                }
+              },
+              "subject": {
+                "type": "object", "additionalProperties": false,
+                "required": ["method", "box", "people", "note"],
+                "properties": {
+                  "method": {"enum": ["mask-rcnn", "face-frame"]},
+                  "box": {"type": ["array", "null"], "items": {"type": "integer"}, "minItems": 4, "maxItems": 4},
+                  "people": {"type": "integer", "minimum": 0},
+                  "note": {"type": "string"}
+                }
+              },
+              "clutter": {
+                "type": "array",
+                "items": {
+                  "type": "object", "additionalProperties": false,
+                  "required": ["kind", "box", "action"],
+                  "properties": {
+                    "kind": {"enum": ["glyph", "logo", "search-bubble", "ui-card"]},
+                    "box": {"type": "array", "items": {"type": "integer"}, "minItems": 4, "maxItems": 4},
+                    "action": {"enum": ["cropped", "filled", "kept", "refused-face", "refused-body"]}
+                  }
+                }
+              },
+              "reconstructionComparison": {
+                "type": "object", "additionalProperties": false,
+                "required": ["method", "input", "mask", "candidate", "status", "reason"],
+                "properties": {
+                  "method": {"const": "opencv-navier-stokes-radius3"},
+                  "input": {"enum": ["control", "geometry"]},
+                  "mask": {"const": "eraser-mask"},
+                  "candidate": {"enum": ["eraser-ns", null]},
+                  "status": {"enum": ["attempted-rejected", "failed"]},
+                  "reason": {"type": "string", "minLength": 1}
+                }
+              }
+            }
+          },
+          "eligibility": {
+            "type": "object", "additionalProperties": false,
+            "required": ["status", "faces", "largestFacePixels", "minFace", "reason"],
+            "properties": {
+              "status": {"enum": ["usable", "junk-candidate", "assessment-failed"]},
+              "faces": {"type": "array", "items": {"type": "array", "items": {"type": "number"}, "minItems": 4, "maxItems": 4}},
+              "largestFacePixels": {"type": "number", "minimum": 0},
+              "minFace": {"type": "integer", "minimum": 1},
+              "reason": {"type": "string", "minLength": 1}
+            }
+          },
+          "diagnostics": {"type": "array", "items": {"type": "string"}},
+          "variants": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "control": {"$ref": "#/definitions/variant"},
+              "geometry": {"$ref": "#/definitions/variant"},
+              "first-crop": {"$ref": "#/definitions/variant"},
+              "residual-crop": {"$ref": "#/definitions/variant"},
+              "head-overlay-mask": {"$ref": "#/definitions/variant"},
+              "head-overlay-reconstruction": {"$ref": "#/definitions/variant"},
+              "head-overlay-composition": {"$ref": "#/definitions/variant"},
+              "cumulative-erase-mask": {"$ref": "#/definitions/variant"},
+              "ui-crop-proposal": {"$ref": "#/definitions/variant"},
+              "eraser": {"$ref": "#/definitions/variant"},
+              "eraser-ns": {"$ref": "#/definitions/variant"},
+              "eraser-mask": {"$ref": "#/definitions/variant"},
+              "second-crop": {"$ref": "#/definitions/variant"},
+              "composition": {"$ref": "#/definitions/variant"},
+              "denoise": {"$ref": "#/definitions/variant"},
+              "tone": {"$ref": "#/definitions/variant"}
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "box": {"type": "array", "items": {"type": "integer", "minimum": 0}, "minItems": 4, "maxItems": 4},
+    "hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "variant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "thumbnail", "thumbnailSha256", "padded", "paddedSha256", "size", "seconds", "meanAbsolutePixelChange"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/definitions/hash"},
+        "thumbnail": {"type": "string", "minLength": 1},
+        "thumbnailSha256": {"$ref": "#/definitions/hash"},
+        "padded": {"type": "string", "minLength": 1},
+        "paddedSha256": {"$ref": "#/definitions/hash"},
+        "size": {
+          "type": "array",
+          "items": {"type": "integer", "minimum": 1},
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "seconds": {"type": "number", "minimum": 0},
+        "meanAbsolutePixelChange": {"type": ["number", "null"], "minimum": 0, "maximum": 255}
+      }
+    }
+  }
+}

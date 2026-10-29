@@ -8,7 +8,7 @@
     "pose": "The dragon lies coiled across its hoard like a sleeping king, one wing half-spread, head raised and turned toward the camera with a proud, watchful gaze, smoke curling from its nostrils.",
     "background": "data/art/backgrounds/fantasy/lairs/fire-volcanic-cavern.json",
     "hoard": "data/art/hoards/fire-hoard.json",
-    "effects": "A few drifting embers and a soft heat shimmer rise from the hoard - understated, nothing busy."
+    "effects": "A few drifting embers and a soft heat shimmer rise from the hoard - understated."
   },
   "template": "data/art/_templates/dragons/scene-lair-dragon.txt",
   "output": "prompts/elder-dragons/Pyraxis/5_Scenes/Pyraxis_Scene_Lair.txt",

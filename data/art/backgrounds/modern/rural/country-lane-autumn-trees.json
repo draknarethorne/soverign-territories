@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/rural/country-lane-autumn-trees",
+  "kind": "background",
+  "name": "Modern: country lane, autumn",
+  "description": "a country lane lined with trees in autumn colour, fallen leaves on the road, soft dappled light",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "rural"
+  ],
+  "notes": "Real-world location for realistic scenes; pair with components.realm = realms/modern.json."
+}

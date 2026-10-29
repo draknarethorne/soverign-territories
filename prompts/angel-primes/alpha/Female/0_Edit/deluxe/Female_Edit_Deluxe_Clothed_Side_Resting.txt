@@ -1,0 +1,32 @@
+=== Alpha Female - 0_Edit - Deluxe fully-clothed bedroom: side resting ===
+Incoming image: the exact user-selected source photo or selected generated image.
+Denoise ~0.7-0.8.
+
+----------------------------------------------------------------
+prompt:
+
+Edit the incoming photograph according to the task below. Keep one person
+only, with realistic photographic detail and natural skin texture.
+
+Create a neutral, full-length pose audition of the same person, fully clothed in the exact same outfit. Change only the pose and bedroom presentation specified by the selected view. Preserve every garment with its original coverage, fit, color, layers and accessories. Use ordinary relaxed body language and a neutral, non-suggestive pose.
+
+Face: Preserve the same person's recognizable face, expression, eye color and skin tone, with consistent facial features.
+Hair: Keep the incoming hairstyle, hair length, texture and color.
+Physique: Preserve visible body proportions and muscle definition, keeping the source physique unchanged.
+Clothing: Keep the person fully clothed in the same outfit. Preserve the fabric, colors, coverage and accessories.
+Pose: Show the fully clothed person resting comfortably on one side on top of the neatly made bed, head supported by a pillow, legs naturally relaxed and arms resting neutrally in front of the torso. Keep the whole figure visible in a wide, full-length view.
+Framing: Show the complete person from head to both feet with comfortable space around the silhouette. Keep the camera level and proportions natural.
+Background and lighting: a simple, tidy, photorealistic bedroom with a neatly made bed, plain light-neutral bedding and an uncluttered softly rendered background; evenly lit by soft neutral frontal light with gentle natural fill, no dramatic shadows or colored cast
+
+Remove visible text, logos, watermarks and interface icons. Preserve visible
+hands, fingers and feet without duplicating limbs. Any newly visible anatomy,
+clothing or background is synthesized, not recovered from the original.
+
+----------------------------------------------------------------
+negative prompt:
+
+removed or changed clothing, added accessories, cropped subject, dramatic or suggestive posing, sexualized direction or anatomy, changed identity, altered facial features, changed eye color, changed skin tone, changed hairstyle, changed hair color, shortened hair,
+reshaped body, changed body proportions, exaggerated anatomy, removed clothing, revealing outfit, changed clothing, added accessories, upright seated pose, cropped feet, suggestive pose, dramatic foreshortening,
+cropped head, cropped hands, cropped feet, foreshortened legs, grey studio backdrop, busy decor, dramatic lighting, colored lighting, clutter, extra people, extra limbs, extra fingers,
+distorted hands, text, watermark, logo, plastic skin, illustration, painting,
+drawing, CGI, cartoon.

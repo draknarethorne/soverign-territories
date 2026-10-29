@@ -48,6 +48,11 @@ Start with the [documentation hub](docs/README.md), then read:
 
 ## Art and video pipeline
 
+Use regular **64-bit CPython 3.14** for the repository's image-processing tools.
+Python 3.12 compatibility is retained; CI covers 3.12, 3.13 and 3.14. Dependency
+setup and the distinction from ComfyUI's Python are in the
+[photo-library runtime guide](docs/art/original-photos.md#python-runtime-and-dependencies).
+
 Card art and short video clips are generated from small JSON files, never hand-written prompts. The guides:
 
 - [Tutorial: creating art JSON](docs/art/tutorial-art.md) and [tutorial: creating video JSON](docs/art/tutorial-video.md), by hand or with an AI.

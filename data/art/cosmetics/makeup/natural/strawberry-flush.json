@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/natural/strawberry-flush",
+  "kind": "makeup",
+  "name": "Strawberry Flush",
+  "description": "a strawberry flush - blush swept high across the cheeks and over the bridge of the nose, a soft pink-washed lid, curled lashes and a juicy glossy lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "natural"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

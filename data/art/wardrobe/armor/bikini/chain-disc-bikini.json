@@ -1,0 +1,11 @@
+{
+  "id": "wardrobe/armor/bikini/chain-disc-bikini",
+  "kind": "wearing",
+  "name": "Body-Chain Disc Bikini",
+  "description": "a draped {{METAL}} body-chain bikini top and bottom - {{PRIMARY}} disc bra cups with {{ACCENT_SOFT}} and {{METAL}} accents, swinging {{ACCENT_SOFT}} chain hip straps; bare stomach and flanks, most of her breasts and legs exposed",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "notes": "Cross-cutting wardrobe piece, reusable by any hero in her own palette. Grounded in the hand-made workflow zz_Curated_Drakness_Qwen_Armor_Bikini (workflows/_curated/drakn-sisters/Drakness)."
+}

@@ -3,7 +3,7 @@
   "kind": "base-set",
   "stage": "scene",
   "heroArt": "data/art/heroes/angel-primes/female/sandalyn.json",
-  "template": "data/art/_templates/heroes/scene-glamour-human.txt",
+  "template": "data/art/_templates/heroes/5_Scenes/scene-glamour-human.txt",
   "output": "prompts/angel-primes/female/Sandalyn/5_Scenes/glamour/Sandalyn_Scene_Glamour.txt",
   "denoise": "~0.5-0.7",
   "name": "Glamour",
@@ -13,7 +13,7 @@
     "jewelry": "data/art/wardrobe/jewelry/studio/simple-chain-with-pendant.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/matching-open-toed-heels.json",
     "back": "data/art/heroes/angel-primes/female/sandalyn/wings/sandalyn-wings.json",
-    "effects": "A gentle drift of stone shards, dust and glowing crystals lifts her hair and hem, faint {{MAGIC}} light glinting within it - understated, nothing busy.",
+    "effects": "A gentle drift of stone shards, dust and glowing crystals lifts her hair and hem, faint {{MAGIC}} light glinting within it - understated.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/backgrounds/fantasy/elemental/grounded/bedrock-stone-realm.json"
   },

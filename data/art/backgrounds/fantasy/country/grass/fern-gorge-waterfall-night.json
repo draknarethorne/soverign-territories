@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/grass/fern-gorge-waterfall-night",
+  "kind": "background",
+  "name": "Fern gorge waterfall night",
+  "description": "a fern-filled gorge with a waterfall at night, moonlight on the wet rock and fireflies in the dark green air",
+  "mood": "hushed, glowing",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "grass",
+    "night",
+    "realistic"
+  ],
+  "notes": "The grass homeland (realms/grass-lands). Role 'night' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

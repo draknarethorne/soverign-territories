@@ -1,0 +1,21 @@
+{
+  "artId": "female-alpha-prime-outfit-grounded",
+  "kind": "base-set",
+  "stage": "alpha",
+  "heroArt": "data/art/heroes/angel-primes/alpha/female.json",
+  "template": "data/art/_templates/heroes/1_Alpha/prime-outfit-reference-human.txt",
+  "output": "prompts/angel-primes/alpha/Female/1_Alpha/1_Prime/Female_Alpha_1_Prime_Outfit_Grounded.txt",
+  "denoise": "~0.9-1.0",
+  "edit_name": "Forward-foot three-quarter outfit audition",
+  "components": {
+    "edit_task": "data/art/edits/pose/clothed.json",
+    "face_policy": "data/art/edits/policies/face-preserve.json",
+    "hair_policy": "data/art/edits/policies/hair-preserve.json",
+    "body_policy": "data/art/edits/policies/body-preserve.json",
+    "clothing_policy": "data/art/edits/policies/clothing-preserve.json",
+    "view": "data/art/studio/views/body/grounded-three-quarter.json",
+    "framing": "data/art/edits/policies/framing-full-length.json",
+    "background": "data/art/backgrounds/studio/grey-even.json"
+  },
+  "notes": "Clothed Prime outfit audition, not bedroom Deluxe. Grounded is a pose cue, not an exact heel-contact acceptance gate; the user accepts a lifted heel. Original and chosen-render inputs remain distinct."
+}

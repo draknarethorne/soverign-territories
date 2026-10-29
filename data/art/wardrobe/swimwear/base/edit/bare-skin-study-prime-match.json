@@ -1,0 +1,48 @@
+{
+  "id": "wardrobe/swimwear/base/edit/bare-skin-study-prime-match",
+  "kind": "wearing",
+  "name": "Bare edit: figure study, match Prime skin",
+  "description": "nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; completely bare natural skin, matching the natural skin tone in the incoming Prime, including the shoulders, arms, back, stomach, hips, thighs, legs and bare feet; the natural shape, fullness and cleavage of the bust stay clearly visible",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "bare",
+    "edit",
+    "figure-study",
+    "prime-match"
+  ],
+  "notes": "A/B comparison variant that leaves skin colour to the incoming Prime; keep negatives identical to the standard bare-skin study.",
+  "negatives": [
+    "bikini",
+    "black bikini",
+    "swimsuit",
+    "bra",
+    "panties",
+    "thong",
+    "straps",
+    "strings",
+    "ties",
+    "waistband",
+    "lingerie",
+    "lace",
+    "fabric",
+    "chains",
+    "jewelry",
+    "shoes",
+    "pasties",
+    "stickers",
+    "body paint",
+    "painted body",
+    "white spots",
+    "polka dots",
+    "dark clothing",
+    "headshot",
+    "close-up",
+    "cropped body",
+    "cropped feet",
+    "censored",
+    "blurred",
+    "mosaic"
+  ]
+}

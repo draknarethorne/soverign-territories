@@ -2,7 +2,7 @@
 """Scaffold an Angel Primes angel's set from data/art/_kits/angel-primes/<slug>.json (re-runnable; existing cards are kept).
 
 Per angel (a kit lists the choices; the identity in data/art/heroes/angel-primes/<slug>.json supplies sex and look). This file writes the core set:
-  1_Alpha      Prime, Bare_Figure (+ Bare_Chest, Barefoot, Heels for the female angels; males have no Barefoot or Heels step)
+  1_Alpha      Prime, Bare_Figure (+ Barefoot, Heels for the female angels; males have no Barefoot or Heels step)
   2_Studies    the head          3_Layers  the kit's A-pose underlayer tests          4_Wardrobe  the kit's clothing and armor on the studio backdrop
   Bench/motion the kit's motions           5_Scenes/signature  one signature scene with wings, element effect and the bonded pet
 and scaffold_angel_library.py then adds the rest of the standard sister set (studies library and hairstyles, covering and celestial experiments, rotating layers, wardrobe,
@@ -22,7 +22,8 @@ import sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import art_layout  # noqa: E402
 import scaffold_angel_library as library  # noqa: E402
-from scaffold_sister_studio import STUDIO, TPL, Writer, camel, norm  # noqa: E402
+from scaffold_sister_studio import STUDIO, Writer, camel, norm  # noqa: E402
+from template_paths import template_path  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 ART = ROOT / "data/art"
@@ -53,7 +54,7 @@ def migrate_signature(slug, hero, division):
 def card_factory(ident, out):
     """A base-set card for this hero: card(art_id, stage, folder, stem, template, comps, ...) with the hero's identity and output folder filled in."""
     def card(art_id, stage, folder, stem, template, comps=None, denoise="~0.5-0.7", note=None, **extra):
-        body = {"artId": art_id, "kind": "base-set", "stage": stage, "heroArt": ident, "template": f"{TPL}/{template}",
+        body = {"artId": art_id, "kind": "base-set", "stage": stage, "heroArt": ident, "template": template_path(template),
                 "output": out(folder, stem), "denoise": denoise, **extra}
         if comps:
             body["components"] = comps
@@ -64,20 +65,17 @@ def card_factory(ident, out):
 
 
 def alpha_chain(wr, card, slug, hero, female, heels):
-    """1_Alpha, the creation chain every angel has: Prime (A-pose from the photo), Bare (figure; chest too for women), and for women the Footwear step
+    """1_Alpha, the creation chain every angel has: Prime (A-pose from the photo), Bare (the figure), and for women the Footwear step
     (Barefoot and Heels A-poses fed the Bare image). Men stay barefoot in every A-pose, so they have no footwear step."""
     sex = "female" if female else "male"
     wr.write("alpha", f"{slug}-alpha-prime", card(f"{slug}-alpha-prime", "alpha", "alpha", f"{hero}_Alpha_1_Prime", f"pose-{sex}-human.txt", denoise="~1.0",
-             note=f"{hero} Prime A-pose, built from the original photo.", **({"figureProfile": "standard"} if female else {})))
+             note=f"{hero} Prime A-pose, built from the original photo.", figureProfile="standard"))
     bare_tpl = "bare-human.txt" if female else "bare-male-human.txt"
     study = "bare-skin-study" if female else "bare-skin-study-male"
     wr.write("alpha", f"{slug}-alpha-bare-figure", card(f"{slug}-alpha-bare-figure", "alpha", "alpha", f"{hero}_Alpha_2_Bare_Figure", bare_tpl,
              {"wearing": f"data/art/wardrobe/swimwear/base/edit/{study}.json"}, name="Bare edit: bare skin figure",
              note="Alpha 2 Bare: fed the Prime, sets the individual build and likeness."))
     if female:
-        wr.write("alpha", f"{slug}-alpha-bare-chest", card(f"{slug}-alpha-bare-chest", "alpha", "alpha", f"{hero}_Alpha_2_Bare_Chest", bare_tpl,
-                 {"wearing": "data/art/wardrobe/swimwear/base/edit/bare-chest-study.json"}, name="Bare edit: bare chest figure",
-                 note="Alpha 2 Bare, chest variant."))
         wr.write("alpha", f"{slug}-alpha-barefoot", card(f"{slug}-alpha-barefoot", "alpha", "alpha", f"{hero}_Alpha_3_Barefoot", "pose-female-human.txt",
                  {"footwear": "data/art/wardrobe/footwear/barefoot/barefoot-a-pose.json"}, note="Alpha 3 Barefoot A-pose, fed the Bare image."))
         wr.write("alpha", f"{slug}-alpha-heels", card(f"{slug}-alpha-heels", "alpha", "alpha", f"{hero}_Alpha_3_Heels", "pose-female-human.txt",
@@ -245,8 +243,22 @@ def build(slug):
     print(f"{slug}: made {wr.made} cards, {wr.skipped} already existed")
 
 
+def build_character(slug):
+    """Only the character scenes (Lineup, duty, quiet, domain, celebration) for a kit angel; everything else is left as it is."""
+    kit = load(f"data/art/_kits/angel-primes/{slug}.json")
+    ident = kit["identity"]
+    sex = "female" if "bust" in load(ident)["art"]["physique"] else "male"
+    division = pathlib.PurePosixPath(ident).parts[4]
+    wr = Writer(ART / "_sets" / GROUP / division / slug, GROUP)
+    out = lambda folder, name: f"prompts/{GROUP}/{division}/{kit['hero']}/{folder}/{name}.txt"
+    library.Angel(slug, kit, ident, sex, division, wr, out).character()
+    print(f"{slug}: made {wr.made} character cards, {wr.skipped} already existed")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--character", action="store_true", help="only the character scenes (Lineup, duty, quiet, domain, celebration) for every kit angel, or --slug")
+    ap.add_argument("--realm", action="store_true", help="opt in: the realm series (homeland, wayfarer, settlement, weather, nightfall in her element's realistic realm) for every kit angel, or --slug")
     ap.add_argument("--slug")
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--alpha", action="store_true", help="only the two alpha test heroes (alpha/female, alpha/male)")
@@ -256,6 +268,21 @@ def main():
         library.coverage()
         return
     kits = {p.stem for p in (ART / "_kits" / GROUP).glob("*.json")}
+    if args.realm:
+        for slug in ([args.slug] if args.slug else sorted(kits)):
+            kit = load(f"data/art/_kits/angel-primes/{slug}.json")
+            ident = kit["identity"]
+            sex = "female" if "bust" in load(ident)["art"]["physique"] else "male"
+            division = pathlib.PurePosixPath(ident).parts[4]
+            wr = Writer(ART / "_sets" / GROUP / division / slug, GROUP)
+            out = lambda folder, name, d=division, h=kit["hero"]: f"prompts/{GROUP}/{d}/{h}/{folder}/{name}.txt"
+            library.Angel(slug, kit, ident, sex, division, wr, out).realm_series()
+            print(f"{slug}: made {wr.made} realm cards, {wr.skipped} already existed")
+        return
+    if args.character:
+        for slug in ([args.slug] if args.slug else sorted(kits)):
+            build_character(slug)
+        return
     slugs = sorted(kits) if args.all else [args.slug]
     if args.all:
         slugs = sorted(kits | set(OLDER) | set(ALPHA))

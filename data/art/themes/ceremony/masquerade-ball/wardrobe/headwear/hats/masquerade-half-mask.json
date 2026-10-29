@@ -1,0 +1,15 @@
+{
+  "id": "themes/ceremony/masquerade-ball/wardrobe/headwear/hats/masquerade-half-mask",
+  "kind": "headwear",
+  "name": "Masquerade Half Mask",
+  "description": "an ornate half-face masquerade mask of {{PRIMARY}} lacquer edged in {{METAL}}, tied behind the head with a satin ribbon",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "masquerade-ball",
+    "headwear"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/cleric/abbey-nave-morning",
+  "kind": "background",
+  "name": "Abbey nave morning",
+  "description": "the nave of a stone abbey in the morning, tall windows throwing coloured light across the flagstones, rows of plain wooden pews and a simple altar",
+  "mood": "reverent, bright",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "cleric",
+    "realistic"
+  ],
+  "notes": "A place a cleric spends her time, in realistic wording (use with an element realm)."
+}

@@ -16,9 +16,9 @@ Lair: a vast volcanic cavern of black basalt with rivers of glowing lava and ris
 
 Hoard: heaps of gold coins and molten-edged ingots, forged swords and cracked shields, ember-glowing crystals, scorched obsidian and half-melted golden statues.
 
-A few drifting embers and a soft heat shimmer rise from the hoard - understated, nothing busy.
+A few drifting embers and a soft heat shimmer rise from the hoard - understated.
 
-A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic; nothing from the modern world.
+A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

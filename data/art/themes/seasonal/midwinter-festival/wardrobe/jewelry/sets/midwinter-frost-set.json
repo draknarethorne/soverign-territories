@@ -1,0 +1,19 @@
+{
+  "id": "themes/seasonal/midwinter-festival/wardrobe/jewelry/sets/midwinter-frost-set",
+  "kind": "jewelry",
+  "name": "Midwinter Frost Set",
+  "includes": [
+    "data/art/wardrobe/jewelry/necklaces/pendant-necklace.json",
+    "data/art/wardrobe/jewelry/earrings/huggie-earrings.json",
+    "data/art/wardrobe/jewelry/rings/simple-band-ring.json"
+  ],
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "midwinter-festival",
+    "jewelry"
+  ]
+}

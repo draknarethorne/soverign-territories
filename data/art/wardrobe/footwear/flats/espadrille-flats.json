@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/flats/espadrille-flats",
+  "kind": "legs_feet",
+  "name": "Espadrille Flats",
+  "description": "{{PRIMARY}} canvas espadrille flats with a braided jute sole and ankle ribbons tied in a bow",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "flats",
+    "female"
+  ]
+}

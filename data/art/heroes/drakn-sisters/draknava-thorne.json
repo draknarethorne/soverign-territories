@@ -25,7 +25,7 @@
       "hairHighlights": "data/art/cosmetics/highlights/streaks/windswept-pearl-streaks.json",
       "hairHighlightColor": "seafoam",
       "hairColorNegatives": ["all-over green hair", "all-over purple hair", "all-over lilac hair", "fully dyed hair"],
-      "skinTone": "Light sun-kissed fair tan complexion, evenly tanned, no pale areas",
+      "skinTone": "Light sun-kissed fair tan complexion, evenly tanned",
       "eyeColorNegatives": [
         "blue eyes",
         "green eyes",
@@ -45,9 +45,9 @@
     "physique": {
       "build": "Lithe, gymnastic wood-elven build; coiled-spring agility and athletic balance",
       "torso": "Narrow gymnastic torso; tight waistline with faint oblique lines and a firm core tapering cleanly into the hips",
-      "bust": "Very full, generous, heavy bust with a soft natural weight and a gentle outward swell, broad natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail",
+      "bust": "Very full, generous, heavy bust with a soft natural weight and a gentle outward swell, broad natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
       "arms": "Slender, toned arms; firm athletic triceps and slender, dexterous wrists",
-      "hips": "Shapely feminine hips, gently curved (not wide), compact and agile",
+      "hips": "Shapely feminine hips, gently curved, compact and agile",
       "legs": "Very long, springy athletic legs; defined calves and toned thighs",
       "distinguishingMarks": [],
       "raceAlignment": "Human presentation aligned to wood elf bard characteristics (gymnastic, breath endurance, aerodynamic poise)"

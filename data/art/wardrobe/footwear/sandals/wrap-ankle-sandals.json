@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/sandals/wrap-ankle-sandals",
+  "kind": "legs_feet",
+  "name": "Wrap Ankle Sandals",
+  "description": "{{PRIMARY}} flat sandals with long leather ties wrapped up the ankle and calf and knotted below the knee",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "sandals",
+    "female"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/eyes/fox-eye-lift",
+  "kind": "makeup",
+  "name": "Fox Eye",
+  "description": "a fox-eye lift - liner and shadow drawn up and out toward the temples to lift the eye, defined lashes, sculpted brows and a muted rose lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "eyes"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

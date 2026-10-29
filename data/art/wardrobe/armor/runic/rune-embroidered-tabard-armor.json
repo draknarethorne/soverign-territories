@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/armor/runic/rune-embroidered-tabard-armor",
+  "kind": "wearing",
+  "name": "Rune-Embroidered Tabard Armor",
+  "description": "a mail shirt under a long {{PRIMARY}} tabard embroidered with {{METAL}} rune-work, plate vambraces at the forearms",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "runic",
+    "tabard",
+    "mail",
+    "unisex"
+  ]
+}

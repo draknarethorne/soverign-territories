@@ -4,7 +4,7 @@
 The sisters are the model: a standard sister has about 160 cards across the pipeline phases and Drakness has the whole library on top. Each angel gets the same structure,
 and the library pieces are ROTATED across the twenty angels (by alignment rank) so that, together, they exercise every family of the library instead of repeating one set.
 
-  1_Alpha      Bare Figure and Chest (scaffold_angel_set), 4 covering and 4 celestial experiments (female)
+  1_Alpha      Bare Figure (scaffold_angel_set), 4 celestial experiments (female)
   2_Studies    body views, head views, close-ups and expressions (scaffold_studio_library), 8 hairstyles from the 46-style library, a hair card per theme
   3_Layers     the skin base variants (female) and a rotating mix of bikini, lingerie, one-piece, backless and athletic underlayers
   4_Wardrobe   clothing (dresses, gowns, sets), armor, themed outfits, and the showcases: celestial, editorial, elemental, studio and 13 photo locations (female)
@@ -23,7 +23,8 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import art_layout  # noqa: E402
-from scaffold_sister_studio import STUDIO, TPL, camel, norm  # noqa: E402
+from scaffold_sister_studio import STUDIO, camel, norm  # noqa: E402
+from template_paths import template_path  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 ART = ROOT / "data/art"
@@ -92,6 +93,10 @@ WEAPON_FAMILY = {"Light": "swords", "Water": "polearms", "Grass": "bows", "Wind"
                  "Poison": "daggers", "Darkness": "crossbows", "Neutral": "polearms"}
 TONES = [(3, "pristine, luminous and unmarked"), (5, "clean, with a quiet shine"), (7, "plain, severe and unornamented"),
          (9, "worn, scorched at the edges and trimmed with dark feathers"), (10, "tattered, shadow-edged and trimmed with black feathers")]
+
+
+def cap(text):
+    return text[:1].upper() + text[1:]
 
 
 def cinematic():
@@ -262,7 +267,7 @@ class Angel:
     # ----- plumbing
 
     def card(self, art_id, stage, folder, stem, template, comps=None, denoise="~0.5-0.7", note=None, **extra):
-        body = {"artId": art_id, "kind": "base-set", "stage": stage, "heroArt": self.ident, "template": f"{TPL}/{template}",
+        body = {"artId": art_id, "kind": "base-set", "stage": stage, "heroArt": self.ident, "template": template_path(template),
                 "output": self.out(folder, stem), "denoise": denoise, **extra}
         if comps:
             body["components"] = comps
@@ -336,10 +341,9 @@ class Angel:
     # ----- phases
 
     def alpha_experiments(self):
+        """The celestial armor experiments only; the covering experiments (contoured, paint, pasties) bled into the wardrobe shots and were dropped."""
         if not self.female:
             return
-        for name in ("contoured", "paint", "paint-colour", "pasties"):
-            self.write("alpha", f"{self.slug}-alpha-2b-{name}", self.clone(f"1_Alpha/2b_Experiments/coverings/draknava-alpha-2b-{name}.json"))
         for name in ("core", "plate", "plate-fitted", "suit"):
             self.write("alpha", f"{self.slug}-alpha-2b-celestial-{name}", self.clone(f"1_Alpha/2b_Experiments/celestial/draknava-alpha-2b-celestial-{name}.json"))
 
@@ -356,7 +360,7 @@ class Angel:
             folder = "/".join(art_layout.dirs_for("hair", [fam]))
             self.write("hair", f"{self.slug}-hair-{stem}", {
                 "artId": f"{self.slug}-hair-{stem}", "kind": "base-set", "stage": "hair", "heroArt": self.ident, "component": path,
-                "template": f"{TPL}/hair-human.txt", "output": self.out(folder, f"{self.hero}_Hair_{camel(fam)}_{camel(stem)}"), "denoise": "~0.4-0.6"})
+                "template": template_path("hair-human.txt"), "output": self.out(folder, f"{self.hero}_Hair_{camel(fam)}_{camel(stem)}"), "denoise": "~0.4-0.6"})
 
     def layers(self):
         sex = self.sex
@@ -432,7 +436,7 @@ class Angel:
                 folder = "/".join(art_layout.dirs_for("hair", ["themes"]))
                 self.write("hair", f"{self.slug}-hair-{pack}", {
                     "artId": f"{self.slug}-hair-{pack}", "kind": "base-set", "stage": "hair", "heroArt": self.ident, "component": one("hair"),
-                    "template": f"{TPL}/hair-human.txt", "output": self.out(folder, f"{self.hero}_Hair_{camel(pack)}"), "denoise": "~0.4-0.6", "notes": f"{title} theme hairstyle."})
+                    "template": template_path("hair-human.txt"), "output": self.out(folder, f"{self.hero}_Hair_{camel(pack)}"), "denoise": "~0.4-0.6", "notes": f"{title} theme hairstyle."})
 
     def male_showcases(self):
         """Four studio showcases for a male angel from his own signature pieces (the sisters' showcase cards are written for women and cannot be cloned)."""
@@ -528,7 +532,7 @@ class Angel:
         # glamour
         scene("glamour", "glamour", "scene-glamour-human.txt", {
             "pose": norm(pick(self.poses("romantic") if self.female else self.poses("standing"), i)), "wearing": pick(dresses, i * 3), "jewelry": self.jewel(0), "legs_feet": pick(feet, i), **common,
-            "effects": self.effect("A gentle drift of {mat} lifts her hair and hem, faint {{MAGIC}} light glinting within it - understated, nothing busy."),
+            "effects": self.effect("A gentle drift of {mat} lifts her hair and hem, faint {{MAGIC}} light glinting within it - understated."),
             "eye_effect": EYES + "iris-kindling.json", "background": realm}, "Glamour", "GLAMOUR: a relaxed, beautiful portrait in her element's realm.")
         evening_bg = self.bg("evening")
         scene("enchanted-evening", "enchanted-evening", "scene-with-companion-human.txt", {
@@ -541,7 +545,7 @@ class Angel:
             stem=f"{hero}_Scene_Staged_EnchantedEvening",
             base_description="{{HERO}} already staged with her chosen hair, makeup and outfit (an outfit render, or just the metallic bikini A-pose to start)")
         scene("elegant-casting", "elegant-casting", "scene-with-outfit-human.txt", {
-            "pose": self.effect("She is caught mid-turn in a spinning cast, one leg lifted behind her, both arms sweeping upward in a spiral gesture that draws a column of {mat} around her, her head turned back to the camera with a bright, serene gaze. No weapon or staff - casting with her bare hands only."),
+            "pose": self.effect("She is caught mid-turn in a spinning cast, one leg lifted behind her, both arms sweeping upward in a spiral gesture that draws a column of {mat} around her, her head turned back to the camera with a bright, serene gaze. Casting with her bare hands only."),
             "wearing": self.sig["gown"], "jewelry": self.sig["jewelry"], "legs_feet": pick(feet, i + 5), **common,
             "effects": self.effect("A shimmering column of {mat}, visible as streaming ribbons and {{MAGIC}} light, spirals around her."), "background": self.bg("casting")},
             "Elegant Casting", "ELEGANT CASTING: a hands-only complex casting stance in her element.")
@@ -589,6 +593,82 @@ class Angel:
             scene(f"staged-{pack}", f"staged-{pack}", "scene-staged-human.txt", staged, title, f"STAGED path: feed the {slug}-clothing-{pack} studio render; only the scene, effects and pose are added.",
                   stem=f"{hero}_Scene_Staged_{camel(pack)}", base_description=f"{{{{HERO}}}} already staged in the {title.lower()} outfit render")
 
+    # ----- character scenes: what she is doing follows who she is (recipes in data/art/_settings/scene-recipes.json)
+
+    def character(self):
+        """The Lineup (a shared-backdrop cut-out, like the sisters'), a duty and a quiet scene from her alignment, a domain scene from her element and, when the element has a theme pack,
+        one celebration scene. Existing cards are kept, so this is safe to re-run."""
+        recipes = json.loads((ART / "_settings/scene-recipes.json").read_text(encoding="utf-8"))
+        i, hero, slug, rank = self.i, self.hero, self.slug, self.kit["alignmentRank"]
+        wings = self.scene["back"]
+        if self.female:
+            robes = self.pool("wardrobe/clothing/robes") or self.pool("wardrobe/clothing/gowns")
+        else:
+            robes = self.pool("wardrobe/armor/robes") or self.pool("wardrobe/clothing/sets")
+        boots = self.npool("wardrobe/footwear/boots")
+        bare = ANKLETS if self.female else BAREFOOT
+
+        def write(art, title, comps, note, template="scene-with-outfit-human.txt"):
+            comps = {k: v for k, v in comps.items() if v}
+            self.write("scene", f"{slug}-scene-{art}", self.card(f"{slug}-scene-{art}", "scene", "scene", f"{hero}_Scene_{camel(art)}", template, comps, name=title, note=note))
+
+        write("lineup", "Lineup", {
+            "pose": "data/art/motion/scene/lineup-square-stance.json", "wearing": self.sig["gown"], "headwear": self.sig["headwear"], "jewelry": self.sig["jewelry"], "legs_feet": bare, "back": wings,
+            "effects": self.effect("{mat} orbit her hands in a small, close ring and a little {{MAGIC}} light rises at her feet."), "eye_effect": EYES + "iris-kindling.json",
+            "background": "data/art/backgrounds/studio/dawn-rim-grey.json", "realm": "data/art/realms/studio.json"},
+            "GROUP SHOT cut-out: her signature outfit on the flat grey backdrop with the shared dawn lighting, full figure, effects kept close, to be composited with the other angels (the sisters' Lineup is the same).")
+
+        def recipe_card(r, k):
+            wear = {"armor": self.sig["armor"], "gown": self.sig["gown"], "robe": pick(robes, i)}[r["wearing"]]
+            hold = {"weapon": self.sig["weapon"], "staff": pick(self.npool("wardrobe/weapons/staves"), i), "none": ""}.get(r.get("holding", "none"), r.get("holding"))
+            pool = [p for d in r["background"] for p in lib(f"backgrounds/fantasy/{d}", "female")] if r.get("background") else []
+            bg = pick(pool, i * 7 + k) if pool else self.scene["background"]
+            comps = {"pose": self.effect(r["pose"]), "wearing": wear, "headwear": self.sig["headwear"] if r["wearing"] != "robe" else "", "jewelry": self.sig["jewelry"],
+                     "legs_feet": pick(boots, i) if r["wearing"] == "armor" and boots else bare, "back": wings, "holding": hold, "effects": cap(self.effect(r["effects"])),
+                     "eye_effect": EYES + r["eyes"] + ".json" if r.get("eyes") else "", "background": bg, "realm": r.get("realm", "")}
+            return comps
+
+        for kind, label in (("duty", "DUTY"), ("quiet", "QUIET")):
+            r = next(x for x in recipes[kind] if x["ranks"][0] <= rank <= x["ranks"][1])
+            write(r["id"], r["name"], recipe_card(r, 0), f"{label}: {r['name']}, for her alignment (rank {rank}); from data/art/_settings/scene-recipes.json.")
+        r = next(x for x in recipes["domain"] if x["element"] == self.element)
+        write("domain", "Domain", recipe_card(dict(r, background=None), 0), f"DOMAIN: her {self.element} element at work in its realm; from data/art/_settings/scene-recipes.json.")
+
+        pack = recipes["celebration"].get(self.element)
+        t = themes(self.sex).get(pack) if pack else None
+        if t:
+            def one(key, k=0):
+                return pick(t[key], i + k)
+            wear = one("armor") if t.get("armor") and pack == "siege-defense" else one("clothing")
+            bg = one("background")
+            comps = {"pose": norm(pick(self.poses("standing") or self.poses("walking"), i)), "expression": pick(EXPRESSIONS, i), "wearing": wear, "back": wings, "headwear": one("headwear"),
+                     "jewelry": one("jewelry") or self.sig["jewelry"], "legs_feet": one("footwear") or (pick(boots, i) if "armor" in wear else bare), "makeup": one("makeup"), "effects": self.sig["effects"], "background": bg}
+            write(pack, t["name"], comps, f"{t['name']} celebration scene for her element: every item is a library or theme-pack piece.")
+
+    def realm_series(self):
+        """Opt-in (scaffold_angel_set.py --realm): her element's homeland as a place, scene by scene, in the realistic element realm (no class, so no haunt). Existing cards are kept."""
+        recipes = json.loads((ART / "_settings/scene-recipes.json").read_text(encoding="utf-8"))
+        realm = f"data/art/realms/{self.element.lower()}-lands.json"
+        country = ART / "backgrounds/fantasy/country" / self.element.lower()
+        if not (ROOT / realm).exists() or not country.is_dir():
+            return
+        robes = (self.pool("wardrobe/clothing/robes") or self.pool("wardrobe/clothing/gowns")) if self.female else (self.pool("wardrobe/armor/robes") or self.pool("wardrobe/clothing/sets"))
+        boots = self.npool("wardrobe/footwear/boots")
+        bare = ANKLETS if self.female else BAREFOOT
+        for r in recipes.get("realm", []):
+            pool = [p.relative_to(ROOT).as_posix() for p in sorted(country.glob("*.json")) if r["role"] in tags_of(p)]
+            if not pool:
+                continue
+            kind = r["wearing"]
+            wear = {"armor": self.sig["armor"], "gown": self.sig["gown"], "robe": self.sig["gown"]}[kind]
+            hold = {"weapon": self.sig["weapon"], "none": ""}.get(r.get("holding", "none"), r.get("holding"))
+            comps = {"pose": self.effect(r["pose"]), "wearing": wear, "headwear": self.sig["headwear"] if kind != "robe" else "", "jewelry": self.sig["jewelry"],
+                     "legs_feet": pick(boots, self.i) if kind == "armor" and boots else bare, "back": self.scene["back"], "holding": hold, "effects": cap(self.effect(r["effects"])),
+                     "eye_effect": EYES + r["eyes"] + ".json" if r.get("eyes") else "", "background": pool[0], "realm": realm}
+            art = r["id"]
+            self.write("scene", f"{self.slug}-scene-{art}", self.card(f"{self.slug}-scene-{art}", "scene", "scene", f"{self.hero}_Scene_{camel(art)}", "scene-with-outfit-human.txt",
+                       {k: v for k, v in comps.items() if v}, name=r["name"], note=f"REALM SERIES: {r['name']} in her {self.element.lower()} homeland ({r['role']}); realistic."))
+
     def finish(self):
         for stage, name, tpl, denoise, note in (
                 ("polish", "Detail", "polish-human.txt", "~0.2-0.4", "SKELETON: a detail-only pass on her chosen finished image (input role scene); tune the wording once there are scenes to polish."),
@@ -630,7 +710,7 @@ class Angel:
             stem = pathlib.PurePosixPath(art["output"]).stem  # <Hero>_Scene_<Name>
             card = {"animId": anim_id, "kind": "animation", "name": name, "heroArt": self.ident,
                     "source": {"artCard": path.relative_to(ROOT).as_posix(), "image": stem.replace("_Scene_", "_Qwen_Scene_") + "_00001_.png"}, **cfg,
-                    "size": [640, 960], "template": "data/animation/_templates/video-minimax.txt"}
+                    "template": "data/animation/_templates/video-minimax.txt"}
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text(json.dumps(card, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
             self.made += 1

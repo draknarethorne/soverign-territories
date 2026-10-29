@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/rural/lavender-field-afternoon",
+  "kind": "background",
+  "name": "Modern: lavender field",
+  "description": "rows of blooming lavender stretching to a stone farmhouse in the afternoon sun, purple fields under a soft blue sky",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "rural"
+  ],
+  "notes": "Real-world location for realistic scenes; pair with components.realm = realms/modern.json."
+}

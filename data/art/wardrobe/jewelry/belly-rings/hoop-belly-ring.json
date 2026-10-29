@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/jewelry/belly-rings/hoop-belly-ring",
+  "kind": "jewelry",
+  "name": "Hoop Belly Ring",
+  "description": "a slim {{METAL}} hoop in the belly button",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "belly-ring",
+    "hoop",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

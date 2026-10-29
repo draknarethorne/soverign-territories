@@ -8,7 +8,7 @@
     "pose": "The dragon rests on a dais of gold amid its treasure, wings partly unfurled to catch the light, head raised and turned toward the camera with a serene, luminous gaze.",
     "background": "data/art/backgrounds/fantasy/lairs/light-ruined-cathedral-nave.json",
     "hoard": "data/art/hoards/light-hoard.json",
-    "effects": "Soft golden motes drift through the shafts of light like dust in sunlight - understated, nothing busy."
+    "effects": "Soft golden motes drift through the shafts of light like dust in sunlight - understated."
   },
   "template": "data/art/_templates/dragons/scene-lair-dragon.txt",
   "output": "prompts/elder-dragons/Lumira/5_Scenes/Lumira_Scene_Lair.txt",

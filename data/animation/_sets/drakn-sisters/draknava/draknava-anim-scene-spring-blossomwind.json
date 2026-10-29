@@ -33,10 +33,6 @@
       "transition": "settle"
     }
   ],
-  "size": [
-    640,
-    960
-  ],
   "template": "data/animation/_templates/video-minimax.txt",
   "notes": "Spring scene in motion, built only from reusable pieces: a theme effect, her element and ambient world effects. Tune the pieces, not the card."
 }

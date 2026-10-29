@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/coast/beach-golden-hour-dunes",
+  "kind": "background",
+  "name": "Modern: beach dunes, golden hour",
+  "description": "a wide sandy beach at golden hour, the low sun glowing over soft dunes with tall grass, the sea calm and gold-lit, long shadows on the sand",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "coast"
+  ],
+  "notes": "Real-world location for realistic scenes; pair with components.realm = realms/modern.json."
+}

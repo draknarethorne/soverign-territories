@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/earth/mesa-trading-post",
+  "kind": "background",
+  "name": "Mesa trading post",
+  "description": "a weathered adobe and timber trading post at the foot of a great red mesa, hitching rails, hanging gourds and drying hides, dusty late-afternoon light",
+  "mood": "lived-in, dusty",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "earth",
+    "settlement",
+    "realistic"
+  ],
+  "notes": "The earth homeland (realms/earth-lands). Role 'settlement' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

@@ -1,0 +1,16 @@
+{
+  "id": "hair/short/pixie-cut",
+  "kind": "hair",
+  "name": "Pixie Cut (female)",
+  "a_pose_style": "a cropped pixie cut, short at the nape with longer wispy layers on top",
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is cropped into a pixie cut, short at the nape with longer wispy layers on top.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "tags": [
+    "female"
+  ]
+}

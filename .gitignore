@@ -29,6 +29,7 @@ go.work.sum
 
 # local development environments
 .venv/
+.venv-processing/
 venv/
 
 # node tool caches
@@ -54,3 +55,12 @@ workflows/.test/
 # Workflows that must never be committed (NSFW experiments and the general ComfyUI workspace)
 workflows/ComfyUI/
 workflows/**/X_*.json
+
+# Temporary files
+tmp/
+
+# Local likeness caches and aligned face evidence
+_likeness/
+
+# Feedback directory for plans and other notes
+feedback/

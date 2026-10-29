@@ -9,10 +9,14 @@ in the temp folder, so if a run is killed half-way the next run restores the fil
 
 Run: python tools/validators/test_validate_data.py            all cases (about 5 minutes)
      python tools/validators/test_validate_data.py --quick    the baseline plus one case per kind of check (about 1 minute)
+     bin\\validate.cmd --isolated --quick    mutate a single disposable copy, safe beside running intake
 """
+import argparse
 import json
+import os
 import pathlib
 import shutil
+import subprocess
 import sys
 import tempfile
 import time
@@ -21,7 +25,21 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import validate_data as vd  # noqa: E402
 
 REAL_ROOT = vd.ROOT
-JOURNAL = pathlib.Path(tempfile.gettempdir()) / "sovereign-validator-selftest" / "journal.json"
+ISOLATED_ROOT_ENV = "SOVEREIGN_VALIDATOR_ISOLATED_ROOT"
+
+
+def journal_path(root, environ):
+    isolated = environ.get(ISOLATED_ROOT_ENV)
+    if isolated is None:
+        return pathlib.Path(tempfile.gettempdir()) / "sovereign-validator-selftest" / "journal.json"
+    marker = root / ".isolated-validator"
+    if (pathlib.Path(isolated).resolve() != root.resolve() or not marker.is_file()
+            or marker.read_text(encoding="utf-8") != str(root.resolve())):
+        raise ValueError("Isolated validator root/ownership marker mismatch")
+    return root / ".validator-selftest" / "journal.json"
+
+
+JOURNAL = journal_path(REAL_ROOT, os.environ)
 _ops = []  # undo steps of the running case, newest last
 
 
@@ -106,6 +124,7 @@ def run_validation(mutate):
         vd.check_kits(report)
         vd.check_pets(report)
         vd.check_piece_refs(report)
+        vd.check_scene_recipes(report)
         vd.check_animation_cards(report)
         return report.errors
     finally:
@@ -161,7 +180,7 @@ CASES = [
     ("{{BASE}} in a piece that extends nothing",
      lambda r: edit(r / "data/art/wardrobe/weapons/swords/greatsword.json", lambda d: d.update({"description": "{{BASE}} with a plain grip"})), "{{BASE}}"),
     ("complete scene card switched to the staged template without being renamed",
-     lambda r: edit(r / SCENE, lambda d: d.update({"template": "data/art/_templates/heroes/scene-staged-human.txt"})), "staged scenes must use"),
+     lambda r: edit(r / SCENE, lambda d: d.update({"template": "data/art/_templates/heroes/5_Scenes/scene-staged-human.txt"})), "staged scenes must use"),
     ("staged-looking name on a complete scene",
      lambda r: edit(r / SCENE, lambda d: d.update({"artId": "drakness-scene-staged-signature"})), "staged scenes must use"),
     ("hair highlight style pointing at a missing piece",
@@ -176,6 +195,12 @@ CASES = [
     ("default sheen pointing at a missing piece",
      lambda r: edit(r / "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
                     lambda d: d["art"].update({"defaultSheen": "data/art/wardrobe/finishes/no-such-finish.json"})), "defaultSheen"),
+    ("default base layer pointing at a missing piece",
+     lambda r: edit(r / "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
+                    lambda d: d["art"].update({"defaultBaseLayer": "data/art/wardrobe/swimwear/base/no-such-layer.json"})), "defaultBaseLayer"),
+    ("default bare base pointing at a missing piece",
+     lambda r: edit(r / "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
+                    lambda d: d["art"].update({"defaultBareBase": "data/art/wardrobe/swimwear/base/edit/no-such-bare.json"})), "defaultBareBase"),
     ("female hero missing a signature cosmetic colour",
      lambda r: edit(r / "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
                     lambda d: d["art"]["palette"].pop("lipColor")), "lipColor"),
@@ -191,6 +216,16 @@ CASES = [
     ("sister scene that types the dragon instead of naming the piece",
      lambda r: edit(r / "data/art/_sets/drakn-sisters/draknora/5_Scenes/story/draknora-scene-bond.json",
                     lambda d: d["components"].update({"companion": "her aligned Elder Dragon, Pyraxis, beside her"})), "not type the dragon"),
+    ("set that includes a piece that does not exist",
+     lambda r: edit(r / "data/art/wardrobe/jewelry/sets/skull-set.json", lambda d: d["includes"].append("data/art/wardrobe/jewelry/rings/no-such-ring.json")), "includes data/art/wardrobe/jewelry/rings/no-such-ring.json, which does not exist"),
+    ("set that includes a piece of another kind",
+     lambda r: edit(r / "data/art/wardrobe/jewelry/sets/skull-set.json", lambda d: d["includes"].append("data/art/wardrobe/footwear/heels/stiletto-pumps.json")), "but this set is kind"),
+    ("scene recipes that skip an alignment rank",
+     lambda r: edit(r / "data/art/_settings/scene-recipes.json", lambda d: d["duty"].pop(0)), "must cover alignment ranks 1 to 10"),
+    ("celebration naming a theme pack that does not exist",
+     lambda r: edit(r / "data/art/_settings/scene-recipes.json", lambda d: d["celebration"].update({"Fire": "no-such-pack"})), "which does not exist"),
+    ("realm series asking for a role no homeland background has",
+     lambda r: edit(r / "data/art/_settings/scene-recipes.json", lambda d: d["realm"][0].update({"role": "no-such-role"})), "has no background for the role"),
     ("scene file name no longer matching its artId",
      lambda r: move(r / SCENE, (r / SCENE).with_name("signature.json")), "scene file name must equal"),
     ("theme folder without a theme.json manifest",
@@ -235,12 +270,38 @@ QUICK = {"baseline is clean", "animation action pointing at a motion piece that 
          "typo'd piece path would silently render as prompt text", "unknown field on a reusable piece", "piece extending a base that does not exist",
          "pieces extending each other in a cycle", "piece extending a frame without filling its slots", "output folder not matching the card's stage", "studio kit naming a piece that does not exist",
          "pet bonded to a different angel than the one that lists it", "angel card filed outside its division folder",
-         "sister companion piece that no longer extends her Elder Dragon's frame", "sister scene that types the dragon instead of naming the piece"}
+         "sister companion piece that no longer extends her Elder Dragon's frame", "sister scene that types the dragon instead of naming the piece",
+         "set that includes a piece that does not exist", "set that includes a piece of another kind",
+         "scene recipes that skip an alignment rank", "celebration naming a theme pack that does not exist", "realm series asking for a role no homeland background has"}
 
 
-def main():
+def isolated_run(quick=False):
+    if ISOLATED_ROOT_ENV in os.environ:
+        raise ValueError("Nested isolated validation is not supported")
+    with tempfile.TemporaryDirectory(prefix="st-val-") as directory:
+        root = pathlib.Path(directory).resolve()
+        for folder in ("data", "tools"):
+            shutil.copytree(REAL_ROOT / folder, root / folder,
+                            ignore=shutil.ignore_patterns("__pycache__", "_archive"))
+        (root / ".isolated-validator").write_text(str(root), encoding="utf-8")
+        environment = {**os.environ, ISOLATED_ROOT_ENV: str(root)}
+        command = [sys.executable, str(root / "tools" / "validators" / "test_validate_data.py")]
+        if quick:
+            command.append("--quick")
+        print(f"Isolated mutation validation: {root}; live repository is read-only", flush=True)
+        return subprocess.run(command, cwd=root, env=environment, check=False).returncode
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--quick", action="store_true")
+    parser.add_argument("--isolated", action="store_true",
+                        help="Copy data/tools once into a disposable workspace; never mutate live files")
+    args = parser.parse_args(argv)
+    if args.isolated:
+        return isolated_run(args.quick)
     recover()
-    cases = [c for c in CASES if "--quick" not in sys.argv or c[0] in QUICK]
+    cases = [c for c in CASES if not args.quick or c[0] in QUICK]
     failures, started = 0, time.time()
     for name, mutate, needle in cases:
         errors = run_validation(mutate)

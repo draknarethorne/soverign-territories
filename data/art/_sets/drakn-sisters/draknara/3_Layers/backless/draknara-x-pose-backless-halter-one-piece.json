@@ -3,7 +3,7 @@
   "kind": "base-set",
   "stage": "pose",
   "heroArt": "data/art/heroes/drakn-sisters/draknara-thorne.json",
-  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "template": "data/art/_templates/heroes/1_Alpha/pose-female-human.txt",
   "output": "prompts/drakn-sisters/Draknara/3_Layers/backless/Draknara_X_Pose_BacklessHalterOnePiece.txt",
   "denoise": "~1.0",
   "components": {

@@ -1,0 +1,11 @@
+{
+  "id": "wardrobe/clothing/gowns/bikini-strap-evening-gown",
+  "kind": "wearing",
+  "name": "Bikini-Strap Evening Gown",
+  "description": "a skimpy {{PRIMARY}} evening gown of ornate design with {{ACCENT_SOFT}} and {{METAL}} detail and bikini-style straps, cut low with most of her breasts exposed, the belly and mid-section covered, a slit on the right side up to mid-thigh, delicate {{ACCENT_SOFT}} and silver glowing fibre-optic threads woven throughout",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "notes": "Cross-cutting wardrobe piece, reusable by any hero in her own palette. Grounded in the hand-made workflow zz_Curated_Drakness_Qwen_Clothing_Dress (workflows/_curated/drakn-sisters/Drakness)."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "wardrobe/jewelry/sets/feather-set",
+  "kind": "jewelry",
+  "name": "Feather Set",
+  "includes": [
+    "data/art/wardrobe/jewelry/earrings/feather-earrings.json",
+    "data/art/wardrobe/jewelry/necklaces/locket-necklace.json",
+    "data/art/wardrobe/jewelry/rings/twisted-wire-ring.json",
+    "data/art/wardrobe/jewelry/anklets/charm-anklet.json"
+  ],
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "set",
+    "feather"
+  ],
+  "notes": "A set of real pieces (includes): edit a piece and every set that includes it follows."
+}

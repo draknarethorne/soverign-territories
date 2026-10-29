@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/shaman/spirit-cairn-mountain-pass",
+  "kind": "background",
+  "name": "Spirit cairn mountain pass",
+  "description": "a tall cairn of stacked stones on a mountain pass hung with offerings, wind-bent grass and a wide cold sky behind",
+  "mood": "windswept, sacred",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "shaman",
+    "realistic"
+  ],
+  "notes": "A place a shaman spends her time, in realistic wording (use with an element realm)."
+}

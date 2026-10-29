@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/water/sea-cliff-storm-surge",
+  "kind": "background",
+  "name": "Sea cliff storm surge",
+  "description": "a sea cliff and stone seawall as a storm surge breaks over the rocks, spray hanging in the air, dark heavy cloud and shafts of cold light",
+  "mood": "powerful, wet",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "water",
+    "weather",
+    "realistic"
+  ],
+  "notes": "The water homeland (realms/water-lands). Role 'weather' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

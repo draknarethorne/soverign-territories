@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/sandals/slide-sandals",
+  "kind": "legs_feet",
+  "name": "Slide Sandals",
+  "description": "{{PRIMARY}} leather slide sandals with a single wide strap across the foot and a cushioned footbed",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "sandals",
+    "unisex"
+  ]
+}

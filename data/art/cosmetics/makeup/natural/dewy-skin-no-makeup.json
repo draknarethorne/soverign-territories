@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/natural/dewy-skin-no-makeup",
+  "kind": "makeup",
+  "name": "Dewy Skin",
+  "description": "a fresh, dewy finish - luminous skin, a soft cream blush on the cheeks, groomed natural brows, a touch of mascara and a sheer {{LIP}} lip balm",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "natural"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

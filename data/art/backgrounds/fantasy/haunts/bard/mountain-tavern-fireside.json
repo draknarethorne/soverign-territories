@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/bard/mountain-tavern-fireside",
+  "kind": "background",
+  "name": "Mountain tavern fireside",
+  "description": "a low-beamed mountain tavern in the evening, a roaring hearth, long scarred tables and a small crowd of blurred figures, warm lamplight",
+  "mood": "warm, lively",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "bard",
+    "realistic"
+  ],
+  "notes": "A place a bard spends her time, in realistic wording (use with an element realm)."
+}

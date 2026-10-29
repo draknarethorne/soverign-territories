@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/resort/beach-club-cabana-midday",
+  "kind": "background",
+  "name": "Modern: beach club cabana",
+  "description": "a beach club cabana with white drapes tied back, striped cushions and a wooden deck, bright midday sun on sand and sea",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "resort"
+  ],
+  "notes": "Real-world location for realistic scenes; pair with components.realm = realms/modern.json."
+}

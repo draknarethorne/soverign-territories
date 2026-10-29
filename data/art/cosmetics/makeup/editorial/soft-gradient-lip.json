@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/editorial/soft-gradient-lip",
+  "kind": "makeup",
+  "name": "Soft Gradient Lip",
+  "description": "a soft gradient lip - a tinted {{LIP}} centre blurred outward, a pearly lid shimmer, straight soft brows and a dewy cheek",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "editorial"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

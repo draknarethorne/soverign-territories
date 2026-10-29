@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/lightning/watchtower-ridge-storm",
+  "kind": "background",
+  "name": "Watchtower ridge storm",
+  "description": "an old stone watchtower on a ridge in a violent storm, forked lightning behind it, wind-blown rain and dark roiling cloud",
+  "mood": "violent, electric",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "lightning",
+    "weather",
+    "realistic"
+  ],
+  "notes": "The lightning homeland (realms/lightning-lands). Role 'weather' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

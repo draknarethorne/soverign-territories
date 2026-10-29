@@ -9,13 +9,13 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: blue-black hair with a subtle electric-indigo sheen.
+Eyes: electric silver-blue irises with faint white-gold striations and a deep indigo limbal ring.
+Skin: warm medium olive complexion, evenly toned.
 
-Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
-Wearing strips of Storm Indigo and silver cloth wound around the torso and hips, layered over a short tunic with a steel clasp at the shoulder, a tied sash.
+Wearing fitted Storm Indigo robes with steel embroidered runes down the front, a wide silver belt with pouches, armored bracers and flowing split skirts.
 
 Jewelry: a simple steel chain with a small pendant, the pendant formed as a forked lightning bolt inside a ring of cloud and set with a small sapphire gem.
 Back: a pair of hard-edged steel-blue wings with lightning running through the feathers.
@@ -23,17 +23,17 @@ Legs & feet: soft Storm Indigo slippers embroidered with silver thread and a tur
 
 A candid high-fashion editorial shot, relaxed casual stroll, soft natural movement. Light breeze. strolling casually, body relaxed and unposed, weight shifting naturally with each step. level, relaxed, facing forward. soft, easy gaze to camera. relaxed, natural smile. arms swinging loosely and naturally with the stroll.
 
-Holding a slender wand of dark wood in one hand, its tip glowing with a small electric white light.
+Holding a short wand tipped with a polished clear sapphire crystal point, held lightly in one hand.
 
 The hem of the robe and his scarves lift gently in a passing breeze, faint electric white light and drifting crackling arcs of lightning and sparks around him.
 
-Eyes: irises softly aglow with electric white light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle electric white catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with electric white light, brightest near the pupil and fading to the natural electric silver-blue irises at the rim, iris detail still visible, a gentle electric white catchlight.
 
 Environment: a towering round library of floor-to-ceiling bookshelves with spiral ladders, floating books and glowing orbs, a huge astrolabe and warm lamplight.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, washed-out skin, ruddy skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.

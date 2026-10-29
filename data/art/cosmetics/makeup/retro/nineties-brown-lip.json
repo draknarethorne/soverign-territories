@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/retro/nineties-brown-lip",
+  "kind": "makeup",
+  "name": "1990s Brown Lip",
+  "description": "a 1990s look - a brown-toned lip liner with a glossy lip, thin arched brows, a bare matte lid and a touch of shimmer",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "retro"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

@@ -1,0 +1,49 @@
+=== Angelica Prime · Alpha 1b Neutral Base: the first shot in a skin-tone base layer (group: Alpha, experiment) — Build (img2img) ===
+Incoming image: a real/AI source photo of the subject (the full photo, a frame, or a headshot). Builds a head-to-toe A-pose in a seamless skin-tone base layer with the standard slender figure: a neutral shape with no colour or detail of its own, so nothing needs to be taken off but the plain layer. Feed the result to Alpha 2 Bare Figure, which sets her individual build. Experiment: compare with the swimsuit Prime and the bare base. Denoise ~1.0.
+
+----------------------------------------------------------------
+prompt:
+
+Remove the source outfit and build the full figure from the reference image in the seamless skin-tone base layer described below.
+
+Critical details - these must be clearly visible:
+Hair: soft champagne-blonde hair with warm honey lights, silky and luminous.
+Bust: full, firm, voluptuous, noticeably enlarged, lifted high and pressed together at the centre in a deep, crisp, clearly defined cleavage held high, even where the reference bust is smaller or spread apart.
+Eyes: clear light-grey irises with radiating soft-gold striations and a pale champagne limbal ring.
+Skin: fair warm-neutral complexion with a soft golden undertone, evenly toned and luminous.
+Legs: very long, slender legs with slim, tapering thighs.
+
+Professional head-to-toe, full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+
+Background: a plain neutral light-grey seamless studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
+
+Maintain strict fidelity to the reference image's facial features and facial bone structure; the Critical details above override the reference.
+
+Face: copied exactly from the reference image: the same bone structure, eye shape and spacing, brows, nose, lips and jawline.
+
+From the reference: her face and her skin tone. Everything else is built as described here.
+
+Head: facing the camera squarely, as the same person, even when it is turned or tilted in the reference.
+
+Framing: the whole body from the top of the head to the feet in the picture, standing; where the reference shows only her head and upper body, continue the figure downward to the feet.
+
+Standing A-pose: upright, feet apart, arms relaxed slightly away from the sides, open hands; head level and facing the camera squarely, shoulders square and relaxed (replace the source photo's pose, head tilt and body angle entirely).
+
+Figure: lithe, slender, long-limbed build; slim waist; shapely feminine hips, gently curved.
+
+Wearing nothing but the seamless skin-tone base layer: a seamless, skin-tone-matched base layer that follows the body exactly, one smooth continuous surface in the wearer's own skin tone; bare feet planted flat on the floor, slightly apart with the toes pointing forward, natural relaxed toes.
+
+Hair: hair fully let down and loose, parted in the exact centre, the front sections swept slightly back and away from the face so the eyes, brows and temples are fully clear, the rest falling forward over the front of both shoulders to rest on the shoulders and upper arms beside the breasts, full length and ends visible, keeping the subject's own natural texture; chest and décolletage open; a very slight lift from a light breeze below (fully replace the source photo's hairstyle).
+
+Makeup: soft and natural - neutral-toned eyeshadow, a light natural blush, groomed brows, softly defined eyes. Reset any heavy makeup from the source photo. Fingernails and toenails natural or Light White.
+
+Eyes: both eyes matched, level and symmetrical, wide open and looking straight at the camera, crisp catchlights; natural lush lashes.
+
+Lips: natural, subtle berry-tinted satin - keep lips natural.
+
+Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth, the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open, chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
+
+----------------------------------------------------------------
+negative prompt:
+
+, extra people, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, red eyes, violet eyes, wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, pout, asymmetrical eyes, crossed eyes, eyes looking away, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, hair covering breasts, ponytail, bun, updo, braids, hair tied back, hair pulled up, pinned-up hair, bangs, side part, hair covering eyes, hair across the face, black hair, brown hair, red hair, grey hair, uniform flat one-tone hair, tanned skin, bronze skin, sun-weathered skin, ruddy skin, shoes, heels, high heels, sandals, boots, footwear, socks, stockings, heavy makeup, illustration, painting, 3d render, cgi, cartoon, anime, airbrushed, plastic skin, text, watermark, logo.

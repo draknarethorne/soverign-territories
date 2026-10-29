@@ -6,5 +6,5 @@ if "%~1"=="" (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% tools\workflows\comfy_workflows.py deploy --group %~1 %~2
+%PY% tools\workflows\comfy_workflows.py deploy --apply --group %~1 %~2
 call "%~dp0_end.cmd" %errorlevel%

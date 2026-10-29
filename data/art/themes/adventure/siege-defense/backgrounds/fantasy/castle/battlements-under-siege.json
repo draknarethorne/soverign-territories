@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/siege-defense/backgrounds/fantasy/castle/battlements-under-siege",
+  "kind": "background",
+  "name": "Battlements Under Siege",
+  "description": "a stone castle wall-walk during a siege, arrows stuck in the timber hoardings, smoke and embers drifting past the crenellations and a besieging camp on the plain below",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "siege-defense",
+    "background"
+  ],
+  "mood": "tense, smoky"
+}

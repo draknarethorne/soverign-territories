@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/jewelry/anklets/beaded-anklet",
+  "kind": "jewelry",
+  "name": "Beaded Anklet",
+  "description": "a thin anklet of small {{GEM}} beads on the left ankle",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "anklet",
+    "beads",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

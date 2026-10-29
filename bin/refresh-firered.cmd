@@ -19,7 +19,9 @@ if errorlevel 1 (
   exit /b 1
 )
 echo == FireRed workflows
-%PY% tools\workflows\comfy_workflows.py make --engine firered --create --hero %~1 %STAGE% %EXTRA%
+%PY% tools\workflows\comfy_workflows.py make --apply --engine firered --create --hero %~1 %STAGE% %EXTRA%
 echo == deploy to the home workspace
-%PY% tools\workflows\comfy_workflows.py deploy --engine firered --hero %~1 %STAGE% %EXTRA%
+%PY% tools\workflows\comfy_workflows.py deploy --apply --engine firered --hero %~1 %STAGE% %EXTRA%
+echo == copy the images the workflows load into the workspace input folders
+if /i not "%EXTRA%"=="--dry-run" %PY% tools\workflows\sync_inputs.py --apply
 call "%~dp0_end.cmd" %errorlevel%

@@ -9,27 +9,29 @@ Photo-realistic studio portrait, full-body shot, head to toe, 85mm portrait phot
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Bust: very full, firm, lifted bust, a bold and powerful rounded shape with generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: dark mahogany-brown hair with burnished copper lights, thick and glossy.
+Bust: very full, firm, lifted bust, a bold, softly rounded shape with generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
+Eyes: fierce amber-orange irises with radiating ember striations and a dark brown limbal ring.
+Skin: warm golden-brown complexion, evenly toned.
 
-Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
 Wearing a Flame Red knitted sweater dress with a loose cowl neck, long sleeves, a belted waist and a hem to mid-thigh.
 
-Jewelry: a simple burnished copper necklace and small matching earrings.
+Jewelry: several burnished copper chains of different lengths layered at the chest with a small ruby pendant; medium polished burnished copper hoop earrings, slim and round; a ring of twisted burnished copper wire wrapped twice around the finger; a thin anklet of small ruby beads on the left ankle.
 Legs & feet: open-toed Flame Red heeled sandals with thin straps across the foot and a strap around the ankle fastened with a burnished copper clasp.
 
 A candid high-fashion editorial shot, dynamic spinning motion, fabric and hair in flow. Motion-generated breeze, swirling around her. captured mid-twirl, torso rotating, skirt or drape flaring outward. turned with the spin, following the motion. bright, joyful, glancing toward the camera. joyful, carefree, laughing smile. arms extended slightly for balance, caught mid-spin.
 
-A fashion wind machine from the side: hair streams across the frame and the fabric of the outfit billows and ripples, caught mid-movement. No magical effects, only fashion lighting.
+A fashion wind machine from the side: hair streams across the frame and the fabric of the outfit billows and ripples, caught mid-movement. Fashion lighting only.
 
-Eyes: natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
+Eyes: natural fierce amber-orange irises, exactly as in the incoming image, calm and clear with crisp catchlights.
 
-Studio backdrop: a clean seamless white studio backdrop with bright, even high-key lighting, minimal shadows, soft floor reflection; no backlight or rim light.
+Makeup: a party eye - fine glitter pressed on the lids over copper shadow, defined lashes, a flushed natural cheek and a glossy berry lip.
+
+Studio backdrop: a clean seamless white studio backdrop with bright, even high-key lighting, minimal shadows, soft floor reflection.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, environment, landscape, room, furniture, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, environment, landscape, room, furniture, text, wording, watermark, logo.

@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/alchemist/alchemy-laboratory-benches",
+  "kind": "background",
+  "name": "Alchemy laboratory benches",
+  "description": "a stone laboratory with long benches of glass flasks, copper stills and hanging dried herbs, steam rising and a furnace glowing at the back",
+  "mood": "busy, hot",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "alchemist",
+    "realistic"
+  ],
+  "notes": "A place a alchemist spends her time, in realistic wording (use with an element realm)."
+}

@@ -1,12 +1,18 @@
-# Template Analysis — Findings
+# Template Analysis — Historical Findings
 
-**Status:** Pass 1–3 complete · **Last updated:** 2026-09-30
-**Companion to:** [`comfyui-art-pipeline.md`](comfyui-art-pipeline.md)
+**Status:** Historical inventory and proposals; not an operational reference · **Last updated:** 2026-09-30
+**Current workflow reference:** [`workflows/README.md`](../../workflows/README.md)
 **Rig filter:** NVIDIA RTX 3050, **8 GB VRAM** (the deciding constraint)
 
-Extracted from the 23 templates in `workflows/Templates/`. Values inside subgraphs are marked
-*(sg)* where not exposed at the top level. Feasibility: ✅ fits 8 GB · ⚠️ borderline (offload/slow)
-· ❌ too heavy.
+This is a dated snapshot of stock templates examined in September 2026. It describes the old
+`workflows/Templates/` inventory, which is no longer the active template location. The active
+masters are `workflows/_templates/` (ST0–ST6), described in the workflow reference above.
+Model names, availability, VRAM estimates, file locations, recommendations, and cleanup lists
+below are not current without independent verification. Do not use the disk-cleanup examples
+as deletion instructions.
+
+Values inside the historical subgraphs are marked *(sg)* where not exposed at the top level.
+Feasibility ratings are only estimates for the rig and template versions examined then.
 
 ---
 
@@ -107,7 +113,10 @@ Everything else is either a heavier duplicate, off-task (control/txt2img), or �
 
 ---
 
-## 6. Proposed *Sovereign Territories* template set
+## 6. Historical proposal: *Sovereign Territories* template set
+
+This proposed set was not a commitment or a description of the current masters. See the
+current stage-template table in [`workflows/README.md`](../../workflows/README.md#stage-templates).
 
 Target: `workflows/SovereignTerritories/` — one tuned template per pipeline step, forked from a
 base above, with models + params locked. (Built in **Pass 4**, after you pick from §5.)
@@ -135,7 +144,12 @@ consistency win — no cross-model drift within the exploration chain.*
 
 ---
 
-## 8. Disk clean-up (Oct 2026)
+## 8. Historical disk-cleanup proposal (Oct 2026; not an instruction)
+
+The lists below were a point-in-time proposal tied to one machine and one inventory scan.
+They do not establish what is installed or safe to remove now. Verify current workflow and
+model references before any cleanup; this document's `Remove-Item` example is intentionally
+not a recommendation to run.
 
 Every path is relative to `B:\Comfy-Desktop\ComfyUI-Shared\models` (388 GB in use). The lists come from scanning the ST templates in
 `workflows/_templates` and every workflow in every ComfyUI workspace for the model files they load. Nothing here has been deleted. Do the stages
@@ -234,4 +248,3 @@ Remove-Item checkpoints\ltx-2.3-22b-dev-fp8.safetensors, diffusion_models\z_imag
 ```
 
 `-WhatIf` only prints what would be removed; take it off to delete.
-
