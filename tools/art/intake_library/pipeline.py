@@ -1,4 +1,4 @@
-"""Recipe v21 sequence: first crop -> eraser -> residual crop -> reconstruction -> composition.
+"""Recipe v22 sequence: overlay preflight -> guarded crop/erase/reconstruct/compose.
 
 The eraser handles confirmed clutter before the residual subject-guarded crop. Confirmed patterns may use a
 separate masked reconstruction path; composition uses the repaired image and observed picture boundary.
@@ -305,12 +305,27 @@ def mask_image(mask):
     return Image.fromarray((mask * 255).astype(np.uint8)).convert("RGB")
 
 
+def overlay_proposals(array):
+    parts = []
+    for item in overlays.badges(array):
+        circle = item["confirmation"]["circle"]
+        parts.append({"kind": "confirmed-badge", "box": item["box"], "pattern": item["confirmation"]["badge"],
+                      "circle": [circle[0], circle[1],
+                                 round(circle[2] * 1.12 + min(array.shape[:2]) * .004, 1)]})
+    parts.extend(dict({"kind": item["kind"], "box": item["box"], "pattern": item["pattern"]},
+                      **({"polygon": item["polygon"]} if item.get("polygon") else {}))
+                 for item in overlays.watermarks(array) + overlays.sparkles(array)
+                 + overlays.tilted_stickers(array) + overlays.viewer_icons(array)
+                 + overlays.references(array))
+    return parts
+
+
 def recommended_candidates(image, row):
     """Run the proven sequence once; retain its full source-coordinate evidence per photo."""
     from intake_library import reconstruction
 
     images = {}
-    for name, output in experimental_candidates(image, row):
+    for name, output in experimental_candidates(image, row, overlay_first=True):
         images[name] = output
         yield name, output
     evidence = row["experiment"]
@@ -358,7 +373,7 @@ def recommended_candidates(image, row):
     }
 
 
-def experimental_candidates(image, row):
+def experimental_candidates(image, row, *, overlay_first=False):
     """Yield named PIL candidates; only row['experiment'] is written, never the frozen v16 evidence.
 
     Exhaust the generator before reading final evidence. Boxes are xyxy; candidate boxes are in their
@@ -455,10 +470,6 @@ def experimental_candidates(image, row):
         evidence["elapsedSeconds"] = time.perf_counter() - started
         return
 
-    person, method, note = find_subject(image, faces, (0, 0), detector_errors=evidence["detectorErrors"])
-    evidence["subject"] = {"method": method, "box": person["box"] if person else None, "note": note}
-    if person is not None and method == "mask-rcnn":
-        original_near = clutter.grow(person["mask"], max(4, round(min(image.size) * .01)))
     geo = row["geometry"]
     first = tuple(geometry.border_box(image))
     array = np.asarray(image)
@@ -470,6 +481,34 @@ def experimental_candidates(image, row):
         if bars and all(bars[0] <= fy and fy + fh <= bars[1] for fx, fy, fw, fh in faces):
             first = (first[0], max(first[1], bars[0]), first[2], min(first[3], bars[1]))
             evidence["letterbox"] = {"pattern": "letterbox", "rows": list(bars)}
+    patterns = overlay_proposals(array) if overlay_first else None
+    if overlay_first:
+        needs_subject = bool(
+            geo.get("overlayDetected") or reel or first != (0, 0, *image.size) or patterns
+        )
+        glyphs = [] if needs_subject else clutter.glyphs(array, None, screenshot=False)
+        needs_subject = needs_subject or bool(glyphs)
+        evidence["preflight"] = {
+            "status": "proposals" if needs_subject else "no-proposals",
+            "patternCount": len(patterns), "glyphCount": len(glyphs),
+            "subjectRequired": needs_subject,
+            "reason": "Body-independent patterns and border/UI proposals precede subject protection; "
+                      "a detection miss is not proof of clean pixels.",
+        }
+        if not needs_subject:
+            reason = ("No detected overlay, border or UI proposal; retain unassessed pixels. "
+                      "Subject segmentation and composition-only suggestions skipped.")
+            evidence["subject"] = {"method": "not-requested", "box": None, "note": reason}
+            evidence["overlayParts"] = []
+            for name in ("first-crop", "eraser", "residual-crop", "composition"):
+                record(name, "skipped", reason)
+            evidence["stopReason"] = reason
+            evidence["elapsedSeconds"] = time.perf_counter() - started
+            return
+    person, method, note = find_subject(image, faces, (0, 0), detector_errors=evidence["detectorErrors"])
+    evidence["subject"] = {"method": method, "box": person["box"] if person else None, "note": note}
+    if person is not None and method == "mask-rcnn":
+        original_near = clutter.grow(person["mask"], max(4, round(min(image.size) * .01)))
     overlay_parts = []
     if geo.get("overlayDetected") or reel:
         panel, panel_note = geometry.panel_box(image, faces, first)
@@ -533,15 +572,7 @@ def experimental_candidates(image, row):
                                      for item in overlays.frame_parts(array, reel, faces=faces)]
                 evidence["screenshotLayout"]["overlayParts"] = overlay_parts
                 first = tuple(proposed)
-    for item in overlays.badges(array):
-        circle = item["confirmation"]["circle"]
-        overlay_parts.append({"kind": "confirmed-badge", "box": item["box"], "pattern": item["confirmation"]["badge"],
-                              "circle": [circle[0], circle[1], round(circle[2] * 1.12 + min(image.size) * .004, 1)]})
-    overlay_parts.extend(dict({"kind": item["kind"], "box": item["box"], "pattern": item["pattern"]},
-                              **({"polygon": item["polygon"]} if item.get("polygon") else {}))
-                         for item in overlays.watermarks(array) + overlays.sparkles(array)
-                         + overlays.tilted_stickers(array) + overlays.viewer_icons(array)
-                         + overlays.references(array))
+    overlay_parts.extend(patterns if patterns is not None else overlay_proposals(array))
     evidence["overlayParts"] = overlay_parts
     if first != (0, 0, *image.size):
         if select_crop("first-crop", first):

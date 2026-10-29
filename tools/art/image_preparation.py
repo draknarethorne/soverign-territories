@@ -36,7 +36,7 @@ from likeness_library import gallery_chrome, metadata, sandbox  # noqa: E402
 CATEGORIES = ("Angels", "Sisters", "Models", "Prospects", "Potentials", "Artists", "Various")
 SCHEMA = ROOT / "data/art/_schema/image-preparation-pilot.schema.json"
 STEPS = pipeline.PREPARED_STEPS
-CURRENT = "preparation-comparison-v21"
+CURRENT = "preparation-comparison-v22"
 # Measured Oct 28 on a 6-core/12-thread Ryzen 5 5500: 1 worker 7.0 s/image, 2 about 5.0, 3 about 4.5, 4 no faster.
 MAX_WORKERS = 3
 WORKER_MEMORY_GB = 2.5
@@ -44,7 +44,7 @@ PARALLEL_MIN_IMAGES = 16
 
 
 def step_names(recipe_id):
-    """The current order; published v6-v20 reports keep their traced step order."""
+    """The current order; published v6-v21 reports keep their traced step order."""
     return list(STEPS) if recipe_id == CURRENT else legacy.step_names(recipe_id)
 
 
@@ -80,7 +80,9 @@ RECIPE = {
                        "missing/failed detector: assessment error; no transforms for either",
         "panelDetection": "profile-driven observed picture boundary; preserve complete overlapping pill; "
                           "boxed panels trimmed, full-bleed status band removed only below subject start",
-        "subject": "Mask R-CNN v2 (COCO person, score>=.5, 800px): largest person plus companions>=20% of its "
+        "subject": "Overlay/border-first proposals gate Mask R-CNN; no proposal retains unassessed pixels and "
+                   "skips composition-only suggestions. Mask R-CNN v2 (COCO person, score>=.5, 800px): "
+                   "largest person plus companions>=20% of its "
                    "area; small figures (ad thumbnails) ignored; no person: body frame around the faces",
         "clutter": "confirmed profile patterns: reel UI, structured GMW ring/letters, baseline-verified "
                    "corner text/caption blocks, sparkle, tilted polygon stickers, viewer icons and reference logos",

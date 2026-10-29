@@ -91,6 +91,316 @@ head-overlay-reconstruction to 2,372 / 222 respectively; composition (104),
 first-crop (32), and none (11) stayed the same. This is the expected effect of
 the new Dola AI reference: ten more images now use head-overlay reconstruction.
 
+### Oct 29: bounded profile before another full run
+
+The interrupted fresh run last reported 1,445/3,072 at 08:24:45,
+about 14.4 ordered outcomes/minute since 06:44:17. Its Python processes were
+absent at 08:27; no completed intake receipt or explicit error was present.
+The cause is unproven. A restart reused the verified input mirror but
+discarded orphaned preparation staging and began rendering again. That
+restart was deliberately stopped at the user's profiling pivot. No full
+intake or matching run is active at this checkpoint.
+
+- [x] **P1 ai** T5 Profile the fixed 30-image mix on current v21 without
+  concurrent tests/hooks; repeat old/new timings, prove exact artifacts and
+  decisions, and retain only a bounded behavior-preserving optimization.
+- [ ] **P1 ai** T6 Before another full intake attempt, implement and test
+  per-image checkpoint recovery bound to input hashes, recipe/configuration,
+  and complete artifact hashes. Published reports remain immutable; never
+  reuse incomplete or changed evidence as successful results. Show completed
+  worker work independently of ordered report progress. Coordinate with
+  storage S20 and intake I60; this is a reliability prerequisite, not another
+  storage-layout refactor.
+- [x] **P1 ai** T7 Add a conservative overlay/border-first gate before
+  person segmentation. Reuse body-independent pattern proposals, retain
+  subject protection for potential repairs/crops and unknown states, and
+  label misses as unassessed rather than clean. Intentionally omit
+  composition-only suggestions on the no-proposal path. Version the recipe,
+  preserve old reports, and measure unchanged-image savings against the same
+  fixed sample without losing its selected repairs.
+
+The original fixed 30 paths were resolved against the fresh frozen input
+mirror, with unique stable-photo-ID resolution when paths had moved. Both
+baseline and optimized runs used those exact bytes and three workers.
+The mix yielded 20 original recommendations, 3 reconstruction, 3 composition,
+2 first-crop and 2 unusable recommendations.
+
+Python 3.14 cProfile captured each image inside its actual spawned worker,
+not merely the parent waiting on futures. The profiled pass took 131.91
+seconds; summed image-worker time was 345.66 seconds. Worker times overlap
+and cannot be added to wall time. This is deterministic function profiling,
+not native-stack sampling or a pure CPU-time breakdown.
+
+| Measured helper | Calls | Summed worker seconds | Seconds per input |
+| --- | ---: | ---: | ---: |
+| Mask R-CNN subject detection, including first-use setup | 28 | 152.42 | 5.081 |
+| LaMa masked fill | 10 | 79.49 | 2.650 |
+| White UI stroke/component helper | 252 | 30.26 | 1.009 |
+| Watermark detection | 28 | 29.16 | 0.972 |
+| Save/encode image artifacts | 378 | 19.31 | 0.644 |
+| General clutter detection | 32 | 14.80 | 0.493 |
+| Logo reference matching | 28 | 8.78 | 0.293 |
+| Badge detection | 60 | 8.62 | 0.287 |
+| Face detection | 30 | 5.67 | 0.189 |
+| Original decoding | 30 | 0.80 | 0.027 |
+| File hashing | 468 | 0.64 | 0.021 |
+| Original copying | 30 | 0.12 | 0.004 |
+
+These are inclusive helper times: watermark/component/clutter measurements
+overlap and must not be summed as independent buckets. Person detection and
+fill together account for about 67% of measured image-worker time. Mask
+construction did not emerge as the main bottleneck. Saving includes encoding;
+it is not a measurement of waiting for B: alone.
+
+The profile attributed 49.8 seconds to NumPy channel min/max reductions.
+The white-stroke helper repeatedly reduced three-channel RGB arrays with a
+generic strided axis reduction. Explicit pairwise unsigned-channel extrema,
+then conversion to signed 16-bit, preserve exact values and chroma arithmetic.
+The 1080x2340 operation microbenchmark measured 97.7 ms versus 9.2 ms.
+Only that measured helper changed; detector thresholds, model resolution,
+recipe and masks/selection policy are unchanged.
+
+| Unprofiled pass | Old helper | Exact pairwise helper |
+| --- | ---: | ---: |
+| First 30-image pass | 125.35 s | 119.06 s |
+| Repeat | 127.28 s | 126.47 s |
+| Mean | 126.32 s | 122.76 s |
+
+Mean elapsed reduction is 2.8% (throughput +2.9%); the repeated gain is small
+and variable, not evidence of a major end-to-end speedup. Old/new throughput
+means approximately 14.25 versus 14.66 inputs/minute for this sample, not a
+full-run forecast. All four runs have identical non-timing per-photo records,
+recipe, and 408 retained/candidate/preview/padded artifact hashes. HTML hashes
+vary because the pages display recorded elapsed times.
+
+Validation: 133 overlay/preparation/intake-sequence tests pass, including RGB
+extrema over all red/green values, representative blue extremes, strided views,
+signed chroma, and component equivalence with/without contrast/vivid edges.
+Report manifests and images remain under the fresh run input mirror's
+`_reports\preparation\baseline-current-20261029`,
+`optimized-current-20261029`, `baseline-repeat-20261029`, and
+`optimized-repeat-20261029`. Disposable profiles/logs are in repository
+`tmp\perf`; this plan retains the measured conclusions and acceptance evidence.
+
+Brief late-sample system observations ranged from 36-55% machine CPU with
+9.3-9.5 GB available RAM, disk activity about 26-157 MB/s and aggregate queue
+length 1.1-1.3. These three snapshots are not whole-run averages and do not
+isolate B: from other disks. No claim of disk saturation or cleanup-induced
+speedup follows from them.
+
+### Oct 29: overlay-first v22 and the larger paired profile
+
+The current recipe is **v22**. After face eligibility, border/letterbox/reel
+and known-pattern proposals run before Mask R-CNN. No proposal triggers an
+additional broad, body-agnostic glyph check. If that also finds nothing,
+retain the original pixels as **unassessed**, skip subject segmentation and
+composition-only suggestions, and still generate denoise/tone comparisons.
+Any border, screenshot, pattern or uncertain glyph takes the protected path.
+Pattern proposals are reused in original source coordinates. Body-sensitive
+clutter is rechecked with the person mask and current crop; post-fill residual
+detection is unchanged. Detection exceptions cannot become no-proposal success.
+The experimental comparison command retains its eager behavior; published
+v21 and older receipts keep their historical validation/step contracts.
+
+The original 30-image sample avoided 20 of 28 subject calls, preserving all
+recommendations, selected pixels and 354 shared candidate/preview/padded
+hashes. Eight rejected, composition-only comparisons were intentionally
+omitted. Unprofiled v22 repeats took **76.99 / 77.65 seconds** (mean 77.32),
+versus the RGB-optimized eager repeats of 119.06 / 126.47 (mean 122.76):
+**37.0% less elapsed time**, without claiming a full-run forecast.
+
+The larger deterministic sample retains those 30 and adds 98 inputs:
+18 Angels, 18 Sisters, 20 Artists, 22 Prospects, 21 Potentials, 29 Various.
+Screenshot-named inputs were preferred before hash-ordered category
+round-robin expansion; there are 14 such names and 16 detected screenshots.
+This is a mixed stress sample, not a population-weighted quality dataset.
+Both passes used the same 128 source hashes, three workers, current RGB
+optimization, per-image cProfile and identical fill-call instrumentation;
+no concurrent tests/hooks. The eager pass explicitly disables only the gate
+and marks that benchmark override in its recipe. Neither run installs,
+matches, changes sources, or touches Production.
+
+| Metric | Eager | Overlay-first |
+| --- | ---: | ---: |
+| Elapsed including publish/verify | 524.48 s | 302.50 s |
+| Outcomes/minute | 14.64 | 25.39 |
+| Summed image-worker time (overlapping) | 1,525.90 s | 854.99 s |
+| Subject calls | 125 | 35 |
+| Guarded fill calls | 18 | 18 |
+| Reconstruction fill calls | 25 | 25 |
+| Neural fill patches across those 43 calls | 116 | 116 |
+
+This larger instrumented pair is **42.3% less elapsed time / 1.73x throughput**.
+Ninety usable images have no proposals; 35 require protection; three are
+ineligible. All **128/128 recommendations, outcomes, source treatments,
+eligibility and geometry** agree: 97 original, 16 reconstructed composition,
+nine reconstruction, three crop-only, three unusable. All **1,569 shared
+candidate/preview/padded artifact hashes** agree, as do the non-timing
+edited-image candidate/decision/mask traces. Sixteen rejected composition-only
+comparisons are omitted, accounting for 48 fewer saved image artifacts.
+No claim that every optional comparison remains present. Fill-call and neural
+patch counts are unchanged; their different measured duration reflects
+scheduling/contention, not a fill-algorithm optimization.
+
+#### Where current image-worker time goes
+
+Inclusive helper times below overlap; do not sum them as exclusive percentages.
+Each per-input figure divides by all 128 inputs, including skipped ones.
+
+| Helper | Calls | Worker seconds | Seconds/input |
+| --- | ---: | ---: | ---: |
+| LaMa fill, both purposes | 43 | 289.86 | 2.26 |
+| Person segmentation, first-use setup included | 35 | 184.09 | 1.44 |
+| Known-pattern proposal bank | 125 | 114.85 | 0.90 |
+| Encode/write candidate, preview and padded images | 1,569 | 80.45 | 0.63 |
+| Glyph detection, across preflight/guarded/head checks | 171 | 59.30 | 0.46 |
+| General guarded/residual clutter | 53 | 41.64 | 0.33 |
+| Logo references (inside proposal bank) | 125 | 37.48 | 0.29 |
+| Watermarks (inside proposal bank) | 125 | 25.49 | 0.20 |
+| Tilted stickers (inside proposal bank) | 125 | 22.40 | 0.17 |
+| Face detector's native detection | 128 | 16.29 | 0.13 |
+| Original decode | 128 | 3.72 | 0.03 |
+| File hashing | 1,953 | 2.74 | 0.02 |
+| Original copy | 128 | 0.44 | <0.01 |
+
+PNG/JPEG encoding itself accounts for 73.47 worker seconds within saving.
+That is not a measurement of B: write latency alone. NumPy reductions still
+consume 101.28 worker seconds across helpers. The glyph routine repeatedly
+materializes full-image component masks; exact RGB extrema reuse, bounded
+component operations and raw-proposal reuse are investigation candidates.
+Do not silently remove safety checks or lower detector thresholds to save time.
+
+| v22 path | Images | Median worker seconds | p90 worker seconds |
+| --- | ---: | ---: | ---: |
+| No proposals, including required outputs | 90 | 1.98 | 2.98 |
+| Any proposal/protection | 35 | 14.79 | 33.74 |
+| Original recommendation, including seven flagged but unchanged images | 97 | 2.01 | 3.34 |
+| Crop-only | 3 | 8.51 | 12.66 |
+| Reconstruction without selected picture composition | 9 | 11.22 | 14.95 |
+| Reconstructed picture composition | 16 | 28.80 | 38.56 |
+| Unusable | 3 | 0.27 | 0.29 |
+
+These are individual worker latencies, not serial wall-time forecasts.
+For routine intake, ordinary photos with no detected marks are cheapest;
+screenshots needing several separate filled regions are most expensive.
+Original recommendation alone does not mean no detector work.
+
+#### Inside inference and the two fill stages: discussion, not policy changes
+
+An isolated, warm-model CPU operator capture on the Cressida screenshot used
+four threads, matching each worker's split. Person inference took 3.26 s;
+guarded fill 8.81 s; reconstruction 8.87 s. Both fill outputs match the saved
+candidate pixels exactly. Torch operator shapes/times show convolution-heavy
+inference, including ROI/mask processing for the person, rather than mask
+drawing or file copying as the dominant work. This isolated instrumented
+capture is not a concurrent throughput result.
+
+The nominal 800px person limit is only the outer resize: 1080x2340 becomes
+369x800, then torchvision's own min-size 800 / max-size 1333 transform expands
+it to 614x1333 (padded batch 640x1344). Removing or changing either resize is
+**not** proved pixel/segmentation-equivalent; it needs separate outcome tests,
+not an automatic performance tweak.
+
+Each LaMa `fill` call can invoke the neural model several times: join nearby
+mask components, expand each component's context, resize each patch to at most
+768px, infer, then paste only masked pixels back. Thus **43 fill calls mean
+116 neural patches**, not 43 model evaluations. Model inference consumes
+284.04 of the fill helper's 289.86 worker seconds. Tiny marks widely separated
+around a screenshot can cost several inferences even with low mask coverage.
+
+The guarded eraser protects faces/body and caps coverage at 20%.
+Reconstruction consumes the guarded final and makes a separate synthetic
+pattern/pill repair, with a 30% cap and explicit outside-mask preservation.
+It currently runs for confirmed overlay proposals **without requiring person
+overlap**; a background watermark can also enter this branch. Its name must
+not be taken as proof that every invocation repairs the person.
+
+In this sample, 25 images use reconstruction and 18 of those first use guarded
+erase. All 18 source-coordinate mask pairs overlap; none are identical.
+Median overlap covers **100% of the guarded mask** and **44.5% of the
+reconstruction mask** (guarded coverage range 86.5-100%).
+Consequently some already-erased pixels are painted again. This is measured
+overlap, **not proof that either pass is redundant**: subtracting masks,
+merging fills or restricting reconstruction to subject overlap changes its
+context/input and may change invented pixels and recommendations.
+
+- [ ] **P2 you** T8 Discuss whether background-only confirmed marks should
+  remain in general synthetic reconstruction or use guarded cleanup alone,
+  and whether overlapping guarded/head masks should be combined or retained.
+  Keep the existing rules until agreed; require exact-mask/selected-pixel and
+  visual acceptance evidence for any proposed outcome-changing change.
+
+Reproducibility: immutable manifests/images are under the frozen input mirror
+`_reports\preparation\eager-profile-128-20261029` and
+`preflight-profile-128-20261029`; the two unprofiled 30-image v22 runs are
+`preflight-unprofiled-20261029` and `preflight-repeat-20261029`.
+Repository `tmp\perf` holds per-input cProfile files, fill events, exact
+source/hash lists, equivalence and nested/operator/resize/overlap measurements.
+This section is the durable summary; scratch evidence is not a new library
+storage convention. The full rebase remains stopped pending T6 recovery.
+
+Validation: **237 related regression tests pass**, including preparation,
+overlay/sequence/eraser comparisons, provenance, frozen preparation and
+retained artifacts. The supported preparation launcher's Working-root
+dry-run passed; nested frozen-input reports were verified through their
+internal publisher/reader rather than weakening the launcher's root guard.
+The isolated validator launcher passed **19/19 quick cases**, including the
+baseline and mutations. Pylance reports compatible callers and no syntax errors;
+markdownlint and whitespace checks pass.
+
+### Oct 29: C: clutter and idle-system snapshot
+
+- [x] **P2 ai** T9 Inventory known C: scratch/cache roots read-only and sample
+  live memory, CPU, paging and disk activity. Separate file sizes, process
+  private commit, resident working sets and measured image-worker costs.
+- [ ] **P2 either** T10 Attribute high VS Code/extension memory through its
+  Process Explorer and Running Extensions diagnostics, then compare a fresh
+  chat/window under the same workload. Capture resource samples during any
+  next controlled image benchmark; an idle snapshot cannot exclude pressure
+  during processing. Cleanup execution belongs to storage S22, not this task.
+- [ ] **P3 either** T11 After performance/rebase work, compare a tight
+  translucent-GMW ring/letter/glow mask with the existing filled-disc mask.
+  This is quality investigation only, not approval to change detection,
+  mask growth, blending, or repair selection.
+
+Read-only metadata enumeration completed without access errors for the named
+roots, without following junctions. Logical sizes at this checkpoint:
+
+| Location | GiB | Disposition |
+| --- | ---: | --- |
+| Repository `tmp` | 0.130 | Small; retain current profile/recovery evidence and this handoff. Old contact sheets and superseded logs are candidates only after ownership/reference checks |
+| Current Copilot chat directory | 1.062 | Keep for now; `events.jsonl` alone is 1,010 MiB. Do not edit/prune a live chat or recovery/checkpoint history |
+| User Windows Temp | 3.919 | 3.717 GiB is Visual Studio installer package staging, not photo-pipeline scratch; confirm setup/update is inactive before supported cleanup |
+| pre-commit cache | 0.568 | Rebuildable environments, but retain the interrupted-hook patch until verified publication/recovery is no longer needed |
+| VS Code cache / cached code / logs | 0.052 / 0.168 / 0.026 | Small relative to memory; deleting them is not a demonstrated memory fix |
+| VS Code global storage | 0.074 | Extension state, not blanket disposable cache |
+
+C: had **432.1 GiB free** (about 46% of its 930.5 GiB capacity).
+Repository `tmp` contained 974 files and no Markdown files before the requested
+handoff was written. It is not a large storage pressure source at present.
+The Temp names `5ggitv0m` and `rzqjwhix.at5` contain Visual Studio package/setup
+payloads; this is ownership evidence, not proof they are abandoned.
+No whole-C: or all-AppData audit is claimed.
+
+A five-second process sample plus Windows counters showed about 14% machine
+CPU, 9.9 GiB available RAM, 43% commit usage, zero sampled page reads/input,
+and zero queued disk requests. C: was doing about 0.28 MiB/s; B: was idle.
+Those are idle/checkpoint observations, not the earlier benchmark's averages.
+There is **no evidence in this snapshot of paging or disk saturation**.
+
+Sixteen `Code` processes summed to about **9.0 GiB private commit**; summed
+working sets were 6.6 GiB but include shared pages and are not unique physical
+usage. The Copilot runtime separately held 3.3 GiB private commit / 1.16 GiB
+working set. The largest Code roles included Node utility processes and a
+renderer. Process role alone does not identify a particular extension or prove
+a leak. The very large chat log makes a fresh-chat comparison reasonable,
+but on-disk log size does not establish how much is loaded in memory.
+
+Evidence: `tmp\perf\c-scratch-audit-20261029.json` and
+`system-snapshot-20261029.json`. No files/caches, processes, galleries or
+session histories were deleted or stopped. The safe next step is targeted
+attribution and comparison, not speculative OS tuning or mass cache removal.
+
 ## 2. The chin in the likeness face crop
 
 The face that goes into likeness is OpenCV's `FaceRecognizerSF.alignCrop`: a
@@ -168,3 +478,29 @@ It seems like we're leaving a lot of generated images from all the runs in testi
 
 Coverage: performance -> section 1 (T1 done, T2); chin -> section 2 (decision, T3);
 generated images -> section 3 (routed to L20/R9, T4).
+
+Oct 29 (chat, overlay-first request), word for word:
+
+> Could we first check if we see any potential junk on the screen before detecting a person for protecting it?  A slight improvement for when most images are clean - but some "may" have potential issues?  If we detect overlays first and don't find any then it's good image.  If we do, then we look for the person to protect it and if necessary have to re-check overlays or would we be able to use the information from the first check?
+
+Oct 29 (chat, larger profile request), word for word:
+
+<!-- markdownlint-disable-next-line MD013 -->
+> As you do this, let's also analyze the performance and profile it a second time on a larger set and get more metrics of each step, what's happening and look for areas to optimize as well.  There might be a few additional pieces of logic to flex when we layout all the numbers again and if a single step is still a bottleneck, what within that step is taking time as there are likely many sub-steps and wondering the same about how to optimize.  The two separate erase and reconstruct serve a purpose and we can discuss that as well.  Maybe some logic is misplaced and how it was supposed to work from what it's doing.  The reconstruct should only happen if there is an overlay on the person we need to care about the type of reconstruction for.  But that's for us to discuss.  Knowing the details of this will help me decide how best to bring in new images and which ones will take time.  I understand doing the huge rebase will run log (but isn't a daily activitiy) but I still want to ensure we have optimized this code without changing the outcome.
+
+Coverage: overlay-first -> T7 and v22 evidence above; larger profile,
+substeps and optimization candidates -> paired 128-image/operator analysis;
+two-stage reconstruction/person-overlap policy -> T8 (discussion only,
+no rule change). Full-run checkpoint recovery remains T6.
+
+Oct 29 (chat, mask-quality question), word for word:
+
+> I'm also wondering about techniques for erasing when we do have an overlay like the GMW logo that is a see-through logo - if we have a different mask that is just the logo instead of a full circle, would the erasing/blending work better at leaving the underlying image in place - instead of a larger smudge because we're going after an entire circle?  This is just a question for consideration - not an approval to change things - optimizations first - then quality control on the final output.
+
+Oct 29 (chat, system/clutter question), word for word:
+
+> Finally, what files in our own tmp directory are worth still keeping around vs. what can be removed to also reduce clutter on C: drive ... we've left a lot of pieces in various temporary locations - maybe even my user/scotte/AppData/local ... would be good to know if there are large amounts of cluttering files on C: as that also impacts overall system performance.  I'm also seeing that VS Code it taking a ton of memory compared to what it used to be - so I'm unclear on that as well.  Just want to see if we can't determine the true performance bottlenecks on top of where the hot spots truly are at in our own code.  Whether it's system, disk, OS, memory, CPU or just expensive image processing calls.
+
+Coverage: translucent-logo consideration -> T11 (not approved implementation);
+C: inventory and resource snapshot -> T9 done; extension attribution and
+under-load comparison -> T10; safe cleanup review -> storage S22.

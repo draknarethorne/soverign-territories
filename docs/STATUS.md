@@ -4,6 +4,31 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Oct 29, overlay-first checkpoint:** current preparation v22 checks overlay/
+border proposals before person segmentation. A paired 128-image worker profile
+took 524.48 s eager versus 302.50 s gated (42.3% less elapsed), avoiding 90 of
+125 subject calls. All 128 recommendations and 1,569 shared image-artifact
+hashes agree; 16 rejected composition-only comparisons are intentionally omitted.
+Both fill stages and their 43 calls / 116 neural patches remain unchanged.
+Two unprofiled 30-image repeats average 77.32 s versus 122.76 s eager.
+Detailed substeps, input-path costs and overlapping erase/reconstruction masks
+are recorded in the [performance plan](plans/2026-10-28-intake-performance.md).
+Reconstruction currently also accepts confirmed background marks: whether to
+restrict it to person overlap is discussion T8, not an implemented rule change.
+No full intake is running; per-image recovery T6 remains its prerequisite.
+
+**Oct 29, 08:45 historical checkpoint:** the earlier fresh intake stopped without
+a receipt after 1,445 ordered outcomes; its cause is not established.
+The restart was deliberately stopped for bounded profiling. No full intake
+is currently running. A fixed 30-image worker profile identifies subject
+detection and masked repainting as about two-thirds of image-worker time;
+original read/copy/hash work is small. One exact-integer overlay optimization
+averages 2.8% less elapsed time over two A/B pairs, with identical decisions
+and 408 image artifacts; 133 targeted tests pass. Per-image checkpoint
+recovery remains a prerequisite before another full run, tracked as T6 in the
+[performance plan](plans/2026-10-28-intake-performance.md). Earlier running
+statements below are historical checkpoints, not current process status.
+
 ## Where we are
 
 Design and art are ahead of gameplay data. The repo has no Unity project yet.

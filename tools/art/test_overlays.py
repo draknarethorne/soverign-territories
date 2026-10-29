@@ -21,6 +21,40 @@ def photo(width, height, seed=1):
     return np.clip(base.astype(np.int16) + rng.integers(-12, 12, base.shape), 40, 190).astype(np.uint8)
 
 
+class RGBBoundsTest(unittest.TestCase):
+    def test_exact_signed_extrema_for_all_channel_values_and_strided_views(self):
+        red, green = np.indices((256, 256), dtype=np.uint8)
+        for blue in (0, 1, 127, 254, 255):
+            image = np.stack((red, green, np.full_like(red, blue)), axis=2)
+            for array in (image, image[::-1, ::2], image.transpose(1, 0, 2)):
+                with self.subTest(blue=blue, strides=array.strides):
+                    low, high = overlays.rgb_bounds(array)
+                    np.testing.assert_array_equal(low, array.min(axis=2).astype(np.int16))
+                    np.testing.assert_array_equal(high, array.max(axis=2).astype(np.int16))
+                    self.assertEqual(low.dtype, np.dtype(np.int16))
+                    self.assertEqual(high.dtype, np.dtype(np.int16))
+                    self.assertTrue(np.all(high - low >= 0))
+
+    def test_rendered_components_match_axis_reductions_with_contrast_and_vivid_edges(self):
+        array = photo(360, 480)
+        array[20:40, 20:80] = 255
+        array[50:70, 30:90] = (255, 0, 0)
+        rule = {
+            "whiteMin": 220, "whiteChroma": 30, "contrastReach": .02,
+            "darkEdge": 100, "plainWhiteMin": 230, "plainWhiteChroma": 20,
+            "minArea": 2, "maxWidth": .8, "maxHeight": .8,
+        }
+        for contrast, vivid in ((False, None), (True, None), (True, 80)):
+            with self.subTest(contrast=contrast, vivid=vivid):
+                actual = overlays.rendered(array, [10, 10, 330, 470], rule,
+                                           contrast=contrast, vivid=vivid)
+                with mock.patch.object(overlays, "rgb_bounds", side_effect=lambda pixels: (
+                        pixels.min(axis=2).astype(np.int16), pixels.max(axis=2).astype(np.int16))):
+                    expected = overlays.rendered(array, [10, 10, 330, 470], rule,
+                                                 contrast=contrast, vivid=vivid)
+                self.assertEqual(actual, expected)
+
+
 class ReelFrameTest(unittest.TestCase):
     def test_full_bleed_reel_bottom_panel(self):
         array = photo(540, 1170)

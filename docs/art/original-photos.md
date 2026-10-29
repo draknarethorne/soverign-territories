@@ -154,7 +154,7 @@ owns upstream preparation/crop cutover; the
 | Order | Role | Output / safeguard |
 | --- | --- | --- |
 | 1 | Retain exact incoming bytes before transformations | Immutable run input, then checked `gallery_org` publication alongside retained `gallery_intake` evidence |
-| 2 | Prepare at native geometry | v20 guarded first crop -> eraser -> residual crop -> confirmed-pattern reconstruction -> composition -> denoise/tone comparisons; preserve subject, skip unsafe/unavailable stages with reasons |
+| 2 | Prepare at native geometry | v22 overlay/border preflight -> guarded first crop -> eraser -> residual crop -> confirmed-pattern reconstruction -> composition -> denoise/tone comparisons; preserve subject, skip unsafe/unavailable stages with reasons |
 | 3 | Analyze and assign | Fresh geometry-correct detection/features; shared likeness policy; cast membership protection remains separate from processing |
 | 4 | Publish the accepted reference | Prepared source in person `gallery` (or `review`), destination-prefix normalization with stable photo ID and history retained |
 | 5 | Generate standard 944x1104 derivatives | Full-photo fit/pad, head framing and chest framing from the accepted source; framing crops/padding remain necessary, but must not rerun source-cleanup crops |
@@ -352,11 +352,23 @@ For only the new unsorted test images, add `--source-folder "Various\gallery"
 images directly in that folder, not Review, other identities or subfolders.
 It leaves the incoming files in place. The report explains every role and
 links the **provisionally selected cleanup/composition**, with its reason.
-The v20 recipe below can select masked cleanup/reconstruction; selection is not a measured
+The v22 recipe below can select masked cleanup/reconstruction; selection is not a measured
 enhancement winner or hair-safety guarantee. A missed screenshot heuristic does
 not mean clean. Control means oriented/sRGB only. Denoise and tone remain separate
 comparison alternatives. Padded examples are downstream canvas fitting, not
 another enhancement.
+
+Current v22 checks known overlay patterns, borders, screenshot layout and
+uncertain glyphs before requesting person segmentation. No detected proposal
+retains the original as **unassessed**, skips Mask R-CNN and composition-only
+suggestions, and still generates denoise/tone comparisons. A miss does not
+certify clean pixels. Pattern proposals are reused; person-sensitive clutter
+checks run with the mask/current crop when needed, and post-fill residual
+detection remains. Confirmed patterns can still enter synthetic reconstruction
+even off the person; the separate guarded/synthetic policies have not changed.
+Published v21 and older reports retain their recorded pixels and contracts.
+Measured results and the two-pass policy discussion live in the
+[intake performance plan](../plans/2026-10-28-intake-performance.md).
 
 #### Same-mask eraser A/B (comparison only)
 

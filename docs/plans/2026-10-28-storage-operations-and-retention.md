@@ -205,6 +205,15 @@ now finishes cleanup without starting another reset. See S14's exact audit.
 
 ### 1. Complete the storage and dependency inventory
 
+- [ ] **P2 either** S22 Review C: cleanup candidates from performance T9's
+  read-only inventory. Keep current profiling/recovery evidence, raw feedback,
+  active chat state and extension state. Verify Visual Studio installer staging
+  is unused before supported removal; identify exact old logs/contact sheets
+  and dependency-free test remnants before deleting anything. No blanket
+  Temp/AppData/cache/session cleanup is authorized by the inventory request.
+  Measurements and the user's words live in the
+  [performance plan](2026-10-28-intake-performance.md).
+
 - [ ] **P1 ai** S1 Map every writer and reader for `Working` outputs,
   sandbox-state runs, report roots, backups, action/undo journals, likeness
   caches, ComfyUI workspaces/results, generated gallery images, scratch files,

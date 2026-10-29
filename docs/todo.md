@@ -5,7 +5,7 @@
 
 ## Open work, by priority
 
-### Your queue: needs your hands or a decision (43)
+### Your queue: needs your hands or a decision (44)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -44,6 +44,7 @@
 - [ ] I26 Decide the directory reckoning: intake root name, kind roots, role and ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] R31 Reload the open ComfyUI tabs, then render one updated ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R35 Choose which body profiles, if any, are offered by ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] T8 Discuss whether background-only confirmed marks should ([2026-10-28](plans/2026-10-28-intake-performance.md))
 
 **P3 (later, or ideas)**
 
@@ -59,7 +60,7 @@
 - [ ] U2 Review current photo outcomes using fresh inventories: ([2026-10-22](plans/2026-10-22-library-upkeep.md))
 - [ ] P10 Archive the manual source directory only after every ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 
-### Either of us (44)
+### Either of us (47)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -98,6 +99,8 @@
 - [ ] R28 Take the 23 unmapped `Various\gallery` screenshots ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R1c Correct the workspace input-directory spelling during a ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R9 Agree storage/backup/retention limits and safe run filing ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] T10 Attribute high VS Code/extension memory through its ([2026-10-28](plans/2026-10-28-intake-performance.md))
+- [ ] S22 Review C: cleanup candidates from performance T9's ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S19 Review the configuration proposal before broad ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 
 **P3 (later, or ideas)**
@@ -112,9 +115,10 @@
 - [ ] A7 Compare download/run versus a lightweight explicit ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] I56 Vision: one command (or a GUI pick) takes a new image ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] R10 Extend to male/animal recipe profiles only after suitable ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] T11 After performance/rebase work, compare a tight ([2026-10-28](plans/2026-10-28-intake-performance.md))
 - [ ] T3 For human review only, show a wider context crop (with ([2026-10-28](plans/2026-10-28-intake-performance.md))
 
-### For the assistant, when you say go (144)
+### For the assistant, when you say go (145)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -196,6 +200,7 @@
 - [ ] R2 Define request/resolved/receipt schemas, recipe capabilities, ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R4 Implement offline preview/prepare/check and the thin launcher ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R5 Bind one reviewed Qwen API graph to its master, preflight ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] T6 Before another full intake attempt, implement and test ([2026-10-28](plans/2026-10-28-intake-performance.md))
 - [ ] S20 Measure fresh-baseline inventory, preparation, matching and ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S21 Finish the Oct 27/28 retrospective and Oct 29 run recap, ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S1 Map every writer and reader for `Working` outputs, ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))

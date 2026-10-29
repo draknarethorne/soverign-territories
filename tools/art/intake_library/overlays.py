@@ -106,13 +106,20 @@ def zones(frame, size, profile=None):
     return found
 
 
+def rgb_bounds(array):
+    """Exact signed RGB extrema without NumPy's slower strided axis reduction."""
+    red, green, blue = array[..., 0], array[..., 1], array[..., 2]
+    return (np.minimum(np.minimum(red, green), blue).astype(np.int16),
+            np.maximum(np.maximum(red, green), blue).astype(np.int16))
+
+
 def rendered(array, region, rule, *, contrast=True, vivid=None):
     """Connected components of pure-white UI strokes inside `region`; by default only with a dark edge nearby.
 
     `vivid` also accepts a saturated edge (a filled "liked" heart button) as contrast.
     """
     height, width = array.shape[:2]
-    low, high = array.min(axis=2).astype(np.int16), array.max(axis=2).astype(np.int16)
+    low, high = rgb_bounds(array)
     if contrast:
         white = (low >= rule["whiteMin"]) & (high - low <= rule["whiteChroma"])
         gray = cv2.cvtColor(array, cv2.COLOR_RGB2GRAY)

@@ -123,6 +123,18 @@
                   "candidates": {"type": "object"},
                   "final": {"type": "string"},
                   "detectorErrors": {"type": "array"},
+                  "preflight": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["status", "patternCount", "glyphCount", "subjectRequired", "reason"],
+                    "properties": {
+                      "status": {"enum": ["proposals", "no-proposals"]},
+                      "patternCount": {"type": "integer", "minimum": 0},
+                      "glyphCount": {"type": "integer", "minimum": 0},
+                      "subjectRequired": {"type": "boolean"},
+                      "reason": {"type": "string", "minLength": 1}
+                    }
+                  },
                   "headOverlay": {"type": "object"}
                 }
               },

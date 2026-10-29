@@ -25,7 +25,8 @@ echo                                    --preserve-action-undo leaves active-act
 echo    people-gallery-review.cmd [--root DIR] [--cache FILE] [--out DIR] [--policy FILE] [--keep SCORE]  local Gallery + Review audit; filters, rankings and staged actions
 echo    artists-gallery.cmd [--root DIR] [--cache FILE] [--dry-run ^| --check ^| --apply]  separate Artist overview/photo review; shared small thumbnails in _reports\artists, NO matching or source changes
 echo    prepare-images.cmd --root "SANDBOX\Working" --out "Working\_reports\preparation\RUN" [--limit 28] [--dry-run ^| --apply ^| --check]  sidecar original/control/geometry/denoise/tone, larger pages and padded examples; NO source or identity changes
-echo                                    --source-folder "Various\gallery" --limit 0 compares ALL direct incoming images; v21 crop/erase/residual-crop/reconstruct/compose trace and masks BEFORE filters; NO live moves
+echo                                    --source-folder "Various\gallery" --limit 0 compares ALL direct incoming images; v22 overlay-first, guarded crop/erase/residual/reconstruct/compose BEFORE filters; NO live moves
+echo                                    no detected proposal skips person segmentation and composition-only suggestions, NOT a clean-pixel guarantee; denoise/tone comparisons remain
 echo                                    confirmed-pattern reconstruction is synthetic; final recommended pixels feed sandbox matching. --apply may download pinned CPU models once; --check verifies evidence.
 echo                                    Artists\ARTIST\gallery uses the SAME preparation and padding, retaining artist-only source scope; copies in Various cannot imply artist ownership
 echo                                    existing RUN --quarantine-junk previews eligible loose-intake moves; --apply verifies a scoped backup and moves to nested _junk, never deletes or matches

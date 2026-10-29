@@ -124,6 +124,67 @@ class SequenceTests(unittest.TestCase):
         self.assertNotIn("head-overlay-reconstruction", outputs)
         self.filler.assert_not_called()
 
+    def test_overlay_first_no_proposals_skips_person_and_cleanup_not_declares_clean(self):
+        import image_preparation as preparation
+
+        self.row["geometry"]["overlayDetected"] = False
+        with mock.patch.object(pipeline, "overlay_proposals", return_value=[]), \
+                mock.patch.object(pipeline.geometry, "border_box", return_value=[0, 0, *self.size]), \
+                mock.patch.object(pipeline.overlays, "reel_frame", return_value=None), \
+                mock.patch.object(pipeline.overlays, "letterbox", return_value=None), \
+                mock.patch.object(pipeline.clutter, "glyphs", return_value=[]):
+            outputs = dict(preparation.prepared_candidates(self.image, self.row))
+        sequence = self.row["processing"]["sequence"]
+        self.assertEqual(sequence["preflight"]["status"], "no-proposals")
+        self.assertFalse(sequence["preflight"]["subjectRequired"])
+        self.assertEqual(sequence["subject"]["method"], "not-requested")
+        self.assertIn("unassessed", sequence["stopReason"])
+        self.assertEqual(set(outputs), {"control", "denoise", "tone"})
+        self.assertEqual(self.row["processing"]["final"], "control")
+        np.testing.assert_array_equal(np.asarray(outputs["control"]), np.asarray(self.image))
+        self.subject_detector.assert_not_called()
+        self.detector.assert_not_called()
+        self.filler.assert_not_called()
+        self.assertTrue(all(step["status"] == "skipped" for step in self.row["processing"]["steps"][:-2]))
+
+    def test_overlay_first_reuses_patterns_and_preserves_non_screenshot_reconstruction(self):
+        self.row["geometry"]["overlayDetected"] = False
+        pattern = {"kind": "watermark", "box": [320, 650, 370, 700], "pattern": "test-pattern"}
+        self.filler.side_effect = lambda image, mask: Image.fromarray(
+            np.where(mask[..., None], np.array([128, 128, 128], dtype=np.uint8), np.asarray(image)))
+        with mock.patch.object(pipeline.overlays, "watermarks", return_value=[pattern]) as scan:
+            outputs = dict(pipeline.recommended_candidates(self.image, self.row))
+        self.assertEqual(scan.call_count, 1, "Reuse preflight pattern proposals after person protection.")
+        self.subject_detector.assert_called_once()
+        self.assertIn("head-overlay-reconstruction", outputs)
+        sequence = self.row["processing"]["sequence"]
+        self.assertTrue(sequence["preflight"]["subjectRequired"])
+        self.assertEqual(sequence["preflight"]["patternCount"], 1)
+        self.assertTrue(sequence["headOverlay"]["cumulativeOutsideMaskIdentical"])
+
+    def test_overlay_first_border_or_ui_or_uncertain_glyph_still_requires_person(self):
+        for trigger in ("border", "ui", "glyph"):
+            with self.subTest(trigger=trigger):
+                row = copy.deepcopy(self.row)
+                row["geometry"]["overlayDetected"] = trigger == "ui"
+                border = [2, 0, *self.size] if trigger == "border" else [0, 0, *self.size]
+                glyphs = [self.part("glyph", [20, 200, 45, 230])] if trigger == "glyph" else []
+                self.subject_detector.reset_mock()
+                with mock.patch.object(pipeline, "overlay_proposals", return_value=[]), \
+                        mock.patch.object(pipeline.geometry, "border_box", return_value=border), \
+                        mock.patch.object(pipeline.overlays, "reel_frame", return_value=None), \
+                        mock.patch.object(pipeline.overlays, "letterbox", return_value=None), \
+                        mock.patch.object(pipeline.clutter, "glyphs", return_value=glyphs):
+                    dict(pipeline.recommended_candidates(self.image, row))
+                self.subject_detector.assert_called_once()
+                self.assertTrue(row["processing"]["sequence"]["preflight"]["subjectRequired"])
+
+    def test_overlay_first_detector_error_cannot_be_a_no_proposals_success(self):
+        with mock.patch.object(pipeline, "overlay_proposals", side_effect=ValueError("broken pattern scan")):
+            with self.assertRaisesRegex(ValueError, "broken pattern scan"):
+                dict(pipeline.recommended_candidates(self.image, self.row))
+        self.subject_detector.assert_not_called()
+
     def test_unconfirmed_glyphs_on_an_ordinary_photo_are_not_erased(self):
         self.row["geometry"]["overlayDetected"] = False
         self.detector.return_value = ([self.part("glyph", [20, 200, 45, 230])], [])
@@ -143,7 +204,7 @@ class SequenceTests(unittest.TestCase):
     def test_published_v17_keeps_its_trace_order_after_recipe_upgrade(self):
         import image_preparation as preparation
 
-        for published in ("preparation-comparison-v17", "preparation-comparison-v18"):
+        for published in ("preparation-comparison-v17", "preparation-comparison-v18", "preparation-comparison-v21"):
             with self.subTest(published=published):
                 self.assertNotEqual(preparation.CURRENT, published)
                 self.assertEqual(preparation.step_names(published), list(pipeline.PREPARED_STEPS))
