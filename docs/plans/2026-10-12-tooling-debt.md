@@ -491,6 +491,12 @@ another clean-runner fixture dependency, not permission to hide failed tests.
 The complete clean-preparation suite passes all 26 tests with the fixture
 fix (377.47 s locally). It is still an expensive integration suite; no claim
 that removing model dependence makes all regression runs fast is made.
+The next CI run showed that this first patch targeted only the package-named
+`tools.art.likeness`, while Review imports top-level `likeness`. Local model
+availability masked the error. The fixture now also patches the actual
+`review_gallery.likeness` dependency and makes the shared real Embedder.load
+raise immediately if reached. This guard, rather than a populated developer
+model cache, is the offline verification contract.
 
 User words (chat, Oct 29), word for word:
 

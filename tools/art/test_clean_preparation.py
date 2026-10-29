@@ -15,7 +15,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 from tools.art import image_preparation, likeness
-from tools.art.likeness_library import clean_preparation, clean_rebase, derivatives, metadata, retained_preparation
+from tools.art.likeness_library import clean_preparation, clean_rebase, derivatives, metadata, retained_preparation, review_gallery
 from tools.art.likeness_library.policy import load_policy
 
 
@@ -77,6 +77,9 @@ class CleanPreparationTests(unittest.TestCase):
         self.embed = embed
         for patch in (
             mock.patch.object(likeness, "Embedder", return_value=self.embed),
+            mock.patch.object(review_gallery.likeness, "Embedder", return_value=self.embed),
+            mock.patch.object(likeness._Embedder, "load",
+                              side_effect=AssertionError("Offline fixtures must never load face models")),
             mock.patch.object(image_preparation.preparation_geometry, "detect_faces",
                               return_value=([[50., 40., 60., 70.]], "Test face")),
             mock.patch.object(image_preparation.pipeline.subjects, "detect",
