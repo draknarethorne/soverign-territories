@@ -62,16 +62,16 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 
 Use the [archive guide](archive-guide.md) for topic navigation. `dropped` means superseded, not implemented.
 
-- **done**: [Plan: names that follow the photos, the new Various batch, headshots, look-alike guard](plans/_archive/2026-10-10-names-ingest-headshots.md)
-- **dropped**: [Plan: a simpler first shot (bare or neutral base), the Prime flows, and the clean-up](plans/_archive/2026-10-11-first-shot-flows.md)
-- **dropped**: [Plan: Prime prompts (pose first), frames, library sync, seeds and inputs](plans/_archive/2026-10-12-prime-prompts-frames-and-inputs.md)
-- **dropped**: [2026-10-12: prompt template standards](plans/_archive/2026-10-12-prompt-template-standards.md)
-- **dropped**: [2026-10-15: likeness reports and manual edit prompts](plans/_archive/2026-10-15-likeness-and-edit-prompts.md)
-- **dropped**: [2026-10-19: library management rebaseline](plans/_archive/2026-10-19-library-management-rebaseline.md)
-- **dropped**: [2026-10-19: library rebaseline, frame retirement and Angel Primes shots](plans/_archive/2026-10-19-library-rebaseline-and-frame-retirement.md)
-- **dropped**: [2026-10-20: self-healing likeness library and review workflow](plans/_archive/2026-10-20-likeness-library-self-healing.md)
-- **dropped**: [2026-10-21: likeness rebaseline, family naming, and matcher simplification](plans/_archive/2026-10-21-likeness-rebaseline-and-family-naming.md)
-- **done**: [2026-10-22: preservation-first plan reconciliation](plans/_archive/2026-10-22-plan-reconciliation.md)
+- **done**: [Plan: names that follow the photos, the new Various batch, headshots, look-alike guard](plans/_archive/completed/2026-10-10-names-ingest-headshots.md)
+- **done**: [2026-10-22: preservation-first plan reconciliation](plans/_archive/completed/2026-10-22-plan-reconciliation.md)
+- **dropped**: [2026-10-19: library management rebaseline](plans/_archive/superseded-library/2026-10-19-library-management-rebaseline.md)
+- **dropped**: [2026-10-19: library rebaseline, frame retirement and Angel Primes shots](plans/_archive/superseded-library/2026-10-19-library-rebaseline-and-frame-retirement.md)
+- **dropped**: [2026-10-20: self-healing likeness library and review workflow](plans/_archive/superseded-library/2026-10-20-likeness-library-self-healing.md)
+- **dropped**: [2026-10-21: likeness rebaseline, family naming, and matcher simplification](plans/_archive/superseded-library/2026-10-21-likeness-rebaseline-and-family-naming.md)
+- **dropped**: [Plan: a simpler first shot (bare or neutral base), the Prime flows, and the clean-up](plans/_archive/superseded-prompts/2026-10-11-first-shot-flows.md)
+- **dropped**: [Plan: Prime prompts (pose first), frames, library sync, seeds and inputs](plans/_archive/superseded-prompts/2026-10-12-prime-prompts-frames-and-inputs.md)
+- **dropped**: [2026-10-12: prompt template standards](plans/_archive/superseded-prompts/2026-10-12-prompt-template-standards.md)
+- **dropped**: [2026-10-15: likeness reports and manual edit prompts](plans/_archive/superseded-prompts/2026-10-15-likeness-and-edit-prompts.md)
 
 </details>
 

@@ -4,6 +4,14 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Oct 30, 14:05 archive correction:** both indexes and physical files are now
+organized across feedback and all four documentation archive locations.
+Twenty-four feedback notes are topic-grouped unchanged; 46 historical docs
+are grouped by domain/topic/status or recap month, preserving prose/source
+while retargeting links. Ongoing filing updates folders, indexes, references
+and generated consumers together; the queue supports nested plan archives.
+No active plan, image library, run stage or backup was reorganized.
+
 **Oct 30 navigation follow-up:** archive topic indexes distinguish historical
 evidence, superseded scope, completed work and incorporated raw feedback;
 no historical files were relocated. The generated queue keeps focused work

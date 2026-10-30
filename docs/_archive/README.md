@@ -18,10 +18,10 @@ validation of their historical claims. Current authorities are in the
 
 | Topic | Historical records |
 | --- | --- |
-| Data and card audits | [Base-set inventory](AUDIT-BASE-SET-INVENTORY-JAN2026-SUPERSEDED.md), [data-directory audit](AUDIT-DATA-DIRECTORY-JAN2026-SUPERSEDED.md), [starter-card audit](AUDIT-STARTER-CARDS-JAN2026-SUPERSEDED.md), [data/docs separation milestone](COMPLETION-DATA-DOCS-SEPARATION-JAN2026-HISTORICAL.md) |
-| Documentation audits and housekeeping | [January documentation audit](DOCUMENTATION-AUDIT-JAN2026-SUPERSEDED.md), [documentation status](documentation-status-report.md), [cleanup summary](CLEANUP-SUMMARY.md) |
-| Earlier MVP, roadmap and campaign proposals | [MVP scope](mvp-scope.md), [December MVP review](final-mvp-review-dec2025-SUPERSEDED.md), [roadmap](roadmap.md), [campaign restructure](CAMPAIGN-MODE-RESTRUCTURE.md), [tutorial gaps](tutorial-gap-resolutions.md) |
-| Earlier document reorganization | [Bible reorganization](bible-reorganization-plan.md), [reorganization status](reorganization-status.md) |
+| Data and card audits | [Base-set inventory](data-audits/AUDIT-BASE-SET-INVENTORY-JAN2026-SUPERSEDED.md), [data-directory audit](data-audits/AUDIT-DATA-DIRECTORY-JAN2026-SUPERSEDED.md), [starter-card audit](data-audits/AUDIT-STARTER-CARDS-JAN2026-SUPERSEDED.md), [data/docs separation milestone](data-audits/COMPLETION-DATA-DOCS-SEPARATION-JAN2026-HISTORICAL.md) |
+| Documentation audits and housekeeping | [January documentation audit](documentation-housekeeping/DOCUMENTATION-AUDIT-JAN2026-SUPERSEDED.md), [documentation status](documentation-housekeeping/documentation-status-report.md), [cleanup summary](documentation-housekeeping/CLEANUP-SUMMARY.md) |
+| Earlier MVP, roadmap and campaign proposals | [MVP scope](mvp-and-roadmap/mvp-scope.md), [December MVP review](mvp-and-roadmap/final-mvp-review-dec2025-SUPERSEDED.md), [roadmap](mvp-and-roadmap/roadmap.md), [campaign restructure](mvp-and-roadmap/CAMPAIGN-MODE-RESTRUCTURE.md), [tutorial gaps](mvp-and-roadmap/tutorial-gap-resolutions.md) |
+| Earlier document reorganization | [Bible reorganization](document-reorganization/bible-reorganization-plan.md), [reorganization status](document-reorganization/reorganization-status.md) |
 
 Other domains have separate [archive indexes](../archive-guide.md).
 

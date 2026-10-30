@@ -5,10 +5,14 @@ Archived is not synonymous with implemented. The
 The [Oct 22 transfer ledger](../README.md#retired-in-the-oct-22-reconciliation)
 records supersession and live task homes.
 
+Physical groups match the sections below: `completed/`,
+`superseded-prompts/`, and `superseded-library/`. File future records into the
+appropriate group and update this index and the live transfer ledger together.
+
 ## Completed records
 
-- [Names, intake and headshots](2026-10-10-names-ingest-headshots.md).
-- [Preservation-first plan reconciliation](2026-10-22-plan-reconciliation.md).
+- [Names, intake and headshots](completed/2026-10-10-names-ingest-headshots.md).
+- [Preservation-first plan reconciliation](completed/2026-10-22-plan-reconciliation.md).
 
 ## Superseded prompt and workflow plans
 
@@ -17,10 +21,10 @@ These have `Status: dropped`, not completed. Current ownership:
 [finals](../2026-10-09-finals-and-mvp.md) and
 [rendering](../2026-10-25-reference-rendering.md).
 
-- [First-shot flows](2026-10-11-first-shot-flows.md).
-- [Prime, frames and inputs](2026-10-12-prime-prompts-frames-and-inputs.md).
-- [Prompt template standards](2026-10-12-prompt-template-standards.md).
-- [Likeness and edit prompts](2026-10-15-likeness-and-edit-prompts.md).
+- [First-shot flows](superseded-prompts/2026-10-11-first-shot-flows.md).
+- [Prime, frames and inputs](superseded-prompts/2026-10-12-prime-prompts-frames-and-inputs.md).
+- [Prompt template standards](superseded-prompts/2026-10-12-prompt-template-standards.md).
+- [Likeness and edit prompts](superseded-prompts/2026-10-15-likeness-and-edit-prompts.md).
 
 ## Superseded library and identity plans
 
@@ -31,10 +35,10 @@ These also have `Status: dropped`. Current ownership:
 [upkeep](../2026-10-22-library-upkeep.md) and
 [rebase](../2026-10-23-cast-seeded-library-rebase.md).
 
-- [Library management rebaseline](2026-10-19-library-management-rebaseline.md).
-- [Rebaseline and frame retirement](2026-10-19-library-rebaseline-and-frame-retirement.md).
-- [Self-healing library](2026-10-20-likeness-library-self-healing.md).
-- [Rebaseline and family naming](2026-10-21-likeness-rebaseline-and-family-naming.md).
+- [Library management rebaseline](superseded-library/2026-10-19-library-management-rebaseline.md).
+- [Rebaseline and frame retirement](superseded-library/2026-10-19-library-rebaseline-and-frame-retirement.md).
+- [Self-healing library](superseded-library/2026-10-20-likeness-library-self-healing.md).
+- [Rebaseline and family naming](superseded-library/2026-10-21-likeness-rebaseline-and-family-naming.md).
 
 Preserve these records and their task maps; do not execute them as a second
 backlog. See the [archive guide](../../archive-guide.md).

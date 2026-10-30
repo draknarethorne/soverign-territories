@@ -2861,6 +2861,7 @@ Finally - if we find an image without a usable face those should also be detecte
 ## Experimental erase first review, Oct 27, 15:23 (verbatim)
 
 Source: user-tagged `feedback/_archive/experimental_erase_feedback.md`.
+Current archived location: `feedback/_archive/intake-quality/experimental_erase_feedback.md`.
 Coverage: I47 display and I48 integrated single-example branch. No source
 move or alteration was performed.
 

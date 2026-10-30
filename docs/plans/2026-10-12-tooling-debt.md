@@ -630,3 +630,26 @@ User words (chat, Oct 30, 13:27), word for word:
 My bad - I didn't realize the way you have organized it.  We might want to better organize that _archive even - and maybe all _archives in docs so that they make more sense.  Let's do that as part of documentation clean-up and organization overall. If we also need to work more on the todo.md automation to split that file up into different priorities we can - but I guess I want to know what you think we could do to improve that.  We'll reboot shortly, but still want to get my docs and thoughts cleaned up and easy to see what we're doing and in what sequence it matters.  We can do analysis in parallel with implementation on areas where more analysis is required to get to decisions on the implementation as well as implementing both small improvements and major priorities.  I'd always like to sprinkle in low-hanging fruit for quality improvements along with the major things - like masking and erasing and storage as key items to address.
 ```
 <!-- markdownlint-enable MD013 -->
+
+## Oct 30, 14:05: physical archive organization correction
+
+The index-only approach was insufficient. All 24 archived feedback notes now
+live in seven topic folders with byte/hash checks; 46 archived documentation
+records are physically grouped to match their indexes: project topics, art
+library operations, completed versus superseded plan topics, and recap months.
+Historical prose/fenced source is preserved; references are rebased, and
+the todo generator now discovers nested plan archives. The canonical
+[ongoing filing model](../archive-guide.md#physical-layout-and-ongoing-filing)
+requires folder, index, references and generated consumers to change together.
+This closes the requested organization correction, not D4's general automated
+day-close audit or D13's broader content review. Active plans remain in place.
+
+User words (chat, Oct 30), word for word:
+
+<!-- markdownlint-disable MD013 -->
+```text
+Seems like the feedback _archive still isn't organized well
+
+I'd want both the index and the actual files in all places organized properly.  So we'd have to do that ongoing as well - following the new process.
+```
+<!-- markdownlint-enable MD013 -->

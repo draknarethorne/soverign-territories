@@ -123,12 +123,21 @@ When a game rule changes, follow: design rule → schema → validator/tooling �
 
 ## The `_archive` convention
 
-Every archive folder in the repo is named `_archive` (`docs/_archive`, `data/_archive`, `prompts/_archive`, ...). It is a
-recycle bin: content stays reachable without digging through git, until a later purge. Rules:
+Every archive folder in the repo is named `_archive` (`docs/_archive`, `data/_archive`, `prompts/_archive`, ...).
+It preserves history, not disposable trash; archival alone authorizes no purge.
+For documentation and raw feedback, both physical folders and their indexes
+follow the [archive filing model](archive-guide.md#physical-layout-and-ongoing-filing).
+Rules:
 
 - Nothing under an `_archive` folder is current, and it is **not** read as documentation or data unless explicitly
   requested (assistants, searches, link checks, and validators skip it).
-- Move superseded material there with `git mv`; do not edit it afterwards, and do not link to it from current docs.
+- Move tracked superseded material with `git mv`, preserving historical prose
+  and raw source text. Update link destinations when moving; navigation indexes
+  may link to history explicitly as history, never as current authority.
+- File each new document in the appropriate topic/status/month folder **and**
+  update its archive index and live owner/transfer ledger in the same change.
+  Do not leave a flat pile for a future cleanup. Verify references, generated
+  consumers and preservation before claiming the filing complete.
 - Active folders that start with an underscore (`data/art/_templates`, `_sets`, `_schema`) are **not** archives.
 
 ## Readiness rule

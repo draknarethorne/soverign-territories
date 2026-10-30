@@ -16,16 +16,40 @@ post-reboot handoff in the [recap index](recap/README.md).
 | Incorporated raw feedback | Local `feedback/_archive/`; [source-to-plan ledger](plans/README.md#oct-27-feedback-disposition-and-intake-restart) | Original notes filed after complete preservation/coverage; not a claim their tasks are done |
 
 Feedback remains git-ignored; tracked plans preserve the full source wording.
-The local feedback archive has a README separating the Oct 30 filing batch
-from older individually filed notes. Do not treat either group as an inbox.
+The local feedback archive physically groups all 24 filed notes into seven
+topic folders: `planning-and-recaps`, `intake-quality`, `identity-and-matching`,
+`storage-and-configuration`, `gallery-and-actions`, `prompts-and-rendering`,
+and `code-maintainability`. Its README gives counts and owning work.
+Original filenames/bytes are retained; filing dates remain in tracked
+preservation records. None of these folders is an unfinished inbox.
+
+## Physical layout and ongoing filing
+
+The folders now match their indexes:
+
+| Archive | Physical groups |
+| --- | --- |
+| `docs/_archive` | `data-audits`, `documentation-housekeeping`, `mvp-and-roadmap`, `document-reorganization` |
+| `docs/art/_archive` | `library-operations` |
+| `docs/plans/_archive` | `completed`, `superseded-prompts`, `superseded-library` |
+| `docs/recap/_archive` | `YYYY-MM` folders; currently `2026-10`, with the topic/reason/current-owner ledger in the recap index |
+| Local `feedback/_archive` | Seven topic folders listed above; no loose notes or competing date-batch folder |
+
+For every future filing: choose the appropriate physical group, preserve the
+record, update the index/transfer ledger and incoming links, and verify any
+generated readers in the same change. A new group needs an index entry, not
+just a directory. Keep only the archive index itself at the archive root.
+Tracked files use `git mv`; ignored feedback uses non-overwriting moves and
+byte/hash verification. Historical prose and fenced raw source remain intact;
+only link destinations may change to retain the same intended targets.
 
 ## Filing and retrieval rules
 
 - Keep archives beside their domain. Do not merge art reports, execution plans
   and raw feedback into one date-only bucket.
-- Use purpose/topic indexes for small archives. Add year/month or named
-  milestone subfolders only when volume actually makes navigation difficult;
-  a date is supporting context, not the only description.
+- Use topic/status folders for domain history and month folders for inherently
+  chronological recaps, with matching purpose/topic indexes. Dates support
+  context; they do not replace topic or live ownership.
 - Do not move historical files merely to make the tree look uniform. A move
   requires reviewed reference updates, preserved prose/source bytes and an
   explicit current owner for every unfinished request.
@@ -36,5 +60,8 @@ from older individually filed notes. Do not treat either group as an inbox.
   or a scoped preservation/link repair. Current work must not resurrect old
   commands, counts or priorities from it.
 
-This pass adds navigation, not a content audit of every historical document.
-Existing historical filenames and links remain stable.
+This pass physically organized 46 historical documentation records and 24
+raw-feedback notes. It is not a fresh content audit or acceptance of every old
+claim. Original filenames remain stable; feedback bytes and historical
+documentation prose/fenced source are preserved, with link destinations
+rebased for the new folders.

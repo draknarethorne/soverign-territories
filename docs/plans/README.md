@@ -115,6 +115,9 @@ After incorporation, re-read the raw source and verify both verbatim preservatio
 and actionable coverage. Only then may that specific feedback file be removed.
 When the user requests archival, move that exact note into `feedback/_archive/`
 instead of deleting it; do not overwrite an existing archived copy.
+Choose its topic folder and update the local index and tracked coverage ledger
+in the same change, following the [physical filing model](../archive-guide.md#physical-layout-and-ongoing-filing).
+The same physical-folder plus index rule applies to documentation archives.
 The current intake directory is root `feedback/`, not `docs/feedback/`.
 Re-read it immediately before removal so edits made during the work are not lost.
 If a note spans plans, keep one complete verbatim copy in the primary plan and
@@ -279,7 +282,9 @@ archive active plans because their source feedback was filed.
 
 **Oct 30 filing batch:** the 13 current source snapshots above were reviewed
 against their owners and verified complete before individual archival into
-`feedback/_archive/2026-10-30-docs-alignment/`. Their original bytes and source
+the local feedback archive. At 14:05, all 24 archived notes (this batch plus
+11 earlier notes) were physically grouped into seven topic folders with a
+local README; the date-only batch folder was removed. Original bytes and source
 hashes are retained; missing exact copies were appended at their primary
 plans' ends, rather than rewriting earlier dated feedback. Open or holding
 implementation is not a reason to keep an already captured raw note active.
@@ -340,13 +345,13 @@ map, live context homes and an explicit not-completed disclaimer.
 
 | Plan | Status | Disposition |
 | --- | --- | --- |
-| [Oct 11 first-shot flows](_archive/2026-10-11-first-shot-flows.md) | dropped | Current manual migration replaces the old winner-selection sequence |
-| [Oct 12 Prime/frames/inputs](_archive/2026-10-12-prime-prompts-frames-and-inputs.md) | dropped | Prompt work to migration; missing inputs to finals; upkeep decisions preserved separately |
-| [Oct 12 prompt standards](_archive/2026-10-12-prompt-template-standards.md) | dropped | Migration owns tested standards, vocabulary mapping and incremental rollout gates |
-| [Oct 15 likeness/edit prompts](_archive/2026-10-15-likeness-and-edit-prompts.md) | dropped | Manual batch can be reviewed now; report acceptance remains a separate live task |
-| [Oct 19 management rebaseline](_archive/2026-10-19-library-management-rebaseline.md) | dropped | Quality, retirement and future intake/pairing split among engine, actions and upkeep |
-| [Oct 19 frame retirement](_archive/2026-10-19-library-rebaseline-and-frame-retirement.md) | dropped | Completed retirement evidence retained; chest crop and user outcomes transferred to upkeep |
-| [Oct 20 self-healing](_archive/2026-10-20-likeness-library-self-healing.md) | dropped | Foundations retained live; all nine open items transferred to focused owners |
-| [Oct 21 rebaseline/family](_archive/2026-10-21-likeness-rebaseline-and-family-naming.md) | dropped | Full contract/evidence retained live; all 69 open items transferred, not declared delivered |
-| [Oct 22 reconciliation](_archive/2026-10-22-plan-reconciliation.md) | done | Full current-plan review, context/task preservation, activation, archival and validated handoff |
-| [_archive/2026-10-10-names-ingest-headshots.md](_archive/2026-10-10-names-ingest-headshots.md) | done | Names that follow the photos (`z_` files), `Sisters`, the new `Various` batch, headshots, the look-alike guard |
+| [Oct 11 first-shot flows](_archive/superseded-prompts/2026-10-11-first-shot-flows.md) | dropped | Current manual migration replaces the old winner-selection sequence |
+| [Oct 12 Prime/frames/inputs](_archive/superseded-prompts/2026-10-12-prime-prompts-frames-and-inputs.md) | dropped | Prompt work to migration; missing inputs to finals; upkeep decisions preserved separately |
+| [Oct 12 prompt standards](_archive/superseded-prompts/2026-10-12-prompt-template-standards.md) | dropped | Migration owns tested standards, vocabulary mapping and incremental rollout gates |
+| [Oct 15 likeness/edit prompts](_archive/superseded-prompts/2026-10-15-likeness-and-edit-prompts.md) | dropped | Manual batch can be reviewed now; report acceptance remains a separate live task |
+| [Oct 19 management rebaseline](_archive/superseded-library/2026-10-19-library-management-rebaseline.md) | dropped | Quality, retirement and future intake/pairing split among engine, actions and upkeep |
+| [Oct 19 frame retirement](_archive/superseded-library/2026-10-19-library-rebaseline-and-frame-retirement.md) | dropped | Completed retirement evidence retained; chest crop and user outcomes transferred to upkeep |
+| [Oct 20 self-healing](_archive/superseded-library/2026-10-20-likeness-library-self-healing.md) | dropped | Foundations retained live; all nine open items transferred to focused owners |
+| [Oct 21 rebaseline/family](_archive/superseded-library/2026-10-21-likeness-rebaseline-and-family-naming.md) | dropped | Full contract/evidence retained live; all 69 open items transferred, not declared delivered |
+| [Oct 22 reconciliation](_archive/completed/2026-10-22-plan-reconciliation.md) | done | Full current-plan review, context/task preservation, activation, archival and validated handoff |
+| [_archive/2026-10-10-names-ingest-headshots.md](_archive/completed/2026-10-10-names-ingest-headshots.md) | done | Names that follow the photos (`z_` files), `Sisters`, the new `Various` batch, headshots, the look-alike guard |

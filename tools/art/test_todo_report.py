@@ -134,6 +134,21 @@ class TodoReportTests(unittest.TestCase):
         self.assertIn("**done**:", text)
         self.assertNotIn("### Completed plans", text)
 
+    def test_nested_archive_records_keep_their_full_relative_links(self):
+        with tempfile.TemporaryDirectory(dir=tr.ROOT / "tmp") as directory:
+            root = pathlib.Path(directory)
+            archive = root / "docs" / "plans" / "_archive"
+            for group, status in (("completed", "done"), ("superseded-library", "dropped")):
+                folder = archive / group
+                folder.mkdir(parents=True)
+                (folder / f"2026-10-30-{status}.md").write_text(
+                    f"# {status} record\n\n**Status:** {status}\n", encoding="utf-8")
+            with mock.patch.object(tr, "ROOT", root):
+                text = "\n".join(tr.open_work())
+            self.assertIn("plans/_archive/completed/2026-10-30-done.md", text)
+            self.assertIn("plans/_archive/superseded-library/2026-10-30-dropped.md", text)
+            self.assertIn("Archived plans (2 historical records", text)
+
     def test_cells_use_final_candidate_or_nothing(self):
         stems = ["Remiah_Qwen_Alpha_1_Prime", "Remiah_FireRed_Alpha_1_Prime"]
         self.assertEqual(tr.state({"Remiah_Qwen_Alpha_1_Prime": 2}, {"Remiah_FireRed_Alpha_1_Prime": 3}, "Remiah", stems), "Q FINAL +1 · F c3")

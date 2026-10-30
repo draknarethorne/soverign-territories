@@ -93,7 +93,7 @@ def plan_status(text):
 
 def open_work():
     """A focused execution queue plus deferred inventory: a `- [ ] **P1 you** ...` box is priority 1 to 3 and owner you (needs your hands or decision), ai (the assistant, when you say go) or either.
-    An untagged box is P2 either. Archived plans (docs/plans/_archive) are listed as completed work."""
+    An untagged box is P2 either. Nested archived plans retain their historical status."""
     items, waiting = [], []
     for plan in sorted((ROOT / "docs" / "plans").glob("2*.md")):
         text = plan.read_text(encoding="utf-8")
@@ -174,7 +174,8 @@ def open_work():
         out += [f"| [{name}](plans/{name}) | {status} | {count} |"
                 for name, status, count in waiting]
         out += ["", "</details>", ""]
-    done = sorted((ROOT / "docs" / "plans" / "_archive").glob("2*.md"))
+    archive = ROOT / "docs" / "plans" / "_archive"
+    done = sorted(archive.rglob("2*.md"))
     out += ["<details>", f"<summary>Archived plans ({len(done)} historical records, not all completed)</summary>", "",
             "### Archived plans", "",
             "Use the [archive guide](archive-guide.md) for topic navigation. "
@@ -182,7 +183,7 @@ def open_work():
     for plan in done:
         text = plan.read_text(encoding="utf-8")
         title = re.search(r"^# (.+)$", text, re.M).group(1)
-        out.append(f"- **{plan_status(text) or 'unclassified'}**: [{title}](plans/_archive/{plan.name})")
+        out.append(f"- **{plan_status(text) or 'unclassified'}**: [{title}](plans/_archive/{plan.relative_to(archive).as_posix()})")
     return out + ["", "</details>", ""]
 
 
