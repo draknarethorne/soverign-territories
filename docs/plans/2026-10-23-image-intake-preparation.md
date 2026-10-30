@@ -2,6 +2,19 @@
 
 **Status:** active (Phase 1; sandbox clean-start integration implemented; real recipe/flow acceptance and production cutover remain gated)
 
+## Oct 29: enhancement-selection clarification
+
+Denoise and tone are comparison-only: the current implementation explicitly
+records no calibrated benefit/detail-preservation selector. Selection chooses
+original or an eligible cleanup/composition, not whichever filter changes
+pixels most. Denoise is a bilateral filter; tone is a partial LAB-lightness
+CLAHE adjustment. Both start independently from the chosen cleanup input.
+An apparently crisper denoise may still remove skin/hair/fabric detail.
+I10/I11 retain visual and representative ComfyUI acceptance; no silent filter
+policy change is part of this rebase. The user's complete question and latest
+autonomous instructions are preserved in the
+[performance continuation](2026-10-28-intake-performance.md#oct-29-autonomous-continuation-chat-word-for-word).
+
 ## Oct 28: approved prepared-image matching and full sandbox iteration
 
 The user authorizes the next sandbox run on every immutable input, including
@@ -49,6 +62,27 @@ remains immutable. Storage S14 verified the reset and S20 owns the new
 3,072-input measurement. The removed v16/bounded pilot reports are not live
 review destinations. Their unresolved cleanup/selection checks transfer to
 I60 below; this retires obsolete report gates, not visual acceptance.
+
+Oct 29 v23 bounded check: all 128 fixed source hashes match the earlier
+sample. Fourteen no-proposal originals now select guarded person compositions;
+all other recommendations agree. Masks/interim images remain native, while
+the chosen output and denoise/tone alternatives alone receive 944x1104
+padding (375 versus 539 eager padded files). Retained Gallery evidence and
+staged history now verify sparse padding, including a separate padded
+original; v6/v16/v22 contracts remain preserved. Recovery/tamper tests pass.
+The performance owner records current timings and the AI first pass across
+all 32 sheets; these are not final user or Production acceptance.
+
+I60 confirmed inherited defect: sample row 33,
+`Various/gallery/Screenshot_20260902_204050_Facebook.jpg`, still has the large
+lower translucent UI panel, nested phone and corner text-search control in
+its selected `head-overlay-composition`. Direct native PNG inspection
+confirmed this; its shared pixels are unchanged from the eager sample.
+Do not label it clean. The authorized sandbox iteration can expose this
+existing limitation; Production readiness and final user inspection remain
+open. Composite summaries/configurable detail retention and terminology
+cutover are recorded under performance T13/T14 and storage S10; do not delete
+current originals, masks or detailed lineage.
 
 Implementation evidence, Oct 28:
 

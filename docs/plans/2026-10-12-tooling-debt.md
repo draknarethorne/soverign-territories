@@ -238,17 +238,35 @@ Gallery/Overview/Review history and face-evidence acceptance, not another
 unrelated tooling expansion. Storage reset is verified; remaining storage
 lifecycle gaps are explicitly open under S1/S4/S5/S11, not presumed finished.
 
-- [ ] **P1 ai** D17 Triage active plans against the rebase/GUI acceptance
+- [x] **P1 ai** D17 Triage active plans against the rebase/GUI acceptance
   milestone. Identify real prerequisites, defer independent work with an
   explicit reason and resume condition, and update the plan index/queue.
   Evaluate `_holding` and status handling before moving anything; preserve
   each plan's independent context and unfinished tasks. Do not start that
   broader reorganization merely to complete the requested commit/push.
-  Oct 29 closeout decision: perform that bounded triage in the fresh chat,
-  before implementation on the continuation branch. Start with T6 recovery,
-  then fresh sandbox rebase and viewer acceptance; independent work may be
-  deferred only with a recorded reason/resume condition. Do not equate
-  merging this branch with completing these plans or all storage work.
+  **Result (Oct 29):** T6 recovery is implemented and tested. T12's final v22
+  performance-decision review still gates S15's exact preview and the fresh
+  sandbox rebase; S20 and the named intake/rebase/gallery checks own
+  measurement and acceptance. No plans moved to `_holding` and no independent
+  plan status changed. The plan index records reasons and resume conditions
+  for T8/T10/T11, S1/S4/S5/S11/S22, L18/L20, and the conditional L19
+  follow-up. Resume these after acceptance, unless evidence shows a direct
+  blocker. T12 is required because the user clarified that the 128-image
+  comparison was not final decision sign-off. Merging the branch does not
+  complete these plans or all storage work.
+
+  **Follow-up (Oct 29):** the user prioritized useful person composition
+  over speculative speedups; only the recommendation and denoise/tone
+  alternatives should be padded. v23 now adds guarded no-proposal composition
+  and selective padding. Rerun/visual review and v23 performance evidence
+  remain prerequisites for S15, the fresh rebase and full intake.
+
+  **Measured disposition (Oct 29):** T12 now records the verified 128-image
+  v23 sample, unprofiled 30-image repeat, selective-padding recovery tests and
+  AI first pass. The slower throughput is explicit; existing nested-phone/UI
+  cleanup remains I60, not a new storage redesign gate. Proceed with the
+  authorized intake-only sandbox iteration, then audit changed outputs,
+  matching, moves and actual viewers before installation/acceptance.
 
 Source: `feedback/chasing_my_tail.md`; retained unchanged. Full wording:
 
@@ -430,12 +448,11 @@ history with a merge commit rather than rewriting it. Merge only after the
 PR's actual CI checks succeed; a successful local suite is not remote matrix
 acceptance. CLI login and API access are now verified working.
 
-The branch is an accumulated art/workflow/library baseline, not a declaration
-that all active plans are complete. D17 plan-wide reconciliation is deliberately
-left to the fresh chat: first identify real rebase/GUI prerequisites and explicit
-deferrals, without discarding independent tasks or raw context. T6 recovery
-remains the first known implementation prerequisite. No new full intake starts
-during branch closeout; Production and immutable Source remain untouched.
+At this closeout checkpoint the branch was an accumulated art/workflow/library
+baseline, not a declaration that all active plans were complete. D17 triage was
+left for the fresh chat; its later result is recorded in the D17 item above and
+the plan index. No new full intake started during branch closeout; Production
+and immutable Source remained untouched.
 
 Local pruning is limited to branches already reachable from merged main;
 retain unrelated remote branches. Removing a branch pointer does not remove

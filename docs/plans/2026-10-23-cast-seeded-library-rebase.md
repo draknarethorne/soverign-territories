@@ -2,6 +2,22 @@
 
 **Status:** active (Phase 3; v17 intake and corrected matching preview complete; visual/move/continuity acceptance remains)
 
+## Oct 29: fresh v23 matching continuation
+
+The full 3,072-outcome intake and its independent artifact check passed.
+The same `fresh-v23-20261029` run now resumes matching with
+`--baseline working --cast-seeds core`. This deliberately uses the existing
+protected/core/workflow-selected retention policy rather than the default
+retain-all mode; it does not lower thresholds or authorize Production.
+Matching started at 22:06 -05:00 with timestamped capture and a live measured
+photo count. Audit releases, destinations, Review reasons, exact faces and
+curation continuity before applying the saved preview.
+
+The user's autonomous investigation, sandbox installation and publication
+authorization is preserved in the
+[performance continuation](2026-10-28-intake-performance.md#oct-29-autonomous-continuation-chat-word-for-word).
+C8/C9 remain open until the real preview/install/viewer checks finish.
+
 ## Oct 28: renewed sandbox authorization
 
 The user's complete direction is preserved in

@@ -77,6 +77,16 @@
               "reason": {"type": "string", "minLength": 1}
             }
           },
+          "recommendedPadded": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "sha256", "source"],
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "sha256": {"$ref": "#/definitions/hash"},
+              "source": {"type": "string", "minLength": 1}
+            }
+          },
           "geometry": {
             "type": "object",
             "additionalProperties": false,
@@ -218,7 +228,11 @@
     "variant": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["path", "sha256", "thumbnail", "thumbnailSha256", "padded", "paddedSha256", "size", "seconds", "meanAbsolutePixelChange"],
+      "required": ["path", "sha256", "thumbnail", "thumbnailSha256", "size", "seconds", "meanAbsolutePixelChange"],
+      "dependencies": {
+        "padded": ["paddedSha256"],
+        "paddedSha256": ["padded"]
+      },
       "properties": {
         "path": {"type": "string", "minLength": 1},
         "sha256": {"$ref": "#/definitions/hash"},

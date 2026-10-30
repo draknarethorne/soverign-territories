@@ -487,6 +487,18 @@ accepted merely because reset/inventory passed.
 - [ ] **P1 ai** S15 Run the final sandbox dry-run, audit source counts, protected
   Angels/Sisters retention, candidate moves, review counts, backups, and undo.
   No Production install in this step.
+
+Oct 29 execution checkpoint: the supported inventory-only preview for
+`fresh-v23-20261029` confirms 3,072 outcomes (2,700 assigned plus 372 current
+Various; 75 newer-byte substitutions). After performance T12's tested
+recovery/current-sample disposition, the intake-only sandbox iteration was
+started with three workers. Its source-overlay copy and live process CPU
+progress were verified. It subsequently completed all 3,072 outcomes with
+no assessment errors, and the separate launcher `--baseline working --check`
+passed. No matching preview or installation exists; this does not
+close S15's move, cast-retention, backup, undo or viewer checks. Current
+sample findings/timings live in T12 and intake I60, not a new storage redesign.
+
 - [ ] **P1 ai** S16 Write the Production runbook with exact source snapshot,
   configuration, destination roots, backups, validation gates, rollback and
   post-run verification. Production execution remains separately gated.

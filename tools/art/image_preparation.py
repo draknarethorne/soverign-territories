@@ -8,6 +8,7 @@ import io
 import json
 import os
 import pathlib
+import shutil
 import sys
 import tempfile
 import time
@@ -36,7 +37,7 @@ from likeness_library import gallery_chrome, metadata, sandbox  # noqa: E402
 CATEGORIES = ("Angels", "Sisters", "Models", "Prospects", "Potentials", "Artists", "Various")
 SCHEMA = ROOT / "data/art/_schema/image-preparation-pilot.schema.json"
 STEPS = pipeline.PREPARED_STEPS
-CURRENT = "preparation-comparison-v22"
+CURRENT = "preparation-comparison-v23"
 # Measured Oct 28 on a 6-core/12-thread Ryzen 5 5500: 1 worker 7.0 s/image, 2 about 5.0, 3 about 4.5, 4 no faster.
 MAX_WORKERS = 3
 WORKER_MEMORY_GB = 2.5
@@ -44,7 +45,7 @@ PARALLEL_MIN_IMAGES = 16
 
 
 def step_names(recipe_id):
-    """The current order; published v6-v21 reports keep their traced step order."""
+    """The current order; published reports keep their recorded step order."""
     return list(STEPS) if recipe_id == CURRENT else legacy.step_names(recipe_id)
 
 
@@ -80,8 +81,8 @@ RECIPE = {
                        "missing/failed detector: assessment error; no transforms for either",
         "panelDetection": "profile-driven observed picture boundary; preserve complete overlapping pill; "
                           "boxed panels trimmed, full-bleed status band removed only below subject start",
-        "subject": "Overlay/border-first proposals gate Mask R-CNN; no proposal retains unassessed pixels and "
-                   "skips composition-only suggestions. Mask R-CNN v2 (COCO person, score>=.5, 800px): "
+        "subject": "Overlay/border-first proposals gate cleanup detectors; no proposal still runs person "
+                   "detection for a guarded composition recommendation. Mask R-CNN v2 (COCO person, score>=.5, 800px): "
                    "largest person plus companions>=20% of its "
                    "area; small figures (ad thumbnails) ignored; no person: body frame around the faces",
         "clutter": "confirmed profile patterns: reel UI, structured GMW ring/letters, baseline-verified "
@@ -91,16 +92,17 @@ RECIPE = {
         "eraser": "guarded LaMa refuses body/face/unknown regions and coverage>20%; one post-fill detection; "
                   "pattern-confirmed reconstruction coverage<=30%, face guard except detected head pill; "
                   "outside cumulative source-coordinate masks must remain identical",
-        "composition": "select observed screenshot picture boundary after reconstruction; subject-mask "
-                       "framing is comparison-only because complete hair/feet coverage is not proven",
+        "composition": "select observed screenshot picture boundary after reconstruction; no-proposal person "
+                       "framing requires <=0.5% grown-subject mask loss and visual hair/feet review; other "
+                       "person framing on proposal paths remains comparison-only",
         "enhancementSelection": "comparison-only; retain cleanup until quality safeguards calibrated",
         "scope": "shared preparation, no assignment; Artists scoped by original artist folder, Various origin unknown",
     },
     "padding": {"size": [944, 1104], "color": list(originals.STUDIO_GREY), "crop": False},
     "overlayPolicy": "retain exact original and masks; reconstructed prepared source eligible for matching "
                      "and generation, not an automatic protected-core replacement",
-    "recommendationPolicy": "v11 sequence final shared by Gallery, likeness and ComfyUI; never a diagnostic "
-                            "mask, rejected subject composition or uncalibrated enhancement",
+    "recommendationPolicy": "sequence final shared by Gallery, likeness and ComfyUI; never a diagnostic mask "
+                            "or uncalibrated enhancement; no-proposal composition requires the subject-loss guard",
 }
 
 
@@ -401,20 +403,17 @@ def render_photo(root, stage, source):
         preview = f"candidates/{folder_key}/{name}-preview.jpg"
         preview_hash = save_image(stage / preview, thumbnail, "JPEG", quality=88)
         thumbnail.close()
-        fitted = ImageOps.contain(variant, (944, 1104), Image.Resampling.LANCZOS)
-        padded = Image.new("RGB", (944, 1104), originals.STUDIO_GREY)
-        padded.paste(fitted, ((944 - fitted.width) // 2, (1104 - fitted.height) // 2))
-        padded_path = f"candidates/{folder_key}/{name}-944x1104.png"
-        padded_hash = save_image(stage / padded_path, padded, "PNG")
-        fitted.close()
-        padded.close()
-        row["variants"][name] = {
+        record = {
             "path": path, "sha256": variant_hash, "thumbnail": preview,
-            "thumbnailSha256": preview_hash, "padded": padded_path,
-            "paddedSha256": padded_hash, "size": list(variant.size),
+            "thumbnailSha256": preview_hash, "size": list(variant.size),
             "seconds": round(time.perf_counter() - previous, 4),
             "meanAbsolutePixelChange": mean_absolute_pixel_change(image, variant),
         }
+        if CURRENT != "preparation-comparison-v23":
+            padded_path = f"candidates/{folder_key}/{name}-944x1104.png"
+            record["padded"] = padded_path
+            record["paddedSha256"] = save_padded(stage, variant, padded_path)
+        row["variants"][name] = record
         previous = time.perf_counter()
     if row["processing"].get("sequence"):
         sequence = row["processing"]["sequence"]
@@ -483,6 +482,13 @@ def recommendation(row):
     return {"use": "original", "reason": reason}
 
 
+def save_padded(stage, image, path):
+    with (ImageOps.contain(image, (944, 1104), Image.Resampling.LANCZOS) as fitted,
+          Image.new("RGB", (944, 1104), originals.STUDIO_GREY) as padded):
+        padded.paste(fitted, ((944 - fitted.width) // 2, (1104 - fitted.height) // 2))
+        return save_image(stage / path, padded, "PNG")
+
+
 def report(data, *, detail=False):
     esc = html.escape
     cards = []
@@ -510,8 +516,16 @@ def report(data, *, detail=False):
                 f'<figure><figcaption>{name} padded 944x1104 (no crop)</figcaption>'
                 f'<a href="{quote(prefix + variant["padded"])}"><img loading="lazy" '
                 f'src="{quote(prefix + variant["padded"])}" alt="{name} padded"></a></figure>'
-                for name, variant in row["variants"].items())
-            padding = f'<h3>Downstream padded candidates</h3><div class="panels">{padded_panels}</div>'
+                for name, variant in row["variants"].items() if "padded" in variant)
+            recommended = row.get("recommendedPadded")
+            if recommended:
+                target = quote(prefix + recommended["path"])
+                padded_panels += (
+                    '<figure><figcaption>Recommended original (retained source) padded 944x1104</figcaption>'
+                    f'<a href="{target}"><img loading="lazy" src="{target}" '
+                    'alt="Recommended original padded"></a></figure>')
+            if padded_panels:
+                padding = f'<h3>Downstream padded candidates</h3><div class="panels">{padded_panels}</div>'
         notes = " ".join(esc(message) for message in row["diagnostics"])
         treatment = esc(row.get("sourceTreatment", "original-unassessed"))
         geometry_html = ""
@@ -660,12 +674,13 @@ def report(data, *, detail=False):
         'recorded mask and coverage guards. White mask pixels identify synthetic areas; outside cumulative '
         'source-coordinate masks pixels must remain identical. Repairs are plausible, not recovered truth.</li>'
         '<li><strong>Composition:</strong> current selected composition uses the observed screenshot picture '
-        'boundary after reconstruction. Subject-mask framing remains comparison-only because complete '
-        'hair/feet coverage is not proven. Review actual pixels, not merely the selected label.</li>'
+        'boundary after reconstruction. Other subject framing must pass the strict mask-loss guard but still '
+        'needs visual review for hair and feet. Review actual pixels, not merely the selected label.</li>'
         '<li><strong>UI-crop-proposal:</strong> the existing screenshot crop rectangle; comparison '
         'only, never recommended because it may cut hair/body. It removes pixels, not overlaid graphics.</li>'
-        '<li><strong>Padded 944x1104:</strong> each candidate fitted without cropping onto a light-grey '
-        'canvas, for downstream display; padding does not clean or repair the photo.</li></ul>'
+        '<li><strong>Padded 944x1104:</strong> only the recommendation and denoise/tone alternatives are '
+        'fitted without cropping onto a light-grey canvas. Masks and interim candidates remain native-sized; '
+        'padding does not clean or repair the photo.</li></ul>'
         '<p>Recommendations are provisional, not measured quality rankings. Clutter detection is heuristic: '
         'an image where nothing was found may still have overlays, including round avatars or picture-in-picture '
         'outside a confirmed phone-reel frame. Nested reel insets are proposed only when a small secondary face, '
@@ -776,6 +791,26 @@ def validate_processing(row, *, same_mask_comparison=False, names=legacy.OLD_STE
         raise ValueError(f"recommendation disagrees with final selection: {row['source']}")
 
 
+def validate_workflow_padding(row):
+    selected = row["recommendation"]["use"]
+    if row["outcome"] in ("unprocessable", "junk-candidate", "assessment-failed") and selected != "none":
+        raise ValueError(f"unusable input has a workflow recommendation: {row['source']}")
+    expected_padded = set()
+    if selected != "none":
+        expected_padded.update(name for name in ("denoise", "tone") if name in row["variants"])
+        if selected in row["variants"]:
+            expected_padded.add(selected)
+    actual_padded = {name for name, variant in row["variants"].items() if "padded" in variant}
+    if actual_padded != expected_padded:
+        raise ValueError(f"unexpected workflow padding candidates: {row['source']}")
+    if selected == "original":
+        padded = row.get("recommendedPadded")
+        if not padded or padded["source"] != row["retained"]:
+            raise ValueError(f"original recommendation lacks retained-source padding: {row['source']}")
+    elif row.get("recommendedPadded"):
+        raise ValueError(f"non-original recommendation has separate original padding: {row['source']}")
+
+
 def validate(data):
     Draft7Validator(json.loads(SCHEMA.read_text(encoding="utf-8"))).validate(data)
     sources = [row["source"] for row in data["photos"]]
@@ -787,6 +822,12 @@ def validate(data):
         geometry = row.get("geometry")
         recipe = data["recipe"].get("id")
         traced = recipe == CURRENT or recipe in legacy.TRACED
+        if recipe in legacy.ids(1, 22) and any(
+                "padded" not in variant or "paddedSha256" not in variant
+                for variant in row["variants"].values()):
+            raise ValueError(f"legacy recipe is missing its recorded padded candidates: {row['source']}")
+        if recipe == "preparation-comparison-v23":
+            validate_workflow_padding(row)
         if recipe == CURRENT or recipe in legacy.SCOPED:
             sandbox._safe_source_path(row["source"])
             relative = pathlib.PurePosixPath(row["source"])
@@ -881,8 +922,11 @@ def verify(root, output, *, current_sources=True):
         artifacts = [(row["retained"], row["sourceSha256"]), (row["detail"], row["detailSha256"])]
         for variant in row["variants"].values():
             artifacts += [(variant["path"], variant["sha256"]),
-                          (variant["thumbnail"], variant["thumbnailSha256"]),
-                          (variant["padded"], variant["paddedSha256"])]
+                          (variant["thumbnail"], variant["thumbnailSha256"])]
+            if "padded" in variant:
+                artifacts.append((variant["padded"], variant["paddedSha256"]))
+        if row.get("recommendedPadded"):
+            artifacts.append((row["recommendedPadded"]["path"], row["recommendedPadded"]["sha256"]))
         for relative, digest in artifacts:
             sandbox._safe_source_path(relative)
             path = safe_path(output, output / relative)
@@ -1003,6 +1047,307 @@ def rendered_rows(root, stage, selected, workers, render=None):
                 following += 1
 
 
+def canonical_sha(value):
+    payload = json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+    return sha(payload)
+
+
+def atomic_json(path, value):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, temporary_name = tempfile.mkstemp(prefix=".checkpoint-", dir=path.parent)
+    temporary = pathlib.Path(temporary_name)
+    try:
+        with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as stream:
+            json.dump(value, stream, indent=2)
+            stream.write("\n")
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+def row_artifact_hashes(row):
+    artifacts = {
+        row["retained"]: row["sourceSha256"],
+        row["detail"]: row["detailSha256"],
+    }
+    for variant in row["variants"].values():
+        artifacts[variant["path"]] = variant["sha256"]
+        artifacts[variant["thumbnail"]] = variant["thumbnailSha256"]
+        if "padded" in variant:
+            artifacts[variant["padded"]] = variant["paddedSha256"]
+    if row.get("recommendedPadded"):
+        artifacts[row["recommendedPadded"]["path"]] = row["recommendedPadded"]["sha256"]
+    return artifacts
+
+
+def artifact_tree_hashes(root, directory):
+    directory = pathlib.Path(directory)
+    if not directory.exists():
+        return {}
+    safe_path(root, directory)
+    if not directory.is_dir():
+        raise ValueError(f"preparation artifact store is not a directory: {directory}")
+    artifacts = {}
+    for path in directory.rglob("*"):
+        if path.is_symlink() or temporary_storage._is_reparse(path):
+            raise ValueError(f"linked preparation artifact: {path}")
+        if path.is_file():
+            safe_path(root, path)
+            artifacts[path.relative_to(directory).as_posix()] = sha_file(path)
+    return artifacts
+
+
+def checkpoint_render_worker(root, recovery, source, index, expected, binding, base_data):
+    """Render one image in isolation and commit its complete, bound checkpoint."""
+    worker_dir = pathlib.Path(recovery) / f"{index:06d}"
+    checkpoint_dir = pathlib.Path(recovery) / "checkpoints"
+    worker_dir.mkdir(parents=True, exist_ok=True)
+    if sha_file(source) != expected["sha256"]:
+        raise ValueError(f"preparation source changed before rendering: {expected['source']}")
+
+    row = render_photo(root, worker_dir, source)
+    if row["source"] != expected["source"] or row["sourceSha256"] != expected["sha256"]:
+        raise ValueError(f"preparation result does not match its input binding: {expected['source']}")
+    row["recommendation"] = recommendation(row)
+    if CURRENT == "preparation-comparison-v23":
+        selected = row["recommendation"]["use"]
+        if selected == "original":
+            selected_image = decode_file(worker_dir / row["retained"])
+            try:
+                path = f"recommended/{row['sourceSha256'][:24]}-944x1104.png"
+                row["recommendedPadded"] = {
+                    "path": path,
+                    "sha256": save_padded(worker_dir, selected_image, path),
+                    "source": row["retained"],
+                }
+            finally:
+                selected_image.close()
+        elif selected in row["variants"]:
+            variant = row["variants"][selected]
+            path = f"candidates/{row['sourceSha256'][:24]}/{selected}-944x1104.png"
+            with Image.open(worker_dir / variant["path"]) as opened:
+                variant["padded"] = path
+                variant["paddedSha256"] = save_padded(worker_dir, opened, path)
+        for name in ("denoise", "tone"):
+            variant = row["variants"].get(name)
+            if variant and "padded" not in variant:
+                path = f"candidates/{row['sourceSha256'][:24]}/{name}-944x1104.png"
+                with Image.open(worker_dir / variant["path"]) as opened:
+                    variant["padded"] = path
+                    variant["paddedSha256"] = save_padded(worker_dir, opened, path)
+    row["detail"] = f"photos/{sha(row['source'].encode('utf-8'))}.html"
+    detail = report({**base_data, "photos": [row]}, detail=True)
+    write_new(worker_dir / row["detail"], detail)
+    row["detailSha256"] = sha(detail)
+
+    artifacts = []
+    for path in sorted(worker_dir.rglob("*")):
+        if path.is_symlink() or temporary_storage._is_reparse(path):
+            raise ValueError(f"linked per-image preparation artifact: {path}")
+        if path.is_file():
+            safe_path(worker_dir, path)
+            artifacts.append({
+                "path": path.relative_to(worker_dir).as_posix(),
+                "sha256": sha_file(path),
+            })
+    expected_artifacts = row_artifact_hashes(row)
+    if {item["path"]: item["sha256"] for item in artifacts} != expected_artifacts:
+        raise ValueError(f"per-image artifact set is incomplete: {expected['source']}")
+
+    checkpoint = {
+        "schemaVersion": 1,
+        "index": index,
+        "runFingerprint": binding["fingerprint"],
+        "source": expected["source"],
+        "sourceSha256": expected["sha256"],
+        "recipeSha256": binding["recipeSha256"],
+        "configurationSha256": binding["configurationSha256"],
+        "artifacts": artifacts,
+        "row": row,
+    }
+    atomic_json(checkpoint_dir / f"{index:06d}.json", checkpoint)
+    return row
+
+
+def remove_worker_state(root, worker_dir, checkpoint_path):
+    for path in (checkpoint_path, worker_dir):
+        if not path.exists() and not path.is_symlink():
+            continue
+        safe_path(root, path)
+        if path.is_symlink() or temporary_storage._is_reparse(path):
+            raise ValueError(f"refusing to remove linked preparation recovery data: {path}")
+        if path.is_dir():
+            shutil.rmtree(path)
+        else:
+            path.unlink()
+
+
+def remove_worker_directory(root, worker_dir):
+    if not worker_dir.exists() and not worker_dir.is_symlink():
+        return
+    safe_path(root, worker_dir)
+    if worker_dir.is_symlink() or temporary_storage._is_reparse(worker_dir):
+        raise ValueError(f"refusing to remove linked preparation recovery data: {worker_dir}")
+    shutil.rmtree(worker_dir)
+
+
+def load_worker_checkpoint(root, recovery, stage_artifacts, index, expected, binding):
+    worker_dir = pathlib.Path(recovery) / f"{index:06d}"
+    checkpoint_path = pathlib.Path(recovery) / "checkpoints" / f"{index:06d}.json"
+    if checkpoint_path.is_symlink() or (
+            checkpoint_path.exists() and temporary_storage._is_reparse(checkpoint_path)):
+        raise ValueError(f"linked preparation checkpoint: {checkpoint_path}")
+    if worker_dir.is_symlink() or (
+            worker_dir.exists() and temporary_storage._is_reparse(worker_dir)):
+        raise ValueError(f"linked per-image preparation staging: {worker_dir}")
+    if not checkpoint_path.exists():
+        if worker_dir.exists():
+            print(f"Discarding incomplete worker staging for {expected['source']}.", flush=True)
+            remove_worker_state(root, worker_dir, checkpoint_path)
+        return None, False
+    safe_path(root, checkpoint_path)
+    try:
+        checkpoint = json.loads(checkpoint_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"could not read preparation checkpoint: {checkpoint_path}: {exc}") from exc
+    if not isinstance(checkpoint, dict):
+        raise ValueError(f"invalid preparation checkpoint shape: {checkpoint_path}")
+    wanted = {
+        "schemaVersion": 1,
+        "index": index,
+        "runFingerprint": binding["fingerprint"],
+        "source": expected["source"],
+        "sourceSha256": expected["sha256"],
+        "recipeSha256": binding["recipeSha256"],
+        "configurationSha256": binding["configurationSha256"],
+    }
+    if any(checkpoint.get(key) != value for key, value in wanted.items()):
+        raise ValueError(f"preparation checkpoint binding mismatch: {checkpoint_path}")
+    row = checkpoint.get("row")
+    if not isinstance(row, dict) or row.get("source") != expected["source"] \
+            or row.get("sourceSha256") != expected["sha256"]:
+        raise ValueError(f"preparation checkpoint row mismatch: {checkpoint_path}")
+    try:
+        recorded_artifacts = {
+            item["path"]: item["sha256"] for item in checkpoint["artifacts"]
+        }
+        expected_artifacts = row_artifact_hashes(row)
+    except (AttributeError, KeyError, TypeError) as exc:
+        raise ValueError(f"incomplete preparation checkpoint: {checkpoint_path}") from exc
+    if len(recorded_artifacts) != len(checkpoint["artifacts"]) or recorded_artifacts != expected_artifacts:
+        raise ValueError(f"preparation checkpoint artifact list mismatch: {checkpoint_path}")
+
+    worker_artifacts = artifact_tree_hashes(root, worker_dir)
+    worker_valid = worker_artifacts == recorded_artifacts
+    stage_valid = all(stage_artifacts.get(path) == digest
+                      for path, digest in recorded_artifacts.items())
+    if stage_valid:
+        remove_worker_directory(root, worker_dir)
+        return row, False
+    if worker_valid:
+        return row, True
+    if worker_dir.exists():
+        print(f"Discarding incomplete or changed checkpoint for {expected['source']}; rerendering.", flush=True)
+    remove_worker_state(root, worker_dir, checkpoint_path)
+    return None, False
+
+
+def clean_incomplete_report_stage(root, stage, stage_artifacts, rows, repairable):
+    references = {}
+    for row in rows.values():
+        for path, digest in row_artifact_hashes(row).items():
+            if path in references and references[path] != digest:
+                raise ValueError(f"conflicting checkpoint artifact hashes: {path}")
+            references[path] = digest
+
+    for relative, actual_hash in stage_artifacts.items():
+        expected_hash = references.get(relative)
+        path = safe_path(root, pathlib.Path(stage) / relative)
+        if expected_hash is None or actual_hash != expected_hash:
+            if expected_hash is not None and relative not in repairable:
+                raise ValueError(f"changed staged artifact has no verified recovery copy: {path}")
+            path.unlink()
+
+    for directory in sorted(pathlib.Path(stage).rglob("*"), key=lambda item: len(item.parts), reverse=True):
+        if directory.is_dir() and not directory.is_symlink() and not any(directory.iterdir()):
+            directory.rmdir()
+
+
+def checkpointed_rows(root, recovery, stage, selected, input_rows, binding, base_data, workers):
+    """Reuse only complete bound images; yield rows in inventory order."""
+    checkpoint_dir = pathlib.Path(recovery) / "checkpoints"
+    checkpoint_dir.mkdir(parents=True, exist_ok=True)
+    stage_artifacts = artifact_tree_hashes(root, stage)
+    recovered = {}
+    repairable = set()
+    for index, expected in enumerate(input_rows):
+        row, needs_materialization = load_worker_checkpoint(
+            root, recovery, stage_artifacts, index, expected, binding,
+        )
+        if row is not None:
+            recovered[index] = row
+            if needs_materialization:
+                repairable.update(row_artifact_hashes(row))
+    clean_incomplete_report_stage(root, stage, stage_artifacts, recovered, repairable)
+    if recovered:
+        print(f"Recovered complete image checkpoints: {len(recovered)}/{len(selected)}.", flush=True)
+
+    completed = len(recovered)
+    following = 0
+    done = dict(recovered)
+    while following in done:
+        yield following, done.pop(following)
+        following += 1
+
+    missing = [index for index in range(len(selected)) if index not in recovered]
+    if not missing:
+        return
+
+    completed_count = [completed]
+
+    def report_worker(index, row):
+        completed_count[0] += 1
+        print(f"Completed worker {completed_count[0]}/{len(selected)} (input {index + 1}): "
+              f"{row['outcome']} ({row['source']})", flush=True)
+
+    if workers <= 1 or len(missing) <= 1:
+        for index in missing:
+            row = checkpoint_render_worker(
+                root, recovery, selected[index], index, input_rows[index], binding, base_data,
+            )
+            report_worker(index, row)
+            done[index] = row
+            while following in done:
+                yield following, done.pop(following)
+                following += 1
+        return
+
+    import concurrent.futures
+    import multiprocessing
+
+    threads = max(1, (os.cpu_count() or 2) // workers)
+    with concurrent.futures.ProcessPoolExecutor(
+            max_workers=workers, mp_context=multiprocessing.get_context("spawn"),
+            initializer=_start_worker, initargs=(threads,)) as pool:
+        futures = {
+            pool.submit(
+                checkpoint_render_worker,
+                root, recovery, selected[index], index, input_rows[index], binding, base_data,
+            ): index
+            for index in missing
+        }
+        for future in concurrent.futures.as_completed(futures):
+            index = futures[future]
+            row = future.result()
+            report_worker(index, row)
+            done[index] = row
+            while following in done:
+                yield following, done.pop(following)
+                following += 1
+
+
 def publish(root, output, selected, *, limit=0, source_folder=None, counts=None, workers=None):
     """Publish one immutable report; sandbox orchestration supplies a verified source mirror."""
     if workers is None:
@@ -1034,19 +1379,78 @@ def publish(root, output, selected, *, limit=0, source_folder=None, counts=None,
                 {"runOutput": output, "temporaryRoot": temporary_root},
             )}
     safe_path(root, temporary_root)
-    with temporary_storage.staging_directory(temporary_root, ".preparation-") as temporary:
-        stage = temporary / "run"
-        stage.mkdir()
+    input_rows = [
+        {"source": source.relative_to(root).as_posix(), "sha256": sha_file(source)}
+        for source in selected
+    ]
+    binding = {
+        "schemaVersion": 1,
+        "root": str(root),
+        "output": str(output),
+        "inputs": input_rows,
+        "recipe": RECIPE,
+        "configurationReceipt": data["configurationReceipt"],
+        "limit": limit,
+        "sourceFolder": source_folder,
+        "inventory": counts,
+    }
+    binding["fingerprint"] = canonical_sha(binding)
+    binding["recipeSha256"] = canonical_sha(RECIPE)
+    binding["configurationSha256"] = canonical_sha(data["configurationReceipt"])
+    recovery_name = f"prep-{binding['fingerprint'][:20]}"
+    with temporary_storage.resumable_staging_directory(temporary_root, recovery_name) as recovery:
+        binding_path = recovery / "binding.json"
+        if binding_path.exists():
+            safe_path(root, binding_path)
+            if binding_path.is_symlink() or temporary_storage._is_reparse(binding_path):
+                raise ValueError(f"linked preparation recovery binding: {binding_path}")
+            try:
+                saved_binding = json.loads(binding_path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError) as exc:
+                raise ValueError(f"could not read preparation recovery binding: {binding_path}: {exc}") from exc
+            if saved_binding != binding:
+                raise ValueError(f"preparation recovery binding mismatch: {recovery}")
+        else:
+            leftovers = list(recovery.iterdir())
+            incomplete_json = [
+                path for path in leftovers
+                if path.name.startswith(".checkpoint-") and path.is_file() and not path.is_symlink()
+            ]
+            for path in incomplete_json:
+                if temporary_storage._is_reparse(path):
+                    raise ValueError(f"linked temporary recovery file: {path}")
+            if len(incomplete_json) != len(leftovers):
+                raise ValueError(f"unbound preparation recovery data needs inspection: {recovery}")
+            for path in incomplete_json:
+                path.unlink()
+            atomic_json(binding_path, binding)
+        stage = recovery / "publish"
+        if stage.exists():
+            safe_path(root, stage)
+            if stage.is_symlink() or temporary_storage._is_reparse(stage) or not stage.is_dir():
+                raise ValueError(f"invalid preparation publish staging: {stage}")
+        else:
+            stage.mkdir()
         print(f"Preparing {len(selected)} images with {workers} worker process(es).", flush=True)
-        for index, row in rendered_rows(root, stage, selected, workers):
+        for index, row in checkpointed_rows(
+                root, recovery, stage, selected, input_rows, binding, data, workers):
             index += 1
-            row["recommendation"] = recommendation(row)
-            row["detail"] = f"photos/{sha(row['source'].encode('utf-8'))}.html"
-            detail = report({**data, "photos": [row]}, detail=True)
-            write_new(stage / row["detail"], detail)
-            row["detailSha256"] = sha(detail)
+            worker_dir = recovery / f"{index - 1:06d}"
+            for relative, expected_hash in row_artifact_hashes(row).items():
+                target_artifact = safe_path(stage, stage / relative)
+                source_artifact = safe_path(worker_dir, worker_dir / relative)
+                if source_artifact.is_file() and sha_file(source_artifact) != expected_hash:
+                    raise ValueError(f"preparation checkpoint artifact changed before publish: {source_artifact}")
+                if target_artifact.exists():
+                    if sha_file(target_artifact) != expected_hash:
+                        raise ValueError(f"preparation checkpoint artifact changed before publish: {target_artifact}")
+                elif source_artifact.is_file():
+                    copy_new_file(target_artifact, source_artifact)
+                else:
+                    raise ValueError(f"preparation checkpoint artifact is missing: {relative}")
+            remove_worker_directory(root, worker_dir)
             data["photos"].append(row)
-            print(f"Prepared {index}/{len(selected)}: {data['photos'][-1]['outcome']}", flush=True)
+            print(f"Ordered report rows: {index}/{len(selected)}.", flush=True)
         page = report(data)
         write_new(stage / "index.html", page)
         data["reportSha256"] = sha(page)
@@ -1054,6 +1458,7 @@ def publish(root, output, selected, *, limit=0, source_folder=None, counts=None,
         write_new(stage / "manifest.json", (json.dumps(data, indent=2) + "\n").encode("utf-8"))
         verify(root, stage)
         os.rename(stage, output)
+        shutil.rmtree(recovery)
     print(f"Published comparison report: {output / 'index.html'}")
     return int(any(row["outcome"] in ("unprocessable", "assessment-failed") for row in data["photos"]))
 

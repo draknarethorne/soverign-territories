@@ -161,3 +161,42 @@ def staging_directory(parent, prefix, preserve_on_error=False):
     finally:
         if created_lock and not directory.exists():
             lock_path.unlink(missing_ok=True)
+
+
+@contextlib.contextmanager
+def resumable_staging_directory(parent, name):
+    """Lock a stable staging directory and preserve it until its owner removes it."""
+    parent = pathlib.Path(parent)
+    if pathlib.Path(name).name != name or name in ("", ".", ".."):
+        raise ValueError(f"invalid resumable staging name: {name}")
+    parent.mkdir(parents=True, exist_ok=True)
+    if _is_reparse(parent):
+        raise ValueError(f"refusing linked resumable staging parent: {parent}")
+    directory = parent / name
+    lock_path = parent / (name + ".lock")
+    if (directory.exists() or directory.is_symlink()) and _is_reparse(directory):
+        raise ValueError(f"refusing linked resumable staging directory: {directory}")
+    if (lock_path.exists() or lock_path.is_symlink()) and _is_reparse(lock_path):
+        raise ValueError(f"refusing linked resumable staging lock: {lock_path}")
+
+    try:
+        lock = lock_path.open("x+b")
+    except FileExistsError:
+        lock = lock_path.open("r+b")
+    try:
+        _ensure_lock_byte(lock)
+        if not _lock(lock):
+            raise RuntimeError(f"resumable staging directory is already in use: {directory}")
+        try:
+            if directory.exists():
+                if not directory.is_dir():
+                    raise ValueError(f"resumable staging path is not a directory: {directory}")
+            else:
+                directory.mkdir()
+            yield directory
+        finally:
+            _unlock(lock)
+    finally:
+        lock.close()
+        if not directory.exists():
+            lock_path.unlink(missing_ok=True)

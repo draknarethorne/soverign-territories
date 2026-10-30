@@ -1,6 +1,6 @@
 # Intake performance, the likeness face crop and generated-output storage
 
-**Status:** active (parallel run measured; fresh-baseline comparison and routed review/storage work remain)
+**Status:** active (parallel/v22 profiles recorded; T6 recovery tested; v23 output review/performance decision, fresh-baseline comparison and routed review/storage work remain)
 
 Source: the user's Oct 28 notes (`feedback/random_thoughts.md`, preserved word for
 word at the end). Three topics: faster intake preparation on this machine,
@@ -104,13 +104,21 @@ intake or matching run is active at this checkpoint.
 - [x] **P1 ai** T5 Profile the fixed 30-image mix on current v21 without
   concurrent tests/hooks; repeat old/new timings, prove exact artifacts and
   decisions, and retain only a bounded behavior-preserving optimization.
-- [ ] **P1 ai** T6 Before another full intake attempt, implement and test
+- [x] **P1 ai** T6 Before another full intake attempt, implement and test
   per-image checkpoint recovery bound to input hashes, recipe/configuration,
   and complete artifact hashes. Published reports remain immutable; never
   reuse incomplete or changed evidence as successful results. Show completed
   worker work independently of ordered report progress. Coordinate with
   storage S20 and intake I60; this is a reliability prerequisite, not another
   storage-layout refactor.
+
+Implemented Oct 29. The report staging tree itself is durable across retries;
+verified worker artifacts are removed as each row is materialized, avoiding a
+second full copy of completed report output. A partial materialization can be
+completed from its still-verified worker checkpoint. The 74 image-preparation
+tests and 11 temporary-storage tests pass, including changed-input/artifact
+rejection and OS-lock reacquisition after a subprocess exit.
+
 - [x] **P1 ai** T7 Add a conservative overlay/border-first gate before
   person segmentation. Reuse body-independent pattern proposals, retain
   subject protection for potential repairs/crops and unknown states, and
@@ -118,6 +126,25 @@ intake or matching run is active at this checkpoint.
   composition-only suggestions on the no-proposal path. Version the recipe,
   preserve old reports, and measure unchanged-image savings against the same
   fixed sample without losing its selected repairs.
+- **v23 follow-up (Oct 29):** the user clarified that no-proposal person
+  composition is useful when it improves workflow framing. v23 now runs person
+  detection on that path and recommends a composition only after the
+  grown-subject mask-loss guard; hair/feet still require visual review.
+  Composition suggestions on proposal paths remain comparison-only.
+- [x] **P1 ai** T12 Before another full intake, close the v22 performance
+  decision review: reconcile the paired 128-image profile with the eager
+  behavior, identify any remaining behavior-preserving optimization worth a
+  bounded test, and record each measured hotspot as optimized, retained or
+  deferred with a reason. Explicitly account for the 48 composition
+  comparison artifacts omitted in v22. v23 implements the user's clarification:
+  the selected recommendation and denoise/tone alternatives are padded, while
+  masks and interim candidates remain native-sized. Verify the regenerated
+  composition evidence and visual output, and measure v23 cost before S15 or a
+  full intake. The user has approved this behavior change; do not broaden it to
+  other cleanup/reconstruction policies without asking. This gate remains
+  closed for the authorized sandbox iteration by the Oct 29 measurements
+  below; this is not production-quality acceptance or approval to install
+  an unaudited matching preview.
 
 The original fixed 30 paths were resolved against the fresh frozen input
 mirror, with unique stable-photo-ID resolution when paths had moved. Both
@@ -190,7 +217,7 @@ speedup follows from them.
 
 ### Oct 29: overlay-first v22 and the larger paired profile
 
-The current recipe is **v22**. After face eligibility, border/letterbox/reel
+The historical recipe is **v22**. After face eligibility, border/letterbox/reel
 and known-pattern proposals run before Mask R-CNN. No proposal triggers an
 additional broad, body-agnostic glyph check. If that also finds nothing,
 retain the original pixels as **unassessed**, skip subject segmentation and
@@ -200,7 +227,7 @@ Pattern proposals are reused in original source coordinates. Body-sensitive
 clutter is rechecked with the person mask and current crop; post-fill residual
 detection is unchanged. Detection exceptions cannot become no-proposal success.
 The experimental comparison command retains its eager behavior; published
-v21 and older receipts keep their historical validation/step contracts.
+v22 and older receipts keep their historical validation/step contracts.
 
 The original 30-image sample avoided 20 of 28 subject calls, preserving all
 recommendations, selected pixels and 354 shared candidate/preview/padded
@@ -285,6 +312,159 @@ For routine intake, ordinary photos with no detected marks are cheapest;
 screenshots needing several separate filled regions are most expensive.
 Original recommendation alone does not mean no detector work.
 
+### T12: current measured disposition
+
+- **Optimized:** exact pairwise RGB extrema averaged 2.8% lower elapsed time
+  across two repeats. The v22 preflight gate cut the paired 128-image elapsed
+  time by 42.3%, with the same recommendations and 1,569 shared artifact
+  hashes.
+- **Retained:** detector thresholds/resizing, safety checks and both fill
+  stages. Their output/context is behavior-sensitive; neither profile proves
+  an equivalent substitute.
+- **Validated targeted optimization:** a bounded A/B ran `clutter.glyphs`
+  (`screenshot=False`) over the same 128 sandbox inputs, alternating execution
+  order. The original axis reductions and repeated component-mask builds took
+  25.806 s; exact pairwise RGB bounds plus one reused component mask took
+  12.573 s (51.3% lower glyph-only time). All returned part types, boxes,
+  reasons and mask hashes matched. Decode, proposal detection and full-run
+  wall time were not measured by this A/B.
+- **Still unproven:** the gated cProfile attributes 114.85 summed worker
+  seconds to `overlay_proposals` (125 calls) and 59.30 to `clutter.glyphs`
+  (171 calls, 28.69 self seconds). Nested detector times overlap. The glyph
+  change is a confirmed local saving, not proof of a similar full-intake
+  reduction. Further proposal-bank reuse/reordering needs its own exact-output
+  A/B; no safe additional end-to-end saving is established.
+- **Deferred:** person-inference resizing and LaMa fill internals need separate
+  equivalence evidence before any change. Copy and hashing took under four
+  summed worker seconds in the 128-image pass; encoding was measured, but disk
+  write latency was not isolated.
+- **Requested behavior; verified sandbox sample below:** assess useful person
+  composition rather than assuming no proposals means no improvement.
+  Padding belongs only on the chosen
+  recommendation and denoise/tone alternatives. v23 implements guarded
+  no-proposal composition selection and selective padding. The outputs were
+  regenerated, inspected and measured below; full-run and final user
+  acceptance remain separate.
+
+#### Oct 29: verified v23 sample and disposition
+
+The actual checkpoint worker, rather than the obsolete `rendered_rows` hook,
+captured all 128 per-image profiles. Ordered source paths and SHA-256 values
+exactly match the eager/v22 sample. The immutable report is
+`fresh-r21-20261029\inputs\_reports\preparation\v23-profile-128-20261029`.
+
+| Result | Verified value |
+| --- | --- |
+| Profiled elapsed, including publication verification | 974.34 s; not a speed improvement over historical v22 |
+| Outcomes | 109 compared, 16 compared-overlay, 3 junk candidates; no assessment/decode errors |
+| Changed recommendations | 14 originals become guarded person compositions; all other selections agree |
+| Shared artifact checks | 1,286 matching hashes; 84 differences are exactly native/preview/padded denoise and tone derived from the 14 new compositions |
+| Workflow padding versus eager sample | 539 -> 375 files: exactly three outputs for each of 125 usable photos; no mask/interim padding |
+| Unprofiled repeat | Original fixed 30 images: 222.75 s, three workers, identical recommendations and 323 shared variant artifact hashes; separate padded originals also agree |
+
+Historical unprofiled eager/gated results (122.76/77.32 s) are not current v23
+throughput claims. The current policy deliberately restores person assessment;
+checkpoint isolation/publication also changes I/O. No CPU resize, fill or
+safety shortcut was adopted to recover the earlier timing.
+
+Summed inclusive worker costs overlap: checkpoint 2,501.42 s, native render
+1,945.03 s, person detection 624.94 s, fill 349.79 s (43 calls), proposal bank
+134.69 s, glyph checks 43.10 s, encoding/write 739.59 s and padding 254.10 s.
+Directory creation accounts for 639.03 worker seconds across 2,218 calls;
+file opens also consume 207.00 s. This identifies real filesystem work, not
+proof that PNG compression alone is the bottleneck. A 40-call existing-folder
+probe took only 0.0051 s (`mkdir(exist_ok=True)`) versus 0.0020 s (directory
+check first); it does not reproduce the creation workload, so no speculative
+directory-check optimization was applied.
+
+Disposition: retain person/face/crop guards, both fill stages, exact artifact
+hashes and durable per-image recovery; keep the validated glyph optimization.
+Further filesystem/layout and inference work stays with S11/T8/T11 after the
+sandbox milestone unless a concrete failure blocks it. The slower current
+throughput is measured and visible, not hidden behind the obsolete 42.3%
+claim.
+
+AI first pass reviewed all 32 source-identified sheets (128 photos), the 14
+new selected compositions in context, and selected native files at full size.
+No obvious new person truncation was identified at sheet resolution; this is
+not a hair/feet completeness proof or the user's final inspection. Direct
+native checks dismissed several thumbnail-level suspicions on clean originals.
+One definite inherited failure is sample row 33,
+`Various/gallery/Screenshot_20260902_204050_Facebook.jpg`: the selected
+reconstruction/composition still contains the large lower translucent panel,
+nested phone and corner text-search control. Its shared pixels match the
+eager baseline; retain it as an I60 cleanup defect, not a clean success or a
+new reason to redesign storage. Production acceptance remains open.
+
+Current validation: 216 focused preparation/history/sequence/overlay/eraser/
+temporary-storage tests pass, including original/selected padding tampering,
+skipped/decode-failed rows, real-mask crop guards and v23 interrupted recovery.
+The earlier 155-test integration pass had two provenance failures; their
+sparse-path reader and genuine v6 fixture were corrected, and all 22
+provenance tests now pass in the focused run. Other integration tests passed;
+this is not a new whole-repository suite result. Isolated validator smoke
+checks pass 19/19. Routine hygiene passed before these result notes and is
+rerun after them.
+
+S15's supported inventory preview names only sandbox Working and the new
+`fresh-v23-20261029` run: 2,700 assigned images plus 372 current Various inputs
+= 3,072 outcomes, with 75 IDs using newer Various bytes. It made no changes
+and evaluated no moves or cast releases. Proceed only to the already
+authorized intake-only sandbox iteration; audit full-run outputs and matching
+before installation. Production and immutable Source remain untouched.
+
+Execution result: `fresh-v23-20261029` intake-only completed successfully
+with three workers. The separate supported launcher
+`--baseline working --check` verifies all 3,072 outcomes and their artifacts;
+`intake.json` reports `assessmentErrors: false`. Counts: 2,966 compared,
+96 compared-overlay, 10 junk candidates. Recommendations: 2,225 original,
+479 composition, 230 head-overlay-reconstruction, 96 head-overlay-composition,
+32 first-crop and 10 none. The 3,062 usable rows produce 9,186 padded outputs.
+Preparation manifest SHA-256:
+`5b0c856c50153e413a99d7db8623666354ea8a8a46319ec18f6e3bf8352f2181`.
+The progress log is `tmp\perf\fresh-v23-20261029-intake.log`; durable evidence
+is the run's `intake.json` and verified preparation manifest. No matching
+`run.json` exists and no installation has occurred. Continue I60's actual
+full-run output audit before matching, then C8/C9/S15/viewer acceptance.
+
+#### Review composites and eventual production intake
+
+The user's first-pass-review proposal is covered here, not a new storage or
+viewer redesign prerequisite. Generate labeled sheets from the actual
+manifest/PNG sequence, retaining source identity, stage names, selection and
+links to exact evidence. AI inspection is a first pass; the user's inspection
+and ability to change the recommendation remain separate acceptance steps.
+Studio-grey padding and closer person framing can be desirable for ComfyUI;
+background loss is not equivalent to losing hair, hands, clothing or feet.
+
+- [ ] **P2 ai** T13 Promote recurring report-to-sheet diagnostics into
+  maintained tooling with a launcher, preview, read-only verification and
+  tests. Reuse existing scratch sheets for current acceptance rather than
+  blocking the rebase on a new viewer feature.
+- [ ] **P2 either** T14 After the flow is accepted, agree detailed versus
+  summary evidence retention with storage S10 and intake I60. Composites may
+  replace disposable review previews, not exact originals, selected native
+  and padded workflow inputs, source-coordinate masks, hashes, lineage or
+  rollback dependencies. Keep full current evidence; no cleanup is authorized.
+  Move user-facing pilot/evaluation language to initial production intake at
+  the accepted cutover, without rewriting historical receipts or claiming
+  Production readiness before sandbox acceptance.
+- [ ] **P2 ai** T15 Add timestamped phase/progress diagnostics to the
+  intake/rebase entry points, reusing a shared mechanism rather than a broad
+  logging migration. Test formatting, errors and launcher output. Until then,
+  timestamp captured output as documented in the long-rebase runbook.
+
+Coverage: composition/padding and measurements -> T12; recurring AI-review
+sheets -> T13; composite/configuration/cleanup idea and terminology -> T14,
+storage S10 and intake I60. These last two tasks are deferred improvements,
+not new prerequisites for the requested sandbox milestone.
+Long-task output/resumption documentation -> the canonical
+[long-rebase runbook](../art/likeness.md#running-and-observing-a-long-rebase):
+launcher/log capture, same shell handle, fresh-shell absolute paths, phase
+progress, receipt verification, lock-safe recovery and the remaining viewer
+gates. Live v23 worker output and its saved log were verified; no second run
+was started to obtain output.
+
 #### Inside inference and the two fill stages: discussion, not policy changes
 
 An isolated, warm-model CPU operator capture on the Cressida screenshot used
@@ -337,7 +517,10 @@ Reproducibility: immutable manifests/images are under the frozen input mirror
 Repository `tmp\perf` holds per-input cProfile files, fill events, exact
 source/hash lists, equivalence and nested/operator/resize/overlap measurements.
 This section is the durable summary; scratch evidence is not a new library
-storage convention. The full rebase remains stopped pending T6 recovery.
+storage convention. T6 recovery is implemented and tested; the full rebase
+was held pending the v23 checks. Those are now recorded above, and the
+intake-only iteration has completed and passed its independent read-only
+check; full-run review, matching and installation remain open.
 
 Validation: **237 related regression tests pass**, including preparation,
 overlay/sequence/eraser comparisons, provenance, frozen preparation and
@@ -479,6 +662,28 @@ It seems like we're leaving a lot of generated images from all the runs in testi
 Coverage: performance -> section 1 (T1 done, T2); chin -> section 2 (decision, T3);
 generated images -> section 3 (routed to L20/R9, T4).
 
+### Oct 29 chat follow-ups, word for word
+
+<!-- markdownlint-disable MD013 MD028 -->
+
+> I want to interrupt as the one thing that might not have been captured in the handoff is we were still testing some performance and profiling of the steps to understand where to make improvements before the full rebase and intake
+
+> the process was actually just accessing the .png files directly - you can find the .py scripts in tmp as well
+
+> I also just noticed we're padding so many variants of images and I don't think we want that - we just want the padded versions of the chosen/recommended photo - so the padding pieces should be looked at in what is fed into the padding of images in the report.  The tone, denoise are also fine I guess - since I do have to test with those variants - but the masks and interim images are not necessary as we only need images in the 944x1104 that are worthy of sending to a workflow for testing the actual output.
+
+> You can create re-usable diagnostic scripts and keep them if it makes sense so we don't have to rebuild them if we blow away tmp scripts - but the ideal world is that we can run the intake process and use scripts to build the visual sheets for you inspection in the future.  So we can automate things that we think could be recurring or usable and keep in tools as well.  I'm not saying totally switch how you were doing it - we just need the most optimal way for you to be able to do the first pass review of the processing and ensure that the final images are the right ones.  The intake is supposed to ahve rules to handle that and I'll do the final inspection and review, but you can do it much faster and with better precision - so hence the partnership in you doing the reviews where it's necessary.
+
+> Don't lose track of work.  But In composition if we strip away background and it pads the image for the gallery later - the padded portion is actually better for ComfyUI as we normally are not using any background from images and convert to the studio grey instead.  So, that's not as big a concern for me.  Having a closer up picture of a person can yield much better results in ComfyUI
+
+> You stuck?
+
+> As you're doing this - one idea I did have is that if the intake process generated a composite image with all the sequence of images in it along with text - we could use that as a reference instead of keeping all images separately and remove those.  Or maybe multiple composites to be displayed in the intake review pages.  Just thinking if that would be better or worse.  Also - if things are still reflected as pilot or evaluation - I think we'll need to address that once we approve the process is working - which for the most part it is not.  It was a pilot or evaluation at one point, but now it's going to be the initial production intake with processing to clean-up images and not just let them flow down into comfy without clean-up, recommendation on best (with me to adjust that later), padded and ready for me to experiement with in comfy workflow.  Ideally, in the long run we don't need so many intake images handing around for ones that were processed - but we do need them until we lock in on the flow - so maybe that's also part of this equation on being able to have a summary set of images vs. all the detailed ones as options in the configuration for the intake processing and clean-up when done.
+
+> This was working in the past for previous agents to run the long running tasks and get the right output, so I am hoping you can figure it out and if it's complicated, we need to document it somewhere in the docs that need to explain how to rebase and run all these steps.
+
+<!-- markdownlint-enable MD013 MD028 -->
+
 Oct 29 (chat, overlay-first request), word for word:
 
 > Could we first check if we see any potential junk on the screen before detecting a person for protecting it?  A slight improvement for when most images are clean - but some "may" have potential issues?  If we detect overlays first and don't find any then it's good image.  If we do, then we look for the person to protect it and if necessary have to re-check overlays or would we be able to use the information from the first check?
@@ -504,3 +709,35 @@ Oct 29 (chat, system/clutter question), word for word:
 Coverage: translucent-logo consideration -> T11 (not approved implementation);
 C: inventory and resource snapshot -> T9 done; extension attribution and
 under-load comparison -> T10; safe cleanup review -> storage S22.
+
+Oct 29 (chat, performance decision clarification), word for word:
+
+> I don't think we actually dug in and made sure that the changes and optimizations was complete - a comparison was done, but I guess I didn't think it was final, final on the decisions.
+
+### Oct 29 autonomous continuation (chat, word for word)
+
+<!-- markdownlint-disable MD013 MD028 -->
+
+> We'll need to commit and push when you get a change as well - at least when we know things are working.
+
+> I'd like you to complete the entire likeness and matching and assignment process while I am gone.  You can preview the results and if it looks a major issue, dig into those ahead of running the complete process to apply the changes so that I can review the output when I return.  You have full authority to track down issues, find them in the code, make decisions and fix them.  You can inspect suspect images directly and do your own analysis or look writing tools to automate checking of various moves, assignment and major changes we have implemented that you will find as you run the process and see what moves to where.  This will be a great opportunity for you to get up to speed on how it works end-to-end and read through plans that may or may not know about issues, update them with new issues and decisions or even just complete plans where we find the issues that are still hanging.  You can inspect the full .html output pages as well looking for anything wrong with them.  It's a full blow authority to take this as far as you can and address any issues you find.  I'll be back in a few hours so you have time to let it run, inspect, fix, run again and just keep letting me know what you are doing every now and then.
+
+> If you finish completely, just read through the plans, update them all, archive things, work on the recaps and archiving, also read through and open feedback/ .md files for additional thoughts work and things to take care of.  You have the docs that instruct how the feedback files work, how to handle the docs/plans and everything is should be clear
+
+> If the logs have timestamps on all our logging entries it would be better - even using some logging framework would help understand timing and if things are active and when.  Just another housekeeping item.
+
+> What is the logic behind recommending denoise or tone?  It seems to me in many cases the denoise looks better, so want to know if we ever implemented the final decision logic or if it always defaults to control if there aren't any erases ... I feel like the denoise has a crisper visual - but not sure it's better in terms of the pixles for comfy - but wondering what you think should be the logic and answer to how we decide?
+
+<!-- markdownlint-enable MD013 MD028 -->
+
+Coverage: tested checkpoint publication -> normal commit/push; autonomous
+sandbox preview/audit/install and actual viewers -> cast C8/C9, intake
+I59/I60 and storage S15. Existing Source/Production boundaries remain.
+Post-milestone plan/feedback/recap reconciliation -> intake I61 and the
+plan-index hygiene rules, not permission to remove unpreserved feedback.
+Timestamp logging -> T15; the current matching capture prefixes each received
+line with an ISO timestamp. Denoise/tone selection -> intake I10/I11: no
+calibrated enhancement chooser exists. They are independent comparison-only
+alternatives from the selected cleanup, not automatic recommendations.
+Perceived crispness alone does not establish texture preservation or better
+ComfyUI output; keep the conservative default pending representative evidence.

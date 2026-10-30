@@ -60,7 +60,7 @@
 - [ ] U2 Review current photo outcomes using fresh inventories: ([2026-10-22](plans/2026-10-22-library-upkeep.md))
 - [ ] P10 Archive the manual source directory only after every ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 
-### Either of us (48)
+### Either of us (49)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -100,6 +100,7 @@
 - [ ] R28 Take the 23 unmapped `Various\gallery` screenshots ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R1c Correct the workspace input-directory spelling during a ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R9 Agree storage/backup/retention limits and safe run filing ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] T14 After the flow is accepted, agree detailed versus ([2026-10-28](plans/2026-10-28-intake-performance.md))
 - [ ] T10 Attribute high VS Code/extension memory through its ([2026-10-28](plans/2026-10-28-intake-performance.md))
 - [ ] S22 Review C: cleanup candidates from performance T9's ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S19 Review the configuration proposal before broad ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
@@ -123,7 +124,6 @@
 
 **P1 (blocks other work, or cheap and valuable)**
 
-- [ ] D17 Triage active plans against the rebase/GUI acceptance ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] M1 Trace detection, alignment/cropping, embeddings, centering, ([2026-10-22](plans/2026-10-22-face-analysis-evaluation.md))
 - [ ] L19 Add gallery-first navigation with a separate Intake/Various ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
 - [ ] L12 Integrate verified preparation comparison/detail links into ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
@@ -201,7 +201,6 @@
 - [ ] R2 Define request/resolved/receipt schemas, recipe capabilities, ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R4 Implement offline preview/prepare/check and the thin launcher ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R5 Bind one reviewed Qwen API graph to its master, preflight ([2026-10-25](plans/2026-10-25-reference-rendering.md))
-- [ ] T6 Before another full intake attempt, implement and test ([2026-10-28](plans/2026-10-28-intake-performance.md))
 - [ ] S20 Measure fresh-baseline inventory, preparation, matching and ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S21 Finish the Oct 27/28 retrospective and Oct 29 run recap, ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S1 Map every writer and reader for `Working` outputs, ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
@@ -259,6 +258,8 @@
 - [ ] R39 Rank best-of-N results with separate technical-quality, ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R7 Add compatible female flow catalogue coverage and explicit ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R8 Add Gallery export and read-only generation results through ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] T13 Promote recurring report-to-sheet diagnostics into ([2026-10-28](plans/2026-10-28-intake-performance.md))
+- [ ] T15 Add timestamped phase/progress diagnostics to the ([2026-10-28](plans/2026-10-28-intake-performance.md))
 - [ ] S17 Map current category-name conditionals and existing policy ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S18 Propose a versioned category/global configuration contract, ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 

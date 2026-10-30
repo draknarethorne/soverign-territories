@@ -232,7 +232,7 @@ class PreparationIndex:
 
     def _load_staged(self):
         """History only: staged receipts never enter current-photo lookup maps."""
-        from image_preparation import verify
+        from image_preparation import row_artifact_hashes, verify
         from .retained_preparation import _checked, _safe
 
         try:
@@ -289,11 +289,8 @@ class PreparationIndex:
                         raise ValueError("staged receipt inputs differ from preparation manifest")
                     # Check every declared path for junctions as well as verifier checks.
                     for row in preview["photos"]:
-                        for field in ("retained", "detail"):
-                            _safe(report, row[field])
-                        for variant in row.get("variants", {}).values():
-                            for field in ("path", "thumbnail", "padded"):
-                                _safe(report, variant[field])
+                        for artifact in row_artifact_hashes(row):
+                            _safe(report, artifact)
                     _safe(report, "index.html")
                     data = verify(mirror, report, current_sources=True)
                     if data.get("root") != str(mirror):

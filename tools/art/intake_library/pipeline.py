@@ -1,4 +1,4 @@
-"""Recipe v22 sequence: overlay preflight -> guarded crop/erase/reconstruct/compose.
+"""Recipe v23 sequence: overlay preflight -> guarded crop/erase/reconstruct/compose.
 
 The eraser handles confirmed clutter before the residual subject-guarded crop. Confirmed patterns may use a
 separate masked reconstruction path; composition uses the repaired image and observed picture boundary.
@@ -36,7 +36,9 @@ EXPERIMENT_POLICY = (
     "refuse unconfirmed glyphs on ordinary photos, face/body/unknown and >20% coverage; "
     "one clutter redetection only after successful fill; "
     "one residual crop; cumulative grown-subject loss <=0.5%, no screenshot app-bar exception; "
-    "composition proposals comparison-only, missing hair/feet completeness proof retains precomposition image; "
+    "no-proposal images still run person detection for a guarded composition recommendation, while skipping cleanup detectors; "
+    "no-proposal composition may be selected after the <=0.5% grown-subject mask-loss guard; other person "
+    "compositions on proposal paths remain comparison-only; visually review hair/feet; "
     "no second fill; detector misses never prove clean; comparison only"
 )
 
@@ -340,12 +342,14 @@ def recommended_candidates(image, row):
                            "masked pixels are synthetic, exact original and masks retained.")
     selected = "control"
     trace = []
+    composition_name = ("composition",) if evidence.get("preflight", {}).get("status") == "no-proposals" else (
+        "head-overlay-composition",)
     stages = (
-        ("first-crop", "first-crop"),
-        ("eraser", "eraser"),
-        ("residual-crop", "residual-crop"),
-        ("reconstruction", "head-overlay-reconstruction"),
-        ("composition", "head-overlay-composition"),
+        ("first-crop", ("first-crop",)),
+        ("eraser", ("eraser",)),
+        ("residual-crop", ("residual-crop",)),
+        ("reconstruction", ("head-overlay-reconstruction",)),
+        ("composition", composition_name),
     )
     final = evidence["final"]
     ancestors = set()
@@ -353,7 +357,8 @@ def recommended_candidates(image, row):
     while current is not None:
         ancestors.add(current)
         current = evidence["candidates"][current]["input"]
-    for stage, name in stages:
+    for stage, names in stages:
+        name = next((candidate for candidate in names if candidate in evidence["candidates"]), names[0])
         record = evidence["candidates"].get(name)
         used = name in ancestors
         reason = (record.get("reason") or "Selected verified prepared sequence output.") if record else (
@@ -378,7 +383,7 @@ def experimental_candidates(image, row, *, overlay_first=False):
 
     Exhaust the generator before reading final evidence. Boxes are xyxy; candidate boxes are in their
     input's coordinates, sourceBox is in original coordinates. Mask images are diagnostic, never selected.
-    Composition proposals are emitted for comparison only; final retains the precomposition image.
+    Composition crops must pass the cumulative grown-subject guard; human review remains necessary.
     No face/person model is rerun; at most one post-fill clutter detection and no second fill are allowed.
     """
     import time
@@ -442,9 +447,11 @@ def experimental_candidates(image, row, *, overlay_first=False):
         return loss <= SUBJECT_LOSS, loss, (
             f"Cumulative grown-subject loss {loss:.4%}; limit {SUBJECT_LOSS:.1%}; no app-bar exception.")
 
-    def select_crop(name, box):
+    def select_crop(name, box, *, note=None):
         nonlocal current, selected, source_box
         allowed, loss, reason = crop_guard(box)
+        if note:
+            reason = f"{note} {reason}"
         record(name, "attempted-selected" if allowed else "refused", reason,
                box=list(box), loss=loss, output=name if allowed else None)
         if not allowed:
@@ -496,19 +503,52 @@ def experimental_candidates(image, row, *, overlay_first=False):
                       "a detection miss is not proof of clean pixels.",
         }
         if not needs_subject:
-            reason = ("No detected overlay, border or UI proposal; retain unassessed pixels. "
-                      "Subject segmentation and composition-only suggestions skipped.")
-            evidence["subject"] = {"method": "not-requested", "box": None, "note": reason}
-            evidence["overlayParts"] = []
-            for name in ("first-crop", "eraser", "residual-crop", "composition"):
-                record(name, "skipped", reason)
-            evidence["stopReason"] = reason
-            evidence["elapsedSeconds"] = time.perf_counter() - started
-            return
+            evidence["preflight"]["subjectRequired"] = True
+            evidence["preflight"]["reason"] = (
+                "No overlay, border or UI proposal; person detection still runs for guarded composition selection. "
+                "Cleanup detectors and fill are skipped.")
     person, method, note = find_subject(image, faces, (0, 0), detector_errors=evidence["detectorErrors"])
     evidence["subject"] = {"method": method, "box": person["box"] if person else None, "note": note}
     if person is not None and method == "mask-rcnn":
         original_near = clutter.grow(person["mask"], max(4, round(min(image.size) * .01)))
+    if evidence.get("preflight", {}).get("status") == "no-proposals":
+        evidence["overlayParts"] = []
+        reason = "No overlay, border or UI proposal; cleanup detectors and fill skipped."
+        for name in ("first-crop", "eraser", "residual-crop"):
+            record(name, "skipped", reason)
+        if person is None:
+            record("composition", "skipped", "Person extent unavailable; retain the unassessed original.")
+        else:
+            sx, sy, _, _ = source_box
+            sbox = [max(0, person["box"][0] - sx), max(0, person["box"][1] - sy),
+                    min(current.width, person["box"][2] - sx),
+                    min(current.height, person["box"][3] - sy)]
+            if sbox[3] < current.height and cut_off_below(person["mask"]):
+                sbox[3] = current.height
+            frame = composition_box(current.size, sbox)
+            if frame:
+                proposed = current.crop(frame)
+                allowed, loss, guard_reason = crop_guard(frame)
+                reason = ("No overlay proposal; selected only after the subject-loss guard. "
+                          "Segmentation can omit hair or feet; visually review the crop. " + guard_reason)
+                if allowed:
+                    select_crop("composition", frame, note=reason)
+                    proposed.close()
+                    proposed = current.copy()
+                else:
+                    record("composition", "attempted-rejected", reason, box=list(frame), loss=loss)
+                    evidence["steps"][-1]["candidate"] = "composition"
+                    candidate("composition", proposed, selected, list(frame), comparison_only=True)
+                evidence["candidates"]["composition"].update(
+                    sourceBox=[sx + frame[0], sy + frame[1], sx + frame[2], sy + frame[3]],
+                    reason=reason)
+                yield "composition", proposed
+            else:
+                record("composition", "skipped", "No useful composition crop; retain the unassessed original.")
+        evidence["stopReason"] = (
+            "No overlay proposal; person detection assessed composition; cleanup detectors and fill skipped.")
+        evidence["elapsedSeconds"] = time.perf_counter() - started
+        return
     overlay_parts = []
     if geo.get("overlayDetected") or reel:
         panel, panel_note = geometry.panel_box(image, faces, first)
@@ -693,13 +733,13 @@ def experimental_candidates(image, row, *, overlay_first=False):
         sbox[3] = current.height
     frame = composition_box(current.size, sbox) if not evidence.get("screenshotLayout") else None
     if frame:
+        proposed = current.crop(frame)
         _, loss, guard_reason = crop_guard(frame)
-        reason = ("Missing hair/feet completeness proof: a segmentation mask can omit visible extremities "
-                  "even when calculated subject loss is zero. Composition is comparison-only; "
-                  "the precomposition cleaned image remains selected. " + guard_reason)
+        reason = ("Missing hair/feet completeness proof. Composition on a proposal path is comparison-only; "
+                  "visually review the crop because "
+                  "segmentation can omit hair or feet. " + guard_reason)
         record("composition", "attempted-rejected", reason, box=list(frame), loss=loss)
         evidence["steps"][-1]["candidate"] = "composition"
-        proposed = current.crop(frame)
         candidate("composition", proposed, selected, list(frame), comparison_only=True)
         evidence["candidates"]["composition"].update(
             sourceBox=[sx + frame[0], sy + frame[1], sx + frame[2], sy + frame[3]],

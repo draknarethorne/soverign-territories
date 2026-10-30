@@ -1136,6 +1136,13 @@ configured temporary staging. A failed copy does not publish a partial mirror.
 A retry can reuse a byte-verified complete mirror and a verified published
 preparation report after a receipt interruption, without rendering it again.
 Unknown, changed or incomplete mirrors are refused rather than silently reused.
+During preparation, per-image checkpoints also bind the ordered source paths
+and hashes, recipe, configuration receipt and every artifact hash. A retry of
+the same run reuses only complete, verified image results, including partially
+materialized report output; changed or corrupt artifacts are rerendered.
+Keep the recipe/configuration and implementation stable during a live run.
+An intentional behavior change requires a versioned recipe and a new run,
+not rewriting the old receipt or discarding its recovery evidence.
 
 For the fresh-baseline path, substitute `--baseline working` for
 `--include-current-various` throughout the sequence below. Include
@@ -1160,6 +1167,90 @@ bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepare
 
 Replace `SANDBOX` with its absolute path. This sequence is documentation, not
 approval to run the next real acceptance experiment.
+
+#### Running and observing a long rebase
+
+The launcher is the entry point; do not replace it with a direct Python
+invocation or start another copy because an agent's tool wait expired.
+Start only one owner for a run. Keep its absolute Working/run paths, command,
+log path and returned shell handle/PID in the handoff. A tool timeout that
+says the command is still running is not a failed command.
+
+For a current-Working intake-only iteration, this PowerShell pattern captures
+both output streams while preserving the launcher's exit code. Choose the run
+name deliberately; on a recovery attempt keep that same run name, but only
+after confirming its previous process has stopped. Use a separate timestamped
+log for each attempt so recovery does not erase the earlier diagnostic.
+
+```powershell
+$repo = 'C:\Soverign-Territories\soverign-territories'
+$root = 'B:\Sovereign Territories Sandbox\Working'
+$runName = 'choose-a-new-run'
+$run = Join-Path $root ('_sandbox-state\' + $runName)
+$logDir = Join-Path $repo 'tmp\session-logs'
+Set-Location $repo
+git check-ignore --quiet $logDir
+if ($LASTEXITCODE -ne 0) { throw 'Log directory must be git-ignored.' }
+New-Item -ItemType Directory -Force -Path $logDir | Out-Null
+$log = Join-Path $logDir ($runName + '-intake-' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '.log')
+$command = 'bin\sandbox-rebase.cmd "{0}" "{1}" --baseline working --intake-only --apply --workers 3' -f $root, $run
+& $env:ComSpec /c $command 2>&1 |
+    ForEach-Object { '[{0}] {1}' -f (Get-Date -Format o), $_ } |
+    Tee-Object -FilePath $log
+$code = $LASTEXITCODE
+if ($code -ne 0) { throw "Intake exited $code; inspect $log and the run diagnostics." }
+```
+
+These are output-receipt timestamps, not precise worker-operation timings:
+buffered lines can arrive together. Keep the report's measured durations for
+profiling. The prefix also applies to captured error output.
+
+In an assistant session, run that bounded command using the shell tool's
+long-running/background facility and retain the returned handle. Read further
+output through that same handle rather than relaunching the command. Confirm
+the specific child process is alive and making progress. If console output is
+offloaded or too large, inspect a bounded log tail instead of repeatedly
+dumping the whole transcript. Later shell-tool calls may start fresh processes:
+do not assume `$run`, `$log` or the working directory survived. Use the
+recorded absolute log path (replace `CHOSEN-LOG.log` below):
+
+```powershell
+Get-Content -LiteralPath 'C:\Soverign-Territories\soverign-territories\tmp\session-logs\CHOSEN-LOG.log' -Tail 20
+```
+
+Interpret the stages separately:
+
+| Observed state | Meaning and next check |
+| --- | --- |
+| Initial quiet interval | Snapshot validation, hashing, overlay construction or input copying can precede worker output. Check the exact process and run-local files; do not infer a stall from silence alone. |
+| `source overlay: copied N/...` | Current Working inputs are being frozen, not yet rendered or matched. |
+| `Preparing N images with W worker process(es)` | Preparation workers have started on the frozen mirror. |
+| `Completed worker ... (input I)` | An image worker finished; completion can be out of input order. |
+| `Ordered report rows: K/N` | Those rows have been safely materialized in inventory order. It may lag completed workers while an earlier input is still running. |
+| All workers/rows reported | Rendering is finished, but report verification and receipt publication may still be running. Do not start matching yet. |
+| Process exited and `intake.json` exists | Candidate completion only: run the launcher's read-only `--check` against the same root/run/baseline. Inspect assessment errors as well as hashes. |
+| Intake check passes | Review actual selected outputs and unresolved cleanup; then resume the same run without `--intake-only --apply` to create the matching preview. This is not permission to install it. |
+
+Durable intake evidence is `RUN\intake.json` plus
+`RUN\inputs\_reports\preparation\all\manifest.json`, its exact native/padded
+images and per-photo details. Logs and contact sheets are observation aids,
+not substitutes for those receipts or source-coordinate masks. The shared
+Intake runs browser exposes verified staged receipts; incomplete work must not
+be presented as accepted Gallery evidence.
+
+After an interruption, first confirm the recorded process is no longer
+running. Repeat the same intake-only launcher command with unchanged inputs,
+recipe and configuration. Let its lock/checkpoint checks decide reuse; do not
+delete `_tmp\prep-*`, checkpoints or staged artifacts by hand. A second live
+owner must be allowed to fail its lock check, not have the lock removed.
+Do not use `--replan` to recover rendering: it resumes matching only when
+verified intake and saved measurements already exist.
+
+Then follow the sequence above: intake `--check`, actual image review,
+matching preview, move/core/Review audit, approved backed-up apply, installed
+`--check`, and actual Gallery/Overview/Review plus exact-face/history checks.
+Keep undo evidence. Completion of a shell command alone does not close these
+acceptance gates or authorize Production.
 
 Sandbox run history has a separate, dependency-aware retention ledger under
 `Working\_sandbox-state\retention-manifest.json`. New intake/rebase receipts

@@ -5,17 +5,39 @@ Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (gen
 
 ## The pattern
 
-**Oct 29 execution priority:** finish the fresh sandbox rebase, then validate
-the actual Gallery/Overview/Review and per-photo intake/face history. Only
-verified blockers should interrupt that milestone. Plan deferral/`_holding`
+**Oct 29 execution priority:** v23's fixed-sample measurements and AI
+composition/padding first pass are recorded; continue the authorized
+intake-only sandbox iteration, then complete the fresh sandbox rebase and
+validate actual Gallery/Overview/Review and per-photo intake/face history.
+Only verified blockers should interrupt that milestone. Plan deferral/`_holding`
 triage is tracked as D17 in
 [tooling debt](2026-10-12-tooling-debt.md); no wholesale moves or assumption
 that all storage lifecycle work is complete are authorized by this note.
 The Oct 29 branch closeout is authorized separately: PR/checks/merge, then a
-fresh continuation branch and chat. D17 reconciliation belongs to that fresh
-chat, not a broad last-minute rewrite. Start by confirming T6 recovery as the
-rebase prerequisite, and record reasons/resume conditions for any deferred
-work before changing statuses or moving plans.
+fresh continuation branch and chat. D17 triage was completed in that fresh
+chat, not as a broad plan rewrite. T6 per-image recovery is implemented and
+tested; T12's measured disposition permits the sandbox iteration before
+S15's full move/backup/undo acceptance. Reasons and
+resume conditions are recorded below; independent plans remain active in
+their existing owners.
+
+**Bounded Oct 29 D17 triage:** T6 per-image recovery is complete. T12's final
+v22 profile remains historical evidence. The v23 composition/padding output,
+AI review and measurements are verified for the authorized fresh rehearsal;
+they are not production-quality acceptance. S20 records run measurements; I60/C7
+cover changed-image, face, move and Review evidence; the requested
+Gallery/Overview/Review inspection follows the real publication. None of
+these gates authorizes Production changes.
+
+Independent work remains in its current active owner, not `_holding`: T8
+reconstruction/mask policy, T10/T11 system-attribution and logo-quality work,
+S1/S4/S5/S11 broader storage/configuration/deduplication work, S22 C: cleanup,
+and L18/L20 library-scale I/O and run retention. Resume those only after this
+acceptance, or sooner if a verified blocker directly prevents it. L19's
+separate unassigned Intake entry remains open; revisit it if actual UAT cannot
+reach the requested intake provenance from Gallery/Overview/Review. Plan
+statuses and independent checklists stay unchanged; triage records priority,
+not completion or transfer.
 
 | Kind of document | Where | Rule |
 | --- | --- | --- |
@@ -242,7 +264,7 @@ deferred; exact current inputs and all user decisions remain protected.
 | [2026-10-23-image-intake-preparation.md](2026-10-23-image-intake-preparation.md) | active | Phase 1: v20 nested-reel proof awaits user review; full preparation/rebase, Harlow cleanup, changed-image audit, exact-face/history acceptance and incremental/live cutover remain open |
 | [2026-10-23-cast-seeded-library-rebase.md](2026-10-23-cast-seeded-library-rebase.md) | active | Phase 3: Oct 28 core/protected cast retention and non-core regrouping authorized for sandbox iteration; move/Review audits and reversible install acceptance still required |
 | [2026-10-25-reference-rendering.md](2026-10-25-reference-rendering.md) | active | 117-output comparison completed; R44 category/person paths pending source-faithful recipe reconciliation, with acceptance, GUI execution and later-stage contracts still open |
-| [2026-10-28-intake-performance.md](2026-10-28-intake-performance.md) | active | Parallel intake and v22 overlay-first delivered; paired 128-image profile preserves selections/shared pixels with 42.3% less elapsed time. Per-image recovery T6 gates full intake; two-pass reconstruction policy discussion T8; storage routed to L20/R9 |
+| [2026-10-28-intake-performance.md](2026-10-28-intake-performance.md) | active | T6 recovery and T12 current sample checks pass; v23 restores guarded composition and limits padding. Slower measured throughput is explicit; proceed with authorized sandbox iteration, not Production acceptance. T8/T13/T14 and storage remain separate |
 | [2026-10-28-storage-operations-and-retention.md](2026-10-28-storage-operations-and-retention.md) | active | Map and configure storage roots, clean only verified generated outputs, preserve active sources, remove abandoned staging safely, and rebuild the sandbox from production |
 
 The Oct 22 retained plans have review/questions blocks; affected owners now

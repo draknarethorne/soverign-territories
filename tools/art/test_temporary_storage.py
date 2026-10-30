@@ -1,3 +1,4 @@
+import json
 import pathlib
 import subprocess
 import sys
@@ -50,6 +51,47 @@ class TemporaryStorageTests(unittest.TestCase):
                 temporary_storage.clean_orphaned_staging(parent, ".reset-"), [stage]
             )
             self.assertFalse(stage.exists())
+
+    def test_resumable_stage_survives_exit_and_can_be_removed_after_publish(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            parent = pathlib.Path(temporary)
+            with temporary_storage.resumable_staging_directory(parent, "preparation-recovery-test") as stage:
+                (stage / "checkpoint.json").write_text('{"complete": true}', encoding="utf-8")
+            self.assertTrue(stage.is_dir())
+            self.assertTrue(stage.with_name(stage.name + ".lock").is_file())
+            with temporary_storage.resumable_staging_directory(parent, stage.name) as resumed:
+                self.assertEqual(
+                    json.loads((resumed / "checkpoint.json").read_text(encoding="utf-8")),
+                    {"complete": True},
+                )
+                temporary_storage.shutil.rmtree(resumed)
+            self.assertFalse(stage.exists())
+            self.assertFalse(stage.with_name(stage.name + ".lock").exists())
+
+    def test_resumable_stage_can_be_reopened_after_process_exit(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            parent = pathlib.Path(temporary)
+            script = (
+                "import os, sys\n"
+                f"sys.path.insert(0, {str(ROOT / 'tools/art')!r})\n"
+                "import temporary_storage\n"
+                "with temporary_storage.resumable_staging_directory(sys.argv[1], 'preparation-recovery-test') as stage:\n"
+                "    stage.joinpath('checkpoint.json').write_text('{\"complete\": true}')\n"
+                "    os._exit(23)\n"
+            )
+            process = subprocess.run(
+                [sys.executable, "-c", script, str(parent)],
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+            )
+            self.assertEqual(process.returncode, 23, process.stderr)
+            with temporary_storage.resumable_staging_directory(
+                parent, "preparation-recovery-test"
+            ) as stage:
+                self.assertEqual(
+                    json.loads((stage / "checkpoint.json").read_text(encoding="utf-8")),
+                    {"complete": True},
+                )
+                temporary_storage.shutil.rmtree(stage)
 
     def test_orphan_with_released_lock_is_removed(self):
         with tempfile.TemporaryDirectory() as temporary:

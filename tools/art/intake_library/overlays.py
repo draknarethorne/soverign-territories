@@ -108,9 +108,7 @@ def zones(frame, size, profile=None):
 
 def rgb_bounds(array):
     """Exact signed RGB extrema without NumPy's slower strided axis reduction."""
-    red, green, blue = array[..., 0], array[..., 1], array[..., 2]
-    return (np.minimum(np.minimum(red, green), blue).astype(np.int16),
-            np.maximum(np.maximum(red, green), blue).astype(np.int16))
+    return clutter.rgb_bounds(array)
 
 
 def rendered(array, region, rule, *, contrast=True, vivid=None):

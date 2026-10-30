@@ -232,6 +232,15 @@ class PreparationProvenanceTests(unittest.TestCase):
         self.assertEqual(evidence["matches"], [])
         self.assertNotIn("<a ", preparation_provenance.render_evidence(evidence))
 
+    def test_staged_original_padding_tamper_withholds_history(self):
+        _, output = self.staged_receipt()
+        data = json.loads((output / "manifest.json").read_text())
+        padded = data["photos"][0]["recommendedPadded"]["path"]
+        (output / padded).write_bytes(b"tampered workflow padding")
+        staged = next(entry for entry in self.index().history_runs if entry.get("staged"))
+        self.assertIn("unverified", staged["status"])
+        self.assertEqual(staged["photos"], [])
+
     def test_multiple_verified_runs_are_listed_without_latest_run_guess(self):
         second = self.root / "_reports" / "preparation" / "pilot-v8"
         with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
@@ -244,6 +253,13 @@ class PreparationProvenanceTests(unittest.TestCase):
         legacy["recipe"]["id"] = "preparation-comparison-v6"
         row = legacy["photos"][0]
         row.pop("sourceScope", None)
+        row.pop("recommendedPadded", None)
+        for name, record in row["variants"].items():
+            if "padded" not in record:
+                relative = f"legacy/{name}-944x1104.png"
+                with Image.open(self.output / record["path"]) as opened:
+                    digest = image_preparation.save_padded(self.output, opened, relative)
+                record.update(padded=relative, paddedSha256=digest)
         row["variants"]["geometry"] = dict(row["variants"]["control"])
         processing = row["processing"]
         current_steps = {step["name"]: step for step in processing["steps"]}

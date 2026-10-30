@@ -101,6 +101,21 @@ def _set_key(source_hash, source, photo_id, domain, recipe):
     ).encode("utf-8")).hexdigest()[:32]
 
 
+def _image_artifacts(row):
+    for index, record in enumerate(row.get("variants", {}).values()):
+        for field, checksum in (("path", "sha256"), ("thumbnail", "thumbnailSha256"),
+                                ("padded", "paddedSha256")):
+            if field == "padded" and field not in record and checksum not in record:
+                continue
+            yield f"v{index:02d}-{field}", record[field], record[checksum]
+    if row.get("recommendedPadded"):
+        record = row["recommendedPadded"]
+        if (row.get("recommendation", {}).get("use") != "original"
+                or record["source"] != row["retained"]):
+            raise ValueError("retained original padding differs from recommendation")
+        yield "recommended-padded", record["path"], record["sha256"]
+
+
 def _detail_navigation(root, current, detail, domain, *, include_gallery_navigation=False):
     """Link only existing local views; derivative manifest is the availability proof."""
     from . import derivatives
@@ -217,17 +232,15 @@ def stage_photo(root, destination, preparation_root, preparation_row, *, recipe)
     if len(row.get("variants", {})) > (MAX_ARTIFACTS - 3) // 3:
         raise ValueError("too many retained preparation variants")
     artifact_map = {}
-    for index, record in enumerate(row.get("variants", {}).values()):
-        for field, checksum in (("path", "sha256"), ("thumbnail", "thumbnailSha256"), ("padded", "paddedSha256")):
-            artifact = _checked(preparation_root, record[field], record[checksum])
-            filename = f"v{index:02d}-{field}{artifact.suffix.lower()}"
-            key = f"{intake}/{filename}"
-            if key in payloads:
-                raise ValueError("repeated retained preparation artifact")
-            if record[field] in artifact_map:
-                raise ValueError("repeated retained preparation source artifact")
-            artifact_map[record[field]] = key
-            payloads[key] = artifact.read_bytes()
+    for label, relative, checksum in _image_artifacts(row):
+        artifact = _checked(preparation_root, relative, checksum)
+        key = f"{intake}/{label}{artifact.suffix.lower()}"
+        if key in payloads:
+            raise ValueError("repeated retained preparation artifact")
+        if relative in artifact_map:
+            raise ValueError("repeated retained preparation source artifact")
+        artifact_map[relative] = key
+        payloads[key] = artifact.read_bytes()
     if len(payloads) > MAX_ARTIFACTS - 2:
         raise ValueError("too many retained preparation artifacts")
     detail_relative = f"{intake}/detail.html"
@@ -368,13 +381,12 @@ def verify_link(root, current_photo, photo_id=None):
             if scope and scope.get("matchingDomain") != data["domain"]:
                 return None
             expected_paths = {data["original"], data["detail"]}
-            for record in row.get("variants", {}).values():
-                for field, checksum in (("path", "sha256"), ("thumbnail", "thumbnailSha256"), ("padded", "paddedSha256")):
-                    relative = data.get("artifactMap", {}).get(
-                        record[field], f"{owner}/gallery_intake/{set_key}/{record[field]}")
-                    if relative not in paths or _digest(paths[relative]) != record[checksum]:
-                        return None
-                    expected_paths.add(relative)
+            for _, source_relative, checksum in _image_artifacts(row):
+                relative = data.get("artifactMap", {}).get(
+                    source_relative, f"{owner}/gallery_intake/{set_key}/{source_relative}")
+                if relative not in paths or _digest(paths[relative]) != checksum:
+                    return None
+                expected_paths.add(relative)
             if set(paths) != expected_paths:
                 return None
             selected = data["selected"]

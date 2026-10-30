@@ -241,7 +241,7 @@ class Embedder:
                 if hashlib.sha256(target.read_bytes()).hexdigest() != artifact_sha256:
                     raise AlignmentEvidenceError(f"existing aligned-face evidence is corrupt: {target}")
             else:
-                partial = target.with_name(f".{target.name}.{uuid.uuid4().hex}.part")
+                partial = target.with_name(f".{uuid.uuid4().hex}.part")
                 with partial.open("xb") as output:
                     output.write(payload)
                     output.flush()

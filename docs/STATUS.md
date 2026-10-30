@@ -10,24 +10,55 @@ runs hygiene/data checks and lightweight gate/isolation guards on 3.14;
 no dependency fallback starts full image regressions. Explicit dispatch
 retains full offline regressions/mutations and optional compatibility.
 Targeted local testing and real-image sandbox acceptance remain required.
-PR #2's earlier full 3.14 run passed in 14m35s; merging is separately blocked
-by approval/deployment rules, not failing tests. No rule bypass is authorized.
+PR #2 merged at `3b7016a` after the passed fast CI run; the earlier full
+3.14 run passed at a preceding code head. The final handoff records the tested
+heads and run IDs; older-Python acceptance is not claimed.
 
-**Oct 29 branch-closeout decision:** publish the accumulated art/workflow
-baseline through a PR and merge only after remote checks pass, then continue
-on a fresh focused branch/chat. This does not close unfinished plans.
-Fresh-chat D17 triage should separate true prerequisites from independent
-deferrable work; T6 per-image recovery remains the known prerequisite before
-fresh sandbox rebase and viewer acceptance. No broad plan moves, history
-rewrite, feedback cleanup, Production change or full intake is part of closeout.
+**Oct 29 branch-closeout result:** PR #2 is merged and work continues on
+`work/sandbox-rebase-acceptance`. This does not close unfinished plans.
+Bounded D17 triage is recorded in [the plan index](plans/README.md): T6
+recovery is implemented and tested; the newly identified T12 performance
+decision review precedes S15 and the fresh sandbox rehearsal. No broad plan
+moves, history rewrite, feedback cleanup, Production change or full intake is
+part of branch closeout.
 
-**Oct 29 CI cost correction:** routine PR/main checks now use Python 3.14
-only; exhaustive mutations and optional 3.12/3.13 compatibility are explicit
+**Oct 29 performance/review clarification:** the paired 128-image v22 profile
+is evidence, not final sign-off. Useful person framing must be assessed rather
+than omitted for speed; this does not require restoring redundant padded
+diagnostics. Workflow-sized padding belongs only
+on the recommendation and denoise/tone alternatives. v23 now runs person
+detection on no-proposal images and can select a guarded composition; actual
+comparison output, profiling and visual review are now verified for the
+authorized sandbox iteration. The fixed 128-image v23 pass took 974.34 s;
+the unprofiled fixed 30 took 222.75 s. Fourteen guarded compositions are newly
+recommended; padding falls from 539 eager outputs to 375 selected/denoise/tone
+outputs. T12 records the slower throughput, exact artifact parity and retained
+safety checks. All 32 review sheets were inspected; a definite inherited
+nested-phone/UI miss remains under I60. This is not production-quality
+acceptance. The new S15 inventory preview is 3,072 inputs; no moves or cast
+decisions were evaluated.
+
+**Oct 29 sandbox execution:** after tested recovery and the bounded v23
+checks, `fresh-v23-20261029` completed through the supported launcher's
+`--baseline working --intake-only --apply --workers 3` path. The process exited
+successfully and a separate launcher `--baseline working --check` passed:
+3,072 outcomes, no assessment errors (2,966 compared, 96 compared-overlay,
+10 junk candidates). Recommendations include 479 person compositions and
+326 reconstruction/picture-boundary outputs. All 9,186 padded outputs belong
+to the 3,062 usable rows. Same-run matching started at 22:06 -05:00 with
+`--baseline working --cast-seeds core`, preserving protected/core/selected
+anchors while previewing eligible non-core release. No installation has
+occurred. I60 output audit,
+C8/C9 reconciliation and actual Gallery/Overview/Review acceptance remain
+unfinished. Production and historical Source are outside this operation.
+
+**Oct 29 CI cost correction:** routine PR/main checks use Python 3.14 only;
+exhaustive mutations and optional 3.12/3.13 compatibility are explicit
 dispatch coverage. No duplicate feature-push CI. The failed PR matrix spent
 298-358 s per runtime on exhaustive mutations, then exposed three tests
 depending on a locally installed cleanup recipe. Their fixtures now install
-their own tiny recipe; 77 focused tests pass. Relevant regressions remain
-automated; no passing remote acceptance or completed merge is claimed yet.
+their own tiny recipe; 77 focused tests passed. The later fast CI run passed;
+this is not a full-suite result for every later documentation/policy change.
 
 **Oct 29 quality-gate decision:** routine commits retain hygiene, script
 analysis and data validity, not unit/mutation suites. Push no longer repeats
@@ -50,30 +81,61 @@ Production operation is part of this fix.
 See the
 [quality contract](QUALITY-GATES.md) and tooling D18.
 
-**Oct 29, overlay-first checkpoint:** current preparation v22 checks overlay/
-border proposals before person segmentation. A paired 128-image worker profile
+**Oct 29, overlay-first checkpoint (v22):** the prior preparation recipe
+checked overlay/border proposals before person segmentation. A paired 128-image worker profile
 took 524.48 s eager versus 302.50 s gated (42.3% less elapsed), avoiding 90 of
 125 subject calls. All 128 recommendations and 1,569 shared image-artifact
-hashes agree; 16 rejected composition-only comparisons are intentionally omitted.
+hashes agree; 16 composition comparisons (48 artifacts) were omitted. This is
+historical v22 evidence, not acceptance of suppressing useful composition.
 Both fill stages and their 43 calls / 116 neural patches remain unchanged.
 Two unprofiled 30-image repeats average 77.32 s versus 122.76 s eager.
 Detailed substeps, input-path costs and overlapping erase/reconstruction masks
 are recorded in the [performance plan](plans/2026-10-28-intake-performance.md).
 Reconstruction currently also accepts confirmed background marks: whether to
 restrict it to person overlap is discussion T8, not an implemented rule change.
-No full intake is running; per-image recovery T6 remains its prerequisite.
+No full intake or fresh sandbox rebase is running; T6 recovery is implemented,
+and T12's current measured disposition now permits the intake-only sandbox
+iteration, not installation or Production cutover.
+
+**Oct 29, T6 recovery implementation:** per-image checkpoints bind the ordered
+source paths and hashes, recipe, configuration receipt and every artifact.
+The report staging tree persists across retries, while completed worker
+artifacts are removed as their rows are safely materialized. The 74 focused
+image-preparation tests and 11 temporary-storage tests pass, including changed
+evidence rejection and lock reacquisition after a subprocess exit. Review's
+26 tests also pass after shortening Windows temporary evidence filenames that
+exceeded `MAX_PATH`. The subsequent focused launcher test environment resolves the earlier
+`comfy_workflows` import failure; 216 current focused regressions and 19/19
+isolated validator cases pass, including v23 selective-padding recovery and
+downstream retained/staged-history compatibility.
+
+The follow-up v22 cProfile locates 114.85 summed worker seconds in the
+proposal bank and 59.30 in glyph checks, with overlapping detector times. A
+bounded A/B on the same 128 sandbox inputs confirms exact glyph-output parity
+and 51.3% lower glyph-only time (25.806 s to 12.573 s) from RGB-bound and
+component-mask reuse; it does not measure full-intake wall time. Person
+inference and LaMa fill remain the largest behavior-sensitive targets.
+
+**Oct 29 v23 composition and padding:** no-proposal rows now run person
+detection. A composition is selected only when the grown-subject mask-loss
+guard passes; segmentation can still omit hair or feet, so review remains
+necessary. Other composition suggestions on proposal paths remain
+comparison-only. Padding is limited to the recommendation and denoise/tone
+alternatives; masks and interim candidates stay native-sized. A focused v23
+regression exercises selected composition and exact-retained-source padding.
+The bounded rerun, actual PNG/padded-image review and measured repeat now pass
+as recorded in T12. Full-run I60/C8/C9 and actual viewer acceptance remain
+open; no Production cutover is implied.
 
 **Oct 29, 08:45 historical checkpoint:** the earlier fresh intake stopped without
 a receipt after 1,445 ordered outcomes; its cause is not established.
-The restart was deliberately stopped for bounded profiling. No full intake
-is currently running. A fixed 30-image worker profile identifies subject
+The restart was deliberately stopped for bounded profiling. T6 was still a
+prerequisite at this checkpoint. No full intake was running. A fixed 30-image worker profile identifies subject
 detection and masked repainting as about two-thirds of image-worker time;
 original read/copy/hash work is small. One exact-integer overlay optimization
 averages 2.8% less elapsed time over two A/B pairs, with identical decisions
-and 408 image artifacts; 133 targeted tests pass. Per-image checkpoint
-recovery remains a prerequisite before another full run, tracked as T6 in the
-[performance plan](plans/2026-10-28-intake-performance.md). Earlier running
-statements below are historical checkpoints, not current process status.
+and 408 image artifacts; 133 targeted tests pass. Earlier running statements
+below are historical checkpoints, not current process status.
 
 ## Where we are
 

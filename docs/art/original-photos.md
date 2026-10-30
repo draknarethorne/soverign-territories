@@ -16,6 +16,9 @@ deletion or folder moves, when a photo has catalogue decisions or retained sets.
 
 The [likeness guide](likeness.md#clean-sandbox-rebuild-versus-category-reclassification)
 owns the exact clean-start stop/resume/install sequence. The
+[long-run instructions](likeness.md#running-and-observing-a-long-rebase)
+explain output capture, progress versus completion, checkpoint recovery and
+the receipt checks needed before matching. The
 [plans index](../plans/README.md#current-library-work-order-oct-23) owns acceptance
 order. No command example below authorizes a production run.
 
@@ -34,12 +37,17 @@ or pass `--workers N` / set `ST_INTAKE_WORKERS`. Batches under 16 images stay
 serial. Outputs are byte-identical to a serial run; measurements are in the
 [intake performance plan](../plans/2026-10-28-intake-performance.md).
 
-Preparation output is built in a same-volume `.preparation-*` staging directory
-with a sidecar OS lock. Success, ordinary failure and Ctrl+C remove it in the
-current process; if the process is hard-stopped, the next preparation run
-removes only a recognized staging directory whose lock is released. Active
-locks are preserved, and a staging directory without its ownership lock is
-reported for manual inspection rather than deleted.
+Full intake preparation checkpoints each completed image in a same-volume,
+OS-locked recovery directory. Its fingerprint binds the ordered source paths
+and hashes, recipe, configuration receipt and run scope. A checkpoint is
+reused only when its complete row and every retained, detail and variant
+artifact hash verify; incomplete image staging is rerendered. Worker-completion
+progress is reported separately from ordered report publication. Recovery
+keeps the verified report staging tree in place, removing each worker's
+duplicate artifacts as its row is materialized. A partial row can be restored
+from its worker checkpoint; data is removed only after the immutable report is
+verified and published. Other owned temporary stages retain their own cleanup
+and recovery rules.
 
 [Core requirements](../../requirements.txt) pin the direct validator/gallery/
 image dependencies. [Intake requirements](../../requirements-intake.txt) include
@@ -154,7 +162,7 @@ owns upstream preparation/crop cutover; the
 | Order | Role | Output / safeguard |
 | --- | --- | --- |
 | 1 | Retain exact incoming bytes before transformations | Immutable run input, then checked `gallery_org` publication alongside retained `gallery_intake` evidence |
-| 2 | Prepare at native geometry | v22 overlay/border preflight -> guarded first crop -> eraser -> residual crop -> confirmed-pattern reconstruction -> composition -> denoise/tone comparisons; preserve subject, skip unsafe/unavailable stages with reasons |
+| 2 | Prepare at native geometry | v23 overlay/border preflight -> guarded first crop -> eraser -> residual crop -> confirmed-pattern reconstruction -> guarded no-proposal composition -> denoise/tone comparisons; preserve subject, skip unsafe/unavailable stages with reasons |
 | 3 | Analyze and assign | Fresh geometry-correct detection/features; shared likeness policy; cast membership protection remains separate from processing |
 | 4 | Publish the accepted reference | Prepared source in person `gallery` (or `review`), destination-prefix normalization with stable photo ID and history retained |
 | 5 | Generate standard 944x1104 derivatives | Full-photo fit/pad, head framing and chest framing from the accepted source; framing crops/padding remain necessary, but must not rerun source-cleanup crops |
@@ -352,21 +360,30 @@ For only the new unsorted test images, add `--source-folder "Various\gallery"
 images directly in that folder, not Review, other identities or subfolders.
 It leaves the incoming files in place. The report explains every role and
 links the **provisionally selected cleanup/composition**, with its reason.
-The v22 recipe below can select masked cleanup/reconstruction; selection is not a measured
-enhancement winner or hair-safety guarantee. A missed screenshot heuristic does
-not mean clean. Control means oriented/sRGB only. Denoise and tone remain separate
-comparison alternatives. Padded examples are downstream canvas fitting, not
-another enhancement.
+The v23 recipe below can select masked cleanup/reconstruction and a guarded
+no-proposal composition; selection is not a measured enhancement winner or
+hair-safety guarantee. A missed screenshot heuristic does not mean clean.
+Control means oriented/sRGB only. Denoise and tone remain separate comparison
+alternatives. Only the recommendation and denoise/tone alternatives receive
+944x1104 padding; masks and interim candidates remain native-sized.
+Retained Gallery evidence supports this sparse padding and preserves the
+separate padded-original record when the recommendation is the original.
+Detailed evidence remains required while the flow is unsettled. Labeled
+composites are review aids, not substitutes for exact originals, selected
+inputs, masks or recovery lineage. Summary retention and production-intake
+terminology are acceptance-gated follow-ups in performance T13/T14, not
+permission to delete current reports.
 
-Current v22 checks known overlay patterns, borders, screenshot layout and
-uncertain glyphs before requesting person segmentation. No detected proposal
-retains the original as **unassessed**, skips Mask R-CNN and composition-only
-suggestions, and still generates denoise/tone comparisons. A miss does not
-certify clean pixels. Pattern proposals are reused; person-sensitive clutter
+Current v23 checks known overlay patterns, borders, screenshot layout and
+uncertain glyphs before cleanup. No detected proposal retains original pixels
+as **unassessed**, still runs person detection, and can recommend a composition
+only when the grown-subject mask-loss guard passes. A miss does not certify
+clean pixels; hair and feet still need visual review. Pattern proposals are
+reused; person-sensitive clutter
 checks run with the mask/current crop when needed, and post-fill residual
 detection remains. Confirmed patterns can still enter synthetic reconstruction
 even off the person; the separate guarded/synthetic policies have not changed.
-Published v21 and older reports retain their recorded pixels and contracts.
+Published v22 and older reports retain their recorded pixels and contracts.
 Measured results and the two-pass policy discussion live in the
 [intake performance plan](../plans/2026-10-28-intake-performance.md).
 

@@ -1,5 +1,6 @@
 """Source-preserving, sandbox-only preparation comparison regressions."""
 import contextlib
+import copy
 import io
 import json
 import pathlib
@@ -17,6 +18,8 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/art"))
 import image_preparation as preparation  # noqa: E402
 import preparation_junk  # noqa: E402
+
+RECOMMENDED_CANDIDATES = preparation.pipeline.recommended_candidates
 
 
 class Links(HTMLParser):
@@ -95,7 +98,8 @@ class PreparationTests(unittest.TestCase):
 
     def source_tree(self):
         return {p.relative_to(self.root).as_posix(): p.read_bytes()
-                for p in self.root.rglob("*") if p.is_file() and "_reports" not in p.parts}
+                for p in self.root.rglob("*")
+                if p.is_file() and not {"_reports", "_tmp"}.intersection(p.parts)}
 
     def call(self, *flags):
         errors = io.StringIO()
@@ -137,6 +141,130 @@ class PreparationTests(unittest.TestCase):
         self.assertEqual(self.call("--apply"), 0)
         self.assertEqual(self.call("--check"), 0)
         self.assertEqual(times, {p: p.stat().st_mtime_ns for p in self.output.rglob("*") if p.is_file()})
+
+    def test_completed_image_checkpoint_resumes_without_rerendering(self):
+        second = self.put("Various/gallery/second_image_456.jpg")
+        original_render = preparation.render_photo
+
+        def stop_after_first(root, stage, source):
+            if source == second:
+                raise RuntimeError("simulated hard stop")
+            return original_render(root, stage, source)
+
+        with mock.patch.object(preparation, "render_photo", side_effect=stop_after_first):
+            with self.assertRaisesRegex(RuntimeError, "simulated hard stop"):
+                preparation.publish(self.root, self.output, [self.photo, second], workers=1)
+
+        temporary_root = preparation.cw.storage_root(self.cfg, "temporary", root=self.root)
+        recoveries = [path for path in temporary_root.glob("prep-*") if path.is_dir()]
+        self.assertEqual(len(recoveries), 1)
+        checkpoint = json.loads((recoveries[0] / "checkpoints/000000.json").read_text(encoding="utf-8"))
+        self.assertEqual(checkpoint["source"], self.photo.relative_to(self.root).as_posix())
+        self.assertTrue(checkpoint["artifacts"])
+        self.assertTrue((recoveries[0] / "publish" / checkpoint["row"]["retained"]).is_file())
+        self.assertFalse((recoveries[0] / "000000").exists())
+        self.assertFalse(self.output.exists())
+
+        with mock.patch.object(preparation, "render_photo", wraps=original_render) as render:
+            preparation.publish(self.root, self.output, [self.photo, second], workers=1)
+        render.assert_called_once()
+        self.assertEqual(render.call_args.args[2], second)
+        self.assertEqual(len(preparation.verify(self.root, self.output)["photos"]), 2)
+        self.assertFalse(recoveries[0].exists())
+
+    def test_changed_checkpoint_artifact_is_rerendered(self):
+        second = self.put("Various/gallery/second_image_456.jpg")
+        original_render = preparation.render_photo
+
+        def stop_after_first(root, stage, source):
+            if source == second:
+                raise RuntimeError("simulated hard stop")
+            return original_render(root, stage, source)
+
+        with mock.patch.object(preparation, "render_photo", side_effect=stop_after_first):
+            with self.assertRaisesRegex(RuntimeError, "simulated hard stop"):
+                preparation.publish(self.root, self.output, [self.photo, second], workers=1)
+
+        temporary_root = preparation.cw.storage_root(self.cfg, "temporary", root=self.root)
+        recovery = next(path for path in temporary_root.glob("prep-*") if path.is_dir())
+        checkpoint = json.loads((recovery / "checkpoints/000000.json").read_text(encoding="utf-8"))
+        retained = recovery / "publish" / checkpoint["row"]["retained"]
+        retained.write_bytes(b"changed artifact")
+
+        with mock.patch.object(preparation, "render_photo", wraps=original_render) as render:
+            preparation.publish(self.root, self.output, [self.photo, second], workers=1)
+        self.assertEqual(render.call_count, 2)
+        self.assertEqual(len(preparation.verify(self.root, self.output)["photos"]), 2)
+
+    def test_partial_report_materialization_recovers_checkpointed_image(self):
+        second = self.put("Various/gallery/second_image_456.jpg")
+        original_copy = preparation.copy_new_file
+        copied = []
+
+        def stop_after_copy(path, source):
+            result = original_copy(path, source)
+            path = pathlib.Path(path)
+            if "publish" in path.parts:
+                copied.append(path)
+            if len(copied) == 1:
+                raise RuntimeError("simulated stop during report materialization")
+            return result
+
+        with mock.patch.object(preparation, "copy_new_file", side_effect=stop_after_copy):
+            with self.assertRaisesRegex(RuntimeError, "during report materialization"):
+                preparation.publish(self.root, self.output, [self.photo, second], workers=1)
+
+        temporary_root = preparation.cw.storage_root(self.cfg, "temporary", root=self.root)
+        recovery = next(path for path in temporary_root.glob("prep-*") if path.is_dir())
+        self.assertTrue((recovery / "checkpoints/000000.json").is_file())
+        self.assertTrue((recovery / "000000").is_dir())
+        self.assertTrue(copied[0].is_file())
+
+        with mock.patch.object(preparation, "render_photo", wraps=preparation.render_photo) as render:
+            preparation.publish(self.root, self.output, [self.photo, second], workers=1)
+        render.assert_called_once()
+        self.assertEqual(render.call_args.args[2], second)
+        self.assertEqual(len(preparation.verify(self.root, self.output)["photos"]), 2)
+
+    def test_changed_configuration_does_not_reuse_prior_checkpoints(self):
+        second = self.put("Various/gallery/second_image_456.jpg")
+        original_render = preparation.render_photo
+
+        def stop_after_first(root, stage, source):
+            if source == second:
+                raise RuntimeError("simulated hard stop")
+            return original_render(root, stage, source)
+
+        with mock.patch.object(preparation, "render_photo", side_effect=stop_after_first):
+            with self.assertRaisesRegex(RuntimeError, "simulated hard stop"):
+                preparation.publish(self.root, self.output, [self.photo, second], workers=1)
+
+        self.cfg["paths"]["modelCacheRoot"] = str(self.root.parent / "different-model-cache")
+        with mock.patch.object(preparation, "render_photo", wraps=original_render) as render:
+            preparation.publish(self.root, self.output, [self.photo, second], workers=1)
+        self.assertEqual(render.call_count, 2)
+        self.assertEqual(len(preparation.verify(self.root, self.output)["photos"]), 2)
+
+    def test_changed_source_hash_does_not_reuse_prior_checkpoints(self):
+        second = self.put("Various/gallery/second_image_456.jpg")
+        original_render = preparation.render_photo
+
+        def stop_after_first(root, stage, source):
+            if source == second:
+                raise RuntimeError("simulated hard stop")
+            return original_render(root, stage, source)
+
+        with mock.patch.object(preparation, "render_photo", side_effect=stop_after_first):
+            with self.assertRaisesRegex(RuntimeError, "simulated hard stop"):
+                preparation.publish(self.root, self.output, [self.photo, second], workers=1)
+
+        changed = io.BytesIO()
+        Image.new("RGB", (160, 240), (30, 80, 120)).save(changed, format="JPEG")
+        self.photo.write_bytes(changed.getvalue())
+        with mock.patch.object(preparation, "render_photo", wraps=original_render) as render:
+            preparation.publish(self.root, self.output, [self.photo, second], workers=1)
+        self.assertEqual(render.call_count, 2)
+        self.assertEqual(len(preparation.verify(self.root, self.output)["photos"]), 2)
 
     def test_full_inventory_includes_cast_review_artists_and_excludes_generated(self):
         self.put("Sisters/Drakn/gallery/drakn_image_234.jpg")
@@ -248,7 +376,7 @@ class PreparationTests(unittest.TestCase):
             temporary_root = preparation.cw.storage_root(
                 preparation.cw.load_cfg(), "temporary", root=self.root
             )
-            preserved = list(temporary_root.glob(".preparation-*/run/originals/*"))
+            preserved = list(temporary_root.glob("prep-*/000000/originals/*"))
             self.assertEqual(preserved[0].read_bytes(), payload)
             return original_decode(payload)
 
@@ -261,24 +389,32 @@ class PreparationTests(unittest.TestCase):
         self.assertEqual((self.output / row["retained"]).read_bytes(), b"not a picture")
         self.assertEqual(self.call("--check"), 1)
 
-    def test_render_failure_cleans_owned_staging_before_publication(self):
-        with mock.patch.object(preparation, "rendered_rows", side_effect=OSError("render stopped")):
+    def test_render_failure_preserves_owned_recovery_before_publication(self):
+        with mock.patch.object(
+            preparation, "checkpoint_render_worker", side_effect=OSError("render stopped")
+        ):
             self.assertEqual(self.call("--apply"), 1)
         temporary_root = preparation.cw.storage_root(
             preparation.cw.load_cfg(), "temporary", root=self.root
         )
-        self.assertEqual(list(temporary_root.glob(".preparation-*")), [])
+        self.assertEqual(len([path for path in temporary_root.glob("prep-*") if path.is_dir()]), 1)
         self.assertFalse(self.output.exists())
         self.assertEqual(self.source_tree(), self.before)
 
-    def test_publish_failure_cleans_owned_staging_without_replacing_output(self):
+    def test_publish_failure_keeps_verified_checkpoints_for_retry(self):
         with mock.patch.object(preparation.os, "rename", side_effect=OSError("publish stopped")):
             self.assertEqual(self.call("--apply"), 1)
         temporary_root = preparation.cw.storage_root(
             preparation.cw.load_cfg(), "temporary", root=self.root
         )
-        self.assertEqual(list(temporary_root.glob(".preparation-*")), [])
+        recoveries = [path for path in temporary_root.glob("prep-*") if path.is_dir()]
+        self.assertEqual(len(recoveries), 1)
+        self.assertTrue((recoveries[0] / "checkpoints/000000.json").is_file())
         self.assertFalse(self.output.exists())
+        with mock.patch.object(preparation, "render_photo", wraps=preparation.render_photo) as render:
+            self.assertEqual(self.call("--apply"), 0)
+        render.assert_not_called()
+        self.assertFalse(recoveries[0].exists())
 
     def test_transparency_is_held_not_silently_composited(self):
         self.photo.unlink()
@@ -584,6 +720,142 @@ class PreparationTests(unittest.TestCase):
         self.assertLess(width, 1200)
         self.assertAlmostEqual(width / height, 944 / 1104, delta=.02)
         self.assertEqual(self.call("--check"), 0)
+
+    @contextlib.contextmanager
+    def v23(self):
+        with (
+            mock.patch.object(preparation, "CURRENT", "preparation-comparison-v23"),
+            mock.patch.object(preparation, "STEPS", preparation.pipeline.PREPARED_STEPS),
+            mock.patch.dict(preparation.RECIPE, {"id": "preparation-comparison-v23"}),
+            mock.patch.object(preparation.pipeline, "recommended_candidates", RECOMMENDED_CANDIDATES),
+            mock.patch.object(preparation.pipeline, "overlay_proposals", return_value=[]),
+            mock.patch.object(preparation.pipeline.overlays, "reel_frame", return_value=None),
+            mock.patch.object(preparation.pipeline.overlays, "letterbox", return_value=None),
+            mock.patch.object(
+                preparation.preparation_geometry, "detect_faces",
+                side_effect=lambda image: (
+                    ([[570., 80., 60., 70.]], "Test face") if image.width > 500
+                    else ([[50., 40., 60., 70.]], "Test face"))),
+        ):
+            yield
+
+    def test_v23_pads_only_recommendation_and_tone_denoise_workflow_candidates(self):
+        self.put("Various/gallery/wide.png", Image.new("RGB", (1200, 800), "#8899aa"))
+        self.subjects.side_effect = lambda image: (
+            self.person(image.size, (500, 60, 700, 800)) if image.width > 500 else None)
+        with self.v23():
+            self.assertEqual(self.call("--apply"), 0, self.errors)
+            manifest = self.manifest()
+            rows = {row["source"]: row for row in manifest["photos"]}
+            wide = rows["Various/gallery/wide.png"]
+            original = rows["Angels/Fixed Slot/gallery/old_name_image_123.jpg"]
+            self.assertEqual(wide["recommendation"]["use"], "composition")
+            self.assertEqual(
+                {name for name, variant in wide["variants"].items() if "padded" in variant},
+                {"composition", "denoise", "tone"})
+            self.assertNotIn("recommendedPadded", wide)
+            self.assertEqual(original["recommendation"]["use"], "original")
+            self.assertEqual(set(original["recommendedPadded"]), {"path", "sha256", "source"})
+            self.assertEqual(original["recommendedPadded"]["source"], original["retained"])
+            self.assertEqual(
+                {name for name, variant in original["variants"].items() if "padded" in variant},
+                {"denoise", "tone"})
+            for path in [wide["variants"]["composition"]["padded"],
+                         original["recommendedPadded"]["path"]]:
+                with Image.open(self.output / path) as image:
+                    self.assertEqual(image.size, (944, 1104))
+            self.assertEqual(self.call("--check"), 0, self.errors)
+            for case in ("interim-padding", "missing-selected", "missing-hash", "orphan-hash",
+                         "missing-original", "wrong-original-source"):
+                with self.subTest(case=case):
+                    changed = copy.deepcopy(manifest)
+                    by_source = {row["source"]: row for row in changed["photos"]}
+                    framed = by_source[wide["source"]]
+                    raw = by_source[original["source"]]
+                    if case == "interim-padding":
+                        framed["variants"]["control"].update({
+                            key: framed["variants"]["composition"][key]
+                            for key in ("padded", "paddedSha256")})
+                    elif case == "missing-selected":
+                        for key in ("padded", "paddedSha256"):
+                            framed["variants"]["composition"].pop(key)
+                    elif case == "missing-hash":
+                        framed["variants"]["tone"].pop("paddedSha256")
+                    elif case == "orphan-hash":
+                        framed["variants"]["tone"].pop("padded")
+                    elif case == "missing-original":
+                        raw.pop("recommendedPadded")
+                    else:
+                        raw["recommendedPadded"]["source"] = framed["retained"]
+                    with self.assertRaises((ValueError, preparation.ValidationError)):
+                        preparation.validate(changed)
+            for relative in (wide["variants"]["composition"]["padded"],
+                             original["recommendedPadded"]["path"]):
+                path = self.output / relative
+                saved = path.read_bytes()
+                path.write_bytes(b"tampered padded output")
+                self.assertEqual(self.call("--check"), 1)
+                path.write_bytes(saved)
+            self.assertEqual(self.call("--check"), 0, self.errors)
+
+    def test_v23_recovery_binds_selective_padded_artifacts(self):
+        second = self.put("Various/gallery/second_image_456.jpg")
+        original_render = preparation.render_photo
+
+        def stop_after_first(root, stage, source):
+            if source == second:
+                raise RuntimeError("simulated hard stop")
+            return original_render(root, stage, source)
+
+        with self.v23():
+            for corrupt in (False, True):
+                with self.subTest(corrupt=corrupt):
+                    output = self.output / str(corrupt)
+                    with mock.patch.object(preparation, "render_photo", side_effect=stop_after_first):
+                        with self.assertRaisesRegex(RuntimeError, "simulated hard stop"):
+                            preparation.publish(self.root, output, [self.photo, second], workers=1)
+                    temporary = preparation.cw.storage_root(self.cfg, "temporary", root=self.root)
+                    recovery = next(path for path in temporary.glob("prep-*") if path.is_dir())
+                    checkpoint = json.loads((recovery / "checkpoints/000000.json").read_text())
+                    padded = checkpoint["row"]["recommendedPadded"]["path"]
+                    artifacts = {entry["path"]: entry["sha256"] for entry in checkpoint["artifacts"]}
+                    self.assertEqual(artifacts[padded], checkpoint["row"]["recommendedPadded"]["sha256"])
+                    if corrupt:
+                        (recovery / "publish" / padded).write_bytes(b"corrupt recovery padding")
+                    with mock.patch.object(preparation, "render_photo", wraps=original_render) as render:
+                        preparation.publish(self.root, output, [self.photo, second], workers=1)
+                    self.assertEqual(render.call_count, 2 if corrupt else 1)
+                    preparation.verify(self.root, output)
+                    self.assertFalse(recovery.exists())
+
+    def test_v23_ineligible_rows_have_no_padded_workflow_output(self):
+        with self.v23(), mock.patch.object(preparation.preparation_geometry, "detect_faces",
+                                          return_value=([], "No usable face")):
+            self.assertEqual(self.call("--apply"), 0, self.errors)
+            manifest = self.manifest()
+            row = manifest["photos"][0]
+            self.assertEqual(row["recommendation"]["use"], "none")
+            self.assertFalse(row["variants"])
+            self.assertNotIn("recommendedPadded", row)
+            row["recommendedPadded"] = {
+                "path": "bogus.png", "sha256": "0" * 64, "source": row["retained"]}
+            with self.assertRaisesRegex(ValueError, "non-original recommendation"):
+                preparation.validate(manifest)
+
+    def test_v23_decode_failure_cannot_publish_padded_workflow_output(self):
+        self.photo.write_bytes(b"not a decodable image")
+        with self.v23():
+            self.assertEqual(self.call("--apply"), 1)
+            manifest = self.manifest()
+            row = manifest["photos"][0]
+            self.assertEqual(row["outcome"], "unprocessable")
+            self.assertEqual(row["recommendation"]["use"], "none")
+            self.assertNotIn("recommendedPadded", row)
+            row["recommendation"]["use"] = "original"
+            row["recommendedPadded"] = {
+                "path": "bogus.png", "sha256": "0" * 64, "source": row["retained"]}
+            with self.assertRaisesRegex(ValueError, "unusable input"):
+                preparation.validate(manifest)
 
     def test_composition_box_keeps_margin_and_skips_when_little_gained(self):
         box = preparation.pipeline.composition_box((1200, 800), [500, 60, 700, 800])

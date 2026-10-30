@@ -139,6 +139,43 @@ class RetainedPreparationTests(unittest.TestCase):
         self.assertTrue(after.is_file())
         self.assertFalse((self.root / destination).exists())
 
+    def test_selective_padding_retains_only_actual_artifacts_and_checks_tampering(self):
+        record = self.row["variants"]["eraser-mask"]
+        record.pop("padded")
+        record.pop("paddedSha256")
+        self.stage()
+        data = retained.verify_link(self.root, self.destination)
+        self.assertIsNotNone(data)
+        self.assertEqual(len(data["artifacts"]), 13)
+        padded = data["artifactMap"][self.row["variants"]["composition"]["padded"]]
+        (self.root / padded).write_bytes(b"tampered padded pixels")
+        self.assertIsNone(retained.verify_link(self.root, self.destination))
+
+    def test_original_recommendation_retains_padded_output_and_rewrites_detail_link(self):
+        for record in self.row["variants"].values():
+            record.pop("padded")
+            record.pop("paddedSha256")
+        self.row["processing"].update(final="control", cleanup="control")
+        self.row["recommendation"] = {"use": "original"}
+        self.put(self.root, self.destination, self.original)
+        relative = "recommended/original-944x1104.png"
+        payload = b"exact padded original bytes"
+        self.put(self.prep, relative, payload)
+        self.row["recommendedPadded"] = {
+            "path": relative, "sha256": sha(payload), "source": self.row["retained"]}
+        detail = f'<img src="../{relative}">'.encode()
+        self.put(self.prep, self.row["detail"], detail)
+        self.row["detailSha256"] = sha(detail)
+        self.stage()
+        data = retained.verify_link(self.root, self.destination)
+        self.assertIsNotNone(data)
+        padded = data["artifactMap"][relative]
+        self.assertEqual((self.root / padded).read_bytes(), payload)
+        self.assertIn(pathlib.PurePosixPath(padded).name, (self.root / data["detail"]).read_text())
+        self.assertNotIn("../recommended/", (self.root / data["detail"]).read_text())
+        (self.root / padded).write_bytes(b"tampered original padding")
+        self.assertIsNone(retained.verify_link(self.root, self.destination))
+
     def test_digest_nested_input_artifacts_are_flattened_with_exact_hashes(self):
         for record in self.row["variants"].values():
             for field in ("path", "thumbnail", "padded"):

@@ -12,6 +12,12 @@ GROW = .008        # complete-shape margin, as a share of the smaller image side
 FACE_GUARD = .02
 
 
+def rgb_bounds(array):
+    red, green, blue = array[..., 0], array[..., 1], array[..., 2]
+    return (np.minimum(np.minimum(red, green), blue).astype(np.int16),
+            np.maximum(np.maximum(red, green), blue).astype(np.int16))
+
+
 def part(kind, mask, reason=""):
     ys, xs = np.nonzero(mask)
     return {"kind": kind, "mask": mask, "reason": reason,
@@ -50,7 +56,8 @@ def glyphs(array, subject, *, screenshot=False):
     """White strokes drawn over the picture (icons, counters, captions), grouped into whole shapes."""
     height, width = array.shape[:2]
     gray = cv2.cvtColor(array, cv2.COLOR_RGB2GRAY)
-    white = (array.min(axis=2) > 215) & (array.max(axis=2).astype(np.int16) - array.min(axis=2) < 30)
+    low, high = rgb_bounds(array)
+    white = (low > 215) & (high - low < 30)
     contrast = cv2.dilate((gray < 110).astype(np.uint8), np.ones((7, 7), np.uint8)) > 0
     strokes = (white & contrast & edge_region(height, width)).astype(np.uint8)
     count, labels, stats, _ = cv2.connectedComponentsWithStats(strokes)
@@ -61,18 +68,19 @@ def glyphs(array, subject, *, screenshot=False):
             small[labels == label] = 1
     join = max(5, round(min(width, height) * .018)) | 1
     grouped = cv2.morphologyEx(small, cv2.MORPH_CLOSE, np.ones((join, join), np.uint8))
+    small_mask = small > 0
     count, labels, stats, _ = cv2.connectedComponentsWithStats(grouped)
     parts = []
     for label in range(1, count):
         x, y, w, h, area = map(int, stats[label])
         shape = labels == label
         if (w > width * .5 or h > height * .1 or (w > width * .2 and h > height * .05)
-                or int((small > 0)[shape].sum()) < 12):
+                or int(small_mask[shape].sum()) < 12):
             continue
         chrome = screenshot and (y + h <= height * .12 or y >= height * .85)
-        if not chrome and (max(w, h) > 4 * min(w, h) or (small > 0)[shape].sum() < .08 * w * h):
+        if not chrome and (max(w, h) > 4 * min(w, h) or small_mask[shape].sum() < .08 * w * h):
             continue  # thin lit edges (walls, railings) are scenery; long text lines only count in app chrome
-        stroke = array[shape & (small > 0)].min(axis=1)
+        stroke = array[shape & small_mask].min(axis=1)
         status_bar = screenshot and y + h <= height * .05
         if not status_bar and (stroke >= 245).mean() < .5:
             continue  # app glyphs are rendered pure white; sunlit highlights and lace are not

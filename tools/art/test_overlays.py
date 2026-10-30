@@ -54,6 +54,22 @@ class RGBBoundsTest(unittest.TestCase):
                                                  contrast=contrast, vivid=vivid)
                 self.assertEqual(actual, expected)
 
+    def test_clutter_glyphs_match_axis_reduction_reference(self):
+        array = np.full((800, 400, 3), (60, 80, 100), dtype=np.uint8)
+        array[300:330, 350:380] = 0
+        array[304:326, 354:376] = 255
+
+        def signature(parts):
+            return [(part["kind"], part["box"], part["reason"], part["mask"].tobytes())
+                    for part in parts]
+
+        actual = signature(overlays.clutter.glyphs(array, None, screenshot=False))
+        with mock.patch.object(overlays.clutter, "rgb_bounds", side_effect=lambda pixels: (
+                pixels.min(axis=2).astype(np.int16),
+                pixels.max(axis=2).astype(np.int16))):
+            expected = signature(overlays.clutter.glyphs(array, None, screenshot=False))
+        self.assertEqual(actual, expected)
+
 
 class ReelFrameTest(unittest.TestCase):
     def test_full_bleed_reel_bottom_panel(self):

@@ -124,7 +124,7 @@ class SequenceTests(unittest.TestCase):
         self.assertNotIn("head-overlay-reconstruction", outputs)
         self.filler.assert_not_called()
 
-    def test_overlay_first_no_proposals_skips_person_and_cleanup_not_declares_clean(self):
+    def test_no_proposals_assesses_person_composition_but_skips_cleanup(self):
         import image_preparation as preparation
 
         self.row["geometry"]["overlayDetected"] = False
@@ -136,16 +136,40 @@ class SequenceTests(unittest.TestCase):
             outputs = dict(preparation.prepared_candidates(self.image, self.row))
         sequence = self.row["processing"]["sequence"]
         self.assertEqual(sequence["preflight"]["status"], "no-proposals")
-        self.assertFalse(sequence["preflight"]["subjectRequired"])
-        self.assertEqual(sequence["subject"]["method"], "not-requested")
-        self.assertIn("unassessed", sequence["stopReason"])
+        self.assertTrue(sequence["preflight"]["subjectRequired"])
+        self.assertEqual(sequence["subject"]["method"], "mask-rcnn")
+        self.assertIn("cleanup detectors and fill skipped", sequence["stopReason"])
         self.assertEqual(set(outputs), {"control", "denoise", "tone"})
         self.assertEqual(self.row["processing"]["final"], "control")
         np.testing.assert_array_equal(np.asarray(outputs["control"]), np.asarray(self.image))
-        self.subject_detector.assert_not_called()
+        self.subject_detector.assert_called_once()
         self.detector.assert_not_called()
         self.filler.assert_not_called()
         self.assertTrue(all(step["status"] == "skipped" for step in self.row["processing"]["steps"][:-2]))
+
+    def test_no_proposal_composition_requires_real_subject_mask_and_preserves_face(self):
+        self.row["geometry"]["overlayDetected"] = False
+        for case in ("guarded", "face-loss", "subject-loss", "face-frame"):
+            with self.subTest(case=case):
+                row = copy.deepcopy(self.row)
+                self.subject_detector.return_value = None if case == "face-frame" else self.person
+                frame = ([80, 120, 320, 800] if case == "face-loss" else
+                         [120, 80, 320, 800] if case == "subject-loss" else [80, 80, 320, 800])
+                with (
+                    mock.patch.object(pipeline, "overlay_proposals", return_value=[]),
+                    mock.patch.object(pipeline.geometry, "border_box", return_value=[0, 0, *self.size]),
+                    mock.patch.object(pipeline.overlays, "reel_frame", return_value=None),
+                    mock.patch.object(pipeline.overlays, "letterbox", return_value=None),
+                    mock.patch.object(pipeline.clutter, "glyphs", return_value=[]),
+                    mock.patch.object(pipeline, "composition_box", return_value=frame),
+                ):
+                    images = dict(pipeline.recommended_candidates(self.image, row))
+                self.assertIn("composition", images)
+                self.assertEqual(row["processing"]["final"], "composition" if case == "guarded" else "control")
+                step = next(step for step in row["processing"]["steps"] if step["name"] == "composition")
+                self.assertEqual(step["status"], "attempted-selected" if case == "guarded" else "attempted-rejected")
+                self.detector.assert_not_called()
+                self.filler.assert_not_called()
 
     def test_overlay_first_reuses_patterns_and_preserves_non_screenshot_reconstruction(self):
         self.row["geometry"]["overlayDetected"] = False
