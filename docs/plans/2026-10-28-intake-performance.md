@@ -474,8 +474,34 @@ and the original catalogue hash were verified unchanged. No staged work was
 deleted: it was renamed to `abandoned-staged-20261030-040207`, with the empty
 previous directory similarly preserved. The durable run-local
 `install-attempt-20261030-040207.json` records that proof and both locations.
-Retry the same saved preview through the supported launcher with unbuffered,
-timestamped capture after the fix is committed. Do not rerun intake/matching.
+The first retry correctly refused because the saved implementation hashes
+predated the fix; no staging/publication occurred. Preserve that preview as
+`pre-native-domain-preview.json` and use the supported measurement-reusing
+`--replan` to rebind the engine, without repeating intake. Compare every
+source/destination/reason/selected hash against the saved audited preview
+before applying; do not hand-edit implementation hashes or bypass the guard.
+The replan started at 04:15 -05:00 with timestamped, unbuffered capture.
+It completed at 04:23:54 with exit 0. **All 2,793 photo rows are exactly
+identical** to the saved audited preview, as are Working inputs, policy,
+cast-seed mode, preparation and both catalogue bindings. Only the recorded
+`retained_preparation.py` implementation hash changed. New preview SHA-256:
+`ec72a3523ccce9f0d3b26cf1a915fe071b4d9355735d9fb483e500f1cc3f7fc1`.
+The engine-bound apply began at 04:24:53; it independently reverified the full
+72,991-file backup at 04:33:51. All 2,793 derivative sets (8,255 entries)
+completed by 06:58:10; retained detail refresh followed. At 08:15:05 the
+pre-publication collision guard refused 2,401 unowned legacy cast outputs.
+`previous` remains empty and the saved plan remains `preview`; complete staging
+must be recovered, not discarded. The old bytes are not proven reproducible.
+Explicit exact-byte preservation and verified completed-stage resume are the
+bounded prerequisite; actual install/viewer acceptance remains open.
+
+A matching 15-second/10-Hz live sample during the fixed derivative stage
+collected 147 samples without errors: **zero configuration loading,
+validation or operational-root resolution samples**. Retained-source
+verification remains active (126 samples); this does not remove its path,
+manifest or artifact hashing. The fixed sample is
+`tmp/perf/fresh-v23-install-fixed-live.txt`. Remaining repeated owner scans
+belong to later library I/O work, not another unmeasured restart.
 
 - [ ] **P1 ai** T16 Verify the config-free native-owner fix through the
   same backed-up install, independent check and actual viewers; record actual

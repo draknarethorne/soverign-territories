@@ -3,8 +3,11 @@ setlocal
 rem Intake-aware clean start. --dry-run inventories; --intake-only --apply prepares and stops.
 rem No flags prepares/resumes and previews matching. --apply installs an existing reviewed preview.
 rem --replan can resume incomplete matching from verified intake and its saved measurements; never installs.
+rem --resume-install --check/--apply verifies completed unpublished staging before reuse.
 if "%~2"=="" (
   echo Usage: sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\RUN" [--baseline working] [--dry-run ^| --intake-only --apply ^| --replan ^| --apply ^| --check ^| --undo]
+  echo Completed unpublished stage: --resume-install --check, then --resume-install --apply
+  echo Unowned legacy cast collisions: explicitly add --preserve-legacy-derivatives to check/apply
   exit /b 2
 )
 set "ST_REBASE_ROOT=%~1"

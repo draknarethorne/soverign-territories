@@ -105,6 +105,18 @@ run-local receipt `install-attempt-20261030-040207.json`. The tested
 [native-owner fix and retry evidence](2026-10-28-intake-performance.md#oct-30-measured-installation-blocker)
 do not change this preview or its selected pixels. Retry the supported apply
 against the same saved preview and existing verified backup.
+The supported measurement-reusing replan completed at 04:23:54. All 2,793
+audited photo rows, policy, selected preparation and catalogue bindings are
+exactly unchanged; only the implementation binding changes. The rebound
+preview SHA-256 is
+`ec72a3523ccce9f0d3b26cf1a915fe071b4d9355735d9fb483e500f1cc3f7fc1`.
+Apply restarted at 04:24:53, with the full backup independently reverified
+at 04:33:51. All derivatives and retained details completed, but at 08:15:05
+the pre-publication guard refused unowned legacy cast derivatives. No swap
+occurred: `previous` is empty and `run.json` remains `preview`. Preserve and
+verify the completed stage; explicitly journal all 2,401 colliding old files
+for exact undo rather than infer reproducibility or regenerate the stage.
+Actual installation/viewer success remains pending.
 
 ## Oct 28: renewed sandbox authorization
 

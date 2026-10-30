@@ -3516,6 +3516,10 @@ def main(argv=None, embedder=None, *, domain="general"):
     s.add_argument("--dry-run", action="store_true", help="inventory immutable inputs only; no preparation, downloads or matching")
     s.add_argument("--undo", action="store_true", help="restore the retained pre-run categories and withdraw this run's cast Review additions")
     s.add_argument("--replan", action="store_true", help="rebuild an unapplied preview from its own fresh measurements, with no old candidate identities")
+    s.add_argument("--resume-install", action="store_true",
+                   help="with --check or --apply, verify and reuse completed unpublished staging; never resumes a partial stage")
+    s.add_argument("--preserve-legacy-derivatives", action="store_true",
+                   help="explicitly retain colliding unowned cast derivatives byte-for-byte in rollback storage; edited owned outputs still refuse")
     s = add("rebaseline", cmd_rebaseline)
     s.add_argument("--out", help="write the read-only whole-library report here (default: configured reports root/library/rebaseline.md); writes prospect-cast-audit.csv beside it")
     s.add_argument("--no-renders", action="store_true", help="ignore saved ComfyUI face renders when scoring Angel pairings")

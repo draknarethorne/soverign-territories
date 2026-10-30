@@ -54,6 +54,8 @@ echo                                    same command with no flags prepares/resu
 echo                                    originals + all kept variants follow assigned photos; --cast-seeds all retains cast membership ^(default^); Artists prepared separately; --undo restores exact pre-run bytes
 echo                                    --cast-seeds core retains protected/core/workflow-selected cast photos and previews non-core release with existing thresholds; inspect moves before apply
 echo                                    --replan reuses only this run's prepared measurements, including a failed matching preview with verified intake; never installs
+echo                                    --resume-install --check verifies completed unpublished staging; --resume-install --apply reuses it without recopying or rewriting outputs
+echo                                    --preserve-legacy-derivatives explicitly journals unowned cast collisions byte-for-byte for undo; edited owned derivatives still refuse
 echo                                    no matcher-only legacy preview can be installed
 echo    storage-retention.cmd --root "SANDBOX\Working" preview       read-only inventory; unknown, incomplete, latest accepted and report-linked runs stay
 echo    storage-retention.cmd --root "SANDBOX\Working" register --all --apply  register receipt-backed runs as review/keep; unsupported directories stay unregistered

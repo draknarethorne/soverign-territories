@@ -27,7 +27,7 @@ echo   T  Preview artist-only likeness grouping in the sandbox (shared engine, n
 echo   V  Preview separate Artist gallery pages (no matching or source changes)
 echo   C  Photo library check (read only: anything waiting?)
 echo   B  Back up the photo library and ComfyUI inputs
-echo   X  Intake-aware sandbox clean start (inventory or verify; prepare/match/apply separately)
+echo   X  Intake-aware sandbox clean start (inventory or verify; completed-stage recovery flags in Help)
 echo   N  Preview sandbox run-retention decisions (read only)
 echo   F  Preview reference-render batch (offline, no workflow deployment or queue)
 echo   D  Refresh rendering selection/results gallery (reports only)

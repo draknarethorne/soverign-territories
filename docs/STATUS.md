@@ -55,10 +55,21 @@ A live sample and regression identified the cause; the narrow native-owner
 fix passes 68 focused tests and reduces one identical real guard check from
 5.602 s to 0.597 s. The first attempt was stopped before publication, all
 2,868 Working input hashes/catalogue verified unchanged, and staging preserved
-with a durable receipt. The same saved preview will be retried, not a new
-intake or matching run. Independent installed check and actual viewers remain
+with a durable receipt. Apply correctly refused the old engine hashes;
+supported measurement-reusing replan now rebinds the preserved preview,
+without repeating intake or bypassing the guard. Compare all assignments
+before retrying apply. Independent installed check and actual viewers remain
 pending; [performance T16](plans/2026-10-28-intake-performance.md#oct-30-measured-installation-blocker)
 owns the real retry measurement.
+
+**Oct 30 install blocker:** the engine-bound retry completed all 2,793
+derivative sets and retained details but exited at 08:15 -05:00 before
+publication on unowned legacy cast derivatives (1,218 padded and 1,183 head).
+The plan remains `preview`, `previous` is empty, and complete staging is
+preserved. These old files are not proven reproducible. Guarded completed-stage
+verification/reuse and explicit exact-byte legacy preservation are being
+validated; installed viewer acceptance remains open. See the
+[recovery runbook](art/likeness.md#running-and-observing-a-long-rebase).
 
 **Oct 30 remaining boundaries:** native inspection confirms two cleanup
 limitations: the inherited nested-phone/UI miss and the newly reported

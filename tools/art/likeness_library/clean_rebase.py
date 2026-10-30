@@ -5,6 +5,7 @@ import csv
 import datetime
 import hashlib
 import json
+import os
 import pathlib
 import shutil
 import uuid
@@ -1285,7 +1286,7 @@ def create_plan(
     return plan
 
 
-def _prior_external_files(working, plan):
+def _prior_external_files(working, plan, *, preserve_legacy=False):
     from . import derivatives, retained_preparation
 
     native = {
@@ -1316,6 +1317,24 @@ def _prior_external_files(working, plan):
             output, checked = derivatives.verified(source, framing, record.get("box"))
             files[output.relative_to(working).as_posix()] = checked["sha256"]
         files[manifest.relative_to(working).as_posix()] = metadata.content_sha256(manifest)
+    legacy = {}
+    for row in plan["photos"]:
+        if not row["destination"].startswith(("Angels/", "Sisters/")):
+            continue
+        source = _publication_path(working, row["destination"])
+        for framing in ("padded", "head", "chest"):
+            target = source.parent.parent / derivatives.relative_target(source, framing)
+            relative = target.relative_to(working).as_posix()
+            if target.exists() and relative not in files:
+                target = _publication_path(working, relative)
+                legacy[relative] = metadata.content_sha256(target)
+    if legacy and not preserve_legacy:
+        raise ValueError(
+            f"{len(legacy)} unowned legacy derivative collisions; inspect and explicitly use "
+            "--preserve-legacy-derivatives to journal their exact bytes for undo")
+    if legacy:
+        print(f"Preserving {len(legacy)} unowned legacy derivatives; no reproducibility claim.")
+        files.update(legacy)
     return files
 
 
@@ -1327,7 +1346,118 @@ def _category_inventory(working, categories):
     }
 
 
-def install_plan(layout, run, plan):
+def verify_staged_install(layout, run, plan):
+    """Prove a completed, unpublished stage against frozen preparation and measurements."""
+    from PIL import Image
+    import originals
+    from . import derivatives, retained_preparation
+
+    staged, previous = run / "staged", run / "previous"
+    if (plan["status"] != "preview" or not plan.get("preparation")
+            or any(key in plan for key in (
+                "publishedFiles", "installedCatalogSHA256", "previousCategoryNames", "externalFiles",
+                "previousCategories", "previousExternalHashes", "previousCategoryFiles"))):
+        raise ValueError("resume requires an unpublished preparation-aware preview")
+    if (not staged.is_dir() or _is_reparse_point(staged) or not previous.is_dir()
+            or _is_reparse_point(previous) or any(previous.iterdir())):
+        raise ValueError("resume requires safe completed staging and an empty previous directory")
+    working, source = layout["working_root"], layout["source_root"]
+    if _curation_inventory(layout) != plan["workingInputs"]:
+        raise ValueError("Working inputs changed since matching preview")
+    if metadata.content_sha256(metadata.path_for_root(working)) != plan["sourceCatalogSHA256"]:
+        raise ValueError("source catalogue changed since preview")
+    if metadata.content_sha256(run / "catalog.json") != plan["catalogSHA256"]:
+        raise ValueError("prepared sandbox catalogue changed since preview")
+    metadata.load_catalog(run / "catalog.json")
+    preparation, data = clean_preparation.verify(layout, run)
+    if metadata.content_sha256(preparation / "manifest.json") != plan["preparation"]["manifestSHA256"]:
+        raise ValueError("preparation evidence differs from matched preview")
+    prepared_rows = {row["source"]: row for row in data["photos"]}
+    measured = json.loads((run / "likeness-cache.json").read_text(encoding="utf-8"))["emb"]
+    expected, manifests, entries = {}, {}, collections.defaultdict(set)
+    for number, row in enumerate(plan["photos"], 1):
+        native = _publication_path(staged, row["destination"])
+        digest = row["preparedSHA256"]
+        if metadata.content_sha256(native) != digest:
+            raise ValueError(f"staged native checksum mismatch: {native}")
+        expected[row["destination"]] = digest
+        link = retained_preparation.verify_link(staged, native, row.get("photoId"))
+        if (link is None or link["row"] != prepared_rows[row["source"]]
+                or link["recipe"] != data["recipe"]):
+            raise ValueError(f"staged retained preparation differs: {native}")
+        for artifact in link["artifacts"]:
+            expected[artifact["path"]] = artifact["sha256"]
+        manifest_path = _publication_path(staged, link["manifest"])
+        expected[link["manifest"]] = metadata.content_sha256(manifest_path)
+        if row["preparationOutcome"] == "unprocessable":
+            continue
+        face = measured.get(hashlib.sha1(native.read_bytes()).hexdigest(), {})
+        box, px = face.get("box"), face.get("px", 0)
+        folder = native.parent.parent
+        if folder not in manifests:
+            manifest = folder / derivatives.MANIFEST
+            manifests[folder] = derivatives.load(folder)
+            expected[manifest.relative_to(staged).as_posix()] = metadata.content_sha256(manifest)
+        for framing in ("padded", "head", "chest"):
+            available = framing == "padded" or bool(box and px >= originals.MIN_FACE_PX)
+            if framing == "head" and available:
+                available = originals.headshot(native, None, derivatives.SIZE, box, cleanup=False)
+            key = derivatives.relative_target(native, framing).as_posix()
+            record = manifests[folder]["entries"].get(key)
+            if not available:
+                if record is not None:
+                    raise ValueError(f"staged derivative bypasses quality gate: {native}: {framing}")
+                continue
+            # The exact retained link above proves prepared pixels without rescanning the owner.
+            if (not record or record.get("recipe") != derivatives.RECIPE
+                    or record.get("source") != native.relative_to(folder).as_posix()
+                    or record.get("sourceSha256") != digest or record.get("sourcePrepared") is not True
+                    or record.get("box") != (list(box) if box else None)):
+                raise ValueError(f"staged derivative ownership differs: {native}: {framing}")
+            target = _publication_path(staged, (folder / key).relative_to(staged).as_posix())
+            with Image.open(target) as image:
+                if image.size != derivatives.SIZE or image.format != "PNG":
+                    raise ValueError(f"staged derivative dimensions/format differ: {target}")
+            rendered = derivatives.render_pixels(native, framing, box, prepared=True)
+            if hashlib.sha256(rendered).hexdigest() != record["sha256"]:
+                raise ValueError(f"staged derivative pixels differ from the recipe: {target}")
+            expected[target.relative_to(staged).as_posix()] = record["sha256"]
+            entries[folder].add(key)
+        if number % 100 == 0:
+            print(f"STAGED VERIFY: {number}/{len(plan['photos'])} native/retained/derivative sets", flush=True)
+    for folder, manifest in manifests.items():
+        if set(manifest["entries"]) != entries[folder]:
+            raise ValueError(f"unaccounted staged derivative entries: {folder}")
+    destinations = {
+        tuple(pathlib.PurePosixPath(row["destination"]).parts[:2])
+        for row in plan["photos"]
+        if pathlib.PurePosixPath(row["destination"]).parts[0] in RESET_CATEGORIES
+    }
+    for category, name in sorted(destinations):
+        former = sorted({
+            row["oldFolder"] for row in plan["photos"]
+            if pathlib.PurePosixPath(row["destination"]).parts[:2] == (category, name)
+            and row["oldFolder"].partition("/")[2] == name
+        })
+        names = [path for old in former for path in (source / old / "gallery").glob("z_*.txt")]
+        if len(names) == 1:
+            relative = f"{category}/{name}/gallery/{names[0].name}"
+            expected[relative] = metadata.content_sha256(names[0])
+        else:
+            relative = f"{category}/{name}/gallery/z_{name.lower().replace(' ', '_')}.txt"
+            payload = f"name: {name}\nClean sandbox rebuild; prior folders recorded in run.json\n"
+            expected[relative] = hashlib.sha256(payload.replace("\n", os.linesep).encode("utf-8")).hexdigest()
+    actual = {path.relative_to(staged).as_posix(): metadata.content_sha256(path)
+              for path in _source_files(staged)}
+    if actual != expected:
+        differences = sorted(key for key in actual.keys() | expected.keys()
+                             if actual.get(key) != expected.get(key))
+        raise ValueError(f"staged inventory changed or incomplete: {differences[:10]}")
+    print(f"Completed staging verified: {len(plan['photos'])} photos, {len(actual)} files.", flush=True)
+    return [{"path": path, "sha256": digest} for path, digest in sorted(actual.items())]
+
+
+def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=False):
     """Stage and hash-check every candidate, retaining old categories for rollback."""
     import library_backup
 
@@ -1354,8 +1484,9 @@ def install_plan(layout, run, plan):
                 raise ValueError(f"Working cast reference differs from Source: {path}")
     library_backup.verify_backup(library_backup.latest_work_root_backup(working))
     staged, previous = run / "staged", run / "previous"
-    if staged.exists() or previous.exists():
+    if not resume_install and (staged.exists() or previous.exists()):
         raise ValueError("staging already exists; inspect the previous attempt before applying")
+    staged_files = verify_staged_install(layout, run, plan) if resume_install else None
     local_catalog = working / ".likeness-library.json"
     previous_catalog = local_catalog.read_bytes() if local_catalog.exists() else None
     if "catalogSHA256" in plan:
@@ -1373,16 +1504,20 @@ def install_plan(layout, run, plan):
         if path.exists():
             list(_source_files(path))
     previous_category_files = _category_inventory(working, categories)
-    previous_external_hashes = _prior_external_files(working, plan) if plan.get("preparation") else {}
-    staged.mkdir()
-    previous.mkdir()
+    previous_external_hashes = (
+        _prior_external_files(working, plan, preserve_legacy=preserve_legacy)
+        if plan.get("preparation") else {}
+    )
+    if not resume_install:
+        staged.mkdir()
+        previous.mkdir()
     preparation_rows = {}
     if plan.get("preparation"):
         preparation, data = clean_preparation.verify(layout, run)
         if metadata.content_sha256(preparation / "manifest.json") != plan["preparation"]["manifestSHA256"]:
             raise ValueError("preparation evidence differs from matched preview")
         preparation_rows = {row["source"]: row for row in data["photos"]}
-    for row in plan["photos"]:
+    for row in (() if resume_install else plan["photos"]):
         src = source.joinpath(*pathlib.PurePosixPath(row["source"]).parts)
         dest = staged.joinpath(*pathlib.PurePosixPath(row["destination"]).parts)
         if pathlib.PurePosixPath(row["destination"]).parts[0] not in categories:
@@ -1405,7 +1540,7 @@ def install_plan(layout, run, plan):
             retained_preparation.stage_photo(
                 staged, row["destination"], preparation, prepared_row, recipe=data["recipe"],
             )
-    for category in RESET_CATEGORIES:
+    for category in (() if resume_install else RESET_CATEGORIES):
         for folder in sorted((staged / category).iterdir()) if (staged / category).exists() else ():
             gallery = folder / "gallery"
             gallery.mkdir(exist_ok=True)
@@ -1426,7 +1561,7 @@ def install_plan(layout, run, plan):
                 f"name: {folder.name}\nClean sandbox rebuild; prior folders recorded in run.json\n",
                 encoding="utf-8",
             )
-    if plan.get("preparation"):
+    if plan.get("preparation") and not resume_install:
         from . import derivatives
 
         measured = json.loads((run / "likeness-cache.json").read_text(encoding="utf-8"))["emb"]
@@ -1447,6 +1582,8 @@ def install_plan(layout, run, plan):
             {"path": path.relative_to(staged).as_posix(), "sha256": metadata.content_sha256(path)}
             for path in _source_files(staged)
         ]
+    if resume_install:
+        plan["publishedFiles"] = staged_files
     external_files = [
         {"path": path.relative_to(staged).as_posix(), "sha256": metadata.content_sha256(path)}
         for path in _source_files(staged)
@@ -1696,6 +1833,12 @@ def command(args, api):
     ):
         raise ValueError("run directory must be outside identity category roots")
     intake_only = getattr(args, "intake_only", False)
+    resume_install = getattr(args, "resume_install", False)
+    preserve_legacy = getattr(args, "preserve_legacy_derivatives", False)
+    if resume_install and (intake_only or not (args.check or args.apply)):
+        raise ValueError("--resume-install requires --check or --apply without --intake-only")
+    if preserve_legacy and not (args.check or args.apply):
+        raise ValueError("--preserve-legacy-derivatives requires --check or --apply")
     include_various = getattr(args, "include_current_various", False)
     baseline = getattr(args, "baseline", None)
     if baseline not in {None, "source", "working"}:
@@ -1746,7 +1889,7 @@ def command(args, api):
             total = len(rows)
         print(f"Intake preview: {total} inputs; use --intake-only --apply to write sidecars.")
         return {"status": "inventory", "inputCount": total}
-    if args.check or args.undo or args.replan:
+    if args.check or args.undo or args.replan or resume_install:
         if not run.is_dir():
             raise ValueError("no saved clean-start run exists")
     else:
@@ -1835,16 +1978,24 @@ def command(args, api):
     elif args.apply:
         raise ValueError("matcher-only previews cannot be installed; create a new intake-aware run")
     _verify_routes(plan, layout["source_root"])
-    if args.apply:
+    if args.apply or resume_install:
         if any(
             metadata.content_sha256(pathlib.Path(__file__).with_name(name)) != digest
             for name, digest in plan.get("implementationHashes", {}).items()
         ):
             raise ValueError("engine changed since preview; replan before applying")
+    if args.check and (resume_install or preserve_legacy):
+        if plan["status"] != "preview":
+            raise ValueError("installation recovery preview requires an unpublished plan; use ordinary --check")
+        if resume_install:
+            verify_staged_install(layout, run, plan)
+        _prior_external_files(layout["working_root"], plan, preserve_legacy=preserve_legacy)
+        return {"status": "staged-verified" if resume_install else "legacy-preservation-preview"}
+    if args.apply:
         if plan["status"] == "applied":
             _check_publication(layout["working_root"], plan)
         else:
-            install_plan(layout, run, plan)
+            install_plan(layout, run, plan, resume_install=resume_install, preserve_legacy=preserve_legacy)
         _write_json(run / "policy.json", plan["policy"])
         _refresh_galleries(layout["working_root"], run)
     if args.undo:

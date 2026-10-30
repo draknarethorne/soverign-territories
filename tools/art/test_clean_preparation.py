@@ -495,10 +495,107 @@ class CleanPreparationTests(unittest.TestCase):
         self.command()
         with mock.patch("library_backup.latest_work_root_backup", return_value=self.base), \
                 mock.patch("library_backup.verify_backup"):
-            with self.assertRaisesRegex(ValueError, "Stale or edited"):
-                self.command(apply=True)
+            for preserve in (False, True):
+                with self.assertRaisesRegex(ValueError, "Stale or edited"):
+                    self.command(apply=True, preserve_legacy_derivatives=preserve)
         self.assertTrue(target.read_bytes().endswith(b"manual edit"))
         self.assertFalse((self.run / "staged").exists())
+
+    def test_legacy_cast_collision_requires_opt_in_and_restores_exact_bytes(self):
+        source = self.working / "Angels/Fixed/gallery/fixed_image_123456.jpg"
+        target = source.parent.parent / derivatives.relative_target(source, "padded")
+        target.parent.mkdir()
+        target.write_bytes(b"unowned legacy bytes, not claimed reproducible")
+        original = target.read_bytes()
+        self.command()
+        with mock.patch("library_backup.latest_work_root_backup", return_value=self.base), \
+                mock.patch("library_backup.verify_backup"):
+            with self.assertRaisesRegex(ValueError, "legacy.*preserve-legacy"):
+                self.command(apply=True)
+            self.assertFalse((self.run / "staged").exists())
+            self.command(apply=True, preserve_legacy_derivatives=True)
+        plan = json.loads((self.run / "run.json").read_text())
+        relative = target.relative_to(self.working).as_posix()
+        self.assertIn(relative, plan["previousExternalHashes"])
+        self.assertEqual((self.run / "previous/external" / relative).read_bytes(), original)
+        self.command(undo=True)
+        self.assertEqual(target.read_bytes(), original)
+
+    def completed_stage(self):
+        self.command()
+        verify_routes = clean_rebase._verify_routes
+
+        def stop_after_staging(*args):
+            verify_routes(*args)
+            if (self.run / "staged").exists():
+                raise ValueError("fixture pre-publication interruption")
+
+        with mock.patch("library_backup.latest_work_root_backup", return_value=self.base), \
+                mock.patch("library_backup.verify_backup"), \
+                mock.patch.object(clean_rebase, "_verify_routes", side_effect=stop_after_staging):
+            with self.assertRaisesRegex(ValueError, "fixture pre-publication"):
+                self.command(apply=True)
+        return json.loads((self.run / "run.json").read_text())
+
+    def test_completed_stage_resume_checks_then_publishes_without_rebuilding_and_undoes(self):
+        plan = self.completed_stage()
+        staged = self.run / "staged"
+        before = {path.relative_to(staged).as_posix(): metadata.content_sha256(path)
+                  for path in staged.rglob("*") if path.is_file()}
+        result = self.command(check=True, resume_install=True)
+        self.assertEqual(result["status"], "staged-verified")
+        self.assertEqual(before, {path.relative_to(staged).as_posix(): metadata.content_sha256(path)
+                                 for path in staged.rglob("*") if path.is_file()})
+        with mock.patch("library_backup.latest_work_root_backup", return_value=self.base), \
+                mock.patch("library_backup.verify_backup"), \
+                mock.patch.object(derivatives, "maintain", side_effect=AssertionError("no rebuild")), \
+                mock.patch.object(retained_preparation, "stage_photo", side_effect=AssertionError("no copy")):
+            self.command(apply=True, resume_install=True)
+        self.command(check=True)
+        self.command(undo=True)
+        for row in plan["photos"]:
+            self.assertEqual(metadata.content_sha256(self.working / row["source"]), row["sha256"])
+
+    def test_completed_stage_resume_refuses_tampering_and_unpublished_state_changes(self):
+        plan = self.completed_stage()
+        staged = self.run / "staged"
+        native = staged / plan["photos"][0]["destination"]
+        original = native.read_bytes()
+        native.write_bytes(original + b"edit")
+        with self.assertRaisesRegex(ValueError, "staged native checksum"):
+            self.command(check=True, resume_install=True)
+        native.write_bytes(original)
+        extra = staged / "unexpected.txt"
+        extra.write_text("unaccounted", encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "staged inventory"):
+            self.command(check=True, resume_install=True)
+        extra.unlink()
+        marker = self.run / "previous" / "unknown.txt"
+        marker.write_text("prior transaction evidence", encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "empty previous"):
+            self.command(check=True, resume_install=True)
+        marker.unlink()
+        folder = native.parent.parent
+        manifest_path = folder / derivatives.MANIFEST
+        manifest_bytes = manifest_path.read_bytes()
+        target = folder / derivatives.relative_target(native, "padded")
+        target_bytes = target.read_bytes()
+        Image.new("RGB", derivatives.SIZE, "magenta").save(target)
+        manifest = derivatives.load(folder)
+        manifest["entries"][derivatives.relative_target(native, "padded").as_posix()]["sha256"] = (
+            metadata.content_sha256(target)
+        )
+        derivatives.save(folder, manifest)
+        with self.assertRaisesRegex(ValueError, "pixels differ"):
+            self.command(check=True, resume_install=True)
+        target.write_bytes(target_bytes)
+        manifest_path.write_bytes(manifest_bytes)
+        row = plan["photos"][0]
+        link = retained_preparation.verify_link(staged, native, row["photoId"])
+        artifact = staged / link["original"]
+        artifact.write_bytes(artifact.read_bytes() + b"edit")
+        with self.assertRaisesRegex(ValueError, "staged retained preparation"):
+            self.command(check=True, resume_install=True)
 
     def test_another_clean_start_preserves_prior_prepared_lineage_and_exact_undo(self):
         catalog_path = self.working / ".likeness-library.json"

@@ -1272,10 +1272,30 @@ resume mechanism. Never clear a live owner's `staged`/`previous` directories.
 If a measured blocker requires stopping before the swap, first prove the
 owner is gone, plan remains `preview`, publication fields are absent,
 `previous` is empty, every bound Working input and source catalogue hash is
-unchanged, and the full backup still verifies. Preserve the staged and empty
-previous directories under distinct attempt names and record a durable
-run-local receipt before retrying the same saved preview. Retain all evidence;
-do not rerun intake/matching just to bypass an interrupted attempt. If any
+unchanged, and the full backup still verifies. A **completed** unpublished
+stage can now be checked with `--resume-install --check`, then installed with
+`--resume-install --apply` on the same launcher/run. Verification binds every
+native and retained row/recipe to the frozen preparation, checks all artifacts,
+reproduces standard derivative hashes in memory, enforces existing unavailable
+head/face gates, and refuses extra/missing/edited files or a nonempty `previous`.
+It does not recopy evidence, rewrite outputs, or resume a partial stage.
+
+Existing unowned cast derivative collisions require the separate explicit
+`--preserve-legacy-derivatives` option on check/apply. These bytes are **not**
+claimed reproducible: every replaced file is hashed and moved into
+`previous/external`, participates in the normal transaction rollback, and is
+restored exactly by `--undo`. Modern owned but edited/stale outputs still
+refuse, even with this option. Default apply detects these legacy collisions
+before expensive rendering. The complete verified backup remains mandatory.
+
+For partial staging, preserve the staged and empty previous directories under
+distinct attempt names and record a durable run-local receipt before retrying.
+Retain all evidence;
+do not rerun intake just to bypass an interrupted attempt. If implementation
+hashes changed, preserve the audited preview and run supported `--replan`
+to rebind it using saved measurements; compare every resulting route,
+reason and selected hash before applying. Never hand-edit the engine hashes.
+If any
 publication or prior-category move exists, stop and inspect the journal's
 exact state instead; this pre-publication procedure does not apply.
 

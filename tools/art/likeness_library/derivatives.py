@@ -72,8 +72,13 @@ def verified(source, framing, box=None):
 
 def render(source, framing, box):
     """Deterministic bytes shared by maintenance, omission proof and recovery."""
-    output = io.BytesIO()
     prepared = retained_preparation.source_is_prepared(source)
+    return render_pixels(source, framing, box, prepared=prepared)
+
+
+def render_pixels(source, framing, box, *, prepared):
+    """Render pixels; prepared=True requires independently verified retained lineage."""
+    output = io.BytesIO()
     if framing == "padded":
         originals.fit(source, output, SIZE, box, cleanup=not prepared)
     elif framing == "head":
