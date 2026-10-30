@@ -57,6 +57,20 @@ Artists/Humans/Animals/`_Intake` proposals are accounted for in
 no broad path migration is authorized. Recap hygiene/pinning belongs to
 storage S21/S23, not wholesale archival of unresolved plans or recaps.
 
+**Oct 30, 12:31 human-review reconciliation:** all updated fresh-v23 feedback
+is covered by the [F01-F31 source-to-plan ledger](2026-10-23-image-intake-preparation.md#complete-source-to-plan-coverage-ledger),
+with 13 unique named-image cases and the complete 209-line source preserved
+verbatim in intake. Reboot/release Explorer and finish the existing staged
+baseline's installed/viewer gates first (T16/C6/I59); no new full intake or
+recipe changes inside that run. Next P1 priorities are storage S24/S25,
+recipe-aware statistics T17, bounded case reproduction I68, coordinated
+crop/mask flow I69, and calibrated enhancement selection I70. P2 report UX,
+dimensions/styling/terminology I71-I73, recipe contract T18 and Artist scope
+I74 follow; CUSTOM execution T19 is P3 after the contract. Root migration and
+`_Intake` naming remain S17-S19 proposals. T11's older exploratory comparison
+is explicitly transferred into I68/I69, not completed or duplicated. User
+feedback is planning input, not implemented fixes or blanket recipe approval.
+
 | Kind of document | Where | Rule |
 | --- | --- | --- |
 | Raw feedback and draft thinking | `feedback/<topic>.md` (git-ignored), or directly in chat | Brain-dumps, review notes and drafts, free-form. Preserve each file until its complete text is captured word for word in the owning plan and coverage is verified. Never bulk-clear this directory |
@@ -224,6 +238,7 @@ archive active plans because their source feedback was filed.
 | `feedback_on_acceptance_testing.md` | Layout L1-L20 and its source coverage; actions A1-A9, engine/protection and naming dependencies remain live | Individually verified and archived; not all accepted |
 | `image_analysis_question.md` | Face-analysis M1-M4; learned face embeddings have no explicit hair/lipstick weight, controlled evaluation still open | Individually verified and archived; empirical evaluation open |
 | `image_intake_feedback.md` | Intake I30-I37, all 26 named examples plus controls; latest recipe remains unaccepted | Individually verified and archived; implementation underway |
+| `fresh-v23-20261029_feedback.md` | Intake F01-F31/I68-I76; performance T17-T19; storage S24/S25/S17-S19 | Updated 209-line source preserved verbatim; every theme and 13 named files mapped; source retained; implementation and acceptance open |
 | `revise_docs_planning_process.md` | This README's adopted feedback/preservation process | Answered/implemented; individually verified and archived |
 | `update_recap_10_22.md` | Actions A4/A6 scenario explanations/UAT; current combined recap and queue track state | Individually verified and archived; scenarios not silently run |
 | `person_names_folders.md` | Family N11 resolved: explicit correction replaces erroneous original name; N12 implements after intake, before family acceptance | Answer recorded; individually verified and archived |
@@ -279,11 +294,11 @@ deferred; exact current inputs and all user decisions remain protected.
 | [2026-10-22-face-analysis-evaluation.md](2026-10-22-face-analysis-evaluation.md) | active | Explain current measurements and evaluate labelled secondary-model cases with verified licence gates |
 | [2026-10-22-manual-prompts-to-art-library.md](2026-10-22-manual-prompts-to-art-library.md) | active | P14-P17 source-faithful wording/order, person-feature/token reconciliation and Female test-bed move; remaining migration, stage contracts, validated `1b` retirement and untouched `2b` |
 | [2026-10-22-library-upkeep.md](2026-10-22-library-upkeep.md) | active | Phase 2: downstream naming/derivative/viewer and backup integration; tested implementation still needs real acceptance; independent Junk/near-duplicate/Demon work retained |
-| [2026-10-23-image-intake-preparation.md](2026-10-23-image-intake-preparation.md) | active | Phase 1: full v23 intake/check and 53-sheet changed-output screening complete; two confirmed cleanup misses, installed face/history verification, human quality acceptance and incremental/live cutover remain |
+| [2026-10-23-image-intake-preparation.md](2026-10-23-image-intake-preparation.md) | active | Phase 1: full v23 intake/check and AI screening complete; expanded human feedback fully mapped F01-F31. I68-I70 own next-round cases/masking/enhancement; I71-I76 own report/scope/naming/Junk follow-ups. Installed face/history acceptance remains blocked on Explorer |
 | [2026-10-23-cast-seeded-library-rebase.md](2026-10-23-cast-seeded-library-rebase.md) | active | Phase 3: revised matching/audit complete, 99 Review holds and full backup verified; safe same-preview retry follows measured native-owner fix, then actual checks/viewers; family/name/Production gates remain |
 | [2026-10-25-reference-rendering.md](2026-10-25-reference-rendering.md) | active | 117-output comparison completed; R44 category/person paths pending source-faithful recipe reconciliation, with acceptance, GUI execution and later-stage contracts still open |
-| [2026-10-28-intake-performance.md](2026-10-28-intake-performance.md) | active | T6 recovery and T12 current sample checks pass; v23 restores guarded composition and limits padding. Slower measured throughput is explicit; proceed with authorized sandbox iteration, not Production acceptance. T8/T13/T14 and storage remain separate |
-| [2026-10-28-storage-operations-and-retention.md](2026-10-28-storage-operations-and-retention.md) | active | Map and configure storage roots, clean only verified generated outputs, preserve active sources, remove abandoned staging safely, and rebuild the sandbox from production |
+| [2026-10-28-intake-performance.md](2026-10-28-intake-performance.md) | active | T16 actual publication/viewers first after Explorer release; T17 recipe-aware statistics P1 next round, T18 profile/recipe contract P2, T19 CUSTOM P3. Mask comparison T11 transferred to intake I68/I69; T13/T14/T15 remain independent |
+| [2026-10-28-storage-operations-and-retention.md](2026-10-28-storage-operations-and-retention.md) | active | S24 backup scope/format/retention and S25 orthogonal FULL/LEAN/COLLAGE storage are top P1 follow-ups after sandbox acceptance; active sources/recovery protected. S17-S19 physical-root/config proposals remain gated |
 
 The Oct 22 retained plans have review/questions blocks; affected owners now
 also record the Oct 23 foundation-first scheduling pivot. The

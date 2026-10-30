@@ -60,7 +60,7 @@
 - [ ] U2 Review current photo outcomes using fresh inventories: ([2026-10-22](plans/2026-10-22-library-upkeep.md))
 - [ ] P10 Archive the manual source directory only after every ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 
-### Either of us (50)
+### Either of us (49)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -118,10 +118,9 @@
 - [ ] A7 Compare download/run versus a lightweight explicit ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] I56 Vision: one command (or a GUI pick) takes a new image ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] R10 Extend to male/animal recipe profiles only after suitable ([2026-10-25](plans/2026-10-25-reference-rendering.md))
-- [ ] T11 After performance/rebase work, compare a tight ([2026-10-28](plans/2026-10-28-intake-performance.md))
 - [ ] T3 For human review only, show a wider context crop (with ([2026-10-28](plans/2026-10-28-intake-performance.md))
 
-### For the assistant, when you say go (148)
+### For the assistant, when you say go (161)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -166,6 +165,9 @@
 - [ ] C3 Add schema-validated optional cast-release mode and shared ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] C5 Run repeatable sandbox scenarios from the same immutable ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] C6 Install reversibly only after approved preview, then normalize ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
+- [ ] I68 Reproduce and label every case F13-F27 below using exact ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I69 Under I39/I41/I49/I52's existing safety contracts, compare ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I70 Extend I42 from comparison generation to a calibrated ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I59 Persist the exact aligned SFace input face, content/model ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I60 Audit all changed full-run outputs for false positives and ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I63 Triage the r20 output by detected pattern and outcome ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
@@ -204,12 +206,14 @@
 - [ ] R4 Implement offline preview/prepare/check and the thin launcher ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R5 Bind one reviewed Qwen API graph to its master, preflight ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] T16 Verify the config-free native-owner fix through the ([2026-10-28](plans/2026-10-28-intake-performance.md))
+- [ ] T17 Capture recipe-aware run statistics and publish a compact ([2026-10-28](plans/2026-10-28-intake-performance.md))
 - [ ] S20 Measure fresh-baseline inventory, preparation, matching and ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S21 Finish the Oct 27/28 retrospective and Oct 29 run recap, ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S1 Map every writer and reader for `Working` outputs, ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S4 Define one validated configuration contract for environment ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S5 Route every relevant writer and reader through the shared ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S24 After S15's sandbox acceptance, prioritize backup growth: ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
+- [ ] S25 With S24's scope/retention review, define and test optional ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S11 Measure duplicate bytes across per-run source mirrors, ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S15 Run the final sandbox dry-run, audit source counts, protected ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S16 Write the Production runbook with exact source snapshot, ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
@@ -246,6 +250,12 @@
 - [ ] P7 Write the accepted prompt standard and recurring audit ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] P8 After replacements pass, retire `1b_Experiments` across ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] A5 Verify stable-directory report replacement, dated report ([2026-10-22](plans/2026-10-22-review-actions.md))
+- [ ] I71 Add intake index filtering/sorting/search by date (label ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I72 Reuse shared page chrome/CSS for intake index, details, ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I73 Replace blanket pilot/evaluation/experimental labels with ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I74 Add explicit include/exclude Artist preparation scope to ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I75 Audit when source IDs/filenames normalize across intake, ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
+- [ ] I76 Make confirmed Junk prominent in the intake report with ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I61 Close/archive only genuinely completed intake plans after ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I66 Build a Grok watermark reference. The faint grey Grok mark ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I40 Add bounded advanced-erasure escalation to I38 after ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
@@ -262,6 +272,7 @@
 - [ ] R39 Rank best-of-N results with separate technical-quality, ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R7 Add compatible female flow catalogue coverage and explicit ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R8 Add Gallery export and read-only generation results through ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] T18 Propose versioned data-driven recipe steps/order/branches ([2026-10-28](plans/2026-10-28-intake-performance.md))
 - [ ] T13 Promote recurring report-to-sheet diagnostics into ([2026-10-28](plans/2026-10-28-intake-performance.md))
 - [ ] T15 Add timestamped phase/progress diagnostics to the ([2026-10-28](plans/2026-10-28-intake-performance.md))
 - [ ] S17 Map current category-name conditionals and existing policy ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
@@ -279,6 +290,7 @@
 - [ ] U4 If requested, report likely resized/re-encoded near ([2026-10-22](plans/2026-10-22-library-upkeep.md))
 - [ ] I28 Delete `intake_library\legacy.py` and its `validate` ([2026-10-23](plans/2026-10-23-image-intake-preparation.md))
 - [ ] R36 Add the `designEdit` lineage field and Gallery filter. ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] T19 After T18's reviewed contract and bounded profile evidence, ([2026-10-28](plans/2026-10-28-intake-performance.md))
 
 ### Completed plans (10, in [plans/_archive](plans/_archive))
 

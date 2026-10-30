@@ -383,6 +383,21 @@ evidence through acceptance; active source galleries remain protected.
   options before adopting a format or deletion schedule. Coordinate detailed
   intake-image retention with performance T13/T14 rather than duplicate it.
 
+- [ ] **P1 ai** S25 With S24's scope/retention review, define and test optional
+  storage modes independent of processing recipes: FULL detail, LEAN shared
+  verified artifacts for identical original/control/recommendation roles, and
+  COLLAGE review previews. Preserve role labels in the GUI while resolving to
+  one file where exact content equivalence permits; do not infer equality from
+  visual similarity or deduplicate distinct source lineage/identity. Account
+  for per-run, retained, backup and rollback copies, source-coordinate masks,
+  selected native/padded workflow inputs and reproduction dependencies.
+  Measure file count/bytes/restore cost and interruption-safe cleanup; no
+  deletion of current evidence until the approved dependency policy permits.
+  Enhancement skipping is a processing/quality choice under I70/T18, not a
+  silent effect of LEAN. T13 owns composite tooling; T14 owns detailed/summary
+  evidence acceptance. Source and full item ledger are in intake's Oct 30
+  12:31 reconciliation.
+
 - [x] **P1 ai** S10 Define and implement a versioned run retention manifest
   and dependency-aware policy. Receipt-backed new runs register as review/keep;
   unsupported and unregistered directories remain held. Only successfully
@@ -557,6 +572,17 @@ The newer Artists/Humans/Animals and `_Intake` proposals are preserved in
 S17-S19 cover the proposed physical/category contract, not an immediate tree
 migration during sandbox installation. Artist preparation and exclusion from
 general people matching are separate decisions.
+
+The expanded Oct 30 note retains the concrete proposed root families
+`Artists` (Fantasy, Pierre, Her Legends), `Humans` (Angels, Sisters, Models,
+Prospects, Potentials, Various), and `Animals` (Bears, Lions, Tigers, Sharks,
+Cats, Dragons), plus a possible Various-to-`_Intake` rename. S17 must inventory
+all path/config/report/workflow/undo consumers and distinguish domain roots
+from display categories; S18/S19 propose and approve a reversible migration
+with old-path lineage, not merely rename directories. Optional Artist
+preparation and separate Artist execution belong to intake I74, not this
+physical migration. See
+[the complete item ledger](2026-10-23-image-intake-preparation.md#complete-source-to-plan-coverage-ledger).
 
 The attached category/configuration feedback describes a broader refactor:
 category metadata (type, rank, path, protection, thresholds and other logic

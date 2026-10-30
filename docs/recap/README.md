@@ -33,6 +33,7 @@ The recap is part of the day's hygiene in [../plans/README.md](../plans/README.m
 
 | Day | File |
 | --- | --- |
+| 2026-10-30, 12:34 - all expanded v23 human feedback mapped and prioritized before reboot | [2026-10-30-1234-recap.md](2026-10-30-1234-recap.md) |
 | 2026-10-30, 11:57 - full stage verifies; Explorer blocks installation; rollback inputs verified | [2026-10-30-1157-recap.md](2026-10-30-1157-recap.md) |
 | 2026-10-30, 09:22 - recovery and matching verified; installation blockers fixed; paused before publication | [2026-10-30-0922-recap.md](2026-10-30-0922-recap.md) |
 | 2026-10-29, 09:40 - overlay-first profile and fresh-chat handoff; full intake stopped | [2026-10-29-0940-recap.md](2026-10-29-0940-recap.md) |

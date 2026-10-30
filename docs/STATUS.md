@@ -4,6 +4,17 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Oct 30, 12:31 review disposition:** the complete updated human-feedback
+note is preserved with item-by-item coverage in the
+[owning intake ledger](plans/2026-10-23-image-intake-preparation.md#complete-source-to-plan-coverage-ledger).
+Complete the existing baseline after the planned reboot/Explorer release
+before changing recipes. Backup/artifact growth is a top next-round priority,
+alongside measured stage statistics, coordinated nonredundant masking/cropping
+and calibrated enhancement recommendations. Configurable processing profiles
+are separate from storage modes; root migration remains a proposal. These
+are prioritized work, not implemented fixes or approval of current quality.
+No processing, cleanup, reboot or new image run is part of this reconciliation.
+
 **Oct 29 final CI policy:** the user explicitly requested fast routine CI
 with slower/full regression suites only on specific demand. PR/main CI now
 runs hygiene/data checks and lightweight gate/isolation guards on 3.14;

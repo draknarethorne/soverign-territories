@@ -558,6 +558,45 @@ belong to later library I/O work, not another unmeasured restart.
   same backed-up install, independent check and actual viewers; record actual
   phase timings separately from the representative guard benchmark.
 
+#### Oct 30 review: observability and configurable processing
+
+The complete 12:31 source and item ledger live in
+[intake's reconciliation](2026-10-23-image-intake-preparation.md#oct-30-1231-full-human-review-feedback-reconciliation).
+This adds next-round priorities, not changes to the bound v23 run.
+
+- [ ] **P1 ai** T17 Capture recipe-aware run statistics and publish a compact
+  intake summary with expandable/linked details: input/outcome counts, overlay
+  types, each attempted/executed/skipped/failed step, reconstruction/composition,
+  recommendation by variant, and enhancement choices. Include total wall time,
+  stage timings, per-image/path averages and bottlenecks with denominators,
+  unavailable fields and parallel worker sums clearly labelled. Derive fields
+  from executed recipe/trace data, not fixed stage lists; don't double-count
+  nested timings or compare pixel-change percentages across crop dimensions.
+  Test totals/conservation and recipe evolution on saved data before new runs.
+- [ ] **P2 ai** T18 Propose versioned data-driven recipe steps/order/branches
+  and profile contracts: FULL preserves current behavior; FAST evaluates cheap
+  size/aspect/overlay composition gates; OVERLAY-ONLY skips composition and
+  reaches explicitly configured enhancements/exit sooner. Specify selective
+  reprocessing for composition and enhancement on/off policy. Compare immutable
+  same-input runs for missed overlays/composition, detail, recommendations,
+  elapsed time and bytes; the suggested 90% control rate must be measured.
+  Processing profiles and storage modes (LEAN/COLLAGE, storage S25) are
+  orthogonal. Bind recipe/config hashes to checkpoints/resume and report
+  experiment status; don't hard-code profile names as new branching logic.
+- [ ] **P3 ai** T19 After T18's reviewed contract and bounded profile evidence,
+  implement validated CUSTOM step/node definitions and versioned erase/
+  reconstruction alternatives, reusing existing modules rather than rewriting
+  the engine. Validate compatible inputs/outputs, allowed order/branches,
+  acyclic execution, safety gates, unknown steps, failure and resume lineage.
+  No arbitrary executable config, silent stage skipping or weakening protections.
+
+The 12:31 feedback elevates the recurring mask-coordination problem into
+intake I68/I69's **P1 next-round** work. T11's older P3 exploratory GMW
+comparison is superseded in priority and covered there with I41; its raw
+discussion remains preserved. T8's remaining background-only repair-policy
+decision still needs its own evidence/approval; feedback does not silently
+authorize larger repainted regions.
+
 #### Review composites and eventual production intake
 
 The user's first-pass-review proposal is covered here, not a new storage or
@@ -577,9 +616,9 @@ background loss is not equivalent to losing hair, hands, clothing or feet.
   replace disposable review previews, not exact originals, selected native
   and padded workflow inputs, source-coordinate masks, hashes, lineage or
   rollback dependencies. Keep full current evidence; no cleanup is authorized.
-  Move user-facing pilot/evaluation language to initial production intake at
-  the accepted cutover, without rewriting historical receipts or claiming
-  Production readiness before sandbox acceptance.
+  Active standard-intake terminology is now owned by intake I73 and may be
+  corrected independently of blanket quality acceptance; historical receipts
+  and genuine experiment labels remain. This is not Production cutover.
 - [ ] **P2 ai** T15 Add timestamped phase/progress diagnostics to the
   intake/rebase entry points, reusing a shared mechanism rather than a broad
   logging migration. Test formatting, errors and launcher output. Until then,
@@ -672,7 +711,8 @@ markdownlint and whitespace checks pass.
   chat/window under the same workload. Capture resource samples during any
   next controlled image benchmark; an idle snapshot cannot exclude pressure
   during processing. Cleanup execution belongs to storage S22, not this task.
-- [ ] **P3 either** T11 After performance/rebase work, compare a tight
+- [x] T11 Transferred Oct 30, not implemented: intake I68/I69 with I41 now
+  own this P1 next-round comparison after current sandbox acceptance: a tight
   translucent-GMW ring/letter/glow mask with the existing filled-disc mask.
   This is quality investigation only, not approval to change detection,
   mask growth, blending, or repair selection.

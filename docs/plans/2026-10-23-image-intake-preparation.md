@@ -2,6 +2,153 @@
 
 **Status:** active (Phase 1; sandbox clean-start integration implemented; real recipe/flow acceptance and production cutover remain gated)
 
+## Oct 30, 12:31: full human-review feedback reconciliation
+
+Source: the updated 209-line `feedback/fresh-v23-20261029_feedback.md`.
+The full current note is preserved verbatim at this plan's end, separately
+from the earlier shorter snapshot. The source stays in place. This section
+supersedes the earlier *coverage claim* that the note concerned only one miss
+and category proposals; it does not erase the earlier evidence or raw words.
+Reported defects below are human observations awaiting exact native/trace
+reproduction, not newly verified diagnoses.
+
+### Execution order and acceptance boundaries
+
+1. **Finish the existing baseline:** reboot/release Explorer, supported replan,
+   compare every frozen row/binding, reuse completed staging, publish and check
+   actual Gallery/Overview/Review/history/face links (performance T16, rebase
+   C6, I59). No full intake repeat or recipe changes inside this bound run.
+2. **Next P1 round:** storage S24 is a top priority; measure backup/artifact
+   growth before creating another large experiment. Capture recipe-aware
+   statistics (performance T17), then a bounded frozen set of the cases below
+   under I68. Compare crop/mask/one-pass versus sequential behavior under I69;
+   calibrate enhancement selection under I70. These are coordinated, separate
+   workstreams, not prerequisites for publishing the existing baseline.
+3. **P2 work:** review UX, consistent styling/dimensions, configurable recipe
+   profiles, neutral standard-intake terminology and Artist preparation scope.
+   Cheap report fixes may ship independently after baseline acceptance.
+4. **Later gated changes:** CUSTOM execution and physical root migration
+   require a reviewed contract, not an opportunistic rewrite during cleanup.
+
+P1 denotes next-round importance, not permission to start every task together.
+Avoid a new 3,000-image run until the bounded changes have measured quality,
+runtime, file-count/byte and recovery evidence. A reported 90% unchanged rate
+is a hypothesis to measure, not a threshold or permission to skip processing.
+The user prefers imperfect cleanup to visible UI in some cases; that is not
+blanket approval to smear hands, arms, clothing or identity evidence.
+
+- [ ] **P1 ai** I68 Reproduce and label every case F13-F27 below using exact
+  run/source/hash, actual variant and source-coordinate masks. Preserve the
+  two observations for the repeated Chiara and Delia filenames separately;
+  resolve source/variant ambiguity before diagnosis. Include clean/no-proposal
+  controls and successful blends, not only failures. Explain current first
+  erase versus head-reconstruction responsibilities, then publish a bounded
+  stage/mask/residual/quality comparison with outside-mask detail checks.
+  Update I60/I63's current-v23 audit rather than treating an old r20 report
+  or small sheet as full acceptance.
+- [ ] **P1 ai** I69 Under I39/I41/I49/I52's existing safety contracts, compare
+  improved subject-safe first crops, tight icon/logo masks and a coordinated
+  light/heavy erase fork. Redetect residuals on the actual first result and
+  map masks through crops; successful prior repairs must not be repainted
+  unless explicit remaining-overlay evidence justifies it. Compare single
+  combined fill, head-only escalation and sequential fill on identical inputs,
+  including hand/arm/fabric and background positives. Record any overlap,
+  reason, elapsed time and detail loss; do not assume subtracting masks or
+  skipping the first pass preserves inference context. Require bounded visual
+  evidence before changing the default; repair-quality fallback stays I64/I65.
+  Include T11's transferred translucent-GMW ring/letter/glow versus filled-disc
+  mask comparison and its reviewed detection/mask-growth/blending boundaries.
+- [ ] **P1 ai** I70 Extend I42 from comparison generation to a calibrated
+  recommendation policy for unenhanced prepared, denoise and tone candidates.
+  Evaluate noise separately from blur, dark exposure, clipping, contrast,
+  skin/hair/fabric detail, color and identity preservation. Use labelled
+  positives/negatives and representative ComfyUI comparisons; publish reasons,
+  uncertainty/hold behavior and manual override. Measure whether enhancement
+  generation can safely be skipped. Do not rank by pixel change or apparent
+  crispness alone; current unenhanced selection remains until validated.
+- [ ] **P2 ai** I71 Add intake index filtering/sorting/search by date (label
+  source mtime versus run time), category, outcome/status, detected overlays,
+  executed steps, identity/name where available, and new/refreshed/replayed
+  input provenance. Support combined/reset/empty filters, stable ordering and
+  links to per-photo evidence. Do not invent identity or novelty from a
+  filename, timestamp or final recommendation alone.
+- [ ] **P2 ai** I72 Reuse shared page chrome/CSS for intake index, details,
+  summaries and retained-history views; audit banner imagery and layout against
+  Gallery/Overview/Review. Display original and actual variant dimensions,
+  labelling native versus padded 944x1104 without needing to open the image.
+  Keep local/retained links working; reuse existing approved banner assets,
+  not new generated art or a second styling system.
+- [ ] **P2 ai** I73 Replace blanket pilot/evaluation/experimental labels with
+  neutral standard-intake terminology in active code/config/recipe metadata,
+  launchers, docs and newly generated pages. Label genuinely experimental
+  recipes individually and expose recipe/version clearly. Audit consumers and
+  tests; preserve immutable historical receipts/recipe IDs and don't equate
+  standard-tool naming with accepted pixels or Production approval. This
+  narrows T14's prior wording: terminology cleanup need not wait for blanket
+  quality acceptance, while actual Production cutover still does.
+- [ ] **P2 ai** I74 Add explicit include/exclude Artist preparation scope to
+  the rebase/intake contract with previewed counts and hash-bound resume/check
+  compatibility. Keep Artist matching/cache/reports isolated from people and
+  support a separate Artist-only Production workflow after approval. I15/I16's
+  delivered matching separation does not implement preparation exclusion.
+  No Artists/Humans/Animals physical migration in this task (storage S17-S19).
+- [ ] **P2 ai** I75 Audit when source IDs/filenames normalize across intake,
+  matching, assignment and final output generation, using F26 specifically.
+  Show raw source name and final assigned name/ID side by side; preserve exact
+  provenance and undo. Determine whether the report shows an intentional frozen
+  raw filename or a missed normalization before changing behavior. Include
+  refreshed versions/replays and avoid renaming immutable source evidence.
+- [ ] **P2 ai** I76 Make confirmed Junk prominent in the intake report with
+  one incoming-image tile and explicit reason/status, rather than three
+  success-like panels. Keep details/restore evidence reachable and distinguish
+  Junk from Review, uncertainty or processing errors; do not delete retained
+  evidence merely to simplify display. Reuse I44/I45's disposition rules.
+
+### Complete source-to-plan coverage ledger
+
+F numbers refer to feedback coverage, not implementation completion. Repeated
+examples retain distinct sub-observations. Shared tasks implement themes once.
+
+| Item | Feedback and required result | Owner / priority / disposition |
+| --- | --- | --- |
+| F01 | Filter/sort date, category, status, overlays/processing, identity/name, new/refreshed/replayed inputs | I71, P2; report UX after baseline |
+| F02 | Shared CSS, consistent banner/image, branding and layout on every generated page | I72, P2; reuse shared chrome; image-source suggestion is unfinished, do not invent a choice |
+| F03 | Run summary: stage participation, overlay/reconstruction counts, control/composition/final recommendation totals; detailed expandable/page view | Performance T17, P1; recipe-aware measured data |
+| F04 | Total/stage/per-image timing, averages by processing path, bottlenecks and recipe changes reflected automatically | T17, P1; distinguish summed worker time from wall time |
+| F05 | Dimensions beside every image, not only in opened files | I72, P2; original/native/variant/padded labels |
+| F06 | Core intake is standard, experiments are named recipes; audit active docs/code/config/communications | I73, P2; no historical rewrite or false Production acceptance |
+| F07 | FULL current flow; FAST size/aspect/overlay heuristics; OVERLAY-ONLY early exit; compare quality/time and resubmit selected images for composition | T18, P2; explicit profile experiments, no silent default change |
+| F08 | LEAN references identical original/control/recommendation once; optional enhancement suppression and trusted-original path | Storage S25, P1 scope/design; T18 processing toggle; I70 quality proof; hashes/provenance retained |
+| F09 | COLLAGE for report images; storage properties independent of processing flow; full-size alternatives not always retained | S25 with T13/T14, P1 storage design; composites not substitutes for required recovery/workflow evidence |
+| F10 | CUSTOM steps/order/nodes and erase/reconstruction versions; side-by-side recipe comparisons | T18, P2 contract; T19, P3 gated implementation |
+| F11 | Automatically generate/select denoise or tone when beneficial, including dark images; human review cannot scale to 3,000+ | I70/I42, P1; calibrated benefit and detail preservation, not always control or always denoise |
+| F12 | Shape-following GMW/all masks, not solid circles/rectangles; background versus hand/subject effects; explain first/second masks | I41 + I68/I69, P1 next round; T11 priority superseded below |
+| F13 | `angelica_shot_20261019151731.jpg`: bottom media/navigation border remains | I68 + I39/I49, P1; retain confirmed row-46 regression |
+| F14 | `chiara_hawthorne_shot_20261010123929.jpg`, first occurrence: residual lower-right icon | I68/I69, P1; residual detection case |
+| F15 | Same Chiara file, second occurrence: broad masks smear hand/arm/dress compared with visible underlying detail | I68/I69 + I64, P1; retain separate quality complaint |
+| F16 | Same Chiara file, composition: person too far right; improve horizontal centering with narrow native crop and later studio-grey padding, no body loss | I68 + I49, P1 bounded composition comparison; background preservation is not the goal |
+| F17 | `chiara_hawthorne_shot_20261010123845.jpg`: first erase 9.107 s, useful cleanup then reconstruction smears it again; black title remains; size-changing pixel metric not comparable | I68/I69 + T17, P1; compare exact stages/masks; black title was tolerated, not automatically a new destructive repair target |
+| F18 | `daphne_lane_shot_20261010125330.jpg`: second-pass blur after useful first cleanup; missed “more” text over leg | I68/I69/I52, P1; both mask coordination and residual text |
+| F19 | `delia_ames_image_7508203306632658676.jpg`: GMW over arm blends reasonably; compare dedicated/reference/dynamic color masks without overfitting edge cases | I41/I68/I69, P1; successful control plus tight-mask trial, no invented source detail |
+| F20 | `delia_ames_shot_20261010125502.jpg`, first occurrence: head overlay, missed bottom-right icons, rectangular/circle union erases arm and leaves floating hand | I68/I69, P1; full subject-detail and mask-union case |
+| F21 | Same Delia filename, second occurrence: lower-left GMW missed | I68/I41, P1; reproduce exact source/variant separately, not dismiss as duplicate feedback |
+| F22 | `eloise_bishop_shot_20261010124538.jpg`: weak first pass, heavy catch-all; early light/heavy fork, one cycle or justified second cycle; modular flow variants | I68/I69, P1 quality/flow experiment; T18/T19 own configurable architecture |
+| F23 | `eloise_bishop_shot_20261010124551.jpg`: residual lower-right icon on white shirt; redundant remasking, reconstruction should focus on head | I68/I69, P1; clean-shirt negative/detail check |
+| F24 | `eloise_bishop_shot_20261010124613.jpg`: useful first cleanup redundantly remasked, but final heavy blend succeeds; investigate contrast/color differences | I68/I69, P1; successful heavy-path control, not universal rejection |
+| F25 | `emmeline_baxter_shot_20261010123511.jpg` and `emmeline_baxter_shot_20261010123642.jpg`: crop black top border/reel first; remaining lower-right icons need cleanup; avoid reblending repaired regions; compare flows to test hypothesis | I68/I39/I69, P1; preserve both distinct photos and successful-repair protection requirement |
+| F26 | `Screenshot_20260902_204652_Facebook.jpg`: missed lower-left phone and filename apparently unnormalized | I68/I52 + I75, P1 defect reproduction/P2 naming audit; distinct from earlier `204050` case |
+| F27 | `Screenshot_20261010_123425_Facebook.jpg`: obvious Junk, show one incoming image rather than three | I76 with I44/I45, P2 display; existing quality/disposition gates unchanged |
+| F28 | Excess 3-4 original/control/recommendation copies; same labels may share one verified file; lean/full choice | S25/S11/T14, P1 storage design; preserve labelled roles and reversible current evidence |
+| F29 | Optional Artist inclusion/exclusion and separate Artist Production processing | I74, P2; matching already separate, preparation exclusion not delivered |
+| F30 | Physical Artists, Humans (Angels/Sisters/Models/Prospects/Potentials/Various), Animals roots with listed examples | Storage S17-S19, P2 proposal; config/consumers/migration/recovery impact, no immediate moves |
+| F31 | Various catch-all becomes `_Intake` or equivalent clearer temporary name | S17-S19, P2 naming proposal; not an approved path change |
+
+F25 contains two separate immutable regression inputs, not one representative
+substitute. The 13 unique named image files in F13-F27 must all appear in
+I68's case inventory (including the Junk/display and filename checks).
+I68 provides the evidence; the owning tasks decide the fix. None of the
+above tasks is marked done merely because feedback has been recorded.
+
 ## Oct 30: newly reported v23 miss and category proposals
 
 The remaining-plan/feedback audit found
@@ -2838,3 +2985,224 @@ I use Various as the catch-all directory for items that don't fit neatly into th
 
 But maybe a better place would be to call it like _Intake or something like that so it's more obvious what it's role is.  Since it's a temporary place for the intake proces for the most part.
 ```
+
+
+### Oct 30, 12:31 updated full fresh-v23 feedback (209-line snapshot, verbatim)
+
+Source: `feedback/fresh-v23-20261029_feedback.md`. The earlier snapshot above
+remains historical; the F01-F31 ledger owns the complete updated coverage.
+
+<!-- markdownlint-disable MD013 -->
+
+```text
+# Fresh v23 20261029 Feedback
+
+## Usability
+
+Would be great if the intake report allowed me to filter or sort the entries more easily, so I can quickly find specific items without having to manually search through the entire list.  Sorting by date, category, or status would be particularly helpful.  Especially to filter to ones that did have overlays and processing, by identity names (if files have them), or any other relevant metadata.  New ones should be easily identifiable as well.  This will be important for ongoing health and growth of the library as well as when I re-run images through the intake process just to see if they have changed or been updated.
+
+## Banner
+
+We should be using same .css for these pages and include the banner/image consistently across all pages.  It's great to have this report, but it feels incomplete without the consistent branding and layout provided by the banner.  It's close - but we'll need to ensure we step back and all generated pages have exact same styling and such.  We can pull images from any of the 
+
+## Statistics and Overview
+
+We should have a run summary at the top with stats on how many images went into each of the steps required - basically counts of how many overlays, head reconstruction and such.  How many did the control end up being the final image, how many composition, etc... Some type of statistics (all that are useful) to help in determining changes and adaptations to the flow.  This long and huge rebase will help me determine which recipie changes, additions and such we work on as discussed later in this document.
+
+Could also include timings, total time, where most time was spent in each image - average time per input image that goes through overlay vs. just composition.  It has to be dynamic based on the receipie so if we change the flow it's refective in the summary and totals.
+
+Make sense?
+
+We could summarize also just include summary at the top of the main page with at the top and have a link to a page with much more details from the outputs.  Or just expand out a section at the top - which ever makes the most sense in how we capture the statistics.
+
+# Image Dimensions
+
+We should be showing the image dimensions somewhere around each image in the report so I can quickly see the size of each image without having to open it separately.  This would help in assessing whether certain images might require composition or other processing steps based on their dimensions.
+
+## Experimental Shift
+
+As called out before, we need to change wording of this intake from experimental to standard or official, to better reflect its intended use and status.  That's including all internal documentation, labels, and communications related to the intake process.  As well as the configuration files, code, recepies, etc...  If we truly have experimental features in the future, new recepies can be named that and show up as experimental, but the core intake should be presented as standard or official.  We'd want to header somewhere, but the entire process is no longer experimental - it would just be if we define new flows to try and optimize the performance, we want to run them side-by-side and compare the results as well as document the differences clearly between runs.
+
+    - For instance, if we decide that since 90% of the images result in the control without processing - maybe we offer the ability to run a "fast" flow which doesn't apply the full processing steps, saving time for the majority of cases while still allowing the standard flow for the remaining 10%.  Basically it's an overlay-only flow and for images without the overlays we don't worry about composition or we have a much faster check to see if composition is required.  
+    - But I want the ability for the intake to support multiple recepies that drive the flow and decisions and it's not "hard-coded" in the logic of which steps go in which order.  So if we decide to add a recepie that is for overlay or "bad image" type processing it can go through all the existing steps, but we'd simply just use the control for images that dropped out of the first check instead of looking for composition. 
+    - I'd want to run them side-by-side and see the difference in timing that it would make to determine just how effective that is.  But that allows me to later on send back selected images for the composition if I see that they could benefit. 
+    - Basically, I can envision a FULL receipie, FAST recepie (attempting a faster check for potential composition) and OVERLAY-ONLY recepie (which would actually be the FASTEST by dropping so many images out for denoise, etc... sooner), each serving different purposes and optimized for different scenarios.
+
+- FULL - same as the current full processing flow
+- FAST - attempts a faster check for potential composition, skipping some steps for images that are likely to not require full processing (check image size as it looks like really wide or really tall photos benefit from composition)  There's a somewhat standard image size that tends not to require composition so maybe it's a combination of what we get from the first overlay check along with some quick hueristics about the image for potential composition needs.
+- OVERLAY-ONLY - focuses on overlay detection andprocessing and drops images right into enhancements further processing as soon as possible, making it the fastest option.
+- LEAN - keeps only the essential images, removing duplicates and referencing the same image for original, control, and recommended when they are effectively the same, conserving disk space.  Could also skip the enhancements for denoise, tone, etc... if they are not necessary.  Basically, can conserve the most amount of disk space compared to the other flows because it is essentially determining that the incoming image IS the best one and we don't need those copies - maybe we generate some, but discard them when we make the recommendation due to the fact we TRUST that the original is the right one.
+- COLLAGE - maybe this is a blend with LEAN, but we'd just keep more of a single collage of all the images that were generated into a single image with them all for a reporting perspective and we don't need full-sized copies of them all.  Maybe this isn't a flow differently and could be combined in any flow.  It could be a property at the top of the receipie.  Similar to LEAN.  Basically we have flows as well as properties in the flow that determine a) how the flow works and b) how the storage behaves.
+- CUSTOM - allows for user-defined processing steps and flow, providing maximum flexibility for specific use cases or experimental features.  This might also skip the enhancements for denoise, tone, etc... if we can't figure out a good way to automate the decision-making for those steps.
+
+## Denoise, Tone
+
+I want to know how we can automate the choice for final recommendation between recommended from the cropping/enhancing/composition steps from the denoise, tone images.  It seems like we don't have any way to choose between those other than a human review - which is not possible for 3000+ images.  We're using a lot of disk space and that's a potential problem.
+
+I personally feel like in many cases denoise looks better than originals and some of the incoming ones are really dark and benefit from denoise or tone.  We need a way to automatically determine when to apply these enhancements and when to select them as the final recommended image, rather than relying solely on human review.
+
+## GMW Mask (maybe all masks)
+
+Instead of a solid circle, can we generate a mask that more accurately follows the shape of the object or area we want to erase?  It seems like for some of the icons on the screen the mask represents the icon more clearly, but for GMW it's a solid circle - which blends well on floors, furniture, etc... but not well when the hand is hidden behind it.  This would allow for more precise editing and blending, reducing the impact on surrounding areas and improving the overall quality of the processed image.
+
+## Masking In General
+
+I noticed that in many images the first erases masks are more oriented to the actual icons and such - but it misses many pieces that do fall through into the head-overlay-reconstruction and those masks are more aggressive squares.  I know that was likely to catch things falling through and I do talk about this elsewhere specifically on images - but I think this is a worth topic to discuss as it does tend to overblur areas when the first erase wasn't successful.  So, this just need more explanation on why it is doing what it's doing.  In general it does well on the piece for the hair and head - but for other areas it can be too aggressive and impact the surrounding regions more than desired.
+
+That said, better to have a blur than junk on the screen.  So, just more feedback for thoughts.
+
+## Number of Images
+
+We should re-evaluate the total number of images we do keep and save in the process and look at trimming away ones that we might not be using.  Keeping 3-4 copies of an original as the control, recommended, etc... It might be a bit excessive, so is there some option we can also use that a leaner approach as well as the full approach.  Meaning, removing duplicates after the intake for an image and referencing the same one if we have the scenario where original, control and recommended are all really the same.  It's like a --lean version which would also help conserving disk space when 90% of the images may result in that approach.  From a GUI we can still show the 3 images with names - they just all point to the same one.  If we have to keep original and control for some reason - that might be ok.  I'm just looking at how to also reduce the excessive number of images in various scenarios that are playing out.
+
+Having flexibililty to control some of these things, along with excluding and separating the Artists from People (as called out later in this document).  Would also help streamline how we're doing this.  Eventually, I would want to also process the Artists files separately in Production from the People.  Which will also mean some directory organization needs to happen - also called out below.
+
+
+## angelica_shot_20261019151731.jpg 
+
+You already know about this, but the bottom media player border in the screenshot is still present.
+
+## chiara_hawthorne_shot_20261010123929.jpg
+
+Left some residual icon on the lower right side of the image.
+
+
+## chiara_hawthorne_shot_20261010123929.jpg
+
+Quality of the erasing effect is pretty poor in what it recovered under the icons compared to what you can see through the icons directly.  It makes me wonder if we couldn't mask more of the icon directly instead of squared for the entire area and try blending the maks more effectively to recover underlying portions?  In this case, her hand and arm are behind the icons and it blurs away her dress and it's basically like a big smudge.  There are other cases where this happens with the GMW and other icons as well.
+
+### Composition example
+    
+    Also, in this image after composition she ends up mostly on the far right of the image and isn't body centered in the image.  It does feel like composition is more effective at trimming the top or bottom - but not as effective at left to right body position.  I don't want to crop body off when doing it and it would make this a much more vertical type image, but the upcoming padding will put the studio background color on the sides and it'll actually be better in Comfy for that without the noise of the background pixels to deal with.
+
+
+## chiara_hawthorne_shot_20261010123845.jpg
+
+The first eraser: 9.107s; pixel change not comparable (different crop dimensions) did a good job removing the icons on the right, but left a black title, which is fine.  It then applied the head overlay mask which also re-smudged the previous icon area further blurring that space when the first one did a decent job of cleaning up the icon.  That wasn't the case with the previous show (just above) and the second eraser did need to execute the clean-up, but our second head-overlay-reconstruction tends to just use larger squared and hence some blurring.
+
+We probably need more analysis on all the images that do have overlays to look at the first mask and erase, what does remain that feeds into the second head-overlay-reconstruction, and how the second pass affects the overall image quality.  Sometimes it's required and ok - other times the mask is more aggressive in places (to catch stuff slipping past the first), but it doesn't seem like we're re-detecting what to mask as effectively for the head-overlay-reconstruction step.  
+
+I know it's complicated in the long run - and maybe we're just spending too much time on these pieces and I can just use the images with smudges on the.  It's just as I look at things - these items jump out at least for some deeper analysis and we might decide it's just fine and the best we can do with the tools we have available. 
+
+But it just warrants further deep dives.
+
+## daphne_lane_shot_20261010125330.jpg
+
+This is another case where the first eraser did proper get rid of the icons on the right side, but similar to the previous examples - but it didn't clear everyting, the head-overlay-reconstruction step introduced some blurring in the surrounding areas.  It seems like the first eraser is effective at removing the icons, but the subsequent reconstruction can sometimes overcompensate, leading to a loss of detail in nearby regions.  Further analysis is needed to determine if the masking and reconstruction steps can be better coordinated to preserve image quality while still effectively removing the icons.
+
+I guess this might be a factor of having the head-overlay and the first eraser only handle certain pieces and then we get more aggressive in the later steps and end up with additional blurring/blending on areas that from the first eraser didn't actually need it.
+
+Lastly - on this image some wording was left over the leg area saying "more" as it wasn't detected and handled by the head reconstruction or the eraser mask.
+
+
+## delia_ames_image_7508203306632658676.jpg
+
+This one has the GMW logo on it and it's over an arm, but blends fairly decently - but it still make me wonder if we couldn't have a better mask for GMW logo when it's detected to be present.  We did start to save .png files for overlay detection - maybe we can also look at having some masks or generating masks for things like this on the fly.  Inspecting some common logos might help with making a little better and more effective masks or even a dynamic mask generation process based on pixel colors and such.  It's just an idea that keeps coming up for me.
+
+The masking we're doing is still much better than if we didn't erase anything at all, but there is room for improvement, especially for recurring elements like logos that might benefit from dedicated masks or dynamic mask generation.
+
+That said, I don't want to dive deep into a few edge cases, however if we can improve on how we're doing the masking based on the results we're seeing it will still be beneficial in the long run.  We'll either improve on the first erasing and only fall into head reconstruction masking when we truly need that reconstruction of the overlay on the head.
+
+Just more of a recurring theme on masking.
+
+## delia_ames_shot_20261010125502.jpg
+
+This one is almost same as previous image - however it has overlay on the head along with icons and the GMW logo.  The first erase only takes care of a small amount of icons and doesn't detect many on the bottom right and then it falls into the more aggressive blocks of erasing which can lead to additional blurring and blending in areas that might not have needed it.  The challenge remains in coordinating the initial erasing with the subsequent reconstruction to minimize unnecessary loss of detail while still effectively removing the overlays and icons.
+
+Again, it's not bad final image - but her arm on the bottom right is blurred away and her hand ends up floating because the masks were just the rectangles and the GMW circle combined as solid shapes.
+
+It's still better than leaving junk and overlays on the screen - but again, makes me thind about how I'd be doing this if I were using a magic eraser that more effectively detects and removes overlays while preserving the underlying details underneath with more detailed masks.
+
+
+## delia_ames_shot_20261010125502.jpg
+
+This one missed the GMW logo on the lower left area of the image.
+
+## eloise_bishop_shot_20261010124538.jpg
+
+This one follows the same pattern as above with the eraser not being highly effective to start and it relies on the reconstruction masks to more aggressively blend away icons and overlays.  Just one more area to think about in terms of the overall process.  
+
+If the first eraser and masking is only effective when we have some well define areas to mask, then we even bypass that masking if we determine that we're going to need a more aggressive masking step anyway. This could help streamline the process and reduce unnecessary intermediate steps and if we can also improve on some of those aggressive masks to be more precise, we might achieve better overall results with less detail loss.
+
+Basically, the analysis up front can potentially be more of a fork instead of always doing the erase and finding out we still need more erasing right afterwards. By deciding early whether a more aggressive masking step is necessary, we can save time and reduce unnecessary detail loss, leading to a more efficient and effective overall process.
+
+Does this make sense as well?  It seems there is a theme coming up around detection of which type of masking we need to do in general to speed things up.  Improving on the masks so they are effective at leaving as much detailed underneath them.  And only having to run through a single erase/construction cycle OR only going through two steps and having only the mask required in one step and not re-applying a mask to an area that doesn't need it.  
+
+Basically a major masking theme coming up for optimization, which then feedback back to being able to support the various types of recipies so we can test things side by side.  That might mean we also need to think about the code organization and how we define steps/nodes in the flow and we will have variants of erase, reconstruction, etc... so we can compare the different versions of how we attempt to mask in the flows for more aggressive - fallbacks, but we attempt finer grained masking up front to see if we can't be more effective with those.  
+
+## eloise_bishop_shot_20261010124551.jpg
+
+This one left some residual icon on the lower right on top of her white shirt.  The more aggressive mask didn't detect that area so it left the icon.  It's another case where multiple mask attempts were made and it's already likely know that the first one won't succeed but we try it anyway.  Given we re-mask some of the same areas in the second step, why not skip the first unless we can make that much more effective and the reconstruction ONLY needs to worry about the head overlay.  That WAS the original intent on that, but it seems like it's more of a catch-all step to remask what the initial erase failed to do.
+
+It all comes back to attempting to combine our erasing and masking and fork to one lighter vs. heavier path and not redundantly applying multiple masking steps to the same area unless absolutely necessary. By making this decision early, we can optimize the process and reduce unnecessary detail loss.
+
+## eloise_bishop_shot_20261010124613.jpg
+
+One more example where we know we have a head overlay and the first mask doesn't really clean much up - but it does it well for what it detects, but the head-overlay step remasks those areas so the first erase was basically unnecessary.  
+
+This one is however an example where the more aggressive mask and overlay of the head blended out well with the background.  I think it's a matter of the contrast and colors in the original and the overlays, but it's curious why this one blended out so well and others do not.
+
+
+## emmeline_baxter_shot_20261010123511.jpg
+
+This one the first crop would actually have cropped more of the black area at the top and negated the need to drop into the more aggressive head overlay mask.  It's true there is the same head-overlay on the image, but due to the original image, it's on a black border and the entire works could have been cropped away in the first crop. There would be some icons on the lower right after the first crop of top and bottom "junk" and in the test - it wasn't highly effective and left some noise - so the second more aggressive mask did catch that, but also re-smudged the area. 
+
+So this actually tells me that re-blending an area that has just been reconstructed is causing the blurring more than if we just do 1 mask and one erase or reconstructions.  So, now it's turned into a MUST avoid re-masking or re-blending areas that have already been successfully reconstructed unless absolutely necessary.
+
+So we have to revisit these steps and do some comparisons in flows to prove this theory.
+
+## emmeline_baxter_shot_20261010123642.jpg
+
+One more example where the first crop could have taken more of the black top border and the "reel" overlay away with a crop instead of leaving it for masking.  That said, the more aggressive mask was also necessary as the first erase didn't get all the icons properly on the lower right and it required the second pass to clean up those areas.  But as noted above, the second pass on already blended areas is not a good output.
+
+It feels like if we can improve the first crop and masks on the initial pass, we can reduce the need for aggressive second-pass masking and avoid the blurring caused by re-blending already reconstructed areas.  Only apply a second pass for head reconstruction and not so much else to be blended or re-blended.  That said, maybe the second pass does catch inlay phones or other areas, but it must be a better second pass that doesn't blindly blur large areas aggressively that may not need it if we improve the first erase.
+
+So - again, trying to get the first parts of the process improved will actually help reduce the number of excess images needed, steps executed and quality of the processing.  This means focusing on better initial crops, more precise first-pass masks, and avoiding unnecessary re-blending unless absolutely required.
+
+## Screenshot_20260902_204652_Facebook.jpg
+
+Missed the phone overlay in the lower left known issue.  Also seems like the filename didn't get renamed properly during processing.  I guess that makes me wonder when that happens in our overall processing of renaming the intake photos as we move along.
+
+## Screenshot_20261010_123425_Facebook.jpg
+
+Detected as junk should be more obvious and just show that one incoming image instead of 3 in the review so we know it's junk easily.
+
+## Artists
+
+We probably should make the ability to include or exclude Artists from the rebase as they aren't really supposed to be part of the people library.  That goes back to the directory strucuture and how we need to separate the Artists from the people folders (Angels, Sister, Models, Prospects, Potentials, Various, etc...)  So we need something more like
+
+B:\Sovereign Territories\Artists
+    Fantasy
+    Pierre
+    Her Legends
+    ...
+
+
+B:\Sovereign Territories\Humans
+    Angels
+    Sister
+    Models
+    Prospects
+    Potentials
+    Various
+    ...
+
+B:\Soverign Territories\Animals
+    Bears
+    Lions
+    Tigers
+    Sharks
+    Cats
+    Dragons
+    ...
+
+Making that split between Artists, People, Animals. etc...
+
+## Various Directory
+
+I use Various as the catch-all directory for items that don't fit neatly into the other categories like Artists, Humans, or Animals. This helps keep the main directories organized and prevents clutter.
+
+But maybe a better place would be to call it like _Intake or something like that so it's more obvious what it's role is.  Since it's a temporary place for the intake proces for the most part.
+```
+
+<!-- markdownlint-enable MD013 -->
