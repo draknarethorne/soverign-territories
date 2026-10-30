@@ -121,7 +121,7 @@
 - [ ] T11 After performance/rebase work, compare a tight ([2026-10-28](plans/2026-10-28-intake-performance.md))
 - [ ] T3 For human review only, show a wider context crop (with ([2026-10-28](plans/2026-10-28-intake-performance.md))
 
-### For the assistant, when you say go (146)
+### For the assistant, when you say go (147)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -208,6 +208,7 @@
 - [ ] S1 Map every writer and reader for `Working` outputs, ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S4 Define one validated configuration contract for environment ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S5 Route every relevant writer and reader through the shared ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
+- [ ] S24 After S15's sandbox acceptance, prioritize backup growth: ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S11 Measure duplicate bytes across per-run source mirrors, ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S15 Run the final sandbox dry-run, audit source counts, protected ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S16 Write the Production runbook with exact source snapshot, ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))

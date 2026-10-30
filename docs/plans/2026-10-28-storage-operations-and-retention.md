@@ -366,6 +366,23 @@ staging/report-publisher run.
 
 ### 4. Retention, deduplication and one-time cleanup
 
+**Oct 30 priority clarification:** finish the current sandbox installation and
+actual viewer/rollback acceptance first. Backup growth is a top item in the
+next priority review, not another prerequisite detour. Evaluate what we retain
+and back up, how it is stored, and when testing copies can safely be pruned.
+No archive format, retention duration or automatic deletion policy is approved
+by this clarification. Preserve the current verified snapshot and rollback
+evidence through acceptance; active source galleries remain protected.
+
+- [ ] **P1 ai** S24 After S15's sandbox acceptance, prioritize backup growth:
+  measure retained/backup scope and redundant snapshots with S11; benchmark
+  directory snapshots against bounded ZIP64 stored/low-compression archives
+  for creation, verification, exact restore, interruption recovery and space.
+  Propose testing retention/prune eligibility and explicit recovery dependency
+  clearance, including timestamps for newest-input selection. Present measured
+  options before adopting a format or deletion schedule. Coordinate detailed
+  intake-image retention with performance T13/T14 rather than duplicate it.
+
 - [x] **P1 ai** S10 Define and implement a versioned run retention manifest
   and dependency-aware policy. Receipt-backed new runs register as review/keep;
   unsupported and unregistered directories remain held. Only successfully
@@ -708,6 +725,18 @@ We have an outstanding task of refactoring the existing code to remove hard-code
 ```
 
     <!-- markdownlint-enable MD013 -->
+
+    ### Oct 30 backup priority after current acceptance (chat, verbatim)
+
+    <!-- markdownlint-disable MD013 -->
+
+    > Ok - I was just wondering if we had a quick solution we could try, but sounds like we circle back on that after we get through the remaning steps we had with where we are at.  I have a lot of other items that we do need to circle back on to replan the next priorities - so this is important to get through - but the way we manage our backups has to be a top one as we're bleeding disk space with so many images we're creating in the process.  So, it's either trimming down on what we do keep/backup, how we back them up and how long we actually keep them before pruning during testing.
+
+    <!-- markdownlint-enable MD013 -->
+
+    Coverage: finish current acceptance before expanding scope -> S15; prioritize
+    backup growth in the next review, retained/backup scope, storage format and
+    testing retention/pruning -> S24 with S10/S11 and performance T13/T14.
 
     Coverage: old run pruning and active-source protection -> safety boundary,
 S10-S13; output path/configuration -> S4-S6; interrupted staging -> S7-S9;
