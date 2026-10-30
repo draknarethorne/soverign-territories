@@ -1,6 +1,11 @@
 # 2026-10-09 plan: finals, candidates, source photos and the MVP scope
 
-**Status:** active (agreed Oct 9; decisions D1 to D10 are answered in the table below; see "Today at a glance" for what is built and what is left).
+**Status:** holding (Oct 30 scheduling; agreed scope and all open decisions remain)
+
+**Resume gate:** after prepared-library acceptance and an explicit source/render
+priority selection. Finals, video tests, source picks and command folds do not
+block the current sandbox install. Recheck current inputs; old hero lists are
+historical, not instructions to reapply cast choices.
 Plans follow the current [planning and feedback process](README.md): file/chat feedback becomes an agreed plan, this index lists plans, and finished plans are archived.
 
 ## Review and questions: 2026-10-22 16:26 -05:00

@@ -1,6 +1,11 @@
 # 2026-10-22: gallery and Review information layout
 
-**Status:** active (Artist browsing/navigation prototype authorized Oct 23; broader people layout acceptance remains)
+**Status:** holding (Oct 30 scheduling; delivered navigation retained, broader UI work deferred)
+
+**Resume gate:** reactivate only the relevant slice if actual installed
+Gallery/Overview/Review/history UAT exposes a blocker; otherwise after baseline
+acceptance. Current viewer verification remains T16/I59, not a new layout
+redesign. Separate Intake entry, pruning and I/O requests remain open.
 
 ## Oct 25 continuation: retained evidence is now integrated
 

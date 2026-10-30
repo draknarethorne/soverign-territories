@@ -1,6 +1,11 @@
 # 2026-10-22: likeness engine acceptance and production rebuilding
 
-**Status:** active (remaining acceptance and production gates; installed trial is not accepted)
+**Status:** holding (Oct 30 scheduling; calibration, convergence and Production gates remain)
+
+**Resume gate:** consume the accepted cast-rebase baseline and labelled
+placement review before calibration/convergence or the separate incremental
+batch. Reactivate a narrow proven engine blocker if needed; holding never
+waives existing thresholds, protection or Production approval requirements.
 
 ## Oct 27: auto-protection note incorporated
 

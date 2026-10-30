@@ -38,6 +38,70 @@ class TodoReportTests(unittest.TestCase):
         self.assertIsNone(tr.TAG.match("T3 test the thing"))
         self.assertEqual(tr.TAG.sub("", "**P3 ai** R2 later"), "R2 later")
 
+    def test_focus_and_holding_preserve_backlog_without_flooding_queue(self):
+        with tempfile.TemporaryDirectory(dir=tr.ROOT / "tmp") as directory:
+            root = pathlib.Path(directory)
+            plans = root / "docs" / "plans"
+            plans.mkdir(parents=True)
+            (plans / "2026-10-30-now.md").write_text(
+                "# Now\n\n**Status:** active\n**Queue focus:** T1\n\n"
+                "- [ ] **P1 ai** T1 Publish verified baseline\n"
+                "- [ ] **P1 ai** T2 Later optimization\n", encoding="utf-8")
+            (plans / "2026-10-30-later.md").write_text(
+                "# Later\n\n**Status:** holding\n\n"
+                "- [ ] **P1 you** L1 Future review\n", encoding="utf-8")
+            with mock.patch.object(tr, "ROOT", root):
+                text = "\n".join(tr.open_work())
+            self.assertIn("T1 Publish verified baseline", text)
+            self.assertNotIn("T2 Later optimization", text)
+            self.assertNotIn("L1 Future review", text)
+            self.assertIn("Scheduled backlog", text)
+            self.assertIn("| active | 1 |", text)
+            self.assertIn("| holding | 1 |", text)
+
+    def test_invalid_or_stale_focus_fails_instead_of_silently_losing_tasks(self):
+        with tempfile.TemporaryDirectory(dir=tr.ROOT / "tmp") as directory:
+            root = pathlib.Path(directory)
+            plans = root / "docs" / "plans"
+            plans.mkdir(parents=True)
+            for focus in ("T2", "T1, T1", "anything"):
+                with self.subTest(focus=focus):
+                    (plans / "2026-10-30-focus.md").write_text(
+                        f"# Focus\n\n**Status:** active\n**Queue focus:** {focus}\n\n"
+                        "- [ ] **P1 ai** T1 Existing task\n", encoding="utf-8")
+                    with mock.patch.object(tr, "ROOT", root), self.assertRaises(ValueError):
+                        tr.open_work()
+
+    def test_active_plan_without_focus_keeps_all_tasks_and_other_states_stay_excluded(self):
+        with tempfile.TemporaryDirectory(dir=tr.ROOT / "tmp") as directory:
+            root = pathlib.Path(directory)
+            plans = root / "docs" / "plans"
+            plans.mkdir(parents=True)
+            for status, task in (("active", "A1 Both owners"),
+                                 ("proposed", "P1 Not agreed"),
+                                 ("done", "D1 Already completed")):
+                (plans / f"2026-10-30-{status}.md").write_text(
+                    f"# {status}\n\n**Status:** {status}\n\n"
+                    f"- [ ] **P2 either** {task}\n", encoding="utf-8")
+            with mock.patch.object(tr, "ROOT", root):
+                text = "\n".join(tr.open_work())
+            self.assertIn("A1 Both owners", text)
+            self.assertNotIn("P1 Not agreed", text)
+            self.assertNotIn("D1 Already completed", text)
+
+    def test_focus_order_keeps_prerequisite_before_followup_within_same_priority_owner(self):
+        with tempfile.TemporaryDirectory(dir=tr.ROOT / "tmp") as directory:
+            root = pathlib.Path(directory)
+            plans = root / "docs" / "plans"
+            plans.mkdir(parents=True)
+            (plans / "2026-10-30-focus.md").write_text(
+                "# Focus\n\n**Status:** active\n**Queue focus:** T2, T1\n\n"
+                "- [ ] **P1 ai** T1 Next backup review\n"
+                "- [ ] **P1 ai** T2 Current baseline\n", encoding="utf-8")
+            with mock.patch.object(tr, "ROOT", root):
+                text = "\n".join(tr.open_work())
+            self.assertLess(text.index("T2 Current baseline"), text.index("T1 Next backup review"))
+
     def test_the_notes_section_is_kept_when_regenerated(self):
         with tempfile.TemporaryDirectory() as d:
             out = pathlib.Path(d) / "todo.md"

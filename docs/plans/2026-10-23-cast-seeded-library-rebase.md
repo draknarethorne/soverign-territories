@@ -2,6 +2,12 @@
 
 **Status:** active (Phase 3; fresh v23 matching and AI audit complete; backed-up installation and actual viewers pending)
 
+**Queue focus:** C6, C7
+
+**Scheduling:** now: same-stage installation and human placement review.
+Other open scenarios, C10 future duplicate selection and eventual Production/
+family gates stay in this plan but are outside today's execution focus.
+
 ## Oct 29: fresh v23 matching continuation
 
 The full 3,072-outcome intake and its independent artifact check passed.

@@ -1,6 +1,10 @@
 # 2026-10-22: manual library actions and scenario testing
 
-**Status:** active (manual action completion and scenario acceptance remain)
+**Status:** holding (Oct 30 scheduling; tested transactions retained, broader scenario acceptance open)
+
+**Resume gate:** installed baseline ready for deliberate action UAT, or a
+verified recovery blocker requiring a bounded slice. Do not apply pending
+actions, settle undo or prune snapshots as part of scheduling cleanup.
 
 ## Oct 25 automatic protection dependency
 
@@ -161,10 +165,17 @@ from the similarly named photo action.
   executes manual decisions and which actually invokes shared maintenance.
   Test rejects from several Models, possible new identities and stronger
   alternative matches without claiming an action apply triggers global healing.
-- [ ] **P3 either** A7 Compare download/run versus a lightweight explicit
-  execution bridge only if needed. First improve displayed command guidance
-  and batch explanations; do not add browser shell/filesystem access, imply
-  a download applies actions, or build a server without a separate decision.
+- [ ] **P2 either** A7 After baseline/action UAT, compare download/run
+  guidance, paired staged-JSON/`.cmd` jobs and an explicitly authorized local
+  execution bridge. Design Preview/Apply feedback for rename/protection/action
+  batches and guarded infrequent rebase; show exact batch/root, streamed
+  progress/errors, completion/recovery and refresh without duplicate execution.
+  Static HTML cannot execute arbitrary shell commands or silently choose paths;
+  choose the trusted interaction/security boundary before implementation.
+  Rendering R23 owns ComfyUI submit/status/completion, with R8/R24 result
+  browsing and guarded pullback. Share one approved bridge, not another
+  execution server. No local service or unguarded browser writes are approved
+  by capturing this request; simpler guidance remains available meanwhile.
 - [x] **P3 either** A8 Transferred, not implemented: gallery-driven generation
   now has the [active reference-rendering owner](2026-10-25-reference-rendering.md).
   R1-R10 own workspace/input/recipe/batch execution and GUI-result delivery;
@@ -507,3 +518,27 @@ The tagged source was `prompts/_edit/female/female_anatomy.txt`.
 At this point - how do you feel about the image intake and how it can lead up to working into my comfyui generation process?  If you think about the long term where I would like to use ComfyUI and post to the server to automatically start workflows for testing things out - how do things line up in the long run and how might I test Models, Prospects and people who are not assigned to a slot where we generate all sorts of workflows.  I could use the generic Female that is setup in the Angel Primes - or we come up with a new workspace for Prospects and Models so I can actually generate pictures for them without having to specifically create dedicated workflows.  Think about how that might work and how I could drive that through the Gallery GUI and being able to pick any image and ask for one of the specific workflows in the normal pattern of phases 0_Edit or 1_Alpha, etc... I need some deep thought and a look at the entire pipeline to see where we need more re-alignment, directory structure, etc...
 ```
 <!-- markdownlint-enable MD013 -->
+
+
+## Oct 30 source snapshot: trigginer_cli_from_gui.md
+
+Source: `feedback/trigginer_cli_from_gui.md`. Coverage: A7. SHA-256: `b9c5acb469b14d3aa3ebcbd76d71231b8070cfa81a9b33c51b1dd4052b6f6bc7`.
+Captured for planning; open tasks are not implementation acceptance.
+
+<!-- markdownlint-disable MD013 MD009 -->
+````text
+When we get to a point where I am staging actions, renames, protections, etc... I would REALLY like to be able to have a Preview and Apply button within the GUI to be able to invoke the commands that were staged into the .json files instead of me running them.  If that means we need to figure out how to create pairing .cmd files and then run them immediately and somehow provide the output back in the GUI - that's what I'd want to figure out.
+
+That could be the tipping point for the simple .html based GUI - but I am sure there is a way for a browser to be able to trigger some of that - or we need to start to re-think the GUI for the long run at that point.
+
+I'm not asking for immediate shift in direction - but to make the GUI work with more advanced features - like trigger the entire rebase (within the rules of protections and core identity thresholds we will establish in the sandbox) directly from the GUI, providing real-time feedback and control over the process without having to switch to the command line.
+
+I don't expect to rebase often - but when I do - I need it to work simply and seamlessly.
+
+When I want to rename the original name and get things fixed up - it also needs to be easy.
+
+Really any of the actions we allow in the GUI need to be simple for me to execute the proper CLI command(s) in a batch .cmd job tied to the corresponding .json file that stores the staged actions.  Or we even revisit how that works.
+
+So, it'll be time to figure that all out.  As mentioned in other places - I actually want the GUI to handle the integration to trigger workflows in comfyi - monitor for job completion, show the images and allow them to be brought back into the gallery in proper location.
+````
+<!-- markdownlint-enable MD013 MD009 -->

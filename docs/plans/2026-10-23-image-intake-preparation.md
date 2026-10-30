@@ -2,7 +2,24 @@
 
 **Status:** active (Phase 1; sandbox clean-start integration implemented; real recipe/flow acceptance and production cutover remain gated)
 
+**Queue focus:** I59, I60
+
+**Scheduling:** now: actual installed evidence/navigation and the current
+human-review baseline. I68-I70 are the next bounded quality round after
+baseline publication and the storage budget review; I71-I76 and other open
+scope remain visible here without flooding today's queue.
+
 ## Oct 30, 12:31: full human-review feedback reconciliation
+
+- [ ] **P2 ai** I77 Audit eligible process-input configuration/reference
+  assets for version control, following `overlay_reference.md`: small
+  non-person overlay crops (including missing GMW/reference examples),
+  profiles, recipe/configuration inputs and their consumers. Record checked-in
+  locations or external pinned hash/provenance where licensing, size,
+  secrets or privacy forbids inclusion. No people-photo, model-weight or
+  credential import is implied by permission to retain suitable inputs in Git.
+  Existing reference-bank implementation remains delivered; completeness
+  and the inventory are not presumed from one stored logo.
 
 Source: the updated 209-line `feedback/fresh-v23-20261029_feedback.md`.
 The full current note is preserved verbatim at this plan's end, separately
@@ -2418,7 +2435,7 @@ restoration and diffusion repair are not default matching preprocessing.
 | Separate artist likeness setup/entry point while sharing intake and engines | I16; canonical entry-point/state/write/recovery boundaries in likeness guide; no new engine or physical tree migration |
 | Keep Artists out of normal people galleries/relationships; separate simpler Artist GUI later | I17 completes general scoring/report isolation; layout L13/L14 own presentation boundary and deferred GUI |
 | Do not process Various/gallery until Artist test images are removed; identify work during review | 17:05 handoff/pause above; I10 visual feedback, I17 isolation, I1 inventory and fixture-only I12/U7/I8 preparation |
-| Write today's recap and keep plans updated during work | [Oct 23 recap](../recap/2026-10-23-1708-recap.md); existing plan-at-each-pivot agreement retained, queue regenerated for this handoff |
+| Write today's recap and keep plans updated during work | [current reboot-resume recap](../recap/2026-10-30-1247-recap.md); existing plan-at-each-pivot agreement retained, queue regenerated for this handoff |
 | Keep every intake version in `gallery_intake`, move with the identity; original to `gallery_org`, best to `gallery` | I21; U7 owns the `archive_org` reconciliation |
 | Link from the gallery review to a page with every version of one photo | I23 through layout L12 |
 | Run intake only, review, then redo or resume | I22 |

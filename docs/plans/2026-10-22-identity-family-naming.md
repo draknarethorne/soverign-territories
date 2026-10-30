@@ -1,6 +1,30 @@
 # 2026-10-22: identity families and safe naming
 
-**Status:** active (draft metadata/naming and one-to-one rebase migration implemented; real acceptance and broader transitions remain open)
+**Status:** holding (Oct 30 scheduling; existing migration retained, broader naming/family acceptance open)
+
+**Resume gate:** after installed baseline and intake tuning, then explicitly
+select N12 corrections/family acceptance. Existing approved decisions and
+stable-name/protection guards remain binding; no bulk renaming during install.
+
+## Oct 30: named and unnamed Various acceptance contract
+
+- [ ] **P2 either** N13 Cover `Various/<supplied person name>` as explicit
+  original-name intent, distinct from unnamed `Various/gallery`. With N12,
+  preview matching/merge/history/name correction and exact de-duplication,
+  preserve fixed cast slots, and compare every photo against normal core/
+  Review thresholds. A folder assertion does not make all its faces identical:
+  detect mixed people, ambiguity and conflicts before mutating.
+  Test new plus duplicate arrivals, existing cast/core membership, matches
+  elsewhere in the library, optional identity retirement after verified merge,
+  low-score Gallery versus Review, rejection back to eligible routing and
+  retirement exclusion with action A2/A6 and engine E4-E8/E13. No unsupported
+  global self-healing or original-name overwrite is claimed today.
+  Unnamed arrivals may create identities under established rules; preserve
+  original source names and allocate stable unique photo IDs for arbitrary
+  supported filenames (intake I75), not only download IDs. Reconcile summary
+  `z_` text versus authoritative durable history for moves, naming, cast
+  assignment/demotion, retirement and rejection, with exact undo. This is
+  one cross-owner acceptance matrix, not a second naming/matching engine.
 
 ## Oct 27 feedback reconciliation: names and family status
 
@@ -307,3 +331,47 @@ No live identity metadata is changed by recording this clarification.
 If I am forcing a change to the original name - which was mis-assigned due to bugs in our previous processing automation, I want that to replace any original name that was mis-assigned and re-establish the persons proper original identity and name.  Hope that clarifies my intent.  The reason things were mis-assigned or swapped were either early bugs in the likeness promotion process to swap prospects to angels or sisters - or I simply just dumped things into Various/gallery and let random assignments happen and now want to correct that because I was being lazy and now I know a person's real identity - even if we assigned them a random one.  Does this make sense on why I am wanting to be able to do that - after we get this intake processing for images working?  Both the image processing and re-establishment of original names is important and then making sure the family naming can happen which may change their first/last names based on how we want that to work?
 ```
 <!-- markdownlint-enable MD013 -->
+
+
+## Oct 30 source snapshot: various_people_names.md
+
+Source: `feedback/various_people_names.md`. Coverage: N12/N13. SHA-256: `dbe7ade104af67ddee7f4235cf7108b24c63887f8c4bc6102d620b25ca2ea1fc`.
+Captured for planning; open tasks are not implementation acceptance.
+
+<!-- markdownlint-disable MD013 MD009 -->
+````text
+# Various People Names
+
+## High Level Understanding
+
+I want to ensure that if I send in a photo through a Various/[people name] - such as Various/Ela Model that what I am asserting is all the images in here are in fact Ela Model as the name and that if they match up with someone else that's already in the library/gallery as another name - most likely just a random chosen name - that I am asserting the following:
+    - This IS the original name of the person in the images
+    - I want the name of this person to be Ela Model (in this case)
+    - If it pairs with existing photos I would want to merge these and history to make the identity know as Ela Model.
+    - If this person is already assigned to a character slot, that's great - we'll bring all these into the gallery and de-dupe them as part of the process.
+    - I would assume if there is already a core identity we'd bring these into that mix and ideally the score of all of them will align.
+    - If some scores are low they can either stay in the gallery with a low score or end up in review based on thresholds.
+    - This is a scenario, where I have pulled images (maybe made a mistake where I put it - hence a review photo) and they all should be that person
+    - If other images are spread out across the gallery that are matching the likeness, I would hope that we'd also pull them into Ela Model's gallery and use thresholds where to put them.
+    - That could retire a likeness/name already or just pull a few images.
+    - If I reject them, then can go back through and land somewhere else
+    - If I retire them, I just don't want them in the pool
+
+There's probably more I'm missing so ask me some questions about it as we go along.
+
+In my mind, this is one way to rename or re-claim the proper original name for a person in the gallery, even if I supply some duplicate photos as well as new ones.  I can use this process over time to self-heal, organically grow and fix names of people.
+
+## Photo Matching
+
+On the other hand, if I just dump a bunch of photos into the Various/gallery directly - then I am assuming they will just match where they match and possible drive a new core identity and pull other images of likeness to them and I am not caring so much about the original name as I may not know what it is and allow the likeness process to assign a random name based on the rules we have in place.
+
+## Photo Naming
+
+I also have a scenario, where the .jpg or .png files don't follow a hard-and-fast naming convention.  I would still want to be able to process those and assign a unique id for the image and get it into the flow and named properly.  This happens if I pull camera photos instead of downloads or I pull them from somewhere else.  So we'll have to adapt the intake so it can handle various names of any .png or .jpg (or other image files) that I might want to ingest over time.
+
+## History Tracking
+
+I am thinking that the z_ .txt file might be useful for summarizing images moving in/out of an identity as well as renamed, assignments to slots, demotions from slots, retirements, and rejections.  This would give a historical record of how images have been managed and allow for better tracking and auditing of changes over time.  I can't recall what we already track so this might be an area to revisit - unless there is another place we can look at an identity and see what has happened in the past.
+
+````
+<!-- markdownlint-enable MD013 MD009 -->

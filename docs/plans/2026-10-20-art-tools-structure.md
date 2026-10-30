@@ -1,6 +1,25 @@
 # 2026-10-20: organize Python art tools by domain
 
-**Status:** active (approved Oct 20, 2026; incremental and risk-gated)
+**Status:** holding (Oct 30 scheduling; approved behavior-preserving scope retained)
+
+**Resume gate:** a bounded extraction required by an approved implementation,
+or explicit selection after library acceptance. Do not start package moves
+while verifying the frozen sandbox engine and rollback.
+
+## Oct 30: end-to-end complexity feedback ownership
+
+- [ ] **P2 ai** E4 Audit maintainability of the complete current pipeline:
+  named/unnamed Various intake, crop/masks/erase/composition, face comparison,
+  grouping/core protection, placement, names/history and GUI evidence.
+  Map module responsibilities, duplicated policy and state transitions;
+  propose only measured, bounded simplifications with regression coverage,
+  not a wholesale replacement while baseline installation is blocked.
+  Consume the same accepted run's evidence from cast C6/C7 and intake I59;
+  engine E4-E7/E13 owns scoring/protection/convergence tests, naming N12/N13
+  owns rename/named intake, and face M1-M4 owns conditional second-model
+  investigation. Trace loose unnamed versus asserted named arrivals and
+  full-photo/core-only rebase with metadata-based name continuity without
+  treating old names as identity seeds. Do not rerun or redefine those owners.
 
 ## Review and questions: 2026-10-22 16:26 -05:00
 
@@ -180,3 +199,27 @@ Also if we want to move the tests into a more dedicated directory and also move 
 As you add structure - I give you freedom to eventually migrate all existing .py files into the proper structure as part of this work - at least any we are working on today and are "not risky" to move around.  We can start another plan and write that up for remaining work that you choose not to take on in the structuring efforts - but I like what you have done so far.  Makes things cleaner from looking at them.  As long as the .cmd files are there to execute the tools - we should be lessening the risk as we move things.  Just more feedback - so keep on going with the plan and update it as we make these on-the-fly decisions.
 
 If we can do the work now and it makes sense - don't defer.  I didn't mean to imply we NEEDED to wait - just you use your judgement on the risk of moving exieting files around.
+
+
+## Oct 30 source snapshot: pipeline_code_complexity.md
+
+Source: `feedback/pipeline_code_complexity.md`. Coverage: E4. SHA-256: `bb2c7d66ffa0c1159918737a71fe63ef7a8e5e19c00c067055e389e8c0f928f7`.
+Captured for planning; open tasks are not implementation acceptance.
+
+<!-- markdownlint-disable MD013 MD009 -->
+````text
+I am curious after all the work we've done what we think about the code-complexity of the entire image processing pipeline - from the intake of new images in Various galleries, whether from Various/gallery or Various/[person name] (which is relatively untested), through the various stages of cropping, masking, erasing, and final composition. How maintainable and understandable is the code, and are there areas where we could simplify or refactor to reduce complexity without sacrificing functionality?
+
+Then we need to look at the likeness process and how the code handles comparisons, similarity checks, and any adjustments made based on likeness. Are the functions modular and easy to follow, or are there areas where the logic could be streamlined? How well does the code integrate with the rest of the pipeline, and are there opportunities to reduce redundancy or improve clarity?
+
+I know we have added complexity - but hope that we've also ensured that the pipeline flow from beginning to end is solid and doesn't need a major overhaul.  We still have more testing beyond the image processing with how the threshold for similarity and the rules around protecting core photos automatically, moving in/out photos based on the likeness score, assigning the images to a person, naming that person, etc...
+
+We'll need to test the rename as well as the Various/[person name] intake path to ensure that images are correctly assigned, renamed, and processed through the pipeline without introducing errors or inconsistencies.
+
+Also testing the rebase of the entire 100% photos assigned and only keeping core likness, but retaining names of persons without the core present based on meta-data about images and previous names, without forcing images to go into a previous name - but a core set of images with the previous name gives the person it's core again.
+
+The whole point of that process is that some photos have leaked across persons through early bugs and issues, so the rebase is attempting to rebuild the cores and setup the future to assign the original names via the Various/[person name] when it's known and let the Various/gallery assign a new name for brand new set of images I don't have a names for and let the images land where they land.
+
+I'm very pleased with the work on the intake and the series of steps we have done to clean up images and now it's onto the likeness and similarity comparison and we may need to add in those additional comparisons for border-line images, merging persons based on likeness scores, assigning family names and keeping original name history and ensuring overall that the GUI present all the information through a series of well integrated pages.
+````
+<!-- markdownlint-enable MD013 MD009 -->

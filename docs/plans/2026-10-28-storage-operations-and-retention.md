@@ -2,6 +2,13 @@
 
 **Status:** active
 
+**Queue focus:** S15, S24, S25
+
+**Scheduling:** S15's verified same-stage install/rollback/actual-viewer gate
+is now; S24 backup scope/format/retention and S25 storage-mode budget are the
+top next work, before another full intake. Other cleanup, root/configuration
+and report I/O tasks remain open backlog, not permission to prune now.
+
 This plan turns the current ad hoc locations for runs, reports, backups and
 temporary files into a predictable, configurable and auditable system. It also
 covers the one-time cleanup and the eventual clean sandbox recreation needed
@@ -198,16 +205,30 @@ now finishes cleanup without starting another reset. See S14's exact audit.
   old run without attributing recipe, population or cache differences to disk
   cleanup alone. Verify fresh intake covers current Working galleries rather
   than silently treating historical Source as current Production.
-- [ ] **P1 ai** S21 Finish the Oct 27/28 retrospective and Oct 29 run recap,
+- [x] **P1 ai** S21 Finish the Oct 27/28 retrospective and Oct 29 run recap,
   reconcile feedback coverage and plans, run validators/tests/markdownlint,
   and commit/push coherent validated batches. Leave unfinished acceptance and
   storage lifecycle gaps explicit.
-- [ ] **P2 either** S23 Agree recap pinning/retirement criteria, then archive
+  **Result (Oct 30):** retrospectives and overnight checkpoints were
+  reconciled into the current resume/feedback handoffs and a 20-record recap
+  transfer ledger. All 13 current feedback notes have exact tracked source
+  copies and task coverage; statuses/index/queue now distinguish active focus
+  and holding. Ten queue tests, syntax checks and routine hygiene/data
+  validation pass. Publication uses the normal commit/push gates; blocked
+  installation, human acceptance and remaining storage work stay open.
+- [x] **P2 either** S23 Agree recap pinning/retirement criteria, then archive
   only individually reviewed superseded recaps with corrected index links.
   The Oct 27/28 retrospectives already exist; the overnight Oct 29-30 recap
   must distinguish automated/AI checks from remaining human acceptance.
   Keep raw `feedback/recap_10_27.md` until its preservation and coverage are
   verified; no bulk recap or feedback removal is authorized.
+  **Result (Oct 30):** the recap index now defines manual current/pinned/
+  archive criteria and the exact 20-record transfer ledger; two relevant
+  handoffs stay active. Moved prose is preserved and relative links verified.
+  Raw feedback was separately reconciled source by source (13 exact-byte
+  snapshots and actionable coverage), then individually archived. This is
+  explicit reviewed housekeeping, not automatic archival/deletion or D4
+  automation, and does not close any image acceptance gate.
 
 ### 1. Complete the storage and dependency inventory
 
@@ -427,6 +448,14 @@ actually eligible. The same live preview then completed in 0.59 seconds.
   copy fallback where links are unavailable. Measure B: I/O and disk savings
   before adopting.
 
+  Include `gui_and _thumbnails.md`: map every actual page/reference and
+  measure thumbnail versus original/full-image browsing cost before retaining
+  or eliminating copies. U6 owns manifest-proven thumbnail regeneration;
+  S24/S25 owns retained evidence budgets; S10/L20 owns dependency-aware run
+  retention. Propose separate recoverable-trash and irreversible-purge stages,
+  user-approved retention windows and exact restore tests. No current source,
+  snapshot, report or trash deletion is authorized by this review.
+
 Verification (2026-10-29, read-only): the full Working scan covered 270,191
 files / 146,857,778,934 bytes with no inventory errors or reparse entries.
 SHA-256 was computed for all 239,555 files in repeated-size groups
@@ -593,12 +622,21 @@ storage cleanup.
 - [ ] **P2 ai** S17 Map current category-name conditionals and existing policy
   sources; identify the authoritative schema/config owner and the behavior of
   each category before changing logic.
+  Include every directory/CLI/cache/Junk/erasure-config/report/workspace
+  consumer in the current-state inventory (S1/S4/S5). Sketch future Drakn
+  Bound males, Elder Dragons and Demons alongside Artist/Human/Animal domains,
+  separating future display categories from physical roots.
 - [ ] **P2 ai** S18 Propose a versioned category/global configuration contract,
   validate it, migrate one low-risk consumer at a time, and test that current
   category routing, protection and likeness thresholds remain unchanged.
 - [ ] **P2 either** S19 Review the configuration proposal before broad
   category-driven logic migration. Adding a category must not silently change
   storage paths, protection or matching behavior.
+  Preview incremental versus justified larger migration chunks, repeat the
+  high-risk cases from a frozen sandbox baseline, verify backup/restore and
+  every CLI/GUI consumer, then seek separate Production approval. Neither
+  `gallery_directory_structure.md` nor category feedback authorizes big-bang
+  renames or skipping current-state analysis.
 
 ## Scope and guardrails
 
@@ -776,3 +814,118 @@ Production runbook -> S14-S16; category/global configuration -> S17-S19.
 > I'm giving you full authority to get the sandbox setup cleanly again and I noticed you saw there are files in the sandbox Various that aren't in production - that's correct I pulled files into there for the work we were doing.  That's a great catch.  I really want to know if all the files in the sandbox are also impacting the intake processing for the work we were doing with the latest version - so I feel like if you can get the sandbox back we need to ensure the process is documented and consider this a dry run of a new/fresh sandbox which looks like Production from the galleries.  We'll lose all the previous reports and such - so we'll need to confirm what the performance is now on running the intake and likeness processes that produce all the reports - and hopefully we can get a new baseline and verify all the output locations, clean-up and other pieces we did get ready are in place and what else is truly remaining from the management of all the files in the sandbox as we wrote up the design for.  So, you can complete that along with validating the intake processing and that it catches all the issues that were to be addressed.  I am heading to bed, so it work you can do can handle all the tasks until I wake in the morning.  Getting to the point where we can run the clean rebase in the sandbox and see how all the new various files land and how all the cropping, masking and other enhancements we made are working.  So complete all the work that makes sense given all the issues we've had and check performance of evertyhing running and see if things will be faster after the clean snapshot and sandbox.  I'll want a complete recap written up as well - we didn't even get the recap from 10-27 written, so now we'll miss 10-28 and likely to generate the recap on 10-29 shortly.  Given it's nearly 12:00 am CST where I am at and working.  Finall if we get a clean codebase - we should commit and push all the files in batches for all this work since it's about 2 days worth of work.
 
 <!-- markdownlint-enable MD013 -->
+
+
+## Oct 30 source snapshot: categories_and_code.md
+
+Source: `feedback/categories_and_code.md`. Coverage: S17-S19. SHA-256: `97bf75e828add5d2b35d29bb6b2c78776a33fb1b828e53499d8cd5c0df4ac170`.
+Captured for planning; open tasks are not implementation acceptance.
+
+<!-- markdownlint-disable MD013 MD009 -->
+````text
+# Categories and Code Organization
+
+This document outlines the approach for managing categories and organizing code in a way that reduces hard-coded dependencies and ensures that logic is driven by configuration files.
+
+## Hard Coding Categories
+
+In reading some code, I see hard-coded references to "Sisters, Models, Angels, Prospects, Potentials and Artists" in logic areas and such.  While that is some of my direct statements, what we need to do is get the categories setup with properties that are defined that drive the decisions about logic instead of the literal about the category name.  
+
+Things like
+    - Category Name
+    - Description
+    - Type (person, animal, artist, etc...)
+    - Rank (priority or importance of the category)
+    - Path (path to storage)
+    - Default Protected (is this protected by default)
+    - Thresholds (for likeness comparison)
+    - Required Min Number Photos (or whatever is appropriate)
+    - Additional Properties (any other relevant properties for the category)
+    - Logic Drivers (any specific logic that depends on this category)
+
+Basically anything driving a logic piece that is based on the name right now, needs to be based on logic around the categories and if we add Demons we only really need to add
+
+We'd have some global properties that are part of the entire project scope for all pieces for things we need as well for things like
+    - Base Storage Path
+    - Default Thresholds (for likeness comparison)
+    - Default Min Number Photos (for likeness comparison)
+
+In short, I think we have at least some .json files for how things work already - but I still see code with hard-coded references as well as places where C:\Soverign-Territories\soverign-territories\data\art\likeness-engine-policy.json being used.  So we're probably a bit fragile in how logic isn't always driven from a config.
+
+As you do the analysis, you can probably figure out the logic and what it's trying to do based on category names and we can enhance the properties and ensure that all things are setup properly.
+
+Basically, it's sort of like defining a workspace in comfyui which has default behaviour that you can adjust and setup properties for specifically.  In our case, the categories and global properties act as the configuration for the system, and we should aim to drive all logic from these configurations rather than hard-coded values.
+
+## Code Organization
+
+When organizing code, it's important to separate concerns and ensure that each module or component has a clear responsibility. For our project, we should consider:
+
+- **Category Management**: Handling the creation, modification, and retrieval of category properties.
+- **Global Configuration**: Managing global properties and ensuring they are accessible throughout the system.
+- **Image Processing**: Handling the intake, processing, and likeness comparison of images.
+- **Likeness Comparison**: Implementing the logic for comparing images based on likeness thresholds and other relevant criteria.
+- **Logic Drivers**: Implementing the logic that depends on category properties and global configurations.
+- **Utilities**: Any helper functions or common utilities that are used across multiple modules.
+
+By organizing code in this manner, we can reduce hard-coded dependencies and make the system more maintainable and extensible.
+
+We have an outstanding task of refactoring the existing code to remove hard-coded category references and ensure that all logic is driven by the configuration defined in the category and global property files. This will involve:
+    - Identifying all instances of hard-coded category names.
+    - Mapping the logic to the appropriate category properties.
+    - Updating the code to use the configuration files for decision-making.
+    - Ensuring that any new categories can be added without modifying the core logic.
+
+````
+<!-- markdownlint-enable MD013 MD009 -->
+
+
+## Oct 30 source snapshot: gallery_directory_structure.md
+
+Source: `feedback/gallery_directory_structure.md`. Coverage: S1/S4/S5/S17-S19. SHA-256: `c3c323989981f74071b4a2478e0bfda90733655656b420187050b52567efb494`.
+Captured for planning; open tasks are not implementation acceptance.
+
+<!-- markdownlint-disable MD013 MD009 -->
+````text
+I'll want to revisit the gallery structure and directory names to ensure we are getting things properly named within the entire gallery and that the structure directly in the Soverign Territories directory makes sense and supports all the upcoming things cleanly - like the Drakn Bound males, Elder Dragons, future categories like Demons and such. 
+
+I've also use the Various as the Intake directory instead of being a true gallery and in it's current state it's a mixed bag of things right now - so that also needs thought.
+
+I think the templates did get setup at one point to support males and females, but this will be a time to revisit our structure and make sure it makes sense overall and that the GUI is prepared for all the things we will be doing.
+
+I won't want a big bang change - but we need to re-establish the proper future directory structure, make sure backups are working and only backup what is needed so we don't over-consume storage or create unnecessary complexity in the gallery.
+
+Additionally, we should consider how the gallery structure will interact with the GUI, ensuring that any changes we make are reflected properly and that the GUI can handle the new categories and organization without issues. This will help maintain a seamless experience for managing and viewing the gallery content.
+
+This also includes the intake, likeness, cache storage, junk, etc... every directory under B:\Soverign Territories needs to be re-evaludated in the end-to-end structure definition.
+
+We'll also need to sketch out more categories of things to come and show how those will fit into the future state, even if not yet supported - but we know how it'll play out.
+
+All directory paths need to be configured and stored somewhere as well and not having anything hard-coded, assume directory paths and make false assumptions.  I am sure we haven't really gotten all that done.
+
+This would also involve making sure categories are driven from a config and that a category can point to a directory and such.
+
+I'm also concerned that some of the CLI commands have false assumptions or have some embedded directory structure or logic within them we'll need to refactor to be more config driven and not just embedded into the code.
+
+We did start that at one point - but not sure how well that was driven into all the intake processing and how those scripts work, where parameters are stored and how all the erasing is being handled.  Lots to think about in the overall directory structure so a current state analysis will be needed so we can figure out where we are at, what configs do exist, what code needs to be config driven more and what our future will be.
+
+Most importantly, what is the incremental plan to get there or do we need to do larger chunks at a time - test in the sandbox - and come back to prod.  
+
+Basically this will involve the sandbox, how we use it repeatably to test out "high risk" changes to the processes so we don't get to a point like we are at in current production where we ran everything live, had some bugs and the gallery became mis-aligned.
+
+Hope this all makes sense as it's more than just directory - it's directory, configs and processes all in a single brain dump.
+````
+<!-- markdownlint-enable MD013 MD009 -->
+
+
+## Oct 30 source snapshot: gui_and _thumbnails.md
+
+Source: `feedback/gui_and _thumbnails.md`. Coverage: S10/S11/S24/S25. SHA-256: `ea78cfb23aaba59ef9141f435828eb98b3330c18b8d3cd9632e0e7a70fa39957`.
+Captured for planning; open tasks are not implementation acceptance.
+
+<!-- markdownlint-disable MD013 MD009 -->
+````text
+We need to analyze all the thumbnails that may or may not be kept and used in all the various gallery pages vs. pointing to the actual images and determine which ones are necessary for performance and usability, and which ones can be removed to reduce redundancy and storage usage.
+
+I know we'll keep backup copies of all the images that happened in the pipeline processing for a period of time and eventually we need to "trash" them and eventually "permantently delete" the trash.  We do need to manage space properly and need to sort that out.
+````
+<!-- markdownlint-enable MD013 MD009 -->

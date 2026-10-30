@@ -1,6 +1,10 @@
 # Plan: tidy the library, junk and screenshots, organise people for the lower tiers
 
-**Status:** active (Phases 1 to 3.1 done; classification, Phase 3.2, is yours and grows one element at a time; Oct 11, 2026)
+**Status:** holding (Oct 30 scheduling; Phases 1 to 3.1 delivered, classification remains open)
+
+**Resume gate:** after stable prepared-library review, when element/profile
+classification is selected. Two-image face-pass work is conditional on a
+specific Prime-test need, not a prerequisite for sandbox publication.
 
 ## Review and questions: 2026-10-22 16:26 -05:00
 

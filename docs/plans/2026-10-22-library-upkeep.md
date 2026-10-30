@@ -1,6 +1,11 @@
 # 2026-10-22: independent photo-library upkeep
 
-**Status:** active (Oct 23 derivative/refresh implementation authorized; production processing not authorized)
+**Status:** holding (Oct 30 scheduling; delivered derivatives retained, broader integration acceptance open)
+
+**Resume gate:** actual installed derivative/selected-input checks reveal a
+specific defect, or baseline acceptance permits U1/U3/U6/U7 follow-through.
+The current installation already uses these helpers; no independent upkeep
+run or Production maintenance is authorized by this scheduling change.
 
 ## Oct 23 priority and implementation boundary
 

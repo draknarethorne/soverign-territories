@@ -1,6 +1,19 @@
 # 2026-10-22: manual prompt migration into reusable art data
 
-**Status:** active (shared clothed edit and Prime slices implemented; remaining migration and visual acceptance open)
+**Status:** holding (Oct 30 scheduling; tested slices retained, migration/visual acceptance unfinished)
+
+**Resume gate:** verified prepared-library inputs and explicit selection of
+source-faithful `0_Edit`/`1_Prime` work with rendering R44. P14-P17 fidelity,
+token reconciliation and set relocation remain prerequisites for that work,
+not the current sandbox publication. Manual source drafts stay untouched.
+
+**Oct 30 source coverage:** `edit_and_prime_templates.md` reinforces
+P14's exact manual-nuance ledger, P15's data/component/token mapping including
+camera and lighting, P16's one-workflow-at-a-time fidelity/regression checks,
+and P7/P9 documentation/rationale. Review the current manual files again at
+resumption; applying lessons to existing workflows requires explicit
+before/after tests. This is future migration work, not permission to generate
+or rewrite all templates during the rebase pause.
 
 ## Oct 27: source-faithful prompt reconciliation and Female test bed
 
@@ -499,3 +512,25 @@ the updated recap/index preserve remaining work and immediate priorities.
 I wrote up an initial review after looking at all the angels pictures - and some of the potentials.  I have a lot of feedback, but centers on a few themes.  Please read this and let come up with a plan for what to do about these and try to work on with the cropping, erasing, cropping and framing.  For the most part things are great - but a few comments in all of this will help find tune this and re-running specific examples I called out will help see it's working along with a sampling of other images to make sure we don't break what "was" working trying to tune the process.  Please read this .md file and update existing plans with this feedback and add more items and work to do in those plans.  I don't think we need a new plan or design document, but need to alter existing ones with this feedback and changes we propose.  Think deeply and also make sure everything else we are working on that remains is properly open in the plan and the recap calls out some critical next steps.  At this point, I am going back to the beginning and working those aspects - hoever I want to ensure that all of my templates for C:\Soverign-Territories\soverign-territories\prompts\_edit\female are brought back into the art libraries properly.  What you ahve been sending to comfyui in the workflows does not match my templates exactly - however you did find a new 3/4 pose that I liked during the process, but we need to ensure that we reconcile the tags that I am using vs. existing tags or scheme for the templates so we don't end up having a .json file for a person/angel/model/etc... with redundancy.  So this work needs to be reflected in the C:\Soverign-Territories\soverign-territories\docs\plans\2026-10-22-manual-prompts-to-art-library.md as to how my specific text and instructions need to help drive re-alignment of all the templates in terms of what I called out in what order and where the bust/body are used along with all the features of a person.  That way, it's not just generic, but pulls in the data about the person proprely.  I know I used a few different terms to specifically call out the body pieces instead of a generic block because it was critical to how it worked.  I worked with AI to come up with those manual prompts and what is there should be transposed into the templates and .json files.  Lastly - now tha we have a Soverign Females workspace - we should move the C:\Soverign-Territories\soverign-territories\data\art\_sets\angel-primes\alpha\female into the C:\Soverign-Territories\soverign-territories\data\art\_sets\soverign-females\female as the "test bed" for automating the generation of images as part of the art intake process.  That would be the skeletal set of workflows and then we can add in the dynamic creation of the angels, models, prospects, potentials as we been - but instead of putting them into Reference/[person name] we should honor the categorization of them under Models/[person name], Angels/[perrson name], Prospects/, Various/, etc...  I love the way the automation into ComfyUI is working - but we need to make some adjustments to the content of the prompts and I am ok with A/B testing with the prompts - but I want more strict adherence to the contents of my prompts and how they are written when we bring them back into the automation and art libraries.  Does this all make sense as well as the feedback docum,ent?
 ```
 <!-- markdownlint-enable MD013 -->
+
+
+## Oct 30 source snapshot: edit_and_prime_templates.md
+
+Source: `feedback/edit_and_prime_templates.md`. Coverage: P14-P16. SHA-256: `9d9bf04b1b62bc249aa31ae028058ac82a0be4aba372b32ab72121ff22c65371`.
+Captured for planning; open tasks are not implementation acceptance.
+
+<!-- markdownlint-disable MD013 MD009 -->
+````text
+Just a reminder note that we need to bring back all the 0_Edit and 1_Prime work that was manually written and rationalize that back into the data/art pipeline, ensuring that it is properly integrated and utilized for future processing and organization.
+
+We did write up most of that already, but when we get to that point we just need to re-review things to ensure the plan lays things out and we can test each of the workflows one-by-one to ensure that things work as consistent for the generated workflows as they did when I was running them with the manual prompts.
+
+We might ahve some refinement in the way we structure and integrate the manual prompts into the automated workflows, ensuring that any nuances captured manually are not lost in the transition.  Some descriptions will need to adapt carefully into the data/art .json files and the templates will need the proper tags for accurate processing and organization.
+
+I'll also want to review the generation code to make sure that adding these new workflows does not break existing functionality but we may need to bring some of the best practices of items in the prompts into existing workflows to declare camera settings, lighting conditions, and other relevant parameters accurately.
+
+Additionally, we should document any changes made during this integration process to maintain a clear record of how manual prompts have been adapted and incorporated into the automated workflows. This will help future developers understand the rationale behind certain decisions and ensure consistency across the project.
+
+This may happen in the future so we need to understand what our steps are to do this and ensure that our generation process isn't a complete mess after we do so.
+````
+<!-- markdownlint-enable MD013 MD009 -->

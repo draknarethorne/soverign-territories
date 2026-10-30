@@ -1,6 +1,10 @@
 # 2026-10-22: face-analysis explanations and secondary-model evaluation
 
-**Status:** active (Oct 20 C9 transferred; explanation and measured evaluation remain)
+**Status:** holding (Oct 30 scheduling; explanations and secondary-model evaluation remain)
+
+**Resume gate:** labelled ambiguous-face evidence after installed review, or
+a demonstrated alignment defect blocking acceptance. A new model/license
+investigation is not a prerequisite for publishing existing exact-face evidence.
 
 ## Oct 23 dependency and scope
 

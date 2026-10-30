@@ -1,6 +1,10 @@
 # 2026-10-12: roadmap and MVP data track
 
-**Status:** active (moved here from `STATUS.md` so that one queue, [../todo.md](../todo.md), shows everything open)
+**Status:** holding (Oct 30 scheduling; independent game-data track, not completed)
+
+**Resume gate:** explicit selection of the Darkness/Light data or game-design
+track after the current library milestone. Data debt and unanswered design
+questions remain valid; they are not image-install prerequisites.
 
 ## Review and questions: 2026-10-22 16:26 -05:00
 

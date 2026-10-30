@@ -1,6 +1,25 @@
 # 2026-10-25: gallery-driven reference rendering
 
-**Status:** active (Oct 25 overnight sandbox integration and bounded local rendering authorized; visual acceptance and production rollout remain gated)
+**Status:** holding (Oct 30 scheduling; completed render receipts retained, downstream integration/acceptance open)
+
+**Resume gate:** verified rebase and prepared-input review, then source-faithful
+manual recipe controls and R44 routing before the bounded next render batch.
+No automatic queueing while baseline installation is blocked; existing outputs
+and pullback evidence remain preserved. GUI execution and later stages remain
+separate decisions, not missing rebase prerequisites.
+
+## Oct 30: generated-image round-trip coverage
+
+The `generated_images_to_gallery.md` request belongs to existing R8/R21/R24
+(Gallery selection, Outputs browsing and explicit selected pullback to
+`<person>/gallery_generated`), R16 (output-as-next-input and optional compatible
+stage chains), R44 (category/person routing), and R23 (later trusted execution/
+completion bridge, coordinated with action A7). Verify one source-to-render-to-
+pullback-to-next-job sequence with unchanged source/identity core, stable
+lineage and no duplicate copies; stage compatibility and execution stay
+explicit. Delivered pilot pullback does not complete GUI integration or
+authorize automatic chains. This is an acceptance expansion of those tasks,
+not a competing generated-gallery implementation.
 
 ## Oct 28: post-rebase Prime sample
 
@@ -1486,3 +1505,23 @@ and real-person clothing removal are excluded, not silently migrated.
 Lastly, what is the naming of the workflows when we automatically render the jobs?  I noticed the reference/cleanup-0c0d-202061020-02 naming and I think that we'll want to adjust the names of jobs and the file locations a bit as we go, but things are looking great and I just need to understand what we want the actualy reference workflow names/structure and output files to be named in the long run.  That's a side note - but important in the long run since we have a ton of jobs created with 1 workflow in a single directory and 1 image in a single directory in the current naming and that might not be the right long term structure.   Maybe I'd rather see the persons name after reference/person_name/0_edit/0c_cleanup/person_name_qwen_edit_0c_cleanup_basic than the way you are naming the jobs.  Not sure how it all is designed, but I would basically like to simluate it as if I did run them manually given the workflow and naming conventions already in place for all other series - if that makes sense.  This is just an autogenerationa and I like the separation of the reference for being automated, but the structure and how they land in directories is a 1-1 type job to picture and while the gallery makes it viewable, it's a lot of directory clutter.  So some rationalization of that naming will need to happen.  If we bring things all together, I want to know who is a separate person, who are very simiarly but not same (family), and which photos do yield the best image of a person.  Even if I have 100+ originals of a person, how to I choose - sometimes I want the outfit to bleed through - so having the person in a 1_Prime with their existing outfit and a gray background in the 3/4 pose might yield the best photo.  Sometimes, I need them in bare so the underlying outfit doesn't pull through but their altererd bust/body to come through.   If I have 20 photos in original that all yeild neearly the same bare figure, that doesn't help, but the unique outfits to matter.  So, it's sort of a blend of being able to sample all the intake images and figure out which ones I choose from - even if there are hundreds.  After we get through this initial phase, maybe I'll learn if I have 20 head shots they are all the same and I don't need 20 different shots to generate the same 20+ reference images.  But right now, I don't know what does make the best reference photo - so letting this continue to run on large samples helps me figure that out and we can then tune things in/out - based on the likeness scores and which image I do like for a person...   I know I might be confused now, but we can work through this all as we iterate on the solution and you can run large batches over night to help figure things out as well.  But I also noticed that the eraser we have is much less effective than the comfyUI cleanup ... in almost every case.  so if the original needs the comfyUI to do a clean-up, that's a viable path if the eraser doesn't work.  Since it can extend to get the full 3/4 prime view in the outfit - which might be more ideal in the long run.  But having a clean version of the original with and without the background with and without an outfit are both good for me.  And having at least 3-4 different deluxe views shows me how the body positions in a specific setting across the people.  It give a constant background and series of poses in bare form for viewing.   Basically all those 0_Edit views tell me if the original photo is useful and good.  So, keep on going, take what I have for feedback and continue while I go to bed and we can resume in the morning.  Feel free to run as many comfy UI jobs and change the naming convention a bit to make it so that we align more to how the names of the output and workflows are.  I understand that each one is unique, but having the name of the person in the workflow will help me see how things were run for a single person.  Date and timestamps also make sense for the runs, but not sure where that fits into the structure, but the current reference/cleanup-xxxxx/job-xx/0_edit doesn't align to a person as well as what I have for zz_shots/Angelica/0_edit/0c_cleanup/angelica_xxxxxx so reference/person/0_edit/oc_cleanup/angelica_qwen_edit_0c_cleanup_bare with the timestampe in the filename might be better for directory and timestamp naming ... I don't know if this all makes sense.  It's been a long day, but somewhere along that we can find a solution.
 ```
 <!-- markdownlint-enable MD013 -->
+
+
+## Oct 30 source snapshot: generated_images_to_gallery.md
+
+Source: `feedback/generated_images_to_gallery.md`. Coverage: R8/R16/R21/R23/R24/R44. SHA-256: `972287796bd135766656397eeb067bdf191120835e9ebc776c99f08b5aab157c`.
+Captured for planning; open tasks are not implementation acceptance.
+
+<!-- markdownlint-disable MD013 MD009 -->
+````text
+I mentioned it at one time, but not sure we really planned out the gallery view pages to show the comfyui generated files and the ability to select those images to pull back into the [person name]/gallery_generated directory for further use and organization.
+
+This would allow us to better manage the generated images, ensuring that they are properly categorized and easily accessible for future use. It would also help in maintaining a clean and organized gallery structure, avoiding clutter and redundancy.
+
+I'd also want the ability that I mentioned to choose an image in the gallery and choose a workflow in comfyui to process that image further, allowing for seamless integration between the gallery and the generation pipeline.
+
+We could also specify that the output from one run becomes the input to a next workflow and build a chain of them that can automatically execute together without me having to do it by hand.  So, there's a lot of future work we can do with the gallery to support the generation pipeline and improve overall workflow efficiency.
+
+We've made more of the intake and processing images to get a clean gallery image, assigned it properly, padded them as needed for input into the generation process with comfyui, but we haven't really worked on what and how can we take those images and better integrate the generated outputs back into the gallery for further use and organization.
+````
+<!-- markdownlint-enable MD013 MD009 -->

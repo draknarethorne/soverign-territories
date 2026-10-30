@@ -5,71 +5,66 @@ Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (gen
 
 ## The pattern
 
-**Oct 29 execution priority:** v23's fixed-sample measurements and AI
-composition/padding first pass are recorded; continue the authorized
-intake-only sandbox iteration, then complete the fresh sandbox rebase and
-validate actual Gallery/Overview/Review and per-photo intake/face history.
-Only verified blockers should interrupt that milestone. Plan deferral/`_holding`
-triage is tracked as D17 in
-[tooling debt](2026-10-12-tooling-debt.md); no wholesale moves or assumption
-that all storage lifecycle work is complete are authorized by this note.
-The Oct 29 branch closeout is authorized separately: PR/checks/merge, then a
-fresh continuation branch and chat. D17 triage was completed in that fresh
-chat, not as a broad plan rewrite. T6 per-image recovery is implemented and
-tested; T12's measured disposition permits the sandbox iteration before
-S15's full move/backup/undo acceptance. Reasons and
-resume conditions are recorded below; independent plans remain active in
-their existing owners.
+**Current scheduling (Oct 30):** finish the existing sandbox baseline, do not
+restart intake. Recovery and the full intake/matching/AI audit are complete;
+publication is safely rolled back and waiting for Explorer handles to clear
+after the user's reboot. Exact resume evidence is pinned in the
+[recap index](../recap/README.md).
 
-**Bounded Oct 29 D17 triage:** T6 per-image recovery is complete. T12's final
-v22 profile remains historical evidence. The v23 composition/padding output,
-AI review and measurements are verified for the authorized fresh rehearsal;
-they are not production-quality acceptance. S20 records run measurements; I60/C7
-cover changed-image, face, move and Review evidence; the requested
-Gallery/Overview/Review inspection follows the real publication. None of
-these gates authorizes Production changes.
+## Now, next and holding
 
-Independent work remains in its current active owner, not `_holding`: T8
-reconstruction/mask policy, T10/T11 system-attribution and logo-quality work,
-S1/S4/S5/S11 broader storage/configuration/deduplication work, S22 C: cleanup,
-and L18/L20 library-scale I/O and run retention. Resume those only after this
-acceptance, or sooner if a verified blocker directly prevents it. L19's
-separate unassigned Intake entry remains open; revisit it if actual UAT cannot
-reach the requested intake provenance from Gallery/Overview/Review. Plan
-statuses and independent checklists stay unchanged; triage records priority,
-not completion or transfer.
+This supersedes Oct 29's choice to keep all independent plans active.
+There are **4 active, 14 holding and 1 proposed plans**. All unfinished scopes
+stay in their original files: no `_holding` directory or broad link migration.
+Holding is a scheduling state, never completion, cancellation or acceptance.
+The [plan table](#plans) and each held plan's **Resume gate** give its owner
+and reactivation condition.
 
-**Oct 30 overnight checkpoint:** the full 3,072-outcome v23 intake, independent
-artifact check, revised matching and AI move/output screening are complete.
-The verified 72,991-file snapshot precedes installation. The first attempt
-was safely stopped before publication to fix a measured native-owner
-configuration hotspot; unchanged inputs/catalogue and preserved staging are
-recorded in performance T16. Actual installed viewer/check acceptance is not
-yet claimed. The
-[cast owner](2026-10-23-cast-seeded-library-rebase.md#revised-v23-preview-and-first-pass-audit)
-records 99 intentional Review holds and the full audit, not a threshold cut.
-The remaining 15 plans retain independent open scope; none is genuinely
-finished and ready to archive. In particular, the proposed CLI inventory's
-absence of open boxes is not implementation acceptance. Feedback remains
-protected in place. The newly reported bottom-navigation miss and
-Artists/Humans/Animals/`_Intake` proposals are accounted for in
-[intake](2026-10-23-image-intake-preparation.md#oct-30-newly-reported-v23-miss-and-category-proposals);
-no broad path migration is authorized. Recap hygiene/pinning belongs to
-storage S21/S23, not wholesale archival of unresolved plans or recaps.
+| Window | Work | Exit / boundary |
+| --- | --- | --- |
+| Now, blocked until reboot | Cast C6/C7, intake I59/I60, performance T16, storage S15 | Rebind the unchanged preview with supported replan; backed-up same-stage install; installed check; actual Gallery/Overview/Review, retained intake history and exact face/prepared/padded links; human placement/quality review. No new full intake |
+| Next, before another expensive run | Storage S24/S25 | Measure file/byte budget; compare scope, packing/compression and retention; agree FULL/LEAN/COLLAGE evidence contract. Preserve verified recovery and active sources; no automatic deletion or ZIP assumption |
+| Next bounded quality round | Performance T17, intake I68/I69/I70 | Recipe-aware statistics, all 13 named cases, coordinated early crop/masks and calibrated denoise/tone selection. Use frozen comparisons before approving another full run; do not change the staged baseline |
+| After those results | Intake I71-I76, performance T18/T19; reactivate upkeep/actions/naming/engine slices as needed | UX/terminology/Artist scope, processing profiles; incremental batch/calibration and action UAT are separate gates, not silently approved |
+| Holding, downstream | Manual prompt P14-P17 and reference rendering R44; finals/Artist/profile/game tracks; broad refactors/model experiments | Resume only when their per-plan gate is met and the slice is selected. Preserve current inputs, rendered evidence, manual drafts and frozen receipts |
 
-**Oct 30, 12:31 human-review reconciliation:** all updated fresh-v23 feedback
-is covered by the [F01-F31 source-to-plan ledger](2026-10-23-image-intake-preparation.md#complete-source-to-plan-coverage-ledger),
-with 13 unique named-image cases and the complete 209-line source preserved
-verbatim in intake. Reboot/release Explorer and finish the existing staged
-baseline's installed/viewer gates first (T16/C6/I59); no new full intake or
-recipe changes inside that run. Next P1 priorities are storage S24/S25,
-recipe-aware statistics T17, bounded case reproduction I68, coordinated
-crop/mask flow I69, and calibrated enhancement selection I70. P2 report UX,
-dimensions/styling/terminology I71-I73, recipe contract T18 and Artist scope
-I74 follow; CUSTOM execution T19 is P3 after the contract. Root migration and
-`_Intake` naming remain S17-S19 proposals. T11's older exploratory comparison
-is explicitly transferred into I68/I69, not completed or duplicated. User
-feedback is planning input, not implemented fixes or blanket recipe approval.
+Only a **demonstrated blocker** may interrupt now. For example L19 Intake
+navigation or a derivative defect can reactivate the relevant held slice if
+installed UAT fails. This does not reactivate its whole redesign or authorize
+Production, family renames, pending swaps or broad cleanup.
+
+**Ownership, not dates, drives execution.** C6 owns one installation;
+T16 consumes its timing/recovery evidence, S15 consumes its backup/rollback
+evidence, and I59 consumes its actual viewer/face/history evidence. These are
+four acceptance views of the **same run**, not four instructions to rerun it.
+Likewise I68/I69 owns the old T11 mask comparison; T17 owns statistics,
+S24 owns backup scope/format/retention, S25 owns retained evidence modes, and
+intake I71-I73 owns preparation-report UX. Gallery L18/L20 and upkeep U6
+reuse those contracts rather than inventing parallel policies.
+
+The user's Oct 30 follow-up authorizes sensible merges/splits, not an immediate
+new umbrella plan. Keep existing independent contracts for this blocked
+milestone: wholesale date/path changes would add review cost without resolving
+it. When a real duplicate is found, select one primary owner, explicitly map
+every transferred task/context/source, and archive the superseded plan only
+after the [reconciliation gates](#how-a-plan-moves). A split must leave a
+specific live owner and links for every unfinished part. A newer date alone
+is never a reason to restart work or lose earlier evidence.
+
+An active plan may declare `**Queue focus:** C6, C7` using its **open task
+IDs**. `bin\todo.cmd` lists only those tasks as the execution queue, plus a
+linked count of everything deferred in active/holding plans. Without that
+field, all open tasks in an active plan are listed. Unknown, closed or duplicate
+focus IDs fail generation, rather than silently dropping work. When a focused
+task finishes, update the focus in the same change; select the next slice
+deliberately. Within the same plan/priority/owner, focus-list order is retained
+(e.g. S15 before S24/S25). Priorities within later scopes remain unchanged and do not
+bypass prerequisites.
+
+The complete fresh-v23 note is preserved with
+[F01-F31 coverage](2026-10-23-image-intake-preparation.md#complete-source-to-plan-coverage-ledger).
+Archiving a captured feedback file is independent of finishing its tasks.
+Root migration/`_Intake` S17-S19 remains proposed, not installed behavior.
 
 | Kind of document | Where | Rule |
 | --- | --- | --- |
@@ -77,13 +72,13 @@ feedback is planning input, not implemented fixes or blanket recipe approval.
 | A plan we agreed to act on | `docs/plans/YYYY-MM-DD-<slug>.md` (this folder, tracked) | Incorporates file or chat feedback when we agree to act on it. Your words go at the end, word for word |
 | A finished plan | `docs/plans/_archive/` | `Status: done` or `dropped`, with a `Result` section; it stays as history and is ignored when reading |
 | Current state | [../STATUS.md](../STATUS.md) | Decisions and open questions only. It does not list the plans: this README does |
-| Your queue | [../todo.md](../todo.md) | Generated by `bin\todo.cmd` from the open boxes of the active plans, sorted by priority and owner, plus the finals and candidates of every card and a notes section that is yours. Never ticked by hand |
+| Your queue | [../todo.md](../todo.md) | Generated by `bin\todo.cmd` from active-plan Queue focus (or all open boxes when absent), sorted by priority and owner, with linked deferred/holding counts, card state and your notes. Never ticked by hand |
 | The day | `docs/recap/YYYY-MM-DD-HHMM-recap.md` | A reflection written at the end of a working day (see [../recap/README.md](../recap/README.md)) |
 
 ## How a plan moves
 
 1. **Capture** raw feedback in `feedback/` or directly in chat. Read it before acting; do not treat a note as agreement to major design decisions. `tmp/` is for disposable tool output, not new user feedback. Existing raw notes there receive the same preservation guarantees.
-2. **Agree and incorporate.** Update the existing owning plan, or create `YYYY-MM-DD-<slug>.md` (the date is the day we agreed), with a `**Status:**` line (`proposed`, `active`, `done`, `dropped`) and a row below. Preserve the original file text or relevant chat messages word for word at the end, with their source/date. Turn every request into a step, decision or explicitly recorded disposition; raw text alone is not a plan.
+2. **Agree and incorporate.** Update the existing owning plan, or create `YYYY-MM-DD-<slug>.md` (the date is the day we agreed), with a `**Status:**` line (`proposed`, `active`, `holding`, `done`, `dropped`) and a row below. Preserve the original file text or relevant chat messages word for word at the end, with their source/date. Turn every request into a step, decision or explicitly recorded disposition; raw text alone is not a plan.
 3. **Work it.** Decisions are asked one at a time and recorded in the plan's decision table; steps are checkboxes ticked as they finish; code and doc changes follow the normal order (design rule, schema, validator or tooling, implementation, tests).
 4. **Close.** Set `**Status:** done` (or `dropped`), add a short `Result` section, `git mv` the file into `_archive/` (fix the relative links), and update the row below. A done plan has no open boxes: each is finished, dropped, or moved to a live plan.
 5. **Supersede.** Follow the preservation and reconciliation gates below.
@@ -231,41 +226,45 @@ Archiving a raw note means its complete wording and actionable coverage have
 been incorporated, not that every resulting task is implemented. Do not
 archive active plans because their source feedback was filed.
 
-| Raw feedback basename | Owning active work / answer | Disposition |
+| Raw feedback basename | Owning work / answer | Disposition |
 | --- | --- | --- |
 | `auto_protection_thoughts.md` | Engine E13; draft gates/overrides implemented, calibration and real acceptance open | Individually verified and archived |
 | `family_naming_question.md` | Family N7/N9; draft metadata/display exist, acceptance and transitions open | Answer recorded; individually verified and archived |
 | `feedback_on_acceptance_testing.md` | Layout L1-L20 and its source coverage; actions A1-A9, engine/protection and naming dependencies remain live | Individually verified and archived; not all accepted |
 | `image_analysis_question.md` | Face-analysis M1-M4; learned face embeddings have no explicit hair/lipstick weight, controlled evaluation still open | Individually verified and archived; empirical evaluation open |
 | `image_intake_feedback.md` | Intake I30-I37, all 26 named examples plus controls; latest recipe remains unaccepted | Individually verified and archived; implementation underway |
-| `fresh-v23-20261029_feedback.md` | Intake F01-F31/I68-I76; performance T17-T19; storage S24/S25/S17-S19 | Updated 209-line source preserved verbatim; every theme and 13 named files mapped; source retained; implementation and acceptance open |
+| `fresh-v23-20261029_feedback.md` | Intake F01-F31/I68-I76; performance T17-T19; storage S24/S25/S17-S19 | Complete current snapshot and all 13 named cases mapped; individually verified and archived; implementation/acceptance open |
 | `revise_docs_planning_process.md` | This README's adopted feedback/preservation process | Answered/implemented; individually verified and archived |
 | `update_recap_10_22.md` | Actions A4/A6 scenario explanations/UAT; current combined recap and queue track state | Individually verified and archived; scenarios not silently run |
 | `person_names_folders.md` | Family N11 resolved: explicit correction replaces erroneous original name; N12 implements after intake, before family acceptance | Answer recorded; individually verified and archived |
+| `categories_and_code.md` | Storage S17-S19; S4/S5 path authority | Exact current source captured; category/schema/global configuration and unchanged-policy tests remain open |
+| `chasing_my_tail.md` | Tooling D17; this index's now/next/holding and same-run ownership | Exact current source captured; explicit deferrals adopted, storage not assumed solved |
+| `cleanup_backups_reports.md` | Storage S10-S16; S24 growth/retention | Complete source preserved; active inputs protected, ST-v9 disposition remains dependency-gated |
+| `edit_and_prime_templates.md` | Manual migration P14-P16; P7/P9 documentation | Exact source captured; manual nuance/token/camera/light fidelity and workflow regression review remain open |
+| `gallery_directory_structure.md` | Storage S1/S4/S5/S17-S19; layout L19 | Exact source captured; current-state inventory, future categories and reversible sandbox-first migration remain open |
+| `generated_images_to_gallery.md` | Rendering R8/R16/R21/R23/R24/R44 | Exact source captured; selected generated pullback, compatible chaining and real GUI round-trip acceptance remain open |
+| `gui_and _thumbnails.md` | Storage S10/S11/S24/S25; upkeep U6 and layout L20 | Exact source captured; per-page thumbnail costs, reference-safe retention/trash/purge contract remain open |
+| `overlay_reference.md` | Intake I77 and existing reference-bank implementation | Complete source preserved; eligible input/config inventory remains open, people photos stay out of Git |
+| `pipeline_code_complexity.md` | Structure E4, consuming intake/cast/engine/naming evidence | Exact source captured; bounded maintainability audit and full named/unnamed/rebase acceptance remain open |
+| `recap_10_27.md` | Storage S21/S23; tooling D4/D16 | Complete source preserved; manual recap lifecycle handled, day-close automation and human checks not inferred |
+| `trigginer_cli_from_gui.md` | Actions A7; rendering R23/R8/R24 | Exact source captured; paired jobs versus trusted GUI bridge, preview/apply/progress/recovery design remains open |
+| `various_people_names.md` | Naming N12/N13; intake I75, cast C10 and actions A2/A6 | Exact source captured; explicit asserted-name/mixed-face/history/filename acceptance matrix, no blind force-merge |
 
-Templates P14-P17 and rendering R44 are deferred while intake implementation
-and bounded A/B work proceed. Preserve all earlier completed render evidence
-and the unapplied rebase preview. No background queue, production processing,
-family rename, live original-name overwrite or global acceptance is authorized
-by this scheduling change. The later explicit-correction decision resolves N11;
-it authorizes N12 implementation after intake, not a bulk identity rewrite now.
+**Oct 30 filing batch:** the 13 current source snapshots above were reviewed
+against their owners and verified complete before individual archival into
+`feedback/_archive/2026-10-30-docs-alignment/`. Their original bytes and source
+hashes are retained; missing exact copies were appended at their primary
+plans' ends, rather than rewriting earlier dated feedback. Open or holding
+implementation is not a reason to keep an already captured raw note active.
+Future edits/new notes remain in `feedback/` until independently reconciled.
+No implementation checkbox was closed merely because its source was filed.
 
-Image preparation is now the first library priority, ahead of broad action UAT.
-This is scheduling, not a new umbrella execution plan. Independent game work
-remains active; later-phase P1 tags describe blocking importance, not permission
-to bypass prerequisites. The generated queue does not resolve dependencies:
-use this order and each owning plan's gates.
-
-| Order | Focus / owner | Prerequisite and exit |
-| --- | --- | --- |
-| Phase 1 | [Image intake preparation](2026-10-23-image-intake-preparation.md) | Full v23 intake/check and changed-image first pass complete; I59 installed face/history links and I60 final quality acceptance remain. Known nested-phone and bottom-navigation misses are explicit. I12 incremental cutover stays open |
-| Phase 2 | [Library upkeep U1/U3/U6/U7](2026-10-22-library-upkeep.md) | Phase 1 handoff; integrate maintenance/recovery, U7 prepared-source full/head/chest derivatives and explicitly selected ComfyUI inputs without repeated source cleanup |
-| Phase 3 | [Cast-seeded all-library rebase C1-C9](2026-10-23-cast-seeded-library-rebase.md) | Revised v23 matching/audit and full backup verified; safely retry the same preview after performance T16's tested native-owner fix. Installed check/viewers follow; family/name/Production gates remain separate |
-| Phase 4 | [Engine acceptance E4/E6/E7/E8/E10, P1-P6](2026-10-22-likeness-engine-acceptance.md) | Accept Phase 3 evidence, convergence and separate incremental batch (now 400+ planned); production still needs its own preview, backup/restore and approval |
-| Supporting | [Face-analysis M1/M2](2026-10-22-face-analysis-evaluation.md) | Inform Phase 1 labels and face/body explanation; secondary-model M3/M4 remains conditional, not a mandatory new-model dependency |
-| After stable baseline | [Manual action A4/A6 UAT](2026-10-22-review-actions.md), [family acceptance](2026-10-22-identity-family-naming.md) | Existing rename/swap work retained; no pending swap or action-undo settlement applied by this pivot |
-| Separate downstream | [Manual prompt migration](2026-10-22-manual-prompts-to-art-library.md) | P14-P17: exact supported source/order mapping, feature/token deduplication and generic Female test-bed relocation; shared pilots are not complete manual migrations. Later-stage contracts and visual acceptance stay open |
-| Parallel rendering integration | [Reference rendering](2026-10-25-reference-rendering.md) | 117-output comparison preserved. After verified rebase, 20-30 source-bound Prime samples including three-quarter views are authorized; R44 routing/prompt fidelity and frozen receipts still apply. Stage chaining, GUI execution and production remain open |
+The [current scheduling table](#now-next-and-holding) replaces the old
+phase-order summary. It does not merge independent owners or mark their
+unfinished work complete. Existing authorized 20-30 source-bound Prime samples
+remain downstream of verified rebase, R44 routing and source-faithful prompts;
+there is no parallel rendering queue during the Explorer blocker. N11 is an
+answered naming decision; N12 remains implementation after intake tuning.
 
 The Oct 22 run remains dated evidence, not validation of the new preparation
 recipe or cast-release policy. The Oct 25 prepared runner now checks/migrates
@@ -280,23 +279,23 @@ deferred; exact current inputs and all user decisions remain protected.
 
 | Plan | Status | What it is |
 | --- | --- | --- |
-| [2026-10-09-finals-and-mvp.md](2026-10-09-finals-and-mvp.md) | active | Candidates, shots and finals for workflows, source-photo picks, the generated todo, and scaling the MVP back to Darkness and Light |
+| [2026-10-09-finals-and-mvp.md](2026-10-09-finals-and-mvp.md) | holding | Resume selected-source/finals/video tests after prepared-library acceptance; no current-input reset |
 | [2026-10-09-cli-simplification.md](2026-10-09-cli-simplification.md) | proposed | Historical inventory supporting only the remaining command folds/forwarders (finals 6.3b/6.5); no new consolidation approved |
-| [2026-10-11-tidy-junk-organise.md](2026-10-11-tidy-junk-organise.md) | active | User profile classification and deferred two-image face-pass experiment; Artist isolation remains required |
-| [2026-10-12-artists-reset-and-auto-crop.md](2026-10-12-artists-reset-and-auto-crop.md) | active | Artists rebuilt, auto-crop, one ingest routine, prospects regrouped; waiting for your review |
-| [2026-10-12-roadmap-and-mvp-data.md](2026-10-12-roadmap-and-mvp-data.md) | active | The MVP data track (Darkness and Light set, starter decks, rules), the Oct 8 steps 3 and 4, the art and video track |
-| [2026-10-12-tooling-debt.md](2026-10-12-tooling-debt.md) | active | D18-D21: fast hooks, complete offline inventory, dependency-selected tests and ignored test scratch; remote matrix acceptance D20 remains open. Non-art documentation, diagnostics and day-close retain independent scope |
-| [2026-10-20-art-tools-structure.md](2026-10-20-art-tools-structure.md) | active | Incrementally organize art Python tools and tests while preserving `bin/*.cmd` interfaces |
-| [2026-10-22-gallery-review-layout.md](2026-10-22-gallery-review-layout.md) | active | Shared theme, run browser and verified retained-detail/return navigation implemented; L19 separate Intake entry, real UAT, L20 pruning and L18 I/O remain |
-| [2026-10-22-likeness-engine-acceptance.md](2026-10-22-likeness-engine-acceptance.md) | active | Phase 4: calibration, convergence and production gates; E13 draft auto-protection/override implementation is tested, not calibrated or production-approved |
-| [2026-10-22-identity-family-naming.md](2026-10-22-identity-family-naming.md) | active | Draft family/name metadata, reversible transactions and N10 display implemented; one-to-one sandbox stable-ID migration wired, broader acceptance and leave/reassignment remain |
-| [2026-10-22-review-actions.md](2026-10-22-review-actions.md) | active | All-category manual actions, recovery, scenario testing, name swaps and future UI boundaries |
-| [2026-10-22-face-analysis-evaluation.md](2026-10-22-face-analysis-evaluation.md) | active | Explain current measurements and evaluate labelled secondary-model cases with verified licence gates |
-| [2026-10-22-manual-prompts-to-art-library.md](2026-10-22-manual-prompts-to-art-library.md) | active | P14-P17 source-faithful wording/order, person-feature/token reconciliation and Female test-bed move; remaining migration, stage contracts, validated `1b` retirement and untouched `2b` |
-| [2026-10-22-library-upkeep.md](2026-10-22-library-upkeep.md) | active | Phase 2: downstream naming/derivative/viewer and backup integration; tested implementation still needs real acceptance; independent Junk/near-duplicate/Demon work retained |
+| [2026-10-11-tidy-junk-organise.md](2026-10-11-tidy-junk-organise.md) | holding | Resume selected element/profile classification after prepared-library review; face-pass experiment conditional |
+| [2026-10-12-artists-reset-and-auto-crop.md](2026-10-12-artists-reset-and-auto-crop.md) | holding | Resume Artist-specific review with intake I74 or explicit request; no new reset |
+| [2026-10-12-roadmap-and-mvp-data.md](2026-10-12-roadmap-and-mvp-data.md) | holding | Explicitly select the independent Darkness/Light data or game-design track after this milestone |
+| [2026-10-12-tooling-debt.md](2026-10-12-tooling-debt.md) | holding | Resume selected tooling slice or demonstrated blocker; day-close automation/non-art audit remain separate |
+| [2026-10-20-art-tools-structure.md](2026-10-20-art-tools-structure.md) | holding | Resume bounded extraction needed by approved implementation; preserve current engine bindings |
+| [2026-10-22-gallery-review-layout.md](2026-10-22-gallery-review-layout.md) | holding | Reactivate proven installed-viewer blocker only, otherwise after acceptance; L18-L20 remain open |
+| [2026-10-22-likeness-engine-acceptance.md](2026-10-22-likeness-engine-acceptance.md) | holding | Accepted baseline/labelled review before calibration, convergence and separate incremental batch; Production still gated |
+| [2026-10-22-identity-family-naming.md](2026-10-22-identity-family-naming.md) | holding | Intake tuning before N12 correction/family acceptance; no current bulk naming change |
+| [2026-10-22-review-actions.md](2026-10-22-review-actions.md) | holding | Resume deliberate action UAT on installed baseline, or narrow verified recovery blocker; pending actions untouched |
+| [2026-10-22-face-analysis-evaluation.md](2026-10-22-face-analysis-evaluation.md) | holding | Labelled ambiguity after installed review, or actual blocking alignment defect; no speculative model dependency |
+| [2026-10-22-manual-prompts-to-art-library.md](2026-10-22-manual-prompts-to-art-library.md) | holding | Prepared-input review and explicit selection before P14-P17 fidelity/token/set work; manual drafts preserved |
+| [2026-10-22-library-upkeep.md](2026-10-22-library-upkeep.md) | holding | Actual derivative/input defect or accepted baseline before U1/U3/U6/U7 follow-through; no independent maintenance now |
 | [2026-10-23-image-intake-preparation.md](2026-10-23-image-intake-preparation.md) | active | Phase 1: full v23 intake/check and AI screening complete; expanded human feedback fully mapped F01-F31. I68-I70 own next-round cases/masking/enhancement; I71-I76 own report/scope/naming/Junk follow-ups. Installed face/history acceptance remains blocked on Explorer |
 | [2026-10-23-cast-seeded-library-rebase.md](2026-10-23-cast-seeded-library-rebase.md) | active | Phase 3: revised matching/audit complete, 99 Review holds and full backup verified; safe same-preview retry follows measured native-owner fix, then actual checks/viewers; family/name/Production gates remain |
-| [2026-10-25-reference-rendering.md](2026-10-25-reference-rendering.md) | active | 117-output comparison completed; R44 category/person paths pending source-faithful recipe reconciliation, with acceptance, GUI execution and later-stage contracts still open |
+| [2026-10-25-reference-rendering.md](2026-10-25-reference-rendering.md) | holding | Verified rebase/prepared inputs plus manual fidelity and R44 routing before bounded Prime batch; no queue during install block |
 | [2026-10-28-intake-performance.md](2026-10-28-intake-performance.md) | active | T16 actual publication/viewers first after Explorer release; T17 recipe-aware statistics P1 next round, T18 profile/recipe contract P2, T19 CUSTOM P3. Mask comparison T11 transferred to intake I68/I69; T13/T14/T15 remain independent |
 | [2026-10-28-storage-operations-and-retention.md](2026-10-28-storage-operations-and-retention.md) | active | S24 backup scope/format/retention and S25 orthogonal FULL/LEAN/COLLAGE storage are top P1 follow-ups after sandbox acceptance; active sources/recovery protected. S17-S19 physical-root/config proposals remain gated |
 

@@ -2,6 +2,13 @@
 
 **Status:** active (parallel/v22 profiles recorded; T6 recovery tested; v23 output review/performance decision, fresh-baseline comparison and routed review/storage work remain)
 
+**Queue focus:** T16
+
+**Scheduling:** now: installation/recovery timing and actual viewers.
+Next: T17 recipe-aware statistics before bounded I68/I69 experiments.
+T18/T19 profiles/CUSTOM and T13-T15 remain scheduled backlog, not today's
+parallel implementation list.
+
 Source: the user's Oct 28 notes (`feedback/random_thoughts.md`, preserved word for
 word at the end). Three topics: faster intake preparation on this machine,
 whether the likeness face crop should include the chin, and where the images
@@ -504,7 +511,7 @@ at 09:08:57 was stopped before replacing the preview. Its SHA remains
 `pre-stage-recovery-preview.json` preserves that checkpoint. Complete staging
 and empty `previous` remain; no apply is running. T16 stays open until actual
 full-stage check/recovery, publication and viewer verification. See the
-[pause recap](../recap/2026-10-30-0922-recap.md).
+[current reboot-resume recap](../recap/2026-10-30-1247-recap.md).
 
 The user resumed the human-review milestone at 09:53. The supported replan
 ran 09:54:17 to 10:03:30, preserving all 2,793 rows and every audited input,

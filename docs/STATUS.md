@@ -4,6 +4,17 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Oct 30 finish-first documentation decision:** four plans remain active,
+fourteen are explicitly holding with reasons/resume gates, and CLI
+consolidation remains proposed. Files stay in place; unfinished scopes are not
+archived or cancelled. The generated queue now selects a small explicit
+execution window and links to all deferred tasks. The
+[plan index](plans/README.md#now-next-and-holding) owns scheduling, and the
+[recap index](recap/README.md) owns the pinned post-reboot resume instructions.
+Storage budget/backup retention precedes another full run; bounded quality/
+statistics work follows the installed baseline. This supersedes Oct 29's
+all-plans-active scheduling, not its safety/approval gates.
+
 **Oct 30, 12:31 review disposition:** the complete updated human-feedback
 note is preserved with item-by-item coverage in the
 [owning intake ledger](plans/2026-10-23-image-intake-preparation.md#complete-source-to-plan-coverage-ledger).
@@ -94,8 +105,8 @@ is running; Explorer still held two handles at 11:57. Release that lock before
 retrying; never force-close handles or bypass integrity guards. The native
 intake report is available for human image-quality feedback, but actual
 installed viewers remain pending. The
-[11:57 checkpoint](recap/2026-10-30-1157-recap.md) records the current blocker.
-The [pause recap](recap/2026-10-30-0922-recap.md) records the earlier pause,
+[current reboot-resume recap](recap/2026-10-30-1247-recap.md) records the current blocker.
+The [cast-rebase plan](plans/2026-10-23-cast-seeded-library-rebase.md) records the earlier pause,
 not the current running state. See the
 [recovery runbook](art/likeness.md#running-and-observing-a-long-rebase).
 
@@ -918,7 +929,7 @@ Final baseline comparison confirms all 113 live input hashes/sizes/mtimes and
 two catalogue/cache records unchanged. v9/v10 together add about 363 MB of
 retained comparison evidence. I18/I20 are partial; I19 needs an available
 stronger-reconstruction slot without interrupting the busy ComfyUI queue.
-The [late recap](recap/2026-10-23-2121-recap.md) records GUI delivery,
+The [intake plan](plans/2026-10-23-image-intake-preparation.md) records GUI delivery,
 visual failures, verification and next steps.
 
 **Same-mask continuation (v11):** the preparation report now compares installed
@@ -1149,7 +1160,7 @@ policy/cache (232 people, 2,667 review photos). HTML/index/history checks pass;
 user visual acceptance remains. Focused tests: 113 passed; final quick launcher
 validation: 495 tests plus 19/19 mutation cases passed. Other operations still
 use full backups; retention and broader write-set recovery remain planned.
-See the [latest recap](recap/2026-10-22-1640-recap.md).
+See the [review-actions plan](plans/2026-10-22-review-actions.md).
 No matching/rebase/normalization or production operation ran.
 
 **Oct 22 22:30 confirmed name swaps:** the existing Review rename control now
@@ -1170,7 +1181,7 @@ A verified 276-file retry preflight passed, but the subsequent read-only
 full-backup inventory was stopped after slow filesystem metadata traversal.
 No worker remains running; reports and production are unchanged. Action-scoped
 recovery/retention are planned, not implemented. See the
-[latest recap follow-up](recap/2026-10-22-1640-recap.md#follow-up-2026-10-22-1750--0500-rename-test-safely-paused).
+[review-actions plan](plans/2026-10-22-review-actions.md).
 The user's Cleanup/Angelica naming fixes are resolved; Lighting remains
 a future prompt-stage placeholder.
 
@@ -1233,7 +1244,7 @@ also remains open because the integrated browser refused the external B:
 location. Review the actual local HTML without treating aggregate counts as
 identity correctness.
 The latest working-day reflection is the
-[Oct 22, 16:40 reconciliation recap](recap/2026-10-22-1640-recap.md);
+[current reboot-resume recap](recap/2026-10-30-1247-recap.md);
 the overnight recap retains the detailed historical sequence.
 
 Oct 14 photo-library follow-up: the people gallery now shows prospect-to-sister face matches and observable photo-readiness evidence; the standard library routine archives Prospect folders with no gallery or review originals under `_retired`. Pose diversity is not scored; a calibrated readiness ranking remains open in [plans/2026-10-12-tooling-debt.md](plans/2026-10-12-tooling-debt.md).
@@ -1279,7 +1290,7 @@ The plan audit found 11 active plans and one proposed plan; the approved
 likeness-workflow, art-tools-structure, and rebaseline/family-naming plans
 bring the current count to 14 active plans and one proposed plan. No other
 plan was ready to archive. The current recap is
-[Oct 20](recap/2026-10-20-0150-recap.md).
+[Oct 30, 12:47 reboot resume](recap/2026-10-30-1247-recap.md).
 The immediate user task is to finish the manual `0_Edit`/`1_Alpha` prompt set;
 do not update shared templates or regenerate their outputs until the user's
 batch is ready and reviewed.

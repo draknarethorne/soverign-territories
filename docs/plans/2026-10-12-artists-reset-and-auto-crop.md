@@ -1,6 +1,10 @@
 # 2026-10-12: Artists reset, auto-crop, one ingest routine
 
-**Status:** active (built and run; crop review received; follow-ups open)
+**Status:** holding (Oct 30 scheduling; delivered work retained, Artist acceptance open)
+
+**Resume gate:** intake I74's separate Artist scope or a concrete Artist review
+request. Crosscheck review and Artist-specific crop acceptance are not implied
+by successful general-people installation; no new reset is needed now.
 
 ## Oct 23 ownership reconciliation
 

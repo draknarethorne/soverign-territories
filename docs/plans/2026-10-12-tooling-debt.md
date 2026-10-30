@@ -1,6 +1,10 @@
 # 2026-10-12: tooling debt from the day
 
-**Status:** active (what the day showed about our tools; none of it blocks the photo work)
+**Status:** holding (Oct 30 scheduling; independent tooling debt, current queue/lifecycle slice delivered)
+
+**Resume gate:** a demonstrated blocker or an explicitly selected tooling
+slice after sandbox acceptance. Existing guardrails still apply while this
+plan is on hold; do not reopen broad CI/refactoring work merely to install.
 
 ## Oct 25: Python processing runtime
 
@@ -24,7 +28,7 @@ Structure owns package moves; engine E3/E6 owns settings/calibration; manual
 actions own individual-photo handling. D2/D3/D12 are transfers, not old work
 to reimplement. Historical counts and line counts below are dated evidence.
 
-Found while building and running the artists reset, the crop and the routine, written up in [../recap/2026-10-12-1722-recap.md](../recap/2026-10-12-1722-recap.md). Each box is small and independent.
+Found while building and running the artists reset, the crop and the routine, written up in the [tooling-debt plan](2026-10-12-tooling-debt.md#steps). Each box is small and independent.
 
 ## Steps
 
@@ -44,7 +48,7 @@ Found while building and running the artists reset, the crop and the routine, wr
   twice, and enable remote checks for working-branch pushes. Keep routine
   commit checks fast and push duplication disabled. Verify the consolidated
   launcher and distinguish local evidence from remote CI status.
-- [ ] **P1 either** D20 Inspect the first expanded remote CI matrix run and
+- [x] **P1 either** D20 Inspect the first expanded remote CI matrix run and
   resolve any clean-runner/Python 3.12 or 3.13 failures before claiming those
   runtimes pass. Local Python 3.14 validation is not remote matrix acceptance.
   CLI GitHub authentication needs repair; the authenticated GitHub integration
@@ -52,8 +56,11 @@ Found while building and running the artists reset, the crop and the routine, wr
   Latest result: the three-version PR run failed on three machine-dependent
   cleanup-batch fixtures, not a Python-version difference. Login is repaired.
   Fixtures are isolated; routine CI is now 3.14 only with explicit optional
-  compatibility dispatch. Verify the corrected PR before merge; do not
-  require the retired automatic matrix or call older runtimes accepted.
+  compatibility dispatch. **Result (Oct 30 evidence check):** PR #2 merged
+  Oct 29 at `3b7016a58bcc0ac4e5e073a0577bab38c394cb7c`; `gh pr view 2`
+  confirms `quality (3.14)` SUCCESS. This closes the corrected routine-PR
+  gate, not optional Python 3.12/3.13 compatibility acceptance; those remain
+  explicit dispatch only. Authentication is working.
 
 - [x] **P2 ai** D14 Audit the actual Python/image stack; recommend regular 64-bit
   3.14, declare tested direct core/CPU-intake requirements and extend Windows CI
@@ -196,15 +203,20 @@ The user's Oct 27 recap feedback is preserved verbatim below. Coverage:
   not implemented. No recap or source feedback is archived by this update.
   D16 tracks the still-open recap pin/archive policy and its safe review flow.
 
-- [ ] **P2 either** D16 Define and implement recap index lifecycle behavior:
+- [x] **P2 either** D16 Define and implement recap index lifecycle behavior:
   make important recaps visibly pinned/current and provide a clear archive
   path for superseded recaps, with explicit criteria and a reviewable list
   before any move. Preserve chronological links and historical access; do not
   automatically archive or delete recaps or raw feedback. Coordinate the
   review-first recap's verification summary with D4 so automated evidence is
   completed first and only unresolved manual checks or decisions are handed to
-  the user. Keep this task open until the policy and behavior are agreed and
-  implemented; existing recaps and `feedback/recap_10_27.md` remain in place.
+  the user. **Result (Oct 30):** explicit manual pinned/current/archive policy
+  and a per-file transfer ledger are implemented in the recap index. Twenty
+  reviewed recaps were moved with historical prose preserved and relative
+  links repaired; two current handoffs remain pinned. All 13 current feedback
+  notes, including this source, were independently preserved/covered/hash-
+  checked before individual archival. This delivers the manual lifecycle,
+  not D4's future day-close automation or image-quality acceptance.
 
 ### Raw feedback: recap and verification follow-up (Oct 27)
 
@@ -232,6 +244,16 @@ Basically just document management hygeine. We want to make sure that our recaps
 ```
 
 ## Oct 29: finish-first priority feedback
+
+**Oct 30 superseding schedule:** the user's consolidation request replaces
+D17's earlier decision to keep every independent plan active. Four owners
+remain active with eight focused queue tasks; fourteen are holding with
+explicit reactivation conditions, one CLI inventory stays proposed. No
+unfinished plan was archived or moved. The
+[plan index](README.md#now-next-and-holding) owns now/next/holding; the
+generated queue shows linked deferred counts. This completes the bounded
+priority/lifecycle review, not D4's future day-close automation or D13's
+repository-wide non-art documentation audit.
 
 The next operational milestone is the fresh sandbox rebase and its actual
 Gallery/Overview/Review history and face-evidence acceptance, not another
@@ -550,3 +572,40 @@ User words (chat, Oct 29), word for word:
 Coverage: D21 owns fast-versus-explicit policy; PR closeout owns the pending
 merge/branch operation; D17 still owns fresh-chat plan triage. The raw
 `feedback/chasing_my_tail.md` remains preserved and unchanged.
+
+
+## Oct 30 source snapshot: chasing_my_tail.md
+
+Source: `feedback/chasing_my_tail.md`. Coverage: D17. SHA-256: `859f7e773ab56272ada73353ef4f8e462cfdbcf8126dfe637e98bd3245cebaa0`.
+Captured for planning; open tasks are not implementation acceptance.
+
+<!-- markdownlint-disable MD013 MD009 -->
+````text
+And we also have automation to automatically invoke jobs in comfyui for rendering using out workflows in the _sets directory - which we sill need to build out properly for the 0_Edit and 1_Prime workflows.  Which is an entirely other thread we have when we get to that point in the image processing and likeness process.  Hope this makes sense in how I am thinking and you can see from chasing_my_tail.md that we have so many open threads that all connect together that we need to close out to get to get out of the sandbox testing and into production runs.
+
+Don't lose track of what you are doing - but as we work on performance to address any optimizations so we aren't taking so long to get the rebase run.  We do also need to handle the chasing my tail feedback in conjunction with getting ready to start.  There's likely questions to ask me about the chasing my tail and what everything is we do need to focus on as we are going.  There are also things to consider about the backup strategy using .zip files or something else to reduce the file-framementation in the FAT (or wherever) windows keep the files - when we have large volumes of files in directories.  Also the directory structure and where to flatten vs. keep deep with only a small number of files in each directory.  Also about just how many files are created and when to remove them.  Maybe more iterative removals of the image intake for temp files during processing instead of letting things build up.  Not all of that made that into the documentation as we didn't have enough conversation and questions about where to apply updates and how to address the potential file sprawl.
+
+I feel like I've been chasing my tail these past few days and haven't made progress that I thought I would and keep finding things that need fixing or reworking, which makes it hard to feel like I'm moving forward.  We've been making things work, like I love the updates to the intake process - then we run into either diskspace/directory structure or some issue that is causing us to jump to our storage work.  That's been the pattern of most days - I don't actually finish the work of the previous day entirely and get pulled into a new issue that seems like it needs to be fixed to get back to previous day and not I am at least since 10-09 that I have open and unfinished plans.  Some mostly done, others not even touched.  Some overlap eachother and get superceeded because we move on to the next pressing issue before fully resolving the previous one.  It's a cycle that makes it hard to feel a sense of completion or progress.
+
+How can we figure out which plans need priority vs. which ones can wait and maybe we move them into _holding until we have the bandwidth to address them properly?  If they are critical to be done they must stay in the plans and active.  But if we truly think they can wait, we should update their status accordingly and ensure that we leave proper notes/reason for the decision.
+
+The README.md needs to reflect that and the decision.  Then I need to figure out which if the plans comes next.  For me, it'll be critical to get back to the rebase and see it working, then validate the GUI and how it can see all the features from intake, overview, review and seeing all the details of how it worked (or didn't work right and we need to address those issues).  So the questions - does that make sense given all the plans or is there necessary work to finish ahead of that - and I'm assuming you addressed all the storage issues.
+
+I guess that's what I am thinking as I prepare to go to bed!
+````
+<!-- markdownlint-enable MD013 MD009 -->
+
+## Oct 30 documentation consolidation direction (verbatim)
+
+Coverage: D17 and the plan index own scheduling/primary-owner transfer rules;
+storage S21/S23 owns manual feedback/recap consolidation. D4 automation and
+D13 broader non-art document review remain unfinished. No further image
+processing or reboot is authorized by this documentation interval.
+
+<!-- markdownlint-disable MD013 -->
+```text
+While we're waiting on the reboot - can we pivot over to the to doing a review of the feedback directory and archive items that are included in plans already.  That was part of chasing_my_tail.md as we do continue to pivot and switch around all over the place.  I don't know what plans are prioritized and where we have items easily and while we do know what we need to do today - we have so many outstanding items I am getting lost in all the noise.  So can you take a few minutes and iterate on feedback and docs/plans and really all the documentation we have to get things aligned.  I can't reboot for another hour or so- so you have time.  We just need to make sure that our recap for today explains where we need to pick back up when I return and clean-up older recaps and archive them.  Only keeping recaps that are still relevent for work outstanding.  Basically it's time to step back and get our docs all in order in those directories.  Make sense?  Think deeply and stop to ask questions if you run into difficult things.  Some feedback can be captured into plans and put on hold as mentioned in chasing my tail thoughts.  So - starting with that one .md and then branching out into meaningful updates and how we need to work ongoing with all this work piling up.
+
+As we do this - if it makes sense do combine multiple plans together into a newer plan an archive older ones with explanation that's fine.  Additionally if we need to split other plans up and put them in their own or portions of existing plans, we can keep a more cohesive view on the docs/plans instead of just being date oriented and sometimes duplicating items or potentially causing re-work.  So you are free to think about how to organize the plans and re-organize them and update instructions if we have a better model based on how things have been working.  Don't shift focus based on this directly, but adapt how you're doing this work to include this feedback.  Then resume what you're doing.
+```
+<!-- markdownlint-enable MD013 -->
