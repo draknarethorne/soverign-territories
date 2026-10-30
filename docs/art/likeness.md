@@ -1150,6 +1150,14 @@ For the fresh-baseline path, substitute `--baseline working` for
 non-core releases under the existing protected/core/workflow-selected rules.
 Use the **same run directory** at each stage:
 
+The matching preview recognizes incoming download IDs using the existing
+originals filename-normalization rules, including leading-dot Facebook names,
+without renaming frozen source files. Inferred IDs must be unique against
+both existing and inferred IDs across the input population. Ambiguous IDs
+and descriptive names with no recognized ID remain explicit Review holds.
+Installed non-cast destination names use the recorded stable ID; source
+paths and original hashes remain in the receipt.
+
 ```bat
 rem Read-only inventory: no models, cache, report or directory creation.
 bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\prepared-run" --include-current-various --dry-run

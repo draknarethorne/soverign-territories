@@ -52,6 +52,21 @@ occurred. I60 output audit,
 C8/C9 reconciliation and actual Gallery/Overview/Review acceptance remain
 unfinished. Production and historical Source are outside this operation.
 
+**Oct 29 matching audit:** the initial core-cast preview completed, accounting
+for 2,793 people photos separately from 279 Artist outcomes. Its 421 Review
+photos included 364 missing-ID holds. A reproduced incoming-download bug
+explains 352: the clean matcher had not used the existing originals filename
+normalization for Facebook downloads. The tested fix recognizes only unique
+filename-derived IDs, preserves frozen sources and normalizes destination
+names. All 67 focused clean/preparation/retained tests pass; the same-run
+matching-only replan preserves the initial preview, intake and measurements.
+No thresholds changed. All 837 changed intake outputs and 10 no-recommendation
+outcomes received 53-sheet screening; the inherited nested-phone/UI miss is
+still explicit. All 2,793 initial-preview exact-face/model/source bindings
+verify, and all 48 release triples were inspected. Those checks are not proof
+of identity or final user acceptance. The recovery checkpoint was committed
+and pushed as `19e4f76`; installation and actual viewers remain pending.
+
 **Oct 29 CI cost correction:** routine PR/main checks use Python 3.14 only;
 exhaustive mutations and optional 3.12/3.13 compatibility are explicit
 dispatch coverage. No duplicate feature-push CI. The failed PR matrix spent

@@ -505,6 +505,12 @@ class CleanRebaseTests(unittest.TestCase):
 
         def fake_plan(candidates, cores, **kwargs):
             self.assertEqual(len(candidates), 1)
+            self.assertEqual(
+                candidates[0]["photoId"],
+                metadata.photo_id_from_name(
+                    likeness.originals.standard_name(self.source_photo.name, "incoming"),
+                ),
+            )
             self.assertEqual(candidates[0]["sourceFolder"], "Various")
             self.assertEqual(candidates[0]["sourceBucket"], "Pool")
             self.assertEqual(set(cores), {"Angels/Angelica"})
@@ -589,6 +595,53 @@ class CleanRebaseTests(unittest.TestCase):
         self.assertEqual(result["candidateCount"], 1)
         with self.assertRaisesRegex(ValueError, "empty embedding cache"):
             clean_rebase.create_plan(self.layout, self.run, load_policy(), api)
+
+    def test_creation_accepts_raw_download_id_without_source_rename(self):
+        relative = "Various/gallery/.facebook_1792598648554_7518703682028564674.jpg"
+        path = self.source / pathlib.Path(relative)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        self.source_photo.rename(path)
+        self.layout["manifest_files"] = {relative: (11, self.digest)}
+        self.relative, self.source_photo = relative, path
+        self.test_creation_uses_empty_cache_and_only_cast_references()
+        self.assertTrue(path.is_file())
+        import json
+        plan = json.loads((self.run / "catalog.json").read_text(encoding="utf-8"))
+        self.assertEqual(plan["actions"], [])
+
+    def test_incoming_ids_never_override_ambiguous_or_existing_ids(self):
+        names = [
+            ".facebook_123_654321.jpg", "incoming_image_654321.jpg",
+            ".facebook_123_111111.jpg", "facebook_456_111111.jpg",
+            ".facebook_123_222222.jpg", "unknown.jpg",
+        ]
+        photos = [
+            SimpleNamespace(path=self.source / "Various" / "gallery" / name,
+                            name=name, group="Various")
+            for name in names
+        ]
+        ids = clean_rebase._matching_photo_ids(photos, self.source, likeness)
+        self.assertEqual(list(ids.values()), [
+            None, "photo:image_654321", None, None, "photo:image_222222", None,
+        ])
+
+    def test_inferred_id_normalizes_only_prepared_destination(self):
+        selected = self.run / "selected.png"
+        selected.write_bytes(b"selected pixels")
+        source = "Various/gallery/.facebook_123_222222.jpg"
+        row = {
+            "source": source, "destination": "Prospects/New Person/gallery/.facebook_123_222222.jpg",
+            "photoId": "photo:image_222222", "sha256": self.digest,
+        }
+        with mock.patch.object(clean_rebase.clean_preparation, "selected_path", return_value=selected):
+            clean_rebase._bind_preparation(
+                [row], {source: {"outcome": "compared", "source": source}}, self.run, likeness,
+            )
+        self.assertEqual(row["source"], source)
+        self.assertEqual(
+            row["destination"], "Prospects/New Person/gallery/new_person_image_222222.png",
+        )
+        self.assertEqual(row["preparedSHA256"], metadata.content_sha256(selected))
 
     def test_creation_core_seed_policy_routes_released_cast_images_as_candidates(self):
         cast_folder = self.source / "Angels" / "Angelica"

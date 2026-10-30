@@ -18,6 +18,30 @@ authorization is preserved in the
 [performance continuation](2026-10-28-intake-performance.md#oct-29-autonomous-continuation-chat-word-for-word).
 C8/C9 remain open until the real preview/install/viewer checks finish.
 
+### Incoming-ID defect found before apply
+
+The first v23 preview accounted for 2,793 people photos (Artists remain
+separate), retained 1,218 cast photos and released 48. Review contained 421
+photos: **364 lacked a recognized filename ID**, rather than failing a
+similarity threshold. Direct inspection found 352 incoming Facebook downloads
+whose IDs the existing `originals.standard_name` already understands, including
+leading-dot download names. The clean matcher had skipped that normalization.
+
+A failing regression reproduced zero matching candidates for such a download.
+The fix derives an ID using that existing filename rule without renaming or
+modifying frozen inputs. An inferred ID must be unique across the full
+population; collisions and genuinely unidentifiable descriptive names still
+hold. Only the installed destination is normalized using the recorded ID.
+No content-based guess, fabricated identity or threshold adjustment is added.
+All **67 clean-rebase/preparation/retained-evidence tests passed**, including
+collision refusal and original-path preservation.
+
+At 23:03 -05:00 the supported launcher began a matching-only `--replan`,
+preserving the initial preview, prepared pixels and measured face cache.
+The first preview is not installation approval; review the new destinations
+and reasons before apply. Twelve descriptive/unknown names remain outside
+the recognized-ID fix; do not silently invent IDs for those.
+
 ## Oct 28: renewed sandbox authorization
 
 The user's complete direction is preserved in

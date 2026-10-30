@@ -52,7 +52,7 @@ def _bind_preparation(rows, prepared_rows, output, api):
         if row.get("photoId") and not row.get("retainedCast"):
             destination = pathlib.PurePosixPath(row["destination"])
             prefix = api.originals.prefix_of(destination.parent.parent.name)
-            key = api.cw.photo_key(pathlib.PurePosixPath(row["source"]).name)
+            key = row["photoId"].removeprefix("photo:")
             row["destination"] = destination.with_name(prefix + "_" + key + destination.suffix).as_posix()
     counts = collections.Counter(row["destination"].casefold() for row in rows)
     for row in rows:
@@ -70,6 +70,26 @@ def _bind_preparation(rows, prepared_rows, output, api):
             row["reason"] += "; filename disambiguated by immutable source path"
             print(f"clean rebase: preserving separate Review hold {row['source']} -> {row['destination']}",
                   flush=True)
+
+
+def _matching_photo_ids(photos, source, api):
+    """Recognize incoming download IDs without renaming the frozen inputs."""
+    identifiers = {}
+    inferred = {}
+    for photo in photos:
+        relative = photo.path.relative_to(source).as_posix()
+        identifier = metadata.photo_id_from_name(photo.name)
+        if identifier is None and photo.group not in ("Angels", "Sisters"):
+            normalized = api.originals.standard_name(photo.name, "incoming")
+            identifier = metadata.photo_id_from_name(normalized)
+            if identifier:
+                inferred[relative] = identifier
+        identifiers[relative] = identifier
+    counts = collections.Counter(value for value in identifiers.values() if value)
+    for relative, identifier in inferred.items():
+        if counts[identifier] != 1:
+            identifiers[relative] = None
+    return identifiers
 
 
 def _curation_inventory(layout, catalog=None):
@@ -1046,6 +1066,7 @@ def create_plan(
         settings["minFace"], cast_quality_exclusions,
     )
     records.update(released_cast)
+    input_ids = _matching_photo_ids(photos, source, api)
     protected_folders = {
         person["folder"] for person in catalog["people"].values() if person.get("protected")
     }
@@ -1053,11 +1074,13 @@ def create_plan(
     preserved, unusable = [], []
     named = _named_routes(source, catalog, api) if preparation else {}
     for relative, (photo, bucket, sha256) in sorted(records.items()):
-        photo_id = metadata.photo_id_from_name(photo.name)
+        photo_id = input_ids[relative]
         base = {
             "source": relative, "sha256": sha256, "photoId": photo_id,
             "oldFolder": photo.key,
         }
+        if photo_id and metadata.photo_id_from_name(photo.name) is None:
+            base["photoIdOrigin"] = "originals-normalized-filename"
         base.update(cast_seed_evidence.get(relative, {}))
         if relative in named:
             destination, reason = named[relative]
@@ -1857,6 +1880,7 @@ def command(args, api):
                 "castSeedWorkflowSelected", "castSeedDecision", "castSeedReason",
                 "castSeedQualityReason",
                 "preparedSHA256", "preparedPath", "preparationOutcome",
+                "photoIdOrigin",
             )
             writer = csv.DictWriter(stream, fieldnames=fields, extrasaction="ignore")
             writer.writeheader()

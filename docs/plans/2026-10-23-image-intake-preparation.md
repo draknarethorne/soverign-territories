@@ -84,6 +84,28 @@ open. Composite summaries/configurable detail retention and terminology
 cutover are recorded under performance T13/T14 and storage S10; do not delete
 current originals, masks or detailed lineage.
 
+Oct 29 full-run AI screening: all **53 source-labelled original/selected
+contact sheets** were inspected, covering every **837 changed recommendation
+and 10 no-recommendation/Junk outcomes**. Displayed input/native hashes were
+verified against the completed manifest
+`5b0c856c50153e413a99d7db8623666354ea8a8a46319ec18f6e3bf8352f2181`.
+Sheets are downscaled lossy review aids, not exact-image acceptance or proof
+of identity. Native follow-up confirmed the inherited nested-phone/UI defect
+on full-run row 3055 above. Native checks of Seraphine
+`7515814455928183144` and Various `7518041966060682367` did not confirm the
+sheet-level lettering suspicion. No new gross composition truncation was
+identified at sheet scale; hair/feet completeness and fine repair quality
+still need the user's final inspection. Eight Artist no-face outcomes stay
+Artist-scoped; no photo is deleted or automatically quarantined by screening.
+The source-bound scratch index and 53 sheets are under
+`tmp/perf/full-v23-audit`; exact artifacts remain in the durable intake report.
+
+The real matching audit also exposed a separate raw-download ID problem,
+owned and reproduced under
+[cast C8](2026-10-23-cast-seeded-library-rebase.md#incoming-id-defect-found-before-apply).
+Fixing recognition of existing filename IDs is not permission to lower
+similarity thresholds or force unresolved Review assignments.
+
 Implementation evidence, Oct 28:
 
 - v17 production-vs-benchmark tests verify exact recommended-pixel equality,
