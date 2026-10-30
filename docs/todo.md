@@ -121,7 +121,7 @@
 - [ ] T11 After performance/rebase work, compare a tight ([2026-10-28](plans/2026-10-28-intake-performance.md))
 - [ ] T3 For human review only, show a wider context crop (with ([2026-10-28](plans/2026-10-28-intake-performance.md))
 
-### For the assistant, when you say go (147)
+### For the assistant, when you say go (148)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -159,6 +159,7 @@
 - [ ] A1 Inventory identity-level CLI and GUI actions across all ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] A4 Cover each new action through actual GUI JSON export, ([2026-10-22](plans/2026-10-22-review-actions.md))
 - [ ] A11 Design and implement verified action-scoped recovery ([2026-10-22](plans/2026-10-22-review-actions.md))
+- [ ] C10 Before a future run with competing same-ID incoming files, ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] C8 Reconcile high-confidence/selected cast seeds with current ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] C9 After sample acceptance, validate the full sandbox rebase, ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] C2 Inventory all photos and decisions from the immutable source ([2026-10-23](plans/2026-10-23-cast-seeded-library-rebase.md))

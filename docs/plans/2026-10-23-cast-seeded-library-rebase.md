@@ -118,6 +118,35 @@ verify the completed stage; explicitly journal all 2,401 colliding old files
 for exact undo rather than infer reproducibility or regenerate the stage.
 Actual installation/viewer success remains pending.
 
+### Oct 30 resumed human-review milestone
+
+The user resumed work at 09:53, asking for completed outputs to review while
+automated acceptance continues. The native intake comparison report is ready
+for image-quality feedback; final installed viewers are not yet published.
+The current-input audit found 75 repeated IDs, all one incoming Various file
+beside its assigned baseline version: **zero IDs have multiple competing
+incoming Various files**, and the frozen overlay has no duplicate aliases.
+Its 75 incoming replacements remain correct under the clarified refresh rule.
+Do not compare processed baseline/output mtimes against an explicitly supplied
+refresh as a reason to discard the refresh.
+
+The supported measurement-reusing replan ran 09:54:17 to 10:03:30 -05:00,
+exit 0. All 2,793 photo rows and Working inputs, policy, seed policy,
+preparation, overlay and catalogue bindings remain exactly equal to
+`pre-stage-recovery-preview.json`. Only `clean_rebase.py` and `derivatives.py`
+implementation hashes changed. Preview SHA-256:
+`616893eabf7e73921291bbe6a4c82be435eeb3c41f2d5becee22af3f9ade458b`.
+The supported completed-stage read-only check started at 10:03:45 with
+explicit exact-byte legacy preservation. This is not yet a publication result.
+
+- [ ] **P1 ai** C10 Before a future run with competing same-ID incoming files,
+  implement and test the user's newest-file-modification-timestamp selection
+  rule, retaining nonselected bytes as scoped recovery rather than independent
+  candidates. Define safe equal-timestamp behavior, preserve timestamp evidence,
+  and keep refreshed source selection separate from derivative output mtimes.
+  The current frozen run has no competing incoming duplicates, so this is not
+  a reason to repeat its intake or delay its human-review milestone.
+
 ## Oct 28: renewed sandbox authorization
 
 The user's complete direction is preserved in
@@ -575,3 +604,20 @@ That way - at the end of the rebase:
 Hope all this makes sense and it will fit in with the end-to-end rebase flows without too much problems or changes.  We've already done a lot of work to get it working to where it is - and this would just further refine all the images in the library from where they are today.
 ```
 <!-- markdownlint-enable MD013 -->
+
+### Oct 30 refresh selection and human-review milestone (chat, verbatim)
+
+<!-- markdownlint-disable MD013 -->
+
+> Sure - but it should actually replace them if a new image came in with the same id - that can happen if we're trying to pull a refreshed image through again or it's just that we're replaying the same images through so they can get cleaned up, cropped, composed - so it must replace the old ones in the padding or anywhere.  If we have two images that collide in a run for some reason we want the newest file timestamp.  Is that what we did for the collisions?
+
+Human-review request:
+
+> Let's get to a point where it's ready for Human review - if you do have parts ready for my review already - please let me know what I can look at while you are completing the rest.  I can gather feedback on any of the completed reports, pages, outputs that are generated while you are iterating aggressively on the remaining automated work you have to do.
+
+<!-- markdownlint-enable MD013 -->
+
+Coverage: refreshed-source and generated-output replacement -> C6; competing
+incoming same-ID newest-timestamp behavior -> C10; current-run audit and
+parallel human intake review -> resumed milestone above, C7 and performance
+T16. Backup scope/format/retention priority remains storage S24.

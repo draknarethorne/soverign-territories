@@ -71,9 +71,13 @@ verification/reuse and explicit exact-byte legacy preservation are implemented,
 regression-tested and pushed as `81325da1f`. At the user's 09:22 pause,
 the measurement-reusing replan was stopped before publishing a new preview;
 the completed stage remains intact, `previous` empty, and plan `preview`.
-No install or processing continues. Real staged recovery and installed viewer
-acceptance remain open. The [pause recap](recap/2026-10-30-0922-recap.md)
-records the exact state. See the
+The user resumed work at 09:53 to reach human review. Supported replan
+completed at 10:03:30: all 2,793 rows and frozen input/policy/catalogue bindings
+are exactly unchanged. The completed-stage read-only check is running;
+real staged recovery and installed viewer acceptance remain open. The native
+intake report is already available for human image-quality feedback.
+The [pause recap](recap/2026-10-30-0922-recap.md) records the earlier pause,
+not the current running state. See the
 [recovery runbook](art/likeness.md#running-and-observing-a-long-rebase).
 
 **Oct 30 remaining boundaries:** native inspection confirms two cleanup
