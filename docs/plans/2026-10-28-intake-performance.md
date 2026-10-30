@@ -438,6 +438,49 @@ Do not attribute that comparison to model inference or storage cleanup alone.
 Captured replan output is timestamped; its process was checked for progress
 and was not suspended. T15 still owns useful producer-side phase diagnostics.
 
+#### Oct 30: measured installation blocker
+
+The first install was active, not suspended, but derivative progress was
+only 376 of 2,793 sources after hours. A bounded live `py-spy` sample
+(15 seconds, 10 Hz, 148 samples, no sampling errors) found
+`source_is_prepared` in 141 samples, operational storage-root resolution in
+100 and configuration loading/validation in 74. These categories overlap;
+they are not additive or an isolated whole-install timing.
+
+The repeated owner scan classified native category paths by loading and
+resolving unrelated operational roots for every retained set. Native
+categories cannot overlap those roots by the shared configuration contract.
+The narrow fix classifies native paths directly; configured Junk/retired
+wrappers still resolve through the validated shared configuration, now reusing
+the configuration already loaded. No artifact/path/source/hash check, pixel,
+recipe, matching threshold or assignment changes.
+
+A failing regression reproduced configuration reads for all seven native
+categories. It now proves zero reads; custom Junk/retired classification
+still passes and loads configuration once per call. All **68 focused
+retained/preparation/clean-rebase tests pass** (166.666 s). The first run
+encountered a Windows directory-rename denial; the isolated test and complete
+rerun passed without a behavior workaround.
+
+The identical real Haniya retained-native check returns `True` before and
+after: **5.602 s -> 0.597 s**. This is one representative guard check, not a
+claim of a 9.4x full-install speedup. Live samples and benchmark outputs are
+under `tmp/perf`; the intake/artifact manifest and preview remain unchanged.
+
+The slow attempt was stopped only after confirming the stack remained inside
+pre-publication derivative generation, plan `preview`, no publication fields,
+and an empty `previous`. After termination, all **2,868 Working input hashes**
+and the original catalogue hash were verified unchanged. No staged work was
+deleted: it was renamed to `abandoned-staged-20261030-040207`, with the empty
+previous directory similarly preserved. The durable run-local
+`install-attempt-20261030-040207.json` records that proof and both locations.
+Retry the same saved preview through the supported launcher with unbuffered,
+timestamped capture after the fix is committed. Do not rerun intake/matching.
+
+- [ ] **P1 ai** T16 Verify the config-free native-owner fix through the
+  same backed-up install, independent check and actual viewers; record actual
+  phase timings separately from the representative guard benchmark.
+
 #### Review composites and eventual production intake
 
 The user's first-pass-review proposal is covered here, not a new storage or

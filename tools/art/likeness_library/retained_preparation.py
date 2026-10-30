@@ -56,16 +56,18 @@ def _storage_prefix(root, name, cfg=None):
 
 def _domain(relative, root=None, cfg=None):
     parts = pathlib.PurePosixPath(relative).parts
-    config = cfg if cfg is not None else cw.load_cfg()
-    root = pathlib.Path(root) if root is not None else cw.work_root(config)
-    junk = _storage_prefix(root, "junk", cfg)
-    retired = _storage_prefix(root, "retired", cfg)
-    if parts[:len(junk)] == junk:
-        parts = parts[len(junk):]
-    elif parts[:len(retired) + 1] == (*retired, "photos"):
-        parts = parts[len(retired) + 1:]
-    if not parts or parts[0] not in {
-            "Angels", "Sisters", "Models", "Prospects", "Potentials", "Artists", "Various"}:
+    categories = {"Angels", "Sisters", "Models", "Prospects", "Potentials", "Artists", "Various"}
+    # Configured operational roots cannot overlap a native photo category.
+    if not parts or parts[0] not in categories:
+        config = cfg if cfg is not None else cw.load_cfg()
+        root = pathlib.Path(root) if root is not None else cw.work_root(config)
+        junk = _storage_prefix(root, "junk", config)
+        retired = _storage_prefix(root, "retired", config)
+        if parts[:len(junk)] == junk:
+            parts = parts[len(junk):]
+        elif parts[:len(retired) + 1] == (*retired, "photos"):
+            parts = parts[len(retired) + 1:]
+    if not parts or parts[0] not in categories:
         raise ValueError("unsupported retained preparation owner")
     if parts[0] == "Artists":
         if len(parts) < 4:

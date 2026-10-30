@@ -41,8 +41,11 @@ not completion or transfer.
 
 **Oct 30 overnight checkpoint:** the full 3,072-outcome v23 intake, independent
 artifact check, revised matching and AI move/output screening are complete.
-The verified 72,991-file snapshot precedes the currently running installation;
-actual installed viewer/check acceptance is not yet claimed. The
+The verified 72,991-file snapshot precedes installation. The first attempt
+was safely stopped before publication to fix a measured native-owner
+configuration hotspot; unchanged inputs/catalogue and preserved staging are
+recorded in performance T16. Actual installed viewer/check acceptance is not
+yet claimed. The
 [cast owner](2026-10-23-cast-seeded-library-rebase.md#revised-v23-preview-and-first-pass-audit)
 records 99 intentional Review holds and the full audit, not a threshold cut.
 The remaining 15 plans retain independent open scope; none is genuinely
@@ -242,7 +245,7 @@ use this order and each owning plan's gates.
 | --- | --- | --- |
 | Phase 1 | [Image intake preparation](2026-10-23-image-intake-preparation.md) | Full v23 intake/check and changed-image first pass complete; I59 installed face/history links and I60 final quality acceptance remain. Known nested-phone and bottom-navigation misses are explicit. I12 incremental cutover stays open |
 | Phase 2 | [Library upkeep U1/U3/U6/U7](2026-10-22-library-upkeep.md) | Phase 1 handoff; integrate maintenance/recovery, U7 prepared-source full/head/chest derivatives and explicitly selected ComfyUI inputs without repeated source cleanup |
-| Phase 3 | [Cast-seeded all-library rebase C1-C9](2026-10-23-cast-seeded-library-rebase.md) | Revised v23 matching and AI move/Review audit complete; full pre-install backup verified and install running. Independent installed check and actual viewers follow. Broader family/name/Production gates remain separate |
+| Phase 3 | [Cast-seeded all-library rebase C1-C9](2026-10-23-cast-seeded-library-rebase.md) | Revised v23 matching/audit and full backup verified; safely retry the same preview after performance T16's tested native-owner fix. Installed check/viewers follow; family/name/Production gates remain separate |
 | Phase 4 | [Engine acceptance E4/E6/E7/E8/E10, P1-P6](2026-10-22-likeness-engine-acceptance.md) | Accept Phase 3 evidence, convergence and separate incremental batch (now 400+ planned); production still needs its own preview, backup/restore and approval |
 | Supporting | [Face-analysis M1/M2](2026-10-22-face-analysis-evaluation.md) | Inform Phase 1 labels and face/body explanation; secondary-model M3/M4 remains conditional, not a mandatory new-model dependency |
 | After stable baseline | [Manual action A4/A6 UAT](2026-10-22-review-actions.md), [family acceptance](2026-10-22-identity-family-naming.md) | Existing rename/swap work retained; no pending swap or action-undo settlement applied by this pivot |
@@ -277,7 +280,7 @@ deferred; exact current inputs and all user decisions remain protected.
 | [2026-10-22-manual-prompts-to-art-library.md](2026-10-22-manual-prompts-to-art-library.md) | active | P14-P17 source-faithful wording/order, person-feature/token reconciliation and Female test-bed move; remaining migration, stage contracts, validated `1b` retirement and untouched `2b` |
 | [2026-10-22-library-upkeep.md](2026-10-22-library-upkeep.md) | active | Phase 2: downstream naming/derivative/viewer and backup integration; tested implementation still needs real acceptance; independent Junk/near-duplicate/Demon work retained |
 | [2026-10-23-image-intake-preparation.md](2026-10-23-image-intake-preparation.md) | active | Phase 1: full v23 intake/check and 53-sheet changed-output screening complete; two confirmed cleanup misses, installed face/history verification, human quality acceptance and incremental/live cutover remain |
-| [2026-10-23-cast-seeded-library-rebase.md](2026-10-23-cast-seeded-library-rebase.md) | active | Phase 3: revised matching/audit complete, 99 Review holds, full backup verified and installation running; installed checks/viewers and independent family/name/Production gates remain |
+| [2026-10-23-cast-seeded-library-rebase.md](2026-10-23-cast-seeded-library-rebase.md) | active | Phase 3: revised matching/audit complete, 99 Review holds and full backup verified; safe same-preview retry follows measured native-owner fix, then actual checks/viewers; family/name/Production gates remain |
 | [2026-10-25-reference-rendering.md](2026-10-25-reference-rendering.md) | active | 117-output comparison completed; R44 category/person paths pending source-faithful recipe reconciliation, with acceptance, GUI execution and later-stage contracts still open |
 | [2026-10-28-intake-performance.md](2026-10-28-intake-performance.md) | active | T6 recovery and T12 current sample checks pass; v23 restores guarded composition and limits padding. Slower measured throughput is explicit; proceed with authorized sandbox iteration, not Production acceptance. T8/T13/T14 and storage remain separate |
 | [2026-10-28-storage-operations-and-retention.md](2026-10-28-storage-operations-and-retention.md) | active | Map and configure storage roots, clean only verified generated outputs, preserve active sources, remove abandoned staging safely, and rebuild the sandbox from production |

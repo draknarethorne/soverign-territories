@@ -85,7 +85,7 @@ class RetainedPreparationTests(unittest.TestCase):
                 "retired": "_retired_custom",
             },
         }
-        with mock.patch.object(retained.cw, "load_cfg", return_value=config):
+        with mock.patch.object(retained.cw, "load_cfg", return_value=config) as load_config:
             self.assertEqual(
                 retained._domain(
                     "_quarantine/Prospects/Example/gallery/image.jpg", self.root
@@ -98,6 +98,7 @@ class RetainedPreparationTests(unittest.TestCase):
                 ),
                 "Artists/Example",
             )
+            self.assertEqual(load_config.call_count, 2)
         with mock.patch.object(domains.cw, "load_cfg", return_value=config):
             with domains.activate("artists"):
                 self.assertTrue(domains.includes(
@@ -106,6 +107,19 @@ class RetainedPreparationTests(unittest.TestCase):
                 self.assertFalse(domains.includes(
                     "_retired_custom/photos/Prospects/Example/gallery/image.jpg", self.root
                 ))
+
+    def test_native_domains_do_not_reload_or_resolve_operational_configuration(self):
+        with mock.patch.object(
+                retained.cw, "load_cfg",
+                side_effect=AssertionError("native owner classification must not load configuration")):
+            for category in ("Angels", "Sisters", "Models", "Prospects", "Potentials", "Various"):
+                with self.subTest(category=category):
+                    source = f"{category}/Example/gallery/image.jpg"
+                    self.assertEqual(retained._domain(source, self.root), "general")
+                    self.assertEqual(retained._owner(source, self.root), f"{category}/Example")
+            source = "Artists/Example/gallery/image.jpg"
+            self.assertEqual(retained._domain(source, self.root), "Artists/Example")
+            self.assertEqual(retained._owner(source, self.root), "Artists/Example")
 
     def test_retains_exact_original_all_actual_variants_detail_and_no_unlisted_extras(self):
         published = self.stage()

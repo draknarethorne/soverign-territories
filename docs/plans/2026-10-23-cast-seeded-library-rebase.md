@@ -97,6 +97,15 @@ active in read-only preflight, with increasing process I/O and no staging or
 publication yet. A quiet log is not grounds to restart it. Installation,
 independent check and actual viewer acceptance remain separate gates.
 
+Later live sampling found a real derivative-stage performance blocker,
+not a suspended owner. The first attempt was stopped before any publication;
+all 2,868 Working input hashes and the source catalogue were reverified.
+Staging and the empty previous directory were preserved, not deleted, with
+run-local receipt `install-attempt-20261030-040207.json`. The tested
+[native-owner fix and retry evidence](2026-10-28-intake-performance.md#oct-30-measured-installation-blocker)
+do not change this preview or its selected pixels. Retry the supported apply
+against the same saved preview and existing verified backup.
+
 ## Oct 28: renewed sandbox authorization
 
 The user's complete direction is preserved in

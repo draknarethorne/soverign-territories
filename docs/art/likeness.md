@@ -1267,6 +1267,18 @@ not substitutes for those receipts or source-coordinate masks. The shared
 Intake runs browser exposes verified staged receipts; incomplete work must not
 be presented as accepted Gallery evidence.
 
+For an interrupted **installation**, intake checkpoints are not an install
+resume mechanism. Never clear a live owner's `staged`/`previous` directories.
+If a measured blocker requires stopping before the swap, first prove the
+owner is gone, plan remains `preview`, publication fields are absent,
+`previous` is empty, every bound Working input and source catalogue hash is
+unchanged, and the full backup still verifies. Preserve the staged and empty
+previous directories under distinct attempt names and record a durable
+run-local receipt before retrying the same saved preview. Retain all evidence;
+do not rerun intake/matching just to bypass an interrupted attempt. If any
+publication or prior-category move exists, stop and inspect the journal's
+exact state instead; this pre-publication procedure does not apply.
+
 After an interruption, first confirm the recorded process is no longer
 running. Repeat the same intake-only launcher command with unchanged inputs,
 recipe and configuration. Let its lock/checkpoint checks decide reuse; do not

@@ -121,7 +121,7 @@
 - [ ] T11 After performance/rebase work, compare a tight ([2026-10-28](plans/2026-10-28-intake-performance.md))
 - [ ] T3 For human review only, show a wider context crop (with ([2026-10-28](plans/2026-10-28-intake-performance.md))
 
-### For the assistant, when you say go (145)
+### For the assistant, when you say go (146)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -202,6 +202,7 @@
 - [ ] R2 Define request/resolved/receipt schemas, recipe capabilities, ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R4 Implement offline preview/prepare/check and the thin launcher ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] R5 Bind one reviewed Qwen API graph to its master, preflight ([2026-10-25](plans/2026-10-25-reference-rendering.md))
+- [ ] T16 Verify the config-free native-owner fix through the ([2026-10-28](plans/2026-10-28-intake-performance.md))
 - [ ] S20 Measure fresh-baseline inventory, preparation, matching and ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S21 Finish the Oct 27/28 retrospective and Oct 29 run recap, ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S1 Map every writer and reader for `Working` outputs, ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))

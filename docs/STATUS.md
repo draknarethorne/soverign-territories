@@ -50,8 +50,15 @@ received AI screening; all measured exact-face/source/model bindings verify.
 The [cast owner](plans/2026-10-23-cast-seeded-library-rebase.md#revised-v23-preview-and-first-pass-audit)
 records the evidence and human review priorities. A complete 72,991-file
 pre-install snapshot passed verification. Installation began at 00:54 -05:00;
-at 02:01 it was actively staging, not yet published. Independent installed
-check and actual Gallery/Overview/Review acceptance remain pending.
+its slow derivative stage exposed repeated configuration/root resolution.
+A live sample and regression identified the cause; the narrow native-owner
+fix passes 68 focused tests and reduces one identical real guard check from
+5.602 s to 0.597 s. The first attempt was stopped before publication, all
+2,868 Working input hashes/catalogue verified unchanged, and staging preserved
+with a durable receipt. The same saved preview will be retried, not a new
+intake or matching run. Independent installed check and actual viewers remain
+pending; [performance T16](plans/2026-10-28-intake-performance.md#oct-30-measured-installation-blocker)
+owns the real retry measurement.
 
 **Oct 30 remaining boundaries:** native inspection confirms two cleanup
 limitations: the inherited nested-phone/UI miss and the newly reported

@@ -520,6 +520,15 @@ The install began at 00:54:53 and was still in active read-only preflight at
 acceptance. Current
 sample findings/timings live in T12 and intake I60, not a new storage redesign.
 
+The first install was subsequently stopped before publication for the measured
+native-owner performance blocker in performance T16. All 2,868 Working input
+hashes and the unchanged source catalogue were independently verified.
+Run-local `install-attempt-20261030-040207.json` records that proof and the
+preserved `abandoned-staged-20261030-040207` / empty
+`abandoned-previous-20261030-040207` directories. Nothing was deleted; the
+verified full backup and saved preview remain the same. Retry apply only
+after the narrow fix's tests/commit; final installed/undo/viewer gates remain.
+
 - [ ] **P1 ai** S16 Write the Production runbook with exact source snapshot,
   configuration, destination roots, backups, validation gates, rollback and
   post-run verification. Production execution remains separately gated.
