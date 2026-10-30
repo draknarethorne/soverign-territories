@@ -73,9 +73,17 @@ the measurement-reusing replan was stopped before publishing a new preview;
 the completed stage remains intact, `previous` empty, and plan `preview`.
 The user resumed work at 09:53 to reach human review. Supported replan
 completed at 10:03:30: all 2,793 rows and frozen input/policy/catalogue bindings
-are exactly unchanged. The completed-stage read-only check is running;
-real staged recovery and installed viewer acceptance remain open. The native
-intake report is already available for human image-quality feedback.
+are exactly unchanged. The completed-stage read-only check passed at 10:45:35
+(2,793 photos, 48,792 files). Apply reverified the full backup and stage,
+then rolled back at 11:46:33 when Explorer's handles on `Various/gallery`
+blocked the category rename. All 2,868 Working input hashes and the source
+catalogue independently verify unchanged; the plan remains `preview`.
+Complete staging and file-empty rollback scaffolding are preserved. No apply
+is running; Explorer still held two handles at 11:57. Release that lock before
+retrying; never force-close handles or bypass integrity guards. The native
+intake report is available for human image-quality feedback, but actual
+installed viewers remain pending. The
+[11:57 checkpoint](recap/2026-10-30-1157-recap.md) records the current blocker.
 The [pause recap](recap/2026-10-30-0922-recap.md) records the earlier pause,
 not the current running state. See the
 [recovery runbook](art/likeness.md#running-and-observing-a-long-rebase).

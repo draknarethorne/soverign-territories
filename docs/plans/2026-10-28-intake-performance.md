@@ -506,6 +506,46 @@ and empty `previous` remain; no apply is running. T16 stays open until actual
 full-stage check/recovery, publication and viewer verification. See the
 [pause recap](../recap/2026-10-30-0922-recap.md).
 
+The user resumed the human-review milestone at 09:53. The supported replan
+ran 09:54:17 to 10:03:30, preserving all 2,793 rows and every audited input,
+policy, preparation, overlay and catalogue binding. Its preview SHA-256 is
+`616893eabf7e73921291bbe6a4c82be435eeb3c41f2d5becee22af3f9ade458b`.
+The real completed-stage `--resume-install --preserve-legacy-derivatives
+--check` ran 10:03:45 to 10:45:35, exit 0: 2,793 photos and 48,792 files
+verify, including exact retained artifacts and recipe-rendered derivative
+hashes. This 41-minute check is measured integrity/render work, not a cheap
+receipt lookup or a claim that installation I/O is solved.
+
+The exact old-file preservation inventory is 2,402 (1,218 padded and 1,184
+head), not just the 2,401 replacement conflicts. One additional old Drakniss
+headshot has no staged replacement under the current quality gate; preserve
+it for undo rather than advertise it as a valid new derivative.
+Backed-up completed-stage apply began 10:53:34; the full 72,991-file snapshot
+independently reverified at 11:02:06. Apply rechecks the stage before the swap;
+publication and installed-viewer acceptance are still pending.
+
+At 11:46:33 apply exited 1 during the category transaction: Explorer PID 12768
+held two handles on `Working/Various/gallery`, blocking the rename into
+`previous/Various`. The normal rollback restored prior categories and external
+files; independent verification proves all 2,868 Working input hashes and the
+source catalogue unchanged. `previous` contains no files, only external-file
+directory scaffolding; complete staging is preserved and the plan is still
+`preview`. Durable receipt: `install-attempt-20261030-114633.json`.
+
+A graceful Explorer-window close did not release the handles; the final
+11:57 query still shows them. No forced handle close, process termination or
+desktop restart was performed. The user-question tool reported the user
+unavailable, so installation is blocked until the lock can be safely released.
+Do not repeat full intake or discard the completed stage.
+
+The narrowly coupled recovery fix accepts directory-only rollback scaffolding
+only after a no-follow walk proves zero files; linked paths and any retained
+file still refuse. Two targeted recovery/tampering tests passed. The full
+29-test preparation suite first encountered the previously observed transient
+Windows fixture-publication denial, then passed unchanged on a complete rerun
+(182.503 s). This source change needs supported replan before another apply.
+T16 stays open; no installed/browser acceptance is claimed.
+
 A matching 15-second/10-Hz live sample during the fixed derivative stage
 collected 147 samples without errors: **zero configuration loading,
 validation or operational-root resolution samples**. Retained-source

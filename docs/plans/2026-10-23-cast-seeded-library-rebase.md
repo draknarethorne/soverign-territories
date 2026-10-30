@@ -139,6 +139,18 @@ implementation hashes changed. Preview SHA-256:
 The supported completed-stage read-only check started at 10:03:45 with
 explicit exact-byte legacy preservation. This is not yet a publication result.
 
+That read-only check completed successfully at 10:45:35: 2,793 photos and
+48,792 staged files verify. Apply began at 10:53:34, reverified the full
+snapshot at 11:02:06 and the completed stage at 11:39:48. It rolled back at
+11:46:33 after Explorer's open handles prevented the `Various` rename.
+All 2,868 Working input hashes and the source catalogue independently verify
+unchanged. The stage is intact, plan `preview`, and `previous` has no files.
+The exact old-file preservation inventory is 2,402: the 2,401 output conflicts
+plus one old Drakniss headshot rejected by today's generation quality gate.
+The receipt `install-attempt-20261030-114633.json` records the failure and
+restore proof. Release the confirmed Explorer lock before replan/retry;
+installed viewers and human identity acceptance remain open.
+
 - [ ] **P1 ai** C10 Before a future run with competing same-ID incoming files,
   implement and test the user's newest-file-modification-timestamp selection
   rule, retaining nonselected bytes as scoped recovery rather than independent

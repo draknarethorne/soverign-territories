@@ -1359,7 +1359,7 @@ def verify_staged_install(layout, run, plan):
                 "previousCategories", "previousExternalHashes", "previousCategoryFiles"))):
         raise ValueError("resume requires an unpublished preparation-aware preview")
     if (not staged.is_dir() or _is_reparse_point(staged) or not previous.is_dir()
-            or _is_reparse_point(previous) or any(previous.iterdir())):
+            or _is_reparse_point(previous) or any(_source_files(previous))):
         raise ValueError("resume requires safe completed staging and an empty previous directory")
     working, source = layout["working_root"], layout["source_root"]
     if _curation_inventory(layout) != plan["workingInputs"]:

@@ -539,6 +539,8 @@ class CleanPreparationTests(unittest.TestCase):
 
     def test_completed_stage_resume_checks_then_publishes_without_rebuilding_and_undoes(self):
         plan = self.completed_stage()
+        # A rolled-back external-file swap leaves its directory-only skeleton.
+        (self.run / "previous" / "external" / "Angels" / "Fixed" / "gallery").mkdir(parents=True)
         staged = self.run / "staged"
         before = {path.relative_to(staged).as_posix(): metadata.content_sha256(path)
                   for path in staged.rglob("*") if path.is_file()}

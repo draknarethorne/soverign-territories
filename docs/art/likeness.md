@@ -1279,6 +1279,9 @@ native and retained row/recipe to the frozen preparation, checks all artifacts,
 reproduces standard derivative hashes in memory, enforces existing unavailable
 head/face gates, and refuses extra/missing/edited files or a nonempty `previous`.
 It does not recopy evidence, rewrite outputs, or resume a partial stage.
+A failed transaction may leave directory-only rollback scaffolding; this is
+allowed only when a no-follow walk proves that `previous` contains no files.
+Any retained rollback file or linked directory still blocks stage reuse.
 
 Existing unowned cast derivative collisions require the separate explicit
 `--preserve-legacy-derivatives` option on check/apply. These bytes are **not**
