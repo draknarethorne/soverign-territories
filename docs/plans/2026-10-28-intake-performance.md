@@ -495,6 +495,17 @@ must be recovered, not discarded. The old bytes are not proven reproducible.
 Explicit exact-byte preservation and verified completed-stage resume are the
 bounded prerequisite; actual install/viewer acceptance remains open.
 
+At 09:22 the user requested a pause and recap. Completed-stage recovery and
+explicit exact-byte legacy preservation are tested and pushed as `81325da1f`
+(71 focused tests, the 20-test backup/recovery group with overlap, and two
+additional tampering/owned-edit checks passed). The supported replan started
+at 09:08:57 was stopped before replacing the preview. Its SHA remains
+`ec72a3523ccce9f0d3b26cf1a915fe071b4d9355735d9fb483e500f1cc3f7fc1`;
+`pre-stage-recovery-preview.json` preserves that checkpoint. Complete staging
+and empty `previous` remain; no apply is running. T16 stays open until actual
+full-stage check/recovery, publication and viewer verification. See the
+[pause recap](../recap/2026-10-30-0922-recap.md).
+
 A matching 15-second/10-Hz live sample during the fixed derivative stage
 collected 147 samples without errors: **zero configuration loading,
 validation or operational-root resolution samples**. Retained-source

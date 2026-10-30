@@ -67,8 +67,13 @@ derivative sets and retained details but exited at 08:15 -05:00 before
 publication on unowned legacy cast derivatives (1,218 padded and 1,183 head).
 The plan remains `preview`, `previous` is empty, and complete staging is
 preserved. These old files are not proven reproducible. Guarded completed-stage
-verification/reuse and explicit exact-byte legacy preservation are being
-validated; installed viewer acceptance remains open. See the
+verification/reuse and explicit exact-byte legacy preservation are implemented,
+regression-tested and pushed as `81325da1f`. At the user's 09:22 pause,
+the measurement-reusing replan was stopped before publishing a new preview;
+the completed stage remains intact, `previous` empty, and plan `preview`.
+No install or processing continues. Real staged recovery and installed viewer
+acceptance remain open. The [pause recap](recap/2026-10-30-0922-recap.md)
+records the exact state. See the
 [recovery runbook](art/likeness.md#running-and-observing-a-long-rebase).
 
 **Oct 30 remaining boundaries:** native inspection confirms two cleanup
