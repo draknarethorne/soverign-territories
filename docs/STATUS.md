@@ -4,6 +4,13 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Oct 30, 14:24 instruction readiness:** the main Copilot entry point now
+matches focused/holding work, pinned handoffs, physical archive filing and
+launcher-based quality gates. It protects manual prompt sources and guards
+against stale specialized-agent policy. A scoped agent refresh is tracked
+as tooling D22 before next use, not a blocker to the current reboot/install
+milestone. No image-runtime changes or specialized-agent rewrites occurred.
+
 **Oct 30, 14:05 archive correction:** both indexes and physical files are now
 organized across feedback and all four documentation archive locations.
 Twenty-four feedback notes are topic-grouped unchanged; 46 historical docs

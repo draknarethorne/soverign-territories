@@ -32,6 +32,15 @@ Found while building and running the artists reset, the crop and the routine, wr
 
 ## Steps
 
+- [ ] **P2 ai** D22 Before the next specialized-agent use, reconcile the seven
+  repository agent files against current scope and canonical rules: replace
+  game-bible-first authority, automatic-publication recipes, assumed existing
+  Unity/Nakama architecture and stale tool/model guidance. Preserve genuinely
+  useful domain expertise; do not activate future-phase work or choose new
+  models without an explicit decision. Validate frontmatter, supported tool
+  references and local links per agent. This is separate from the completed
+  main Copilot entry-point alignment and not a prerequisite for the blocked
+  sandbox install.
 - [x] **P1 ai** D21 Make local/CI regression selection change-aware, retain
   explicit full acceptance coverage and conservative shared/unknown-path
   fallback, and fix repository-root test scratch instead of masking it with
@@ -651,5 +660,25 @@ User words (chat, Oct 30), word for word:
 Seems like the feedback _archive still isn't organized well
 
 I'd want both the index and the actual files in all places organized properly.  So we'd have to do that ongoing as well - following the new process.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Oct 30, 14:24: instruction alignment and readiness
+
+The main Copilot entry point now follows canonical queue focus/holding,
+pinned recap selection, physical archive filing, independent analysis/quality
+lanes and launcher-based validation. It distinguishes manual prompt sources
+from generated outputs and guards against legacy agent examples overriding
+current scope. Specialized-agent modernization remains explicitly D22,
+before their next use; D4 automation and D13 broader content review remain
+deferred. No broad content-audit or specialized-agent rewrite is claimed.
+Operational documentation is ready to resume the pinned reboot/install
+milestone without starting another documentation reorganization.
+
+User words (chat, Oct 30), word for word:
+
+<!-- markdownlint-disable MD013 -->
+```text
+Are there any other documentation updates, agent instructions, copilot instructions or any forms of documentation you feel we should clean-up and address at this time or are we good from a documentation perspective?
 ```
 <!-- markdownlint-enable MD013 -->
