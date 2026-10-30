@@ -2,6 +2,27 @@
 
 **Status:** active (Phase 1; sandbox clean-start integration implemented; real recipe/flow acceptance and production cutover remain gated)
 
+## Oct 30: newly reported v23 miss and category proposals
+
+The remaining-plan/feedback audit found
+`feedback/fresh-v23-20261029_feedback.md`; its complete words are preserved
+at the end of this plan, and the original note stays in place. Native
+inspection confirms its Angelica example, full-run row 46:
+`Angels/angelica/gallery/angelica_shot_20261019151731.jpg` retains the bottom
+Android navigation strip in the selected original/control. It was not among
+the changed-image sheets because no cleanup was selected. I60 therefore
+retains two confirmed defects, this missed strip and the nested-phone/UI
+example below. Do not equate no proposal with clean pixels or call the flow
+fully accepted. Do not edit the bound intake during the running installation.
+
+The Artists/Humans/Animals root split, optional Artist inclusion in preparation,
+and possible `_Intake` rename are proposals, not accepted path migrations.
+Artists are already excluded from the general people matching pool (279
+separate preparation outcomes versus 2,793 people); that is distinct from
+skipping Artist preparation. Existing I15/I16 own that separation, while
+storage S17-S19 own the broader category/configuration review. Preserve current
+paths and scope until that versioned proposal is approved.
+
 ## Oct 29: enhancement-selection clarification
 
 Denoise and tone are comparison-only: the current implementation explicitly
@@ -2770,3 +2791,50 @@ I don't want to skip images that do need work - but maybe we need to determine i
 ### feedback/overlay_reference.md (verbatim; approved)
 
 All overlay references including any other configs we need can stay in git - it's mainly the actual images of the people we would not store in git.  So if there are others for things like GMW logo or other things we snapped into a cache or other directories - they can be in git.  Really anything that is input into the process can be stored in git where it make sense.  When I checked, I only saw one overlay reference in the git location you pointed me to.
+
+### feedback/fresh-v23-20261029_feedback.md (verbatim; proposals remain gated)
+
+```text
+# Fresh v23 20261029 Feedback
+
+## angelica_shot_20261019151731.jpg 
+
+Missed the bottom media player border in the screenshot.
+
+## Artists
+
+We probably should make the ability to include or exclude Artists from the rebase as they aren't really supposed to be part of the people library.  That goes back to the directory strucuture and how we need to separate the Artists from the people folders (Angels, Sister, Models, Prospects, Potentials, Various, etc...)  So we need something more like
+
+B:\Sovereign Territories\Artists
+    Fantasy
+    Pierre
+    Her Legends
+    ...
+
+
+B:\Sovereign Territories\Humans
+    Angels
+    Sister
+    Models
+    Prospects
+    Potentials
+    Various
+    ...
+
+B:\Soverign Territories\Animals
+    Bears
+    Lions
+    Tigers
+    Sharks
+    Cats
+    Dragons
+    ...
+
+Making that split between Artists, People, Animals. etc...
+
+## Various Directory
+
+I use Various as the catch-all directory for items that don't fit neatly into the other categories like Artists, Humans, or Animals. This helps keep the main directories organized and prevents clutter.
+
+But maybe a better place would be to call it like _Intake or something like that so it's more obvious what it's role is.  Since it's a temporary place for the intake proces for the most part.
+```

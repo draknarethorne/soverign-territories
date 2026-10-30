@@ -1,6 +1,6 @@
 # Project Status
 
-**Updated:** 2026-10-29 · This is the one working document: where the project is, what has
+**Updated:** 2026-10-30 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
@@ -38,34 +38,30 @@ nested-phone/UI miss remains under I60. This is not production-quality
 acceptance. The new S15 inventory preview is 3,072 inputs; no moves or cast
 decisions were evaluated.
 
-**Oct 29 sandbox execution:** after tested recovery and the bounded v23
-checks, `fresh-v23-20261029` completed through the supported launcher's
-`--baseline working --intake-only --apply --workers 3` path. The process exited
-successfully and a separate launcher `--baseline working --check` passed:
-3,072 outcomes, no assessment errors (2,966 compared, 96 compared-overlay,
-10 junk candidates). Recommendations include 479 person compositions and
-326 reconstruction/picture-boundary outputs. All 9,186 padded outputs belong
-to the 3,062 usable rows. Same-run matching started at 22:06 -05:00 with
-`--baseline working --cast-seeds core`, preserving protected/core/selected
-anchors while previewing eligible non-core release. No installation has
-occurred. I60 output audit,
-C8/C9 reconciliation and actual Gallery/Overview/Review acceptance remain
-unfinished. Production and historical Source are outside this operation.
+**Oct 30 sandbox checkpoint:** tested recovery preceded the full v23 intake:
+3,072 outcomes, no assessment errors, and an independent launcher check passed.
+The revised core-cast preview accounts for 2,793 people separately from 279
+Artist outcomes: 1,218 cast retained, 48 eligible releases and 99 Review holds.
+A reproduced/tested incoming-download naming fix recognizes 352 existing
+filename IDs without altering frozen sources or thresholds; 67 focused tests
+passed. Recovery and the fix are pushed as `19e4f76` and `1d9d738`.
+All changed-output sheets, non-retained destinations and release triples
+received AI screening; all measured exact-face/source/model bindings verify.
+The [cast owner](plans/2026-10-23-cast-seeded-library-rebase.md#revised-v23-preview-and-first-pass-audit)
+records the evidence and human review priorities. A complete 72,991-file
+pre-install snapshot passed verification. Installation began at 00:54 -05:00;
+at 02:01 it was actively staging, not yet published. Independent installed
+check and actual Gallery/Overview/Review acceptance remain pending.
 
-**Oct 29 matching audit:** the initial core-cast preview completed, accounting
-for 2,793 people photos separately from 279 Artist outcomes. Its 421 Review
-photos included 364 missing-ID holds. A reproduced incoming-download bug
-explains 352: the clean matcher had not used the existing originals filename
-normalization for Facebook downloads. The tested fix recognizes only unique
-filename-derived IDs, preserves frozen sources and normalizes destination
-names. All 67 focused clean/preparation/retained tests pass; the same-run
-matching-only replan preserves the initial preview, intake and measurements.
-No thresholds changed. All 837 changed intake outputs and 10 no-recommendation
-outcomes received 53-sheet screening; the inherited nested-phone/UI miss is
-still explicit. All 2,793 initial-preview exact-face/model/source bindings
-verify, and all 48 release triples were inspected. Those checks are not proof
-of identity or final user acceptance. The recovery checkpoint was committed
-and pushed as `19e4f76`; installation and actual viewers remain pending.
+**Oct 30 remaining boundaries:** native inspection confirms two cleanup
+limitations: the inherited nested-phone/UI miss and the newly reported
+Angelica bottom-navigation strip. No proposal is not proof of clean pixels.
+Artists remain outside general people matching; the suggested physical
+Artists/Humans/Animals split and `_Intake` rename are unapproved proposals,
+not changes to make during this installation. Denoise/tone remain
+comparison-only pending a calibrated quality/detail-preservation selector.
+No plans were falsely closed or raw feedback removed. Production and
+historical Source remain outside the operation.
 
 **Oct 29 CI cost correction:** routine PR/main checks use Python 3.14 only;
 exhaustive mutations and optional 3.12/3.13 compatibility are explicit

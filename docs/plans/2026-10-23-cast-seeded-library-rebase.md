@@ -1,6 +1,6 @@
 # 2026-10-23: all-image preparation and cast-seeded rebase experiments
 
-**Status:** active (Phase 3; v17 intake and corrected matching preview complete; visual/move/continuity acceptance remains)
+**Status:** active (Phase 3; fresh v23 matching and AI audit complete; backed-up installation and actual viewers pending)
 
 ## Oct 29: fresh v23 matching continuation
 
@@ -41,6 +41,61 @@ preserving the initial preview, prepared pixels and measured face cache.
 The first preview is not installation approval; review the new destinations
 and reasons before apply. Twelve descriptive/unknown names remain outside
 the recognized-ID fix; do not silently invent IDs for those.
+
+### Revised v23 preview and first-pass audit
+
+The matching-only replan completed successfully at 23:43:54 -05:00.
+Preparation manifest/pixels and face measurements are unchanged. Saved preview
+SHA-256: `ce61389bd0fe07da8e4f7582fb7db998f6ebf1f5e7e93ee4f7c05d043a917873`.
+The original preview remains in `initial-preview.json`.
+
+| Evidence | Result |
+| --- | ---: |
+| Prepared people photos / separate Artist outcomes | 2,793 / 279 |
+| Cast-only reference identities | 21 |
+| Retained cast / eligible releases | 1,218 / 48 |
+| Candidate-pool photos, including releases | 1,575 |
+| Non-cast Gallery photos / destination identities | 1,476 / 181 |
+| Review photos | 99 |
+| Recognized incoming IDs, without source renames | 352 |
+| Destinations differing from original Working folder | 942 |
+| Destinations changed from the initial preview | 570 |
+| Exact aligned face/model/selected-source bindings verified | 2,793 |
+
+Review reasons are now 44 small-group cast resemblance, 19 high cast
+similarity requiring same-person review, 17 ambiguous cast matches, 12
+unrecognized/descriptive IDs, five multiple-face holds and two 56px-face
+holds. The initial 421-to-99 reduction is not simply 352: newly admitted
+candidates change grouping and expose additional legitimate cast holds.
+No threshold was lowered and no forced match replaces Review.
+
+All 1,575 non-retained-cast destinations received scored-face screening across
+17 labelled sheets, alongside six original/prepared/exact-face release
+sheets. Every source/destination route and selected SHA-256 was checked.
+All 48 releases have false core/anchor/identity-protection/photo-protection/
+workflow-selection flags. Three Drakness releases intentionally have no
+core score because their multiple-face quality gate excludes them; they
+remain Review, not confident regrouping. Other displayed scores retain their
+actual configured meaning: a display band alone does not establish a core.
+
+This is AI first-pass screening, not proof of identity. Numerical cohesion
+flags a few groups for final user inspection, especially the 35-photo
+`Prospects/Lucia Reyes` group (minimum leave-one-out centroid similarity
+0.2332), the two-photo `Potentials/Celine Gilbert` group (0.2538), and the
+68-photo `Prospects/Harlow Chase` group (minimum 0.2947). Leave-one-out
+centroid similarity is diagnostic, not a substitute for the configured
+average-linkage clustering rule or permission to silently split a group.
+Family/protection calibration and the user's final inspection remain open.
+
+The complete pre-install snapshot was previewed and started through
+`library-backup.cmd` at 23:45 -05:00. It completed at Oct 30, 00:54:29 -05:00:
+**72,991 files / 41,998,676,177 bytes**, with every file and SHA-256 verified
+and exit code 0. Snapshot: `_backup/library-20261029-235003`; manifest SHA-256:
+`b73ced418f289a0109899dd8601b368b2b55fa6337bcbf9f327b4e27c8280ccf`.
+The supported same-run install started at 00:54:53. At 01:22 it remained
+active in read-only preflight, with increasing process I/O and no staging or
+publication yet. A quiet log is not grounds to restart it. Installation,
+independent check and actual viewer acceptance remain separate gates.
 
 ## Oct 28: renewed sandbox authorization
 

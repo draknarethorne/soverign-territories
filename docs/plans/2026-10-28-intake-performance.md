@@ -423,9 +423,20 @@ with three workers. The separate supported launcher
 Preparation manifest SHA-256:
 `5b0c856c50153e413a99d7db8623666354ea8a8a46319ec18f6e3bf8352f2181`.
 The progress log is `tmp\perf\fresh-v23-20261029-intake.log`; durable evidence
-is the run's `intake.json` and verified preparation manifest. No matching
-`run.json` exists and no installation has occurred. Continue I60's actual
-full-run output audit before matching, then C8/C9/S15/viewer acceptance.
+is the run's `intake.json` and verified preparation manifest. That checkpoint
+preceded matching. Subsequent full-run output screening and the matching-only
+incoming-ID correction are recorded in intake I60 and cast C8/C9. The revised
+preview completed at 23:43 -05:00; installation/viewer acceptance remains.
+
+Observed full-intake log lifetime was 16:49:03 to 21:35:41 (4 h 46 m 38 s),
+including source overlay, rendering, publication and verification; it is not
+an isolated worker-render timing. The initial matching command ran 22:06:46
+to 22:30:23. The cache-reusing replan ran 23:03:16 to 23:43:54 with read-only
+audit/snapshot-preview I/O alongside it. Verification and repeated file
+access dominate its quiet phases; cache reuse does not skip artifact checks.
+Do not attribute that comparison to model inference or storage cleanup alone.
+Captured replan output is timestamped; its process was checked for progress
+and was not suspended. T15 still owns useful producer-side phase diagnostics.
 
 #### Review composites and eventual production intake
 
@@ -717,6 +728,8 @@ Oct 29 (chat, performance decision clarification), word for word:
 ### Oct 29 autonomous continuation (chat, word for word)
 
 <!-- markdownlint-disable MD013 MD028 -->
+
+> Read the handoff’s FINAL VERIFIED BASELINE and the linked plans. Use the “chasing my tail” feedback to separate rebase prerequisites from work that can wait—without broadly reorganizing everything. Then implement T6 per-image recovery, complete the sandbox rebase, and verify Gallery/Overview/Review. Don’t start a full intake until recovery is tested.
 
 > We'll need to commit and push when you get a change as well - at least when we know things are working.
 

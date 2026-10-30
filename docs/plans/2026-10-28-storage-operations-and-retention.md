@@ -202,6 +202,12 @@ now finishes cleanup without starting another reset. See S14's exact audit.
   reconcile feedback coverage and plans, run validators/tests/markdownlint,
   and commit/push coherent validated batches. Leave unfinished acceptance and
   storage lifecycle gaps explicit.
+- [ ] **P2 either** S23 Agree recap pinning/retirement criteria, then archive
+  only individually reviewed superseded recaps with corrected index links.
+  The Oct 27/28 retrospectives already exist; the overnight Oct 29-30 recap
+  must distinguish automated/AI checks from remaining human acceptance.
+  Keep raw `feedback/recap_10_27.md` until its preservation and coverage are
+  verified; no bulk recap or feedback removal is authorized.
 
 ### 1. Complete the storage and dependency inventory
 
@@ -495,8 +501,23 @@ recovery/current-sample disposition, the intake-only sandbox iteration was
 started with three workers. Its source-overlay copy and live process CPU
 progress were verified. It subsequently completed all 3,072 outcomes with
 no assessment errors, and the separate launcher `--baseline working --check`
-passed. No matching preview or installation exists; this does not
-close S15's move, cast-retention, backup, undo or viewer checks. Current
+passed. The subsequent matching preview and tested incoming-ID correction
+completed through matching-only replan at 23:43 -05:00: 2,793 people photos,
+1,218 retained cast, 48 eligible releases, 942 folder changes and 99 Review
+outcomes. All selected inputs/exact-face bindings and protected release flags
+verify; 53 intake sheets and 17 destination sheets received AI screening.
+The [cast owner](2026-10-23-cast-seeded-library-rebase.md#revised-v23-preview-and-first-pass-audit)
+records the full audit, remaining review priorities and unchanged thresholds.
+The complete snapshot preview covers 72,991 files / 41,998,676,177 bytes
+(the earlier preview preceded final matching-report updates). Its supported
+apply started at 23:45 -05:00, before installation. Snapshot
+`library-20261029-235003` completed at Oct 30, 00:54:29 -05:00 with exit 0:
+all 72,991 files / 41,998,676,177 bytes passed file-list and SHA-256 checks.
+Manifest SHA-256:
+`b73ced418f289a0109899dd8601b368b2b55fa6337bcbf9f327b4e27c8280ccf`.
+The install began at 00:54:53 and was still in active read-only preflight at
+01:22. This completes the backup gate, not installation, undo or viewer
+acceptance. Current
 sample findings/timings live in T12 and intake I60, not a new storage redesign.
 
 - [ ] **P1 ai** S16 Write the Production runbook with exact source snapshot,
@@ -504,6 +525,12 @@ sample findings/timings live in T12 and intake I60, not a new storage redesign.
   post-run verification. Production execution remains separately gated.
 
 ### 6. Related category configuration feedback
+
+The newer Artists/Humans/Animals and `_Intake` proposals are preserved in
+[intake's fresh-v23 feedback](2026-10-23-image-intake-preparation.md#feedbackfresh-v23-20261029_feedbackmd-verbatim-proposals-remain-gated).
+S17-S19 cover the proposed physical/category contract, not an immediate tree
+migration during sandbox installation. Artist preparation and exclusion from
+general people matching are separate decisions.
 
 The attached category/configuration feedback describes a broader refactor:
 category metadata (type, rank, path, protection, thresholds and other logic
@@ -553,6 +580,23 @@ storage cleanup.
 ## Preserved user feedback
 
 <!-- markdownlint-disable MD013 MD046 -->
+
+### feedback/recap_10_27.md (verbatim; S21/S23)
+
+```text
+We'll need to write a recap for 10-27-2026 of all that was done, where we are, what I need to validate, etc... following the standard practice, but ensuring we also highlight the big wins, gotchas, remaining items and manual verification I need to do as well as all the automated verification you were doing all the way to speed this up.
+
+This tells me that as we move into additional phases - including the likeness comparison that as long as we work it similar to how we did the intake that you can do the initial verification passes on all the outstanding items we need to work on and not just rely on me for all the manual work and present me with the final list of things you couldn't verify or need me to do manually.
+
+I'm finding out that getting our requirements, plans and verification processes clearly defined upfront is crucial to ensure smooth progress and minimize the need for extensive manual intervention later on. This approach allows us to catch potential issues early, streamline the verification workflow, and maintain a high level of accuracy and efficiency throughout the project.
+Moving forward, we should continue to refine our processes, document any changes, and ensure that both manual and automated verification steps are well-integrated and consistently applied. This will help us maintain momentum and reduce the risk of errors as we tackle more complex phases of the project.
+
+Our feedback loop we have has been working well and we can just continue to improve on it, update our instructions, docs and working agreement together and that will make the continued work on this very effective.
+
+I'll also want to start to archive older recaps that aren't important any more.  Keep ones that are still important (like pinning them) so that ongoing the recaps are things I still need to pay attention to.  It's sort of like how we have active feedback .md files until we get them into plans and archive the feedback.  Same with active plans and how we archive completed or obsolete or superceeded ones as we learn.  
+
+Basically just document management hygeine. We want to make sure that our recaps, feedback, and plans are all organized, easily accessible, and that outdated or irrelevant information is properly archived to avoid clutter and confusion.
+```
 
 Oct 28 chat, 21:32:56:
 

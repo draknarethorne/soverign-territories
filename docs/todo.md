@@ -60,7 +60,7 @@
 - [ ] U2 Review current photo outcomes using fresh inventories: ([2026-10-22](plans/2026-10-22-library-upkeep.md))
 - [ ] P10 Archive the manual source directory only after every ([2026-10-22](plans/2026-10-22-manual-prompts-to-art-library.md))
 
-### Either of us (49)
+### Either of us (50)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -102,6 +102,7 @@
 - [ ] R9 Agree storage/backup/retention limits and safe run filing ([2026-10-25](plans/2026-10-25-reference-rendering.md))
 - [ ] T14 After the flow is accepted, agree detailed versus ([2026-10-28](plans/2026-10-28-intake-performance.md))
 - [ ] T10 Attribute high VS Code/extension memory through its ([2026-10-28](plans/2026-10-28-intake-performance.md))
+- [ ] S23 Agree recap pinning/retirement criteria, then archive ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S22 Review C: cleanup candidates from performance T9's ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S19 Review the configuration proposal before broad ([2026-10-28](plans/2026-10-28-storage-operations-and-retention.md))
 

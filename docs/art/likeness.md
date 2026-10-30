@@ -1201,6 +1201,7 @@ git check-ignore --quiet $logDir
 if ($LASTEXITCODE -ne 0) { throw 'Log directory must be git-ignored.' }
 New-Item -ItemType Directory -Force -Path $logDir | Out-Null
 $log = Join-Path $logDir ($runName + '-intake-' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '.log')
+$env:PYTHONUNBUFFERED = '1'
 $command = 'bin\sandbox-rebase.cmd "{0}" "{1}" --baseline working --intake-only --apply --workers 3' -f $root, $run
 & $env:ComSpec /c $command 2>&1 |
     ForEach-Object { '[{0}] {1}' -f (Get-Date -Format o), $_ } |
@@ -1210,8 +1211,10 @@ if ($code -ne 0) { throw "Intake exited $code; inspect $log and the run diagnost
 ```
 
 These are output-receipt timestamps, not precise worker-operation timings:
-buffered lines can arrive together. Keep the report's measured durations for
-profiling. The prefix also applies to captured error output.
+`PYTHONUNBUFFERED` avoids Python delaying ordinary progress lines when output
+is piped, but parallel-worker messages can still arrive together. Keep the
+report's measured durations for profiling. The prefix also applies to captured
+error output. Do not restart a live operation just to change its buffering.
 
 In an assistant session, run that bounded command using the shell tool's
 long-running/background facility and retain the returned handle. Read further
@@ -1238,6 +1241,24 @@ Interpret the stages separately:
 | All workers/rows reported | Rendering is finished, but report verification and receipt publication may still be running. Do not start matching yet. |
 | Process exited and `intake.json` exists | Candidate completion only: run the launcher's read-only `--check` against the same root/run/baseline. Inspect assessment errors as well as hashes. |
 | Intake check passes | Review actual selected outputs and unresolved cleanup; then resume the same run without `--intake-only --apply` to create the matching preview. This is not permission to install it. |
+| Quiet matching/apply interval | Input, report and backup hash verification can precede another progress line. Inspect the exact Python process; do not start a duplicate. |
+| Backup manifest exists | Not sufficient: the snapshot writer publishes it before its final full-file verification. Wait for successful verification and launcher exit. |
+| `RUN\staged` exists; plan still `preview` | Installation is copying retained evidence and building derivatives before its guarded directory swap. Do not remove staging or retry a live owner. |
+| Plan becomes `applied` | The library swap committed; viewer generation may still be running. Preserve `previous`, catalogue and publication hashes for undo, then verify the completed command and actual pages. |
+
+For a quiet command, inspect its recorded Python PID (replace `12345`):
+
+```powershell
+Get-Process -Id 12345 | Select-Object Id, CPU, StartTime
+Get-CimInstance Win32_Process -Filter 'ProcessId=12345' |
+    Select-Object ProcessId, ReadTransferCount, WriteTransferCount
+```
+
+Compare observations over time. Hash verification can read without writing;
+directory enumeration/creation can advance without large transferred-byte
+counts. A large snapshot can spend substantial time creating directories
+before copying files. Check thread suspension before diagnosing a hung
+process, and avoid repeatedly walking the whole tree just to measure progress.
 
 Durable intake evidence is `RUN\intake.json` plus
 `RUN\inputs\_reports\preparation\all\manifest.json`, its exact native/padded
