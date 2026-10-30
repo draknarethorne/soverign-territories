@@ -109,6 +109,31 @@ class TodoReportTests(unittest.TestCase):
                 out.write_text(f"x\n{tr.NOTES_START}\nmy own note\n{tr.NOTES_END}\n", encoding="utf-8")
                 self.assertIn("my own note", tr.build())
 
+    def test_multiline_summaries_exclude_preserved_fenced_feedback(self):
+        with tempfile.TemporaryDirectory(dir=tr.ROOT / "tmp") as directory:
+            root = pathlib.Path(directory)
+            plans = root / "docs" / "plans"
+            plans.mkdir(parents=True)
+            (plans / "2026-10-30-readable-plan.md").write_text(
+                "# Readable\n\n**Status:** active\n\n"
+                "- [ ] **P1 ai** T1 Verify the installed\n"
+                "  gallery and exact face evidence.\n\n"
+                "````text\n- [ ] **P1 ai** T2 Raw user example\n````\n",
+                encoding="utf-8")
+            with mock.patch.object(tr, "ROOT", root):
+                text = "\n".join(tr.open_work())
+            self.assertIn("T1 Verify the installed gallery and exact face evidence.", text)
+            self.assertIn("[readable plan]", text)
+            self.assertNotIn("T2 Raw user example", text)
+
+    def test_supporting_inventories_are_collapsed_and_archive_status_is_honest(self):
+        text = tr.build()
+        self.assertEqual(text.count("<details>"), 3)
+        self.assertEqual(text.count("</details>"), 3)
+        self.assertIn("**dropped**:", text)
+        self.assertIn("**done**:", text)
+        self.assertNotIn("### Completed plans", text)
+
     def test_cells_use_final_candidate_or_nothing(self):
         stems = ["Remiah_Qwen_Alpha_1_Prime", "Remiah_FireRed_Alpha_1_Prime"]
         self.assertEqual(tr.state({"Remiah_Qwen_Alpha_1_Prime": 2}, {"Remiah_FireRed_Alpha_1_Prime": 3}, "Remiah", stems), "Q FINAL +1 · F c3")

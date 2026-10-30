@@ -4,6 +4,15 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Oct 30 navigation follow-up:** archive topic indexes distinguish historical
+evidence, superseded scope, completed work and incorporated raw feedback;
+no historical files were relocated. The generated queue keeps focused work
+visible and collapses deferred/history/card inventories, with complete
+multiline summaries and named owners. Bounded read-only analysis and one
+independent quality quick win may accompany the main milestone under the
+[parallel-lane rules](plans/README.md#parallel-analysis-and-small-improvements).
+This does not change installation, masking/erasing or storage acceptance gates.
+
 **Oct 30 finish-first documentation decision:** four plans remain active,
 fourteen are explicitly holding with reasons/resume gates, and CLI
 consolidation remains proposed. Files stay in place; unfinished scopes are not

@@ -16,6 +16,10 @@ For ongoing library work, start with the
 [focused queue](todo.md). The design reading order below is not today's
 operational task order.
 
+For historical material, use the [archive guide](archive-guide.md): it
+separates project/design records, art reports, superseded plans, recaps and
+incorporated feedback. Archives are history, not another active queue.
+
 ## Read in this order
 
 1. [Game Bible](game-bible.md) — player promise, principles, and phased vision.

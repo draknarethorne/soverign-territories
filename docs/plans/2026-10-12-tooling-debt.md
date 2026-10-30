@@ -609,3 +609,24 @@ While we're waiting on the reboot - can we pivot over to the to doing a review o
 As we do this - if it makes sense do combine multiple plans together into a newer plan an archive older ones with explanation that's fine.  Additionally if we need to split other plans up and put them in their own or portions of existing plans, we can keep a more cohesive view on the docs/plans instead of just being date oriented and sometimes duplicating items or potentially causing re-work.  So you are free to think about how to organize the plans and re-organize them and update instructions if we have a better model based on how things have been working.  Don't shift focus based on this directly, but adapt how you're doing this work to include this feedback.  Then resume what you're doing.
 ```
 <!-- markdownlint-enable MD013 -->
+
+## Oct 30 archive navigation and parallel-lane follow-up
+
+**Result:** D17's finish-first model now has a linked archive topic guide,
+domain archive indexes, and a local ignored raw-feedback archive index.
+History stays in place. The queue retains one source of truth, improves
+multiline task summaries, ignores quoted fenced checkboxes, and collapses
+deferred/history/card inventories rather than creating duplicate priority
+files. Archived `dropped` records are no longer mislabelled completed.
+The plan index owns bounded parallel-analysis and small-improvement lanes;
+mask/erase I68/I69, enhancements I70 and storage S24/S25 remain their existing
+implementation/decision owners. D4 and broader D13 remain open, not fulfilled
+by adding indexes. No new image run or storage cleanup is part of this pass.
+
+User words (chat, Oct 30, 13:27), word for word:
+
+<!-- markdownlint-disable MD013 -->
+```text
+My bad - I didn't realize the way you have organized it.  We might want to better organize that _archive even - and maybe all _archives in docs so that they make more sense.  Let's do that as part of documentation clean-up and organization overall. If we also need to work more on the todo.md automation to split that file up into different priorities we can - but I guess I want to know what you think we could do to improve that.  We'll reboot shortly, but still want to get my docs and thoughts cleaned up and easy to see what we're doing and in what sequence it matters.  We can do analysis in parallel with implementation on areas where more analysis is required to get to decisions on the implementation as well as implementing both small improvements and major priorities.  I'd always like to sprinkle in low-hanging fruit for quality improvements along with the major things - like masking and erasing and storage as key items to address.
+```
+<!-- markdownlint-enable MD013 -->

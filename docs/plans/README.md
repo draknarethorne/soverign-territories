@@ -61,6 +61,33 @@ deliberately. Within the same plan/priority/owner, focus-list order is retained
 (e.g. S15 before S24/S25). Priorities within later scopes remain unchanged and do not
 bypass prerequisites.
 
+## Parallel analysis and small improvements
+
+The sequence above is the **mutation/acceptance order**, not a requirement
+that all thinking be serial. Keep one primary milestone, with bounded
+independent analysis and one small quality improvement alongside it:
+
+| Lane | Current candidates | Required output / stop |
+| --- | --- | --- |
+| Main delivery | Same-stage install and real viewer/recovery checks | Finish or report a concrete blocker; no new intake or recipe change to the frozen run |
+| Parallel analysis | S24/S25 backup/artifact alternatives; I68/I69 mask/erase case diagnosis; I70 denoise/tone criteria; T17 measurement design | One owner, bounded sources, evidence and a decision/recommendation handed back to the existing task. Reading existing evidence may proceed before install; mutation, benchmarks and default adoption keep their own gates |
+| Small quality improvement | Clearer report labels/links/empty states, documentation navigation and focused regression coverage, scoped within I71-I73 or the owning tool | Preview and focused validation; no model/threshold/recipe, schema, root layout, dependency or storage-retention change disguised as a quick win |
+
+Select one small independent slice per iteration, not every easy-looking item.
+If it expands into new behavior or requires a major decision, record the
+finding in its owner and return to the milestone. Analysis helpers must not
+edit the main worker's files or read mutable half-published evidence; use
+frozen/read-only inputs and avoid competing heavy B: I/O during installation.
+Parallel analysis is permission to prepare decisions, not to apply them early.
+
+The generated queue stays in one file for now: current tasks first, deferred
+inventory and history collapsed, card state collapsed separately, and personal
+notes visible. This avoids several generated priority files becoming competing
+queues. Split into additional generated views only when a specific navigation
+need remains; generate them from the same plan tasks, never duplicate them
+by hand. Multiline task summaries and named plan links make current tasks
+readable without opening every date-named file.
+
 The complete fresh-v23 note is preserved with
 [F01-F31 coverage](2026-10-23-image-intake-preparation.md#complete-source-to-plan-coverage-ledger).
 Archiving a captured feedback file is independent of finishing its tasks.
