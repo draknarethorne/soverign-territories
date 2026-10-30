@@ -32,7 +32,7 @@ Found while building and running the artists reset, the crop and the routine, wr
 
 ## Steps
 
-- [ ] **P2 ai** D22 Before the next specialized-agent use, reconcile the seven
+- [x] **P2 ai** D22 Before the next specialized-agent use, reconcile the seven
   repository agent files against current scope and canonical rules: replace
   game-bible-first authority, automatic-publication recipes, assumed existing
   Unity/Nakama architecture and stale tool/model guidance. Preserve genuinely
@@ -41,6 +41,13 @@ Found while building and running the artists reset, the crop and the routine, wr
   references and local links per agent. This is separate from the completed
   main Copilot entry-point alignment and not a prerequisite for the blocked
   sandbox install.
+  **Result (Oct 30):** all seven agent bodies and the selection guide now use
+  canonical scope/authority, bounded roles and validated publication rules.
+  Removed stale API/code/numeric examples and tool IDs; kept useful review,
+  implementation and mathematical expertise. Existing model pins are unchanged;
+  no runtime availability or invocation acceptance is claimed. Frontmatter,
+  documented aliases, shared-contract bindings and 59 local links/fragments
+  were independently checked; Visual Analyst has read-only tools.
 - [x] **P1 ai** D21 Make local/CI regression selection change-aware, retain
   explicit full acceptance coverage and conservative shared/unknown-path
   fallback, and fix repository-root test scratch instead of masking it with
@@ -96,6 +103,10 @@ Found while building and running the artists reset, the crop and the routine, wr
   The complete art-directory slice is D15 below, not an unfinished reread.
   Preserve unique context and incoming references before any further archival;
   a repository-wide inventory is not proof each other document was read.
+  At the planning checkpoint after installed-baseline review, select the
+  first bounded slice and record reviewed files/dispositions, not another
+  whole-repository reorganization. Keep the storage-before-next-run gate.
+  Use the remaining D13 findings to scope D4's read-only automation separately.
 - [x] **P2 ai** D15 Read every active `docs/art` document in full before the
   review-first recap; reconcile current commands/authority, classify all 21,
   combine enduring reorganisation rationale into curation and archive only
@@ -680,5 +691,29 @@ User words (chat, Oct 30), word for word:
 <!-- markdownlint-disable MD013 -->
 ```text
 Are there any other documentation updates, agent instructions, copilot instructions or any forms of documentation you feel we should clean-up and address at this time or are we good from a documentation perspective?
+```
+<!-- markdownlint-enable MD013 -->
+
+## Oct 30, 14:28: specialized-agent refresh and documentation return
+
+D22 is delivered in all seven agents plus their shared selection guide.
+The main entry point links the common contract rather than duplicating a
+second agent policy. Domain roles remain distinct; fabricated samples,
+future-stack assumptions, automatic publication and claimed model advantages
+are removed. Model choices are retained, not upgraded. Actual model/tool
+availability is an invocation-time gate, not a result of Markdown validation.
+
+The next planning checkpoint after installed-baseline review must revisit
+D13 and select a bounded documentation slice; D4 remains the separate
+read-only day-close automation task informed by that review. Neither blocks
+reboot/install or overrides storage S24/S25 before another expensive run.
+This request covers D22 implementation and the explicit return gate for
+D13/D4; it does not claim either remaining task is implemented.
+
+User words (chat, Oct 30), word for word:
+
+<!-- markdownlint-disable MD013 -->
+```text
+Do the recommended things and I'll plan to reboot and get back to the key priority as long as we have plans to circle back on documentation as well
 ```
 <!-- markdownlint-enable MD013 -->

@@ -84,9 +84,9 @@ If a number or rule here disagrees with those docs, the docs win.
   improvement may accompany it under the plan index's gates. Analysis does not authorize early mutation, a new full
   intake, threshold/recipe changes or heavy competing I/O. Reuse shared run evidence across acceptance owners,
   rather than rerunning the same operation for each plan. Merge/split only with explicit ownership transfers.
-- **Specialized agents:** their older examples are not current architecture or policy. Verify their instructions
-  against current scope/contracts before use; they cannot authorize future-phase Unity/Nakama work, change the
-  source of truth, select an obsolete tool/model, or bypass validation/publication approval.
+- **Specialized agents:** follow the [shared agent contract](agents/AGENT-SELECTION-GUIDE.md#shared-working-contract).
+  Verify actual project/tool/model availability before use; a role cannot authorize future-phase Unity/Nakama work,
+  change the source of truth, silently substitute a model, or bypass validation/publication approval.
 - **The day's hygiene (before a commit and push at the end of a working day):** feedback files, chat requests and legacy tmp notes are accounted for
   in owning plans; unresolved/unincorporated notes stay safely in place (neither directory must be empty); every plan has a status and tagged boxes; finished plans are
   archived; `bin\todo.cmd` was run; STATUS.md has the day's decisions; a recap is written in `docs/recap/`; validators, tests and

@@ -1,254 +1,72 @@
 # Agent Selection Guide
 
-Quick reference for choosing the right specialized agent for Sovereign Territories tasks.
-
----
-
-## Shared working rules (every agent)
-
-All agents follow the **Working style** of [../copilot-instructions.md](../copilot-instructions.md); where an agent file says otherwise, these win:
-
-- **Notes become plans.** Accept raw `feedback/*.md` files (git-ignored) and chat feedback. Incorporate agreed work into the owning plan in `docs/plans/`, with status, tagged steps and verbatim raw words. Verify preservation and coverage, then re-read before removing only that specific source. Never bulk-clear feedback or legacy tmp notes; unresolved notes stay. See [the intake process](../../docs/plans/README.md).
-- **One queue.** What is open lives in the plans and is shown, by priority and owner, in `docs/todo.md` (run `bin\todo.cmd`). Do not keep a second list in STATUS.md or in an agent's reply.
-- **Commits.** Commit and push at the end of a working day, after the day's hygiene (see `docs/plans/README.md`) and the validators, unless the user asks for a commit sooner; an agent's own auto-commit rule does not override this.
-- **Recap.** A day's reflection goes to `docs/recap/YYYY-MM-DD-HHMM-recap.md` (see `docs/recap/README.md`).
-- **Long work.** Say what and why, preview first, verify each step, write files whole, keep originals, and use read-only helpers in parallel.
-
----
-
-## 🎯 Quick Decision Tree
-
-```
-Is it about game design/systems/documentation?
-├─ YES → @Sovereign-Beast-Mode (Claude Sonnet 4.5)
-└─ NO
-   ├─ Is it math/balance/economy calculations?
-   │  └─ YES → @Sovereign-Balance-Master (o1-preview)
-   │
-   ├─ Does it involve images/UI/visual assets?
-   │  └─ YES → @Sovereign-Visual-Analyst (Gemini Pro)
-   │
-   ├─ Is it Unity code/scenes/prefabs?
-   │  └─ YES → @Sovereign-Unity-Builder (GPT-4o)
-   │
-   ├─ Is it bulk data (50+ cards/buildings)?
-   │  └─ YES → @Sovereign-Data-Factory (Claude Haiku)
-   │
-   ├─ Is it Nakama/multiplayer/backend?
-   │  └─ YES → @Sovereign-Network-Ninja (GPT-5.1-Codex)
-   │
-   └─ Is it algorithm/pathfinding/complex logic?
-      └─ YES → @Sovereign-Code-Mode (GPT-5.1-Codex)
-```
-
----
-
-## 📋 Agent Matrix
-
-| Agent | Model | Best For | Don't Use For |
-|-------|-------|----------|---------------|
-| **@Sovereign-Beast-Mode** | Claude Sonnet 4.5 | Game design, documentation, system architecture, balance discussions | Code implementation, visual analysis |
-| **@Sovereign-Balance-Master** | GPT-5.2 | Damage formulas, XP curves, gacha math, economy optimization | Simple calculations, Unity code |
-| **@Sovereign-Visual-Analyst** | Gemini 3 Pro (Preview) | Card art critique, UI/UX analysis, battle map terrain design | Code implementation, design docs |
-| **@Sovereign-Unity-Builder** | GPT-4o | MonoBehaviours, ScriptableObjects, UI, scenes, general Unity code | Complex algorithms, backend logic |
-| **@Sovereign-Data-Factory** | Claude Haiku 4.5 | Bulk card generation (50+), JSON validation, batch file operations | Single card design, complex balance |
-| **@Sovereign-Network-Ninja** | GPT-5.1-Codex | Nakama server logic, authentication, matchmaking, real-time battles | Unity client code (use Unity-Builder) |
-| **@Sovereign-Code-Mode** | GPT-5.1-Codex | Complex algorithms, pathfinding, procedural generation, battle AI | Simple Unity scripts (use Unity-Builder) |
-
----
-
-## 🎮 By Project Phase
-
-### **Phase 1: Design (Current)**
-**Primary**: @Sovereign-Beast-Mode  
-**Secondary**: @Sovereign-Balance-Master (for formulas), @Sovereign-Visual-Analyst (for mockups)
-
-**Typical Tasks**:
-- Update game-bible.md with new systems
-- Design card rarity tiers
-- Plan progression curves
-- Review UI mockups
-
----
-
-### **Phase 2: Data Creation**
-**Primary**: @Sovereign-Data-Factory  
-**Secondary**: @Sovereign-Beast-Mode (for design specs)
-
-**Typical Tasks**:
-- Generate 100 card entries from schemas
-- Create building/tactic data
-- Validate JSON schemas
-- Batch rename asset files
-
----
-
-### **Phase 3: Unity Implementation**
-**Primary**: @Sovereign-Unity-Builder  
-**Secondary**: @Sovereign-Code-Mode (for complex logic), @Sovereign-Visual-Analyst (for UI polish)
-
-**Typical Tasks**:
-- Create CardManager, BattleManager scripts
-- Build deck builder UI
-- Implement battle map grid system
-- Create ScriptableObject templates
-
----
-
-### **Phase 4: Backend Integration**
-**Primary**: @Sovereign-Network-Ninja  
-**Secondary**: @Sovereign-Unity-Builder (for client-side network code)
-
-**Typical Tasks**:
-- Implement Nakama authentication
-- Create matchmaking system
-- Build real-time battle sync
-- Set up leaderboards
-
----
-
-### **Phase 5: Balance & Polish**
-**Primary**: @Sovereign-Balance-Master  
-**Secondary**: @Sovereign-Beast-Mode (for design iteration), @Sovereign-Visual-Analyst (for UI polish)
-
-**Typical Tasks**:
-- Tune damage formulas
-- Optimize economy curves
-- Fix gacha probabilities
-- Adjust XP progression
-
----
-
-## 🔍 By Task Type
-
-### **Documentation**
-- Game design docs → **@Sovereign-Beast-Mode**
-- Code documentation → **@Sovereign-Unity-Builder** or **@Sovereign-Code-Mode**
-- Visual style guide → **@Sovereign-Visual-Analyst**
-
-### **Analysis**
-- System design → **@Sovereign-Beast-Mode**
-- Math/balance → **@Sovereign-Balance-Master**
-- Visual critique → **@Sovereign-Visual-Analyst**
-
-### **Creation**
-- Game systems → **@Sovereign-Beast-Mode**
-- Unity code → **@Sovereign-Unity-Builder**
-- Bulk data → **@Sovereign-Data-Factory**
-- Nakama server → **@Sovereign-Network-Ninja**
-
-### **Optimization**
-- Economy tuning → **@Sovereign-Balance-Master**
-- Code performance → **@Sovereign-Code-Mode**
-- UI/UX clarity → **@Sovereign-Visual-Analyst**
-
----
-
-## 💡 Example Scenarios
-
-### Scenario 1: "Design a new pack system with 3 tiers"
-**Agent**: @Sovereign-Beast-Mode  
-**Why**: System design, game-bible.md updates, cross-system impact analysis
-
----
-
-### Scenario 2: "Calculate optimal gold production rates for 5 building tiers"
-**Agent**: @Sovereign-Balance-Master (GPT-5.2)  
-**Why**: Math-heavy, requires formula derivation and curve optimization
-
----
-
-### Scenario 3: "Review main-menu.jpg and suggest UI improvements"
-**Agent**: @Sovereign-Visual-Analyst  
-**Why**: Visual analysis, UI/UX critique, requires image understanding
-
----
-
-### Scenario 4: "Create CardManager.cs to handle deck building"
-**Agent**: @Sovereign-Unity-Builder  
-**Why**: Unity MonoBehaviour, general C# coding
-
----
-
-### Scenario 5: "Generate 100 Fire element units (Common to Legendary)"
-**Agent**: @Sovereign-Data-Factory  
-**Why**: Bulk data generation, repetitive task, needs speed
-
----
-
-### Scenario 6: "Implement Nakama matchmaking with ELO brackets"
-**Agent**: @Sovereign-Network-Ninja  
-**Why**: Nakama server logic, multiplayer systems
-
----
-
-### Scenario 7: "Write A* pathfinding for 8x8 tactical grid"
-**Agent**: @Sovereign-Code-Mode  
-**Why**: Complex algorithm, requires deep reasoning
-
----
-
-## 🚫 Common Mistakes
-
-### ❌ Using Unity-Builder for complex algorithms
-**Problem**: GPT-4o is fast but less rigorous than GPT-5.1-Codex for algorithms  
-**Fix**: Use @Sovereign-Code-Mode for pathfinding, AI, procedural generation
-
-### ❌ Using Beast-Mode for bulk data creation
-**Problem**: Sonnet 4.5 is thorough but slower than Haiku for repetitive tasks  
-**Fix**: Use @Sovereign-Data-Factory for 50+ entries
-
-### ❌ Using Balance-Master for simple questions
-**Problem**: GPT-5.2's deep reasoning wastes time on "What's 2+2?"  
-**Fix**: Use @Sovereign-Unity-Builder or Haiku 4.5 for quick tasks
-
-### ❌ Using Visual-Analyst without images
-**Problem**: Gemini 3 Pro's superpower is multimodal vision  
-**Fix**: Only use for tasks involving JPEGs/PNGs in assets/examples/
-
----
-
-## 📁 Agent Files Location
-
-All agents are in `.github/agents/`:
-
-- `Sovereign-Beast-Mode.agent.md` (Claude Sonnet 4.5)
-- `Sovereign-Balance-Master.agent.md` (GPT-5.2)
-- `Sovereign-Visual-Analyst.agent.md` (Gemini 3 Pro Preview)
-- `Sovereign-Unity-Builder.agent.md` (GPT-4o)
-- `Sovereign-Data-Factory.agent.md` (Claude Haiku 4.5)
-- `Sovereign-Network-Ninja.agent.md` (GPT-5.1-Codex)
-- `Sovereign-Code-Mode.agent.md` (GPT-5.1-Codex)
-
----
-
-## 🔄 Switching Agents Mid-Task
-
-**Example Workflow**: Designing a new battle mechanic
-
-1. **@Sovereign-Beast-Mode**: Design the mechanic, update game-bible.md
-2. **@Sovereign-Balance-Master**: Calculate damage formulas, stat curves
-3. **@Sovereign-Unity-Builder**: Implement BattleManager.cs, CombatResolver.cs
-4. **@Sovereign-Visual-Analyst**: Review battle UI mockup for clarity
-5. **@Sovereign-Balance-Master**: Tune values based on playtesting
-
-**Key Point**: Each agent specializes in one step. Don't ask Unity-Builder to do balance math or Beast-Mode to write Unity code.
-
----
-
-## 🎯 Current Active Agent
-
-**You are currently talking to**: @Sovereign-Beast-Mode (Claude Sonnet 4.5)
-
-**Specialized for**:
-- Game design & system architecture
-- Documentation (game-bible.md, README.md)
-- Design iteration & balance discussions
-- Cross-system impact analysis
-
-**To switch**: Mention the agent in chat (e.g., "@Sovereign-Balance-Master, calculate XP curve for levels 1-50")
-
----
-
-**Last Updated**: December 30, 2024  
-**Total Agents**: 7 (each optimized for specific tasks)
+Choose a specialist only when its bounded context is useful. Simple lookups,
+single-trace debugging and small changes stay with the current assistant;
+this guide does not mandate delegation or identify the currently active agent.
+
+## Shared working contract
+
+All seven agents follow [Copilot instructions](../copilot-instructions.md).
+Their role descriptions do not override scope, approval or safety gates.
+
+- **Current authority:** read [STATUS](../../docs/STATUS.md), the
+  [documentation map](../../docs/README.md) and affected owning plans.
+  MVP/design rules and runtime schemas beat the game bible's future vision.
+  The current release is local-first PvE Sovereign Dawn; Unity is planned,
+  and Nakama/PvP/alliances/territory/AFK systems remain later-phase scope.
+- **One work order:** [the plan index](../../docs/plans/README.md) owns
+  scheduling. The [generated queue](../../docs/todo.md) shows active focus
+  and links deferred work. Holding is not completion; pinned handoffs in
+  [the recap index](../../docs/recap/README.md) own current resume details.
+  Do not change priorities merely because another agent is available.
+- **Feedback and filing:** preserve chat/raw sources word for word with
+  per-request coverage in the primary plan. Verify preservation/coverage and
+  reread each source before individual filing. Follow
+  [the archive guide](../../docs/archive-guide.md) for matching physical
+  groups, indexes and references; archival does not close implementation.
+- **Bounded execution:** one primary milestone, with only the independent
+  analysis/quality slices allowed by the plan index. Delegation needs a
+  concrete scope and stop condition; do not recursively hand a task around.
+  A read-only assignment remains read-only even for an edit-capable agent.
+- **Tools:** use only tools actually exposed by the current host; discover
+  deferred tools before calling them. Frontmatter uses documented aliases,
+  not copied extension-specific IDs. Capability is not guaranteed by a model
+  name. Use Windows paths for tool access and preserve unrelated dirty work.
+- **Validation:** preview supported [launchers](../../bin/help.cmd), run
+  the smallest relevant checks and follow
+  [quality gates](../../docs/QUALITY-GATES.md). Distinguish actual test/build/
+  browser results from instructions for a human to run later. Keep scratch
+  under the repository's verified ignored temporary area.
+- **Publication:** no automatic commit/push for large changes, passing tests
+  or a role handoff. Follow the user's publication authorization and scoped
+  day-close requirements; stage only intended files, run required checks,
+  preserve other work and include the repository coauthor trailer.
+- **Protected data:** no source pruning, blanket intake, Production writes,
+  pipeline default changes or dependency installation merely to exercise an
+  agent. Do not create art assets or upload private repository/image data.
+
+## Roles
+
+| Agent | Best fit | Boundary |
+| --- | --- | --- |
+| [Beast Mode](Sovereign-Beast-Mode.agent.md) | Approved game-design analysis, cross-system trade-offs, canonical design docs | Not production code or automatic publication |
+| [Balance Master](Sovereign-Balance-Master.agent.md) | Formulas, probabilities, progression and reproducible balance analysis | No invented numeric rules or unapproved economy |
+| [Code Mode](Sovereign-Code-Mode.agent.md) | Approved Unity/C# logic, algorithms, debugging and focused tests | Verify project/toolchain; no speculative scaffolding |
+| [Data Factory](Sovereign-Data-Factory.agent.md) | Approved schema-driven batches and structured transformations | No invented fields, IDs, balance or unsafe bulk moves |
+| [Network Ninja](Sovereign-Network-Ninja.agent.md) | Explicitly authorized later-phase backend scope | Not a dependency of current PvE or sandbox acceptance |
+| [Unity Builder](Sovereign-Unity-Builder.agent.md) | Approved scene, prefab, component and UI integration | Requires a real approved Unity project/editor |
+| [Visual Analyst](Sovereign-Visual-Analyst.agent.md) | Read-only image/UI critique and comparison | Requires inspectable evidence; no mutation or identity sign-off |
+
+Model selections remain in each agent's frontmatter; this guide deliberately
+does not duplicate a second model roster or claim relative speed/quality.
+Existing selections were retained during the Oct 30 refresh. Availability,
+permissions and modality must be checked in the host when used. If a pinned
+model is unavailable, report it and obtain a selection decision; do not
+silently substitute a model or claim a runtime smoke test passed.
+
+## Handoff result
+
+Return the bounded outcome, changed files (if authorized), evidence/checks
+actually executed, remaining gates and owning plan/task. A proposed follow-up
+is not permission to start it. Reuse the same verified run evidence across
+acceptance owners instead of rerunning heavy operations for each agent.

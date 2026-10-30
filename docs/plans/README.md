@@ -26,6 +26,7 @@ and reactivation condition.
 | Next, before another expensive run | Storage S24/S25 | Measure file/byte budget; compare scope, packing/compression and retention; agree FULL/LEAN/COLLAGE evidence contract. Preserve verified recovery and active sources; no automatic deletion or ZIP assumption |
 | Next bounded quality round | Performance T17, intake I68/I69/I70 | Recipe-aware statistics, all 13 named cases, coordinated early crop/masks and calibrated denoise/tone selection. Use frozen comparisons before approving another full run; do not change the staged baseline |
 | After those results | Intake I71-I76, performance T18/T19; reactivate upkeep/actions/naming/engine slices as needed | UX/terminology/Artist scope, processing profiles; incremental batch/calibration and action UAT are separate gates, not silently approved |
+| Documentation return checkpoint | [Tooling D13/D4](2026-10-12-tooling-debt.md#steps); D22 agent refresh delivered | After installed-baseline review, explicitly select a bounded remaining documentation slice, then scope day-close automation from findings. Do not preempt storage-before-next-run or reopen a broad reorganization |
 | Holding, downstream | Manual prompt P14-P17 and reference rendering R44; finals/Artist/profile/game tracks; broad refactors/model experiments | Resume only when their per-plan gate is met and the slice is selected. Preserve current inputs, rendered evidence, manual drafts and frozen receipts |
 
 Only a **demonstrated blocker** may interrupt now. For example L19 Intake

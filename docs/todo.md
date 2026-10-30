@@ -38,7 +38,7 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-10-11-tidy-junk-organise.md](plans/2026-10-11-tidy-junk-organise.md) | holding | 2 |
 | [2026-10-12-artists-reset-and-auto-crop.md](plans/2026-10-12-artists-reset-and-auto-crop.md) | holding | 2 |
 | [2026-10-12-roadmap-and-mvp-data.md](plans/2026-10-12-roadmap-and-mvp-data.md) | holding | 13 |
-| [2026-10-12-tooling-debt.md](plans/2026-10-12-tooling-debt.md) | holding | 10 |
+| [2026-10-12-tooling-debt.md](plans/2026-10-12-tooling-debt.md) | holding | 9 |
 | [2026-10-20-art-tools-structure.md](plans/2026-10-20-art-tools-structure.md) | holding | 10 |
 | [2026-10-22-face-analysis-evaluation.md](plans/2026-10-22-face-analysis-evaluation.md) | holding | 4 |
 | [2026-10-22-gallery-review-layout.md](plans/2026-10-22-gallery-review-layout.md) | holding | 13 |

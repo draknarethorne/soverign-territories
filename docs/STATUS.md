@@ -4,12 +4,15 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
-**Oct 30, 14:24 instruction readiness:** the main Copilot entry point now
-matches focused/holding work, pinned handoffs, physical archive filing and
-launcher-based quality gates. It protects manual prompt sources and guards
-against stale specialized-agent policy. A scoped agent refresh is tracked
-as tooling D22 before next use, not a blocker to the current reboot/install
-milestone. No image-runtime changes or specialized-agent rewrites occurred.
+**Oct 30, 14:28 instruction readiness:** the main Copilot entry point and
+all seven specialized agents now follow canonical local-first scope, bounded
+roles, focused/holding work, pinned handoffs and validated publication.
+Agent model pins are unchanged; runtime availability is not claimed.
+The shared selection guide no longer assumes a current agent/project,
+numeric rules or tool IDs. Tooling D22 is delivered; the planning checkpoint
+after installed-baseline review explicitly returns to D13's bounded content
+audit and D4's separate read-only automation. Neither blocks reboot/install
+or preempts storage-before-next-run. No image-runtime changes occurred.
 
 **Oct 30, 14:05 archive correction:** both indexes and physical files are now
 organized across feedback and all four documentation archive locations.
