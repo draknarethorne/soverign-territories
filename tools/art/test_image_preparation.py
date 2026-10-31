@@ -828,6 +828,127 @@ class PreparationTests(unittest.TestCase):
                     preparation.verify(self.root, output)
                     self.assertFalse(recovery.exists())
 
+    def test_lean_preserves_roles_and_bytes_with_fewer_actual_files(self):
+        def without_seconds(value):
+            if isinstance(value, dict):
+                return {key: without_seconds(item) for key, item in value.items()
+                        if key not in ("seconds", "elapsedSeconds")}
+            if isinstance(value, list):
+                return [without_seconds(item) for item in value]
+            return value
+
+        self.put("Various/gallery/exact.png", Image.new("RGB", (160, 240), "#8899aa"))
+        with self.v23():
+            self.assertEqual(self.call("--apply"), 0, self.errors)
+            full = self.manifest()
+            lean_output = self.output.with_name("lean")
+            preparation.publish(self.root, lean_output, preparation.inventory(self.root), storage_mode="lean")
+            lean = preparation.verify(self.root, lean_output)
+            self.assertEqual(lean["storageMode"], "lean")
+            self.assertNotIn("storageMode", full)
+            full_rows = {row["source"]: row for row in full["photos"]}
+            for row in lean["photos"]:
+                old = full_rows[row["source"]]
+                self.assertEqual(row["recommendation"], old["recommendation"])
+                self.assertEqual(without_seconds(row["processing"]), without_seconds(old["processing"]))
+                self.assertEqual(set(row["variants"]), set(old["variants"]))
+                self.assertEqual(row["recommendedPadded"]["sha256"], old["recommendedPadded"]["sha256"])
+                self.assertFalse(any("padded" in record for record in row["variants"].values()))
+                hashes = {row["sourceSha256"]: row["retained"]}
+                for name, record in row["variants"].items():
+                    for field, checksum in (("path", "sha256"), ("thumbnail", "thumbnailSha256")):
+                        self.assertEqual(record[checksum], old["variants"][name][checksum])
+                        self.assertEqual(hashes.setdefault(record[checksum], record[field]), record[field])
+                detail = (lean_output / row["detail"]).read_text(encoding="utf-8")
+                self.assertIn("LEAN", detail)
+                self.assertIn('alt="1. Original"', detail)
+                self.assertIn('alt="3. Final recommended source for 944x1104"', detail)
+                parser = Links()
+                parser.feed(detail)
+                for target in parser.targets:
+                    if not target.startswith("#"):
+                        self.assertTrue((lean_output / row["detail"]).parent.joinpath(unquote(target)).is_file(), target)
+            files = lambda output: [path for path in output.rglob("*") if path.is_file()]
+            self.assertLess(len(files(lean_output)), len(files(self.output)))
+            self.assertLess(sum(p.stat().st_size for p in files(lean_output)),
+                            sum(p.stat().st_size for p in files(self.output)))
+            jpeg = next(row for row in lean["photos"] if row["source"].endswith(".jpg"))
+            self.assertNotEqual(jpeg["retained"], jpeg["variants"]["control"]["path"])
+            self.assertEqual(self.source_tree(), self.before | {
+                "Various/gallery/exact.png": (self.root / "Various/gallery/exact.png").read_bytes()})
+            with self.assertRaisesRegex(ValueError, "different inputs/recipe"):
+                preparation.publish(self.root, self.output, preparation.inventory(self.root), storage_mode="lean")
+            tampered = lean_output / jpeg["variants"]["control"]["path"]
+            tampered.write_bytes(b"modified shared control")
+            with self.assertRaisesRegex(ValueError, "artifact"):
+                preparation.verify(self.root, lean_output)
+
+    def test_lean_reuses_original_only_for_exact_encoded_bytes(self):
+        self.photo.unlink()
+        photo = self.put("Various/gallery/exact.png")
+        with Image.open(photo) as opened:
+            preparation.save_image(photo.with_name("encoded.png"), opened, "PNG")
+        photo.unlink()
+        photo.with_name("encoded.png").rename(photo)
+        with self.v23():
+            self.assertEqual(self.call("--storage-mode", "lean", "--apply"), 0, self.errors)
+            row = self.manifest()["photos"][0]
+            self.assertEqual(row["retained"], row["variants"]["control"]["path"])
+            self.assertEqual(row["sourceSha256"], row["variants"]["control"]["sha256"])
+            self.assertEqual(self.call("--check"), 0, self.errors)
+
+    def test_lean_pads_only_selected_composition_and_validates_mode(self):
+        self.photo.unlink()
+        self.put("Various/gallery/wide.png", Image.new("RGB", (1200, 800), "#8899aa"))
+        self.subjects.side_effect = lambda image: self.person(image.size, (500, 60, 700, 800))
+        with self.v23():
+            self.assertEqual(self.call("--storage-mode", "lean", "--apply"), 0, self.errors)
+            data = self.manifest()
+            row = data["photos"][0]
+            self.assertEqual(row["recommendation"]["use"], "composition")
+            self.assertEqual({name for name, record in row["variants"].items() if "padded" in record},
+                             {"composition"})
+            self.assertEqual(self.call("--check"), 0, self.errors)
+            changed = copy.deepcopy(data)
+            changed.pop("storageMode")
+            with self.assertRaisesRegex(ValueError, "padding"):
+                preparation.validate(changed)
+            changed = copy.deepcopy(data)
+            changed["recipe"]["id"] = "preparation-comparison-v22"
+            with self.assertRaisesRegex(ValueError, "LEAN"):
+                preparation.validate(changed)
+            changed = copy.deepcopy(data)
+            changed["storageMode"] = "fast"
+            with self.assertRaises(preparation.ValidationError):
+                preparation.validate(changed)
+
+    def test_lean_checkpoint_resumes_exact_aliases_and_mode_is_bound(self):
+        second = self.put("Various/gallery/second_image_456.jpg")
+        original_render = preparation.render_photo
+
+        def stop_after_first(root, stage, source, **kwargs):
+            if source == second:
+                raise RuntimeError("simulated hard stop")
+            return original_render(root, stage, source, **kwargs)
+
+        with self.v23():
+            with mock.patch.object(preparation, "render_photo", side_effect=stop_after_first):
+                with self.assertRaisesRegex(RuntimeError, "hard stop"):
+                    preparation.publish(self.root, self.output, [self.photo, second], workers=1, storage_mode="lean")
+            temporary = preparation.cw.storage_root(self.cfg, "temporary", root=self.root)
+            recovery = next(path for path in temporary.glob("prep-*") if path.is_dir())
+            binding = json.loads((recovery / "binding.json").read_text())
+            self.assertEqual(binding["storageMode"], "lean")
+            with mock.patch.object(preparation, "render_photo", wraps=original_render) as render:
+                preparation.publish(self.root, self.output, [self.photo, second], workers=1, storage_mode="lean")
+            self.assertEqual(render.call_count, 1)
+            data = preparation.verify(self.root, self.output)
+            row = data["photos"][0]
+            self.assertEqual(row["variants"]["control"]["path"], row["variants"]["denoise"]["path"])
+            self.assertFalse(recovery.exists())
+            with self.assertRaisesRegex(ValueError, "different inputs/recipe"):
+                preparation.publish(self.root, self.output, [self.photo, second], workers=1)
+
     def test_v23_ineligible_rows_have_no_padded_workflow_output(self):
         with self.v23(), mock.patch.object(preparation.preparation_geometry, "detect_faces",
                                           return_value=([], "No usable face")):

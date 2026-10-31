@@ -269,7 +269,7 @@ def copy_new_file(path, source):
     return source_hash
 
 
-def save_image(path, image, image_format, **options):
+def save_image(path, image, image_format, *, aliases=None, **options):
     path.parent.mkdir(parents=True, exist_ok=True)
     descriptor, temporary_name = tempfile.mkstemp(prefix=".image-", dir=path.parent)
     temporary = pathlib.Path(temporary_name)
@@ -280,14 +280,27 @@ def save_image(path, image, image_format, **options):
                 options.setdefault("compress_level", 3)
             image.save(stream, format=image_format, **options)
         candidate_hash = sha_file(temporary)
+        if aliases is not None and candidate_hash in aliases:
+            if sha_file(aliases[candidate_hash]) != candidate_hash:
+                raise ValueError(f"shared preparation artifact changed: {aliases[candidate_hash]}")
+            return candidate_hash
         if path.exists():
             if sha_file(path) != candidate_hash:
                 raise ValueError(f"refusing to overwrite different pilot artifact: {path}")
-            return candidate_hash
-        os.replace(temporary, path)
+        else:
+            os.replace(temporary, path)
+        if aliases is not None:
+            aliases[candidate_hash] = path
         return candidate_hash
     finally:
         temporary.unlink(missing_ok=True)
+
+
+def save_role_image(stage, relative, image, image_format, aliases, **options):
+    digest = save_image(stage / relative, image, image_format, aliases=aliases, **options)
+    if aliases is not None:
+        relative = aliases[digest].relative_to(stage).as_posix()
+    return relative, digest
 
 
 def mean_absolute_pixel_change(control, variant):
@@ -334,10 +347,11 @@ def prepared_candidates(image, row):
                 selected, None, selected, "Filter unavailable after reported OpenCV failure; retain cleanup input."))
 
 
-def render_photo(root, stage, source):
+def render_photo(root, stage, source, *, storage_mode="full"):
     digest = sha_file(source)
     retained = f"originals/{digest}{source.suffix.lower()}"
     copy_new_file(stage / retained, source)
+    aliases = {digest: stage / retained} if storage_mode == "lean" else None
     row = {
         "source": source.relative_to(root).as_posix(),
         "photoId": metadata.photo_id_from_name(source.name),
@@ -397,11 +411,11 @@ def render_photo(root, stage, source):
     folder_key = digest if CURRENT in legacy.ids(5, 16) else digest[:24]
     for name, variant in prepared_candidates(image, row):
         path = f"candidates/{folder_key}/{name}.png"
-        variant_hash = save_image(stage / path, variant, "PNG")
+        path, variant_hash = save_role_image(stage, path, variant, "PNG", aliases)
         thumbnail = variant.copy()
         thumbnail.thumbnail((360, 480), Image.Resampling.LANCZOS)
         preview = f"candidates/{folder_key}/{name}-preview.jpg"
-        preview_hash = save_image(stage / preview, thumbnail, "JPEG", quality=88)
+        preview, preview_hash = save_role_image(stage, preview, thumbnail, "JPEG", aliases, quality=88)
         thumbnail.close()
         record = {
             "path": path, "sha256": variant_hash, "thumbnail": preview,
@@ -482,11 +496,11 @@ def recommendation(row):
     return {"use": "original", "reason": reason}
 
 
-def save_padded(stage, image, path):
+def save_padded(stage, image, path, *, aliases=None):
     with (ImageOps.contain(image, (944, 1104), Image.Resampling.LANCZOS) as fitted,
           Image.new("RGB", (944, 1104), originals.STUDIO_GREY) as padded):
         padded.paste(fitted, ((944 - fitted.width) // 2, (1104 - fitted.height) // 2))
-        return save_image(stage / path, padded, "PNG")
+        return save_image(stage / path, padded, "PNG", aliases=aliases)
 
 
 def report(data, *, detail=False):
@@ -647,6 +661,9 @@ def report(data, *, detail=False):
         + '<div class="site-page">'
         '<header class="page-header"><div><h1>Image preparation pilot - experimental, no library changes</h1></div></header>'
         + ('<p><a href="../index.html">Back to comparison gallery</a></p>' if detail else '')
+        + ('<p><strong>LEAN evidence:</strong> equal-byte roles share a file within this photo; '
+           'only the recommendation has workflow padding. Native alternatives and masks remain available. '
+           'No processing steps were skipped.</p>' if data.get("storageMode") == "lean" else '')
         +
         '<p>Control: oriented/sRGB only. Denoise and tone are separate alternatives, not a '
         'combined approved recipe. Click for full-resolution candidates or exact retained input. '
@@ -791,13 +808,14 @@ def validate_processing(row, *, same_mask_comparison=False, names=legacy.OLD_STE
         raise ValueError(f"recommendation disagrees with final selection: {row['source']}")
 
 
-def validate_workflow_padding(row):
+def validate_workflow_padding(row, storage_mode="full"):
     selected = row["recommendation"]["use"]
     if row["outcome"] in ("unprocessable", "junk-candidate", "assessment-failed") and selected != "none":
         raise ValueError(f"unusable input has a workflow recommendation: {row['source']}")
     expected_padded = set()
     if selected != "none":
-        expected_padded.update(name for name in ("denoise", "tone") if name in row["variants"])
+        if storage_mode == "full":
+            expected_padded.update(name for name in ("denoise", "tone") if name in row["variants"])
         if selected in row["variants"]:
             expected_padded.add(selected)
     actual_padded = {name for name, variant in row["variants"].items() if "padded" in variant}
@@ -813,6 +831,9 @@ def validate_workflow_padding(row):
 
 def validate(data):
     Draft7Validator(json.loads(SCHEMA.read_text(encoding="utf-8"))).validate(data)
+    storage_mode = data.get("storageMode", "full")
+    if storage_mode == "lean" and data["recipe"].get("id") != "preparation-comparison-v23":
+        raise ValueError("LEAN storage requires the v23 preparation recipe")
     sources = [row["source"] for row in data["photos"]]
     if not sources:
         raise ValueError("pilot manifest contains no photos")
@@ -827,7 +848,7 @@ def validate(data):
                 for variant in row["variants"].values()):
             raise ValueError(f"legacy recipe is missing its recorded padded candidates: {row['source']}")
         if recipe == "preparation-comparison-v23":
-            validate_workflow_padding(row)
+            validate_workflow_padding(row, storage_mode)
         if recipe == CURRENT or recipe in legacy.SCOPED:
             sandbox._safe_source_path(row["source"])
             relative = pathlib.PurePosixPath(row["source"])
@@ -961,6 +982,9 @@ def run(args):
     counts = {category: sum(p.relative_to(root).parts[0] == category for p in paths) for category in CATEGORIES}
     print(f"Inventory: {json.dumps(counts)}; selected {len(selected)} of {len(paths)}.")
     print("Sidecar preparation only. No source changes, matching, membership changes or ComfyUI writes.")
+    print(f"Evidence storage: {args.storage_mode.upper()}; "
+          + ("exact-byte role reuse, recommended padding only." if args.storage_mode == "lean"
+             else "existing comparison files and recommended/denoise/tone padding."))
     print("Apply may download pinned CPU models once; preview and check do not download models.")
     for source in selected:
         print(f"  {source.relative_to(root)}")
@@ -970,7 +994,7 @@ def run(args):
         print(f"Preview only. Add --apply to retain exact inputs and publish comparisons in {output}")
         return 0
     return publish(root, output, selected, limit=args.limit, source_folder=source_folder, counts=counts,
-                   workers=args.workers)
+                   workers=args.workers, storage_mode=args.storage_mode)
 
 
 def available_memory_gb():
@@ -1107,19 +1131,28 @@ def checkpoint_render_worker(root, recovery, source, index, expected, binding, b
     if sha_file(source) != expected["sha256"]:
         raise ValueError(f"preparation source changed before rendering: {expected['source']}")
 
-    row = render_photo(root, worker_dir, source)
+    storage_mode = base_data.get("storageMode", "full")
+    row = (render_photo(root, worker_dir, source, storage_mode=storage_mode)
+           if storage_mode == "lean" else render_photo(root, worker_dir, source))
     if row["source"] != expected["source"] or row["sourceSha256"] != expected["sha256"]:
         raise ValueError(f"preparation result does not match its input binding: {expected['source']}")
     row["recommendation"] = recommendation(row)
+    aliases = None
+    if storage_mode == "lean":
+        aliases = {row["sourceSha256"]: worker_dir / row["retained"]}
+        for variant in row["variants"].values():
+            for field, checksum in (("path", "sha256"), ("thumbnail", "thumbnailSha256")):
+                aliases.setdefault(variant[checksum], worker_dir / variant[field])
     if CURRENT == "preparation-comparison-v23":
         selected = row["recommendation"]["use"]
         if selected == "original":
             selected_image = decode_file(worker_dir / row["retained"])
             try:
                 path = f"recommended/{row['sourceSha256'][:24]}-944x1104.png"
+                padded_hash = save_padded(worker_dir, selected_image, path, aliases=aliases)
                 row["recommendedPadded"] = {
-                    "path": path,
-                    "sha256": save_padded(worker_dir, selected_image, path),
+                    "path": aliases[padded_hash].relative_to(worker_dir).as_posix() if aliases is not None else path,
+                    "sha256": padded_hash,
                     "source": row["retained"],
                 }
             finally:
@@ -1128,9 +1161,11 @@ def checkpoint_render_worker(root, recovery, source, index, expected, binding, b
             variant = row["variants"][selected]
             path = f"candidates/{row['sourceSha256'][:24]}/{selected}-944x1104.png"
             with Image.open(worker_dir / variant["path"]) as opened:
-                variant["padded"] = path
-                variant["paddedSha256"] = save_padded(worker_dir, opened, path)
-        for name in ("denoise", "tone"):
+                padded_hash = save_padded(worker_dir, opened, path, aliases=aliases)
+                variant["padded"] = (
+                    aliases[padded_hash].relative_to(worker_dir).as_posix() if aliases is not None else path)
+                variant["paddedSha256"] = padded_hash
+        for name in (("denoise", "tone") if storage_mode == "full" else ()):
             variant = row["variants"].get(name)
             if variant and "padded" not in variant:
                 path = f"candidates/{row['sourceSha256'][:24]}/{name}-944x1104.png"
@@ -1348,8 +1383,11 @@ def checkpointed_rows(root, recovery, stage, selected, input_rows, binding, base
                 following += 1
 
 
-def publish(root, output, selected, *, limit=0, source_folder=None, counts=None, workers=None):
+def publish(root, output, selected, *, limit=0, source_folder=None, counts=None, workers=None, storage_mode="full"):
     """Publish one immutable report; sandbox orchestration supplies a verified source mirror."""
+    if storage_mode not in ("full", "lean") or (
+            storage_mode == "lean" and RECIPE["id"] != "preparation-comparison-v23"):
+        raise ValueError("storage mode must be full, or lean with the v23 recipe")
     if workers is None:
         # Each worker loads its own models (~10 s); small batches stay serial.
         workers = default_workers() if len(selected) >= PARALLEL_MIN_IMAGES else 1
@@ -1364,7 +1402,8 @@ def publish(root, output, selected, *, limit=0, source_folder=None, counts=None,
         data = verify(root, output)
         if (data["recipe"] != RECIPE or data["limit"] != limit
                 or [r["source"] for r in data["photos"]] != [p.relative_to(root).as_posix() for p in selected]
-                or data["inventory"] != counts or data.get("sourceFolder") != source_folder):
+                or data["inventory"] != counts or data.get("sourceFolder") != source_folder
+                or data.get("storageMode", "full") != storage_mode):
             raise ValueError("existing run has different inputs/recipe; choose a new --out")
         print(f"Existing run verified without rewriting: {output / 'index.html'}")
         return int(any(row["outcome"] in ("unprocessable", "assessment-failed") for row in data["photos"]))
@@ -1378,6 +1417,8 @@ def publish(root, output, selected, *, limit=0, source_folder=None, counts=None,
                 root,
                 {"runOutput": output, "temporaryRoot": temporary_root},
             )}
+    if storage_mode != "full":
+        data["storageMode"] = storage_mode
     safe_path(root, temporary_root)
     input_rows = [
         {"source": source.relative_to(root).as_posix(), "sha256": sha_file(source)}
@@ -1394,6 +1435,8 @@ def publish(root, output, selected, *, limit=0, source_folder=None, counts=None,
         "sourceFolder": source_folder,
         "inventory": counts,
     }
+    if storage_mode != "full":
+        binding["storageMode"] = storage_mode
     binding["fingerprint"] = canonical_sha(binding)
     binding["recipeSha256"] = canonical_sha(RECIPE)
     binding["configurationSha256"] = canonical_sha(data["configurationReceipt"])
@@ -1471,6 +1514,9 @@ def main(argv=None):
     parser.add_argument("--source-folder", help="one active Gallery/Review folder below Working; no recursion")
     parser.add_argument("--workers", type=int, help="parallel preparation processes (default ST_INTAKE_WORKERS, "
                         f"else up to {MAX_WORKERS} by free memory); each gets an equal share of the CPU threads")
+    parser.add_argument("--storage-mode", choices=("full", "lean"), default="full",
+                        help="full: existing comparison evidence; lean: exact-byte role reuse and only recommended "
+                        "padding; neither changes the processing recipe (new standalone reports only)")
     disposition = parser.add_mutually_exclusive_group()
     disposition.add_argument("--quarantine-junk", action="store_true",
                              help="preview report-bound loose-intake Junk moves; --apply backs up and moves, no deletion")

@@ -9,7 +9,7 @@ and preserves chronological access to manually archived records.
 
 | State | Recap | Why it remains active |
 | --- | --- | --- |
-| **Pinned — resume** | [2026-10-30-1247](2026-10-30-1247-recap.md) | Oct 31 installed baseline plus verified equivalent speed exercise and backup benchmark; human review is unchanged, with remaining history/scope work before another run. No worker/reboot blocker remains. |
+| **Pinned — resume** | [2026-10-30-1247](2026-10-30-1247-recap.md) | Oct 31 installed baseline, speed proof and six-photo LEAN producer proof; human review unchanged. Next S26 installed-native reuse/conditional originals, then backup amplification; no full rerun or existing evidence pruning. |
 | **Pinned — feedback** | [2026-10-30-1234](2026-10-30-1234-recap.md) | Complete F01-F31 human-feedback coverage and next-round quality priorities remain relevant after baseline publication. |
 
 “Pinned” is a manual index designation, not an automated workflow or an

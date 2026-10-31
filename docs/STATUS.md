@@ -4,6 +4,21 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Oct 31 duplicate-first storage direction:** preventing exact image copies
+now precedes packing experiments: S25 producer reuse -> S26 installed-native
+references/conditional `gallery_org` -> S24 backup amplification/retention.
+The first opt-in standalone LEAN preparation slice is tested: exact-byte roles
+share a file within their photo; only the recommendation is padded; FULL and
+all processing choices are unchanged. Six real installed-photo sidecars went
+from 62 to 46 images / 61.1 to 42.9 MB with identical recommendations,
+38 native/preview role hashes and selected padding. Browser index/detail
+checks passed; installed baseline/source/backup/receipt hashes are unchanged.
+This sample is not a fresh-population forecast or a LEAN installed rebase.
+FAST processing, on-demand alternate padding and installed original reuse
+are not implemented; no existing evidence was pruned. The
+[owning storage plan](plans/2026-10-28-storage-operations-and-retention.md#oct-31-lean-producer-proof)
+records the copy map, results, full user feedback and incremental gates.
+
 **Oct 31 speed/storage implementation:** the authorized parallel lane now
 has operation-local retained/derivative verification reuse with full end-of-
 operation content/path/membership checks. A six-photo installed A/B produced

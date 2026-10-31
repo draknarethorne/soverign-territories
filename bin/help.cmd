@@ -33,6 +33,7 @@ echo    people-gallery-review.cmd [--root DIR] [--cache FILE] [--out DIR] [--pol
 echo                                    --history-only [--dry-run ^| --check ^| --apply] verifies/repairs only intake history; previews by default, no photo-viewer rebuild
 echo    artists-gallery.cmd [--root DIR] [--cache FILE] [--dry-run ^| --check ^| --apply]  separate Artist overview/photo review; shared small thumbnails in _reports\artists, NO matching or source changes
 echo    prepare-images.cmd --root "SANDBOX\Working" --out "Working\_reports\preparation\RUN" [--limit 28] [--dry-run ^| --apply ^| --check]  sidecar original/control/geometry/denoise/tone, larger pages and padded examples; NO source or identity changes
+echo                                    --storage-mode lean shares exact-byte roles per photo and pads ONLY the recommendation; full remains default; new standalone runs only, NOT a FAST recipe or rebase switch
 echo                                    --source-folder "Various\gallery" --limit 0 compares ALL direct incoming images; v22 overlay-first, guarded crop/erase/residual/reconstruct/compose BEFORE filters; NO live moves
 echo                                    no detected proposal skips person segmentation and composition-only suggestions, NOT a clean-pixel guarantee; denoise/tone comparisons remain
 echo                                    confirmed-pattern reconstruction is synthetic; final recommended pixels feed sandbox matching. --apply may download pinned CPU models once; --check verifies evidence.

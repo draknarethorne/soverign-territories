@@ -52,7 +52,7 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% -m unittest tools.art.test_clean_preparation tools.art.test_retained_preparation
+%PY% -m unittest tools.art.test_clean_preparation tools.art.test_retained_preparation tools.art.test_verification_reads
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
@@ -72,7 +72,7 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% tools\art\test_library_backup.py
+%PY% -m unittest tools.art.test_library_backup tools.art.test_library_backup_benchmark
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1

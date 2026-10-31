@@ -8,6 +8,10 @@
     "schemaVersion": {"const": 1},
     "root": {"type": "string", "minLength": 1},
     "recipe": {"type": "object"},
+    "storageMode": {
+      "description": "Absent means historical FULL evidence. LEAN aliases exact bytes within each photo and pads only its recommendation; no processing steps are skipped.",
+      "enum": ["full", "lean"]
+    },
     "inventory": {
       "type": "object",
       "additionalProperties": {"type": "integer", "minimum": 0}

@@ -76,6 +76,38 @@ class RetainedPreparationTests(unittest.TestCase):
         return retained.stage_photo(
             self.root, self.destination, self.prep, self.row, recipe={"id": "test-v16"})
 
+    def test_exact_role_aliases_publish_once_and_keep_all_role_links(self):
+        self.row["variants"]["tone"] = dict(self.row["variants"]["denoise"])
+        self.stage()
+        data = retained.verify_link(self.root, self.destination)
+        self.assertIsNotNone(data)
+        artifact = self.row["variants"]["denoise"]["path"]
+        published = data["artifactMap"][artifact]
+        self.assertEqual(sum(entry["path"] == published for entry in data["artifacts"]), 1)
+        self.assertEqual(data["row"]["variants"]["tone"], data["row"]["variants"]["denoise"])
+        (self.root / published).write_bytes(b"modified shared role")
+        self.assertIsNone(retained.verify_link(self.root, self.destination))
+
+    def test_role_aliases_to_original_keep_one_retained_original(self):
+        record = self.row["variants"]["tone"]
+        record["path"], record["sha256"] = self.row["retained"], self.source_sha
+        self.stage()
+        data = retained.verify_link(self.root, self.destination)
+        self.assertIsNotNone(data)
+        self.assertEqual(data["artifactMap"][self.row["retained"]], data["original"])
+        self.assertEqual(sum(entry["sha256"] == self.source_sha for entry in data["artifacts"]), 1)
+
+    def test_conflicting_checksums_for_shared_path_refuse_publication(self):
+        self.row["variants"]["tone"] = dict(self.row["variants"]["denoise"])
+        self.row["variants"]["tone"]["sha256"] = sha(b"different bytes")
+        with self.assertRaisesRegex(ValueError, "checksum mismatch"):
+            self.stage()
+        self.assertFalse(any(self.root.rglob(retained.MANIFEST)))
+
+    def test_exact_aliases_survive_cross_owner_move_and_undo(self):
+        self.row["variants"]["tone"] = dict(self.row["variants"]["denoise"])
+        self.test_cross_owner_move_and_undo_restore_exact_set_manifest_and_hashes()
+
     def test_operation_reuse_preserves_lineage_and_reduces_real_content_reads(self):
         self.stage()
         native = self.root / self.destination

@@ -364,8 +364,8 @@ The v23 recipe below can select masked cleanup/reconstruction and a guarded
 no-proposal composition; selection is not a measured enhancement winner or
 hair-safety guarantee. A missed screenshot heuristic does not mean clean.
 Control means oriented/sRGB only. Denoise and tone remain separate comparison
-alternatives. Only the recommendation and denoise/tone alternatives receive
-944x1104 padding; masks and interim candidates remain native-sized.
+alternatives. In default FULL evidence, only the recommendation and denoise/tone
+alternatives receive 944x1104 padding; masks and interim candidates remain native-sized.
 Retained Gallery evidence supports this sparse padding and preserves the
 separate padded-original record when the recommendation is the original.
 Detailed evidence remains required while the flow is unsettled. Labeled
@@ -373,6 +373,35 @@ composites are review aids, not substitutes for exact originals, selected
 inputs, masks or recovery lineage. Summary retention and production-intake
 terminology are acceptance-gated follow-ups in performance T13/T14, not
 permission to delete current reports.
+
+#### LEAN evidence experiment (standalone reports)
+
+For a **new bounded** comparison, add `--storage-mode lean` to the preparation
+command above; start with `--limit 6 --dry-run`, then `--apply`. Use the same
+mode for repeated apply. `--check` reads the saved mode from the manifest and
+fully verifies sources/artifacts; it does not convert an existing report.
+The menu's preparation preview offers `full` or `lean`. FULL remains the
+compatibility default; LEAN is not yet a `library.cmd` or rebase option.
+
+LEAN preserves original/control/recommended panel labels while aliasing
+exact-byte roles within each photo to the same file, including previews.
+Only the selected recommendation receives workflow padding. Denoise/tone
+native alternatives and masks remain available, but unselected alternatives
+do not have padded links. Use a separate FULL comparison when those padded
+alternatives are needed; per-variant on-demand generation is not implemented.
+LEAN does not skip processing or encoding, and is **not FAST**: processing
+profiles remain a separately gated quality change. Different byte encodings
+of apparently identical pixels remain distinct, including raw JPEG versus
+normalized PNG. Sources and existing evidence are never pruned or rewritten.
+
+The first six real installed-photo FULL/LEAN comparison retained identical
+recommendations, native/preview hashes and recommended padding, with 62 to
+46 image files and 61,128,917 to 42,901,872 image bytes. Twelve unselected
+padded images and four exact original/control copies were avoided.
+This is a bounded, already-prepared input sample, not a full-library savings
+forecast or an installed LEAN migration. Complete evidence and the next
+conditional-`gallery_org`/installed-native work live in
+[storage S25/S26](../plans/2026-10-28-storage-operations-and-retention.md#oct-31-lean-producer-proof).
 
 Current v23 checks known overlay patterns, borders, screenshot layout and
 uncertain glyphs before cleanup. No detected proposal retains original pixels

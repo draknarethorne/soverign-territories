@@ -131,7 +131,9 @@ set "ROOT="
 set "RUN="
 set /p "ROOT=Sandbox Working absolute path: "
 set /p "RUN=Comparison run absolute path inside Working\_reports\preparation: "
-call "%~dp0prepare-images.cmd" --root "%ROOT%" --out "%RUN%" --dry-run
+set "STORAGE=full"
+set /p "STORAGE=Evidence storage (full/lean; Enter keeps full): "
+call "%~dp0prepare-images.cmd" --root "%ROOT%" --out "%RUN%" --storage-mode "%STORAGE%" --dry-run
 pause
 goto menu
 :erasercompare

@@ -674,6 +674,10 @@ This adds next-round priorities, not changes to the bound v23 run.
   Processing profiles and storage modes (LEAN/COLLAGE, storage S25) are
   orthogonal. Bind recipe/config hashes to checkpoints/resume and report
   experiment status; don't hard-code profile names as new branching logic.
+  The Oct 31 duplicate-first direction and the first tested LEAN evidence
+  slice live in [storage S25/S26](2026-10-28-storage-operations-and-retention.md#oct-31-lean-producer-proof).
+  They precede this profile work: exact role reuse and omitted unselected
+  padding do not skip enhancement/cleanup evaluation or implement FAST.
 - [ ] **P3 ai** T19 After T18's reviewed contract and bounded profile evidence,
   implement validated CUSTOM step/node definitions and versioned erase/
   reconstruction alternatives, reusing existing modules rather than rewriting

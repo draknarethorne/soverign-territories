@@ -237,11 +237,14 @@ def stage_photo(root, destination, preparation_root, preparation_row, *, recipe)
     artifact_map = {}
     for label, relative, checksum in _image_artifacts(row):
         artifact = _checked(preparation_root, relative, checksum)
+        if relative in artifact_map:
+            continue
+        if relative == row["retained"]:
+            artifact_map[relative] = original_relative
+            continue
         key = f"{intake}/{label}{artifact.suffix.lower()}"
         if key in payloads:
             raise ValueError("repeated retained preparation artifact")
-        if relative in artifact_map:
-            raise ValueError("repeated retained preparation source artifact")
         artifact_map[relative] = key
         payloads[key] = artifact.read_bytes()
     if len(payloads) > MAX_ARTIFACTS - 2:
