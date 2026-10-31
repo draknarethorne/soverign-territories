@@ -4,6 +4,31 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Oct 31 speed/storage implementation:** the authorized parallel lane now
+has operation-local retained/derivative verification reuse with full end-of-
+operation content/path/membership checks. A six-photo installed A/B produced
+identical evidence/thumbnail outputs: 16.014 to 5.040 seconds and digest bytes
+1,044,319,522 to 166,752,025, including final content checks; this is not a
+whole-run speedup claim. Staged history no longer hashes every mirror input
+twice; its complete artifact/source audit remains. S24's opt-in backup
+benchmark compares directory/STORED/deflate1 creation, verification and exact
+mtime/hash restore; mixed-sample compression is not an image-space win or
+approval to adopt ZIP/prune. [L18](plans/2026-10-22-gallery-review-layout.md#oct-31-l18-implementation)
+and the [backup runbook](art/original-photos.md#bounded-backup-format-benchmark-explicit-experiment)
+record results and exercise boundaries. Human C7/I60 continues; S25 scope,
+whole-rebase remeasurement and storage/retention decisions remain open.
+
+The frozen-code isolated Review exercise subsequently completed in
+1,621.82 s; all 2,793 records and 8,379 thumbnails match the installed
+baseline exactly. Edge filters/framing, retained/face/padded/history links,
+2,793 actual history rows and installed Overview passed. Catalogue,
+baseline pages, backup manifest, applied receipt and cache hashes are
+unchanged. The comparison is Review/history-only, not a replacement Overview.
+Two focused batches ran 231 tests successfully (one symlink-privilege skip);
+scoped hooks pass. No worker remains or new intake/rebase occurred.
+L18 is now the sole selected slice in its reactivated plan; the generated
+queue retains all broader UI work as deferred.
+
 **Oct 31, 02:19 installed milestone:** the Various handle cleared without
 reboot; authorized same-run resume preserved all 2,793 audited decisions.
 The full-scale install exposed a retention receipt-size/transaction rollback

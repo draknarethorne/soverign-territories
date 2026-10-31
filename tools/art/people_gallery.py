@@ -50,6 +50,7 @@ from likeness_library.policy import (  # noqa: E402
 )
 from likeness_library.derivatives import thumbnail  # noqa: E402
 from likeness_library.overview_photos import MAX_PHOTOS, arrange_workflow_photo, top_gallery_photos  # noqa: E402
+from likeness_library import verification_reads  # noqa: E402
 
 THUMB = (176, 220)  # match the review gallery's 4:5 portrait framing
 SECTIONS = [
@@ -1085,17 +1086,20 @@ def _main(argv=None, space=None):
     reports = cw.storage_root(cfg, "reports", root=work)
     out = cw.storage_output_path(cfg, "reports", args.out or "library", root=work)
     out.mkdir(parents=True, exist_ok=True)
-    rows = collect(cfg, st, work, space, groups, rend=rend, policy=policy)
+    with verification_reads.session(work, label="Overview thumbnails"):
+        rows = collect(cfg, st, work, space, groups, rend=rend, policy=policy)
     provenance_sources = [
         (photo["path"], photo_id_from_name(photo["name"]))
         for row in rows for photo in row["gallery_photos"]
     ]
     provenance = preparation_provenance.build_index(work, out, provenance_sources, "general")
-    for row in rows:
-        for photo in row["gallery_photos"]:
-            photo["preparationEvidence"] = provenance.evidence(
-                photo["path"], photo_id_from_name(photo["name"]),
-            )
+    history = provenance.history_html().encode("utf-8")
+    with verification_reads.session(work, label="Overview evidence"):
+        for row in rows:
+            for photo in row["gallery_photos"]:
+                photo["preparationEvidence"] = provenance.evidence(
+                    photo["path"], photo_id_from_name(photo["name"]),
+                )
     counts = {}
     for r in rows:
         counts[r["status"]] = counts.get(r["status"], 0) + 1
@@ -1126,7 +1130,6 @@ def _main(argv=None, space=None):
                                                      ]), encoding="utf-8")
     generated = {name: (out / name).read_bytes()
                  for name in ("people_gallery.html", "people_gallery.md", "identity-rankings.md")}
-    history = provenance.history_html().encode("utf-8")
     (out / "intake_runs.html").write_bytes(history)
     generated["intake_runs.html"] = history
     for row in rows:

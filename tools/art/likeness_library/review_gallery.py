@@ -27,6 +27,7 @@ from likeness_library.policy import (
     render_policy_panel,
     render_score_legend,
 )  # noqa: E402
+from likeness_library import verification_reads  # noqa: E402
 
 PAGE_SIZE = 100
 SECTIONS = CATEGORY_ORDER
@@ -1690,12 +1691,14 @@ def _main(argv=None):
         [(item["_photo"].path, item.get("photoId")) for item in items],
         "general",
     )
-    for item in items:
-        item["preparationEvidence"] = provenance.evidence(
-            item["_photo"].path, item.get("photoId"),
-        )
-        item["generationSource"] = item["_photo"].path.relative_to(work).as_posix()
-    public_items, thumb_dir = write_thumbnails(items, out, work)
+    history = provenance.history_html().encode("utf-8")
+    with verification_reads.session(work, label="Review inputs"):
+        for item in items:
+            item["preparationEvidence"] = provenance.evidence(
+                item["_photo"].path, item.get("photoId"),
+            )
+            item["generationSource"] = item["_photo"].path.relative_to(work).as_posix()
+        public_items, thumb_dir = write_thumbnails(items, out, work)
     gallery_chrome.publish_banner(reports)
     report = out / "people_gallery_review.html"
     report.write_text(
@@ -1709,7 +1712,6 @@ def _main(argv=None):
         ),
         encoding="utf-8",
     )
-    history = provenance.history_html().encode("utf-8")
     (out / "intake_runs.html").write_bytes(history)
     report_assets.record(out, {report.name: report.read_bytes(), "intake_runs.html": history})
     print(f"people gallery review: {len(public_items)} photo(s)")

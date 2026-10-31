@@ -9,7 +9,7 @@ import time
 from PIL import Image, ImageOps
 
 import originals
-from . import retained_preparation
+from . import retained_preparation, verification_reads
 from likeness_library.thumbnails import crop_thumbnail
 
 SIZE = (944, 1104)
@@ -18,11 +18,14 @@ MANIFEST = ".photo-derivatives.json"
 
 
 def digest(path):
-    return hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest()
+    return verification_reads.sha256(path)
 
 
 def load(folder):
     path = pathlib.Path(folder) / MANIFEST
+    reads = verification_reads.active()
+    if reads is not None and path.exists():
+        return reads.document(path, 64 * 1024 * 1024)
     return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"entries": {}}
 
 

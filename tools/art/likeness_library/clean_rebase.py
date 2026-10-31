@@ -1282,7 +1282,8 @@ def create_plan(
             "inputCount": len(prepared_rows),
             "artistCount": sum(row["source"].startswith("Artists/") for row in prepared_rows.values()),
         }
-        for name in ("clean_preparation.py", "retained_preparation.py", "derivatives.py", "metadata.py"):
+        for name in ("clean_preparation.py", "retained_preparation.py", "derivatives.py",
+                     "verification_reads.py", "metadata.py"):
             plan["implementationHashes"][name] = metadata.content_sha256(pathlib.Path(__file__).with_name(name))
     cfg = metadata.cw.load_cfg()
     source_manifest = layout["sandbox_root"] / "source-manifest.json"

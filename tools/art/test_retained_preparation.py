@@ -17,6 +17,7 @@ from likeness_library import (
     domains, maintenance, preparation_provenance, retained_preparation as retained,
 )  # noqa: E402
 from likeness_library import metadata  # noqa: E402
+from likeness_library import verification_reads  # noqa: E402
 from likeness_library.policy import load_policy  # noqa: E402
 
 
@@ -74,6 +75,66 @@ class RetainedPreparationTests(unittest.TestCase):
     def stage(self):
         return retained.stage_photo(
             self.root, self.destination, self.prep, self.row, recipe={"id": "test-v16"})
+
+    def test_operation_reuse_preserves_lineage_and_reduces_real_content_reads(self):
+        self.stage()
+        native = self.root / self.destination
+        with mock.patch.object(
+                verification_reads, "_digest", wraps=verification_reads._digest) as digest:
+            expected = []
+            for _ in range(7):
+                expected.append(retained.verify_link(self.root, native, "photo:image_123"))
+                self.assertTrue(retained.source_is_prepared(native))
+            strict_reads = digest.call_count
+        with mock.patch.object(
+                verification_reads, "_digest", wraps=verification_reads._digest) as digest:
+            with verification_reads.session(self.root) as proof:
+                actual = []
+                for _ in range(7):
+                    actual.append(retained.verify_link(self.root, native, "photo:image_123"))
+                    self.assertTrue(retained.source_is_prepared(native))
+            reused_reads = digest.call_count
+        self.assertEqual(expected, actual)
+        self.assertLess(reused_reads, strict_reads // 3)
+        self.assertEqual(proof.stats["directoryScans"], 1)
+        self.assertEqual(proof.stats["jsonLoads"], 1)
+        self.assertGreater(proof.stats["sealReads"], 0)
+
+    def test_operation_reuse_rejects_artifact_manifest_native_and_new_claim_mutation(self):
+        self.stage()
+        data = retained.verify_link(self.root, self.destination)
+        manifest = self.root / data["manifest"]
+        targets = [self.root / self.destination, self.root / data["original"], manifest]
+        for target in targets:
+            original = target.read_bytes()
+            with self.subTest(target=target), self.assertRaisesRegex(ValueError, "content changed"):
+                with verification_reads.session(self.root):
+                    self.assertTrue(retained.source_is_prepared(self.root / self.destination))
+                    target.write_bytes(original + b"changed")
+                    self.assertTrue(retained.source_is_prepared(self.root / self.destination))
+            target.write_bytes(original)
+        new_set = manifest.parent.with_name("f" * 32)
+        with self.assertRaisesRegex(ValueError, "directory changed"):
+            with verification_reads.session(self.root):
+                self.assertTrue(retained.source_is_prepared(self.root / self.destination))
+                new_set.mkdir()
+
+    def test_operation_reuse_keeps_artist_domain_and_photo_id_checks_separate(self):
+        self.stage()
+        artist_row = json.loads(json.dumps(self.row))
+        artist_row["source"] = "Artists/Example/gallery/incoming_image_123.jpg"
+        artist_row["sourceScope"]["matchingDomain"] = "Artists/Example"
+        destination = "Artists/Example/review/incoming_image_123.jpg"
+        self.put(self.root, destination, self.selected)
+        retained.stage_photo(self.root, destination, self.prep, artist_row, recipe={"id": "test-v16"})
+        with verification_reads.session(self.root):
+            general = retained.verify_link(self.root, self.destination, "photo:image_123")
+            artist = retained.verify_link(self.root, destination, "photo:image_123")
+            self.assertEqual(general["domain"], "general")
+            self.assertEqual(artist["domain"], "Artists/Example")
+            self.assertIsNone(retained.verify_link(self.root, destination, "photo:different"))
+            self.assertTrue(retained.source_is_prepared(self.root / destination))
+            self.assertTrue(retained.source_is_prepared(self.root / self.destination))
 
     def test_configured_junk_and_retired_roots_preserve_domain_classification(self):
         config = retained.cw.load_cfg()

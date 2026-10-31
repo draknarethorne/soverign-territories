@@ -12,10 +12,18 @@ restart intake. Storage S24/S25 precedes another expensive run. Exact evidence,
 including two optional render-navigation gaps, is pinned in the
 [recap index](../recap/README.md).
 
+**Oct 31 parallel implementation:** while that human review continues, bounded
+L18 verification reuse and an opt-in S24 backup packing/restore benchmark are
+implemented and tested. This is the user's authorized speed/storage lane,
+not a change to the frozen images, thresholds or backup defaults. See
+[L18 results and source coverage](2026-10-22-gallery-review-layout.md#oct-31-l18-implementation)
+and the [backup exercise](../art/original-photos.md#bounded-backup-format-benchmark-explicit-experiment).
+Broader measurements/LEAN evidence modes remain before another full rebase.
+
 ## Now, next and holding
 
 This supersedes Oct 29's choice to keep all independent plans active.
-There are **4 active, 14 holding and 1 proposed plans**. All unfinished scopes
+There are **5 active, 13 holding and 1 proposed plans**. All unfinished scopes
 stay in their original files: no `_holding` directory or broad link migration.
 Holding is a scheduling state, never completion, cancellation or acceptance.
 The [plan table](#plans) and each held plan's **Resume gate** give its owner
@@ -25,7 +33,7 @@ and reactivation condition.
 | --- | --- | --- |
 | Now, human review of installed baseline | Cast C7, intake I60 | C6/I59/T16/S15 automated gates passed, including real history rows/detail links and rollback bytes. Human placement/quality acceptance remains open. No new full intake |
 | Next, before another expensive run | Storage S24/S25 | Measure file/byte budget; compare scope, packing/compression and retention; agree FULL/LEAN/COLLAGE evidence contract. Preserve verified recovery and active sources; no automatic deletion or ZIP assumption |
-| Before another expensive viewer refresh | [Gallery L18](2026-10-22-gallery-review-layout.md), with T15/T17 evidence | Oct 31 audit elevated the bounded verification-I/O slice to P1; measure repeated reads on frozen fixtures, preserve invalidation/hash/path guards. This is not permission to reopen the held gallery redesign or rerun intake |
+| Parallel speed lane, before another expensive viewer refresh | [Gallery L18](2026-10-22-gallery-review-layout.md), with T15/T17 evidence | First retained-proof reuse slice and full-scale equivalent Review are verified; next bound repeated whole-history audits across pages. Preserve invalidation/hash/path guards. No broader gallery redesign or intake rerun |
 | Next bounded quality round | Performance T17, intake I68/I69/I70 | Recipe-aware statistics, all 13 named cases, coordinated early crop/masks and calibrated denoise/tone selection. Use frozen comparisons before approving another full run; do not change the staged baseline |
 | After those results | Intake I71-I76, performance T18/T19; reactivate upkeep/actions/naming/engine slices as needed | UX/terminology/Artist scope, processing profiles; incremental batch/calibration and action UAT are separate gates, not silently approved |
 | Documentation return checkpoint | [Tooling D13/D4](2026-10-12-tooling-debt.md#steps); D22 agent refresh delivered | After installed-baseline review, explicitly select a bounded remaining documentation slice, then scope day-close automation from findings. Do not preempt storage-before-next-run or reopen a broad reorganization |
@@ -321,7 +329,7 @@ deferred; exact current inputs and all user decisions remain protected.
 | [2026-10-12-roadmap-and-mvp-data.md](2026-10-12-roadmap-and-mvp-data.md) | holding | Explicitly select the independent Darkness/Light data or game-design track after this milestone |
 | [2026-10-12-tooling-debt.md](2026-10-12-tooling-debt.md) | holding | Resume selected tooling slice or demonstrated blocker; day-close automation/non-art audit remain separate |
 | [2026-10-20-art-tools-structure.md](2026-10-20-art-tools-structure.md) | holding | Resume bounded extraction needed by approved implementation; preserve current engine bindings |
-| [2026-10-22-gallery-review-layout.md](2026-10-22-gallery-review-layout.md) | holding | Reactivate proven installed-viewer blocker only, otherwise after acceptance; L18-L20 remain open |
+| [2026-10-22-gallery-review-layout.md](2026-10-22-gallery-review-layout.md) | active | Oct 31 authorization selects L18 only for parallel speed work; broader layout and L19/L20 remain deferred |
 | [2026-10-22-likeness-engine-acceptance.md](2026-10-22-likeness-engine-acceptance.md) | holding | Accepted baseline/labelled review before calibration, convergence and separate incremental batch; Production still gated |
 | [2026-10-22-identity-family-naming.md](2026-10-22-identity-family-naming.md) | holding | Intake tuning before N12 correction/family acceptance; no current bulk naming change |
 | [2026-10-22-review-actions.md](2026-10-22-review-actions.md) | holding | Resume deliberate action UAT on installed baseline, or narrow verified recovery blocker; pending actions untouched |

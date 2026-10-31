@@ -1,11 +1,13 @@
 # 2026-10-22: gallery and Review information layout
 
-**Status:** holding (Oct 30 scheduling; delivered navigation retained, broader UI work deferred)
+**Status:** active (Oct 31 authorization: bounded L18 speed slice only; broader UI work deferred)
 
-**Resume gate:** reactivate only the relevant slice if actual installed
-Gallery/Overview/Review/history UAT exposes a blocker; otherwise after baseline
-acceptance. Current viewer verification remains T16/I59, not a new layout
-redesign. Separate Intake entry, pruning and I/O requests remain open.
+**Queue focus:** L18
+
+**Scope boundary:** the Oct 31 request selects report-verification I/O in
+parallel with human C7/I60 review. No new layout redesign, intake, pruning or
+parameter change is authorized. Other open layout tasks stay deferred unless
+an actual installed-viewer blocker or later explicit selection reactivates them.
 
 ## Oct 25 continuation: retained evidence is now integrated
 
@@ -518,12 +520,13 @@ or conceal pending decisions behind disabled controls.
   treatment, and delete the preview folder (about 44 MB, not manifest-owned).
   Preview copies retain historical data/scripts, including old Artist entries;
   they demonstrate presentation, not the current general-domain filter.
-- [ ] **P1 ai** L18 Improve preparation evidence-index I/O without weakening
-  hash/path/scope checks. Current 2,421-row saved-evidence preview verification
-  takes about 99 seconds because full referenced runs are checked; build once
-  per render, retain explicit limits/errors, and benchmark selective per-photo
-  artifact verification or a safely invalidated reusable verification index.
-  No timestamp-only trust, silent latest-run selection or automatic acceptance.
+- [ ] **P1 ai** L18 Finish preparation evidence-index I/O optimization:
+  operation-local retained/derivative reuse and full-scale
+  row/thumbnail/browser equivalence are delivered; next bound the remaining
+  repeated whole-history audits across page generation.
+  Keep explicit limits/errors, complete hash/path/scope checks and final
+  content invalidation; no timestamp-only trust, silent latest-run selection
+  or automatic acceptance.
 
 Oct 31 full-scale evidence strengthens this existing task: the successful
 same-stage apply took 16,734.44 seconds including backup/stage checks and
@@ -544,6 +547,105 @@ bounded measurement/invalidation tests. Share explicit verified results within
 one frozen generation; do not silently skip hashing, persist timestamp-only
 trust or add a new cache service. Storage scope/budget S24/S25 stays ahead of
 another large run; this report did not implement or benchmark the optimization.
+
+### Oct 31 L18 implementation
+
+The user authorized bounded implementation in parallel with human C7/I60
+review, not another intake/rebase. L18 now has a delivered first slice:
+operation-local retained-manifest discovery, parsed JSON, safe-path, source
+preparation and SHA-256 reuse for Review thumbnails/evidence and Overview
+thumbnails/evidence. No process-global or persisted positive cache is used.
+Every reused operation finishes by rechecking owner membership, all guarded
+paths and **all recorded file contents** before publishing the page. A changed
+native, artifact or manifest fails even with its original size/mtime restored.
+Errors discard the session; standalone calls and mutation/maintenance paths
+retain strict uncached behavior. Artist/path/photo-ID binding is unchanged.
+Fresh prepared-run previews also hash-bind the new verification helper;
+the regression first reproduced its missing implementation receipt binding.
+No frozen applied receipt is rewritten or made acceptable by bypassing that
+guard. A future rebase/parameter experiment requires a new run directory.
+The two focused regression batches ran 231 tests successfully (one Windows
+symlink-privilege skip; simulated reparse-attribute rejection still executes).
+Both new test modules are discovered by the existing library validation scope.
+Scoped hooks/markdownlint pass without processing manual prompt drafts.
+
+History is deliberately outside this reuse scope: wrapping single-use
+whole-run audits in a second complete artifact pass would add I/O. Instead,
+staged history checks each mirror input once in the existing full verifier,
+after comparing the receipt's entire input map to the manifest and guarding
+every path. The redundant pre-verifier input hash pass is removed, not the
+source/artifact audit. Tampered mirror input still makes the run unverified.
+
+**Measured six-photo A/B:** one installed photo from each of Angels, Sisters,
+Models, Prospects, Potentials and Various; actual thumbnail bytes, keys,
+diagnostics, derivative records and retained links are identical (combined
+output SHA-256
+`96203b0fbfcb66e1e2829f6c28993434f450cc6294406484dd57c6a56cd8aa69`).
+Strict versus reuse, **including the final full content seal**:
+
+| Metric | Strict | Operation reuse |
+| --- | ---: | ---: |
+| Wall seconds | 16.014 | 5.040 |
+| Digest-file reads | 1,396 | 423 |
+| Digest bytes | 1,044,319,522 | 166,752,025 |
+
+Digest counters exclude manifest parsing. Reuse additionally parsed 211 JSON
+documents once, scanned six owner directories and checked 1,002 unique safe
+paths; its 317 unique file inputs total 86,180,899 bytes and all receive a
+second content check. This is a bounded warm-cache sample under contention,
+strict-first order, **not a threefold full-install speedup claim**.
+The reproducible read-only helper/receipt are in ignored
+`tmp/perf/benchmark-verification-20261031.py` and
+`verification-benchmark-20261031.json`.
+
+The independent [S24 benchmark](2026-10-28-storage-operations-and-retention.md#4-retention-deduplication-and-one-time-cleanup)
+delivers preview/apply/check comparisons with exact restored hashes/mtimes,
+not an archive-default or deletion-policy change. Parallelism is intentionally
+not the first fix: avoid repeated I/O before adding contention beside ComfyUI.
+S25 FULL/LEAN/COLLAGE and broader history/report audit reuse remain open.
+
+The first isolated scale worker was started before implementation edits had
+finished and dynamically imported a newer retained reader alongside the older
+session class. It failed before publishing a page; the two empty, owned
+comparison directories were removed. The retry freezes runtime hashes for its
+entire duration and independently checks the installed catalogue, pages,
+backup manifest, applied receipt and embedding cache before/after. Do not edit
+runtime modules while a measurement worker is running.
+
+**Verified frozen-code retry:** supported Review generation into the separate
+`_reports/library-performance-20261031/` completed in **1,621.82 seconds**
+(27 min 1.82 s). The staged-history full artifact/source audit took 227.84 s;
+the labelled retained/thumbnail input phase, including its final seal, took
+1,067.64 s. The remaining command time is not independently phase-attributed.
+This is a report-only exercise under contention, not another full rebase or a
+controlled before/after install-speed measurement.
+
+The operation read **48,611 unique inputs / 33,477,426,558 bytes** and
+rehashed every one at the seal; it reused 130,771 digest requests, parsed
+2,996 JSON documents and scanned 203 owners. Full content proof still entails
+two 33.48-GB passes, explaining why storage/evidence scope remains P1.
+All **2,793 public records and 8,379 thumbnail files / 196,065,948 bytes**
+are exactly equal to the installed baseline. Saved/default policy equality
+was independently confirmed; no parameters changed.
+
+Actual Edge checks passed Review/Gallery counts, person/filename filtering,
+head/chest image switching, retained detail, 112x112 aligned face, native
+padded output, **2,793 real history rows** and installed Overview framing.
+No JavaScript or loaded-image failures occurred. The comparison directory
+intentionally contains only Review/history, so its local Overview link is
+uninitialized; use the installed Overview. The two existing optional
+Outputs/Comparison gaps remain L19, not silently accepted as initialized.
+The installed catalogue, three baseline pages, full-backup manifest,
+applied `run.json`, embedding cache and six renderer-module hashes all match
+before and after generation/browser testing.
+
+Durable proof lives beside the frozen run at
+`_sandbox-state/fresh-v23-20261029/performance-audit-20261031/`:
+`report-exercise.json`, `browser-acceptance.json`, `verification-benchmark.json`,
+`backup-benchmark-receipt.json`, `role-reuse-candidates.json` and the bounded
+measurement helpers. No source/artifact/backup was pruned; no full intake or
+rebase was started. Human C7/I60 review continues on the unchanged installed
+pages; the equivalent comparison does not require repeating identity review.
 
 ### Oct 23, 19:36 continuation: presentation-only checks
 
@@ -937,5 +1039,19 @@ above, L12/L19 navigation and L20 safe pruning. No source processing requested.
 <!-- markdownlint-disable MD013 -->
 ```text
 For intake views - it would be nice to have a quick link to one that had some sort of navigation like the overiew and photo review does on the gallery.  Something where each run is a selectable item that then shows all photos underneath.  Instead of the drop-down. It would open that in a new page when clicking the "x runs" link instead of expanding it.  That might make things a little better in the long run.  I like the integrated experience like that for some summary as well.  So that's the type of experience I want.  Even having "intake runs" at the top of the gallery might also be interesting to be able to link to a specific intake run and see the intake overview as well.  I know we'll have a lot of runs - so the filtering of runs needs to not be an issue when we do that.  Basically that will allow me to see the history of runs - which we'll need to prune over time - especially as we're still doing work on the runs.  But I love this concept and how it's coming together.  Keep going - review the work - think deeply about how it's used and make updates as you see need to be made along the way.
+```
+<!-- markdownlint-enable MD013 -->
+
+Source: chat, Oct 31, 2026, 10:25 -05:00 (verbatim).
+Coverage: [L18 implementation](#oct-31-l18-implementation) owns report/evidence
+reuse and the parallel-review exercise; performance T15/T17 owns phase/stats
+follow-through; storage S24/S25 owns backup/history scope, alternatives and
+retention decisions. Rebase C7 and intake I60 remain human review, not
+authorization to rerun or tune the applied baseline. All requests are owned;
+multithreading is an option, not an unmeasured default.
+
+<!-- markdownlint-disable MD013 -->
+```text
+I'll do the review, but why don't you look at speed improvements as we'll need to do another run and performance and storage are the two key items to address, backups and history are costly for storage and performance. If we need to multi-thread pieces that's an option, if we need better cache or re-use to not re-repeat things we should do that. If we have a simpler verification, consider that. Please get going, update plans, docs, code, tests and let me know when you get to a point where we can exercise some of those in parallel with me verifying so we can re-run the rebase and possible adjust parameters.
 ```
 <!-- markdownlint-enable MD013 -->

@@ -441,12 +441,31 @@ class PreparationProvenanceTests(unittest.TestCase):
     def test_current_source_hash_is_cached_per_index(self):
         index = self.index()
         with mock.patch.object(
-            preparation_provenance.hashlib, "sha256",
-            wraps=preparation_provenance.hashlib.sha256,
+            preparation_provenance.verification_reads, "sha256",
+            wraps=preparation_provenance.verification_reads.sha256,
         ) as digest:
             index.evidence(self.photo, self.photo_id)
             index.evidence(self.photo, self.photo_id)
         self.assertEqual(digest.call_count, 1)
+
+    def test_staged_inputs_are_hashed_by_full_verifier_not_a_redundant_prepass(self):
+        _, output = self.staged_receipt()
+        data = json.loads((output / "manifest.json").read_text(encoding="utf-8"))
+        mirror = pathlib.Path(data["root"])
+        source = mirror / data["photos"][0]["source"]
+        with mock.patch.object(
+                retained_preparation, "_checked", wraps=retained_preparation._checked) as checked:
+            index = self.index()
+        staged = next(entry for entry in index.history_runs if entry.get("staged"))
+        self.assertFalse(staged["status"].startswith("unverified"))
+        self.assertFalse(any(
+            pathlib.Path(call.args[0]) == mirror and call.args[1] == data["photos"][0]["source"]
+            for call in checked.call_args_list
+        ))
+        source.write_bytes(b"edited mirror input")
+        staged = next(entry for entry in self.index().history_runs if entry.get("staged"))
+        self.assertTrue(staged["status"].startswith("unverified"))
+        self.assertIn("source changed", staged["status"])
 
     def test_single_trace_has_direct_intake_entry_and_both_viewers_share_renderer(self):
         evidence = self.index().evidence(self.photo, self.photo_id)

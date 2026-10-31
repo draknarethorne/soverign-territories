@@ -404,6 +404,29 @@ evidence through acceptance; active source galleries remain protected.
   options before adopting a format or deletion schedule. Coordinate detailed
   intake-image retention with performance T13/T14 rather than duplicate it.
 
+  **Oct 31 bounded implementation:** the existing `library-backup.cmd
+  --benchmark SNAPSHOT` now previews/measures DIRECTORY, ZIP64 STORED and
+  ZIP64 deflate 1 under explicitly resolved ignored repo `tmp`; `--check`
+  verifies saved measurements, all selected source hashes, payload hashes and
+  exact restored file mtimes/counts/bytes. Changed inputs and incomplete/truncated
+  outputs are refused, not overwritten; links/traversal and long Windows paths
+  have focused regressions. The verified historical snapshot was read only:
+  no full snapshot walk/hash, new intake, library mutation, backup replacement
+  or pruning occurred. Verbatim authorization belongs to the parent's
+  [L18 implementation/user-request record](2026-10-22-gallery-review-layout.md#oct-31-l18-implementation),
+  rather than another copy here.
+
+  **Measured evidence:** a 24-file / 13.7-MB mixed real-image sample passed
+  all three restores and the independent final receipt/output `--check`.
+  Archive packing reduces payload file count; mixed-sample deflate savings
+  must not be interpreted as image savings (the image members expand).
+  Exact denominators, measured times/bytes, commands, output location,
+  boundaries and single-pass warm-cache/B:-read/C:-write caveats live in the
+  [canonical backup runbook](../art/original-photos.md#bounded-backup-format-benchmark-explicit-experiment).
+  DIRECTORY remains the default. S24 stays open for retained scope,
+  whole-library recovery dependencies, broader cold/same-volume measurements
+  and a user-approved retention/prune decision; S25 is unchanged.
+
 - [ ] **P1 ai** S25 With S24's scope/retention review, define and test optional
   storage modes independent of processing recipes: FULL detail, LEAN shared
   verified artifacts for identical original/control/recommendation roles, and
@@ -418,6 +441,22 @@ evidence through acceptance; active source galleries remain protected.
   silent effect of LEAN. T13 owns composite tooling; T14 owns detailed/summary
   evidence acceptance. Source and full item ledger are in intake's Oct 30
   12:31 reconciliation.
+
+  **Oct 31 metadata-only LEAN screen:** the frozen manifest's 2,793 people
+  rows reference 31,774 image roles at 31,650 distinct paths. Restricting
+  candidates to different paths with the same declared SHA-256 **within one
+  original row**, and excluding paths shared by multiple rows, identifies
+  462 potentially avoidable files across 222 photos (462 equal-content groups).
+  This is about 1.46% of referenced image paths, not a byte-saving estimate or
+  proof that an existing artifact may be deleted. No artifact stat/hash pass,
+  cross-lineage merge, rewriting of detail links or change to retained evidence
+  occurred. The reproducible helper and full group ledger are in ignored
+  `tmp/perf/audit-role-reuse-20261031.py` and
+  `tmp/perf/role-reuse-candidates-20261031.json`.
+  This bounds the next LEAN experiment: test explicit role-to-artifact aliases
+  with identical bytes and source lineage before optimizing broader retention.
+  Directory packing and within-row aliases alone do not explain away all
+  backup/history amplification; S24's scope/dependency inventory remains P1.
 
 - [x] **P1 ai** S10 Define and implement a versioned run retention manifest
   and dependency-aware policy. Receipt-backed new runs register as review/keep;

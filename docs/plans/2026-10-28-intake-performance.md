@@ -600,6 +600,15 @@ was introduced.
 
 #### Oct 31: outcome-review speed priorities
 
+**Implementation continuation:** the user's subsequent authorization is
+preserved verbatim with [L18's delivered read-reuse slice and measured A/B](2026-10-22-gallery-review-layout.md#oct-31-l18-implementation).
+It removes repeated retained-proof work within report operations and the
+redundant staged-history mirror-input hash prepass; full content/path checks
+remain. S24 also has an opt-in measured packing/restore experiment.
+T15/T17 remain open for broader progress and recipe-aware processing statistics;
+neither this bounded report optimization nor storage sampling is another intake
+or approval to change parameters. The remainder below records the earlier audit.
+
 The user's new request asks what worked, which cast/name outcomes need more
 iterations, and where speed improvements are useful. The
 [complete routing/name audit](2026-10-23-cast-seeded-library-rebase.md#oct-31-cast-routing-name-continuity-and-iteration-audit)

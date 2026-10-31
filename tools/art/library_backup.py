@@ -559,7 +559,30 @@ def main(argv=None):
                         help="include managed derivatives and generated browser files (complete monthly snapshots)")
     parser.add_argument("--root", help="photo library root (default: workspaces.json paths.productionRoot)")
     parser.add_argument("--inputs", help="ComfyUI inputs root (default: workspaces.json paths.inputsRoot)")
+    parser.add_argument("--benchmark", metavar="SNAPSHOT",
+                        help="opt-in bounded format benchmark from a completed snapshot; preview by default")
+    parser.add_argument("--out", help="benchmark output, strictly below git-ignored repository tmp")
+    parser.add_argument("--limit", type=int, default=24, help="benchmark maximum files (1..64)")
+    parser.add_argument("--max-mib", type=int, default=32, help="benchmark byte cap (1..128 MiB)")
+    parser.add_argument("--dry-run", action="store_true", help="preview only, including with --apply")
+    parser.add_argument("--check", action="store_true", help="verify persisted benchmark measurements and outputs")
     args = parser.parse_args(argv)
+    if args.benchmark:
+        if args.restore or args.verify or args.full or args.root or args.inputs or args.destination:
+            parser.error("--benchmark cannot be combined with snapshot creation/restore options")
+        from library_backup_benchmark import run
+        from zipfile import BadZipFile
+        try:
+            run(args.benchmark, args.out, args.limit, args.max_mib * 1024 * 1024,
+                apply=args.apply and not args.dry_run, check=args.check)
+        except (OSError, ValueError, KeyError, TypeError, RuntimeError, BadZipFile) as exc:
+            print(f"benchmark failed: {exc}", file=sys.stderr)
+            return 1
+        return 0
+    if args.check or args.out:
+        parser.error("--check/--out require --benchmark")
+    if args.dry_run:
+        args.apply = False
     if args.restore:
         if not args.destination:
             parser.error("--restore requires --destination")

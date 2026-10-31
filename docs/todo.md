@@ -13,10 +13,11 @@
 
 - [ ] C7 Review before/after cast seeds, hair/overlay outcomes and every released cast destination; accept a configuration or request another isolated run. Record all image/decision counts and holds. Deliver accepted evidence to ... ([cast seeded library rebase](plans/2026-10-23-cast-seeded-library-rebase.md))
 
-### For the assistant, when you say go (4)
+### For the assistant, when you say go (5)
 
 **P1 (blocks other work, or cheap and valuable)**
 
+- [ ] L18 Finish preparation evidence-index I/O optimization: operation-local retained/derivative reuse and full-scale row/thumbnail/browser equivalence are delivered; next bound the remaining repeated whole-history audits across ... ([gallery review layout](plans/2026-10-22-gallery-review-layout.md))
 - [ ] I60 Audit all changed full-run outputs for false positives and incomplete cleanup; audit identity moves and borderline Review reasons under rebase C8/C9. Validate artifacts, recovery and deterministic repeat behavior before ... ([image intake preparation](plans/2026-10-23-image-intake-preparation.md))
 - [ ] T17 Capture recipe-aware run statistics and publish a compact intake summary with expandable/linked details: input/outcome counts, overlay types, each attempted/executed/skipped/failed step, reconstruction/composition, ... ([intake performance](plans/2026-10-28-intake-performance.md))
 - [ ] S24 After S15's sandbox acceptance, prioritize backup growth: measure retained/backup scope and redundant snapshots with S11; benchmark directory snapshots against bounded ZIP64 stored/low-compression archives for creation, ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
@@ -38,7 +39,7 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-10-12-tooling-debt.md](plans/2026-10-12-tooling-debt.md) | holding | 9 |
 | [2026-10-20-art-tools-structure.md](plans/2026-10-20-art-tools-structure.md) | holding | 10 |
 | [2026-10-22-face-analysis-evaluation.md](plans/2026-10-22-face-analysis-evaluation.md) | holding | 4 |
-| [2026-10-22-gallery-review-layout.md](plans/2026-10-22-gallery-review-layout.md) | holding | 13 |
+| [2026-10-22-gallery-review-layout.md](plans/2026-10-22-gallery-review-layout.md) | active | 12 |
 | [2026-10-22-identity-family-naming.md](plans/2026-10-22-identity-family-naming.md) | holding | 11 |
 | [2026-10-22-library-upkeep.md](plans/2026-10-22-library-upkeep.md) | holding | 7 |
 | [2026-10-22-likeness-engine-acceptance.md](plans/2026-10-22-likeness-engine-acceptance.md) | holding | 19 |

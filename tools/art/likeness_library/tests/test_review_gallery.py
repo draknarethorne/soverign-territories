@@ -805,7 +805,7 @@ class ReviewGalleryTests(unittest.TestCase):
 
     def test_thumbnail_cache_reuses_derivative_by_content(self):
         with tempfile.TemporaryDirectory() as tmp:
-            from likeness_library import derivatives
+            from likeness_library import derivatives, verification_reads
             source = pathlib.Path(tmp) / "Person" / "gallery" / "photo.jpg"
             source.parent.mkdir(parents=True)
             Image.new("RGB", (800, 1000), "white").save(source)
@@ -825,7 +825,13 @@ class ReviewGalleryTests(unittest.TestCase):
             }
             out = pathlib.Path(tmp) / "report"
             first, _ = review_gallery.write_thumbnails([item], out)
-            second, _ = review_gallery.write_thumbnails([item], out)
+            before = {path.name: path.read_bytes()
+                      for path in (out / "people_gallery_review_files").glob("*.jpg")}
+            with verification_reads.session(pathlib.Path(tmp)):
+                second, _ = review_gallery.write_thumbnails([item], out)
+            self.assertEqual(first, second)
+            self.assertEqual(before, {path.name: path.read_bytes()
+                                     for path in (out / "people_gallery_review_files").glob("*.jpg")})
             self.assertEqual(first[0]["thumbnail"], second[0]["thumbnail"])
             self.assertEqual(first[0]["thumbnailHead"], second[0]["thumbnailHead"])
             self.assertEqual(first[0]["thumbnailFace"], second[0]["thumbnailFace"])
@@ -836,6 +842,38 @@ class ReviewGalleryTests(unittest.TestCase):
             self.assertEqual(len(list((out / "people_gallery_review_files").glob("*.jpg"))), 3)
             with Image.open(out / first[0]["thumbnailFace"]) as face:
                 self.assertEqual(face.size, (320, 320))
+
+    def test_failed_content_seal_does_not_publish_review_or_history(self):
+        from likeness_library import verification_reads
+        scratch = pathlib.Path(__file__).resolve().parents[4] / "tmp"
+        with tempfile.TemporaryDirectory(dir=scratch) as tmp:
+            root = pathlib.Path(tmp)
+            out = root / "_reports" / "library"
+            out.mkdir(parents=True)
+            report = out / "people_gallery_review.html"
+            history = out / "intake_runs.html"
+            report.write_bytes(b"existing review")
+            history.write_bytes(b"existing history")
+            native = root / "source.bin"
+            native.write_bytes(b"original")
+            cfg = {"storageRoots": {"reports": "_reports"}}
+            index = SimpleNamespace(history_html=lambda: "new history")
+
+            def mutate(_items, _out, _work):
+                verification_reads.sha256(native)
+                native.write_bytes(b"modified")
+                return [], out / "people_gallery_review_files"
+
+            with mock.patch.object(review_gallery.likeness, "build",
+                                   return_value=(cfg, {}, root, None, None)), \
+                    mock.patch.object(review_gallery.metadata, "load_catalog", return_value={}), \
+                    mock.patch.object(review_gallery, "collect_items", return_value=([], [])), \
+                    mock.patch.object(review_gallery.preparation_provenance, "build_index", return_value=index), \
+                    mock.patch.object(review_gallery, "write_thumbnails", side_effect=mutate), \
+                    self.assertRaisesRegex(ValueError, "content changed"):
+                review_gallery.main(["--root", str(root)])
+            self.assertEqual(report.read_bytes(), b"existing review")
+            self.assertEqual(history.read_bytes(), b"existing history")
 
 
 if __name__ == "__main__":

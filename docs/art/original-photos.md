@@ -917,6 +917,70 @@ These transaction snapshots are verified by the same launcher but are not
 eligible as full-library recovery baselines. Other actions retain full backup.
 See [whole-person rename](likeness.md#whole-person-rename) for the boundary.
 
+#### Bounded backup-format benchmark (explicit experiment)
+
+`bin\library-backup.cmd --benchmark SNAPSHOT` previews a deterministic,
+manifest-selected sample; it does **not** create a backup or change its format.
+The source must be a completed snapshot. Only selected files are checked against
+its recorded SHA-256; this command never scans or verifies the full snapshot.
+Selection round-robins extension/path strata with stable hashed filename order.
+The defaults are 24 files / 32 MiB, with hard caps of 64 files / 128 MiB.
+This is representative sampling, not an exhaustive or random statistical sample.
+
+```powershell
+$snapshot = 'B:\Sovereign Territories Sandbox\Working\_backup\library-20261029-235003'
+$out = 'C:\Soverign-Territories\soverign-territories\tmp\backup-benchmarks\s24-20261031-real24-final'
+cmd /c bin\library-backup.cmd --benchmark "$snapshot" --out "$out" --dry-run
+# Use a NEW output path for a new measurement; the saved example below is reusable by --check.
+cmd /c bin\library-backup.cmd --benchmark "$snapshot" --out "$out" --apply
+cmd /c bin\library-backup.cmd --benchmark "$snapshot" --out "$out" --check
+```
+
+Outputs must resolve strictly below the repository's git-ignored `tmp`.
+Each format retains its payload and an independently hash-verified restored tree.
+ZIP members force ZIP64 local headers; STORED and deflate level 1 are compared
+against ordinary directory copies. Nanosecond file mtimes are recorded separately
+in `receipt.json`, not entrusted to ZIP's coarse timestamps. Restore verifies exact
+selected filenames, sizes, SHA-256 and recorded mtimes, not ACLs, empty directories
+or directory timestamps. Library sources, snapshots and reviewer pages are read-only.
+Reparse points/junctions/symlinks, unsafe members and snapshot/output overlap are refused.
+
+`--check` verifies the persisted receipt, selected source hashes, every payload
+and every retained restore, including exact file counts and bytes. Repeating an
+unchanged invocation verifies/reuses the receipt without rewriting measurements.
+Changed inputs/settings, modified/truncated archives and incomplete runs fail
+closed: use a new ignored output path after investigation. Interrupted benchmark
+folders have no complete receipt and are never resumed or silently overwritten;
+they are **not** recovery snapshots. No existing snapshot is removed or replaced.
+
+Oct 31 bounded measurement (Python 3.14.3): 24 of 72,991 manifest files,
+13,697,208 of 41,998,676,177 bytes. Twelve selected JPEG/PNG files total
+3,242,746 bytes; the other twelve are metadata/pages and one MP4.
+The useful persisted receipt is the example `$out\receipt.json` above.
+
+| Payload | Build s | Full hash verify s | Restore + full hash/mtime check s | Payload bytes | Payload files |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| DIRECTORY | 0.1085 | 0.1047 | 0.2166 | 13,697,208 | 24 |
+| ZIP64 STORED | 0.0952 | 0.0201 | 0.2788 | 13,703,134 | 1 |
+| ZIP64 deflate 1 | 0.3266 | 0.0690 | 0.2823 | 12,596,858 | 1 |
+
+Every restored format contains all 24 files / 13,697,208 bytes with exact hashes
+and recorded mtimes. Deflate saves 8.03% on this **mixed** sample, but the twelve
+image members alone expand to 3,411,290 compressed payload bytes (before ZIP
+headers), so this is not evidence that compressing image backups saves space.
+ZIP64 STORED adds 5,926 bytes but reduces payload file count from 24 to 1.
+Logical payload bytes exclude allocation size, restored copies and receipt overhead.
+Single passes run in fixed DIRECTORY/STORED/deflate order with warm OS caches;
+no cache eviction, fsync, cold-drive or same-volume B: throughput is measured.
+Builds read B: and write repository tmp on C:. An independent final `--check`
+passed. The >4-GiB ZIP64 boundary and full-library interruption recovery are
+not exercised by this bounded experiment.
+
+**Recommendation:** retain DIRECTORY as the backup default. Archive file-count
+reduction is promising, not approval to adopt archives, change retention or prune.
+Broader workload/cold-drive measurements and dependency-aware recovery/retention
+approval remain [S24 work](../plans/2026-10-28-storage-operations-and-retention.md).
+
 ### Post-action gallery maintenance (no matching)
 
 `bin\people-gallery.cmd` now previews housekeeping by default; it no longer

@@ -236,6 +236,8 @@ class CleanPreparationTests(unittest.TestCase):
         self.assertIn("run.json", registered["manifestHashes"])
         self.assertEqual(plan["preparation"]["inputCount"], 5)
         self.assertEqual(plan["preparation"]["artistCount"], 1)
+        helper = pathlib.Path(derivatives.__file__).with_name("verification_reads.py")
+        self.assertEqual(plan["implementationHashes"]["verification_reads.py"], metadata.content_sha256(helper))
         self.assertEqual(len(plan["photos"]), 4)
         self.assertTrue(all(self.run in path.parents for path in self.measured))
         self.assertTrue(any(row["preparedSHA256"] != row["sha256"] for row in plan["photos"]))

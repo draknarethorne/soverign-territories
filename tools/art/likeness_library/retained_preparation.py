@@ -13,7 +13,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT))
 from tools.workflows import comfy_workflows as cw  # noqa: E402
 
-from . import metadata
+from . import metadata, verification_reads
 
 
 MAX_MANIFEST_BYTES = 8 * 1024 * 1024
@@ -23,6 +23,11 @@ MANIFEST = "manifest.json"
 
 
 def _safe(root, relative):
+    reads = verification_reads.active()
+    return reads.safe_path(root, relative, _safe_uncached) if reads is not None else _safe_uncached(root, relative)
+
+
+def _safe_uncached(root, relative):
     root = pathlib.Path(root).absolute()
     value = str(relative)
     parts = pathlib.PurePosixPath(value).parts
@@ -41,11 +46,7 @@ def _safe(root, relative):
 
 
 def _digest(path):
-    digest = hashlib.sha256()
-    with path.open("rb") as stream:
-        for block in iter(lambda: stream.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
+    return verification_reads.sha256(path)
 
 
 def _storage_prefix(root, name, cfg=None):
@@ -316,10 +317,16 @@ def stage_photo(root, destination, preparation_root, preparation_row, *, recipe)
 def _manifests(root, current):
     owner = _owner(current, root)
     directory = _safe(root, f"{owner}/gallery_intake")
+    reads = verification_reads.active()
+    cache_key = (pathlib.Path(root).absolute(), directory)
+    if reads is not None and cache_key in reads.manifests:
+        return reads.manifests[cache_key]
+    children = reads.children(directory) if reads is not None else None
     if not directory.exists():
         return []
     paths = []
-    for count, child in enumerate(directory.iterdir()):
+    children = children if children is not None else directory.iterdir()
+    for count, child in enumerate(children):
         if count >= MAX_SETS:
             raise ValueError("retained preparation index exceeds bounded set count")
         _safe(root, child.relative_to(root).as_posix())
@@ -327,10 +334,18 @@ def _manifests(root, current):
             if not re.fullmatch("[0-9a-f]{32}", child.name):
                 raise ValueError("unexpected retained preparation set")
             paths.append(_safe(root, f"{owner}/gallery_intake/{child.name}/{MANIFEST}"))
+    if reads is not None:
+        reads.manifests[cache_key] = paths
     return paths
 
 
 def _load(path):
+    reads = verification_reads.active()
+    if reads is not None:
+        data = reads.document(path, MAX_MANIFEST_BYTES)
+        if data.get("formatVersion") != 1:
+            raise ValueError("unsupported retained preparation manifest")
+        return data
     if path.stat().st_size > MAX_MANIFEST_BYTES:
         raise ValueError("retained preparation manifest too large")
     data = json.loads(path.read_text(encoding="utf-8"))
@@ -452,31 +467,48 @@ def crop_guard(root, photo, photo_id=None):
 def source_is_prepared(photo):
     """Resolve only the native owner's explicit current-path claims, fail closed."""
     native = pathlib.Path(getattr(photo, "path", photo)).absolute()
+    reads = verification_reads.active()
+    if reads is None:
+        return _source_is_prepared(native)
+    if native not in reads.prepared:
+        reads.prepared[native] = _source_is_prepared(native)
+    return reads.prepared[native]
+
+
+def _source_is_prepared(native):
     if native.parent.name not in ("gallery", "review"):
         return False
     owner = native.parent.parent
     directory = _safe(owner, "gallery_intake")
+    reads = verification_reads.active()
+    children = reads.children(directory) if reads is not None else None
     if not directory.exists():
         return False
     photo_id = metadata.photo_id_from_name(native.name)
-    for count, child in enumerate(directory.iterdir()):
+    children = children if children is not None else directory.iterdir()
+    for count, child in enumerate(children):
         if count >= MAX_SETS:
             raise ValueError("prepared source owner exceeds bounded set count")
-        _safe(owner, child.relative_to(owner).as_posix())
-        if not child.is_dir() or not re.fullmatch("[0-9a-f]{32}", child.name):
-            raise ValueError("invalid retained preparation owner entry")
-        manifest = _safe(owner, f"gallery_intake/{child.name}/{MANIFEST}")
-        try:
-            data = _load(manifest)
-            relative = data["current"]
-        except (OSError, ValueError, KeyError, TypeError) as exc:
-            raise ValueError(f"invalid prepared source lineage: {manifest}: {exc}") from exc
-        parts = pathlib.PurePosixPath(relative).parts
-        root = native
-        for _ in parts:
-            root = root.parent
-        _owner(relative, root)
-        expected = _safe(root, relative)
+        if reads is not None and child in reads.source_claims:
+            data, root, expected = reads.source_claims[child]
+        else:
+            _safe(owner, child.relative_to(owner).as_posix())
+            if not child.is_dir() or not re.fullmatch("[0-9a-f]{32}", child.name):
+                raise ValueError("invalid retained preparation owner entry")
+            manifest = _safe(owner, f"gallery_intake/{child.name}/{MANIFEST}")
+            try:
+                data = _load(manifest)
+                relative = data["current"]
+            except (OSError, ValueError, KeyError, TypeError) as exc:
+                raise ValueError(f"invalid prepared source lineage: {manifest}: {exc}") from exc
+            parts = pathlib.PurePosixPath(relative).parts
+            root = native
+            for _ in parts:
+                root = root.parent
+            _owner(relative, root)
+            expected = _safe(root, relative)
+            if reads is not None:
+                reads.source_claims[child] = (data, root, expected)
         if expected == native:
             return crop_guard(root, native, photo_id)
         if data.get("photoId") == photo_id and photo_id is not None:

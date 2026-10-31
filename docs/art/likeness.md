@@ -561,6 +561,33 @@ The former 8 MiB ceiling rejected the actual 49,709,196-byte v23 manifest,
 leaving a run label with zero photos. Check verified photo counts and detail
 links, not just the presence of the run name.
 
+Report generation reuses retained/derivative verification only within an
+explicit operation. Before page publication, it rechecks the owner-directory
+membership, linked/reparse-path guards and **full SHA-256 of every recorded
+input**; original size/mtime alone never authorizes reuse. A failed final
+check refuses the page update. Review/Overview evidence and thumbnails share
+this mechanism; standalone checks and source-changing maintenance do not use
+it. History still audits every declared artifact and current mirror source;
+the duplicate staged-input hash prepass is removed, not the full audit.
+Progress output identifies the input and final-seal phases and their read counts.
+Do not run source-changing commands concurrently: these are full before/after
+content checks, not a filesystem lock or an immutable-snapshot guarantee.
+
+For an isolated report-only comparison while reviewing the installed baseline:
+
+```powershell
+cmd /c bin\people-gallery-review.cmd --root "B:\Sovereign Territories Sandbox\Working" --cache "B:\Sovereign Territories Sandbox\Working\_sandbox-state\fresh-v23-20261029\likeness-cache.json" --policy "B:\Sovereign Territories Sandbox\Working\_sandbox-state\fresh-v23-20261029\policy.json" --out library-performance-20261031 --no-renders
+```
+
+This writes a separate report/thumbnail cache under configured reports, not a
+new intake or rebase. Use a new output name for another comparison; the existing
+installed pages remain the human-review baseline. Whole-run history verification
+still runs and can be slow; bounded timings are not full-run speedup estimates.
+The report includes the existing aligned-face and retained-detail links.
+This isolated output contains Review/history only: its local Overview target is
+not generated. Use the existing installed Overview rather than treating this
+comparison folder as a new complete gallery publication.
+
 In grouped views the header has separate **Reference photo**, **Identity details**
 and **Manual actions** panels. The read-only reference stays visible even when
 the same photo is in the grid; only the grid copy has photo staging controls.

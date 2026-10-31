@@ -1,12 +1,13 @@
 """Read-only links from gallery photos to verified preparation comparisons."""
-import hashlib
 import html
 import json
 import os
 import pathlib
+import time
 from urllib.parse import quote, urlencode
 
 from tools.workflows import comfy_workflows as cw
+from . import verification_reads
 
 
 MAX_RUNS = 32
@@ -191,7 +192,7 @@ class PreparationIndex:
                     self.incomplete = True
                     self._error(f"{run.name}: manifest exceeds {MAX_MANIFEST_BYTES} bytes")
                     return
-                preview = json.loads(manifest.read_text(encoding="utf-8"))
+                preview = verification_reads.document(manifest, MAX_MANIFEST_BYTES)
                 row_total = len(preview.get("photos", []))
                 if row_count + row_total > MAX_ROWS:
                     self.incomplete = True
@@ -257,10 +258,12 @@ class PreparationIndex:
                     self.history_runs.append(entry)
                     if receipt_path.stat().st_size > MAX_MANIFEST_BYTES:
                         raise ValueError("staged receipt exceeds byte limit")
-                    receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+                    receipt = verification_reads.document(receipt_path, MAX_MANIFEST_BYTES)
                     if (receipt.get("schemaVersion") != 1
                             or not isinstance(receipt.get("assessmentErrors"), bool)):
                         raise ValueError("invalid staged intake receipt schema")
+                    started = time.perf_counter()
+                    print(f"Preparation history: auditing staged {run.name}; full artifact/source checks", flush=True)
                     mirror_relative = relative + "/inputs"
                     mirror = _safe(self.root, mirror_relative)
                     mirror_reports = cw.storage_root(
@@ -274,7 +277,7 @@ class PreparationIndex:
                                         receipt["preparationManifestSHA256"])
                     if manifest.stat().st_size > MAX_MANIFEST_BYTES:
                         raise ValueError("staged manifest exceeds byte limit")
-                    preview = json.loads(manifest.read_text(encoding="utf-8"))
+                    preview = verification_reads.document(manifest, MAX_MANIFEST_BYTES)
                     if len(preview.get("photos", [])) > MAX_ROWS:
                         raise ValueError("staged run exceeds photo limit")
                     inputs = receipt["inputs"]
@@ -282,7 +285,7 @@ class PreparationIndex:
                         raise ValueError("invalid staged receipt inputs")
                     expected = {}
                     for source, digest in inputs.items():
-                        _checked(mirror, source, digest)
+                        _safe(mirror, source)
                         expected[source] = digest
                     actual = {row["source"]: row["sourceSha256"] for row in preview["photos"]}
                     if len(actual) != len(preview["photos"]) or actual != expected:
@@ -305,8 +308,11 @@ class PreparationIndex:
                     entry["status"] = "verified staged/intake-only; not accepted publication"
                     for photo in entry["photos"]:
                         photo["staged"] = True
+                    print(f"Preparation history: {run.name}; {len(entry['photos'])} scoped rows indexed "
+                          f"in {time.perf_counter() - started:.2f}s", flush=True)
                 except (OSError, ValueError, KeyError, TypeError) as exc:
                     entry["status"] = "unverified staged receipt: " + str(exc)[:240]
+                    print(f"Preparation history: {run.name}; {entry['status']}", flush=True)
         except (OSError, ValueError) as exc:
             self._error("Cannot discover staged intake receipts: " + str(exc))
 
@@ -359,7 +365,7 @@ class PreparationIndex:
     def _current_hash(self, key, path):
         if key not in self._hashes:
             try:
-                digest = hashlib.sha256(path.read_bytes()).hexdigest()
+                digest = verification_reads.sha256(path)
                 self._hashes[key] = digest
             except OSError as exc:
                 self._hashes[key] = None

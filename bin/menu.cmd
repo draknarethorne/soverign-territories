@@ -27,6 +27,7 @@ echo   T  Preview artist-only likeness grouping in the sandbox (shared engine, n
 echo   V  Preview separate Artist gallery pages (no matching or source changes)
 echo   C  Photo library check (read only: anything waiting?)
 echo   B  Back up the photo library and ComfyUI inputs
+echo      B also offers a bounded backup-format benchmark preview (Help lists apply/check)
 echo   X  Intake-aware sandbox clean start (inventory or verify; completed-stage recovery flags in Help)
 echo   N  Preview sandbox run-retention decisions (read only)
 echo   F  Preview reference-render batch (offline, no workflow deployment or queue)
@@ -236,6 +237,13 @@ call "%~dp0cleanup.cmd" "%WS%" %FLAG%
 pause
 goto menu
 :backup
+set "SNAPSHOT="
+set /p "SNAPSHOT=Benchmark an existing snapshot instead? Full snapshot path (blank = normal backup): "
+if not "%SNAPSHOT%"=="" (
+  call "%~dp0library-backup.cmd" --benchmark "%SNAPSHOT%" --dry-run
+  pause
+  goto menu
+)
 set "APPLY="
 set "FLAG="
 set /p "APPLY=Create the snapshot now? (n = preview only): "

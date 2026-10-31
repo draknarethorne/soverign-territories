@@ -25,6 +25,7 @@ echo    library-preview.cmd             the same, every step as a preview ^(noth
 echo    library-check.cmd               read only: is it in step, any duplicates, any photo waiting? Exit 1 when work is waiting
 echo    library-backup.cmd [--apply ^| --full ^| --verify SNAPSHOT]  preview, create, or verify a dated snapshot (^--full keeps generated derivatives)
 echo    library-backup.cmd --restore SNAPSHOT --destination NEW_DIR [--apply]  preview/materialize exact recovery with regenerated derivatives; never overwrites a live tree
+echo    library-backup.cmd --benchmark SNAPSHOT [--limit 24] [--max-mib 32] [--out REPO_TMP_DIR] [--dry-run ^| --apply ^| --check]  bounded directory/ZIP64 stored/deflate1 measurements; never changes library or backup defaults
 echo    people-gallery.cmd [--dry-run ^| --check ^| --apply] [--root DIR] [--cache FILE] [--out DIR] [--policy FILE]  preview/check local housekeeping; apply backs up, normalizes originals, maintains padded/head/chest and both viewers; NO matching
 echo                                    active action undo blocks apply; undo first or explicitly --settle-actions to close undo with full recovery snapshot
 echo                                    --preserve-action-undo leaves active-action identity trees untouched and maintains others; held files remain diagnostic, no settlement
