@@ -5,11 +5,11 @@ Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (gen
 
 ## The pattern
 
-**Current scheduling (Oct 30):** finish the existing sandbox baseline, do not
-restart intake. Recovery and the full intake/matching/AI audit are complete;
-the afternoon retry has published the sandbox and is generating viewers.
-Independent installed/browser/rollback checks remain pending. Do not start
-another replan/intake or generator while the worker is active. Exact evidence is pinned in the
+**Current scheduling (Oct 31):** the existing sandbox baseline is installed
+and its automated installed/browser/recovery gates passed. No worker remains.
+Human identity/quality review C7/I60 is next; do not replan the applied run or
+restart intake. Storage S24/S25 precedes another expensive run. Exact evidence,
+including two optional render-navigation gaps, is pinned in the
 [recap index](../recap/README.md).
 
 ## Now, next and holding
@@ -23,7 +23,7 @@ and reactivation condition.
 
 | Window | Work | Exit / boundary |
 | --- | --- | --- |
-| Now, finish installed acceptance | Cast C6/C7, intake I59/I60, performance T16, storage S15 | Publication succeeded; finish current viewer generation, installed check, actual Gallery/Overview/Review, retained intake history and exact face/prepared/padded links, rollback audit and human placement/quality review. No new full intake |
+| Now, human review of installed baseline | Cast C7, intake I60 | C6/I59/T16/S15 automated gates passed, including real history rows/detail links and rollback bytes. Human placement/quality acceptance remains open. No new full intake |
 | Next, before another expensive run | Storage S24/S25 | Measure file/byte budget; compare scope, packing/compression and retention; agree FULL/LEAN/COLLAGE evidence contract. Preserve verified recovery and active sources; no automatic deletion or ZIP assumption |
 | Next bounded quality round | Performance T17, intake I68/I69/I70 | Recipe-aware statistics, all 13 named cases, coordinated early crop/masks and calibrated denoise/tone selection. Use frozen comparisons before approving another full run; do not change the staged baseline |
 | After those results | Intake I71-I76, performance T18/T19; reactivate upkeep/actions/naming/engine slices as needed | UX/terminology/Artist scope, processing profiles; incremental batch/calibration and action UAT are separate gates, not silently approved |
@@ -71,7 +71,7 @@ independent analysis and one small quality improvement alongside it:
 
 | Lane | Current candidates | Required output / stop |
 | --- | --- | --- |
-| Main delivery | Same-stage install and real viewer/recovery checks | Finish or report a concrete blocker; no new intake or recipe change to the frozen run |
+| Main delivery | Human review of verified installed baseline | Record identity/quality feedback under C7/I60; no new intake or recipe change to the frozen run |
 | Parallel analysis | S24/S25 backup/artifact alternatives; I68/I69 mask/erase case diagnosis; I70 denoise/tone criteria; T17 measurement design | One owner, bounded sources, evidence and a decision/recommendation handed back to the existing task. Reading existing evidence may proceed before install; mutation, benchmarks and default adoption keep their own gates |
 | Small quality improvement | Clearer report labels/links/empty states, documentation navigation and focused regression coverage, scoped within I71-I73 or the owning tool | Preview and focused validation; no model/threshold/recipe, schema, root layout, dependency or storage-retention change disguised as a quick win |
 
@@ -327,10 +327,10 @@ deferred; exact current inputs and all user decisions remain protected.
 | [2026-10-22-face-analysis-evaluation.md](2026-10-22-face-analysis-evaluation.md) | holding | Labelled ambiguity after installed review, or actual blocking alignment defect; no speculative model dependency |
 | [2026-10-22-manual-prompts-to-art-library.md](2026-10-22-manual-prompts-to-art-library.md) | holding | Prepared-input review and explicit selection before P14-P17 fidelity/token/set work; manual drafts preserved |
 | [2026-10-22-library-upkeep.md](2026-10-22-library-upkeep.md) | holding | Actual derivative/input defect or accepted baseline before U1/U3/U6/U7 follow-through; no independent maintenance now |
-| [2026-10-23-image-intake-preparation.md](2026-10-23-image-intake-preparation.md) | active | Phase 1: full v23 intake/check and AI screening complete; expanded human feedback fully mapped F01-F31. I68-I70 own next-round cases/masking/enhancement; I71-I76 own report/scope/naming/Junk follow-ups. Installed face/history acceptance remains blocked on Explorer |
-| [2026-10-23-cast-seeded-library-rebase.md](2026-10-23-cast-seeded-library-rebase.md) | active | Phase 3: revised matching/audit complete, 99 Review holds and full backup verified; safe same-preview retry follows measured native-owner fix, then actual checks/viewers; family/name/Production gates remain |
+| [2026-10-23-image-intake-preparation.md](2026-10-23-image-intake-preparation.md) | active | Phase 1: I59 actual installed face/history acceptance passed; I60 current quality review remains open. Expanded feedback is fully mapped F01-F31; I68-I70 own next-round cases/masking/enhancement and I71-I76 own UX/scope/naming/Junk follow-ups |
+| [2026-10-23-cast-seeded-library-rebase.md](2026-10-23-cast-seeded-library-rebase.md) | active | Phase 3: C6 installed/recovery/viewer gates passed; C7 human identity/quality review remains, with 99 Review holds. Family/name/Production gates remain separate |
 | [2026-10-25-reference-rendering.md](2026-10-25-reference-rendering.md) | holding | Verified rebase/prepared inputs plus manual fidelity and R44 routing before bounded Prime batch; no queue during install block |
-| [2026-10-28-intake-performance.md](2026-10-28-intake-performance.md) | active | T16 actual publication/viewers first after Explorer release; T17 recipe-aware statistics P1 next round, T18 profile/recipe contract P2, T19 CUSTOM P3. Mask comparison T11 transferred to intake I68/I69; T13/T14/T15 remain independent |
+| [2026-10-28-intake-performance.md](2026-10-28-intake-performance.md) | active | T16 installation/check/viewer measurements verified; T17 statistics P1 follows storage budget, T18 profile/recipe contract P2, T19 CUSTOM P3. Repeated viewer verification I/O remains L18; T13/T14/T15 stay independent |
 | [2026-10-28-storage-operations-and-retention.md](2026-10-28-storage-operations-and-retention.md) | active | S24 backup scope/format/retention and S25 orthogonal FULL/LEAN/COLLAGE storage are top P1 follow-ups after sandbox acceptance; active sources/recovery protected. S17-S19 physical-root/config proposals remain gated |
 
 The Oct 22 retained plans have review/questions blocks; affected owners now

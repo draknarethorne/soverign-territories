@@ -1,10 +1,10 @@
 # 2026-10-23: all-image preparation and cast-seeded rebase experiments
 
-**Status:** active (Phase 3; v23 publication completed; viewer refresh and independent installed/browser acceptance pending)
+**Status:** active (Phase 3; C6 installed and independently verified; C7 human identity/quality review remains)
 
-**Queue focus:** C6, C7
+**Queue focus:** C7
 
-**Scheduling:** now: same-stage installation and human placement review.
+**Scheduling:** now: human placement review of the verified installed baseline.
 Other open scenarios, C10 future duplicate selection and eventual Production/
 family gates stay in this plan but are outside today's execution focus.
 
@@ -572,7 +572,7 @@ implicitly selected here.
   parameters; compare cast retention, released-photo destinations, false
   matches/misses, fragmentation, holds, runtime and conservation. Follow-up
   movement/convergence acceptance stays with engine E7, not hidden cascades.
-- [ ] **P1 ai** C6 Install reversibly only after approved preview, then normalize
+- [x] **P1 ai** C6 Install reversibly only after approved preview, then normalize
   final-folder filenames and regenerate maintained padded/head/chest outputs and
   derivative-backed viewers/index. Reconcile obsolete managed outputs safely;
   preserve unknown/edited files and exact action/rebase recovery. Verify selected
@@ -682,6 +682,53 @@ Coverage: handle diagnosis and authorized retry -> C6/T16; independent
 rollback/backup audit -> storage S15; actual installed pages -> intake I59;
 human quality/identity acceptance remains C7/I60. ComfyUI contention prevents
 interpreting these wall times as isolated performance benchmarks.
+
+### Oct 31, 02:19: final installed verification
+
+C6 is complete, not C7's human identity/quality approval. The same-stage apply
+finished at 00:28:56 -05:00, exit 0. The independent ordinary launcher check
+passed; all 48,792 published files and 2,793 frozen rows remain accounted for.
+No new intake, another full backup, recipe/default change, ComfyUI submission
+or Production write occurred.
+
+The separate recovery audit verifies exact rollback inventories and all 7,686
+file hashes (4,018 category plus 3,668 external), all 279 unchanged Artist
+sources and installed catalogue SHA-256
+`9293fce4863cfdb2264cf48c6e06b8ef5bcb002538ef4a1d265eb53413a6efaa`.
+The applied journal and catalogue stayed byte-identical through report repair.
+Actual full-scale undo was **not** executed; rollback bytes/readiness were
+audited, prior failed-install rollback was proven and fixtures exercise undo.
+
+Actual Edge acceptance verified 2,793 exact-face/preparation evidence records,
+2,694 Gallery / 99 Review, person/name/location filters, actual head/chest image
+changes, Overview controls, native padded and exact 112x112 aligned face,
+retained detail/return links, and source-hash-matched per-photo intake history.
+No loaded-image failures, unexpected missing local targets or JavaScript
+errors remained. Optional shared Outputs/Comparison links still point to
+uninitialized reports; this is explicitly reported under gallery L19, not
+silently treated as successful navigation.
+
+The browser initially caught another real scale defect: the 49,709,196-byte
+preparation manifest exceeded the history reader's old 8 MiB limit, leaving a
+run label and **zero** photos. The 64 MiB bounded fix preserves path/hash,
+scope and row limits. A tested `people-gallery-review.cmd --history-only`
+preview/apply/check repairs only history and ownership metadata, avoiding a
+second hours-long viewer refresh. All 56 focused history/retention/Review
+tests passed, followed by actual browser verification of 2,793 history rows,
+filename filtering and the original source-bound photo trace. Frozen intake
+history retains its historical staged/not-accepted label; it does not itself
+prove the independently verified final publication.
+
+Durable evidence beside `run.json`:
+
+- `installed-recovery-audit-20261031.json`
+- `installed-viewer-acceptance-20261031.json`
+- `installed-refresh-stack-20261030.txt`
+
+[Performance T16](2026-10-28-intake-performance.md#oct-31-measured-installed-continuation)
+owns measured timings; gallery L18 owns repeated verification I/O.
+Storage S24/S25 remains before another expensive run. C7/I60, known quality
+defects, family/name/engine acceptance and Production approval stay open.
 
 User words (chat, Oct 30), word for word:
 

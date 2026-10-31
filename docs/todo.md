@@ -13,15 +13,12 @@
 
 - [ ] C7 Review before/after cast seeds, hair/overlay outcomes and every released cast destination; accept a configuration or request another isolated run. Record all image/decision counts and holds. Deliver accepted evidence to ... ([cast seeded library rebase](plans/2026-10-23-cast-seeded-library-rebase.md))
 
-### For the assistant, when you say go (7)
+### For the assistant, when you say go (4)
 
 **P1 (blocks other work, or cheap and valuable)**
 
-- [ ] C6 Install reversibly only after approved preview, then normalize final-folder filenames and regenerate maintained padded/head/chest outputs and derivative-backed viewers/index. Reconcile obsolete managed outputs safely; ... ([cast seeded library rebase](plans/2026-10-23-cast-seeded-library-rebase.md))
-- [ ] I59 Persist the exact aligned SFace input face, content/model binding and score context; link it and retained intake history from each assigned photo in Gallery. Keep people images outside git and checks read-only. ([image intake preparation](plans/2026-10-23-image-intake-preparation.md))
 - [ ] I60 Audit all changed full-run outputs for false positives and incomplete cleanup; audit identity moves and borderline Review reasons under rebase C8/C9. Validate artifacts, recovery and deterministic repeat behavior before ... ([image intake preparation](plans/2026-10-23-image-intake-preparation.md))
-- [ ] T16 Verify the config-free native-owner fix through the same backed-up install, independent check and actual viewers; record actual phase timings separately from the representative guard benchmark. ([intake performance](plans/2026-10-28-intake-performance.md))
-- [ ] S15 Run the final sandbox dry-run, audit source counts, protected Angels/Sisters retention, candidate moves, review counts, backups, and undo. No Production install in this step. ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
+- [ ] T17 Capture recipe-aware run statistics and publish a compact intake summary with expandable/linked details: input/outcome counts, overlay types, each attempted/executed/skipped/failed step, reconstruction/composition, ... ([intake performance](plans/2026-10-28-intake-performance.md))
 - [ ] S24 After S15's sandbox acceptance, prioritize backup growth: measure retained/backup scope and redundant snapshots with S11; benchmark directory snapshots against bounded ZIP64 stored/low-compression archives for creation, ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S25 With S24's scope/retention review, define and test optional storage modes independent of processing recipes: FULL detail, LEAN shared verified artifacts for identical original/control/recommendation roles, and COLLAGE ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
 
@@ -50,7 +47,7 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-10-23-cast-seeded-library-rebase.md](plans/2026-10-23-cast-seeded-library-rebase.md) | active | 7 |
 | [2026-10-23-image-intake-preparation.md](plans/2026-10-23-image-intake-preparation.md) | active | 57 |
 | [2026-10-25-reference-rendering.md](plans/2026-10-25-reference-rendering.md) | holding | 27 |
-| [2026-10-28-intake-performance.md](plans/2026-10-28-intake-performance.md) | active | 9 |
+| [2026-10-28-intake-performance.md](plans/2026-10-28-intake-performance.md) | active | 8 |
 | [2026-10-28-storage-operations-and-retention.md](plans/2026-10-28-storage-operations-and-retention.md) | active | 10 |
 
 </details>

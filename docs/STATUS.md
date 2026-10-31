@@ -1,19 +1,25 @@
 # Project Status
 
-**Updated:** 2026-10-30 · This is the one working document: where the project is, what has
+**Updated:** 2026-10-31 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
-**Oct 30 evening sandbox continuation:** the Various handle cleared without
+**Oct 31, 02:19 installed milestone:** the Various handle cleared without
 reboot; authorized same-run resume preserved all 2,793 audited decisions.
 The full-scale install exposed a retention receipt-size/transaction rollback
 bug, now reproduced and fixed with 80 focused regressions passing.
 The existing full backup was reverified and reused. The sandbox is now
-published and the same worker is generating viewers; installed checks,
-actual browser acceptance and rollback audit remain pending, not accepted
-from journal status alone. The [pinned handoff](recap/2026-10-30-1247-recap.md)
-supersedes its old reboot/pre-publication instructions. No new intake or
-Production change occurred; user manual prompt edits remain separate.
+published; independent installed and recovery checks passed, followed by
+actual Edge Gallery/Overview/Review/history/face/prepared/padded verification.
+Browser acceptance also exposed and reproduced a separate history-size
+defect: the bounded fix and report-only repair passed 56 focused tests and
+restored all 2,793 people traces. Automated C6/I59/T16/S15 gates are complete;
+human identity/quality C7/I60 remains open. Optional Outputs/Comparison
+navigation still lacks initialized reports (L19); slow repeated evidence I/O
+remains measured debt (L18), not solved performance. The
+[pinned handoff](recap/2026-10-30-1247-recap.md) records durable proof,
+remaining review and storage-before-next-run order. No worker remains,
+no new intake or Production change occurred, and manual prompt edits stay separate.
 
 **Oct 30, 14:28 instruction readiness:** the main Copilot entry point and
 all seven specialized agents now follow canonical local-first scope, bounded

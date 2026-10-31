@@ -12,7 +12,7 @@ from tools.workflows import comfy_workflows as cw
 MAX_RUNS = 32
 MAX_ROWS = 5000
 MAX_ERRORS = 5
-MAX_MANIFEST_BYTES = 8 * 1024 * 1024
+MAX_MANIFEST_BYTES = 64 * 1024 * 1024
 
 EVIDENCE_SCRIPT = """
 function appendPreparationEvidence(article, evidence) {

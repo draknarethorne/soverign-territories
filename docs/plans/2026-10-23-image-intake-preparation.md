@@ -2,9 +2,9 @@
 
 **Status:** active (Phase 1; sandbox clean-start integration implemented; real recipe/flow acceptance and production cutover remain gated)
 
-**Queue focus:** I59, I60
+**Queue focus:** I60
 
-**Scheduling:** now: actual installed evidence/navigation and the current
+**Scheduling:** I59 installed evidence/navigation is verified; now: the current
 human-review baseline. I68-I70 are the next bounded quality round after
 baseline publication and the storage budget review; I71-I76 and other open
 scope remain visible here without flooding today's queue.
@@ -31,10 +31,10 @@ reproduction, not newly verified diagnoses.
 
 ### Execution order and acceptance boundaries
 
-1. **Finish the existing baseline:** reboot/release Explorer, supported replan,
-   compare every frozen row/binding, reuse completed staging, publish and check
-   actual Gallery/Overview/Review/history/face links (performance T16, rebase
-   C6, I59). No full intake repeat or recipe changes inside this bound run.
+1. **Existing baseline completed Oct 31:** C6/I59/T16 installed checks and
+   actual Gallery/Overview/Review/history/face links passed without reboot.
+   C7/I60 human identity/quality acceptance stays open. Do not replan the
+   applied run or repeat intake/change recipes inside this bound baseline.
 2. **Next P1 round:** storage S24 is a top priority; measure backup/artifact
    growth before creating another large experiment. Capture recipe-aware
    statistics (performance T17), then a bounded frozen set of the cases below
@@ -224,7 +224,7 @@ clusters can carry changeable family associations, never a merge based on surnam
 - [x] I58 Promote v11 through shared reconstruction code, version the
   recipe and schema, retain compatibility with published v16 reports, and prove
   actual preparation recommends the same pixels as the benchmark.
-- [ ] **P1 ai** I59 Persist the exact aligned SFace input face, content/model
+- [x] **P1 ai** I59 Persist the exact aligned SFace input face, content/model
   binding and score context; link it and retained intake history from each
   assigned photo in Gallery. Keep people images outside git and checks read-only.
 - [ ] **P1 ai** I60 Audit all changed full-run outputs for false positives and
@@ -234,6 +234,17 @@ clusters can carry changeable family associations, never a merge based on surnam
 - [ ] **P2 ai** I61 Close/archive only genuinely completed intake plans after
   checking all independent scope and preserving feedback; transfer unfinished
   work explicitly rather than calling the whole plan done.
+
+I59 actual acceptance passed Oct 31, 02:19 -05:00: every one of 2,793 photo
+records has verified aligned-face/preparation evidence and maintained padded
+provenance. Edge opened the exact aligned input, retained detail and native
+padded file, changed real framing/filter outputs, and navigated repaired
+2,793-photo history to a source-hash-matched original trace. The history-size
+failure was fixed and regression-tested, not hidden by checking only a run
+label. [C6's final proof](2026-10-23-cast-seeded-library-rebase.md#oct-31-0219-final-installed-verification)
+records durable receipts and the two optional render-navigation gaps.
+I60 and the complete named-case/quality backlog remain open; this is not human
+quality acceptance or completion of all intake scope.
 
 Coverage: I58/I54 (all-image preparation and final-image matching), I59
 (per-image history and exact face), I60/C8/C9 (moves, borderline checks and

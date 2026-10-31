@@ -9,7 +9,7 @@ and preserves chronological access to manually archived records.
 
 | State | Recap | Why it remains active |
 | --- | --- | --- |
-| **Pinned — resume** | [2026-10-30-1247](2026-10-30-1247-recap.md) | Same-stage publication succeeded after tested recovery; active viewer generation and pending installed/browser/rollback gates. |
+| **Pinned — resume** | [2026-10-30-1247](2026-10-30-1247-recap.md) | Oct 31 verified installed milestone; human review links, durable proof, remaining optional navigation/I/O debt and storage-before-next-run order. No worker/reboot blocker remains. |
 | **Pinned — feedback** | [2026-10-30-1234](2026-10-30-1234-recap.md) | Complete F01-F31 human-feedback coverage and next-round quality priorities remain relevant after baseline publication. |
 
 “Pinned” is a manual index designation, not an automated workflow or an

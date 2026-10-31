@@ -148,6 +148,15 @@ browser filesystem permission is approved by this clarification.
   and detail renderers without triggering processing or implying publication.
   Coordinate retained-version detail with L12 and intake I21/I23.
 
+Oct 31 installed-browser disposition: People Overview/Review shared chrome
+links to Outputs and Comparison even though this sandbox has neither report.
+The existing Artist and metadata-only rendering entry pages were published
+and checked through their launchers, without queueing ComfyUI work.
+L19 owns availability-aware links/explicit uninitialized empty states; do not
+invent a render batch or claim the two remaining targets work. This is a
+recorded optional-render navigation gap, not missing native/prepared/face
+evidence or permission to restart the held gallery redesign.
+
 ## Oct 25, 09:13: intake integration and next safe work
 
 The user's complete continuation request is preserved at the end. Image-review
@@ -515,6 +524,16 @@ or conceal pending decisions behind disabled controls.
   per render, retain explicit limits/errors, and benchmark selective per-photo
   artifact verification or a safely invalidated reusable verification index.
   No timestamp-only trust, silent latest-run selection or automatic acceptance.
+
+Oct 31 full-scale evidence strengthens this existing task: the successful
+same-stage apply took 16,734.44 seconds including backup/stage checks and
+viewers. Live thumbnail stacks repeatedly rediscovered retained manifests
+through derivative crop guards; processing progressed, so this was not
+another Explorer/suspension lock. See the
+[measured phases](2026-10-28-intake-performance.md#oct-31-measured-installed-continuation).
+Use a bounded, per-generation validated index with explicit invalidation and
+same-input artifact checks before proposing a full-scale refresh. This is
+future measured work, not an optimization delivered by the receipt-size fix.
 
 ### Oct 23, 19:36 continuation: presentation-only checks
 

@@ -1,11 +1,11 @@
 # Intake performance, the likeness face crop and generated-output storage
 
-**Status:** active (parallel/v22 profiles recorded; T6 recovery tested; v23 output review/performance decision, fresh-baseline comparison and routed review/storage work remain)
+**Status:** active (T6 recovery and T16 installed measurements verified; next-round statistics, quality and storage work remain)
 
-**Queue focus:** T16
+**Queue focus:** T17
 
-**Scheduling:** now: installation/recovery timing and actual viewers.
-Next: T17 recipe-aware statistics before bounded I68/I69 experiments.
+**Scheduling:** T16 installed measurements and actual viewers passed.
+Next, after storage budget review: T17 statistics before bounded I68/I69 experiments.
 T18/T19 profiles/CUSTOM and T13-T15 remain scheduled backlog, not today's
 parallel implementation list.
 
@@ -561,9 +561,42 @@ manifest or artifact hashing. The fixed sample is
 `tmp/perf/fresh-v23-install-fixed-live.txt`. Remaining repeated owner scans
 belong to later library I/O work, not another unmeasured restart.
 
-- [ ] **P1 ai** T16 Verify the config-free native-owner fix through the
+- [x] **P1 ai** T16 Verify the config-free native-owner fix through the
   same backed-up install, independent check and actual viewers; record actual
   phase timings separately from the representative guard benchmark.
+
+#### Oct 31: measured installed continuation
+
+The same-stage apply completed successfully at 00:28:56 -05:00. No intake
+was repeated; the original full backup was reverified and reused.
+
+| Phase | Wall seconds | Interpretation |
+| --- | --- | --- |
+| Final completed-stage check | 2,577.37 | 2,793 photos / 48,792 files; includes integrity/render verification |
+| Successful apply and viewer publication | 16,734.44 | Backup/stage checks, transaction and all viewers; not isolated swap time |
+| Independent ordinary installed check | 1,764.78 | Supported launcher, exit 0; separate from subsequent rollback-byte audit |
+| History-only repair | 1,148.85 | Artifact verification, one history page and ownership receipt; no photo-viewer rebuild |
+| Independent history-only check | 2,262.19 | Read-only full saved-evidence verification, exit 0; strongly load-sensitive |
+
+ComfyUI remained active; these are observed contended-machine timings, not a
+controlled before/after speedup. Read-only live stack samples showed repeated
+retained-manifest discovery in `write_thumbnails -> derivatives.verified ->
+source_is_prepared -> crop_guard -> verify_link -> _manifests`.
+Progress advanced from 641 to 884 of 2,793; the process was working, not
+suspended. Review publication finished at 23:56:38; Overview followed.
+One process observation reported about 376 GB read before completion, but
+this is not a storage-device or isolated phase benchmark.
+
+[Gallery L18](2026-10-22-gallery-review-layout.md) owns the bounded
+verification-index optimization and its invalidation/hash/path invariants;
+T15 owns timestamp/progress reporting. Do not remove provenance checks or
+repeat the rebase to make the viewer seem faster. A distinct history-browser
+49,709,196-byte manifest ceiling defect was reproduced during actual browser
+acceptance; its bounded repair, 56 focused tests and strict 2,793-row browser
+acceptance passed under C6/I59. Both history timing rows include full
+artifact verification; a live check sample was in `verify -> path.read_bytes`
+with an observed PageIn wait, not suspended execution. No cache/guard bypass
+was introduced.
 
 #### Oct 30 review: observability and configurable processing
 

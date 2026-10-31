@@ -225,6 +225,49 @@ class PreparationProvenanceTests(unittest.TestCase):
         staged = next(entry for entry in self.index().history_runs if entry.get("staged"))
         self.assertEqual(staged["photos"], [])
 
+    def test_large_staged_manifest_keeps_verified_history_and_size_bound(self):
+        run, output = self.staged_receipt()
+        manifest = output / "manifest.json"
+        manifest.write_bytes(manifest.read_bytes() + b"\n" + b" " * (8 * 1024 * 1024))
+        receipt_path = run / "intake.json"
+        receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+        receipt["preparationManifestSHA256"] = image_preparation.sha(manifest.read_bytes())
+        receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
+        staged = next(entry for entry in self.index().history_runs if entry.get("staged"))
+        self.assertIn("verified", staged["status"])
+        self.assertFalse(staged["status"].startswith("unverified"))
+        self.assertEqual(len(staged["photos"]), 1)
+        with mock.patch.object(preparation_provenance, "MAX_MANIFEST_BYTES", manifest.stat().st_size - 1):
+            staged = next(entry for entry in self.index().history_runs if entry.get("staged"))
+        self.assertIn("exceeds byte limit", staged["status"])
+        self.assertEqual(staged["photos"], [])
+
+    def test_history_only_launcher_previews_checks_and_repairs_without_review_rebuild(self):
+        self.staged_receipt()
+        report = self.page_dir / "people_gallery_review.html"
+        report.write_bytes(b"existing viewer")
+        args = ["--root", str(self.root), "--history-only"]
+        with mock.patch.object(review_gallery, "collect_items") as collect, \
+                mock.patch.object(review_gallery, "write_thumbnails") as thumbnails, \
+                contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(review_gallery.main(args), 0)
+            self.assertFalse((self.page_dir / "intake_runs.html").exists())
+            self.assertEqual(review_gallery.main([*args, "--dry-run"]), 0)
+            self.assertFalse((self.page_dir / "intake_runs.html").exists())
+            self.assertEqual(review_gallery.main([*args, "--check"]), 1)
+            self.assertEqual(review_gallery.main([*args, "--apply"]), 0)
+            self.assertEqual(review_gallery.main([*args, "--check"]), 0)
+            (self.page_dir / "intake_runs.html").write_text("stale", encoding="utf-8")
+            self.assertEqual(review_gallery.main([*args, "--check"]), 1)
+            self.assertEqual(review_gallery.main([*args, "--apply"]), 0)
+            collect.assert_not_called()
+            thumbnails.assert_not_called()
+        self.assertEqual(report.read_bytes(), b"existing viewer")
+        self.assertIn("intake-stop", (self.page_dir / "intake_runs.html").read_text(encoding="utf-8"))
+        assets = json.loads((self.page_dir / "people-gallery-manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual(assets["files"]["intake_runs.html"], hashlib.sha256(
+            (self.page_dir / "intake_runs.html").read_bytes()).hexdigest())
+
     def test_changed_source_is_stale_and_has_no_published_link(self):
         self.photo.write_bytes(self.photo.read_bytes() + b"changed")
         evidence = self.index().evidence(self.photo, self.photo_id)

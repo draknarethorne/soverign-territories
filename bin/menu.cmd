@@ -17,7 +17,7 @@ echo   0  Deep quality checks (explicit unit and mutation hooks; slower)
 echo   9  Refresh FireRed for a hero
 echo   A  Animate a hero (video prompts, workflows, deploy)
 echo   L  Photo library: sort new photos in Various, remove duplicates, rebuild all scaled images
-echo   R  Photo review gallery (read-only Gallery and Review audit)
+echo   R  Photo review gallery (read-only audit; history-only repair flags in Help)
 echo   G  Preview gallery upkeep (rename, padded/head/chest; no matching or writes)
 echo   P  Preview sandbox image preparation comparisons (no source or identity changes)
 echo   U  Preview same-mask eraser A/B (LaMa vs OpenCV; comparison only)

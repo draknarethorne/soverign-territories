@@ -17,7 +17,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "tools/art"))
 import likeness  # noqa: E402
 import originals  # noqa: E402
-from likeness_library import domains, gallery_chrome, identity_names, metadata, person_rename, preparation_provenance, protection, rejections, report_assets  # noqa: E402
+from likeness_library import domains, gallery_chrome, identity_names, metadata, person_rename, preparation_history, preparation_provenance, protection, rejections, report_assets  # noqa: E402
 from likeness_library.audit import audit_person, catalog_photo_flags, core_excluded_protection, identity_order_key  # noqa: E402
 from likeness_library.cross_reference import CATEGORY_ORDER, rank_identity_centroids, score_band  # noqa: E402
 from likeness_library.policy import (
@@ -1640,6 +1640,11 @@ def main(argv=None):
 
 def _main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--history-only", action="store_true", help="refresh only checked intake history; preview unless --apply")
+    history_mode = parser.add_mutually_exclusive_group()
+    history_mode.add_argument("--dry-run", action="store_true")
+    history_mode.add_argument("--check", action="store_true")
+    history_mode.add_argument("--apply", action="store_true")
     parser.add_argument("--artists", action="store_true", help="retired: use artists-gallery.cmd")
     parser.add_argument("--keep", type=float, default=0.25, help="Prospect borderline score (default: 0.25)")
     parser.add_argument("--out", help="report folder under the configured reports root (relative paths start there)")
@@ -1654,12 +1659,25 @@ def _main(argv=None):
     args = parser.parse_args(argv)
     if args.artists:
         parser.error("--artists no longer mixes Artists into people pages; use bin\\artists-gallery.cmd")
+    if not args.history_only and (args.dry_run or args.check or args.apply):
+        parser.error("--dry-run/--check/--apply require --history-only")
     policy = load_policy(args.policy)
     cfg, st, work, cache, space = likeness.build(
         types.SimpleNamespace(root=args.root, cache=args.cache, embedder=None, policy=args.policy)
     )
     reports = likeness.cw.storage_root(cfg, "reports", root=work)
     out = likeness.cw.storage_output_path(cfg, "reports", args.out or "library", root=work)
+    if args.history_only:
+        if args.apply:
+            report = preparation_history.publish_staged(work, out, cfg=cfg)
+            report_assets.record(out, {report.name: report.read_bytes()})
+            print(f"Refreshed checked intake history only: {report}")
+            return 0
+        payload = preparation_provenance.build_index(work, out, [], cfg=cfg).history_html()
+        report = out / "intake_runs.html"
+        current = report.is_file() and report.read_text(encoding="utf-8") == payload
+        print(f"Intake history {'current' if current else 'needs refresh'}: {report}")
+        return int(args.check and not current)
     catalog = metadata.load_catalog(metadata.path_for_root(work))
     items, warnings = collect_items(
         cfg, st, work, cache, space, catalog,

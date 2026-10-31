@@ -549,6 +549,18 @@ queue, low-score view, flat view, selectable ordering, and cached thumbnails.
 The person's workflow photo, identity anchor, or provisional reference stays
 visible even if filters hide it.
 
+For a history-only repair, use the same launcher with `--root "<library>"`
+and `--history-only --dry-run`, then `--history-only --apply` and
+`--history-only --check`. This verifies saved preparation artifacts and
+atomically replaces `intake_runs.html` and updates its report-ownership receipt;
+it does not rebuild photo viewers,
+thumbnails, matching, or intake. Preview is the default in this mode.
+Preparation manifests remain bounded to 64 MiB, 5,000 rows per run and
+32 discovered runs; oversized or tampered evidence stays explicitly unverified.
+The former 8 MiB ceiling rejected the actual 49,709,196-byte v23 manifest,
+leaving a run label with zero photos. Check verified photo counts and detail
+links, not just the presence of the run name.
+
 In grouped views the header has separate **Reference photo**, **Identity details**
 and **Manual actions** panels. The read-only reference stays visible even when
 the same photo is in the grid; only the grid copy has photo staging controls.

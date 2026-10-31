@@ -2,10 +2,10 @@
 
 **Status:** active
 
-**Queue focus:** S15, S24, S25
+**Queue focus:** S24, S25
 
-**Scheduling:** S15's verified same-stage install/rollback/actual-viewer gate
-is now; S24 backup scope/format/retention and S25 storage-mode budget are the
+**Scheduling:** S15's automated install/recovery/viewer gate passed Oct 31;
+S24 backup scope/format/retention and S25 storage-mode budget are the
 top next work, before another full intake. Other cleanup, root/configuration
 and report I/O tasks remain open backlog, not permission to prune now.
 
@@ -551,9 +551,21 @@ new Various outcomes = 3,072, with 75 baseline IDs substituted by newer
 Various bytes. This includes the preserved sandbox-only additions. The
 supported launcher inventory took 55.68 seconds. Matching has not been
 accepted merely because reset/inventory passed.
-- [ ] **P1 ai** S15 Run the final sandbox dry-run, audit source counts, protected
+- [x] **P1 ai** S15 Run the final sandbox dry-run, audit source counts, protected
   Angels/Sisters retention, candidate moves, review counts, backups, and undo.
   No Production install in this step.
+
+Oct 31 automated gate complete: the same-stage install reused the verified
+72,991-file full snapshot; installed checks, exact rollback inventories/hashes,
+Artist isolation and actual viewer/history acceptance passed. Recovery proof
+and browser evidence are durable beside `run.json`; see
+[C6's final verification](2026-10-23-cast-seeded-library-rebase.md#oct-31-0219-final-installed-verification).
+This closes the **undo-readiness audit**, not an executed full-scale undo:
+the earlier failed install's real rollback was independently proven and
+focused fixtures exercise undo/retry. The installed baseline was not undone
+and reinstalled merely to obtain another test. C7/I60 human quality/identity
+approval is still separate. No backups, originals or retained evidence were
+pruned; S24/S25 decisions remain required before another expensive run.
 
 Oct 29 execution checkpoint: the supported inventory-only preview for
 `fresh-v23-20261029` confirms 3,072 outcomes (2,700 assigned plus 372 current
