@@ -7,8 +7,9 @@ Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (gen
 
 **Current scheduling (Oct 30):** finish the existing sandbox baseline, do not
 restart intake. Recovery and the full intake/matching/AI audit are complete;
-publication is safely rolled back and waiting for Explorer handles to clear
-after the user's reboot. Exact resume evidence is pinned in the
+the afternoon retry has published the sandbox and is generating viewers.
+Independent installed/browser/rollback checks remain pending. Do not start
+another replan/intake or generator while the worker is active. Exact evidence is pinned in the
 [recap index](../recap/README.md).
 
 ## Now, next and holding
@@ -22,7 +23,7 @@ and reactivation condition.
 
 | Window | Work | Exit / boundary |
 | --- | --- | --- |
-| Now, blocked until reboot | Cast C6/C7, intake I59/I60, performance T16, storage S15 | Rebind the unchanged preview with supported replan; backed-up same-stage install; installed check; actual Gallery/Overview/Review, retained intake history and exact face/prepared/padded links; human placement/quality review. No new full intake |
+| Now, finish installed acceptance | Cast C6/C7, intake I59/I60, performance T16, storage S15 | Publication succeeded; finish current viewer generation, installed check, actual Gallery/Overview/Review, retained intake history and exact face/prepared/padded links, rollback audit and human placement/quality review. No new full intake |
 | Next, before another expensive run | Storage S24/S25 | Measure file/byte budget; compare scope, packing/compression and retention; agree FULL/LEAN/COLLAGE evidence contract. Preserve verified recovery and active sources; no automatic deletion or ZIP assumption |
 | Next bounded quality round | Performance T17, intake I68/I69/I70 | Recipe-aware statistics, all 13 named cases, coordinated early crop/masks and calibrated denoise/tone selection. Use frozen comparisons before approving another full run; do not change the staged baseline |
 | After those results | Intake I71-I76, performance T18/T19; reactivate upkeep/actions/naming/engine slices as needed | UX/terminology/Artist scope, processing profiles; incremental batch/calibration and action UAT are separate gates, not silently approved |

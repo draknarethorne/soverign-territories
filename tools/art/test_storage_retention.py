@@ -55,6 +55,24 @@ class StorageRetentionTests(unittest.TestCase):
         self.assertTrue(run.is_dir())
         self.assertFalse((self.state / storage_retention.MANIFEST_NAME).exists())
 
+    def test_full_scale_install_receipt_is_supported_but_limit_remains_bounded(self):
+        run = self.add_run("full-scale")
+        path = run / "run.json"
+        receipt = json.loads(path.read_text(encoding="utf-8"))
+        receipt["installationEvidence"] = "x" * 19_623_486
+        path.write_text(json.dumps(receipt), encoding="utf-8")
+        self.assertGreater(path.stat().st_size, 16 * 1024 * 1024)
+        self.assertEqual(storage_retention.MAX_RUN_MANIFEST_BYTES, 64 * 1024 * 1024)
+        result = storage_retention.register_runs(self.root, self.cfg, run_names=["full-scale"])
+        self.assertIsNotNone(result)
+        self.assertEqual(storage_retention._read_json(path)["status"], "applied")
+        self.assertIn("run.json", storage_retention._manifest_hashes(run))
+        with mock.patch.object(storage_retention, "MAX_RUN_MANIFEST_BYTES", 16 * 1024 * 1024):
+            with self.assertRaisesRegex(ValueError, "run manifest exceeds"):
+                storage_retention._manifest_hashes(run)
+        with self.assertRaisesRegex(ValueError, "run manifest exceeds"):
+            storage_retention._read_json(path, limit=16 * 1024 * 1024)
+
     def test_only_approved_nonlatest_run_can_be_pruned(self):
         self.register_pair()
         with self.assertRaisesRegex(ValueError, "latest accepted"):

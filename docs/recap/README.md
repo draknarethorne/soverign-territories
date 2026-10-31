@@ -9,7 +9,7 @@ and preserves chronological access to manually archived records.
 
 | State | Recap | Why it remains active |
 | --- | --- | --- |
-| **Pinned — resume** | [2026-10-30-1247](2026-10-30-1247-recap.md) | Exact reboot, same-stage install and installed-viewer/recovery gates for the blocked v23 baseline. |
+| **Pinned — resume** | [2026-10-30-1247](2026-10-30-1247-recap.md) | Same-stage publication succeeded after tested recovery; active viewer generation and pending installed/browser/rollback gates. |
 | **Pinned — feedback** | [2026-10-30-1234](2026-10-30-1234-recap.md) | Complete F01-F31 human-feedback coverage and next-round quality priorities remain relevant after baseline publication. |
 
 “Pinned” is a manual index designation, not an automated workflow or an

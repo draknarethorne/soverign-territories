@@ -4,6 +4,17 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Oct 30 evening sandbox continuation:** the Various handle cleared without
+reboot; authorized same-run resume preserved all 2,793 audited decisions.
+The full-scale install exposed a retention receipt-size/transaction rollback
+bug, now reproduced and fixed with 80 focused regressions passing.
+The existing full backup was reverified and reused. The sandbox is now
+published and the same worker is generating viewers; installed checks,
+actual browser acceptance and rollback audit remain pending, not accepted
+from journal status alone. The [pinned handoff](recap/2026-10-30-1247-recap.md)
+supersedes its old reboot/pre-publication instructions. No new intake or
+Production change occurred; user manual prompt edits remain separate.
+
 **Oct 30, 14:28 instruction readiness:** the main Copilot entry point and
 all seven specialized agents now follow canonical local-first scope, bounded
 roles, focused/holding work, pinned handoffs and validated publication.

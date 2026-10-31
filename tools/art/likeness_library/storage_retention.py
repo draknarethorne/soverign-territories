@@ -22,7 +22,7 @@ MANIFEST_NAME = "retention-manifest.json"
 POLICY = {"latestAcceptedPerPipeline": 1, "explicitPruneApproval": True}
 CLASSES = {"active", "review", "accepted", "superseded", "pruned"}
 TEXT_SUFFIXES = {".csv", ".html", ".json", ".log", ".md", ".txt", ".xml", ".yaml", ".yml"}
-MAX_RUN_MANIFEST_BYTES = 16 * 1024 * 1024
+MAX_RUN_MANIFEST_BYTES = 64 * 1024 * 1024
 CHUNK_SIZE = 1024 * 1024
 RUN_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
 

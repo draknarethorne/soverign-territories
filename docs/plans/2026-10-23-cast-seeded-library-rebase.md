@@ -1,6 +1,6 @@
 # 2026-10-23: all-image preparation and cast-seeded rebase experiments
 
-**Status:** active (Phase 3; fresh v23 matching and AI audit complete; backed-up installation and actual viewers pending)
+**Status:** active (Phase 3; v23 publication completed; viewer refresh and independent installed/browser acceptance pending)
 
 **Queue focus:** C6, C7
 
@@ -639,3 +639,56 @@ Coverage: refreshed-source and generated-output replacement -> C6; competing
 incoming same-ID newest-timestamp behavior -> C10; current-run audit and
 parallel human intake review -> resumed milestone above, C7 and performance
 T16. Backup scope/format/retention priority remains storage S24.
+
+## Oct 30 afternoon: resume without reboot and full-scale journal failure
+
+The read-only handle scan found no remaining Various handle. The user
+authorized resuming while ComfyUI continues, accepting resource contention.
+No new intake, model/recipe change or Production write is authorized.
+
+The old recap's bare replan command defaulted to `all`; the exact comparison
+caught changed seed/decision bindings before any install. The corrected
+supported command uses `--baseline working --cast-seeds core`. All 2,793 rows
+and every frozen field match the preserved audited
+`pre-resume-20261030-1521-preview.json`; only time/implementation rebinding
+may differ. The recap's check/apply commands now carry the explicit policy.
+
+The completed-stage check passed 2,793 photos / 48,792 files. Apply began at
+17:06:50 -05:00 and reverified the existing 72,991-file / 41,998,676,177-byte
+snapshot; it did not create another full backup. At 18:30:52 it failed:
+the 19,623,486-byte applied journal exceeded retention's old 16 MiB reader
+limit. Automatic rollback restored library files but left an `applied`
+journal; this was not installed acceptance.
+
+The failure is preserved in run-local
+`install-attempt-20261030-183052-manifest-limit.json`.
+Independent `manifest-limit-rollback-verification.json` verifies all 7,686
+recorded original hashes (including all 2,868 Working inputs), all 48,792
+staged hashes, unchanged source catalogue and no files in `previous`.
+Only 2,681 empty generated publication directories were removed; no source
+image or retained file was deleted. The exact audited preview was restored
+after verification, then rebound through supported core-mode replan.
+
+The fix keeps a bounded 64 MiB retention receipt and restores the previous
+journal on registration failure; transaction rollback removes only empty
+directories it created. Platform JSON serialization is preserved so catalogue
+hashes do not change merely from writing. Regression fixtures reproduce the
+old failure before verifying rollback, retry and undo.
+The supported runbook in [likeness](../art/likeness.md) owns these semantics.
+At 19:07 -05:00 the final same-stage check/retry started; no installed
+success or viewer acceptance is claimed by this checkpoint.
+
+Coverage: handle diagnosis and authorized retry -> C6/T16; independent
+rollback/backup audit -> storage S15; actual installed pages -> intake I59;
+human quality/identity acceptance remains C7/I60. ComfyUI contention prevents
+interpreting these wall times as isolated performance benchmarks.
+
+User words (chat, Oct 30), word for word:
+
+<!-- markdownlint-disable MD013 -->
+```text
+Can you check if the file handle is fixed - I am still waiting to be able to reboot.
+
+Why don't we try to start things back up again.  I do have comfy running and taking up some CPU, GPU, memory and disk utilization - so it might be slower, but we should try to push the next phase of the work and verify the results.
+```
+<!-- markdownlint-enable MD013 -->

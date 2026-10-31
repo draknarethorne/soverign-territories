@@ -1283,6 +1283,22 @@ A failed transaction may leave directory-only rollback scaffolding; this is
 allowed only when a no-follow walk proves that `previous` contains no files.
 Any retained rollback file or linked directory still blocks stage reuse.
 
+Pass the original seed mode explicitly when replanning or applying:
+`--baseline working --cast-seeds core` for a Working/core run. A bare
+`--replan` uses the CLI's `all` default, not the saved seed policy. Compare
+all photo rows and frozen bindings against a preserved audited preview before
+installing; timestamp and implementation-hash rebinding are not new approval.
+
+Full install journals contain published and rollback inventories and may
+exceed 16 MiB. Retention readers/writers support a bounded 64 MiB run receipt;
+the writer rejects larger receipts without replacing the prior journal.
+If retention registration fails after a journal swap, the old journal is
+restored and the install transaction rolls files back, including only empty
+directories it created. A legacy failed receipt marked `applied` is not proof
+of installation: verify live/staged/rollback hashes, preserve the failed
+receipt and reconcile state before any supported replan/resume. Never force
+an apply or undo based on that status alone.
+
 Existing unowned cast derivative collisions require the separate explicit
 `--preserve-legacy-derivatives` option on check/apply. These bytes are **not**
 claimed reproducible: every replaced file is hashed and moved into

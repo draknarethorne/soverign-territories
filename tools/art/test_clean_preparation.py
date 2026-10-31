@@ -15,7 +15,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 from tools.art import image_preparation, likeness
-from tools.art.likeness_library import clean_preparation, clean_rebase, derivatives, metadata, retained_preparation, review_gallery
+from tools.art.likeness_library import clean_preparation, clean_rebase, derivatives, metadata, retained_preparation, review_gallery, storage_retention
 from tools.art.likeness_library.policy import load_policy
 
 
@@ -598,6 +598,57 @@ class CleanPreparationTests(unittest.TestCase):
         artifact.write_bytes(artifact.read_bytes() + b"edit")
         with self.assertRaisesRegex(ValueError, "staged retained preparation"):
             self.command(check=True, resume_install=True)
+
+    def test_retention_failure_restores_preview_and_exact_library_before_resume(self):
+        self.completed_stage()
+        journal = self.run / "run.json"
+        preview = journal.read_bytes()
+        original_catalog = (self.working / ".likeness-library.json").read_bytes()
+        original_sources = {
+            relative: (self.working / relative).read_bytes() for relative in self.inputs
+        }
+        staged = self.run / "staged"
+        staged_hashes = {
+            path.relative_to(staged).as_posix(): metadata.content_sha256(path)
+            for path in staged.rglob("*") if path.is_file()
+        }
+        with mock.patch("library_backup.latest_work_root_backup", return_value=self.base), \
+                mock.patch("library_backup.verify_backup"), \
+                mock.patch.object(storage_retention, "register_runs",
+                                  side_effect=ValueError("fixture retention write failure")):
+            with self.assertRaisesRegex(ValueError, "fixture retention write failure"):
+                self.command(apply=True, resume_install=True)
+        self.assertEqual(journal.read_bytes(), preview)
+        self.assertEqual((self.working / ".likeness-library.json").read_bytes(), original_catalog)
+        for relative, expected in original_sources.items():
+            self.assertEqual((self.working / relative).read_bytes(), expected)
+        self.assertEqual(staged_hashes, {
+            path.relative_to(staged).as_posix(): metadata.content_sha256(path)
+            for path in staged.rglob("*") if path.is_file()
+        })
+        self.command(check=True, resume_install=True)
+        with mock.patch("library_backup.latest_work_root_backup", return_value=self.base), \
+                mock.patch("library_backup.verify_backup"):
+            self.command(apply=True, resume_install=True)
+        self.command(check=True)
+        self.command(undo=True)
+
+    def test_oversized_run_write_preserves_existing_preview(self):
+        self.command()
+        journal = self.run / "run.json"
+        before = journal.read_bytes()
+        with mock.patch.object(storage_retention, "MAX_RUN_MANIFEST_BYTES", 1):
+            with self.assertRaisesRegex(ValueError, "run manifest exceeds"):
+                clean_rebase._write_json(journal, json.loads(before))
+        self.assertEqual(journal.read_bytes(), before)
+
+    def test_atomic_json_writer_preserves_existing_platform_serialization(self):
+        value = {"schemaVersion": 1, "photos": [{"path": "example"}]}
+        expected = self.run / "expected.json"
+        expected.write_text(json.dumps(value, indent=2), encoding="utf-8")
+        actual = self.run / "actual.json"
+        clean_rebase._write_json(actual, value)
+        self.assertEqual(actual.read_bytes(), expected.read_bytes())
 
     def test_another_clean_start_preserves_prior_prepared_lineage_and_exact_undo(self):
         catalog_path = self.working / ".likeness-library.json"

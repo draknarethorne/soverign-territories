@@ -26,18 +26,32 @@ from .sandbox import (
 
 
 def _write_json(path, value):
-    temporary = path.with_suffix(".tmp")
-    temporary.write_text(json.dumps(value, indent=2), encoding="utf-8")
-    temporary.replace(path)
-    if pathlib.Path(path).name == "run.json" and isinstance(value.get("workingRoot"), str):
+    payload = json.dumps(value, indent=2).replace("\n", os.linesep).encode("utf-8")
+    retention_root = None
+    if path.name == "run.json" and isinstance(value.get("workingRoot"), str):
         working_root = pathlib.Path(value["workingRoot"])
         if sandbox.is_sandbox_working_path(working_root):
             from . import storage_retention
 
+            if len(payload) > storage_retention.MAX_RUN_MANIFEST_BYTES:
+                raise ValueError(f"run manifest exceeds {storage_retention.MAX_RUN_MANIFEST_BYTES} bytes: {path}")
+            retention_root = working_root
+    original = path.read_bytes() if retention_root is not None and path.exists() else None
+    temporary = path.with_suffix(".tmp")
+    temporary.write_bytes(payload)
+    temporary.replace(path)
+    if retention_root is not None:
+        try:
             storage_retention.register_runs(
-                working_root, metadata.cw.load_cfg(),
-                run_names=[pathlib.Path(path).parent.name],
+                retention_root, metadata.cw.load_cfg(), run_names=[path.parent.name],
             )
+        except Exception:
+            if original is None:
+                path.unlink()
+            else:
+                temporary.write_bytes(original)
+                temporary.replace(path)
+            raise
 
 
 def _bind_preparation(rows, prepared_rows, output, api):
@@ -1609,7 +1623,7 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
     for relative, expected_hash in previous_external_hashes.items():
         if metadata.content_sha256(_publication_path(working, relative)) != expected_hash:
             raise ValueError(f"external files changed during staging; no rebuild installed: {relative}")
-    moved, installed, cast_added, cast_saved = [], [], [], []
+    moved, installed, cast_added, cast_saved, created_directories = [], [], [], [], []
     try:
         for relative in prior_external:
             current, saved = working / relative, previous / "external" / relative
@@ -1627,7 +1641,13 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
         for item in external_files:
             path = pathlib.PurePosixPath(item["path"])
             src, dest = staged.joinpath(*path.parts), working.joinpath(*path.parts)
+            missing = []
+            parent = dest.parent
+            while not parent.exists():
+                missing.append(parent)
+                parent = parent.parent
             dest.parent.mkdir(parents=True, exist_ok=True)
+            created_directories.extend(reversed(missing))
             src.rename(dest)
             cast_added.append((dest, src))
         for row in plan["photos"]:
@@ -1657,6 +1677,9 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
             (previous / category).rename(working / category)
         for current, saved in reversed(cast_saved):
             saved.rename(current)
+        for directory in reversed(created_directories):
+            if directory.is_dir() and not any(directory.iterdir()):
+                directory.rmdir()
         raise
 
 
