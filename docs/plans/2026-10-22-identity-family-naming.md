@@ -6,6 +6,26 @@
 select N12 corrections/family acceptance. Existing approved decisions and
 stable-name/protection guards remain binding; no bulk renaming during install.
 
+## Oct 31: what the installed rebase did and did not verify
+
+The [installed outcome audit](2026-10-23-cast-seeded-library-rebase.md#oct-31-cast-routing-name-continuity-and-iteration-audit)
+found 202 identity records but zero structured `names` or `family` entries.
+The source catalogue was empty; populated stable-ID family/name migration,
+family reconciliation and original-name correction were not exercised.
+All 21 cast name/history files and 133 non-cast same-label history copies
+verify byte-for-byte; 48 other non-cast summaries are generated stubs.
+There are no duplicate recorded full-name labels, but 45 repeated surnames
+span 118 folders without accepted family metadata. Surname reuse alone is
+not an organizational-family association or a biological relationship.
+
+This closes no N7/N9/N12/N13 gate. In particular, 61 old non-cast folders
+split and 105 new non-cast destinations mix source-folder provenance; name
+file preservation is not proof of correct membership or original name.
+Use the audit's name-lineage table with the user's review, then prepare
+explicit reversible corrections/family proposals under existing contracts.
+Do not silently re-label the current frozen baseline or run automatic
+family reconciliation as part of this read-only audit.
+
 ## Oct 30: named and unnamed Various acceptance contract
 
 - [ ] **P2 either** N13 Cover `Various/<supplied person name>` as explicit

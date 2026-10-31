@@ -598,6 +598,48 @@ artifact verification; a live check sample was in `verify -> path.read_bytes`
 with an observed PageIn wait, not suspended execution. No cache/guard bypass
 was introduced.
 
+#### Oct 31: outcome-review speed priorities
+
+The user's new request asks what worked, which cast/name outcomes need more
+iterations, and where speed improvements are useful. The
+[complete routing/name audit](2026-10-23-cast-seeded-library-rebase.md#oct-31-cast-routing-name-continuity-and-iteration-audit)
+owns the verbatim request and per-slot results. This is measured analysis,
+not a new intake, benchmark under load, recipe change or delivered speed fix.
+
+**The next speed target is evidence/report I/O, not another segmentation
+shortcut.** The applied state was observed by Oct 30, 21:04; the worker did not
+exit until Oct 31, 00:28:56. At least about **3 h 25 min remained after that
+observation**, approximately 73% of the successful 4 h 39 min apply. This
+is a lower-bound remaining-viewer interval, not an instrumented swap/report
+split; publication may have happened earlier. Contention remains a confounder,
+but repeated work is visible in both the code and saved live stacks.
+
+| Priority / existing owner | Evidence and bounded next experiment | Required guard |
+| --- | --- | --- |
+| P1 L18: reuse verification within a frozen report operation | A fully successful Review row calls `derivatives.verified` seven times: thumbnail and provenance for chest/head/face, then padded. Each calls `source_is_prepared`, which rediscovers owner sets and calls `crop_guard/verify_link`; the latter re-enumerates all owner manifests and hashes the matching artifact set. Reuse an explicit verified per-source result and owner index rather than independently proving the same source seven times | Operation-scoped immutable/locked inputs or explicit change detection; fail on stale, duplicate, linked or altered artifacts; never timestamp-only positive trust or unbounded process-global caching |
+| P1 L18: separate whole-run audit from read-only presentation | The history-only repair still spent 1,148.85 s and its independent check 2,262.19 s because `_load_staged` validates every mirror input, artifact path and the complete original report. Static history generation isn't the expensive part. Measure one fully checked index reused across Overview/Review/history in the same frozen generation | Preserve complete explicit audit/check commands and source/domain/hash binding; cache invalidation/failed verification must be visible, not a success-shaped fallback |
+| P2 T15: expose phase/progress | Multi-hour quiet periods caused repeated lock/stall investigations. Add elapsed time, verified/total files and phase boundaries to backup, stage verification, publication, thumbnail/evidence and history checks | Shared diagnostics; no semantic/recipe changes; report stalls/errors explicitly |
+| P1 S24/S25: control file amplification | Metadata inventory: 48,792 published files for 2,793 people, about 17.5 files/photo. Retained evidence is 34,567 files, distinct from 2,793 retained originals and 8,255 maintained derivatives. Review adds 8,379 shared thumbnail files / 196,065,948 bytes | Measure bytes and restore cost before changing scope/format; no source pruning, archive-format assumption or collapsing distinct lineage |
+| P1 T17 then I68-I70: measure useful processing | Existing paired profiles and checkpoint recovery worked, but speed must retain useful crop/mask/framing and explain attempted/skipped stages | Same frozen cases, recipe-aware counts and quality checks before another large recipe run |
+
+Static amplification model, **not an observed call count or a promised
+speedup**: with this run's destination-owner populations,
+`sum(ownerPhotoCount^2) = 210,359`. Seven complete owner-manifest traversals
+per successfully framed photo would visit about 1.47 million entries before
+including source-location scans, preparation evidence, Overview or other
+guards. Actual calls differ for unavailable derivatives and execution paths.
+Drakniss alone contains 314 final Gallery/Review photos, making owner-wide
+scans especially expensive. A bounded fixture benchmark should count
+enumerations, manifest loads, artifact reads/bytes and wall time, not just
+mock away the slow functions.
+
+Suggested implementation acceptance: identical report records, evidence states,
+links and derivative bytes on the same frozen fixture; fewer measured repeated
+reads; rejection of a changed native/artifact/manifest and reparse paths; no
+cross-root/domain reuse; explicit refresh/invalidation across mutation phases.
+Then run one approved report-only scale check, not another intake/rebase.
+No numerical speedup is claimed until that experiment runs.
+
 #### Oct 30 review: observability and configurable processing
 
 The complete 12:31 source and item ledger live in

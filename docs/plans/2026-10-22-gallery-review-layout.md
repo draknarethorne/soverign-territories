@@ -518,7 +518,7 @@ or conceal pending decisions behind disabled controls.
   treatment, and delete the preview folder (about 44 MB, not manifest-owned).
   Preview copies retain historical data/scripts, including old Artist entries;
   they demonstrate presentation, not the current general-domain filter.
-- [ ] **P2 ai** L18 Improve preparation evidence-index I/O without weakening
+- [ ] **P1 ai** L18 Improve preparation evidence-index I/O without weakening
   hash/path/scope checks. Current 2,421-row saved-evidence preview verification
   takes about 99 seconds because full referenced runs are checked; build once
   per render, retain explicit limits/errors, and benchmark selective per-photo
@@ -534,6 +534,16 @@ another Explorer/suspension lock. See the
 Use a bounded, per-generation validated index with explicit invalidation and
 same-input artifact checks before proposing a full-scale refresh. This is
 future measured work, not an optimization delivered by the receipt-size fix.
+
+Oct 31 outcome-review audit elevates this existing slice to P1 **before
+another expensive report/rebase iteration**, without reopening the held gallery
+redesign. The
+[speed analysis](2026-10-28-intake-performance.md#oct-31-outcome-review-speed-priorities)
+traces seven repeated verification calls on the normal Review row and specifies
+bounded measurement/invalidation tests. Share explicit verified results within
+one frozen generation; do not silently skip hashing, persist timestamp-only
+trust or add a new cache service. Storage scope/budget S24/S25 stays ahead of
+another large run; this report did not implement or benchmark the optimization.
 
 ### Oct 23, 19:36 continuation: presentation-only checks
 

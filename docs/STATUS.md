@@ -21,6 +21,20 @@ remains measured debt (L18), not solved performance. The
 remaining review and storage-before-next-run order. No worker remains,
 no new intake or Production change occurred, and manual prompt edits stay separate.
 
+**Oct 31 outcome/speed review:** every frozen route and name-sidecar binding
+was audited beyond technical publication. Angels retained 445 Gallery photos,
+released 18 and now has 36 Review; Sisters retained 773, released 30 and now
+has 27 Review. No new cast Gallery promotion or recorded lock/anchor/workflow
+release occurred. All 21 cast name histories survive, but the installed
+catalogue has no structured family/name records; family reconciliation and
+original-name correction were not exercised, not implicitly accepted.
+The [outcome report](plans/2026-10-23-cast-seeded-library-rebase.md#oct-31-cast-routing-name-continuity-and-iteration-audit)
+lists per-slot changes, name-lineage limitations and remaining gates.
+The [speed analysis](plans/2026-10-28-intake-performance.md#oct-31-outcome-review-speed-priorities)
+identifies repeated provenance reads as the P1 L18 slice before another
+expensive iteration; no optimization or new image run was performed.
+Human identity/quality review and storage S24/S25 remain the next boundaries.
+
 **Oct 30, 14:28 instruction readiness:** the main Copilot entry point and
 all seven specialized agents now follow canonical local-first scope, bounded
 roles, focused/holding work, pinned handoffs and validated publication.

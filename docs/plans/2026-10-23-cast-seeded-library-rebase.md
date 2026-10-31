@@ -730,6 +730,137 @@ owns measured timings; gallery L18 owns repeated verification I/O.
 Storage S24/S25 remains before another expensive run. C7/I60, known quality
 defects, family/name/engine acceptance and Production approval stay open.
 
+## Oct 31: cast routing, name continuity and iteration audit
+
+The user asked for more than technical installation: explain cast moves,
+names/families, what worked, remaining iterations and speed. This follow-up
+audits every frozen decision and name sidecar, not faces or biological identity.
+Existing first-pass image screening is historical evidence, not a new
+image-by-image identity sign-off. The user's visual/identity review remains C7;
+I60's cleanup-quality work and C8/C9's wider acceptance remain open.
+
+### Actual cast movement, not just matching suggestions
+
+All 2,793 installed decision rows equal the audited pre-install preview.
+There are 942 **folder** changes across the full people population. Filename/
+extension normalization is separate: 281 retained cast paths changed without
+changing their cast folder or Gallery membership.
+
+| Category | Before | Retained Gallery | Released to candidate pool | Review placements now | Final Gallery + Review |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Angels | 463 | 445 | 18 | 36 | 481 |
+| Sisters | 803 | 773 | 30 | 27 | 800 |
+| Total | 1,266 | 1,218 | 48 | 63 | 1,281 |
+
+**No new image was automatically promoted into a cast Gallery or core.**
+The 63 cast Review placements comprise 58 non-cast arrivals, three Angelica
+releases held in Angelica's own Review, one Drakniss release held in
+Angelica Review and one Draknoxa release held in Sammara Review. These are
+review suggestions, not accepted cast replacements. No fixed slot changed
+occupant through a rename/swap. A best-match field is not a destination.
+
+| Fixed slot | Before | Retained Gallery | Released | Final Review | Final total |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Camaris | 51 | 50 | 1 | 5 | 55 |
+| Gavrielle | 20 | 19 | 1 | 0 | 19 |
+| Nyxene | 15 | 15 | 0 | 0 | 15 |
+| Ravaelle | 79 | 76 | 3 | 2 | 78 |
+| Angelica | 61 | 49 | 12 | 15 | 64 |
+| Azaline | 18 | 18 | 0 | 0 | 18 |
+| Haniya | 94 | 94 | 0 | 0 | 94 |
+| Remiah | 51 | 51 | 0 | 2 | 53 |
+| Sammara | 17 | 17 | 0 | 6 | 23 |
+| Sandalyn | 11 | 11 | 0 | 3 | 14 |
+| Seraphine | 46 | 45 | 1 | 3 | 48 |
+| Draknara | 97 | 97 | 0 | 5 | 102 |
+| Draknava | 40 | 40 | 0 | 0 | 40 |
+| Drakness | 113 | 110 | 3 | 2 | 112 |
+| Drakneta | 31 | 25 | 6 | 4 | 29 |
+| Draknira | 34 | 33 | 1 | 0 | 33 |
+| Draknisa | 95 | 95 | 0 | 1 | 96 |
+| Drakniss | 322 | 307 | 15 | 7 | 314 |
+| Drakniya | 23 | 21 | 2 | 3 | 24 |
+| Draknora | 26 | 25 | 1 | 0 | 25 |
+| Draknoxa | 22 | 20 | 2 | 5 | 25 |
+
+Of the 48 releases, 27 went to Potentials Gallery, seven to Prospects Gallery,
+six to Models Gallery, five to Angel Review and three to Various Review.
+The three Drakness releases are quality/multiple-face holds, not confident
+alternative assignments. All releases have false core, anchor, identity-lock,
+photo-lock and workflow-selected flags. All 21 workflow selections and three
+configured anchors remained retained; 19 selections are also core members.
+Two workflow-selected non-core photos remained retained deliberately.
+
+Thus the **recorded safeguards and conservative routing worked**. It does
+not follow that every release/grouping is visually right: the policy permits
+unprotected low-scoring photos to leave fixed cast Gallery. Highest-yield
+human checks are Drakniss's 15 releases, Angelica's 12 and Drakneta's six
+(33 of 48 together), plus both Sister-to-Angel Review suggestions. Do not
+lower thresholds or auto-promote these holds to make the result look cleaner.
+
+### Names and organizational families: preservation is not reconciliation
+
+- The source catalogue was empty and no prior local catalogue existed. The
+  run created 202 identity records; migration of previously populated stable-ID
+  family/name metadata was therefore **not exercised by this dataset**.
+- The installed catalogue contains **zero structured `names` records and
+  zero `family` records**. This run did not execute family reconciliation,
+  correction N12 or automatic family-name assignment.
+- All 21 cast `z_` name/history files match the frozen source hashes. Of 181
+  non-cast destination summaries, 133 preserve a same-label source file
+  byte-for-byte; 48 are generated summary stubs pointing to the run journal.
+  Complete source sidecars remain in the overlay: 194 people plus 67 Artist.
+- No duplicate recorded full-name labels were found across the 202 people
+  destinations. However, **45 surname labels are shared across 118 folders**.
+  With zero family metadata, these surnames must not be presented as accepted
+  organizational-family links, let alone real relationships.
+- 61 old non-cast folders split across destinations; 105 non-cast destinations
+  combine more than one source folder. These are routing facts, not errors
+  by themselves. A copied name/history file is not proof that its old label
+  correctly describes all new members, nor is a generated name an original
+  source name. N9/N12/N13 and C8/C9 retain this acceptance boundary.
+
+Concrete review anchors from recorded lineage: Lucia Reyes now has 35 photos
+from its own old folder; Celine Gilbert has two from Celine Gilbert and
+Keira Stone; Harlow Chase has 68 from Harlow Chase, Lucia Reyes, Davina Banks,
+Angelica and Various. These were already flagged for review by existing
+diagnostics; no new face comparison or identity conclusion is made here.
+
+### What worked, and what needs another iteration
+
+| Area | Finding | Next owner / boundary |
+| --- | --- | --- |
+| Conservation and publication | Audited rows unchanged; protected/core/selected membership preserved; no automatic cast Gallery additions | C6 delivered; C7 human review remains |
+| Cast release and regrouping | Exact destinations/reasons available; 48 releases and 99 holds conserved | C8/C9 and C7: inspect intended placement; do not treat score bands as truth |
+| Cleanup | Prior output screening and artifact proofs exist, but known overlays/framing/repaint defects remain | I60/I68/I69; reproduce named cases on a bounded frozen set |
+| Names/families | History files preserved, but no structured family/name reconciliation occurred | N9/N12/N13; explicit reversible correction/family acceptance, no automatic rename now |
+| Speed | Installation succeeded, but repeated provenance verification dominates useful next speed work | L18 with T15/T17; see the linked performance audit |
+| Storage | 48,792 publication files include 34,567 retained-evidence files; 8,255 maintained derivatives, 2,793 originals, 2,793 natives, 181 name stubs/copies and 203 other receipts | S24/S25; preserve sources/recovery, measure before packing/pruning |
+
+The 99 Review outcomes remain 44 small-group cast holds, 19 high-cast holds,
+17 ambiguous-cast holds, 12 missing-ID holds, five multiple-face holds and
+two small-face holds. This is explainable conservative behavior, not proof
+that these are all genuine errors or that the remaining Gallery is correct.
+
+The read-only audit is preserved beside the run in
+`outcome-audit-20261031/audit.json`, `cast-transitions.csv` (106 distinct
+release/arrival rows; five rows belong to both sets), `name-lineage.csv`
+(202 folders) and `audit-rebase-outcomes-20261031.py`. The script checks
+current catalogue binding, all sidecar hashes and protection/routing
+invariants. It does not rerun inference, modify images or assert identity.
+The [performance follow-up](2026-10-28-intake-performance.md#oct-31-outcome-review-speed-priorities)
+ranks measured next work without starting another full intake.
+
+### Oct 31 review questions (chat, verbatim)
+
+<!-- markdownlint-disable MD013 -->
+```text
+Did you do a full review of what happened in the sandbox rebase and validate those images and the moves make sense to you?
+
+I'll do my review, but I'm wondering if you did inspections and comparisons to see if things did move in/out of angels or sisters as well as the family names and if it all makes sense and what actually worked and what might need more iterations and features looked into.  If you can also look at the performance and speed issues that would also be the most useful.
+```
+<!-- markdownlint-enable MD013 -->
+
 User words (chat, Oct 30), word for word:
 
 <!-- markdownlint-disable MD013 -->
