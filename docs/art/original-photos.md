@@ -186,9 +186,12 @@ Centering follows the full visible subject, not only the face. Already-tight
 inputs can skip either crop; retain wider useful context when subject bounds
 are uncertain. Head/chest derivative framing is a separate later operation.
 
-The retained-preparation staging API publishes exact incoming bytes under the
-destination owner's `gallery_org/<set-key>/original.ext`; the accepted
-native image remains in `gallery` or `review`. Its declared variants (including
+The FULL retained-preparation staging API publishes exact incoming bytes under
+the destination owner's `gallery_org/<set-key>/original.ext`; the accepted
+native image remains in `gallery` or `review`. New opt-in LEAN publications
+reference that native file instead when the original bytes match exactly,
+and share exact-equal native variant roles with it. Differing originals
+still live in `gallery_org`. Its declared variants (including
 denoise/tone, masks, previews and padded comparisons), photo detail and recipe
 are retained under `gallery_intake/<set-key>/`. The 32-hex set key covers the
 immutable source path, source photo ID, matching domain, original SHA-256 and
@@ -381,7 +384,8 @@ command above; start with `--limit 6 --dry-run`, then `--apply`. Use the same
 mode for repeated apply. `--check` reads the saved mode from the manifest and
 fully verifies sources/artifacts; it does not convert an existing report.
 The menu's preparation preview offers `full` or `lean`. FULL remains the
-compatibility default; LEAN is not yet a `library.cmd` or rebase option.
+compatibility default. Fresh `sandbox-rebase.cmd` runs also accept LEAN;
+ordinary `library.cmd` has not changed defaults.
 
 LEAN preserves original/control/recommended panel labels while aliasing
 exact-byte roles within each photo to the same file, including previews.
@@ -402,6 +406,79 @@ This is a bounded, already-prepared input sample, not a full-library savings
 forecast or an installed LEAN migration. Complete evidence and the next
 conditional-`gallery_org`/installed-native work live in
 [storage S25/S26](../plans/2026-10-28-storage-operations-and-retention.md#oct-31-lean-producer-proof).
+
+#### Installed LEAN, COMPACT and COLLAGE experiments
+
+For a **new** rebase, append `--storage-mode lean` to the usual preview and
+intake commands. Resume with that mode or omit the option to use the recorded
+mode. A conflicting explicit mode refuses; nothing converts an applied run.
+LEAN retained format 2 references its own installed native photo for all
+exact-equal roles. It creates `gallery_org` only when source original bytes
+differ. Renames, owner moves, undo and backup restore must carry that lineage;
+another photo with identical bytes is not an allowed substitute.
+
+New preparation manifests and index pages include recipe-derived outcome,
+recommendation and step/status counts, distinct image files/bytes, image-role
+references, worker count and current-invocation preparation wall time.
+The timing stops before final publication/verification and is not end-to-end.
+Image totals exclude manifests, HTML, mirrors, installed copies and backups.
+Historical manifests without statistics remain valid.
+
+Convert a verified FULL or LEAN report into a **new independent** history:
+
+```cmd
+bin\preparation-history.cmd --root "SANDBOX\Working" --report "REPORT" --out "Working\_reports\preparation-history\NEW" --mode compact --dry-run
+bin\preparation-history.cmd --root "SANDBOX\Working" --report "REPORT" --out "Working\_reports\preparation-history\NEW" --mode compact --apply
+bin\preparation-history.cmd --root "SANDBOX\Working" --out "Working\_reports\preparation-history\NEW" --check
+```
+
+Replace the example paths with absolute paths. Reports inside a verified
+rebase input mirror are supported. COMPACT keeps downsized JPEG diagnostics
+(640-pixel long edge); COLLAGE makes one labelled stage sheet per photo.
+Both preserve exact original, selected native and selected padded payloads
+once per photo, with provenance/role mappings. The layout is shallow, without
+cross-photo or cross-artist pooling. Limits: 1-64 photos; oversized or linked
+paths refuse. The source report is rechecked before atomic publication.
+Repeat apply/check safely reuses the same verified conversion.
+
+These are **lossy historical views**, not exact masks, alternative-stage
+processing inputs or full rollback. FULL remains available. Conversion alone
+is additive storage: it deletes no source report and reclaims zero bytes.
+Do not prune a run needed by an installed receipt, undo, backup, history link
+or production dependency. Existing `storage-retention.cmd` clearances apply
+only to its supported superseded runs; generic report-to-bundle PRUNE is
+not implemented. Selective FULL reproduction also requires the exact source,
+recipe, model/config/runtime, and is not guaranteed by a collage.
+
+For a real mixed end-to-end comparison, use a short ignored output path
+(the long aligned-face filename must fit OpenCV's Windows path limit):
+
+```cmd
+bin\storage-experiment.cmd --root "B:\Sovereign Territories Sandbox\Working" --out "C:\Soverign-Territories\soverign-territories\tmp\s1" --limit 24 --dry-run
+```
+
+`--apply` copies the same balanced sample of Various and assigned Galleries
+into isolated FULL/LEAN sandbox roots, then exercises preparation, real
+matching, install/check, Gallery/Overview/Review/history publication, exact
+backup/materialized restore and both history conversions. The supplied
+library is read-only. `--check` verifies persisted bytes and native-reference
+lineage. A failed incomplete output is retained for diagnosis and requires
+a different short output, not silent continuation. Completed repeat apply
+does not rerun preparation; it verifies the saved experiment.
+
+The HTML/JSON summarize individual stage wall times, preparation counters,
+active installed files/bytes, overlapping mirror/report/backup/restore scopes,
+and history conversion/verification totals. Do not sum overlapping scopes.
+FULL runs first; model/cache warming, simultaneous tests/ComfyUI load and
+different volumes limit timing conclusions. No automatic FAST recipe, source
+PRUNE, frozen-baseline migration or default adoption follows from a sample.
+For a second changed-image cohort, `--sources LIST.json` accepts exactly
+`--limit` relative active paths, balanced between Various and general assigned
+Galleries, including at least three Angel and three Sister core candidates.
+An immutable earlier input mirror can be the read-only `--root`; this
+replays unprocessed originals instead of measuring only already-cleaned
+installed recommendations. The source-list choice and every input SHA are
+preserved through the resulting experiment receipt.
 
 Current v23 checks known overlay patterns, borders, screenshot layout and
 uncertain glyphs before cleanup. No detected proposal retains original pixels

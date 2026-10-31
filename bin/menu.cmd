@@ -20,6 +20,7 @@ echo   L  Photo library: sort new photos in Various, remove duplicates, rebuild 
 echo   R  Photo review gallery (read-only audit; history-only repair flags in Help)
 echo   G  Preview gallery upkeep (rename, padded/head/chest; no matching or writes)
 echo   P  Preview sandbox image preparation comparisons (no source or identity changes)
+echo      P also offers independent COMPACT/COLLAGE history or a mixed storage experiment
 echo   U  Preview same-mask eraser A/B (LaMa vs OpenCV; comparison only)
 echo   V  Preview unconfirmed overlay reference candidates
 echo   J  Preview early Junk quarantine from a completed preparation report (no moves)
@@ -127,6 +128,10 @@ if /i "%APPLY%"=="y" call "%~dp0render-reference.cmd" compare "%BATCH%" --root "
 pause
 goto menu
 :preparation
+set "PREPARATION=prepare"
+set /p "PREPARATION=Preview prepare/history/experiment (Enter keeps prepare): "
+if /i "%PREPARATION%"=="history" goto preparationhistory
+if /i "%PREPARATION%"=="experiment" goto storageexperiment
 set "ROOT="
 set "RUN="
 set /p "ROOT=Sandbox Working absolute path: "
@@ -134,6 +139,26 @@ set /p "RUN=Comparison run absolute path inside Working\_reports\preparation: "
 set "STORAGE=full"
 set /p "STORAGE=Evidence storage (full/lean; Enter keeps full): "
 call "%~dp0prepare-images.cmd" --root "%ROOT%" --out "%RUN%" --storage-mode "%STORAGE%" --dry-run
+pause
+goto menu
+:preparationhistory
+set "ROOT="
+set "REPORT="
+set "RUN="
+set "STORAGE=compact"
+set /p "ROOT=Sandbox Working absolute path: "
+set /p "REPORT=Existing FULL or LEAN preparation report absolute path: "
+set /p "RUN=New output directly inside Working\_reports\preparation-history: "
+set /p "STORAGE=History mode compact/collage (Enter keeps compact): "
+call "%~dp0preparation-history.cmd" --root "%ROOT%" --report "%REPORT%" --out "%RUN%" --mode "%STORAGE%" --dry-run
+pause
+goto menu
+:storageexperiment
+set "ROOT="
+set "RUN="
+set /p "ROOT=Read-only source library Working absolute path: "
+set /p "RUN=NEW experiment output absolute path strictly under repository tmp: "
+call "%~dp0storage-experiment.cmd" --root "%ROOT%" --out "%RUN%" --dry-run
 pause
 goto menu
 :erasercompare

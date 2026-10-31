@@ -694,7 +694,7 @@ class PreparationTests(unittest.TestCase):
         row["variants"]["eraser-mask"] = dict(row["variants"]["control"])
         before = json.dumps(row["processing"], sort_keys=True)
         page = preparation.report(data).decode("utf-8")
-        trace = page.split("<tbody>", 1)[1].split("</tbody>", 1)[0]
+        trace = page.split('<div class="trace">', 1)[1].split("<tbody>", 1)[1].split("</tbody>", 1)[0]
         self.assertIn(">ui-crop-proposal</a>", trace)
         self.assertIn(">eraser-mask</a>", trace)
         self.assertIn("comparison-only", trace)
@@ -921,6 +921,24 @@ class PreparationTests(unittest.TestCase):
             changed["storageMode"] = "fast"
             with self.assertRaises(preparation.ValidationError):
                 preparation.validate(changed)
+
+    def test_statistics_count_actual_shared_images_and_reject_false_totals(self):
+        with self.v23():
+            self.assertEqual(self.call("--storage-mode", "lean", "--apply"), 0, self.errors)
+            data = self.manifest()
+            stats = data["statistics"]
+            images = [path for path in self.output.rglob("*") if path.suffix in (".png", ".jpg")]
+            self.assertEqual(stats["photos"], 1)
+            self.assertEqual(sum(stats["outcomes"].values()), 1)
+            self.assertEqual(sum(stats["recommendations"].values()), 1)
+            self.assertEqual(stats["imageFiles"], len(images))
+            self.assertEqual(stats["imageBytes"], sum(path.stat().st_size for path in images))
+            self.assertGreater(stats["imageRoles"], stats["imageFiles"])
+            self.assertIn("Run statistics", (self.output / "index.html").read_text())
+            data["statistics"]["imageFiles"] += 1
+            (self.output / "manifest.json").write_text(json.dumps(data))
+            with self.assertRaisesRegex(ValueError, "statistics"):
+                preparation.verify(self.root, self.output)
 
     def test_lean_checkpoint_resumes_exact_aliases_and_mode_is_bound(self):
         second = self.put("Various/gallery/second_image_456.jpg")
@@ -1357,7 +1375,7 @@ class PreparationTests(unittest.TestCase):
     def test_artist_and_general_usable_inputs_share_recipe_and_padding_not_identity_assignment(self):
         self.put("Artists/First Painter/gallery/first_image_456.jpg")
         self.put("Artists/Second Painter/gallery/second_image_789.jpg")
-        self.assertEqual(self.call("--apply"), 0)
+        self.assertEqual(self.call("--apply"), 0, self.errors)
         rows = self.manifest()["photos"]
         self.assertEqual({r["sourceScope"]["matchingDomain"] for r in rows},
                          {"general", "Artists/First Painter", "Artists/Second Painter"})
@@ -1367,6 +1385,31 @@ class PreparationTests(unittest.TestCase):
                 with Image.open(self.output / variant["padded"]) as image:
                     self.assertEqual(image.size, (944, 1104))
         self.assertFalse(self.manifest()["recipe"]["matching"])
+
+    def test_atomic_publication_retries_transient_lock_and_preserves_checkpoint_on_persistent_lock(self):
+        from likeness_library import report_assets
+        rename = report_assets.os.rename
+        calls = []
+
+        def lock_once(stage, target):
+            calls.append((stage, target))
+            if len(calls) == 1:
+                raise PermissionError("scanner lock")
+            return rename(stage, target)
+
+        with mock.patch.object(report_assets.os, "rename", side_effect=lock_once), \
+                mock.patch.object(report_assets.time, "sleep"):
+            self.assertEqual(self.call("--apply"), 0, self.errors)
+        self.assertEqual(len(calls), 2)
+        self.assertEqual(self.call("--check"), 0, self.errors)
+        self.output = self.output.with_name("locked")
+        with mock.patch.object(report_assets.os, "rename", side_effect=PermissionError("persistent lock")) as rename, \
+                mock.patch.object(report_assets.time, "sleep"):
+            self.assertEqual(self.call("--apply"), 1)
+        self.assertEqual(rename.call_count, 5)
+        self.assertIn("persistent lock", self.errors)
+        self.assertFalse(self.output.exists())
+        self.assertTrue(any((self.root / "_tmp").glob("prep-*/publish/manifest.json")))
 
     def test_junk_workflow_configuration_race_after_backup_refuses_before_moves(self):
         self.loose_junk_run()

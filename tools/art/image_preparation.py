@@ -664,6 +664,7 @@ def report(data, *, detail=False):
         + ('<p><strong>LEAN evidence:</strong> equal-byte roles share a file within this photo; '
            'only the recommendation has workflow padding. Native alternatives and masks remain available. '
            'No processing steps were skipped.</p>' if data.get("storageMode") == "lean" else '')
+        + statistics_html(data.get("statistics"))
         +
         '<p>Control: oriented/sRGB only. Denoise and tone are separate alternatives, not a '
         'combined approved recipe. Click for full-resolution candidates or exact retained input. '
@@ -960,7 +961,56 @@ def verify(root, output, *, current_sources=True):
     page = safe_path(output, output / "index.html")
     if sha(page.read_bytes()) != data["reportSha256"]:
         raise ValueError("pilot HTML hash mismatch")
+    if "statistics" in data:
+        expected = image_statistics(output, data["photos"])
+        if any(data["statistics"].get(key) != value for key, value in expected.items()):
+            raise ValueError("preparation statistics differ from verified rows/artifacts")
     return data
+
+
+def image_statistics(output, rows):
+    images = {}
+    roles = 0
+    outcomes, recommendations = collections.Counter(), collections.Counter()
+    steps = collections.defaultdict(collections.Counter)
+    for row in rows:
+        references = [(row["retained"], row["sourceSha256"])]
+        for variant in row["variants"].values():
+            references += [(variant["path"], variant["sha256"]),
+                           (variant["thumbnail"], variant["thumbnailSha256"])]
+            if "padded" in variant:
+                references.append((variant["padded"], variant["paddedSha256"]))
+        if row.get("recommendedPadded"):
+            record = row["recommendedPadded"]
+            references.append((record["path"], record["sha256"]))
+        for relative, digest in references:
+            if relative in images and images[relative] != digest:
+                raise ValueError(f"conflicting image-role hashes: {relative}")
+            images[relative] = digest
+        roles += len(references)
+        outcomes[row["outcome"]] += 1
+        recommendations[row["recommendation"]["use"]] += 1
+        for step in row.get("processing", {}).get("steps", []):
+            steps[step["name"]][step["status"]] += 1
+    return {
+        "photos": len(rows), "imageRoles": roles, "imageFiles": len(images),
+        "imageBytes": sum(safe_path(output, output / relative).stat().st_size for relative in images),
+        "outcomes": dict(outcomes), "recommendations": dict(recommendations),
+        "steps": {name: dict(statuses) for name, statuses in steps.items()},
+    }
+
+
+def statistics_html(stats):
+    if not stats:
+        return ""
+    rows = "".join(f"<tr><td>{html.escape(name)}</td><td>{html.escape(json.dumps(stats[name], sort_keys=True))}</td></tr>"
+                   for name in ("photos", "imageRoles", "imageFiles", "imageBytes", "workers",
+                                "preparationSeconds", "outcomes", "recommendations", "steps"))
+    return ('<details open class="run-statistics"><summary>Run statistics</summary>'
+            '<p>Unique image payloads only: excludes HTML, manifests, mirrors, installed copies and backups. '
+            'Preparation wall time covers this invocation through ordered artifact collection, including recovery; '
+            'excludes final page generation, publication and verification. Worker times are not summed wall time.</p>'
+            f'<table><thead><tr><th>Measure</th><th>Value</th></tr></thead><tbody>{rows}</tbody></table></details>')
 
 
 def run(args):
@@ -1385,6 +1435,7 @@ def checkpointed_rows(root, recovery, stage, selected, input_rows, binding, base
 
 def publish(root, output, selected, *, limit=0, source_folder=None, counts=None, workers=None, storage_mode="full"):
     """Publish one immutable report; sandbox orchestration supplies a verified source mirror."""
+    started = time.perf_counter()
     if storage_mode not in ("full", "lean") or (
             storage_mode == "lean" and RECIPE["id"] != "preparation-comparison-v23"):
         raise ValueError("storage mode must be full, or lean with the v23 recipe")
@@ -1494,13 +1545,18 @@ def publish(root, output, selected, *, limit=0, source_folder=None, counts=None,
             remove_worker_directory(root, worker_dir)
             data["photos"].append(row)
             print(f"Ordered report rows: {index}/{len(selected)}.", flush=True)
+        data["statistics"] = {
+            **image_statistics(stage, data["photos"]), "workers": workers,
+            "preparationSeconds": round(time.perf_counter() - started, 6),
+        }
         page = report(data)
         write_new(stage / "index.html", page)
         data["reportSha256"] = sha(page)
         validate(data)
         write_new(stage / "manifest.json", (json.dumps(data, indent=2) + "\n").encode("utf-8"))
         verify(root, stage)
-        os.rename(stage, output)
+        from likeness_library.report_assets import rename_directory
+        rename_directory(stage, output)
         shutil.rmtree(recovery)
     print(f"Published comparison report: {output / 'index.html'}")
     return int(any(row["outcome"] in ("unprocessable", "assessment-failed") for row in data["photos"]))

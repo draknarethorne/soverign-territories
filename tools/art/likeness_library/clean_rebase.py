@@ -1554,6 +1554,7 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
 
             retained_preparation.stage_photo(
                 staged, row["destination"], preparation, prepared_row, recipe=data["recipe"],
+                storage_mode=data.get("storageMode", "full"),
             )
     for category in (() if resume_install else RESET_CATEGORIES):
         for folder in sorted((staged / category).iterdir()) if (staged / category).exists() else ():
@@ -1857,6 +1858,9 @@ def command(args, api):
     ):
         raise ValueError("run directory must be outside identity category roots")
     intake_only = getattr(args, "intake_only", False)
+    storage_mode = getattr(args, "storage_mode", None)
+    if storage_mode not in (None, "full", "lean"):
+        raise ValueError("storage mode must be full or lean")
     resume_install = getattr(args, "resume_install", False)
     preserve_legacy = getattr(args, "preserve_legacy_derivatives", False)
     if resume_install and (intake_only or not (args.check or args.apply)):
@@ -1927,11 +1931,16 @@ def command(args, api):
     elif include_various and not (args.check or args.undo or args.replan):
         layout = _create_source_overlay(layout, run, current_working=current_working)
     plan_path = run / "run.json"
+    if storage_mode is not None and (run / "intake.json").exists():
+        _, saved_preparation = clean_preparation.verify(layout, run)
+        if saved_preparation.get("storageMode", "full") != storage_mode:
+            raise ValueError("saved intake storage mode differs; use the saved mode or a new run")
     if intake_only or args.check and not plan_path.exists():
         if args.check:
             output, data = clean_preparation.verify(layout, run)
         elif args.apply:
-            output, data = clean_preparation.prepare(layout, run, getattr(args, "workers", None))
+            output, data = clean_preparation.prepare(
+                layout, run, getattr(args, "workers", None), storage_mode=storage_mode)
             from . import preparation_history
 
             storage_cfg = api.cw.load_cfg()
@@ -1979,7 +1988,8 @@ def command(args, api):
             raise ValueError("create and review the prepared matching preview before --apply")
         if args.replan and not ((run / "intake.json").is_file() and (run / "likeness-cache.json").is_file()):
             raise ValueError("resuming incomplete matching requires verified preparation and saved measurements")
-        preparation = clean_preparation.prepare(layout, run, getattr(args, "workers", None))
+        preparation = clean_preparation.prepare(
+            layout, run, getattr(args, "workers", None), storage_mode=storage_mode)
         from . import preparation_history
 
         storage_cfg = api.cw.load_cfg()

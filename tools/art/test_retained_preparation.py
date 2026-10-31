@@ -73,8 +73,67 @@ class RetainedPreparationTests(unittest.TestCase):
         return path
 
     def stage(self):
+        if getattr(self, "storage_mode", "full") == "lean":
+            detail = (self.prep / self.row["detail"]).read_bytes()
+            detail += ('<img src="../' + self.row["variants"]["composition"]["path"] + '">').encode()
+            self.put(self.prep, self.row["detail"], detail)
+            self.row["detailSha256"] = sha(detail)
         return retained.stage_photo(
-            self.root, self.destination, self.prep, self.row, recipe={"id": "test-v16"})
+            self.root, self.destination, self.prep, self.row, recipe={"id": "test-v16"},
+            storage_mode=getattr(self, "storage_mode", "full"))
+
+    def test_lean_selected_native_has_no_retained_copy_and_original_differs(self):
+        self.storage_mode = "lean"
+        published = self.stage()
+        data = retained.verify_link(self.root, self.destination)
+        self.assertEqual(data["formatVersion"], 2)
+        self.assertEqual(data["artifactMap"][self.row["variants"]["composition"]["path"]], self.destination)
+        self.assertNotIn(self.destination, [entry["path"] for entry in published])
+        self.assertNotEqual(data["original"], self.destination)
+        self.assertEqual(sum(entry["sha256"] == sha(self.selected) for entry in published), 0)
+        self.assertTrue(retained.source_is_prepared(self.root / self.destination))
+        self.test_native_lean_links_survive_rename(data)
+
+    def test_native_lean_links_survive_rename(self, data=None):
+        if data is None:
+            self.storage_mode = "lean"
+            self.stage()
+            data = retained.verify_link(self.root, self.destination)
+        before = self.root / self.destination
+        after = before.with_name("renamed_image_123.jpg")
+        retained.rename_photo(self.root, before, after)
+        link = retained.verify_link(self.root, after)
+        self.assertIsNotNone(link)
+        self.assertEqual(link["artifactMap"][self.row["variants"]["composition"]["path"]],
+                         after.relative_to(self.root).as_posix())
+        self.assertIn("renamed_image_123.jpg", (self.root / link["detail"]).read_text())
+
+    def test_lean_unchanged_original_creates_no_gallery_org_and_undo_is_exact(self):
+        self.storage_mode = "lean"
+        self.row["processing"].update(final="control", cleanup="control")
+        self.row["recommendation"] = {"use": "original"}
+        self.selected = self.original
+        self.put(self.root, self.destination, self.original)
+        self.row["variants"]["composition"]["path"] = self.row["retained"]
+        self.row["variants"]["composition"]["sha256"] = self.source_sha
+        self.test_cross_owner_move_and_undo_restore_exact_set_manifest_and_hashes()
+        data = retained.verify_link(self.root, self.destination)
+        self.assertEqual(data["original"], self.destination)
+        self.assertFalse((self.root / "Various/gallery_org").exists())
+
+    def test_lean_cross_owner_native_alias_move_and_undo(self):
+        self.storage_mode = "lean"
+        self.test_cross_owner_move_and_undo_restore_exact_set_manifest_and_hashes()
+
+    def test_lean_native_alias_cannot_escape_to_another_photo(self):
+        self.storage_mode = "lean"
+        self.stage()
+        data = retained.verify_link(self.root, self.destination)
+        other = self.put(self.root, "Various/review/other_image_456.jpg", self.selected)
+        manifest = self.root / data["manifest"]
+        data["artifactMap"][self.row["variants"]["composition"]["path"]] = other.relative_to(self.root).as_posix()
+        manifest.write_text(json.dumps({key: value for key, value in data.items() if key != "manifest"}))
+        self.assertIsNone(retained.verify_link(self.root, self.destination))
 
     def test_exact_role_aliases_publish_once_and_keep_all_role_links(self):
         self.row["variants"]["tone"] = dict(self.row["variants"]["denoise"])
@@ -588,6 +647,26 @@ class RetainedPreparationTests(unittest.TestCase):
         for entry in published:
             self.assertEqual((snapshot / "work-root" / entry["path"]).read_bytes(),
                              (self.root / entry["path"]).read_bytes())
+
+    def test_lean_real_snapshot_restore_preserves_native_alias_without_gallery_org(self):
+        self.storage_mode = "lean"
+        self.row["processing"].update(final="control", cleanup="control")
+        self.row["recommendation"] = {"use": "original"}
+        self.selected = self.original
+        self.put(self.root, self.destination, self.original)
+        self.row["variants"]["composition"]["path"] = self.row["retained"]
+        self.row["variants"]["composition"]["sha256"] = self.source_sha
+        self.stage()
+        with contextlib.redirect_stdout(io.StringIO()):
+            snapshot = library_backup.create_backup(self.root, stamp="lean-restore", apply=True)
+            recovery = library_backup.restore_backup(snapshot, self.base / "restored", apply=True)
+        restored = recovery / "work-root"
+        self.assertFalse((restored / "Various" / "gallery_org").exists())
+        data = retained.verify_link(restored, self.destination)
+        self.assertIsNotNone(data)
+        self.assertEqual(data["formatVersion"], 2)
+        self.assertEqual(data["original"], self.destination)
+        self.assertEqual(data["artifactMap"][self.row["variants"]["composition"]["path"]], self.destination)
 
 
 if __name__ == "__main__":

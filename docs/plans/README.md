@@ -19,10 +19,13 @@ not a change to the frozen images, thresholds or backup defaults. See
 [L18 results and source coverage](2026-10-22-gallery-review-layout.md#oct-31-l18-implementation)
 and the [backup exercise](../art/original-photos.md#bounded-backup-format-benchmark-explicit-experiment).
 The subsequent [duplicate-first storage increment](2026-10-28-storage-operations-and-retention.md#oct-31-lean-producer-proof)
-adds opt-in standalone LEAN reports with exact-byte role reuse and only
-recommended padding. Its six-photo equivalence/file-count proof is verified;
-installed-native reuse S26 and broader mode/default decisions remain before
-another full rebase. No frozen report or applied receipt was migrated.
+adds opt-in LEAN reports and fresh installed-native reuse S26. Two mixed
+24-photo FULL/LEAN end-to-end trials, exact backup restore and independent
+COMPACT/COLLAGE histories are verified; see the
+[current storage proof](2026-10-28-storage-operations-and-retention.md#oct-31-installed-lean-and-history-mode-proof).
+S26 and composite-tooling T13 are delivered. S25 mode/default/dependency
+acceptance and S24 amplification/PRUNE remain before another full rebase.
+No frozen report or applied receipt was migrated.
 
 ## Now, next and holding
 
@@ -36,7 +39,7 @@ and reactivation condition.
 | Window | Work | Exit / boundary |
 | --- | --- | --- |
 | Now, human review of installed baseline | Cast C7, intake I60 | C6/I59/T16/S15 automated gates passed, including real history rows/detail links and rollback bytes. Human placement/quality acceptance remains open. No new full intake |
-| Next, before another expensive run | Storage S25 -> S26 -> S24 | LEAN producer proof delivered; next reuse installed native bytes and keep `gallery_org` only for changed originals, with lineage/move/undo/restore tests. Then reduce backup scope/retention amplification; packing follows avoiding copies. Preserve verified recovery/active sources; no automatic deletion |
+| Next, before another expensive run | Storage S25 review + S24 inventory; S26 delivered | LEAN installed-native and mixed COMPACT/COLLAGE trials delivered. Mode/default review and read-only mirror/backup dependency inventory may proceed together; packing, scope mutation and PRUNE retain approval gates. Preserve verified recovery/active sources; no automatic deletion |
 | Parallel speed lane, before another expensive viewer refresh | [Gallery L18](2026-10-22-gallery-review-layout.md), with T15/T17 evidence | First retained-proof reuse slice and full-scale equivalent Review are verified; next bound repeated whole-history audits across pages. Preserve invalidation/hash/path guards. No broader gallery redesign or intake rerun |
 | Next bounded quality round | Performance T17, intake I68/I69/I70 | Recipe-aware statistics, all 13 named cases, coordinated early crop/masks and calibrated denoise/tone selection. Use frozen comparisons before approving another full run; do not change the staged baseline |
 | After those results | Intake I71-I76, performance T18/T19; reactivate upkeep/actions/naming/engine slices as needed | UX/terminology/Artist scope, processing profiles; incremental batch/calibration and action UAT are separate gates, not silently approved |
@@ -344,8 +347,8 @@ deferred; exact current inputs and all user decisions remain protected.
 | [2026-10-23-image-intake-preparation.md](2026-10-23-image-intake-preparation.md) | active | Phase 1: I59 actual installed face/history acceptance passed; I60 current quality review remains open. Expanded feedback is fully mapped F01-F31; I68-I70 own next-round cases/masking/enhancement and I71-I76 own UX/scope/naming/Junk follow-ups |
 | [2026-10-23-cast-seeded-library-rebase.md](2026-10-23-cast-seeded-library-rebase.md) | active | Phase 3: C6 installed/recovery/viewer gates passed; C7 human identity/quality review remains, with 99 Review holds. Family/name/Production gates remain separate |
 | [2026-10-25-reference-rendering.md](2026-10-25-reference-rendering.md) | holding | Verified rebase/prepared inputs plus manual fidelity and R44 routing before bounded Prime batch; no queue during install block |
-| [2026-10-28-intake-performance.md](2026-10-28-intake-performance.md) | active | T16 installation/check/viewer measurements verified; T17 statistics P1 follows storage budget, T18 profile/recipe contract P2, T19 CUSTOM P3. Repeated viewer verification I/O remains L18; T13/T14/T15 stay independent |
-| [2026-10-28-storage-operations-and-retention.md](2026-10-28-storage-operations-and-retention.md) | active | S25 standalone LEAN producer proof delivered; next S26 installed native references/conditional originals, then broader modes and S24 backup amplification. Active sources/recovery protected; physical-root/config proposals remain gated |
+| [2026-10-28-intake-performance.md](2026-10-28-intake-performance.md) | active | T13 COMPACT/COLLAGE tooling and T16 installed measurements delivered; T17 counters/external phases implemented, finer timings/types remain. T18 profiles P2, T19 CUSTOM P3; T14 retention and T15 progress remain independent |
+| [2026-10-28-storage-operations-and-retention.md](2026-10-28-storage-operations-and-retention.md) | active | S26 installed-native/conditional-original proof and two mixed 24-photo trials delivered. Next S25 history/default/dependency acceptance, then S24 mirror/backup amplification and PRUNE. Active sources/recovery protected; physical-root/config proposals remain gated |
 
 The Oct 22 retained plans have review/questions blocks; affected owners now
 also record the Oct 23 foundation-first scheduling pivot. The

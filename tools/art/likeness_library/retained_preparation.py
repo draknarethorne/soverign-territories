@@ -196,13 +196,15 @@ def refresh_detail(root, current_photo, photo_id=None, *, include_gallery_naviga
     ]
 
 
-def stage_photo(root, destination, preparation_root, preparation_row, *, recipe):
+def stage_photo(root, destination, preparation_root, preparation_row, *, recipe, storage_mode="full"):
     """Publish auxiliary files into an isolated staging root, without overwrites.
 
     Return [{path: root-relative POSIX string, sha256: checksum}], excluding the
     already installed native photo. Only this row's declared artifacts are read.
     """
     root = pathlib.Path(root).absolute()
+    if storage_mode not in ("full", "lean"):
+        raise ValueError("retained storage mode must be full or lean")
     preparation_root = pathlib.Path(preparation_root).absolute()
     destination = pathlib.Path(destination).as_posix()
     owner = _owner(destination, root)
@@ -229,8 +231,10 @@ def stage_photo(root, destination, preparation_root, preparation_row, *, recipe)
     for folder in (intake, org):
         if _safe(root, folder).exists():
             raise ValueError(f"retained preparation already exists: {folder}")
-    original_relative = f"{org}/original{original.suffix.lower()}"
-    payloads = {original_relative: original.read_bytes()}
+    shared = storage_mode == "lean"
+    original_relative = destination if shared and native_hash == source_hash else f"{org}/original{original.suffix.lower()}"
+    payloads = {} if original_relative == destination else {original_relative: original.read_bytes()}
+    aliases = {native_hash: destination, source_hash: original_relative} if shared else {}
     detail = _checked(preparation_root, row["detail"], row["detailSha256"])
     if len(row.get("variants", {})) > (MAX_ARTIFACTS - 3) // 3:
         raise ValueError("too many retained preparation variants")
@@ -242,11 +246,16 @@ def stage_photo(root, destination, preparation_root, preparation_row, *, recipe)
         if relative == row["retained"]:
             artifact_map[relative] = original_relative
             continue
+        if shared and checksum in aliases:
+            artifact_map[relative] = aliases[checksum]
+            continue
         key = f"{intake}/{label}{artifact.suffix.lower()}"
         if key in payloads:
             raise ValueError("repeated retained preparation artifact")
         artifact_map[relative] = key
         payloads[key] = artifact.read_bytes()
+        if shared:
+            aliases[checksum] = key
     if len(payloads) > MAX_ARTIFACTS - 2:
         raise ValueError("too many retained preparation artifacts")
     detail_relative = f"{intake}/detail.html"
@@ -258,7 +267,7 @@ def stage_photo(root, destination, preparation_root, preparation_row, *, recipe)
     text = text.replace(quote("../" + row["retained"]), quote(original_href, safe="/._-"))
     text = text.replace(quote("../" + row["detail"]), "#top")
     for source_relative, published_relative in artifact_map.items():
-        href = pathlib.PurePosixPath(published_relative).name
+        href = os.path.relpath(_safe(root, published_relative), detail_target.parent).replace(os.sep, "/")
         text = text.replace(quote("../" + source_relative), quote(href, safe="/._-"))
     text = text.replace('href="../index.html"', 'href="#top"')
     text = text.replace("Back to comparison gallery", "Back to retained comparison")
@@ -274,7 +283,7 @@ def stage_photo(root, destination, preparation_root, preparation_row, *, recipe)
         raise ValueError("detail collides with retained variant")
     payloads[detail_relative] = text.encode("utf-8")
     data = {
-        "formatVersion": 1, "sourceSha256": source_hash, "setKey": set_key,
+        "formatVersion": 2 if shared else 1, "sourceSha256": source_hash, "setKey": set_key,
         "original": original_relative, "current": destination, "currentSha256": native_hash,
         "photoId": metadata.photo_id_from_name(native.name) or row.get("photoId"),
         "domain": domain, "recipe": recipe,
@@ -346,13 +355,13 @@ def _load(path):
     reads = verification_reads.active()
     if reads is not None:
         data = reads.document(path, MAX_MANIFEST_BYTES)
-        if data.get("formatVersion") != 1:
+        if data.get("formatVersion") not in (1, 2):
             raise ValueError("unsupported retained preparation manifest")
         return data
     if path.stat().st_size > MAX_MANIFEST_BYTES:
         raise ValueError("retained preparation manifest too large")
     data = json.loads(path.read_text(encoding="utf-8"))
-    if data.get("formatVersion") != 1:
+    if data.get("formatVersion") not in (1, 2):
         raise ValueError("unsupported retained preparation manifest")
     return data
 
@@ -375,7 +384,8 @@ def verify_link(root, current_photo, photo_id=None):
             if _digest(native) != data["currentSha256"]:
                 return None
             artifacts = data["artifacts"]
-            if not 2 <= len(artifacts) <= MAX_ARTIFACTS:
+            shared = data["formatVersion"] == 2
+            if not (1 if shared else 2) <= len(artifacts) <= MAX_ARTIFACTS:
                 return None
             source_hash = data["sourceSha256"]
             set_key = data["setKey"]
@@ -391,6 +401,9 @@ def verify_link(root, current_photo, photo_id=None):
                         or relative.startswith(f"{owner}/gallery_intake/{set_key}/"))):
                     return None
                 paths[relative] = _checked(root, relative, entry["sha256"])
+            owned_paths = set(paths)
+            if shared:
+                paths[current] = native
             if data["original"] not in paths or data["detail"] not in paths:
                 return None
             if _digest(paths[data["original"]]) != source_hash:
@@ -407,7 +420,7 @@ def verify_link(root, current_photo, photo_id=None):
                 if relative not in paths or _digest(paths[relative]) != checksum:
                     return None
                 expected_paths.add(relative)
-            if set(paths) != expected_paths:
+            if owned_paths != expected_paths - ({current} if shared else set()):
                 return None
             selected = data["selected"]
             expected = source_hash if selected == "original" else row["variants"][selected]["sha256"]
@@ -542,16 +555,18 @@ def plan_transfer(root, source, destination):
         new = new_owner + old[len(old_owner):]
         files.append({"source": old, "destination": new, "sha256": entry["sha256"]})
     for field in ("original", "detail"):
-        updated[field] = new_owner + updated[field][len(old_owner):]
+        updated[field] = (destination if updated[field] == source else
+                          new_owner + updated[field][len(old_owner):])
     for entry in updated["artifacts"]:
         entry["path"] = new_owner + entry["path"][len(old_owner):]
     for key, relative in updated.get("artifactMap", {}).items():
-        updated["artifactMap"][key] = new_owner + relative[len(old_owner):]
+        updated["artifactMap"][key] = (destination if relative == source else new_owner + relative[len(old_owner):])
     detail_before = _safe(root, data["detail"]).read_text(encoding="utf-8")
+    detail_after = _retarget_native(detail_before, root, source, destination, data["detail"], updated["detail"])
     detail_after = re.sub(
         r'<nav class="retained-navigation".*?</nav>',
         _detail_navigation(root, destination, updated["detail"], data["domain"]),
-        detail_before, count=1, flags=re.S,
+        detail_after, count=1, flags=re.S,
     )
     for entry in updated["artifacts"]:
         if entry["path"] == updated["detail"]:
@@ -662,6 +677,8 @@ def execute_transfer(root, transfer, *, reverse=False):
         if _owner(old_photo, root) != _owner(new_photo, root):
             for directory in ("gallery_org", "gallery_intake"):
                 folder = _safe(root, f"{_owner(old_photo, root)}/{directory}/{transfer['setKey']}")
+                if not folder.exists():
+                    continue
                 for child in sorted(folder.rglob("*"), reverse=True):
                     if child.is_dir():
                         child.rmdir()
@@ -682,6 +699,15 @@ def execute_transfer(root, transfer, *, reverse=False):
             source.parent.mkdir(parents=True, exist_ok=True)
             destination.rename(source)
         raise
+
+
+def _retarget_native(text, root, source, destination, old_detail, new_detail):
+    old_href = os.path.relpath(_safe(root, source), _safe(root, old_detail).parent).replace(os.sep, "/")
+    new_href = os.path.relpath(_safe(root, destination), _safe(root, new_detail).parent).replace(os.sep, "/")
+    for attribute in ("href", "src"):
+        text = text.replace(f'{attribute}="{quote(old_href, safe="/._-")}"',
+                            f'{attribute}="{quote(new_href, safe="/._-")}"')
+    return text
 
 
 def rename_photo(root, source, destination):
@@ -714,6 +740,16 @@ def rename_photo(root, source, destination):
     detail_before = detail.read_bytes()
     updated = json.loads(before)
     updated["current"] = destination
+    if updated["original"] == source:
+        updated["original"] = destination
+    for key, relative in updated.get("artifactMap", {}).items():
+        if relative == source:
+            updated["artifactMap"][key] = destination
+    detail_after = _retarget_native(detail_before.decode("utf-8"), root, source, destination,
+                                    data["detail"], data["detail"]).encode("utf-8")
+    for entry in updated["artifacts"]:
+        if entry["path"] == data["detail"]:
+            entry["sha256"] = hashlib.sha256(detail_after).hexdigest()
     pending = manifest.with_name("manifest.rename-pending.json")
     if pending.exists():
         raise ValueError("unfinished retained preparation rename requires recovery")
@@ -726,6 +762,7 @@ def rename_photo(root, source, destination):
     try:
         native.rename(target)
         moved = True
+        detail.write_bytes(detail_after)
         pending.replace(manifest)
         refresh_detail(root, target)
     except Exception:

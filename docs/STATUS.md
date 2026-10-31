@@ -4,7 +4,26 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
-**Oct 31 duplicate-first storage direction:** preventing exact image copies
+**Oct 31 installed LEAN/history iteration:** opt-in fresh rebase publication
+now shares its own native bytes for exact-equal original/variant roles and
+retains differing originals. Two mixed 24-photo FULL/LEAN cohorts completed
+real matching, installation/check and full backup/materialized restore,
+including unchanged and genuinely processed inputs. Native/preview/selected
+padding hashes and routes agree; installed bytes fell about 24-25%.
+COMPACT and COLLAGE have independent preview/apply/check flows and measured
+reports; COMPACT can increase file count, COLLAGE reduces it.
+Recipe-aware counters, complete external wall phases and overlapping storage
+scopes are reported. Timing results are mixed under concurrent load, not a
+general speedup claim. Gallery/Overview/Review/history and all 48 LEAN detail
+pages passed technical browser checks. Human C7/I60 remains separate.
+S26 and performance T13 are delivered; S25 defaults/dependency acceptance,
+S24 amplification/PRUNE and finer T17 observability remain open. FULL
+compatibility stays default; no FAST implementation or generic source PRUNE.
+The [owning proof](plans/2026-10-28-storage-operations-and-retention.md#oct-31-installed-lean-and-history-mode-proof)
+records measurements and durable evidence. Existing installed baseline,
+source and backup hashes are unchanged; no full-library intake occurred.
+
+**Earlier Oct 31 duplicate-first producer checkpoint:** preventing exact image copies
 now precedes packing experiments: S25 producer reuse -> S26 installed-native
 references/conditional `gallery_org` -> S24 backup amplification/retention.
 The first opt-in standalone LEAN preparation slice is tested: exact-byte roles
@@ -14,8 +33,8 @@ from 62 to 46 images / 61.1 to 42.9 MB with identical recommendations,
 38 native/preview role hashes and selected padding. Browser index/detail
 checks passed; installed baseline/source/backup/receipt hashes are unchanged.
 This sample is not a fresh-population forecast or a LEAN installed rebase.
-FAST processing, on-demand alternate padding and installed original reuse
-are not implemented; no existing evidence was pruned. The
+FAST processing and on-demand alternate padding remain unimplemented;
+installed original reuse was subsequently delivered above. No existing evidence was pruned. The
 [owning storage plan](plans/2026-10-28-storage-operations-and-retention.md#oct-31-lean-producer-proof)
 records the copy map, results, full user feedback and incremental gates.
 

@@ -2,12 +2,14 @@
 
 **Status:** active
 
-**Queue focus:** S26, S25, S24
+**Queue focus:** S25, S24
 
 **Scheduling:** S15's automated install/recovery/viewer gate passed Oct 31;
-S25 exact-byte artifact reuse/recommended-only padding, then S26 installed
-lineage references, precede S24 backup packing/scope/retention. These are the
-top next work, before another full intake. Other cleanup, root/configuration
+S25 exact-byte artifact reuse/recommended-only padding and S26 installed
+lineage references now have bounded implementation/proof. S25's mode/default
+review and S24's read-only amplification/dependency inventory may proceed in
+parallel. Backup scope changes, packing/default adoption and PRUNE still
+need their evidence/approval gates before another full intake. Other cleanup, root/configuration
 and report I/O tasks remain open backlog, not permission to prune now.
 
 This plan turns the current ad hoc locations for runs, reports, backups and
@@ -390,6 +392,20 @@ staging/report-publisher run.
 
 #### Oct 31 duplicate-first contract
 
+**Authorized next iterations (Oct 31, 11:57):** complete a bounded LEAN
+installed-native slice and recipe-aware timing/storage report statistics;
+then compare independently verifiable COMPACT (downsized diagnostics) and
+COLLAGE (labelled contact history) bundles from FULL/LEAN reports. Use
+20-30 mixed Various/existing Gallery inputs through preparation, publication,
+derivatives, viewers and backup/recovery. Record actual wall time, files,
+bytes, exact/approximate role availability, selection/outcome counts and
+input/output denominators. Do not select defaults from intake-only timing.
+FULL evidence stays available; compact history is not exact rollback.
+Source-report PRUNE requires dependency clearance and a recoverable
+transaction; conversion alone must never silently remove the source.
+FAST remains a separate processing-quality gate. Use short per-photo asset
+names and avoid new unnecessary folder levels; do not bulk-migrate old paths.
+
 The user's latest direction supersedes packing-first scheduling, not the
 recovery safety gates. Prevent unnecessary files at the producer before
 compressing copies of them. A report role is a label/reference, not an
@@ -419,8 +435,8 @@ retaining only composites is later work, not an unannounced FAST profile.
 | Immutable source -> `clean_preparation.prepare` input mirror | Copies each input and binds its hash; separate from current Gallery | S24/S1 map recovery ownership before proposing cross-run reuse; no external mutable reference or hardlink as a shortcut |
 | Mirror/source -> `image_preparation.render_photo` | Retains original, then encodes native controls/candidates and previews | S25 LEAN now resolves equal encoded bytes to one path per photo, including raw/control when truly identical. Distinct encodings stay distinct |
 | Recommendation -> per-image checkpoint | FULL pads recommendation plus denoise/tone; manifests bind exact artifact set | LEAN pads recommendation only. Storage mode participates in recovery fingerprint; missing/changed shared files invalidate recovery/check |
-| Selected source -> `clean_rebase.stage` native Gallery/Review | Copies selected bytes to the assigned native path | S26 make that native file the canonical installed reference, without changing matching/identity decisions |
-| `retained_preparation.stage_photo` | Still copies original into `gallery_org` and selected/other candidates into `gallery_intake` | S26 removes native/original/selected duplication together with lineage, ownership, move/undo and restore readers. Repeated role paths already publish once with exact checksum validation |
+| Selected source -> `clean_rebase.stage` native Gallery/Review | Copies selected bytes to the assigned native path | Opt-in S26 LEAN format 2 uses this exact native as the canonical installed reference, without changing matching/identity decisions |
+| `retained_preparation.stage_photo` | FULL preserves compatibility; LEAN retains originals only when bytes differ from installed native | S26 aliases exact-equal original/variant roles to that photo's native path. Ownership, detail links, move/rename/undo and backup restore understand both formats; no migration of old evidence |
 | Derivatives, history and backups | Derivatives can overlap selected padding; history links evidence rather than owning its own image store; backups copy retained/run payloads too | Hash-map these boundaries before unifying paths. Keep browser thumbnails when distinct and useful; keep independently recoverable snapshot bytes until a replacement is proven |
 
 #### Oct 31 LEAN producer proof
@@ -470,9 +486,97 @@ hooks pass. The data-scope launcher needed a process-local
 coverage guard also caught the two previous optimization modules missing
 from the explicit full launcher; those entries are now wired and the guard
 passes (scoped discovery already included them).
-This does not validate a LEAN installation or authorize pruning old runs.
-S25 stays open for broader evidence/availability modes; **S26 is the next
-implementation slice**, before packing/default adoption or another full rebase.
+That producer proof alone did not validate a LEAN installation or authorize
+pruning old runs. The subsequent S26 proof below supersedes its next-step
+instruction; S25 stays open for broader defaults/dependency acceptance.
+
+#### Oct 31 installed LEAN and history-mode proof
+
+Two **24-photo mixed cohorts** completed actual preparation, fresh matching,
+preview/install/check, Gallery/Overview/Review/history publication, full
+backup and materialized recovery. Each combines 12 Various photos with
+12 assigned Gallery photos, including Angel/Sister core context. These
+isolated `tmp/s1` and `tmp/s2` libraries are not a full-scale rebase or
+replacement for the existing human-review baseline.
+
+| Cohort / scope | FULL | LEAN |
+| --- | ---: | ---: |
+| Installed recommendations replayed: preparation images / bytes | 240 / 209,937,761 | 187 / 150,874,548 |
+| Same cohort: installed category files / bytes | 391 / 293,455,622 | 314 / 223,430,837 |
+| Original pre-processing inputs replayed: preparation images / bytes | 336 / 241,014,133 | 276 / 190,247,836 |
+| Same changed-input cohort: installed category files / bytes | 495 / 339,606,575 | 411 / 255,248,597 |
+
+Installed storage fell **23.9% and 24.8%** respectively. All native and preview
+role hashes, chosen padding, recommendations and matching destinations agree
+within each FULL/LEAN pair. The first cohort selected all 24 originals and
+LEAN created no original duplicates; the second genuinely changed all 24:
+15 composition, five head-overlay reconstruction, two first-crop and two
+head-overlay composition recommendations. Its distinct originals remain
+exactly recoverable. This checks both halves of conditional `gallery_org`,
+not only already-clean inputs.
+
+Each source report also passed independent COMPACT and COLLAGE conversion:
+
+| Source | Complete source report files / MB | COMPACT files / MB | COLLAGE files / MB |
+| --- | ---: | ---: | ---: |
+| First cohort FULL | 266 / 211.26 | 286 / 45.77 | 75 / 37.66 |
+| First cohort LEAN | 213 / 152.19 | 238 / 43.37 | 75 / 37.23 |
+| Changed cohort FULL | 362 / 242.71 | 399 / 74.82 | 99 / 64.62 |
+| Changed cohort LEAN | 302 / 191.92 | 351 / 72.38 | 99 / 64.21 |
+
+MB means decimal bytes / 1,000,000; totals include bundle metadata/HTML.
+COMPACT substantially reduces bytes but **can increase file count**, since
+exact originals/selected/padding accompany the reduced diagnostic files.
+COLLAGE is the stronger file-count candidate. Both retain exact original,
+selected native and selected padded bytes, with row/role/recipe provenance;
+lossy diagnostics cannot replace exact masks or alternative-stage inputs.
+All eight bundles passed independent check. They remain additive copies:
+**zero source reports deleted and zero bytes reclaimed by conversion**.
+
+Recipe-aware counters and external wall phases are in the experiment JSON
+and HTML, including overlapping source/mirror/installed/backup/recovery
+scopes. Pre-history phase totals were about 191 -> 233 seconds in the first
+cohort and 340 -> 240 seconds in the second. FULL-first order, warm shared
+models, simultaneous tests/ComfyUI and repository-volume copies confound
+causal speed claims; storage improvements are proven, a general speedup is
+not. No candidate processing/encoding step was skipped.
+
+Browser acceptance loaded both cohorts' real Overview, Review and history,
+all 48 LEAN installed detail pages and history conversions with no broken
+images. Filters, head framing, card size, sorting and all 24 history rows
+were exercised. These are technical link/rendering checks, not human
+placement or image-quality acceptance. Move/rename/action undo remains
+focused fixture coverage; these experiments performed full backup restore,
+not another full-scale undo.
+
+The experiments exposed Windows long-path accounting and a transient atomic
+publication lock. Inventory now uses the existing extended-path helper;
+the launcher rejects overlong OpenCV evidence roots before writing. Atomic
+directory publication reuses bounded permission-lock retry with explicit
+diagnostics, propagates persistent failure and preserves recovery checkpoints.
+No processing pixels or decisions change.
+
+Final focused batches passed 129 storage/history tests, 104 preparation/
+Artist-publication tests and 95 rebase/action/derivative/backup tests.
+Schema/link validation, all 19 isolated quick mutations and scoped commit
+hooks passed. The transient directory-lock failure was reproduced before
+the bounded retry fix; both transient recovery and persistent refusal are
+covered, not dismissed as a successful retry of the test suite.
+
+Durable receipts, report, source list, reproduction code and validation/browser
+proof are under `Working/_reports/storage-experiments/20261031-lean-history`.
+The isolated sample roots remain in ignored repository `tmp/s1` and `tmp/s2`
+for inspection; they are generated experiment copies, not new canonical
+sources. The failed overlong-path attempt is disposable after its diagnostic
+receipt is preserved. Original B: source/catalogue/pages, applied receipt and
+backup manifest hashes remain unchanged.
+
+**Next:** review S25's evidence/default choices alongside S24's read-only
+mirror/run/retained/backup dependency inventory before generic post-FULL PRUNE.
+FULL compatibility remains the default; LEAN is opt-in. FAST processing,
+on-demand alternate padding and exact selective FULL regeneration remain
+separate later capabilities. No broad directory migration or existing-run
+pruning is authorized by these results.
 
 **Oct 30 priority clarification:** finish the current sandbox installation and
 actual viewer/rollback acceptance first. Backup growth is a top item in the
@@ -517,9 +621,9 @@ evidence through acceptance; active source galleries remain protected.
   whole-library recovery dependencies, broader cold/same-volume measurements
   and a user-approved retention/prune decision; packing alone does not satisfy S25.
 
-- [ ] **P1 ai** S25 The standalone exact-byte/recommended-only producer
-  slice is verified above; after S26's installed proof, finish broader
-  evidence availability/defaults and test optional
+- [ ] **P1 ai** S25 Producer, installed-native and opt-in COMPACT/COLLAGE
+  experiments are verified above. Finish broader evidence availability,
+  default/dependency acceptance and production-scope tests for optional
   storage modes independent of processing recipes: FULL detail, LEAN shared
   verified artifacts for identical original/control/recommendation roles, and
   COLLAGE review previews. Preserve role labels in the GUI while resolving to
@@ -554,7 +658,7 @@ evidence through acceptance; active source galleries remain protected.
   Directory packing and within-row aliases alone do not explain away all
   backup/history amplification; S24's scope/dependency inventory remains P1.
 
-- [ ] **P1 ai** S26 After S25's bounded producer proof, version retained
+- [x] **P1 ai** S26 After S25's bounded producer proof, version retained
   publication so unchanged originals and selected roles reference the
   installed native file rather than copying it to `gallery_org` or
   `gallery_intake`. Changed originals still require exact original recovery.
@@ -564,7 +668,12 @@ evidence through acceptance; active source galleries remain protected.
   transfer/rename/retirement/action undo, installed verification, backup
   restore and history availability together. Read-only mapping first;
   no deletion/migration of the frozen installed baseline. Only then expose
-  LEAN through a fresh rebase and choose routine defaults from real evidence.
+  LEAN through a fresh rebase. Version 2, native-reference ownership,
+  unchanged-original/no-`gallery_org`, differing-original recovery, exact
+  alias tamper rejection, rename, cross-owner move/undo and real backup
+  restoration are tested. The fresh mixed real-image experiments below
+  exercise the CLI and installed check. Routine default adoption remains
+  S25's separate evidence/human-acceptance decision; FULL compatibility stays.
 
 - [x] **P1 ai** S10 Define and implement a versioned run retention manifest
   and dependency-aware policy. Receipt-backed new runs register as review/keep;
@@ -1034,6 +1143,24 @@ We have an outstanding task of refactoring the existing code to remove hard-code
     - Updating the code to use the configuration files for decision-making.
     - Ensuring that any new categories can be added without modifying the core logic.
 
+````
+<!-- markdownlint-enable MD013 MD009 -->
+
+## Oct 31 broader LEAN lifecycle direction (chat, verbatim)
+
+Coverage: FULL/LEAN modes, exact native references and retained provenance ->
+S25/S26; COMPACT downsized diagnostics and COLLAGE labelled sheets -> T13/S25;
+independent history verification and after-run dependency-aware PRUNE -> S10/S24/T14;
+FAST and selective FULL reprocessing -> T18 (not implemented by storage modes);
+timing/outcome/file/byte statistics -> T17; mixed 20-30 photo end-to-end trials ->
+the authorized iteration contract. Defaults and existing-layout migration remain
+separate decisions; lossy diagnostics are not original or rollback substitutes.
+
+<!-- markdownlint-disable MD013 MD009 -->
+````text
+I like that approach so far - and does this align with all the features I discussed for LEAN in terms of storage?  Or is there more yet we can experiment with to really trim down copies of files post image processing for LEAN.  I don't recall all of what I had thought about when I wrote that up as an option for the flow.  Having the ability to first run FAST and/or LEAN as defaults and only resort to a FULL run when I have a true need to keep all the files for inspection and then PRUNE things afterwards and/or create the COLLAGE to reduce the number of files, but still keep some representation of history in that COLLAGE and then all the files created during the intake are preserved in one file instead of all files.  Even if that file is also a smaller copy of the images during processing.  That's fine as we can always selectively re-run for a FULL process on images needing any sort of processing.  Basically that's what I think is most important and then working on performance bottlenecks as continued iterations and ensuring that we don't have image sprawl and are smart about what we do and don't keep and where we keep it and how we name things as well behind the scenes.  Basically ensuring the directory structure is also less nested where it's not needed.
+
+I think we should probably take an iteration or two to work on getting all these in place and focus on LEAN first but making sure these other modes and flows are able to be defined so we can experiment with how they work.  We could even downsize images for historical storage instead of the collage in various modes as long as the FULL approach is retained and we can PRUNE things after we run which could even resort to creating the COLLAGE of a FULL run just to reduce and compress history down.  or we COMPACT and it just downsizes all the files.  Basically there are many ways to look at how we are running so we can run timings to see which is most effective and both storage and the speed.  This also needs to include the statistics in the report for the runs as well so that we also capture those as part of these updates.  The two pieces go hand in hand for sampling the output, speed, storage and will help be figure out what is the DEFAULT flow and which options are best for which purpose.  Keep iterating and running on small batches of 20-30 images from both Various and existing Galleries to see how it works from end-to-end.  Not just intake.
 ````
 <!-- markdownlint-enable MD013 MD009 -->
 

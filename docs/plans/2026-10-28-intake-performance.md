@@ -664,6 +664,14 @@ This adds next-round priorities, not changes to the bound v23 run.
   from executed recipe/trace data, not fixed stage lists; don't double-count
   nested timings or compare pixel-change percentages across crop dimensions.
   Test totals/conservation and recipe evolution on saved data before new runs.
+  **Oct 31 bounded increment:** preparation JSON/index now records actual
+  image-role/unique-file/byte totals, worker count, invocation preparation
+  wall time, outcome/recommendation counts and recipe-derived step/status
+  counts, with verification/tamper tests. The mixed storage experiment adds
+  complete external stage wall times and overlapping mirror, installed,
+  backup, restore and history scopes. T17 remains open for finer executed
+  stage timings, overlay-type/detail counts and per-image/bottleneck UX;
+  preparation timing is not mislabeled as complete-run timing.
 - [ ] **P2 ai** T18 Propose versioned data-driven recipe steps/order/branches
   and profile contracts: FULL preserves current behavior; FAST evaluates cheap
   size/aspect/overlay composition gates; OVERLAY-ONLY skips composition and
@@ -702,10 +710,15 @@ and ability to change the recommendation remain separate acceptance steps.
 Studio-grey padding and closer person framing can be desirable for ComfyUI;
 background loss is not equivalent to losing hair, hands, clothing or feet.
 
-- [ ] **P2 ai** T13 Promote recurring report-to-sheet diagnostics into
+- [x] **P2 ai** T13 Promote recurring report-to-sheet diagnostics into
   maintained tooling with a launcher, preview, read-only verification and
   tests. Reuse existing scratch sheets for current acceptance rather than
   blocking the rebase on a new viewer feature.
+  Delivered Oct 31 as `preparation-history.cmd`: bounded COMPACT downsized
+  stage diagnostics or COLLAGE labelled sheets, full role/provenance mapping,
+  exact original/selected/padded payloads, preview/apply/independent check,
+  atomic new publication, source recheck and 29 focused tests. Rebase input
+  mirrors are supported; conversion never prunes its source report.
 - [ ] **P2 either** T14 After the flow is accepted, agree detailed versus
   summary evidence retention with storage S10 and intake I60. Composites may
   replace disposable review previews, not exact originals, selected native
@@ -714,6 +727,11 @@ background loss is not equivalent to losing hair, hands, clothing or feet.
   Active standard-intake terminology is now owned by intake I73 and may be
   corrected independently of blanket quality acceptance; historical receipts
   and genuine experiment labels remain. This is not Production cutover.
+  COMPACT/COLLAGE are now available as independent additive experiments.
+  They do not replace any active masks, exact recipe inputs or rollback
+  dependencies. Source report deletion and generic FULL-to-history PRUNE
+  still require S24/S10's dependency inventory and explicit clearance;
+  current conversion reclaims zero bytes.
 - [ ] **P2 ai** T15 Add timestamped phase/progress diagnostics to the
   intake/rebase entry points, reusing a shared mechanism rather than a broad
   logging migration. Test formatting, errors and launcher output. Until then,

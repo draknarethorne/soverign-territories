@@ -294,6 +294,7 @@ class PreparationProvenanceTests(unittest.TestCase):
         legacy_manifest = self.output / "manifest.json"
         legacy = json.loads(legacy_manifest.read_text(encoding="utf-8"))
         legacy["recipe"]["id"] = "preparation-comparison-v6"
+        legacy.pop("statistics", None)
         row = legacy["photos"][0]
         row.pop("sourceScope", None)
         row.pop("recommendedPadded", None)

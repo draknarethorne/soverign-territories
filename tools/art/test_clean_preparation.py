@@ -128,6 +128,25 @@ class CleanPreparationTests(unittest.TestCase):
             self.command(apply=True)
         self.assertFalse(self.measured)
 
+    def test_lean_new_run_install_check_and_exact_undo(self):
+        self.command(intake_only=True, apply=True, storage_mode="lean")
+        with self.assertRaisesRegex(ValueError, "storage mode differs"):
+            self.command(intake_only=True, apply=True, storage_mode="full")
+        self.command(storage_mode="lean")
+        with mock.patch("library_backup.latest_work_root_backup", return_value=self.base), \
+                mock.patch("library_backup.verify_backup"):
+            self.command(apply=True, storage_mode="lean")
+        self.command(check=True)
+        plan = json.loads((self.run / "run.json").read_text())
+        for row in plan["photos"]:
+            link = retained_preparation.verify_link(self.working, row["destination"])
+            self.assertIsNotNone(link)
+            self.assertEqual(link["formatVersion"], 2)
+            self.assertNotIn(row["destination"], [entry["path"] for entry in link["artifacts"]])
+        self.command(undo=True)
+        for relative, expected in self.inputs.items():
+            self.assertEqual(metadata.content_sha256(self.working / relative), expected[1])
+
     def test_intake_preview_and_missing_run_checks_do_not_create_a_directory(self):
         self.run = self.working / "_sandbox-state" / "not-created"
         self.assertEqual(self.command(intake_only=True)["inputCount"], 5)

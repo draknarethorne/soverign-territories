@@ -33,7 +33,10 @@ echo    people-gallery-review.cmd [--root DIR] [--cache FILE] [--out DIR] [--pol
 echo                                    --history-only [--dry-run ^| --check ^| --apply] verifies/repairs only intake history; previews by default, no photo-viewer rebuild
 echo    artists-gallery.cmd [--root DIR] [--cache FILE] [--dry-run ^| --check ^| --apply]  separate Artist overview/photo review; shared small thumbnails in _reports\artists, NO matching or source changes
 echo    prepare-images.cmd --root "SANDBOX\Working" --out "Working\_reports\preparation\RUN" [--limit 28] [--dry-run ^| --apply ^| --check]  sidecar original/control/geometry/denoise/tone, larger pages and padded examples; NO source or identity changes
-echo                                    --storage-mode lean shares exact-byte roles per photo and pads ONLY the recommendation; full remains default; new standalone runs only, NOT a FAST recipe or rebase switch
+echo                                    --storage-mode lean shares exact-byte roles per photo and pads ONLY the recommendation; full remains default; also supported by fresh sandbox-rebase runs, NOT a FAST recipe
+echo    preparation-history.cmd --root "SANDBOX\Working" --report "REPORT" --out "Working\_reports\preparation-history\NEW" --mode compact [--dry-run ^| --apply ^| --check]
+echo                                    compact downsizes diagnostics; collage makes labelled sheets; both retain exact originals/selected native/padded bytes once per photo. Independent new bundle, NO source PRUNE
+echo    storage-experiment.cmd --root "SOURCE\Working" --out "REPO\tmp\NEW" [--limit 24] [--dry-run ^| --apply ^| --check]  mixed 20-30 photo copied FULL/LEAN rebase, matching, publication, backup and restore; source stays read-only
 echo                                    --source-folder "Various\gallery" --limit 0 compares ALL direct incoming images; v22 overlay-first, guarded crop/erase/residual/reconstruct/compose BEFORE filters; NO live moves
 echo                                    no detected proposal skips person segmentation and composition-only suggestions, NOT a clean-pixel guarantee; denoise/tone comparisons remain
 echo                                    confirmed-pattern reconstruction is synthetic; final recommended pixels feed sandbox matching. --apply may download pinned CPU models once; --check verifies evidence.
@@ -53,6 +56,7 @@ echo                                    --baseline working freezes current galle
 echo                                    --include-current-various adds current Working\Various inputs via a hash-bound run-local recovery overlay
 echo                                    --intake-only --apply prepares all images and stops for review; --check verifies without writes
 echo                                    --workers N sets parallel intake processes ^(default: up to 3 by free memory; ST_INTAKE_WORKERS overrides^); matching stays single-process
+echo                                    --storage-mode lean for a NEW run shares installed original/selected native bytes, retaining differing originals; omitted resumes the recorded mode or starts full
 echo                                    same command with no flags prepares/resumes then previews fresh-cache matching; --apply installs only a saved preview
 echo                                    originals + all kept variants follow assigned photos; --cast-seeds all retains cast membership ^(default^); Artists prepared separately; --undo restores exact pre-run bytes
 echo                                    --cast-seeds core retains protected/core/workflow-selected cast photos and previews non-core release with existing thresholds; inspect moves before apply

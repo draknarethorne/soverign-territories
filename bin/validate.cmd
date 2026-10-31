@@ -52,7 +52,7 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% -m unittest tools.art.test_clean_preparation tools.art.test_retained_preparation tools.art.test_verification_reads
+%PY% -m unittest tools.art.test_clean_preparation tools.art.test_retained_preparation tools.art.test_verification_reads tools.art.test_preparation_history_bundle tools.art.test_library_storage_experiment
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1

@@ -12,6 +12,22 @@
       "description": "Absent means historical FULL evidence. LEAN aliases exact bytes within each photo and pads only its recommendation; no processing steps are skipped.",
       "enum": ["full", "lean"]
     },
+    "statistics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["photos", "imageRoles", "imageFiles", "imageBytes", "outcomes", "recommendations", "steps", "workers", "preparationSeconds"],
+      "properties": {
+        "photos": {"type": "integer", "minimum": 1},
+        "imageRoles": {"type": "integer", "minimum": 1},
+        "imageFiles": {"type": "integer", "minimum": 1},
+        "imageBytes": {"type": "integer", "minimum": 0},
+        "outcomes": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 1}},
+        "recommendations": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 1}},
+        "steps": {"type": "object", "additionalProperties": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 1}}},
+        "workers": {"type": "integer", "minimum": 1},
+        "preparationSeconds": {"type": "number", "minimum": 0}
+      }
+    },
     "inventory": {
       "type": "object",
       "additionalProperties": {"type": "integer", "minimum": 0}

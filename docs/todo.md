@@ -13,15 +13,14 @@
 
 - [ ] C7 Review before/after cast seeds, hair/overlay outcomes and every released cast destination; accept a configuration or request another isolated run. Record all image/decision counts and holds. Deliver accepted evidence to ... ([cast seeded library rebase](plans/2026-10-23-cast-seeded-library-rebase.md))
 
-### For the assistant, when you say go (6)
+### For the assistant, when you say go (5)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] L18 Finish preparation evidence-index I/O optimization: operation-local retained/derivative reuse and full-scale row/thumbnail/browser equivalence are delivered; next bound the remaining repeated whole-history audits across ... ([gallery review layout](plans/2026-10-22-gallery-review-layout.md))
 - [ ] I60 Audit all changed full-run outputs for false positives and incomplete cleanup; audit identity moves and borderline Review reasons under rebase C8/C9. Validate artifacts, recovery and deterministic repeat behavior before ... ([image intake preparation](plans/2026-10-23-image-intake-preparation.md))
 - [ ] T17 Capture recipe-aware run statistics and publish a compact intake summary with expandable/linked details: input/outcome counts, overlay types, each attempted/executed/skipped/failed step, reconstruction/composition, ... ([intake performance](plans/2026-10-28-intake-performance.md))
-- [ ] S26 After S25's bounded producer proof, version retained publication so unchanged originals and selected roles reference the installed native file rather than copying it to `gallery_org` or `gallery_intake`. Changed originals ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
-- [ ] S25 The standalone exact-byte/recommended-only producer slice is verified above; after S26's installed proof, finish broader evidence availability/defaults and test optional storage modes independent of processing recipes: ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
+- [ ] S25 Producer, installed-native and opt-in COMPACT/COLLAGE experiments are verified above. Finish broader evidence availability, default/dependency acceptance and production-scope tests for optional storage modes independent of ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S24 After the duplicate-first S25/S26 increments, reduce backup growth: measure retained/backup scope and redundant snapshots with S11; benchmark directory snapshots against bounded ZIP64 stored/low-compression archives for ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
 
 <details>
@@ -49,7 +48,7 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-10-23-cast-seeded-library-rebase.md](plans/2026-10-23-cast-seeded-library-rebase.md) | active | 7 |
 | [2026-10-23-image-intake-preparation.md](plans/2026-10-23-image-intake-preparation.md) | active | 57 |
 | [2026-10-25-reference-rendering.md](plans/2026-10-25-reference-rendering.md) | holding | 27 |
-| [2026-10-28-intake-performance.md](plans/2026-10-28-intake-performance.md) | active | 8 |
+| [2026-10-28-intake-performance.md](plans/2026-10-28-intake-performance.md) | active | 7 |
 | [2026-10-28-storage-operations-and-retention.md](plans/2026-10-28-storage-operations-and-retention.md) | active | 10 |
 
 </details>

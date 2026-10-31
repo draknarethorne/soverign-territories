@@ -10,10 +10,10 @@ MANIFEST = "people-gallery-manifest.json"
 RECIPE = "people-gallery-v1"
 
 
-def replace_file(stage, target):
+def _publish(operation, stage, target):
     for attempt in range(5):
         try:
-            os.replace(stage, target)
+            operation(stage, target)
             return
         except PermissionError:
             if attempt == 4:
@@ -21,6 +21,15 @@ def replace_file(stage, target):
             if attempt == 0:
                 print(f"DIAGNOSTIC: temporary file lock publishing {target}; retrying atomic replacement")
             time.sleep(0.05 * 2 ** attempt)
+
+
+def replace_file(stage, target):
+    _publish(os.replace, stage, target)
+
+
+def rename_directory(stage, target):
+    """Keep new-directory rename semantics while retrying temporary scanner locks."""
+    _publish(os.rename, stage, target)
 
 
 def record(out, payloads):

@@ -24,14 +24,17 @@ def inventory(layout):
     return rows
 
 
-def prepare(layout, run, workers=None):
+def prepare(layout, run, workers=None, *, storage_mode=None):
     """Copy inputs once, then use the ordinary preparation runner without live writes."""
     import image_preparation
 
     run = pathlib.Path(run)
     receipt = run / "intake.json"
     if receipt.exists():
-        return verify(layout, run)
+        output, data = verify(layout, run)
+        if storage_mode is not None and data.get("storageMode", "full") != storage_mode:
+            raise ValueError("saved intake storage mode differs; use the saved mode or a new run")
+        return output, data
     mirror = run / "inputs"
     rows = inventory(layout)
     cfg = metadata.cw.load_cfg()
@@ -53,7 +56,7 @@ def prepare(layout, run, workers=None):
             stage.rename(mirror)
     output = metadata.cw.storage_root(cfg, "reports", root=mirror) / "preparation" / "all"
     paths = [mirror / relative for relative in rows]
-    result = image_preparation.publish(mirror, output, paths, workers=workers)
+    result = image_preparation.publish(mirror, output, paths, workers=workers, storage_mode=storage_mode or "full")
     data = image_preparation.verify(mirror, output)
     source_manifest = layout["sandbox_root"] / "source-manifest.json"
     value = {
