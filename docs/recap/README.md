@@ -9,7 +9,8 @@ and preserves chronological access to manually archived records.
 
 | State | Recap | Why it remains active |
 | --- | --- | --- |
-| **Pinned — resume** | [2026-10-30-1247](2026-10-30-1247-recap.md) | Fresh four-thread replay passed exact preparation/routes, installation, installed browser checks and ordinary recovery. S27 restored viewers/final check and S30 remain; interrupted maintenance resumed from saved stages. S29/S31 retirement verified, with 611.11 MB net logical production backup saving. Last FULL stays protected. |
+| **Pinned — resume** | [2026-11-01-1705](2026-11-01-1705-recap.md) | Actual recovered viewers and portable People/Artist history passed. Final independent replay/cast audit/publication remain; includes whole-plan completion review and separate human/coding next steps. |
+| Earlier baseline continuity | [2026-10-30-1247](2026-10-30-1247-recap.md) | Preserved installed FULL baseline, exact receipts and earlier feedback handoff. Current resume state is Nov 1; retain this record until its unique baseline/context transfer is individually verified. |
 | **Pinned — feedback** | [2026-10-30-1234](2026-10-30-1234-recap.md) | Complete F01-F31 human-feedback coverage and next-round quality priorities remain relevant after baseline publication. |
 
 “Pinned” is a manual index designation, not an automated workflow or an

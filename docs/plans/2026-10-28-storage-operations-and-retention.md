@@ -1641,5 +1641,13 @@ What in the docs/plans do we need to address or work on?  I want to figure out w
 I did interrupt you a while ago as well as now - I want to know what else were you working on and get back to that work if we didn't finish it all.  So tell me where we are and what else we have to do.
 
 Ok - continue on and get it all done.
+
+What I do want to do when you finish is take a pass through the docs/plans and determine which ones are finally done and can be put into the archive based on our working agreement on how we manage these plans.  Then, I want a recap for today following our docs/recap process and want to know what is next for me to do and what else we have do code and get finished.
 ````
 <!-- markdownlint-enable MD013 -->
+
+Coverage of the Nov 1 closeout request: whole-plan completion/archival review
+and dispositions -> the plan index's Nov 1 completion review; today's
+verified result, reflection and resume state -> the Nov 1 recap; next human
+actions versus coding work -> the same recap and generated queue. Preserve
+unfinished scope in its existing owner; no checklist-only forced archival.

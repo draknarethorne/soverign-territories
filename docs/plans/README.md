@@ -87,6 +87,32 @@ bypass prerequisites.
 
 ## Parallel analysis and small improvements
 
+### Nov 1 whole-plan completion review
+
+Reviewed all 19 non-archived execution/proposal plans against the completion
+and preservation rules below: five active, 13 holding and one proposed.
+**No entire plan qualifies for archival today.** Delivered slices and saved
+manual drafts are not acceptance of each plan's remaining scope. No open
+task was dropped or moved just to empty a plan.
+
+| Disposition | Remaining work / why not archived |
+| --- | --- |
+| Active: storage | S27/S30 finish the current replay/audit; even after those close, S24/S25 broader retention/dependency/production acceptance, S16 production runbook and configuration work remain |
+| Active: gallery | L18 remaining history/preflight I/O; L19 navigation, L20 dependency-aware retention and broader layout acceptance remain |
+| Active: intake | I60 quality/placement audit, I68-I70 bounded named-case/mask/enhancement tuning and remaining production/incremental integration |
+| Active: performance | T17 finer executed timings/overlay detail, T18 profiles, T14 retention acceptance and T15 progress remain |
+| Active: cast | C7 human review, C8/C9 family/production acceptance, broader C1-C3/C5 seed/curation/scenario contracts remain |
+| Holding: game/finals, classification and Artist acceptance | Their selected-source/finals, classification/conditional face pass, game-data and Artist acceptance gates remain in their existing plans |
+| Holding: tooling and structure | D13/D4 bounded documentation/day-close work and remaining debt/refactors are not delivered by updating this index |
+| Holding: engine, actions, face evaluation and upkeep | Calibration/convergence/production, real action UAT, labelled face evaluation and end-to-end integration remain |
+| Holding: naming, manual prompts and rendering | N7/N9/N12/N13 acceptance/corrections, source-faithful prompt migration, R44 routing and generated-result round trips remain |
+| Proposed: CLI simplification | Remaining folds/forwarders are unapproved; zero open checkbox lines is not a completion decision |
+
+The [plan table](#plans) remains the file-by-file inventory and resume gates;
+the [Nov 1 recap](../recap/2026-11-01-1705-recap.md) separates next human
+actions from coding priorities. Do not reactivate every held plan or
+reorganize the whole directory as a side effect of this review.
+
 The sequence above is the **mutation/acceptance order**, not a requirement
 that all thinking be serial. Keep one primary milestone, with bounded
 independent analysis and one small quality improvement alongside it:
