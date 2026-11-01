@@ -367,7 +367,7 @@ The v23 recipe below can select masked cleanup/reconstruction and a guarded
 no-proposal composition; selection is not a measured enhancement winner or
 hair-safety guarantee. A missed screenshot heuristic does not mean clean.
 Control means oriented/sRGB only. Denoise and tone remain separate comparison
-alternatives. In default FULL evidence, only the recommendation and denoise/tone
+alternatives. In explicit FULL evidence, only the recommendation and denoise/tone
 alternatives receive 944x1104 padding; masks and interim candidates remain native-sized.
 Retained Gallery evidence supports this sparse padding and preserves the
 separate padded-original record when the recommendation is the original.
@@ -377,14 +377,18 @@ inputs, masks or recovery lineage. Summary retention and production-intake
 terminology are acceptance-gated follow-ups in performance T13/T14, not
 permission to delete current reports.
 
-#### LEAN evidence experiment (standalone reports)
+#### LEAN evidence default (fresh v23 reports)
 
-For a **new bounded** comparison, add `--storage-mode lean` to the preparation
-command above; start with `--limit 6 --dry-run`, then `--apply`. Use the same
-mode for repeated apply. `--check` reads the saved mode from the manifest and
+For a **new bounded** comparison, LEAN is the default; start with
+`--limit 6 --dry-run`, then `--apply`. Explicit `--storage-mode full` keeps
+richer alternate padded diagnostics. Repeated apply with no mode preserves
+the saved report or interrupted recovery binding, including historical FULL.
+Conflicting interrupted modes require an explicit choice or a new output.
+`--check` reads the saved mode from the manifest and
 fully verifies sources/artifacts; it does not convert an existing report.
-The menu's preparation preview offers `full` or `lean`. FULL remains the
-compatibility default. Fresh `sandbox-rebase.cmd` runs also accept LEAN;
+The menu's preparation preview offers `full`, `lean` or saved/default mode.
+Older processing recipes keep FULL compatibility. Fresh
+`sandbox-rebase.cmd` runs also default to LEAN;
 ordinary `library.cmd` has not changed defaults.
 
 LEAN preserves original/control/recommended panel labels while aliasing
@@ -409,8 +413,9 @@ conditional-`gallery_org`/installed-native work live in
 
 #### Installed LEAN, COMPACT and COLLAGE experiments
 
-For a **new** rebase, append `--storage-mode lean` to the usual preview and
-intake commands. Resume with that mode or omit the option to use the recorded
+For a **new** rebase, the usual preview/intake commands use LEAN; specify
+`--storage-mode full` for richer diagnostics. Resume with the saved mode or
+omit the option to use the recorded
 mode. A conflicting explicit mode refuses; nothing converts an applied run.
 LEAN retained format 2 references its own installed native photo for all
 exact-equal roles. It creates `gallery_org` only when source original bytes
@@ -450,6 +455,57 @@ only to its supported superseded runs; generic report-to-bundle PRUNE is
 not implemented. Selective FULL reproduction also requires the exact source,
 recipe, model/config/runtime, and is not guaranteed by a collage.
 
+#### Lossless cold-backup experiment
+
+```cmd
+bin\backup-archive.cmd "COMPLETED_SNAPSHOT" --out "ABS_REPO_TMP_NEW" --format hybrid --dry-run
+bin\backup-archive.cmd "COMPLETED_SNAPSHOT" --out "ABS_REPO_TMP_NEW" --format hybrid --apply
+bin\backup-archive.cmd --check "ABS_REPO_TMP_NEW"
+bin\backup-archive.cmd --restore "BUNDLE" --destination "ABS_REPO_TMP_NEW_SNAPSHOT" --apply
+bin\library-backup.cmd --restore "MATERIALIZED_SNAPSHOT" --destination "NEW_RECOVERY" --apply
+```
+
+Use absolute paths. This bounded experiment allows at most 20,000 snapshot
+files / 2 GiB and writes only below ignored repository temporary storage.
+It is not a migration tool for the existing 42-GB baseline. Exact payloads
+are packed once with path/mtime aliases, including the original manifest.
+Hybrid stores compressed image formats and deflates text; `--format stored`
+is the control. Independent check needs no source snapshot. Materialization
+reconstructs the directory snapshot for ordinary verification and recovery,
+including regeneration metadata. Report the bundle size, build/check costs
+and materialization **plus** ordinary restore time, not extraction alone.
+
+The menu's backup entry offers this preview. It never removes the original
+snapshot or makes the archive eligible for automatic backup selection.
+Default directory backups omit only proven regenerable derivatives/browser
+files; `--full` retains them. Generated browser pages need rebuilding after
+default recovery. A collage is never an exact backup, and automatic
+backup/report PRUNE is not enabled by this experiment.
+
+#### Complete same-input rebase replay
+
+`bin\rebase-replay.cmd --dry-run` verifies the retained applied FULL baseline,
+its complete original input set, cast policy and inherited curation without
+running models. `--apply` creates a **new isolated** LEAN sandbox under ignored
+`tmp\r3`, then measures preparation, fresh matching, installation/check,
+backup and materialized recovery. `--check` verifies completed evidence.
+The installed FULL baseline is never replanned or overwritten.
+Hot replay backups explicitly use full directory scope: omission's
+regeneration proof saved space but was materially slower in the paired
+sample. This does not turn LEAN preparation back into FULL evidence.
+
+The first full replay completed 3,072 intake outcomes but stopped at the
+exact comparison on 50 sources; it has not passed matching, installation
+or full-scale recovery. Numerical inference variation remains unproven.
+Keep the gate and inspect the saved blocker before another full intake.
+
+Equality gates compare all common native/preview/selected-padding roles,
+recommendations and general matching destinations before installation.
+Lossy history conversion and backup packing remain optional, not automatic
+extra copies on every routine run. Compare complete phase denominators and
+overlapping storage scopes; a different volume or concurrent ComfyUI load
+prevents attributing all observed time differences to LEAN.
+
 For a real mixed end-to-end comparison, use a short ignored output path
 (the long aligned-face filename must fit OpenCV's Windows path limit):
 
@@ -471,7 +527,8 @@ active installed files/bytes, overlapping mirror/report/backup/restore scopes,
 and history conversion/verification totals. Do not sum overlapping scopes.
 FULL runs first; model/cache warming, simultaneous tests/ComfyUI load and
 different volumes limit timing conclusions. No automatic FAST recipe, source
-PRUNE, frozen-baseline migration or default adoption follows from a sample.
+PRUNE or frozen-baseline migration follows from a sample. The later
+evidence-default decision is separate from changing the processing recipe.
 For a second changed-image cohort, `--sources LIST.json` accepts exactly
 `--limit` relative active paths, balanced between Various and general assigned
 Galleries, including at least three Angel and three Sister core candidates.

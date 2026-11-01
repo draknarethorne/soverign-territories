@@ -744,7 +744,7 @@ class PreparationTests(unittest.TestCase):
         self.subjects.side_effect = lambda image: (
             self.person(image.size, (500, 60, 700, 800)) if image.width > 500 else None)
         with self.v23():
-            self.assertEqual(self.call("--apply"), 0, self.errors)
+            self.assertEqual(self.call("--storage-mode", "full", "--apply"), 0, self.errors)
             manifest = self.manifest()
             rows = {row["source"]: row for row in manifest["photos"]}
             wide = rows["Various/gallery/wide.png"]
@@ -828,6 +828,39 @@ class PreparationTests(unittest.TestCase):
                     preparation.verify(self.root, output)
                     self.assertFalse(recovery.exists())
 
+    def test_fresh_v23_cli_defaults_to_lean_and_resumes_saved_full(self):
+        with self.v23():
+            self.assertEqual(self.call("--apply"), 0, self.errors)
+            self.assertEqual(self.manifest()["storageMode"], "lean")
+            self.assertEqual(self.call("--apply"), 0, self.errors)
+            self.output = self.output.parent / "explicit-full"
+            self.assertEqual(self.call("--storage-mode", "full", "--apply"), 0, self.errors)
+            self.assertNotIn("storageMode", self.manifest())
+            before = (self.output / "manifest.json").read_bytes()
+            self.assertEqual(self.call("--apply"), 0, self.errors)
+            self.assertEqual((self.output / "manifest.json").read_bytes(), before)
+
+    def test_default_storage_mode_preserves_interrupted_full_and_refuses_ambiguity(self):
+        with self.v23():
+            self.assertEqual(preparation.resolve_storage_mode(self.root, self.output), "lean")
+            temporary = preparation.cw.storage_root(self.cfg, "temporary", root=self.root)
+            binding = temporary / "prep-full" / "binding.json"
+            binding.parent.mkdir(parents=True)
+            data = {"root": str(self.root), "output": str(self.output)}
+            binding.write_text(json.dumps(data))
+            self.assertEqual(preparation.resolve_storage_mode(self.root, self.output), "full")
+            other = temporary / "prep-lean" / "binding.json"
+            other.parent.mkdir()
+            other.write_text(json.dumps({**data, "storageMode": "lean"}))
+            with self.assertRaisesRegex(ValueError, "multiple saved"):
+                preparation.resolve_storage_mode(self.root, self.output)
+            self.assertEqual(preparation.resolve_storage_mode(self.root, self.output, "full"), "full")
+            other.write_text(json.dumps({**data, "output": str(self.output.parent / "other")}))
+            self.assertEqual(preparation.resolve_storage_mode(self.root, self.output), "full")
+            binding.write_text(json.dumps({**data, "storageMode": "invalid"}))
+            with self.assertRaisesRegex(ValueError, "invalid saved"):
+                preparation.resolve_storage_mode(self.root, self.output)
+
     def test_lean_preserves_roles_and_bytes_with_fewer_actual_files(self):
         def without_seconds(value):
             if isinstance(value, dict):
@@ -839,7 +872,7 @@ class PreparationTests(unittest.TestCase):
 
         self.put("Various/gallery/exact.png", Image.new("RGB", (160, 240), "#8899aa"))
         with self.v23():
-            self.assertEqual(self.call("--apply"), 0, self.errors)
+            self.assertEqual(self.call("--storage-mode", "full", "--apply"), 0, self.errors)
             full = self.manifest()
             lean_output = self.output.with_name("lean")
             preparation.publish(self.root, lean_output, preparation.inventory(self.root), storage_mode="lean")

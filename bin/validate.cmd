@@ -52,7 +52,7 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% -m unittest tools.art.test_clean_preparation tools.art.test_retained_preparation tools.art.test_verification_reads tools.art.test_preparation_history_bundle tools.art.test_library_storage_experiment
+%PY% -m unittest tools.art.test_clean_preparation tools.art.test_retained_preparation tools.art.test_verification_reads tools.art.test_preparation_history_bundle tools.art.test_library_storage_experiment tools.art.test_library_rebase_replay
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
@@ -72,7 +72,7 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% -m unittest tools.art.test_library_backup tools.art.test_library_backup_benchmark
+%PY% -m unittest tools.art.test_library_backup tools.art.test_library_backup_benchmark tools.art.test_library_backup_archive
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1

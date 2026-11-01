@@ -4,6 +4,39 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Oct 31 evening replay blocker:** all 3,072 intake outcomes completed in
+11,294.13 seconds. The exact comparison stopped before matching: 50 sources
+have differing artifacts, including 27 selected natives and 17 selected
+paddings. Original bytes, recipe, recommendations and outcomes agree;
+selected-native differences peak at 2/255 per channel. Cause is unproven;
+do not waive the gate or claim complete rebase/viewer/recovery acceptance.
+No replay worker remains and the last FULL baseline is unchanged.
+Next is bounded reproducibility diagnosis, then the remaining complete
+replay. S29 adds actual sandbox legacy/current backup retirement and
+recoverable Recycle Bin proof before production; recycling is not freed
+space until final purge. S30 explicitly covers cast admissions/releases,
+core/workflow retention and original-name/surname acceptance.
+
+**Earlier Oct 31 complete-replay iteration:** fresh v23 preparation
+and sandbox rebase now default to LEAN evidence without skipping processing.
+Saved/interrupted modes persist and explicit FULL remains available.
+Lossless bounded snapshot packing/materialization and four same-state
+complete sample backups/eight archives restored exactly. Smaller omission
+backups saved 65.60 MB but were materially slower, so the complete replay
+uses explicit full-scope hot backups with LEAN preparation. Cold packing is
+optional. Retiring only new trial snapshots/materializations reclaimed
+10.48 GB; all eight archives checked independently after source removal.
+A fresh isolated 3,072-input replay remains the current acceptance gate,
+not yet reported as complete. Its observed mirror-publication lock now uses
+the existing bounded atomic retry, with transient/permanent failure tests.
+The last FULL baseline and sole independent B: backup remain unchanged.
+Three older production backups include unique bytes and are held, not
+deleted merely by age. First-pass visual inspection found existing composition/foot-margin issues
+shared by FULL and LEAN, so storage equality is not blanket quality approval.
+[S27/S28](plans/2026-10-28-storage-operations-and-retention.md#oct-31-default-and-complete-replay-iteration)
+own the new end-to-end gates and both preserved user requests. The older
+default/no-rerun statements below are historical checkpoints.
+
 **Oct 31 installed LEAN/history iteration:** opt-in fresh rebase publication
 now shares its own native bytes for exact-equal original/variant roles and
 retains differing originals. Two mixed 24-photo FULL/LEAN cohorts completed

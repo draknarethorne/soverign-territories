@@ -195,6 +195,32 @@ class CleanPreparationTests(unittest.TestCase):
         self.assertFalse((self.run / "inputs").exists())
         self.assertEqual(list((self.working / "_tmp").iterdir()), [])
 
+    def test_input_mirror_publication_retries_transient_lock(self):
+        original = os.rename
+        attempts = []
+
+        def rename(source, target):
+            if pathlib.Path(target) == self.run / "inputs":
+                attempts.append(target)
+                if len(attempts) == 1:
+                    raise PermissionError("scanner lock")
+            return original(source, target)
+
+        with mock.patch.object(metadata.report_assets.os, "rename", side_effect=rename), \
+                mock.patch.object(metadata.report_assets.time, "sleep"):
+            output, data = clean_preparation.prepare(self.layout, self.run)
+        self.assertEqual(len(attempts), 2)
+        self.assertEqual(len(data["photos"]), 5)
+        self.assertTrue(output.is_dir())
+
+    def test_persistent_mirror_publication_lock_never_publishes_receipt(self):
+        with mock.patch.object(metadata.report_assets.os, "rename", side_effect=PermissionError("locked")), \
+                mock.patch.object(metadata.report_assets.time, "sleep"):
+            with self.assertRaises(PermissionError):
+                clean_preparation.prepare(self.layout, self.run)
+        self.assertFalse((self.run / "inputs").exists())
+        self.assertFalse((self.run / "intake.json").exists())
+
     def test_resume_after_receipt_interruption_reuses_verified_artifacts(self):
         self.command(intake_only=True, apply=True)
         (self.run / "intake.json").unlink()

@@ -2,9 +2,168 @@
 
 **Status:** active
 
-**Queue focus:** S25, S24
+**Queue focus:** S27
 
-**Scheduling:** S15's automated install/recovery/viewer gate passed Oct 31;
+## Oct 31 default and complete-replay iteration
+
+The next comparison is the **complete 3,072-input rebase**, not another
+intake-only or 24-photo savings claim. Keep the last FULL publication, its
+source inputs, installed viewers and sole independent recovery snapshot
+unchanged. Replay into a new isolated sandbox with the same original bytes,
+policy, cast-core settings and inherited curation. Compare recommendations,
+native/preview/selected-padding bytes and matching destinations before
+installation. A mismatch is a stop, not permission to weaken the comparison.
+
+**Latest verified state (Oct 31 evening):** all 3,072 replay intake outcomes
+completed in 11,294.13 seconds (3 h 8 min 14 s). The exact preparation gate
+stopped before matching: 50 sources have differing artifacts, including
+27 selected natives and 17 selected paddings. Original bytes, recipe,
+recommendations and outcomes agree; measured selected-native channel
+differences peak at 2/255. Numerical inference variation is a hypothesis,
+not an established cause or permission to substitute a tolerance for the
+exact gate. Matching, installation, new full-scale backups/recovery and
+viewer acceptance have **not** run. No worker remains. Preserve the failed
+comparison for a small controlled FULL/LEAN repeat before another full run.
+The blocker/report is under ignored `tmp/r3`; the last B: FULL baseline
+and its source/backup inventories were independently verified unchanged.
+
+The selected storage default for **fresh v23 preparation and sandbox rebase**
+is now LEAN: unchanged processing, exact-byte role reuse and selected-only
+padding. Explicit FULL remains available. Saved and interrupted FULL/LEAN
+runs keep their recorded mode when the option is omitted; historical recipes
+keep FULL compatibility. This does not change ordinary production intake,
+authorize FAST processing or migrate existing evidence.
+
+- [ ] **P1 ai** S27 Complete the isolated full replay, installed verification,
+  Gallery/Overview/Review/history and materialized backup recovery; persist
+  phase times, overlapping storage scopes, equality results and baseline
+  seals. Show denominators and volume/load limitations. Reject worse image
+  outcomes and do not infer a speedup from file-count reductions.
+- [x] **P1 ai** S28 Finish same-state FULL/default backup and STORED/hybrid
+  deduplicated archive measurements, exact archive materialization and
+  ordinary recovery. Decide the routine/cold-history recommendation from
+  measured storage **and** restore costs. Packing is not pruning.
+- [ ] **P1 ai** S29 Prove the obsolete-backup retirement lifecycle on
+  sandbox copies of legacy and current snapshots: dependency inventory,
+  exact independent recovery and comparison preservation, explicit scoped
+  retirement receipt, Windows Recycle Bin handoff and recovery test.
+  Recycling does not itself reclaim filesystem free space; show bytes
+  retained in the Bin separately from bytes actually freed after an
+  explicitly approved final purge. Refuse silent permanent-delete fallback
+  when the volume/API cannot recycle. No production pruning until these
+  sandbox gates pass; do not delete unique legacy recovery bytes by age.
+- [ ] **P1 ai** S30 After the replay blocker is resolved, audit real
+  Various-to-Sister/Angel admissions, cast core/workflow retention,
+  eligible low-score releases/Review/reassignment, and original-name plus
+  surname presentation. Cross-reference the existing cast and naming
+  owners rather than building another matcher or naming engine. A plausible
+  likeness is not a fabricated same-person decision; existing ambiguity,
+  protection and explicit review gates must remain visible.
+
+The new bounded lossless archive experiment retains exact path/mtime aliases,
+the original snapshot manifest and all distinct bytes. A bundle can be
+checked and materialized without the original directory snapshot. Hybrid
+stores already-compressed image payloads and compresses text; STORED remains
+the lossless control. Output is confined to ignored repository experiments;
+no production archive substitution or backup-selection migration occurs.
+
+The existing baseline backup contains 72,991 manifest entries /
+41,998,676,177 bytes, of which 36,231,718,870 bytes are under `_sandbox-state`.
+Grouping declared SHA/size pairs gives 46,570 distinct payloads /
+32,081,792,058 bytes: 9,916,884,119 potentially avoidable repeated bytes.
+This is **metadata-only potential**, not a fresh content audit, packing
+result or reclaimed space. There is only one direct backup directory in
+active Working; it remains the last independent recovery baseline, not an
+obsolete backup to delete. Unsupported old roots/runs remain dependency-held.
+
+### Same-state backup results
+
+The changed-input 24-photo FULL/LEAN libraries were backed up **after**
+their history bundles existed. Each state received both full and
+regenerable-omitting directory snapshots, both STORED/hybrid deduplicated
+archives, independent archive check, snapshot materialization and ordinary
+backup recovery. All four snapshots and all eight archives passed exact
+byte checks; default recovery regenerated 71 derivatives and omitted 75
+generated browser outputs as documented. These are complete sample-library
+scopes, not just 24 selected backup files.
+
+| Evidence / backup scope | Files / MB | Create seconds | Direct restore seconds | Hybrid bundle MB |
+| --- | ---: | ---: | ---: | ---: |
+| FULL / full | 1,555 / 740.87 | 21.79 | 25.62 | 321.28 |
+| FULL / omission default | 1,409 / 675.26 | 61.28 | 75.39 | 256.00 |
+| LEAN / full | 1,363 / 602.85 | 9.57 | 12.85 | 269.31 |
+| LEAN / omission default | 1,217 / 537.25 | 47.55 | 46.58 | 204.04 |
+
+MB is decimal. Preview is separate: full took 0.84-1.01 seconds, omission
+15.47-18.72 seconds. Omission saves 65.60 MB but its proof/regeneration is
+substantially slower here. **Do not adopt the smaller scope as the hot-path
+optimization.** The complete replay therefore uses LEAN preparation with
+explicit `library-backup.cmd --full` for hot directory recovery, not FULL
+preparation evidence. The existing generic backup omission default remains
+available; changing that repository-wide is a separate policy decision.
+
+Cold packing halves physical backup bytes through exact payload reuse:
+LEAN/full 602.85 MB -> 274.26 MB STORED or 269.31 MB hybrid, two physical
+bundle files. Hybrid's incremental gain over STORED is only 4.95 MB (1.8%);
+build times were 13.42 and 14.04 seconds. Hybrid materialization plus ordinary
+recovery took 10.90 + 8.41 seconds, excluding its separate 2.82-second
+ordinary snapshot verification. Default/omitted recovery through hybrid
+took 22.34 + 45.96 seconds, plus 15.40 seconds ordinary verification.
+Cold packing is optional after acceptance, not another mandatory hot phase.
+One warm-cache run under shared load is not a universal speed claim.
+
+After persisting receipts/logs and rechecking restored bytes/mtimes, cleanup
+removed only the four **newly created trial** directory snapshots and their
+12 disposable recovery/materialization trees: **10,484,457,020 bytes**
+reclaimed. The original sample snapshots, last installed FULL and all older
+library backups remain. All eight retained packed bundles passed independent
+check again **after** their trial source snapshots were deleted. This proves
+bounded lossless packing/source-copy retirement, not generic old-backup or
+FULL-report PRUNE. Exact paths/counts are in the durable cleanup receipt.
+
+Three older **production** directory backups were discovered, not only the
+sole active sandbox snapshot. Metadata comparison against the newest
+`library-20261020-222038` shows unique SHA/size payloads absent from it:
+`library-20261014-162634` has 2,617 / 1,970,151,682 bytes and
+`library-20261019-235936` has 23 / 18,600,003 bytes. These are not verified
+redundant backups and are held; age alone would destroy unique recovery
+bytes. They also exceed the bounded archive tool's 2-GiB limit. No old
+backup was removed on the basis of its name/date or manifest alone.
+
+### First-pass image review
+
+All 24 changed-input LEAN stage sheets were inspected visually, not merely
+loaded in a browser. Overlay cleanup generally removes the visible logo/UI,
+while reconstruction remains synthetic and is not identity/quality approval.
+Full-resolution inspection confirmed a pre-existing recommendation problem:
+changed cohort row 13
+(`Various/gallery/.facebook_1792600427207_7518711142239802419.jpg`) crops off
+toes/shoe edges visible in the original. Row 17 also has an aggressive lower
+shoe boundary; row 18 retains the visible shoes. These recommendations are
+identical in FULL and LEAN, so this is not a storage-mode regression.
+Composition-only acceptance needs a limb/foot-margin review before calling
+the processing recipe optimal. Do not silently change its selection rules in
+the storage comparison. I68/I69 own the crop/cleanup rule iteration; C7/I60
+human acceptance remains open. Padding cannot restore already-cropped pixels.
+
+### Lifecycle and removal boundary
+
+Routine: current guarded recipe + LEAN; explicit FULL for diagnostics.
+After acceptance, COLLAGE is the leading low-file-count visual-history
+candidate; COMPACT is optional when separate reduced stages are useful.
+Exact cold recovery uses a separately verified lossless snapshot/bundle,
+never a collage. Do not create every representation on every routine run.
+
+The user now permits removing **older backups no longer needed**, while
+retaining the last FULL comparison. This still requires exact source and
+dependency classification, independent recovery verification and an explicit
+receipt. Existing supported run-retention clearances remain available;
+generic backup/report deletion or age-only pruning is not enabled. The
+current sole baseline snapshot cannot meet the obsolete-backup condition.
+Record actual reclaimed bytes separately from avoided/new additive bytes.
+
+**Earlier scheduling checkpoint (superseded by this iteration):**
+S15's automated install/recovery/viewer gate passed Oct 31;
 S25 exact-byte artifact reuse/recommended-only padding and S26 installed
 lineage references now have bounded implementation/proof. S25's mode/default
 review and S24's read-only amplification/dependency inventory may proceed in
@@ -1143,6 +1302,38 @@ We have an outstanding task of refactoring the existing code to remove hard-code
     - Updating the code to use the configuration files for decision-making.
     - Ensuring that any new categories can be added without modifying the core logic.
 
+````
+<!-- markdownlint-enable MD013 MD009 -->
+
+## Oct 31 evening sandbox acceptance direction (chat, verbatim)
+
+Coverage: actual reclamation and recoverable retirement -> S29/S24;
+legacy/current sandbox proofs before production -> S29; full rebase and
+cast admissions/releases -> S27/S30 and cast C7/C8/C9; original names and
+surnames -> S30 and naming N7/N9/N12/N13. Later sandbox scenarios remain
+user-supplied follow-ups, not invented work. Recycle Bin storage must not
+be reported as already freed space.
+
+<!-- markdownlint-disable MD013 MD009 -->
+````text
+Where are we in the proces and what else remains to try to get to that optimal approach we're looking for and I actually do want the storage reclaimed and items can be put into the windows recycle bin as the last step to preserve anything.  The sandbox is for testing all these items end-to-end before production, so working on how to clean up and get to the right approach will lead us to how it'll work in production as well - where we have existing backups from older processes to prune and reclaim storage there - when we get this all figured out in sandbox and prove it all works on both older backups and current approach.  It's great to see the progress and I look forward to the final output.  I expect some images from the full rebase will be added to sisters and angels as some images in Various are of those and should get into the core in the end as well as some that were lower scores may move out to review or even re-assigned.  Sometimes the images I pull are modified and really may not look like the person so its fine for them to find another likeness in this model as long as we do retain all images that meet the core and workflow likeness of sisters and angels.  I also want to see the surnaming in effect as well and keeping original names.  There's a few more things I want to test in sandbox after a rebase is complete and we have optimal speed and storage paths.
+````
+<!-- markdownlint-enable MD013 MD009 -->
+
+## Oct 31 end-to-end default and replay direction (chat, verbatim)
+
+Coverage: DEFAULT and unchanged outcomes -> S25/S27 and I68/I69; complete
+rebase timing/storage/reporting -> S27/T17; backup scope/packing/PRUNE ->
+S24/S28/S10; FULL to reduced visual history -> T13/T14/S25; first-pass
+assistant review -> the review record above, not final human acceptance.
+The second message explicitly schedules a complete replay after the bounded
+gates and allows only proven-obsolete backups to be removed.
+
+<!-- markdownlint-disable MD013 MD009 -->
+````text
+As you look at the results - do you see more areas for optimization and what actually is the final recommendation for a "DEFAULT" mode to be processing in that has the right balance of speed and storage - while allowing the other modes as other options.  I'd want to keep iterating on all the different thoughts I did have, expand on them as we see results and to also look at how the backups are working as well as being able to PRUNE older backups or even COMPRESS or COLLAGE older runs to save on space - and eventually just PRUNE them over time.  So it would be somewhat of a strategy that could basically take previous FULL runes and when done COMPRESS or COLLAGE them - whichever we think is the most effective as well as dealing with backups properly.  Because backups tend to also be a huge sprawl of files - especially from previous ones before these features.  So, keep on going, continue to iterate try things, evaluate the results and make recommendations to get us to the best place.  You can take the place of the human review first on the results - as you are doing to ensure that we aren't changing the expected outcomes in the end.  Ultimately, I just want the images clean to go into the likeness compares and end up in a gallery with proper recommended photo to pad for the various images we use.  We'll have to keep working on the rules as we go.  So take this feedback - work through more options all the way into the final process - end-to-end and verify how it's working to get us to the right OPTIMAL or DEFAULT set behaviour that makes the most sense.
+
+I also want to make sure these items are baked into the flow and we'd then circle back after these appear and run the optimal flow as a complete rebase again.  We can remove older backups that we no longer need to reduce space from spwral already created but keeping the results from this last FULL as comparison.  Ideally we can show just how much space, speed and other areas we are saving from end-to-end ... not just the intake processing, but the full rebase that we just completed.  Hope that makes sense in what I want you to iterate on until it's completely done.  IF we do something that makes speed or outcome worse - then we need to avoid that and continue to iterate.  It is a balance of speed and storage to get to optimal as well as keeping all functionality we have as we go and figuring out that sweet spot and thinking outside the box when possible to improve on all aspects.  I am getting a new machine with more CPU, VRAM, RAM and SSD storage - but I still need to run leaner on this machine for a while.
 ````
 <!-- markdownlint-enable MD013 MD009 -->
 

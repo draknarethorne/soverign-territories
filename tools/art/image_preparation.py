@@ -1013,6 +1013,47 @@ def statistics_html(stats):
             f'<table><thead><tr><th>Measure</th><th>Value</th></tr></thead><tbody>{rows}</tbody></table></details>')
 
 
+def resolve_storage_mode(root, output, requested=None):
+    """New v23 runs use LEAN; saved reports and interrupted runs keep their bound mode."""
+    if requested not in (None, "full", "lean"):
+        raise ValueError("storage mode must be full or lean")
+    root, output = pathlib.Path(root), pathlib.Path(output)
+    safe_path(root, output)
+    candidates = []
+    manifest = output / "manifest.json"
+    if output.exists():
+        candidates.append(manifest)
+    else:
+        temporary = cw.storage_root(cw.load_cfg(), "temporary", root=root)
+        safe_path(root, temporary)
+        if temporary.exists():
+            folders = list(temporary.iterdir())
+            if len(folders) > 10000:
+                raise ValueError("too many preparation recovery entries; inspect temporary storage")
+            for folder in folders:
+                if folder.name.startswith("prep-"):
+                    safe_path(root, folder)
+                    binding = folder / "binding.json"
+                    if binding.exists():
+                        candidates.append(binding)
+    modes = set()
+    for path in candidates:
+        safe_path(root, path)
+        if path.stat().st_size > 16 * 1024 * 1024:
+            raise ValueError(f"saved storage-mode record is too large: {path}")
+        data = json.loads(path.read_text(encoding="utf-8"))
+        if path == manifest or (data.get("root") == str(root) and data.get("output") == str(output)):
+            mode = data.get("storageMode", "full")
+            if mode not in ("full", "lean"):
+                raise ValueError(f"invalid saved storage mode: {path}")
+            modes.add(mode)
+    if requested is not None:
+        return requested
+    if len(modes) > 1:
+        raise ValueError("multiple saved storage modes for this output; specify --storage-mode or a new output")
+    return next(iter(modes)) if modes else ("lean" if RECIPE["id"] == "preparation-comparison-v23" else "full")
+
+
 def run(args):
     root, output = locations(args.root, args.out)
     if args.quarantine_junk or args.undo_junk:
@@ -1023,6 +1064,7 @@ def run(args):
         data = verify(root, output)
         print(f"Verified {len(data['photos'])} retained inputs, candidates, thumbnails and current sources.")
         return int(any(row["outcome"] in ("unprocessable", "assessment-failed") for row in data["photos"]))
+    storage_mode = resolve_storage_mode(root, output, args.storage_mode)
     paths = inventory(root, args.source_folder)
     source_folder = None
     if args.source_folder:
@@ -1032,8 +1074,8 @@ def run(args):
     counts = {category: sum(p.relative_to(root).parts[0] == category for p in paths) for category in CATEGORIES}
     print(f"Inventory: {json.dumps(counts)}; selected {len(selected)} of {len(paths)}.")
     print("Sidecar preparation only. No source changes, matching, membership changes or ComfyUI writes.")
-    print(f"Evidence storage: {args.storage_mode.upper()}; "
-          + ("exact-byte role reuse, recommended padding only." if args.storage_mode == "lean"
+    print(f"Evidence storage: {storage_mode.upper()}; "
+          + ("exact-byte role reuse, recommended padding only." if storage_mode == "lean"
              else "existing comparison files and recommended/denoise/tone padding."))
     print("Apply may download pinned CPU models once; preview and check do not download models.")
     for source in selected:
@@ -1044,7 +1086,7 @@ def run(args):
         print(f"Preview only. Add --apply to retain exact inputs and publish comparisons in {output}")
         return 0
     return publish(root, output, selected, limit=args.limit, source_folder=source_folder, counts=counts,
-                   workers=args.workers, storage_mode=args.storage_mode)
+                   workers=args.workers, storage_mode=storage_mode)
 
 
 def available_memory_gb():
@@ -1570,9 +1612,9 @@ def main(argv=None):
     parser.add_argument("--source-folder", help="one active Gallery/Review folder below Working; no recursion")
     parser.add_argument("--workers", type=int, help="parallel preparation processes (default ST_INTAKE_WORKERS, "
                         f"else up to {MAX_WORKERS} by free memory); each gets an equal share of the CPU threads")
-    parser.add_argument("--storage-mode", choices=("full", "lean"), default="full",
-                        help="full: existing comparison evidence; lean: exact-byte role reuse and only recommended "
-                        "padding; neither changes the processing recipe (new standalone reports only)")
+    parser.add_argument("--storage-mode", choices=("full", "lean"),
+                        help="new v23 runs default to lean; saved/interrupted runs retain their mode. "
+                        "full keeps alternate padded diagnostics; neither changes the processing recipe")
     disposition = parser.add_mutually_exclusive_group()
     disposition.add_argument("--quarantine-junk", action="store_true",
                              help="preview report-bound loose-intake Junk moves; --apply backs up and moves, no deletion")

@@ -3503,7 +3503,7 @@ def main(argv=None, embedder=None, *, domain="general"):
                    help="parallel intake preparation processes (default ST_INTAKE_WORKERS or the measured default); "
                         "matching stays single-process")
     s.add_argument("--storage-mode", choices=("full", "lean"),
-                   help="new-run evidence storage; omitted resumes the saved mode or starts FULL; "
+                   help="new-run evidence storage; omitted resumes the saved mode or starts LEAN; "
                         "LEAN shares installed native bytes and pads only the recommendation")
     s.add_argument("--include-current-various", action="store_true",
                    help="stage current Working Various images over matching immutable IDs and include genuinely new images")

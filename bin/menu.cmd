@@ -20,7 +20,7 @@ echo   L  Photo library: sort new photos in Various, remove duplicates, rebuild 
 echo   R  Photo review gallery (read-only audit; history-only repair flags in Help)
 echo   G  Preview gallery upkeep (rename, padded/head/chest; no matching or writes)
 echo   P  Preview sandbox image preparation comparisons (no source or identity changes)
-echo      P also offers independent COMPACT/COLLAGE history or a mixed storage experiment
+echo      P also offers COMPACT/COLLAGE history, mixed storage experiments or a complete rebase replay
 echo   U  Preview same-mask eraser A/B (LaMa vs OpenCV; comparison only)
 echo   V  Preview unconfirmed overlay reference candidates
 echo   J  Preview early Junk quarantine from a completed preparation report (no moves)
@@ -28,7 +28,7 @@ echo   T  Preview artist-only likeness grouping in the sandbox (shared engine, n
 echo   V  Preview separate Artist gallery pages (no matching or source changes)
 echo   C  Photo library check (read only: anything waiting?)
 echo   B  Back up the photo library and ComfyUI inputs
-echo      B also offers a bounded backup-format benchmark preview (Help lists apply/check)
+echo      B also offers lossless snapshot archives or a bounded format benchmark (Help lists apply/check)
 echo   X  Intake-aware sandbox clean start (inventory or verify; completed-stage recovery flags in Help)
 echo   N  Preview sandbox run-retention decisions (read only)
 echo   F  Preview reference-render batch (offline, no workflow deployment or queue)
@@ -129,16 +129,21 @@ pause
 goto menu
 :preparation
 set "PREPARATION=prepare"
-set /p "PREPARATION=Preview prepare/history/experiment (Enter keeps prepare): "
+set /p "PREPARATION=Preview prepare/history/experiment/replay (Enter keeps prepare): "
 if /i "%PREPARATION%"=="history" goto preparationhistory
 if /i "%PREPARATION%"=="experiment" goto storageexperiment
+if /i "%PREPARATION%"=="replay" goto rebasepreview
 set "ROOT="
 set "RUN="
 set /p "ROOT=Sandbox Working absolute path: "
 set /p "RUN=Comparison run absolute path inside Working\_reports\preparation: "
-set "STORAGE=full"
-set /p "STORAGE=Evidence storage (full/lean; Enter keeps full): "
-call "%~dp0prepare-images.cmd" --root "%ROOT%" --out "%RUN%" --storage-mode "%STORAGE%" --dry-run
+set "STORAGE="
+set /p "STORAGE=Evidence storage (full/lean; Enter resumes saved mode or starts lean): "
+if "%STORAGE%"=="" (
+  call "%~dp0prepare-images.cmd" --root "%ROOT%" --out "%RUN%" --dry-run
+) else (
+  call "%~dp0prepare-images.cmd" --root "%ROOT%" --out "%RUN%" --storage-mode "%STORAGE%" --dry-run
+)
 pause
 goto menu
 :preparationhistory
@@ -151,6 +156,10 @@ set /p "REPORT=Existing FULL or LEAN preparation report absolute path: "
 set /p "RUN=New output directly inside Working\_reports\preparation-history: "
 set /p "STORAGE=History mode compact/collage (Enter keeps compact): "
 call "%~dp0preparation-history.cmd" --root "%ROOT%" --report "%REPORT%" --out "%RUN%" --mode "%STORAGE%" --dry-run
+pause
+goto menu
+:rebasepreview
+call "%~dp0rebase-replay.cmd" --dry-run
 pause
 goto menu
 :storageexperiment
@@ -264,6 +273,15 @@ call "%~dp0cleanup.cmd" "%WS%" %FLAG%
 pause
 goto menu
 :backup
+set "ARCHIVE="
+set /p "ARCHIVE=Preview lossless archive of an existing snapshot? Full path (blank = backup/benchmark): "
+if not "%ARCHIVE%"=="" (
+  set "ARCHIVEOUT="
+  set /p "ARCHIVEOUT=New absolute output under repository tmp: "
+  call :archivepreview
+  pause
+  goto menu
+)
 set "SNAPSHOT="
 set /p "SNAPSHOT=Benchmark an existing snapshot instead? Full snapshot path (blank = normal backup): "
 if not "%SNAPSHOT%"=="" (
@@ -278,3 +296,6 @@ if /i "%APPLY%"=="y" set "FLAG=--apply"
 call "%~dp0library-backup.cmd" %FLAG%
 pause
 goto menu
+:archivepreview
+call "%~dp0backup-archive.cmd" "%ARCHIVE%" --out "%ARCHIVEOUT%" --dry-run
+exit /b

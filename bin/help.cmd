@@ -26,6 +26,8 @@ echo    library-check.cmd               read only: is it in step, any duplicates
 echo    library-backup.cmd [--apply ^| --full ^| --verify SNAPSHOT]  preview, create, or verify a dated snapshot (^--full keeps generated derivatives)
 echo    library-backup.cmd --restore SNAPSHOT --destination NEW_DIR [--apply]  preview/materialize exact recovery with regenerated derivatives; never overwrites a live tree
 echo    library-backup.cmd --benchmark SNAPSHOT [--limit 24] [--max-mib 32] [--out REPO_TMP_DIR] [--dry-run ^| --apply ^| --check]  bounded directory/ZIP64 stored/deflate1 measurements; never changes library or backup defaults
+echo    backup-archive.cmd SNAPSHOT --out "ABS_REPO_TMP_NEW" [--format hybrid ^| stored] [--dry-run ^| --apply]  bounded lossless cold-backup packing with exact-content reuse; no source deletion
+echo    backup-archive.cmd --check BUNDLE   verify independently; --restore BUNDLE --destination ABS_REPO_TMP_NEW [--apply] materializes the original snapshot for ordinary library-backup restore
 echo    people-gallery.cmd [--dry-run ^| --check ^| --apply] [--root DIR] [--cache FILE] [--out DIR] [--policy FILE]  preview/check local housekeeping; apply backs up, normalizes originals, maintains padded/head/chest and both viewers; NO matching
 echo                                    active action undo blocks apply; undo first or explicitly --settle-actions to close undo with full recovery snapshot
 echo                                    --preserve-action-undo leaves active-action identity trees untouched and maintains others; held files remain diagnostic, no settlement
@@ -33,10 +35,11 @@ echo    people-gallery-review.cmd [--root DIR] [--cache FILE] [--out DIR] [--pol
 echo                                    --history-only [--dry-run ^| --check ^| --apply] verifies/repairs only intake history; previews by default, no photo-viewer rebuild
 echo    artists-gallery.cmd [--root DIR] [--cache FILE] [--dry-run ^| --check ^| --apply]  separate Artist overview/photo review; shared small thumbnails in _reports\artists, NO matching or source changes
 echo    prepare-images.cmd --root "SANDBOX\Working" --out "Working\_reports\preparation\RUN" [--limit 28] [--dry-run ^| --apply ^| --check]  sidecar original/control/geometry/denoise/tone, larger pages and padded examples; NO source or identity changes
-echo                                    --storage-mode lean shares exact-byte roles per photo and pads ONLY the recommendation; full remains default; also supported by fresh sandbox-rebase runs, NOT a FAST recipe
+echo                                    new v23 runs default to LEAN: exact-byte role reuse and recommended padding only; --storage-mode full keeps richer diagnostics; saved/interrupted modes persist. NOT FAST
 echo    preparation-history.cmd --root "SANDBOX\Working" --report "REPORT" --out "Working\_reports\preparation-history\NEW" --mode compact [--dry-run ^| --apply ^| --check]
 echo                                    compact downsizes diagnostics; collage makes labelled sheets; both retain exact originals/selected native/padded bytes once per photo. Independent new bundle, NO source PRUNE
 echo    storage-experiment.cmd --root "SOURCE\Working" --out "REPO\tmp\NEW" [--limit 24] [--dry-run ^| --apply ^| --check]  mixed 20-30 photo copied FULL/LEAN rebase, matching, publication, backup and restore; source stays read-only
+echo    rebase-replay.cmd [--dry-run ^| --apply ^| --check]  complete same-input applied-baseline replay into isolated tmp\r3; exact output/route gates before installation, directory backup and recovery; baseline stays unchanged
 echo                                    --source-folder "Various\gallery" --limit 0 compares ALL direct incoming images; v22 overlay-first, guarded crop/erase/residual/reconstruct/compose BEFORE filters; NO live moves
 echo                                    no detected proposal skips person segmentation and composition-only suggestions, NOT a clean-pixel guarantee; denoise/tone comparisons remain
 echo                                    confirmed-pattern reconstruction is synthetic; final recommended pixels feed sandbox matching. --apply may download pinned CPU models once; --check verifies evidence.
@@ -56,7 +59,7 @@ echo                                    --baseline working freezes current galle
 echo                                    --include-current-various adds current Working\Various inputs via a hash-bound run-local recovery overlay
 echo                                    --intake-only --apply prepares all images and stops for review; --check verifies without writes
 echo                                    --workers N sets parallel intake processes ^(default: up to 3 by free memory; ST_INTAKE_WORKERS overrides^); matching stays single-process
-echo                                    --storage-mode lean for a NEW run shares installed original/selected native bytes, retaining differing originals; omitted resumes the recorded mode or starts full
+echo                                    new runs default to LEAN installed original/selected native reuse, retaining differing originals; omitted resumes the recorded mode; --storage-mode full keeps richer diagnostics
 echo                                    same command with no flags prepares/resumes then previews fresh-cache matching; --apply installs only a saved preview
 echo                                    originals + all kept variants follow assigned photos; --cast-seeds all retains cast membership ^(default^); Artists prepared separately; --undo restores exact pre-run bytes
 echo                                    --cast-seeds core retains protected/core/workflow-selected cast photos and previews non-core release with existing thresholds; inspect moves before apply

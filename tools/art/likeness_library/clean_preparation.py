@@ -53,10 +53,11 @@ def prepare(layout, run, workers=None, *, storage_mode=None):
                 shutil.copy2(layout["source_root"] / relative, target)
                 if metadata.content_sha256(target) != expected:
                     raise OSError(f"intake staging checksum mismatch: {relative}")
-            stage.rename(mirror)
+            metadata.report_assets.rename_directory(stage, mirror)
     output = metadata.cw.storage_root(cfg, "reports", root=mirror) / "preparation" / "all"
     paths = [mirror / relative for relative in rows]
-    result = image_preparation.publish(mirror, output, paths, workers=workers, storage_mode=storage_mode or "full")
+    mode = image_preparation.resolve_storage_mode(mirror, output, storage_mode)
+    result = image_preparation.publish(mirror, output, paths, workers=workers, storage_mode=mode)
     data = image_preparation.verify(mirror, output)
     source_manifest = layout["sandbox_root"] / "source-manifest.json"
     value = {
