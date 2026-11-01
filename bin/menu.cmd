@@ -19,6 +19,7 @@ echo   A  Animate a hero (video prompts, workflows, deploy)
 echo   L  Photo library: sort new photos in Various, remove duplicates, rebuild all scaled images
 echo   R  Photo review gallery (read-only audit; history-only repair flags in Help)
 echo   G  Preview gallery upkeep (rename, padded/head/chest; no matching or writes)
+echo   GR Preview reports-only gallery refresh (no photo upkeep)
 echo   P  Preview sandbox image preparation comparisons (no source or identity changes)
 echo      P also offers COMPACT/COLLAGE history, mixed storage experiments or a complete rebase replay
 echo   U  Preview same-mask eraser A/B (LaMa vs OpenCV; comparison only)
@@ -48,6 +49,7 @@ if /i "%CH%"=="K" call "%~dp0backdrop.cmd" --repo --workspaces --check & pause &
 if /i "%CH%"=="L" call "%~dp0library.cmd" & pause & goto menu
 if /i "%CH%"=="R" call "%~dp0people-gallery-review.cmd" & pause & goto menu
 if /i "%CH%"=="G" call "%~dp0people-gallery.cmd" --dry-run & pause & goto menu
+if /i "%CH%"=="GR" call "%~dp0people-gallery.cmd" --reports-only --dry-run & pause & goto menu
 if /i "%CH%"=="C" call "%~dp0library-check.cmd" & pause & goto menu
 if /i "%CH%"=="B" goto backup
 if /i "%CH%"=="X" goto sandboxrebase

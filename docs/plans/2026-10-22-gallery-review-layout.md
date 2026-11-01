@@ -523,7 +523,8 @@ or conceal pending decisions behind disabled controls.
 - [ ] **P1 ai** L18 Finish preparation evidence-index I/O optimization:
   operation-local retained/derivative reuse and full-scale
   row/thumbnail/browser equivalence are delivered; next bound the remaining
-  repeated whole-history audits across page generation.
+  repeated whole-history audits across page generation and read-only
+  maintenance preflight verification.
   Keep explicit limits/errors, complete hash/path/scope checks and final
   content invalidation; no timestamp-only trust, silent latest-run selection
   or automatic acceptance.
@@ -549,6 +550,30 @@ trust or add a new cache service. Storage scope/budget S24/S25 stays ahead of
 another large run; this report did not implement or benchmark the optimization.
 
 ### Oct 31 L18 implementation
+
+**Nov 1 remaining bottleneck:** the complete optimized replay's restored
+People maintenance preview is still expensive before any report publication.
+The live child read over 93 GB while remaining CPU/I/O-active; this is not
+evidence of suspension or a dead file handle. Direct call-path inspection
+shows maintenance calls `derivatives.maintain` once for preflight and again
+for results, and each maintained framing verifies source preparation without
+the report-generation read session. That repeats owner-manifest discovery and
+retained-artifact checks. Keep this measured remaining cost visible in the
+final replay results rather than claiming LEAN solved end-to-end speed.
+Do not change the active verification implementation mid-run. A subsequent
+bounded read-only preflight reuse experiment must seal all content/paths
+before its result is accepted; never carry positive cached claims across
+maintenance writes or replace verification with timestamp trust.
+
+A separate read-only 24-photo experiment (four photos per category) produced
+identical maintenance change/diagnostic results: strict 9.313 seconds versus
+3.243 seconds with operation-local reuse **including the final full content/
+path seal**. Strict digest calls read 1,231,850,646 bytes, excluding JSON
+parsing; reuse read 254,882,745 unique input bytes and sealed those bytes again.
+There were 214 JSON loads, seven directory scans and 580 final content checks.
+Strict-first order and shared load prevent a causal full-run speedup claim.
+This is not installed maintenance behavior: the active replay remains unchanged.
+`maintenance-preflight-24.json` is retained with the final storage experiment.
 
 The user authorized bounded implementation in parallel with human C7/I60
 review, not another intake/rebase. L18 now has a delivered first slice:

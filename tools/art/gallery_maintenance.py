@@ -89,6 +89,38 @@ def report_state(root, library, cache_path, policy_path):
     return hashlib.sha256(json.dumps(evidence, sort_keys=True).encode()).hexdigest()
 
 
+def reports_pending(root, library, cache_path, policy_path, output):
+    state_path = output / ".gallery-maintenance-report-state.json"
+    state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.is_file() else {}
+    pending = state.get("inputs") != report_state(root, library, cache_path, policy_path)
+    for name in ("people_gallery_review.html", "people_gallery.html"):
+        report = output / name
+        if not report.is_file() or state.get("reports", {}).get(name) != derivatives.digest(report):
+            pending = True
+    if pending:
+        print("OUT OF SYNC: derivative-backed gallery reports need refresh")
+    return pending
+
+
+def refresh_reports(root, library, cache_path, policy_path, output):
+    from likeness_library import review_gallery
+    import people_gallery
+
+    shared = ["--root", str(root), "--cache", str(cache_path), "--out", str(output), "--no-renders"]
+    if policy_path:
+        shared += ["--policy", str(policy_path)]
+    for generate in (review_gallery.main, people_gallery.main):
+        if generate(shared):
+            raise ValueError("gallery report refresh failed")
+    state = {"inputs": report_state(root, library, cache_path, policy_path),
+             "reports": {name: derivatives.digest(output / name)
+                         for name in ("people_gallery_review.html", "people_gallery.html")}}
+    state_path = output / ".gallery-maintenance-report-state.json"
+    stage = state_path.with_suffix(".json.pending")
+    stage.write_text(json.dumps(state, indent=2) + "\n", encoding="utf-8")
+    os.replace(stage, state_path)
+
+
 def run(args, cfg):
     root = pathlib.Path(args.root or cw.work_root(cfg)).expanduser().resolve()
     if not root.is_dir():
@@ -126,6 +158,15 @@ def run(args, cfg):
                 break
             if path.is_symlink() or root not in folder.resolve().parents:
                 raise ValueError(f"refusing linked/escaped photo folder: {folder}")
+    if args.reports_only:
+        if args.check:
+            return int(reports_pending(root, library, cache_path, args.policy, output))
+        if args.apply:
+            refresh_reports(root, library, cache_path, args.policy, output)
+        else:
+            print(f"Reports-only preview: refresh Overview, Review and history under {output}.")
+            print("No photo renames, derivative maintenance, pruning, backups or reports written.")
+        return 0
     protected_names = configured_names(cfg)
     known = sorted({originals.prefix_of(p.name) for p in library}, key=len, reverse=True)
     renames, sources, problems = [], [], []
@@ -238,40 +279,14 @@ def run(args, cfg):
     print(f"{len(renames)} rename(s), {len(changes)} derivative(s) "
           f"{'processed' if args.apply else 'pending'}, {len(diagnostics)} diagnostic(s)")
     if args.check:
-        reports_pending = False
-        if not args.no_reports:
-            out = pathlib.Path(args.out) if args.out else reports_root / "library"
-            state_path = out / ".gallery-maintenance-report-state.json"
-            state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.is_file() else {}
-            reports_pending = state.get("inputs") != report_state(root, library, cache_path, args.policy)
-            for name in ("people_gallery_review.html", "people_gallery.html"):
-                report = out / name
-                if not report.is_file() or state.get("reports", {}).get(name) != derivatives.digest(report):
-                    reports_pending = True
-            if reports_pending:
-                print("OUT OF SYNC: derivative-backed gallery reports need refresh")
-        return int(bool(renames or changes or diagnostics or reports_pending))
+        pending_reports = not args.no_reports and reports_pending(
+            root, library, cache_path, args.policy, output)
+        return int(bool(renames or changes or diagnostics or pending_reports))
     if not args.apply:
         print("Preview only: add --apply after reviewing; reports are not written.")
         return 0
     if not args.no_reports:
-        from likeness_library import review_gallery
-        import people_gallery
-        shared = ["--root", str(root), "--cache", str(cache_path), "--no-renders"]
-        if args.policy:
-            shared += ["--policy", args.policy]
-        if args.out:
-            shared += ["--out", args.out]
-        review_gallery.main(shared)
-        people_gallery.main(shared)
-        out = pathlib.Path(args.out) if args.out else reports_root / "library"
-        state = {"inputs": report_state(root, library, cache_path, args.policy),
-                 "reports": {name: derivatives.digest(out / name)
-                             for name in ("people_gallery_review.html", "people_gallery.html")}}
-        state_path = out / ".gallery-maintenance-report-state.json"
-        stage = state_path.with_suffix(".json.pending")
-        stage.write_text(json.dumps(state, indent=2) + "\n", encoding="utf-8")
-        os.replace(stage, state_path)
+        refresh_reports(root, library, cache_path, args.policy, output)
     return 1 if diagnostics else 0
 
 
@@ -290,6 +305,8 @@ def main(argv=None):
     parser.add_argument("--preserve-action-undo", action="store_true",
                         help="leave every active action identity tree untouched; maintain other folders only")
     parser.add_argument("--no-reports", action="store_true", help="maintain files only")
+    parser.add_argument("--reports-only", action="store_true",
+                        help="refresh viewers from existing photos/derivatives; no photo housekeeping")
     parser.add_argument("--no-renders", action="store_true", help="compatibility; renders are never loaded")
     parser.add_argument("--artists", action="store_true", help="retired: use artists-gallery.cmd for Artist pages")
     args = parser.parse_args(argv)
@@ -297,6 +314,8 @@ def main(argv=None):
         parser.error("--artists no longer mixes Artists into people pages; use bin\\artists-gallery.cmd")
     if args.settle_actions and args.preserve_action_undo:
         parser.error("--settle-actions and --preserve-action-undo are mutually exclusive")
+    if args.reports_only and (args.no_reports or args.settle_actions or args.preserve_action_undo):
+        parser.error("--reports-only cannot be combined with housekeeping or --no-reports options")
     try:
         return run(args, cw.load_cfg())
     except (OSError, ValueError) as exc:

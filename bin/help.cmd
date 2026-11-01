@@ -32,6 +32,7 @@ echo                                    --library-root ABS_LIBRARY opts into dur
 echo                                    --prune-source SNAPSHOT --library-root ROOT --bundle BUNDLE --materialized SNAPSHOT_PROOF --recovered ORDINARY_PROOF [--dry-run ^| --apply] explicitly deletes ONLY verified older backup copies; newest stays
 echo    backup-retire.cmd --check RECEIPT  synthetic tmp\retire-proof Recycle Bin proof only; recover --receipt RECEIPT [--dry-run ^| --apply]; no production deletion or purge
 echo    people-gallery.cmd [--dry-run ^| --check ^| --apply] [--root DIR] [--cache FILE] [--out DIR] [--policy FILE]  preview/check local housekeeping; apply backs up, normalizes originals, maintains padded/head/chest and both viewers; NO matching
+echo                                    --reports-only previews/checks/refreshes Overview, Review and history from existing photos/derivatives; no renames, derivative maintenance, pruning or backups
 echo                                    active action undo blocks apply; undo first or explicitly --settle-actions to close undo with full recovery snapshot
 echo                                    --preserve-action-undo leaves active-action identity trees untouched and maintains others; held files remain diagnostic, no settlement
 echo    people-gallery-review.cmd [--root DIR] [--cache FILE] [--out DIR] [--policy FILE] [--keep SCORE]  local Gallery + Review audit; filters, rankings and staged actions

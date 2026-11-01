@@ -247,6 +247,24 @@ class ReplayTests(unittest.TestCase):
             replay.check(self.root)
         run.assert_not_called()
 
+    def test_recovery_viewers_use_report_only_commands_not_housekeeping(self):
+        restored = self.root / "Recovery" / "work-root"
+        with mock.patch.object(replay, "execute") as execute:
+            replay.rebuild_recovery_viewers(self.root, {}, restored)
+        self.assertEqual(execute.call_count, 4)
+        calls = execute.call_args_list
+        self.assertEqual([call.args[3] for call in calls], [
+            "restore-reports-preview", "restore-reports",
+            "restore-artists-preview", "restore-artists-viewers",
+        ])
+        for call in calls[:2]:
+            command = call.args[4]
+            self.assertEqual(command[0], "people-gallery.cmd")
+            self.assertIn("--reports-only", command)
+            self.assertEqual(command[command.index("--root") + 1], str(restored))
+        self.assertEqual(calls[0].args[4][-1], "--dry-run")
+        self.assertEqual(calls[1].args[4][-1], "--apply")
+
     def test_wrong_inherited_catalogue_stops_before_copying(self):
         with mock.patch.object(replay, "load", return_value={
             "status": "applied", "previousLocalCatalog": False,

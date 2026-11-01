@@ -552,6 +552,18 @@ def backup_stage(out, state, env, working, label):
     return snapshot
 
 
+def rebuild_recovery_viewers(out, state, restored):
+    run = restored / "_sandbox-state" / "replay"
+    env = environment(out, restored)
+    gallery = ["people-gallery.cmd", "--root", str(restored), "--cache", str(run / "likeness-cache.json"),
+               "--policy", str(run / "policy.json"), "--reports-only"]
+    execute(out, state, env, "restore-reports-preview", gallery + ["--dry-run"])
+    execute(out, state, env, "restore-reports", gallery + ["--apply"])
+    artists = ["artists-gallery.cmd", "--root", str(restored), "--cache", str(run / "likeness-cache.json")]
+    execute(out, state, env, "restore-artists-preview", artists + ["--dry-run"])
+    execute(out, state, env, "restore-artists-viewers", artists + ["--apply"])
+
+
 def write_summary(out, state):
     working, _, _ = locations(out)
     rel = working.relative_to(out).as_posix()
@@ -667,16 +679,7 @@ def apply(out, baseline, workers):
     verify_lineage(restored, plan)
     if categories(restored) != state["installedInventory"]:
         raise ValueError("ordinary restore did not exactly reproduce installed categories")
-    restored_run = restored / "_sandbox-state" / "replay"
-    restored_env = environment(out, restored)
-    gallery = ["people-gallery.cmd", "--root", str(restored), "--cache", str(restored_run / "likeness-cache.json"),
-               "--policy", str(restored_run / "policy.json")]
-    execute(out, state, restored_env, "restore-viewer-preview", gallery + ["--dry-run"])
-    execute(out, state, restored_env, "restore-viewers", gallery + ["--apply"])
-    artists = ["artists-gallery.cmd", "--root", str(restored),
-               "--cache", str(restored_run / "likeness-cache.json")]
-    execute(out, state, restored_env, "restore-artists-preview", artists + ["--dry-run"])
-    execute(out, state, restored_env, "restore-artists-viewers", artists + ["--apply"])
+    rebuild_recovery_viewers(out, state, restored)
     verify_lineage(restored, plan)
     state["restoredViewers"] = viewers(restored)
     state["restoredInventory"] = categories(restored)

@@ -62,6 +62,48 @@ class MaintenanceTests(unittest.TestCase):
         return {p.relative_to(self.root).as_posix(): p.read_bytes()
                 for p in self.root.rglob("*") if p.is_file()}
 
+    def test_reports_only_never_runs_photo_housekeeping(self):
+        import people_gallery
+
+        before = self.tree()
+        args = ["--root", str(self.root), "--cache", str(self.cache), "--reports-only"]
+        output = self.root / "_reports" / "library"
+
+        def publish(_args):
+            output.mkdir(parents=True, exist_ok=True)
+            for name in ("people_gallery.html", "people_gallery_review.html"):
+                (output / name).write_text("report", encoding="utf-8")
+            return 0
+
+        with mock.patch.object(upkeep.cw, "load_cfg", return_value=self.cfg), \
+                mock.patch.object(upkeep.derivatives, "maintain", side_effect=AssertionError("maintenance")), \
+                mock.patch.object(upkeep.derivatives, "prune", side_effect=AssertionError("prune")), \
+                mock.patch.object(upkeep.library_backup, "create_backup", side_effect=AssertionError("backup")), \
+                mock.patch.object(upkeep.originals, "standard_name", side_effect=AssertionError("rename")), \
+                mock.patch.object(review_gallery, "main", side_effect=publish) as review, \
+                mock.patch.object(people_gallery, "main", return_value=0) as overview, \
+                contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(upkeep.main(args + ["--dry-run"]), 0)
+            self.assertEqual(before, self.tree())
+            review.assert_not_called()
+            self.assertEqual(upkeep.main(args + ["--check"]), 1)
+            self.assertEqual(upkeep.main(args + ["--apply"]), 0)
+            self.assertEqual(upkeep.main(args + ["--check"]), 0)
+            self.assertEqual(upkeep.main(args + ["--apply"]), 0)
+            (output / "people_gallery.html").write_text("edited", encoding="utf-8")
+            self.assertEqual(upkeep.main(args + ["--check"]), 1)
+            self.assertEqual(review.call_count, 2)
+            self.assertEqual(overview.call_count, 2)
+        for relative, payload in before.items():
+            self.assertEqual((self.root / relative).read_bytes(), payload)
+        self.assertTrue(self.photo.exists())
+
+    def test_reports_only_rejects_housekeeping_options(self):
+        for option in ("--no-reports", "--settle-actions", "--preserve-action-undo"):
+            with self.subTest(option=option), contextlib.redirect_stderr(io.StringIO()), \
+                    self.assertRaises(SystemExit):
+                upkeep.main(["--reports-only", option])
+
     def test_preview_and_check_are_read_only_and_apply_is_repeat_safe(self):
         before = self.tree()
         self.assertEqual(self.call("--dry-run"), 0)

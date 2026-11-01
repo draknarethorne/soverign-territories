@@ -11,6 +11,7 @@ deletion or folder moves, when a photo has catalogue decisions or retained sets.
 | Inspect crop/erase candidates without changing sources | `bin\prepare-images.cmd` | Sandbox sidecars; v20 recommended sequence, no identity assignment |
 | Prepare immutable sandbox inputs, optionally stop, then match/install | `bin\sandbox-rebase.cmd` | Implemented retained-cast flow; real acceptance still pending |
 | Maintain names/derivatives and refresh galleries without matching | `bin\people-gallery.cmd` | Preview/check/apply with backup and action-undo guards |
+| Rebuild only People viewers after exact recovery | `bin\people-gallery.cmd --reports-only` | Preview/check/apply; existing photos and maintained derivatives are not renamed, pruned or regenerated |
 | Change one photo or a recorded name deliberately | `bin\likeness-actions.cmd` | Validate/preview first; supported actions use backed-up transactions |
 | Ordinary incremental ingest | `bin\library.cmd` | Production writes paused by draft policy; upstream prepared-source cutover remains incomplete |
 
@@ -548,6 +549,14 @@ replay therefore requires three workers/four threads each on this 12-thread host
 sets the serial model-thread environment to four, and records the runtime in its
 receipt. A different host/worker budget refuses instead of assuming byte parity.
 No baseline/diagnostic image is copied into the new preparation report.
+
+Recovery rebuilds People Overview/Review/history with
+`people-gallery.cmd --reports-only --apply`, not ordinary housekeeping.
+Preview first with `--reports-only --dry-run`; `--reports-only --check` checks
+report state without maintenance. This option cannot settle actions or maintain
+photos. Restored source/category and retained-lineage equality remain mandatory
+after viewer rebuilding. A maintenance preview's proposed rename or derivative
+change is not permission to change the exact recovered snapshot.
 
 Equality gates compare all common native/preview/selected-padding roles,
 recommendations and general matching destinations before installation.

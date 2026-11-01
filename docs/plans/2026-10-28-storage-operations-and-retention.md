@@ -145,6 +145,21 @@ the saved supported replay, not intake or completed launcher stages.
 Restored viewer rebuilding, the independent final check and full-population
 S30 acceptance remain pending.
 
+**Nov 1 recovery-viewer defect and correction:** the resumed ordinary
+maintenance preview took 3,325.212 seconds and proposed 10 renames,
+279 derivative changes and 684 diagnostics. That command was wrong for an
+exact-restore viewer rebuild. Its apply was stopped during preflight, before
+the maintenance write phase; no diagnostic was waived or renamed photo
+accepted. The corrected supported replay uses `people-gallery.cmd
+--reports-only` for new `restore-reports-preview` / `restore-reports` stages.
+This only rebuilds existing-photo Overview, Review and history reports; it
+does not normalize photos, maintain/prune derivatives or create maintenance
+backups. The unsuccessful ordinary-maintenance attempts/logs remain evidence.
+Actual reports-only launcher preview and 63 maintenance/replay/Overview
+regressions pass, including repeat/check and no-housekeeping assertions.
+The resumed replay must verify recovery before reports and category/lineage
+equality afterward, then complete its independent final check.
+
 The real full-population family preview ran read-only with an isolated cache:
 202 usable identities, 179 suggestions, 115 proposed names, 16 same-person
 review holds and 40 reused-surname groups. No automatic changes, existing/
@@ -1603,5 +1618,7 @@ work bounded under D13/D4; this request does not reopen broad reorganization.
 What in the docs/plans do we need to address or work on?  I want to figure out what else we need to do an dget complete???  Still other work needed???
 
 I did interrupt you a while ago as well as now - I want to know what else were you working on and get back to that work if we didn't finish it all.  So tell me where we are and what else we have to do.
+
+Ok - continue on and get it all done.
 ````
 <!-- markdownlint-enable MD013 -->

@@ -16,7 +16,11 @@ by actual installed People/Artist Overview, Review, history and retained-detail
 browser checks with no broken images in the inspected views. The installed
 full backup verified 88,717 files / 48,684,163,533 bytes; ordinary recovery
 reproduced installed categories and retained lineage exactly. Restored-viewer
-maintenance was interrupted; the saved replay was safely resumed Nov 1 without
+maintenance was interrupted; its resumed preview exposed an orchestration
+defect: ordinary housekeeping proposed renames/derivative changes instead of
+only rebuilding reports. Apply was stopped during preflight. The supported
+replay now uses the tested `--reports-only` path (63 focused tests pass),
+retaining exact recovery/category/lineage checks. It is resumed without
 restarting intake or completed launcher stages. Restored viewers, the final
 independent replay check and S30 remain unaccepted. Preserve failed
 `tmp\r3`, active sources and the independent FULL baseline. The current
