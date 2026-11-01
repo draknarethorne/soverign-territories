@@ -2,7 +2,7 @@
 
 **Status:** active
 
-**Queue focus:** S27, S31, S29, S30
+**Queue focus:** S27, S30
 
 ## Oct 31 authorized backup cleanup
 
@@ -77,7 +77,7 @@ Its 5,839,370,178-byte disposable proof was removed after verification.
 `ordered-restore-proof.json` preserves the measurements and log hashes.
 This does not justify packing on the hot path.
 
-- [ ] **P1 ai** S31 Audit actual legacy backups; preserve unique bytes, repair
+- [x] **P1 ai** S31 Audit actual legacy backups; preserve unique bytes, repair
   only from verified evidence, pack and restore eligible older snapshots, then
   explicitly retire redundant directories. Measure source/bundle/file counts
   and actual volume-free-space deltas separately; retain manifests and receipts.
@@ -123,9 +123,14 @@ A fresh supported replay now runs under `tmp\r4`, preserving all `tmp\r3`
 failure evidence. It requires the measured three-worker/four-thread split on
 this 12-thread host and records that runtime in its receipt. Preview verified
 all 3,072 original inputs (529,913,669 bytes), source policy and inherited
-catalogue; 18 replay regressions pass. Apply is running the full workflow,
-including strict role/route gates before installation, full hot backups,
-ordinary recovery and actual viewers. This is running, not accepted evidence.
+catalogue; 18 replay regressions pass. The complete preparation now passes
+all common role hashes for 3,072 sources, and all 2,793 matching routes agree
+exactly with FULL. Preparation took 10,946.617 seconds and matching preview
+1,005.919 seconds. The full pre-install backup independently verified
+40,108 files / 22,036,424,359 bytes after 748.947 seconds of creation.
+Installation is active with increasing process CPU/I/O. Installed verification,
+viewers, backup recovery and full-population S30 remain pending; preparation
+and route equality alone do not accept those remaining gates.
 
 The selected storage default for **fresh v23 preparation and sandbox rebase**
 is now LEAN: unchanged processing, exact-byte role reuse and selected-only
@@ -143,7 +148,7 @@ authorize FAST processing or migrate existing evidence.
   deduplicated archive measurements, exact archive materialization and
   ordinary recovery. Decide the routine/cold-history recommendation from
   measured storage **and** restore costs. Packing is not pruning.
-- [ ] **P1 ai** S29 Prove the obsolete-backup retirement lifecycle on
+- [x] **P1 ai** S29 Prove the obsolete-backup retirement lifecycle on
   sandbox copies of legacy and current snapshots: dependency inventory,
   exact independent recovery and comparison preservation, explicit scoped
   retirement receipt, Windows Recycle Bin handoff and recovery test.

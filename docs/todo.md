@@ -13,7 +13,7 @@
 
 - [ ] C7 Review before/after cast seeds, hair/overlay outcomes and every released cast destination; accept a configuration or request another isolated run. Record all image/decision counts and holds. Deliver accepted evidence to ... ([cast seeded library rebase](plans/2026-10-23-cast-seeded-library-rebase.md))
 
-### For the assistant, when you say go (7)
+### For the assistant, when you say go (5)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -21,8 +21,6 @@
 - [ ] I60 Audit all changed full-run outputs for false positives and incomplete cleanup; audit identity moves and borderline Review reasons under rebase C8/C9. Validate artifacts, recovery and deterministic repeat behavior before ... ([image intake preparation](plans/2026-10-23-image-intake-preparation.md))
 - [ ] T17 Capture recipe-aware run statistics and publish a compact intake summary with expandable/linked details: input/outcome counts, overlay types, each attempted/executed/skipped/failed step, reconstruction/composition, ... ([intake performance](plans/2026-10-28-intake-performance.md))
 - [ ] S27 Complete the isolated full replay, installed verification, Gallery/Overview/Review/history and materialized backup recovery; persist phase times, overlapping storage scopes, equality results and baseline seals. Show ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
-- [ ] S31 Audit actual legacy backups; preserve unique bytes, repair only from verified evidence, pack and restore eligible older snapshots, then explicitly retire redundant directories. Measure source/bundle/file counts and actual ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
-- [ ] S29 Prove the obsolete-backup retirement lifecycle on sandbox copies of legacy and current snapshots: dependency inventory, exact independent recovery and comparison preservation, explicit scoped retirement receipt, Windows ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S30 After the replay blocker is resolved, audit real Various-to-Sister/Angel admissions, cast core/workflow retention, eligible low-score releases/Review/reassignment, and original-name plus surname presentation. ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
 
 <details>
