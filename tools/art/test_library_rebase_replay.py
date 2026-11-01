@@ -265,6 +265,44 @@ class ReplayTests(unittest.TestCase):
         self.assertEqual(calls[0].args[4][-1], "--dry-run")
         self.assertEqual(calls[1].args[4][-1], "--apply")
 
+    def test_exact_restore_and_rebuilt_reports_are_separate_content_proofs(self):
+        snapshot, recovery = self.root / "snapshot", self.root / "recovery"
+        snapshot.mkdir()
+        payloads = {
+            "work-root/Models/X/gallery/a.jpg": b"native",
+            "work-root/_reports/library/people_gallery.html": b"original report",
+            "work-root/_reports/analysis/notes.json": b"unrelated analysis",
+        }
+        entries = []
+        for relative, payload in payloads.items():
+            path = recovery / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(payload)
+            entries.append({"backup": relative, "size": len(payload), "sha256": replay.digest(path)})
+        replay.write(snapshot / "manifest.json", {"entries": entries})
+        original = replay.verify_recovery(snapshot, recovery)
+        report = recovery / "work-root" / "_reports" / "library" / "people_gallery.html"
+        report.write_bytes(b"rebuilt report at a new root and time")
+        with self.assertRaises(ValueError):
+            replay.verify_recovery(snapshot, recovery)
+        reports = replay.inventory(recovery / "work-root" / "_reports")
+        rebuilt = replay.verify_recovery(snapshot, recovery, rebuilt_reports=reports)
+        self.assertEqual(original, {**rebuilt, "originalReports": True})
+        report.write_bytes(b"edited rebuilt report")
+        with self.assertRaises(ValueError):
+            replay.verify_recovery(snapshot, recovery, rebuilt_reports=reports)
+        report.write_bytes(b"rebuilt report at a new root and time")
+        native = recovery / "work-root" / "Models" / "X" / "gallery" / "a.jpg"
+        native.write_bytes(b"edited native")
+        with self.assertRaises(ValueError):
+            replay.verify_recovery(snapshot, recovery, rebuilt_reports=reports)
+        native.write_bytes(b"native")
+        analysis = recovery / "work-root" / "_reports" / "analysis" / "notes.json"
+        analysis.write_bytes(b"edited unrelated analysis")
+        reports = replay.inventory(recovery / "work-root" / "_reports")
+        with self.assertRaises(ValueError):
+            replay.verify_recovery(snapshot, recovery, rebuilt_reports=reports)
+
     def test_wrong_inherited_catalogue_stops_before_copying(self):
         with mock.patch.object(replay, "load", return_value={
             "status": "applied", "previousLocalCatalog": False,

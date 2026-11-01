@@ -159,6 +159,14 @@ Actual reports-only launcher preview and 63 maintenance/replay/Overview
 regressions pass, including repeat/check and no-housekeeping assertions.
 The resumed replay must verify recovery before reports and category/lineage
 equality afterward, then complete its independent final check.
+An additional failing regression exposed a second final-check defect:
+regenerated HTML cannot also retain the old root/time-dependent report hashes.
+The checker now persists the original exact-restore proof before rebuilding,
+then verifies authorized rebuilt report paths against their separately sealed
+inventory. Native/category content and unrelated report files retain original
+backup hash requirements; edited rebuilt reports still fail. All 64 focused
+regressions pass. This separates two different proofs rather than skipping
+report verification or weakening source recovery.
 
 The real full-population family preview ran read-only with an isolated cache:
 202 usable identities, 179 suggestions, 115 proposed names, 16 same-person

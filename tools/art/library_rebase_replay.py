@@ -428,18 +428,27 @@ def verify_lineage(root, plan):
                 raise ValueError(f"missing/exact retained lineage mismatch: {current}")
 
 
-def verify_recovery(snapshot, recovery):
+def verify_recovery(snapshot, recovery, *, rebuilt_reports=None):
     manifest = load(snapshot / "manifest.json")
-    for row in manifest["entries"]:
-        target = safe_path(recovery, row["backup"].replace("\\", "/"))
-        if target.stat().st_size != row["size"]:
+    rows = [*manifest["entries"], *manifest.get("regenerable", [])]
+    for row in rows:
+        relative = row["backup"].replace("\\", "/")
+        target = safe_path(recovery, relative)
+        expected = {"bytes": row["size"], "sha256": row["sha256"]}
+        report_prefix = "work-root/_reports/"
+        if rebuilt_reports is not None and relative.startswith(report_prefix):
+            report = relative[len(report_prefix):]
+            if (report.startswith(("library/", "artists/"))
+                    or report == "comparisons/pairings/angel-prospect-candidates.md"):
+                if report not in rebuilt_reports:
+                    raise ValueError(f"rebuilt report missing from sealed inventory: {report}")
+                expected = rebuilt_reports[report]
+        if target.stat().st_size != expected["bytes"]:
             raise ValueError(f"restored file size differs: {target}")
-        require_hash(target, row["sha256"])
-    for row in manifest.get("regenerable", []):
-        target = safe_path(recovery, row["backup"].replace("\\", "/"))
-        require_hash(target, row["sha256"])
-        if target.stat().st_size != row["size"]:
-            raise ValueError(f"restored derivative size differs: {target}")
+        require_hash(target, expected["sha256"])
+    return {"manifestSHA256": digest(snapshot / "manifest.json"),
+            "files": len(rows), "bytes": sum(row["size"] for row in rows),
+            "originalReports": rebuilt_reports is None}
 
 
 def viewers(root):
@@ -502,7 +511,10 @@ def check(out):
     require_hash(snapshot / "manifest.json", state["backupManifestSHA256"])
     library_backup.verify_backup(snapshot)
     recovery = out / "Recovery"
-    verify_recovery(snapshot, recovery)
+    restored = recovery / "work-root"
+    recovery_check = verify_recovery(snapshot, recovery, rebuilt_reports=state["restoredReports"])
+    if state["ordinaryRestoreVerification"] != {**recovery_check, "originalReports": True}:
+        raise ValueError("original exact-restore proof differs from the verified backup")
     verify_lineage(recovery / "work-root", plan)
     if viewers(recovery / "work-root") != state["restoredViewers"]:
         raise ValueError("rebuilt recovery viewers changed")
@@ -510,8 +522,7 @@ def check(out):
         raise ValueError("restored category content changed")
     if state["restoredInventory"] != state["installedInventory"]:
         raise ValueError("recovery categories do not exactly reproduce installed categories")
-    verify_inventory(recovery / "work-root" / "_reports" / "library", state["restoredReports"]["general"])
-    verify_inventory(recovery / "work-root" / "_reports" / "artists", state["restoredReports"]["artists"])
+    verify_inventory(restored / "_reports", state["restoredReports"])
     env = environment(out, working)
     command = common_command(working, run, state["workers"]) + ["--check"]
     result = subprocess.run(
@@ -674,8 +685,14 @@ def apply(out, baseline, workers):
     restore = ["library-backup.cmd", "--restore", str(snapshot), "--destination", str(recovery)]
     execute(out, state, env, "restore-preview", restore)
     execute(out, state, env, "restore", restore + ["--apply"])
-    verify_recovery(snapshot, recovery)
     restored = recovery / "work-root"
+    if "ordinaryRestoreVerification" not in state:
+        state["ordinaryRestoreVerification"] = verify_recovery(snapshot, recovery)
+        write(out / RECEIPT, state)
+    else:
+        resumed = verify_recovery(snapshot, recovery, rebuilt_reports=inventory(restored / "_reports"))
+        if state["ordinaryRestoreVerification"] != {**resumed, "originalReports": True}:
+            raise ValueError("resumed recovery differs from the original exact-restore proof")
     verify_lineage(restored, plan)
     if categories(restored) != state["installedInventory"]:
         raise ValueError("ordinary restore did not exactly reproduce installed categories")
@@ -685,10 +702,7 @@ def apply(out, baseline, workers):
     state["restoredInventory"] = categories(restored)
     if state["restoredInventory"] != state["installedInventory"]:
         raise ValueError("viewer rebuild changed restored category content")
-    state["restoredReports"] = {
-        "general": inventory(restored / "_reports" / "library"),
-        "artists": inventory(restored / "_reports" / "artists"),
-    }
+    state["restoredReports"] = inventory(restored / "_reports")
     state["storageScopes"] = {
         "baselineInstalledCategories": {"files": len(state["baselineInstalledInventory"]),
                                        "bytes": sum(row["bytes"] for row in state["baselineInstalledInventory"].values())},

@@ -19,8 +19,9 @@ reproduced installed categories and retained lineage exactly. Restored-viewer
 maintenance was interrupted; its resumed preview exposed an orchestration
 defect: ordinary housekeeping proposed renames/derivative changes instead of
 only rebuilding reports. Apply was stopped during preflight. The supported
-replay now uses the tested `--reports-only` path (63 focused tests pass),
-retaining exact recovery/category/lineage checks. It is resumed without
+replay now uses the tested `--reports-only` path. The original exact-restore
+proof is kept separate from rebuilt-report hashes (64 focused tests pass),
+retaining exact recovery/category/lineage and report checks. It is resumed without
 restarting intake or completed launcher stages. Restored viewers, the final
 independent replay check and S30 remain unaccepted. Preserve failed
 `tmp\r3`, active sources and the independent FULL baseline. The current

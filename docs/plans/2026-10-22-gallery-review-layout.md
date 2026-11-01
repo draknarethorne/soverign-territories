@@ -575,6 +575,13 @@ Strict-first order and shared load prevent a causal full-run speedup claim.
 This is not installed maintenance behavior: the active replay remains unchanged.
 `maintenance-preflight-24.json` is retained with the final storage experiment.
 
+The subsequent S27 recovery preview exposed a different correctness problem:
+ordinary housekeeping proposed renames and derivative changes during what
+should be report-only recovery verification. Recovery now selects the tested
+`people-gallery.cmd --reports-only` path. This avoids unnecessary maintenance
+entirely for that use case; the real housekeeping preflight optimization above
+remains an experiment, not a secretly installed cache change.
+
 The user authorized bounded implementation in parallel with human C7/I60
 review, not another intake/rebase. L18 now has a delivered first slice:
 operation-local retained-manifest discovery, parsed JSON, safe-path, source

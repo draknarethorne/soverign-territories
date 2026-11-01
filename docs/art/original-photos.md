@@ -557,6 +557,11 @@ report state without maintenance. This option cannot settle actions or maintain
 photos. Restored source/category and retained-lineage equality remain mandatory
 after viewer rebuilding. A maintenance preview's proposed rename or derivative
 change is not permission to change the exact recovered snapshot.
+The replay records the complete original byte-checked restore before rebuilding
+reports. Its final check verifies source/category bytes against that backup and
+rebuilt People/Artist reports against a separate sealed report inventory.
+Only those report namespaces and the generated pairing summary may differ;
+unrelated analysis files and all non-report backup entries must still match.
 
 Equality gates compare all common native/preview/selected-padding roles,
 recommendations and general matching destinations before installation.
