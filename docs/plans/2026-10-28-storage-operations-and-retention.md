@@ -23,6 +23,21 @@ Bin is still not free-space reclamation. Large archive mode is opt-in through
 under the library's existing `_backup\_packed` exclusion, not active galleries.
 The existing automatic backup selector continues to use directory snapshots.
 
+**Actual Oct 19 retirement completed:** exact snapshot materialization and
+ordinary recovery passed, followed by explicit permanent pruning, independent
+archive verification after source removal and repeat retirement verification
+after disposable recovery proofs were removed. The 10,440-file directory
+(5,839,370,178 bytes including manifest) is now a two-file lossless bundle
+(5,228,258,659 bytes), plus its separate sealed retirement receipt. Net logical
+backup reduction is **611,111,519 bytes (611.11 MB)**; 11,674,915,189 bytes of
+new disposable recovery proofs were also removed from C: after verification.
+Observed B: free space rose 6,786,121,728 bytes during the pruning window;
+allocation overhead and shared writes mean this is not the net logical saving
+and does not exclude the retained archive's earlier allocation.
+The newest Oct 20 directory, damaged Oct 14 survivors, active sources and the
+sole sandbox FULL recovery snapshot remain. Exact proof and phase logs are in
+`production19-retirement-proof.json` in the durable storage experiment report.
+
 Actual Windows NTFS current/legacy synthetic fixtures passed recycle, raw Bin
 identity/content verification, Shell undelete and exact restored bytes/mtime
 checks. Both original source fixtures and their comparison baselines survived.
@@ -89,8 +104,13 @@ four and eight threads reproduce the frozen role hashes in all 12 executions
 each (FULL/LEAN, two repetitions, three sources); six threads produce stable,
 different hashes in all 12. Storage mode does not change those paired results.
 Five slower no-MKLDNN attempts still differ; that diagnostic was stopped.
-This is stronger evidence than random variation, but it does not yet verify all
-50 differing inputs or authorize substituting bytes in the completed replay.
+The subsequent four-thread LEAN rerender verified **all 50 affected sources**:
+every common role hash matches the frozen baseline exactly, in 1,362.23 seconds
+of summed rendering time. Thread count is therefore a demonstrated source of
+the mismatch, not a LEAN storage regression in these inputs. The completed
+six-thread replay remains unchanged and blocked. Wire a reproducible supported
+runtime before another full replay; do not splice diagnostic or baseline bytes
+into the completed report or waive its strict gate.
 
 The selected storage default for **fresh v23 preparation and sandbox rebase**
 is now LEAN: unchanged processing, exact-byte role reuse and selected-only

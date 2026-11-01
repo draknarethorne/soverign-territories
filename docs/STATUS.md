@@ -15,8 +15,12 @@ explicit operation, never a fallback. The first actual production archive
 preview refused a manifest/payload mismatch; hold it pending content audit.
 The completed audit verifies Oct 19 and Oct 20 exactly. Oct 14 has 2,920 missing
 files and seven changed payloads and stays held; do not conceal this by rewriting
-its manifest. Oct 19 is being losslessly packed before actual recovery proof.
-No production backup has been removed. The active queue now exposes S27/S31/
+its manifest. Oct 19 now passed exact archive materialization and ordinary
+recovery; its redundant directory was explicitly pruned. Independent archive
+and repeat retirement checks passed after source/proof removal. Net logical
+backup reduction is 611.11 MB; 11.67 GB of disposable C: recovery proofs was
+removed too. The newest Oct 20 directory and sandbox FULL baseline remain.
+The active queue now exposes S27/S31/
 S29/S30 instead of hiding the newly requested acceptance work.
 
 **Oct 31 evening replay blocker:** all 3,072 intake outcomes completed in
