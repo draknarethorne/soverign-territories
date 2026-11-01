@@ -9,7 +9,7 @@ and preserves chronological access to manually archived records.
 
 | State | Recap | Why it remains active |
 | --- | --- | --- |
-| **Pinned — resume** | [2026-10-30-1247](2026-10-30-1247-recap.md) | S28 archive/recovery proof and 10.48-GB trial cleanup; all 3,072 replay intake outcomes complete, exact comparison blocks matching on 50 sources. S27 diagnosis, S29 recoverable retirement and S30 cast/name acceptance remain. Last FULL stays protected. |
+| **Pinned — resume** | [2026-10-30-1247](2026-10-30-1247-recap.md) | Fresh four-thread replay passed exact preparation/routes, installation, installed browser checks and ordinary recovery. S27 restored viewers/final check and S30 remain; interrupted maintenance resumed from saved stages. S29/S31 retirement verified, with 611.11 MB net logical production backup saving. Last FULL stays protected. |
 | **Pinned — feedback** | [2026-10-30-1234](2026-10-30-1234-recap.md) | Complete F01-F31 human-feedback coverage and next-round quality priorities remain relevant after baseline publication. |
 
 “Pinned” is a manual index designation, not an automated workflow or an

@@ -5,12 +5,15 @@ Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (gen
 
 ## The pattern
 
-**Current scheduling (Oct 31 evening):** preserve the installed FULL sandbox
+**Current scheduling (Nov 1):** preserve the installed FULL sandbox
 baseline and its passed automated viewer/recovery checks. The user has now
 authorized a separate optimized replay and actual sandbox/production backup
-cleanup. The replay's 3,072 intake outcomes are complete, but exact differences
-block matching/install; diagnose bounded repeats rather than restarting blindly.
-Storage S27/S29/S30/S31 owns the current finish line. Human C7/I60 remains a
+cleanup. The fresh four-thread replay passed exact preparation for all 3,072
+inputs, all 2,793 matching routes, installation, installed browser checks and
+ordinary recovery. Interrupted restored-viewer maintenance is now resumed from
+saved stages; restored browsers, final independent check and S30 remain.
+Storage S27/S30 owns the current finish line; S29/S31 retirement is verified.
+Human C7/I60 remains a
 separate quality decision. Exact baseline evidence is pinned in the
 [recap index](../recap/README.md); older no-replay statements below are historical.
 
@@ -41,7 +44,7 @@ and reactivation condition.
 | Window | Work | Exit / boundary |
 | --- | --- | --- |
 | Now, human review of installed baseline | Cast C7, intake I60 | C6/I59/T16/S15 automated gates passed, including real history rows/detail links and rollback bytes. Human placement/quality acceptance remains open. No new full intake |
-| Current end-to-end gate | Storage S27 replay diagnosis; S28 measured; S29/S30 acceptance; S31 authorized cleanup | All 3,072 intake outcomes complete; 50-source exact-byte differences stop matching. 10.48 GB of earlier trial duplicates reclaimed. Actual synthetic current/legacy NTFS recycle/undelete passed; B: is exFAT. Audit actual legacy backups before explicit permanent retirement. Cast/names and full replay acceptance remain open. Last FULL stays protected |
+| Current end-to-end gate | Storage S27 restored viewers/final check; S30 cast/name audit | Exact preparation/routes, installation, installed browsers and ordinary recovery passed. Resume saved restored-viewer maintenance, not intake. S28/S29/S31 verified; Oct 19 retirement saves 611.11 MB net logical backup bytes. Newest production, damaged Oct 14 survivors and last sandbox FULL stay protected. Family preview is read-only, not accepted renaming |
 | Parallel speed lane, before another expensive viewer refresh | [Gallery L18](2026-10-22-gallery-review-layout.md), with T15/T17 evidence | First retained-proof reuse slice and full-scale equivalent Review are verified; next bound repeated whole-history audits across pages. Preserve invalidation/hash/path guards. No broader gallery redesign or intake rerun |
 | Next bounded quality round | Performance T17, intake I68/I69/I70 | Recipe-aware statistics, all 13 named cases, coordinated early crop/masks and calibrated denoise/tone selection. Use frozen comparisons before approving another full run; do not change the staged baseline |
 | After those results | Intake I71-I76, performance T18/T19; reactivate upkeep/actions/naming/engine slices as needed | UX/terminology/Artist scope, processing profiles; incremental batch/calibration and action UAT are separate gates, not silently approved |

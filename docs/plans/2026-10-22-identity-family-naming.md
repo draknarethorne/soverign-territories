@@ -6,6 +6,26 @@
 select N12 corrections/family acceptance. Existing approved decisions and
 stable-name/protection guards remain binding; no bulk renaming during install.
 
+## Nov 1: full-population family preview
+
+The installed optimized replay's real family-preview launcher ran against
+all 202 identities with 202 usable cores and zero exclusions. It produced
+179 closest-reference suggestions, 115 proposed names, 16 same-person review
+holds and 40 reused-surname groups. Existing/proposed-name and folder collision
+counts were zero. Preview took 731.447 seconds under shared load.
+
+This was a read-only preview using an isolated copied cache. The installed
+catalogue, applied run and original matching cache seals stayed unchanged.
+The actual preview browser showed 179 suggestions and no mutation controls;
+reference links resolve to installed Review. Durable `family-preview.json`
+and `family-preview-proof.json` live with the storage experiment report.
+
+No families or surnames were automatically assigned. Zero surname proposals
+use Angel/Sister reference surnames: those fixed cast records have single-word
+labels, not supplied original-person surnames. Do not invent missing provenance
+or treat shared surnames as accepted families. This exercises the full preview,
+but does not close N7/N9/N12/N13 or replace human same-person review.
+
 ## Oct 31: what the installed rebase did and did not verify
 
 The [installed outcome audit](2026-10-23-cast-seeded-library-rebase.md#oct-31-cast-routing-name-continuity-and-iteration-audit)

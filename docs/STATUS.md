@@ -11,11 +11,23 @@ records three workers/four threads each on this 12-thread host; its complete
 3,072-source preparation and all 2,793 matching routes now match the FULL
 baseline exactly. Preparation took 10,946.617 seconds; matching preview
 1,005.919 seconds. The full pre-install backup verified 40,108 files /
-22,036,424,359 bytes. Installation is active with increasing process CPU/I/O;
-installed viewers, full recovery and S30 remain unaccepted. Preserve failed
+22,036,424,359 bytes. Installation and its independent check passed, followed
+by actual installed People/Artist Overview, Review, history and retained-detail
+browser checks with no broken images in the inspected views. The installed
+full backup verified 88,717 files / 48,684,163,533 bytes; ordinary recovery
+reproduced installed categories and retained lineage exactly. Restored-viewer
+maintenance was interrupted; the saved replay was safely resumed Nov 1 without
+restarting intake or completed launcher stages. Restored viewers, the final
+independent replay check and S30 remain unaccepted. Preserve failed
 `tmp\r3`, active sources and the independent FULL baseline. The current
 storage execution queue is S27/S30; S29/S31 lifecycle and eligible older
 production retirement are verified. Human C7/N7 decisions stay separate.
+
+The real 202-identity family preview produced 179 suggestions, 115 proposed
+names and 16 same-person review holds, with no automatic changes or name/folder
+collisions. These are not accepted families. Single-word cast labels supplied
+no original surnames; original-name correction and naming acceptance remain
+[N7/N9/N12/N13](plans/2026-10-22-identity-family-naming.md).
 
 **Oct 31 late backup cleanup:** the user explicitly authorizes actual sandbox
 and production backup pruning after verification. S31 now owns the legacy

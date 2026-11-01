@@ -93,7 +93,7 @@ policy, cast-core settings and inherited curation. Compare recommendations,
 native/preview/selected-padding bytes and matching destinations before
 installation. A mismatch is a stop, not permission to weaken the comparison.
 
-**Latest verified state (Oct 31 evening):** all 3,072 replay intake outcomes
+**Earlier failed replay (Oct 31 evening):** all 3,072 replay intake outcomes
 completed in 11,294.13 seconds (3 h 8 min 14 s). The exact preparation gate
 stopped before matching: 50 sources have differing artifacts, including
 27 selected natives and 17 selected paddings. Original bytes, recipe,
@@ -128,9 +128,30 @@ all common role hashes for 3,072 sources, and all 2,793 matching routes agree
 exactly with FULL. Preparation took 10,946.617 seconds and matching preview
 1,005.919 seconds. The full pre-install backup independently verified
 40,108 files / 22,036,424,359 bytes after 748.947 seconds of creation.
-Installation is active with increasing process CPU/I/O. Installed verification,
-viewers, backup recovery and full-population S30 remain pending; preparation
-and route equality alone do not accept those remaining gates.
+Installation passed in 11,709.935 seconds; installed verification took
+385.087 seconds and Artist viewers 199.033 seconds. Actual installed browser
+checks covered People Overview (202 identities / 2,694 Gallery photos),
+all-category Review (99 cards), an incoming cast retained-detail page,
+People history (2,793 rows), Artist Overview/Review (71 groups / 279 photos)
+and Artist history/detail. Inspected images loaded without broken links.
+Technical navigation is not human identity/quality acceptance.
+
+The installed full backup verified 88,717 files / 48,684,163,533 bytes after
+2,872.961 seconds of creation. Ordinary restore reproduced installed category
+content exactly; restored retained lineage verified 31,300 files /
+18,694,284,941 bytes. Restored People viewer maintenance was interrupted,
+with no surviving replay/maintenance process found. Nov 1 continuation resumed
+the saved supported replay, not intake or completed launcher stages.
+Restored viewer rebuilding, the independent final check and full-population
+S30 acceptance remain pending.
+
+The real full-population family preview ran read-only with an isolated cache:
+202 usable identities, 179 suggestions, 115 proposed names, 16 same-person
+review holds and 40 reused-surname groups. No automatic changes, existing/
+proposed-name collisions or folder collisions occurred; catalogue, applied
+run and original cache seals stayed unchanged. The
+[naming plan](2026-10-22-identity-family-naming.md#nov-1-full-population-family-preview)
+owns interpretation and remaining acceptance, not this storage experiment.
 
 The selected storage default for **fresh v23 preparation and sandbox rebase**
 is now LEAN: unchanged processing, exact-byte role reuse and selected-only
@@ -1569,3 +1590,18 @@ iterations rather than broad directory reorganization or active-source pruning.
 Lastly - if we're confident in some of the processes, I wouldl like to prune and fix up some of the sandbox and production backups if we can do that as well.   Freeing up disk and file redundancy is critical to prove things are working.  So you can do all that and just keep on going until things are truly optimal for the processes.  I actually want to prune both the sandbox and the production directories to save space and get rid of old things we will never need and update manifests properly.  This is time to try things out for the storage improvements.
 ````
 <!-- markdownlint-enable MD013 MD009 -->
+
+## Nov 1 status and interrupted-work request (chat, verbatim)
+
+Coverage: report completed versus pending gates and resume the same saved
+work -> S27/S30; identify remaining quality, family/name and production work
+through their existing owners -> the plan index. Keep documentation return
+work bounded under D13/D4; this request does not reopen broad reorganization.
+
+<!-- markdownlint-disable MD013 -->
+````text
+What in the docs/plans do we need to address or work on?  I want to figure out what else we need to do an dget complete???  Still other work needed???
+
+I did interrupt you a while ago as well as now - I want to know what else were you working on and get back to that work if we didn't finish it all.  So tell me where we are and what else we have to do.
+````
+<!-- markdownlint-enable MD013 -->
