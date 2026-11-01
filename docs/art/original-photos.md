@@ -562,6 +562,14 @@ reports. Its final check verifies source/category bytes against that backup and
 rebuilt People/Artist reports against a separate sealed report inventory.
 Only those report namespaces and the generated pairing summary may differ;
 unrelated analysis files and all non-report backup entries must still match.
+History at a relocated root uses the saved intake configuration to bind the
+original library, run, input mirror and preparation-output relative paths.
+It preserves the original manifest/receipt bytes and checks every **local**
+input/artifact. Missing or conflicting root bindings remain unverified;
+ordinary preparation verification still requires its original root by default.
+Verified relocated history is still comparison evidence, not publication
+acceptance. The complete replay also requires 2,793 People and 279 Artist
+verified history rows, so an empty but loadable page cannot pass.
 
 Equality gates compare all common native/preview/selected-padding roles,
 recommendations and general matching destinations before installation.

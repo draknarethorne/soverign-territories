@@ -168,6 +168,19 @@ backup hash requirements; edited rebuilt reports still fail. All 64 focused
 regressions pass. This separates two different proofs rather than skipping
 report verification or weakening source recovery.
 
+Actual recovered-browser inspection then caught an empty history despite
+working Overview/Review/detail images: the saved manifest named the old
+absolute mirror root. History now accepts relocation only when the saved
+configuration binds the original library/run/mirror/report paths to the same
+relative paths in recovery, followed by every local input/artifact hash check.
+No original manifest, receipt or source bytes are rewritten or read through
+the old library. Default preparation verification remains root-strict.
+Portable report stages rerun only report generation, not intake/matching.
+The replay now also rejects missing, empty or unverified history counts
+(2,793 People / 279 Artist). All 178 focused preparation/provenance/
+maintenance/replay/Overview tests pass. Actual portable-history regeneration
+and final browser/independent acceptance remain pending.
+
 The real full-population family preview ran read-only with an isolated cache:
 202 usable identities, 179 suggestions, 115 proposed names, 16 same-person
 review holds and 40 reused-surname groups. No automatic changes, existing/

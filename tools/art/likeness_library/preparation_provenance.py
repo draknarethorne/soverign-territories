@@ -295,8 +295,23 @@ class PreparationIndex:
                         for artifact in row_artifact_hashes(row):
                             _safe(report, artifact)
                     _safe(report, "index.html")
-                    data = verify(mirror, report, current_sources=True)
-                    if data.get("root") != str(mirror):
+                    recorded_root = str(mirror)
+                    if preview.get("root") != recorded_root:
+                        bindings = receipt["configurationReceipt"]["resolvedPaths"]
+                        original_root = pathlib.Path(bindings["libraryRoot"])
+                        if not original_root.is_absolute() or ".." in original_root.parts:
+                            raise ValueError("invalid staged original library root")
+                        for key, current in (("runDirectory", run), ("inputMirror", mirror),
+                                             ("preparationOutput", report)):
+                            original = pathlib.Path(bindings[key])
+                            if (not original.is_absolute() or ".." in original.parts
+                                    or original.relative_to(original_root) != current.relative_to(self.root)):
+                                raise ValueError(f"relocated staged {key} binding differs")
+                        recorded_root = bindings["inputMirror"]
+                        if preview.get("root") != recorded_root:
+                            raise ValueError("relocated staged manifest root differs from receipt")
+                    data = verify(mirror, report, current_sources=True, recorded_root=recorded_root)
+                    if data.get("root") != recorded_root:
                         raise ValueError("staged preparation root differs from receipt mirror")
                     if data.get("recipe") != receipt["recipe"]:
                         raise ValueError("staged receipt recipe differs from preparation manifest")
@@ -306,6 +321,8 @@ class PreparationIndex:
                         raise ValueError("invalid staged source manifest checksum")
                     self._history_record(entry, report, data)
                     entry["status"] = "verified staged/intake-only; not accepted publication"
+                    if recorded_root != str(mirror):
+                        entry["status"] += "; relocated root verified"
                     for photo in entry["photos"]:
                         photo["staged"] = True
                     print(f"Preparation history: {run.name}; {len(entry['photos'])} scoped rows indexed "

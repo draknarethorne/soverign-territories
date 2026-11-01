@@ -21,7 +21,11 @@ defect: ordinary housekeeping proposed renames/derivative changes instead of
 only rebuilding reports. Apply was stopped during preflight. The supported
 replay now uses the tested `--reports-only` path. The original exact-restore
 proof is kept separate from rebuilt-report hashes (64 focused tests pass),
-retaining exact recovery/category/lineage and report checks. It is resumed without
+retaining exact recovery/category/lineage and report checks. Actual recovered
+browser inspection caught empty history caused by saved absolute roots.
+Guarded portable history and exact 2,793/279 history-row gates are now tested
+(178 focused tests pass); actual regenerated-history acceptance is pending.
+It is resumed without
 restarting intake or completed launcher stages. Restored viewers, the final
 independent replay check and S30 remain unaccepted. Preserve failed
 `tmp\r3`, active sources and the independent FULL baseline. The current

@@ -582,6 +582,13 @@ should be report-only recovery verification. Recovery now selects the tested
 entirely for that use case; the real housekeeping preflight optimization above
 remains an experiment, not a secretly installed cache change.
 
+Recovered-browser checks found a separate history root-binding gap: Overview,
+Review and retained detail load correctly, but copied staged receipts initially
+yielded zero history rows. S27 now exercises guarded portable history with
+unchanged saved manifests and full local source/artifact checks, plus exact
+People/Artist row-count gates. This is a recovery blocker within the existing
+history contract, not reactivation of the deferred layout redesign.
+
 The user authorized bounded implementation in parallel with human C7/I60
 review, not another intake/rebase. L18 now has a delivered first slice:
 operation-local retained-manifest discovery, parsed JSON, safe-path, source

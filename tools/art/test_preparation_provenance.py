@@ -225,6 +225,41 @@ class PreparationProvenanceTests(unittest.TestCase):
         staged = next(entry for entry in self.index().history_runs if entry.get("staged"))
         self.assertEqual(staged["photos"], [])
 
+    def test_relocated_history_requires_bound_roots_and_exact_local_inputs(self):
+        run, output = self.staged_receipt()
+        receipt_path = run / "intake.json"
+        receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+        receipt["configurationReceipt"] = {"resolvedPaths": {
+            "libraryRoot": str(self.root), "runDirectory": str(run),
+            "inputMirror": str(run / "inputs"), "preparationOutput": str(output),
+        }}
+        receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
+        restored = self.root.parent / "Recovered"
+        shutil.copytree(self.root, restored)
+        restored_run = restored / run.relative_to(self.root)
+        restored_output = restored / output.relative_to(self.root)
+        before = (restored_output / "manifest.json").read_bytes()
+        with self.assertRaisesRegex(ValueError, "root differs"):
+            image_preparation.verify(restored_run / "inputs", restored_output)
+        (run / "inputs" / self.photo.relative_to(self.root)).write_bytes(b"old root is not read")
+
+        def staged():
+            index = preparation_provenance.build_index(restored, restored / "_reports" / "library", [])
+            return next(entry for entry in index.history_runs if entry.get("staged"))
+
+        self.assertTrue(staged()["status"].startswith("verified staged"))
+        self.assertEqual(len(staged()["photos"]), 1)
+        self.assertEqual((restored_output / "manifest.json").read_bytes(), before)
+        saved_receipt = restored_run / "intake.json"
+        bad = json.loads(saved_receipt.read_text(encoding="utf-8"))
+        bad["configurationReceipt"]["resolvedPaths"]["inputMirror"] = str(run / "other-inputs")
+        saved_receipt.write_text(json.dumps(bad), encoding="utf-8")
+        self.assertTrue(staged()["status"].startswith("unverified"))
+        saved_receipt.write_text(json.dumps(receipt), encoding="utf-8")
+        (restored_run / "inputs" / self.photo.relative_to(self.root)).write_bytes(b"changed restored input")
+        self.assertTrue(staged()["status"].startswith("unverified"))
+        self.assertEqual(staged()["photos"], [])
+
     def test_large_staged_manifest_keeps_verified_history_and_size_bound(self):
         run, output = self.staged_receipt()
         manifest = output / "manifest.json"
@@ -294,6 +329,7 @@ class PreparationProvenanceTests(unittest.TestCase):
         legacy_manifest = self.output / "manifest.json"
         legacy = json.loads(legacy_manifest.read_text(encoding="utf-8"))
         legacy["recipe"]["id"] = "preparation-comparison-v6"
+        legacy["storageMode"] = "full"
         legacy.pop("statistics", None)
         row = legacy["photos"][0]
         row.pop("sourceScope", None)

@@ -927,14 +927,14 @@ def validate(data):
             raise ValueError(f"incomplete comparison variants: {row['source']}")
 
 
-def verify(root, output, *, current_sources=True):
+def verify(root, output, *, current_sources=True, recorded_root=None):
     manifest = safe_path(root, output / "manifest.json")
     data = json.loads(manifest.read_text(encoding="utf-8"))
     validate(data)
     disposition = preparation_junk.verified_journal(root, output) if current_sources else None
     moved = ({move["source"]: move["target"] for move in disposition["moves"]}
              if disposition and disposition["status"] == "applied" else {})
-    if data["root"] != str(root):
+    if data["root"] != str(root if recorded_root is None else recorded_root):
         raise ValueError("pilot manifest root differs from --root")
     for row in data["photos"]:
         sandbox._safe_source_path(row["source"])

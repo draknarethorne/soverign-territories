@@ -254,8 +254,8 @@ class ReplayTests(unittest.TestCase):
         self.assertEqual(execute.call_count, 4)
         calls = execute.call_args_list
         self.assertEqual([call.args[3] for call in calls], [
-            "restore-reports-preview", "restore-reports",
-            "restore-artists-preview", "restore-artists-viewers",
+            "restore-reports-preview", "restore-reports-portable",
+            "restore-artists-preview", "restore-artists-portable",
         ])
         for call in calls[:2]:
             command = call.args[4]
@@ -264,6 +264,28 @@ class ReplayTests(unittest.TestCase):
             self.assertEqual(command[command.index("--root") + 1], str(restored))
         self.assertEqual(calls[0].args[4][-1], "--dry-run")
         self.assertEqual(calls[1].args[4][-1], "--apply")
+
+    def test_viewers_reject_empty_or_unverified_restored_history(self):
+        for domain, names, count in (
+                ("library", ("people_gallery.html", "people_gallery_review.html"), 2793),
+                ("artists", ("artists_gallery.html", "artists_gallery_review.html"), 279)):
+            folder = self.root / "_reports" / domain
+            folder.mkdir(parents=True)
+            for name in names:
+                (folder / name).write_text("report", encoding="utf-8")
+            data = [{"status": "verified staged/intake-only; not accepted publication",
+                     "photos": [{}] * count}]
+            (folder / "intake_runs.html").write_text(
+                '<script id="history-data" type="application/json">' + json.dumps(data) + '</script>',
+                encoding="utf-8")
+        self.assertEqual(len(replay.viewers(self.root)), 6)
+        history = self.root / "_reports" / "library" / "intake_runs.html"
+        for data in ([], [{"status": "unverified staged receipt", "photos": [{}] * 2793}],
+                     [{"status": "verified staged", "photos": []}]):
+            history.write_text('<script id="history-data" type="application/json">'
+                               + json.dumps(data) + '</script>', encoding="utf-8")
+            with self.subTest(data=data[:1]), self.assertRaises(ValueError):
+                replay.viewers(self.root)
 
     def test_exact_restore_and_rebuilt_reports_are_separate_content_proofs(self):
         snapshot, recovery = self.root / "snapshot", self.root / "recovery"

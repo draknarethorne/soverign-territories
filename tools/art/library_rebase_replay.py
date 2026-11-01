@@ -462,6 +462,16 @@ def viewers(root):
         prep.safe_path(root, path)
         if not path.is_file() or path.stat().st_size == 0:
             raise ValueError(f"missing generated viewer: {path}")
+    for domain, expected in (("library", 2793), ("artists", 279)):
+        history = root / "_reports" / domain / "intake_runs.html"
+        payloads = re.findall(r'<script id="history-data" type="application/json">(.*?)</script>',
+                              history.read_text(encoding="utf-8"), flags=re.DOTALL)
+        if len(payloads) != 1:
+            raise ValueError(f"missing or duplicate history data: {history}")
+        runs = json.loads(payloads[0])
+        if (not runs or any(not row["status"].startswith("verified") for row in runs)
+                or sum(len(row["photos"]) for row in runs) != expected):
+            raise ValueError(f"incomplete verified {domain} history; expected {expected} photos")
     return {path.relative_to(root).as_posix(): digest(path) for path in required}
 
 
@@ -569,10 +579,10 @@ def rebuild_recovery_viewers(out, state, restored):
     gallery = ["people-gallery.cmd", "--root", str(restored), "--cache", str(run / "likeness-cache.json"),
                "--policy", str(run / "policy.json"), "--reports-only"]
     execute(out, state, env, "restore-reports-preview", gallery + ["--dry-run"])
-    execute(out, state, env, "restore-reports", gallery + ["--apply"])
+    execute(out, state, env, "restore-reports-portable", gallery + ["--apply"])
     artists = ["artists-gallery.cmd", "--root", str(restored), "--cache", str(run / "likeness-cache.json")]
     execute(out, state, env, "restore-artists-preview", artists + ["--dry-run"])
-    execute(out, state, env, "restore-artists-viewers", artists + ["--apply"])
+    execute(out, state, env, "restore-artists-portable", artists + ["--apply"])
 
 
 def write_summary(out, state):
