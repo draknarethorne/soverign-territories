@@ -226,6 +226,14 @@ class FamilyPreviewTests(unittest.TestCase):
         finally:
             fixture.tearDown()
 
+    def test_cli_adapter_returns_success_exit_status_not_report_dictionary(self):
+        from tools.art import likeness
+
+        with mock.patch("likeness_library.family_preview.run", return_value={"identityCount": 4}) as run:
+            args = SimpleNamespace()
+            self.assertEqual(likeness.cmd_family_preview(args), 0)
+            run.assert_called_once_with(args, likeness)
+
 
 if __name__ == "__main__":
     unittest.main()

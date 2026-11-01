@@ -28,6 +28,9 @@ echo    library-backup.cmd --restore SNAPSHOT --destination NEW_DIR [--apply]  p
 echo    library-backup.cmd --benchmark SNAPSHOT [--limit 24] [--max-mib 32] [--out REPO_TMP_DIR] [--dry-run ^| --apply ^| --check]  bounded directory/ZIP64 stored/deflate1 measurements; never changes library or backup defaults
 echo    backup-archive.cmd SNAPSHOT --out "ABS_REPO_TMP_NEW" [--format hybrid ^| stored] [--dry-run ^| --apply]  bounded lossless cold-backup packing with exact-content reuse; no source deletion
 echo    backup-archive.cmd --check BUNDLE   verify independently; --restore BUNDLE --destination ABS_REPO_TMP_NEW [--apply] materializes the original snapshot for ordinary library-backup restore
+echo                                    --library-root ABS_LIBRARY opts into durable _backup\_packed bundles and 100k-file/64-GiB bounds; original manifests remain exact
+echo                                    --prune-source SNAPSHOT --library-root ROOT --bundle BUNDLE --materialized SNAPSHOT_PROOF --recovered ORDINARY_PROOF [--dry-run ^| --apply] explicitly deletes ONLY verified older backup copies; newest stays
+echo    backup-retire.cmd --check RECEIPT  synthetic tmp\retire-proof Recycle Bin proof only; recover --receipt RECEIPT [--dry-run ^| --apply]; no production deletion or purge
 echo    people-gallery.cmd [--dry-run ^| --check ^| --apply] [--root DIR] [--cache FILE] [--out DIR] [--policy FILE]  preview/check local housekeeping; apply backs up, normalizes originals, maintains padded/head/chest and both viewers; NO matching
 echo                                    active action undo blocks apply; undo first or explicitly --settle-actions to close undo with full recovery snapshot
 echo                                    --preserve-action-undo leaves active-action identity trees untouched and maintains others; held files remain diagnostic, no settlement

@@ -3298,7 +3298,8 @@ def cmd_names(args):
 
 def cmd_family_preview(args):
     from likeness_library.family_preview import run
-    return run(args, sys.modules[__name__])
+    run(args, sys.modules[__name__])
+    return 0
 
 
 def cmd_rename(args):

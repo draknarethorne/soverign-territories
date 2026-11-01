@@ -861,6 +861,13 @@ class PreparationTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "invalid saved"):
                 preparation.resolve_storage_mode(self.root, self.output)
 
+    def test_saved_full_scale_manifest_above_checkpoint_bound_keeps_mode(self):
+        self.output.mkdir(parents=True)
+        manifest = self.output / "manifest.json"
+        manifest.write_text(json.dumps({"largeReport": " " * (17 * 1024 * 1024)}), encoding="utf-8")
+        with self.v23():
+            self.assertEqual(preparation.resolve_storage_mode(self.root, self.output), "full")
+
     def test_lean_preserves_roles_and_bytes_with_fewer_actual_files(self):
         def without_seconds(value):
             if isinstance(value, dict):

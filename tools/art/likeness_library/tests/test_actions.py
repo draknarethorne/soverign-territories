@@ -151,6 +151,61 @@ class LikenessActionTests(unittest.TestCase):
                 if plans[0]["destination"] is not None:
                     self.assertFalse(plans[0]["destination"].exists())
 
+    def test_cast_review_admission_and_undo_preserve_fixed_slot_and_original_names(self):
+        for category in ("Angels", "Sisters"):
+            with self.subTest(category=category), tempfile.TemporaryDirectory() as directory:
+                root = pathlib.Path(directory)
+                folder = category + "/Fixed"
+                source = root / folder / "review" / "incoming_image_123456.jpg"
+                source.parent.mkdir(parents=True)
+                source.write_bytes(b"explicitly reviewed incoming photo")
+                digest = metadata.content_sha256(source)
+                person_id = "person_" + "a" * 32
+                (root / folder / "gallery").mkdir(parents=True)
+                history = root / folder / "gallery" / "z_person.txt"
+                history.write_text("name: Original Vale\n", encoding="utf-8")
+                person = {
+                    "id": person_id, "folder": folder, "displayName": "Fixed",
+                    "folderHistory": [], "identityAnchors": [], "protected": True,
+                    "names": {"originalName": "Original Vale", "currentName": "Current Vale",
+                              "originalSource": "recorded-history"},
+                }
+                catalog = {"schemaVersion": 1, "people": {person_id: person},
+                           "photos": {self.photo_id: {"contentSha256": digest, "protected": False}},
+                           "actions": []}
+                initial = copy.deepcopy(catalog)
+
+                def save(updated):
+                    catalog.clear()
+                    catalog.update(copy.deepcopy(updated))
+
+                review = root / folder / "review" / source.name
+                gallery = root / folder / "gallery" / source.name
+                self.assertEqual(review.read_bytes(), b"explicitly reviewed incoming photo")
+                self.assertFalse(gallery.exists())
+                approve = {
+                    "type": "review-approved", "photoId": self.photo_id,
+                    "contentSha256": digest, "sourceBucket": "Review",
+                    "personFolder": folder, "personId": person_id,
+                }
+                second, _ = actions.apply_actions(
+                    {**self.manifest, "actions": [approve]}, root, catalog, {}, "Various",
+                    backup_fn=lambda *_: "verified-test-backup", save_fn=save,
+                )
+                self.assertEqual(gallery.read_bytes(), b"explicitly reviewed incoming photo")
+                self.assertEqual(catalog["people"][person_id], person)
+                self.assertEqual(history.read_text(), "name: Original Vale\n")
+                self.assertFalse(review.exists())
+                actions.undo_actions(
+                    catalog, root, {}, "Various", batch_id=second,
+                    backup_fn=lambda *_: "verified-test-backup", save_fn=save,
+                )
+                self.assertEqual(source.read_bytes(), b"explicitly reviewed incoming photo")
+                self.assertEqual(catalog["people"], initial["people"])
+                self.assertEqual(catalog["photos"], initial["photos"])
+                self.assertFalse(gallery.exists())
+                self.assertTrue(review.exists())
+
     def test_selected_workflow_photo_cannot_be_moved(self):
         errors, _plans = actions.validate_manifest(
             self.manifest,

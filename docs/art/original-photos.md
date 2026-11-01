@@ -455,7 +455,7 @@ only to its supported superseded runs; generic report-to-bundle PRUNE is
 not implemented. Selective FULL reproduction also requires the exact source,
 recipe, model/config/runtime, and is not guaranteed by a collage.
 
-#### Lossless cold-backup experiment
+#### Lossless cold-backup packing and verified retirement
 
 ```cmd
 bin\backup-archive.cmd "COMPLETED_SNAPSHOT" --out "ABS_REPO_TMP_NEW" --format hybrid --dry-run
@@ -467,7 +467,7 @@ bin\library-backup.cmd --restore "MATERIALIZED_SNAPSHOT" --destination "NEW_RECO
 
 Use absolute paths. This bounded experiment allows at most 20,000 snapshot
 files / 2 GiB and writes only below ignored repository temporary storage.
-It is not a migration tool for the existing 42-GB baseline. Exact payloads
+Without an explicit library root it cannot pack the 42-GB baseline. Exact payloads
 are packed once with path/mtime aliases, including the original manifest.
 Hybrid stores compressed image formats and deflates text; `--format stored`
 is the control. Independent check needs no source snapshot. Materialization
@@ -481,6 +481,42 @@ Default directory backups omit only proven regenerable derivatives/browser
 files; `--full` retains them. Generated browser pages need rebuilding after
 default recovery. A collage is never an exact backup, and automatic
 backup/report PRUNE is not enabled by this experiment.
+
+For explicitly authorized **older library backups**, `--library-root` enables
+larger bounded packing (100,000 files / 64 GiB; 128-MiB metadata). Durable bundles
+belong below `LIBRARY\_backup\_packed`, already excluded from ordinary snapshots.
+Check/restore need the same library-root option. Snapshot manifests are retained
+byte-for-byte; each bundle has a sealed independent index and receipt. Automatic
+backup selection still requires a directory snapshot: the newest complete
+snapshot and the sole sandbox FULL baseline cannot be retired.
+
+```cmd
+bin\backup-archive.cmd "OLD_SNAPSHOT" --library-root "ABS_LIBRARY" --out "ABS_LIBRARY\_backup\_packed\OLD_NAME" --dry-run
+bin\backup-archive.cmd "OLD_SNAPSHOT" --library-root "ABS_LIBRARY" --out "ABS_LIBRARY\_backup\_packed\OLD_NAME" --apply
+bin\backup-archive.cmd --restore "DURABLE_BUNDLE" --library-root "ABS_LIBRARY" --destination "ABS_REPO_TMP_SNAPSHOT" --apply
+bin\library-backup.cmd --restore "ABS_REPO_TMP_SNAPSHOT" --destination "ABS_REPO_TMP_RECOVERY" --apply
+bin\backup-archive.cmd --prune-source "OLD_SNAPSHOT" --library-root "ABS_LIBRARY" --bundle "DURABLE_BUNDLE" --materialized "ABS_REPO_TMP_SNAPSHOT" --recovered "ABS_REPO_TMP_RECOVERY" --dry-run
+```
+
+Only after inspecting the preview, repeat the last command with `--apply`.
+This is **explicit permanent deletion**, not a fallback from failed recycling.
+It requires exact source/archive equality, actual materialized and ordinary
+recovery proofs, a verified newer directory snapshot and no explicit live
+run/undo/cache references. Only indexed files are deleted. Interrupted deletion
+has a sealed receipt and resumes; unexpected files halt it. A completed repeat
+independently checks the retained archive, even after disposable proof cleanup.
+The sibling `OLD_NAME-retirement.json` records the source's retirement and
+retained bundle. Do not edit historical snapshot manifests to hide missing data.
+Manifest mismatches or unreadable bytes hold a backup for investigation.
+
+The separate `bin\backup-retire.cmd` tests current/legacy **synthetic** fixtures
+below ignored `tmp\retire-proof` on local NTFS: preview, recycle, raw Bin identity
+and content check, then actual Shell undelete. It refuses production paths,
+non-NTFS volumes and permanent deletion. `--check RECEIPT` and
+`recover --receipt RECEIPT --dry-run` are read-only; recovery requires `--apply`.
+Actual current/legacy physical tests passed, including original-source and
+comparison preservation. B: is exFAT and is not eligible for that guarded API.
+Never report recycled bytes as freed disk space; no whole-Bin emptying is provided.
 
 #### Complete same-input rebase replay
 

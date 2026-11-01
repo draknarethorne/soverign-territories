@@ -1,4 +1,4 @@
-"""Bounded, opt-in, lossless snapshot packing; no live-library selection or pruning.
+"""Bounded, opt-in, lossless snapshot packing and verified obsolete-backup retirement.
 
 The new bundle contains payload.zip and a path-bound integrity receipt. Checks
 need no source. Restore materializes the original snapshot, including its exact
@@ -26,6 +26,7 @@ MAX_BYTES = 2 * 1024**3
 MAX_METADATA = 16 * 1024**2
 MAX_DIRS = 20_000
 MAX_ARCHIVE_BYTES = MAX_BYTES + 2 * MAX_METADATA
+LIBRARY_ROOT = None
 RECIPE = "lossless-snapshot-zip64-v1"
 TEXT = {".json", ".jsonl", ".txt", ".md", ".html", ".htm", ".csv", ".yaml",
         ".yml", ".xml", ".log", ".cmd", ".py", ".js", ".css", ".svg"}
@@ -61,10 +62,20 @@ def name(value):
     return value
 
 
+def walk(root):
+    def refuse(error):
+        raise error
+    return os.walk(root, followlinks=False, onerror=refuse)
+
+
 def output_path(value):
     if not pathlib.Path(value).is_absolute():
         raise ValueError("output must be explicitly absolute and below ignored repository tmp")
     path = guarded(value)
+    if LIBRARY_ROOT is not None:
+        packed = guarded(LIBRARY_ROOT / "_backup" / "_packed")
+        if packed in path.parents:
+            return path
     scratch = guarded(ROOT / "tmp")
     if scratch not in path.parents:
         raise ValueError("output must be below ignored repository tmp (experiment only)")
@@ -74,7 +85,34 @@ def output_path(value):
     return path
 
 
-def file_hash(path, max_bytes=MAX_ARCHIVE_BYTES):
+def configure_library(value):
+    """CLI-only, explicit larger bounds and durable library archive location."""
+    global LIBRARY_ROOT, MAX_FILES, MAX_BYTES, MAX_METADATA, MAX_DIRS, MAX_ARCHIVE_BYTES
+    raw = pathlib.Path(value)
+    if not raw.is_absolute() or ".." in raw.parts:
+        raise ValueError("library root must be explicitly absolute without traversal")
+    if str(raw).startswith(("\\\\", "//")) and not str(raw).startswith("\\\\?\\"):
+        raise ValueError("network library roots are not supported")
+    root = guarded(raw)
+    if not root.is_dir() or root.parent == root or not guarded(root / "_backup").is_dir():
+        raise ValueError("library root must have an existing _backup directory")
+    LIBRARY_ROOT = root
+    MAX_FILES, MAX_DIRS = 100_000, 100_000
+    MAX_BYTES, MAX_METADATA = 64 * 1024**3, 128 * 1024**2
+    MAX_ARCHIVE_BYTES = MAX_BYTES + 2 * MAX_METADATA
+
+
+def library_snapshot(value):
+    path = guarded(value)
+    if (LIBRARY_ROOT is None or path.parent != LIBRARY_ROOT / "_backup"
+            or not path.name.startswith("library-") or path.name.endswith(".retiring")):
+        raise ValueError("only a direct library-* snapshot under the selected _backup is eligible")
+    return path
+
+
+def file_hash(path, max_bytes=None):
+    if max_bytes is None:
+        max_bytes = MAX_ARCHIVE_BYTES
     digest = hashlib.sha256()
     total = 0
     with guarded(path).open("rb") as stream:
@@ -102,7 +140,7 @@ def copy_payload(src, dst, size):
 
 def read_json(payload):
     if len(payload) > MAX_METADATA:
-        raise ValueError("metadata exceeds 16 MiB bound")
+        raise ValueError("metadata exceeds configured bound")
 
     def unique(pairs):
         result = {}
@@ -121,7 +159,7 @@ def metadata_bytes(path):
     with path.open("rb") as stream:
         data = stream.read(MAX_METADATA + 1)
     if len(data) > MAX_METADATA:
-        raise ValueError("metadata exceeds 16 MiB bound")
+        raise ValueError("metadata exceeds configured bound")
     return data
 
 
@@ -147,7 +185,7 @@ def validate_rows(index):
                 if not isinstance(row["sha256"], str) or not HEX.fullmatch(row["sha256"]):
                     raise ValueError("invalid payload hash")
     if total > MAX_BYTES:
-        raise ValueError("snapshot exceeds 2 GiB input bound")
+        raise ValueError("snapshot exceeds configured input bound")
     integer(index["rootMtimeNs"], 2**63 - 1)
     for path in names.values():
         parent = pathlib.PurePosixPath(path).parent
@@ -176,7 +214,7 @@ def validate_manifest(payload, files, directories=()):
         expected[relative] = row
         if (relative not in files or row["size"] != files[relative]["size"]
                 or row["sha256"] != files[relative]["sha256"]):
-            raise ValueError("original snapshot manifest/payload mismatch")
+            raise ValueError(f"original snapshot manifest/payload mismatch: {relative}")
     if set(expected) != set(files) - {"manifest.json"}:
         raise ValueError("original snapshot manifest coverage mismatch")
     recovery = manifest.get("regenerable", [])
@@ -216,7 +254,7 @@ def inventory(snapshot):
         raise ValueError("snapshot must be a directory")
     rows, dirs, total = [], [], 0
     root_time = root.stat().st_mtime_ns
-    for current, children, names in os.walk(root, followlinks=False):
+    for current, children, names in walk(root):
         children.sort()
         names.sort()
         for child in children:
@@ -226,7 +264,7 @@ def inventory(snapshot):
             dirs.append({"path": path.relative_to(root).as_posix(),
                          "mtimeNs": path.stat().st_mtime_ns})
             if len(dirs) > MAX_DIRS:
-                raise ValueError("snapshot exceeds 20,000 directory bound")
+                raise ValueError("snapshot exceeds configured directory bound")
         for child in names:
             path = guarded(pathlib.Path(current) / child)
             info = path.stat()
@@ -234,10 +272,10 @@ def inventory(snapshot):
                 raise ValueError("nonregular snapshot file")
             total += info.st_size
             if len(rows) >= MAX_FILES or total > MAX_BYTES:
-                raise ValueError("snapshot exceeds bounds: 20,000 files / 2 GiB input")
+                raise ValueError("snapshot exceeds configured file/byte bounds")
             relative = name(path.relative_to(root).as_posix())
             if relative == "manifest.json" and info.st_size > MAX_METADATA:
-                raise ValueError("snapshot manifest exceeds 16 MiB bound")
+                raise ValueError("snapshot manifest exceeds configured metadata bound")
             if relative == "INCOMPLETE.txt":
                 raise ValueError("incomplete snapshot refused")
             rows.append({"path": relative, "size": info.st_size,
@@ -422,6 +460,8 @@ def pack(snapshot, out, *, kind="hybrid", apply=False):
     if kind not in ("hybrid", "stored"):
         raise ValueError("unsupported archive format")
     source, destination = guarded(snapshot), output_path(out)
+    if LIBRARY_ROOT is not None:
+        library_snapshot(source)
     nonoverlap(source, destination)
     if destination.exists():
         receipt, index = check_bundle(destination)
@@ -502,7 +542,6 @@ def restore(bundle, destination, *, apply=False):
         if inventory(stage) != index:
             raise ValueError("materialized snapshot content/mtime mismatch")
         backup.verify_backup(stage)
-        # Reject archive/receipt mutation during materialization too.
         checked, _ = check_bundle(source)
         if checked != receipt:
             raise ValueError("bundle changed during materialization")
@@ -516,13 +555,183 @@ def restore(bundle, destination, *, apply=False):
     return target
 
 
+def recovery_check(materialized, recovered, index):
+    """Require actual independent snapshot and ordinary recovery, not status flags."""
+    materialized, recovered = output_path(materialized), output_path(recovered)
+    nonoverlap(materialized, recovered)
+    if inventory(materialized) != index:
+        raise ValueError("materialized recovery differs from packed snapshot")
+    backup.verify_backup(materialized)
+    expected = {row["path"]: row for row in index["files"] if row["path"] != "manifest.json"}
+    manifest = read_json(metadata_bytes(materialized / "manifest.json"))
+    for relative, payload, entry in backup._regenerated(materialized, manifest):
+        expected[relative.as_posix()] = {
+            "size": len(payload), "sha256": sha(payload), "mtimeNs": entry["mtimeNs"]}
+    actual, directories = set(), set()
+    if not recovered.is_dir():
+        raise ValueError("ordinary recovered tree is missing")
+    for current, children, names in walk(recovered):
+        for child in children:
+            path = guarded(pathlib.Path(current) / child)
+            directories.add(path.relative_to(recovered).as_posix())
+        for child in names:
+            path = guarded(pathlib.Path(current) / child)
+            relative = path.relative_to(recovered).as_posix()
+            row = expected.get(relative)
+            info = path.stat()
+            if (row is None or info.st_size != row["size"]
+                    or info.st_mtime_ns != row["mtimeNs"]
+                    or file_hash(path, row["size"]) != row["sha256"]):
+                raise ValueError(f"ordinary recovered bytes/mtime mismatch: {relative}")
+            actual.add(relative)
+    expected_dirs = {row["path"] for row in index["directories"]}
+    for relative in expected:
+        parent = pathlib.PurePosixPath(relative).parent
+        while str(parent) != ".":
+            expected_dirs.add(parent.as_posix())
+            parent = parent.parent
+    if actual != set(expected) or directories != expected_dirs:
+        raise ValueError("ordinary recovered membership mismatch")
+
+
+def references(source):
+    """Conservative hold for any explicit live run/undo/cache backup reference."""
+    spellings = {str(source).removeprefix("\\\\?\\").casefold()}
+    spellings |= {value.replace("\\", "/") for value in spellings}
+    spellings |= {value.replace("\\", "\\\\") for value in spellings}
+    roots = [LIBRARY_ROOT / name for name in ("_actions", "_sandbox-state", "_likeness")]
+    paths = [LIBRARY_ROOT / ".likeness-library.json"]
+    for root in roots:
+        if root.exists():
+            for current, children, names in walk(guarded(root)):
+                for child in children:
+                    guarded(pathlib.Path(current) / child)
+                paths.extend(pathlib.Path(current) / child for child in names
+                             if pathlib.Path(child).suffix.lower() in {".json", ".jsonl"})
+                if len(paths) > MAX_FILES:
+                    raise ValueError("reference scan count bound exceeded")
+    for path in paths:
+        if path.exists():
+            text = metadata_bytes(path).decode("utf-8-sig").casefold()
+            if any(value in text for value in spellings):
+                raise ValueError(f"snapshot held by live metadata reference: {path}")
+
+
+def prune_source(snapshot, bundle, materialized, recovered, *, apply=False):
+    """Explicit permanent pruning, never a fallback for failed recycling."""
+    source = library_snapshot(snapshot)
+    bundle = output_path(bundle)
+    if guarded(LIBRARY_ROOT / "_backup" / "_packed") not in bundle.parents:
+        raise ValueError("pruning requires a durable library bundle, not scratch output")
+    receipt, index = check_bundle(bundle)
+    if receipt["source"] != str(source):
+        raise ValueError("bundle does not belong to selected source snapshot")
+    retirement = bundle.parent / (bundle.name + "-retirement.json")
+    resuming = retirement.exists()
+    if resuming:
+        record = read_json(metadata_bytes(retirement))
+        seal = record.pop("sealSha256", None)
+        if (seal != sha(canonical(record)) or record.get("bundleReceipt") != receipt
+                or record.get("source") != str(source)
+                or record.get("recipe") != "verified-snapshot-retirement-v1"
+                or record.get("status") not in {"deleting", "complete"}):
+            raise ValueError("retirement receipt mismatch")
+        if record["status"] == "complete":
+            if source.exists() or guarded(str(source) + ".retiring").exists():
+                raise ValueError("completed retirement source reappeared")
+            print(json.dumps({**record, "independentArchiveVerified": True}))
+            return record
+    candidates = []
+    for candidate in source.parent.iterdir():
+        if candidate.is_dir() and candidate.name.startswith("library-") and not candidate.name.endswith(".retiring"):
+            manifest_path = guarded(candidate / "manifest.json")
+            if manifest_path.is_file():
+                manifest = read_json(metadata_bytes(manifest_path))
+                if manifest.get("status") == "complete" and any(
+                        row.get("name") == "work-root"
+                        and guarded(row["path"]) == LIBRARY_ROOT
+                        for row in manifest.get("sources", [])):
+                    candidates.append(candidate)
+    if not candidates or source.name >= max(path.name for path in candidates):
+        raise ValueError("newest or sole complete recovery snapshot must remain a directory")
+    backup.verify_backup(max(candidates, key=lambda path: path.name))
+    materialized, recovered = output_path(materialized), output_path(recovered)
+    for path in (source, bundle):
+        nonoverlap(path, materialized)
+        nonoverlap(path, recovered)
+    recovery_check(materialized, recovered, index)
+    references(source)
+    retiring = guarded(str(source) + ".retiring")
+    if source.exists() and retiring.exists():
+        raise ValueError("ambiguous original and retiring snapshot")
+    if source.exists() and inventory(source) != index:
+        raise ValueError("source changed since archive publication")
+    if not source.exists() and not resuming:
+        raise ValueError("source missing without an existing retirement receipt")
+    record = {"recipe": "verified-snapshot-retirement-v1", "status": "deleting",
+              "source": str(source), "bundleReceipt": receipt,
+              "materializedProof": str(materialized), "ordinaryRecoveryProof": str(recovered),
+              "logicalSourceBytes": metrics(index)["logicalBytes"],
+              "permanentDeletionExplicit": True, "recycleFallback": False}
+    print(json.dumps({**record, "preview": not apply}))
+    if not apply:
+        return record
+
+    def save():
+        data = {**record, "sealSha256": sha(canonical(record))}
+        pending = guarded(str(retirement) + ".writing")
+        with pending.open("wb") as stream:
+            stream.write(canonical(data))
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(pending, retirement)
+
+    save()
+    if source.exists():
+        os.rename(source, retiring)
+    allowed = {row["path"]: row for row in index["files"]}
+    allowed_dirs = {row["path"] for row in index["directories"]}
+    existing = []
+    for current, children, names in walk(retiring):
+        for child in children:
+            path = guarded(pathlib.Path(current) / child)
+            if path.relative_to(retiring).as_posix() not in allowed_dirs:
+                raise ValueError("unexpected retiring directory")
+        for child in names:
+            path = guarded(pathlib.Path(current) / child)
+            row = allowed.get(path.relative_to(retiring).as_posix())
+            if (row is None or path.stat().st_size != row["size"]
+                    or file_hash(path, row["size"]) != row["sha256"]):
+                raise ValueError("unexpected or changed retiring file")
+            existing.append(path)
+    for path in existing:
+        path.unlink()
+    for row in sorted(index["directories"], key=lambda r: r["path"].count("/"), reverse=True):
+        path = guarded(retiring / row["path"])
+        if path.exists():
+            path.rmdir()
+    if retiring.exists():
+        retiring.rmdir()
+    check_bundle(bundle)
+    record["status"] = "complete"
+    save()
+    print(json.dumps(record))
+    return record
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("snapshot", nargs="?", help="existing completed directory snapshot")
     parser.add_argument("--out", help="NEW explicitly absolute ignored repository tmp bundle")
+    parser.add_argument("--library-root", help="explicit library root; enables 100k files / 64 GiB and durable _backup\\_packed output")
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--check", metavar="BUNDLE", help="independent read-only archive verification")
     modes.add_argument("--restore", metavar="BUNDLE", help="materialize original directory snapshot")
+    modes.add_argument("--prune-source", metavar="SNAPSHOT",
+                       help="explicit permanent deletion after independent archive and recovery proofs; never newest snapshot")
+    parser.add_argument("--bundle", help="independent bundle for --prune-source")
+    parser.add_argument("--materialized", help="exact materialized snapshot proof for --prune-source")
+    parser.add_argument("--recovered", help="ordinary library-backup restored tree for --prune-source")
     parser.add_argument("--destination", help="NEW explicitly absolute ignored repository tmp directory")
     parser.add_argument("--format", choices=("hybrid", "stored"), default="hybrid")
     action = parser.add_mutually_exclusive_group()
@@ -530,7 +739,17 @@ def main(argv=None):
     action.add_argument("--dry-run", action="store_true")
     args = parser.parse_args(argv)
     try:
-        if args.check:
+        if args.library_root:
+            configure_library(args.library_root)
+        if args.prune_source:
+            if (not args.library_root or not args.bundle or not args.materialized
+                    or not args.recovered or args.snapshot or args.out or args.destination):
+                parser.error("--prune-source requires --library-root, --bundle, --materialized and --recovered only")
+            prune_source(args.prune_source, args.bundle, args.materialized, args.recovered,
+                         apply=args.apply)
+        elif args.bundle or args.materialized or args.recovered:
+            parser.error("--bundle/--materialized/--recovered require --prune-source")
+        elif args.check:
             if args.snapshot or args.out or args.destination or args.apply:
                 parser.error("--check takes only a bundle (read-only)")
             check_bundle(args.check)

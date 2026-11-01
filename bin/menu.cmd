@@ -273,11 +273,20 @@ call "%~dp0cleanup.cmd" "%WS%" %FLAG%
 pause
 goto menu
 :backup
+set "RETIRECHECK="
+set /p "RETIRECHECK=Check a synthetic Recycle Bin receipt? Full path (blank = backup/archive): "
+if not "%RETIRECHECK%"=="" (
+  call "%~dp0backup-retire.cmd" --check "%RETIRECHECK%"
+  pause
+  goto menu
+)
 set "ARCHIVE="
 set /p "ARCHIVE=Preview lossless archive of an existing snapshot? Full path (blank = backup/benchmark): "
 if not "%ARCHIVE%"=="" (
+  set "ARCHIVEROOT="
+  set /p "ARCHIVEROOT=Library root for durable large archives (blank = bounded tmp experiment): "
   set "ARCHIVEOUT="
-  set /p "ARCHIVEOUT=New absolute output under repository tmp: "
+  set /p "ARCHIVEOUT=New absolute output under repo tmp or selected library _backup\_packed: "
   call :archivepreview
   pause
   goto menu
@@ -297,5 +306,9 @@ call "%~dp0library-backup.cmd" %FLAG%
 pause
 goto menu
 :archivepreview
+if not "%ARCHIVEROOT%"=="" (
+  call "%~dp0backup-archive.cmd" "%ARCHIVE%" --library-root "%ARCHIVEROOT%" --out "%ARCHIVEOUT%" --dry-run
+  exit /b
+)
 call "%~dp0backup-archive.cmd" "%ARCHIVE%" --out "%ARCHIVEOUT%" --dry-run
 exit /b

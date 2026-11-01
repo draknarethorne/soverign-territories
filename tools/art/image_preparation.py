@@ -1039,7 +1039,8 @@ def resolve_storage_mode(root, output, requested=None):
     modes = set()
     for path in candidates:
         safe_path(root, path)
-        if path.stat().st_size > 16 * 1024 * 1024:
+        limit = 128 * 1024 * 1024 if path == manifest else 16 * 1024 * 1024
+        if path.stat().st_size > limit:
             raise ValueError(f"saved storage-mode record is too large: {path}")
         data = json.loads(path.read_text(encoding="utf-8"))
         if path == manifest or (data.get("root") == str(root) and data.get("output") == str(output)):

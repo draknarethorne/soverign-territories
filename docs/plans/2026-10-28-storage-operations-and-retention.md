@@ -2,7 +2,54 @@
 
 **Status:** active
 
-**Queue focus:** S27
+**Queue focus:** S27, S31, S29, S30
+
+## Oct 31 authorized backup cleanup
+
+The user now explicitly includes **production and sandbox backup pruning**,
+not only copied experiments. Keep active source/category folders and the last
+FULL comparison unchanged. Keep the newest production directory snapshot and
+the sandbox's sole independent FULL snapshot. Older backups may be replaced
+only by independently checked, exact archives after materialization and ordinary
+recovery pass. Preserve original manifests inside those bundles; a sealed
+retirement receipt records the removed directory and retained recovery location.
+
+The B: library volume is **exFAT**, not NTFS. The guarded Recycle Bin proof
+therefore cannot be applied there. No failed recycling operation silently falls
+back to deletion. An explicit `backup-archive.cmd --prune-source` operation is
+separate permanent deletion of proven redundant backup copies. Moving into the
+Bin is still not free-space reclamation. Large archive mode is opt-in through
+`--library-root`, bounded to 100,000 files / 64 GiB and writes durable bundles
+under the library's existing `_backup\_packed` exclusion, not active galleries.
+The existing automatic backup selector continues to use directory snapshots.
+
+Actual Windows NTFS current/legacy synthetic fixtures passed recycle, raw Bin
+identity/content verification, Shell undelete and exact restored bytes/mtime
+checks. Both original source fixtures and their comparison baselines survived.
+This proves the API lifecycle, not production backlog eligibility. A real
+production preview refused a manifest/payload mismatch; the affected backup
+must remain held until a complete content audit and any repair are verified.
+
+The completed actual production content audit found:
+
+| Snapshot | Actual files checked | Manifest result | Disposition |
+| --- | ---: | --- | --- |
+| Oct 14 | 5,766 | 2,920 missing files; seven changed payloads | Hold; do not rewrite declarations or discard unique surviving bytes |
+| Oct 19 | 10,439 | Exact sizes/hashes and membership | Eligible for independent archive/recovery proof |
+| Oct 20 | 22,373 | Exact sizes/hashes and membership | Keep newest complete directory recovery |
+
+The Oct 19 packing preview includes its original manifest: 10,440 files /
+5,839,370,178 logical bytes; 9,681 distinct payloads / 5,233,954,449 unique bytes.
+This is potential, not reclaimed space or an accepted final archive. Transient
+invalid-argument reads and a WinError 1450 resource refusal occurred during early
+audits; bounded, logged read retries completed the final audit with no unreadable
+files. No operating-system/volume repair or inferred manifest repair was attempted.
+
+- [ ] **P1 ai** S31 Audit actual legacy backups; preserve unique bytes, repair
+  only from verified evidence, pack and restore eligible older snapshots, then
+  explicitly retire redundant directories. Measure source/bundle/file counts
+  and actual volume-free-space deltas separately; retain manifests and receipts.
+  Apply only to supported backup paths, not active images or held FULL evidence.
 
 ## Oct 31 default and complete-replay iteration
 
@@ -26,6 +73,14 @@ viewer acceptance have **not** run. No worker remains. Preserve the failed
 comparison for a small controlled FULL/LEAN repeat before another full run.
 The blocker/report is under ignored `tmp/r3`; the last B: FULL baseline
 and its source/backup inventories were independently verified unchanged.
+
+Controlled three-source runtime repeats now isolate a thread-count dependency:
+four and eight threads reproduce the frozen role hashes in all 12 executions
+each (FULL/LEAN, two repetitions, three sources); six threads produce stable,
+different hashes in all 12. Storage mode does not change those paired results.
+Five slower no-MKLDNN attempts still differ; that diagnostic was stopped.
+This is stronger evidence than random variation, but it does not yet verify all
+50 differing inputs or authorize substituting bytes in the completed replay.
 
 The selected storage default for **fresh v23 preparation and sandbox rebase**
 is now LEAN: unchanged processing, exact-byte role reuse and selected-only
@@ -59,6 +114,36 @@ authorize FAST processing or migrate existing evidence.
   owners rather than building another matcher or naming engine. A plausible
   likeness is not a fabricated same-person decision; existing ambiguity,
   protection and explicit review gates must remain visible.
+
+**S30 contract proof, not full-population acceptance:** 91 existing
+cast/core/name regressions passed, followed by 60 naming/action regressions
+including a new Angel/Sister Review-to-Gallery approval and exact undo test.
+Fixed cast slots, protected identity metadata, recorded original/current
+names and history bytes survive approval and undo. The matcher deliberately
+puts incoming cast candidates into **Review**, not directly into the core;
+explicit `review-approved` action admits an inspected photo to Gallery.
+Automatic core admission would change the current protected-cast contract
+and is not silently enabled by the storage replay.
+
+The actual installed 24-photo sandbox family-preview launcher ran and
+preserved its catalogue: nine identities, zero direct family suggestions.
+This sample does not contain qualifying family evidence and must not invent
+surnames just to produce a visible result. Existing reversible family/name
+tests do exercise qualifying support, surname changes and preserved original
+names. Full-population family acceptance remains N7/N9/N12/N13 after rebase.
+The real launcher initially returned an error despite writing a valid
+report because its adapter returned a dictionary to `sys.exit`; it now
+returns status 0, with a regression and a successful launcher rerun.
+
+A fresh read-only check of the preserved FULL run accounts for all 2,793
+general routes: 1,218 retained cast photos, 48 eligible releases and **22
+Various-to-cast candidates**, all in Review. None of the 48 releases has a
+true core, anchor, protected-identity, protected-photo or workflow-selected
+flag. Their destinations are seven Prospects, 27 Potentials, five Angel
+Review, six Models and three Various. The durable
+`cast-acceptance-baseline.json` lists all 22 incoming candidates with reasons.
+This confirms the requested admission path exists, but neither automatic
+core admission nor optimized replay acceptance has been established.
 
 The new bounded lossless archive experiment retains exact path/mtime aliases,
 the original snapshot manifest and all distinct bytes. A bundle can be
@@ -1413,11 +1498,24 @@ Coverage: exact duplicates/references and HTML roles -> S25; conditional
 `gallery_org` and installed native reuse -> S26; backup/history amplification
 -> S24/S11; recommended-only padding and explicit FULL comparisons -> S25;
 FAST processing versus LEAN storage -> T18/S25; incremental sprawl reduction
-and priority -> the duplicate-first contract above. No request is treated as
-permission to prune existing recovery evidence.
+and priority -> the duplicate-first contract above. This producer request alone did not authorize pruning existing recovery evidence;
+the later explicit cleanup direction below is governed by S29/S31.
 
 <!-- markdownlint-disable MD013 MD009 -->
 ````text
 I think with storage one of the most saving areas is on the fact that many images aren't being processed and we simply pass the original along and recommend it.  I feel like not having duplicate copies of the exact same file and working off a reference to the same file in each step would be much better.  The .html can still give a visual representation of the same image for original, control and recommended vs. separate copies.  Same will hold true in any instance.  We don't need both an original and gallery that are identical.  I would only want originals saved in something like gallery_org if we ended up processing the image during intake and ended up with a different recommended image for the gallery.  So, exact duplicate storage should be the first target to map our and address.  That'll save on the backups, history and actual gallery.  I also feel like we should not generate padded copies of anything other than the recommended image - so if we're creating padded copies of denoise, tone that are not recommended - that's probably only something we do ON DEMAND as part of some FULL process and not typically the norm.  We really need to cut down on the number of files.  So, read more about other ideas and concepts around storage in the plans, update them with what you think is the right next pieces to incrementally try to trim down on duplicates and excessive copies of files that are not going to be used.  Some capabilities can be part of a FULL run, but in most cases we'll run FAST or LEAN - if I recall those concepts properly.  So, what if we think about those areas and actually start to build towards that.  Reducing sprawl of images is critical to both speed and storage.
+````
+<!-- markdownlint-enable MD013 MD009 -->
+
+## Oct 31 production and sandbox cleanup direction (chat, verbatim)
+
+Coverage: actual production/sandbox pruning and disk reclamation -> S29/S31;
+unique-byte and last-FULL preservation -> S24/S27/S31; manifests, recovery and
+explicit retirement receipts -> S28/S29/S31. Continue the existing bounded
+iterations rather than broad directory reorganization or active-source pruning.
+
+<!-- markdownlint-disable MD013 MD009 -->
+````text
+Lastly - if we're confident in some of the processes, I wouldl like to prune and fix up some of the sandbox and production backups if we can do that as well.   Freeing up disk and file redundancy is critical to prove things are working.  So you can do all that and just keep on going until things are truly optimal for the processes.  I actually want to prune both the sandbox and the production directories to save space and get rid of old things we will never need and update manifests properly.  This is time to try things out for the storage improvements.
 ````
 <!-- markdownlint-enable MD013 MD009 -->

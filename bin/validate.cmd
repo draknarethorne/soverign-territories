@@ -72,7 +72,7 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% -m unittest tools.art.test_library_backup tools.art.test_library_backup_benchmark tools.art.test_library_backup_archive
+%PY% -m unittest tools.art.test_library_backup tools.art.test_library_backup_benchmark tools.art.test_library_backup_archive tools.art.test_backup_retirement
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1

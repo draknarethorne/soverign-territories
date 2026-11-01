@@ -47,6 +47,17 @@ found; it does not certify identity correctness, derivative freshness or
 automatic cleanup quality. Ordinary reporting commands may write requested
 reports and cache data; use their documented output paths.
 
+`family-preview` returns a successful process exit after writing its JSON/HTML
+report. It does not apply surnames or modify the catalogue. Missing qualifying
+family evidence produces an explicit empty suggestion list, not invented
+relationships. Recorded original/current person names remain separate from
+fixed Angel/Sister character slots.
+
+In the prepared rebase, incoming Angel/Sister candidates go to Review.
+Inspection and an explicit `review-approved` action admit a candidate to
+Gallery; similarity alone does not bypass this protected-cast boundary.
+Approval/undo preserve the slot, recorded original/current names and history.
+
 Both domains use the same YuNet/SFace weights and cache format, but default
 state is library-local: `<work>/_likeness/general/` versus
 `<work>/_likeness/artists/`, each with its own cache and move/crop history.

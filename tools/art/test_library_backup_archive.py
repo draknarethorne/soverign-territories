@@ -145,6 +145,114 @@ class ArchiveTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "format"):
             self.pack(kind="stored")
 
+    def library_mode(self):
+        state = {key: getattr(archive, key) for key in (
+            "LIBRARY_ROOT", "MAX_FILES", "MAX_DIRS", "MAX_BYTES",
+            "MAX_METADATA", "MAX_ARCHIVE_BYTES")}
+        patch = mock.patch.multiple(archive, **state)
+        patch.start()
+        self.addCleanup(patch.stop)
+        archive.configure_library(self.work)
+        self.bundle = self.work / "_backup" / "_packed" / "fixture"
+
+    def proofs(self):
+        self.pack()
+        materialized, recovered = self.root / "materialized", self.root / "recovered"
+        archive.restore(self.bundle, materialized, apply=True)
+        backup.restore_backup(materialized, recovered, apply=True)
+        return materialized, recovered
+
+    def test_library_large_profile_durable_roundtrip_and_explicit_prune(self):
+        # Older production manifests have exclude_backup, without newer optional fields.
+        path = self.snapshot / "manifest.json"
+        manifest = json.loads(path.read_bytes())
+        for row in manifest["sources"]:
+            row["exclude_backup"] = row.pop("exclude_library_storage")
+        for key in ("regenerable", "generatedReports", "configurationReceipt"):
+            manifest.pop(key, None)
+        path.write_text(json.dumps(manifest), encoding="utf-8")
+        latest = backup.create_backup(self.work, stamp="zz-latest", apply=True)
+        latest_hash = archive.file_hash(latest / "manifest.json")
+        self.library_mode()
+        materialized, recovered = self.proofs()
+        before = archive.inventory(self.snapshot)
+        archive.prune_source(self.snapshot, self.bundle, materialized, recovered)
+        self.assertEqual(archive.inventory(self.snapshot), before)
+        archive.prune_source(self.snapshot, self.bundle, materialized, recovered, apply=True)
+        self.assertFalse(self.snapshot.exists())
+        self.assertFalse(pathlib.Path(str(self.snapshot) + ".retiring").exists())
+        self.assertEqual(archive.file_hash(latest / "manifest.json"), latest_hash)
+        self.assertEqual(archive.inventory(materialized), before)
+        archive.check_bundle(self.bundle)
+        # Completed checks remain independent after disposable recovery proof removal.
+        shutil.rmtree(materialized)
+        shutil.rmtree(recovered)
+        result = archive.prune_source(self.snapshot, self.bundle, materialized, recovered)
+        self.assertEqual(result["status"], "complete")
+        self.assertTrue(result["permanentDeletionExplicit"])
+
+    def test_library_prune_refuses_only_or_latest_snapshot(self):
+        self.library_mode()
+        materialized, recovered = self.proofs()
+        with self.assertRaisesRegex(ValueError, "newest or sole"):
+            archive.prune_source(self.snapshot, self.bundle, materialized, recovered, apply=True)
+        self.assertTrue(self.snapshot.exists())
+
+    def test_library_prune_refuses_live_reference_and_bad_recovery(self):
+        backup.create_backup(self.work, stamp="zz-latest", apply=True)
+        self.library_mode()
+        materialized, recovered = self.proofs()
+        reference = self.work / "_actions" / "active.json"
+        reference.parent.mkdir()
+        reference.write_text(json.dumps({"backup": str(self.snapshot)}), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "live metadata reference"):
+            archive.prune_source(self.snapshot, self.bundle, materialized, recovered, apply=True)
+        reference.unlink()
+        (recovered / "work-root" / "notes.json").write_bytes(b"bad")
+        with self.assertRaisesRegex(ValueError, "recovered bytes"):
+            archive.prune_source(self.snapshot, self.bundle, materialized, recovered, apply=True)
+        self.assertTrue(self.snapshot.exists())
+
+    def test_library_profile_does_not_authorize_active_sources_or_arbitrary_outputs(self):
+        self.library_mode()
+        with self.assertRaisesRegex(ValueError, "direct library"):
+            archive.pack(self.work, self.bundle, apply=True)
+        with self.assertRaisesRegex(ValueError, "tmp"):
+            archive.output_path(backup.ROOT / "data" / "gallery" / "oops")
+        for value in ("relative", self.root):
+            with self.assertRaises(ValueError):
+                archive.configure_library(value)
+
+    def test_interrupted_permanent_prune_resumes_only_indexed_remaining_files(self):
+        backup.create_backup(self.work, stamp="zz-latest", apply=True)
+        self.library_mode()
+        materialized, recovered = self.proofs()
+        unlink = pathlib.Path.unlink
+        failed = False
+
+        def interrupt(path, *args, **kwargs):
+            nonlocal failed
+            if ".retiring" in str(path) and not failed:
+                failed = True
+                unlink(path, *args, **kwargs)
+                raise OSError("injected partial deletion")
+            return unlink(path, *args, **kwargs)
+
+        with mock.patch.object(pathlib.Path, "unlink", interrupt):
+            with self.assertRaisesRegex(OSError, "partial deletion"):
+                archive.prune_source(self.snapshot, self.bundle, materialized, recovered, apply=True)
+        retiring = pathlib.Path(str(self.snapshot) + ".retiring")
+        self.assertTrue(retiring.exists())
+        extra = retiring / "unexpected.txt"
+        extra.write_bytes(b"do not delete")
+        with self.assertRaisesRegex(ValueError, "unexpected"):
+            archive.prune_source(self.snapshot, self.bundle, materialized, recovered, apply=True)
+        self.assertEqual(extra.read_bytes(), b"do not delete")
+        extra.unlink()
+        archive.prune_source(self.snapshot, self.bundle, materialized, recovered, apply=True)
+        self.assertFalse(retiring.exists())
+        archive.check_bundle(self.bundle)
+
     def test_stored_control_and_hybrid_images(self):
         self.pack()
         receipt, index = archive.check_bundle(self.bundle)
@@ -215,6 +323,11 @@ class ArchiveTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "mismatch"):
             self.pack()
         self.assert_no_stage()
+
+    def test_unreadable_directory_is_an_error_not_an_incomplete_inventory(self):
+        with mock.patch.object(archive.os, "scandir", side_effect=PermissionError("denied directory")):
+            with self.assertRaisesRegex(PermissionError, "denied directory"):
+                archive.inventory(self.snapshot)
 
     def test_source_mutation_refuses_atomic_publication(self):
         real = archive.build_zip

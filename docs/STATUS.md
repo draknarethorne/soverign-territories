@@ -4,6 +4,21 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Oct 31 late backup cleanup:** the user explicitly authorizes actual sandbox
+and production backup pruning after verification. S31 now owns the legacy
+content audit, exact large-library packing/recovery and explicit retirement
+receipts. Keep active sources, the newest production directory snapshot and
+the sole sandbox FULL snapshot. Actual synthetic current/legacy NTFS recycle,
+Bin identity/content checks and Shell undelete passed. B: is exFAT, so that
+guarded NTFS API cannot recycle its backups; permanent pruning is a separate
+explicit operation, never a fallback. The first actual production archive
+preview refused a manifest/payload mismatch; hold it pending content audit.
+The completed audit verifies Oct 19 and Oct 20 exactly. Oct 14 has 2,920 missing
+files and seven changed payloads and stays held; do not conceal this by rewriting
+its manifest. Oct 19 is being losslessly packed before actual recovery proof.
+No production backup has been removed. The active queue now exposes S27/S31/
+S29/S30 instead of hiding the newly requested acceptance work.
+
 **Oct 31 evening replay blocker:** all 3,072 intake outcomes completed in
 11,294.13 seconds. The exact comparison stopped before matching: 50 sources
 have differing artifacts, including 27 selected natives and 17 selected
