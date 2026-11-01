@@ -67,8 +67,15 @@ cold-recovery bottleneck: path-order restoration requested 5,210 backward seeks
 and re-read 759 duplicate payloads. Independent checks and materialization now
 follow physical digest order; extraction reads each payload once and copies
 aliases locally. Exact alias/mtime and physical-read-order regressions pass.
-An actual same-bundle ordered restore remains required before claiming a
-wall-time improvement. This does not justify packing on the hot path.
+The actual same-bundle ordered restore passed exact membership, byte, mtime
+and ordinary snapshot verification after the original directory was gone.
+Apply took **307.43 seconds**, compared with the earlier 629.68 seconds;
+preview took 310.53 seconds versus 287.41 seconds. Shared load/cache state
+confounds a causal speedup claim, but the verified algorithm removes all
+5,210 backward payload seeks and 759 repeated archived-payload reads.
+Its 5,839,370,178-byte disposable proof was removed after verification.
+`ordered-restore-proof.json` preserves the measurements and log hashes.
+This does not justify packing on the hot path.
 
 - [ ] **P1 ai** S31 Audit actual legacy backups; preserve unique bytes, repair
   only from verified evidence, pack and restore eligible older snapshots, then
