@@ -384,7 +384,7 @@ def checked_archive(path, expected_index_hash, kind):
         if {m.filename for m in members} != {"snapshot.json", *(
                 "payload/" + digest for digest in groups)}:
             raise ValueError("archive membership mismatch")
-        for digest, rows in groups.items():
+        for digest, rows in sorted(groups.items()):
             info = archive.getinfo("payload/" + digest)
             compressed = kind == "hybrid" and all(
                 pathlib.PurePosixPath(row["path"]).suffix.lower() in TEXT for row in rows)
@@ -530,12 +530,21 @@ def restore(bundle, destination, *, apply=False):
     try:
         for row in index["directories"]:
             (stage / row["path"]).mkdir(parents=True, exist_ok=True)
+        groups = {}
+        for row in index["files"]:
+            groups.setdefault(row["sha256"], []).append(row)
         with zipfile.ZipFile(guarded(source / "payload.zip")) as archive:
-            for row in index["files"]:
-                path = guarded(stage / row["path"])
-                with archive.open("payload/" + row["sha256"]) as src, path.open("xb") as dst:
-                    copy_payload(src, dst, row["size"])
-                os.utime(path, ns=(row["mtimeNs"], row["mtimeNs"]))
+            # Match physical member order; read each unique payload only once.
+            for digest, rows in sorted(groups.items()):
+                first = guarded(stage / rows[0]["path"])
+                with archive.open("payload/" + digest) as src, first.open("xb") as dst:
+                    copy_payload(src, dst, rows[0]["size"])
+                for row in rows:
+                    path = guarded(stage / row["path"])
+                    if path != first:
+                        with first.open("rb") as src, path.open("xb") as dst:
+                            copy_payload(src, dst, row["size"])
+                    os.utime(path, ns=(row["mtimeNs"], row["mtimeNs"]))
         for row in sorted(index["directories"], key=lambda r: r["path"].count("/"), reverse=True):
             os.utime(stage / row["path"], ns=(row["mtimeNs"], row["mtimeNs"]))
         os.utime(stage, ns=(index["rootMtimeNs"], index["rootMtimeNs"]))

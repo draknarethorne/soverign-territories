@@ -509,6 +509,12 @@ The sibling `OLD_NAME-retirement.json` records the source's retirement and
 retained bundle. Do not edit historical snapshot manifests to hide missing data.
 Manifest mismatches or unreadable bytes hold a backup for investigation.
 
+Independent payload checks and materialization follow the archive's physical
+digest order. Materialization reads each distinct archived payload once, then
+copies aliases locally and restores their individual mtimes. This avoids
+thousands of backward archive seeks without changing hashes, memberships or
+recovery requirements. Final snapshot/source/archive checks are not skipped.
+
 The separate `bin\backup-retire.cmd` tests current/legacy **synthetic** fixtures
 below ignored `tmp\retire-proof` on local NTFS: preview, recycle, raw Bin identity
 and content check, then actual Shell undelete. It refuses production paths,

@@ -132,6 +132,43 @@ class ArchiveTests(unittest.TestCase):
         self.assertEqual(json.loads((recovered / "work-root" / "_reports" / "artists" /
                                     "gallery-manifest.json").read_bytes()), report_manifest)
 
+    def test_materialize_reads_unique_archive_payloads_once_in_physical_order(self):
+        self.pack()
+        _, index = archive.check_bundle(self.bundle)
+        reads = []
+        copy_payload = archive.copy_payload
+
+        def capture(src, dst, size):
+            if isinstance(src, zipfile.ZipExtFile):
+                reads.append(src.name)
+            return copy_payload(src, dst, size)
+
+        with mock.patch.object(archive, "copy_payload", side_effect=capture):
+            restored = archive.restore(self.bundle, self.root / "ordered-materialized", apply=True)
+        self.assertEqual(reads, ["payload/" + digest for digest in sorted({
+            row["sha256"] for row in index["files"]})])
+        self.assertLess(len(reads), len(index["files"]))
+        self.assertEqual(archive.inventory(restored), index)
+
+    def test_independent_check_reads_payloads_in_physical_order(self):
+        receipt = self.pack()
+        _, index = archive.check_bundle(self.bundle)
+        reads = []
+        real_open = zipfile.ZipFile.open
+
+        def capture(packed, member, *args, **kwargs):
+            reads.append(member.filename if isinstance(member, zipfile.ZipInfo) else member)
+            return real_open(packed, member, *args, **kwargs)
+
+        with mock.patch.object(zipfile.ZipFile, "open", capture):
+            archive.checked_archive(self.bundle / "payload.zip", receipt["indexSha256"], receipt["format"])
+        manifest = next(row for row in index["files"] if row["path"] == "manifest.json")
+        self.assertEqual(reads, [
+            "snapshot.json",
+            *["payload/" + digest for digest in sorted({row["sha256"] for row in index["files"]})],
+            "payload/" + manifest["sha256"],
+        ])
+
     def test_preview_and_idempotent_repeat(self):
         original = archive.inventory(self.snapshot)
         archive.pack(self.snapshot, self.bundle)

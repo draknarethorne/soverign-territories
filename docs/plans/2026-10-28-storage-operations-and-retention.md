@@ -45,6 +45,16 @@ invalid-argument reads and a WinError 1450 resource refusal occurred during earl
 audits; bounded, logged read retries completed the final audit with no unreadable
 files. No operating-system/volume repair or inferred manifest repair was attempted.
 
+The real Oct 19 archive published and independently checked: 5,228,258,010 ZIP
+bytes, retaining all 10,440 file roles and 9,681 distinct payloads. Its first
+exact snapshot materialization took 629.68 seconds. That revealed a concrete
+cold-recovery bottleneck: path-order restoration requested 5,210 backward seeks
+and re-read 759 duplicate payloads. Independent checks and materialization now
+follow physical digest order; extraction reads each payload once and copies
+aliases locally. Exact alias/mtime and physical-read-order regressions pass.
+An actual same-bundle ordered restore remains required before claiming a
+wall-time improvement. This does not justify packing on the hot path.
+
 - [ ] **P1 ai** S31 Audit actual legacy backups; preserve unique bytes, repair
   only from verified evidence, pack and restore eligible older snapshots, then
   explicitly retire redundant directories. Measure source/bundle/file counts
