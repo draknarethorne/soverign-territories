@@ -119,6 +119,14 @@ six-thread replay remains unchanged and blocked. Wire a reproducible supported
 runtime before another full replay; do not splice diagnostic or baseline bytes
 into the completed report or waive its strict gate.
 
+A fresh supported replay now runs under `tmp\r4`, preserving all `tmp\r3`
+failure evidence. It requires the measured three-worker/four-thread split on
+this 12-thread host and records that runtime in its receipt. Preview verified
+all 3,072 original inputs (529,913,669 bytes), source policy and inherited
+catalogue; 18 replay regressions pass. Apply is running the full workflow,
+including strict role/route gates before installation, full hot backups,
+ordinary recovery and actual viewers. This is running, not accepted evidence.
+
 The selected storage default for **fresh v23 preparation and sandbox rebase**
 is now LEAN: unchanged processing, exact-byte role reuse and selected-only
 padding. Explicit FULL remains available. Saved and interrupted FULL/LEAN

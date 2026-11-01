@@ -529,7 +529,7 @@ Never report recycled bytes as freed disk space; no whole-Bin emptying is provid
 `bin\rebase-replay.cmd --dry-run` verifies the retained applied FULL baseline,
 its complete original input set, cast policy and inherited curation without
 running models. `--apply` creates a **new isolated** LEAN sandbox under ignored
-`tmp\r3`, then measures preparation, fresh matching, installation/check,
+`tmp\r4`, then measures preparation, fresh matching, installation/check,
 backup and materialized recovery. `--check` verifies completed evidence.
 The installed FULL baseline is never replanned or overwritten.
 Hot replay backups explicitly use full directory scope: omission's
@@ -540,6 +540,14 @@ The first full replay completed 3,072 intake outcomes but stopped at the
 exact comparison on 50 sources; it has not passed matching, installation
 or full-scale recovery. Numerical inference variation remains unproven.
 Keep the gate and inspect the saved blocker before another full intake.
+
+The original `tmp\r3` failed replay remains unchanged. Controlled repeats of
+all 50 affected sources now reproduce exact baseline role hashes at four threads;
+paired FULL/LEAN tests isolate the differing six-thread runtime. The fresh
+replay therefore requires three workers/four threads each on this 12-thread host,
+sets the serial model-thread environment to four, and records the runtime in its
+receipt. A different host/worker budget refuses instead of assuming byte parity.
+No baseline/diagnostic image is copied into the new preparation report.
 
 Equality gates compare all common native/preview/selected-padding roles,
 recommendations and general matching destinations before installation.

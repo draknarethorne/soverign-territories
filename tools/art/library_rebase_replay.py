@@ -29,7 +29,7 @@ from likeness_library.policy import effective_settings
 BASELINE = pathlib.Path(
     r"B:\Sovereign Territories Sandbox\Working\_sandbox-state\fresh-v23-20261029"
 )
-OUT = ROOT / "tmp" / "r3"
+OUT = ROOT / "tmp" / "r4"
 EXPECTED = {
     "run": "b08cfb0d5346297ed88bee836d77b91ed719eb7c3ed7adcb77ae7ca1450c50bf",
     "catalog": "9293fce4863cfdb2264cf48c6e06b8ef5bcb002538ef4a1d265eb53413a6efaa",
@@ -76,13 +76,13 @@ def output_path(value):
         raise ValueError("output must be an absolute path without traversal")
     prep.safe_path(ROOT, path)
     if path != OUT and OUT not in path.parents:
-        raise ValueError("replay output must be tmp\\r3 or a named directory beneath it")
+        raise ValueError("replay output must be tmp\\r4 or a named directory beneath it")
     if subprocess.run(["git", "check-ignore", str(path)], cwd=ROOT,
                       capture_output=True).returncode:
         raise ValueError("replay output must be git-ignored")
     evidence = path / "Sovereign Territories Sandbox" / "Working" / "_likeness" / "general" / "face-evidence"
     if os.name == "nt" and len(str(evidence / ("a" * 64 + "-" + "b" * 64 + ".png"))) >= 260:
-        raise ValueError("output is too long for OpenCV evidence; use tmp\\r3")
+        raise ValueError("output is too long for OpenCV evidence; use tmp\\r4")
     return path
 
 
@@ -206,7 +206,15 @@ def environment(out, working):
     env["SOVEREIGN_TERRITORIES_SANDBOX_WORKING_ROOT"] = str(working)
     env["SOVEREIGN_TERRITORIES_PRODUCTION_ROOT"] = str(out / "Sovereign Territories")
     env["SOVEREIGN_TERRITORIES_INPUTS_ROOT"] = str(out / "empty-inputs")
+    env["ST_INTAKE_THREADS"] = "4"
     return env
+
+
+def reproducible_runtime(workers):
+    cores = os.cpu_count() or 1
+    if workers != 3 or cores // workers != 4:
+        raise ValueError("verified replay requires three workers with four threads each on this 12-thread host")
+    return {"workers": workers, "logicalProcessors": cores, "threadsPerWorker": 4}
 
 
 def setup(out, state, rows, baseline):
@@ -571,6 +579,7 @@ def write_summary(out, state):
 
 
 def apply(out, baseline, workers):
+    runtime = reproducible_runtime(workers)
     original, rows, protected, baseline_backup = inspect_baseline(baseline)
     if out.exists() and (out / RECEIPT).is_file():
         state = load(out / RECEIPT)
@@ -580,6 +589,8 @@ def apply(out, baseline, workers):
             raise ValueError("existing replay belongs to a different baseline/output")
         if state.get("schemaVersion") != 1:
             raise ValueError("unsupported replay receipt schema")
+        if state.get("preparationRuntime") != runtime:
+            raise ValueError("saved replay runtime differs; preserve it and use a new isolated output")
         if state.get("status") == "complete":
             return check(out)
         if state["workers"] != workers:
@@ -592,6 +603,7 @@ def apply(out, baseline, workers):
         state = {
             "schemaVersion": 1, "status": "incomplete", "baseline": str(baseline), "out": str(out),
             "baselineWorking": original["workingRoot"], "policy": original["policy"], "workers": workers,
+            "preparationRuntime": runtime,
             "inputs": rows, "protected": protected, "stages": {}, "attempts": [],
             "baselineInstalledInventory": categories(pathlib.Path(original["workingRoot"])),
             "baselineSourceInventory": inventory(pathlib.Path(original["workingRoot"]).parent / "Source"),
@@ -699,7 +711,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--baseline", type=pathlib.Path, default=BASELINE)
     parser.add_argument("--out", type=pathlib.Path, default=OUT)
-    parser.add_argument("--workers", type=int, default=2)
+    parser.add_argument("--workers", type=int, default=3)
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--dry-run", action="store_true")
     mode.add_argument("--apply", action="store_true")
@@ -712,6 +724,7 @@ def main(argv=None):
             raise ValueError("baseline must be an absolute path without traversal")
         if not 1 <= args.workers <= 3:
             raise ValueError("workers must be 1..3")
+        reproducible_runtime(args.workers)
         if args.check:
             check(out)
         elif args.apply:

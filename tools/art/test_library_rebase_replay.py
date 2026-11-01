@@ -21,7 +21,7 @@ class ReplayTests(unittest.TestCase):
 
     def test_output_is_bounded_to_named_ignored_scratch(self):
         self.assertEqual(replay.output_path(replay.OUT), replay.OUT)
-        for path in (replay.ROOT, replay.ROOT / "tmp", replay.ROOT / "tmp" / "r4",
+        for path in (replay.ROOT, replay.ROOT / "tmp", replay.ROOT / "tmp" / "r3",
                      replay.OUT / ".." / "outside", pathlib.Path("tmp\\r3")):
             with self.subTest(path=path), self.assertRaises(ValueError):
                 replay.output_path(path)
@@ -133,15 +133,17 @@ class ReplayTests(unittest.TestCase):
 
     def test_completed_apply_only_checks(self):
         state = {"schemaVersion": 1, "status": "complete", "baseline": str(self.root),
-                 "out": str(self.root), "inputs": []}
+                 "out": str(self.root), "inputs": [],
+                 "preparationRuntime": {"workers": 3, "logicalProcessors": 12, "threadsPerWorker": 4}}
         replay.write(self.root / replay.RECEIPT, state)
         state["protected"] = {}
         state["policy"] = {}
         replay.write(self.root / replay.RECEIPT, state)
         with mock.patch.object(replay, "inspect_baseline", return_value=({"policy": {}}, [], {}, None)), \
+                mock.patch.object(replay.os, "cpu_count", return_value=12), \
                 mock.patch.object(replay, "check", return_value=state) as checked, \
                 mock.patch.object(replay, "execute") as execute:
-            self.assertEqual(replay.apply(self.root, self.root, 2), state)
+            self.assertEqual(replay.apply(self.root, self.root, 3), state)
         checked.assert_called_once_with(self.root)
         execute.assert_not_called()
 
@@ -195,7 +197,8 @@ class ReplayTests(unittest.TestCase):
     def test_failed_intake_resume_uses_normal_launcher_ownership(self):
         state = {"schemaVersion": 1, "status": "incomplete", "baseline": str(self.root),
                  "out": str(self.root), "inputs": [], "protected": {}, "policy": {},
-                 "workers": 2, "setupComplete": True, "stages": {"inventory-preview": {}},
+                 "workers": 3, "preparationRuntime": {"workers": 3, "logicalProcessors": 12, "threadsPerWorker": 4},
+                 "setupComplete": True, "stages": {"inventory-preview": {}},
                  "attempts": [{"status": "failed"}]}
         replay.write(self.root / replay.RECEIPT, state)
         original = {"policy": {}}
@@ -207,11 +210,12 @@ class ReplayTests(unittest.TestCase):
                 raise RuntimeError("normal launcher owns mirror and resume")
 
         with mock.patch.object(replay, "inspect_baseline", return_value=(original, [], {}, None)), \
+                mock.patch.object(replay.os, "cpu_count", return_value=12), \
                 mock.patch.object(replay, "check_protected"), \
                 mock.patch.object(replay, "execute", side_effect=execute), \
                 mock.patch.object(replay.shutil, "copy2") as copy:
             with self.assertRaisesRegex(RuntimeError, "normal launcher"):
-                replay.apply(self.root, self.root, 2)
+                replay.apply(self.root, self.root, 3)
         label, command = commands[-1]
         self.assertEqual(label, "intake")
         self.assertEqual(command[0], "sandbox-rebase.cmd")
@@ -219,6 +223,16 @@ class ReplayTests(unittest.TestCase):
         copy.assert_not_called()
         working, source, run = replay.locations(self.root)
         self.assertFalse((run / "inputs").exists())
+
+    def test_runtime_requires_measured_four_thread_workers(self):
+        with mock.patch.object(replay.os, "cpu_count", return_value=12):
+            self.assertEqual(replay.reproducible_runtime(3)["threadsPerWorker"], 4)
+            for workers in (1, 2):
+                with self.assertRaisesRegex(ValueError, "four threads"):
+                    replay.reproducible_runtime(workers)
+        with mock.patch.object(replay.os, "cpu_count", return_value=16):
+            with self.assertRaises(ValueError):
+                replay.reproducible_runtime(3)
 
     def test_inventory_refuses_link_before_resolving_root(self):
         with mock.patch.object(replay.sandbox, "_is_reparse_point", return_value=True), \
