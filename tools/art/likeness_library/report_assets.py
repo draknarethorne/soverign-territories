@@ -3,6 +3,7 @@ import hashlib
 import json
 import os
 import pathlib
+import shutil
 import tempfile
 import time
 
@@ -13,17 +14,21 @@ RECIPE = "people-gallery-v1"
 PUBLISH_RETRY_DELAYS = (0.05, 0.1, 0.2, 0.4, 1, 2, 4, 8, 15)
 
 
-def _publish(operation, stage, target):
+def _retry_locked(action, target, operation, *args):
     for attempt, delay in enumerate((*PUBLISH_RETRY_DELAYS, None)):
         try:
-            operation(stage, target)
+            operation(*args)
             return
         except PermissionError:
             if delay is None:
                 raise
             if attempt == 0 or delay >= 1:
-                print(f"DIAGNOSTIC: temporary file lock publishing {target}; retrying in {delay}s", flush=True)
+                print(f"DIAGNOSTIC: temporary file lock {action} {target}; retrying in {delay}s", flush=True)
             time.sleep(delay)
+
+
+def _publish(operation, stage, target):
+    _retry_locked("publishing", target, operation, stage, target)
 
 
 def replace_file(stage, target):
@@ -33,6 +38,11 @@ def replace_file(stage, target):
 def rename_directory(stage, target):
     """Keep new-directory rename semantics while retrying temporary scanner locks."""
     _publish(os.rename, stage, target)
+
+
+def remove_tree(path):
+    """Delete scratch output whose freshly written files a scanner may still hold open."""
+    _retry_locked("removing", path, lambda: shutil.rmtree(path) if os.path.lexists(path) else None)
 
 
 def record(out, payloads):

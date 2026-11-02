@@ -32,7 +32,7 @@ import preparation_junk  # noqa: E402
 import screens  # noqa: E402
 import temporary_storage  # noqa: E402
 from intake_library import legacy, models, pipeline, reconstruction  # noqa: E402
-from likeness_library import gallery_chrome, metadata, sandbox  # noqa: E402
+from likeness_library import gallery_chrome, metadata, report_assets, sandbox  # noqa: E402
 
 CATEGORIES = ("Angels", "Sisters", "Models", "Prospects", "Potentials", "Artists", "Various")
 SCHEMA = ROOT / "data/art/_schema/image-preparation-pilot.schema.json"
@@ -1307,7 +1307,7 @@ def remove_worker_state(root, worker_dir, checkpoint_path):
         if path.is_symlink() or temporary_storage._is_reparse(path):
             raise ValueError(f"refusing to remove linked preparation recovery data: {path}")
         if path.is_dir():
-            shutil.rmtree(path)
+            report_assets.remove_tree(path)
         else:
             path.unlink()
 
@@ -1318,7 +1318,7 @@ def remove_worker_directory(root, worker_dir):
     safe_path(root, worker_dir)
     if worker_dir.is_symlink() or temporary_storage._is_reparse(worker_dir):
         raise ValueError(f"refusing to remove linked preparation recovery data: {worker_dir}")
-    shutil.rmtree(worker_dir)
+    report_assets.remove_tree(worker_dir)
 
 
 def load_worker_checkpoint(root, recovery, stage_artifacts, index, expected, binding):
@@ -1466,14 +1466,19 @@ def checkpointed_rows(root, recovery, stage, selected, input_rows, binding, base
             ): index
             for index in missing
         }
-        for future in concurrent.futures.as_completed(futures):
-            index = futures[future]
-            row = future.result()
-            report_worker(index, row)
-            done[index] = row
-            while following in done:
-                yield following, done.pop(following)
-                following += 1
+        try:
+            for future in concurrent.futures.as_completed(futures):
+                index = futures[future]
+                row = future.result()
+                report_worker(index, row)
+                done[index] = row
+                while following in done:
+                    yield following, done.pop(following)
+                    following += 1
+        except BaseException:
+            # Fail fast: running images still finish their checkpoints, queued ones are not started.
+            pool.shutdown(wait=True, cancel_futures=True)
+            raise
 
 
 def publish(root, output, selected, *, limit=0, source_folder=None, counts=None, workers=None, storage_mode="full"):

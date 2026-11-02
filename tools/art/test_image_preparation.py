@@ -1447,7 +1447,7 @@ class PreparationTests(unittest.TestCase):
         with mock.patch.object(report_assets.os, "rename", side_effect=PermissionError("persistent lock")) as rename, \
                 mock.patch.object(report_assets.time, "sleep"):
             self.assertEqual(self.call("--apply"), 1)
-        self.assertEqual(rename.call_count, 5)
+        self.assertEqual(rename.call_count, len(report_assets.PUBLISH_RETRY_DELAYS) + 1)
         self.assertIn("persistent lock", self.errors)
         self.assertFalse(self.output.exists())
         self.assertTrue(any((self.root / "_tmp").glob("prep-*/publish/manifest.json")))

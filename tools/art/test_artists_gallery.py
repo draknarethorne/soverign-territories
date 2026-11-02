@@ -230,6 +230,27 @@ class ArtistGalleryTests(unittest.TestCase):
         self.assertTrue((target / "inner").is_dir())
         self.assertEqual(sleep.call_count, 6)
 
+    def test_scratch_removal_retries_a_scanner_lock_then_deletes_the_tree(self):
+        scratch = self.root / "worker"
+        (scratch / "photos").mkdir(parents=True)
+        (scratch / "photos" / "page.html").write_text("x")
+        real_rmtree, failures = report_assets.shutil.rmtree, iter([PermissionError("locked")] * 2)
+
+        def flaky(path):
+            error = next(failures, None)
+            if error:
+                raise error
+            real_rmtree(path)
+
+        with mock.patch.object(report_assets.shutil, "rmtree", side_effect=flaky), \
+                mock.patch.object(report_assets.time, "sleep") as sleep, \
+                contextlib.redirect_stdout(io.StringIO()) as messages:
+            report_assets.remove_tree(scratch)
+        self.assertFalse(scratch.exists())
+        self.assertEqual(sleep.call_count, 2)
+        self.assertIn("temporary file lock removing", messages.getvalue())
+        report_assets.remove_tree(scratch)
+
 
 class SharedChromeTests(unittest.TestCase):
     def setUp(self):
