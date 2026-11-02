@@ -366,7 +366,9 @@ authorize FAST processing or migrate existing evidence.
   sample or streamed compare, and refusal when preview peak bytes/files exceed
   free space. Preview total files written/deleted, since hundreds of thousands
   of small-file creates/deletes through the security filter drove the Nov 2
-  stalls. Rerun S27 only after S32 and storage-health review.
+  stalls (confirmed: the same deletion with Acronis off took 210 s with no
+  stalls). Exclude replay scratch from Acronis before re-enabling it. Rerun S27
+  only after S32; the corrected `tmp\r4\n` replay was deleted on Nov 2.
 
 **S30 contract proof, not full-population acceptance:** 91 existing
 cast/core/name regressions passed, followed by 60 naming/action regressions

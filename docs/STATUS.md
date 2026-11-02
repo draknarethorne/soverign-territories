@@ -11,7 +11,10 @@ paused pending storage-health review. Sandbox retirement completed before
 reboot; old C: replay deletion was interrupted mid-first-child and must be
 reconciled, not blindly rerun. Detailed hardware counters were permission
 denied. The [Nov 2 incident handoff](recap/2026-11-02-0830-recap.md#post-reboot-safety-override---system-io-incident)
-supersedes the ordinary resume instructions below.
+supersedes the ordinary resume instructions below. Follow-up: with Acronis
+protection/backup off, deleting all of `tmp\r4` (including corrected `n`)
+took 210 s, freed 262 GB and logged no stalls, pointing at Acronis rather
+than SSD failure. S27 now needs a new replay designed under S32.
 
 **Nov 2 paused for ComfyUI:** corrected isolated `tmp\r4\n` completed
 installation, backup, ordinary recovery and report-only rebuilding. All
