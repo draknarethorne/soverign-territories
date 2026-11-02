@@ -15,6 +15,18 @@ resumption; applying lessons to existing workflows requires explicit
 before/after tests. This is future migration work, not permission to generate
 or rewrite all templates during the rebase pause.
 
+**Nov 2 experimental Deluxe drafts:** `prompts/_edit/deluxe` (six
+`0_edit_0d_deluxe_bare_*` pose variants) is committed as the user's
+experimental pose work. It is deliberately outside `prompts/_edit/female`, so
+P14's 31-file ledger and the migration do not include it; no tool reads it.
+
+- [ ] **P3 you** P18 Decide how experimental drafts such as
+  `prompts/_edit/deluxe` coexist with the pipeline: stay manual-only, become
+  an opt-in experimental workflow family that the generators never emit by
+  default, or promote individual reviewed variants into P14/P15. Holding until
+  the user chooses; until then the folder stays outside generation and
+  migration.
+
 ## Oct 27: source-faithful prompt reconciliation and Female test bed
 
 The user's complete 11:05 chat is preserved at the end of this plan.
@@ -534,3 +546,15 @@ Additionally, we should document any changes made during this integration proces
 This may happen in the future so we need to understand what our steps are to do this and ensure that our generation process isn't a complete mess after we do so.
 ````
 <!-- markdownlint-enable MD013 MD009 -->
+
+## Nov 2 chat direction (verbatim)
+
+Coverage: commit `prompts/_edit/deluxe` -> committed Nov 2; experimental
+poses kept separate and not for the entire pipeline -> the Nov 2 note
+(outside the P14 ledger and generation); how to handle them -> P18.
+
+<!-- markdownlint-disable MD013 -->
+````text
+You can commit the _edit/deluxe - they are more experimental with poses but I kept them separate from the other ones as they aren't really intended for the entire pipeline and only for more experimental work.  So we'll need to sort that out in how we can do that.
+````
+<!-- markdownlint-enable MD013 -->
