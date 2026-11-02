@@ -12,6 +12,12 @@ RECIPE = "people-gallery-v1"
 
 
 PUBLISH_RETRY_DELAYS = (0.05, 0.1, 0.2, 0.4, 1, 2, 4, 8, 15)
+# A file deleted while a scanner holds it stays pending, so its folder is briefly "not empty".
+TRANSIENT_WINERRORS = {145}
+
+
+def _is_transient_lock(error):
+    return isinstance(error, PermissionError) or getattr(error, "winerror", None) in TRANSIENT_WINERRORS
 
 
 def _retry_locked(action, target, operation, *args):
@@ -19,8 +25,8 @@ def _retry_locked(action, target, operation, *args):
         try:
             operation(*args)
             return
-        except PermissionError:
-            if delay is None:
+        except OSError as error:
+            if not _is_transient_lock(error) or delay is None:
                 raise
             if attempt == 0 or delay >= 1:
                 print(f"DIAGNOSTIC: temporary file lock {action} {target}; retrying in {delay}s", flush=True)

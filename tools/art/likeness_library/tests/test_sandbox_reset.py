@@ -401,6 +401,33 @@ class SandboxResetTests(unittest.TestCase):
         self.assertEqual((self.working / "_reports/reset-review-bundle/Angels/Keep/gallery_org/set2/original.jpg").read_bytes(),
                          b"unique incoming original")
 
+    def test_full_reset_leaves_artists_out_of_the_sandbox_unless_included(self):
+        for relative, contents in {
+            "Angels/Keep/gallery/keep.jpg": b"untouched source",
+            "Artists/Pierre/Zoe/gallery/zoe.jpg": b"artist photo",
+            "Artists/Pierre/gallery/loose.jpg": b"loose artist photo",
+        }.items():
+            path = self.production / pathlib.Path(relative)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(contents)
+        self._working_file("Artists/Pierre/Zoe/gallery/sandbox_only.jpg", b"sandbox artist edit")
+
+        result = full_reset_preview(self.working, self.production)
+
+        self.assertEqual(result["resetBlockers"], [])
+        self.assertEqual(result["currentProduction"]["excludedCategories"],
+                         {"Artists": {"fileCount": 2, "bytes": len(b"artist photo") + len(b"loose artist photo")}})
+        self.assertEqual(result["currentProduction"]["excludedStorageFileCount"], 0)
+        self.assertEqual(result["workingActiveFiles"], [], "sandbox Artists are not carried forward")
+
+        full_reset_apply(self.working, self.production)
+        self.assertFalse((self.working / "Artists").exists())
+        self.assertTrue((self.working / "Angels/Keep/gallery/keep.jpg").is_file())
+
+        included = full_reset_preview(self.working, self.production, include_artists=True)
+        self.assertEqual(included["currentProduction"]["excludedCategories"], {})
+        self.assertEqual(included["currentProduction"]["fileCount"], 3)
+
     def test_full_reset_apply_refuses_conflicts_without_changing_working(self):
         production_conflict = self.production / "Angels/Keep/gallery/keep.jpg"
         production_conflict.parent.mkdir(parents=True, exist_ok=True)

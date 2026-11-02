@@ -3,7 +3,7 @@
 **Status:** active (LY1 decided Nov 2: all five recommendations accepted; LY2,
 LY3 publication/undo and LY5 implemented and tested Nov 2)
 
-**Queue focus:** LY4, LY6
+**Queue focus:** LY4, LY6, LY8
 
 **Order:** LY2/LY3 (code + tests) -> LY5 -> LY4 clean sandbox reset and LEAN
 rebase on the new layout, timed with Acronis off -> storage S32/S27 acceptance
@@ -230,6 +230,19 @@ check passed afterwards.
   the carried bundle), run the clean LEAN rebase in place with per-step timings
   (Acronis off), verify Gallery/Overview/Review, then hand to storage S32/S27
   and retire the old sandbox snapshot and run state.
+  Progress Nov 2 (run `fresh-20261102`, Acronis off), timings in seconds:
+  reset preview 221, reset apply 314, `originals` migration 103, backup 83
+  (10,550 files, 6.56 GB), rebase dry run 47; intake of 3,093 images started
+  14:48 with 3 CPU-bound workers (about 17 images/min). Fixes found by the run:
+  the full reset no longer carries regenerable output (43,623 files, 32.2 GB)
+  or the 757 processed copies of production originals (`190c0e77f`), and
+  directory publishes retry scanner locks for up to about 30 s after a
+  repeatable `WinError 5` on the source-overlay rename (`deac77b52`). The first
+  intake then stopped ordering rows after image 759: removing a worker's
+  scratch folder hit the same scanner lock, and the process pool silently
+  drained all queued images before reporting. Scratch removal now retries and
+  a failed ordered publish cancels queued work (`0e50eb5f4`); the resumed run
+  recovered all 1,267 per-image checkpoints (T6 recovery confirmed live).
 - [x] **P2 ai** LY5 Group derivative folders (LY1-b) and update
   viewers and ComfyUI input sync; verify `sync-inputs` output names unchanged.
   Done Nov 2: names unchanged by construction; rename-only migration in
@@ -238,6 +251,20 @@ check passed afterwards.
   and `likeness.md` (layout and retained-storage text updated Nov 2) and add the
   fresh-sandbox step-by-step runbook, confirmed by the LY4 run; production
   adopts the layout at its first accepted install.
+- [x] **P1 ai** LY7 Leave Artists out of the sandbox: `sandbox-reset --full`
+  neither copies Production `Artists` nor carries sandbox Artists forward
+  (`--include-artists` opts back in), so they are never copied or prepared.
+  Done Nov 2 for the next fresh sandbox; the current `fresh-20261102` run
+  already prepared its 279 Artists images before the decision and matching
+  ignores them. The Production-side Artist scope stays with intake I74.
+- [ ] **P1 either** LY8 Production true-up before the first direct Production
+  clean rebase: inventory Production for the old in-person layout
+  (`gallery_944x1104`/`headshot_*`, `gallery_intake`, `gallery_org`,
+  `.photo-derivatives.json`), stale `_` directories and fragmented or
+  unnecessary files; decide per class (migrate by `originals`, move to
+  `_processing`, retire with a backup, or leave); write the runbook for
+  running directly in Production. Gate: the fresh sandbox run (LY4) accepted,
+  so the same classification rules are proven there first.
 
 ## User request (chat, verbatim)
 

@@ -20,6 +20,9 @@ RESET_CATEGORIES = ("Models", "Prospects", "Potentials")
 CHUNK_SIZE = 1024 * 1024
 FULL_RESET_STAGE_PREFIX = "full-reset-stage-"
 RESERVED_PRODUCTION_ROOTS = {"_archive"}
+# Photo categories a full reset leaves out of the sandbox unless asked (Nov 2:
+# Artists are processed separately later, never in the people sandbox).
+SANDBOX_EXCLUDED_CATEGORIES = ("Artists",)
 PRESERVED_PHOTO_STORAGE_ROOTS = {"junk", "retired"}
 # Generated per-person output a full reset rebuilds instead of carrying forward:
 # scaled/headshot/chest copies (former and grouped layout), their manifest and
@@ -303,7 +306,7 @@ def _configured_storage_paths(cfg, root):
     }
 
 
-def _full_reset_analysis(working_root, production_root=None, cfg=None, layout=None):
+def _full_reset_analysis(working_root, production_root=None, cfg=None, layout=None, *, include_artists=False):
     """Build the verified copy plan used by preview and full reset apply."""
     layout = validate_sandbox(working_root) if layout is None else layout
     working = layout["working_root"]
@@ -332,6 +335,8 @@ def _full_reset_analysis(working_root, production_root=None, cfg=None, layout=No
         for name, path in production_storage_paths.items()
         if name not in PRESERVED_PHOTO_STORAGE_ROOTS
     }
+    excluded_categories = () if include_artists else SANDBOX_EXCLUDED_CATEGORIES
+    excluded_category_roots = {(category,) for category in excluded_categories}
     (
         production_files,
         production_count,
@@ -341,12 +346,19 @@ def _full_reset_analysis(working_root, production_root=None, cfg=None, layout=No
     ) = _tree_inventory(
         production,
         hash_files=True,
-        excluded_roots=excluded_storage_roots,
+        excluded_roots=excluded_storage_roots | excluded_category_roots,
     )
+    excluded_category_totals = {}
+    for category in excluded_categories:
+        if (production / category).is_dir() and not _is_reparse_point(production / category):
+            _, count, size, _, _ = _tree_inventory(production / category, hash_files=False)
+            excluded_category_totals[category] = {"fileCount": count, "bytes": size}
+    excluded_production_count -= sum(item["fileCount"] for item in excluded_category_totals.values())
+    excluded_production_bytes -= sum(item["bytes"] for item in excluded_category_totals.values())
     working_files, working_count, working_bytes, _, _ = _tree_inventory(
         working, hash_files=False
     )
-    active_roots = set(cw.PHOTO_ROOTS)
+    active_roots = set(cw.PHOTO_ROOTS) - set(excluded_categories)
     active_working = {}
     active_production = {}
 
@@ -425,8 +437,12 @@ def _full_reset_analysis(working_root, production_root=None, cfg=None, layout=No
         },
         key=str.casefold,
     )
+    compared_source = {
+        relative for relative in source_files
+        if relative.split("/", 1)[0] not in excluded_categories
+    }
     production_added = sorted(set(production_files) - set(source_files), key=str.casefold)
-    production_removed = sorted(set(source_files) - set(production_files), key=str.casefold)
+    production_removed = sorted(compared_source - set(production_files), key=str.casefold)
     production_changed = sorted(
         (
             relative for relative in set(source_files) & set(production_files)
@@ -468,6 +484,7 @@ def _full_reset_analysis(working_root, production_root=None, cfg=None, layout=No
             ),
             "excludedStorageFileCount": excluded_production_count,
             "excludedStorageBytes": excluded_production_bytes,
+            "excludedCategories": excluded_category_totals,
             "fileCount": len(production_files),
             "totalBytes": sum(entry["bytes"] for entry in production_files.values()),
             "activeFileCount": len(active_production),
@@ -505,9 +522,11 @@ def _full_reset_analysis(working_root, production_root=None, cfg=None, layout=No
     }
 
 
-def full_reset_preview(working_root, production_root=None, cfg=None):
+def full_reset_preview(working_root, production_root=None, cfg=None, *, include_artists=False):
     """Compare current Production with Working and list active files needing carry-forward."""
-    result, _plan = _full_reset_analysis(working_root, production_root, cfg=cfg)
+    result, _plan = _full_reset_analysis(
+        working_root, production_root, cfg=cfg, include_artists=include_artists
+    )
     return result
 
 
@@ -676,6 +695,8 @@ def full_reset_apply(
     production_root=None,
     cfg=None,
     storage_receipt=None,
+    *,
+    include_artists=False,
 ):
     """Replace only sandbox Working with the verified current Production baseline."""
     cfg = cw.load_cfg() if cfg is None else cfg
@@ -706,7 +727,7 @@ def full_reset_apply(
     _require_empty_reset_temporary_root(temporary_root)
 
     result, plan = _full_reset_analysis(
-        working_root, production_root, cfg=cfg, layout=layout
+        working_root, production_root, cfg=cfg, layout=layout, include_artists=include_artists
     )
     if not result["resetReady"]:
         blockers = ", ".join(result["resetBlockers"])

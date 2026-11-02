@@ -24,7 +24,7 @@ Workspace likeness settings retain explicit anchors and workflow metadata.
   likeness diagnostics                one-pass calibration and active-person folder reports (CSV + Markdown)
   likeness policy                     validate and show the shared, versioned likeness policy
   likeness sandbox-reset              preview a reset of generated sandbox categories from its verified Source snapshot
-  likeness sandbox-reset --full       read-only Production comparison and exact full-Working reset boundary preview
+  likeness sandbox-reset --full       read-only Production comparison and exact full-Working reset boundary preview (Artists left out unless --include-artists)
   likeness audit-core [NAMES]         read-only core and low-score report, with tracked anchors/protection applied
   likeness alike                      pairs of people who look alike (angel against angel, angel against sister ...), most alike first
   likeness compare Angelica azaline   how alike two folders are, and the photos that match best
@@ -674,10 +674,12 @@ def cmd_sandbox_reset(args):
                 production_root=cw.production_root(cfg),
                 cfg=cfg,
                 storage_receipt=storage_receipt,
+                include_artists=getattr(args, "include_artists", False),
             )
         else:
             result = full_reset_preview(
-                args.root, production_root=cw.production_root(cfg), cfg=cfg
+                args.root, production_root=cw.production_root(cfg), cfg=cfg,
+                include_artists=getattr(args, "include_artists", False),
             )
             result["configurationReceipt"] = storage_receipt
         print(json.dumps(result, indent=2, ensure_ascii=True))
@@ -3415,6 +3417,7 @@ def main(argv=None, embedder=None, *, domain="general"):
     s = add("sandbox-reset", cmd_sandbox_reset)
     s.add_argument("--full", action="store_true", help="read-only current-Production and active-file carry-forward preview for the exact Working root")
     s.add_argument("--apply", action="store_true", help="restore only Models, Prospects, and Potentials from the verified Source snapshot; incompatible with --full")
+    s.add_argument("--include-artists", action="store_true", help="with --full: also copy Production Artists (left out of the sandbox by default)")
     s = add("policy", cmd_policy)
     s.add_argument("--policy", help="versioned policy JSON (default: data\\art\\likeness-engine-policy.json)")
     s = add("family-preview", cmd_family_preview, help="read-only direct family references, surname reuse and naming collisions")

@@ -251,6 +251,31 @@ class ArtistGalleryTests(unittest.TestCase):
         self.assertIn("temporary file lock removing", messages.getvalue())
         report_assets.remove_tree(scratch)
 
+    def test_scratch_removal_retries_a_pending_delete_but_not_other_errors(self):
+        scratch = self.root / "worker"
+        (scratch / "photos").mkdir(parents=True)
+        pending = OSError(41, "The directory is not empty")
+        pending.winerror = 145
+        real_rmtree, failures = report_assets.shutil.rmtree, iter([pending])
+
+        def flaky(path):
+            error = next(failures, None)
+            if error:
+                raise error
+            real_rmtree(path)
+
+        with mock.patch.object(report_assets.shutil, "rmtree", side_effect=flaky), \
+                mock.patch.object(report_assets.time, "sleep") as sleep, contextlib.redirect_stdout(io.StringIO()):
+            report_assets.remove_tree(scratch)
+        self.assertFalse(scratch.exists())
+        self.assertEqual(sleep.call_count, 1)
+
+        (scratch / "photos").mkdir(parents=True)
+        with mock.patch.object(report_assets.shutil, "rmtree", side_effect=OSError(28, "disk full")), \
+                mock.patch.object(report_assets.time, "sleep") as sleep, self.assertRaises(OSError):
+            report_assets.remove_tree(scratch)
+        sleep.assert_not_called()
+
 
 class SharedChromeTests(unittest.TestCase):
     def setUp(self):

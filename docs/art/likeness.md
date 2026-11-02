@@ -502,6 +502,10 @@ retained-set manifest names an original already in Production is
 `processed-copy-of-production-original`; a legacy `gallery_org` original not in
 Production goes to the review bundle (`review-bundle-original`), never back
 into the person folder. `carryForwardBytes` totals each class.
+Production `Artists` are left out of the sandbox (decided Nov 2: Artists are a
+separate later workflow), so they are neither copied nor prepared; sandbox
+Artists files are not carried forward. `currentProduction.excludedCategories`
+reports what was left out; `--include-artists` restores the old behaviour.
 Production, Source, and Working reparse points are refused.
 
 After reviewing a fresh preview with `resetReady: true`, add `--apply` to
@@ -538,7 +542,7 @@ off (or the library excluded) during the long steps. Production is only read.
 
 | # | Command (preview, then apply) | What it does | Copies in the sandbox afterwards |
 | --- | --- | --- | --- |
-| 1 | `bin\likeness.cmd --root W sandbox-reset --full`, then add `--apply` once `resetReady: true` | Replaces Working with a verified copy of production. Unique sandbox photos stay; unique metadata goes to `_reports\reset-review-bundle` | One copy of production: person `gallery`/`review` (plus former `gallery_944x1104`/`headshot_944x1104`), `_junk`, `_retired`, the bundle. Old sandbox backups, runs and reports are gone |
+| 1 | `bin\likeness.cmd --root W sandbox-reset --full`, then add `--apply` once `resetReady: true` | Replaces Working with a verified copy of production, without `Artists`. Unique sandbox photos stay; unique metadata goes to `_reports\reset-review-bundle` | One copy of production people: person `gallery`/`review` (plus former `gallery_944x1104`/`headshot_944x1104`), `_junk`, `_retired`, the bundle. Old sandbox backups, runs and reports are gone |
 | 2 | `bin\originals.cmd --root W --dry-run`, then without `--dry-run` | Moves the former scaled folders into `<person>\944x1104\{full,head,chest}` by rename and fills gaps. `--check` must say IN SYNC | Same bytes, new folders; no second copy |
 | 3 | `bin\library-backup.cmd --root W`, then `--apply` | Dated LEAN snapshot in `W\_backup` (derivatives omitted, regenerable) | Production photos twice: live and `_backup` |
 | 4 | `bin\sandbox-rebase.cmd W RUN --baseline working --dry-run` | Read-only inventory of the inputs | Unchanged |
@@ -1323,6 +1327,8 @@ Interpret the stages separately:
 | `Preparing N images with W worker process(es)` | Preparation workers have started on the frozen mirror. |
 | `Completed worker ... (input I)` | An image worker finished; completion can be out of input order. |
 | `Ordered report rows: K/N` | Those rows have been safely materialized in inventory order. It may lag completed workers while an earlier input is still running. |
+| `DIAGNOSTIC: temporary file lock ...; retrying` | Antivirus or the indexer still holds a freshly written file; publishes and scratch removal retry for about 30 s. Repeated lines across many images point at a scanner to exclude, not a code fault. |
+| Neither line advances for many minutes while workers burn CPU | Check the run's `inputs\_tmp\prep-*\checkpoints` count. Since Nov 2 a failed ordered publish cancels queued images and exits; rerunning the same run reuses every completed checkpoint. |
 | All workers/rows reported | Rendering is finished, but report verification and receipt publication may still be running. Do not start matching yet. |
 | Process exited and `intake.json` exists | Candidate completion only: run the launcher's read-only `--check` against the same root/run/baseline. Inspect assessment errors as well as hashes. |
 | Intake check passes | Review actual selected outputs and unresolved cleanup; then resume the same run without `--intake-only --apply` to create the matching preview. This is not permission to install it. |
