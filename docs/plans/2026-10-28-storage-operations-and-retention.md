@@ -6,6 +6,64 @@
 
 ## Oct 31 authorized backup cleanup
 
+### Nov 2 stat-only disk inventory and cleanup priority
+
+The user requested a quick explanation of temporary storage, sandbox
+`gallery_intake` and backups while ComfyUI work/final verification are paused.
+One metadata-only scan took 73.60 seconds for repository `tmp` and 23.61
+seconds for the B: sandbox, with zero skipped/error entries. No image content
+was opened/hashed and nothing was deleted. Figures are logical decimal GB,
+not allocated bytes or unique-payload measurements.
+
+| Non-overlapping scope | GB | Files | Meaning / clearance |
+| --- | ---: | ---: | --- |
+| Repository `tmp`, entire | 339.607 | 620,686 | Measured, not an unexplained loose-file cache |
+| Corrected replay `tmp\r4\n` | 168.737 | 310,920 | Keep while S27 final checker depends on its installed/backup/recovery trees |
+| Older replay `tmp\r4`, excluding child `n` | 168.744 | 309,607 | First retirement candidate; preserve failed-run/name/family/browser evidence and explicitly retire old checker dependencies first |
+| Backup-format experiments `tmp\b3` | 2.121 | 124 | Mostly eight retained exact archive bundles; not ordinary logs |
+| Loose files directly under `tmp` | 0.0042 | 35 | Includes protected handoff/raw notes; not the source of the storage problem |
+| B: sandbox, entire | 150.765 | 262,600 | Separate from C: temporary experiments |
+| B: sandbox `Working` | 145.097 | 253,618 | Contains active galleries plus run history and backup |
+| B: immutable `Source` | 5.571 | 8,845 | Protected source snapshot |
+
+Each replay contains approximately 26.457 GB of installed categories, a
+21.895-GB run, 70.783/70.784 GB of pre-install plus installed hot snapshots,
+and a 48.685-GB ordinary restored tree. These independent test copies explain
+the amplification; they are not all new image-processing outcomes. The
+corrected replay is nested beneath the failed replay: **never delete `tmp\r4`
+wholesale**, because it contains `n`. Only exact named old children can be
+selected after a retirement receipt and dependency review.
+
+B: Working uses 67.744 GB in `_sandbox-state`, 42.033 GB in its sole FULL
+backup, and 0.613 GB in `_reports`. The baseline run's major children are:
+27.722 GB input/preparation mirror, **26.924 GB abandoned staging** and
+4.540 GB reversible `previous` categories. The older r21 run is 7.818 GB.
+Abandoned staging and r21 are next eligibility-audit candidates, not proven
+redundancy; verify unique bytes, recovery records and readers before deletion.
+`previous` is undo state, not scratch. Keep the sole FULL backup.
+
+`gallery_intake` is destination-owned recipe evidence, not incoming photos:
+per-source manifest/detail plus retained alternative images/thumbnails and,
+in FULL, richer padded diagnostics. Detail pages and rollback/provenance
+checks read it. Direct active category owners account for **23.636 GB /
+34,103 files**; another 0.323 GB is under retired-photo owners. The baseline
+abandoned stage has a further 23.957 GB copy. Across the whole B: sandbox
+these total 47.916 GB, dominated by 46.878 GB of PNGs. Do not sum those roles
+on top of the enclosing sandbox totals. LEAN avoids exact-equal native/role
+copies and unselected padding, but still retains nonselected native
+alternatives. It does not automatically compact or prune previous FULL
+history, and COMPACT/COLLAGE do not replace exact rollback.
+
+S24/S25 remain the homes for closing this lifecycle gap: bounded disk-budget
+preview before another full rehearsal; one retained comparison plus one current
+replay, explicit failed/superseded-run retirement; backup and restored-proof
+retention separate from active evidence; preview/apply/check and a durable
+cleanup receipt. Do not automatically delete unknown folders, raw feedback,
+active galleries or the sole independent recovery by age or folder name.
+This inventory request does not resume model work or the heavy final checker.
+The stat-only receipt is `tmp\storage-audit-20261102.json`; a copy is published
+in the existing durable storage-experiment report.
+
 **Nov 2 pause:** corrected `tmp\r4\n` now reproduces all 273 installed
 name/history summaries exactly; independent cast/native/name audit and actual
 recovered browsers/history/details passed. S30's technical proof is saved;
@@ -1695,5 +1753,17 @@ task state, not a new permanent cross-repository preference.
 <!-- markdownlint-disable MD013 -->
 ````text
 I have comfyui running now, so maybe we should pause here and make a memory on where to result when I can free up memory.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 2 disk-usage request (chat, verbatim)
+
+Coverage: actual stat-only temporary/sandbox usage and `gallery_intake` role
+explanation -> the Nov 2 inventory above; dependency-gated candidate retirement,
+budget and cleanup lifecycle -> S24/S25. No source or proof was pruned.
+
+<!-- markdownlint-disable MD013 -->
+````text
+We need to quickly look at our tmp directory and what space we're actually using there - it's like 300GB of storage used right now.  Then we need to look at what gallery_intake is in the sandbox as well as space and backup for the sandbox to see what can be pruned.  We've blown up disk usage while testing and I'm not sure what everything is AND how we're going to keep things clean as we seem to have loose files hanging around.
 ````
 <!-- markdownlint-enable MD013 -->
