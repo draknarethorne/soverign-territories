@@ -179,7 +179,30 @@ Portable report stages rerun only report generation, not intake/matching.
 The replay now also rejects missing, empty or unverified history counts
 (2,793 People / 279 Artist). All 178 focused preparation/provenance/
 maintenance/replay/Overview tests pass. Actual portable-history regeneration
-and final browser/independent acceptance remain pending.
+passed actual browser inspection. Final independent acceptance remains pending.
+
+**Nov 1 name/history gate:** the added full-population installed audit rejected
+the image-only replay: FULL has 273 summaries, replay 181. Missing original
+inputs explain 21 cast and 71 Artist summaries, one changed Camaris filename
+and shortened generated histories in existing summaries. Original photo-role
+and route equality did not prove metadata equality. Replay setup copied only
+photos and the inherited catalogue, unlike FULL's source-overlay sidecars
+and existing Working histories. Keep this failure visible; do not copy final
+FULL summaries into an applied run, edit its receipts or waive the gate.
+
+The corrected setup verifies and records 261 original Source-overlay summaries
+and 265 pre-install Working summaries from the independently sealed original
+backup. Include Source metadata in the immutable manifest but not the 3,072
+photo count; preserve Working-only Artist history even without photo inputs.
+A read-only projection of the existing installer rules reproduces every
+expected installed summary path and hash (273/273). The actual launcher
+preview verifies original metadata, and 71 focused replay/maintenance/
+provenance regressions pass. The existing replay's `--check` now explicitly
+rejects metadata loss before expensive checks. A corrected fresh isolated
+replay, actual installation/name parity and ordinary recovery remain S27/S30
+requirements. Earlier 22.47% category savings are provisional: they include
+the metadata omission and unowned legacy derivatives, not an accepted pure
+LEAN saving. No production cutover or new pruning is authorized by this fix.
 
 The real full-population family preview ran read-only with an isolated cache:
 202 usable identities, 179 suggestions, 115 proposed names, 16 same-person

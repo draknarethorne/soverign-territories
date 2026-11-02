@@ -217,8 +217,66 @@ def reproducible_runtime(workers):
     return {"workers": workers, "logicalProcessors": cores, "threadsPerWorker": 4}
 
 
+def is_name_summary(relative):
+    parts = pathlib.PurePosixPath(relative).parts
+    return (bool(parts) and len(parts) == (5 if parts[0] == "Artists" else 4)
+            and parts[0] in prep.CATEGORIES and parts[-2] == "gallery"
+            and parts[-1].startswith("z_") and parts[-1].endswith(".txt"))
+
+
+def baseline_metadata(baseline, original, backup):
+    overlay = baseline / "source-overlay"
+    require_hash(overlay / "overlay.json", original["sourceOverlaySHA256"])
+    require_hash(backup / "manifest.json", EXPECTED["backup"])
+    result = {"source": [], "working": []}
+    for role, records, root in (
+            ("source", load(overlay / "overlay.json")["sidecars"], overlay),
+            ("working", load(backup / "manifest.json")["entries"], backup / "work-root")):
+        seen = set()
+        total_bytes = 0
+        for record in records:
+            if role == "source":
+                relative = record["path"]
+                if not is_name_summary(relative):
+                    raise ValueError(f"unexpected baseline identity sidecar: {relative}")
+            else:
+                parts = pathlib.PureWindowsPath(record["backup"]).parts
+                if not parts or parts[0] != "work-root":
+                    continue
+                relative = pathlib.PurePosixPath(*parts[1:]).as_posix()
+                if not is_name_summary(relative):
+                    continue
+            path = safe_path(root, relative)
+            if relative.casefold() in seen:
+                raise ValueError(f"duplicate baseline identity sidecar: {relative}")
+            seen.add(relative.casefold())
+            expected = record["sha256"]
+            require_hash(path, expected)
+            size = path.stat().st_size
+            if role == "working" and size != record["size"]:
+                raise ValueError(f"baseline identity sidecar size differs: {relative}")
+            result[role].append({"path": relative, "bytes": size, "sha256": expected})
+            total_bytes += size
+            if len(seen) > MAX_INPUTS or total_bytes > 16 * 1024**2:
+                raise ValueError("baseline identity sidecars exceed replay bounds")
+        result[role].sort(key=lambda row: row["path"])
+    return result
+
+
+def compare_name_summaries(expected, actual):
+    before = {key: value for key, value in expected.items() if is_name_summary(key)}
+    after = {key: value for key, value in actual.items() if is_name_summary(key)}
+    differences = [key for key in sorted(before.keys() | after.keys())
+                   if before.get(key) != after.get(key)]
+    return {"equal": not differences, "expectedFiles": len(before), "actualFiles": len(after),
+            "differingPaths": differences}
+
+
 def setup(out, state, rows, baseline):
     working, source, run = locations(out)
+    original = load(baseline / "run.json")
+    backup = pathlib.Path(state["baselineBackup"])
+    identity_metadata = baseline_metadata(baseline, original, backup)
     for root in (working, source, out / "empty-inputs"):
         root.mkdir(parents=True, exist_ok=True)
     for index, row in enumerate(rows, 1):
@@ -233,16 +291,27 @@ def setup(out, state, rows, baseline):
                 require_hash(target, row["sha256"])
         if index % 256 == 0:
             print(f"copy {index}/{len(rows)}", flush=True)
+    for role, original_root, target_root in (
+            ("source", baseline / "source-overlay", source),
+            ("working", backup / "work-root", working)):
+        for row in identity_metadata[role]:
+            original_path = safe_path(original_root, row["path"])
+            target = safe_path(target_root, row["path"])
+            if not target.exists():
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(original_path, target)
+            require_hash(target, row["sha256"])
     require_hash(metadata.CATALOG_PATH, EXPECTED["inherited"])
     catalog = working / ".likeness-library.json"
     if catalog.exists():
         require_hash(catalog, EXPECTED["inherited"])
     else:
         shutil.copy2(metadata.CATALOG_PATH, catalog)
+    source_rows = sorted(rows + identity_metadata["source"], key=lambda row: row["path"])
     manifest = {
         "schemaVersion": 1, "snapshotRoot": "Source", "workingRootAtCreation": "Working",
-        "sourceRoot": str(out / "Sovereign Territories"), "fileCount": len(rows),
-        "totalBytes": sum(row["bytes"] for row in rows), "files": rows,
+        "sourceRoot": str(out / "Sovereign Territories"), "fileCount": len(source_rows),
+        "totalBytes": sum(row["bytes"] for row in source_rows), "files": source_rows,
     }
     manifest_path = working.parent / "source-manifest.json"
     if manifest_path.exists() and load(manifest_path) != manifest:
@@ -257,6 +326,7 @@ def setup(out, state, rows, baseline):
     if not policy_path.exists():
         write(policy_path, state["policy"])
     state["sourceManifestSHA256"] = digest(manifest_path)
+    state["metadataInputs"] = identity_metadata
     state["setupComplete"] = True
     write(out / RECEIPT, state)
 
@@ -491,15 +561,20 @@ def check(out):
     state = load(out / RECEIPT)
     if state.get("schemaVersion") != 1 or state.get("status") != "complete" or state.get("out") != str(out):
         raise ValueError("replay is incomplete or belongs to another output")
+    names = compare_name_summaries(state["baselineInstalledInventory"], state["installedInventory"])
+    if not names["equal"] or names != state.get("nameHistoryComparison"):
+        raise ValueError("installed name/history parity is unverified; preserve this replay and use corrected setup")
     baseline = pathlib.Path(state["baseline"])
-    original, rows, protected, _ = inspect_baseline(baseline)
+    original, rows, protected, baseline_backup = inspect_baseline(baseline)
+    if baseline_metadata(baseline, original, baseline_backup) != state.get("metadataInputs"):
+        raise ValueError("persisted original identity metadata differs")
     if protected != state["protected"] or rows != state["inputs"] or len(rows) != 3072:
         raise ValueError("persisted baseline identity/input membership differs")
     check_protected(state)
     working, source, run = locations(out)
     sandbox.validate_sandbox(working)
     require_hash(working.parent / "source-manifest.json", state["sourceManifestSHA256"])
-    for row in rows:
+    for row in rows + state["metadataInputs"]["source"]:
         require_hash(safe_path(source, row["path"]), row["sha256"])
     expected = prep.verify(baseline / "inputs", baseline / "inputs" / "_reports" / "preparation" / "all")
     prepared = prep.verify(run / "inputs", run / "inputs" / "_reports" / "preparation" / "all")
@@ -541,7 +616,7 @@ def check(out):
     )
     if result.returncode:
         raise ValueError("independent installed --check failed: " + result.stdout[-8000:] + result.stderr[-8000:])
-    print("Verified: 3072 input roles, fresh matching, publication, backup, ordinary restore and viewers.", flush=True)
+    print("Verified: 3072 input roles, fresh matching, name/history parity, publication, backup, ordinary restore and viewers.", flush=True)
     return state
 
 
@@ -646,6 +721,8 @@ def apply(out, baseline, workers):
         }
         write(out / RECEIPT, state)
     working, source, run = locations(out)
+    if state.get("setupComplete") and "metadataInputs" not in state:
+        raise ValueError("image-only setup omitted identity metadata; preserve it and use a new isolated output")
     if not state.get("setupComplete"):
         setup(out, state, rows, baseline)
     env = environment(out, working)
@@ -688,6 +765,11 @@ def apply(out, baseline, workers):
         "artists": inventory(working / "_reports" / "artists"),
     }
     state["installedInventory"] = categories(working)
+    state["nameHistoryComparison"] = compare_name_summaries(
+        state["baselineInstalledInventory"], state["installedInventory"])
+    write(out / RECEIPT, state)
+    if not state["nameHistoryComparison"]["equal"]:
+        raise ValueError("installed name/history summaries differ; backup/recovery acceptance prohibited")
     state["runSHA256"] = digest(run / "run.json")
     snapshot = backup_stage(out, state, env, working, "installedBackup")
     state["backupManifestSHA256"] = digest(snapshot / "manifest.json")
@@ -757,10 +839,13 @@ def main(argv=None):
         elif args.apply:
             apply(out, baseline, args.workers)
         else:
-            original, rows, _, _ = inspect_baseline(baseline)
+            original, rows, _, baseline_backup = inspect_baseline(baseline)
+            identity_metadata = baseline_metadata(baseline, original, baseline_backup)
             print(f"Preview: {len(rows)} exact inputs, {sum(row['bytes'] for row in rows):,} bytes; "
                   f"{len(original['photos'])} general matches, core seeds, inherited catalogue verified.")
             print(f"New LEAN default, fresh embedding cache; isolated output: {out}")
+            print(f"Preserve {len(identity_metadata['source'])} Source and "
+                  f"{len(identity_metadata['working'])} pre-install Working identity-name summaries.")
             print("Compare all original/native/preview/selected-padding roles and routing BEFORE installation.")
             print("Then FULL hot backup, install/check, viewers, FULL installed hot backup, ordinary restore/viewer rebuild.")
             print("No files written; no models, matching or preparation started.")

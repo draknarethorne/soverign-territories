@@ -4,7 +4,22 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
-**Nov 1 live replay:** controlled repeats proved a thread-count dependency,
+**Nov 1 latest acceptance blocker:** recovered Overview/Review/detail and
+2,793 People / 279 Artist history rows passed actual browser inspection.
+The additional name/history audit correctly rejected the image-only replay:
+181 installed summaries versus FULL's 273, including missing cast/Artist
+history and shortened generated summaries. Setup copied original photos but
+omitted original non-image identity provenance. The correction carries 261
+sealed Source-overlay summaries and 265 original pre-install Working summaries,
+not final FULL output fixtures. A read-only installer-rule projection reproduces
+all 273 expected summary paths/hashes, and 71 focused regressions pass.
+The launcher preview verified those input counts without starting models.
+The existing replay is preserved and its new `--check` explicitly refuses
+name/history acceptance. S27/S30 and final savings remain unaccepted until
+a corrected isolated replay passes installation, metadata and recovery gates.
+No plan qualifies for archival; the Nov 1 recap and plan index record why.
+
+**Earlier Nov 1 replay:** controlled repeats proved a thread-count dependency,
 not a FULL/LEAN storage difference. All 50 previously differing sources match
 the frozen role hashes at four threads. The fresh supported `tmp\r4` replay
 records three workers/four threads each on this 12-thread host; its complete

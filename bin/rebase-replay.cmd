@@ -1,6 +1,6 @@
 @echo off
 setlocal
-rem Preserved FULL baseline -> isolated tmp\r3 LEAN replay. Default/--dry-run writes nothing.
+rem Preserved FULL baseline -> isolated tmp\r4 LEAN replay. Default/--dry-run writes nothing.
 rem --apply resumes stages; completed --apply verifies instead of reprocessing. --check is independent.
 call "%~dp0_env.cmd"
 call "%~dp0_test-env.cmd"

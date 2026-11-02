@@ -550,6 +550,18 @@ sets the serial model-thread environment to four, and records the runtime in its
 receipt. A different host/worker budget refuses instead of assuming byte parity.
 No baseline/diagnostic image is copied into the new preparation report.
 
+Replay setup must preserve non-image identity provenance too. The frozen
+source-overlay receipt supplies exact Source `z_*.txt` name/history inputs;
+the independently sealed pre-install backup supplies pre-existing Working
+summaries, including cast and Artist folders without current photo inputs.
+These roles are recorded separately. Source summaries join the immutable
+source manifest, not the preparation input count. Installation must reproduce
+all frozen installed summary paths and hashes before backup/recovery acceptance.
+The image-only `tmp\r4` replay failed this gate (181 versus 273 summaries);
+keep its evidence unchanged, rather than copying final FULL summaries into
+an applied run or weakening the check. A corrected replay uses a fresh named
+output under `tmp\r4` and original pre-run metadata, not final output fixtures.
+
 Recovery rebuilds People Overview/Review/history with
 `people-gallery.cmd --reports-only --apply`, not ordinary housekeeping.
 Preview first with `--reports-only --dry-run`; `--reports-only --check` checks

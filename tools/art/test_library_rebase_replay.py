@@ -19,6 +19,35 @@ class ReplayTests(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree(replay.library_backup._snapshot_path(self.root))
 
+    def metadata_fixture(self, baseline):
+        overlay = baseline / "source-overlay"
+        backup = self.root / "backup"
+        overlay.mkdir(parents=True)
+        backup.mkdir()
+        sidecars, entries = [], []
+        for relative in (
+                "Sisters/Drakniss/gallery/z_original_name.txt",
+                "Prospects/Camaris/gallery/z_camaris_bloom.txt",
+                "Artists/Pierre/Zoe/gallery/z_zoe.txt"):
+            for root in (overlay, backup / "work-root"):
+                path = root / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(b"name: Original Name\nPreserved history\n")
+            sidecars.append({"path": relative, "sha256": replay.digest(overlay / relative)})
+            entries.append({"backup": "work-root\\" + relative.replace("/", "\\"),
+                            "size": (overlay / relative).stat().st_size,
+                            "sha256": replay.digest(overlay / relative)})
+        empty_artist = backup / "work-root" / "Artists/Pierre/Empty/gallery/z_empty.txt"
+        empty_artist.parent.mkdir(parents=True)
+        empty_artist.write_bytes(b"name: Empty Artist\nOriginal history without current photos\n")
+        entries.append({"backup": str(empty_artist.relative_to(backup)),
+                        "size": empty_artist.stat().st_size, "sha256": replay.digest(empty_artist)})
+        replay.write(overlay / "overlay.json", {"sidecars": sidecars})
+        replay.write(backup / "manifest.json", {"entries": entries})
+        original = {"sourceOverlaySHA256": replay.digest(overlay / "overlay.json")}
+        replay.write(baseline / "run.json", original)
+        return backup, original
+
     def test_output_is_bounded_to_named_ignored_scratch(self):
         self.assertEqual(replay.output_path(replay.OUT), replay.OUT)
         for path in (replay.ROOT, replay.ROOT / "tmp", replay.ROOT / "tmp" / "r3",
@@ -176,16 +205,76 @@ class ReplayTests(unittest.TestCase):
         catalogue = self.root / "inherited.json"
         catalogue.write_bytes(b'{"schemaVersion":1,"people":{},"photos":{},"actions":[]}')
         out = self.root / "copy"
+        backup, _ = self.metadata_fixture(baseline)
+        state = {"policy": {}, "baselineBackup": str(backup)}
         with mock.patch.object(replay.metadata, "CATALOG_PATH", catalogue), \
-                mock.patch.dict(replay.EXPECTED, {"inherited": replay.digest(catalogue)}):
-            replay.setup(out, {"policy": {}}, rows, baseline)
+                mock.patch.dict(replay.EXPECTED, {"inherited": replay.digest(catalogue),
+                                                 "backup": replay.digest(backup / "manifest.json")}):
+            replay.setup(out, state, rows, baseline)
         working, source, run = replay.locations(out)
-        self.assertEqual(replay.load(working.parent / "source-manifest.json")["files"], rows)
+        self.assertEqual(replay.load(working.parent / "source-manifest.json")["files"],
+                         sorted(rows + state["metadataInputs"]["source"], key=lambda row: row["path"]))
         for root in (working, source):
-            for row in rows:
+            for row in rows + state["metadataInputs"]["source"]:
                 replay.require_hash(replay.safe_path(root, row["path"]), row["sha256"])
+        self.assertTrue((working / "Artists/Pierre/Empty/gallery/z_empty.txt").is_file())
+        self.assertFalse((source / "Artists/Pierre/Empty/gallery/z_empty.txt").exists())
         self.assertEqual((working / ".likeness-library.json").read_bytes(), catalogue.read_bytes())
         self.assertFalse((run / "likeness-cache.json").exists())
+
+    def test_metadata_inputs_are_exact_originals_not_installed_summaries(self):
+        baseline = self.root / "baseline"
+        backup, original = self.metadata_fixture(baseline)
+        with mock.patch.dict(replay.EXPECTED, {"backup": replay.digest(backup / "manifest.json")}):
+            data = replay.baseline_metadata(baseline, original, backup)
+            self.assertEqual(len(data["source"]), 3)
+            self.assertEqual(len(data["working"]), 4)
+            self.assertEqual([row for row in data["working"] if row in data["source"]], data["source"])
+            changed = backup / "work-root" / data["working"][0]["path"]
+            changed.write_bytes(b"edited history")
+            with self.assertRaisesRegex(ValueError, "checksum"):
+                replay.baseline_metadata(baseline, original, backup)
+
+    def test_metadata_rejects_traversal_and_duplicate_sidecars(self):
+        baseline = self.root / "baseline"
+        backup, original = self.metadata_fixture(baseline)
+        overlay = baseline / "source-overlay" / "overlay.json"
+        records = replay.load(overlay)["sidecars"]
+        for invalid in (
+                records + [records[0]],
+                [{"path": "../Sisters/Drakniss/gallery/z_escape.txt", "sha256": "a" * 64}],
+                [{"path": "Sisters/Drakniss/gallery/photo.jpg", "sha256": "a" * 64}]):
+            replay.write(overlay, {"sidecars": invalid})
+            original["sourceOverlaySHA256"] = replay.digest(overlay)
+            with mock.patch.dict(replay.EXPECTED, {"backup": replay.digest(backup / "manifest.json")}):
+                with self.assertRaises(ValueError):
+                    replay.baseline_metadata(baseline, original, backup)
+
+    def test_name_gate_covers_cast_artist_history_hashes_and_original_filenames(self):
+        names = {
+            "Sisters/Drakniss/gallery/z_original_name.txt": {"sha256": "a", "bytes": 1},
+            "Artists/Pierre/Zoe/gallery/z_zoe.txt": {"sha256": "b", "bytes": 2},
+            "Prospects/Camaris/gallery/z_camaris_bloom.txt": {"sha256": "c", "bytes": 3},
+        }
+        self.assertTrue(replay.compare_name_summaries(names, names)["equal"])
+        for path in names:
+            with self.subTest(path=path):
+                edited = {key: value for key, value in names.items() if key != path}
+                self.assertFalse(replay.compare_name_summaries(names, edited)["equal"])
+                edited[path] = {"sha256": "edited", "bytes": 1}
+                self.assertFalse(replay.compare_name_summaries(names, edited)["equal"])
+        self.assertFalse(replay.is_name_summary(""))
+
+    def test_complete_status_cannot_hide_name_history_loss(self):
+        replay.write(self.root / replay.RECEIPT, {
+            "schemaVersion": 1, "status": "complete", "out": str(self.root),
+            "baselineInstalledInventory": {"Sisters/X/gallery/z_original.txt": {"sha256": "a"}},
+            "installedInventory": {},
+        })
+        with mock.patch.object(replay, "inspect_baseline") as inspect:
+            with self.assertRaisesRegex(ValueError, "name/history parity"):
+                replay.check(self.root)
+        inspect.assert_not_called()
 
     def test_new_replay_does_not_override_lean_default(self):
         working, _, run = replay.locations(self.root)
@@ -199,6 +288,7 @@ class ReplayTests(unittest.TestCase):
                  "out": str(self.root), "inputs": [], "protected": {}, "policy": {},
                  "workers": 3, "preparationRuntime": {"workers": 3, "logicalProcessors": 12, "threadsPerWorker": 4},
                  "setupComplete": True, "stages": {"inventory-preview": {}},
+                 "metadataInputs": {"source": [], "working": []},
                  "attempts": [{"status": "failed"}]}
         replay.write(self.root / replay.RECEIPT, state)
         original = {"policy": {}}
