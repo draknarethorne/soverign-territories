@@ -388,7 +388,9 @@ authorize FAST processing or migrate existing evidence.
   copies equal to the original optional/recomputable. Implement only as a
   dependency-aware S25 migration that rewrites manifest, detail links, hashes
   and undo together, previews bytes/files, backs up once and is tested in the
-  sandbox first; never delete individual files by hand. Also decide whether
+  sandbox first; never delete individual files by hand. Run it in the same
+  migration pass as the [library layout](2026-11-02-library-layout.md) LY4
+  if LY1-e is accepted. Also decide whether
   `_backup` (42 GB) and `_sandbox-state\fresh-v23-20261029` (33 GB) both
   remain needed after S27.
 
