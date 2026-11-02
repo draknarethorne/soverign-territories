@@ -15,14 +15,27 @@ from likeness_library.thumbnails import crop_thumbnail
 SIZE = (944, 1104)
 RECIPE = "standard-padded-head-chest-v1"
 MANIFEST = ".photo-derivatives.json"
+KINDS = {"padded": "full", "head": "head", "chest": "chest"}
 
 
 def digest(path):
     return verification_reads.sha256(path)
 
 
+def manifest_path(folder):
+    """<person>/944x1104/.photo-derivatives.json; its keys stay relative to the person folder."""
+    return originals.cw.derivative_root(folder, SIZE) / MANIFEST
+
+
+def manifest_owner(manifest):
+    """The person folder a manifest belongs to (the legacy layout kept it in the person folder itself)."""
+    manifest = pathlib.Path(manifest)
+    root = originals.cw.derivative_root(manifest.parent.parent, SIZE)
+    return manifest.parent.parent if manifest.parent.name == root.name else manifest.parent
+
+
 def load(folder):
-    path = pathlib.Path(folder) / MANIFEST
+    path = manifest_path(folder)
     reads = verification_reads.active()
     if reads is not None and path.exists():
         return reads.document(path, 64 * 1024 * 1024)
@@ -30,7 +43,8 @@ def load(folder):
 
 
 def save(folder, data):
-    path = pathlib.Path(folder) / MANIFEST
+    path = manifest_path(folder)
+    path.parent.mkdir(parents=True, exist_ok=True)
     stage = path.with_suffix(".json.pending")
     stage.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
     try:
@@ -48,11 +62,21 @@ def save(folder, data):
 
 
 def relative_target(source, framing):
+    """<W>x<H>/<kind>/<stem>[_head|_chest]_<W>x<H>.png, under <W>x<H>/review/ for a Review photo."""
     source = pathlib.Path(source)
-    bucket = "" if source.parent.name == "gallery" else "review_"
-    directory = {"padded": "gallery", "head": "headshot", "chest": "chest"}[framing]
+    directory = originals.cw.derivative_dir(
+        pathlib.Path(), KINDS[framing], SIZE, review=source.parent.name != "gallery")
     suffix = "" if framing == "padded" else f"_{framing}"
-    return pathlib.Path(f"{bucket}{directory}_944x1104") / f"{source.stem}{suffix}_944x1104.png"
+    return directory / f"{source.stem}{suffix}_{SIZE[0]}x{SIZE[1]}.png"
+
+
+def legacy_key(key):
+    """The current manifest key for a key written under the former <prefix>_944x1104 folders (None when not one)."""
+    parts = pathlib.PurePosixPath(key).parts
+    for old, new in originals.cw.legacy_derivative_dirs(pathlib.Path(), SIZE):
+        if len(parts) == 2 and parts[0] == old.name:
+            return (pathlib.PurePosixPath(new.as_posix()) / parts[1]).as_posix()
+    return None
 
 
 def verified(source, framing, box=None):

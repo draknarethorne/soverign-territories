@@ -11,7 +11,7 @@ from .engine import unassigned_home
 
 PERSON_ROOTS = ("Angels", "Sisters", "Models", "Prospects", "Potentials")
 BUCKETS = ("gallery", "review")
-RESERVED = {"gallery", "review", "duplicates", "various"}
+RESERVED = {"gallery", "review", "duplicates", "various", "944x1104"}
 
 
 def is_seed_name(name):

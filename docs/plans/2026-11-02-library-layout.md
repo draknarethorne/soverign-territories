@@ -1,8 +1,9 @@
 # 2026-11-02: library directory layout - separate galleries from intake/processing
 
-**Status:** active (LY1 decided Nov 2: all five recommendations accepted)
+**Status:** active (LY1 decided Nov 2: all five recommendations accepted; LY2,
+LY3 publication/undo and LY5 implemented and tested Nov 2)
 
-**Queue focus:** LY2, LY3
+**Queue focus:** LY4, LY6
 
 **Order:** LY2/LY3 (code + tests) -> LY5 -> LY4 clean sandbox reset and LEAN
 rebase on the new layout, timed with Acronis off -> storage S32/S27 acceptance
@@ -154,6 +155,31 @@ while the 89 unique photos and 17 metadata files travel in
 directly. LY4 shrinks to refusing/detecting the old layout plus that reset and
 rebase procedure; the separate migration tool is dropped.
 
+**Implementation notes (Nov 2).**
+
+- (a) as built: sets live at `_processing\<owner path>\<set-key>` (for example
+  `_processing\Angels\Angelica\<32 hex>`), mirroring the person path instead of
+  a `<domain>` index. Ownership stays obvious, clean-rebase install/undo moves
+  `_processing\<category>` together with its category, and no separate lookup
+  must be rebuilt. Whole-person rename/merge still holds while a person owns
+  sets (unchanged behavior). The old in-person `gallery_org`/`gallery_intake`
+  layout is refused (`LegacyLayoutError`), never migrated.
+- (b) as built: `<person>\944x1104\{full,head,chest}` and
+  `944x1104\review\{full,head,chest}`, with `.photo-derivatives.json` inside
+  `944x1104` (keys still relative to the person folder). File names are
+  unchanged (`<stem>_944x1104.png`, `<stem>_head_944x1104.png`), so the
+  generated workflows and `sync-inputs` names are unaffected. Every
+  `originals` run first moves the former folders by rename (byte-identical
+  duplicates dropped, different files kept and reported, the manifest moved
+  with rewritten keys), so production's 335 `gallery_944x1104`/
+  `headshot_944x1104` folders move without regenerating about 5 GB.
+  `originals --check` reports anything still to move. Workflow-input discovery
+  (`photo_library`/`headshot_library`) falls back to the former folder names
+  until then; viewers and likeness read only the new layout.
+- (d) not yet built: install still copies the selected artifacts from the run
+  into `_processing`; with LEAN only the selected/needed artifacts are copied,
+  and the run's `inputs` mirror is retired after acceptance. Tracked as LY3b.
+
 ## Modes: two separate axes
 
 | Axis | Values | Owner | Decides |
@@ -192,20 +218,26 @@ check passed afterwards.
 ## Steps
 
 - [x] **P1 you** LY1 Decide the layout: (a)-(e) accepted Nov 2, see Decisions.
-- [ ] **P1 ai** LY2 Implement the `_processing` store in `retained_preparation.py`
-  (new `processing` storage root, per-set manifest with `current` path, a
-  rebuildable lookup, manifest-only transfers, LEAN retention per (e)) and
-  refuse the old in-person layout; focused regressions first.
-- [ ] **P1 ai** LY3 Update install/replay (move, not copy), backup scope and small
-  path users to the new API; run the affected test files.
+- [x] **P1 ai** LY2 Implement the `_processing` store in `retained_preparation.py`
+  (new `processing` storage root, per-set manifest with `current` path,
+  manifest-only transfers, LEAN retention per (e)) and refuse the old in-person
+  layout; focused regressions first. Done Nov 2 (owner-path layout, see notes).
+- [x] **P1 ai** LY3 Update install/undo/check, backup scope and small path users
+  to the new API; run the affected test files. Done Nov 2.
+- [ ] **P2 ai** LY3b Install moves the selected run artifacts into `_processing`
+  instead of copying (decision d), keeping the run's undo/replay receipts valid.
 - [ ] **P1 ai** LY4 Reset the sandbox from production (`sandbox-reset --full` plus
   the carried bundle), run the clean LEAN rebase in place with per-step timings
   (Acronis off), verify Gallery/Overview/Review, then hand to storage S32/S27
   and retire the old sandbox snapshot and run state.
-- [ ] **P2 ai** LY5 Group derivative folders (LY1-b) and update
+- [x] **P2 ai** LY5 Group derivative folders (LY1-b) and update
   viewers and ComfyUI input sync; verify `sync-inputs` output names unchanged.
+  Done Nov 2: names unchanged by construction; rename-only migration in
+  `originals`.
 - [ ] **P2 ai** LY6 Rewrite the layout sections in `docs/art/original-photos.md`
-  and `likeness.md`; production adopts the layout at its first accepted install.
+  and `likeness.md` (layout and retained-storage text updated Nov 2) and add the
+  fresh-sandbox step-by-step runbook, confirmed by the LY4 run; production
+  adopts the layout at its first accepted install.
 
 ## User request (chat, verbatim)
 
@@ -230,5 +262,33 @@ intake plans.
 <!-- markdownlint-disable MD013 -->
 ````text
 I agree with the recommendations - and we can also revisit existing _ directories in the sandbox and production for things that are also old and no longer used or useful due to all the changes.  So, we can get the sandbox into a clean state - and I know that might mean a full rebase and re-run, but that's what I want to see in the long run.  Since I have Acronis disabled now - I am hoping that the process is actually faster and all out timings will help.  Ultimately, keeping the separation, but still having files exist for references will help in the long run and only keep files generated we need.  That was all part of the LEAN type processing we were doing vs. FULL and FAST ... so we'll need to re-read and sync up all these items along with that existing plan and bring all the docs/plans into alignment and ensure directory structure makes more sense.
+````
+<!-- markdownlint-enable MD013 -->
+
+Nov 2, coverage: move forward with the changes -> LY2, LY3, LY5 implemented and
+tested; gallery holds only what is needed after the full process -> the
+`gallery`/`review`/`944x1104` person layout and `_processing`; re-copy
+production (with the new `Various\gallery` photos) into a fresh sandbox, run it
+end to end, then redo the whole process from documented steps -> LY4 and the
+LY6 runbook; status update -> the session reply and recap.
+
+<!-- markdownlint-disable MD013 -->
+````text
+Let's move forward with those changes and then give me an update on where we are at - we need that we properly handle the structure so the gallery is cleaner and only has what we need after the full processes.  Basically - I want to re-replicate copying down the existing Production directory to the Sandbox.  I have files into the production Various/gallery so that when we snap things all from the start that things will work end-to-end in a fresh sandbox that isn't in the current state we're in.  So when we get things tested and verified are working - we'll need to step back and re-do that entire process and ensure all documentation and steps for executing it are in place and we can see the first runs working on a fresh sandbox and then we'll know how it processes, how it cleans things up that might not align or how the process works on that fresh sandbox set of galleries.
+````
+<!-- markdownlint-enable MD013 -->
+
+Nov 2, coverage: commands and their order, and what copies exist at each step
+of a fresh sandbox -> answered in chat as stages 0-5 and recorded as the LY6
+runbook; workflow names injected at generation -> LY5 changes only code paths,
+never the generated workflow JSON by hand, and keeps file names unchanged.
+
+<!-- markdownlint-disable MD013 -->
+````text
+Before you start with a complete refresh of the sandbox - tell me what commands we run and in what order to get things going.  I want to understand just how it works when we snap the fresh and new copy of production down to the sandbox and all what we do run and what copies of things we do have in the sandbox at each step along the way.  More of a sandbox processing for dummies type step-by-step read out.
+````
+
+````text
+Workflows are generated and the names get injected to them in the generation process.
 ````
 <!-- markdownlint-enable MD013 -->

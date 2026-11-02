@@ -271,6 +271,7 @@ class PreparationTests(unittest.TestCase):
         self.put("Artists/Painter/Person/review/person_image_345.png")
         self.put("Various/review/various_image_456.jpg")
         self.put("Potentials/Person/gallery_944x1104/generated.png")
+        self.put("Potentials/Person/944x1104/full/generated.png")
         self.put("_archive/Sisters/Drakn/gallery/historical.png")
         paths = preparation.inventory(self.root)
         self.assertEqual(len(paths), 4)
@@ -305,7 +306,7 @@ class PreparationTests(unittest.TestCase):
 
     def test_source_folder_rejects_escape_archive_and_generated_directories(self):
         for folder in ("..", "_archive/Angels/gallery", "Angels/Fixed Slot/gallery_944x1104",
-                       "Various", "Various/missing/gallery"):
+                       "Angels/Fixed Slot/944x1104/full", "Various", "Various/missing/gallery"):
             self.assertEqual(self.call("--source-folder", folder, "--apply"), 1, folder)
         self.assertFalse(self.output.parent.exists())
 

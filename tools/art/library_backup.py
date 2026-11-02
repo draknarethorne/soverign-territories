@@ -99,15 +99,19 @@ def derivative_omissions(work):
     for relative, manifest in files.items():
         if manifest.name != derivatives.MANIFEST:
             continue
-        if any(part.casefold() in ("gallery_org", "gallery_intake") for part in manifest.relative_to(work).parts):
+        if any(part.casefold() in ("gallery_org", "gallery_intake", "_processing")
+               for part in manifest.relative_to(work).parts):
             continue
         try:
-            data = derivatives.load(manifest.parent)
+            owner = derivatives.manifest_owner(manifest)
+            if derivatives.manifest_path(owner) != manifest:
+                continue  # a legacy manifest not yet moved by originals: its bytes are kept, nothing omitted
+            data = derivatives.load(owner)
             for output, record in data["entries"].items():
                 try:
-                    source = (manifest.parent / record["source"]).resolve()
-                    target = (manifest.parent / output).resolve()
-                    if source.parent.name not in {"gallery", "review"} or source.parent.parent != manifest.parent:
+                    source = (owner / record["source"]).resolve()
+                    target = (owner / output).resolve()
+                    if source.parent.name not in {"gallery", "review"} or source.parent.parent != owner.resolve():
                         continue
                     framing = next((mode for mode in ("padded", "head", "chest")
                                     if derivatives.relative_target(source, mode).as_posix() == output), None)

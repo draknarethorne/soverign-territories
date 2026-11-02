@@ -420,9 +420,9 @@ class LikenessActionTests(unittest.TestCase):
     def test_workflow_photo_selection_is_staged_applied_and_undoable(self):
         folder = self.root / "Angels" / "Sophie"
         gallery = folder / "gallery"
-        scaled = folder / "gallery_944x1104"
+        scaled = folder / "944x1104" / "full"
         gallery.mkdir(parents=True)
-        scaled.mkdir()
+        scaled.mkdir(parents=True)
         old_photo = gallery / "sophie_image_111111.jpg"
         new_photo = gallery / "sophie_image_222222.jpg"
         old_photo.write_bytes(b"old photo")

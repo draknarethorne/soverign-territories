@@ -19,6 +19,7 @@
     "actions": "_actions",
     "junk": "_junk",
     "retired": "_retired",
+    "processing": "_processing",
     "sandboxState": "_sandbox-state",
     "temporary": "_tmp"
   },

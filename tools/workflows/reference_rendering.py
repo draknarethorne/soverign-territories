@@ -179,7 +179,7 @@ def inspect_source(root, job):
             raise ValueError("Selected render must be an explicitly retained output")
     elif parts[0] not in allowed or any(p.startswith("_") for p in parts):
         raise ValueError(f"Source is outside active photo roots: {relative}")
-    if not selected and not any(p in {"gallery", "review", "gallery_944x1104",
+    if not selected and not any(p in {"gallery", "review", "944x1104", "gallery_944x1104",
                      "headshot_944x1104", "chest_944x1104"} for p in parts[1:-1]):
         raise ValueError(f"Source must be an active photo or standard derivative: {relative}")
     if not selected and (parts[0] == "Artists") != (job["source"]["domain"] == "artists"):

@@ -8,8 +8,10 @@ import shutil
 import tempfile
 import unittest
 import copy
+import sys
 from unittest import mock
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import library_backup
 from library_backup import (
     _snapshot_path, create_backup, latest_work_root_backup, preview, restore_backup, verify_backup,

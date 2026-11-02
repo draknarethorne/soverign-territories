@@ -141,7 +141,8 @@ class CleanPreparationTests(unittest.TestCase):
         for row in plan["photos"]:
             link = retained_preparation.verify_link(self.working, row["destination"])
             self.assertIsNotNone(link)
-            self.assertEqual(link["formatVersion"], 2)
+            self.assertEqual(link["formatVersion"], retained_preparation.LEAN_VERSION)
+            self.assertTrue(link["manifest"].startswith("_processing/"))
             self.assertNotIn(row["destination"], [entry["path"] for entry in link["artifacts"]])
         self.command(undo=True)
         for relative, expected in self.inputs.items():
@@ -334,8 +335,12 @@ class CleanPreparationTests(unittest.TestCase):
             self.command(apply=True)
         plan = json.loads((self.run / "run.json").read_text(encoding="utf-8"))
         self.assertEqual(plan["status"], "applied")
-        self.assertTrue(any("/gallery_org/" in row["path"] for row in plan["publishedFiles"]))
-        self.assertTrue(any("/gallery_intake/" in row["path"] for row in plan["publishedFiles"]))
+        self.assertTrue(any(row["path"].startswith("_processing/") and "/original." in row["path"]
+                            for row in plan["publishedFiles"]))
+        self.assertTrue(any(row["path"].startswith("_processing/") and row["path"].endswith("/detail.html")
+                            for row in plan["publishedFiles"]))
+        self.assertFalse(any(name in row["path"] for row in plan["publishedFiles"]
+                             for name in retained_preparation.LEGACY_FOLDERS))
         for row in plan["photos"]:
             self.assertEqual(metadata.content_sha256(self.working / row["destination"]), row["preparedSHA256"])
             link = retained_preparation.verify_link(
@@ -383,7 +388,7 @@ class CleanPreparationTests(unittest.TestCase):
                 mock.patch("library_backup.verify_backup"):
             self.command(apply=True)
         plan = json.loads((self.run / "run.json").read_text(encoding="utf-8"))
-        item = next(item for item in plan["publishedFiles"] if "gallery_intake" in item["path"])
+        item = next(item for item in plan["publishedFiles"] if item["path"].startswith("_processing/"))
         (self.working / item["path"]).write_bytes(b"edited")
         with self.assertRaisesRegex(ValueError, "output changed"):
             self.command(undo=True)
@@ -528,7 +533,7 @@ class CleanPreparationTests(unittest.TestCase):
                 mock.patch("library_backup.verify_backup"):
             self.command(apply=True)
         plan = json.loads((self.run / "run.json").read_text())
-        self.assertIn("Angels/Fixed/.photo-derivatives.json", plan["previousExternalHashes"])
+        self.assertIn("Angels/Fixed/944x1104/.photo-derivatives.json", plan["previousExternalHashes"])
         self.command(undo=True)
         after = {path.relative_to(folder).as_posix(): path.read_bytes()
                  for path in folder.rglob("*") if path.is_file()}
@@ -551,7 +556,7 @@ class CleanPreparationTests(unittest.TestCase):
     def test_legacy_cast_collision_requires_opt_in_and_restores_exact_bytes(self):
         source = self.working / "Angels/Fixed/gallery/fixed_image_123456.jpg"
         target = source.parent.parent / derivatives.relative_target(source, "padded")
-        target.parent.mkdir()
+        target.parent.mkdir(parents=True)
         target.write_bytes(b"unowned legacy bytes, not claimed reproducible")
         original = target.read_bytes()
         self.command()
@@ -625,7 +630,7 @@ class CleanPreparationTests(unittest.TestCase):
             self.command(check=True, resume_install=True)
         marker.unlink()
         folder = native.parent.parent
-        manifest_path = folder / derivatives.MANIFEST
+        manifest_path = derivatives.manifest_path(folder)
         manifest_bytes = manifest_path.read_bytes()
         target = folder / derivatives.relative_target(native, "padded")
         target_bytes = target.read_bytes()

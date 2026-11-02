@@ -144,7 +144,7 @@ def _workflow_photo_plan(action, source, root, cfg):
 
     def scaled_path(original):
         return (
-            original.parent.parent / f"gallery_{width}x{height}"
+            originals.cw.derivative_dir(original.parent.parent, "full", (width, height))
             / f"{original.stem}_{width}x{height}.png"
         )
 
@@ -765,9 +765,8 @@ def _retained_plans(root, plans):
     for plan in plans:
         if plan.get("type") == person_rename.ACTION:
             for member in (plan, plan.get("partner")):
-                if member and member["source"] != member["destination"] and any(
-                        path.exists() for name in ("gallery_intake", "gallery_org")
-                        for path in [member["source"] / name]):
+                if member and member["source"] != member["destination"] and retained_preparation.has_sets(
+                        root, member["source"]):
                     raise ValueError("retained preparation holds whole-person folder actions; photo actions remain available")
         source, destination = plan.get("source"), plan.get("destination")
         if source is None or destination is None or source == destination or plan.get("type") == person_rename.ACTION:

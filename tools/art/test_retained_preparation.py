@@ -86,9 +86,12 @@ class RetainedPreparationTests(unittest.TestCase):
         self.storage_mode = "lean"
         published = self.stage()
         data = retained.verify_link(self.root, self.destination)
-        self.assertEqual(data["formatVersion"], 2)
+        self.assertEqual(data["formatVersion"], retained.LEAN_VERSION)
+        self.assertTrue(data["original"].startswith(f"_processing/Various/{data['setKey']}/"))
         self.assertEqual(data["artifactMap"][self.row["variants"]["composition"]["path"]], self.destination)
         self.assertNotIn(self.destination, [entry["path"] for entry in published])
+        self.assertTrue(data["omitted"])
+        self.assertFalse(any((self.root / "Various" / name).exists() for name in retained.LEGACY_FOLDERS))
         self.assertNotEqual(data["original"], self.destination)
         self.assertEqual(sum(entry["sha256"] == sha(self.selected) for entry in published), 0)
         self.assertTrue(retained.source_is_prepared(self.root / self.destination))
@@ -119,7 +122,24 @@ class RetainedPreparationTests(unittest.TestCase):
         self.test_cross_owner_move_and_undo_restore_exact_set_manifest_and_hashes()
         data = retained.verify_link(self.root, self.destination)
         self.assertEqual(data["original"], self.destination)
-        self.assertFalse((self.root / "Various/gallery_org").exists())
+        self.assertFalse(any((self.root / "Various" / name).exists() for name in retained.LEGACY_FOLDERS))
+
+    def test_legacy_in_person_layout_is_refused_not_migrated(self):
+        self.stage()
+        (self.root / "Various/gallery_intake").mkdir()
+        with self.assertRaisesRegex(ValueError, "legacy"):
+            retained.verify_link(self.root, self.destination)
+        with self.assertRaisesRegex(ValueError, "legacy"):
+            retained.has_sets(self.root, "Various")
+
+    def test_full_keeps_every_artifact_and_has_sets_reports_owner(self):
+        self.stage()
+        data = retained.verify_link(self.root, self.destination)
+        self.assertEqual(data["formatVersion"], retained.FULL_VERSION)
+        self.assertEqual(data.get("omitted") or {}, {})
+        self.assertTrue(retained.has_sets(self.root, "Various"))
+        self.assertTrue(retained.has_sets(self.root, self.root / "Various"))
+        self.assertFalse(retained.has_sets(self.root, "Potentials/Assigned"))
 
     def test_lean_cross_owner_native_alias_move_and_undo(self):
         self.storage_mode = "lean"
@@ -283,7 +303,8 @@ class RetainedPreparationTests(unittest.TestCase):
         self.assertIsNotNone(data)
         self.assertEqual((self.root / data["original"]).read_bytes(), self.original)
         self.assertNotIn("discarded", json.dumps(published))
-        self.assertIn("gallery_org", (self.root / data["detail"]).read_text())
+        self.assertTrue(data["detail"].startswith(f"_processing/Various/{data['setKey']}/"))
+        self.assertIn("original", (self.root / data["detail"]).read_text())
         tone_path = data["artifactMap"][self.row["variants"]["tone"]["path"]]
         self.assertIn(pathlib.PurePosixPath(tone_path).name, (self.root / data["detail"]).read_text())
         self.assertNotIn("../candidates/", (self.root / data["detail"]).read_text())
@@ -401,7 +422,7 @@ class RetainedPreparationTests(unittest.TestCase):
         self.stage()
         policy, move = self.maintenance_setup()
         data = retained.verify_link(self.root, move["source"])
-        target = self.root / f"Potentials/Assigned/gallery_intake/{data['setKey']}"
+        target = self.root / f"_processing/Potentials/Assigned/{data['setKey']}"
         target.mkdir(parents=True)
         with self.assertRaisesRegex(ValueError, "target set exists"):
             maintenance.apply_moves(self.root, [move], policy, {}, backup_fn=lambda *_: "verified")
@@ -588,7 +609,7 @@ class RetainedPreparationTests(unittest.TestCase):
         self.row["variants"]["tone"]["path"] = "../escape.png"
         with self.assertRaises(ValueError):
             self.stage()
-        self.assertFalse((self.root / "Various/gallery_intake").exists())
+        self.assertFalse((self.root / "_processing/Various").exists())
 
     def test_reparse_refusal_and_rename_failure_preserve_original_mapping(self):
         with mock.patch.object(pathlib.Path, "is_symlink", return_value=True):
@@ -633,7 +654,7 @@ class RetainedPreparationTests(unittest.TestCase):
             [(self.root / self.destination, "photo:image_123")])
         evidence = index.evidence(self.root / self.destination, "photo:image_123")
         self.assertEqual(evidence["state"], "verified")
-        self.assertIn("gallery_intake", evidence["matches"][0]["href"])
+        self.assertIn("_processing/Various/", evidence["matches"][0]["href"])
         self.assertIn("Open intake detail", preparation_provenance.render_evidence(evidence))
 
     def test_housekeeping_keeps_gallery_org_and_backup_retains_all_auxiliary_files(self):
@@ -661,10 +682,10 @@ class RetainedPreparationTests(unittest.TestCase):
             snapshot = library_backup.create_backup(self.root, stamp="lean-restore", apply=True)
             recovery = library_backup.restore_backup(snapshot, self.base / "restored", apply=True)
         restored = recovery / "work-root"
-        self.assertFalse((restored / "Various" / "gallery_org").exists())
+        self.assertTrue((restored / "_processing" / "Various").is_dir())
         data = retained.verify_link(restored, self.destination)
         self.assertIsNotNone(data)
-        self.assertEqual(data["formatVersion"], 2)
+        self.assertEqual(data["formatVersion"], retained.LEAN_VERSION)
         self.assertEqual(data["original"], self.destination)
         self.assertEqual(data["artifactMap"][self.row["variants"]["composition"]["path"]], self.destination)
 

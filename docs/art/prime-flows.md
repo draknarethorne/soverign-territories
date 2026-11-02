@@ -20,8 +20,8 @@ input-role change or experiment removal was applied during plan reconciliation.
 The normal Prime path is used for full-length and partial-body source photos.
 The prompt asks the model to continue a partial image into a full figure; if a
 source is not suitable, choose another photo. No partial-body frame is made or
-configured. A `chest_944x1104` crop is only a future experiment and is not
-implemented.
+configured. Using the maintained chest crop (`944x1104\chest`) as a Prime input
+is only a future experiment and is not implemented.
 
 FireRed sometimes invents a face instead of using the one in the photo,
 especially when the head is turned. Its Prime prompt therefore starts with an

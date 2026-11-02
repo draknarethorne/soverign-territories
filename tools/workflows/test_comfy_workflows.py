@@ -1071,9 +1071,9 @@ class PhotoRepointTests(unittest.TestCase):
     def world(self, folder="Alice", new_name=None):
         w = World().__enter__()
         lib = w.tmp / "lib"
-        (lib / "Angels" / folder / "gallery_944x1104").mkdir(parents=True)
+        (lib / "Angels" / folder / "944x1104" / "full").mkdir(parents=True)
         (lib / "Angels" / folder / "gallery_944x1104_org").mkdir()
-        (lib / "Angels" / folder / "gallery_944x1104" / (new_name or self.NEW)).write_bytes(b"png")
+        (lib / "Angels" / folder / "944x1104" / "full" / (new_name or self.NEW)).write_bytes(b"png")
         (lib / "Angels" / folder / "gallery_944x1104_org" / self.OLD).write_bytes(b"old")
         w.cfg.update({"standardSize": [944, 1104], "photos": {"Alice": self.OLD}, "inputs": {}, "sharedInput": str(w.tmp / "shared-input"), "sharedOutput": str(w.tmp / "shared-output")})
         (w.tmp / "shared-input").mkdir()
@@ -1148,6 +1148,7 @@ class PhotoRepointTests(unittest.TestCase):
         w = self.world()
         try:
             head = "alice_image_123_head_944x1104.png"
+            # still in the former headshot_944x1104 folder: found until originals.cmd moves it to 944x1104/head
             (w.tmp / "lib" / "Angels" / "Alice" / "headshot_944x1104").mkdir()
             (w.tmp / "lib" / "Angels" / "Alice" / "headshot_944x1104" / head).write_bytes(b"png")
             w.cfg["photos"]["Alice"] = head

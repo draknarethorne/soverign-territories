@@ -1317,7 +1317,7 @@ def _prior_external_files(working, plan, *, preserve_legacy=False):
             })
     for relative in sorted({str(pathlib.PurePosixPath(path).parent.parent) for path in native}):
         folder = working / relative
-        manifest = folder / derivatives.MANIFEST
+        manifest = derivatives.manifest_path(folder)
         if not manifest.exists():
             continue
         for target, record in derivatives.load(folder)["entries"].items():
@@ -1353,10 +1353,24 @@ def _prior_external_files(working, plan, *, preserve_legacy=False):
     return files
 
 
+def _category_roots(root, categories):
+    """Category folders and their mirrored processing-store subtrees are replaced as one unit."""
+    from . import retained_preparation
+
+    prefix = retained_preparation._processing_prefix(root)
+    return [*categories, *(f"{prefix}/{category}" for category in categories)]
+
+
+def _in_roots(relative, roots):
+    parts = pathlib.PurePosixPath(relative).parts
+    return any(parts[:len(pathlib.PurePosixPath(item).parts)] == pathlib.PurePosixPath(item).parts
+               for item in roots)
+
+
 def _category_inventory(working, categories):
     return {
         path.relative_to(working).as_posix(): metadata.content_sha256(path)
-        for category in categories if (working / category).exists()
+        for category in _category_roots(working, categories) if (working / category).exists()
         for path in _source_files(working / category)
     }
 
@@ -1410,7 +1424,7 @@ def verify_staged_install(layout, run, plan):
         box, px = face.get("box"), face.get("px", 0)
         folder = native.parent.parent
         if folder not in manifests:
-            manifest = folder / derivatives.MANIFEST
+            manifest = derivatives.manifest_path(folder)
             manifests[folder] = derivatives.load(folder)
             expected[manifest.relative_to(staged).as_posix()] = metadata.content_sha256(manifest)
         for framing in ("padded", "head", "chest"):
@@ -1512,9 +1526,10 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
         if previous_catalog is not None:
             (run / "previous-catalog.json").write_bytes(previous_catalog)
     categories = (*RESET_CATEGORIES, "Various") if plan.get("preparation") else RESET_CATEGORIES
-    for category in categories:
+    roots = _category_roots(working, categories)
+    for category in roots:
         path = working / category
-        if _is_reparse_point(path):
+        if _is_reparse_point(path) or _is_reparse_point(path.parent):
             raise ValueError(f"unsafe generated-category target: {path}")
         if path.exists():
             list(_source_files(path))
@@ -1603,7 +1618,7 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
     external_files = [
         {"path": path.relative_to(staged).as_posix(), "sha256": metadata.content_sha256(path)}
         for path in _source_files(staged)
-        if path.relative_to(staged).parts[0] not in categories
+        if not _in_roots(path.relative_to(staged).as_posix(), roots)
     ]
     prior_external = sorted(previous_external_hashes)
     for item in external_files:
@@ -1632,12 +1647,16 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
             saved.parent.mkdir(parents=True, exist_ok=True)
             current.rename(saved)
             cast_saved.append((current, saved))
-        for category in categories:
+        for category in roots:
             target = working / category
             if target.exists():
+                (previous / category).parent.mkdir(parents=True, exist_ok=True)
                 target.rename(previous / category)
                 moved.append(category)
             if (staged / category).exists():
+                if not target.parent.exists():
+                    target.parent.mkdir(parents=True)
+                    created_directories.append(target.parent)
                 (staged / category).rename(target)
                 installed.append(category)
         for item in external_files:
@@ -1661,7 +1680,7 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
             plan["installedCatalogSHA256"] = metadata.content_sha256(local_catalog)
         plan["status"] = "applied"
         plan["previousCategories"] = str(previous)
-        plan["previousCategoryNames"] = moved
+        plan["previousCategoryNames"] = [category for category in moved if category in categories]
         plan["installedCategoryNames"] = list(categories)
         plan["externalFiles"] = external_files
         plan["previousExternalFiles"] = prior_external
@@ -1741,7 +1760,8 @@ def undo_plan(layout, run, plan):
         saved = _publication_path(previous, relative)
         if metadata.content_sha256(saved) != expected:
             raise ValueError(f"previous category file changed: {saved}")
-    for category in categories:
+    roots = _category_roots(working, categories)
+    for category in roots:
         for root in (working / category, previous / category):
             if root.exists():
                 list(_source_files(root))
@@ -1759,11 +1779,13 @@ def undo_plan(layout, run, plan):
             current.parent.mkdir(parents=True, exist_ok=True)
             saved.rename(current)
             cast_restored.append((saved, current))
-        for category in categories:
+        for category in roots:
             if (working / category).exists():
+                (withdrawn / category).parent.mkdir(parents=True, exist_ok=True)
                 (working / category).rename(withdrawn / category)
                 moved.append(category)
             if (previous / category).exists():
+                (working / category).parent.mkdir(parents=True, exist_ok=True)
                 (previous / category).rename(working / category)
                 restored.append(category)
         if "installedCatalogSHA256" in plan:
@@ -1817,7 +1839,7 @@ def _check_publication(working, plan):
 
         categories = tuple(plan["installedCategoryNames"])
         expected = {item["path"]: item["sha256"] for item in outputs
-                    if pathlib.PurePosixPath(item["path"]).parts[0] in categories}
+                    if _in_roots(item["path"], _category_roots(working, categories))}
         if _category_inventory(working, categories) != expected:
             raise ValueError("installed category inventory changed; review added/removed/edited files")
         cast = {

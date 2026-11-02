@@ -99,7 +99,7 @@ def inventory(root):
         folders = [artist] + sorted(
             child for child in artist.iterdir()
             if child.is_dir() and not child.name.startswith("_")
-            and child.name not in {"gallery", "review"}
+            and child.name not in {"gallery", "review", "944x1104"}
             and not any(child.name.startswith(prefix) for prefix in ("gallery_", "headshot_", "chest_"))
         )
         for folder in folders:

@@ -80,7 +80,7 @@ def report_state(root, library, cache_path, policy_path):
                 "catalogue": derivatives.digest(metadata.path_for_root(root)),
                 "policy": load_policy(policy_path)}
     for folder in library:
-        manifest = folder / derivatives.MANIFEST
+        manifest = derivatives.manifest_path(folder)
         if manifest.is_file():
             evidence["manifests"][folder.relative_to(root).as_posix()] = derivatives.digest(manifest)
         for bucket in ("gallery", "review"):

@@ -908,7 +908,7 @@ class LikenessTests(unittest.TestCase):
         for name, text in (("draknara_image_1.jpg", "dee|21|2"), ("draknara_image_2.jpg", "dee|22")):
             (dn / name).write_text(text)
         for folder, stems in (("Angels/Azaline", ("azaline_image_1", "azaline_image_2", "azaline_image_3")), ("Sisters/Draknara", ("draknara_image_1", "draknara_image_2"))):
-            g = self.lib / folder / "gallery_94x110"
+            g = self.lib / folder / "94x110" / "full"
             g.mkdir(parents=True, exist_ok=True)
             for s in stems:
                 (g / f"{s}_94x110.png").write_bytes(b"x")

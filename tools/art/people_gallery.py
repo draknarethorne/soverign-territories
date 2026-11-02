@@ -80,8 +80,8 @@ def sharpness(img):
 def copies(folder, stem, size):
     """(headshot path or None, body path or None) of an original, from its scaled copies."""
     w, h = size
-    head = folder / f"headshot_{w}x{h}" / f"{stem}_head_{w}x{h}.png"
-    body = folder / f"gallery_{w}x{h}" / f"{stem}_{w}x{h}.png"
+    head = cw.derivative_dir(folder, "head", size) / f"{stem}_head_{w}x{h}.png"
+    body = cw.derivative_dir(folder, "full", size) / f"{stem}_{w}x{h}.png"
     return (head if head.exists() else None), (body if body.exists() else None)
 
 

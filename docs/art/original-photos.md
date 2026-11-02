@@ -107,21 +107,30 @@ Under the configured Production library folder (`paths.productionRoot` in
 
 ```text
 Angels\Angelica\gallery                  your originals for Angelica (jpg, png, webp, bmp)
-Angels\Angelica\gallery_org\<set-key>     exact incoming bytes retained by prepared publication
-Angels\Angelica\gallery_intake\<set-key>  checked retained alternatives, manifest and detail
-Angels\Angelica\gallery_944x1104         made by the tool: every original on a light-grey 944x1104 canvas, as PNG
-Angels\Angelica\headshot_944x1104        made by the tool: the face of each original, cropped around it and scaled up (see Headshots)
-Angels\Angelica\chest_944x1104           maintained chest-up crop for the viewers, not a new workflow input
-Angels\Angelica\.photo-derivatives.json exact source/output hashes and rendering recipe for maintained derivatives
 Angels\Angelica\review                   photos the likeness tool is not sure about (yours to look at)
-Angels\Angelica\review_gallery_944x1104  maintained derivatives of review photos (also review_headshot_, review_chest_)
+Angels\Angelica\944x1104\full            made by the tool: every original on a light-grey 944x1104 canvas, as PNG
+Angels\Angelica\944x1104\head            made by the tool: the face of each original, cropped around it and scaled up (see Headshots)
+Angels\Angelica\944x1104\chest           maintained chest-up crop for the viewers, not a new workflow input
+Angels\Angelica\944x1104\review\...      the same full, head and chest copies of the review photos
+Angels\Angelica\944x1104\.photo-derivatives.json  exact source/output hashes and rendering recipe (keys relative to Angelica)
 Angels\Angelica\gallery\z_angelica.txt   the person's name, profile and history (written by the likeness tool; see likeness.md)
+_processing\Angels\Angelica\<set-key>    prepared-intake history: exact incoming bytes, retained alternatives, manifest
 _archive\Angels\Angelica\...             old scaled copies and set-aside duplicates (the same path as the folder)
 _junk\Prospects\rhea_ives_...jpg         legacy unusable photos, flat per side; retained, not automatically retried
 _junk\Various\gallery\incoming.jpg      report-bound early Junk; exact source path retained below _junk
 _junk\Artists\Artist\gallery\image.jpg   early artist Junk; owner never becomes Various or another artist
 Sisters\Draknara\...  Prospects\Anya Sloane\...  Artists\Pierre\Mara Locke\...  Various\...   the same layout in the other roots
 ```
+
+A person folder holds only `gallery`, `review` and `944x1104` (Nov 2, 2026;
+[layout plan](../plans/2026-11-02-library-layout.md)). The former
+`gallery_944x1104`, `headshot_944x1104`, `chest_944x1104` and `review_*`
+folders are moved into `944x1104` by the next `originals` run (renames only; a
+byte-identical copy already there is dropped, a different one stays in the old
+folder and is reported; `originals --check` counts what is left to move). File
+names are unchanged, so workflow inputs are unaffected. The former in-person
+`gallery_org`/`gallery_intake` history is not migrated: retained-preparation
+commands refuse it, and a sandbox is reset from production instead.
 
 The general roots are Angels, Sisters, Models, Prospects, Potentials and Various.
 Models is a distinct draft category, not an alias for Sisters. Artists is a
@@ -163,7 +172,7 @@ owns upstream preparation/crop cutover; the
 
 | Order | Role | Output / safeguard |
 | --- | --- | --- |
-| 1 | Retain exact incoming bytes before transformations | Immutable run input, then checked `gallery_org` publication alongside retained `gallery_intake` evidence |
+| 1 | Retain exact incoming bytes before transformations | Immutable run input, then checked publication of the original and retained evidence under `_processing\<owner path>\<set-key>` |
 | 2 | Prepare at native geometry | v23 overlay/border preflight -> guarded first crop -> eraser -> residual crop -> confirmed-pattern reconstruction -> guarded no-proposal composition -> denoise/tone comparisons; preserve subject, skip unsafe/unavailable stages with reasons |
 | 3 | Analyze and assign | Fresh geometry-correct detection/features; shared likeness policy; cast membership protection remains separate from processing |
 | 4 | Publish the accepted reference | Prepared source in person `gallery` (or `review`), destination-prefix normalization with stable photo ID and history retained |
@@ -189,13 +198,14 @@ inputs can skip either crop; retain wider useful context when subject bounds
 are uncertain. Head/chest derivative framing is a separate later operation.
 
 The FULL retained-preparation staging API publishes exact incoming bytes under
-the destination owner's `gallery_org/<set-key>/original.ext`; the accepted
-native image remains in `gallery` or `review`. New opt-in LEAN publications
+`_processing/<owner path>/<set-key>/original.ext` (the owner path mirrors the
+person folder, e.g. `_processing/Angels/Angelica/<set-key>`; Nov 2, 2026); the
+accepted native image remains in `gallery` or `review`. New opt-in LEAN publications
 reference that native file instead when the original bytes match exactly,
 and share exact-equal native variant roles with it. Differing originals
-still live in `gallery_org`. Its declared variants (including
+are still kept in the set. Its declared variants (including
 denoise/tone, masks, previews and padded comparisons), photo detail and recipe
-are retained under `gallery_intake/<set-key>/`. The 32-hex set key covers the
+are retained in the same `_processing` set. The 32-hex set key covers the
 immutable source path, source photo ID, matching domain, original SHA-256 and
 full recipe; byte-identical distinct photo records are not deduplicated.
 The manifest preserves and verifies those full identity fields, not just the
@@ -224,10 +234,10 @@ The bounded per-photo manifest records the original checksum, selected native
 checksum, exact current path, stable photo ID and matching domain. Overview and
 Review prefer this link only after verifying the current photo and every
 retained artifact; neither basename nor photo-ID similarity proves a move.
-Originals housekeeping preserves `gallery_org`; routine backups retain both
-retained directories rather than treating comparisons as disposable outputs.
+Originals housekeeping preserves `_processing`; routine backups retain the
+retained sets rather than treating comparisons as disposable outputs.
 
-`gallery_intake` is **installed processing history**, not a queue of incoming
+`_processing` is **installed processing history**, not a queue of incoming
 photos and not a second canonical Gallery. Likeness/workflow inputs use the
 selected native photo and its maintained derivatives; unselected denoise/tone
 images and alternative padding are diagnostic evidence, not all required for
@@ -1414,7 +1424,7 @@ required. Threshold changes belong in the versioned policy, not `--min`.
 | 7 `duplicates`, `originals` again | the moves create new names; `originals --check` must say IN SYNC | |
 | 8 `sync-inputs`, 9 `crosscheck`, `index` | workflow inputs; the look-alike report; the people index | |
 
-**Prime partial-body frame flow retired (Oct 19).** See [Retired frame images](#retired-prime-partial-body-frames) for what changed and where the preserved files went. Maintained `chest_944x1104` viewer crops are separate from that retired flow; their visual acceptance remains open.
+**Prime partial-body frame flow retired (Oct 19).** See [Retired frame images](#retired-prime-partial-body-frames) for what changed and where the preserved files went. Maintained `944x1104\chest` viewer crops are separate from that retired flow; their visual acceptance remains open.
 
 The former `review`/`sort`/`singles`/`rematch` decision chain is no longer run
 automatically. Reconciliation now also proposes reciprocal whole-identity
@@ -1482,8 +1492,9 @@ Not every photo has a headshot, by design: a headshot needs a face big enough to
 | Step | What |
 | --- | --- |
 | Rename | Each original prefix follows its current folder; stable IDs are retained. Use supported moves rather than manually shuffling retained/catalogued photos. A collision is held with a warning. |
-| Scale | Each original is fitted inside 944x1104 (the shape is kept, EXIF rotation applied), centred on light grey (`originals.STUDIO_GREY`, 190,190,190; cream until Oct 26), saved as `<name>_944x1104.png`. A phone screenshot of Facebook (tall, with the app's light navigation bar along the bottom) is first cut down to the picture itself, without the bars, caption and icons (`tools/art/screens.py`), unless her head reaches into them. A copy already newer than its original is skipped (`--force` redoes all). |
-| Headshots | Each original with a clear face also gets `headshot_944x1104\<name>_head_944x1104.png` (see Headshots). `--no-headshots` skips this step. |
+| Move | Scaled copies still in the former `gallery_944x1104`, `headshot_944x1104`, `chest_944x1104` (and `review_*`) folders are renamed into `944x1104\full`, `head`, `chest` (`review\...` for review copies) with the derivative manifest; conflicts stay put and are reported. |
+| Scale | Each original is fitted inside 944x1104 (the shape is kept, EXIF rotation applied), centred on light grey (`originals.STUDIO_GREY`, 190,190,190; cream until Oct 26), saved as `944x1104\full\<name>_944x1104.png`. A phone screenshot of Facebook (tall, with the app's light navigation bar along the bottom) is first cut down to the picture itself, without the bars, caption and icons (`tools/art/screens.py`), unless her head reaches into them. A copy already newer than its original is skipped (`--force` redoes all). |
+| Headshots | Each original with a clear face also gets `944x1104\head\<name>_head_944x1104.png` (see Headshots). `--no-headshots` skips this step. |
 | Prune | A scaled copy that no original in that folder makes any more is **moved to `_archive\<the folder's path>\gallery_944x1104_org`**, never deleted (a headshot goes to the matching `headshot_944x1104_org`), so the person folders stay free of old copies. `originals --archive-old --apply` moves the `_org` folders that were left in the library (with a manifest; `--undo-archive` reverses it). Other files in the scaled folder are left alone. |
 | Re-point | With the work done, a chosen photo (`photos` in `workspaces.json`) that was renamed is found again by its id: `workspaces.json`, the generated workflows that load it (repo and workspaces; a changed workspace file is backed up first) and the workspace input folders are updated. The same step is available alone as `bin\inputs.cmd photos` (preview with `--dry-run`). |
 

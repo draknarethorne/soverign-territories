@@ -110,11 +110,11 @@ class IdentityMaintenanceTests(unittest.TestCase):
 
     def test_retained_identity_transition_holds_without_blocking_unrelated_photo_move(self):
         photos, space, cores = self.fixture(5)
-        auxiliary = self.root / self.folder / "gallery_intake" / ("a" * 64) / "manifest.json"
+        auxiliary = self.root / "_processing" / self.folder / ("a" * 32) / "manifest.json"
         auxiliary.parent.mkdir(parents=True)
         auxiliary.write_bytes(b"retained set; planner must not alter even stale evidence")
-        original = self.root / self.folder / "gallery_org" / ("a" * 64) / "original.jpg"
-        original.parent.mkdir(parents=True)
+        original = self.root / "_processing" / self.folder / ("a" * 32) / "original.jpg"
+        original.parent.mkdir(parents=True, exist_ok=True)
         original.write_bytes(b"exact retained original")
         before = {path: path.read_bytes() for path in (auxiliary, original, *(photo.path for photo in photos))}
         incoming = self.photo(200000, "Various")

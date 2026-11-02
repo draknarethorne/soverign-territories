@@ -1165,7 +1165,7 @@ def cmd_promote(args):
     if chosen_path is None:
         sys.exit(f"promotion folders updated, but selected photo {chosen.name} was not found after originals; choose a photo with inputs set {hero}")
     width, height = cfg.get("standardSize") or (944, 1104)
-    scaled = current / f"gallery_{width}x{height}" / f"{chosen_path.stem}_{width}x{height}.png"
+    scaled = cw.derivative_dir(current, "full", (width, height)) / f"{chosen_path.stem}_{width}x{height}.png"
     if not scaled.is_file():
         sys.exit(f"promotion folders updated, but selected scaled photo is missing: {scaled}")
 
@@ -2026,7 +2026,7 @@ def cmd_photos(args):
             alt = f"; the best other photo in her folder scores {best_s[0] - cur[0][0]:+.2f} but is a different look: {best.name}" if cur and best_s[0] - cur[0][0] >= args.margin else ""
             rows.append((name, chosen[name], "kept: the sister's photo is your choice" + alt, cur[0][1] if cur else "", "", ""))
             continue
-        scaled = best.path.parent.parent / f"gallery_{cfg['standardSize'][0]}x{cfg['standardSize'][1]}" / f"{best.path.stem}_{cfg['standardSize'][0]}x{cfg['standardSize'][1]}.png"
+        scaled = cw.derivative_dir(best.path.parent.parent, "full", cfg['standardSize']) / f"{best.path.stem}_{cfg['standardSize'][0]}x{cfg['standardSize'][1]}.png"
         rows.append((name, chosen[name], f"-> {best.name}", best_s[1], best.name, ("%+.2f" % (best_s[0] - cur[0][0])) if cur else why))
         if scaled.exists() and scaled.name != chosen[name]:
             renames[name] = (chosen[name], scaled)
@@ -2271,7 +2271,7 @@ def cmd_pairs(args):
         if not found or not hero:
             print(f"  no photo set for {slot} ({'photo not found' if not found else 'not in workspaces.json photos'})")
             continue
-        scaled = found.parent.parent / f"gallery_{cfg2['standardSize'][0]}x{cfg2['standardSize'][1]}" / f"{found.stem}_{cfg2['standardSize'][0]}x{cfg2['standardSize'][1]}.png"
+        scaled = cw.derivative_dir(found.parent.parent, "full", cfg2['standardSize']) / f"{found.stem}_{cfg2['standardSize'][0]}x{cfg2['standardSize'][1]}.png"
         if scaled.exists() and cfg2["photos"][hero] != scaled.name:
             renames[hero] = (cfg2["photos"][hero], scaled)
             print(f"  photo for {slot}: {cfg2['photos'][hero]} -> {scaled.name}")
@@ -3163,7 +3163,7 @@ def cmd_index(args):
         like = max(((float(c @ space.centroid(t)), t) for t in top if t != key and space.by_key.get(t)), default=(None, ""), key=lambda r: r[0]) if c is not None else (None, "")
         rows.append({
             "status": status_of(key), "folder": key.split("/", 1)[1], "name": people.name_of(folder) or "",
-            "photos": len(originals.images(folder / "gallery")), "headshots": len(list((folder / f"headshot_{cfg.get('standardSize', [944, 1104])[0]}x{cfg.get('standardSize', [944, 1104])[1]}").glob("*.png"))),
+            "photos": len(originals.images(folder / "gallery")), "headshots": len(list(cw.derivative_dir(folder, "head", cfg.get('standardSize', [944, 1104])).glob("*.png"))),
             "review": len(originals.images(folder / "review")), "best_prime_photo": best.name if best else "",
             "looks_like": like[1].split("/", 1)[1] if like[1] and like[0] is not None and like[0] >= 0.20 else "", "looks_like_score": f"{like[0]:.2f}" if like[0] is not None and like[0] >= 0.20 else "",
             "reserved": "yes" if people.reserved(folder) else "",

@@ -22,8 +22,11 @@
 - [ ] T17 Capture recipe-aware run statistics and publish a compact intake summary with expandable/linked details: input/outcome counts, overlay types, each attempted/executed/skipped/failed step, reconstruction/composition, ... ([intake performance](plans/2026-10-28-intake-performance.md))
 - [ ] S27 Complete the isolated full replay, installed verification, Gallery/Overview/Review/history and materialized backup recovery; persist phase times, overlapping storage scopes, equality results and baseline seals. Show ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S30 After the replay blocker is resolved, audit real Various-to-Sister/Angel admissions, cast core/workflow retention, eligible low-score releases/Review/reassignment, and original-name plus surname presentation. ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
-- [ ] LY2 Implement the `_processing` store in `retained_preparation.py` (new `processing` storage root, per-set manifest with `current` path, a rebuildable lookup, manifest-only transfers, LEAN retention per (e)) and refuse the old ... ([library layout](plans/2026-11-02-library-layout.md))
-- [ ] LY3 Update install/replay (move, not copy), backup scope and small path users to the new API; run the affected test files. ([library layout](plans/2026-11-02-library-layout.md))
+- [ ] LY4 Reset the sandbox from production (`sandbox-reset --full` plus the carried bundle), run the clean LEAN rebase in place with per-step timings (Acronis off), verify Gallery/Overview/Review, then hand to storage S32/S27 and ... ([library layout](plans/2026-11-02-library-layout.md))
+
+**P2 (normal)**
+
+- [ ] LY6 Rewrite the layout sections in `docs/art/original-photos.md` and `likeness.md` (layout and retained-storage text updated Nov 2) and add the fresh-sandbox step-by-step runbook, confirmed by the LY4 run; production adopts ... ([library layout](plans/2026-11-02-library-layout.md))
 
 <details>
 <summary>Deferred work by owning plan</summary>
@@ -52,7 +55,7 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-10-25-reference-rendering.md](plans/2026-10-25-reference-rendering.md) | holding | 27 |
 | [2026-10-28-intake-performance.md](plans/2026-10-28-intake-performance.md) | active | 7 |
 | [2026-10-28-storage-operations-and-retention.md](plans/2026-10-28-storage-operations-and-retention.md) | active | 13 |
-| [2026-11-02-library-layout.md](plans/2026-11-02-library-layout.md) | active | 3 |
+| [2026-11-02-library-layout.md](plans/2026-11-02-library-layout.md) | active | 1 |
 
 </details>
 

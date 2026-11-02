@@ -4,6 +4,7 @@ import copy
 import io
 import json
 import pathlib
+import sys
 import tempfile
 import unittest
 from types import SimpleNamespace
@@ -12,7 +13,8 @@ from unittest import mock
 
 import numpy as np
 
-from tools.art.likeness_library import family_preview, policy
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2]))
+from tools.art.likeness_library import family_preview, policy  # noqa: E402
 
 
 class Identity(TypedDict):

@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """Keep the original-photo library in step with what you drop in it (preview unless --apply).
 
-The library is <work root>/<Root>/<Name>/gallery (your originals) and <Name>/gallery_944x1104 (what this makes), for the roots
+The library is <work root>/<Root>/<Name>/gallery (your originals) and <Name>/944x1104/full and /head (what this makes), for the roots
 Angels, Sisters, Prospects, Artists and Various (workspaces.json paths.photoRoots; the old name Models is still read). For every <Name> folder that has a gallery:
 
+  0. MOVE    the scaled copies still in the former gallery_944x1104, headshot_944x1104 and chest_944x1104 folders (and their review_
+             twins) into 944x1104/full, head and chest (renames only; a byte-identical copy already there is dropped, a different one is
+             kept in the old folder and reported).
   1. RENAME  each original after the FOLDER it is in. Whatever it was called before (another angel, a sister, a prospect, an artist, a facebook
              download, a phone screenshot), its id is kept and only the prefix changes. Rename the folder itself and every name follows.
              The convention is  <name>_image_<facebook id>,  <name>_shot_<yyyymmddhhmmss>  (a screenshot) and  <name>_pic_<8 hex>  (anything with
@@ -16,7 +19,7 @@ Angels, Sisters, Prospects, Artists and Various (workspaces.json paths.photoRoot
              probable duplicates.
   2. SCALE   each original onto a light-grey 944x1104 canvas (shape kept, EXIF rotation applied) as <name>_..._944x1104.png.
              A copy that is already newer than its original is left alone (--force makes them all again).
-  3. PRUNE   every image in gallery_944x1104 that no original in that folder's gallery makes any more (you deleted or moved the
+  3. PRUNE   every image in 944x1104/full that no original in that folder's gallery makes any more (you deleted or moved the
              original, or it has an old name). They are moved into <work root>/_archive/<the folder's path>/gallery_944x1104_org, never
              deleted, so the person folders hold only what is live; other files are never touched.
   4. REPOINT (with --apply) a photo you chose in workspaces.json ("photos") that was renamed or moved is pointed at its new name in
@@ -295,9 +298,56 @@ class Faces:
         self.cache.save()
 
 
+def same_bytes(a, b):
+    import filecmp
+    return filecmp.cmp(a, b, shallow=False)
+
+
+def migrate_layout(folder, size, apply):
+    """Move the former gallery_/headshot_/chest_<W>x<H> folders (and review_ ones) into <folder>/<W>x<H>/{full,head,chest}
+    by rename only, and carry the derivative manifest along with its keys rewritten. A file already at the new place is
+    dropped when byte-identical and otherwise kept where it is and reported. Returns (moved, conflicts)."""
+    from likeness_library import derivatives
+    moved, conflicts = 0, []
+    for old, new in cw.legacy_derivative_dirs(folder, size):
+        if not old.is_dir():
+            continue
+        for p in sorted(old.iterdir()):
+            dest = new / p.name
+            if not p.is_file() or (dest.exists() and not (dest.is_file() and same_bytes(p, dest))):
+                conflicts.append(f"{p} (differs from {dest})" if dest.exists() else f"{p} (not a file)")
+                continue
+            moved += 1
+            if apply:
+                if dest.exists():
+                    p.unlink()
+                else:
+                    dest.parent.mkdir(parents=True, exist_ok=True)
+                    os.replace(p, dest)
+        if apply and not any(old.iterdir()):
+            old.rmdir()
+    legacy = pathlib.Path(folder) / derivatives.MANIFEST
+    if legacy.is_file():
+        data = json.loads(legacy.read_text(encoding="utf-8"))
+        current = derivatives.load(folder)
+        entries = dict(current.get("entries", {}))
+        clash = False
+        for key, record in data.get("entries", {}).items():
+            key = derivatives.legacy_key(key) or key
+            if key in entries and entries[key] != record:
+                conflicts.append(f"{legacy}: {key} differs from {derivatives.manifest_path(folder)}")
+                clash = True
+            entries.setdefault(key, record)
+        moved += 1
+        if apply and not clash:
+            derivatives.save(folder, {**data, **current, "entries": entries})
+            legacy.unlink()
+    return moved, conflicts
+
+
 def make_headshots(sources, folder, size, args, tally, faces):
-    """headshot_<W>x<H>/<name>_<W>x<H>.png for every original with a usable face (not made again while newer than the original); copies whose original is gone, or has no face, are moved to the _archive copy of headshot_<W>x<H>_org."""
-    out_dir, archive = folder / f"headshot_{size[0]}x{size[1]}", archive_dir(folder, args.work, f"headshot_{size[0]}x{size[1]}_org")
+    """<W>x<H>/head/<name>_head_<W>x<H>.png for every original with a usable face (not made again while newer than the original); copies whose original is gone, or has no face, are moved to the _archive copy of headshot_<W>x<H>_org."""
+    out_dir, archive = cw.derivative_dir(folder, "head", size), archive_dir(folder, args.work, f"headshot_{size[0]}x{size[1]}_org")
     wanted, made, skipped = set(), 0, 0
     for path, final in sources:
         name = f"{re.sub(r'_[0-9]+x[0-9]+$', '', os.path.splitext(final)[0])}_head_{size[0]}x{size[1]}.png"  # _head_ keeps it apart from the full photo's copy in a ComfyUI input folder
@@ -307,7 +357,7 @@ def make_headshots(sources, folder, size, args, tally, faces):
             continue
         wanted.add(name.lower())
         dest = out_dir / name
-        if not args.force and is_fresh(path, dest, size):
+        if not args.force and is_fresh(path, current_copy(dest, folder, size), size):
             continue
         if not args.apply:
             if headshot(path, None, size, box):
@@ -316,7 +366,7 @@ def make_headshots(sources, folder, size, args, tally, faces):
                 skipped += 1
                 wanted.discard(name.lower())
             continue
-        out_dir.mkdir(exist_ok=True)
+        out_dir.mkdir(parents=True, exist_ok=True)
         try:
             ok = headshot(path, dest, size, box)
         except Exception as e:  # noqa: BLE001
@@ -341,10 +391,26 @@ def make_headshots(sources, folder, size, args, tally, faces):
     tally["headshots_pruned"] = tally.get("headshots_pruned", 0) + len(stale)
 
 
+def current_copy(dest, folder, size):
+    """dest, or where it still is in a former <prefix>_<W>x<H> folder (a preview runs before the layout move)."""
+    if dest.exists():
+        return dest
+    for old, new in cw.legacy_derivative_dirs(folder, size):
+        if new == dest.parent:
+            return old / dest.name
+    return dest
+
+
 def process_folder(folder, label, size, args, tally):
-    gallery, out_dir = folder / "gallery", folder / f"gallery_{size[0]}x{size[1]}"
+    gallery, out_dir = folder / "gallery", cw.derivative_dir(folder, "full", size)
     prefix = prefix_of(folder.name)
     print(f"----------------------------------------------------------\n>>> {label}   (prefix: {prefix})")
+    moved, conflicts = migrate_layout(folder, size, args.apply)
+    if moved:
+        print(f"  {'MOVED' if args.apply else 'move '} {moved} scaled cop{'y' if moved == 1 else 'ies'} into {cw.derivative_root(folder, size).name}/")
+    for conflict in conflicts:
+        print(f"  WARNING kept in the old folder: {conflict}")
+    tally["layout"] = tally.get("layout", 0) + (0 if args.apply else moved) + len(conflicts)
     files = images(gallery)
     taken = {p.name.lower() for p in files}
     # prefixes these files still carry (the folder was renamed, or they came from another one) are swapped like any other folder's
@@ -362,8 +428,7 @@ def process_folder(folder, label, size, args, tally):
             if args.apply:
                 from likeness_library import retained_preparation
 
-                retained = folder / "gallery_intake"
-                if retained.exists():
+                if retained_preparation.has_sets(args.work, folder):
                     retained_preparation.rename_photo(args.work, p, gallery / new)
                 elif case_only:
                     hop = p.with_name(p.name + ".rename_tmp")
@@ -398,13 +463,13 @@ def process_folder(folder, label, size, args, tally):
         wanted[out_name.lower()] = out_name  # kept even if it cannot be read now, so its old copy is not pruned
         dest = out_dir / out_name
         if not args.apply:
-            if args.force or not is_fresh(path, dest, size):
+            if args.force or not is_fresh(path, current_copy(dest, folder, size), size):
                 print(f"  convert {final} -> {out_name}")
                 made += 1
             continue
         if not args.force and is_fresh(path, dest, size):
             continue
-        out_dir.mkdir(exist_ok=True)
+        out_dir.mkdir(parents=True, exist_ok=True)
         try:
             fit(path, dest, size, args.faces.of(path)[0] if getattr(args, "faces", None) else None)
             made += 1
@@ -437,7 +502,7 @@ def main(argv=None, faces=None, *, configuration=None):
     ap.add_argument("--root", help="the folder that holds Angels, Sisters, Prospects, Artists and Various (default: workspaces.json paths.productionRoot)")
     ap.add_argument("--force", action="store_true", help="make every copy again, even ones newer than their original")
     ap.add_argument("--no-repoint", action="store_true", help="do not re-point chosen photos in workspaces.json and the workflows")
-    ap.add_argument("--no-headshots", action="store_true", help="do not make the headshot_944x1104 copies (the face, cropped and scaled up)")
+    ap.add_argument("--no-headshots", action="store_true", help="do not make the 944x1104/head copies (the face, cropped and scaled up)")
     ap.add_argument("--check", action="store_true", help="preview only, then say IN SYNC or OUT OF SYNC (exit 1): is every gallery's scaled copy and headshot there, and nothing left over? Run it after moving photos about")
     ap.add_argument("--archive-old", action="store_true", help="move the *_org folders already in the library into <work root>/_archive (mirrored paths, with a manifest)")
     ap.add_argument("--undo-archive", action="store_true", help="put the files of the last --archive-old back")
@@ -476,7 +541,7 @@ def main(argv=None, faces=None, *, configuration=None):
           + (f", {tally.get('headshots', 0)} headshot(s) {'made' if args.apply else 'to make'}" if args.faces else ""))
     if args.check:
         todo = {"renamed": tally["renamed"], "scaled copies to make": tally["made"], "scaled copies to prune": tally["pruned"], "headshots to make": tally.get("headshots", 0),
-                "headshots to prune": tally.get("headshots_pruned", 0)}
+                "headshots to prune": tally.get("headshots_pruned", 0), f"scaled copies to move into {size[0]}x{size[1]}/ (or kept back by a conflict)": tally.get("layout", 0)}
         todo = {k: v for k, v in todo.items() if v}
         print("IN SYNC: every gallery has its scaled copy and headshot, and nothing is left over." if not todo
               else "OUT OF SYNC: " + ", ".join(f"{v} {k}" for k, v in todo.items()) + ".  Run bin\\originals.cmd to bring them in step.")

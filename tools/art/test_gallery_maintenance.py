@@ -133,7 +133,7 @@ class MaintenanceTests(unittest.TestCase):
         source = review / "person_image_987.jpg"
         self.assertTrue(source.exists())
         target, _ = derivatives.verified(source, "chest", self.box)
-        self.assertEqual(target.parent.name, "review_chest_944x1104")
+        self.assertEqual(target.parent.relative_to(source.parent.parent).as_posix(), "944x1104/review/chest")
 
     def test_thumbnail_changes_with_recipe_box_or_derivative_and_never_recrops_original(self):
         self.call("--apply")
@@ -152,7 +152,7 @@ class MaintenanceTests(unittest.TestCase):
 
     def test_hand_edited_and_unowned_derivatives_are_preserved_and_backed_up(self):
         target = self.folder / derivatives.relative_target(self.photo, "chest")
-        target.parent.mkdir()
+        target.parent.mkdir(parents=True)
         target.write_bytes(b"manual image")
         before = target.read_bytes()
         changes, messages = derivatives.maintain(self.photo, self.box, 120, apply=True)
@@ -172,7 +172,7 @@ class MaintenanceTests(unittest.TestCase):
         self.assertEqual(self.call("--apply"), 0)
         source = self.gallery / "fixed_slot_image_123.jpg"
         target, _ = derivatives.verified(source, "chest", self.box)
-        manifest = self.folder / derivatives.MANIFEST
+        manifest = derivatives.manifest_path(self.folder)
         manifest.unlink()
         timestamp = target.stat().st_mtime_ns
         changes, messages = derivatives.maintain(source, self.box, 120, apply=True)

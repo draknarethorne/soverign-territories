@@ -26,9 +26,13 @@ def independent_count(rows, policy):
 
 def retained_transition_hold(root, folder):
     """Identity-wide inventories cannot yet journal retained-set ownership."""
-    path = pathlib.Path(root) / folder / "gallery_intake"
-    original = pathlib.Path(root) / folder / "gallery_org"
-    if any(candidate.exists() or candidate.is_symlink() for candidate in (path, original)):
+    from . import retained_preparation
+
+    try:
+        held = retained_preparation.has_sets(root, folder)
+    except ValueError as exc:
+        return str(exc)
+    if held:
         return "retained preparation holds identity-wide transition; photo membership moves remain eligible"
     return None
 
@@ -148,7 +152,7 @@ def merge_actions(space, cores, catalog, locked_ids, selected_ids, policy, root,
 def relocated_path(action, relative):
     suffix = pathlib.PurePosixPath(relative).relative_to(action["sourceFolder"])
     if action["type"] == "identity-merge" and suffix.parts[0] not in (
-        "gallery", "review", "gallery_944x1104", "gallery_911x1104", "headshots",
+        "gallery", "review", "944x1104", "gallery_944x1104", "gallery_911x1104", "headshots",
     ):
         suffix = pathlib.PurePosixPath("_identity-history", action["personId"]) / suffix
     return (pathlib.PurePosixPath(action["destinationFolder"]) / suffix).as_posix()

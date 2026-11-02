@@ -350,6 +350,7 @@ STORAGE_ROOT_DEFAULTS = {
     "actions": "_actions",
     "junk": "_junk",
     "retired": "_retired",
+    "processing": "_processing",
     "sandboxState": "_sandbox-state",
     "temporary": "_tmp",
 }
@@ -2398,30 +2399,52 @@ def photo_folders(cfg, base=None):
     return out
 
 
-def photo_library(cfg, base=None):
-    """[(folder name, path)] of every scaled original: <folder>/gallery_<W>x<H>/*.png, for each library folder and each person grouped inside an artist's folder (the _org archive folders are not part of it)."""
-    w, h = cfg.get("standardSize") or (944, 1104)
+# Scaled-copy kind -> the folder prefix it had before the copies were grouped under <person>/<W>x<H> (Nov 2, 2026).
+DERIVATIVE_KINDS = {"full": "gallery", "head": "headshot", "chest": "chest"}
+
+
+def derivative_root(folder, size=(944, 1104)):
+    """<person>/<W>x<H>: every scaled copy of a person's photos, kept apart from the gallery and review originals."""
+    return pathlib.Path(folder) / f"{size[0]}x{size[1]}"
+
+
+def derivative_dir(folder, kind, size=(944, 1104), review=False):
+    """<person>/<W>x<H>/<kind>, or <person>/<W>x<H>/review/<kind> for copies of Review photos; kind is full, head or chest."""
+    if kind not in DERIVATIVE_KINDS:
+        raise ValueError(f"unknown derivative kind: {kind}")
+    root = derivative_root(folder, size)
+    return (root / "review" if review else root) / kind
+
+
+def legacy_derivative_dirs(folder, size=(944, 1104)):
+    """[(old folder, new folder)]: the former <prefix>_<W>x<H> and review_<prefix>_<W>x<H> folders beside gallery."""
+    return [(pathlib.Path(folder) / f"{'review_' if review else ''}{old}_{size[0]}x{size[1]}",
+             derivative_dir(folder, kind, size, review))
+            for review in (False, True) for kind, old in DERIVATIVE_KINDS.items()]
+
+
+def _derivative_library(cfg, base, kind):
+    size = cfg.get("standardSize") or (944, 1104)
     out = []
     for root in photo_roots(cfg, base):
         for d in ([root] if (root / "gallery").is_dir() else sorted(p for p in root.iterdir() if p.is_dir())):
             for name, folder in [(d.name, d)] + [(f"{d.name}/{s.name}", s) for s in sorted(p for p in d.iterdir() if p.is_dir())]:
-                g = folder / f"gallery_{w}x{h}"
+                g = derivative_dir(folder, kind, size)
+                if not g.is_dir():
+                    g = folder / f"{DERIVATIVE_KINDS[kind]}_{size[0]}x{size[1]}"  # not yet moved by originals.cmd
                 if g.is_dir():
                     out += [(name, f) for f in sorted(g.glob("*.png"))]
     return out
+
+
+def photo_library(cfg, base=None):
+    """[(folder name, path)] of every scaled original: <folder>/<W>x<H>/full/*.png, for each library folder and each person grouped inside an artist's folder (the _archive copies are not part of it)."""
+    return _derivative_library(cfg, base, "full")
 
 
 def headshot_library(cfg, base=None):
-    """[(folder name, path)] of each derived headshot input, separate from the scaled originals."""
-    w, h = cfg.get("standardSize") or (944, 1104)
-    out = []
-    for root in photo_roots(cfg, base):
-        for d in ([root] if (root / "gallery").is_dir() else sorted(p for p in root.iterdir() if p.is_dir())):
-            for name, folder in [(d.name, d)] + [(f"{d.name}/{s.name}", s) for s in sorted(p for p in d.iterdir() if p.is_dir())]:
-                g = folder / f"headshot_{w}x{h}"
-                if g.is_dir():
-                    out += [(name, f) for f in sorted(g.glob("*.png"))]
-    return out
+    """[(folder name, path)] of each derived headshot input (<folder>/<W>x<H>/head), separate from the scaled originals."""
+    return _derivative_library(cfg, base, "head")
 
 
 PHOTO_KEY = re.compile(r"(image_\d+|(?:screenshot|shot)_\d{8}_?\d{6}|pic_[0-9a-f]{8})", re.I)

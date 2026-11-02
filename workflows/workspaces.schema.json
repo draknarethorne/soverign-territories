@@ -92,6 +92,7 @@
         "actions",
         "junk",
         "retired",
+        "processing",
         "sandboxState",
         "temporary"
       ],
@@ -103,6 +104,7 @@
         "actions": {"type": "string", "minLength": 1},
         "junk": {"type": "string", "minLength": 1},
         "retired": {"type": "string", "minLength": 1},
+        "processing": {"type": "string", "minLength": 1},
         "sandboxState": {"type": "string", "minLength": 1},
         "temporary": {"type": "string", "minLength": 1}
       },

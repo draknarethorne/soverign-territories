@@ -20,6 +20,55 @@ MAX_MANIFEST_BYTES = 8 * 1024 * 1024
 MAX_ARTIFACTS = 256
 MAX_SETS = 5000
 MANIFEST = "manifest.json"
+FULL_VERSION, LEAN_VERSION = 3, 4
+LEGACY_FOLDERS = ("gallery_intake", "gallery_org")
+
+
+def _processing_prefix(root, cfg=None):
+    return "/".join(_storage_prefix(root, "processing", cfg))
+
+
+def _set_folder(root, owner, set_key):
+    """One folder per set beneath the processing store, mirroring the owner path."""
+    return f"{_processing_prefix(root)}/{owner}/{set_key}"
+
+
+class LegacyLayoutError(ValueError):
+    """The library still uses the retired in-person gallery_intake/gallery_org layout."""
+
+
+def _refuse_legacy(owner_path):
+    for name in LEGACY_FOLDERS:
+        if (pathlib.Path(owner_path) / name).exists():
+            raise LegacyLayoutError(
+                f"legacy in-person processing layout at {pathlib.Path(owner_path) / name}; "
+                "reset the sandbox and rebase on the _processing layout")
+
+
+def has_sets(root, owner):
+    """Whether an owner folder (root-relative POSIX or absolute) has retained processing sets."""
+    root = pathlib.Path(root).absolute()
+    owner = pathlib.Path(owner)
+    if not owner.is_absolute() and root in owner.absolute().parents:
+        owner = owner.absolute()
+    relative = owner.relative_to(root).as_posix() if owner.is_absolute() else owner.as_posix()
+    _refuse_legacy(root / relative)
+    folder = root.joinpath(*_storage_prefix(root, "processing"), *pathlib.PurePosixPath(relative).parts)
+    return folder.is_dir() and any(
+        child.is_dir() and re.fullmatch("[0-9a-f]{32}", child.name) for child in folder.iterdir())
+
+
+def _omitted(row, name, field, lean):
+    """LEAN keeps masks, selected chain outputs, the final padding and all thumbnails."""
+    if not lean or name is None or field == "thumbnail" or "mask" in name:
+        return False
+    final = row.get("processing", {}).get("final", row.get("recommendation", {}).get("use", "original"))
+    if field == "padded":
+        return name != final
+    chain = {step.get("selected") for step in row.get("processing", {}).get("steps", [])
+             if isinstance(step, dict)} | {final}
+    # Control is the EXIF-oriented sRGB re-encoding of the retained original.
+    return name == "control" or name not in chain
 
 
 def _safe(root, relative):
@@ -105,18 +154,23 @@ def _set_key(source_hash, source, photo_id, domain, recipe):
 
 
 def _image_artifacts(row):
-    for index, record in enumerate(row.get("variants", {}).values()):
+    for index, (name, record) in enumerate(row.get("variants", {}).items()):
         for field, checksum in (("path", "sha256"), ("thumbnail", "thumbnailSha256"),
                                 ("padded", "paddedSha256")):
             if field == "padded" and field not in record and checksum not in record:
                 continue
-            yield f"v{index:02d}-{field}", record[field], record[checksum]
+            yield f"v{index:02d}-{field}", record[field], record[checksum], name, field
     if row.get("recommendedPadded"):
         record = row["recommendedPadded"]
         if (row.get("recommendation", {}).get("use") != "original"
                 or record["source"] != row["retained"]):
             raise ValueError("retained original padding differs from recommendation")
-        yield "recommended-padded", record["path"], record["sha256"]
+        yield "recommended-padded", record["path"], record["sha256"], None, "padded"
+
+
+def _thumbnails(row):
+    return {record[field]: record["thumbnail"] for record in row.get("variants", {}).values()
+            for field in ("path", "padded") if field in record and "thumbnail" in record}
 
 
 def _detail_navigation(root, current, detail, domain, *, include_gallery_navigation=False):
@@ -226,30 +280,33 @@ def stage_photo(root, destination, preparation_root, preparation_row, *, recipe,
     if native_hash != expected:
         raise ValueError("native photo does not match selected preparation bytes")
     set_key = _set_key(source_hash, row["source"], row.get("photoId"), domain, recipe)
-    intake = f"{owner}/gallery_intake/{set_key}"
-    org = f"{owner}/gallery_org/{set_key}"
-    for folder in (intake, org):
-        if _safe(root, folder).exists():
-            raise ValueError(f"retained preparation already exists: {folder}")
+    _refuse_legacy(_safe(root, owner))
+    set_folder = _set_folder(root, owner, set_key)
+    if _safe(root, set_folder).exists():
+        raise ValueError(f"retained preparation already exists: {set_folder}")
     shared = storage_mode == "lean"
-    original_relative = destination if shared and native_hash == source_hash else f"{org}/original{original.suffix.lower()}"
+    original_relative = (destination if shared and native_hash == source_hash
+                         else f"{set_folder}/original{original.suffix.lower()}")
     payloads = {} if original_relative == destination else {original_relative: original.read_bytes()}
     aliases = {native_hash: destination, source_hash: original_relative} if shared else {}
     detail = _checked(preparation_root, row["detail"], row["detailSha256"])
     if len(row.get("variants", {})) > (MAX_ARTIFACTS - 3) // 3:
         raise ValueError("too many retained preparation variants")
-    artifact_map = {}
-    for label, relative, checksum in _image_artifacts(row):
+    artifact_map, omitted = {}, {}
+    for label, relative, checksum, name, field in _image_artifacts(row):
         artifact = _checked(preparation_root, relative, checksum)
-        if relative in artifact_map:
+        if relative in artifact_map or relative in omitted:
             continue
         if relative == row["retained"]:
             artifact_map[relative] = original_relative
             continue
+        if _omitted(row, name, field, shared):
+            omitted[relative] = checksum
+            continue
         if shared and checksum in aliases:
             artifact_map[relative] = aliases[checksum]
             continue
-        key = f"{intake}/{label}{artifact.suffix.lower()}"
+        key = f"{set_folder}/{label}{artifact.suffix.lower()}"
         if key in payloads:
             raise ValueError("repeated retained preparation artifact")
         artifact_map[relative] = key
@@ -258,7 +315,7 @@ def stage_photo(root, destination, preparation_root, preparation_row, *, recipe,
             aliases[checksum] = key
     if len(payloads) > MAX_ARTIFACTS - 2:
         raise ValueError("too many retained preparation artifacts")
-    detail_relative = f"{intake}/detail.html"
+    detail_relative = f"{set_folder}/detail.html"
     detail_target = _safe(root, detail_relative)
     original_href = os.path.relpath(_safe(root, original_relative), detail_target.parent).replace(os.sep, "/")
     text = detail.read_text(encoding="utf-8")
@@ -266,9 +323,15 @@ def stage_photo(root, destination, preparation_root, preparation_row, *, recipe,
         raise ValueError("preparation detail changed during publication")
     text = text.replace(quote("../" + row["retained"]), quote(original_href, safe="/._-"))
     text = text.replace(quote("../" + row["detail"]), "#top")
-    for source_relative, published_relative in artifact_map.items():
+    thumbnails = _thumbnails(row)
+    published = dict(artifact_map)
+    published.update({relative: artifact_map[thumbnails[relative]] for relative in omitted
+                      if thumbnails.get(relative) in artifact_map})
+    for source_relative, published_relative in published.items():
         href = os.path.relpath(_safe(root, published_relative), detail_target.parent).replace(os.sep, "/")
         text = text.replace(quote("../" + source_relative), quote(href, safe="/._-"))
+    for source_relative in omitted:
+        text = text.replace(quote("../" + source_relative), "#top")
     text = text.replace('href="../index.html"', 'href="#top"')
     text = text.replace("Back to comparison gallery", "Back to retained comparison")
     text = re.sub(r' style="--st-banner:url\([^"]*\)"', "", text)
@@ -283,17 +346,17 @@ def stage_photo(root, destination, preparation_root, preparation_row, *, recipe,
         raise ValueError("detail collides with retained variant")
     payloads[detail_relative] = text.encode("utf-8")
     data = {
-        "formatVersion": 2 if shared else 1, "sourceSha256": source_hash, "setKey": set_key,
+        "formatVersion": LEAN_VERSION if shared else FULL_VERSION, "sourceSha256": source_hash, "setKey": set_key,
         "original": original_relative, "current": destination, "currentSha256": native_hash,
         "photoId": metadata.photo_id_from_name(native.name) or row.get("photoId"),
         "domain": domain, "recipe": recipe,
         "selected": selected, "detail": detail_relative, "detailSourceSha256": row["detailSha256"],
-        "artifactMap": artifact_map,
+        "artifactMap": artifact_map, "omitted": omitted,
         "row": row,
         "artifacts": [{"path": key, "sha256": hashlib.sha256(payload).hexdigest()}
                       for key, payload in payloads.items()],
     }
-    manifest_relative = f"{intake}/{MANIFEST}"
+    manifest_relative = f"{set_folder}/{MANIFEST}"
     payloads[manifest_relative] = (json.dumps(data, indent=2) + "\n").encode("utf-8")
     if len(payloads[manifest_relative]) > MAX_MANIFEST_BYTES:
         raise ValueError("retained preparation manifest too large")
@@ -314,21 +377,31 @@ def stage_photo(root, destination, preparation_root, preparation_row, *, recipe,
     except Exception:
         for target in reversed(completed):
             target.unlink()
-        for folder in (intake, org):
-            target = _safe(root, folder)
-            if target.exists():
-                for child in sorted(target.rglob("*"), reverse=True):
-                    if child.is_dir():
-                        child.rmdir()
-                target.rmdir()
+        _prune_empty(root, set_folder)
         raise
     return [{"path": relative, "sha256": hashlib.sha256(payload).hexdigest()}
             for relative, payload in payloads.items()]
 
 
+def _prune_empty(root, folder):
+    """Remove an empty set folder and empty owner parents, never the store itself."""
+    store = _safe(root, _processing_prefix(root))
+    target = _safe(root, folder)
+    if target.exists():
+        for child in sorted(target.rglob("*"), reverse=True):
+            if child.is_dir():
+                child.rmdir()
+        target.rmdir()
+    parent = target.parent
+    while parent != store and store in parent.parents and parent.exists() and not any(parent.iterdir()):
+        parent.rmdir()
+        parent = parent.parent
+
+
 def _manifests(root, current):
     owner = _owner(current, root)
-    directory = _safe(root, f"{owner}/gallery_intake")
+    _refuse_legacy(_safe(root, owner))
+    directory = _safe(root, f"{_processing_prefix(root)}/{owner}")
     reads = verification_reads.active()
     cache_key = (pathlib.Path(root).absolute(), directory)
     if reads is not None and cache_key in reads.manifests:
@@ -342,10 +415,11 @@ def _manifests(root, current):
         if count >= MAX_SETS:
             raise ValueError("retained preparation index exceeds bounded set count")
         _safe(root, child.relative_to(root).as_posix())
-        if child.is_dir():
-            if not re.fullmatch("[0-9a-f]{32}", child.name):
-                raise ValueError("unexpected retained preparation set")
-            paths.append(_safe(root, f"{owner}/gallery_intake/{child.name}/{MANIFEST}"))
+        # Owner folders can nest (e.g. Artists/<artist>/<person>); only 32-hex folders are sets.
+        if child.is_dir() and re.fullmatch("[0-9a-f]{32}", child.name):
+            paths.append(_safe(root, f"{_processing_prefix(root)}/{owner}/{child.name}/{MANIFEST}"))
+        elif not child.is_dir():
+            raise ValueError(f"unexpected file in processing store: {child}")
     if reads is not None:
         reads.manifests[cache_key] = paths
     return paths
@@ -355,13 +429,13 @@ def _load(path):
     reads = verification_reads.active()
     if reads is not None:
         data = reads.document(path, MAX_MANIFEST_BYTES)
-        if data.get("formatVersion") not in (1, 2):
+        if data.get("formatVersion") not in (FULL_VERSION, LEAN_VERSION):
             raise ValueError("unsupported retained preparation manifest")
         return data
     if path.stat().st_size > MAX_MANIFEST_BYTES:
         raise ValueError("retained preparation manifest too large")
     data = json.loads(path.read_text(encoding="utf-8"))
-    if data.get("formatVersion") not in (1, 2):
+    if data.get("formatVersion") not in (FULL_VERSION, LEAN_VERSION):
         raise ValueError("unsupported retained preparation manifest")
     return data
 
@@ -384,21 +458,20 @@ def verify_link(root, current_photo, photo_id=None):
             if _digest(native) != data["currentSha256"]:
                 return None
             artifacts = data["artifacts"]
-            shared = data["formatVersion"] == 2
+            shared = data["formatVersion"] == LEAN_VERSION
             if not (1 if shared else 2) <= len(artifacts) <= MAX_ARTIFACTS:
                 return None
             source_hash = data["sourceSha256"]
             set_key = data["setKey"]
             row = data["row"]
+            set_folder = _set_folder(root, owner, set_key)
             if (manifest.parent.name != set_key or set_key != _set_key(
                     source_hash, row["source"], row.get("photoId"), data["domain"], data["recipe"])):
                 return None
             paths = {}
             for entry in artifacts:
                 relative = entry["path"]
-                if (relative in paths or not (
-                        relative.startswith(f"{owner}/gallery_org/{set_key}/")
-                        or relative.startswith(f"{owner}/gallery_intake/{set_key}/"))):
+                if relative in paths or not relative.startswith(f"{set_folder}/"):
                     return None
                 paths[relative] = _checked(root, relative, entry["sha256"])
             owned_paths = set(paths)
@@ -414,12 +487,25 @@ def verify_link(root, current_photo, photo_id=None):
             if scope and scope.get("matchingDomain") != data["domain"]:
                 return None
             expected_paths = {data["original"], data["detail"]}
-            for _, source_relative, checksum in _image_artifacts(row):
-                relative = data.get("artifactMap", {}).get(
-                    source_relative, f"{owner}/gallery_intake/{set_key}/{source_relative}")
-                if relative not in paths or _digest(paths[relative]) != checksum:
+            omitted = data.get("omitted", {})
+            expected_omitted, seen = {}, set()
+            for _, source_relative, checksum, name, field in _image_artifacts(row):
+                if source_relative in seen:
+                    relative = data.get("artifactMap", {}).get(source_relative)
+                    if (expected_omitted.get(source_relative, checksum) != checksum or relative is not None
+                            and _digest(paths[relative]) != checksum):
+                        return None
+                    continue
+                seen.add(source_relative)
+                if source_relative != row["retained"] and _omitted(row, name, field, shared):
+                    expected_omitted[source_relative] = checksum
+                    continue
+                relative = data.get("artifactMap", {}).get(source_relative)
+                if relative is None or relative not in paths or _digest(paths[relative]) != checksum:
                     return None
                 expected_paths.add(relative)
+            if omitted != expected_omitted:
+                return None
             if owned_paths != expected_paths - ({current} if shared else set()):
                 return None
             selected = data["selected"]
@@ -428,6 +514,8 @@ def verify_link(root, current_photo, photo_id=None):
                 return None
             matches.append({**data, "manifest": manifest.relative_to(root).as_posix()})
         return matches[0] if len(matches) == 1 else None
+    except LegacyLayoutError:
+        raise
     except (OSError, ValueError, KeyError, TypeError):
         return None
 
@@ -495,41 +583,28 @@ def _source_is_prepared(native):
     if native.parent.name not in ("gallery", "review"):
         return False
     owner = native.parent.parent
-    directory = _safe(owner, "gallery_intake")
-    reads = verification_reads.active()
-    children = reads.children(directory) if reads is not None else None
-    if not directory.exists():
+    _refuse_legacy(owner)
+    root = _library_root(native)
+    if root is None:
         return False
-    photo_id = metadata.photo_id_from_name(native.name)
-    children = children if children is not None else directory.iterdir()
-    for count, child in enumerate(children):
-        if count >= MAX_SETS:
-            raise ValueError("prepared source owner exceeds bounded set count")
-        if reads is not None and child in reads.source_claims:
-            data, root, expected = reads.source_claims[child]
-        else:
-            _safe(owner, child.relative_to(owner).as_posix())
-            if not child.is_dir() or not re.fullmatch("[0-9a-f]{32}", child.name):
-                raise ValueError("invalid retained preparation owner entry")
-            manifest = _safe(owner, f"gallery_intake/{child.name}/{MANIFEST}")
+    return crop_guard(root, native, metadata.photo_id_from_name(native.name))
+
+
+def _library_root(native):
+    """Nearest ancestor whose configured processing store exists and owns this photo path."""
+    config = cw.load_cfg()
+    for candidate in native.parent.parent.parents:
+        try:
+            store = cw.storage_root(config, "processing", root=candidate)
+        except ValueError:
+            continue
+        if store.is_dir():
             try:
-                data = _load(manifest)
-                relative = data["current"]
-            except (OSError, ValueError, KeyError, TypeError) as exc:
-                raise ValueError(f"invalid prepared source lineage: {manifest}: {exc}") from exc
-            parts = pathlib.PurePosixPath(relative).parts
-            root = native
-            for _ in parts:
-                root = root.parent
-            _owner(relative, root)
-            expected = _safe(root, relative)
-            if reads is not None:
-                reads.source_claims[child] = (data, root, expected)
-        if expected == native:
-            return crop_guard(root, native, photo_id)
-        if data.get("photoId") == photo_id and photo_id is not None:
-            raise ValueError("prepared source path changed without verified retained lineage")
-    return False
+                _owner(native.relative_to(candidate).as_posix(), candidate, config)
+            except ValueError:
+                continue
+            return candidate
+    return None
 
 
 def plan_transfer(root, source, destination):
@@ -544,6 +619,14 @@ def plan_transfer(root, source, destination):
     if _domain(source, root) != _domain(destination, root):
         raise ValueError("retained preparation cannot cross artist/general domains")
     old_owner, new_owner = _owner(source, root), _owner(destination, root)
+    old_set = _set_folder(root, old_owner, data["setKey"])
+    new_set = _set_folder(root, new_owner, data["setKey"])
+
+    def moved(relative):
+        if relative == source:
+            return destination
+        return new_set + relative[len(old_set):] if relative.startswith(old_set + "/") else relative
+
     manifest = _safe(root, data["manifest"])
     before = manifest.read_text(encoding="utf-8")
     updated = json.loads(before)
@@ -551,16 +634,13 @@ def plan_transfer(root, source, destination):
     updated["photoId"] = metadata.photo_id_from_name(pathlib.PurePosixPath(destination).name) or data["photoId"]
     files = []
     for entry in [*data["artifacts"], {"path": data["manifest"], "sha256": _digest(manifest)}]:
-        old = entry["path"]
-        new = new_owner + old[len(old_owner):]
-        files.append({"source": old, "destination": new, "sha256": entry["sha256"]})
+        files.append({"source": entry["path"], "destination": moved(entry["path"]), "sha256": entry["sha256"]})
     for field in ("original", "detail"):
-        updated[field] = (destination if updated[field] == source else
-                          new_owner + updated[field][len(old_owner):])
+        updated[field] = moved(updated[field])
     for entry in updated["artifacts"]:
-        entry["path"] = new_owner + entry["path"][len(old_owner):]
+        entry["path"] = moved(entry["path"])
     for key, relative in updated.get("artifactMap", {}).items():
-        updated["artifactMap"][key] = (destination if relative == source else new_owner + relative[len(old_owner):])
+        updated["artifactMap"][key] = moved(relative)
     detail_before = _safe(root, data["detail"]).read_text(encoding="utf-8")
     detail_after = _retarget_native(detail_before, root, source, destination, data["detail"], updated["detail"])
     detail_after = re.sub(
@@ -573,12 +653,11 @@ def plan_transfer(root, source, destination):
             entry["sha256"] = hashlib.sha256(detail_after.encode("utf-8")).hexdigest()
     expected = {entry["source"] for entry in files}
     actual = set()
-    for directory in ("gallery_org", "gallery_intake"):
-        folder = _safe(root, f"{old_owner}/{directory}/{data['setKey']}")
-        for path in folder.rglob("*"):
-            _safe(root, path.relative_to(root).as_posix())
-            if path.is_file():
-                actual.add(path.relative_to(root).as_posix())
+    folder = _safe(root, old_set)
+    for path in folder.rglob("*"):
+        _safe(root, path.relative_to(root).as_posix())
+        if path.is_file():
+            actual.add(path.relative_to(root).as_posix())
     if actual != expected:
         raise ValueError("retained preparation set contains untracked files")
     return {
@@ -621,10 +700,9 @@ def validate_transfers(root, transfers, *, reverse=False):
             seen.add(destination)
         if _owner(transfer["sourcePhoto"], root) != _owner(transfer["destinationPhoto"], root):
             target_photo = transfer["sourcePhoto"] if reverse else transfer["destinationPhoto"]
-            for directory in ("gallery_org", "gallery_intake"):
-                folder = _safe(root, f"{_owner(target_photo, root)}/{directory}/{transfer['setKey']}")
-                if folder.exists():
-                    raise ValueError(f"retained preparation target set exists: {folder}")
+            folder = _safe(root, _set_folder(root, _owner(target_photo, root), transfer["setKey"]))
+            if folder.exists():
+                raise ValueError(f"retained preparation target set exists: {folder}")
 
 
 def owned_files(root, current_photo, photo_id=None):
@@ -675,16 +753,7 @@ def execute_transfer(root, transfer, *, reverse=False):
         old_photo = transfer["destinationPhoto"] if reverse else transfer["sourcePhoto"]
         new_photo = transfer["sourcePhoto"] if reverse else transfer["destinationPhoto"]
         if _owner(old_photo, root) != _owner(new_photo, root):
-            for directory in ("gallery_org", "gallery_intake"):
-                folder = _safe(root, f"{_owner(old_photo, root)}/{directory}/{transfer['setKey']}")
-                if not folder.exists():
-                    continue
-                for child in sorted(folder.rglob("*"), reverse=True):
-                    if child.is_dir():
-                        child.rmdir()
-                folder.rmdir()
-                if not any(folder.parent.iterdir()):
-                    folder.parent.rmdir()
+            _prune_empty(root, _set_folder(root, _owner(old_photo, root), transfer["setKey"]))
     except Exception:
         if pending.exists():
             pending.unlink()

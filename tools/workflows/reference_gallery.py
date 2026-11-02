@@ -53,7 +53,7 @@ SUPPORTED_RECIPES = {
 }
 SUPPORTED_STAGES = {"0_Edit", "1_Alpha", "2_Studies", "Bench"}
 SOURCE_DIRECTORIES = {
-    "gallery", "review", "gallery_944x1104", "headshot_944x1104", "chest_944x1104",
+    "gallery", "review", "944x1104", "gallery_944x1104", "headshot_944x1104", "chest_944x1104",
 }
 SAFE_PENDING_LABELS = {
     ("0_Edit", "0d Deluxe"): "0d Deluxe",

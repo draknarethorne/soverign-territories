@@ -23,7 +23,8 @@ import unittest
 import uuid
 from unittest import mock
 
-import backup_retirement as retirement
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import backup_retirement as retirement  # noqa: E402
 
 archive = retirement.archive
 

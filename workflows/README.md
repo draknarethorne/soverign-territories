@@ -113,7 +113,9 @@ bin\render-reference.cmd check female-proof-01 --root "B:\Photo Library" --check
 
 `prepare` without `--apply` previews. Preview/check are offline and write no
 files. Sources must be image files in active `gallery`, `review` or maintained
-`gallery_944x1104`, `headshot_944x1104`, `chest_944x1104` buckets below
+`944x1104\full`, `head` and `chest` buckets (and their `944x1104\review\` twins;
+the former `gallery_944x1104`, `headshot_944x1104`, `chest_944x1104` names are
+still accepted until `originals` moves them) below
 Angels/Sisters/Models/Prospects/Potentials/Various/Artists. Artists require the
 separate `artists` domain; other roots require `general`. Original/retained
 variants outside those buckets are not supported yet. No arbitrary outside

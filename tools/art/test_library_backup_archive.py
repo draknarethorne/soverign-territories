@@ -6,12 +6,14 @@ import os
 import pathlib
 import shutil
 import subprocess
+import sys
 import unittest
 import uuid
 import warnings
 import zipfile
 from unittest import mock
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import library_backup as backup
 import library_backup_archive as archive
 

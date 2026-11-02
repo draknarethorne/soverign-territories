@@ -61,8 +61,8 @@ class OriginalsTests(unittest.TestCase):
             originals.main(["--root", str(self.lib), "--apply", "--no-repoint", "--no-headshots"],
                            configuration=cfg)
         repoint.assert_not_called()
-        self.assertTrue((artist.parent / "gallery_94x110/artist_image_2_94x110.png").is_file())
-        self.assertFalse((general.parent / "gallery_94x110").exists())
+        self.assertTrue((artist.parent / "94x110/full/artist_image_2_94x110.png").is_file())
+        self.assertFalse((general.parent / "94x110/full").exists())
         self.assertEqual((general / "general_image_1.jpg").read_bytes(), before)
 
     def test_scoped_refresh_requires_no_repoint_before_mutating_any_image(self):
@@ -72,7 +72,7 @@ class OriginalsTests(unittest.TestCase):
         with contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
             originals.main(["--root", str(self.lib), "--apply", "--no-headshots"], configuration=cfg)
         self.assertTrue((artist / "unrenamed_image_2.jpg").exists())
-        self.assertFalse((artist.parent / "gallery_94x110").exists())
+        self.assertFalse((artist.parent / "94x110/full").exists())
 
     def setUp(self):
         self.tmp = pathlib.Path(tempfile.mkdtemp())
@@ -97,6 +97,56 @@ class OriginalsTests(unittest.TestCase):
             originals.main([*(["--apply"] if apply else []), "--root", str(self.lib), "--no-repoint", *([] if faces else ["--no-headshots"]), *args], faces=faces)
         return out.getvalue()
 
+    def test_layout_move_is_rename_only_merges_identical_and_keeps_conflicts(self):
+        import json
+        folder = self.lib / "Angels" / "Angelica"
+        files = {"gallery_944x1104/a_944x1104.png": b"a", "headshot_944x1104/a_head_944x1104.png": b"h",
+                 "review_chest_944x1104/r_chest_944x1104.png": b"c", "gallery_944x1104/same_944x1104.png": b"s",
+                 "gallery_944x1104/diff_944x1104.png": b"old", "944x1104/full/same_944x1104.png": b"s",
+                 "944x1104/full/diff_944x1104.png": b"new"}
+        for relative, data in files.items():
+            (folder / relative).parent.mkdir(parents=True, exist_ok=True)
+            (folder / relative).write_bytes(data)
+        legacy = folder / ".photo-derivatives.json"
+        legacy.write_text(json.dumps({"entries": {"gallery_944x1104/a_944x1104.png": {"source": "gallery/a.jpg"}}}), encoding="utf-8")
+        before = {p: p.read_bytes() for p in folder.rglob("*") if p.is_file()}
+        moved, conflicts = originals.migrate_layout(folder, (944, 1104), apply=False)
+        self.assertEqual((moved, len(conflicts)), (5, 1), "a preview counts the moves and the conflict")
+        self.assertEqual({p: p.read_bytes() for p in folder.rglob("*") if p.is_file()}, before, "a preview changes nothing")
+        moved, conflicts = originals.migrate_layout(folder, (944, 1104), apply=True)
+        self.assertEqual(len(conflicts), 1)
+        self.assertIn("diff_944x1104.png", conflicts[0])
+        self.assertEqual((folder / "944x1104/full/a_944x1104.png").read_bytes(), b"a")
+        self.assertEqual((folder / "944x1104/head/a_head_944x1104.png").read_bytes(), b"h")
+        self.assertEqual((folder / "944x1104/review/chest/r_chest_944x1104.png").read_bytes(), b"c")
+        self.assertEqual((folder / "944x1104/full/same_944x1104.png").read_bytes(), b"s")
+        self.assertEqual((folder / "944x1104/full/diff_944x1104.png").read_bytes(), b"new", "an existing different file is never overwritten")
+        self.assertEqual(sorted(p.name for p in (folder / "gallery_944x1104").iterdir()), ["diff_944x1104.png"], "the conflicting copy stays put")
+        self.assertFalse((folder / "headshot_944x1104").exists(), "an emptied old folder is removed")
+        self.assertFalse(legacy.exists())
+        manifest = json.loads((folder / "944x1104/.photo-derivatives.json").read_text(encoding="utf-8"))
+        self.assertEqual(list(manifest["entries"]), ["944x1104/full/a_944x1104.png"], "manifest keys follow their files")
+        self.assertEqual(originals.migrate_layout(folder, (944, 1104), apply=True), (0, conflicts), "a second run changes nothing")
+
+    def test_check_reports_the_old_layout_and_a_run_moves_it_without_remaking(self):
+        g = self.gallery("Angels", "Angelica")
+        jpeg(g / "angelica_image_1.jpg")
+        self.run_tool()
+        folder = g.parent
+        (folder / "gallery_94x110").mkdir()
+        copy = folder / "94x110/full/angelica_image_1_94x110.png"
+        copy.replace(folder / "gallery_94x110/angelica_image_1_94x110.png")
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            self.assertEqual(originals.main(["--check", "--root", str(self.lib), "--no-headshots"]), 1)
+        self.assertIn("1 scaled copies to move", out.getvalue())
+        self.assertIn("0 to make", out.getvalue(), "a copy still in the old folder is not remade")
+        again = self.run_tool()
+        self.assertIn("MOVED 1 scaled copy into 94x110/", again)
+        self.assertIn("0 made", again)
+        self.assertEqual(self.names("Angels", "Angelica"), ["angelica_image_1_94x110.png"])
+        self.assertFalse((folder / "gallery_94x110").exists())
+
     def test_headshots_are_the_face_cropped_at_the_standard_shape_and_pruned_with_the_original(self):
         g = self.gallery("Angels", "Angelica")
         Image.new("RGB", (400, 600), (200, 100, 50)).save(g / "angelica_image_1.jpg")
@@ -110,12 +160,12 @@ class OriginalsTests(unittest.TestCase):
             def save(self):
                 pass
         out = self.run_tool(faces=Fake())
-        self.assertEqual(self.names("Angels", "Angelica", "headshot_94x110"), ["angelica_image_1_head_94x110.png"], "a tiny face and a photo with no face get none")
-        self.assertEqual(cw.image_size(self.lib / "Angels/Angelica/headshot_94x110/angelica_image_1_head_94x110.png"), (94, 110))
+        self.assertEqual(self.names("Angels", "Angelica", "94x110/head"), ["angelica_image_1_head_94x110.png"], "a tiny face and a photo with no face get none")
+        self.assertEqual(cw.image_size(self.lib / "Angels/Angelica/94x110/head/angelica_image_1_head_94x110.png"), (94, 110))
         self.assertIn("2 skipped", out)
         (g / "angelica_image_1.jpg").unlink()
         self.run_tool(faces=Fake())
-        self.assertEqual(self.names("Angels", "Angelica", "headshot_94x110"), [])
+        self.assertEqual(self.names("Angels", "Angelica", "94x110/head"), [])
         self.assertEqual(self.names("Angels", "Angelica", "headshot_94x110_org"), ["angelica_image_1_head_94x110.png"], "kept, not deleted")
 
     def test_partial_body_photos_do_not_create_retired_frame_inputs(self):
@@ -141,7 +191,7 @@ class OriginalsTests(unittest.TestCase):
             code = originals.main(["--check", "--root", str(self.lib), "--no-headshots"])
         self.assertEqual(code, 1, out.getvalue())
         self.assertIn("OUT OF SYNC: 1 scaled copies to make", out.getvalue())
-        self.assertEqual(self.names("Angels", "Angelica", "gallery_94x110"), [], "a check changes nothing")
+        self.assertEqual(self.names("Angels", "Angelica", "94x110/full"), [], "a check changes nothing")
         self.run_tool("--no-headshots")
         out = io.StringIO()
         with contextlib.redirect_stdout(out):
@@ -206,13 +256,13 @@ class OriginalsTests(unittest.TestCase):
             def save(self):
                 pass
         self.run_tool(faces=Fake())
-        made = self.lib / "Prospects/Rhea Ives/gallery_94x110"
+        made = self.lib / "Prospects/Rhea Ives/94x110/full"
         with Image.open(made / "rhea_ives_shot_20261010124258_94x110.png") as im:
             self.assertEqual(im.size, (94, 110))
             self.assertNotIn((0, 0, 0), {im.getpixel((x, y)) for x in range(0, 94, 6) for y in range(0, 110, 6)}, "no black comment bar in the scaled copy")
-        self.assertEqual(self.names("Prospects", "Rhea Ives", "headshot_94x110"), ["rhea_ives_shot_20261010124258_head_94x110.png", "rhea_ives_shot_20261010124300_head_94x110.png"], "a head clear of the bars gets one; so does a picture that is not a reel")
+        self.assertEqual(self.names("Prospects", "Rhea Ives", "94x110/head"), ["rhea_ives_shot_20261010124258_head_94x110.png", "rhea_ives_shot_20261010124300_head_94x110.png"], "a head clear of the bars gets one; so does a picture that is not a reel")
 
-    def names(self, root, name, sub="gallery_94x110"):
+    def names(self, root, name, sub="94x110/full"):
         d = (self.lib / "_archive" if sub.endswith("_org") else self.lib) / root / name / sub
         return sorted(p.name for p in d.iterdir()) if d.is_dir() else []
 
@@ -326,7 +376,7 @@ class OriginalsTests(unittest.TestCase):
         jpeg(g / "angelica_image_1.jpg")
         jpeg(g / "angelica_image_2.jpg")
         self.run_tool()
-        out_dir = self.lib / "Angels" / "Angelica" / "gallery_94x110"
+        out_dir = self.lib / "Angels" / "Angelica" / "94x110/full"
         (out_dir / "notes.txt").write_text("keep", encoding="utf-8")
         (g / "angelica_image_2.jpg").unlink()
         self.run_tool()
@@ -343,8 +393,8 @@ class OriginalsTests(unittest.TestCase):
         self.assertEqual(self.names("Angels", "Angelica", "gallery_94x110_org"), ["angelica_image_1_94x110.png"])
 
     def test_a_folder_without_a_gallery_is_left_alone(self):
-        (self.lib / "Angels" / "Angelica" / "gallery_94x110").mkdir(parents=True)
-        (self.lib / "Angels" / "Angelica" / "gallery_94x110" / "angelica_image_1_94x110.png").write_bytes(b"x")
+        (self.lib / "Angels" / "Angelica" / "94x110/full").mkdir(parents=True)
+        (self.lib / "Angels" / "Angelica" / "94x110/full" / "angelica_image_1_94x110.png").write_bytes(b"x")
         self.run_tool()
         self.assertEqual(self.names("Angels", "Angelica"), ["angelica_image_1_94x110.png"])
 
@@ -360,7 +410,7 @@ class OriginalsTests(unittest.TestCase):
     def test_the_copy_is_the_standard_size_shape_kept_and_a_second_run_changes_nothing(self):
         jpeg(self.gallery("Angels", "Angelica") / "angelica_image_1.jpg", (60, 30))
         self.run_tool()
-        png = self.lib / "Angels" / "Angelica" / "gallery_94x110" / "angelica_image_1_94x110.png"
+        png = self.lib / "Angels" / "Angelica" / "94x110/full" / "angelica_image_1_94x110.png"
         with Image.open(png) as im:
             self.assertEqual(im.size, (94, 110))
             self.assertEqual(im.getpixel((2, 2)), originals.STUDIO_GREY, "letterboxed on grey")
@@ -373,7 +423,7 @@ class OriginalsTests(unittest.TestCase):
     def test_exif_rotation_is_applied(self):
         jpeg(self.gallery("Angels", "Angelica") / "angelica_image_1.jpg", (60, 30), orientation=6)  # 60x30 turned to 30x60
         self.run_tool()
-        png = self.lib / "Angels" / "Angelica" / "gallery_94x110" / "angelica_image_1_94x110.png"
+        png = self.lib / "Angels" / "Angelica" / "94x110/full" / "angelica_image_1_94x110.png"
         with Image.open(png) as im:
             self.assertEqual(im.getpixel((2, 55)), originals.STUDIO_GREY, "upright: grey at the sides, not top and bottom")
 
@@ -384,7 +434,7 @@ class OriginalsTests(unittest.TestCase):
         jpeg(self.gallery("Artists", "Pierre") / "pierre_image_6.jpg")
         self.run_tool()
         self.assertEqual(sorted(p.name for p in g.iterdir()), ["elanore_swift_image_5.jpg"])
-        self.assertEqual(sorted(p.name for p in (g.parent / "gallery_94x110").iterdir()), ["elanore_swift_image_5_94x110.png"])
+        self.assertEqual(sorted(p.name for p in (g.parent / "94x110/full").iterdir()), ["elanore_swift_image_5_94x110.png"])
         self.assertEqual(self.names("Artists", "Pierre", "gallery"), ["pierre_image_6.jpg"], "the artist's own folder keeps its prefix")
 
     def test_only_limits_the_folders(self):

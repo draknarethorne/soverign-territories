@@ -519,6 +519,33 @@ If the journal says `committed`, rerunning the same apply finishes cleanup and
 returns the existing receipt; it does not reset Working a second time or discard
 the carried metadata bundle.
 
+### Fresh sandbox from production: step by step
+
+The whole procedure for a new end-to-end rehearsal. `W` stands for
+`"B:\Sovereign Territories Sandbox\Working"` and `RUN` for
+`"B:\Sovereign Territories Sandbox\Working\_sandbox-state\<new run name>"`.
+**Always pass `--root W`**: without it `originals`, `library-backup` and the
+gallery launchers act on production. Every step previews first. Keep Acronis
+off (or the library excluded) during the long steps. Production is only read.
+
+| # | Command (preview, then apply) | What it does | Copies in the sandbox afterwards |
+| --- | --- | --- | --- |
+| 1 | `bin\likeness.cmd --root W sandbox-reset --full`, then add `--apply` once `resetReady: true` | Replaces Working with a verified copy of production. Unique sandbox photos stay; unique metadata goes to `_reports\reset-review-bundle` | One copy of production: person `gallery`/`review` (plus former `gallery_944x1104`/`headshot_944x1104`), `_junk`, `_retired`, the bundle. Old sandbox backups, runs and reports are gone |
+| 2 | `bin\originals.cmd --root W --dry-run`, then without `--dry-run` | Moves the former scaled folders into `<person>\944x1104\{full,head,chest}` by rename and fills gaps. `--check` must say IN SYNC | Same bytes, new folders; no second copy |
+| 3 | `bin\library-backup.cmd --root W`, then `--apply` | Dated LEAN snapshot in `W\_backup` (derivatives omitted, regenerable) | Production photos twice: live and `_backup` |
+| 4 | `bin\sandbox-rebase.cmd W RUN --baseline working --dry-run` | Read-only inventory of the inputs | Unchanged |
+| 5 | Same with `--intake-only --apply` (timed log, see below), then `--check` | Freezes the inputs and prepares every photo (control, geometry, padding, masks) | Plus `RUN\inputs` (frozen input mirror) and `RUN\...\preparation` evidence |
+| 6 | Same without flags, then `--apply`, then `--check` | Matches and installs: people get `gallery`/`review`/`944x1104`; LEAN processing history goes to `W\_processing\<person path>\<set-key>`; the replaced categories go to `RUN\previous` for `--undo` | Plus `_processing` (LEAN) and `RUN\previous` (the pre-install categories) |
+| 7 | `bin\people-gallery.cmd --root W --check`, `bin\people-gallery-review.cmd --root W` | Rebuilds and checks Gallery/Overview/Review | Plus viewer thumbnails under `_reports` |
+| 8 | After acceptance only: storage retention for `RUN\previous`, staged and `inputs`, and the step-3 backup | Leaves one live library plus `_processing` and a new backup | Back to about one copy plus LEAN history |
+
+Each person folder then contains only `gallery` (with its `z_<name>.txt`
+profile), `review` (when needed) and `944x1104`. A person with old `gallery_org` or
+`gallery_intake` folders means the reset was skipped; the rebase refuses that
+layout. `--undo` at step 6 restores exactly the step-5 state. Use one run name
+per rehearsal and record the per-step durations from the logs in the owning
+plan.
+
 ## People Gallery and Review Gallery
 
 Preview with `bin\people-gallery.cmd --dry-run`, then use `--apply` to
@@ -1448,8 +1475,10 @@ Production, `Source`, active galleries, and trees outside the exact sandbox
    legacy matcher-only previews cannot install.
 
 Apply verifies a complete backup and freezes current native/category/auxiliary
-hashes across staging. It stages prepared natives, exact `gallery_org` originals,
-checked `gallery_intake` alternatives and standard derivatives. Prepared natives
+hashes across staging. It stages prepared natives, exact originals and checked
+alternatives in the `_processing` store, and standard derivatives under each
+person's `944x1104` folder; install and undo move `_processing/<category>`
+together with its category. Prepared natives
 skip legacy source cropping/screenshot stripping, but keep face-quality and
 head/chest framing gates. See [retained storage](original-photos.md) for backup
 and move behavior.

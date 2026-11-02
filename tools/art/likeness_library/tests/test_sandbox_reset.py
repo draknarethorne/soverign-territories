@@ -169,12 +169,13 @@ class SandboxResetTests(unittest.TestCase):
         self.assertEqual(result["currentProduction"]["managedFileCount"], 5)
         self.assertEqual(
             result["currentProduction"]["excludedStorageFileCount"],
-            8,
+            9,
         )
         self.assertEqual(
             result["currentProduction"]["wholeRootFileCount"],
-            13,
+            14,
         )
+        self.assertIn("_processing", result["currentProduction"]["excludedStorageRoots"])
         self.assertIn("_archive", result["currentProduction"]["excludedStorageRoots"])
         self.assertIn("_backup", result["currentProduction"]["excludedStorageRoots"])
         self.assertIn("_reports", result["currentProduction"]["excludedStorageRoots"])
