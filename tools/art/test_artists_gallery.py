@@ -205,11 +205,30 @@ class ArtistGalleryTests(unittest.TestCase):
                 mock.patch.object(report_assets.time, "sleep"), contextlib.redirect_stdout(io.StringIO()) as messages:
             report_assets.replace_file(stage, target)
         self.assertEqual(replace.call_count, 2)
-        self.assertIn("retrying atomic replacement", messages.getvalue())
-        with mock.patch.object(report_assets.os, "replace", side_effect=PermissionError("locked")), \
-                mock.patch.object(report_assets.time, "sleep"), contextlib.redirect_stdout(io.StringIO()):
+        self.assertIn("temporary file lock publishing", messages.getvalue())
+        with mock.patch.object(report_assets.os, "replace", side_effect=PermissionError("locked")) as replace, \
+                mock.patch.object(report_assets.time, "sleep") as sleep, contextlib.redirect_stdout(io.StringIO()):
             with self.assertRaises(PermissionError):
                 report_assets.replace_file(stage, target)
+        self.assertEqual(replace.call_count, len(report_assets.PUBLISH_RETRY_DELAYS) + 1)
+        self.assertGreaterEqual(sum(call.args[0] for call in sleep.call_args_list), 30)
+
+    def test_directory_publish_waits_out_a_scanner_lock_lasting_seconds(self):
+        stage, target = self.root / "stage-dir", self.root / "published"
+        (stage / "inner").mkdir(parents=True)
+        real_rename, failures = report_assets.os.rename, iter([PermissionError("locked")] * 6)
+
+        def flaky(source, destination):
+            error = next(failures, None)
+            if error:
+                raise error
+            real_rename(source, destination)
+
+        with mock.patch.object(report_assets.os, "rename", side_effect=flaky), \
+                mock.patch.object(report_assets.time, "sleep") as sleep, contextlib.redirect_stdout(io.StringIO()):
+            report_assets.rename_directory(stage, target)
+        self.assertTrue((target / "inner").is_dir())
+        self.assertEqual(sleep.call_count, 6)
 
 
 class SharedChromeTests(unittest.TestCase):

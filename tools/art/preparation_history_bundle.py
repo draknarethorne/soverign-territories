@@ -594,7 +594,8 @@ def publish(root, report, output, mode):
         safe(root, output)
         if output.exists():
             raise ValueError("output appeared concurrently; refusing overwrite")
-        stage.rename(output)
+        from likeness_library.report_assets import rename_directory
+        rename_directory(stage, output)
     return result
 
 

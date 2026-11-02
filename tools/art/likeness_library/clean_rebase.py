@@ -393,7 +393,7 @@ def _verify_source_overlay(layout, run):
 
 def _create_source_overlay(layout, run, *, current_working=False):
     from tools.art import temporary_storage
-
+    from .report_assets import rename_directory
     overlay = pathlib.Path(run) / "source-overlay"
     if overlay.exists():
         raise ValueError("unfinished or existing source overlay; inspect it and use a new run")
@@ -401,7 +401,7 @@ def _create_source_overlay(layout, run, *, current_working=False):
     temporary_root = metadata.cw.storage_root(cfg, "temporary", root=layout["working_root"])
     with temporary_storage.staging_directory(temporary_root, "source-overlay-") as stage:
         _build_source_overlay(layout, stage, current_working=current_working)
-        stage.rename(overlay)
+        rename_directory(stage, overlay)
     return _verify_source_overlay(layout, run)
 
 

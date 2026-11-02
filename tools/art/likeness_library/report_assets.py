@@ -10,17 +10,20 @@ MANIFEST = "people-gallery-manifest.json"
 RECIPE = "people-gallery-v1"
 
 
+PUBLISH_RETRY_DELAYS = (0.05, 0.1, 0.2, 0.4, 1, 2, 4, 8, 15)
+
+
 def _publish(operation, stage, target):
-    for attempt in range(5):
+    for attempt, delay in enumerate((*PUBLISH_RETRY_DELAYS, None)):
         try:
             operation(stage, target)
             return
         except PermissionError:
-            if attempt == 4:
+            if delay is None:
                 raise
-            if attempt == 0:
-                print(f"DIAGNOSTIC: temporary file lock publishing {target}; retrying atomic replacement")
-            time.sleep(0.05 * 2 ** attempt)
+            if attempt == 0 or delay >= 1:
+                print(f"DIAGNOSTIC: temporary file lock publishing {target}; retrying in {delay}s", flush=True)
+            time.sleep(delay)
 
 
 def replace_file(stage, target):
