@@ -9,7 +9,8 @@ and preserves chronological access to manually archived records.
 
 | State | Recap | Why it remains active |
 | --- | --- | --- |
-| **Pinned — resume** | [2026-11-01-1705](2026-11-01-1705-recap.md) | Actual recovered viewers and portable People/Artist history passed. Final independent replay/cast audit/publication remain; includes whole-plan completion review and separate human/coding next steps. |
+| **Pinned — resume** | [2026-11-02-0830](2026-11-02-0830-recap.md) | Paused for ComfyUI memory. Corrected 273-summary/cast audit and actual recovered browsers pass; only independent final check/publication remain. Exact check-only command and proof requirements; do not repeat intake/install. |
+| Previous day reflection | [2026-11-01-1705](2026-11-01-1705-recap.md) | Whole-plan completion review, metadata omission diagnosis and separate human/coding next steps. Live corrected-run state is superseded by Nov 2; retain the day's unique reflection. |
 | Earlier baseline continuity | [2026-10-30-1247](2026-10-30-1247-recap.md) | Preserved installed FULL baseline, exact receipts and earlier feedback handoff. Current resume state is Nov 1; retain this record until its unique baseline/context transfer is individually verified. |
 | **Pinned — feedback** | [2026-10-30-1234](2026-10-30-1234-recap.md) | Complete F01-F31 human-feedback coverage and next-round quality priorities remain relevant after baseline publication. |
 

@@ -5,16 +5,17 @@ Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (gen
 
 ## The pattern
 
-**Current scheduling (Nov 1):** preserve the installed FULL sandbox
+**Current scheduling (Nov 2 pause):** preserve the installed FULL sandbox
 baseline and its passed automated viewer/recovery checks. The user has now
 authorized a separate optimized replay and actual sandbox/production backup
 cleanup. The fresh four-thread replay passed exact preparation for all 3,072
 inputs, all 2,793 matching routes, installation, installed browser checks and
 ordinary recovery. Restored browsers and exact populated history now pass.
-The final name/history audit found missing original metadata: 181 summaries
-versus FULL's 273. Setup is corrected and tested to preserve original Source
-and pre-install Working summaries; the existing applied evidence stays
-unchanged. A fresh isolated replay must pass that gate before S27/S30 close.
+The image-only replay's 181/273 name-history failure was fixed through original
+metadata inputs in a fresh isolated replay. Actual corrected 273-summary,
+cast/name and recovered browser audits now pass. Final independent checking
+was paused for ComfyUI memory at the user's request; resume check-only from
+the [Nov 2 handoff](../recap/2026-11-02-0830-recap.md), not intake/install.
 Storage S27/S30 owns the current finish line; S29/S31 retirement is verified.
 Human C7/I60 remains a
 separate quality decision. Exact baseline evidence is pinned in the
@@ -47,7 +48,7 @@ and reactivation condition.
 | Window | Work | Exit / boundary |
 | --- | --- | --- |
 | Now, human review of installed baseline | Cast C7, intake I60 | C6/I59/T16/S15 automated gates passed, including real history rows/detail links and rollback bytes. Human placement/quality acceptance remains open. No new full intake |
-| Current end-to-end gate | Storage S27 metadata-complete replay/final check; S30 cast/name audit | Exact image roles/routes, installation, restored browsers/history and ordinary recovery passed, but original-name/history parity failed (181/273 summaries). Corrected setup preserves original metadata; a fresh isolated replay is required, not patching applied receipts. S28/S29/S31 verified; Oct 19 retirement saves 611.11 MB net logical backup bytes. Newest production, damaged Oct 14 survivors and last sandbox FULL stay protected. Family preview is read-only, not accepted renaming |
+| Current end-to-end gate, paused for ComfyUI | Storage S27 final independent check/publication; S30 technical audit passed | Corrected exact image roles/routes, 273 summaries, cast/name audit and actual recovered browsers/history pass. Resume only independent `--check` after memory is available; no duplicate intake/install. S28/S29/S31 verified; Oct 19 retirement saves 611.11 MB net logical backup bytes. Newest production, damaged Oct 14 survivors and last sandbox FULL stay protected. Family preview is read-only, not accepted renaming |
 | Parallel speed lane, before another expensive viewer refresh | [Gallery L18](2026-10-22-gallery-review-layout.md), with T15/T17 evidence | First retained-proof reuse slice and full-scale equivalent Review are verified; next bound repeated whole-history audits across pages. Preserve invalidation/hash/path guards. No broader gallery redesign or intake rerun |
 | Next bounded quality round | Performance T17, intake I68/I69/I70 | Recipe-aware statistics, all 13 named cases, coordinated early crop/masks and calibrated denoise/tone selection. Use frozen comparisons before approving another full run; do not change the staged baseline |
 | After those results | Intake I71-I76, performance T18/T19; reactivate upkeep/actions/naming/engine slices as needed | UX/terminology/Artist scope, processing profiles; incremental batch/calibration and action UAT are separate gates, not silently approved |

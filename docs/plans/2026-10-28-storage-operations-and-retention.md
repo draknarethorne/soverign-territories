@@ -6,6 +6,16 @@
 
 ## Oct 31 authorized backup cleanup
 
+**Nov 2 pause:** corrected `tmp\r4\n` now reproduces all 273 installed
+name/history summaries exactly; independent cast/native/name audit and actual
+recovered browsers/history/details passed. S30's technical proof is saved;
+human identity, quality, surname correction and migration remain separate.
+The user requested pausing to free memory for ComfyUI. Stopped the owned
+final read-only verifier and check/watch jobs, not ComfyUI; S27 remains open
+without a captured final exit-zero proof. Resume only completed-run `--check`
+using the [Nov 2 handoff](../recap/2026-11-02-0830-recap.md). Do not rerun
+intake/install, manufacture final success or prune dependent evidence.
+
 The user now explicitly includes **production and sandbox backup pruning**,
 not only copied experiments. Keep active source/category folders and the last
 FULL comparison unchanged. Keep the newest production directory snapshot and
@@ -1674,3 +1684,16 @@ and dispositions -> the plan index's Nov 1 completion review; today's
 verified result, reflection and resume state -> the Nov 1 recap; next human
 actions versus coding work -> the same recap and generated queue. Preserve
 unfinished scope in its existing owner; no checklist-only forced archival.
+
+## Nov 2 pause request (chat, verbatim)
+
+Coverage: pause owned work without touching ComfyUI, retain exact completed
+stages and final acceptance boundary, and persist the check-only resume
+command/proof requirements -> S27 and the Nov 2 recap. This is temporary
+task state, not a new permanent cross-repository preference.
+
+<!-- markdownlint-disable MD013 -->
+````text
+I have comfyui running now, so maybe we should pause here and make a memory on where to result when I can free up memory.
+````
+<!-- markdownlint-enable MD013 -->

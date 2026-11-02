@@ -1,10 +1,22 @@
 # Project Status
 
-**Updated:** 2026-11-01 · This is the one working document: where the project is, what has
+**Updated:** 2026-11-02 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
-**Nov 1 latest acceptance blocker:** recovered Overview/Review/detail and
+**Nov 2 paused for ComfyUI:** corrected isolated `tmp\r4\n` completed
+installation, backup, ordinary recovery and report-only rebuilding. All
+3,072 photo roles, 2,793 routes and 273 name/history summaries match.
+Independent installed cast/name audit and actual recovered People/Artist
+Overview/Review/history/detail browser checks pass. At the user's request,
+the final read-only audit and owned check/watch jobs were stopped to free
+memory; ComfyUI was untouched. Final exit-zero verification/publication and
+S27 remain unaccepted; receipt `complete` is not that proof. Resume with
+`--out "C:\Soverign-Territories\soverign-territories\tmp\r4\n" --check`,
+not another full intake. The [Nov 2 handoff](recap/2026-11-02-0830-recap.md)
+owns exact commands, proofs, limitations and remaining work. No new pruning.
+
+**Nov 1 acceptance blocker (resolved in corrected metadata, final audit pending):** recovered Overview/Review/detail and
 2,793 People / 279 Artist history rows passed actual browser inspection.
 The additional name/history audit correctly rejected the image-only replay:
 181 installed summaries versus FULL's 273, including missing cast/Artist
