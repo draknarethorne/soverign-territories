@@ -359,8 +359,11 @@ authorize FAST processing or migrate existing evidence.
   owners rather than building another matcher or naming engine. A plausible
   likeness is not a fabricated same-person decision; existing ambiguity,
   protection and explicit review gates must remain visible.
-- [ ] **P1 ai** S32 Redesign the replay for disk/I-O budget before any rerun:
-  replay root on a non-system volume (not C:, which holds OS and pagefile);
+- [ ] **P1 ai** S32 Redesign the replay before any rerun: **run directly in
+  the sandbox** (`B:\Sovereign Territories Sandbox\Working`) so results land
+  in their real Gallery/Review/history locations for the user to inspect; never
+  copy the whole sandbox into repository `tmp` (user direction, Nov 2). Use the
+  sandbox's own backup as the restore point instead of extra full trees;
   no duplicate pre-install plus installed full backups plus a full restored
   tree. Prefer one backup, manifest-hash restore verification of a bounded
   sample or streamed compare, and refusal when preview peak bytes/files exceed
@@ -1850,5 +1853,17 @@ Keep `tmp\b3` and the loose `tmp` root files (raw handoff notes).
 <!-- markdownlint-disable MD013 -->
 ````text
 I am an administrator - so I would have thought you could run the admin level commands or other commands - but something is definitely a problem.  I just put in this new WD as I thought my other disk was failing - but maybe file fragmentation with so many files on C: is an issue - I think I might just manually remove tmp files and we'd just need to start over and possibly put them elsewhere or even figure out how to trim down on what we're doing since we are making so many copies of entire directories and just chewing up disk space in these runs.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 2 run-in-sandbox direction (chat, verbatim)
+
+Coverage: `tmp` cleaned to 6 MB of protected legacy notes; scratch evidence
+moved to the durable report's `scratch-evidence-20261102`; 2 GB archive-format
+bundles removed (receipts kept); future replays run in the sandbox -> S32.
+
+<!-- markdownlint-disable MD013 -->
+````text
+Ok - so, I don't know where we are at and what I need to do for sure - are we clean now in tmp or what residual is there that is needed?  Or is the sandbox the place where we have the proper data to see.  Using tmp to hold the entire sandbox isn't right and I don't want to view things in tmp myself - the purpose of running is to run on the sandbox and have the files in place in the sandbox at the right spot.
 ````
 <!-- markdownlint-enable MD013 -->
