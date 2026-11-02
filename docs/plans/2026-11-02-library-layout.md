@@ -1,11 +1,14 @@
 # 2026-11-02: library directory layout - separate galleries from intake/processing
 
-**Status:** proposed (analysis delivered Nov 2; layout decisions LY1 open)
+**Status:** active (LY1 decided Nov 2: all five recommendations accepted)
 
-**Resume gate:** the user's decisions on LY1. Implementation then precedes the
-storage S32 in-sandbox replay and S27 final check, so that the replay builds and
-proves the agreed layout instead of the current mixed one. Production writes
-remain gated by the existing acceptance plans.
+**Queue focus:** LY2, LY3
+
+**Order:** LY2/LY3 (code + tests) -> LY5 -> LY4 clean sandbox reset and LEAN
+rebase on the new layout, timed with Acronis off -> storage S32/S27 acceptance
+-> retire the old sandbox `_backup` snapshot and `fresh-v23` run state. No full
+intake runs on the old layout. Production writes remain gated by the existing
+acceptance plans.
 
 Owners kept elsewhere: storage
 [S32/S33](2026-10-28-storage-operations-and-retention.md) (replay method and
@@ -120,7 +123,7 @@ lines) builds every `gallery_org`/`gallery_intake` path and `derivatives.py`
 | Small path users | `originals.py`, `identity_maintenance.py`, `likeness.py` (`crop_guard`), `preparation_history.py`, `preparation_provenance.py` | follow new API | small |
 | Derivative grouping (LY1-b only) | `derivatives.relative_target`, `gallery_maintenance.py`, `review_gallery.py`, `reference_gallery.py`/`reference_rendering.py` folder lists, `identity_maintenance.py`, `originals.py`, ComfyUI input sync | folder names only; workflow input names unchanged | small-medium |
 | Tests | 5 files test intake/org/transfer directly; layout fixtures in more | update + new migration tests | medium |
-| Migration tool | new `bin\library-layout.cmd` with `--dry-run`/`--check`/apply/undo | move 2,793 sets (~37k files, same-volume renames), rewrite manifests/details, build index, refresh viewers | medium |
+| Migration tool | dropped (see Decisions): a clean reset and rebase builds the new layout; tools refuse the old one | - |
 | Docs | `docs/art/original-photos.md` layout, `likeness.md`, gallery/storage plans | rewrite layout sections | small |
 
 Rough effort: the processing-store move (LY2-LY4) is about three focused
@@ -134,23 +137,72 @@ compatibility reader or migrate them explicitly); Acronis must exclude the
 library scratch areas before ~37k renames; detail links change depth and need
 the existing hash-checked rewrite.
 
+## Decisions (LY1, Nov 2)
+
+| | Decision |
+| --- | --- |
+| a | Processing history lives in `_processing\<domain>\<set-key>`, not in person folders |
+| b | The six 944x1104 folders become one `944x1104\{full,head,chest,review\...}` folder per person |
+| c | `Various\gallery` stays the drop zone |
+| d | Install **moves** the selected run artifacts into `_processing` instead of copying |
+| e | LEAN retention keeps only what a set needs: original, selected-step native/padded output (aliased when byte-identical), masks, thumbnails, manifest, detail. No never-selected `tone`/`denoise` alternatives and no `control` copy equal to the original |
+
+**No migration of the 2,793 legacy sets.** Production has no retained sets, and
+the existing `likeness sandbox-reset --full` rebuilds Working from production
+while the 89 unique photos and 17 metadata files travel in
+`_reports\reset-review-bundle`. A clean rebase therefore creates the new layout
+directly. LY4 shrinks to refusing/detecting the old layout plus that reset and
+rebase procedure; the separate migration tool is dropped.
+
+## Modes: two separate axes
+
+| Axis | Values | Owner | Decides |
+| --- | --- | --- | --- |
+| Storage | FULL / LEAN / COMPACT / COLLAGE | [storage](2026-10-28-storage-operations-and-retention.md) | which computed bytes are **kept** |
+| Processing | FULL / FAST / OVERLAY-ONLY | performance [T18](2026-10-28-intake-performance.md), intake [I70](2026-10-23-image-intake-preparation.md) | which steps are **computed** |
+
+Decision (e) tightens LEAN (storage): it no longer keeps unselected
+alternatives. It does not change what is computed. The recipe treats
+enhancement as comparison-only (never selected), so computing `tone`/`denoise`
+is pure cost under LEAN; whether to stop computing them is a T18/I70 processing
+decision that needs user approval, not part of this plan.
+
+## `_` directories (hash audit Nov 2, Acronis off)
+
+All 70,913 files in production and the sandbox active stores were SHA-256
+hashed (185 s; production 27 GB read at about 180 MB/s).
+
+| Library | Folder | Finding | Action |
+| --- | --- | --- | --- |
+| Production | `_archive` 6.5 GB | 10k exact copies of active/backup photos, 1,330 old 944x1104/headshot copies, 195 unique `gallery_uncropped` pre-crop originals, Workflows, scripts, Oct 11 manifest | **Done Nov 2:** copies and scaled files removed; the 603 unique files stay in place (0.11 GB left) |
+| Production | `_backup\library-20261014-162634` 2.7 GB | earlier "2,617 unique" now all matched in active galleries, regenerable scaled copies, or 174 unique metadata/report files | **Done:** removed; the 174 unique files are in the ZIP below |
+| Production | `_backup\_packed` (Oct 19 bundle) 5.2 GB | 0 unique photos; 25 unique members | **Done:** removed; members in the ZIP below |
+| Production | `_backup\library-20261020-222038` 5.6 GB | newest snapshot; now the **only** copy of about 2,100 older files (`Potentials`, `_reports`, ComfyUI inputs) | keep; never retire without its own audit |
+| Production | `_reports`, `_retired`, `_junk` | current/user-dispositioned | keep |
+| Sandbox | `_reports\library-performance-20261031` 231 MB | regenerable viewer from the timed run; timing recorded in the gallery plan | **Done:** HTML/thumbnails removed; manifest and `RETIRED.json` kept |
+| Sandbox | `_backup\library-20261029-235003` 42 GB, `_sandbox-state\fresh-v23-20261029` 33 GB | sole FULL snapshot and run state of the current sandbox | retire after the clean rebase is accepted, keeping JSON receipts |
+| Sandbox | `_reports\reset-review-bundle`, `storage-experiments` | carried metadata, durable evidence | keep |
+
+Production went from about 27 GB to 10.9 GB: 12,988 files and 14,340,483,967
+bytes were removed after re-hashing every target and survivor. The receipt,
+plan, script and verified `retained-metadata.zip` (199 files) are in
+`B:\Sovereign Territories\_reports\storage-retirement-20261102`; the read-only
+check passed afterwards.
+
 ## Steps
 
-- [ ] **P1 you** LY1 Decide the layout:
-  (a) move `gallery_org` + `gallery_intake` into `_processing\<domain>\<set-key>` (recommended);
-  (b) group the six 944x1104 folders under one `944x1104` folder per person, or keep them as-is;
-  (c) keep `Various\gallery` as the drop zone, or add a separate `_incoming` drop folder;
-  (d) install moves run artifacts instead of copying them (recommended);
-  (e) apply S33 compaction in the same migration (recommended).
+- [x] **P1 you** LY1 Decide the layout: (a)-(e) accepted Nov 2, see Decisions.
 - [ ] **P1 ai** LY2 Implement the `_processing` store in `retained_preparation.py`
-  with a rebuildable index, manifest-only transfers and old-layout journal
-  compatibility; focused regressions first.
-- [ ] **P1 ai** LY3 Update install/replay, backup scope and small path users to
-  the new API; run the affected test files.
-- [ ] **P1 ai** LY4 Add `bin\library-layout.cmd` (preview/check/apply/undo) and
-  rehearse it in the sandbox with one backup, a file/byte budget preview and
-  verified viewers, then hand to storage S32/S27.
-- [ ] **P2 ai** LY5 If LY1-b is chosen, group derivative folders and update
+  (new `processing` storage root, per-set manifest with `current` path, a
+  rebuildable lookup, manifest-only transfers, LEAN retention per (e)) and
+  refuse the old in-person layout; focused regressions first.
+- [ ] **P1 ai** LY3 Update install/replay (move, not copy), backup scope and small
+  path users to the new API; run the affected test files.
+- [ ] **P1 ai** LY4 Reset the sandbox from production (`sandbox-reset --full` plus
+  the carried bundle), run the clean LEAN rebase in place with per-step timings
+  (Acronis off), verify Gallery/Overview/Review, then hand to storage S32/S27
+  and retire the old sandbox snapshot and run state.
+- [ ] **P2 ai** LY5 Group derivative folders (LY1-b) and update
   viewers and ComfyUI input sync; verify `sync-inputs` output names unchanged.
 - [ ] **P2 ai** LY6 Rewrite the layout sections in `docs/art/original-photos.md`
   and `likeness.md`; production adopts the layout at its first accepted install.
@@ -165,5 +217,18 @@ resume gate before S32/S27.
 <!-- markdownlint-disable MD013 -->
 ````text
 We may want to revisit the directory structure again - after you figure this out and possibly separate things out a bit in terms of what ends up in the gallery at the end.  I do think after we've been working on it that some of the generated files from intake or processing might need to be outside the person's directory and we focus on having just the gallery files.  Right now we're mixing up the intake/original and the output gallery files in a single structure.  I did want to revisit our structure as part of the sandbox work - so now seems like a good time to do that.  If we have some place for intake files and the processing of them separated from reports and from galleries - we can still move files around and we adapt things a bit.  But I need much more analysis of the current structure - future structure and just how big an effort this is with all the scripts we have.
+````
+<!-- markdownlint-enable MD013 -->
+
+Nov 2, coverage: agreement -> LY1 checked and Decisions; old `_` directories
+in sandbox and production -> the audit table and the Nov 2 retirement; clean
+sandbox by full reset/re-run with timings while Acronis is off -> Order and
+LY4; keep separation and only needed files (LEAN vs FULL/FAST) -> decision (e)
+and the Modes section; plan alignment -> cross-links in storage, performance and
+intake plans.
+
+<!-- markdownlint-disable MD013 -->
+````text
+I agree with the recommendations - and we can also revisit existing _ directories in the sandbox and production for things that are also old and no longer used or useful due to all the changes.  So, we can get the sandbox into a clean state - and I know that might mean a full rebase and re-run, but that's what I want to see in the long run.  Since I have Acronis disabled now - I am hoping that the process is actually faster and all out timings will help.  Ultimately, keeping the separation, but still having files exist for references will help in the long run and only keep files generated we need.  That was all part of the LEAN type processing we were doing vs. FULL and FAST ... so we'll need to re-read and sync up all these items along with that existing plan and bring all the docs/plans into alignment and ensure directory structure makes more sense.
 ````
 <!-- markdownlint-enable MD013 -->

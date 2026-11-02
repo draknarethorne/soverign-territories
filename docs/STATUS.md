@@ -4,6 +4,17 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Nov 2 current direction (supersedes the two paragraphs below):** the user
+accepted the [library layout](plans/2026-11-02-library-layout.md) decisions:
+person folders keep only `gallery`, `review` and one `944x1104` folder;
+processing history moves to `_processing\<domain>\<set-key>`; install moves
+instead of copying; LEAN keeps no unselected alternatives. Next is LY2/LY3
+code, then a clean sandbox reset and in-sandbox LEAN rebase timed with Acronis
+off; no full intake on the old layout, and `tmp\r4` no longer exists. A full
+SHA-256 audit retired 14.3 GB of redundant production `_archive`/`_backup`
+copies with receipt and a verified metadata ZIP (production now 10.9 GB);
+unique pre-crop originals and the newest backup are kept.
+
 **Nov 2 post-reboot safety override:** the user reported a complete OS hang.
 Windows ESENT events confirm severe C: system-write stalls, up to 602 seconds;
 physical SSD failure is not yet established. All cleanup/replay work remains

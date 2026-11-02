@@ -13,7 +13,7 @@
 
 - [ ] C7 Review before/after cast seeds, hair/overlay outcomes and every released cast destination; accept a configuration or request another isolated run. Record all image/decision counts and holds. Deliver accepted evidence to ... ([cast seeded library rebase](plans/2026-10-23-cast-seeded-library-rebase.md))
 
-### For the assistant, when you say go (5)
+### For the assistant, when you say go (7)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -22,6 +22,8 @@
 - [ ] T17 Capture recipe-aware run statistics and publish a compact intake summary with expandable/linked details: input/outcome counts, overlay types, each attempted/executed/skipped/failed step, reconstruction/composition, ... ([intake performance](plans/2026-10-28-intake-performance.md))
 - [ ] S27 Complete the isolated full replay, installed verification, Gallery/Overview/Review/history and materialized backup recovery; persist phase times, overlapping storage scopes, equality results and baseline seals. Show ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S30 After the replay blocker is resolved, audit real Various-to-Sister/Angel admissions, cast core/workflow retention, eligible low-score releases/Review/reassignment, and original-name plus surname presentation. ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
+- [ ] LY2 Implement the `_processing` store in `retained_preparation.py` (new `processing` storage root, per-set manifest with `current` path, a rebuildable lookup, manifest-only transfers, LEAN retention per (e)) and refuse the old ... ([library layout](plans/2026-11-02-library-layout.md))
+- [ ] LY3 Update install/replay (move, not copy), backup scope and small path users to the new API; run the affected test files. ([library layout](plans/2026-11-02-library-layout.md))
 
 <details>
 <summary>Deferred work by owning plan</summary>
@@ -49,7 +51,8 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-10-23-image-intake-preparation.md](plans/2026-10-23-image-intake-preparation.md) | active | 57 |
 | [2026-10-25-reference-rendering.md](plans/2026-10-25-reference-rendering.md) | holding | 27 |
 | [2026-10-28-intake-performance.md](plans/2026-10-28-intake-performance.md) | active | 7 |
-| [2026-10-28-storage-operations-and-retention.md](plans/2026-10-28-storage-operations-and-retention.md) | active | 14 |
+| [2026-10-28-storage-operations-and-retention.md](plans/2026-10-28-storage-operations-and-retention.md) | active | 13 |
+| [2026-11-02-library-layout.md](plans/2026-11-02-library-layout.md) | active | 3 |
 
 </details>
 

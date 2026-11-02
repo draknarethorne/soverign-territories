@@ -686,6 +686,10 @@ This adds next-round priorities, not changes to the bound v23 run.
   slice live in [storage S25/S26](2026-10-28-storage-operations-and-retention.md#oct-31-lean-producer-proof).
   They precede this profile work: exact role reuse and omitted unselected
   padding do not skip enhancement/cleanup evaluation or implement FAST.
+  Nov 2 ([library layout](2026-11-02-library-layout.md#modes-two-separate-axes)):
+  LEAN no longer **keeps** unselected `tone`/`denoise` outputs, but they are
+  still **computed** although the recipe never selects enhancement; deciding
+  whether a profile skips that cost (user approval) is part of T18/I70.
 - [ ] **P3 ai** T19 After T18's reviewed contract and bounded profile evidence,
   implement validated CUSTOM step/node definitions and versioned erase/
   reconstruction alternatives, reusing existing modules rather than rewriting

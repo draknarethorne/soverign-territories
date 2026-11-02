@@ -415,6 +415,9 @@ LEAN does not skip processing or encoding, and is **not FAST**: processing
 profiles remain a separately gated quality change. Different byte encodings
 of apparently identical pixels remain distinct, including raw JPEG versus
 normalized PNG. Sources and existing evidence are never pruned or rewritten.
+Decided Nov 2, not yet implemented ([library layout](../plans/2026-11-02-library-layout.md)
+LY2): the new `_processing` store's LEAN keeps no unselected denoise/tone
+alternatives and no `control` copy equal to the original.
 
 The first six real installed-photo FULL/LEAN comparison retained identical
 recommendations, native/preview hashes and recommended padding, with 62 to

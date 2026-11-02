@@ -372,8 +372,15 @@ authorize FAST processing or migrate existing evidence.
   stalls (confirmed: the same deletion with Acronis off took 210 s with no
   stalls). Exclude replay scratch from Acronis before re-enabling it. Rerun S27
   only after S32; the corrected `tmp\r4\n` replay was deleted on Nov 2.
-- [ ] **P1 either** S33 Agree the per-person directory contract and compact
-  `gallery_intake` (user request, Nov 2). Nov 2 stat/manifest-only sandbox
+- [x] **P1 either** S33 Agree the per-person directory contract and compact
+  `gallery_intake` (user request, Nov 2). **Decided Nov 2** via the
+  [library layout](2026-11-02-library-layout.md) LY1: person folders keep only
+  `gallery`, `review` and one `944x1104` folder; history moves to
+  `_processing`; LEAN keeps no unselected alternatives or redundant `control`
+  copies. No in-place compaction or migration: the clean reset/rebase (layout
+  LY4) builds the compact store, after which the old sandbox `_backup` and
+  `fresh-v23` state are retired. The inventory that drove the decision:
+  Nov 2 stat/manifest-only sandbox
   inventory (282 person/pool folders, no stray directories): `gallery` 1.39 GB,
   `gallery_org` 0.45 GB, `gallery_944x1104`/`headshot_`/`chest_` 7.9 GB,
   `review` plus its three `review_*_944x1104` derivative folders 0.33 GB, and
@@ -493,6 +500,12 @@ sole active sandbox snapshot. Metadata comparison against the newest
 redundant backups and are held; age alone would destroy unique recovery
 bytes. They also exceed the bounded archive tool's 2-GiB limit. No old
 backup was removed on the basis of its name/date or manifest alone.
+
+**Resolved Nov 2** by a full SHA-256 audit against every store rather than
+against the newest backup only: `library-20261014-162634` and the packed Oct 19
+bundle were removed after their unique files (174 + 25) went into a verified
+ZIP; `library-20261020-222038` is kept and is now the only copy of about 2,100
+older files. Details and receipt: [layout plan](2026-11-02-library-layout.md#_-directories-hash-audit-nov-2-acronis-off).
 
 ### First-pass image review
 
