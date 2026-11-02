@@ -349,6 +349,58 @@ class SandboxResetTests(unittest.TestCase):
         )
         self.assertTrue((self.production / "_backup/discarded.bin").is_file())
 
+    def test_full_reset_drops_regenerable_output_and_processed_copies_of_production_originals(self):
+        original = b"production original"
+        for relative, contents in {
+            "Angels/Keep/gallery/keep_image_1.jpg": original,
+            "Angels/Keep/gallery_944x1104/keep_image_1_944x1104.png": b"production scaled",
+        }.items():
+            path = self.production / pathlib.Path(relative)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(contents)
+        processed = b"prepared png of the production original"
+        self._working_file("Angels/Keep/gallery/keep_image_1.png", processed)
+        self._working_file("Angels/Keep/gallery_944x1104/keep_image_1_944x1104.png", b"rebuilt scaled")
+        self._working_file("Angels/Keep/944x1104/chest/keep_image_1_chest_944x1104.png", b"chest")
+        self._working_file("Angels/Keep/review_headshot_944x1104/r_head_944x1104.png", b"review head")
+        self._working_file("Angels/Keep/.photo-derivatives.json", b"{}")
+        self._working_file("Angels/Keep/gallery_org/set1/original.jpg", original)
+        self._working_file("Angels/Keep/gallery_org/set2/original.jpg", b"unique incoming original")
+        self._working_file("Angels/Keep/gallery_intake/set1/manifest.json", json.dumps({
+            "sourceSha256": hashlib.sha256(original).hexdigest(),
+            "currentSha256": hashlib.sha256(processed).hexdigest(),
+        }).encode())
+        self._working_file("Angels/Keep/gallery_intake/set1/tone.png", b"variant")
+        self._working_file("Angels/Keep/gallery/new_unique.jpg", b"really new photo")
+
+        result = full_reset_preview(self.working, self.production)
+        entries = {e["path"]: e["status"] for e in result["workingActiveFiles"]}
+
+        self.assertEqual(result["resetBlockers"], [], "a scaled copy at a production path is not a conflict")
+        for path in ("Angels/Keep/gallery_944x1104/keep_image_1_944x1104.png",
+                     "Angels/Keep/944x1104/chest/keep_image_1_chest_944x1104.png",
+                     "Angels/Keep/review_headshot_944x1104/r_head_944x1104.png",
+                     "Angels/Keep/.photo-derivatives.json",
+                     "Angels/Keep/gallery_intake/set1/manifest.json",
+                     "Angels/Keep/gallery_intake/set1/tone.png"):
+            self.assertEqual(entries[path], "regenerable-not-carried", path)
+        self.assertEqual(entries["Angels/Keep/gallery/keep_image_1.png"], "processed-copy-of-production-original")
+        self.assertEqual(entries["Angels/Keep/gallery_org/set1/original.jpg"], "already-present-at-different-active-path")
+        self.assertEqual(entries["Angels/Keep/gallery_org/set2/original.jpg"], "review-bundle-original")
+        self.assertEqual(entries["Angels/Keep/gallery/new_unique.jpg"], "carry-forward-active-photo")
+        self.assertEqual(result["carryForwardBytes"]["regenerable-not-carried"], sum(
+            len(b) for b in (b"rebuilt scaled", b"chest", b"review head", b"{}", b"variant")) + (
+            self.working / "Angels/Keep/gallery_intake/set1/manifest.json").stat().st_size)
+
+        full_reset_apply(self.working, self.production)
+
+        person = self.working / "Angels/Keep"
+        self.assertEqual(sorted(p.name for p in person.iterdir()), ["gallery", "gallery_944x1104"])
+        self.assertEqual(sorted(p.name for p in (person / "gallery").iterdir()), ["keep_image_1.jpg", "new_unique.jpg"])
+        self.assertEqual((person / "gallery_944x1104/keep_image_1_944x1104.png").read_bytes(), b"production scaled")
+        self.assertEqual((self.working / "_reports/reset-review-bundle/Angels/Keep/gallery_org/set2/original.jpg").read_bytes(),
+                         b"unique incoming original")
+
     def test_full_reset_apply_refuses_conflicts_without_changing_working(self):
         production_conflict = self.production / "Angels/Keep/gallery/keep.jpg"
         production_conflict.parent.mkdir(parents=True, exist_ok=True)

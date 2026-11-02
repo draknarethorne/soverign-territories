@@ -494,6 +494,14 @@ tree and classifies active-file content absent from Production. Unique photos
 stay at their current relative paths. Unique non-image metadata goes to the
 non-active `_reports\reset-review-bundle`; identical content already active in
 Production needs no carry-forward, and same-path byte conflicts block apply.
+Generated per-person output is rebuilt rather than carried and never blocks:
+scaled/headshot/chest copies (former `*_944x1104` and grouped `944x1104`
+folders), `.photo-derivatives.json` and legacy `gallery_intake` history
+(`regenerable-not-carried`, not hashed). An installed prepared photo whose
+retained-set manifest names an original already in Production is
+`processed-copy-of-production-original`; a legacy `gallery_org` original not in
+Production goes to the review bundle (`review-bundle-original`), never back
+into the person folder. `carryForwardBytes` totals each class.
 Production, Source, and Working reparse points are refused.
 
 After reviewing a fresh preview with `resetReady: true`, add `--apply` to

@@ -21,6 +21,45 @@ CHUNK_SIZE = 1024 * 1024
 FULL_RESET_STAGE_PREFIX = "full-reset-stage-"
 RESERVED_PRODUCTION_ROOTS = {"_archive"}
 PRESERVED_PHOTO_STORAGE_ROOTS = {"junk", "retired"}
+# Generated per-person output a full reset rebuilds instead of carrying forward:
+# scaled/headshot/chest copies (former and grouped layout), their manifest and
+# legacy in-person processing history.
+REGENERABLE_FOLDER = re.compile(
+    r"^(?:(?:review_)?(?:gallery|headshot|chest)_\d+x\d+|\d+x\d+|gallery_intake)$",
+    re.IGNORECASE,
+)
+REGENERABLE_FILES = {".photo-derivatives.json"}
+LEGACY_ORIGINALS_FOLDER = "gallery_org"
+NOT_CARRIED_STATUSES = {
+    "already-present-at-different-active-path",
+    "regenerable-not-carried",
+    "processed-copy-of-production-original",
+}
+
+
+def _is_regenerable(relative):
+    parts = pathlib.PurePosixPath(relative).parts
+    return parts[-1].casefold() in REGENERABLE_FILES or any(
+        REGENERABLE_FOLDER.match(part) for part in parts[1:-1]
+    )
+
+
+def _processed_copy_sources(working):
+    """Installed prepared-photo hash -> its original's hash, from retained set manifests."""
+    sources = {}
+    candidates = [
+        path for path in working.rglob("manifest.json")
+        if "gallery_intake" in path.parts or "_processing" in path.parts
+    ]
+    for path in candidates:
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        current, source = data.get("currentSha256"), data.get("sourceSha256")
+        if isinstance(current, str) and isinstance(source, str):
+            sources[current] = source
+    return sources
 
 
 def is_sandbox_working_path(path):
@@ -316,7 +355,7 @@ def _full_reset_analysis(working_root, production_root=None, cfg=None, layout=No
             path = working / pathlib.Path(relative)
             active_working[relative] = {
                 "bytes": entry["bytes"],
-                "sha256": _file_digest(path),
+                "sha256": None if _is_regenerable(relative) else _file_digest(path),
             }
 
     for relative, entry in production_files.items():
@@ -330,6 +369,7 @@ def _full_reset_analysis(working_root, production_root=None, cfg=None, layout=No
         ".avif", ".bmp", ".gif", ".jpeg", ".jpg", ".png", ".tif", ".tiff", ".webp"
     }
     carry_forward = []
+    processed_sources = _processed_copy_sources(working)
     for relative, entry in sorted(active_working.items(), key=lambda item: item[0].casefold()):
         production_at_path = active_production.get(relative)
         if production_at_path and (
@@ -337,13 +377,23 @@ def _full_reset_analysis(working_root, production_root=None, cfg=None, layout=No
             and production_at_path["sha256"] == entry["sha256"]
         ):
             continue
-        if production_at_path is None and entry["sha256"] in production_active_hashes:
+        is_image = pathlib.PurePosixPath(relative).suffix.casefold() in image_extensions
+        if _is_regenerable(relative):
+            status = "regenerable-not-carried"
+            destination = None
+        elif production_at_path is None and entry["sha256"] in production_active_hashes:
             status = "already-present-at-different-active-path"
+            destination = None
+        elif is_image and processed_sources.get(entry["sha256"]) in production_active_hashes:
+            status = "processed-copy-of-production-original"
             destination = None
         elif production_at_path is not None:
             status = "path-conflict-review-required"
             destination = f"_reports/reset-review-bundle/path-conflicts/{relative}"
-        elif pathlib.PurePosixPath(relative).suffix.casefold() in image_extensions:
+        elif is_image and LEGACY_ORIGINALS_FOLDER in pathlib.PurePosixPath(relative).parts[1:-1]:
+            status = "review-bundle-original"
+            destination = f"_reports/reset-review-bundle/{relative}"
+        elif is_image:
             status = "carry-forward-active-photo"
             destination = relative
         else:
@@ -438,6 +488,10 @@ def _full_reset_analysis(working_root, production_root=None, cfg=None, layout=No
         },
         "workingActiveFiles": carry_forward,
         "carryForwardCounts": dict(sorted(counts.items())),
+        "carryForwardBytes": dict(sorted(collections.Counter({
+            status: sum(e["bytes"] for e in carry_forward if e["status"] == status)
+            for status in counts
+        }).items())),
     }
     return result, {
         "layout": layout,
@@ -700,13 +754,12 @@ def full_reset_apply(
                 )
 
             for entry in plan["carry_forward"]:
-                if entry["status"] in {
-                    "already-present-at-different-active-path",
-                }:
+                if entry["status"] in NOT_CARRIED_STATUSES:
                     continue
                 if entry["status"] not in {
                     "carry-forward-active-photo",
                     "review-bundle-metadata",
+                    "review-bundle-original",
                 }:
                     raise ValueError(
                         f"unapproved carry-forward status: {entry['status']}"
