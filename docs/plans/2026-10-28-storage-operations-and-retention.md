@@ -372,6 +372,25 @@ authorize FAST processing or migrate existing evidence.
   stalls (confirmed: the same deletion with Acronis off took 210 s with no
   stalls). Exclude replay scratch from Acronis before re-enabling it. Rerun S27
   only after S32; the corrected `tmp\r4\n` replay was deleted on Nov 2.
+- [ ] **P1 either** S33 Agree the per-person directory contract and compact
+  `gallery_intake` (user request, Nov 2). Nov 2 stat/manifest-only sandbox
+  inventory (282 person/pool folders, no stray directories): `gallery` 1.39 GB,
+  `gallery_org` 0.45 GB, `gallery_944x1104`/`headshot_`/`chest_` 7.9 GB,
+  `review` plus its three `review_*_944x1104` derivative folders 0.33 GB, and
+  `gallery_intake` **23.96 GB / 34,567 files** (2,793 sets, 0 missing). By
+  role: never-selected `tone`/`denoise` native plus padded alternatives
+  14.8 GB (selected in 0 of 2,793 rows); `control` 4.11 GB, while 2,036 rows
+  selected the unchanged original; selected-role native plus padded copies
+  about 2 GB; masks, thumbnails, manifest and detail under 0.6 GB. Propose a
+  contract: keep `gallery`, `review`, `gallery_org`, maintained derivatives
+  and a compact `gallery_intake` (manifest, detail, masks, selected/first-crop
+  roles, thumbnails); make `tone`/`denoise` alternatives and `control`
+  copies equal to the original optional/recomputable. Implement only as a
+  dependency-aware S25 migration that rewrites manifest, detail links, hashes
+  and undo together, previews bytes/files, backs up once and is tested in the
+  sandbox first; never delete individual files by hand. Also decide whether
+  `_backup` (42 GB) and `_sandbox-state\fresh-v23-20261029` (33 GB) both
+  remain needed after S27.
 
 **S30 contract proof, not full-population acceptance:** 91 existing
 cast/core/name regressions passed, followed by 60 naming/action regressions
@@ -1865,5 +1884,17 @@ bundles removed (receipts kept); future replays run in the sandbox -> S32.
 <!-- markdownlint-disable MD013 -->
 ````text
 Ok - so, I don't know where we are at and what I need to do for sure - are we clean now in tmp or what residual is there that is needed?  Or is the sandbox the place where we have the proper data to see.  Using tmp to hold the entire sandbox isn't right and I don't want to view things in tmp myself - the purpose of running is to run on the sandbox and have the files in place in the sandbox at the right spot.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 2 per-person directory request (chat, verbatim)
+
+Coverage: `gallery_intake` explanation (current installed processing history,
+not leftovers from old runs) -> chat answer and the runbook; per-person
+directory analysis and cleanup -> S33.
+
+<!-- markdownlint-disable MD013 -->
+````text
+Did you answer the questions about what is gallery_intake in the sandbox?  Is that current functionality or from previous runs?  I'm thinking I want a more complete analysis on what directories should exist under each person's directory as we do this.  It feels like we definitely have some room for understanding and clean-up on that.
 ````
 <!-- markdownlint-enable MD013 -->

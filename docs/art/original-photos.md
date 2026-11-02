@@ -114,6 +114,7 @@ Angels\Angelica\headshot_944x1104        made by the tool: the face of each orig
 Angels\Angelica\chest_944x1104           maintained chest-up crop for the viewers, not a new workflow input
 Angels\Angelica\.photo-derivatives.json exact source/output hashes and rendering recipe for maintained derivatives
 Angels\Angelica\review                   photos the likeness tool is not sure about (yours to look at)
+Angels\Angelica\review_gallery_944x1104  maintained derivatives of review photos (also review_headshot_, review_chest_)
 Angels\Angelica\gallery\z_angelica.txt   the person's name, profile and history (written by the likeness tool; see likeness.md)
 _archive\Angels\Angelica\...             old scaled copies and set-aside duplicates (the same path as the folder)
 _junk\Prospects\rhea_ives_...jpg         legacy unusable photos, flat per side; retained, not automatically retried
