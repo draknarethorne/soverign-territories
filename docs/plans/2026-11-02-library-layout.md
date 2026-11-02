@@ -243,6 +243,9 @@ check passed afterwards.
   drained all queued images before reporting. Scratch removal now retries and
   a failed ordered publish cancels queued work (`0e50eb5f4`); the resumed run
   recovered all 1,267 per-image checkpoints (T6 recovery confirmed live).
+  At 1,738 the same removal met `WinError 145` (a scanned file still pending
+  delete leaves its folder "not empty"); that is now retried too
+  (`dc019ce33`), and the second resume recovered 1,744 checkpoints.
 - [x] **P2 ai** LY5 Group derivative folders (LY1-b) and update
   viewers and ComfyUI input sync; verify `sync-inputs` output names unchanged.
   Done Nov 2: names unchanged by construction; rename-only migration in
@@ -317,5 +320,24 @@ Before you start with a complete refresh of the sandbox - tell me what commands 
 
 ````text
 Workflows are generated and the names get injected to them in the generation process.
+````
+<!-- markdownlint-enable MD013 -->
+
+Nov 2 16:27, coverage: "Have we been finding issues" -> the lock fixes in LY4;
+do not copy unneeded files into the sandbox -> the reset already leaves
+regenerable output behind, and LY7 leaves Artists out; a concise, clean
+sandbox on demand and a known way to run directly in Production with its
+existing clutter -> LY8 true-up, gated on LY4 acceptance; clean break from
+Artists (no copying or processing in the sandbox) -> LY7, with the Production
+Artist scope kept at intake I74.
+
+<!-- markdownlint-disable MD013 -->
+````text
+Have we been finding issues or what is going on?
+````
+
+````text
+I hope this doesn't stop the background task ... but Yes - let's not copy forward files we don't need into the sandbox - which goes along with re-structuring things to make it easier to determine that in the future state as well as current state.  While we will have to deal with running a clean re-base directly into production - if we need to do something to clean it up ahead of time or to restructure things, I'll need to sort that out so we get a) a concise and clean sandbox when we want a new one and b) know exactly how to deal with production runs directly that may have a lot of existing structure and fragmented or unncessary files in many areas already.  That's a true-up that needs to happen in Production when we get the sandbox working the way we want it.
+When running - we need to make a clean-break from doing anything with Artists - that was one of the plans and maybe we didn't finish that but it would save a lot of time in both copying files down to the Sandbox and processing them - if we don't actually want to process the Artists in the sandbox - which I do not want at this point.
 ````
 <!-- markdownlint-enable MD013 -->

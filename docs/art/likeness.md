@@ -1327,7 +1327,7 @@ Interpret the stages separately:
 | `Preparing N images with W worker process(es)` | Preparation workers have started on the frozen mirror. |
 | `Completed worker ... (input I)` | An image worker finished; completion can be out of input order. |
 | `Ordered report rows: K/N` | Those rows have been safely materialized in inventory order. It may lag completed workers while an earlier input is still running. |
-| `DIAGNOSTIC: temporary file lock ...; retrying` | Antivirus or the indexer still holds a freshly written file; publishes and scratch removal retry for about 30 s. Repeated lines across many images point at a scanner to exclude, not a code fault. |
+| `DIAGNOSTIC: temporary file lock ...; retrying` | Antivirus or the indexer still holds a freshly written file (`WinError 5`, or `145` "directory is not empty" while its deletion is pending); publishes and scratch removal retry for about 30 s. Repeated lines across many images point at a scanner to exclude, not a code fault. |
 | Neither line advances for many minutes while workers burn CPU | Check the run's `inputs\_tmp\prep-*\checkpoints` count. Since Nov 2 a failed ordered publish cancels queued images and exits; rerunning the same run reuses every completed checkpoint. |
 | All workers/rows reported | Rendering is finished, but report verification and receipt publication may still be running. Do not start matching yet. |
 | Process exited and `intake.json` exists | Candidate completion only: run the launcher's read-only `--check` against the same root/run/baseline. Inspect assessment errors as well as hashes. |

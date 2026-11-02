@@ -13,6 +13,12 @@
 
 - [ ] C7 Review before/after cast seeds, hair/overlay outcomes and every released cast destination; accept a configuration or request another isolated run. Record all image/decision counts and holds. Deliver accepted evidence to ... ([cast seeded library rebase](plans/2026-10-23-cast-seeded-library-rebase.md))
 
+### Either of us (1)
+
+**P1 (blocks other work, or cheap and valuable)**
+
+- [ ] LY8 Production true-up before the first direct Production clean rebase: inventory Production for the old in-person layout (`gallery_944x1104`/`headshot_*`, `gallery_intake`, `gallery_org`, `.photo-derivatives.json`), stale `_` ... ([library layout](plans/2026-11-02-library-layout.md))
+
 ### For the assistant, when you say go (7)
 
 **P1 (blocks other work, or cheap and valuable)**

@@ -108,6 +108,9 @@ blanket approval to smear hands, arms, clothing or identity evidence.
   compatibility. Keep Artist matching/cache/reports isolated from people and
   support a separate Artist-only Production workflow after approval. I15/I16's
   delivered matching separation does not implement preparation exclusion.
+  Nov 2: the sandbox side is delivered by layout LY7 (`sandbox-reset --full`
+  leaves Artists out, so a fresh sandbox never prepares them); the
+  Production clean-rebase exclusion remains here, with layout LY8.
   No Artists/Humans/Animals physical migration in this task (storage S17-S19).
 - [ ] **P2 ai** I75 Audit when source IDs/filenames normalize across intake,
   matching, assignment and final output generation, using F26 specifically.
@@ -156,7 +159,7 @@ examples retain distinct sub-observations. Shared tasks implement themes once.
 | F26 | `Screenshot_20260902_204652_Facebook.jpg`: missed lower-left phone and filename apparently unnormalized | I68/I52 + I75, P1 defect reproduction/P2 naming audit; distinct from earlier `204050` case |
 | F27 | `Screenshot_20261010_123425_Facebook.jpg`: obvious Junk, show one incoming image rather than three | I76 with I44/I45, P2 display; existing quality/disposition gates unchanged |
 | F28 | Excess 3-4 original/control/recommendation copies; same labels may share one verified file; lean/full choice | S25/S11/T14, P1 storage design; preserve labelled roles and reversible current evidence |
-| F29 | Optional Artist inclusion/exclusion and separate Artist Production processing | I74, P2; matching already separate, preparation exclusion not delivered |
+| F29 | Optional Artist inclusion/exclusion and separate Artist Production processing | I74, P2; matching already separate; sandbox exclusion delivered (layout LY7), Production preparation exclusion not delivered |
 | F30 | Physical Artists, Humans (Angels/Sisters/Models/Prospects/Potentials/Various), Animals roots with listed examples | Storage S17-S19, P2 proposal; config/consumers/migration/recovery impact, no immediate moves |
 | F31 | Various catch-all becomes `_Intake` or equivalent clearer temporary name | S17-S19, P2 naming proposal; not an approved path change |
 
