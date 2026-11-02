@@ -64,6 +64,53 @@ This inventory request does not resume model work or the heavy final checker.
 The stat-only receipt is `tmp\storage-audit-20261102.json`; a copy is published
 in the existing durable storage-experiment report.
 
+### Nov 2 explicit cleanup authorization and installed-history boundary
+
+The later cleanup request authorizes actual removal of verified generated
+copies in both areas, including direct exact-directory removal where the
+existing receipt-backed retention CLI cannot represent an incomplete run.
+This is not authorization to delete active sources or installed evidence.
+These one-off retirement scripts must not be presented as automatic retention.
+
+The abandoned unpublished stage and incomplete r21 are now removed:
+**57,690 files / 34,741,891,142 bytes**, replaced by an **87,701,368-byte**
+metadata archive. All 50,962 candidate media files had surviving payloads;
+33,030 distinct surviving payloads were independently content-hashed.
+There were no unmatched images. Every unique non-image payload and its
+original path mapping was retained. Independent post-removal `--check`
+passed; FULL run/catalogue/Source/backup and corrected replay seals match.
+The abandonment journal proves no publication; r21 had no applied-run receipt.
+Neither current history page depends on these two exact roots.
+
+The old failed replay's two image-tree children are being retired separately,
+never their parent `tmp\r4` or its corrected `n` child. Its complete
+non-image metadata, path inventory and original root receipts/logs are
+preserved before removal. This intentionally retires an unaccepted experiment;
+it is **not** an exact recoverable archive of discarded old replay images.
+The completed corrected experiment replaces it, not repaired historical data.
+Final source/ZIP accounting and after-inventory belong to the durable
+`cleanup-20261102.json` once both operations finish.
+
+The remaining installed FULL `gallery_intake` is **not cleared for deletion**.
+A manifest-role inspection covered 2,793 FULL sets with no missing artifact
+or outside-owner references. It identifies 5,582 unselected padded diagnostics
+(5.672 GB), but classification is not independent content verification or
+dependency clearance. These images are not needed for routine matching;
+comparison details, declared artifact hashes, undo and the frozen FULL
+acceptance baseline still require them. Do not subtract these role totals
+again from the earlier directory census or conflate the two measurements.
+LEAN avoids new unnecessary copies, not existing FULL history. S24/S25 still
+own dependency-aware installed-history migration, compaction and pruning.
+
+**Operational guard for the next experiment:** keep one FULL comparison and
+one current replay; preview incremental and peak disk cost before allocating
+another complete tree. Retire a failed/superseded rehearsal only after its
+dependency review, durable evidence preservation and explicit preview/apply/
+check. Record retained ZIP/report costs as well as deleted bytes. Protect
+active galleries, raw feedback, undo state and the last independent backup.
+Ordinary scratch ownership cleanup does not yet cover all legacy experiments.
+Do not launch intake, models or the paused final verifier as part of cleanup.
+
 **Nov 2 pause:** corrected `tmp\r4\n` now reproduces all 273 installed
 name/history summaries exactly; independent cast/native/name audit and actual
 recovered browsers/history/details passed. S30's technical proof is saved;
@@ -312,6 +359,14 @@ authorize FAST processing or migrate existing evidence.
   owners rather than building another matcher or naming engine. A plausible
   likeness is not a fabricated same-person decision; existing ambiguity,
   protection and explicit review gates must remain visible.
+- [ ] **P1 ai** S32 Redesign the replay for disk/I-O budget before any rerun:
+  replay root on a non-system volume (not C:, which holds OS and pagefile);
+  no duplicate pre-install plus installed full backups plus a full restored
+  tree. Prefer one backup, manifest-hash restore verification of a bounded
+  sample or streamed compare, and refusal when preview peak bytes/files exceed
+  free space. Preview total files written/deleted, since hundreds of thousands
+  of small-file creates/deletes through the security filter drove the Nov 2
+  stalls. Rerun S27 only after S32 and storage-health review.
 
 **S30 contract proof, not full-population acceptance:** 91 existing
 cast/core/name regressions passed, followed by 60 naming/action regressions
@@ -1765,5 +1820,33 @@ budget and cleanup lifecycle -> S24/S25. No source or proof was pruned.
 <!-- markdownlint-disable MD013 -->
 ````text
 We need to quickly look at our tmp directory and what space we're actually using there - it's like 300GB of storage used right now.  Then we need to look at what gallery_intake is in the sandbox as well as space and backup for the sandbox to see what can be pruned.  We've blown up disk usage while testing and I'm not sure what everything is AND how we're going to keep things clean as we seem to have loose files hanging around.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 2 actual cleanup request (chat, verbatim)
+
+Coverage: actual temporary/sandbox generated-copy retirement, independent
+survivor verification and durable receipts -> the authorized cleanup section
+above; standing disk-budget/failed-run cleanup and installed-history migration
+gap -> S24/S25; `gallery_intake` purpose and retained dependencies -> the
+original-photos runbook. No full intake or heavy final verifier was resumed.
+
+<!-- markdownlint-disable MD013 -->
+````text
+We should delete and clean-up both areas if we can it with our scripts, great - if not and it must be manual deletes with direct commands to the directory that's fine.  We need to be better about clean-up.  I'm also curious what gallery_intake folder is in the Sandbox and if those images are all still needed for our work.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 2 post-hang storage direction (chat, verbatim)
+
+Coverage: system I/O incident -> the Nov 2 recap override; manual removal of
+replay scratch and starting the replay over elsewhere with fewer whole-tree
+copies -> S32, then S27. Durable replay evidence already lives on B:; removing
+`tmp\r4` (including corrected `n`) means S27's final check needs a new replay.
+Keep `tmp\b3` and the loose `tmp` root files (raw handoff notes).
+
+<!-- markdownlint-disable MD013 -->
+````text
+I am an administrator - so I would have thought you could run the admin level commands or other commands - but something is definitely a problem.  I just put in this new WD as I thought my other disk was failing - but maybe file fragmentation with so many files on C: is an issue - I think I might just manually remove tmp files and we'd just need to start over and possibly put them elsewhere or even figure out how to trim down on what we're doing since we are making so many copies of entire directories and just chewing up disk space in these runs.
 ````
 <!-- markdownlint-enable MD013 -->

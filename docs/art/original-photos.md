@@ -225,6 +225,18 @@ Review prefer this link only after verifying the current photo and every
 retained artifact; neither basename nor photo-ID similarity proves a move.
 Originals housekeeping preserves `gallery_org`; routine backups retain both
 retained directories rather than treating comparisons as disposable outputs.
+
+`gallery_intake` is **installed processing history**, not a queue of incoming
+photos and not a second canonical Gallery. Likeness/workflow inputs use the
+selected native photo and its maintained derivatives; unselected denoise/tone
+images and alternative padding are diagnostic evidence, not all required for
+that routine use. They remain dependencies of the current comparison detail,
+manifest verification, move/undo and the preserved FULL comparison. Removing
+individual files breaks that contract. LEAN avoids some new copies but does
+not retroactively prune FULL sets. A supported migration must update ownership,
+links, hashes and recovery together; independent COMPACT/COLLAGE output alone
+does not authorize deleting the installed evidence.
+
 Same-owner originals renaming updates the manifest with rollback on failure.
 Matching moves transfer the entire verified retained set with their journal:
 the original and every declared artifact move to the new owner, the manifest

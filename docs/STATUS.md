@@ -4,6 +4,15 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Nov 2 post-reboot safety override:** the user reported a complete OS hang.
+Windows ESENT events confirm severe C: system-write stalls, up to 602 seconds;
+physical SSD failure is not yet established. All cleanup/replay work remains
+paused pending storage-health review. Sandbox retirement completed before
+reboot; old C: replay deletion was interrupted mid-first-child and must be
+reconciled, not blindly rerun. Detailed hardware counters were permission
+denied. The [Nov 2 incident handoff](recap/2026-11-02-0830-recap.md#post-reboot-safety-override---system-io-incident)
+supersedes the ordinary resume instructions below.
+
 **Nov 2 paused for ComfyUI:** corrected isolated `tmp\r4\n` completed
 installation, backup, ordinary recovery and report-only rebuilding. All
 3,072 photo roles, 2,793 routes and 273 name/history summaries match.
@@ -15,6 +24,14 @@ S27 remain unaccepted; receipt `complete` is not that proof. Resume with
 `--out "C:\Soverign-Territories\soverign-territories\tmp\r4\n" --check`,
 not another full intake. The [Nov 2 handoff](recap/2026-11-02-0830-recap.md)
 owns exact commands, proofs, limitations and remaining work. No new pruning.
+The later explicit cleanup request supersedes that no-pruning inventory state:
+abandoned sandbox staging and incomplete r21 are now removed with exact
+survivor/metadata proof; the old failed replay's image-tree children are being
+retired separately. Corrected `tmp\r4\n`, FULL comparison, sole sandbox backup,
+active galleries and installed `gallery_intake` remain protected. The
+[storage plan](plans/2026-10-28-storage-operations-and-retention.md#nov-2-explicit-cleanup-authorization-and-installed-history-boundary)
+owns cleanup accounting and remaining S24/S25 lifecycle gaps. Heavy final
+verification remains paused for ComfyUI.
 
 **Nov 1 acceptance blocker (resolved in corrected metadata, final audit pending):** recovered Overview/Review/detail and
 2,793 People / 279 Artist history rows passed actual browser inspection.
