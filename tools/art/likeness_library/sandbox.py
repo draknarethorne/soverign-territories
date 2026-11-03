@@ -635,6 +635,7 @@ def _require_renamable_entries(working, temporary_root):
         raise ValueError(
             "full reset is blocked before staging: close windows, editor tabs or terminals using "
             + ", ".join(blocked)
+            + " (also remove these folders from Explorer Quick Access recent items)"
         )
 
 

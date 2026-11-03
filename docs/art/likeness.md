@@ -525,10 +525,12 @@ A visible Explorer tab is not sufficient evidence that the path is unlocked:
 hidden tabs can retain directory handles. In the Oct 29 rehearsal, Microsoft's
 Handle utility identified two Explorer handles to `_reports\library`; gracefully
 closing that window released them. Do not force-close individual handles.
-On Nov 3 the handles belonged to no open window; restarting Explorer released
-them. The full reset now rename-probes each top-level entry before staging and
-stops with a "close windows, editor tabs or terminals" message instead of
-failing hours later.
+On Nov 3 the handles belonged to no open window: Explorer watches folders
+listed as recent in Quick Access. Removing those folders from Quick Access
+("Remove from Quick access") released them; restarting Explorer alone did
+not, because it re-registers the same recent folders. The full reset now
+rename-probes each top-level entry before staging and stops with a "close
+windows, editor tabs or terminals" message instead of failing hours later.
 Rollback cleanup uses Windows extended-length paths because moving old nested
 backups into staging can exceed MAX_PATH even when their original paths did not.
 If the journal says `committed`, rerunning the same apply finishes cleanup and
