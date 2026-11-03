@@ -310,8 +310,11 @@ check passed afterwards.
   pages/min as folders grew); reuse digests already verified in the same
   transaction instead of re-hashing; hash person trees once per gallery build
   (`person_rename.tree_hash` per item); print one progress line per phase so
-  a long apply is checkable without a profiler. Call-count regressions for each. Gate:
-  attempt 3 checked (the engine is in the run's implementation hashes).
+  a long apply is checkable without a profiler. Call-count regressions for each. The
+  read-only `bin\people-gallery.cmd ... --check` (Nov 3, over 1.5 h, silent log) sits
+  in the same `derivatives.maintain` -> `verified` -> `verify_link` -> `_manifests`
+  chain, so it benefits too. Gate: attempt 3 checked (the engine is in the run's
+  implementation hashes).
 - [ ] **P2 either** LY10 Read-only `--cast-seeds core` comparison in a
   separate run directory, so the recap shows who would leave Angels/Sisters
   under core seeds; first measure whether a new run must repeat intake (about
