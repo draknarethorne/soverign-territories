@@ -4,7 +4,26 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
-**Nov 2 current direction (supersedes the two paragraphs below):** the user
+**Nov 2 evening current direction (supersedes the paragraphs below):** the
+[library layout](plans/2026-11-02-library-layout.md) LY2/LY3/LY5/LY7 are done
+(person folders keep only `gallery`, `review`, `944x1104`; processing history
+in `_processing`; Artists left out of the sandbox). The fresh sandbox
+`fresh-20261102` was reset from production and its intake completed
+(T6 per-image recovery proven live across two resumes). Apply attempt 3 (all
+moves and renames applied, `--preserve-legacy-derivatives`) completed Nov 3
+04:49: 2,814 photos, 792 moved, 749 renamed, 118 in Review, 68 new
+identities ([Nov 3 recap](recap/2026-11-03-0500-recap.md)); attempts 1-2
+were interrupted and kept as evidence; apply speed is LY9. Decided: every
+`sandbox-rebase.cmd` step now writes an automatic, repeatable recap
+(`Working\_reports\library\rebase-recap\index.html`: moves, renames, Review,
+cast gains/losses, new identities by surname and nearest cast member, run
+comparison), with look-alike picks and expected placements kept in
+`rebase-expectations.json` beside Working; cast matches stay in Review this run
+and tuning follows the user's review (LY11), then a core-seed comparison
+(LY10). Spelling "Soverign" -> "Sovereign" is planned, holding
+([SP1-SP7](plans/2026-11-02-sovereign-spelling-rename.md)).
+
+**Nov 2 earlier direction:** the user
 accepted the [library layout](plans/2026-11-02-library-layout.md) decisions:
 person folders keep only `gallery`, `review` and one `944x1104` folder;
 processing history moves to `_processing\<domain>\<set-key>`; install moves

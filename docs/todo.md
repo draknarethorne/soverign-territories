@@ -7,19 +7,24 @@
 
 ## Open work, by priority
 
-### Your queue: needs your hands or a decision (1)
+### Your queue: needs your hands or a decision (2)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] C7 Review before/after cast seeds, hair/overlay outcomes and every released cast destination; accept a configuration or request another isolated run. Record all image/decision counts and holds. Deliver accepted evidence to ... ([cast seeded library rebase](plans/2026-10-23-cast-seeded-library-rebase.md))
+- [ ] LY11 Review the applied sandbox galleries and the recap; record look-alike picks and expected placements in `rebase-expectations.json`, and feedback on Review volume, cast joins, and the duplicate Camaris name ... ([library layout](plans/2026-11-02-library-layout.md))
 
-### Either of us (1)
+### Either of us (2)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] LY8 Production true-up before the first direct Production clean rebase: inventory Production for the old in-person layout (`gallery_944x1104`/`headshot_*`, `gallery_intake`, `gallery_org`, `.photo-derivatives.json`), stale `_` ... ([library layout](plans/2026-11-02-library-layout.md))
 
-### For the assistant, when you say go (7)
+**P2 (normal)**
+
+- [ ] LY10 Read-only `--cast-seeds core` comparison in a separate run directory, so the recap shows who would leave Angels/Sisters under core seeds; first measure whether a new run must repeat intake (about 1.9 h) or can reuse ... ([library layout](plans/2026-11-02-library-layout.md))
+
+### For the assistant, when you say go (8)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -32,6 +37,7 @@
 
 **P2 (normal)**
 
+- [ ] LY9 Cut repeated verification in apply (attempt 3 read 354 GB for about 26 GB of data and took 7.5 h): load the workflow configuration once per pass (`verify_link`, `_set_folder`, `_detail_navigation` still call `cw.load_cfg` ... ([library layout](plans/2026-11-02-library-layout.md))
 - [ ] LY6 Rewrite the layout sections in `docs/art/original-photos.md` and `likeness.md` (layout and retained-storage text updated Nov 2) and add the fresh-sandbox step-by-step runbook, confirmed by the LY4 run; production adopts ... ([library layout](plans/2026-11-02-library-layout.md))
 
 <details>
@@ -62,6 +68,7 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-10-28-intake-performance.md](plans/2026-10-28-intake-performance.md) | active | 7 |
 | [2026-10-28-storage-operations-and-retention.md](plans/2026-10-28-storage-operations-and-retention.md) | active | 13 |
 | [2026-11-02-library-layout.md](plans/2026-11-02-library-layout.md) | active | 1 |
+| [2026-11-02-sovereign-spelling-rename.md](plans/2026-11-02-sovereign-spelling-rename.md) | holding | 7 |
 
 </details>
 

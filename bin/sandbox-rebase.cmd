@@ -23,4 +23,12 @@ goto arguments
 :run
 call "%~dp0_env.cmd"
 %PY% tools\art\likeness.py --root "%ST_REBASE_ROOT%" clean-rebase --run-dir "%ST_REBASE_RUN%" %ST_REBASE_ARGS%
-call "%~dp0_end.cmd" %errorlevel%
+set "ST_REBASE_CODE=%errorlevel%"
+rem Every successful matched step refreshes the run's recap page and the run index (none before matching exists).
+if not "%ST_REBASE_CODE%"=="0" goto finish
+echo %ST_REBASE_ARGS% | findstr /i /c:"--dry-run" /c:"--intake-only" >nul && goto finish
+if not exist "%ST_REBASE_RUN%\run.json" goto finish
+%PY% tools\art\likeness_library\rebase_recap.py "%ST_REBASE_RUN%"
+set "ST_REBASE_CODE=%errorlevel%"
+:finish
+call "%~dp0_end.cmd" %ST_REBASE_CODE%

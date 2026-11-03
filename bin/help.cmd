@@ -71,6 +71,9 @@ echo                                    --replan reuses only this run's prepared
 echo                                    --resume-install --check verifies completed unpublished staging; --resume-install --apply reuses it without recopying or rewriting outputs
 echo                                    --preserve-legacy-derivatives explicitly journals unowned cast collisions byte-for-byte for undo; edited owned derivatives still refuse
 echo                                    no matcher-only legacy preview can be installed
+echo    rebase-recap.cmd "RUN-DIR" [--dry-run ^| --check] [--out FILE] [--expectations FILE]  per-run HTML of every move, rename, Review hold, cast gain/loss, new identity, other-run differences
+echo                                    automatic after every sandbox-rebase preview/replan/apply/check/undo; Working\_reports\library\rebase-recap\RUN.html + index.html
+echo                                    "Looks like" picks and expected placements: SANDBOX\rebase-expectations.json beside Working ^(kept by resets^), scored on every run
 echo    storage-retention.cmd --root "SANDBOX\Working" preview       read-only inventory; unknown, incomplete, latest accepted and report-linked runs stay
 echo    storage-retention.cmd --root "SANDBOX\Working" register --all --apply  register receipt-backed runs as review/keep; unsupported directories stay unregistered
 echo                                    accept RUN --reason TEXT --review-cleared --audit-cleared --apply; supersede RUN --reason TEXT --review-cleared --undo-cleared --audit-cleared --apply

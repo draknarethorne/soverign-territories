@@ -39,7 +39,7 @@ No frozen report or applied receipt was migrated.
 ## Now, next and holding
 
 This supersedes Oct 29's choice to keep all independent plans active.
-There are **5 active, 13 holding and 1 proposed plans**. All unfinished scopes
+There are **5 active, 14 holding and 1 proposed plans**. All unfinished scopes
 stay in their original files: no `_holding` directory or broad link migration.
 Holding is a scheduling state, never completion, cancellation or acceptance.
 The [plan table](#plans) and each held plan's **Resume gate** give its owner
@@ -384,6 +384,7 @@ deferred; exact current inputs and all user decisions remain protected.
 | [2026-10-25-reference-rendering.md](2026-10-25-reference-rendering.md) | holding | Verified rebase/prepared inputs plus manual fidelity and R44 routing before bounded Prime batch; no queue during install block |
 | [2026-10-28-intake-performance.md](2026-10-28-intake-performance.md) | active | T13 COMPACT/COLLAGE tooling and T16 installed measurements delivered; T17 counters/external phases implemented, finer timings/types remain. T18 profiles P2, T19 CUSTOM P3; T14 retention and T15 progress remain independent |
 | [2026-11-02-library-layout.md](2026-11-02-library-layout.md) | active | `_processing` store separating intake/processing history from person galleries (LY1 decided); clean sandbox reset/LEAN rebase on the new layout precedes storage S32/S27; Nov 2 `_` directory audit and production retirement |
+| [2026-11-02-sovereign-spelling-rename.md](2026-11-02-sovereign-spelling-rename.md) | holding | Correct "Soverign" to "Sovereign" in the repository, local folders, docs and three machines; resume after the sandbox gallery/scripts are accepted clean and SP1 decisions are answered |
 | [2026-10-28-storage-operations-and-retention.md](2026-10-28-storage-operations-and-retention.md) | active | S26, mixed history trials and S28 backup/archive recovery delivered; fresh v23 LEAN evidence default. S27 complete replay is current. Smaller hot backups measured slower and rejected for replay; old backups with unique bytes held. S25 broader quality/production and S24 generic PRUNE remain gated |
 
 The Oct 22 retained plans have review/questions blocks; affected owners now

@@ -9,7 +9,8 @@ and preserves chronological access to manually archived records.
 
 | State | Recap | Why it remains active |
 | --- | --- | --- |
-| **Pinned — resume** | [2026-11-02-0830](2026-11-02-0830-recap.md) | Paused for ComfyUI memory. Corrected 273-summary/cast audit and actual recovered browsers pass; only independent final check/publication remain. Exact check-only command and proof requirements; do not repeat intake/install. |
+| **Pinned — resume** | [2026-11-03-0500](2026-11-03-0500-recap.md) | Fresh sandbox `fresh-20261102` rebased end to end with all moves/renames applied; what to open for review, outcome counts, findings (apply speed, duplicate Camaris name) and next owners. |
+| Previous resume | [2026-11-02-0830](2026-11-02-0830-recap.md) | Paused for ComfyUI memory. Corrected 273-summary/cast audit and actual recovered browsers pass; superseded as the resume point by the Nov 3 sandbox rebase; retain until its post-reboot safety context is individually transferred. |
 | Previous day reflection | [2026-11-01-1705](2026-11-01-1705-recap.md) | Whole-plan completion review, metadata omission diagnosis and separate human/coding next steps. Live corrected-run state is superseded by Nov 2; retain the day's unique reflection. |
 | Earlier baseline continuity | [2026-10-30-1247](2026-10-30-1247-recap.md) | Preserved installed FULL baseline, exact receipts and earlier feedback handoff. Current resume state is Nov 1; retain this record until its unique baseline/context transfer is individually verified. |
 | **Pinned — feedback** | [2026-10-30-1234](2026-10-30-1234-recap.md) | Complete F01-F31 human-feedback coverage and next-round quality priorities remain relevant after baseline publication. |

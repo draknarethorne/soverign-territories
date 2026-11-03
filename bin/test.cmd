@@ -29,7 +29,7 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% -m unittest tools.art.likeness_library.tests.test_sandbox_reset tools.art.test_temporary_storage
+%PY% -m unittest tools.art.likeness_library.tests.test_sandbox_reset tools.art.likeness_library.tests.test_rebase_recap tools.art.test_temporary_storage
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1

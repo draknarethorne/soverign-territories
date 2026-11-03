@@ -221,6 +221,7 @@ set "VERIFY="
 set /p "VERIFY=Verify existing run only? (y/n): "
 if /i "%VERIFY%"=="y" (
   call "%~dp0sandbox-rebase.cmd" "%ROOT%" "%RUN%" --check
+  call "%~dp0rebase-recap.cmd" "%RUN%" --dry-run
 ) else (
   call "%~dp0sandbox-rebase.cmd" "%ROOT%" "%RUN%" --dry-run
 )

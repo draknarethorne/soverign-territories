@@ -3,7 +3,7 @@
 **Status:** active (LY1 decided Nov 2: all five recommendations accepted; LY2,
 LY3 publication/undo and LY5 implemented and tested Nov 2)
 
-**Queue focus:** LY4, LY6, LY8
+**Queue focus:** LY4, LY11, LY9, LY10, LY6, LY8
 
 **Order:** LY2/LY3 (code + tests) -> LY5 -> LY4 clean sandbox reset and LEAN
 rebase on the new layout, timed with Acronis off -> storage S32/S27 acceptance
@@ -246,6 +246,40 @@ check passed afterwards.
   At 1,738 the same removal met `WinError 145` (a scanned file still pending
   delete leaves its folder "not empty"); that is now retried too
   (`dc019ce33`), and the second resume recovered 1,744 checkpoints.
+  Intake took about 1,890 + 4,896 s; then check 225, preview 1,025 and replan
+  485. The first apply refused an ambiguous ID for byte-identical copies
+  (fixed `91a7a992a`); attempt 1 spent 77% of its time reloading the workflow
+  configuration once per retained set (prefix hoisted, `030259282`) and was
+  stopped; attempt 2 staged about 184 photos/min but died with a session
+  restart (long runs are now detached). Both kept their `staged`/`previous`
+  as `*-attemptN-interrupted` with a receipt; Working was untouched. Attempt
+  3 started 21:16 with `--preserve-legacy-derivatives` and finished 04:49
+  (exit 0, 27,180 s): about 25 min staging, 2 h 50 min scaled copies (8,000+
+  `944x1104` files), 1 h 50 min detail-page refresh, 40 min hashing and safety
+  checks, 2 h 15 min Review/People/intake gallery rebuild; 354 GB read in
+  total for about 26 GB of data (LY9). Applied: 2,814 photos (stayed 1,904,
+  moved 792, moved to Review 96, to Review 22), 749 renamed, 118 in Review,
+  68 new identities, 73 emptied; person folders hold only
+  `gallery`/`review`/`944x1104`, no `gallery_intake`/`gallery_org` remain,
+  `_processing` holds all six categories. Diagnostics: 120 head crops not
+  reproducible from the cached face box and 3 photos without a usable face
+  (padded copy only). Cast: nothing left Angels/Sisters (all-seeds mode); all
+  79 cast gains from Various/Potentials/Prospects are in that cast member's
+  Review. Finding for review: a pre-existing `Potentials\Camaris` identity
+  (5 photos, nearest Drakniss 0.20) was promoted to `Prospects\Camaris`, so
+  two identities share the Angel name Camaris. After install, `--check` runs
+  without `--preserve-legacy-derivatives` (with it the check selects the
+  unpublished-plan recovery preview and is refused); runbook corrected.
+  Decided Nov 2 (chat): the run must go all the way in the sandbox (every move
+  and rename applied) so the outcome can be reviewed in the galleries; the
+  review aid is automatic and repeatable, not one-off: every
+  `sandbox-rebase.cmd` step writes `_reports\library\rebase-recap\<run>.html`
+  plus an index (moves, renames, Review holds, cast gains/losses, new
+  identities by surname with nearest cast member, comparison with other runs
+  of the same inputs), and the user's look-alike picks and expected photo
+  placements live in `rebase-expectations.json` beside Working, scored on
+  every recap. Cast matches stay in Review for this run; tuning (whether
+  low-score supplements join Angels/Sisters) follows the user's review.
 - [x] **P2 ai** LY5 Group derivative folders (LY1-b) and update
   viewers and ComfyUI input sync; verify `sync-inputs` output names unchanged.
   Done Nov 2: names unchanged by construction; rename-only migration in
@@ -268,6 +302,24 @@ check passed afterwards.
   `_processing`, retire with a backup, or leave); write the runbook for
   running directly in Production. Gate: the fresh sandbox run (LY4) accepted,
   so the same classification rules are proven there first.
+- [ ] **P2 ai** LY9 Cut repeated verification in apply (attempt 3 read 354
+  GB for about 26 GB of data and took 7.5 h): load the workflow configuration
+  once per pass (`verify_link`, `_set_folder`, `_detail_navigation` still call
+  `cw.load_cfg` per photo); memoise per-folder derivative manifests and
+  `source_is_prepared` within a pass (detail refresh slowed from 40 to 20
+  pages/min as folders grew); reuse digests already verified in the same
+  transaction instead of re-hashing; hash person trees once per gallery build
+  (`person_rename.tree_hash` per item); print one progress line per phase so
+  a long apply is checkable without a profiler. Call-count regressions for each. Gate:
+  attempt 3 checked (the engine is in the run's implementation hashes).
+- [ ] **P2 either** LY10 Read-only `--cast-seeds core` comparison in a
+  separate run directory, so the recap shows who would leave Angels/Sisters
+  under core seeds; first measure whether a new run must repeat intake (about
+  1.9 h) or can reuse `fresh-20261102` inputs. Gate: attempt 3 checked.
+- [ ] **P1 you** LY11 Review the applied sandbox galleries and the recap; record
+  look-alike picks and expected placements in `rebase-expectations.json`, and
+  feedback on Review volume, cast joins, and the duplicate Camaris name
+  (`Prospects\Camaris` versus the Angel).
 
 ## User request (chat, verbatim)
 
@@ -339,5 +391,37 @@ Have we been finding issues or what is going on?
 ````text
 I hope this doesn't stop the background task ... but Yes - let's not copy forward files we don't need into the sandbox - which goes along with re-structuring things to make it easier to determine that in the future state as well as current state.  While we will have to deal with running a clean re-base directly into production - if we need to do something to clean it up ahead of time or to restructure things, I'll need to sort that out so we get a) a concise and clean sandbox when we want a new one and b) know exactly how to deal with production runs directly that may have a lot of existing structure and fragmented or unncessary files in many areas already.  That's a true-up that needs to happen in Production when we get the sandbox working the way we want it.
 When running - we need to make a clean-break from doing anything with Artists - that was one of the plans and maybe we didn't finish that but it would save a lot of time in both copying files down to the Sandbox and processing them - if we don't actually want to process the Artists in the sandbox - which I do not want at this point.
+````
+<!-- markdownlint-enable MD013 -->
+
+Nov 2 evening, coverage: run the sandbox to completion with every move and
+rename applied, then review the galleries and trace back through intake,
+comparisons and history -> LY4 attempt 3 (full apply) and the automatic recap;
+an HTML page of what happened -> `rebase-recap\<run>.html`; who goes where,
+renames, cast pulls, Review, who leaves, nearest identity, shared surnames ->
+recap sections; "who do I think they look like" and the dropped-in test
+images -> the Looks like picker and `rebase-expectations.json` (LY11);
+protect Angels/Sisters while letting aligned supplements join, tune if too
+many land in Review -> cast matches held in Review this run, tuning after
+LY11, core-seed comparison LY10; repeatable automation, not one-off -> the
+recap runs after every `sandbox-rebase.cmd` step; morning expectation of a
+complete, clean rebase with docs and plans synced -> LY4 acceptance, this
+plan, STATUS.md and the Nov 2 recap.
+
+<!-- markdownlint-disable MD013 -->
+````text
+Since this is a sandbox - I'd actually like it to run to completion and actually move ahead with all the moves, renames of all files.  I want to see what does move in/out of the galleries, what is actually renamed, how does history look for those, etc... I do want a recap of what did happen - if we have a .html page that shows all that would be great.  I really want to check the final gallery UI and then drive backwards through what did happen and if needed review the intake processing work, see what the comparisons did and how things moved.  Hope this makes sense - we can have you check things for my human review - but when I come back, I want to see if we can't run it all the way and apply all changes and see what happened with the galleries.  I am doing this because I know some pictures for angels might fall out and some pictures in various SHOULD land in angels or sisters and that some things may end up in review, but if there are too many - then we need tuning.  As you know, I want protect the core identity of angels and sisters and if images supplement and align - they should be there, even with low scores so we don't create additional identities that ARE one of those - but if many fall out into a Model and the surname indicates the alignment - that'll help.  I can see when looking at a gallery just how close it aligns to other identities and that helps me see if it is or isn't someone else and it's just that our face scoring could use further improvements.  Does this all make sense on how far I want the rebase to run and how much I want to see all the actual changes applied?  Since it's sandbox - we can be aggressive in how we approach it since we can always make updates and re-run all or some pieces depending no my final feedback of the entire end-to-end run.
+````
+
+````text
+Ultimately what I want to understand is who goes where in terms of the final end-to-end processing, who's renamed, who pulls from angels or sisters based on core, who is in review, who moves out - all that helps me understand what actually heppened in a run and why, who are they closest to, are they sharing surnames or not.  Who do I think they look like.  I know I have dropped in images to test this and that's what I want to see happen and how the entire system we have setup is or is not working to my visual reviews at the final outcome of the rebase.  Does that make sense and what questions do you have for me based on this comment?
+````
+
+````text
+I want this to be repeatable and part of the automation, not a one time thing
+````
+
+````text
+What I expect in the morning is a full and clean rebase completed and I can start to review the GUI and capture feedback about the GUI and results.  Don't forget to review and update docs/plans and to ensure you build all what we need and any late breaking things we decided that are not in the plans do get into the plans.  It's a complete end-to-end and sync up with docs and decisions.  So finish all what you know is needed for all this.
 ````
 <!-- markdownlint-enable MD013 -->
