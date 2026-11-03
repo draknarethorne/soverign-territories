@@ -401,7 +401,8 @@ def _prune_empty(root, folder):
 def _manifests(root, current):
     owner = _owner(current, root)
     _refuse_legacy(_safe(root, owner))
-    directory = _safe(root, f"{_processing_prefix(root)}/{owner}")
+    prefix = _processing_prefix(root)
+    directory = _safe(root, f"{prefix}/{owner}")
     reads = verification_reads.active()
     cache_key = (pathlib.Path(root).absolute(), directory)
     if reads is not None and cache_key in reads.manifests:
@@ -417,7 +418,7 @@ def _manifests(root, current):
         _safe(root, child.relative_to(root).as_posix())
         # Owner folders can nest (e.g. Artists/<artist>/<person>); only 32-hex folders are sets.
         if child.is_dir() and re.fullmatch("[0-9a-f]{32}", child.name):
-            paths.append(_safe(root, f"{_processing_prefix(root)}/{owner}/{child.name}/{MANIFEST}"))
+            paths.append(_safe(root, f"{prefix}/{owner}/{child.name}/{MANIFEST}"))
         elif not child.is_dir():
             raise ValueError(f"unexpected file in processing store: {child}")
     if reads is not None:

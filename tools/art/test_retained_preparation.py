@@ -457,6 +457,11 @@ class RetainedPreparationTests(unittest.TestCase):
             retained._set_key(self.source_sha, self.row["source"], self.row["photoId"], "general", {"id": "test-v17"}),
             first["setKey"],
         )
+        real_prefix = retained._processing_prefix
+        with mock.patch.object(retained, "_processing_prefix", side_effect=real_prefix) as prefix:
+            self.assertEqual(len(retained._manifests(self.root, second_destination)), 2)
+        # The configured store resolves once per owner scan, not once per retained set.
+        self.assertEqual(prefix.call_count, 1)
 
     def test_undo_rejects_changed_target_manifest_and_artifacts(self):
         self.stage()
