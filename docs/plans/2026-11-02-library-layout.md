@@ -3,7 +3,7 @@
 **Status:** active (LY1 decided Nov 2: all five recommendations accepted; LY2,
 LY3 publication/undo and LY5 implemented and tested Nov 2)
 
-**Queue focus:** LY4, LY11, LY9, LY10, LY6, LY8
+**Queue focus:** LY4, LY11, LY9, LY12, LY10, LY6, LY8
 
 **Order:** LY2/LY3 (code + tests) -> LY5 -> LY4 clean sandbox reset and LEAN
 rebase on the new layout, timed with Acronis off -> storage S32/S27 acceptance
@@ -323,6 +323,15 @@ check passed afterwards.
   look-alike picks and expected placements in `rebase-expectations.json`, and
   feedback on Review volume, cast joins, and the duplicate Camaris name
   (`Prospects\Camaris` versus the Angel).
+- [ ] **P2 ai** LY12 Align gallery maintenance with the rebase. The Nov 3
+  `bin\people-gallery.cmd ... --check` (97 min, EXIT 1) wants to rename 5
+  `Various\review` "missing stable photo ID" holds that `clean_rebase` keeps
+  under their original names on purpose, and it reports the galleries "out of
+  sync" because the rebase's `_refresh_galleries` does not write
+  `.gallery-maintenance-report-state.json`. Decide whether the holds keep their
+  source names (they carry name hints) or get named by the rebase. Write the
+  state after a rebase gallery rebuild, so a fresh install checks clean. Add a
+  test for each. Gate: LY11 feedback on the holds.
 
 ## User request (chat, verbatim)
 

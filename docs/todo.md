@@ -24,7 +24,7 @@
 
 - [ ] LY10 Read-only `--cast-seeds core` comparison in a separate run directory, so the recap shows who would leave Angels/Sisters under core seeds; first measure whether a new run must repeat intake (about 1.9 h) or can reuse ... ([library layout](plans/2026-11-02-library-layout.md))
 
-### For the assistant, when you say go (8)
+### For the assistant, when you say go (9)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -38,6 +38,7 @@
 **P2 (normal)**
 
 - [ ] LY9 Cut repeated verification in apply (attempt 3 read 354 GB for about 26 GB of data and took 7.5 h): load the workflow configuration once per pass (`verify_link`, `_set_folder`, `_detail_navigation` still call `cw.load_cfg` ... ([library layout](plans/2026-11-02-library-layout.md))
+- [ ] LY12 Align gallery maintenance with the rebase. The Nov 3 `bin\people-gallery.cmd ... --check` (97 min, EXIT 1) wants to rename 5 `Various\review` "missing stable photo ID" holds that `clean_rebase` keeps under their original ... ([library layout](plans/2026-11-02-library-layout.md))
 - [ ] LY6 Rewrite the layout sections in `docs/art/original-photos.md` and `likeness.md` (layout and retained-storage text updated Nov 2) and add the fresh-sandbox step-by-step runbook, confirmed by the LY4 run; production adopts ... ([library layout](plans/2026-11-02-library-layout.md))
 
 <details>
