@@ -6,6 +6,36 @@
 select N12 corrections/family acceptance. Existing approved decisions and
 stable-name/protection guards remain binding; no bulk renaming during install.
 
+## Nov 3: name continuity and character-slot boundaries
+
+The user requires first and last names for non-character identities in Models,
+Prospects and Potentials; Various is an unassigned intake pool, not a person.
+Fixed Angels/Sisters slots retain their character keys. Future named slots
+such as Demons follow that distinction when their category is authorized,
+not by adding a new category now. Apply family/surname recommendations only
+after establishing identity continuity; resemblance does not authorize a
+same-person merge or a character-name takeover.
+
+- [ ] **P1 ai** N14 Trace and test name continuity on the frozen
+  `fresh-20261102` data: Harlow Chase's original members versus the 54 Various
+  arrivals and 42 reported Jacinta Newberry departures, Sophie Lloyd's changed
+  name, emptied identities, and retired Camaris Bloom. Publish an
+  old-identity -> final-identity membership matrix with surviving core IDs,
+  retained/new/reused name reasons and original-name provenance. Preserve a
+  sufficiently supported original core's name; do not let unrelated newcomers
+  inherit a name just because a folder label is available. For a valid merge,
+  including protected Prospect cores, retain the oldest original identity's
+  name and history (verified original provenance, not file-copy mtime);
+  expose missing/tied age evidence for review. Enforce collision-safe first
+  and last names for non-slot identities, coordinating layout LY13 rather
+  than creating a second rename engine. Gate: immutable membership/name
+  evidence and existing stable-ID preview/apply/undo boundaries.
+
+Recap L21 displays the movement matrix; L22 displays current/proposed surnames
+and nearest cast references. This plan owns decisions, not duplicate report
+rendering. Raw chat is preserved in the cast plan; the complete written
+recap feedback and coverage map are in the gallery plan.
+
 ## Nov 1: full-population family preview
 
 The installed optimized replay's real family-preview launcher ran against

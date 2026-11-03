@@ -558,6 +558,16 @@ layout. `--undo` at step 6 restores exactly the step-5 state. Use one run name
 per rehearsal and record the per-step durations from the logs in the owning
 plan.
 
+New prepared rebase previews recognize standard download IDs and give
+non-standard non-cast files the existing content-derived `pic_<8 hex>` ID.
+Only final destination filenames are normalized; frozen inputs and original
+recovery paths stay unchanged. Exact byte copies do not become independent
+matching candidates: they are held under distinct `various_duplicate_*` names
+with an explicit canonical-source reason. Different bytes claiming the same
+content-derived ID refuse rather than overwrite or silently merge. Existing
+installed runs are not renamed by this change; their saved outcome maps remain
+the review baseline.
+
 ## People Gallery and Review Gallery
 
 Preview with `bin\people-gallery.cmd --dry-run`, then use `--apply` to

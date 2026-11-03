@@ -25,11 +25,13 @@
 - [ ] C12 Cast auto-join band: define the score and margin above which a cast match joins the Gallery directly (single cast candidate, no quality hold), Review below it. Calibrate from the user's LY11 look-alike picks and ... ([cast seeded library rebase](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] LY10 Read-only `--cast-seeds core` comparison in a separate run directory, so the recap shows who would leave Angels/Sisters under core seeds; first measure whether a new run must repeat intake (about 1.9 h) or can reuse ... ([library layout](plans/2026-11-02-library-layout.md))
 
-### For the assistant, when you say go (11)
+### For the assistant, when you say go (14)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] L18 Finish preparation evidence-index I/O optimization: operation-local retained/derivative reuse and full-scale row/thumbnail/browser equivalence are delivered; next bound the remaining repeated whole-history audits across ... ([gallery review layout](plans/2026-10-22-gallery-review-layout.md))
+- [ ] L21 Bring the recap onto existing shared HTML/CSS/navigation standards, with safe local links opening final person/gallery/Review pages in new tabs. Show old-identity -> final-identity photo counts, original members retained ... ([gallery review layout](plans/2026-10-22-gallery-review-layout.md))
+- [ ] L23 Clarify the recap's reason counts and every-photo table. Link each hold group to its actual final destinations and photos, including the 52 Model-band and 27 high-cast-similarity holds. Show each photo's top three cast ... ([gallery review layout](plans/2026-10-22-gallery-review-layout.md))
 - [ ] C11 Core-only cast protection. Identity `protected` keeps the slot, name, folder, anchors, workflow-selected and photo-protected images, but no longer freezes every Gallery photo in core mode. Make the Angels/Sisters core ... ([cast seeded library rebase](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] I60 Audit all changed full-run outputs for false positives and incomplete cleanup; audit identity moves and borderline Review reasons under rebase C8/C9. Validate artifacts, recovery and deterministic repeat behavior before ... ([image intake preparation](plans/2026-10-23-image-intake-preparation.md))
 - [ ] T17 Capture recipe-aware run statistics and publish a compact intake summary with expandable/linked details: input/outcome counts, overlay types, each attempted/executed/skipped/failed step, reconstruction/composition, ... ([intake performance](plans/2026-10-28-intake-performance.md))
@@ -40,6 +42,7 @@
 
 **P2 (normal)**
 
+- [ ] L22 Improve recap identity comparison: show each Angel/Sister's top ten eligible core references with kept/lost/gained/Review photos and person-specific filtering/deep links; evaluate a dedicated page only if filtered ... ([gallery review layout](plans/2026-10-22-gallery-review-layout.md))
 - [ ] LY12 Align gallery maintenance with the rebase. The Nov 3 `bin\people-gallery.cmd ... --check` (97 min, EXIT 1) wants to rename 5 `Various\review` "missing stable photo ID" holds that `clean_rebase` keeps under their original ... ([library layout](plans/2026-11-02-library-layout.md))
 - [ ] LY9 Cut repeated verification in apply (attempt 3 read 354 GB for about 26 GB of data and took 7.5 h): load the workflow configuration once per pass (`verify_link`, `_set_folder`, `_detail_navigation` still call `cw.load_cfg` ... ([library layout](plans/2026-11-02-library-layout.md))
 - [ ] LY6 Rewrite the layout sections in `docs/art/original-photos.md` and `likeness.md` (layout and retained-storage text updated Nov 2) and add the fresh-sandbox step-by-step runbook, confirmed by the LY4 run; production adopts ... ([library layout](plans/2026-11-02-library-layout.md))
@@ -60,10 +63,10 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-10-12-tooling-debt.md](plans/2026-10-12-tooling-debt.md) | holding | 9 |
 | [2026-10-20-art-tools-structure.md](plans/2026-10-20-art-tools-structure.md) | holding | 10 |
 | [2026-10-22-face-analysis-evaluation.md](plans/2026-10-22-face-analysis-evaluation.md) | holding | 4 |
-| [2026-10-22-gallery-review-layout.md](plans/2026-10-22-gallery-review-layout.md) | active | 12 |
-| [2026-10-22-identity-family-naming.md](plans/2026-10-22-identity-family-naming.md) | holding | 11 |
+| [2026-10-22-gallery-review-layout.md](plans/2026-10-22-gallery-review-layout.md) | active | 13 |
+| [2026-10-22-identity-family-naming.md](plans/2026-10-22-identity-family-naming.md) | holding | 12 |
 | [2026-10-22-library-upkeep.md](plans/2026-10-22-library-upkeep.md) | holding | 7 |
-| [2026-10-22-likeness-engine-acceptance.md](plans/2026-10-22-likeness-engine-acceptance.md) | holding | 19 |
+| [2026-10-22-likeness-engine-acceptance.md](plans/2026-10-22-likeness-engine-acceptance.md) | holding | 21 |
 | [2026-10-22-manual-prompts-to-art-library.md](plans/2026-10-22-manual-prompts-to-art-library.md) | holding | 21 |
 | [2026-10-22-review-actions.md](plans/2026-10-22-review-actions.md) | holding | 10 |
 | [2026-10-23-cast-seeded-library-rebase.md](plans/2026-10-23-cast-seeded-library-rebase.md) | active | 7 |

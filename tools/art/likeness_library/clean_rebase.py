@@ -87,23 +87,60 @@ def _bind_preparation(rows, prepared_rows, output, api):
                   flush=True)
 
 
-def _matching_photo_ids(photos, source, api):
-    """Recognize incoming download IDs without renaming the frozen inputs."""
-    identifiers = {}
-    inferred = {}
+def _matching_photo_ids(photos, source, api, duplicates=None, digests=None):
+    """Give every non-cast input a stable photo ID without renaming the frozen inputs.
+
+    Download IDs in the name come first. Any other name gets the originals content ID
+    (`pic_<sha1[:8]>`), the same ID `originals.py` assigns. A content-ID photo whose bytes
+    equal a photo that already has an ID (else the copy outside Various, else the first path)
+    gets no ID and is recorded in `duplicates` (relative -> canonical relative).
+    `digests` (relative -> SHA-256) avoids re-reading files the manifest already hashed.
+    """
+    identifiers, inferred, by_content = {}, {}, {}
+    by_relative = {}
     for photo in photos:
         relative = photo.path.relative_to(source).as_posix()
+        by_relative[relative] = photo
         identifier = metadata.photo_id_from_name(photo.name)
         if identifier is None and photo.group not in ("Angels", "Sisters"):
             normalized = api.originals.standard_name(photo.name, "incoming")
             identifier = metadata.photo_id_from_name(normalized)
             if identifier:
                 inferred[relative] = identifier
+            else:
+                by_content[relative] = f"photo:pic_{api.originals.content_id(photo.path)}"
         identifiers[relative] = identifier
     counts = collections.Counter(value for value in identifiers.values() if value)
     for relative, identifier in inferred.items():
         if counts[identifier] != 1:
             identifiers[relative] = None
+    if not by_content:
+        return identifiers
+    known = dict(digests or {})
+
+    def digest(relative):
+        if relative not in known:
+            known[relative] = metadata.content_sha256(by_relative[relative].path)
+        return known[relative]
+
+    def preference(relative):
+        return relative.startswith("Various/"), relative.casefold()
+
+    owners = {identifier for identifier in identifiers.values() if identifier}
+    by_bytes = {}
+    for relative in sorted((item for item, value in identifiers.items() if value), key=preference):
+        by_bytes.setdefault(digest(relative), relative)
+    for relative in sorted(by_content, key=preference):
+        canonical = by_bytes.get(digest(relative))
+        if canonical is not None:
+            if duplicates is not None:
+                duplicates[relative] = canonical
+            continue
+        if by_content[relative] in owners:
+            raise ValueError(f"content-derived photo ID collision for different bytes: {relative}")
+        identifiers[relative] = by_content[relative]
+        owners.add(by_content[relative])
+        by_bytes[digest(relative)] = relative
     return identifiers
 
 
@@ -1091,7 +1128,12 @@ def create_plan(
         settings["minFace"], cast_quality_exclusions,
     )
     records.update(released_cast)
-    input_ids = _matching_photo_ids(photos, source, api)
+    duplicates = {}
+    input_ids = _matching_photo_ids(
+        photos, source, api, duplicates,
+        digests={relative: manifest[relative][1] for relative in manifest},
+    )
+    duplicate_counts = collections.Counter()
     protected_folders = {
         person["folder"] for person in catalog["people"].values() if person.get("protected")
     }
@@ -1105,7 +1147,11 @@ def create_plan(
             "oldFolder": photo.key,
         }
         if photo_id and metadata.photo_id_from_name(photo.name) is None:
-            base["photoIdOrigin"] = "originals-normalized-filename"
+            content = api.cw.photo_key(api.originals.standard_name(photo.name, "incoming"))
+            base["photoIdOrigin"] = (
+                "originals-normalized-filename" if content and photo_id.endswith(content)
+                else "originals-content-id"
+            )
         base.update(cast_seed_evidence.get(relative, {}))
         if relative in named:
             destination, reason = named[relative]
@@ -1120,6 +1166,20 @@ def create_plan(
             preserved.append({
                 **base, "destination": relative,
                 "reason": "protected/workflow photo retained; excluded from candidate clustering",
+            })
+            continue
+        if not photo_id and relative in duplicates:
+            canonical = duplicates[relative]
+            # Deliberately no photo-ID token, so the held copy never competes with the canonical ID.
+            key = f"duplicate_{sha256[:12]}"
+            duplicate_counts[key] += 1
+            suffix = pathlib.PurePosixPath(photo.name).suffix.lower().replace(".jpeg", ".jpg")
+            unusable.append({
+                **base,
+                "destination": (
+                    f"Various/review/various_{key}_duplicate-{duplicate_counts[key]}{suffix}"
+                ),
+                "reason": f"exact byte duplicate of {canonical}; held in Review, excluded from clustering",
             })
             continue
         if not photo_id:
@@ -1216,6 +1276,15 @@ def create_plan(
         _migrate_continuity(
             catalog, routed, layout["working_root"], api.originals.images, current_inputs=working_inputs,
         )
+    else:
+        for row in routed:
+            if row.get("photoIdOrigin") == "originals-content-id":
+                destination = pathlib.PurePosixPath(row["destination"])
+                prefix = api.originals.prefix_of(destination.parent.parent.name)
+                key = row["photoId"].removeprefix("photo:")
+                row["destination"] = destination.with_name(
+                    f"{prefix}_{key}{destination.suffix}",
+                ).as_posix()
     people_by_folder = {person["folder"]: person for person in catalog["people"].values()}
     folders = set(cores) | {
         "/".join(pathlib.PurePosixPath(row["destination"]).parts[:2])

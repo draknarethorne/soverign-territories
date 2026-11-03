@@ -1,13 +1,81 @@
 # 2026-10-22: gallery and Review information layout
 
-**Status:** active (Oct 31 authorization: bounded L18 speed slice only; broader UI work deferred)
+**Status:** active (Nov 3 recap feedback: scoped presentation/diagnostic work plus existing L18 speed slice)
 
-**Queue focus:** L18
+**Queue focus:** L18, L21, L22, L23
 
-**Scope boundary:** the Oct 31 request selects report-verification I/O in
-parallel with human C7/I60 review. No new layout redesign, intake, pruning or
-parameter change is authorized. Other open layout tasks stay deferred unless
-an actual installed-viewer blocker or later explicit selection reactivates them.
+**Scope boundary:** Nov 3 selects the fresh-rebase recap improvements below
+alongside human C7/LY11 review and existing report-verification I/O. It does not
+authorize a broad gallery redesign, full intake, pruning, rank-prefixed source
+filenames, or unreviewed grouping/threshold changes. Preserve the installed
+baseline until a separately previewed and verified run is approved.
+
+## Nov 3: fresh rebase recap feedback
+
+Primary raw source: `rebase_fresh_20261102_feedback.md` (complete words at
+the end). It is an intake of observations and requested improvements, not
+acceptance of final identity placements. User-reported name-flow examples are
+cases to trace against saved photo IDs; do not turn the examples into verified
+ground-truth identities.
+
+- [ ] **P1 ai** L21 Bring the recap onto existing shared HTML/CSS/navigation
+  standards, with safe local links opening final person/gallery/Review pages
+  in new tabs. Show old-identity -> final-identity photo counts, original
+  members retained versus arrivals/departures, name continuity reasons and
+  distinct renamed/merged/split/emptied states. Harlow Chase and Sophie Lloyd
+  are required examples; naming N14 owns the continuity correction. Test
+  actual generated links, count conservation, shared styles and repeatability.
+- [ ] **P2 ai** L22 Improve recap identity comparison: show each Angel/Sister's
+  top ten eligible core references with kept/lost/gained/Review photos and
+  person-specific filtering/deep links; evaluate a dedicated page only if
+  filtered navigation cannot meet the need. In the surname table show current
+  name, nearest cast name and score, recommended surname/current versus
+  proposed name, one verified representative image for each side, and an
+  agree/disagree choice. Distinguish recommended rename, resemblance without
+  rename, and distant/unknown evidence using existing score colors and text
+  labels. Naming N5/N14 owns surname rules; no UI-driven filesystem rename.
+- [ ] **P1 ai** L23 Clarify the recap's reason counts and every-photo table.
+  Link each hold group to its actual final destinations and photos, including
+  the 52 Model-band and 27 high-cast-similarity holds. Show each photo's top
+  three cast references/scores when saved evidence exists; otherwise say
+  unmeasured/unavailable rather than invent values or leave ambiguous blanks.
+  Label photo-to-core versus cluster-to-cast scores and group size so a
+  single photo does not appear to be a "small group" decision without context.
+  Distinguish No Change, identity move, Review transition, rename and format
+  conversion from frozen intake-path changes. Display engine E14's final
+  own-versus-rival audit and whether reassignment/convergence ran or remains
+  pending. Investigate false 2+ face holds with intake I60/engine E6 on the
+  exact two saved images; quality flags are observations, not confirmed
+  people counts. Test missing evidence, same-person returns and all reason
+  destinations without rerunning intake just to populate a table.
+- [ ] **P3 either** L24 Evaluate a ComfyUI-friendly ranked photo picker or
+  opt-in export view. Explain that scores/ranks can change as membership
+  changes, and compare stable source filenames plus a picker/copyable path
+  with a reversible ranked export. The proposed `rank_01_`/`score_0.95_`
+  filename prefixes are ideas, not approved source renames. Gate: agree the
+  workflow with the user; preserve source IDs, references and LEAN storage.
+
+### Request coverage
+
+| Source section | Primary owner / acceptance |
+| --- | --- |
+| Page Layout | L21 shared HTML/CSS; browser checks |
+| Where Photos Went | L21 final destination links in new tabs |
+| Harlow Chase; Sophie Lloyd | N14 continuity trace/correction; L21 membership matrix |
+| Identities emptied | N14 original-core continuity; L21 emptied versus rename/merge/split |
+| Angels and Sisters | L22 top ten core references and per-person navigation; cast C11 release trial |
+| Other identities (surname) | L22 paired images, scores, current/proposed names and feedback; N5/N14 rules |
+| File Naming Thought | L24 options and approval; LY12 standard stable naming remains separate |
+| Model Resemblance (52) | L23 explicit reasons, photo counts and final locations; E6 calibration |
+| Cast Match (27) | L23 held location/nearest cast; C12 later auto-join band |
+| Two Faces | L23 exact case linkage; I60/E6 false-detection review |
+| Various Review | E14 assignment audit/E15 bounded recomparison; C11/C12 cast Review/auto-join |
+| Angelica | C11 all-slot core trial; E14 own-versus-rival audit |
+| Iterative Processing | E7/E14/E15 explicit passes, triggers and unresolved results |
+| Every Photo: top three cast | L23 saved reference scores or explicit unavailable state |
+| Every Photo: small group; empty score | L23 group/photo decision and score-reference labels |
+| Every Photo: No Change versus moved | L23 identity/bucket/path/rename/conversion distinctions |
+| Summary and continuing feedback | LY11/C7 human review stays open; no acceptance inferred |
 
 ## Oct 25 continuation: retained evidence is now integrated
 
@@ -1093,4 +1161,113 @@ multithreading is an option, not an unmeasured default.
 ```text
 I'll do the review, but why don't you look at speed improvements as we'll need to do another run and performance and storage are the two key items to address, backups and history are costly for storage and performance. If we need to multi-thread pieces that's an option, if we need better cache or re-use to not re-repeat things we should do that. If we have a simpler verification, consider that. Please get going, update plans, docs, code, tests and let me know when you get to a point where we can exercise some of those in parallel with me verifying so we can re-run the rebase and possible adjust parameters.
 ```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 3 source: rebase_fresh_20261102_feedback.md (verbatim)
+
+Coverage of every source section is in the Nov 3 Request coverage table above.
+The complete source remains below, including the original file URL, wording
+and examples. Filing this note does not close implementation or human review.
+
+<!-- markdownlint-disable MD013 MD009 -->
+````text
+# Rebase Fresh 20261102 Feedback
+
+## Summary
+
+Here's a summary of items from my review of the rebase fresh 20261102 process.
+
+## Rebase Recap Review
+
+### Page Layout
+
+file:///B:/Sovereign%20Territories%20Sandbox/Working/_reports/library/rebase-recap/fresh-20261102.html#expected
+
+That file should align to the same standards and formats with css and such for all generated .html files.
+
+### Where Photos Went
+
+Could we add links to open pages in new tabs where the photos ended up, so that it's easier to navigate and verify their locations?  I like having direct links to the final destinations for quick access and validation.
+
+#### Harlow Chase
+
+It would also be nice to understand how identities of names shifted - like Various 54 images took over Harlow Chase and then Harlow Chase moved 42 to Jacinta New Berry.  It might be useful to show how many of each identity moved to another identity, providing a clearer picture of the rebase changes and how many stuck with a previously identified identity.  It seems like in this run that someone new totally took over Harlow Chase because I don't see any remaining images associated with the original Harlow Chase identity.  Or at least it's not clear how names are shifting.
+
+#### Sophie Lloyd
+
+She also shifted her name on the rebase and it's unclear to my why since she should have had her own pretty solid number of pictures to re-establish her name.  So it seems like name shifts are happening when I didn't expect them to.  I understand show photos within existing identities will shift around, but I thought we have logic to attempt to keep a name if there was enough of a core from the previous named person.
+
+### Identities emptied by rebase
+
+Why so many identities emptied - it feels like we renamed many of them instead of keeping them?  I think this folds more into my understanding of how we're handling the groupings and keeping the loose ties to previous names where it makes sense.  After we do that - we can apply the surname portion logic to further refine the identities and ensure consistency across the rebase process.
+
+## Angels and Sisters
+
+I like the way the Angels and Sisters review will show the ones in review - but I think it would also be good to show the top 10 core images along with the other ones so if I do a quick review it would be good.  I'm also wondering if we should have dedicated pages for each of the angels and sisters review instead of being in this same page - maybe it's more like the gallery where you can filter by names or open a link to a specific angel or sister.  It's not a big deal, just thinking some consistency in how the pages provide a view of the kept, lost, gained and review images.  
+
+### Other identities (surname)
+
+I would like to see the current person name along with the Nearest Cast sister or angel name so I can see how the surnames align with the respective sister or angel when it's chosen as recommendation.  I'd also like to see one image for each the identity person and the nearest cast so I can see a quick glance at the likeness WHEN a surname is recommended.  Let's make that table more obvious and easier to interpret at a glance.  Then I could agree or disagree with the recommendation.  If it's close, but not a rename show that as well - and if it's far away, make that obvious.  Maybe using the same sort of color on the score as we do on the other pages (green, yellow, orange, red) for how that works.  Again, a bit more consistency in the pages as I find this one really useful - just needs some additional work.
+
+## File Naming Thought
+
+As we do this, I'm also wondering if there isn't a way we can include some additional information in the filenames so that when I am choosing them from the directory in ComfyUI for testing, that I also understand the ranking within the identity.  Would it make sense to include the similarity ranking, score or something in front of the name so it is immediately clear how each image ranks within its identity?  I don't know if that number would change over time and it might make things confusing - so just looking for ideas or thoughts on that.  I don't have a good solution, just a thought of where the manual work to load things into Comfy UI natively makes me have to pull up the review sheet and then find that image in the gallery full directory and if there are hundereds, it's visually scanning for it.  
+
+One idea could be to include a prefix like `rank_01_`, `rank_02_`, etc., or `score_0.95_` to indicate the similarity score.  This way, even when browsing the directory, I can quickly identify the top-ranked images within each identity without having to cross-reference the review sheet.  It might also help in quickly spotting any anomalies or unexpected rankings.
+
+## Model Resemblance
+
+small group falls in the configured Model resemblance band: 52 - what happened with these photos?  I'm unclear what this section is showing or telling me.
+
+## Cast Match
+
+high cast similarity may indicate a same-person match: 27  - what happened with these photos?  Did they not get added to the review for a match?  I'm confused on this.
+
+## Two Faces
+
+quality hold: 2+ faces: someone else is in the picture: 2 - that's not true for those two photos, I don't see two people in those actual photos held back.
+
+## Various Review
+
+I feel like we should try to attempt to assign the photos instead of leaving them in Various Review - that's a lot of photos that seem in many cases, good enough to assign it based on it's score or put in Review for the closest cast match if it's not high enough score to auto assign.
+
+
+## Angelica
+
+I am very curious how things will happen with Angelica when we do the rebase and protect the higher scoring photos.  There's a few pictures in there that I think are potentially someone else or it might be Angelica.  It will be interesting to see if the rebase correctly identifies and protects the higher scoring photos while filtering out the ones that don't match as well.  This is a general rule about photos and why I want the angels and sisters to core identity to be protected in the rebase and let some other photos drop to another person if it's not really the Angel or Sister and bring in other ones that are.  
+
+## Iterative Processing
+
+So, as images move in/out of an identity, does the system rescore other images already assigned to an identity or how does the process work.  So, let's say that 10 images drop out of a sister and form a new identity and then that would pull images from other identities already forming, more likely prospect or potential or maybe they drop out into a Model since they closely resemble an angel or sister, but fell out and will attract other images since this new identity formed or updated an identity.  I guess I'm trying to understand the iterations of how identities are updated and how the system ensures that the best matching images are assigned to the correct identities over multiple iterations.  
+
+I know I don't understand how things all work internally, but it seems to me if I was doing it manually, I might need to circle back a few times to re-evaluate the assignments as new images are added or removed from identities to ensure that the best matching images are correctly assigned.
+
+It would be helpful to have some clarity on how the system handles these iterative updates and whether it automatically rescans and reassigns images as identities evolve, or if there are specific triggers that initiate this process.
+
+## Every Photo
+
+In that table we should show the top 3 nearest casts to the person in the photo, along with their similarity scores.  This will give a clearer picture of how the system is evaluating and matching each image to potential identities.  I like the reasons column, but it references the words small group when it's just a single image - so not sure waht that reason is telling me - but it should explain why the system made the assignment it did for that particular photo.  Some are confusing when I read them as to what it's actually saying.
+
+Score column seems empty sometimes, so confused on why and what that column is telling me.
+
+If an incoming image didn't change identity, would be easier if the column just indicated "No Change" or something similar, rather than leaving it blank, so it's clear that the system evaluated it and determined it should remain with the current identity.  It says "moved" today when it essentially ended up back in same spot.  This would make it more transparent and easier to understand the system's decisions at a glance.  
+
+## Summary
+
+In general, I love the progress and we'll have more feedback, as I have just focused on the rebase recap for now and wanted to get you this initial set of thoughts and observations. I hope this helps provide some insight into how the system is handling the rebase and the assignment of images to identities, and I look forward to seeing how these processes continue to improve.
+
+We're making great progress and I look forward to seeing how the system continues to evolve and improve in handling image assignments and identity management.
+````
+<!-- markdownlint-enable MD013 MD009 -->
+
+## Nov 3 12:12 feedback-intake request (verbatim)
+
+Coverage: preserve in-progress filename work and tests -> layout LY12;
+read and align the initial recap feedback for future runs -> L21-L24 and the
+coverage table; naming/protection/grouping items remain with N14/C11/E13-E15.
+
+<!-- markdownlint-disable MD013 -->
+````text
+I hope this doesn't kill a background task, so don't lose track of what you're doing  - but I've written up some initial feedback on the recase recap .html pages and you can read through thoughts and update existing plans where necessary and get things aligned to work on these items as it'll help with future runs if we can address that various feedback in the document.
+````
 <!-- markdownlint-enable MD013 -->

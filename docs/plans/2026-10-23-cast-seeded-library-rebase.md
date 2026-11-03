@@ -31,22 +31,50 @@ cast member, 7 of them by 0.15 or more: four Drakness -> Nyxene (for example
 photos, not group-shot artifacts. The Drakness -> Nyxene folder pair scores
 0.37, more alike than 99% of folder pairs.
 
-User decisions (Nov 3): Review holds for cast gains are right for this stage;
-later, high-confidence matches should auto-join and only questionable ones go
-to Review. Protect only the core of each Angel/Sister (a core score near 0.40,
-to be tuned), so non-core photos can be re-matched, including to another cast
-member. These answer part of C1; the remaining C1 questions stay open.
+User decisions (Nov 3, 10:50): core-only automatic protection during a rebase
+is approved. Record qualifying per-photo protection automatically in the
+recoverable catalogue transaction; do not require the user to lock every photo.
+
+| Category | Approved trial minimum for automatic core protection |
+| --- | --- |
+| Angels / Sisters | 0.40 |
+| Models | 0.50 |
+| Prospects | 0.60 |
+| Potentials | No automatic protection; preserve explicit manual decisions |
+
+These are inclusive own-core trial thresholds, not auto-join thresholds,
+proof of identity, or permission to count self/duplicate support. Shared
+acquisition/provenance/manual-opt-out implementation stays with
+[engine E13](2026-10-22-likeness-engine-acceptance.md#nov-3-rebase-protection-and-final-membership-audit).
+Protecting a Prospect core must not prohibit an otherwise valid identity
+merge; retain the oldest original identity's name and lineage under
+[naming N14](2026-10-22-identity-family-naming.md#nov-3-name-continuity-and-character-slot-boundaries).
+Potentials remain mobile, but absence of automatic protection does not erase
+manual locks, rejects or source recovery.
+
+Review holds for cast gains remain right for this stage; high-confidence
+auto-join later is C12. Non-core cast photos may belong to another cast member
+or a non-cast identity: the previous C11 proposal to return every other photo
+to its original folder was not an approved rule and is superseded here.
+No new Demon category or matcher is authorized by this decision; future named
+character slots should inherit the same slot-versus-source-person distinction.
 
 - [ ] **P1 ai** C11 Core-only cast protection. Identity `protected` keeps the
   slot, name, folder, anchors, workflow-selected and photo-protected images, but
   no longer freezes every Gallery photo in core mode. Make the Angels/Sisters
-  core minimum a policy value with a 0.40 trial. A released cast photo that is
-  closer to another cast member by the route margin goes to that member's
-  Review, never silently to a non-cast folder; others return to their own
-  folder. Preview the exact release/route set (expected about 158 released, about
-  29 cross-cast candidates) before any apply, with tests for each gate. Runs as
-  the [layout LY10](2026-11-02-library-layout.md) comparison. Gate: C1 approval
-  of these semantics.
+  core minimum a policy value with the approved 0.40 trial. Persist automatic
+  core protection through E13, separately from mandatory-retained references.
+  Release eligible non-core photos into normal evidence-based matching;
+  questionable cast matches go to the matched cast member's Review, while
+  non-cast destinations remain possible. Preview every retained/core/released
+  and routed outcome before apply. The 158 below-0.40 and 29 higher-rival
+  observations are diagnostic counts, not promised release or move totals:
+  references, quality/support and frozen-core rescoring can change them.
+  Test Drakness/Nyxene and Angelica alongside all other cast slots, and
+  consume the final-membership audit from engine E14. Runs as the
+  [layout LY10](2026-11-02-library-layout.md) comparison. Gate: threshold/core-only
+  decision approved Nov 3; tested E13 acquisition, exact release preview and
+  source/preparation reuse verification before a new sandbox install.
 - [ ] **P2 either** C12 Cast auto-join band: define the score and margin above
   which a cast match joins the Gallery directly (single cast candidate, no
   quality hold), Review below it. Calibrate from the user's LY11 look-alike
@@ -928,4 +956,19 @@ LY12; the user's fuller written feedback document -> to come (LY11).
 ```text
 Well, it's fine for this stage to have things in review for Angels and Sisters, but down the road if the scores are high enough, they can auto join, only review if it's questionable.  On a related note - why didn't any of the low scoring items for someone like Drakness move out and over to Nyxene - since a few of them have higher scores for Nyxene than Drakness (and those two are actually sisters in real-life, so they look very similar.  I expected that some of those moves would happen when we rebased.  We had discussed only protecting protecting the core of sisters and angels with core scores above .40 (or some number we need to tune) so that we could see if any images might be in a sister that should land somewhere else.  I guess those two things jump out at me to start with for feedback.  Capture these items and let me know what you think about these questions.  How did we get an identity Camaris?  That seems like a bug of somekind lurking about.  We should be able to intake any files in the various/gallery and if they don't conform to the normal standards, just assign a guid and give them proper naming for various to start with.  Things are looking good and I'll write up an actual document with other questions and feedback - but so far I am pleased with progress.  We just have a few things that I think we will continue to work on and improve the accuracy.
 ```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 3 10:50 core-protection decision (verbatim)
+
+Coverage: automatic rebase protection and category thresholds -> C11/table and
+engine E13; merge protected Prospect cores using the oldest original name ->
+naming N14; first/last names below character slots and future Demons ->
+naming N14/layout LY13, no new category now; Drakness and all-cast release
+trial -> C11/layout LY10; mixed Prospect clusters and higher-rival final
+scores -> engine E14/E15; standard filename implementation -> layout LY12.
+
+<!-- markdownlint-disable MD013 -->
+````text
+I agree with the auto-protect the core during the rebase and we should record that protection automatically on a rebase - since none of the photos have protection applied to them.  So, the outcome of a rebase is that we should auto-protect the core identity of angels and sisters automatically.  Models the core protection should be a bit higher for auto protection - like .50 and higher and prospects like .60 and higher and let's just leave potentials unprotected so their images can float more.  If we do have some prospects where the core is protected, but they should merge, that's also fine we'd just want to pick the oldest original to keep the name with instead of taking on a newer name.  We'll need to fix the names of people who come in like Camaris and ensure we have first and last names assigned to anyone who is in a category like Models or below.  Other categories we'll add later, like Demons will follow the Angels and Sisters model for named character slots, but anything without that should always follow the naming.  I'll continue to review the results, but I feel like we need to test with the core protection of someone like Drakness and see what happens to the other images - and ideally we would do that across the board and see if where the images flow to.  I also know that some other prospects have small clusters of mis-matched photos and I'll get a bunch of that feedback as well to see if it can also help with tuning.  But if you read the report and we have anyone who is part of an identity, but they score higher against another identity - that's a sign where something is not quite right in the grouping.  Maybe it's happened because more images came into a core and someone now aligns more with another person and I'd want that also audited at the end of the run as it might mean those photos need to go back and be re-compared again.  Let's also fix the non-standard filenaming and move ahead with that change.
+````
 <!-- markdownlint-enable MD013 -->

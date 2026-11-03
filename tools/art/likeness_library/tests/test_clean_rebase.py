@@ -523,7 +523,7 @@ class CleanRebaseTests(unittest.TestCase):
                 candidates[0]["photoId"],
                 metadata.photo_id_from_name(
                     likeness.originals.standard_name(self.source_photo.name, "incoming"),
-                ),
+                ) or f"photo:pic_{likeness.originals.content_id(self.source_photo)}",
             )
             self.assertEqual(candidates[0]["sourceFolder"], "Various")
             self.assertEqual(candidates[0]["sourceBucket"], "Pool")
@@ -556,6 +556,11 @@ class CleanRebaseTests(unittest.TestCase):
                 self.layout, self.run, load_policy(), api,
                 embedder=fixture_embedder,
             )
+            for row in result["photos"]:
+                if row.get("photoIdOrigin") == "originals-content-id":
+                    name = pathlib.PurePosixPath(row["destination"]).name
+                    self.assertEqual(metadata.photo_id_from_name(name), row["photoId"])
+                    self.assertTrue(name.startswith("angelica_pic_"))
             self.assertEqual(
                 fixture_embedder.evidence_root,
                 self.working / "_likeness" / "general" / "face-evidence",
@@ -623,6 +628,17 @@ class CleanRebaseTests(unittest.TestCase):
         plan = json.loads((self.run / "catalog.json").read_text(encoding="utf-8"))
         self.assertEqual(plan["actions"], [])
 
+    def test_creation_accepts_content_id_without_preparation_or_source_rename(self):
+        relative = "Various/gallery/fia download.jpg"
+        path = self.source / pathlib.Path(relative)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        self.source_photo.rename(path)
+        self.layout["manifest_files"] = {relative: (11, self.digest)}
+        self.relative, self.source_photo = relative, path
+        original = path.read_bytes()
+        self.test_creation_uses_empty_cache_and_only_cast_references()
+        self.assertEqual(path.read_bytes(), original)
+
     def test_incoming_ids_never_override_ambiguous_or_existing_ids(self):
         names = [
             ".facebook_123_654321.jpg", "incoming_image_654321.jpg",
@@ -634,10 +650,58 @@ class CleanRebaseTests(unittest.TestCase):
                             name=name, group="Various")
             for name in names
         ]
+        for photo in photos:
+            photo.path.parent.mkdir(parents=True, exist_ok=True)
+            photo.path.write_bytes(photo.name.encode())
+        unknown = photos[-1].path
         ids = clean_rebase._matching_photo_ids(photos, self.source, likeness)
         self.assertEqual(list(ids.values()), [
-            None, "photo:image_654321", None, None, "photo:image_222222", None,
+            None, "photo:image_654321", None, None, "photo:image_222222",
+            f"photo:pic_{likeness.originals.content_id(unknown)}",
         ])
+
+    def test_nonstandard_names_get_content_ids_and_byte_duplicates_are_held(self):
+        files = {
+            "Prospects/Brielle Carter/gallery/brielle_carter_pose_1.jpg": b"brielle pose",
+            "Various/gallery/various_pose_1.jpg": b"brielle pose",
+            "Various/gallery/Mia Base.jpg": b"mia base",
+            "Various/gallery/incoming-d167.jpg": b"other picture",
+        }
+        photos = []
+        for relative, payload in files.items():
+            path = self.source / pathlib.Path(relative)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(payload)
+            group = relative.split("/", 1)[0]
+            photos.append(SimpleNamespace(path=path, name=path.name, group=group))
+        duplicates = {}
+        ids = clean_rebase._matching_photo_ids(photos, self.source, likeness, duplicates)
+        content = {
+            relative: f"photo:pic_{likeness.originals.content_id(self.source / relative)}"
+            for relative in files
+        }
+        brielle = "Prospects/Brielle Carter/gallery/brielle_carter_pose_1.jpg"
+        self.assertEqual(ids[brielle], content[brielle])
+        self.assertIsNone(ids["Various/gallery/various_pose_1.jpg"])
+        self.assertEqual(duplicates, {"Various/gallery/various_pose_1.jpg": brielle})
+        for relative in ("Various/gallery/Mia Base.jpg", "Various/gallery/incoming-d167.jpg"):
+            self.assertEqual(ids[relative], content[relative])
+
+    def test_content_id_never_claims_an_existing_id_for_different_bytes(self):
+        first = self.source / "Various" / "gallery" / "odd name.jpg"
+        first.parent.mkdir(parents=True, exist_ok=True)
+        first.write_bytes(b"first")
+        key = likeness.originals.content_id(first)
+        second = first.with_name(f"various_pic_{key}.jpg")
+        second.write_bytes(b"second")
+        photos = [
+            SimpleNamespace(path=path, name=path.name, group="Various")
+            for path in (first, second)
+        ]
+        duplicates = {}
+        with self.assertRaisesRegex(ValueError, "content-derived photo ID collision"):
+            clean_rebase._matching_photo_ids(photos, self.source, likeness, duplicates)
+        self.assertEqual(duplicates, {})
 
     def test_inferred_id_normalizes_only_prepared_destination(self):
         selected = self.run / "selected.png"
@@ -656,6 +720,27 @@ class CleanRebaseTests(unittest.TestCase):
             row["destination"], "Prospects/New Person/gallery/new_person_image_222222.png",
         )
         self.assertEqual(row["preparedSHA256"], metadata.content_sha256(selected))
+
+    def test_content_id_uses_manifest_digests_without_rehashing_other_photos(self):
+        unknown = self.source / "Various" / "gallery" / "download.jpg"
+        unknown.parent.mkdir(parents=True, exist_ok=True)
+        unknown.write_bytes(b"download")
+        existing = unknown.with_name("various_image_123456.jpg")
+        existing.write_bytes(b"different")
+        photos = [
+            SimpleNamespace(path=path, name=path.name, group="Various")
+            for path in (unknown, existing)
+        ]
+        digests = {
+            path.relative_to(self.source).as_posix(): metadata.content_sha256(path)
+            for path in (unknown, existing)
+        }
+        with mock.patch.object(metadata, "content_sha256", side_effect=AssertionError("rehash")):
+            ids = clean_rebase._matching_photo_ids(photos, self.source, likeness, {}, digests)
+        self.assertEqual(
+            ids["Various/gallery/download.jpg"],
+            f"photo:pic_{likeness.originals.content_id(unknown)}",
+        )
 
     def test_creation_core_seed_policy_routes_released_cast_images_as_candidates(self):
         cast_folder = self.source / "Angels" / "Angelica"

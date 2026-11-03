@@ -5,6 +5,22 @@ Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (gen
 
 ## The pattern
 
+**Current scheduling (Nov 3 review; supersedes the dated Nov 2 pause below):**
+the fresh `fresh-20261102` sandbox is installed and its ordinary post-install
+check passed; human placement/quality review remains open (LY11/C7).
+The additional people-gallery check found filename/report-state alignment
+gaps (LY12), not a reason to restart intake. Complete that bounded prerequisite
+and naming continuity/collision work (LY13/N14), then test approved rebase
+core acquisition (C11/engine E13) and compare routes under LY10 using verified
+prepared-source reuse where possible. Core threshold decisions are already
+approved; a new apply still needs exact release/outcome preview and recovery.
+The [recap feedback](2026-10-22-gallery-review-layout.md#nov-3-fresh-rebase-recap-feedback)
+selects L21-L23 presentation/diagnostic improvements using saved evidence,
+not a broad GUI rebuild. Engine E14/E15 owns final-membership audit and later
+bounded recomparison; naming and engine plans retain their broader holding
+gates. No competing full intake, Production mutation, spelling migration or
+Sovereign Females rollout while this baseline is being reviewed.
+
 **Current scheduling (Nov 2 pause):** preserve the installed FULL sandbox
 baseline and its passed automated viewer/recovery checks. The user has now
 authorized a separate optimized replay and actual sandbox/production backup
@@ -39,7 +55,9 @@ No frozen report or applied receipt was migrated.
 ## Now, next and holding
 
 This supersedes Oct 29's choice to keep all independent plans active.
-There are **5 active, 14 holding and 1 proposed plans**. All unfinished scopes
+The Oct 30 scheduling recorded **5 active, 14 holding and 1 proposed plans**;
+the Nov 2 layout/spelling additions and Nov 3 selection above extend that
+dated window. All unfinished scopes
 stay in their original files: no `_holding` directory or broad link migration.
 Holding is a scheduling state, never completion, cancellation or acceptance.
 The [plan table](#plans) and each held plan's **Resume gate** give its owner
@@ -47,6 +65,7 @@ and reactivation condition.
 
 | Window | Work | Exit / boundary |
 | --- | --- | --- |
+| Nov 3 current review and bounded prerequisites | [Layout LY11-LY13](2026-11-02-library-layout.md), [recap L21-L23](2026-10-22-gallery-review-layout.md#nov-3-fresh-rebase-recap-feedback); N14/E13/E14 narrow handoffs | Preserve the installed baseline; test naming/recovery, resolve continuity, acquire core protection in a separate preview, and expose final-rival diagnostics. Broader holding work remains deferred |
 | Now, human review of installed baseline | Cast C7, intake I60 | C6/I59/T16/S15 automated gates passed, including real history rows/detail links and rollback bytes. Human placement/quality acceptance remains open. No new full intake |
 | Current end-to-end gate, paused for ComfyUI | Storage S27 final independent check/publication; S30 technical audit passed | Corrected exact image roles/routes, 273 summaries, cast/name audit and actual recovered browsers/history pass. Resume only independent `--check` after memory is available; no duplicate intake/install. S28/S29/S31 verified; Oct 19 retirement saves 611.11 MB net logical backup bytes. Newest production, damaged Oct 14 survivors and last sandbox FULL stay protected. Family preview is read-only, not accepted renaming |
 | Parallel speed lane, before another expensive viewer refresh | [Gallery L18](2026-10-22-gallery-review-layout.md), with T15/T17 evidence | First retained-proof reuse slice and full-scale equivalent Review are verified; next bound repeated whole-history audits across pages. Preserve invalidation/hash/path guards. No broader gallery redesign or intake rerun |

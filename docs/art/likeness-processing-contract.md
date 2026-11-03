@@ -1,6 +1,6 @@
 # Likeness processing contract
 
-**Reconciled:** 2026-10-28. Approved target rules, not a claim that all
+**Reconciled:** 2026-11-03. Approved target rules, not a claim that all
 acceptance gates have passed. The [engine acceptance plan](../plans/2026-10-22-likeness-engine-acceptance.md)
 owns execution; [installed evidence](likeness-sandbox-trial.md) owns the
 dated run record; [likeness guide](likeness.md) owns runnable command syntax.
@@ -9,6 +9,17 @@ additional shipped CLI contracts. Production remains unapproved.
 
 ## Latest precedence and ownership
 
+- Nov 3 approves core-only rebase protection with automatically recorded
+  per-photo evidence. The [cast decision table](../plans/2026-10-23-cast-seeded-library-rebase.md#nov-3-cast-feedback-after-the-fresh-sandbox-rebase)
+  owns category trial minima; engine E13 owns support/quality/manual override
+  and transactional acquisition. Slot identity protection must not implicitly
+  freeze all Gallery members in this explicitly scoped rebase mode.
+  Valid non-cast merges preserve original name/lock lineage through naming
+  N14. Non-core cast photos may re-match to cast Review or eligible non-cast
+  identities; persistent automatic locks, final-rival audit and convergence
+  remain implementation/acceptance work, not claims about the installed
+  all-seeds baseline. Ordinary processing and Production permissions are
+  unchanged.
 - Oct 28 authorizes full sandbox iteration using final recommended prepared
   pixels consistently for Gallery, likeness and ComfyUI. Keep exact originals,
   masks/history and the exact aligned SFace input face with content/model

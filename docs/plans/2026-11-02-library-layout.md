@@ -336,6 +336,15 @@ check passed afterwards.
   standard Various naming at intake; do not keep source names. Implement that in
   the rebase/intake, write the state after a rebase gallery rebuild, so a fresh
   install checks clean, and add a test for each.
+  Filename slice implemented Nov 3: preserve recognized download IDs; assign
+  ID-less non-cast inputs the existing originals content ID and normalize
+  prepared destination prefixes without renaming frozen inputs. Exact byte
+  copies are held with distinct `various_duplicate_*` names and explicit
+  canonical-source reasons, not clustered twice; differing-byte ID collisions
+  refuse explicitly. Manifest SHA-256 values are reused. Install/check/undo
+  naming and duplicate recovery tests pass. This does not retroactively rename
+  the installed review baseline. The maintenance report-state slice remains
+  open; LY12 is not complete.
 - [ ] **P1 ai** LY13 Cast-name collision. `Potentials\Camaris` is not a new
   identity: Production has had it since Oct 8 (two photos). Its `z_camaris_bloom.txt`
   says "Camaris Bloom", "returned to Potentials; replaced as Camaris by Ruby Eden"
@@ -346,6 +355,20 @@ check passed afterwards.
   an Angel/Sister (case-insensitive), preferring the recorded `name:`; a
   validator lists existing collisions. Correct the Production folder only through
   the LY8 true-up. Tests for each.
+  Nov 3 extends this with [naming N14](2026-10-22-identity-family-naming.md#nov-3-name-continuity-and-character-slot-boundaries):
+  non-character identities must have first and last names; valid merges keep
+  the oldest original identity's name, including protected Prospect cores.
+
+**Nov 3 recap feedback ownership:** the complete
+`rebase_fresh_20261102_feedback.md` is preserved once in
+[gallery L21-L24](2026-10-22-gallery-review-layout.md#nov-3-fresh-rebase-recap-feedback).
+That scope owns consistent recap styling/navigation, final-destination links,
+membership-flow tables, core/surname image comparisons, explicit reason/score
+labels, No Change distinctions and the ranked-picker idea. N14 owns Harlow/
+Sophie/name continuity; engine E14/E15 owns final-rival audits and bounded
+recomparison. C11/engine E13 owns the approved core-protection trial. Reuse
+the same saved run evidence and preserve the installed pages for ongoing
+review; no new full intake or broad plan reorganization is authorized.
 
 ## User request (chat, verbatim)
 

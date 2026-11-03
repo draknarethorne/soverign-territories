@@ -7,6 +7,42 @@ placement review before calibration/convergence or the separate incremental
 batch. Reactivate a narrow proven engine blocker if needed; holding never
 waives existing thresholds, protection or Production approval requirements.
 
+## Nov 3: rebase protection and final-membership audit
+
+The [cast plan's approved threshold table](2026-10-23-cast-seeded-library-rebase.md#nov-3-cast-feedback-after-the-fresh-sandbox-rebase)
+owns category values. E13 owns acquiring and recording automatic per-photo
+protection during rebase, including its provenance, frozen independent support,
+manual overrides and exact undo. The user has approved core-only acquisition
+and category trial values; do not ask for those same decisions again. Remaining
+support/rival/quality gates must be reported explicitly and tested, not silently
+replaced by a score-only lock on all folder members. Protected Prospect cores
+can participate in a valid same-person merge; protect evidence and preserve
+the oldest original identity's name through naming N14, rather than freezing
+the entire folder or losing locks during a merge.
+
+The latest [recap feedback](2026-10-22-gallery-review-layout.md#nov-3-fresh-rebase-recap-feedback)
+asks whether membership changes cause other photos to be rescored. Do not
+claim repeated reassignment or convergence from one initial cast-reference
+pass and final classification. E7 remains the bounded-convergence owner;
+the following audit must expose residual disagreements before enabling a
+follow-up move pass.
+
+- [ ] **P1 ai** E14 Audit every eligible photo against its final own identity
+  (leave-one-out) and rival identities after the run. Record score meanings,
+  best rivals, margins, evidence/support, core/automatic/manual protection,
+  quality exclusions and affected identity IDs. Flag higher-rival scores as
+  possible grouping errors, not proof of wrong identity; relatives and
+  lookalikes can legitimately be close. Include Drakness/Nyxene, Angelica,
+  mixed Prospect clusters and newly formed or changed identities. Expose
+  results through recap L23 and record whether another comparison pass is
+  needed. Gate: stable final membership and verified features.
+- [ ] **P2 either** E15 Under E7, define and test a bounded affected-identity
+  follow-up pass: frozen references per pass, approved merge/split/routing
+  gates, changed-membership triggers, deterministic tie handling, maximum
+  passes, oscillation detection and explicit unresolved outcomes. Do not
+  start a full intake or recursively grow cores during a pass. Gate: E14
+  evidence and labelled placement feedback reviewed.
+
 ## Oct 27: auto-protection note incorporated
 
 `auto_protection_thoughts.md` is covered by E13 below: separately calibrated
@@ -99,6 +135,12 @@ Proposed safety requirements for E13, pending policy approval:
   protected Review, stale hashes, manual opt-out, workflow conflicts and
   repeat/rebase preservation; automated implementation tests are not calibration.
   Calibrate on labelled sandbox cases before enabling a mutating policy.
+  Nov 3: category trial thresholds and automatic persistence during rebase
+  are approved in the cast plan; implement that bounded rebase slice with
+  boundary tests, distinguish acquired locks from manual locks, and preserve
+  Prospect merge eligibility. Other support/quality/rival calibration remains
+  open; do not imply the existing installed all-seeds run already recorded
+  these automatic photo locks.
 
 The user was unavailable for the first policy question. Working proposal:
 explicit unprotect is a persistent opt-out until explicitly re-enabled, including

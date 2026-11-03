@@ -4,7 +4,22 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
-**Nov 3 first review decisions:** cast gains held in Review are right for now;
+**Nov 3 10:50/12:12 review update:** automatic rebase core protection and its
+persistent per-photo record are approved; category trial values live in the
+[cast decision table](plans/2026-10-23-cast-seeded-library-rebase.md#nov-3-cast-feedback-after-the-fresh-sandbox-rebase).
+Models/Prospects follow higher automatic-protection minima; Potentials receive
+no automatic locks. Valid Prospect merges retain the oldest original name;
+non-character identities require first and last names (naming N14). Final
+own-versus-rival audit and bounded recomparison are engine E14/E15, not an
+assumed existing cascade. The full fresh-rebase recap feedback is preserved in
+[gallery L21-L24](plans/2026-10-22-gallery-review-layout.md#nov-3-fresh-rebase-recap-feedback)
+with every request mapped to its owner. Rank-prefixed source filenames remain
+an idea, not an approved rename. The content-ID filename slice of LY12 is
+implemented and recovery-tested; report-state integration remains open.
+Core auto-protection and recap UI changes are planned, not applied to the
+current installed baseline. No new full intake or spelling migration started.
+
+**Nov 3 first review decisions (extended by the update above):** cast gains held in Review are right for now;
 later, high-confidence cast matches auto-join and only questionable ones go to
 Review ([cast C12](plans/2026-10-23-cast-seeded-library-rebase.md)). Protect
 only each Angel/Sister's core (trial 0.40, to tune) so that non-core photos are

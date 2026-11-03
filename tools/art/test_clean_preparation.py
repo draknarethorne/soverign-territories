@@ -291,7 +291,7 @@ class CleanPreparationTests(unittest.TestCase):
         self.assertTrue(named["destination"].startswith("Potentials/Known Person/gallery/"))
         self.assertEqual(manifest.read_bytes(), unchanged)
 
-    def test_missing_id_review_collisions_preserve_both_sources_and_recover_exactly(self):
+    def test_content_duplicates_preserve_both_sources_and_recover_exactly(self):
         originals = {}
         for relative in ("Potentials/Fia/gallery/legacy.jpg", "Various/gallery/LEGACY.JPG"):
             source = self.source / relative
@@ -308,7 +308,8 @@ class CleanPreparationTests(unittest.TestCase):
         for row in held:
             self.assertTrue(row["destination"].startswith("Various/review/"))
             self.assertIsNone(metadata.photo_id_from_name(row["destination"]))
-            self.assertIn("filename disambiguated", row["reason"])
+            self.assertIn("exact byte duplicate", row["reason"])
+            self.assertTrue(pathlib.PurePosixPath(row["destination"]).name.startswith("various_duplicate_"))
         self.command(replan=True)
         replanned = json.loads((self.run / "run.json").read_text(encoding="utf-8"))
         self.assertEqual(destinations, {
@@ -325,6 +326,34 @@ class CleanPreparationTests(unittest.TestCase):
         self.command(undo=True)
         for relative, content in originals.items():
             self.assertEqual((self.working / relative).read_bytes(), content)
+
+    def test_nonstandard_intake_name_has_stable_id_and_reversible_standard_destination(self):
+        relative = "Various/gallery/Mia Base.jpg"
+        source = self.source / relative
+        Image.new("RGB", (640, 960), (120, 100, 80)).save(source)
+        target = self.working / relative
+        shutil.copy2(source, target)
+        self.inputs[relative] = (source.stat().st_size, metadata.content_sha256(source))
+        original = source.read_bytes()
+        key = f"pic_{likeness.originals.content_id(source)}"
+        self.command()
+        plan = json.loads((self.run / "run.json").read_text(encoding="utf-8"))
+        row = next(item for item in plan["photos"] if item["source"] == relative)
+        self.assertEqual(row["photoId"], f"photo:{key}")
+        self.assertEqual(row["photoIdOrigin"], "originals-content-id")
+        self.assertEqual(pathlib.PurePosixPath(row["destination"]).stem, f"various_{key}")
+        self.assertNotIn("missing stable photo ID", row["reason"])
+        self.assertEqual(source.read_bytes(), original)
+        with mock.patch("library_backup.latest_work_root_backup", return_value=self.base), \
+                mock.patch("library_backup.verify_backup"):
+            self.command(apply=True)
+        native = self.working / row["destination"]
+        self.assertTrue(native.is_file())
+        self.assertEqual(metadata.photo_id_from_name(native.name), f"photo:{key}")
+        self.assertIsNotNone(retained_preparation.verify_link(self.working, native))
+        self.command(check=True)
+        self.command(undo=True)
+        self.assertEqual(target.read_bytes(), original)
 
     def test_apply_retains_versions_and_originals_and_undo_restores_cast_and_pool(self):
         before = {path.relative_to(self.working).as_posix(): path.read_bytes()
