@@ -173,6 +173,16 @@ def _curation_inventory(layout, catalog=None):
                     if not record or not record.get("sanitized"):
                         raise ValueError(f"duplicate current photo ID is not safely isolated: {relative}")
                     allowed_unbound.add(relative)
+        elif len(matching) > 1:
+            # Identical copies of the immutable input are one photo; anything else must be isolated.
+            for path in paths:
+                if path in matching:
+                    continue
+                relative = path.relative_to(working).as_posix()
+                record = overlay_inputs.get(relative)
+                if not record or not record.get("sanitized"):
+                    raise ValueError(f"duplicate current photo ID is not safely isolated: {relative}")
+                allowed_unbound.add(relative)
         elif len({metadata.content_sha256(path) for path in paths}) == 1:
             pass
         else:

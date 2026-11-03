@@ -456,6 +456,20 @@ class CleanRebaseTests(unittest.TestCase):
         self.assertEqual(len(current_inputs), 5)
         self.assertTrue(any(record["role"] == "working-various-duplicate" for record in manifest["rawRecovery"]))
 
+        # Production also keeps the person's own copy: two identical inputs plus the isolated screenshot.
+        person_copy = self.working / relative
+        person_copy.parent.mkdir(parents=True)
+        person_copy.write_bytes(source.read_bytes())
+        with mock.patch.dict("sys.modules", {"image_preparation": self.image_inventory_mock()}):
+            current_inputs = clean_rebase._curation_inventory(overlay_layout)
+            self.assertEqual(len(current_inputs), 6)
+            self.assertIn(screenshot.relative_to(self.working).as_posix(), current_inputs)
+            stranger = self.working / "Models" / "Other" / "gallery" / "other_shot_20261010125400.jpg"
+            stranger.parent.mkdir(parents=True)
+            stranger.write_bytes(b"unrelated photo with the same timestamp")
+            with self.assertRaisesRegex(ValueError, "not safely isolated"):
+                clean_rebase._curation_inventory(overlay_layout)
+
     def test_undo_removes_created_local_catalogue(self):
         plan = self.prepare_catalogue()
         local = self.working / ".likeness-library.json"
