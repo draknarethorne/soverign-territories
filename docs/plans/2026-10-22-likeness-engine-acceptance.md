@@ -1,6 +1,11 @@
 # 2026-10-22: likeness engine acceptance and production rebuilding
 
-**Status:** holding (Oct 30 scheduling; calibration, convergence and Production gates remain)
+**Status:** active (Nov 3 narrow E13/E14/E15 prerequisites to layout LY10 only)
+
+**Queue focus:** E13, E14, E15
+
+**Broader scope:** calibration, convergence, the separate incremental batch
+and Production remain holding under the resume gate below.
 
 **Resume gate:** consume the accepted cast-rebase baseline and labelled
 placement review before calibration/convergence or the separate incremental
@@ -8,6 +13,18 @@ batch. Reactivate a narrow proven engine blocker if needed; holding never
 waives existing thresholds, protection or Production approval requirements.
 
 ## Nov 3: rebase protection and final-membership audit
+
+The 12:46 request selects E13/E14 as narrow prerequisites to a new
+Production-source sandbox rehearsal under layout LY10. Broader engine
+calibration/convergence and Production gates stay holding. Implementation
+records one final frozen-membership audit, top-three rivals, explicit missing
+scores, quality/protection/anchor/workflow state, and whether margin-qualified
+unlocked Gallery disagreements need follow-up. The audit itself does not move
+photos; since 14:17 the E15 refinement pass runs before it, and the audit
+reports what remains (no convergence claim). Category trial values are bound
+to `--record-core-protection`, with a distinct run policy version; ordinary
+policy defaults are unchanged. Independent support, rival and quality gates
+still report their holds when the category minimum alone is insufficient.
 
 The [cast plan's approved threshold table](2026-10-23-cast-seeded-library-rebase.md#nov-3-cast-feedback-after-the-fresh-sandbox-rebase)
 owns category values. E13 owns acquiring and recording automatic per-photo
@@ -36,12 +53,18 @@ follow-up move pass.
   mixed Prospect clusters and newly formed or changed identities. Expose
   results through recap L23 and record whether another comparison pass is
   needed. Gate: stable final membership and verified features.
-- [ ] **P2 either** E15 Under E7, define and test a bounded affected-identity
-  follow-up pass: frozen references per pass, approved merge/split/routing
-  gates, changed-membership triggers, deterministic tie handling, maximum
-  passes, oscillation detection and explicit unresolved outcomes. Do not
-  start a full intake or recursively grow cores during a pass. Gate: E14
-  evidence and labelled placement feedback reviewed.
+- [ ] **P1 ai** E15 Under E7, run a bounded in-place refinement inside the
+  rebase plan (14:17 request below): frozen references per pass, existing
+  route/merge/category gates, deterministic ties, maximum passes, oscillation
+  detection and explicit unresolved outcomes, including identity merges as
+  membership evolves. Implemented and unit-tested in
+  `likeness_library/refinement.py` (moves, held-Review attach, cast lookalikes
+  to cast Review only, reciprocal-best cluster merges with oldest-name
+  continuity, reclassification/dissolution, locked/protected/rejected photos
+  frozen); evidence is in the plan's `membershipRefinement`, the audit state
+  `refined-then-audited` and recap section `refinement`. Remaining: inspect
+  the Nov 3 source rehearsal's refinement and audit output, then tune.
+  Gate: E14 evidence reviewed against the user's visual review.
 
 ## Oct 27: auto-protection note incorporated
 
@@ -322,3 +345,48 @@ that any of these gates passed. Historical source words and execution records
 remain preserved in the retired records. This successor is active after
 context/task transfer verification; durable rules and evidence are in the
 live references linked above. No production apply is authorized by archival.
+
+## Nov 3: audit and refinement follow-up
+
+The user asks whether final auditing and affected-image re-comparison can
+improve assignments. Yes: newly formed or changed cores can change the best
+supported destination after the initial frozen matching pass. E14 records
+those disagreements; auditing alone does not change galleries. E15/E7 owns
+bounded affected-identity follow-up, using verified existing measurements
+instead of repeating intake, frozen references per pass, existing routing/
+merge/split and protection gates, deterministic ties, a pass limit and
+oscillation detection. Only accepted moves change membership/history and
+refresh derivatives, processing links and galleries; ambiguous cases remain
+explicit Review/diagnostic outcomes. A higher rival score alone is not enough,
+especially for relatives/lookalikes. This question does not independently
+authorize an automatic follow-up recipe or a competing run; inspect this
+source rehearsal's audit first.
+
+### Follow-up question (verbatim)
+
+<!-- markdownlint-disable MD013 -->
+````text
+It almost seems like an audit is necessary after the run to look for instances where things do seem mis-aligned and we'd want to figure out what to do with those images in the process or re-run them through the likeness again to see where they land?  Basically, iterating and auditing and refining any assignments.  Would that make sense or not end up actually having any impact no the galleries, assignments, and such?
+````
+<!-- markdownlint-enable MD013 -->
+
+### Nov 3, 14:17: bounded refinement in place
+
+The user authorizes automatic refinement applied in place after rebase
+routing, including identity merges. Implementation runs inside the plan
+before naming, so install, undo, history and recap use the refined plan; the
+final audit then reports what remains. Rules: one pass freezes provisional
+cluster cores and fixed cast cores; a photo moves only if the existing
+`auto-route` gate passes for a cluster (cast gains go to the cast's Review
+folder, never straight into a core gallery); category-protected cores,
+anchors, workflow inputs and rejection history stay put; a reciprocal-best
+pair merges only when similarity reaches the survivor category's merge
+minimum with the route margin, every loser photo meets the route minimum and
+the loser has no locked or rejected photos; the larger cluster survives and
+naming keeps the oldest original name. Passes stop when stable or at four.
+
+<!-- markdownlint-disable MD013 -->
+````text
+I want to see the bounded automatic refinements working in place so that after a rebase - we believe that it's as clean as it's going to get.  This could also include merging more identities as the identities evolve.  It's not just where do individual photo's go - but do we end up realizing that two identities are now the same when images move in/out in this last phase of the likeness.
+````
+<!-- markdownlint-enable MD013 -->

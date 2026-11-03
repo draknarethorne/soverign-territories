@@ -525,6 +525,10 @@ A visible Explorer tab is not sufficient evidence that the path is unlocked:
 hidden tabs can retain directory handles. In the Oct 29 rehearsal, Microsoft's
 Handle utility identified two Explorer handles to `_reports\library`; gracefully
 closing that window released them. Do not force-close individual handles.
+On Nov 3 the handles belonged to no open window; restarting Explorer released
+them. The full reset now rename-probes each top-level entry before staging and
+stops with a "close windows, editor tabs or terminals" message instead of
+failing hours later.
 Rollback cleanup uses Windows extended-length paths because moving old nested
 backups into staging can exceed MAX_PATH even when their original paths did not.
 If the journal says `committed`, rerunning the same apply finishes cleanup and
@@ -543,12 +547,12 @@ off (or the library excluded) during the long steps. Production is only read.
 | # | Command (preview, then apply) | What it does | Copies in the sandbox afterwards |
 | --- | --- | --- | --- |
 | 1 | `bin\likeness.cmd --root W sandbox-reset --full`, then add `--apply` once `resetReady: true` | Replaces Working with a verified copy of production, without `Artists`. Unique sandbox photos stay; unique metadata goes to `_reports\reset-review-bundle` | One copy of production people: person `gallery`/`review` (plus former `gallery_944x1104`/`headshot_944x1104`), `_junk`, `_retired`, the bundle. Old sandbox backups, runs and reports are gone |
-| 2 | `bin\originals.cmd --root W --dry-run`, then without `--dry-run` | Moves the former scaled folders into `<person>\944x1104\{full,head,chest}` by rename and fills gaps. `--check` must say IN SYNC | Same bytes, new folders; no second copy |
+| 2 | `bin\originals.cmd --root W --no-repoint --dry-run`, then without `--dry-run` | Moves legacy scaled folders into `<person>\944x1104` and fills maintained-copy gaps. `--check` must say IN SYNC. `--no-repoint` preserves the shared workflow configuration during this isolated rehearsal | Existing copies move by rename; missing maintained copies are generated |
 | 3 | `bin\library-backup.cmd --root W`, then `--apply` | Dated LEAN snapshot in `W\_backup` (derivatives omitted, regenerable) | Production photos twice: live and `_backup` |
-| 4 | `bin\sandbox-rebase.cmd W RUN --baseline working --dry-run` | Read-only inventory of the inputs | Unchanged |
+| 4 | `bin\sandbox-rebase.cmd W RUN --baseline working --cast-seeds core --record-core-protection --dry-run` | Read-only inventory of the newly reset Production inputs; the flags bind approved core-only rebase behavior | Unchanged |
 | 5 | Same with `--intake-only --apply` (timed log, see below), then `--check` | Freezes the inputs and prepares every photo (control, geometry, padding, masks) | Plus `RUN\inputs` (frozen input mirror) and `RUN\...\preparation` evidence |
 | 6 | Same without flags (matched preview), then `--preserve-legacy-derivatives --apply`, then plain `--check` (after install the flag is refused: it selects the unpublished-plan recovery preview) | Matches and installs: people get `gallery`/`review`/`944x1104`; LEAN processing history goes to `W\_processing\<person path>\<set-key>`; the replaced categories go to `RUN\previous` for `--undo`. The flag is expected on a fresh copy: production's scaled copies collide with the regenerated ones and are journalled byte-for-byte into `RUN\previous\external` | Plus `_processing` (LEAN) and `RUN\previous` (the pre-install categories and replaced scaled copies) |
-| 7 | `bin\people-gallery.cmd --root W --check`, `bin\people-gallery-review.cmd --root W`; the recap is automatic | Rebuilds and checks Gallery/Overview/Review. Every `sandbox-rebase.cmd` preview, replan, apply, check and undo also rewrites `W\_reports\library\rebase-recap\<run>.html` and its `index.html` (`bin\rebase-recap.cmd RUN` regenerates it by hand). It shows moves, renames, Review holds, cast gains/losses, new identities by surname with their nearest cast member, and differences from other runs of the same inputs; photos link to their intake comparison. **Looks like** picks save `rebase-expectations.json` beside Working (survives resets); its `photos` map (ID, file name or stem -> person) is scored on every later recap | Plus viewer thumbnails and recap pages under `_reports`; the expectations file beside Working |
+| 7 | `bin\people-gallery.cmd --root W --cache RUN\likeness-cache.json --policy RUN\policy.json --check`; the recap is automatic | Install publishes both Gallery/Overview and Review through shared report-state publication. Every successful matched `sandbox-rebase.cmd` step also rewrites the recap and run index; inventory/intake-only steps do not. Check with this run's explicit local cache/policy, then open the actual pages. **Looks like** picks save `rebase-expectations.json` beside Working (survives resets) | Plus viewer thumbnails, report-state receipt and recap pages under `_reports`; the expectations file beside Working |
 | 8 | After acceptance only: storage retention for `RUN\previous`, staged and `inputs`, and the step-3 backup | Leaves one live library plus `_processing` and a new backup | Back to about one copy plus LEAN history |
 
 Each person folder then contains only `gallery` (with its `z_<name>.txt`
@@ -557,6 +561,71 @@ profile), `review` (when needed) and `944x1104`. A person with old `gallery_org`
 layout. `--undo` at step 6 restores exactly the step-5 state. Use one run name
 per rehearsal and record the per-step durations from the logs in the owning
 plan.
+
+For the approved core trial, keep all three run flags on every step. In a
+Command Prompt, after completing reset, originals and backup above:
+
+```bat
+set "W=B:\Sovereign Territories Sandbox\Working"
+set "RUN=%W%\_sandbox-state\fresh-20261103-core"
+set "CORE=--baseline working --cast-seeds core --record-core-protection"
+bin\sandbox-rebase.cmd "%W%" "%RUN%" %CORE% --dry-run
+bin\sandbox-rebase.cmd "%W%" "%RUN%" %CORE% --intake-only --apply --workers 4
+bin\sandbox-rebase.cmd "%W%" "%RUN%" %CORE% --intake-only --check
+bin\sandbox-rebase.cmd "%W%" "%RUN%" %CORE%
+bin\sandbox-rebase.cmd "%W%" "%RUN%" %CORE% --preserve-legacy-derivatives --apply
+bin\sandbox-rebase.cmd "%W%" "%RUN%" %CORE% --check
+bin\people-gallery.cmd --root "%W%" --cache "%RUN%\likeness-cache.json" --policy "%RUN%\policy.json" --check
+```
+
+Do not run the apply line until the saved matched preview has been audited.
+Keep `--no-repoint` on sandbox originals steps; refresh chosen workflow inputs
+only through their separately reviewed command, never against this rehearsal.
+`--baseline working` here means the **freshly reset Production copy**, not
+the previous rebase's output. The reset excludes verified processed copies
+whose originals remain in Production; genuinely unique sandbox photos and
+metadata are preserved through the documented reset bundle. Check the exact
+carry-forward inventory before applying reset.
+
+`--record-core-protection` requires `--cast-seeds core`. It records a distinct
+run-local policy with inclusive minima Angels/Sisters 0.40, Models 0.50,
+Prospects 0.60, and no automatic Potential locks. Identity/slot protection
+does not freeze every source photo in this explicit mode. Photo locks,
+anchors, workflow selections, rejects and manual opt-outs remain binding;
+complete verified identity merges retain oldest-original name continuity.
+Independent leave-one-out support, quality and rival gates still apply, and
+their holds are shown rather than treating a category score as proof.
+Ordinary defaults and all-seeds runs are unchanged.
+
+Matching uses frozen initial cast and provisional grouping references. A
+bounded in-place refinement (engine E15) then runs inside the plan before
+naming, so install, undo, history and the recap all use its result. Each pass
+freezes provisional cluster cores and fixed cast cores and:
+
+- moves an unlocked photo only when the normal `auto-route` gate passes for
+  another cluster; a cast lookalike goes to that cast's `review` folder only;
+- attaches held `Various\review` rows to a cluster under the same gate;
+- merges a reciprocal-best pair of clusters when similarity reaches the
+  survivor category's merge minimum with the route margin and every loser
+  photo meets the route minimum; the larger cluster survives and naming keeps
+  the oldest original name;
+- reclassifies changed clusters (Potentials/Prospects/Review) and dissolves
+  a cluster that no longer qualifies.
+
+Category-protected cores, anchors, workflow inputs and rejection history are
+frozen; a merge is refused while the loser holds them. Passes stop when
+stable or after four, and oscillations are reported unresolved. The plan's
+`membershipRefinement` and the recap's refinement section list every move,
+merge and unresolved case.
+
+A separate final-membership audit then compares each eligible Gallery photo
+with its final own core (leave-one-out for core members) and the top three
+rivals. It records protection/support/quality evidence, higher-rival flags
+and margin-qualified follow-up candidates. The recap labels those scores
+separately from initial photo/cluster scores and links recorded top-ten cast
+core references. **The audit itself applies no moves and does not claim
+convergence; it reports what refinement left.** A higher rival score can
+reveal a mixed cluster, but can also reflect genuine relatives/lookalikes.
 
 New prepared rebase previews recognize standard download IDs and give
 non-standard non-cast files the existing content-derived `pic_<8 hex>` ID.

@@ -3,7 +3,28 @@
 **Status:** active (LY1 decided Nov 2: all five recommendations accepted; LY2,
 LY3 publication/undo and LY5 implemented and tested Nov 2)
 
-**Queue focus:** LY4, LY11, LY13, LY12, LY9, LY10, LY6, LY8
+**Queue focus:** LY10, LY11, LY13, LY12, LY9, LY6, LY8
+
+## Nov 3: authorized new source rehearsal
+
+The 12:46 request selects naming N14/LY13, cast C11/engine E13/E14 and
+recap L21-L23 as tested prerequisites to a separate complete fresh rebase.
+Copy current Production through full reset; do not use installed
+`fresh-20261102` identities as inputs. The reset's processed-copy provenance
+excludes old generated pixels when the original remains in Production;
+genuinely unique sources and review metadata stay preserved. Compact prior
+run/catalogue/policy JSON is carried into the reset-review bundle for
+historical recap comparison only, never auto-applied or used as match seeds.
+
+LY12 report-state integration now uses shared gallery publication after
+install, in addition to the previously tested content-ID naming slice.
+The core trial, bounded in-place refinement (engine E15, added 14:17) and
+final-membership audit are explicit run-local behavior;
+ordinary defaults stay unchanged. Broader convergence beyond the four-pass
+refinement, surname-rule acceptance and Production true-up remain gated with their
+owners. LY10 stays open through fresh reset, intake, actual release/name
+preview, install and Gallery/Overview/Review/recap checks. See the
+[exact runbook](../art/likeness.md#fresh-sandbox-from-production-step-by-step).
 
 **Order:** LY2/LY3 (code + tests) -> LY5 -> LY4 clean sandbox reset and LEAN
 rebase on the new layout, timed with Acronis off -> storage S32/S27 acceptance

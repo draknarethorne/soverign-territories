@@ -32,6 +32,48 @@ class IdentityNameTests(unittest.TestCase):
         self.assertEqual(names["originalSource"], "unavailable")
         self.assertEqual(names["currentName"], "New Person")
 
+    def test_rebase_name_requires_two_tokens_and_prefers_recorded_display_name(self):
+        self.assertTrue(identity_names.is_full_person_name("Camaris Bloom"))
+        self.assertFalse(identity_names.is_full_person_name("Camaris"))
+        (self.folder / "gallery" / "z_camaris.txt").write_text(
+            "name: Camaris Bloom\n2026-10-19 returned to Potentials\n", encoding="utf-8",
+        )
+        person = {"displayName": "Camaris", "folder": "Potentials/Camaris"}
+        self.assertEqual(
+            identity_names.rebase_snapshot(person, self.folder)["currentName"], "Camaris Bloom",
+        )
+
+    def test_rebase_name_flags_source_and_catalogue_name_conflict(self):
+        (self.folder / "gallery" / "z_recorded_person.txt").write_text(
+            "name: Recorded Person\n", encoding="utf-8",
+        )
+        person = {
+            "displayName": "Catalogue Person", "folder": "Prospects/Catalogue Person",
+            "names": {
+                "originalName": "Catalogue Person", "currentName": "Catalogue Person",
+                "originalSource": "recorded-history",
+            },
+        }
+        names = identity_names.rebase_snapshot(person, self.folder)
+        self.assertEqual(names["currentName"], "Recorded Person")
+        self.assertEqual(names["sourceNameConflict"], {
+            "catalogueName": "Catalogue Person", "recordedName": "Recorded Person",
+        })
+
+    def test_original_age_uses_recorded_creation_event_not_file_timestamp(self):
+        history = self.folder / "gallery" / "z_first_person.txt"
+        history.write_text(
+            "name: First Person\n2026-10-01 +5 from Various: one new person (5 photos)\n",
+            encoding="utf-8",
+        )
+        result = identity_names.original_age("person-a", self.person, self.folder)
+        self.assertEqual(result["status"], "verified")
+        self.assertEqual(result["date"], "2026-10-01")
+        history.write_text("name: First Person\n2026-10-03 renamed from Old Person (Prospects/Old Person)\n",
+                          encoding="utf-8")
+        result = identity_names.original_age("person-a", self.person, self.folder)
+        self.assertEqual(result["status"], "missing")
+
     def test_earliest_explicit_rename_history_survives_subsequent_rename(self):
         (self.folder / "gallery" / "z_new_person.txt").write_text(
             "name: New Person\n2026-10-01 renamed from First Person (Models/First Person)\n"

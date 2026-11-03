@@ -4,6 +4,31 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Nov 3 14:17 bounded refinement:** the user asks for automatic refinement
+applied in place after rebase routing, including identity merges as
+membership evolves. Implemented as engine E15 inside the plan before naming
+(frozen cores per pass, existing route/merge gates, cast gains to cast Review
+only, protected/locked/rejected photos frozen, four-pass limit, oscillation
+reporting); the final audit runs after it and reports what remains. The
+library suite (409 tests) passes. A reset preflight now detects held folders
+before staging; the first reset attempt rolled back cleanly on an Explorer
+directory handle, released by restarting Explorer.
+
+**Nov 3 12:46 source-rehearsal continuation:** the user selects naming,
+core-protection, final-membership audit and recap feedback prerequisites, then
+a new clean sandbox copied from current Production rather than last run's
+output ([layout LY10](plans/2026-11-02-library-layout.md)).
+The approved core trial is explicit run-local policy, not changed ordinary
+defaults. Both whole-identity retention gates now permit eligible releases in
+that mode while preserving photo locks, anchors, workflow choices and rejects.
+Complete protected-Prospect merges require verified oldest-original continuity.
+The final audit records own-versus-rival evidence and follow-up candidates
+after the E15 refinement pass (14:17 above). Shared gallery report-state
+publication and compact reset-history preservation are implemented; prior run
+JSON is historical evidence only, not new matching seeds. Focused code tests
+are passing; full preparation/recovery and schema gates are still running.
+The current reset is read-only preview; no new intake/install has started.
+
 **Nov 3 10:50/12:12 review update:** automatic rebase core protection and its
 persistent per-photo record are approved; category trial values live in the
 [cast decision table](plans/2026-10-23-cast-seeded-library-rebase.md#nov-3-cast-feedback-after-the-fresh-sandbox-rebase).

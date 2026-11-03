@@ -2,11 +2,26 @@
 
 **Status:** active (Phase 3; C6 installed and independently verified; C7 human identity/quality review remains)
 
-**Queue focus:** C7, C11, C12
+**Queue focus:** C7, C11
 
 **Scheduling:** now: human placement review of the verified installed baseline.
 Other open scenarios, C10 future duplicate selection and eventual Production/
 family gates stay in this plan but are outside today's execution focus.
+
+## Nov 3: selected prerequisites and new source rehearsal
+
+The 12:46 request authorizes another complete sandbox reset from current
+Production after feedback prerequisites are tested. Previous generated
+membership is comparison evidence, not input identity authority. The new
+`--cast-seeds core --record-core-protection` run-local policy records the
+approved thresholds and permits eligible non-core cast release despite an
+identity/slot lock; default/all-seeds and ordinary policy behavior stay intact.
+Manual photo locks, anchors, workflow choices, rejects, evidence support,
+quality and opt-outs remain enforced. Automatic locks use final frozen
+Gallery cores and shared independent leave-one-out evidence, not all folder
+members. Final own/rival scores are a separate diagnostic pass, not an
+unbounded reassignment cascade. C11/E13/E14 and LY13 name-continuity tests
+must pass before new intake; LY10 remains open through install and GUI checks.
 
 ## Nov 3: cast feedback after the fresh sandbox rebase
 
@@ -970,5 +985,17 @@ scores -> engine E14/E15; standard filename implementation -> layout LY12.
 <!-- markdownlint-disable MD013 -->
 ````text
 I agree with the auto-protect the core during the rebase and we should record that protection automatically on a rebase - since none of the photos have protection applied to them.  So, the outcome of a rebase is that we should auto-protect the core identity of angels and sisters automatically.  Models the core protection should be a bit higher for auto protection - like .50 and higher and prospects like .60 and higher and let's just leave potentials unprotected so their images can float more.  If we do have some prospects where the core is protected, but they should merge, that's also fine we'd just want to pick the oldest original to keep the name with instead of taking on a newer name.  We'll need to fix the names of people who come in like Camaris and ensure we have first and last names assigned to anyone who is in a category like Models or below.  Other categories we'll add later, like Demons will follow the Angels and Sisters model for named character slots, but anything without that should always follow the naming.  I'll continue to review the results, but I feel like we need to test with the core protection of someone like Drakness and see what happens to the other images - and ideally we would do that across the board and see if where the images flow to.  I also know that some other prospects have small clusters of mis-matched photos and I'll get a bunch of that feedback as well to see if it can also help with tuning.  But if you read the report and we have anyone who is part of an identity, but they score higher against another identity - that's a sign where something is not quite right in the grouping.  Maybe it's happened because more images came into a core and someone now aligns more with another person and I'd want that also audited at the end of the run as it might mean those photos need to go back and be re-compared again.  Let's also fix the non-standard filenaming and move ahead with that change.
+````
+<!-- markdownlint-enable MD013 -->
+
+### Nov 3, 12:46 source-rehearsal request (verbatim)
+
+Coverage: selected feedback prerequisites -> LY12/LY13/N14, C11/E13/E14 and
+L21-L23; clean current-Production reset and separate complete rehearsal ->
+LY10; final comparison semantics and possible follow-up -> E14/E15.
+
+<!-- markdownlint-disable MD013 -->
+````text
+Let's work on the queue of the feedback items and see how that works.  I'd like a new clean rebase pulling from the source and not using the output from this last rebase so we can test out the changes of the naming and such one more time.  I'm still unclear on how the internal process does or doesn't need to re-compare things as it establishings identity and moves items in/out.  I see that in some cases, the image is assigned to an identity, but has a similarity score higher with another identity.  So - that's what makes me thing that something isn't 100% right in how the compare is iterating and working.
 ````
 <!-- markdownlint-enable MD013 -->

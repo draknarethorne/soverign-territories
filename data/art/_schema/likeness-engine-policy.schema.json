@@ -22,6 +22,19 @@
     "protection"
   ],
   "properties": {
+    "rebaseProtection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled", "minimumOwnCoreSimilarities"],
+      "properties": {
+        "enabled": {"type": "boolean"},
+        "minimumOwnCoreSimilarities": {
+          "type": "object",
+          "additionalProperties": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+          "minProperties": 1
+        }
+      }
+    },
     "smallGroupMaximumUsablePhotos": {"type": "integer", "minimum": 1},
     "runtimeSettings": {
       "type": "object",
@@ -266,6 +279,26 @@
       }
     }
   },
+  "allOf": [
+    {
+      "if": {
+        "required": ["rebaseProtection"],
+        "properties": {
+          "rebaseProtection": {"properties": {"enabled": {"const": true}}}
+        }
+      },
+      "then": {
+        "properties": {
+          "protection": {
+            "required": ["automatic"],
+            "properties": {
+              "automatic": {"properties": {"enabled": {"const": true}}}
+            }
+          }
+        }
+      }
+    }
+  ],
   "definitions": {
     "pathPatterns": {
       "type": "array", "minItems": 1,

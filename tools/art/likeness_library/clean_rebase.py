@@ -12,9 +12,9 @@ import uuid
 
 import numpy as np
 
-from . import clean_preparation, metadata, rejections, sandbox
+from . import clean_preparation, identity_names, metadata, protection, refinement, rejections, sandbox
 from .engine import Cache, Photo, Space
-from .policy import effective_settings, load_policy
+from .policy import effective_settings, load_policy, validate_policy
 from .reconciliation import frozen_identity_cores, plan_reconciliation
 from .sandbox import (
     RESET_CATEGORIES,
@@ -564,12 +564,224 @@ def _decision_matches_input(record, source_hash, working, current):
                 and link["sourceSha256"] == source_hash)
 
 
-def _migrate_continuity(catalog, rows, working, images, *, current_inputs=None):
-    """Reuse identities only after scoring, where their membership proves one-to-one continuity."""
+def _identity_core_continuity_ids(person_id, person, catalog, photo_folders, *, enabled=False):
+    """Return recipe-proven automatic core locks and all mandatory photo references."""
+    automatic_core, mandatory = set(), set(person.get("identityAnchors", []))
+    for photo_id, record in catalog.get("photos", {}).items():
+        source = photo_folders.get(photo_id, {})
+        if isinstance(source, str):
+            source = {"folder": source}
+        if source.get("folder", "").casefold() != person["folder"].casefold():
+            continue
+        provenance = record.get("protectionProvenance")
+        core_ids = set(provenance.get("frozenCorePhotoIds", [])) if provenance else set()
+        automatic = bool(
+            enabled and record.get("protected") and provenance
+            and provenance.get("recipeVersion") == "independent-gallery-loo-v1"
+            and photo_id in core_ids
+            and source.get("sha256") == record.get("contentSha256")
+        )
+        if automatic:
+            automatic_core.add(photo_id)
+        elif record.get("protected"):
+            mandatory.add(photo_id)
+    return automatic_core, mandatory
+
+
+def _cluster_name_routes(clusters, by_id, catalog, source, api, minimum_cluster, cast_folders=(),
+                         preserved=(), rebase_protection=False):
+    """Choose display names from surviving, recorded identities after matching."""
+    clusters = sorted(
+        clusters, key=lambda group: (-len(group["photoIds"]), group.get("clusterId") or ""),
+    )
+    people_by_folder = collections.defaultdict(list)
+    for person_id, person in catalog["people"].items():
+        people_by_folder[person["folder"].casefold()].append((person_id, person))
+    for folder, people in people_by_folder.items():
+        if len(people) > 1:
+            raise ValueError(f"multiple catalogue people claim {folder}")
+
+    cluster_support = collections.defaultdict(collections.Counter)
+    cluster_folders = []
+    cluster_photo_ids = []
+    photo_folders = {
+        photo_id: {"folder": row["oldFolder"], "sha256": row.get("sha256")}
+        for photo_id, row in by_id.items()
+    }
+    retained_mandatory = collections.defaultdict(set)
+    for row in preserved:
+        if ("protected/workflow photo retained" in row.get("reason", "")
+                and row.get("oldFolder", "").split("/", 1)[0] in RESET_CATEGORIES):
+            retained_mandatory[row["oldFolder"].casefold()].add(row.get("photoId"))
+    for index, group in enumerate(clusters):
+        support = collections.Counter()
+        photo_ids = set(group["photoIds"])
+        cluster_photo_ids.append(photo_ids)
+        for photo_id in group["photoIds"]:
+            folder = by_id[photo_id]["oldFolder"]
+            if folder.split("/", 1)[0] in RESET_CATEGORIES:
+                support[folder.casefold()] += 1
+        cluster_folders.append(support)
+        cluster_key = f"{index}:{group.get('clusterId') or group.get('destination', '')}"
+        for folder, count in support.items():
+            cluster_support[folder][cluster_key] += count
+
+    cast_names = set()
+    for folder in cast_folders:
+        cast_names.add(folder.split("/", 1)[-1].casefold())
+    for person in catalog["people"].values():
+        if person["folder"].split("/", 1)[0] not in ("Angels", "Sisters"):
+            continue
+        cast_names.add(person["folder"].split("/", 1)[1].casefold())
+        if person.get("displayName"):
+            cast_names.add(person["displayName"].casefold())
+
+    active_name_owners = collections.defaultdict(set)
+    for person in catalog["people"].values():
+        if person.get("mergedInto") or person["folder"].split("/", 1)[0] not in RESET_CATEGORIES:
+            continue
+        names = identity_names.rebase_snapshot(
+            person, pathlib.Path(source) / pathlib.PurePosixPath(person["folder"]), catalog=catalog,
+        )
+        current_name = (names or {}).get("currentName")
+        if identity_names.is_full_person_name(current_name):
+            active_name_owners[" ".join(current_name.split()).casefold()].add(
+                person["folder"].casefold()
+            )
+
+    taken = set(cast_names) | set(active_name_owners)
+    for row in preserved:
+        folder = row.get("oldFolder", "")
+        if folder.split("/", 1)[0] in RESET_CATEGORIES:
+            name = folder.split("/", 1)[-1]
+            if identity_names.is_full_person_name(name):
+                taken.add(" ".join(name.split()).casefold())
+
+    names_by_destination, evidence_by_destination = {}, {}
+    claimed = set()
+    for index, group in enumerate(clusters):
+        destination = group["destination"]
+        category = destination.split("/", 1)[0]
+        source_folders = cluster_folders[index]
+        source_keys = set(source_folders)
+        candidates, excluded = [], []
+        for folder_key, support in sorted(source_folders.items()):
+            folder = next(
+                (by_id[photo_id]["oldFolder"] for photo_id in group["photoIds"]
+                 if by_id[photo_id]["oldFolder"].casefold() == folder_key),
+                folder_key,
+            )
+            people = people_by_folder.get(folder_key, [])
+            person_id, person = people[0] if people else (None, {
+                "folder": folder, "displayName": pathlib.PurePosixPath(folder).name,
+            })
+            if support < minimum_cluster:
+                excluded.append({"folder": folder, "reason": "below minimum surviving core"})
+                continue
+            supports = cluster_support[folder_key]
+            strongest = max(supports.values(), default=0)
+            automatic_core_ids, mandatory_ids = _identity_core_continuity_ids(
+                person_id, person, catalog, photo_folders, enabled=rebase_protection,
+            )
+            mandatory_ids.update(retained_mandatory[folder_key])
+            preserves_core = bool(automatic_core_ids) and automatic_core_ids.issubset(
+                cluster_photo_ids[index],
+            )
+            preserves_mandatory = mandatory_ids.issubset(cluster_photo_ids[index])
+            retains_original_route = (
+                preserves_core and preserves_mandatory
+                if automatic_core_ids else
+                support == strongest and sum(value == strongest for value in supports.values()) == 1
+            )
+            if not retains_original_route:
+                excluded.append({"folder": folder, "reason": "original identity split or tied across clusters"})
+                continue
+            source_folder = pathlib.Path(source) / pathlib.PurePosixPath(folder)
+            names = identity_names.rebase_snapshot(person, source_folder, catalog=catalog)
+            if names and names.get("sourceNameConflict"):
+                excluded.append({"folder": folder, "reason": "catalogue name conflicts with source record"})
+                continue
+            current_name = (names or {}).get("currentName")
+            if not identity_names.is_full_person_name(current_name):
+                excluded.append({"folder": folder, "reason": "no recorded first-and-last name"})
+                continue
+            current_name = " ".join(current_name.split())
+            if current_name.casefold() in cast_names:
+                excluded.append({"folder": folder, "reason": "name is reserved by a fixed cast slot"})
+                continue
+            other_owners = active_name_owners.get(current_name.casefold(), set()) - source_keys
+            if other_owners:
+                excluded.append({"folder": folder, "reason": "name belongs to another active identity"})
+                continue
+            age = identity_names.original_age(person_id, person, source_folder, catalog=catalog)
+            candidates.append({
+                "folder": folder, "personId": person_id, "supportPhotoCount": support,
+                "name": current_name, "nameSource": (names or {}).get("originalSource", "unavailable"),
+                "originalName": (names or {}).get("originalName"),
+                "corePhotoIds": sorted(automatic_core_ids),
+                "mandatoryPhotoIds": sorted(mandatory_ids),
+                "preservesCore": preserves_core,
+                "ageEvidence": age,
+            })
+
+        winner = None
+        age_review = False
+        if len(candidates) == 1:
+            winner = candidates[0]
+        elif len(candidates) > 1:
+            ages = [candidate["ageEvidence"] for candidate in candidates]
+            if all(age["status"] == "verified" for age in ages):
+                oldest = min(age["date"] for age in ages)
+                oldest_candidates = [
+                    candidate for candidate in candidates
+                    if candidate["ageEvidence"]["date"] == oldest
+                ]
+                if len(oldest_candidates) == 1:
+                    winner = oldest_candidates[0]
+                else:
+                    age_review = True
+            else:
+                age_review = True
+
+        if winner and winner["name"].casefold() not in claimed:
+            name = winner["name"]
+            reason = "retained original identity name"
+            review_required = False
+        else:
+            name = api.invent_name(group.get("clusterId", destination), taken | claimed)
+            if (not identity_names.is_full_person_name(name)
+                    or name.casefold() in cast_names
+                    or name.casefold() in taken
+                    or name.casefold() in claimed):
+                raise ValueError(f"generated non-character identity name is unsafe: {name!r}")
+            reason = (
+                "review original-name age evidence; generated collision-safe name"
+                if age_review else "no sufficiently supported, collision-safe original name"
+            )
+            review_required = age_review or bool(candidates) or bool(excluded)
+        if category in RESET_CATEGORIES and not identity_names.is_full_person_name(name):
+            raise ValueError(f"non-character identity requires first and last names: {name!r}")
+        claimed.add(name.casefold())
+        names_by_destination[destination] = f"{category}/{name}"
+        evidence_by_destination[destination] = {
+            "name": name, "decision": reason, "reviewRequired": review_required,
+            "originalCandidates": candidates, "excludedOriginals": excluded,
+            "survivorPersonId": winner["personId"] if winner else None,
+            "survivorFolder": winner["folder"] if winner else None,
+        }
+    return names_by_destination, evidence_by_destination
+
+
+def _migrate_continuity(catalog, rows, working, images, *, current_inputs=None,
+                        rebase_protection=False):
+    """Reuse identities only for complete, scored continuity or name-proven merges."""
     destinations = collections.defaultdict(set)
     owners = collections.defaultdict(set)
+    rows_by_owner = collections.defaultdict(list)
     membership = {}
+    membership_ids = collections.defaultdict(set)
     current_paths = collections.defaultdict(list)
+    photo_folders = {}
     for relative in current_inputs or ():
         photo_id = metadata.photo_id_from_name(pathlib.PurePosixPath(relative).name)
         if photo_id:
@@ -583,14 +795,19 @@ def _migrate_continuity(catalog, rows, working, images, *, current_inputs=None):
                 if key in membership:
                     raise ValueError(f"ambiguous current identity ownership: {key}")
                 membership[key] = person["folder"]
+                membership_ids[person["folder"]].add(key)
                 current_paths[key].append(path)
     for row in rows:
         previous = membership.get(row.get("photoId"), row["oldFolder"])
         if previous.split("/")[0] not in RESET_CATEGORIES:
             continue
+        photo_folders[row.get("photoId")] = {
+            "folder": previous, "sha256": row.get("sha256"),
+        }
         folder = str(pathlib.PurePosixPath(row["destination"]).parent.parent)
         destinations[previous].add(folder)
         owners[folder].add(previous)
+        rows_by_owner[previous].append(row)
     occupied = {person["folder"].casefold(): person_id
                 for person_id, person in catalog["people"].items()}
     labels = {}
@@ -620,7 +837,260 @@ def _migrate_continuity(catalog, rows, working, images, *, current_inputs=None):
         for folder, targets in destinations.items():
             for target in targets:
                 owners[target].add(folder)
+
+    people_by_folder = collections.defaultdict(list)
     for person_id, person in catalog["people"].items():
+        people_by_folder[person["folder"].casefold()].append((person_id, person))
+    merge_plans = []
+    merged_ids = set()
+    continuity_by_person = {
+        person_id: _identity_core_continuity_ids(
+            person_id, person, catalog, photo_folders, enabled=rebase_protection,
+        )
+        for person_id, person in catalog["people"].items()
+    }
+    for person_id, person in catalog["people"].items():
+        retained = {
+            row.get("photoId") for row in rows_by_owner.get(person["folder"], ())
+            if "protected/workflow photo retained" in row.get("reason", "")
+        }
+        continuity_by_person[person_id][1].update(retained)
+    mandatory_target_by_person = {}
+    for person_id, person in catalog["people"].items():
+        folder = person["folder"]
+        automatic_core_ids, mandatory_ids = continuity_by_person[person_id]
+        required_ids = automatic_core_ids | mandatory_ids
+        if not required_ids:
+            continue
+        targets_by_id = {
+            row.get("photoId"): pathlib.PurePosixPath(row["destination"]).parent.parent.as_posix()
+            for row in rows_by_owner.get(folder, ())
+        }
+        missing = required_ids - targets_by_id.keys()
+        if missing:
+            raise ValueError(f"mandatory identity photos are missing after matching: {folder}")
+        required_targets = {targets_by_id[photo_id].casefold() for photo_id in required_ids}
+        if len(required_targets) != 1:
+            raise ValueError(f"protected core or mandatory photos split across destinations: {folder}")
+        mandatory_target_by_person[person_id] = next(
+            targets_by_id[photo_id] for photo_id in required_ids
+        )
+
+    def split_core_target(person_id, folder):
+        targets = destinations.get(folder, set())
+        automatic_core_ids, _ = continuity_by_person[person_id]
+        if len(targets) <= 1 or not automatic_core_ids or not rebase_protection:
+            return None
+        target = mandatory_target_by_person.get(person_id)
+        if not target or target not in targets or len(owners[target]) != 1:
+            return None
+        target_rows = [
+            row for row in rows_by_owner.get(folder, ())
+            if pathlib.PurePosixPath(row["destination"]).parent.parent.as_posix().casefold()
+            == target.casefold()
+        ]
+        for row in target_rows:
+            rejections.require_destination(
+                catalog, row.get("photoId"), row["sha256"], person_id,
+            )
+        evidences = [row.get("identityNameEvidence") for row in target_rows]
+        if not evidences or any(not isinstance(value, dict) for value in evidences):
+            return None
+        evidence_key = json.dumps(evidences[0], sort_keys=True, ensure_ascii=False)
+        if any(json.dumps(value, sort_keys=True, ensure_ascii=False) != evidence_key
+               for value in evidences[1:]):
+            return None
+        evidence = evidences[0]
+        candidate = next(
+            (row for row in evidence.get("originalCandidates", [])
+             if row.get("personId") == person_id and row.get("preservesCore") is True),
+            None,
+        )
+        if (
+            evidence.get("decision") != "retained original identity name"
+            or evidence.get("reviewRequired")
+            or evidence.get("survivorPersonId") != person_id
+            or not candidate
+            or evidence.get("name", "").casefold() != candidate.get("name", "").casefold()
+            or target.split("/", 1)[-1].casefold() != evidence.get("name", "").casefold()
+        ):
+            return None
+        return target
+
+    def supported_name_candidate(person_id, folder, target):
+        target_rows = [
+            row for row in rows_by_owner.get(folder, ())
+            if pathlib.PurePosixPath(row["destination"]).parent.parent.as_posix().casefold()
+            == target.casefold()
+        ]
+        evidences = [row.get("identityNameEvidence") for row in target_rows]
+        if not evidences or any(not isinstance(value, dict) for value in evidences):
+            return None
+        evidence_key = json.dumps(evidences[0], sort_keys=True, ensure_ascii=False)
+        if any(json.dumps(value, sort_keys=True, ensure_ascii=False) != evidence_key
+               for value in evidences[1:]):
+            return None
+        evidence = evidences[0]
+        candidate = next(
+            (row for row in evidence.get("originalCandidates", [])
+             if row.get("personId") == person_id),
+            None,
+        )
+        if (
+            evidence.get("decision") != "retained original identity name"
+            or evidence.get("reviewRequired")
+            or evidence.get("survivorPersonId") != person_id
+            or not candidate
+            or evidence.get("name", "").casefold() != candidate.get("name", "").casefold()
+            or target.split("/", 1)[-1].casefold() != evidence.get("name", "").casefold()
+        ):
+            return None
+        return evidence, candidate
+
+    for target, source_folders in owners.items():
+        if len(source_folders) < 2 or target.split("/", 1)[0] not in RESET_CATEGORIES:
+            continue
+        if any(folder.split("/", 1)[0] not in RESET_CATEGORIES for folder in source_folders):
+            continue
+        member_records = []
+        for folder in sorted(source_folders, key=str.casefold):
+            matches = people_by_folder.get(folder.casefold(), [])
+            if len(matches) != 1 or matches[0][1].get("mergedInto"):
+                member_records = []
+                break
+            person_id, person = matches[0]
+            routed_ids = {row.get("photoId") for row in rows_by_owner.get(folder, ())}
+            automatic_core_ids, mandatory_ids = continuity_by_person[person_id]
+            required_ids = automatic_core_ids | mandatory_ids
+            target_ids = {
+                row.get("photoId") for row in rows_by_owner.get(folder, ())
+                if pathlib.PurePosixPath(row["destination"]).parent.parent.as_posix().casefold()
+                == target.casefold()
+            }
+            if required_ids:
+                if mandatory_target_by_person.get(person_id, "").casefold() != target.casefold():
+                    member_records = []
+                    break
+                if not required_ids.issubset(target_ids):
+                    member_records = []
+                    break
+            if not automatic_core_ids and (
+                  destinations.get(folder) != {target}
+                  or not membership_ids.get(folder, set()).issubset(routed_ids)):
+                member_records = []
+                break
+            member_records.append((person_id, person, folder))
+        if len(member_records) != len(source_folders):
+            continue
+        target_rows = [
+            row for folder in source_folders for row in rows_by_owner.get(folder, ())
+            if pathlib.PurePosixPath(row["destination"]).parent.parent.as_posix().casefold()
+            == target.casefold()
+        ]
+        evidence_rows = [row.get("identityNameEvidence") for row in target_rows]
+        if not evidence_rows or any(not isinstance(value, dict) for value in evidence_rows):
+            continue
+        evidence = evidence_rows[0]
+        evidence_key = json.dumps(evidence, sort_keys=True, ensure_ascii=False)
+        if any(json.dumps(value, sort_keys=True, ensure_ascii=False) != evidence_key
+               for value in evidence_rows[1:]):
+            continue
+        member_ids = {person_id for person_id, _, _ in member_records}
+        candidates = evidence.get("originalCandidates", [])
+        candidate_ids = {candidate.get("personId") for candidate in candidates}
+        survivor_id = evidence.get("survivorPersonId")
+        survivor_candidate = next(
+            (candidate for candidate in candidates if candidate.get("personId") == survivor_id), None,
+        )
+        candidate_folders = {
+            candidate.get("personId"): candidate.get("folder", "").casefold()
+            for candidate in candidates
+        }
+        age_rows = [candidate.get("ageEvidence", {}) for candidate in candidates]
+        verified_oldest = (
+            len(candidates) == len(member_ids)
+            and all(row.get("status") == "verified" and row.get("date") for row in age_rows)
+            and sum(row.get("date") == min(age.get("date", "9999") for age in age_rows)
+                    for row in age_rows) == 1
+            and survivor_candidate is not None
+            and survivor_candidate.get("ageEvidence", {}).get("date")
+            == min(age.get("date", "9999") for age in age_rows)
+        )
+        if (
+            evidence.get("decision") != "retained original identity name"
+            or evidence.get("reviewRequired")
+            or candidate_ids != member_ids
+            or any(
+                continuity_by_person[person_id][0]
+                and not next(
+                    (candidate.get("preservesCore") is True
+                     for candidate in candidates if candidate.get("personId") == person_id),
+                    False,
+                )
+                for person_id, _, _ in member_records
+            )
+            or any(candidate_folders.get(person_id) != person["folder"].casefold()
+                   for person_id, person, _ in member_records)
+            or not verified_oldest
+            or survivor_id not in member_ids
+            or not survivor_candidate
+            or evidence.get("survivorFolder", "").casefold()
+            != survivor_candidate.get("folder", "").casefold()
+            or target.split("/", 1)[-1].casefold() != evidence.get("name", "").casefold()
+        ):
+            continue
+        target_occupants = people_by_folder.get(target.casefold(), [])
+        if any(person_id not in member_ids for person_id, _ in target_occupants):
+            raise ValueError(f"identity merge destination is owned by an unrelated identity: {target}")
+        families = {
+            (person.get("family") or {}).get("id")
+            for _, person, _ in member_records if person.get("family")
+        }
+        surnames = {
+            (person.get("family") or {}).get("surname", "").casefold()
+            for _, person, _ in member_records if person.get("family")
+        }
+        overrides = {
+            person.get("automaticProtectionOverride")
+            for _, person, _ in member_records
+            if person.get("automaticProtectionOverride")
+        }
+        if len(families) > 1 or len(surnames) > 1 or len(overrides) > 1:
+            raise ValueError(f"identity merge has conflicting family or protection decisions: {target}")
+        source_ids = member_ids
+        anchors = {
+            photo_id for _, person, _ in member_records
+            for photo_id in person.get("identityAnchors", [])
+        }
+        target_rows_by_id = {row.get("photoId"): row for row in target_rows}
+        for photo_id in anchors:
+            row = target_rows_by_id.get(photo_id)
+            if (not row or pathlib.PurePosixPath(row["destination"]).parent.parent.as_posix().casefold()
+                    != target.casefold() or pathlib.PurePosixPath(row["destination"]).parent.name != "gallery"):
+                raise ValueError(f"identity merge would not preserve mandatory anchor {photo_id}: {target}")
+        for row in target_rows:
+            state = rejections.candidate_state(catalog, row.get("photoId"), row["sha256"])
+            if state.get("rejectionMetadataStale"):
+                raise ValueError(
+                    f"{row.get('photoId')}: rejected-identity metadata is stale; review changed photo bytes"
+                )
+            rejected = set(state.get("rejectedPersonIds", []))
+            if rejected & source_ids:
+                raise ValueError(
+                    f"{row.get('photoId')}: destination identity was explicitly rejected"
+                )
+            rejections.require_destination(
+                catalog, row.get("photoId"), row["sha256"], survivor_id,
+            )
+        merge_plans.append({
+            "target": target, "members": member_records, "survivorId": survivor_id,
+            "evidence": evidence, "anchors": anchors,
+        })
+        merged_ids.update(source_ids)
+
+    for person_id, person in catalog["people"].items():
+        if person_id in merged_ids:
+            continue
         folder = person["folder"]
         targets = destinations.get(folder, set())
         if not targets:
@@ -631,7 +1101,89 @@ def _migrate_continuity(catalog, rows, working, images, *, current_inputs=None):
             or any(person_id in photo.get("rejectedPersonIds", []) for photo in catalog["photos"].values())
         )
         unique = len(targets) == 1 and len(owners[next(iter(targets))]) == 1
-        target = next(iter(targets)) if unique else None
+        target = next(iter(targets)) if unique else split_core_target(person_id, folder)
+        unique = unique or target is not None
+        if target and target.split("/")[0] in ("Various", "Angels", "Sisters"):
+            unique = False
+        if has_decisions and not unique:
+            raise ValueError(f"identity decisions cannot migrate unambiguously after matching: {folder}")
+        if unique and target != folder and any(
+            other["folder"].casefold() == target.casefold()
+            for other_id, other in catalog["people"].items() if other_id != person_id
+        ):
+            raise ValueError(f"stable identity migration would collide: {folder} -> {target}")
+
+    for merge in merge_plans:
+        target = merge["target"]
+        survivor_id = merge["survivorId"]
+        survivor = catalog["people"][survivor_id]
+        members = merge["members"]
+        candidate = next(
+            row for row in merge["evidence"]["originalCandidates"]
+            if row["personId"] == survivor_id
+        )
+        all_families = [person["family"] for _, person, _ in members if person.get("family")]
+        if all_families:
+            family = copy.deepcopy(all_families[0])
+            member_ids = {person_id for person_id, _, _ in members}
+            if family["referencePersonId"] in member_ids:
+                family["referencePersonId"] = survivor_id
+            survivor["family"] = family
+        survivor["identityAnchors"] = sorted(set(survivor.get("identityAnchors", [])) | merge["anchors"])
+        survivor["protected"] = any(person.get("protected", False) for _, person, _ in members)
+        overrides = {
+            person.get("automaticProtectionOverride")
+            for _, person, _ in members if person.get("automaticProtectionOverride")
+        }
+        if overrides:
+            survivor["automaticProtectionOverride"] = next(iter(overrides))
+        survivor["displayName"] = merge["evidence"]["name"]
+        names = survivor.get("names")
+        if names is None:
+            survivor["names"] = {
+                "originalName": candidate.get("originalName") or candidate["name"],
+                "currentName": candidate["name"],
+                "originalSource": candidate.get("nameSource", "recorded-history"),
+            }
+        else:
+            names["currentName"] = candidate["name"]
+        for _, person, folder in members:
+            if folder.casefold() != target.casefold():
+                histories = survivor.setdefault("folderHistory", [])
+                for alias in [folder, *person.get("folderHistory", [])]:
+                    if all(existing.casefold() != alias.casefold() for existing in histories):
+                        histories.append(alias)
+            if person["id"] != survivor_id:
+                person["mergedInto"] = survivor_id
+                person["identityAnchors"] = []
+        old_folder = survivor["folder"]
+        if old_folder.casefold() != target.casefold():
+            history = survivor.setdefault("folderHistory", [])
+            if all(existing.casefold() != old_folder.casefold() for existing in history):
+                history.append(old_folder)
+            survivor["folder"] = target
+        for person in catalog["people"].values():
+            if person.get("mergedInto") in member_ids and person["id"] != survivor_id:
+                person["mergedInto"] = survivor_id
+            family = person.get("family")
+            if family and family.get("referencePersonId") in member_ids:
+                family["referencePersonId"] = survivor_id
+
+    for person_id, person in catalog["people"].items():
+        folder = person["folder"]
+        targets = destinations.get(folder, set())
+        if not targets:
+            continue
+        if person_id in merged_ids:
+            continue
+        has_decisions = bool(
+            person.get("automaticProtectionOverride") or person.get("names") or person.get("family")
+            or person.get("identityAnchors") or person.get("protected")
+            or any(person_id in photo.get("rejectedPersonIds", []) for photo in catalog["photos"].values())
+        )
+        unique = len(targets) == 1 and len(owners[next(iter(targets))]) == 1
+        target = next(iter(targets)) if unique else split_core_target(person_id, folder)
+        unique = unique or target is not None
         if target and target.split("/")[0] in ("Various", "Angels", "Sisters"):
             unique = False
         if has_decisions and not unique:
@@ -640,8 +1192,25 @@ def _migrate_continuity(catalog, rows, working, images, *, current_inputs=None):
             if any(other["folder"].casefold() == target.casefold()
                    for other_id, other in catalog["people"].items() if other_id != person_id):
                 raise ValueError(f"stable identity migration would collide: {folder} -> {target}")
-            person["folderHistory"].append(folder)
-            person["folder"] = target
+        if unique:
+            selected = supported_name_candidate(person_id, folder, target)
+            if selected:
+                evidence, candidate = selected
+                person["displayName"] = evidence["name"]
+                names = person.get("names")
+                if names is None:
+                    person["names"] = {
+                        "originalName": candidate.get("originalName") or candidate["name"],
+                        "currentName": candidate["name"],
+                        "originalSource": candidate.get("nameSource", "recorded-history"),
+                    }
+                else:
+                    names["currentName"] = candidate["name"]
+            if target.casefold() != folder.casefold():
+                if all(existing.casefold() != folder.casefold()
+                       for existing in person.setdefault("folderHistory", [])):
+                    person["folderHistory"].append(folder)
+                person["folder"] = target
     for row in rows:
         record = catalog["photos"].get(row.get("photoId"))
         if record:
@@ -778,6 +1347,208 @@ def _verify_routes(plan, source):
             raise ValueError(f"source changed since preview: {path}")
 
 
+def core_protection_policy(policy):
+    """Bind approved trial thresholds to this run, not the ordinary library policy."""
+    policy = copy.deepcopy(policy)
+    if not policy["protection"].get("automatic"):
+        raise ValueError("core rebase requires the shared automatic-protection evidence recipe")
+    policy["version"] = policy["version"].removesuffix("-core-rebase-v1") + "-core-rebase-v1"
+    policy["rebaseProtection"] = {
+        "enabled": True,
+        "minimumOwnCoreSimilarities": {
+            "Angels": .40, "Sisters": .40, "Models": .50,
+            "Prospects": .60, "Potentials": None,
+        },
+    }
+    policy["protection"]["automatic"]["enabled"] = True
+    for category in ("Angels", "Sisters"):
+        policy["categoryPolicies"][category]["identityCoreMinimumSimilarity"] = .40
+    return validate_policy(policy)
+
+
+def _final_membership_outcomes(photos, routed, catalog, policy, settings, root, selected, api,
+                               source_root, analysis_paths):
+    """Audit one frozen final membership without silently moving lookalikes again."""
+    by_source = {photo.path.relative_to(source_root).as_posix(): photo for photo in photos}
+    final = Space([], settings)
+    final.photos = []
+    final.by_key = collections.defaultdict(list)
+    rows_by_photo = {}
+    hashes = {}
+    for row in routed:
+        original = by_source.get(row["source"])
+        if original is None:
+            raise ValueError(f"final audit cannot resolve measured source: {row['source']}")
+        photo = copy.copy(original)
+        destination = pathlib.PurePosixPath(row["destination"])
+        photo.name = destination.name
+        photo.key = destination.parent.parent.as_posix()
+        photo.group, _, photo.folder = photo.key.partition("/")
+        photo.bucket = destination.parent.name
+        photo.path = analysis_paths[row["source"]]
+        photo.sha = row.get("preparedSHA256", row["sha256"])
+        hashes[photo.path] = photo.sha
+        final.photos.append(photo)
+        rows_by_photo[id(photo)] = row
+        if (
+            photo.bucket == "gallery" and photo.key.split("/", 1)[0] in policy["categoryPolicies"]
+            and photo.usable(settings["minFace"]) and photo.vec is not None
+            and np.isfinite(photo.vec).all() and np.linalg.norm(photo.vec) > 0
+            and photo.faces == 1 and photo.f2 <= settings["multiFace"]
+            and not row.get("castSeedQualityReason")
+        ):
+            final.by_key[photo.key].append(photo)
+    final.keys = sorted(final.by_key)
+    audit_catalog = copy.deepcopy(catalog)
+    for photo in final.photos:
+        photo_id = metadata.photo_id_from_name(photo.name)
+        row = rows_by_photo[id(photo)]
+        if (
+            photo_id in audit_catalog["photos"]
+            and audit_catalog["photos"][photo_id]["contentSha256"] in (row["sha256"], photo.sha)
+        ):
+            audit_catalog["photos"][photo_id]["contentSha256"] = photo.sha
+    cores, _, diagnostics = frozen_identity_cores(
+        final, audit_catalog, photo_id_fn=metadata.photo_id_from_name,
+        content_sha256_fn=lambda path: hashes[path], policy=policy,
+    )
+    anchors = {
+        photo_id
+        for person in audit_catalog["people"].values()
+        if not person.get("mergedInto") and person["folder"] in cores
+        for photo_id in person.get("identityAnchors", [])
+        if photo_id in cores[person["folder"]]["corePhotoIds"]
+    }
+    automatic, protection_evidence = [], []
+    if policy.get("rebaseProtection", {}).get("enabled"):
+        automatic, protection_evidence = protection.plan_protection(
+            final, cores, audit_catalog, policy, root=root,
+            selected_ids={
+                metadata.photo_id_from_name(photo.name) for photo in final.photos
+                if api.cw.photo_key(photo.name) in selected
+            },
+            category_minimums=policy["rebaseProtection"]["minimumOwnCoreSimilarities"],
+        )
+        batch_id = "batch_" + uuid.uuid4().hex
+        for action in automatic:
+            person_id, photo_id = action.get("personId"), action.get("photoId")
+            field = "person" if person_id else "photo"
+            catalog["people" if person_id else "photos"][person_id or photo_id] = action["after"]
+            catalog["actions"].append({
+                "id": "action_" + uuid.uuid4().hex, "batchId": batch_id,
+                "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                "actor": "tool", "type": "person-protected" if person_id else "photo-protected",
+                "photoIds": [] if person_id else [photo_id],
+                **({"personId": person_id} if person_id else {"contentSha256": action["after"]["contentSha256"]}),
+                "reason": action["reason"],
+                "beforeState": {"person": None, "photo": None, field: action["before"]},
+                "afterState": {"person": None, "photo": None, field: copy.deepcopy(action["after"])},
+            })
+    protection_by_photo = {
+        row["photoId"]: row for row in protection_evidence if row.get("photoId")
+    }
+    core_references = {}
+    for folder, core in cores.items():
+        if folder.split("/", 1)[0] not in ("Angels", "Sisters"):
+            continue
+        references = []
+        for photo in final.by_key[folder]:
+            photo_id = metadata.photo_id_from_name(photo.name)
+            if photo_id not in core["corePhotoIds"]:
+                continue
+            row = rows_by_photo[id(photo)]
+            references.append({
+                "source": row["source"], "destination": row["destination"], "photoId": photo_id,
+                "score": core["photoScores"].get(photo.name), "anchor": photo_id in anchors,
+            })
+        core_references[folder] = sorted(
+            references, key=lambda row: (
+                not row["anchor"], row["score"] is None,
+                -(row["score"] if row["score"] is not None else 0), row["destination"],
+            ),
+        )[:10]
+    audit_rows = []
+    for photo in final.photos:
+        row = rows_by_photo[id(photo)]
+        own = cores.get(photo.key)
+        photo_id = metadata.photo_id_from_name(photo.name)
+        valid = (
+            photo.vec is not None and np.isfinite(photo.vec).all() and np.linalg.norm(photo.vec) > 0
+            and photo.usable(settings["minFace"]) and photo.faces == 1 and photo.f2 <= settings["multiFace"]
+        )
+        score = (
+            own["photoScores"].get(photo.name, float(photo.vec @ own["vector"]))
+            if own and valid else None
+        )
+        rivals = sorted(
+            ({"folder": folder, "score": round(float(photo.vec @ core["vector"]), 6)}
+             for folder, core in cores.items() if folder != photo.key and valid
+             and core["side"] == ("Artists" if photo.key.startswith("Artists/") else "Prospects")),
+            key=lambda rival: (-rival["score"], rival["folder"]),
+        )[:3]
+        cast_references = sorted(
+            (
+                {
+                    "folder": folder,
+                    "score": (
+                        round(score, 6) if score is not None else None
+                    ) if folder == photo.key else round(float(photo.vec @ core["vector"]), 6),
+                }
+                for folder, core in cores.items()
+                if valid and folder.split("/", 1)[0] in ("Angels", "Sisters")
+            ),
+            key=lambda reference: (
+                reference["score"] is None,
+                -(reference["score"] if reference["score"] is not None else 0),
+                reference["folder"],
+            ),
+        )[:3]
+        higher = bool(score is not None and rivals and rivals[0]["score"] > score)
+        locked = bool(catalog["photos"].get(photo_id, {}).get("protected"))
+        photo_record = catalog["photos"].get(photo_id, {})
+        workflow = api.cw.photo_key(photo.name) in selected
+        reason = (
+            "quality gate: no eligible single-face measurement" if not valid else
+            "Review or unassigned: not an accepted Gallery member" if photo.bucket != "gallery" or not own else
+            "own leave-one-out score unavailable (singleton or excluded evidence)" if score is None else
+            "photo protection or mandatory anchor/workflow selection prevents automatic removal"
+            if locked or photo_id in anchors or workflow else
+            "higher rival: diagnostic only; relatives and lookalikes need bounded follow-up"
+            if higher else "no higher rival against the frozen final identity cores"
+        )
+        followup = bool(
+            higher and photo.bucket == "gallery" and not (locked or photo_id in anchors or workflow)
+            and rivals[0]["score"] - score >= policy["photoRouting"]["minimumOwnCoreLead"]
+        )
+        audit_rows.append({
+            "source": row["source"], "destination": row["destination"],
+            "ownScore": round(score, 6) if score is not None else None, "rivals": rivals,
+            "castReferences": cast_references,
+            "higherRival": higher, "reason": reason, "protected": locked,
+            "anchor": photo_id in anchors, "workflowSelected": workflow,
+            "followupCandidate": followup,
+            "photoId": photo_id, "identityIds": own.get("personIds", []) if own else [],
+            "coreMember": bool(own and photo_id in own["corePhotoIds"]),
+            "automaticProtection": bool(photo_record.get("protectionProvenance")),
+            "manualOptOut": photo_record.get("automaticProtectionOverride") == "disabled",
+            "rivalMargin": round(score - rivals[0]["score"], 6) if score is not None and rivals else None,
+            "independentProtectionSupport": protection_by_photo.get(photo_id, {}).get("independentSupport"),
+            "protectionReason": protection_by_photo.get(photo_id, {}).get("reason"),
+        })
+    return {
+        "reference": "frozen final Gallery cores; own core members use leave-one-out; rivals exclude own identity",
+        "pass": 1, "state": "audited", "rows": audit_rows, "diagnostics": diagnostics,
+        "higherRivalCount": sum(row["higherRival"] for row in audit_rows),
+        "followupCandidateCount": sum(row["followupCandidate"] for row in audit_rows),
+        "nextPassNeeded": any(row["followupCandidate"] for row in audit_rows),
+        "automaticMoves": 0,
+        "protectionEvidence": protection_evidence,
+        "automaticPhotoProtectionCount": sum("photoId" in action for action in automatic),
+        "automaticIdentityProtectionCount": sum("personId" in action for action in automatic),
+        "coreReferences": core_references,
+    }
+
+
 def _cast_seed_outcomes(
     entries, cores, catalog, selected, policy, api, seed_policy, min_face,
     quality_exclusions=None,
@@ -839,11 +1610,12 @@ def _cast_seed_outcomes(
             if photo.usable(min_face)
             and relative not in quality_exclusions
         }
+        identity_blocks_release = not policy.get("rebaseProtection", {}).get("enabled", False)
         core = cores.get(folder)
         if core is None and not (
-            person and person.get("protected")
+            person and person.get("protected") and identity_blocks_release
             or all(
-                (person and person.get("protected"))
+                (person and person.get("protected") and identity_blocks_release)
                 or catalog["photos"].get(metadata.photo_id_from_name(photo.name), {}).get("protected")
                 or metadata.photo_id_from_name(photo.name) in anchor_ids
                 or api.cw.photo_key(photo.name) in selected
@@ -880,7 +1652,7 @@ def _cast_seed_outcomes(
         releasable = [
             photo for _relative, photo in gallery
             if not (
-                person and person.get("protected")
+                person and person.get("protected") and identity_blocks_release
                 or catalog["photos"].get(metadata.photo_id_from_name(photo.name), {}).get("protected")
                 or metadata.photo_id_from_name(photo.name) in anchor_ids
                 or api.cw.photo_key(photo.name) in selected
@@ -910,7 +1682,7 @@ def _cast_seed_outcomes(
             photo_protected = bool(photo_record.get("protected"))
             workflow_selected = api.cw.photo_key(photo.name) in selected
             reasons = []
-            if identity_protected:
+            if identity_protected and identity_blocks_release:
                 reasons.append("protected identity")
             if photo_protected:
                 reasons.append("protected photo")
@@ -921,7 +1693,8 @@ def _cast_seed_outcomes(
             if core_member:
                 reasons.append("member of the current configured identity core")
             keep = bool(
-                identity_protected or photo_protected or anchor or workflow_selected or core_member
+                identity_protected and identity_blocks_release
+                or photo_protected or anchor or workflow_selected or core_member
             )
             reason = "; ".join(reasons) if keep else (
                 "below configured identity-core similarity minimum"
@@ -1135,7 +1908,8 @@ def create_plan(
     )
     duplicate_counts = collections.Counter()
     protected_folders = {
-        person["folder"] for person in catalog["people"].values() if person.get("protected")
+        person["folder"] for person in catalog["people"].values()
+        if person.get("protected") and not policy.get("rebaseProtection", {}).get("enabled")
     }
     candidates, by_id = [], {}
     preserved, unusable = [], []
@@ -1157,10 +1931,23 @@ def create_plan(
             destination, reason = named[relative]
             preserved.append({**base, "destination": destination, "reason": reason})
             continue
+        photo_record = catalog["photos"].get(photo_id, {})
+        provenance = photo_record.get("protectionProvenance", {})
+        protected_core = bool(
+            policy.get("rebaseProtection", {}).get("enabled")
+            and photo.key.split("/", 1)[0] in RESET_CATEGORIES
+            and photo_record.get("protected")
+            and photo_record.get("automaticProtectionOverride") != "disabled"
+            and photo_record.get("contentSha256") == sha256
+            and provenance.get("recipeVersion") == "independent-gallery-loo-v1"
+            and photo_id in provenance.get("frozenCorePhotoIds", [])
+        )
+        if protected_core:
+            base["rebaseProtectedCore"] = True
         protected = (
             api.cw.photo_key(photo.name) in selected
             or photo.key in protected_folders
-            or catalog["photos"].get(photo_id, {}).get("protected", False)
+            or photo_record.get("protected", False) and not protected_core
         )
         if protected:
             preserved.append({
@@ -1219,31 +2006,38 @@ def create_plan(
         name_factory=lambda seed, taken: api.invent_name(seed, taken),
         policy=policy,
     )
+    locked_ids = {
+        photo_id for photo_id, record in core_catalog["photos"].items() if record.get("protected")
+    } | {
+        photo_id for person in catalog["people"].values() for photo_id in person.get("identityAnchors", [])
+    } | {
+        input_ids[relative] for relative, (photo, _, _) in records.items()
+        if input_ids.get(relative) and api.cw.photo_key(photo.name) in selected
+    }
+    result, refinement_evidence = refinement.refine(
+        result, candidates, cores, policy, locked_ids=locked_ids,
+    )
+    print(
+        f"clean rebase: refinement {refinement_evidence['passCount']} pass(es), "
+        f"{refinement_evidence['moveCount']} move(s), {refinement_evidence['mergeCount']} merge(s), "
+        f"{len(refinement_evidence['unresolved'])} unresolved; {refinement_evidence['stopReason']}",
+        flush=True,
+    )
     # Historical names are display provenance only, never matching evidence.
-    cluster_names = {}
-    taken = {row["oldFolder"].split("/", 1)[1].casefold() for row in preserved
-             if "/" in row["oldFolder"]}
-    for group in sorted(result["clusters"], key=lambda g: (-len(g["photoIds"]), g["clusterId"])):
-        old_names = collections.Counter(
-            by_id[photo_id]["oldFolder"].split("/", 1)[1] for photo_id in group["photoIds"]
-            if by_id[photo_id]["oldFolder"].split("/")[0] in RESET_CATEGORIES
-        )
-        name = next(
-            (name for name, _ in sorted(old_names.items(), key=lambda r: (-r[1], r[0].casefold()))
-             if name.casefold() not in taken),
-            None,
-        )
-        if name is None:
-            name = api.invent_name(group["clusterId"], taken)
-        taken.add(name.casefold())
-        category = group["destination"].split("/", 1)[0]
-        cluster_names[group["destination"]] = f"{category}/{name}"
+    cluster_names, name_evidence = _cluster_name_routes(
+        result["clusters"], by_id, catalog, source, api, settings["minCluster"],
+        cast_folders=cores, preserved=preserved,
+        rebase_protection=bool(policy.get("rebaseProtection", {}).get("enabled")),
+    )
     routed = list(preserved) + list(unusable)
+    refinement.rename_evidence(refinement_evidence, cluster_names)
     for row in result["assignments"]:
         base = by_id[row["photoId"]]
         destination = cluster_names.get(row["destination"], row["destination"])
         routed.append({
             **base, **row, "destination": f"{destination}/gallery/{pathlib.PurePosixPath(base['source']).name}",
+            **({"identityNameEvidence": name_evidence[row["destination"]]}
+               if row["destination"] in name_evidence else {}),
         })
     for row in result["held"]:
         base = by_id[row["photoId"]]
@@ -1271,10 +2065,12 @@ def create_plan(
     if len(routed) != len(records):
         raise AssertionError("clean rebase did not account for every source candidate")
     routed += cast_rows
+    refinement.rename_steps(routed, cluster_names)
     if preparation:
         _bind_preparation(routed, prepared_rows, preparation[0], api)
         _migrate_continuity(
             catalog, routed, layout["working_root"], api.originals.images, current_inputs=working_inputs,
+            rebase_protection=bool(policy.get("rebaseProtection", {}).get("enabled")),
         )
     else:
         for row in routed:
@@ -1302,6 +2098,17 @@ def create_plan(
             "folderHistory": [], "identityAnchors": [],
             "protected": policy["categoryPolicies"][category]["identityProtectedByDefault"],
         }
+    final_audit = _final_membership_outcomes(
+        photos, routed, catalog, policy, settings, layout["sandbox_root"], selected, api,
+        source, {relative: photo.path for relative, photo in quality_photos.items()},
+    )
+    final_audit.update(
+        automaticMoves=refinement_evidence["moveCount"],
+        automaticMerges=refinement_evidence["mergeCount"],
+        refinementPasses=refinement_evidence["passCount"],
+        refinementStopReason=refinement_evidence["stopReason"],
+        state="refined-then-audited",
+    )
     metadata.validate_catalog(catalog)
     destinations = {person["folder"]: person["id"] for person in catalog["people"].values()
                     if not person.get("mergedInto")}
@@ -1344,11 +2151,14 @@ def create_plan(
         "cacheMeasurementsReusedForReplan": reuse_measurements,
         "centeringMean": mean.tolist(), "candidateCount": len(records),
         "coreDiagnostics": diagnostics, "photos": sorted(routed, key=lambda r: r["source"]),
+        "finalMembershipAudit": final_audit,
+        "membershipRefinement": refinement_evidence,
         "catalogSHA256": metadata.content_sha256(run / "catalog.json"),
         "sourceCatalogSHA256": source_catalog_hash,
         "implementationHashes": {
             name: metadata.content_sha256(pathlib.Path(__file__).with_name(name))
-            for name in ("clean_rebase.py", "planner.py", "policy.py", "reconciliation.py", "audit.py", "engine.py", "rejections.py")
+            for name in ("clean_rebase.py", "planner.py", "policy.py", "reconciliation.py",
+                         "audit.py", "engine.py", "rejections.py", "protection.py", "refinement.py")
         },
         "status": "preview",
     }
@@ -1933,14 +2743,14 @@ def _check_publication(working, plan):
 
 
 def _refresh_galleries(working, run):
-    import people_gallery
-    from . import review_gallery
+    import gallery_maintenance
 
-    shared = ["--root", str(working), "--cache", str(run / "likeness-cache.json"),
-              "--policy", str(run / "policy.json"), "--no-renders"]
-    for generate in (review_gallery.main, people_gallery.main):
-        if generate(shared):
-            raise ValueError("rebuild installed, but gallery refresh failed; retry --apply after resolving the diagnostic")
+    cfg = gallery_maintenance.cw.load_cfg()
+    gallery_maintenance.refresh_reports(
+        working, gallery_maintenance.folders(cfg, working),
+        run / "likeness-cache.json", run / "policy.json",
+        gallery_maintenance.cw.storage_root(cfg, "reports", root=working) / "library",
+    )
 
 
 def command(args, api):
@@ -1950,6 +2760,12 @@ def command(args, api):
     if cast_seeds not in {"all", "core"}:
         raise ValueError("--cast-seeds must be all or core")
     policy = load_policy(args.policy)
+    if getattr(args, "record_core_protection", False):
+        if cast_seeds != "core":
+            raise ValueError("--record-core-protection requires --cast-seeds core")
+        policy = core_protection_policy(policy)
+    if policy.get("rebaseProtection", {}).get("enabled") and cast_seeds != "core":
+        raise ValueError("enabled rebase protection policy requires --cast-seeds core")
     layout = validate_sandbox(args.root)
     run = require_sandbox_output(args.root, args.run_dir)
     if run == layout["working_root"] or any(

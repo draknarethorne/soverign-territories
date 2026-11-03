@@ -1,12 +1,28 @@
 # 2026-10-22: identity families and safe naming
 
-**Status:** holding (Oct 30 scheduling; existing migration retained, broader naming/family acceptance open)
+**Status:** active (Nov 3 narrow N14 prerequisite to layout LY10 only)
+
+**Queue focus:** N14
+
+**Broader scope:** family acceptance and unrelated naming corrections remain
+holding under the resume gate below.
 
 **Resume gate:** after installed baseline and intake tuning, then explicitly
 select N12 corrections/family acceptance. Existing approved decisions and
 stable-name/protection guards remain binding; no bulk renaming during install.
 
 ## Nov 3: name continuity and character-slot boundaries
+
+The 12:46 request selects N14 as a prerequisite to layout LY10's new
+Production-source rehearsal, without reactivating broader family acceptance.
+Supported final matching membership now determines name continuity; complete
+merges require uniquely oldest dated original identity evidence, preserve the
+survivor ID and aliases/anchors/photo decisions, and refuse ambiguous age,
+split, rejection or override conflicts. Non-slot names require first and last
+names and avoid reserved cast names. Camaris Bloom's recorded name is preserved
+without borrowing the active Camaris character slot. Focused tests include
+protected-Prospect merges reaching actual clustering; real source-run naming,
+Harlow/Sophie results and user placement acceptance remain open.
 
 The user requires first and last names for non-character identities in Models,
 Prospects and Potentials; Various is an unassigned intake pool, not a person.

@@ -17,6 +17,7 @@ from PIL import Image, ImageDraw
 from tools.art import image_preparation, likeness
 from tools.art.likeness_library import clean_preparation, clean_rebase, derivatives, metadata, retained_preparation, review_gallery, storage_retention
 from tools.art.likeness_library.policy import load_policy
+from tools.art.likeness_library.reconciliation import frozen_identity_cores
 
 
 class CleanPreparationTests(unittest.TestCase):
@@ -87,13 +88,17 @@ class CleanPreparationTests(unittest.TestCase):
             mock.patch.object(image_preparation.pipeline.fill, "fill",
                               side_effect=AssertionError("No clutter in fixture; do not load eraser")),
             mock.patch.object(clean_rebase, "validate_sandbox", return_value=self.layout),
-            mock.patch.object(clean_rebase, "frozen_identity_cores", return_value=(
-                {"Angels/Fixed": {"vector": np.array([1., 0.]), "side": "Prospects"}}, set(), [],
-            )),
+            mock.patch.object(clean_rebase, "frozen_identity_cores", side_effect=self.frozen_cores),
             mock.patch.object(clean_rebase, "plan_reconciliation", side_effect=self.matches),
         ):
             patch.start()
             self.addCleanup(patch.stop)
+
+    @staticmethod
+    def frozen_cores(space, catalog, **kwargs):
+        if all(not hasattr(photo, "bucket") for photo in space.photos):
+            return {"Angels/Fixed": {"vector": np.array([1., 0.]), "side": "Prospects"}}, set(), []
+        return frozen_identity_cores(space, catalog, **kwargs)
 
     @staticmethod
     def subject(image):
@@ -754,10 +759,17 @@ class CleanPreparationTests(unittest.TestCase):
             clean_rebase, "frozen_identity_cores", wraps=clean_rebase.frozen_identity_cores,
         ) as freeze:
             self.command()
-        core_catalog = freeze.call_args.args[1]
+        core_catalog = freeze.call_args_list[0].args[1]
         self.assertEqual(
             core_catalog["photos"]["photo:image_123456"]["contentSha256"],
             self.inputs["Angels/Fixed/gallery/fixed_image_123456.jpg"][1],
+        )
+        final_catalog = freeze.call_args_list[-1].args[1]
+        plan = json.loads((self.run / "run.json").read_text())
+        cast_row = next(row for row in plan["photos"] if row["photoId"] == "photo:image_123456")
+        self.assertEqual(
+            final_catalog["photos"]["photo:image_123456"]["contentSha256"],
+            cast_row["preparedSHA256"],
         )
         with mock.patch("library_backup.latest_work_root_backup", return_value=self.base), \
                 mock.patch("library_backup.verify_backup"):

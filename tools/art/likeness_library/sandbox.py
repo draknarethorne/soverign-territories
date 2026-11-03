@@ -419,6 +419,32 @@ def _full_reset_analysis(working_root, production_root=None, cfg=None, layout=No
             "destination": destination,
         })
 
+    history_destinations = {}
+    for relative, entry in sorted(working_files.items()):
+        parts = pathlib.PurePosixPath(relative).parts
+        if len(parts) == 3 and parts[0] == "_sandbox-state" and parts[-1] in {
+            "run.json", "catalog.json", "policy.json",
+        }:
+            destination = f"_reports/reset-review-bundle/rebase-runs/{parts[1]}/{parts[-1]}"
+        elif (
+            len(parts) == 5 and parts[:3] == ("_reports", "reset-review-bundle", "rebase-runs")
+            and parts[-1] in {"run.json", "catalog.json", "policy.json"}
+        ):
+            destination = relative
+        else:
+            continue
+        digest = _file_digest(working / pathlib.Path(relative))
+        previous = history_destinations.get(destination.casefold())
+        if previous:
+            if previous != digest:
+                raise ValueError(f"conflicting historical rebase receipts require review: {destination}")
+            continue
+        history_destinations[destination.casefold()] = digest
+        carry_forward.append({
+            "path": relative, "bytes": entry["bytes"], "sha256": digest,
+            "status": "review-bundle-rebase-history", "destination": destination,
+        })
+
     source_files = layout["manifest_files"]
     source_roots = {relative.split("/", 1)[0] for relative in source_files}
     preserved_storage_roots = {
@@ -589,6 +615,29 @@ def _simple_entry_names(names, field):
     return names
 
 
+def _require_renamable_entries(working, temporary_root):
+    """Fail before hours of staging when an open handle would block the final swap."""
+    blocked = []
+    for path in sorted(working.iterdir(), key=lambda item: item.name.casefold()):
+        if path == temporary_root:
+            continue
+        probe = path.with_name(f"{path.name}.reset-probe-{uuid.uuid4().hex[:8]}")
+        try:
+            path.rename(probe)
+        except OSError as error:
+            blocked.append(f"{path.name} ({error.strerror or error})")
+            continue
+        try:
+            probe.rename(path)
+        except OSError as error:
+            raise RuntimeError(f"reset preflight could not restore {path} from {probe}") from error
+    if blocked:
+        raise ValueError(
+            "full reset is blocked before staging: close windows, editor tabs or terminals using "
+            + ", ".join(blocked)
+        )
+
+
 def _rollback_full_reset(working, stage, journal):
     staged = stage / "new"
     previous = stage / "rollback" / "old"
@@ -752,6 +801,7 @@ def full_reset_apply(
         for relative, entry in plan["production_files"].items()
     }
 
+    _require_renamable_entries(working, temporary_root)
     with temporary_storage.staging_directory(
         temporary_root,
         FULL_RESET_STAGE_PREFIX,
@@ -781,6 +831,7 @@ def full_reset_apply(
                     "carry-forward-active-photo",
                     "review-bundle-metadata",
                     "review-bundle-original",
+                    "review-bundle-rebase-history",
                 }:
                     raise ValueError(
                         f"unapproved carry-forward status: {entry['status']}"

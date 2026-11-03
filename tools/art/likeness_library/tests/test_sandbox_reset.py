@@ -8,6 +8,7 @@ import tempfile
 import unittest
 from unittest import mock
 
+from tools.art.likeness_library import sandbox as sandbox_module
 from tools.art.likeness_library.sandbox import (
     _remove_tree,
     _recover_full_reset,
@@ -253,6 +254,46 @@ class SandboxResetTests(unittest.TestCase):
         self.assertTrue(result["resetReady"])
         self.assertEqual(result["resetBlockers"], [])
 
+    def test_full_reset_preserves_compact_rebase_history_without_old_output_seeds(self):
+        original = b"production original"
+        production_photo = self.production / "Various/gallery/original.jpg"
+        production_photo.parent.mkdir(parents=True)
+        production_photo.write_bytes(original)
+        processed = b"selected processed pixels"
+        self._working_file("Prospects/Generated Person/gallery/processed.jpg", processed)
+        self._working_file("_processing/general/set/manifest.json", json.dumps({
+            "currentSha256": hashlib.sha256(processed).hexdigest(),
+            "sourceSha256": hashlib.sha256(original).hexdigest(),
+        }).encode())
+        receipts = {
+            "run.json": b'{"schemaVersion": 1, "status": "applied", "photos": []}',
+            "catalog.json": b'{"schemaVersion": 1, "people": {}, "photos": {}, "actions": []}',
+            "policy.json": b'{"version": "old-run"}',
+        }
+        for name, contents in receipts.items():
+            self._working_file(f"_sandbox-state/old-run/{name}", contents)
+        self._working_file("_sandbox-state/old-run/likeness-cache.json", b"obsolete cache")
+        preview = full_reset_preview(self.working, self.production)
+        history = [row for row in preview["workingActiveFiles"]
+                   if row["status"] == "review-bundle-rebase-history"]
+        self.assertEqual(len(history), 3)
+        full_reset_apply(self.working, self.production)
+        self.assertFalse((self.working / "Prospects/Generated Person").exists())
+        self.assertFalse((self.working / "_sandbox-state/old-run").exists())
+        self.assertEqual((self.working / "Various/gallery/original.jpg").read_bytes(), original)
+        for name, contents in receipts.items():
+            self.assertEqual(
+                (self.working / "_reports/reset-review-bundle/rebase-runs/old-run" / name).read_bytes(),
+                contents,
+            )
+        full_reset_apply(self.working, self.production)
+        for name, contents in receipts.items():
+            self.assertEqual(
+                (self.working / "_reports/reset-review-bundle/rebase-runs/old-run" / name).read_bytes(),
+                contents,
+            )
+        self.assertEqual(production_photo.read_bytes(), original)
+
     def test_full_reset_apply_rebuilds_working_and_preserves_unique_active_files(self):
         from tools.workflows import comfy_workflows as cw
 
@@ -445,6 +486,28 @@ class SandboxResetTests(unittest.TestCase):
             before,
         )
         self.assertFalse((self.working / "_tmp").exists())
+
+    def test_full_reset_apply_stops_before_staging_when_a_folder_is_held_open(self):
+        source = self.production / "Angels/Keep/gallery/keep.jpg"
+        source.parent.mkdir(parents=True, exist_ok=True)
+        source.write_bytes(b"production version")
+        report = self._working_file("_reports/library/index.html", b"held report")
+        original_rename = pathlib.Path.rename
+
+        def rename(path, target):
+            if path.name == "_reports":
+                raise PermissionError(5, "Access is denied", str(path))
+            return original_rename(path, target)
+
+        with mock.patch.object(pathlib.Path, "rename", rename), \
+                mock.patch.object(sandbox_module, "_copy_verified_file") as copy_file:
+            with self.assertRaisesRegex(ValueError, r"blocked before staging.*_reports"):
+                full_reset_apply(self.working, self.production)
+        copy_file.assert_not_called()
+        self.assertEqual(report.read_bytes(), b"held report")
+        self.assertTrue((self.working / "_reports").is_dir())
+        self.assertFalse(any(path.name.startswith("_reports.reset-probe") for path in self.working.iterdir()))
+        self.assertFalse(any((self.working / "_tmp").glob("full-reset-stage-*")))
 
     def test_full_reset_recovery_rolls_back_interrupted_swap(self):
         temporary_root = self.working / "_tmp"

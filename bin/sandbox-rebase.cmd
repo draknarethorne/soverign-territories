@@ -8,6 +8,7 @@ if "%~2"=="" (
   echo Usage: sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\RUN" [--baseline working] [--dry-run ^| --intake-only --apply ^| --replan ^| --apply ^| --check ^| --undo]
   echo Completed unpublished stage: --resume-install --check, then --resume-install --apply
   echo Unowned legacy cast collisions: explicitly add --preserve-legacy-derivatives to check/apply
+  echo Approved core trial: keep --cast-seeds core --record-core-protection on every step
   exit /b 2
 )
 set "ST_REBASE_ROOT=%~1"

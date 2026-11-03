@@ -53,6 +53,109 @@ class CleanRebaseTests(unittest.TestCase):
 
         return SimpleNamespace(inventory=inventory)
 
+    def test_final_membership_records_recoverable_core_locks_and_honest_rival_audit(self):
+        import copy
+        import json
+        photos, routed, paths = [], [], {}
+        folder = "Prospects/Alex Cooper"
+        person_id = "person_" + "1" * 32
+        catalog = {
+            "schemaVersion": 1, "photos": {}, "actions": [],
+            "people": {person_id: {
+                "id": person_id, "folder": folder, "displayName": "Alex Cooper",
+                "folderHistory": [], "identityAnchors": [], "protected": False,
+            }},
+        }
+        for index in range(5):
+            path = self.source / folder / "gallery" / f"alex_cooper_image_{123450 + index}.jpg"
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(f"source {index}".encode())
+            vector = np.zeros(8)
+            vector[0], vector[index + 1] = .8, .6
+            photo = clean_rebase.Photo(path, "Prospects", "Alex Cooper", "cache-sha",
+                                       {"v": vector.tolist(), "faces": 1, "px": 100})
+            photo.vec = vector
+            photos.append(photo)
+            relative = path.relative_to(self.source).as_posix()
+            paths[relative] = path
+            routed.append({"source": relative, "destination": relative, "sha256": metadata.content_sha256(path)})
+        original_catalog = copy.deepcopy(catalog)
+        policy = clean_rebase.core_protection_policy(load_policy())
+        api = SimpleNamespace(cw=SimpleNamespace(photo_key=lambda name: pathlib.Path(name).stem))
+        settings = {"minFace": 60, "multiFace": .3}
+        outcome = clean_rebase._final_membership_outcomes(
+            photos, routed, catalog, policy, settings, self.base, set(), api, self.source, paths,
+        )
+        self.assertEqual(outcome["automaticPhotoProtectionCount"], 5)
+        self.assertEqual(outcome["automaticIdentityProtectionCount"], 1)
+        self.assertEqual(outcome["higherRivalCount"], 0)
+        json.dumps(outcome, allow_nan=False)
+        self.assertTrue(all(row["protected"] and not row["anchor"] for row in outcome["rows"]))
+        metadata.validate_catalog(catalog)
+        self.assertEqual(len(catalog["actions"]), 6)
+        for action in catalog["actions"]:
+            state = action["beforeState"]
+            if action["type"] == "person-protected":
+                catalog["people"][action["personId"]] = state["person"]
+            elif state["photo"] is None:
+                del catalog["photos"][action["photoIds"][0]]
+            else:
+                catalog["photos"][action["photoIds"][0]] = state["photo"]
+        catalog["actions"] = []
+        self.assertEqual(catalog, original_catalog)
+
+        path = self.source / "Potentials/Bianca Elm/gallery/bianca_elm_image_654321.jpg"
+        path.parent.mkdir(parents=True)
+        path.write_bytes(b"rival singleton")
+        photo = clean_rebase.Photo(path, "Potentials", "Bianca Elm", "cache-rival",
+                                   {"v": [1.] + [0.] * 7, "faces": 1, "px": 100})
+        photo.vec = np.array([1.] + [0.] * 7)
+        photos.append(photo)
+        relative = path.relative_to(self.source).as_posix()
+        paths[relative] = path
+        routed.append({"source": relative, "destination": relative, "sha256": metadata.content_sha256(path)})
+        cast_path = self.source / "Sisters/Nyxene/gallery/nyxene_image_654320.jpg"
+        cast_path.parent.mkdir(parents=True)
+        cast_path.write_bytes(b"cast singleton")
+        cast_photo = clean_rebase.Photo(cast_path, "Sisters", "Nyxene", "cache-cast",
+                                        {"v": [-1.] + [0.] * 7, "faces": 1, "px": 100})
+        cast_photo.vec = np.array([-1.] + [0.] * 7)
+        photos.append(cast_photo)
+        cast_relative = cast_path.relative_to(self.source).as_posix()
+        paths[cast_relative] = cast_path
+        routed.append({"source": cast_relative, "destination": cast_relative,
+                       "sha256": metadata.content_sha256(cast_path)})
+        before = copy.deepcopy(routed)
+        outcome = clean_rebase._final_membership_outcomes(
+            photos, routed, catalog, load_policy(), settings, self.base, set(), api, self.source, paths,
+        )
+        self.assertEqual(outcome["higherRivalCount"], 5)
+        self.assertTrue(all(row["rivals"][0]["folder"] == "Potentials/Bianca Elm"
+                            for row in outcome["rows"][:5]))
+        self.assertIsNone(outcome["rows"][-1]["ownScore"])
+        self.assertEqual(outcome["rows"][0]["castReferences"],
+                         [{"folder": "Sisters/Nyxene", "score": -.8}])
+        self.assertEqual(outcome["rows"][-1]["castReferences"],
+                         [{"folder": "Sisters/Nyxene", "score": None}])
+        self.assertEqual(len(outcome["coreReferences"]["Sisters/Nyxene"]), 1)
+        json.dumps(outcome, allow_nan=False)
+        self.assertEqual(outcome["automaticMoves"], 0)
+        self.assertEqual(routed, before)
+
+    def test_installed_galleries_use_shared_report_state_publication(self):
+        library = [self.working / "Angels" / "Angelica"]
+        reports = self.working / "_reports"
+        upkeep = SimpleNamespace(
+            cw=SimpleNamespace(load_cfg=lambda: {}, storage_root=lambda *_args, **_kwargs: reports),
+            folders=lambda *_args: library, refresh_reports=mock.Mock(),
+        )
+        with mock.patch.dict("sys.modules", {"gallery_maintenance": upkeep}):
+            clean_rebase._refresh_galleries(self.working, self.run)
+        upkeep.refresh_reports.assert_called_once_with(
+            self.working, library, self.run / "likeness-cache.json",
+            self.run / "policy.json", reports / "library",
+        )
+
     def plan(self):
         return {
             "status": "preview",
@@ -62,6 +165,636 @@ class CleanRebaseTests(unittest.TestCase):
                 "sha256": self.digest,
             }],
         }
+
+    def test_continuity_collision_remap_records_only_actual_moves(self):
+        for earlier_history in ([], ["Potentials/Original Name"]):
+            with self.subTest(earlier_history=earlier_history):
+                first = {
+                    "id": "person_a", "folder": "Potentials/Eloise",
+                    "folderHistory": list(earlier_history),
+                }
+                second = {
+                    "id": "person_b", "folder": "Potentials/Jade", "folderHistory": [],
+                }
+                moved = {
+                    "id": "person_c", "folder": "Potentials/Moving Person",
+                    "folderHistory": ["Potentials/Earlier Person"],
+                }
+                catalog = {
+                    "people": {person["id"]: person for person in (first, second, moved)},
+                    "photos": {},
+                }
+                rows = [
+                    {"oldFolder": first["folder"], "photoId": "photo:image_654321",
+                     "destination": "Potentials/Jade/gallery/one.jpg"},
+                    {"oldFolder": second["folder"], "photoId": "photo:image_345678",
+                     "destination": "Various/review/two.jpg", "bestMatch": "Potentials/Jade"},
+                    {"oldFolder": moved["folder"], "photoId": "photo:image_456789",
+                     "destination": "Prospects/Moved Person/gallery/three.jpg"},
+                ]
+                clean_rebase._migrate_continuity(
+                    catalog, rows, self.working, lambda _folder: [],
+                )
+                self.assertEqual(first["folder"], "Potentials/Eloise")
+                self.assertEqual(first["folderHistory"], earlier_history)
+                self.assertEqual(rows[0]["destination"], "Potentials/Eloise/gallery/one.jpg")
+                self.assertEqual(rows[1]["bestMatch"], "Potentials/Eloise")
+                self.assertEqual(moved["folder"], "Prospects/Moved Person")
+                self.assertEqual(
+                    moved["folderHistory"],
+                    ["Potentials/Earlier Person", "Potentials/Moving Person"],
+                )
+
+    def continuity_merge_fixture(self):
+        import copy
+
+        folders = ("Prospects/Oldest Person", "Potentials/Younger Person")
+        people = {}
+        photos = {}
+        rows = []
+        candidates = []
+        anchor_ids = []
+        survivor_id = "person_" + "1" * 32
+        retired_id = "person_" + "2" * 32
+        unrelated_id = "person_" + "3" * 32
+        ids = (survivor_id, retired_id)
+        for index, (folder, name, created, person_id) in enumerate(zip(
+            folders, ("Oldest Person", "Younger Person"), ("2026-10-01", "2026-10-09"), ids,
+        )):
+            people[person_id] = {
+                "id": person_id, "folder": folder, "displayName": name,
+                "folderHistory": [], "identityAnchors": [],
+                "names": {
+                    "originalName": name, "currentName": name, "originalSource": "recorded-history",
+                },
+                "protected": index == 1,
+                **({"automaticProtectionOverride": "disabled"} if index == 1 else {}),
+            }
+            candidates.append({
+                "folder": folder, "personId": person_id, "supportPhotoCount": 2,
+                "name": name, "nameSource": "recorded-history", "originalName": name,
+                "ageEvidence": {
+                    "date": created, "status": "verified",
+                    "evidence": [{"date": created, "source": "z-history-new-person"}],
+                },
+            })
+            for photo_index in range(2):
+                photo_number = 900001 + index * 10 + photo_index
+                photo_id = f"photo:image_{photo_number}"
+                relative = f"{folder}/gallery/{name.lower().replace(' ', '_')}_image_{photo_number}.jpg"
+                path = self.working / pathlib.Path(relative)
+                path.parent.mkdir(parents=True, exist_ok=True)
+                data = f"photo-{photo_number}".encode()
+                path.write_bytes(data)
+                digest = hashlib.sha256(data).hexdigest()
+                photos[photo_id] = {
+                    "contentSha256": digest, "protected": photo_number == 900012,
+                    **({"automaticProtectionOverride": "enabled"} if photo_number == 900012 else {}),
+                    **({"rejectedPersonIds": [unrelated_id]} if photo_number == 900002 else {}),
+                }
+                if photo_number == 900012:
+                    anchor_ids.append(photo_id)
+                rows.append({
+                    "photoId": photo_id, "oldFolder": folder, "source": relative,
+                    "destination": f"Prospects/Oldest Person/gallery/{path.name}",
+                    "sha256": digest, "preparedSHA256": digest,
+                })
+        people[unrelated_id] = {
+            "id": unrelated_id, "folder": "Prospects/Unrelated Person",
+            "displayName": "Unrelated Person", "folderHistory": [], "identityAnchors": [],
+        }
+        people[retired_id]["identityAnchors"] = list(anchor_ids)
+        evidence = {
+            "name": "Oldest Person", "decision": "retained original identity name",
+            "reviewRequired": False, "originalCandidates": candidates,
+            "survivorPersonId": survivor_id, "survivorFolder": folders[0],
+        }
+        for row in rows:
+            row["identityNameEvidence"] = copy.deepcopy(evidence)
+        catalog = {
+            "schemaVersion": 1, "people": people, "photos": photos, "actions": [],
+        }
+        return catalog, rows, survivor_id, retired_id, anchor_ids
+
+    def protected_core_split_fixture(self):
+        import copy
+
+        person_id = "person_" + "7" * 32
+        folder = "Prospects/Legacy Person"
+        name = "Core Survivor"
+        core_ids = [f"photo:image_{number}" for number in (920001, 920002)]
+        soft_id = "photo:image_920003"
+        people = {
+            person_id: {
+                "id": person_id, "folder": folder, "displayName": "Legacy Person",
+                "folderHistory": [], "identityAnchors": [],
+                "names": {
+                    "originalName": name, "currentName": name,
+                    "originalSource": "recorded-history",
+                },
+            },
+        }
+        photos, rows = {}, []
+        photo_ids = [*core_ids, soft_id]
+        evidence = {
+            "name": name, "decision": "retained original identity name",
+            "reviewRequired": False,
+            "originalCandidates": [{
+                "folder": folder, "personId": person_id, "supportPhotoCount": 2,
+                "name": name, "nameSource": "recorded-history", "originalName": name,
+                "corePhotoIds": core_ids, "mandatoryPhotoIds": [],
+                "preservesCore": True,
+                "ageEvidence": {"status": "unavailable"},
+            }],
+            "survivorPersonId": person_id, "survivorFolder": folder,
+        }
+        for index, photo_id in enumerate(photo_ids):
+            number = 920001 + index
+            relative = f"{folder}/gallery/legacy_image_{number}.jpg"
+            path = self.working / pathlib.Path(relative)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            payload = f"protected-core-test-{number}".encode()
+            path.write_bytes(payload)
+            digest = hashlib.sha256(payload).hexdigest()
+            record = {"contentSha256": digest, "protected": index < 2}
+            if index < 2:
+                record["protectionProvenance"] = {
+                    "recipeVersion": "independent-gallery-loo-v1",
+                    "frozenCorePhotoIds": core_ids,
+                }
+            photos[photo_id] = record
+            destination = (
+                "Prospects/Core Survivor" if index < 2 else "Prospects/Outlier Person"
+            )
+            row = {
+                "photoId": photo_id, "oldFolder": folder, "source": relative,
+                "destination": f"{destination}/gallery/{path.name}",
+                "sha256": digest, "preparedSHA256": digest,
+            }
+            if index < 2:
+                row["identityNameEvidence"] = copy.deepcopy(evidence)
+            rows.append(row)
+        catalog = {
+            "schemaVersion": 1, "people": people, "photos": photos, "actions": [],
+        }
+        return catalog, rows, person_id, core_ids
+
+    def add_automatic_core_to_merge(self, catalog, rows):
+        import copy
+
+        evidence = rows[0]["identityNameEvidence"]
+        for person_index, first_row_index in enumerate((0, 2)):
+            row = rows[first_row_index]
+            photo_id = row["photoId"]
+            catalog["photos"][photo_id].update({
+                "protected": True,
+                "protectionProvenance": {
+                    "recipeVersion": "independent-gallery-loo-v1",
+                    "frozenCorePhotoIds": [photo_id],
+                },
+            })
+            candidate = evidence["originalCandidates"][person_index]
+            candidate["corePhotoIds"] = [photo_id]
+            candidate["preservesCore"] = True
+        for row in rows:
+            row["identityNameEvidence"] = copy.deepcopy(evidence)
+
+    def test_continuity_migrates_verified_protected_merge_without_losing_decisions(self):
+        import copy
+
+        catalog, rows, survivor_id, retired_id, anchor_ids = self.continuity_merge_fixture()
+        photo_decisions = copy.deepcopy(catalog["photos"])
+        clean_rebase._migrate_continuity(
+            catalog, rows, self.working, self.image_inventory_mock().inventory,
+        )
+        survivor = catalog["people"][survivor_id]
+        retired = catalog["people"][retired_id]
+        self.assertEqual(survivor["folder"], "Prospects/Oldest Person")
+        self.assertEqual(survivor["displayName"], "Oldest Person")
+        self.assertTrue(survivor["protected"])
+        self.assertEqual(survivor["automaticProtectionOverride"], "disabled")
+        self.assertEqual(set(survivor["identityAnchors"]), set(anchor_ids))
+        self.assertIn("Potentials/Younger Person", survivor["folderHistory"])
+        self.assertEqual(retired["mergedInto"], survivor_id)
+        self.assertEqual(retired["names"]["currentName"], "Younger Person")
+        self.assertEqual(retired["identityAnchors"], [])
+        self.assertEqual(catalog["photos"], photo_decisions)
+        metadata.validate_catalog(catalog)
+
+    def test_continuity_keeps_core_identity_when_soft_outlier_departs(self):
+        import copy
+
+        catalog, rows, person_id, core_ids = self.protected_core_split_fixture()
+        original_photos = copy.deepcopy(catalog["photos"])
+        clean_rebase._migrate_continuity(
+            catalog, rows, self.working, self.image_inventory_mock().inventory,
+            rebase_protection=True,
+        )
+        person = catalog["people"][person_id]
+        self.assertEqual(person["folder"], "Prospects/Core Survivor")
+        self.assertEqual(person["displayName"], "Core Survivor")
+        self.assertEqual(person["names"]["currentName"], "Core Survivor")
+        self.assertIn("Prospects/Legacy Person", person["folderHistory"])
+        self.assertEqual(catalog["photos"], original_photos)
+        self.assertTrue(all(catalog["photos"][photo_id]["protected"] for photo_id in core_ids))
+
+    def test_continuity_refuses_divided_protected_core_without_mutation(self):
+        import copy
+
+        catalog, rows, _, _ = self.protected_core_split_fixture()
+        rows[1]["destination"] = rows[1]["destination"].replace(
+            "Prospects/Core Survivor", "Prospects/Second Core",
+        )
+        before = copy.deepcopy(catalog)
+        with self.assertRaisesRegex(ValueError, "protected core or mandatory photos split"):
+            clean_rebase._migrate_continuity(
+                catalog, rows, self.working, self.image_inventory_mock().inventory,
+                rebase_protection=True,
+            )
+        self.assertEqual(catalog, before)
+
+    def test_continuity_full_merge_preserves_automatic_locks_and_rejects_destination(self):
+        import copy
+
+        catalog, rows, survivor_id, _, _ = self.continuity_merge_fixture()
+        self.add_automatic_core_to_merge(catalog, rows)
+        locked = {
+            photo_id: copy.deepcopy(record)
+            for photo_id, record in catalog["photos"].items()
+            if record.get("protectionProvenance")
+        }
+        before = copy.deepcopy(catalog)
+        photo_id = next(iter(locked))
+        catalog["photos"][photo_id]["rejectedPersonIds"] = [survivor_id]
+        rejected = copy.deepcopy(catalog)
+        with self.assertRaisesRegex(ValueError, "destination identity was explicitly rejected"):
+            clean_rebase._migrate_continuity(
+                catalog, rows, self.working, self.image_inventory_mock().inventory,
+                rebase_protection=True,
+            )
+        self.assertEqual(catalog, rejected)
+
+        catalog = before
+        clean_rebase._migrate_continuity(
+            catalog, rows, self.working, self.image_inventory_mock().inventory,
+            rebase_protection=True,
+        )
+        for photo_id, record in locked.items():
+            self.assertEqual(catalog["photos"][photo_id], record)
+        self.assertEqual(catalog["people"][survivor_id]["folder"], "Prospects/Oldest Person")
+
+    def test_continuity_merge_refuses_exact_rejected_destination_without_mutation(self):
+        import copy
+
+        catalog, rows, survivor_id, _, _ = self.continuity_merge_fixture()
+        photo_id = rows[0]["photoId"]
+        catalog["photos"][photo_id]["rejectedPersonIds"] = [survivor_id]
+        before = copy.deepcopy(catalog)
+        with self.assertRaisesRegex(ValueError, "destination identity was explicitly rejected"):
+            clean_rebase._migrate_continuity(
+                catalog, rows, self.working, self.image_inventory_mock().inventory,
+            )
+        self.assertEqual(catalog, before)
+
+    def test_continuity_merge_refuses_when_mandatory_anchor_is_not_retained_in_gallery(self):
+        catalog, rows, _, _, anchor_ids = self.continuity_merge_fixture()
+        anchor = next(row for row in rows if row["photoId"] == anchor_ids[0])
+        anchor["destination"] = anchor["destination"].replace("/gallery/", "/review/")
+        with self.assertRaisesRegex(ValueError, "mandatory anchor"):
+            clean_rebase._migrate_continuity(
+                catalog, rows, self.working, self.image_inventory_mock().inventory,
+            )
+
+    def test_continuity_merge_keeps_split_and_ambiguous_provenance_as_refusals(self):
+        import copy
+
+        catalog, rows, _, _, _ = self.continuity_merge_fixture()
+        rows[0]["destination"] = rows[0]["destination"].replace(
+            "Prospects/Oldest Person", "Prospects/Alternate Person",
+        )
+        before = copy.deepcopy(catalog)
+        with self.assertRaisesRegex(ValueError, "identity decisions cannot migrate unambiguously"):
+            clean_rebase._migrate_continuity(
+                catalog, rows, self.working, self.image_inventory_mock().inventory,
+            )
+        self.assertEqual(catalog, before)
+
+        catalog, rows, _, _, _ = self.continuity_merge_fixture()
+        for row in rows:
+            row["identityNameEvidence"]["originalCandidates"][1]["ageEvidence"]["date"] = "2026-10-01"
+        before = copy.deepcopy(catalog)
+        with self.assertRaisesRegex(ValueError, "identity decisions cannot migrate unambiguously"):
+            clean_rebase._migrate_continuity(
+                catalog, rows, self.working, self.image_inventory_mock().inventory,
+            )
+        self.assertEqual(catalog, before)
+
+    def test_create_plan_protected_prospect_merge_reaches_cluster_and_continuity(self):
+        import copy
+        import json
+
+        oldest_id = "person_" + "4" * 32
+        younger_id = "person_" + "5" * 32
+        cast_id = "person_" + "6" * 32
+        folders = ("Prospects/Oldest Person", "Potentials/Younger Person")
+        people = {
+            oldest_id: {
+                "id": oldest_id, "folder": folders[0], "displayName": "Oldest Person",
+                "folderHistory": [], "identityAnchors": [], "protected": True,
+            },
+            younger_id: {
+                "id": younger_id, "folder": folders[1], "displayName": "Younger Person",
+                "folderHistory": [], "identityAnchors": [], "protected": True,
+            },
+            cast_id: {
+                "id": cast_id, "folder": "Angels/Angelica", "displayName": "Angelica",
+                "folderHistory": [], "identityAnchors": [],
+            },
+        }
+        source_folders = []
+        candidates_by_folder = {}
+        manifest_files = {}
+        for index, (folder, name, created) in enumerate((
+            (folders[0], "Oldest Person", "2026-10-01"),
+            (folders[1], "Younger Person", "2026-10-09"),
+        )):
+            path = self.source / pathlib.Path(folder)
+            gallery = path / "gallery"
+            gallery.mkdir(parents=True)
+            (gallery / f"z_{name.lower().replace(' ', '_')}.txt").write_text(
+                f"name: {name}\n{created} +2 from Various: one new person (2 photos)\n",
+                encoding="utf-8",
+            )
+            source_folders.append((folder.split("/", 1)[0], folder.split("/", 1)[1], path))
+            candidates_by_folder[folder] = []
+            for photo_index in range(2):
+                number = 910000 + index * 10 + photo_index
+                photo_name = f"{name.lower().replace(' ', '_')}_image_{number}.jpg"
+                photo_path = gallery / photo_name
+                payload = f"synthetic-photo-{number}".encode()
+                photo_path.write_bytes(payload)
+                relative = photo_path.relative_to(self.source).as_posix()
+                digest = hashlib.sha256(payload).hexdigest()
+                manifest_files[relative] = (len(payload), digest)
+                candidates_by_folder[folder].append(metadata.photo_id_from_name(photo_name))
+
+        cast_path = self.source / "Angels" / "Angelica"
+        cast_photo = cast_path / "gallery" / "angelica_image_919999.jpg"
+        cast_photo.parent.mkdir(parents=True)
+        cast_photo.write_bytes(b"cast reference")
+        cast_relative = cast_photo.relative_to(self.source).as_posix()
+        cast_digest = metadata.content_sha256(cast_photo)
+        manifest_files[cast_relative] = (cast_photo.stat().st_size, cast_digest)
+        source_folders.append(("Angels", "Angelica", cast_path))
+        catalog_path = self.working / ".likeness-library.json"
+        metadata.save_catalog({
+            "schemaVersion": 1, "people": people, "photos": {}, "actions": [],
+        }, catalog_path)
+        layout = {
+            **self.layout,
+            "manifest_files": manifest_files,
+        }
+        policy = clean_rebase.core_protection_policy(load_policy())
+        api = SimpleNamespace(
+            cw=SimpleNamespace(
+                load_cfg=lambda: {},
+                storage_root=likeness.cw.storage_root,
+                photo_folders=lambda _cfg, _root: source_folders,
+                photo_key=likeness.cw.photo_key,
+            ),
+            settings=likeness.settings, originals=likeness.originals,
+            nz=likeness.nz, chosen_keys=lambda _cfg: set(),
+            invent_name=lambda *_: self.fail("protected identities lost name continuity"),
+        )
+
+        def fake_cores(space, _catalog, **_kwargs):
+            self.assertEqual(set(space.by_key), {"Angels/Angelica"})
+            return {"Angels/Angelica": {"vector": np.array([1., 0.])}}, set(), []
+
+        expected_ids = set(candidates_by_folder[folders[0]] + candidates_by_folder[folders[1]])
+
+        def fake_plan(candidates, cores, **_kwargs):
+            self.assertEqual(set(cores), {"Angels/Angelica"})
+            self.assertEqual({row["photoId"] for row in candidates}, expected_ids)
+            self.assertEqual(len(candidates), 4)
+            photo_ids = sorted(expected_ids)
+            destination = "Prospects/Generated"
+            return {
+                "assignments": [
+                    {"photoId": photo_id, "destination": destination, "reason": "synthetic complete merge"}
+                    for photo_id in photo_ids
+                ],
+                "clusters": [{
+                    "clusterId": "protected-merge", "destination": destination,
+                    "photoIds": photo_ids,
+                }],
+                "held": [],
+            }
+
+        with mock.patch.object(clean_rebase.metadata, "path_for_root", return_value=catalog_path), \
+                mock.patch.object(clean_rebase, "frozen_identity_cores", side_effect=fake_cores), \
+                mock.patch.object(clean_rebase, "plan_reconciliation", side_effect=fake_plan), \
+                mock.patch.object(clean_rebase, "_final_membership_outcomes", return_value={
+                    "state": "audited", "rows": [], "automaticMoves": 0,
+                }) as final_audit:
+            plan = clean_rebase.create_plan(
+                layout, self.run, policy, api,
+                embedder=lambda _path: {
+                    "v": [1., 0.], "faces": 1, "s": .95, "px": 100,
+                },
+            )
+        final_audit.assert_called_once()
+        self.assertEqual(plan["policy"]["rebaseProtection"]["enabled"], True)
+        migrated_catalog = json.loads((self.run / "catalog.json").read_text(encoding="utf-8"))
+        routed = [row for row in plan["photos"] if row.get("identityNameEvidence")]
+        self.assertEqual({row["photoId"] for row in routed}, expected_ids)
+        self.assertEqual(
+            {"/".join(row["destination"].split("/")[:2]) for row in routed},
+            {"Prospects/Oldest Person"},
+        )
+        working_catalog = copy.deepcopy(migrated_catalog)
+        clean_rebase._migrate_continuity(
+            working_catalog, plan["photos"], self.working, self.image_inventory_mock().inventory,
+        )
+        self.assertEqual(working_catalog["people"][oldest_id]["folder"], "Prospects/Oldest Person")
+        self.assertEqual(working_catalog["people"][younger_id]["mergedInto"], oldest_id)
+
+    def test_cluster_names_keep_supported_identity_despite_newcomer_majority(self):
+        folder = "Prospects/Old Person"
+        identity = "person_" + "1" * 32
+        history_folder = self.source / pathlib.Path(folder) / "gallery"
+        history_folder.mkdir(parents=True)
+        (history_folder / "z_old_person.txt").write_text(
+            "name: Old Person\n2026-10-01 +3 from Various: one new person (3 photos)\n",
+            encoding="utf-8",
+        )
+        catalog = {"people": {identity: {
+            "id": identity, "folder": folder, "displayName": "Old Person",
+        }}, "actions": []}
+        by_id = {
+            **{f"photo:old{index}": {"oldFolder": folder} for index in range(3)},
+            **{f"photo:new{index}": {"oldFolder": "Various"} for index in range(5)},
+        }
+        groups = [{
+            "clusterId": "joined", "destination": "Prospects/Generated",
+            "photoIds": list(by_id),
+        }]
+        api = SimpleNamespace(invent_name=lambda *_: self.fail("supported name was not retained"))
+        names, evidence = clean_rebase._cluster_name_routes(
+            groups, by_id, catalog, self.source, api, 3,
+        )
+        self.assertEqual(names["Prospects/Generated"], "Prospects/Old Person")
+        self.assertEqual(evidence["Prospects/Generated"]["decision"], "retained original identity name")
+
+    def test_cluster_name_follows_locked_core_not_larger_soft_split(self):
+        folder = "Prospects/Legacy Person"
+        identity = "person_" + "8" * 32
+        history_folder = self.source / pathlib.Path(folder) / "gallery"
+        history_folder.mkdir(parents=True)
+        (history_folder / "z_legacy_person.txt").write_text(
+            "name: Core Survivor\n2026-10-01 +2 from Various: one new person (2 photos)\n",
+            encoding="utf-8",
+        )
+        core_ids = [f"photo:image_{number}" for number in (930001, 930002)]
+        soft_ids = [f"photo:image_{number}" for number in range(930003, 930007)]
+        newcomer_ids = [f"photo:new-{index}" for index in range(4)]
+        all_ids = [*core_ids, *soft_ids, *newcomer_ids]
+        digest = "a" * 64
+        catalog = {
+            "people": {identity: {
+                "id": identity, "folder": folder, "displayName": "Core Survivor",
+            }},
+            "photos": {
+                photo_id: {
+                    "contentSha256": digest, "protected": True,
+                    "protectionProvenance": {
+                        "recipeVersion": "independent-gallery-loo-v1",
+                        "frozenCorePhotoIds": core_ids,
+                    },
+                }
+                for photo_id in core_ids
+            },
+            "actions": [],
+        }
+        by_id = {
+            photo_id: {
+                "oldFolder": folder if photo_id in core_ids + soft_ids else "Various",
+                "sha256": digest,
+            }
+            for photo_id in all_ids
+        }
+        groups = [
+            {"clusterId": "soft-majority", "destination": "Prospects/Soft Cluster",
+             "photoIds": soft_ids + newcomer_ids},
+            {"clusterId": "locked-core", "destination": "Prospects/Core Cluster",
+             "photoIds": core_ids},
+        ]
+        names, evidence = clean_rebase._cluster_name_routes(
+            groups, by_id, catalog, self.source,
+            SimpleNamespace(invent_name=lambda *_: "Fresh Person"), 2,
+            rebase_protection=True,
+        )
+        self.assertEqual(names["Prospects/Core Cluster"], "Prospects/Core Survivor")
+        self.assertEqual(evidence["Prospects/Core Cluster"]["survivorPersonId"], identity)
+        self.assertEqual(names["Prospects/Soft Cluster"], "Prospects/Fresh Person")
+        self.assertNotIn(
+            identity,
+            {row.get("personId") for row in evidence["Prospects/Soft Cluster"]["originalCandidates"]},
+        )
+
+    def test_cluster_name_merge_uses_oldest_recorded_identity_age(self):
+        folders = ("Prospects/First Person", "Potentials/Second Person")
+        catalog = {"people": {}, "actions": []}
+        by_id = {}
+        photo_ids = []
+        for index, (folder, name, created) in enumerate((
+            (folders[0], "First Person", "2026-10-01"),
+            (folders[1], "Second Person", "2026-10-09"),
+        )):
+            identity = "person_" + str(index + 1) * 32
+            catalog["people"][identity] = {
+                "id": identity, "folder": folder, "displayName": name,
+            }
+            history_folder = self.source / pathlib.Path(folder) / "gallery"
+            history_folder.mkdir(parents=True)
+            (history_folder / f"z_{name.lower().replace(' ', '_')}.txt").write_text(
+                f"name: {name}\n{created} +3 from Various: one new person (3 photos)\n",
+                encoding="utf-8",
+            )
+            for photo_index in range(3):
+                photo_id = f"photo:{index}-{photo_index}"
+                by_id[photo_id] = {"oldFolder": folder}
+                photo_ids.append(photo_id)
+        groups = [{
+            "clusterId": "merged", "destination": "Prospects/Generated",
+            "photoIds": photo_ids,
+        }]
+        api = SimpleNamespace(invent_name=lambda *_: self.fail("verified oldest name was not retained"))
+        names, evidence = clean_rebase._cluster_name_routes(
+            groups, by_id, catalog, self.source, api, 3,
+        )
+        self.assertEqual(names["Prospects/Generated"], "Prospects/First Person")
+        winner = next(
+            row for row in evidence["Prospects/Generated"]["originalCandidates"]
+            if row["name"] == "First Person"
+        )
+        self.assertEqual(winner["ageEvidence"]["evidence"][0]["source"], "z-history-new-person")
+
+    def test_cluster_names_use_camaris_bloom_record_and_hold_ambiguous_merge_age(self):
+        folder = "Potentials/Camaris"
+        identity = "person_" + "3" * 32
+        history_folder = self.source / pathlib.Path(folder) / "gallery"
+        history_folder.mkdir(parents=True)
+        (history_folder / "z_camaris_bloom.txt").write_text(
+            "name: Camaris Bloom\n2026-10-19 returned to Potentials\n", encoding="utf-8",
+        )
+        camaris_catalog = {"people": {
+            identity: {"id": identity, "folder": folder, "displayName": "Camaris"},
+            "person_cast": {"id": "person_cast", "folder": "Angels/Camaris", "displayName": "Camaris"},
+        }, "actions": []}
+        by_id = {f"photo:c{index}": {"oldFolder": folder} for index in range(2)}
+        groups = [{
+            "clusterId": "camaris", "destination": "Prospects/Camaris",
+            "photoIds": list(by_id),
+        }]
+        names, _ = clean_rebase._cluster_name_routes(
+            groups, by_id, camaris_catalog, self.source,
+            SimpleNamespace(invent_name=lambda *_: "Fresh Person"), 2,
+            cast_folders=("Angels/Camaris",),
+        )
+        self.assertEqual(names["Prospects/Camaris"], "Prospects/Camaris Bloom")
+
+        folders = ("Prospects/Older Person", "Prospects/Newer Person")
+        merged_catalog = {"people": {}, "actions": []}
+        merged_by_id = {}
+        ids = []
+        for index, (source_folder, name) in enumerate(zip(folders, ("Older Person", "Newer Person"))):
+            pid = "person_" + str(index + 4) * 32
+            merged_catalog["people"][pid] = {
+                "id": pid, "folder": source_folder, "displayName": name,
+            }
+            history_folder = self.source / pathlib.Path(source_folder) / "gallery"
+            history_folder.mkdir(parents=True)
+            (history_folder / f"z_{name.lower().replace(' ', '_')}.txt").write_text(
+                f"name: {name}\n2026-10-19 renamed from Other Person (Prospects/Other Person)\n",
+                encoding="utf-8",
+            )
+            for photo_index in range(2):
+                photo_id = f"photo:a{index}-{photo_index}"
+                merged_by_id[photo_id] = {"oldFolder": source_folder}
+                ids.append(photo_id)
+        merged_names, merged_evidence = clean_rebase._cluster_name_routes(
+            [{
+                "clusterId": "ambiguous", "destination": "Prospects/Combined",
+                "photoIds": ids,
+            }],
+            merged_by_id, merged_catalog, self.source,
+            SimpleNamespace(invent_name=lambda *_: "Fresh Person"), 2,
+        )
+        self.assertEqual(merged_names["Prospects/Combined"], "Prospects/Fresh Person")
+        self.assertTrue(merged_evidence["Prospects/Combined"]["reviewRequired"])
+        self.assertIn("review original-name age evidence",
+                      merged_evidence["Prospects/Combined"]["decision"])
 
     def test_inventory_preview_explains_cast_seed_mode_without_evaluating_it(self):
         for mode in ("all", "core"):
@@ -146,6 +879,22 @@ class CleanRebaseTests(unittest.TestCase):
         self.assertTrue(any(row["castSeedAnchor"] for row in retained))
         self.assertTrue(any(row["castSeedProtectedPhoto"] for row in retained))
         self.assertTrue(any(row["castSeedWorkflowSelected"] for row in retained))
+        catalog["people"]["angelica"]["protected"] = True
+        retained_all, released_all, _ = clean_rebase._cast_seed_outcomes(
+            entries, {folder: core}, catalog,
+            {pathlib.Path(names["workflow"]).stem}, load_policy(), api, "core", 60,
+        )
+        self.assertEqual(len(retained_all), 5)
+        self.assertEqual(released_all, {})
+        trial = clean_rebase.core_protection_policy(load_policy())
+        retained_core, released_core, _ = clean_rebase._cast_seed_outcomes(
+            entries, {folder: core}, catalog,
+            {pathlib.Path(names["workflow"]).stem}, trial, api, "core", 60,
+        )
+        self.assertEqual(len(retained_core), 4)
+        self.assertEqual(set(released_core), {f"{folder}/gallery/{names['low']}"})
+        self.assertTrue(all(row["castSeedProtectedIdentity"] for row in retained_core))
+        self.assertTrue(all(row["castSeedThreshold"] == .40 for row in retained_core))
 
     def test_core_seed_policy_refuses_undersized_unprotected_identity(self):
         folder = "Sisters/Drakniss"
@@ -512,7 +1261,14 @@ class CleanRebaseTests(unittest.TestCase):
             invent_name=lambda seed, taken: "New Person",
         )
 
+        real_frozen_identity_cores = clean_rebase.frozen_identity_cores
+        core_calls = 0
+
         def fake_cores(space, catalog, **kwargs):
+            nonlocal core_calls
+            core_calls += 1
+            if core_calls > 1:
+                return real_frozen_identity_cores(space, catalog, **kwargs)
             self.assertEqual(set(space.by_key), {"Angels/Angelica"})
             self.assertTrue(all(photo.group == "Angels" for photo in space.photos))
             return {"Angels/Angelica": {"vector": np.array([1., 0.])}}, set(), []
@@ -556,6 +1312,12 @@ class CleanRebaseTests(unittest.TestCase):
                 self.layout, self.run, load_policy(), api,
                 embedder=fixture_embedder,
             )
+            self.assertGreaterEqual(core_calls, 2)
+            refinement_evidence = result["membershipRefinement"]
+            self.assertIn(refinement_evidence["stopReason"], ("stable", "pass-limit"))
+            self.assertEqual(result["finalMembershipAudit"]["automaticMoves"], refinement_evidence["moveCount"])
+            self.assertEqual(result["finalMembershipAudit"]["state"], "refined-then-audited")
+            self.assertIn("refinement.py", result["implementationHashes"])
             for row in result["photos"]:
                 if row.get("photoIdOrigin") == "originals-content-id":
                     name = pathlib.PurePosixPath(row["destination"]).name
@@ -797,7 +1559,7 @@ class CleanRebaseTests(unittest.TestCase):
                 "synthetic unusable face" if photo.name == cast_names[3] else None
             ),
             chosen_keys=lambda cfg: {likeness.cw.photo_key(cast_names[5])},
-            invent_name=lambda seed, taken: f"New-{seed[-6:]}",
+            invent_name=lambda seed, taken: f"New Name-{seed[-6:]}",
         )
 
         def fake_cores(_space, _catalog, **_kwargs):
@@ -867,7 +1629,7 @@ class CleanRebaseTests(unittest.TestCase):
             ),
             settings=likeness.settings, originals=likeness.originals,
             nz=likeness.nz, chosen_keys=lambda cfg: set(),
-            invent_name=lambda seed, taken: f"New-{seed[-6:]}",
+            invent_name=lambda seed, taken: f"New Name-{seed[-6:]}",
         )
         with mock.patch.object(clean_rebase, "frozen_identity_cores", return_value=(
             {"Angels/Angelica": {"vector": np.array([0., 1.]), "side": "Prospects"}},

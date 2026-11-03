@@ -5,7 +5,18 @@ Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (gen
 
 ## The pattern
 
-**Current scheduling (Nov 3 review; supersedes the dated Nov 2 pause below):**
+**Current scheduling (Nov 3 12:46 source-rehearsal authorization):**
+the user requests another clean reset from current Production, not the output
+of `fresh-20261102`. Implement and test the selected naming, core-protection,
+final-membership audit and recap feedback prerequisites first; then preview
+the verified full reset and run a separate source-based rehearsal. Preserve
+unique sandbox photos and review metadata through the reset contract, but do
+not use last run's generated identities as matching seeds. This explicitly
+supersedes the no-new-intake scheduling paragraph below once the recovery and
+feedback prerequisites pass. Production writes, broader calibration,
+automatic convergence, spelling migration and Sovereign Females remain gated.
+
+**Earlier scheduling (Nov 3 review):**
 the fresh `fresh-20261102` sandbox is installed and its ordinary post-install
 check passed; human placement/quality review remains open (LY11/C7).
 The additional people-gallery check found filename/report-state alignment
@@ -65,7 +76,7 @@ and reactivation condition.
 
 | Window | Work | Exit / boundary |
 | --- | --- | --- |
-| Nov 3 current review and bounded prerequisites | [Layout LY11-LY13](2026-11-02-library-layout.md), [recap L21-L23](2026-10-22-gallery-review-layout.md#nov-3-fresh-rebase-recap-feedback); N14/E13/E14 narrow handoffs | Preserve the installed baseline; test naming/recovery, resolve continuity, acquire core protection in a separate preview, and expose final-rival diagnostics. Broader holding work remains deferred |
+| Nov 3 source-based rehearsal and bounded prerequisites | [Layout LY10-LY13](2026-11-02-library-layout.md), [recap L21-L23](2026-10-22-gallery-review-layout.md#nov-3-fresh-rebase-recap-feedback); N14/E13/E14 narrow handoffs | Test naming/recovery, core protection and final-rival diagnostics first, then full reset from current Production and separate rehearsal. Do not seed from prior generated identities. Broader holding work remains deferred |
 | Now, human review of installed baseline | Cast C7, intake I60 | C6/I59/T16/S15 automated gates passed, including real history rows/detail links and rollback bytes. Human placement/quality acceptance remains open. No new full intake |
 | Current end-to-end gate, paused for ComfyUI | Storage S27 final independent check/publication; S30 technical audit passed | Corrected exact image roles/routes, 273 summaries, cast/name audit and actual recovered browsers/history pass. Resume only independent `--check` after memory is available; no duplicate intake/install. S28/S29/S31 verified; Oct 19 retirement saves 611.11 MB net logical backup bytes. Newest production, damaged Oct 14 survivors and last sandbox FULL stay protected. Family preview is read-only, not accepted renaming |
 | Parallel speed lane, before another expensive viewer refresh | [Gallery L18](2026-10-22-gallery-review-layout.md), with T15/T17 evidence | First retained-proof reuse slice and full-scale equivalent Review are verified; next bound repeated whole-history audits across pages. Preserve invalidation/hash/path guards. No broader gallery redesign or intake rerun |
@@ -391,9 +402,9 @@ deferred; exact current inputs and all user decisions remain protected.
 | [2026-10-12-roadmap-and-mvp-data.md](2026-10-12-roadmap-and-mvp-data.md) | holding | Explicitly select the independent Darkness/Light data or game-design track after this milestone |
 | [2026-10-12-tooling-debt.md](2026-10-12-tooling-debt.md) | holding | Resume selected tooling slice or demonstrated blocker; day-close automation/non-art audit remain separate |
 | [2026-10-20-art-tools-structure.md](2026-10-20-art-tools-structure.md) | holding | Resume bounded extraction needed by approved implementation; preserve current engine bindings |
-| [2026-10-22-gallery-review-layout.md](2026-10-22-gallery-review-layout.md) | active | Oct 31 authorization selects L18 only for parallel speed work; broader layout and L19/L20 remain deferred |
-| [2026-10-22-likeness-engine-acceptance.md](2026-10-22-likeness-engine-acceptance.md) | holding | Accepted baseline/labelled review before calibration, convergence and separate incremental batch; Production still gated |
-| [2026-10-22-identity-family-naming.md](2026-10-22-identity-family-naming.md) | holding | Intake tuning before N12 correction/family acceptance; no current bulk naming change |
+| [2026-10-22-gallery-review-layout.md](2026-10-22-gallery-review-layout.md) | active | Nov 3 selects recap L21-L23 plus existing L18; actual source-rehearsal viewer acceptance remains open, not a broad redesign |
+| [2026-10-22-likeness-engine-acceptance.md](2026-10-22-likeness-engine-acceptance.md) | active | Narrow E13/E14/E15 prerequisites (protection, audit, bounded in-place refinement) to the single layout LY10 milestone; calibration, broader convergence, separate incremental batch and Production stay holding |
+| [2026-10-22-identity-family-naming.md](2026-10-22-identity-family-naming.md) | active | Narrow N14 source-rehearsal prerequisite; broader family acceptance and unrelated corrections stay holding |
 | [2026-10-22-review-actions.md](2026-10-22-review-actions.md) | holding | Resume deliberate action UAT on installed baseline, or narrow verified recovery blocker; pending actions untouched |
 | [2026-10-22-face-analysis-evaluation.md](2026-10-22-face-analysis-evaluation.md) | holding | Labelled ambiguity after installed review, or actual blocking alignment defect; no speculative model dependency |
 | [2026-10-22-manual-prompts-to-art-library.md](2026-10-22-manual-prompts-to-art-library.md) | holding | Prepared-input review and explicit selection before P14-P17 fidelity/token/set work; manual drafts preserved |

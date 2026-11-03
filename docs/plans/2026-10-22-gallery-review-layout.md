@@ -12,6 +12,14 @@ baseline until a separately previewed and verified run is approved.
 
 ## Nov 3: fresh rebase recap feedback
 
+Selected implementation: shared chrome and safe new-tab links, identity
+flow/member counts, distinct change/score/reason labels, actual final audit
+fields and linked recorded top-ten cast cores are wired and focused-tested.
+Unavailable score/rename evidence stays explicitly unavailable; picks persist.
+L21-L23 remain open until the new source-based run's actual pages are checked.
+Surname-rule acceptance and the two labelled face-detection cases remain with
+their existing owners, not implicitly completed by the UI changes.
+
 Primary raw source: `rebase_fresh_20261102_feedback.md` (complete words at
 the end). It is an intake of observations and requested improvements, not
 acceptance of final identity placements. User-reported name-flow examples are

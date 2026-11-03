@@ -3520,6 +3520,9 @@ def main(argv=None, embedder=None, *, domain="general"):
     )
     s.add_argument("--policy", help="versioned likeness policy JSON")
     s.add_argument("--check", action="store_true", help="verify the saved plan and installed outputs without changing photos")
+    s.add_argument("--record-core-protection", action="store_true",
+                   help="with --cast-seeds core, use approved rebase category core thresholds and record automatic "
+                        "photo protection; ordinary processing and default all-seeds runs are unchanged")
     s.add_argument("--dry-run", action="store_true", help="inventory immutable inputs only; no preparation, downloads or matching")
     s.add_argument("--undo", action="store_true", help="restore the retained pre-run categories and withdraw this run's cast Review additions")
     s.add_argument("--replan", action="store_true", help="rebuild an unapplied preview from its own fresh measurements, with no old candidate identities")

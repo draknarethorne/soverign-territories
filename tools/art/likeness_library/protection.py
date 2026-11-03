@@ -42,7 +42,8 @@ def _independent(rows, policy):
 
 
 def plan_protection(space, cores, catalog, policy, *, root, moving_photo_ids=(),
-                    moving_folders=(), selected_ids=(), additional_photos=()):
+                    moving_folders=(), selected_ids=(), additional_photos=(),
+                    category_minimums=None):
     """Return metadata patches and diagnostic holds from one immutable evidence set.
 
     Missing catalogue photo rows may be created only from fresh measured bytes.
@@ -64,7 +65,7 @@ def plan_protection(space, cores, catalog, policy, *, root, moving_photo_ids=(),
         digest = None
         if not photo_id or counts[photo_id] != 1:
             reason = "missing or ambiguous stable photo ID"
-        elif photo.path.parent.name.casefold() != "gallery":
+        elif getattr(photo, "bucket", photo.path.parent.name).casefold() != "gallery":
             reason = "Review and non-Gallery photos cannot acquire protection"
         elif photo_id in moving_ids or photo.key in moving_folders:
             reason = "membership changes require fresh reconciliation evidence"
@@ -120,6 +121,12 @@ def plan_protection(space, cores, catalog, policy, *, root, moving_photo_ids=(),
         if not person.get("mergedInto"):
             people_by_folder.setdefault(person["folder"], []).append((person_id, person))
     for folder, people in sorted(people_by_folder.items()):
+        minimum = (
+            category_minimums.get(folder.split("/", 1)[0])
+            if category_minimums is not None else settings["minimumOwnCoreSimilarity"]
+        )
+        if minimum is None:
+            continue
         if len(people) != 1:
             evidence.append({"folder": folder, "decision": "hold", "reason": "ambiguous identity ownership"})
             continue
@@ -150,7 +157,9 @@ def plan_protection(space, cores, catalog, policy, *, root, moving_photo_ids=(),
             reason = (
                 "persistent manual photo opt-out" if record.get("automaticProtectionOverride") == "disabled" else
                 "insufficient independent leave-one-out core support" if support < settings["minimumIndependentReferences"] else
-                "own-core confidence below protection threshold" if score < settings["minimumOwnCoreSimilarity"] else
+                "photo is outside the qualifying identity core"
+                if category_minimums is not None and photo_id not in cores[folder]["corePhotoIds"] else
+                "own-core confidence below protection threshold" if score < minimum else
                 "ambiguous rival identity margin" if margin < settings["minimumRivalMargin"] else
                 None
             )

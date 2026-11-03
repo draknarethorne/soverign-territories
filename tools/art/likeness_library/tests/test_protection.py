@@ -96,6 +96,44 @@ class ProtectionTests(unittest.TestCase):
         self.assertFalse(actions)
         self.assertTrue(any("independent" in row["reason"] for row in evidence))
 
+    def test_rebase_category_minimum_is_inclusive_and_requires_core_membership(self):
+        _, evidence = self.plan()
+        score = next(row["score"] for row in evidence if row.get("photoId"))
+        actions, _ = self.plan(category_minimums={"Prospects": score})
+        self.assertEqual(sum("photoId" in row for row in actions), 5)
+        actions, _ = self.plan(category_minimums={"Prospects": score + .000001})
+        self.assertEqual(actions, [])
+        self.core[self.folder]["corePhotoIds"].pop()
+        self.catalog["people"][self.person_id]["protected"] = True
+        self.policy["protection"]["automatic"]["minimumIndependentReferences"] = 2
+        actions, evidence = self.plan(category_minimums={"Prospects": .60})
+        self.assertEqual(sum("photoId" in row for row in actions), 4)
+        self.assertTrue(any("outside the qualifying identity core" in row["reason"] for row in evidence))
+
+    def test_rebase_excluded_category_acquires_no_identity_or_photo_locks(self):
+        self.assertEqual(self.plan(category_minimums={"Prospects": None})[0], [])
+
+    def test_rebase_policy_rejects_unknown_category_or_invalid_score(self):
+        for minimums in ({"Unknown": .4}, {"Prospects": True}, {"Prospects": float("nan")}):
+            policy = copy.deepcopy(self.policy)
+            policy["rebaseProtection"] = {"enabled": True, "minimumOwnCoreSimilarities": minimums}
+            with self.assertRaises(ValueError):
+                validate_policy(policy)
+
+    def test_enabled_rebase_policy_requires_enabled_evidence_recipe_in_schema_and_runtime(self):
+        import jsonschema
+        from tools.art.likeness_library.clean_rebase import core_protection_policy
+
+        schema_path = pathlib.Path(protection.__file__).resolve().parents[3] / "data/art/_schema/likeness-engine-policy.schema.json"
+        schema = json.loads(schema_path.read_text(encoding="utf-8"))
+        policy = core_protection_policy(self.policy)
+        jsonschema.validate(policy, schema)
+        policy["protection"]["automatic"]["enabled"] = False
+        with self.assertRaises(ValueError):
+            validate_policy(policy)
+        with self.assertRaises(jsonschema.ValidationError):
+            jsonschema.validate(policy, schema)
+
     def test_review_stale_rejected_ambiguous_and_moving_evidence_are_held(self):
         for mode in ("review", "stale", "rejected", "ambiguous", "moving"):
             with self.subTest(mode=mode):

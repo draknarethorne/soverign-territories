@@ -40,7 +40,7 @@ def validate_policy(policy):
         "categoryPolicies",
         "protection",
     }
-    optional = {"smallGroupMaximumUsablePhotos"}
+    optional = {"smallGroupMaximumUsablePhotos", "rebaseProtection"}
     if not required <= set(policy) or set(policy) - required - optional:
         missing = sorted(required - set(policy))
         extra = sorted(set(policy) - required - optional)
@@ -92,6 +92,20 @@ def validate_policy(policy):
     category_policies = policy["categoryPolicies"]
     if not isinstance(category_policies, dict) or set(category_policies) != set(categories):
         raise ValueError("categoryPolicies must define exactly the categories in categoryOrder")
+    rebase = policy.get("rebaseProtection")
+    if rebase is not None:
+        if (
+            not isinstance(rebase, dict)
+            or set(rebase) != {"enabled", "minimumOwnCoreSimilarities"}
+            or not isinstance(rebase["enabled"], bool)
+            or not isinstance(rebase["minimumOwnCoreSimilarities"], dict)
+            or not rebase["minimumOwnCoreSimilarities"]
+            or set(rebase["minimumOwnCoreSimilarities"]) - set(categories)
+        ):
+            raise ValueError("invalid rebaseProtection policy")
+        for category, minimum in rebase["minimumOwnCoreSimilarities"].items():
+            if minimum is not None:
+                _number(minimum, f"rebaseProtection/{category}", 0, 1)
     for category, rules in category_policies.items():
         required_category_keys = {
             "identityProtectedByDefault",
@@ -286,6 +300,8 @@ def validate_policy(policy):
     if not all(value for key, value in protection.items() if key != "automatic"):
         raise ValueError("protection policy must preserve every approved protection rule")
     automatic = protection.get("automatic")
+    if rebase and rebase["enabled"] and automatic is None:
+        raise ValueError("rebase protection requires automatic protection evidence gates")
     if automatic is not None:
         if not isinstance(automatic, dict) or set(automatic) != {
             "enabled", "recipeVersion", "minimumOwnCoreSimilarity", "minimumRivalMargin",
@@ -294,6 +310,8 @@ def validate_policy(policy):
             raise ValueError("automatic protection policy is incomplete or invalid")
         if not isinstance(automatic["enabled"], bool) or automatic["recipeVersion"] != "independent-gallery-loo-v1":
             raise ValueError("unsupported automatic protection recipe")
+        if rebase and rebase["enabled"] and not automatic["enabled"]:
+            raise ValueError("rebase protection requires enabled automatic protection evidence gates")
         _number(automatic["minimumOwnCoreSimilarity"], "automatic protection own core similarity", 0, 1)
         _number(automatic["minimumRivalMargin"], "automatic protection rival margin", 0, 2)
         for key in ("minimumIndependentReferences", "minimumEstablishedPhotos"):
