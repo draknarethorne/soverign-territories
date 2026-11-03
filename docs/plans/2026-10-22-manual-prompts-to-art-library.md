@@ -27,6 +27,33 @@ P14's 31-file ledger and the migration do not include it; no tool reads it.
   the user chooses; until then the folder stays outside generation and
   migration.
 
+**Nov 3 Sovereign Females workspace note** (`sovereign_females_workspace.md`,
+verbatim at the end): Sovereign Females is the `referenceWorkspace` in
+`workflows/workspaces.json` but has no `workspaces` entry, so generation does not
+manage it. Its install holds `alpha`, `Reference` and `zz_shots` (255 workflow
+JSON files; 38 `zz_` files still named `Angelica_*`). Direction: Sovereign
+Females (and later Sovereign Males) become the generic experimental
+workspaces; the generic female/male pair leaves Angel Primes; each workspace
+receives only the workflows in its scope, chosen by configuration. Follow the
+manual prompts' ordering of pose, background, camera and other details, and
+check whether it should apply to all templates (P14/P15). The old Prime/Bare
+`bare` examples can go once the new prompts replace them.
+
+- [ ] **P2 you** P19 Answer the workspace-organisation questions one at a time:
+  what Sovereign Females/Males contain versus Angel Primes and the Drakn
+  workspaces, what `zz_shots` become under generic names, which old
+  `bare`/Prime items retire, and conflicts with older docs, `_sets` and current
+  generation flows.
+- [ ] **P2 ai** P20 Add Sovereign Females (then Sovereign Males) to
+  `workspaces.json` with scoped workflow selection (which templates or stages
+  go to which workspace). Reset its workflows through generation, generalise
+  the `Angelica_*` `zz_shots` names, remove the generic female/male from Angel
+  Primes, with sync previews and tests. Gate: P19 answers and this plan's
+  resume gate.
+- [ ] **P2 ai** P21 Compare the manual prompts' section order (pose, background,
+  camera and other details) with every template family, and propose an
+  ordering standard as part of P7. Gate: P14 ledger.
+
 ## Oct 27: source-faithful prompt reconciliation and Female test bed
 
 The user's complete 11:05 chat is preserved at the end of this plan.
@@ -556,5 +583,38 @@ poses kept separate and not for the entire pipeline -> the Nov 2 note
 <!-- markdownlint-disable MD013 -->
 ````text
 You can commit the _edit/deluxe - they are more experimental with poses but I kept them separate from the other ones as they aren't really intended for the entire pipeline and only for more experimental work.  So we'll need to sort that out in how we can do that.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 3 source: sovereign_females_workspace.md (verbatim)
+
+Coverage: a Sovereign Females workspace with prompts, templates and drafts that
+does not conflict with the pipeline -> P20; deciding which ComfyUI workflows go
+into which workspace, through `workspaces.json` -> P20; generic Sovereign
+Females/Males, with the generic female/male leaving Angel Primes -> P19/P20;
+reset its workflows and generalise the `Angelica` `zz_shots` names -> P20;
+ask questions where older docs, flows or `_sets` conflict -> P19; drop old
+`bare`/Prime items the new prompts replace -> P19/P8; manual prompt ordering of
+pose, background, camera and details, possibly for all templates -> P21/P7.
+
+<!-- markdownlint-disable MD013 -->
+````text
+I've realized that within the workspace generation and comfy ui flows that we need to build out what will be for the sovereign females workspace specifically, ensuring that all prompts, templates, and experimental drafts are properly integrated and managed without conflicting with the existing pipeline.
+
+We can use that workspace when working on bringing back the templates and I think what we'll want to do is plan out a way where we are conditionally deciding which comfy ui workflows go into which workspaces, since we do have quite a few and the number of generated workflows is large - but at the end of the day, we need what we need in order to generate the proper art for our selected angels, sisters, demons, etc... 
+
+But we can have something like sovereign females that is more generic and then remove the generic female and male from the angel primes and only use a sovereign females, sovereign males and other workspaces for the experimental type work.  That way each workspace becomes clean with only what it needs for the scope of that workspace.
+
+Soverign Females exists, but the workflows there need to be reset and the zz_shots still use Angelica in the name - even though that's not what they are intended for.  So we'd want to generalize the filenames as I took some short-cuts in naming things just to save time.
+
+So you might need to ask me questions about how we want things organized in order to get it to a point where the generation process puts the right things into the various workspaces we do have already.  Some of this is done, but not all of it is handled in the workspaces.json file.
+
+So, when we get to this point - we'll include this in the template and workspaces work we need to do so I can stop having my own experimental prompts and actually use the generation flow.
+
+Also - to be clear, the bare examples are there to address the issues we did have a long time ago with how the existing templates for Prime and Bare were setup and we can get rid of some of the items that we no longer need in favor of the new prompts.
+
+One lesson learned is that certain items need to be ordered in the manner that I have the manual prompts setup vs. our older templates in how things were working.  That might also apply to ALL our templates in terms of the priority of how the pose, background, camera and other details are provided.
+
+Hope this helps and please make sure to ask me questions where we have conflicts in older docs, existing generation flows, _sets or whatever questions you do have.
 ````
 <!-- markdownlint-enable MD013 -->

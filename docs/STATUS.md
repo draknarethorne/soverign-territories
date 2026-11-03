@@ -1,8 +1,20 @@
 # Project Status
 
-**Updated:** 2026-11-02 · This is the one working document: where the project is, what has
+**Updated:** 2026-11-03 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
+
+**Nov 3 first review decisions:** cast gains held in Review are right for now;
+later, high-confidence cast matches auto-join and only questionable ones go to
+Review ([cast C12](plans/2026-10-23-cast-seeded-library-rebase.md)). Protect
+only each Angel/Sister's core (trial 0.40, to tune) so that non-core photos are
+re-matched, including to another cast member (C11). Today all-seeds mode, catalog
+protection of 20 of 21 cast identities and a 0.30 core keep every cast photo; 29
+of 1,266 cast photos score higher against another cast member (four Drakness ->
+Nyxene). Non-standard `Various\gallery` names get a stable ID and Various naming
+([layout LY12](plans/2026-11-02-library-layout.md)). `Prospects\Camaris` is a
+retired face ("Camaris Bloom", replaced Oct 19) whose folder kept the cast name:
+a collision guard is LY13.
 
 **Nov 2 evening current direction (supersedes the paragraphs below):** the
 [library layout](plans/2026-11-02-library-layout.md) LY2/LY3/LY5/LY7 are done

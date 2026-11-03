@@ -2,11 +2,56 @@
 
 **Status:** active (Phase 3; C6 installed and independently verified; C7 human identity/quality review remains)
 
-**Queue focus:** C7
+**Queue focus:** C7, C11, C12
 
 **Scheduling:** now: human placement review of the verified installed baseline.
 Other open scenarios, C10 future duplicate selection and eventual Production/
 family gates stay in this plan but are outside today's execution focus.
+
+## Nov 3: cast feedback after the fresh sandbox rebase
+
+The Nov 2 fresh sandbox rebase
+([layout LY4](2026-11-02-library-layout.md)) used `--cast-seeds all`. No
+Angel/Sister photo was scored, so none could leave. The user expected low
+scorers such as Drakness photos that look more like Nyxene (an Angel; the
+two are real-life sisters) to move. Read-only evidence from the run's cache
+(`tmp\session-logs\2026-11-03\cast-survey.txt`) shows three independent gates:
+
+| Gate | Effect |
+| --- | --- |
+| `--cast-seeds all` (the default) | Every cast Gallery photo is retained unscored |
+| Catalog `protected: true` on 20 of 21 cast identities | Even `--cast-seeds core` keeps every photo of a protected identity (`clean_rebase` treats identity protection as photo protection) |
+| `identityCoreMinimumSimilarity` 0.30 for Angels/Sisters | Most of the Drakness candidates score 0.31-0.43 against their own folder, so a 0.30 core keeps them as core |
+
+Leave-one-out scores across the cast (1,266 photos): 36 photos are below 0.30
+against their own folder, 158 below 0.40 (12%). 29 score higher against another
+cast member, 7 of them by 0.15 or more: four Drakness -> Nyxene (for example
+0.54 versus 0.32), Drakniss -> angelica 0.44/0.24, Drakniss -> Gavrielle
+0.36/0.20, angelica -> Draknoxa 0.31/0.15. Most candidates are single-face
+photos, not group-shot artifacts. The Drakness -> Nyxene folder pair scores
+0.37, more alike than 99% of folder pairs.
+
+User decisions (Nov 3): Review holds for cast gains are right for this stage;
+later, high-confidence matches should auto-join and only questionable ones go
+to Review. Protect only the core of each Angel/Sister (a core score near 0.40,
+to be tuned), so non-core photos can be re-matched, including to another cast
+member. These answer part of C1; the remaining C1 questions stay open.
+
+- [ ] **P1 ai** C11 Core-only cast protection. Identity `protected` keeps the
+  slot, name, folder, anchors, workflow-selected and photo-protected images, but
+  no longer freezes every Gallery photo in core mode. Make the Angels/Sisters
+  core minimum a policy value with a 0.40 trial. A released cast photo that is
+  closer to another cast member by the route margin goes to that member's
+  Review, never silently to a non-cast folder; others return to their own
+  folder. Preview the exact release/route set (expected about 158 released, about
+  29 cross-cast candidates) before any apply, with tests for each gate. Runs as
+  the [layout LY10](2026-11-02-library-layout.md) comparison. Gate: C1 approval
+  of these semantics.
+- [ ] **P2 either** C12 Cast auto-join band: define the score and margin above
+  which a cast match joins the Gallery directly (single cast candidate, no
+  quality hold), Review below it. Calibrate from the user's LY11 look-alike
+  picks and `rebase-expectations.json`, not from fixed guesses. Gate: C11 preview
+  reviewed.
 
 ## Oct 29: fresh v23 matching continuation
 
@@ -868,5 +913,19 @@ User words (chat, Oct 30), word for word:
 Can you check if the file handle is fixed - I am still waiting to be able to reboot.
 
 Why don't we try to start things back up again.  I do have comfy running and taking up some CPU, GPU, memory and disk utilization - so it might be slower, but we should try to push the next phase of the work and verify the results.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 3 chat feedback (verbatim)
+
+Coverage: Review now, auto-join later for high scores -> C12; why Drakness
+photos did not move to Nyxene and core-only protection near 0.40 -> the Nov 3
+section and C11 (with layout LY10); how the Camaris identity arose -> layout
+LY13; non-standard Various names get a stable ID and Various naming -> layout
+LY12; the user's fuller written feedback document -> to come (LY11).
+
+<!-- markdownlint-disable MD013 -->
+```text
+Well, it's fine for this stage to have things in review for Angels and Sisters, but down the road if the scores are high enough, they can auto join, only review if it's questionable.  On a related note - why didn't any of the low scoring items for someone like Drakness move out and over to Nyxene - since a few of them have higher scores for Nyxene than Drakness (and those two are actually sisters in real-life, so they look very similar.  I expected that some of those moves would happen when we rebased.  We had discussed only protecting protecting the core of sisters and angels with core scores above .40 (or some number we need to tune) so that we could see if any images might be in a sister that should land somewhere else.  I guess those two things jump out at me to start with for feedback.  Capture these items and let me know what you think about these questions.  How did we get an identity Camaris?  That seems like a bug of somekind lurking about.  We should be able to intake any files in the various/gallery and if they don't conform to the normal standards, just assign a guid and give them proper naming for various to start with.  Things are looking good and I'll write up an actual document with other questions and feedback - but so far I am pleased with progress.  We just have a few things that I think we will continue to work on and improve the accuracy.
 ```
 <!-- markdownlint-enable MD013 -->

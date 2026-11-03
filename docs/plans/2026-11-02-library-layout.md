@@ -3,7 +3,7 @@
 **Status:** active (LY1 decided Nov 2: all five recommendations accepted; LY2,
 LY3 publication/undo and LY5 implemented and tested Nov 2)
 
-**Queue focus:** LY4, LY11, LY9, LY12, LY10, LY6, LY8
+**Queue focus:** LY4, LY11, LY13, LY12, LY9, LY10, LY6, LY8
 
 **Order:** LY2/LY3 (code + tests) -> LY5 -> LY4 clean sandbox reset and LEAN
 rebase on the new layout, timed with Acronis off -> storage S32/S27 acceptance
@@ -318,7 +318,10 @@ check passed afterwards.
 - [ ] **P2 either** LY10 Read-only `--cast-seeds core` comparison in a
   separate run directory, so the recap shows who would leave Angels/Sisters
   under core seeds; first measure whether a new run must repeat intake (about
-  1.9 h) or can reuse `fresh-20261102` inputs. Gate: attempt 3 checked.
+  1.9 h) or can reuse `fresh-20261102` inputs. Nov 3: with today's code a core run
+  releases nothing, because 20 of 21 cast identities are catalog-protected; run it
+  with [cast C11](2026-10-23-cast-seeded-library-rebase.md) semantics. Gate: attempt
+  3 checked; C11 approved.
 - [ ] **P1 you** LY11 Review the applied sandbox galleries and the recap; record
   look-alike picks and expected placements in `rebase-expectations.json`, and
   feedback on Review volume, cast joins, and the duplicate Camaris name
@@ -328,10 +331,21 @@ check passed afterwards.
   `Various\review` "missing stable photo ID" holds that `clean_rebase` keeps
   under their original names on purpose, and it reports the galleries "out of
   sync" because the rebase's `_refresh_galleries` does not write
-  `.gallery-maintenance-report-state.json`. Decide whether the holds keep their
-  source names (they carry name hints) or get named by the rebase. Write the
-  state after a rebase gallery rebuild, so a fresh install checks clean. Add a
-  test for each. Gate: LY11 feedback on the holds.
+  `.gallery-maintenance-report-state.json`. User decision (Nov 3): any file in
+  `Various\gallery` that does not follow the naming standard gets a stable ID and
+  standard Various naming at intake; do not keep source names. Implement that in
+  the rebase/intake, write the state after a rebase gallery rebuild, so a fresh
+  install checks clean, and add a test for each.
+- [ ] **P1 ai** LY13 Cast-name collision. `Potentials\Camaris` is not a new
+  identity: Production has had it since Oct 8 (two photos). Its `z_camaris_bloom.txt`
+  says "Camaris Bloom", "returned to Potentials; replaced as Camaris by Ruby Eden"
+  (Oct 19), but the folder kept the cast name. The rebase reused the folder name
+  for a 5-photo cluster (nearest Drakniss 0.20) as `Prospects\Camaris`. Fix: the
+  cast-replacement path renames the retired folder to its recorded display name;
+  the rebase and intake refuse or rename any non-cast identity whose name matches
+  an Angel/Sister (case-insensitive), preferring the recorded `name:`; a
+  validator lists existing collisions. Correct the Production folder only through
+  the LY8 true-up. Tests for each.
 
 ## User request (chat, verbatim)
 

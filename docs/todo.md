@@ -14,7 +14,7 @@
 - [ ] C7 Review before/after cast seeds, hair/overlay outcomes and every released cast destination; accept a configuration or request another isolated run. Record all image/decision counts and holds. Deliver accepted evidence to ... ([cast seeded library rebase](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] LY11 Review the applied sandbox galleries and the recap; record look-alike picks and expected placements in `rebase-expectations.json`, and feedback on Review volume, cast joins, and the duplicate Camaris name ... ([library layout](plans/2026-11-02-library-layout.md))
 
-### Either of us (2)
+### Either of us (3)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -22,23 +22,26 @@
 
 **P2 (normal)**
 
+- [ ] C12 Cast auto-join band: define the score and margin above which a cast match joins the Gallery directly (single cast candidate, no quality hold), Review below it. Calibrate from the user's LY11 look-alike picks and ... ([cast seeded library rebase](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] LY10 Read-only `--cast-seeds core` comparison in a separate run directory, so the recap shows who would leave Angels/Sisters under core seeds; first measure whether a new run must repeat intake (about 1.9 h) or can reuse ... ([library layout](plans/2026-11-02-library-layout.md))
 
-### For the assistant, when you say go (9)
+### For the assistant, when you say go (11)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] L18 Finish preparation evidence-index I/O optimization: operation-local retained/derivative reuse and full-scale row/thumbnail/browser equivalence are delivered; next bound the remaining repeated whole-history audits across ... ([gallery review layout](plans/2026-10-22-gallery-review-layout.md))
+- [ ] C11 Core-only cast protection. Identity `protected` keeps the slot, name, folder, anchors, workflow-selected and photo-protected images, but no longer freezes every Gallery photo in core mode. Make the Angels/Sisters core ... ([cast seeded library rebase](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] I60 Audit all changed full-run outputs for false positives and incomplete cleanup; audit identity moves and borderline Review reasons under rebase C8/C9. Validate artifacts, recovery and deterministic repeat behavior before ... ([image intake preparation](plans/2026-10-23-image-intake-preparation.md))
 - [ ] T17 Capture recipe-aware run statistics and publish a compact intake summary with expandable/linked details: input/outcome counts, overlay types, each attempted/executed/skipped/failed step, reconstruction/composition, ... ([intake performance](plans/2026-10-28-intake-performance.md))
 - [ ] S27 Complete the isolated full replay, installed verification, Gallery/Overview/Review/history and materialized backup recovery; persist phase times, overlapping storage scopes, equality results and baseline seals. Show ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S30 After the replay blocker is resolved, audit real Various-to-Sister/Angel admissions, cast core/workflow retention, eligible low-score releases/Review/reassignment, and original-name plus surname presentation. ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] LY4 Reset the sandbox from production (`sandbox-reset --full` plus the carried bundle), run the clean LEAN rebase in place with per-step timings (Acronis off), verify Gallery/Overview/Review, then hand to storage S32/S27 and ... ([library layout](plans/2026-11-02-library-layout.md))
+- [ ] LY13 Cast-name collision. `Potentials\Camaris` is not a new identity: Production has had it since Oct 8 (two photos). Its `z_camaris_bloom.txt` says "Camaris Bloom", "returned to Potentials; replaced as Camaris by Ruby Eden" ... ([library layout](plans/2026-11-02-library-layout.md))
 
 **P2 (normal)**
 
-- [ ] LY9 Cut repeated verification in apply (attempt 3 read 354 GB for about 26 GB of data and took 7.5 h): load the workflow configuration once per pass (`verify_link`, `_set_folder`, `_detail_navigation` still call `cw.load_cfg` ... ([library layout](plans/2026-11-02-library-layout.md))
 - [ ] LY12 Align gallery maintenance with the rebase. The Nov 3 `bin\people-gallery.cmd ... --check` (97 min, EXIT 1) wants to rename 5 `Various\review` "missing stable photo ID" holds that `clean_rebase` keeps under their original ... ([library layout](plans/2026-11-02-library-layout.md))
+- [ ] LY9 Cut repeated verification in apply (attempt 3 read 354 GB for about 26 GB of data and took 7.5 h): load the workflow configuration once per pass (`verify_link`, `_set_folder`, `_detail_navigation` still call `cw.load_cfg` ... ([library layout](plans/2026-11-02-library-layout.md))
 - [ ] LY6 Rewrite the layout sections in `docs/art/original-photos.md` and `likeness.md` (layout and retained-storage text updated Nov 2) and add the fresh-sandbox step-by-step runbook, confirmed by the LY4 run; production adopts ... ([library layout](plans/2026-11-02-library-layout.md))
 
 <details>
@@ -61,7 +64,7 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-10-22-identity-family-naming.md](plans/2026-10-22-identity-family-naming.md) | holding | 11 |
 | [2026-10-22-library-upkeep.md](plans/2026-10-22-library-upkeep.md) | holding | 7 |
 | [2026-10-22-likeness-engine-acceptance.md](plans/2026-10-22-likeness-engine-acceptance.md) | holding | 19 |
-| [2026-10-22-manual-prompts-to-art-library.md](plans/2026-10-22-manual-prompts-to-art-library.md) | holding | 18 |
+| [2026-10-22-manual-prompts-to-art-library.md](plans/2026-10-22-manual-prompts-to-art-library.md) | holding | 21 |
 | [2026-10-22-review-actions.md](plans/2026-10-22-review-actions.md) | holding | 10 |
 | [2026-10-23-cast-seeded-library-rebase.md](plans/2026-10-23-cast-seeded-library-rebase.md) | active | 7 |
 | [2026-10-23-image-intake-preparation.md](plans/2026-10-23-image-intake-preparation.md) | active | 57 |
