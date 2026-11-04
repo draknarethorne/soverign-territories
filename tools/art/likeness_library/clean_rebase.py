@@ -8,6 +8,7 @@ import json
 import os
 import pathlib
 import shutil
+import time
 import uuid
 
 import numpy as np
@@ -2553,10 +2554,23 @@ def _reset_name_payload_hash(payload):
     return hashlib.sha256(payload.replace("\n", os.linesep).encode("utf-8")).hexdigest()
 
 
+def _phase_timer(label):
+    """Print elapsed seconds per install phase so slow rebase steps are measurable."""
+    started = [time.perf_counter()]
+
+    def mark(phase):
+        now = time.perf_counter()
+        print(f"{label}: {phase} in {now - started[0]:.1f}s", flush=True)
+        started[0] = now
+
+    return mark
+
+
 def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=False):
     """Stage and hash-check every candidate, retaining old categories for rollback."""
     import library_backup
 
+    phase = _phase_timer("Install")
     working, source = layout["working_root"], layout["source_root"]
     if plan.get("preparation") and _curation_inventory(layout) != plan["workingInputs"]:
         raise ValueError("Working inputs changed since matching preview; regenerate preview")
@@ -2579,6 +2593,7 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
             if not path.is_file() or metadata.content_sha256(path) != expected_hash:
                 raise ValueError(f"Working cast reference differs from Source: {path}")
     library_backup.verify_backup(library_backup.latest_work_root_backup(working))
+    phase("preflight and backup verification")
     staged, previous = run / "staged", run / "previous"
     if not resume_install and (staged.exists() or previous.exists()):
         raise ValueError("staging already exists; inspect the previous attempt before applying")
@@ -2605,6 +2620,7 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
         _prior_external_files(working, plan, preserve_legacy=preserve_legacy)
         if plan.get("preparation") else {}
     )
+    phase("current category and external inventory")
     if not resume_install:
         staged.mkdir()
         previous.mkdir()
@@ -2614,6 +2630,7 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
         if metadata.content_sha256(preparation / "manifest.json") != plan["preparation"]["manifestSHA256"]:
             raise ValueError("preparation evidence differs from matched preview")
         preparation_rows = {row["source"]: row for row in data["photos"]}
+        phase("preparation evidence verification")
     for row in (() if resume_install else plan["photos"]):
         src = source.joinpath(*pathlib.PurePosixPath(row["source"]).parts)
         dest = staged.joinpath(*pathlib.PurePosixPath(row["destination"]).parts)
@@ -2647,6 +2664,7 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
                 shutil.copy2(copied, gallery / file_name)
             else:
                 (gallery / file_name).write_text(payload, encoding="utf-8")
+    phase("staging copies and retained preparation")
     if plan.get("preparation") and not resume_install:
         from . import derivatives
 
@@ -2660,14 +2678,17 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
             _, messages = derivatives.maintain(path, face.get("box"), face.get("px", 0), apply=True)
             for message in messages:
                 print(f"DERIVATIVE: {message}")
+        phase("944x1104 derivatives")
         for row in plan["photos"]:
             retained_preparation.refresh_detail(
                 staged, staged / row["destination"], include_gallery_navigation=True,
             )
+        phase("detail pages")
         plan["publishedFiles"] = [
             {"path": path.relative_to(staged).as_posix(), "sha256": metadata.content_sha256(path)}
             for path in _source_files(staged)
         ]
+        phase("staged file hashes")
     if resume_install:
         plan["publishedFiles"] = staged_files
     external_files = [
@@ -2695,6 +2716,7 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
     for relative, expected_hash in previous_external_hashes.items():
         if metadata.content_sha256(_publication_path(working, relative)) != expected_hash:
             raise ValueError(f"external files changed during staging; no rebuild installed: {relative}")
+    phase("pre-publication rechecks")
     moved, installed, cast_added, cast_saved, created_directories = [], [], [], [], []
     try:
         for relative in prior_external:
@@ -2742,6 +2764,7 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
         plan["previousExternalHashes"] = previous_external_hashes
         plan["previousCategoryFiles"] = previous_category_files
         _write_json(run / "run.json", plan)
+        phase("publication and installed checksums")
     except Exception:
         if "catalogSHA256" in plan:
             _restore_catalog(local_catalog, previous_catalog)
@@ -3108,9 +3131,11 @@ def command(args, api):
         )
         _write_json(plan_path, plan)
     if plan.get("preparation"):
+        verified = _phase_timer("Plan")
         output, _ = clean_preparation.verify(layout, run)
         if metadata.content_sha256(output / "manifest.json") != plan["preparation"]["manifestSHA256"]:
             raise ValueError("prepared inputs changed since matching; use a new run")
+        verified("preparation evidence verification")
     elif args.apply:
         raise ValueError("matcher-only previews cannot be installed; create a new intake-aware run")
     _verify_routes(plan, layout["source_root"])
@@ -3133,7 +3158,9 @@ def command(args, api):
         else:
             install_plan(layout, run, plan, resume_install=resume_install, preserve_legacy=preserve_legacy)
         _write_json(run / "policy.json", plan["policy"])
+        refresh = _phase_timer("Apply")
         _refresh_galleries(layout["working_root"], run)
+        refresh("gallery, overview and Review refresh")
     if args.undo:
         undo_plan(layout, run, plan)
     if args.check and plan["status"] == "applied":

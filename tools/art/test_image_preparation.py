@@ -887,12 +887,18 @@ class PreparationTests(unittest.TestCase):
             lean = preparation.verify(self.root, lean_output)
             self.assertEqual(lean["storageMode"], "lean")
             self.assertNotIn("storageMode", full)
+            def without_comparisons(processing):
+                processing = without_seconds(processing)
+                processing["steps"] = [step for step in processing["steps"]
+                                       if step["name"] not in ("denoise", "tone")]
+                return processing
+
             full_rows = {row["source"]: row for row in full["photos"]}
             for row in lean["photos"]:
                 old = full_rows[row["source"]]
                 self.assertEqual(row["recommendation"], old["recommendation"])
-                self.assertEqual(without_seconds(row["processing"]), without_seconds(old["processing"]))
-                self.assertEqual(set(row["variants"]), set(old["variants"]))
+                self.assertEqual(without_comparisons(row["processing"]), without_comparisons(old["processing"]))
+                self.assertEqual(set(row["variants"]), set(old["variants"]) - {"denoise", "tone"})
                 self.assertEqual(row["recommendedPadded"]["sha256"], old["recommendedPadded"]["sha256"])
                 self.assertFalse(any("padded" in record for record in row["variants"].values()))
                 hashes = {row["sourceSha256"]: row["retained"]}
@@ -952,7 +958,7 @@ class PreparationTests(unittest.TestCase):
             self.assertEqual(self.call("--check"), 0, self.errors)
             changed = copy.deepcopy(data)
             changed.pop("storageMode")
-            with self.assertRaisesRegex(ValueError, "padding"):
+            with self.assertRaisesRegex(ValueError, "skipped by LEAN"):
                 preparation.validate(changed)
             changed = copy.deepcopy(data)
             changed["recipe"]["id"] = "preparation-comparison-v22"
@@ -974,7 +980,7 @@ class PreparationTests(unittest.TestCase):
             self.assertEqual(sum(stats["recommendations"].values()), 1)
             self.assertEqual(stats["imageFiles"], len(images))
             self.assertEqual(stats["imageBytes"], sum(path.stat().st_size for path in images))
-            self.assertGreater(stats["imageRoles"], stats["imageFiles"])
+            self.assertGreaterEqual(stats["imageRoles"], stats["imageFiles"])
             self.assertIn("Run statistics", (self.output / "index.html").read_text())
             data["statistics"]["imageFiles"] += 1
             (self.output / "manifest.json").write_text(json.dumps(data))
@@ -998,12 +1004,19 @@ class PreparationTests(unittest.TestCase):
             recovery = next(path for path in temporary.glob("prep-*") if path.is_dir())
             binding = json.loads((recovery / "binding.json").read_text())
             self.assertEqual(binding["storageMode"], "lean")
+            self.assertEqual(binding["leanComparisons"], "skipped")
             with mock.patch.object(preparation, "render_photo", wraps=original_render) as render:
                 preparation.publish(self.root, self.output, [self.photo, second], workers=1, storage_mode="lean")
             self.assertEqual(render.call_count, 1)
             data = preparation.verify(self.root, self.output)
             row = data["photos"][0]
-            self.assertEqual(row["variants"]["control"]["path"], row["variants"]["denoise"]["path"])
+            self.assertFalse({"denoise", "tone"} & set(row["variants"]))
+            steps = {step["name"]: step for step in row["processing"]["steps"]}
+            for name in ("denoise", "tone"):
+                self.assertEqual(steps[name]["status"], "skipped")
+                self.assertIsNone(steps[name]["candidate"])
+                self.assertEqual(steps[name]["reason"], preparation.LEAN_COMPARISONS_SKIPPED)
+            self.assertFalse(list(self.output.rglob("denoise*")) + list(self.output.rglob("tone*")))
             self.assertFalse(recovery.exists())
             with self.assertRaisesRegex(ValueError, "different inputs/recipe"):
                 preparation.publish(self.root, self.output, [self.photo, second], workers=1)

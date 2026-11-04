@@ -4,6 +4,17 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Nov 4 11:30 LEAN trim and machine hand-off:** measured where the rebase
+spends time and space ([layout LY14](plans/2026-11-02-library-layout.md)).
+Denoise and tone were never auto-selected but used 55% of intake CPU and 8.5 GB
+of run state; LEAN intake no longer renders them (LY14a; FULL still does). The
+rebase apply prints per-phase timings. 944x1104 derivatives cost about 54 min
+and 7.2 GB per full apply; capping them to core/protected/workflow photos is an
+open user decision (LY14). The last re-run on this machine is a fresh LEAN run
+from Production (replacing the undo/replan route below) so the trim applies.
+The main README gains a new-machine setup section. Recap:
+[2026-11-04 11:30](recap/2026-11-04-1130-recap.md).
+
 **Nov 4 family naming decided and built:** score-band family trees. A new or
 renamed non-cast identity joins the family of its closest cast member when that
 score is yellow (0.30) or better, otherwise of its closest peer identity at

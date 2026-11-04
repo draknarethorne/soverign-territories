@@ -417,11 +417,15 @@ ordinary `library.cmd` has not changed defaults.
 
 LEAN preserves original/control/recommended panel labels while aliasing
 exact-byte roles within each photo to the same file, including previews.
-Only the selected recommendation receives workflow padding. Denoise/tone
-native alternatives and masks remain available, but unselected alternatives
-do not have padded links. Use a separate FULL comparison when those padded
-alternatives are needed; per-variant on-demand generation is not implemented.
-LEAN does not skip processing or encoding, and is **not FAST**: processing
+Only the selected recommendation receives workflow padding. Since Nov 4
+([layout LY14a](../plans/2026-11-02-library-layout.md)), LEAN no longer renders
+the comparison-only denoise and tone alternatives: they were never
+auto-selected, yet cost over half the preparation CPU and about 8.5 GB per full
+intake. Their steps are recorded as `skipped` with a LEAN reason. Use a
+separate FULL comparison when those alternatives or their padded versions are
+needed; per-variant on-demand generation is not implemented. Older LEAN
+reports that contain them still verify. Apart from those two comparison
+renders, LEAN skips no processing and is **not FAST**: processing
 profiles remain a separately gated quality change. Different byte encodings
 of apparently identical pixels remain distinct, including raw JPEG versus
 normalized PNG. Sources and existing evidence are never pruned or rewritten.

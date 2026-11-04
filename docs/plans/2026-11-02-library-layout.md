@@ -3,7 +3,7 @@
 **Status:** active (LY1 decided Nov 2: all five recommendations accepted; LY2,
 LY3 publication/undo and LY5 implemented and tested Nov 2)
 
-**Queue focus:** LY11, LY13, LY12, LY9, LY6, LY8
+**Queue focus:** LY11, LY13, LY14, LY12, LY9, LY6, LY8
 
 ## Nov 3: authorized new source rehearsal
 
@@ -385,16 +385,46 @@ check passed afterwards.
   Nov 3 extends this with [naming N14](2026-10-22-identity-family-naming.md#nov-3-name-continuity-and-character-slot-boundaries):
   non-character identities must have first and last names; valid merges keep
   the oldest original identity's name, including protected Prospect cores.
-- [ ] **P2 ai** LY14 Measure, then decide, capping maintained 944x1104
+- [ ] **P2 you** LY14 Decide whether to cap maintained 944x1104
   derivatives (`gallery_944x1104`/headshots) to each identity's core,
-  protected and workflow photos: profile the end-to-end phases (intake,
-  matching, staging, derivatives, verification, gallery/report refresh) on
-  the N15 re-run log and report file counts, bytes and minutes per phase;
-  estimate the saving from the cap. If adopted: originals stay and still show
-  in Review; protecting a photo generates its derivative; unprotecting or
-  moving out removes them through the existing derivative manifest. Shares
-  evidence with LY9; no extra full run. Gate: N15 completes. Source: user
-  feedback below (Nov 4).
+  protected and workflow photos. Measured Nov 4 (table below): derivatives
+  are 8,291 files / 7.2 GB in Working and cost about 1.15 s per photo
+  (padded 0.39 s, head and chest the rest), roughly 54 serial minutes of a
+  2,814-photo apply. A cap to core/protected/workflow photos would save most
+  of that time and space plus the matching `_backup`/`previous` copies. Various
+  holds only about 115 Review photos (0.10 GB), so excluding it alone changes
+  little. If adopted: originals stay and still show in Review; protecting a
+  photo generates its derivative; unprotecting or moving out removes them
+  through the existing derivative manifest. Confirm the per-phase numbers with
+  the timed N15 re-run before deciding. Source: user feedback below (Nov 4).
+- [x] **P2 ai** LY14a LEAN intake no longer renders the comparison-only denoise
+  and tone candidates (never auto-selected in 2,811 of 2,811 photos). Their
+  steps are recorded as `skipped` with an explicit LEAN reason; FULL still
+  renders them, and a FULL manifest with LEAN-skipped steps fails validation.
+  The checkpoint binding gains `leanComparisons` so older LEAN checkpoints are
+  never mixed in. Existing LEAN manifests with the renders still validate.
+  The rebase install and apply now print per-phase seconds (`Install: ...`,
+  `Plan: ...`, `Apply: ...`) for the next measurement. Takes effect on a new
+  intake only; undo/replan/apply of an existing run reuses its old inputs.
+
+**Nov 4 measured bottlenecks** (the `fresh-20261103-core` run; the apply log had
+no timestamps outside verification, so derivative time is a 30-photo benchmark):
+
+| Phase | Measure | Note |
+| --- | --- | --- |
+| Intake preparation CPU | about 587 worker-min | denoise 305 (52%), composition 71, head reconstruction 55, control 36, eraser 31.5, tone 20 |
+| Run `inputs` on disk | 31,429 files / 17.9 GB | tone 4.6 GB, denoise 3.9 GB, control 3.8 GB; denoise/tone never selected |
+| Apply: Review inputs verify | 1,619 s | 31,637 reads / 13.1 GB, mostly candidates |
+| Apply: Overview thumbnails verify | 510 s | 13,681 reads / 4.5 GB |
+| Apply: Overview evidence verify | 219 s | 11,311 reads / 2.5 GB |
+| Apply: preparation history index (x2) | 268 s + 260 s | full artifact/source checks |
+| Apply: 944x1104 derivatives | about 54 min (estimated) | 1.15 s per photo, 3 framings |
+| Apply: preparation evidence verify (x2) | untimed until now | re-hashes the whole run `inputs`; LY14a halves it |
+| Sandbox state | 23 GB | `inputs` 17.9, `previous` 4.5, source overlay 0.6 |
+
+Expected effect of LY14a on the next fresh run: about 8.5 GB less run state,
+about half the preparation CPU, and roughly half the bytes read by every
+`inputs` verification pass.
 
 **Nov 3 recap feedback ownership:** the complete
 `rebase_fresh_20261102_feedback.md` is preserved once in
@@ -514,8 +544,10 @@ What I expect in the morning is a full and clean rebase completed and I can star
 
 ## speed_and_space_optimization.md (Nov 4, verbatim)
 
-Coverage: derivative cap, protect/unprotect generation and clean-up, and the
-bottleneck question -> LY14 (with LY9 sharing the evidence).
+Coverage: derivative cap, protect/unprotect generation and clean-up, Various
+derivatives and the bottleneck question -> LY14 (measured Nov 4, decision
+open); denoise/tone in LEAN -> LY14a (done); machine-transfer setup -> the main
+README and the Nov 4 hand-off recap.
 
 <!-- markdownlint-disable MD013 -->
 ````text
@@ -523,6 +555,16 @@ What if during the process we "cap" the number of 944x1104 images we generate fo
 
 I am wondering if this would have an improvement on overall processing, amount of files copied - checked etc... it would reduce the spwral of generting so many images - but I don't know if it would actually save time.  
 
+I also don't think Various needs to generate all possible 944x1104 images that are left there for review as well.  Unless moving them would want to have those generated already.  
+
+I guess - I want to know in the rebase process where the time is being spent and if capping the number of generated images would actually make a noticeable difference.
+
 I'd want to know where the bottlenecks are in the processing overall.
+````
+
+Chat (Nov 4):
+
+````text
+I have this question in the speed and optimization - if you find somewhere else where we're taking so much time - how can we trim that down.  I also thought we were going to skip the denoise and tone images if we're running LEAN or was that in a different approach.  We've done a lot of optimization to save space and improve speed - but I see that the sandbox state is 17GB and looks like a lot of that is the denoise and tone images.  So please let's figure this out before one last re-run on this maching.  I am getting my other machine setup to run and we'll need to shift to being able to ensure we have a write-up on how to get that machine setup in the main README.md and setup instructions for the development environment - what tools we use when working and how it all works - and a hand-off with recap on where we are so I can pickup on that machine.   But first - we need to sort out these last enhancements we need to do while memory and context are up to date.
 ````
 <!-- markdownlint-enable MD013 -->

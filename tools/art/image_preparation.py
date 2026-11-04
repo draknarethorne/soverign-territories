@@ -326,12 +326,21 @@ def comparison_candidates(image, row):
             f"Enhancement failed; original retained, no manual approval required: {exc}")
 
 
-def prepared_candidates(image, row):
+LEAN_COMPARISONS_SKIPPED = (
+    "LEAN: comparison-only enhancement not rendered (never auto-selected); FULL storage renders it.")
+
+
+def prepared_candidates(image, row, *, comparisons=True):
     images = {}
     for name, candidate in pipeline.recommended_candidates(image, row):
         images[name] = candidate
         yield name, candidate
     selected = row["processing"]["cleanup"]
+    if not comparisons:
+        for name in ("denoise", "tone"):
+            row["processing"]["steps"].append(preparation_geometry.step(
+                name, "skipped", selected, None, selected, LEAN_COMPARISONS_SKIPPED))
+        return
     prepared = images[selected]
     for name, candidate in comparison_candidates(prepared, row):
         if name != "control":
@@ -409,7 +418,7 @@ def render_photo(root, stage, source, *, storage_mode="full"):
         row["diagnostics"].append("Not flagged by reel heuristic; this is not proof of no overlays.")
     previous = time.perf_counter()
     folder_key = digest if CURRENT in legacy.ids(5, 16) else digest[:24]
-    for name, variant in prepared_candidates(image, row):
+    for name, variant in prepared_candidates(image, row, comparisons=storage_mode != "lean"):
         path = f"candidates/{folder_key}/{name}.png"
         path, variant_hash = save_role_image(stage, path, variant, "PNG", aliases)
         thumbnail = variant.copy()
@@ -663,7 +672,8 @@ def report(data, *, detail=False):
         + ('<p><a href="../index.html">Back to comparison gallery</a></p>' if detail else '')
         + ('<p><strong>LEAN evidence:</strong> equal-byte roles share a file within this photo; '
            'only the recommendation has workflow padding. Native alternatives and masks remain available. '
-           'No processing steps were skipped.</p>' if data.get("storageMode") == "lean" else '')
+           'Comparison-only denoise/tone renders are skipped (never auto-selected); FULL storage renders them.</p>'
+           if data.get("storageMode") == "lean" else '')
         + statistics_html(data.get("statistics"))
         +
         '<p>Control: oriented/sRGB only. Denoise and tone are separate alternatives, not a '
@@ -850,6 +860,10 @@ def validate(data):
             raise ValueError(f"legacy recipe is missing its recorded padded candidates: {row['source']}")
         if recipe == "preparation-comparison-v23":
             validate_workflow_padding(row, storage_mode)
+            if storage_mode != "lean" and any(
+                    step["reason"] == LEAN_COMPARISONS_SKIPPED
+                    for step in (row.get("processing") or {}).get("steps", ())):
+                raise ValueError(f"FULL storage is missing comparison renders skipped by LEAN: {row['source']}")
         if recipe == CURRENT or recipe in legacy.SCOPED:
             sandbox._safe_source_path(row["source"])
             relative = pathlib.PurePosixPath(row["source"])
@@ -1536,6 +1550,8 @@ def publish(root, output, selected, *, limit=0, source_folder=None, counts=None,
     }
     if storage_mode != "full":
         binding["storageMode"] = storage_mode
+        # Separates resumable checkpoints from LEAN runs that still rendered denoise/tone.
+        binding["leanComparisons"] = "skipped"
     binding["fingerprint"] = canonical_sha(binding)
     binding["recipeSha256"] = canonical_sha(RECIPE)
     binding["configurationSha256"] = canonical_sha(data["configurationReceipt"])
