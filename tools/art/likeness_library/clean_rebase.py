@@ -858,6 +858,8 @@ def _migrate_continuity(catalog, rows, working, images, *, current_inputs=None,
     mandatory_target_by_person = {}
     for person_id, person in catalog["people"].items():
         folder = person["folder"]
+        if folder.split("/")[0] not in RESET_CATEGORIES:
+            continue
         automatic_core_ids, mandatory_ids = continuity_by_person[person_id]
         required_ids = automatic_core_ids | mandatory_ids
         if not required_ids:

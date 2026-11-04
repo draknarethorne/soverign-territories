@@ -456,6 +456,27 @@ class CleanRebaseTests(unittest.TestCase):
             )
         self.assertEqual(catalog, before)
 
+    def test_continuity_ignores_cast_people_with_configured_anchors(self):
+        catalog, rows, survivor_id, _, _ = self.continuity_merge_fixture()
+        cast_id = "person_" + "9" * 32
+        gallery = self.working / "Angels" / "Cast Angel" / "gallery"
+        gallery.mkdir(parents=True)
+        (gallery / "cast_angel_image_7508202904299473073.jpg").write_bytes(b"cast")
+        catalog["people"][cast_id] = {
+            "id": cast_id, "folder": "Angels/Cast Angel", "displayName": "Cast Angel",
+            "folderHistory": [], "identityAnchors": ["photo:image_7508202904299473073"],
+            "protected": False,
+        }
+        catalog["photos"]["photo:image_7508202904299473073"] = {
+            "contentSha256": "0" * 64, "protected": False,
+        }
+        clean_rebase._migrate_continuity(
+            catalog, rows, self.working, self.image_inventory_mock().inventory,
+            rebase_protection=True,
+        )
+        self.assertEqual(catalog["people"][cast_id]["folder"], "Angels/Cast Angel")
+        self.assertEqual(catalog["people"][survivor_id]["folder"], "Prospects/Oldest Person")
+
     def test_continuity_merge_refuses_when_mandatory_anchor_is_not_retained_in_gallery(self):
         catalog, rows, _, _, anchor_ids = self.continuity_merge_fixture()
         anchor = next(row for row in rows if row["photoId"] == anchor_ids[0])
