@@ -1,8 +1,18 @@
 # Project Status
 
-**Updated:** 2026-11-03 · This is the one working document: where the project is, what has
+**Updated:** 2026-11-04 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
+
+**Nov 4 clean core-trial rebase installed:** sandbox reset from Production and
+rebased as `fresh-20261103-core` (core seeds, recorded core protection,
+refinement, final audit). All 2,814 outcomes applied (309 min apply); the
+post-install check passes. 153 photos left Angels/Sisters, 64 cast gains wait in
+cast Review, Drakness -> Nyxene 4; refinement made 9 moves and refused one
+merge; the audit flags about 26 cast members scoring higher against clusters
+formed from their own released photos (engine E16 decision) and one demotion
+by refinement (E17). Recap and review list:
+[2026-11-04 recap](recap/2026-11-04-0230-recap.md).
 
 **Nov 3 14:17 bounded refinement:** the user asks for automatic refinement
 applied in place after rebase routing, including identity merges as

@@ -173,6 +173,25 @@ class RebaseRecapTests(unittest.TestCase):
         self.assertIn("Angels/Ava/review/ava_b.png", first)
         self.assertIn("Top three per-photo cast references", first)
 
+    def test_audit_source_link_falls_back_after_the_source_moved(self):
+        plan = _plan(self.working)
+        plan["finalMembershipAudit"] = {"state": "audited", "rows": [
+            {"source": "Angels/Ava/gallery/ava_a.jpg", "destination": "Angels/Ava/gallery/ava_a.jpg",
+             "reason": "kept"},
+            {"source": "Various/gallery/c.jpg", "destination": "Models/Nia Vale/gallery/nia_vale_c.png",
+             "reason": "moved"},
+        ]}
+        (self.run / "run.json").write_text(json.dumps(plan), encoding="utf-8")
+        kept = self.working / "Angels" / "Ava" / "gallery" / "ava_a.jpg"
+        kept.parent.mkdir(parents=True)
+        kept.write_bytes(b"x")
+        data = rebase_recap.collect(self.run)
+        page = rebase_recap.render(data, self.working / "report.html")
+        self.assertIn('href="Angels/Ava/gallery/ava_a.jpg" target="_blank" rel="noopener noreferrer">Source photo',
+                      page)
+        self.assertNotIn('href="Various/gallery/c.jpg"', page)
+        self.assertIn("moved (original path no longer exists)", page)
+
     def test_actual_audit_contract_and_ordered_core_references(self):
         plan = _plan(self.working)
         plan["coreReferences"] = {"Angels/Ava": [

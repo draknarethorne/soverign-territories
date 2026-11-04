@@ -7,10 +7,11 @@
 
 ## Open work, by priority
 
-### Your queue: needs your hands or a decision (2)
+### Your queue: needs your hands or a decision (3)
 
 **P1 (blocks other work, or cheap and valuable)**
 
+- [ ] E16 Decide how released cast photos that re-form their own cluster are handled. In the Nov 3 `fresh-20261103-core` preview, retained cast members score higher against clusters built from that same cast member's released ... ([likeness engine acceptance](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] C7 Review before/after cast seeds, hair/overlay outcomes and every released cast destination; accept a configuration or request another isolated run. Record all image/decision counts and holds. Deliver accepted evidence to ... ([cast seeded library rebase](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] LY11 Review the applied sandbox galleries and the recap; record look-alike picks and expected placements in `rebase-expectations.json`, and feedback on Review volume, cast joins, and the duplicate Camaris name ... ([library layout](plans/2026-11-02-library-layout.md))
 
@@ -23,7 +24,7 @@
 
 **P2 (normal)**
 
-- [ ] LY10 Read-only `--cast-seeds core` comparison in a separate run directory, so the recap shows who would leave Angels/Sisters under core seeds; first measure whether a new run must repeat intake (about 1.9 h) or can reuse ... ([library layout](plans/2026-11-02-library-layout.md))
+- [ ] E17 Refinement reclassification demoted Models/Neve Ellery to Potentials after it lost one photo (5 to 4). Decide whether refinement may lower an identity's category or should keep the category it had at the start of ... ([likeness engine acceptance](plans/2026-10-22-likeness-engine-acceptance.md))
 
 ### For the assistant, when you say go (16)
 

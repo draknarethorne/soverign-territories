@@ -2,7 +2,7 @@
 
 **Status:** active (Nov 3 narrow E13/E14/E15 prerequisites to layout LY10 only)
 
-**Queue focus:** E13, E14, E15
+**Queue focus:** E13, E14, E15, E16, E17
 
 **Broader scope:** calibration, convergence, the separate incremental batch
 and Production remain holding under the resume gate below.
@@ -65,6 +65,21 @@ follow-up move pass.
   `refined-then-audited` and recap section `refinement`. Remaining: inspect
   the Nov 3 source rehearsal's refinement and audit output, then tune.
   Gate: E14 evidence reviewed against the user's visual review.
+- [ ] **P1 you** E16 Decide how released cast photos that re-form their own
+  cluster are handled. In the Nov 3 `fresh-20261103-core` preview, retained
+  cast members score higher against clusters built from that same cast
+  member's released photos: Draknora vs Potentials/Neve Ellery (.61-.66 vs
+  own .43-.45), Drakniss vs Models/Vienna Remington, Evangeline Blackwell and
+  Fiorella Inglewood (up to .71 vs own .42-.60), Draknara vs Octavia Hensley,
+  Fiorella Dunn and Eloise Preston, Drakneta vs Brynn Adler, Draknoxa vs Quinn
+  Iverson, Ravaelle vs Models/Lena Easton. 26 of the 38 audit follow-ups are
+  this pattern. Options: such clusters go to the cast's Review instead of a new
+  identity; raise or lower the .40 core minimum per cast; or accept them as
+  separate people after visual review. Gate: user's visual review of these pages.
+- [ ] **P2 either** E17 Refinement reclassification demoted Models/Neve
+  Ellery to Potentials after it lost one photo (5 to 4). Decide whether
+  refinement may lower an identity's category or should keep the category it
+  had at the start of refinement (hysteresis). Gate: E16 decision.
 
 ## Oct 27: auto-protection note incorporated
 

@@ -276,6 +276,19 @@ def _destination_links(row, data, out_dir):
             + _safe_link(gallery, page_label, out_dir, new_tab=True) + "</span>")
 
 
+def _source_link(source, row, data, out_dir):
+    """Link the pre-run location only while it exists; after install fall back to intake evidence."""
+    target = _working_target(source, data)
+    if target is None or data.get("historical"):
+        return '<span class=muted>source link unavailable</span>'
+    if target.is_file():
+        return _safe_link(target, "Source photo", out_dir, new_tab=True)
+    if row and row.get("detail"):
+        return ("<span class=muted>moved (original path no longer exists)</span> · "
+                + _safe_link(row["detail"], "Intake comparison", out_dir, new_tab=True))
+    return '<span class=muted>moved (original path no longer exists)</span>'
+
+
 def _thumb(row, data, out_dir):
     if data.get("historical"):
         return '<span class=muted>Historical image unavailable: compact run evidence contains no images.</span>'
@@ -755,10 +768,7 @@ def _audit_section(data, out_dir):
         source = str(item.get("source", ""))
         row = plan_rows.get(source)
         destination = str(item.get("destination", row["destination"] if row else ""))
-        source_target = _working_target(source, data)
-        source_link = (_safe_link(source_target, "Source photo", out_dir, new_tab=True)
-                       if source_target and not data.get("historical")
-                       else '<span class=muted>source link unavailable</span>')
+        source_link = _source_link(source, row, data, out_dir)
         new_person, new_bucket = person_and_bucket(destination)
         final_links = _destination_links(
             {"destination": destination, "newPerson": new_person, "newBucket": new_bucket}, data, out_dir,

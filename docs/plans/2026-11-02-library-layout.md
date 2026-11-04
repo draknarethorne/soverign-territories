@@ -3,7 +3,7 @@
 **Status:** active (LY1 decided Nov 2: all five recommendations accepted; LY2,
 LY3 publication/undo and LY5 implemented and tested Nov 2)
 
-**Queue focus:** LY10, LY11, LY13, LY12, LY9, LY6, LY8
+**Queue focus:** LY11, LY13, LY12, LY9, LY6, LY8
 
 ## Nov 3: authorized new source rehearsal
 
@@ -336,13 +336,19 @@ check passed afterwards.
   in the same `derivatives.maintain` -> `verified` -> `verify_link` -> `_manifests`
   chain, so it benefits too. Gate: attempt 3 checked (the engine is in the run's
   implementation hashes).
-- [ ] **P2 either** LY10 Read-only `--cast-seeds core` comparison in a
+- [x] **P2 either** LY10 Read-only `--cast-seeds core` comparison in a
   separate run directory, so the recap shows who would leave Angels/Sisters
   under core seeds; first measure whether a new run must repeat intake (about
   1.9 h) or can reuse `fresh-20261102` inputs. Nov 3: with today's code a core run
   releases nothing, because 20 of 21 cast identities are catalog-protected; run it
   with [cast C11](2026-10-23-cast-seeded-library-rebase.md) semantics. Gate: attempt
   3 checked; C11 approved.
+  Result (Nov 4): run `fresh-20261103-core` reset from Production, full intake
+  (197 min), matched preview, refinement and audit, then installed (309 min) and
+  checked (exit 0). 153 photos left cast members, 64 cast gains in cast Review,
+  Drakness -> Nyxene 4. Recap/Gallery/Review pages verified in a browser (all
+  images load; source links fixed). Outcome review continues in LY11; decisions
+  in engine E16/E17. See the [Nov 4 recap](../recap/2026-11-04-0230-recap.md).
 - [ ] **P1 you** LY11 Review the applied sandbox galleries and the recap; record
   look-alike picks and expected placements in `rebase-expectations.json`, and
   feedback on Review volume, cast joins, and the duplicate Camaris name

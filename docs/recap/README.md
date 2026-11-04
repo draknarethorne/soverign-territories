@@ -9,7 +9,8 @@ and preserves chronological access to manually archived records.
 
 | State | Recap | Why it remains active |
 | --- | --- | --- |
-| **Pinned — resume** | [2026-11-03-0500](2026-11-03-0500-recap.md) | Fresh sandbox applied; Nov 3 review continuation records approved core-protection decisions, complete recap-feedback ownership, tested filename fix and pending continuity/audit/report-state work. Installed review baseline remains unchanged. |
+| **Pinned — resume** | [2026-11-04-0230](2026-11-04-0230-recap.md) | Clean core-trial rebase `fresh-20261103-core` reset from Production, refined, audited and installed; who moved where, E16/E17 decisions and what to review next. |
+| Previous resume | [2026-11-03-0500](2026-11-03-0500-recap.md) | First fresh sandbox applied (all-seeds); Nov 3 review continuation records approved core-protection decisions, complete recap-feedback ownership and the filename fix. Superseded as resume by the Nov 4 core-trial install; retain until its decision context is individually transferred. |
 | Previous resume | [2026-11-02-0830](2026-11-02-0830-recap.md) | Paused for ComfyUI memory. Corrected 273-summary/cast audit and actual recovered browsers pass; superseded as the resume point by the Nov 3 sandbox rebase; retain until its post-reboot safety context is individually transferred. |
 | Previous day reflection | [2026-11-01-1705](2026-11-01-1705-recap.md) | Whole-plan completion review, metadata omission diagnosis and separate human/coding next steps. Live corrected-run state is superseded by Nov 2; retain the day's unique reflection. |
 | Earlier baseline continuity | [2026-10-30-1247](2026-10-30-1247-recap.md) | Preserved installed FULL baseline, exact receipts and earlier feedback handoff. Current resume state is Nov 1; retain this record until its unique baseline/context transfer is individually verified. |
