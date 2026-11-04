@@ -433,6 +433,9 @@ def main(argv=None):
     mode.add_argument("--dry-run", action="store_true", help="preview only (the default)")
     mode.add_argument("--check", action="store_true", help="read-only status of this flow")
     args = parser.parse_args(argv)
+    # Progress must reach a redirected console log immediately, not when the buffer fills.
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(line_buffering=True)
     working = pathlib.Path(args.root).resolve()
     if working.name != "Working" or not (working.parent / "Source").is_dir():
         raise ValueError("--root must be a sandbox Working folder next to its Source snapshot")

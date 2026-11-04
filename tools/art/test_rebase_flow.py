@@ -131,6 +131,27 @@ class RebaseFlowTests(unittest.TestCase):
         self.assertEqual((space["working"], space["people"], space["_backup"], space["run"], space["inputs"],
                           space["files"]), (23, 10, 5, 8, 7, 4))
 
+    def test_redirected_console_is_line_buffered(self):
+        (self.working.parent / "Source").mkdir(parents=True)
+        self.working.mkdir()
+        log = pathlib.Path(self.tmp.name) / "console.log"
+        code = ("import sys; sys.path.insert(0, %r); import rebase_flow; import time; "
+                "rebase_flow.FLOW_ROOT = rebase_flow.pathlib.Path(%r); "
+                "rebase_flow.main(['--root', %r, '--run', 'trial']); time.sleep(30)"
+                % (str(pathlib.Path(rebase_flow.__file__).parent), str(self.paths[0] / "f"), str(self.working)))
+        import subprocess
+        import time
+        with log.open("w") as stream:
+            process = subprocess.Popen([sys.executable, "-c", code], stdout=stream, stderr=subprocess.STDOUT)
+            try:
+                deadline = time.time() + 20
+                while time.time() < deadline and "Preview only" not in log.read_text():
+                    time.sleep(0.2)
+                self.assertIn("Preview only", log.read_text())
+            finally:
+                process.kill()
+                process.wait()
+
     def test_main_preview_and_check_write_nothing(self):
         (self.working.parent / "Source").mkdir(parents=True)
         self.working.mkdir()
