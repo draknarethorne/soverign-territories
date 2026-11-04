@@ -414,7 +414,11 @@ check passed afterwards.
   remaining flow estimate. `tmp\session-logs\rebase-flow\RUN\flow.md` is
   rewritten after every event and records space after each step. Failed or
   interrupted steps resume with the same `--apply`. The flow replaces the
-  manual N15 command list and fixes its missing backup `--apply`.
+  manual N15 command list and fixes its missing backup `--apply`. The reset
+  preview, intake dry-run and separate intake check are optional
+  (`--with-previews`) because the apply steps repeat their guards. The matching
+  plan and the backup of the fresh baseline stay, because the install requires
+  both.
 
 **Nov 4 measured bottlenecks** (the `fresh-20261103-core` run; the apply log had
 no timestamps outside verification, so derivative time is a 30-photo benchmark):
@@ -587,5 +591,13 @@ Is there any point in doing a full re-run from the start and resetting the sandb
 
 ````text
 The recap needs to be updated if we do different commands - they were already in the recap.
+````
+
+Chat (Nov 4, 12:29; coverage: optional previews -> LY14b `--with-previews`;
+the backup of the fresh baseline is required by the install and never copies
+the discarded run -> recap "Last re-run"):
+
+````text
+Also - I'm thinking the preview steps can be avoided - unless you are reading them to look for issues - otherwise, won't that also cut down on the time and we only worry about preview if we're actively concerned about the changes - but since we're in the sandbox and doing a full reset, I feel like we can skip those steps to save time as well.  Make sense?  Those are optional steps if we need to preview.  We don't need to backup the existing sandbox if we're starting the process all over and trying to see where the bottlenecks still exist and how much space we're taking up.  So both skipping preview and avoiding backing up an invalid run should help.
 ````
 <!-- markdownlint-enable MD013 -->

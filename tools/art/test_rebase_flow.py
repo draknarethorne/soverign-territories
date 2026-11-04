@@ -107,6 +107,23 @@ class RebaseFlowTests(unittest.TestCase):
         state = json.loads(self.paths[1].read_text(encoding="utf-8"))
         self.assertEqual(state["steps"]["b"]["status"], "pending")
 
+    def test_optional_previews_are_skipped_unless_requested(self):
+        flow = [python_step("look", "print('preview')"), python_step("act", "print('apply')")]
+        flow[0]["optional"] = True
+        state = rebase_flow.load_state(self.paths[1], self.working, self.run, 4, flow)
+        rebase_flow.apply_optional(state, flow, False)
+        self.assertEqual(state["steps"]["look"]["status"], "skipped")
+        self.assertEqual(rebase_flow.run_flow(flow, state, self.paths,
+                                              measure=lambda: {"working": 0, "run": 0, "files": 0},
+                                              echo=self.lines.append, launcher=list, heartbeat=3600), 0)
+        self.assertFalse((self.paths[0] / "01-look.log").exists())
+        self.assertEqual(state["steps"]["act"]["status"], "done")
+        rebase_flow.apply_optional(state, flow, True)
+        self.assertEqual(state["steps"]["look"]["status"], "pending")
+        real = rebase_flow.steps(self.working, self.run, 4)
+        self.assertEqual([step["id"] for step in real if step.get("optional")],
+                         ["reset-preview", "intake-preview", "intake-check"])
+
     def test_progress_eta_and_heartbeat(self):
         live = {"id": "intake", "started": 0.0, "last_output": 700.0, "phases": [],
                 "done": 11, "total": 101, "first_worker": 100.0, "first_done": 0}

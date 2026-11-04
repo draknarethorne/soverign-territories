@@ -1,10 +1,13 @@
 """Run the fresh sandbox rebase end to end with live progress, step timings and disk space.
 
 The flow calls the same bin launchers a person would, in order: full reset, originals,
-backup, intake, matched preview, install, checks. Each step's full output goes to its own
-log; the console shows a start/finish line per step, sub-phase timings, a heartbeat with
-progress and ETA, and a running process-flow recap (flow.md) that is rewritten after
-every event. Completed steps are recorded in flow.json, so a rerun resumes where it stopped.
+backup of the fresh baseline, intake, matching plan, install, checks. The read-only reset
+preview, intake inventory and separate intake check are optional (--with-previews): the
+reset apply, matching plan and install repeat those guards themselves. Each step's full
+output goes to its own log; the console shows a start/finish line per step, sub-phase
+timings, a heartbeat with progress and ETA, and a running process-flow recap (flow.md)
+that is rewritten after every event. Completed steps are recorded in flow.json, so a
+rerun resumes where it stopped.
 
   rebase_flow.py --root WORKING --run NAME            preview the plan (no writes)
   rebase_flow.py --root WORKING --run NAME --apply    run or resume
@@ -52,7 +55,7 @@ def steps(working, run, workers):
     return [
         {"id": "reset-preview", "title": "Full reset preview (blockers, Production baseline)",
          "argv": ["bin\\likeness.cmd", "--root", w, "sandbox-reset", "--full"],
-         "expect": r'"resetReady": true'},
+         "expect": r'"resetReady": true', "optional": True},
         {"id": "reset-apply", "title": "Full reset of Working to Production",
          "argv": ["bin\\likeness.cmd", "--root", w, "sandbox-reset", "--full", "--apply"],
          "expect": r'"applied": true'},
@@ -61,15 +64,17 @@ def steps(working, run, workers):
         {"id": "originals-check", "title": "Originals in sync",
          "argv": ["bin\\originals.cmd", "--root", w, "--no-repoint", "--check"],
          "expect": r"IN SYNC"},
-        {"id": "backup", "title": "Library backup snapshot",
+        {"id": "backup", "title": "Backup of the fresh baseline (install requires it)",
          "argv": ["bin\\library-backup.cmd", "--root", w, "--apply"],
          "expect": r"snapshot complete"},
-        {"id": "intake-preview", "title": "Intake inventory (dry run)", "argv": [*rebase, "--dry-run"]},
+        {"id": "intake-preview", "title": "Intake inventory (dry run)", "argv": [*rebase, "--dry-run"],
+         "optional": True},
         {"id": "intake", "title": f"Intake preparation ({workers} workers)",
          "argv": [*rebase, "--intake-only", "--apply", "--workers", str(workers)]},
         {"id": "intake-check", "title": "Intake verification",
-         "argv": [*rebase, "--intake-only", "--check"], "expect": r"Intake verified"},
-        {"id": "match-preview", "title": "Matched preview (likeness, cast, refinement)", "argv": rebase},
+         "argv": [*rebase, "--intake-only", "--check"], "expect": r"Intake verified", "optional": True},
+        {"id": "match-preview", "title": "Matching plan (likeness, cast, refinement; install needs it)",
+         "argv": rebase},
         {"id": "install", "title": "Install, galleries, Overview and Review",
          "argv": [*rebase, "--apply", "--preserve-legacy-derivatives"]},
         {"id": "install-check", "title": "Installed run check", "argv": [*rebase, "--check"]},
@@ -161,6 +166,18 @@ def load_state(state_path, working, run, workers, flow):
     for step in flow:
         state["steps"].setdefault(step["id"], {"status": "pending"})
     return state
+
+
+def apply_optional(state, flow, with_previews):
+    """Skip read-only previews and duplicate checks unless asked; the apply steps repeat their guards."""
+    for step in flow:
+        if not step.get("optional"):
+            continue
+        record = state["steps"][step["id"]]
+        if with_previews and record["status"] == "skipped":
+            state["steps"][step["id"]] = {"status": "pending"}
+        elif not with_previews and record["status"] != "done":
+            state["steps"][step["id"]] = {"status": "skipped", "note": "optional; --with-previews runs it"}
 
 
 def _write_atomic(path, text):
@@ -393,7 +410,7 @@ def run_flow(flow, state, paths, *, start=None, until=None, heartbeat=120, measu
     flow_started = time.time()
     echo(f"Live process-flow recap: {md_path}")
     for index, step in enumerate(flow):
-        if state["steps"][step["id"]]["status"] == "done":
+        if state["steps"][step["id"]]["status"] in ("done", "skipped"):
             continue
         if not run_step(index, step, state, paths, flow, heartbeat=heartbeat, measure=measure,
                         echo=echo, launcher=launcher):
@@ -412,7 +429,7 @@ def preview(flow, state, md_path, echo=print):
     for index, step in enumerate(flow, 1):
         record = state["steps"][step["id"]]
         minutes = NOV3_MINUTES.get(step["id"], 5)
-        if record["status"] != "done":
+        if record["status"] not in ("done", "skipped"):
             total += minutes
         echo(f"{index:2}. {step['id']:<15} {record['status']:<11} Nov 3 ~{minutes:>3}m  "
              f"{subprocess.list2cmdline(step['argv'])}")
@@ -428,6 +445,8 @@ def main(argv=None):
     parser.add_argument("--heartbeat", type=int, default=120, help="seconds between progress lines")
     parser.add_argument("--from", dest="start", help="redo from this step (earlier records kept in history)")
     parser.add_argument("--until", help="stop after this step")
+    parser.add_argument("--with-previews", action="store_true",
+                        help="also run the optional reset preview, intake inventory and separate intake check")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--apply", action="store_true", help="run or resume the flow")
     mode.add_argument("--dry-run", action="store_true", help="preview only (the default)")
@@ -457,6 +476,7 @@ def main(argv=None):
         failed = [step_id for step_id, record in state["steps"].items() if record["status"] == "failed"]
         return 1 if failed else 0
     state = load_state(paths[1], working, run, args.workers, flow)
+    apply_optional(state, flow, args.with_previews)
     if not args.apply:
         return preview(flow, state, paths[2])
     if state.get("workers") != args.workers and state["steps"]["intake"]["status"] != "done":
