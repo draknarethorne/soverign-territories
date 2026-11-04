@@ -225,6 +225,7 @@ if /i "%VERIFY%"=="y" (
 ) else (
   call "%~dp0sandbox-rebase.cmd" "%ROOT%" "%RUN%" --dry-run
 )
+echo Whole fresh rebase with live progress: bin\rebase-flow.cmd --root "%ROOT%" --run NAME --apply (preview without --apply)
 pause
 goto menu
 :retention

@@ -58,6 +58,10 @@ echo                                    --sequence --enhancements compares nativ
 echo    overlay-review.cmd --report DIR --sources LIST.json --out "Working\_reports\eraser-compare\NEW" [--dry-run ^| --apply ^| --check]
 echo                                    unconfirmed logo/pill reference proposals anywhere in the image; no source repainting or automatic confirmation
 echo                                    comparison only: no selection, assignment, model load or source change; --check verifies every hash read-only
+echo    rebase-flow.cmd --root "SANDBOX\Working" --run NAME [--dry-run ^| --apply ^| --check] [--workers N] [--from STEP] [--until STEP]
+echo                                    the whole fresh rebase in order: full reset, originals + check, backup, intake + check, matched preview, install, checks
+echo                                    live progress: per-step start/finish, phase timings, photo count + ETA, space after each step; resumes at the first unfinished step
+echo                                    process-flow recap and per-step logs: tmp\session-logs\rebase-flow\NAME\flow.md; --check prints it read-only
 echo    sandbox-rebase.cmd "SANDBOX\Working" "RUN-DIR" --dry-run  inventory ALL immutable inputs; no models, reports or matching
 echo                                    --baseline working freezes current galleries plus Various for a fresh Production-like rehearsal; historical Source stays untouched
 echo                                    --include-current-various adds current Working\Various inputs via a hash-bound run-local recovery overlay

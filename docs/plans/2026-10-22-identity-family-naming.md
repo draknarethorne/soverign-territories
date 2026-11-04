@@ -45,8 +45,8 @@ cast person's `z_` file stays as provenance; the catalogue carries the current
 family name. Families are presentation only, never matching evidence.
 
 - [ ] **P1 ai** N15 Re-run as a fresh LEAN sandbox run from Production
-  (`fresh-20261104-lean`; sequence in the
-  [11:30 recap](../recap/2026-11-04-1130-recap.md)) so the LEAN trim (layout
+  (`bin\rebase-flow.cmd --root W --run fresh-20261104-lean --apply`, layout
+  LY14b; see the [11:30 recap](../recap/2026-11-04-1130-recap.md)) so the LEAN trim (layout
   LY14a) and the apply timings apply; this replaces the earlier undo/replan of
   `fresh-20261103-core`. Use `--baseline working --cast-seeds core
   --record-core-protection`; confirm the

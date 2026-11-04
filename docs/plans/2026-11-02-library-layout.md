@@ -406,6 +406,15 @@ check passed afterwards.
   The rebase install and apply now print per-phase seconds (`Install: ...`,
   `Plan: ...`, `Apply: ...`) for the next measurement. Takes effect on a new
   intake only; undo/replan/apply of an existing run reuses its old inputs.
+- [x] **P2 ai** LY14b `bin\rebase-flow.cmd` runs the whole fresh rebase
+  (full reset, originals and check, backup, intake and check, matched preview,
+  install, checks) with live process-flow feedback. The console shows a
+  start/finish line per step against the Nov 3 times and phase timings. Its
+  heartbeat gives photos done, rate and ETA, a quiet-process warning and the
+  remaining flow estimate. `tmp\session-logs\rebase-flow\RUN\flow.md` is
+  rewritten after every event and records space after each step. Failed or
+  interrupted steps resume with the same `--apply`. The flow replaces the
+  manual N15 command list and fixes its missing backup `--apply`.
 
 **Nov 4 measured bottlenecks** (the `fresh-20261103-core` run; the apply log had
 no timestamps outside verification, so derivative time is a 30-photo benchmark):
@@ -566,5 +575,17 @@ Chat (Nov 4):
 
 ````text
 I have this question in the speed and optimization - if you find somewhere else where we're taking so much time - how can we trim that down.  I also thought we were going to skip the denoise and tone images if we're running LEAN or was that in a different approach.  We've done a lot of optimization to save space and improve speed - but I see that the sandbox state is 17GB and looks like a lot of that is the denoise and tone images.  So please let's figure this out before one last re-run on this maching.  I am getting my other machine setup to run and we'll need to shift to being able to ensure we have a write-up on how to get that machine setup in the main README.md and setup instructions for the development environment - what tools we use when working and how it all works - and a hand-off with recap on where we are so I can pickup on that machine.   But first - we need to sort out these last enhancements we need to do while memory and context are up to date.
+````
+
+Chat (Nov 4, 12:07; coverage: full reset vs reuse -> recap "Last re-run"
+answer; previous run removal approved -> the full reset removes it; live
+progress and process-flow recap -> LY14b):
+
+````text
+Is there any point in doing a full re-run from the start and resetting the sandbox to the original state and not re-running on this existing one?  Or what is recommended as the next step?  I'm fine if the previous run and all it's files are removed - this is a sandbox for that purpose.  So what makes the most sense to run and how to test out the full space reduction and timings?  I'd also like to see more intermittent feedback as the processes are running so I know where we are, what finished, what those times were and what remains along the way.  More of a process flow recap as it goes along.
+````
+
+````text
+The recap needs to be updated if we do different commands - they were already in the recap.
 ````
 <!-- markdownlint-enable MD013 -->

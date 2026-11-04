@@ -13,7 +13,11 @@ and 7.2 GB per full apply; capping them to core/protected/workflow photos is an
 open user decision (LY14). The last re-run on this machine is a fresh LEAN run
 from Production (replacing the undo/replan route below) so the trim applies.
 The main README gains a new-machine setup section. Recap:
-[2026-11-04 11:30](recap/2026-11-04-1130-recap.md).
+[2026-11-04 11:30](recap/2026-11-04-1130-recap.md). 12:30: a full reset plus
+fresh run is the chosen test, and the reset removes the old 23 GB run (approved).
+`bin\rebase-flow.cmd` runs the whole sequence with live progress, step and phase
+timings, an ETA and space after each step (LY14b), in
+`tmp\session-logs\rebase-flow\RUN\flow.md`.
 
 **Nov 4 family naming decided and built:** score-band family trees. A new or
 renamed non-cast identity joins the family of its closest cast member when that

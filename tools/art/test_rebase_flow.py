@@ -1,0 +1,156 @@
+import io
+import json
+import pathlib
+import sys
+import tempfile
+import unittest
+from contextlib import redirect_stdout
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+
+import rebase_flow  # noqa: E402
+
+
+def python_step(step_id, code, expect=None):
+    step = {"id": step_id, "title": step_id, "argv": [sys.executable, "-c", code]}
+    if expect:
+        step["expect"] = expect
+    return step
+
+
+class RebaseFlowTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        base = pathlib.Path(self.tmp.name)
+        self.working = base / "Sandbox" / "Working"
+        self.run = self.working / "_sandbox-state" / "trial"
+        folder = base / "flow"
+        folder.mkdir()
+        self.paths = (folder, folder / "flow.json", folder / "flow.md")
+        self.lines = []
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def _run(self, flow, **kwargs):
+        state = rebase_flow.load_state(self.paths[1], self.working, self.run, 4, flow)
+        return rebase_flow.run_flow(
+            flow, state, self.paths, measure=lambda: {"working": 2 * 1024 ** 3, "run": 0, "files": 3},
+            echo=self.lines.append, launcher=list, heartbeat=3600, **kwargs)
+
+    def test_real_flow_uses_launchers_with_core_flags_and_applied_backup(self):
+        flow = rebase_flow.steps(self.working, self.run, 6)
+        ids = [step["id"] for step in flow]
+        self.assertEqual(ids, list(rebase_flow.NOV3_MINUTES))
+        by_id = {step["id"]: step for step in flow}
+        self.assertIn("--apply", by_id["backup"]["argv"])
+        self.assertIn("--check", by_id["originals-check"]["argv"])
+        self.assertEqual(by_id["reset-preview"]["expect"], '"resetReady": true')
+        for step_id in ("intake-preview", "intake", "intake-check", "match-preview", "install", "install-check"):
+            argv = by_id[step_id]["argv"]
+            self.assertEqual(argv[0], "bin\\sandbox-rebase.cmd")
+            self.assertEqual(argv[3:8], list(rebase_flow.REBASE_FLAGS))
+        self.assertEqual(by_id["intake"]["argv"][-2:], ["--workers", "6"])
+        self.assertIn("--preserve-legacy-derivatives", by_id["install"]["argv"])
+        self.assertIn(str(self.run / "policy.json"), by_id["gallery-check"]["argv"])
+
+    def test_flow_records_phases_photos_space_and_recap(self):
+        flow = [
+            python_step("one", "print('Install: staging copies in 12.5s')"),
+            python_step("two", "print('Completed worker 1/2 (input 1): ok (a)'); "
+                               "print('Completed worker 2/2 (input 2): ok (b)')"),
+        ]
+        self.assertEqual(self._run(flow), 0)
+        state = json.loads(self.paths[1].read_text(encoding="utf-8"))
+        self.assertEqual(state["steps"]["one"]["status"], "done")
+        self.assertEqual(state["steps"]["one"]["phases"],
+                         [{"phase": "Install: staging copies", "seconds": 12.5}])
+        self.assertEqual(state["steps"]["two"]["photos"], {"done": 2, "total": 2})
+        self.assertEqual(state["steps"]["two"]["space"]["working"], 2 * 1024 ** 3)
+        recap = self.paths[2].read_text(encoding="utf-8")
+        self.assertIn("| 1 | one | done |", recap)
+        self.assertIn("Install: staging copies", recap)
+        self.assertIn("2.00 GB", recap)
+        self.assertTrue(any("one done in" in line for line in self.lines))
+        log_lines = (self.paths[0] / "02-two.log").read_text(encoding="utf-8").splitlines()
+        self.assertEqual(sum("Completed worker" in line for line in log_lines[1:]), 2)
+
+    def test_missing_expected_text_fails_and_rerun_resumes_at_that_step(self):
+        flow = [python_step("first", "print('fine')"),
+                python_step("second", "print('OUT OF SYNC')", expect="IN SYNC")]
+        self.assertEqual(self._run(flow), 1)
+        state = json.loads(self.paths[1].read_text(encoding="utf-8"))
+        self.assertEqual(state["steps"]["second"]["status"], "failed")
+        self.assertIn("did not report", state["steps"]["second"]["note"])
+        self.assertTrue(any("! OUT OF SYNC" in line for line in self.lines))
+
+        fixed = [flow[0], python_step("second", "print('IN SYNC')", expect="IN SYNC")]
+        self.lines.clear()
+        self.assertEqual(self._run(fixed), 0)
+        self.assertFalse(any("first:" in line and "===" in line for line in self.lines))
+        state = json.loads(self.paths[1].read_text(encoding="utf-8"))
+        self.assertEqual(state["steps"]["second"]["status"], "done")
+
+    def test_nonzero_exit_fails_and_from_redoes_with_history(self):
+        flow = [python_step("only", "import sys; sys.exit(3)")]
+        self.assertEqual(self._run(flow), 1)
+        self.assertIn("exit 3", json.loads(self.paths[1].read_text(encoding="utf-8"))["steps"]["only"]["note"])
+        good = [python_step("only", "print('ok')")]
+        self.assertEqual(self._run(good), 0)
+        self.assertEqual(self._run(good, start="only"), 0)
+        state = json.loads(self.paths[1].read_text(encoding="utf-8"))
+        self.assertEqual(state["history"][0]["status"], "done")
+
+    def test_until_stops_after_named_step(self):
+        flow = [python_step("a", "print(1)"), python_step("b", "print(2)")]
+        self.assertEqual(self._run(flow, until="a"), 0)
+        state = json.loads(self.paths[1].read_text(encoding="utf-8"))
+        self.assertEqual(state["steps"]["b"]["status"], "pending")
+
+    def test_progress_eta_and_heartbeat(self):
+        live = {"id": "intake", "started": 0.0, "last_output": 700.0, "phases": [],
+                "done": 11, "total": 101, "first_worker": 100.0, "first_done": 0}
+        info = rebase_flow.progress(live, now=200.0)
+        self.assertAlmostEqual(info["rate"], 6.6)
+        self.assertAlmostEqual(info["eta"], 90 / 0.11)
+        flow = rebase_flow.steps(self.working, self.run, 4)
+        state = rebase_flow.load_state(self.paths[1], self.working, self.run, 4, flow)
+        state["steps"]["intake"]["status"] = "running"
+        line = rebase_flow.heartbeat_line(6, flow, live, state, now=1400.0)
+        self.assertIn("11/101 photos (11%)", line)
+        self.assertIn("QUIET", line)
+        self.assertIn("flow remaining", line)
+
+    def test_measure_space_groups_people_backup_and_run(self):
+        for relative, size in (("Angels/a.png", 10), ("_backup/x", 5), ("_sandbox-state/trial/inputs/i", 7),
+                               ("_sandbox-state/trial/run.json", 1)):
+            path = self.working / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(b"x" * size)
+        space = rebase_flow.measure_space(self.working, self.run)
+        self.assertEqual((space["working"], space["people"], space["_backup"], space["run"], space["inputs"],
+                          space["files"]), (23, 10, 5, 8, 7, 4))
+
+    def test_main_preview_and_check_write_nothing(self):
+        (self.working.parent / "Source").mkdir(parents=True)
+        self.working.mkdir()
+        original = rebase_flow.FLOW_ROOT
+        rebase_flow.FLOW_ROOT = self.paths[0] / "flows"
+        try:
+            output = io.StringIO()
+            with redirect_stdout(output):
+                self.assertEqual(rebase_flow.main(["--root", str(self.working), "--run", "trial"]), 0)
+                self.assertEqual(rebase_flow.main(["--root", str(self.working), "--run", "trial", "--check"]), 1)
+            self.assertIn("Preview only", output.getvalue())
+            self.assertIn("--apply", output.getvalue())
+            self.assertFalse((self.paths[0] / "flows").exists())
+            with self.assertRaisesRegex(ValueError, "plain folder name"):
+                rebase_flow.main(["--root", str(self.working), "--run", "..\\x"])
+            with self.assertRaisesRegex(ValueError, "unknown step"):
+                rebase_flow.main(["--root", str(self.working), "--run", "t", "--from", "nope"])
+        finally:
+            rebase_flow.FLOW_ROOT = original
+
+
+if __name__ == "__main__":
+    unittest.main()
