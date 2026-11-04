@@ -96,6 +96,42 @@ class RebaseRecapTests(unittest.TestCase):
         self.assertIn("unsafe destination link unavailable",
                       rebase_recap._destination_links(unsafe, data, out.parent))
 
+    def test_family_section_shows_tree_links_and_renames(self):
+        plan = _plan(self.working)
+        plan["familyNaming"] = {
+            "enabled": True, "linkBand": "yellow", "linkMinimum": 0.3, "rule": "closest cast, then peer",
+            "linkedIdentityCount": 1, "renamedIdentityCount": 1, "unlinkedIdentityCount": 0,
+            "cast": {"Angels/Ava": {"recordedPersonName": "Ava Vale", "currentPersonName": "Ava Hadley",
+                                    "surname": "Hadley", "surnameSource": "configured"}},
+            "families": [{
+                "id": "family_" + "0" * 32, "root": "Angels/Ava", "rootFolder": "Angels/Ava", "rootKind": "cast",
+                "surname": "Hadley", "surnameSource": "configured",
+                "members": [{
+                    "identity": "Models/Generated", "folder": "Models/Nia Vale", "previousName": "Nia Moss",
+                    "name": "Nia Vale", "status": "renamed", "parent": "Angels/Ava", "parentFolder": "Angels/Ava",
+                    "tier": "cast", "score": 0.41, "band": "yellow",
+                    "path": [{"from": "Models/Generated", "to": "Angels/Ava", "toFolder": "Angels/Ava",
+                              "score": 0.41, "band": "yellow", "tier": "cast"}],
+                }],
+            }],
+        }
+        (self.run / "run.json").write_text(json.dumps(plan), encoding="utf-8")
+        out = self.working / "_reports" / "library" / "rebase-recap" / "run1.html"
+        self.assertEqual(rebase_recap.main([str(self.run)]), 0)
+        page = out.read_text(encoding="utf-8")
+        self.assertIn('id=families', page)
+        self.assertIn('href="#families"', page)
+        self.assertIn("Angels/Ava: Hadley", page)
+        self.assertIn("Ava Vale &rarr; <b>Ava Hadley</b>", page)
+        self.assertIn("was Nia Moss", page)
+        self.assertIn("0.410 yellow", page)
+        self.assertIn("family Hadley", page)
+
+    def test_family_section_reports_older_runs_without_family_naming(self):
+        out = self.working / "_reports" / "library" / "rebase-recap" / "run1.html"
+        self.assertEqual(rebase_recap.main([str(self.run)]), 0)
+        self.assertIn("predates score-band family naming", out.read_text(encoding="utf-8"))
+
     def test_expectations_beside_working_are_scored_and_stale_pages_fail_check(self):
         expectations = self.working.parent / "rebase-expectations.json"
         expectations.write_text(json.dumps({

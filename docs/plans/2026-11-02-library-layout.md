@@ -385,6 +385,16 @@ check passed afterwards.
   Nov 3 extends this with [naming N14](2026-10-22-identity-family-naming.md#nov-3-name-continuity-and-character-slot-boundaries):
   non-character identities must have first and last names; valid merges keep
   the oldest original identity's name, including protected Prospect cores.
+- [ ] **P2 ai** LY14 Measure, then decide, capping maintained 944x1104
+  derivatives (`gallery_944x1104`/headshots) to each identity's core,
+  protected and workflow photos: profile the end-to-end phases (intake,
+  matching, staging, derivatives, verification, gallery/report refresh) on
+  the N15 re-run log and report file counts, bytes and minutes per phase;
+  estimate the saving from the cap. If adopted: originals stay and still show
+  in Review; protecting a photo generates its derivative; unprotecting or
+  moving out removes them through the existing derivative manifest. Shares
+  evidence with LY9; no extra full run. Gate: N15 completes. Source: user
+  feedback below (Nov 4).
 
 **Nov 3 recap feedback ownership:** the complete
 `rebase_fresh_20261102_feedback.md` is preserved once in
@@ -499,5 +509,20 @@ I want this to be repeatable and part of the automation, not a one time thing
 
 ````text
 What I expect in the morning is a full and clean rebase completed and I can start to review the GUI and capture feedback about the GUI and results.  Don't forget to review and update docs/plans and to ensure you build all what we need and any late breaking things we decided that are not in the plans do get into the plans.  It's a complete end-to-end and sync up with docs and decisions.  So finish all what you know is needed for all this.
+````
+<!-- markdownlint-enable MD013 -->
+
+## speed_and_space_optimization.md (Nov 4, verbatim)
+
+Coverage: derivative cap, protect/unprotect generation and clean-up, and the
+bottleneck question -> LY14 (with LY9 sharing the evidence).
+
+<!-- markdownlint-disable MD013 -->
+````text
+What if during the process we "cap" the number of 944x1104 images we generate for a single identity and focus on generating them for the core set of images based on score or any protected or workflow set?  Just wondering if that would actually speed up the end-to-end process and save on disk space.  We can still keep all the originals and show them in the review and if we protect one, it would auto generate the 944x1104 version.  We'd also need to ensure if we unprotect one and it moves out that we clean-up the various generated images.
+
+I am wondering if this would have an improvement on overall processing, amount of files copied - checked etc... it would reduce the spwral of generting so many images - but I don't know if it would actually save time.  
+
+I'd want to know where the bottlenecks are in the processing overall.
 ````
 <!-- markdownlint-enable MD013 -->

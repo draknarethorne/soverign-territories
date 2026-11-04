@@ -1,15 +1,53 @@
 # 2026-10-22: identity families and safe naming
 
-**Status:** active (Nov 3 narrow N14 prerequisite to layout LY10 only)
+**Status:** active (Nov 4 score-band family naming built; sandbox re-run and acceptance next)
 
-**Queue focus:** N14
+**Queue focus:** N15, N7
 
-**Broader scope:** family acceptance and unrelated naming corrections remain
-holding under the resume gate below.
+**Broader scope:** unrelated naming corrections remain holding under the
+resume gate below.
 
 **Resume gate:** after installed baseline and intake tuning, then explicitly
 select N12 corrections/family acceptance. Existing approved decisions and
 stable-name/protection guards remain binding; no bulk renaming during install.
+
+## Nov 4: score-band family trees (decided and built)
+
+The user reviewed `fresh-20261103-core`: Fia and Freya Hadley, Jacinta Alden
+and Arwen Preston are Angelica or her family, and Drakniss showed the same
+pattern. Splits were acceptable; family surnames were not. Analysis found the
+rebase never ran a family step (the reciprocal-pair rule in
+`identity_families.py` runs only in `reconcile`), the matching surnames were
+old Production names, and `invent_name` reused surnames freely.
+
+Decisions (Nov 4, user):
+
+| Topic | Decision |
+| --- | --- |
+| Link threshold | Wherever the yellow band starts (`scoreBands.yellow.minimum`, now 0.30), so the score colour matches the logic. Orange/red never link. |
+| Tree | An identity links to its closest Angel/Sister at or above the band; otherwise to its closest other Model/Prospect/Potential at or above it. Connected links form one family tree (chains allowed). |
+| Surname | Cast root: configured override, then the surname of the Angel/Sister's recorded original person name (never Thorne by default). Without one, the tree adopts the oldest member's surname upward and every member takes it downward. |
+| Angelica | Family surname Hadley (`castSurnameOverrides`), recorded as current person name Angelica Hadley. |
+| Production | Self-heals on the next run there; no hand edits. |
+
+Built: `familyNaming` policy section and schema; `family_tree.py`; the rebase
+plan applies it after membership/name continuity and before destinations,
+records catalogue `names`/`family` for every member and the cast root, carries
+`z_` history forward with `renamed from <old> (family <surname>)`, and the recap
+adds a Families section plus family status per identity. Name collisions keep
+the previous name and are reported. New invented names prefer unused surnames.
+`--replan` now also accepts an undone install, setting that attempt aside as
+evidence, so the re-run reuses the verified intake and measurements. The
+cast person's `z_` file stays as provenance; the catalogue carries the current
+family name. Families are presentation only, never matching evidence.
+
+- [ ] **P1 ai** N15 Re-run `fresh-20261103-core` from matching: `--undo`,
+  `--replan`, `--apply --preserve-legacy-derivatives`, `--check` with
+  `--baseline working --cast-seeds core --record-core-protection`; confirm the
+  Families section (Angelica, Drakniss, Draknara, Ravaelle), renamed `z_`
+  histories and catalogue validation. Gate: recap and check pass.
+- [ ] **P1 you** N7 Review actual sandbox family groups, exceptions and
+  proposed names in the N15 recap; accept or tune the band before Production.
 
 ## Nov 3: name continuity and character-slot boundaries
 
@@ -367,24 +405,28 @@ family metadata nor performs automatic naming.
 
 - [ ] **P1 ai** N1 Classify surname reuse as confirmed resemblance,
   unrelated or unresolved, and inventory case-insensitive name/folder collisions.
-- [ ] **P1 either** N2 Specify and approve suggested versus threshold-assigned
+- [x] **P1 either** N2 Specify and approve suggested versus threshold-assigned
   family links, evidence/version/history, reversibility and naming thresholds.
   Use stable IDs; cover splits/joins, promotion/demotion and changed cast
-  occupants without making slots or names identity keys.
-- [ ] **P1 either** N3 Approve a deterministic naming/migration table,
-  preserving existing names until resolved and rejecting collisions.
-- [ ] **P2 ai** N4 Implement approved family schema, validators and helpers
+  occupants without making slots or names identity keys. Nov 4: yellow-band
+  score-band tree, policy-versioned evidence in `run.json`, reversible through
+  rebase undo.
+- [x] **P1 either** N3 Approve a deterministic naming/migration table,
+  preserving existing names until resolved and rejecting collisions. Nov 4:
+  deterministic tree rule; collisions keep the previous name and are reported.
+- [x] **P2 ai** N4 Implement approved family schema, validators and helpers
   in contract-first order. Preserve exact prior name/history on undo and test
-  stale decisions, collisions and rollback.
+  stale decisions, collisions and rollback. Nov 4: policy schema/validation,
+  `family_tree.py`, catalogue family records, tests.
 - [ ] **P1 ai** N5 Show suggested/assigned family links, members, current
   and proposed names, evidence and source-history mismatches in the gallery.
   Preserve flat/category/person views, classification/family filters and
-  cast-likeness evidence without implying identity confirmation.
-- [ ] **P1 ai** N6 Wire approved family-link and family-name changes through
+  cast-likeness evidence without implying identity confirmation. Nov 4: the
+  rebase recap shows families; People/Review gallery filters remain open.
+- [x] **P1 ai** N6 Wire approved family-link and family-name changes through
   the existing manifest/preview/verified-backup/apply/undo boundary, not browser
-  filesystem writes or a second naming engine.
-- [ ] **P1 you** N7 Review actual sandbox family groups, exceptions and
-  proposed names; accept thresholds before the production batch.
+  filesystem writes or a second naming engine. Nov 4: inside the clean rebase
+  plan/apply/undo.
 - [ ] **P2 ai** N8 Refresh the people index, galleries and documented
   workflow-facing references after apply/undo, preserving fixed cast keys.
 
@@ -461,3 +503,18 @@ I am thinking that the z_ .txt file might be useful for summarizing images movin
 
 ````
 <!-- markdownlint-enable MD013 MD009 -->
+
+## Nov 4 chat: family names after the fresh-20261103-core review (verbatim)
+
+Coverage: the two messages below are covered by the Nov 4 section (decisions,
+build, N15 re-run, N7 review). Production self-healing is by the next run there.
+
+<!-- markdownlint-disable MD013 -->
+````text
+I think that Fia Hadley and Freya Hadley are either Angelica or a sister of her in terms of the real life photos.  So - I think that I am ok with them falling out of Angelica - but would have wanted the surname to be linked to Angelica instead of Hadley as their last name and make them a Model (which it did do).  So maybe the score for a family name adjustment is the yellow band and above.  Orange or red bands for closest cast wouldn't do that.  But if they did cast with another prospect and not an angel - they can align on family names - like Fia and Freya did do - but they just didn't take on Angelicas family name.  Also Jacinta Alden is also related to Angelica and likely casts high to Fia or Freya - and Arwen Preston is also the same.  They are all either Angelica or someone in her family ... so the question on the family names is are they looking at all categories of the family name - but having a preference for first taking on family names of a Sister or Angel based on score.  Then if it's organge or red - looking across other Models, Prospects or Potentials to bring the family names closer - more like building a family tree of surnames instead of just trying to keep the name of a sister or angel?  Don't actually start work - take this in ... do your own analysis.  Right now, I am just focused on Angelica -but for Drakniss the same thing happened as well, but I am fine with things being pulled out and the way some of the new identities did form - just the family names didn't line up as I might have thought.  So - maybe a little adjusting in how we do the resemblence and when I look in the gallery review - we do keep the top 3 likenesses on each image ... so that's the key indicator I am using to see that it does look like we're on the right track - just tuning how the process works and what thresholds we use for renaming.  I have some other thoughts, but let's focus on this for now.  
+````
+
+````text
+Angelica can be Hadley - since that's already a name - we'd need to update her production data and the copy we snapped into the Sandbox so we don't need to re-copy that all again and start over - unless that's actually what we're going to end up needing to do.  Any others Sisters or Angels missing family names also need to be assigned in Production and Sandbox.  I guess what we could do is have logic to take the oldest family name if the Sister or Angel doesn't have it and that's where Hadley would get assigned upwards to Angelica and then downwards in the tree.  Maybe that'll also "fix" up Production when we run there - so we don't actually need to fix Production by hand.  How about that as a recommended option.  2) Each Sister should have their own family name that's not thorne as part of their original names - same with all angels.  It's just that Angelica is Angelica in both senses, but the others should all have family names from their original person name.  Again, if not - we would adopt upwards from the oldest family name within the tree.  That way it self heals both up and down.  3)  I would like the link to match where ever the yellow band covers - that way the visual of the score and color match with the logic.  That makes more sense to me than just using 0.40 to start.   We do need to build out the entire family naming - I thought that was done, but somehow we missed that.  So, go ahead and build that all and then tell me when we're ready to start the re-run of whatever step we can pickup and re-run from.
+````
+<!-- markdownlint-enable MD013 -->

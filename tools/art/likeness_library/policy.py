@@ -40,7 +40,7 @@ def validate_policy(policy):
         "categoryPolicies",
         "protection",
     }
-    optional = {"smallGroupMaximumUsablePhotos", "rebaseProtection"}
+    optional = {"smallGroupMaximumUsablePhotos", "rebaseProtection", "familyNaming"}
     if not required <= set(policy) or set(policy) - required - optional:
         missing = sorted(required - set(policy))
         extra = sorted(set(policy) - required - optional)
@@ -106,6 +106,23 @@ def validate_policy(policy):
         for category, minimum in rebase["minimumOwnCoreSimilarities"].items():
             if minimum is not None:
                 _number(minimum, f"rebaseProtection/{category}", 0, 1)
+    family = policy.get("familyNaming")
+    if family is not None:
+        overrides = family.get("castSurnameOverrides", {}) if isinstance(family, dict) else None
+        if (
+            not isinstance(family, dict)
+            or set(family) - {"enabled", "linkMinimumBand", "castSurnameOverrides"}
+            or not isinstance(family.get("enabled"), bool)
+            or family.get("linkMinimumBand", "yellow") not in ("green", "yellow", "orange")
+            or not isinstance(overrides, dict)
+            or any(
+                not isinstance(folder, str) or folder.split("/", 1)[0] not in ("Angels", "Sisters")
+                or folder.count("/") != 1 or not isinstance(surname, str)
+                or len(surname.split()) != 1 or not surname[:1].isalpha()
+                for folder, surname in overrides.items()
+            )
+        ):
+            raise ValueError("invalid familyNaming policy")
     for category, rules in category_policies.items():
         required_category_keys = {
             "identityProtectedByDefault",

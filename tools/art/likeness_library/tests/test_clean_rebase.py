@@ -1,7 +1,9 @@
 """Clean rebase must flatten old groups, isolate references, and stage reversibly."""
 import contextlib
+import copy
 import hashlib
 import io
+import json
 import pathlib
 import tempfile
 import unittest
@@ -511,7 +513,63 @@ class CleanRebaseTests(unittest.TestCase):
         self.assertEqual(catalog, before)
 
     def test_create_plan_protected_prospect_merge_reaches_cluster_and_continuity(self):
-        import copy
+        plan, migrated_catalog, ids = self._protected_merge_plan(clean_rebase.core_protection_policy(load_policy()))
+        oldest_id, younger_id, expected_ids = ids
+        self.assertEqual(plan["policy"]["rebaseProtection"]["enabled"], True)
+        routed = [row for row in plan["photos"] if row.get("identityNameEvidence")]
+        self.assertEqual({row["photoId"] for row in routed}, expected_ids)
+        self.assertEqual(
+            {"/".join(row["destination"].split("/")[:2]) for row in routed},
+            {"Prospects/Oldest Person"},
+        )
+        working_catalog = copy.deepcopy(migrated_catalog)
+        clean_rebase._migrate_continuity(
+            working_catalog, plan["photos"], self.working, self.image_inventory_mock().inventory,
+        )
+        self.assertEqual(working_catalog["people"][oldest_id]["folder"], "Prospects/Oldest Person")
+        self.assertEqual(working_catalog["people"][younger_id]["mergedInto"], oldest_id)
+
+    def test_create_plan_family_tree_renames_lookalike_and_records_family(self):
+        policy = clean_rebase.core_protection_policy(load_policy())
+        policy["familyNaming"] = {"enabled": True, "linkMinimumBand": "yellow",
+                                  "castSurnameOverrides": {"Angels/Angelica": "Hadley"}}
+        plan, migrated_catalog, ids = self._protected_merge_plan(policy, embedder=lambda path: {
+            # The fake cast core is fixed at [1, 0]; candidates stay on its side after space centring.
+            "v": [0., 1.] if "angelica" in str(path).lower() else [1., 0.],
+            "faces": 1, "s": .95, "px": 100,
+        })
+        oldest_id, _, expected_ids = ids
+        routed = [row for row in plan["photos"] if row["photoId"] in expected_ids]
+        self.assertEqual({"/".join(row["destination"].split("/")[:2]) for row in routed},
+                         {"Prospects/Oldest Hadley"})
+        family = plan["familyNaming"]["families"][0]
+        self.assertEqual((family["rootFolder"], family["surname"], family["surnameSource"]),
+                         ("Angels/Angelica", "Hadley", "configured"))
+        member = family["members"][0]
+        self.assertEqual((member["folder"], member["previousName"], member["status"], member["band"]),
+                         ("Prospects/Oldest Hadley", "Oldest Person", "renamed", "green"))
+        self.assertEqual(plan["familyNaming"]["cast"]["Angels/Angelica"]["currentPersonName"], "Angelica Hadley")
+        recorded = {person["folder"]: person for person in migrated_catalog["people"].values()
+                    if person.get("family")}
+        self.assertEqual(recorded["Angels/Angelica"]["names"]["currentName"], "Angelica Hadley")
+        self.assertEqual(recorded["Prospects/Oldest Hadley"]["names"]["currentName"], "Oldest Hadley")
+        self.assertEqual(recorded["Prospects/Oldest Hadley"]["family"]["referencePersonId"],
+                         recorded["Angels/Angelica"]["id"])
+        metadata.validate_catalog(migrated_catalog)
+        # Real runs migrate continuity before placeholder people exist; replay that order on the source catalogue.
+        working_catalog = json.loads((self.working / ".likeness-library.json").read_text(encoding="utf-8"))
+        clean_rebase._migrate_continuity(
+            working_catalog, plan["photos"], self.working, self.image_inventory_mock().inventory,
+        )
+        self.assertEqual(working_catalog["people"][oldest_id]["folder"], "Prospects/Oldest Hadley")
+        file_name, copied, payload = clean_rebase._reset_name_file(plan, self.source, "Prospects", "Oldest Hadley")
+        self.assertEqual((file_name, copied), ("z_oldest_hadley.txt", None))
+        lines = payload.splitlines()
+        self.assertEqual(lines[0], "name: Oldest Hadley")
+        self.assertIn("2026-10-01 +2 from Various: one new person (2 photos)", lines)
+        self.assertEqual(lines[-1], f"{plan['createdAt'][:10]} renamed from Oldest Person (family Hadley)")
+
+    def _protected_merge_plan(self, policy, embedder=None):
         import json
 
         oldest_id = "person_" + "4" * 32
@@ -575,7 +633,6 @@ class CleanRebaseTests(unittest.TestCase):
             **self.layout,
             "manifest_files": manifest_files,
         }
-        policy = clean_rebase.core_protection_policy(load_policy())
         api = SimpleNamespace(
             cw=SimpleNamespace(
                 load_cfg=lambda: {},
@@ -620,25 +677,27 @@ class CleanRebaseTests(unittest.TestCase):
                 }) as final_audit:
             plan = clean_rebase.create_plan(
                 layout, self.run, policy, api,
-                embedder=lambda _path: {
+                embedder=embedder or (lambda _path: {
                     "v": [1., 0.], "faces": 1, "s": .95, "px": 100,
-                },
+                }),
             )
         final_audit.assert_called_once()
-        self.assertEqual(plan["policy"]["rebaseProtection"]["enabled"], True)
         migrated_catalog = json.loads((self.run / "catalog.json").read_text(encoding="utf-8"))
-        routed = [row for row in plan["photos"] if row.get("identityNameEvidence")]
-        self.assertEqual({row["photoId"] for row in routed}, expected_ids)
-        self.assertEqual(
-            {"/".join(row["destination"].split("/")[:2]) for row in routed},
-            {"Prospects/Oldest Person"},
-        )
-        working_catalog = copy.deepcopy(migrated_catalog)
-        clean_rebase._migrate_continuity(
-            working_catalog, plan["photos"], self.working, self.image_inventory_mock().inventory,
-        )
-        self.assertEqual(working_catalog["people"][oldest_id]["folder"], "Prospects/Oldest Person")
-        self.assertEqual(working_catalog["people"][younger_id]["mergedInto"], oldest_id)
+        return plan, migrated_catalog, (oldest_id, younger_id, expected_ids)
+
+    def test_undone_attempt_is_set_aside_before_replan(self):
+        for name in ("staged", "previous", "withdrawn"):
+            (self.run / name / "Prospects").mkdir(parents=True)
+        (self.run / "previous-catalog.json").write_text("{}", encoding="utf-8")
+        (self.run / "likeness-cache.json").write_text("{}", encoding="utf-8")
+        clean_rebase._set_aside_undone_attempt(self.run, {"status": "undone"})
+        attempts = list((self.run / "superseded").iterdir())
+        self.assertEqual(len(attempts), 1)
+        self.assertEqual(sorted(path.name for path in attempts[0].iterdir()),
+                         ["previous", "previous-catalog.json", "run.json", "staged", "withdrawn"])
+        for name in ("staged", "previous", "withdrawn", "previous-catalog.json"):
+            self.assertFalse((self.run / name).exists())
+        self.assertTrue((self.run / "likeness-cache.json").exists())
 
     def test_cluster_names_keep_supported_identity_despite_newcomer_majority(self):
         folder = "Prospects/Old Person"

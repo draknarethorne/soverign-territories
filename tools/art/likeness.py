@@ -179,14 +179,24 @@ York
 
 
 def invent_name(seed, taken):
-    """A made-up first and last name, the same for the same seed, that no existing folder (or its prefix) already uses."""
+    """A made-up first and last name, the same for the same seed, that no existing folder (or its prefix) already uses.
+
+    Unused surnames come first so unrelated new people do not look like one family; family naming links real lookalikes.
+    """
     h = int(hashlib.sha1(seed.encode()).hexdigest(), 16)
     used = {originals.prefix_of(t) for t in taken}
-    for i in range(len(FIRST) * len(LAST)):
-        n = (h + i * 7919) % (len(FIRST) * len(LAST))
-        name = f"{FIRST[n % len(FIRST)]} {LAST[(n // len(FIRST)) % len(LAST)]}"
-        if originals.prefix_of(name) not in used:
-            return name
+    surnames = {str(t).replace("\\", "/").rsplit("/", 1)[-1].split()[-1].casefold()
+                for t in taken if len(str(t).replace("\\", "/").rsplit("/", 1)[-1].split()) >= 2}
+    total = len(FIRST) * len(LAST)
+    for fresh_surname in (True, False):
+        for i in range(total):
+            n = (h + i * 7919) % total
+            last = LAST[(n // len(FIRST)) % len(LAST)]
+            if fresh_surname and last.casefold() in surnames:
+                continue
+            name = f"{FIRST[n % len(FIRST)]} {last}"
+            if originals.prefix_of(name) not in used:
+                return name
     return f"Prospect {h % 10000}"
 
 

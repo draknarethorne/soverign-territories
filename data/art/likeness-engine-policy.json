@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "draft-2026-10-25.1",
+  "version": "draft-2026-11-04.1",
   "status": "draft",
   "runtimeSettings": {
     "mixed": ["Artists/*", "Various", "Prospects/Various", "Potentials/Various"],
@@ -85,6 +85,13 @@
     "associationMaximumSimilarityExclusive": 0.55,
     "minimumIndependentPhotos": 5,
     "minimumReferenceMargin": 0.05
+  },
+  "familyNaming": {
+    "enabled": true,
+    "linkMinimumBand": "yellow",
+    "castSurnameOverrides": {
+      "Angels/angelica": "Hadley"
+    }
   },
   "categoryPolicies": {
     "Sisters": {

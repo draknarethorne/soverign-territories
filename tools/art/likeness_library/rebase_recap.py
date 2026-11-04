@@ -3,7 +3,8 @@
 Reads only RUN\\run.json, the intake manifest, sibling runs and the user's expectations file (beside Working, so a
 sandbox reset keeps it). It lists every photo that stayed, moved between people, moved between gallery and review,
 or was renamed; Angels/Sisters gains and losses; new identities grouped by family surname with their nearest cast
-member and the user's own "looks like" pick; review holds; differences from other runs of the same inputs (for
+member and the user's own "looks like" pick; score-band families with each member's link, score and path; review
+holds; differences from other runs of the same inputs (for
 example all versus core cast seeds); and whether expected photo placements happened. No library file is changed.
 sandbox-rebase.cmd regenerates it after every preview, replan, apply, check and undo.
 """
@@ -165,6 +166,7 @@ def collect(run):
         "coreReferences": plan.get("coreReferences"),
         "finalMembershipAudit": plan.get("finalMembershipAudit"),
         "membershipRefinement": plan.get("membershipRefinement"),
+        "familyNaming": plan.get("familyNaming"),
         "reassignmentStatus": plan.get("reassignmentStatus"),
         "convergenceStatus": plan.get("convergenceStatus"),
         "scoreBands": plan.get("policy", {}).get("scoreBands")
@@ -394,18 +396,26 @@ def _identity_section(data, out_dir):
         if not row["newPerson"].startswith((*CAST, "Various")) and row["newBucket"] == "gallery":
             members[row["newPerson"]].append(row)
     families = collections.defaultdict(list)
+    family_members = _family_members(data)
     for person in members:
-        families[person.rsplit("/", 1)[-1].rsplit(None, 1)[-1]].append(person)
+        family = family_members.get(person)
+        families[family["surname"] if family else person.rsplit("/", 1)[-1].rsplit(None, 1)[-1]].append(person)
     new = set(data["newIdentities"])
     said = data.get("expectations", {}).get("identities", {})
     choices = ["", *data["cast"], NEW_PERSON, UNSURE]
+    policy_text = (
+        "Family surnames come from the score-band family tree (see <a href=\"#families\">Families</a>); they are "
+        "presentation only, never kinship or same-person evidence. "
+        if data.get("familyNaming") else
+        "This run records no family naming policy; groups are literal shared surnames and no rename is inferred. "
+    )
     parts = ["<h2 id=identities>Other identities (grouped by family surname)</h2>",
-             "<p class=muted>Nearest-cast values are saved per-photo similarities, not routing decisions or rename "
-             "recommendations. This run records no surname proposal policy; no rename recommendation is inferred. "
+             "<p class=muted>Nearest-cast values are saved per-photo similarities, not routing decisions. "
+             + policy_text +
              "Paired thumbnails are representative saved destinations, not visually verified identity evidence. "
              "Use <b>Looks like</b> "
              "to record your own judgement, then <b>Save my picks</b>; this preserves the existing expectations workflow.</p>",
-             "<table><tr><th>Current identity</th><th>Proposed name</th><th>Photos</th><th>Came from</th>"
+             "<table><tr><th>Current identity</th><th>Family naming</th><th>Photos</th><th>Came from</th>"
              "<th>Nearest cast and mean per-photo score</th><th>Paired saved images</th>"
              "<th>Looks like (yours)</th></tr>"]
     details = []
@@ -434,10 +444,20 @@ def _identity_section(data, out_dir):
                 f'<option value="{html.escape(choice, quote=True)}"{" selected" if choice == mine else ""}>'
                 f"{html.escape(choice or '-')}</option>" for choice in choices + ([mine] if mine not in choices else []))
             disagrees = mine.startswith(CAST)
+            member = family_members.get(person)
+            if member:
+                naming = (f"{html.escape(member['status'])}"
+                          + (f" (was {html.escape(member['previousName'])})" if member["status"] == "renamed" else "")
+                          + f"<br><span class=muted>via {html.escape(str(member.get('parentFolder') or 'root'))}"
+                          + (f" {_score(member['score'])} {html.escape(str(member['band']))}"
+                             if member.get("score") is not None else "") + "</span>")
+            else:
+                naming = '<span class=muted>Not in a family</span>' if data.get("familyNaming") else \
+                    '<span class=muted>Not recorded</span>'
             parts.append(
                 f'<tr><td><a href="#{anchor}">{html.escape(person)}</a>'
-                f'<br><span class=muted>family {html.escape(surname if len(people) > 1 else "not grouped")}</span></td>'
-                '<td class=muted>Not recorded</td>'
+                f'<br><span class=muted>family {html.escape(surname if len(people) > 1 or member else "not grouped")}</span></td>'
+                f'<td>{naming}</td>'
                 f'<td>{len(group)}</td><td>{html.escape(", ".join(f"{k} {v}" for k, v in origins.most_common(4)))}</td>'
                 f'<td>{html.escape(top)} ({count}/{len(group)}, '
                 f'<span class="score-badge {_score_class(mean, data)}">{_score_text(mean)}</span>'
@@ -715,6 +735,57 @@ def _refinement_section(data):
     return "".join(parts)
 
 
+def _family_members(data):
+    evidence = data.get("familyNaming")
+    lookup = {}
+    for family in (evidence or {}).get("families", []) if isinstance(evidence, dict) else []:
+        for member in family.get("members", []):
+            if member.get("folder"):
+                lookup[member["folder"]] = {**member, "surname": family.get("surname")}
+    return lookup
+
+
+def _family_section(data):
+    evidence = data.get("familyNaming")
+    parts = ["<h2 id=families>Families (score-band family tree)</h2>"]
+    if not isinstance(evidence, dict):
+        return "".join(parts + ["<p class=muted>Unavailable in this run: no familyNaming was saved; this run "
+                                "predates score-band family naming.</p>"])
+    esc = lambda value: html.escape(str(value))
+    parts.append(
+        f"<p>Link band <b>{esc(evidence.get('linkBand'))}</b> (score at least {_score(evidence.get('linkMinimum'))}); "
+        f"{len(evidence.get('families', []))} families, {esc(evidence.get('linkedIdentityCount'))} linked identities, "
+        f"{esc(evidence.get('renamedIdentityCount'))} surname change(s), "
+        f"{esc(evidence.get('unlinkedIdentityCount'))} unlinked. {esc(evidence.get('rule'))}</p>"
+    )
+    for family in sorted(evidence.get("families", []),
+                         key=lambda item: (item.get("rootKind") != "cast", -len(item.get("members", [])),
+                                           str(item.get("rootFolder")))):
+        cast = (evidence.get("cast") or {}).get(family.get("root"), {})
+        heading = (f"{esc(family.get('rootFolder'))}: {esc(family.get('surname'))}"
+                   f" <span class=muted>({esc(family.get('surnameSource'))}; "
+                   f"{len(family.get('members', []))} member(s))</span>")
+        parts.append(f"<h3>{heading}</h3>")
+        if cast:
+            parts.append(f"<p>Cast person name: {esc(cast.get('recordedPersonName') or 'not recorded')} &rarr; "
+                         f"<b>{esc(cast.get('currentPersonName'))}</b></p>")
+        if family.get("members"):
+            parts.append(
+                "<table><tr><th>Identity</th><th>Status</th><th>Linked to</th><th>Score</th><th>Path to root</th></tr>"
+                + "".join(
+                    f"<tr><td>{esc(member.get('folder'))}"
+                    + (f"<br><span class=muted>was {esc(member.get('previousName'))}</span>"
+                       if member.get("status") == "renamed" else "")
+                    + f"</td><td>{esc(member.get('status'))}</td>"
+                    f"<td>{esc(member.get('parentFolder') or 'root')} <span class=muted>{esc(member.get('tier'))}</span></td>"
+                    f"<td>{_score(member['score']) + ' ' + esc(member.get('band')) if member.get('score') is not None else '-'}</td>"
+                    f"<td>{' &rarr; '.join(esc(step.get('toFolder')) + ' ' + _score(step.get('score')) for step in member.get('path', [])) or '-'}</td></tr>"
+                    for member in family["members"]
+                ) + "</table>"
+            )
+    return "".join(parts)
+
+
 def _audit_section(data, out_dir):
     audit = data.get("finalMembershipAudit")
     parts = ["<h2 id=audit>Final own-versus-rival membership audit</h2>"]
@@ -949,7 +1020,8 @@ def render(data, out_path, others=()):
         '<section><h2>Recap sections</h2>'
         + gallery_chrome.navigation([
             ("Expectations", "#expected"), ("Where photos went", "#flows"), ("Identity continuity", "#continuity"),
-            ("Angels and Sisters", "#cast"), ("Other identities", "#identities"), ("Review holds", "#review"),
+            ("Angels and Sisters", "#cast"), ("Other identities", "#identities"), ("Families", "#families"),
+            ("Review holds", "#review"),
             ("Refinement", "#refinement"), ("Final audit", "#audit"), *(([("Other runs", "#compare")] if others else [])), ("Every photo", "#all"),
         ], "Sandbox rebase recap") + "</section>",
         f"<section>{_expectation_section(data, out_dir)}</section>",
@@ -957,6 +1029,7 @@ def render(data, out_path, others=()):
         f"<section>{_continuity_section(data, out_dir)}</section>",
         f"<section>{_cast_section(data, out_dir)}</section>",
         f"<section>{_identity_section(data, out_dir)}</section>",
+        f"<section>{_family_section(data)}</section>",
         f"<section>{_review_section(data, out_dir)}</section>",
         f"<section>{_refinement_section(data)}</section>",
         f"<section>{_audit_section(data, out_dir)}</section>",

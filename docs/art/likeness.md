@@ -1594,8 +1594,10 @@ return to gallery/run browsing and expose available maintained derivatives.
 
 `--check` verifies saved input evidence and installed hashes without writes.
 Repeat apply verifies the installed result and refreshes galleries, never
-installs twice. `--replan` works only on an unapplied preview, reuses that run's
-measurements and preserves its initial preview; changed inputs/recipe need a
+installs twice. `--replan` works on an unapplied preview or an undone install,
+reuses that run's measurements and preserves its initial preview; an undone
+attempt's `staged`, `previous`, `withdrawn` and prior catalogue move to
+`RUN\superseded\<UTC stamp>\` as evidence first. Changed inputs/recipe need a
 new run. Apply requires saved policy and implementation hashes to match.
 Check/undo remain available after policy changes.
 

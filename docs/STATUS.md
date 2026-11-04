@@ -4,6 +4,23 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Nov 4 family naming decided and built:** score-band family trees. A new or
+renamed non-cast identity joins the family of its closest cast member when that
+score is yellow (0.30) or better, otherwise of its closest peer identity at
+yellow or better, and takes that family's surname. Each Angel/Sister's family
+surname is the surname of their recorded original person name; Angelica is
+Hadley (policy override). Without one, the tree adopts the oldest member's
+surname upward. The policy key is `familyNaming`. It runs inside the clean-rebase
+plan, records `names`/`family` in the catalogue, carries `z_` name history
+forward, and shows a Families section in the recap. Production self-heals on its
+next rebase, with no hand edits. Re-run: undo `fresh-20261103-core`, then
+`--replan`, `--apply`, `--check`; no new intake
+([naming N15](plans/2026-10-22-identity-family-naming.md)). Speed/space
+feedback (cap 944x1104 derivatives to core/protected photos; measure
+bottlenecks first) is
+[layout LY14](plans/2026-11-02-library-layout.md). Recap:
+[2026-11-04 10:30](recap/2026-11-04-1030-recap.md).
+
 **Nov 4 clean core-trial rebase installed:** sandbox reset from Production and
 rebased as `fresh-20261103-core` (core seeds, recorded core protection,
 refinement, final audit). All 2,814 outcomes applied (309 min apply); the

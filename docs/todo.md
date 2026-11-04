@@ -7,10 +7,11 @@
 
 ## Open work, by priority
 
-### Your queue: needs your hands or a decision (3)
+### Your queue: needs your hands or a decision (4)
 
 **P1 (blocks other work, or cheap and valuable)**
 
+- [ ] N7 Review actual sandbox family groups, exceptions and proposed names in the N15 recap; accept or tune the band before Production. ([identity family naming](plans/2026-10-22-identity-family-naming.md))
 - [ ] E16 Decide how released cast photos that re-form their own cluster are handled. In the Nov 3 `fresh-20261103-core` preview, retained cast members score higher against clusters built from that same cast member's released ... ([likeness engine acceptance](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] C7 Review before/after cast seeds, hair/overlay outcomes and every released cast destination; accept a configuration or request another isolated run. Record all image/decision counts and holds. Deliver accepted evidence to ... ([cast seeded library rebase](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] LY11 Review the applied sandbox galleries and the recap; record look-alike picks and expected placements in `rebase-expectations.json`, and feedback on Review volume, cast joins, and the duplicate Camaris name ... ([library layout](plans/2026-11-02-library-layout.md))
@@ -33,7 +34,7 @@
 - [ ] L18 Finish preparation evidence-index I/O optimization: operation-local retained/derivative reuse and full-scale row/thumbnail/browser equivalence are delivered; next bound the remaining repeated whole-history audits across ... ([gallery review layout](plans/2026-10-22-gallery-review-layout.md))
 - [ ] L21 Bring the recap onto existing shared HTML/CSS/navigation standards, with safe local links opening final person/gallery/Review pages in new tabs. Show old-identity -> final-identity photo counts, original members retained ... ([gallery review layout](plans/2026-10-22-gallery-review-layout.md))
 - [ ] L23 Clarify the recap's reason counts and every-photo table. Link each hold group to its actual final destinations and photos, including the 52 Model-band and 27 high-cast-similarity holds. Show each photo's top three cast ... ([gallery review layout](plans/2026-10-22-gallery-review-layout.md))
-- [ ] N14 Trace and test name continuity on the frozen `fresh-20261102` data: Harlow Chase's original members versus the 54 Various arrivals and 42 reported Jacinta Newberry departures, Sophie Lloyd's changed name, emptied ... ([identity family naming](plans/2026-10-22-identity-family-naming.md))
+- [ ] N15 Re-run `fresh-20261103-core` from matching: `--undo`, `--replan`, `--apply --preserve-legacy-derivatives`, `--check` with `--baseline working --cast-seeds core --record-core-protection`; confirm the Families section ... ([identity family naming](plans/2026-10-22-identity-family-naming.md))
 - [ ] E14 Audit every eligible photo against its final own identity (leave-one-out) and rival identities after the run. Record score meanings, best rivals, margins, evidence/support, core/automatic/manual protection, quality ... ([likeness engine acceptance](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] E15 Under E7, run a bounded in-place refinement inside the rebase plan (14:17 request below): frozen references per pass, existing route/merge/category gates, deterministic ties, maximum passes, oscillation detection and ... ([likeness engine acceptance](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] C11 Core-only cast protection. Identity `protected` keeps the slot, name, folder, anchors, workflow-selected and photo-protected images, but no longer freezes every Gallery photo in core mode. Make the Angels/Sisters core ... ([cast seeded library rebase](plans/2026-10-23-cast-seeded-library-rebase.md))
@@ -67,7 +68,7 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-10-20-art-tools-structure.md](plans/2026-10-20-art-tools-structure.md) | holding | 10 |
 | [2026-10-22-face-analysis-evaluation.md](plans/2026-10-22-face-analysis-evaluation.md) | holding | 4 |
 | [2026-10-22-gallery-review-layout.md](plans/2026-10-22-gallery-review-layout.md) | active | 13 |
-| [2026-10-22-identity-family-naming.md](plans/2026-10-22-identity-family-naming.md) | active | 11 |
+| [2026-10-22-identity-family-naming.md](plans/2026-10-22-identity-family-naming.md) | active | 7 |
 | [2026-10-22-library-upkeep.md](plans/2026-10-22-library-upkeep.md) | holding | 7 |
 | [2026-10-22-likeness-engine-acceptance.md](plans/2026-10-22-likeness-engine-acceptance.md) | active | 18 |
 | [2026-10-22-manual-prompts-to-art-library.md](plans/2026-10-22-manual-prompts-to-art-library.md) | holding | 21 |
@@ -77,7 +78,7 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-10-25-reference-rendering.md](plans/2026-10-25-reference-rendering.md) | holding | 27 |
 | [2026-10-28-intake-performance.md](plans/2026-10-28-intake-performance.md) | active | 7 |
 | [2026-10-28-storage-operations-and-retention.md](plans/2026-10-28-storage-operations-and-retention.md) | active | 13 |
-| [2026-11-02-library-layout.md](plans/2026-11-02-library-layout.md) | active | 2 |
+| [2026-11-02-library-layout.md](plans/2026-11-02-library-layout.md) | active | 3 |
 | [2026-11-02-sovereign-spelling-rename.md](plans/2026-11-02-sovereign-spelling-rename.md) | holding | 7 |
 
 </details>

@@ -9,7 +9,8 @@ and preserves chronological access to manually archived records.
 
 | State | Recap | Why it remains active |
 | --- | --- | --- |
-| **Pinned — resume** | [2026-11-04-0230](2026-11-04-0230-recap.md) | Clean core-trial rebase `fresh-20261103-core` reset from Production, refined, audited and installed; who moved where, E16/E17 decisions and what to review next. |
+| **Pinned — resume** | [2026-11-04-1030](2026-11-04-1030-recap.md) | Score-band family naming built (yellow-band links, Angelica Hadley, own-surname cast roots); exact undo/replan/apply/check resume of `fresh-20261103-core` with no new intake. |
+| Previous resume | [2026-11-04-0230](2026-11-04-0230-recap.md) | Clean core-trial rebase `fresh-20261103-core` reset from Production, refined, audited and installed; who moved where, E16/E17 decisions and what to review next. Remains the review guide for the installed run. |
 | Previous resume | [2026-11-03-0500](2026-11-03-0500-recap.md) | First fresh sandbox applied (all-seeds); Nov 3 review continuation records approved core-protection decisions, complete recap-feedback ownership and the filename fix. Superseded as resume by the Nov 4 core-trial install; retain until its decision context is individually transferred. |
 | Previous resume | [2026-11-02-0830](2026-11-02-0830-recap.md) | Paused for ComfyUI memory. Corrected 273-summary/cast audit and actual recovered browsers pass; superseded as the resume point by the Nov 3 sandbox rebase; retain until its post-reboot safety context is individually transferred. |
 | Previous day reflection | [2026-11-01-1705](2026-11-01-1705-recap.md) | Whole-plan completion review, metadata omission diagnosis and separate human/coding next steps. Live corrected-run state is superseded by Nov 2; retain the day's unique reflection. |

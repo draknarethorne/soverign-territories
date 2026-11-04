@@ -12,7 +12,9 @@ import uuid
 
 import numpy as np
 
-from . import clean_preparation, identity_names, metadata, protection, refinement, rejections, sandbox
+from . import (
+    clean_preparation, family_tree, identity_names, metadata, protection, refinement, rejections, sandbox,
+)
 from .engine import Cache, Photo, Space
 from .policy import effective_settings, load_policy, validate_policy
 from .reconciliation import frozen_identity_cores, plan_reconciliation
@@ -770,6 +772,146 @@ def _cluster_name_routes(clusters, by_id, catalog, source, api, minimum_cluster,
             "survivorFolder": winner["folder"] if winner else None,
         }
     return names_by_destination, evidence_by_destination
+
+
+def _apply_family_tree(clusters, cluster_names, name_evidence, candidates, cores, catalog, source, policy,
+                       preserved=()):
+    """Give each score-band family one surname after membership and name continuity are final."""
+    if not family_tree.settings(policy)["enabled"]:
+        return None
+    vectors = {row["photoId"]: row["vector"] for row in candidates}
+    identities = {}
+    for group in clusters:
+        destination = group["destination"]
+        category, _, name = cluster_names.get(destination, destination).partition("/")
+        members = [vectors[photo_id] for photo_id in group["photoIds"] if photo_id in vectors]
+        if category not in RESET_CATEGORIES or not members or not identity_names.is_full_person_name(name):
+            continue
+        evidence = name_evidence.get(destination, {})
+        winner = next((
+            candidate for candidate in evidence.get("originalCandidates", [])
+            if candidate.get("personId") and candidate["personId"] == evidence.get("survivorPersonId")
+        ), None)
+        age = (winner or {}).get("ageEvidence") or {}
+        identities[destination] = {
+            "name": name, "vector": family_tree.centroid(members), "photoCount": len(group["photoIds"]),
+            "ageDate": age.get("date") if age.get("status") == "verified" else None,
+            "retained": evidence.get("decision") == "retained original identity name",
+        }
+    people = {
+        person["folder"].casefold(): person for person in catalog["people"].values()
+        if not person.get("mergedInto")
+    }
+    cast = {}
+    for folder, core in cores.items():
+        names = identity_names.rebase_snapshot(
+            people.get(folder.casefold()), pathlib.Path(source) / pathlib.PurePosixPath(folder), catalog=catalog,
+        )
+        cast[folder] = {"vector": core["vector"], "personName": (names or {}).get("currentName")}
+    reserved = {folder.split("/", 1)[-1] for folder in cores}
+    reserved |= {
+        person["folder"].split("/", 1)[-1] for person in catalog["people"].values()
+        if person["folder"].split("/", 1)[0] in RESET_CATEGORIES
+    }
+    reserved |= {
+        row.get("oldFolder", "").split("/", 1)[-1] for row in preserved
+        if row.get("oldFolder", "").split("/", 1)[0] in RESET_CATEGORIES
+    }
+    reserved -= {identity["name"] for identity in identities.values()}
+    renames, evidence = family_tree.plan(identities, cast, policy, reserved=reserved)
+    for destination, name in sorted(renames.items()):
+        category, _, before = cluster_names[destination].partition("/")
+        record = name_evidence.setdefault(destination, {})
+        record["nameBeforeFamily"] = before
+        record["name"] = name
+        cluster_names[destination] = f"{category}/{name}"
+    folder_of = lambda key: cluster_names.get(key, key) if key else None
+    for family in evidence["families"]:
+        family["rootFolder"] = folder_of(family["root"])
+        for member in family["members"]:
+            member["folder"] = folder_of(member["identity"])
+            member["parentFolder"] = folder_of(member["parent"])
+            for step in member["path"]:
+                step["fromFolder"], step["toFolder"] = folder_of(step["from"]), folder_of(step["to"])
+            record = name_evidence.get(member["identity"])
+            if record is not None:
+                record["family"] = {
+                    "id": family["id"], "surname": family["surname"], "root": family["rootFolder"],
+                    "parent": member["parentFolder"], "score": member["score"], "band": member["band"],
+                    "status": member["status"],
+                }
+    print(
+        f"clean rebase: family naming ({evidence['linkBand']} band, link >= {evidence['linkMinimum']:.2f}): "
+        f"{len(evidence['families'])} families, {evidence['linkedIdentityCount']} linked, "
+        f"{evidence['renamedIdentityCount']} surname change(s)",
+        flush=True,
+    )
+    return evidence
+
+
+def _record_families(catalog, evidence, cluster_names, name_evidence, source, policy):
+    """Write catalogue family/name records so galleries present the same families as the plan."""
+    if not evidence:
+        return
+    people = {
+        person["folder"].casefold(): person for person in catalog["people"].values()
+        if not person.get("mergedInto")
+    }
+    recorded = 0
+    for family in evidence["families"]:
+        reference = people.get(family["rootFolder"].casefold())
+        family["catalogueRecorded"] = False
+        if reference is None:
+            continue
+        entries = []
+        if family["rootKind"] == "cast":
+            info = evidence["cast"].get(family["root"], {})
+            names = identity_names.rebase_snapshot(
+                reference, pathlib.Path(source) / pathlib.PurePosixPath(family["rootFolder"]), catalog=catalog,
+            ) or {}
+            if info.get("currentPersonName"):
+                slot = family["rootFolder"].rsplit("/", 1)[-1]
+                entries.append((reference, info.get("recordedPersonName") or slot, info["currentPersonName"], 1.0, {
+                    "originalName": names.get("originalName") or info.get("recordedPersonName"),
+                    "originalSource": (names.get("originalSource") or "recorded-history")
+                    if (names.get("originalName") or info.get("recordedPersonName")) else "unavailable",
+                }, "cast root"))
+        for member in family["members"]:
+            person = people.get((member["folder"] or "").casefold())
+            if person is None:
+                continue
+            evidence_row = name_evidence.get(member["identity"], {})
+            winner = next((
+                candidate for candidate in evidence_row.get("originalCandidates", [])
+                if candidate.get("personId") and candidate["personId"] == evidence_row.get("survivorPersonId")
+            ), None)
+            original = {
+                "originalName": (winner or {}).get("originalName") or member["previousName"],
+                "originalSource": (winner or {}).get("nameSource") or "catalogue-registration",
+            }
+            via = (f"{member['tier']} link to {member['parentFolder']} {member['score']:.3f} ({member['band']})"
+                   if member["parent"] else "family root (oldest member)")
+            entries.append((person, member["previousName"], member["name"],
+                            member["score"] if member["score"] is not None else 1.0, original, via))
+        for person, previous, current, score, original, via in entries:
+            if original["originalSource"] not in (
+                "recorded-history", "rename-history", "catalogue-registration",
+            ):
+                original = {"originalName": None, "originalSource": "unavailable"}
+            person["names"] = {
+                "originalName": original["originalName"], "currentName": current,
+                "originalSource": original["originalSource"],
+            }
+            person["family"] = {
+                "id": family["id"], "referencePersonId": reference["id"], "surname": family["surname"],
+                "score": float(score), "policyVersion": policy["version"], "previousPersonName": previous,
+                "reason": (f"Score-band family tree ({evidence['linkBand']} band or above): {via}; surname "
+                           f"{family['surname']} from {family['surnameSource']}. Presentation only, not kinship "
+                           "or same-person evidence."),
+            }
+            recorded += 1
+        family["catalogueRecorded"] = True
+    evidence["catalogueRecordCount"] = recorded
 
 
 def _migrate_continuity(catalog, rows, working, images, *, current_inputs=None,
@@ -2031,6 +2173,10 @@ def create_plan(
         cast_folders=cores, preserved=preserved,
         rebase_protection=bool(policy.get("rebaseProtection", {}).get("enabled")),
     )
+    family_evidence = _apply_family_tree(
+        result["clusters"], cluster_names, name_evidence, candidates, cores, catalog, source, policy,
+        preserved,
+    )
     routed = list(preserved) + list(unusable)
     refinement.rename_evidence(refinement_evidence, cluster_names)
     for row in result["assignments"]:
@@ -2100,6 +2246,7 @@ def create_plan(
             "folderHistory": [], "identityAnchors": [],
             "protected": policy["categoryPolicies"][category]["identityProtectedByDefault"],
         }
+    _record_families(catalog, family_evidence, cluster_names, name_evidence, source, policy)
     final_audit = _final_membership_outcomes(
         photos, routed, catalog, policy, settings, layout["sandbox_root"], selected, api,
         source, {relative: photo.path for relative, photo in quality_photos.items()},
@@ -2155,12 +2302,14 @@ def create_plan(
         "coreDiagnostics": diagnostics, "photos": sorted(routed, key=lambda r: r["source"]),
         "finalMembershipAudit": final_audit,
         "membershipRefinement": refinement_evidence,
+        "familyNaming": family_evidence,
         "catalogSHA256": metadata.content_sha256(run / "catalog.json"),
         "sourceCatalogSHA256": source_catalog_hash,
         "implementationHashes": {
             name: metadata.content_sha256(pathlib.Path(__file__).with_name(name))
             for name in ("clean_rebase.py", "planner.py", "policy.py", "reconciliation.py",
-                         "audit.py", "engine.py", "rejections.py", "protection.py", "refinement.py")
+                         "audit.py", "engine.py", "rejections.py", "protection.py", "refinement.py",
+                         "family_tree.py")
         },
         "status": "preview",
     }
@@ -2354,19 +2503,10 @@ def verify_staged_install(layout, run, plan):
         if pathlib.PurePosixPath(row["destination"]).parts[0] in RESET_CATEGORIES
     }
     for category, name in sorted(destinations):
-        former = sorted({
-            row["oldFolder"] for row in plan["photos"]
-            if pathlib.PurePosixPath(row["destination"]).parts[:2] == (category, name)
-            and row["oldFolder"].partition("/")[2] == name
-        })
-        names = [path for old in former for path in (source / old / "gallery").glob("z_*.txt")]
-        if len(names) == 1:
-            relative = f"{category}/{name}/gallery/{names[0].name}"
-            expected[relative] = metadata.content_sha256(names[0])
-        else:
-            relative = f"{category}/{name}/gallery/z_{name.lower().replace(' ', '_')}.txt"
-            payload = f"name: {name}\nClean sandbox rebuild; prior folders recorded in run.json\n"
-            expected[relative] = hashlib.sha256(payload.replace("\n", os.linesep).encode("utf-8")).hexdigest()
+        file_name, copied, payload = _reset_name_file(plan, source, category, name)
+        relative = f"{category}/{name}/gallery/{file_name}"
+        expected[relative] = (metadata.content_sha256(copied) if copied is not None
+                              else _reset_name_payload_hash(payload))
     actual = {path.relative_to(staged).as_posix(): metadata.content_sha256(path)
               for path in _source_files(staged)}
     if actual != expected:
@@ -2375,6 +2515,35 @@ def verify_staged_install(layout, run, plan):
         raise ValueError(f"staged inventory changed or incomplete: {differences[:10]}")
     print(f"Completed staging verified: {len(plan['photos'])} photos, {len(actual)} files.", flush=True)
     return [{"path": path, "sha256": digest} for path, digest in sorted(actual.items())]
+
+
+def _reset_name_file(plan, source, category, name):
+    """Return (file name, source path to copy or None, text payload or None) for one rebuilt identity."""
+    renamed = {}
+    for family in (plan.get("familyNaming") or {}).get("families", []):
+        for member in family["members"]:
+            if member["status"] == "renamed" and member.get("folder"):
+                renamed[member["folder"]] = (member["previousName"], family["surname"])
+    previous, surname = renamed.get(f"{category}/{name}", (name, None))
+    former = sorted({
+        row["oldFolder"] for row in plan["photos"]
+        if pathlib.PurePosixPath(row["destination"]).parts[:2] == (category, name)
+        and row["oldFolder"].partition("/")[2] == previous
+    })
+    names = [path for old in former for path in (pathlib.Path(source) / pathlib.Path(old) / "gallery").glob("z_*.txt")]
+    file_name = f"z_{name.lower().replace(' ', '_')}.txt"
+    if len(names) == 1 and surname is None:
+        return names[0].name, names[0], None
+    if len(names) == 1:
+        history = names[0].read_text(encoding="utf-8").splitlines()[1:]
+        date = plan.get("createdAt", "")[:10]
+        lines = [f"name: {name}", *history, f"{date} renamed from {previous} (family {surname})"]
+        return file_name, None, "\n".join(lines) + "\n"
+    return file_name, None, f"name: {name}\nClean sandbox rebuild; prior folders recorded in run.json\n"
+
+
+def _reset_name_payload_hash(payload):
+    return hashlib.sha256(payload.replace("\n", os.linesep).encode("utf-8")).hexdigest()
 
 
 def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=False):
@@ -2466,23 +2635,11 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
         for folder in sorted((staged / category).iterdir()) if (staged / category).exists() else ():
             gallery = folder / "gallery"
             gallery.mkdir(exist_ok=True)
-            former_folders = sorted({
-                row["oldFolder"] for row in plan["photos"]
-                if pathlib.PurePosixPath(row["destination"]).parts[:2] == (category, folder.name)
-                and row["oldFolder"].partition("/")[2] == folder.name
-            })
-            name_files = [
-                path for former in former_folders
-                for path in (source / pathlib.Path(former) / "gallery").glob("z_*.txt")
-            ]
-            if len(name_files) == 1:
-                shutil.copy2(name_files[0], gallery / name_files[0].name)
-                continue
-            name_file = gallery / f"z_{folder.name.lower().replace(' ', '_')}.txt"
-            name_file.write_text(
-                f"name: {folder.name}\nClean sandbox rebuild; prior folders recorded in run.json\n",
-                encoding="utf-8",
-            )
+            file_name, copied, payload = _reset_name_file(plan, source, category, folder.name)
+            if copied is not None:
+                shutil.copy2(copied, gallery / file_name)
+            else:
+                (gallery / file_name).write_text(payload, encoding="utf-8")
     if plan.get("preparation") and not resume_install:
         from . import derivatives
 
@@ -2744,6 +2901,23 @@ def _check_publication(working, plan):
             raise ValueError("installed cast inventory changed; review added/removed/edited photos")
 
 
+def _set_aside_undone_attempt(run, plan):
+    """Keep an undone install's journal as evidence and clear the run for a new install from the same intake."""
+    stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    target = run / "superseded" / stamp
+    if target.exists():
+        raise ValueError(f"superseded attempt already exists: {target}")
+    target.mkdir(parents=True)
+    for name in ("staged", "previous", "withdrawn", "previous-catalog.json"):
+        path = run / name
+        if _is_reparse_point(path):
+            raise ValueError(f"unsafe run journal entry: {path}")
+        if path.exists():
+            path.rename(target / name)
+    _write_json(target / "run.json", plan)
+    print(f"Undone install set aside as evidence: {target}", flush=True)
+
+
 def _refresh_galleries(working, run):
     import gallery_maintenance
 
@@ -2885,10 +3059,12 @@ def command(args, api):
             raise ValueError("saved plan source overlay differs; use the same verified overlay")
         if args.replan:
             if (
-                plan["status"] != "preview" or not plan["embeddingCacheStartedEmpty"]
+                plan["status"] not in ("preview", "undone") or not plan["embeddingCacheStartedEmpty"]
                 or plan["embeddingCache"] != str(run / "likeness-cache.json")
             ):
-                raise ValueError("only a fresh-cache, unapplied preview can be replanned")
+                raise ValueError("only a fresh-cache preview or an undone install can be replanned")
+            if plan["status"] == "undone":
+                _set_aside_undone_attempt(run, plan)
             _verify_routes(plan, layout["source_root"])
             original_preview = run / "initial-preview.json"
             if not original_preview.exists():

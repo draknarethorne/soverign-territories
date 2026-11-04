@@ -22,6 +22,22 @@
     "protection"
   ],
   "properties": {
+    "familyNaming": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled"],
+      "description": "Score-band family trees: shared surnames are presentation only, never matching evidence.",
+      "properties": {
+        "enabled": {"type": "boolean"},
+        "linkMinimumBand": {"enum": ["green", "yellow", "orange"]},
+        "castSurnameOverrides": {
+          "type": "object",
+          "description": "User-decided family surnames for fixed Angels/Sisters slots, keyed by slot folder.",
+          "propertyNames": {"pattern": "^(Angels|Sisters)/[^/]+$"},
+          "additionalProperties": {"type": "string", "pattern": "^[^\\W\\d_][\\w'-]*$"}
+        }
+      }
+    },
     "rebaseProtection": {
       "type": "object",
       "additionalProperties": false,
