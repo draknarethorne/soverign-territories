@@ -447,7 +447,7 @@ def _identity_section(data, out_dir):
             member = family_members.get(person)
             if member:
                 naming = (f"{html.escape(member['status'])}"
-                          + (f" (was {html.escape(member['previousName'])})" if member["status"] == "renamed" else "")
+                          + (f" (was {html.escape(member['previousName'])})" if member["status"].startswith("renamed") else "")
                           + f"<br><span class=muted>via {html.escape(str(member.get('parentFolder') or 'root'))}"
                           + (f" {_score(member['score'])} {html.escape(str(member['band']))}"
                              if member.get("score") is not None else "") + "</span>")
@@ -756,6 +756,7 @@ def _family_section(data):
         f"<p>Link band <b>{esc(evidence.get('linkBand'))}</b> (score at least {_score(evidence.get('linkMinimum'))}); "
         f"{len(evidence.get('families', []))} families, {esc(evidence.get('linkedIdentityCount'))} linked identities, "
         f"{esc(evidence.get('renamedIdentityCount'))} surname change(s), "
+        f"{esc(evidence.get('displacedFamilyCount', 0))} given a fresh surname because theirs belongs to another family, "
         f"{esc(evidence.get('unlinkedIdentityCount'))} unlinked. {esc(evidence.get('rule'))}</p>"
     )
     for family in sorted(evidence.get("families", []),
@@ -766,6 +767,10 @@ def _family_section(data):
                    f" <span class=muted>({esc(family.get('surnameSource'))}; "
                    f"{len(family.get('members', []))} member(s))</span>")
         parts.append(f"<h3>{heading}</h3>")
+        if family.get("displacedFrom"):
+            parts.append(f"<p>Surname {esc(family['displacedFrom'].get('surname'))} belongs to the family of "
+                         f"{esc(family['displacedFrom'].get('owner'))}, so this unrelated identity gets "
+                         f"<b>{esc(family.get('surname'))}</b>.</p>")
         if cast:
             parts.append(f"<p>Cast person name: {esc(cast.get('recordedPersonName') or 'not recorded')} &rarr; "
                          f"<b>{esc(cast.get('currentPersonName'))}</b></p>")
@@ -775,7 +780,7 @@ def _family_section(data):
                 + "".join(
                     f"<tr><td>{esc(member.get('folder'))}"
                     + (f"<br><span class=muted>was {esc(member.get('previousName'))}</span>"
-                       if member.get("status") == "renamed" else "")
+                       if str(member.get("status", "")).startswith("renamed") else "")
                     + f"</td><td>{esc(member.get('status'))}</td>"
                     f"<td>{esc(member.get('parentFolder') or 'root')} <span class=muted>{esc(member.get('tier'))}</span></td>"
                     f"<td>{_score(member['score']) + ' ' + esc(member.get('band')) if member.get('score') is not None else '-'}</td>"

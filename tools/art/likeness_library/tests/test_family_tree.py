@@ -123,11 +123,47 @@ class FamilyTreeTests(unittest.TestCase):
             with self.assertRaises(ValueError, msg=str(bad)):
                 validate_policy(broken)
 
-    def test_production_policy_links_at_yellow_with_angelica_hadley(self):
+    def test_production_policy_links_at_yellow_with_recorded_cast_surnames(self):
         config = family_tree.settings(load_policy())
         self.assertTrue(config["enabled"])
         self.assertEqual(config["minimum"], load_policy()["scoreBands"]["yellow"]["minimum"])
-        self.assertEqual(config["overrides"].get("Angels/angelica"), "Hadley")
+        self.assertEqual(config["overrides"], {})
+
+    def test_collision_with_name_pool_changes_first_name(self):
+        cast = {"Angels/angelica": {"vector": E[0], "personName": "Angelica Hadley"}}
+        identities = {"Prospects/Fia Vale": self.identity("Fia Vale", blend(E[0], E[1], .5))}
+        renames, evidence = family_tree.plan(identities, cast, self.policy, reserved={"Fia Hadley"},
+                                             first_names=["Fia", "Gia"])
+        self.assertEqual(renames, {"Prospects/Fia Vale": "Gia Hadley"})
+        self.assertTrue(evidence["families"][0]["members"][0]["status"].startswith("renamed"))
+
+    def test_unrelated_holder_of_cast_surname_gets_fresh_surname(self):
+        cast = {"Angels/angelica": {"vector": E[0], "personName": "Angelica Vale"}}
+        identities = {
+            "Prospects/Fia Hadley": self.identity("Fia Hadley", blend(E[0], E[1], .45)),
+            "Models/Amira Vale": self.identity("Amira Vale", E[2], ageDate="2024-01-01"),
+        }
+        renames, evidence = family_tree.plan(identities, cast, self.policy, surnames=["Vale", "Hadley", "Quill"])
+        self.assertEqual(renames, {"Prospects/Fia Hadley": "Fia Vale", "Models/Amira Vale": "Amira Quill"})
+        amira = next(f for f in evidence["families"] if f["root"] == "Models/Amira Vale")
+        self.assertEqual(amira["displacedFrom"], {"surname": "Vale", "owner": "Angels/angelica"})
+        self.assertEqual(evidence["displacedFamilyCount"], 1)
+
+    def test_unrelated_lone_identities_sharing_a_surname_oldest_keeps_it(self):
+        identities = {
+            "Prospects/Opal Vale": self.identity("Opal Vale", E[1], ageDate="2026-02-01"),
+            "Potentials/Yvette Vale": self.identity("Yvette Vale", E[2], ageDate="2026-06-01"),
+        }
+        renames, evidence = family_tree.plan(identities, {}, self.policy, surnames=["Vale", "Marsh"])
+        self.assertEqual(renames, {"Potentials/Yvette Vale": "Yvette Marsh"})
+        self.assertEqual([f["root"] for f in evidence["families"]], ["Potentials/Yvette Vale"])
+
+    def test_linked_family_keeps_surname_its_members_share(self):
+        cast = {"Angels/angelica": {"vector": E[0], "personName": "Angelica Vale"}}
+        identities = {"Models/Amira Vale": self.identity("Amira Vale", blend(E[0], E[1], .4))}
+        renames, evidence = family_tree.plan(identities, cast, self.policy, surnames=["Quill"])
+        self.assertEqual(renames, {})
+        self.assertEqual(evidence["displacedFamilyCount"], 0)
 
 
 class InventNameTests(unittest.TestCase):

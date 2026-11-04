@@ -775,7 +775,7 @@ def _cluster_name_routes(clusters, by_id, catalog, source, api, minimum_cluster,
 
 
 def _apply_family_tree(clusters, cluster_names, name_evidence, candidates, cores, catalog, source, policy,
-                       preserved=()):
+                       preserved=(), api=None):
     """Give each score-band family one surname after membership and name continuity are final."""
     if not family_tree.settings(policy)["enabled"]:
         return None
@@ -818,7 +818,10 @@ def _apply_family_tree(clusters, cluster_names, name_evidence, candidates, cores
         if row.get("oldFolder", "").split("/", 1)[0] in RESET_CATEGORIES
     }
     reserved -= {identity["name"] for identity in identities.values()}
-    renames, evidence = family_tree.plan(identities, cast, policy, reserved=reserved)
+    renames, evidence = family_tree.plan(
+        identities, cast, policy, reserved=reserved,
+        surnames=getattr(api, "LAST", ()), first_names=getattr(api, "FIRST", ()),
+    )
     for destination, name in sorted(renames.items()):
         category, _, before = cluster_names[destination].partition("/")
         record = name_evidence.setdefault(destination, {})
@@ -843,7 +846,8 @@ def _apply_family_tree(clusters, cluster_names, name_evidence, candidates, cores
     print(
         f"clean rebase: family naming ({evidence['linkBand']} band, link >= {evidence['linkMinimum']:.2f}): "
         f"{len(evidence['families'])} families, {evidence['linkedIdentityCount']} linked, "
-        f"{evidence['renamedIdentityCount']} surname change(s)",
+        f"{evidence['renamedIdentityCount']} surname change(s), "
+        f"{evidence['displacedFamilyCount']} given a fresh surname owned elsewhere",
         flush=True,
     )
     return evidence
@@ -2175,7 +2179,7 @@ def create_plan(
     )
     family_evidence = _apply_family_tree(
         result["clusters"], cluster_names, name_evidence, candidates, cores, catalog, source, policy,
-        preserved,
+        preserved, api,
     )
     routed = list(preserved) + list(unusable)
     refinement.rename_evidence(refinement_evidence, cluster_names)
@@ -2522,8 +2526,11 @@ def _reset_name_file(plan, source, category, name):
     renamed = {}
     for family in (plan.get("familyNaming") or {}).get("families", []):
         for member in family["members"]:
-            if member["status"] == "renamed" and member.get("folder"):
-                renamed[member["folder"]] = (member["previousName"], family["surname"])
+            if member["status"].startswith("renamed") and member.get("folder"):
+                displaced = family.get("displacedFrom")
+                why = (f"surname {displaced['surname']} belongs to the family of {displaced['owner']}"
+                       if displaced else f"family {family['surname']}")
+                renamed[member["folder"]] = (member["previousName"], why)
     previous, surname = renamed.get(f"{category}/{name}", (name, None))
     former = sorted({
         row["oldFolder"] for row in plan["photos"]
@@ -2537,7 +2544,7 @@ def _reset_name_file(plan, source, category, name):
     if len(names) == 1:
         history = names[0].read_text(encoding="utf-8").splitlines()[1:]
         date = plan.get("createdAt", "")[:10]
-        lines = [f"name: {name}", *history, f"{date} renamed from {previous} (family {surname})"]
+        lines = [f"name: {name}", *history, f"{date} renamed from {previous} ({surname})"]
         return file_name, None, "\n".join(lines) + "\n"
     return file_name, None, f"name: {name}\nClean sandbox rebuild; prior folders recorded in run.json\n"
 

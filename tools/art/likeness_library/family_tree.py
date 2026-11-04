@@ -5,8 +5,11 @@ An identity joins the family of its closest Angel/Sister when that score reaches
 configured band (yellow by default); otherwise it links to its closest other identity
 in that band. Connected links form one family whose surname comes from the cast root
 (configured override, then recorded person name) or, failing that, the oldest member.
+Surnames are exclusive: Angel/Sister families claim theirs first, then other families and lone
+identities by age; an identity whose surname another family owns gets a fresh unused surname.
 """
 import collections
+import hashlib
 import uuid
 
 import numpy as np
@@ -56,11 +59,29 @@ def _age_key(member):
             member["name"].casefold())
 
 
-def plan(identities, cast, policy, *, reserved=()):
+def _rotated(seed, pool):
+    pool = list(pool)
+    if not pool:
+        return []
+    start = int(hashlib.sha1(seed.encode("utf-8")).hexdigest(), 16) % len(pool)
+    return pool[start:] + pool[:start]
+
+
+def _fresh_surname(seed, taken, pool):
+    return next((name for name in _rotated("surname:" + seed, pool) if name.casefold() not in taken), None)
+
+
+def _fresh_first_name(seed, surname, used, pool):
+    return next((f"{first} {surname}" for first in _rotated("first:" + seed, pool)
+                 if f"{first} {surname}".casefold() not in used), None)
+
+
+def plan(identities, cast, policy, *, reserved=(), surnames=(), first_names=()):
     """Return ({identity key: new name}, evidence) for one frozen final membership.
 
     identities: {key: {"name", "vector", "photoCount", "ageDate", "retained"}}
     cast: {folder: {"vector", "personName"}} for fixed Angels/Sisters slots.
+    surnames/first_names: pools for fresh names when a surname belongs to another family or a name is taken.
     """
     config = settings(policy)
     minimum = config["minimum"]
@@ -123,27 +144,57 @@ def plan(identities, cast, policy, *, reserved=()):
     used = {identities[key]["name"].casefold() for key in identities}
     used |= {name.casefold() for name in reserved if name}
     used |= {entry["personName"].casefold() for entry in cast.values() if entry.get("personName")}
-    renames, families, cast_evidence = {}, [], {}
-    for root, members in sorted(components.items(), key=lambda item: item[0].casefold()):
+    overrides = {key.casefold(): value for key, value in config["overrides"].items()}
+    groups = []
+    for root, members in components.items():
         root_cast = root if root in cast else None
         ordered = sorted(members, key=lambda key: _age_key(identities[key]))
-        if not root_cast and len(ordered) < 2:
-            continue
-        surname, source = None, None
+        preferred = []
         if root_cast:
-            override = {key.casefold(): value for key, value in config["overrides"].items()}.get(root_cast.casefold())
+            if overrides.get(root_cast.casefold()):
+                preferred.append((overrides[root_cast.casefold()], "configured"))
             recorded = surname_of(cast[root_cast].get("personName") or "")
-            if override:
-                surname, source = override, "configured"
-            elif recorded:
-                surname, source = recorded, "recorded person name"
-        if not surname:
-            for key in ordered:
-                surname = surname_of(identities[key]["name"])
-                if surname:
-                    source = "adopted from oldest family member " + identities[key]["name"]
-                    break
-        if not surname:
+            if recorded:
+                preferred.append((recorded, "recorded person name"))
+        for index, key in enumerate(ordered):
+            own = surname_of(identities[key]["name"])
+            if own:
+                if not root_cast and len(ordered) == 1:
+                    label = "own surname"
+                elif index == 0:
+                    label = "adopted from oldest family member " + identities[key]["name"]
+                else:
+                    label = ("adopted from family member " + identities[key]["name"]
+                             + "; older surnames belong to other families")
+                preferred.append((own, label))
+        if preferred:
+            priority = (0, root.casefold()) if root_cast else (1, _age_key(identities[ordered[0]]), root.casefold())
+            groups.append({"root": root, "cast": root_cast, "ordered": ordered, "preferred": preferred,
+                           "priority": priority})
+    # Every surname anywhere in the frozen roster; a fresh surname must be new to all of them.
+    held = {surname_of(name).casefold() for name in used if surname_of(name)}
+    held |= {value.casefold() for value in overrides.values()}
+    owned, allocated = {}, {}
+    for group in sorted(groups, key=lambda item: item["priority"]):
+        choice = next(((name, label) for name, label in group["preferred"] if name.casefold() not in owned), None)
+        displaced = None
+        if choice is None:
+            wanted = group["preferred"][0][0]
+            displaced = {"surname": wanted, "owner": owned[wanted.casefold()]}
+            fresh = _fresh_surname(group["root"], held | set(owned), surnames)
+            if fresh is None:
+                choice = (wanted, "shared: no unused surname available")
+            else:
+                choice = (fresh, f"fresh surname; {wanted} belongs to the family of {displaced['owner']}")
+                held.add(fresh.casefold())
+        owned.setdefault(choice[0].casefold(), group["root"])
+        allocated[group["root"]] = (choice[0], choice[1], displaced)
+
+    renames, families, cast_evidence = {}, [], {}
+    for group in sorted(groups, key=lambda item: item["root"].casefold()):
+        root_cast, ordered = group["cast"], group["ordered"]
+        surname, source, displaced = allocated[group["root"]]
+        if not root_cast and len(ordered) < 2 and displaced is None:
             continue
         reference = root_cast or ordered[0]
         rows = []
@@ -153,7 +204,14 @@ def plan(identities, cast, policy, *, reserved=()):
             status = "unchanged"
             if proposed.casefold() != current.casefold():
                 if proposed.casefold() in used:
-                    status, proposed = "collision kept previous name", current
+                    alternative = _fresh_first_name(key, surname, used, first_names)
+                    if alternative is None:
+                        status, proposed = "collision kept previous name", current
+                    else:
+                        used.discard(current.casefold())
+                        used.add(alternative.casefold())
+                        renames[key] = proposed = alternative
+                        status = "renamed (first name changed to avoid an existing name)"
                 else:
                     used.discard(current.casefold())
                     used.add(proposed.casefold())
@@ -171,6 +229,8 @@ def plan(identities, cast, policy, *, reserved=()):
             "id": family_id(reference), "root": reference, "rootKind": "cast" if root_cast else "identity",
             "surname": surname, "surnameSource": source, "members": rows,
         }
+        if displaced:
+            family["displacedFrom"] = displaced
         families.append(family)
         if root_cast:
             person_name = cast[root_cast].get("personName")
@@ -188,9 +248,12 @@ def plan(identities, cast, policy, *, reserved=()):
         "enabled": True, "linkBand": config["band"], "linkMinimum": minimum,
         "rule": ("closest Angel/Sister at or above the link band, otherwise closest other identity at or "
                  "above it; connected links share the cast root's surname (configured, then recorded) "
-                 "or the oldest member's surname. Presentation only, never matching evidence."),
+                 "or the oldest member's surname. Each surname belongs to one family: Angel/Sister families claim "
+                 "first, then the oldest; anyone else holding a claimed surname gets a fresh unused one. "
+                 "Presentation only, never matching evidence."),
         "families": families, "cast": cast_evidence,
         "linkedIdentityCount": len(parents), "renamedIdentityCount": len(renames),
+        "displacedFamilyCount": sum(1 for family in families if family.get("displacedFrom")),
         "unlinkedIdentityCount": sum(1 for key in identities if key not in parents and not any(
             link["to"] == key for link in parents.values())),
     }

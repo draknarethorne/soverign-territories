@@ -27,7 +27,8 @@ Decisions (Nov 4, user):
 | Link threshold | Wherever the yellow band starts (`scoreBands.yellow.minimum`, now 0.30), so the score colour matches the logic. Orange/red never link. |
 | Tree | An identity links to its closest Angel/Sister at or above the band; otherwise to its closest other Model/Prospect/Potential at or above it. Connected links form one family tree (chains allowed). |
 | Surname | Cast root: configured override, then the surname of the Angel/Sister's recorded original person name (never Thorne by default). Without one, the tree adopts the oldest member's surname upward and every member takes it downward. |
-| Angelica | Family surname Hadley (`castSurnameOverrides`), recorded as current person name Angelica Hadley. |
+| Angelica (first decision, superseded below) | Family surname Hadley (`castSurnameOverrides`), recorded as current person name Angelica Hadley. |
+| Exclusive surnames (Nov 4 10:38) | One surname, one family. Angelica keeps her recorded surname Vale (override removed). Angel/Sister families claim their surnames first, then other families and lone identities by the age of their oldest member. Anyone else holding a claimed surname keeps their first name and gets a fresh surname that nobody uses. A family-member rename that would duplicate an existing full name changes the first name instead. |
 | Production | Self-heals on the next run there; no hand edits. |
 
 Built: `familyNaming` policy section and schema; `family_tree.py`; the rebase
@@ -35,7 +36,9 @@ plan applies it after membership/name continuity and before destinations,
 records catalogue `names`/`family` for every member and the cast root, carries
 `z_` history forward with `renamed from <old> (family <surname>)`, and the recap
 adds a Families section plus family status per identity. Name collisions keep
-the previous name and are reported. New invented names prefer unused surnames.
+the previous name only when no fresh first name is available. Unrelated holders of
+a claimed surname are recorded with `displacedFrom` and a `z_` line naming the
+owning family. New invented names prefer unused surnames.
 `--replan` now also accepts an undone install, setting that attempt aside as
 evidence, so the re-run reuses the verified intake and measurements. The
 cast person's `z_` file stays as provenance; the catalogue carries the current
@@ -516,5 +519,21 @@ I think that Fia Hadley and Freya Hadley are either Angelica or a sister of her 
 
 ````text
 Angelica can be Hadley - since that's already a name - we'd need to update her production data and the copy we snapped into the Sandbox so we don't need to re-copy that all again and start over - unless that's actually what we're going to end up needing to do.  Any others Sisters or Angels missing family names also need to be assigned in Production and Sandbox.  I guess what we could do is have logic to take the oldest family name if the Sister or Angel doesn't have it and that's where Hadley would get assigned upwards to Angelica and then downwards in the tree.  Maybe that'll also "fix" up Production when we run there - so we don't actually need to fix Production by hand.  How about that as a recommended option.  2) Each Sister should have their own family name that's not thorne as part of their original names - same with all angels.  It's just that Angelica is Angelica in both senses, but the others should all have family names from their original person name.  Again, if not - we would adopt upwards from the oldest family name within the tree.  That way it self heals both up and down.  3)  I would like the link to match where ever the yellow band covers - that way the visual of the score and color match with the logic.  That makes more sense to me than just using 0.40 to start.   We do need to build out the entire family naming - I thought that was done, but somehow we missed that.  So, go ahead and build that all and then tell me when we're ready to start the re-run of whatever step we can pickup and re-run from.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 4 10:38 chat: reverse naming (verbatim)
+
+Coverage: exclusive surnames, Angelica keeping Vale, and pushing unrelated
+holders out -> the "Exclusive surnames" decision row above; tested in
+`test_family_tree`; real results confirmed by N15/N7.
+
+<!-- markdownlint-disable MD013 -->
+````text
+Sorry - but Angelica has a name Angelica Vale as part of her z_ file ... so will this rename her to Hadley in the process or what happens to Vale?  We don't need Angelica set to Hadley if the Vale name makes sense - however we have other Vales so that's where I was thinking Hadley makes sense - since I don't know her actual original name.
+````
+
+````text
+I almost feel like we also need a reverse naming to ensure there aren't re-used family names that don't align to the family by score.  If we did keep as the name for Angelica and brought in all related to her and pushed out all that weren't - would that be reasonable because I don't want to be confused if random names are assigned and they aren't part of the family.
 ````
 <!-- markdownlint-enable MD013 -->

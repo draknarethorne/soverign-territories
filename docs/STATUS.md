@@ -8,8 +8,10 @@ been decided, what is open, and what is next. Rules live in the canonical docs l
 renamed non-cast identity joins the family of its closest cast member when that
 score is yellow (0.30) or better, otherwise of its closest peer identity at
 yellow or better, and takes that family's surname. Each Angel/Sister's family
-surname is the surname of their recorded original person name; Angelica is
-Hadley (policy override). Without one, the tree adopts the oldest member's
+surname is the surname of their recorded original person name, so Angelica
+stays Vale. Surnames are exclusive: one surname, one family. Angels/Sisters claim
+theirs first, then the oldest; unrelated holders keep their first name and get a
+fresh unused surname. Without a recorded surname, the tree adopts the oldest member's
 surname upward. The policy key is `familyNaming`. It runs inside the clean-rebase
 plan, records `names`/`family` in the catalogue, carries `z_` name history
 forward, and shows a Families section in the recap. Production self-heals on its
