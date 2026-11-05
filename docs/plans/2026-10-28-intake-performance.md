@@ -713,6 +713,16 @@ instrumentation and T18 owns processing-profile proposals; this does not
 activate T19 or authorize another full run. Storage/copy implementation belongs
 to [layout LY14](2026-11-02-library-layout.md#nov-4-copy-and-verification-proposals).
 
+**22:02 authorization update:** LY14c/LY14d/LY14e now own approved
+duplicate-first/verification reuse and explicit disposable sandbox recovery,
+then a fresh measured run; the raw user messages remain in the layout plan.
+Keep three separate axes: pixel-processing recipe, evidence storage
+FULL/LEAN, and recovery full/disposable. The user's desired future FAST
+profile can combine more aggressive processing, backup/rollback and reporting
+omissions, but its exact contract and quality trade-offs still belong to T18.
+Do not silently enable any FAST branch while implementing the approved
+LEAN/disposable recovery shortcut. FULL/Production stays protective.
+
 **Measured baseline:** 3,517 outcomes; four CPU workers. Intake end-to-end
 10,854 s (180m54s), of which the recorded preparation invocation is 10,382 s
 (173m02s). Previous intake was about 197 min for 2,814 outcomes: approximately

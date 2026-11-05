@@ -44,6 +44,7 @@ def load(folder):
 
 def save(folder, data):
     path = manifest_path(folder)
+    verification_reads.before_write(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     stage = path.with_suffix(".json.pending")
     stage.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
@@ -59,6 +60,8 @@ def save(folder, data):
     finally:
         if stage.exists():
             stage.unlink()
+    if verification_reads.active() is not None:
+        verification_reads.document(path, 64 * 1024 * 1024)
 
 
 def relative_target(source, framing):
@@ -165,6 +168,7 @@ def maintain(source, box, px, *, apply=False):
         stage = target.with_name(target.name + ".pending")
         try:
             if not target.exists() or digest(target) != expected:
+                verification_reads.before_write(target)
                 stage.write_bytes(payload)
                 os.replace(stage, target)
             data["entries"][relative.as_posix()] = {

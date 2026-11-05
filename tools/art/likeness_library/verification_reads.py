@@ -29,12 +29,14 @@ class ReadSession:
         self.started = time.perf_counter()
         self.hashes = {}
         self.documents = {}
+        self.document_sizes = {}
         self.directories = {}
         self.paths = {}
         self.manifests = {}
         self.prepared = {}
         self.source_claims = {}
         self.guarded = set()
+        self.invalidated = set()
         self.stats = {"contentReads": 0, "contentBytes": 0, "reusedHashes": 0,
                       "jsonLoads": 0, "directoryScans": 0, "pathChecks": 0,
                       "sealReads": 0, "sealBytes": 0}
@@ -92,11 +94,12 @@ class ReadSession:
                 raise ValueError(f"verification input changed during read: {path}")
             self.hashes[path] = digest
             self.documents[path] = json.loads(payload.decode("utf-8"))
+            self.document_sizes[path] = len(payload)
             self.stats["contentReads"] += 1
             self.stats["contentBytes"] += len(payload)
             self.stats["jsonLoads"] += 1
             self._progress("read", self.stats["contentReads"])
-        elif path.stat().st_size > limit:
+        elif self.document_sizes[path] > limit:
             raise ValueError(f"verification manifest exceeds {limit} bytes: {path}")
         return self.documents[path]
 
@@ -108,6 +111,17 @@ class ReadSession:
             self.directories[directory] = (exists, entries, self._entry_types(entries))
             self.stats["directoryScans"] += 1
         return self.directories[directory][1]
+
+    def invalidate(self, path):
+        """Check the old bytes before an intentional write; require fresh proof afterward."""
+        path = self._path(path)
+        if path in self.hashes and _digest(path) != self.hashes[path]:
+            raise ValueError(f"verification content changed before write: {path}")
+        self.hashes.pop(path, None)
+        self.documents.pop(path, None)
+        self.document_sizes.pop(path, None)
+        self.prepared.clear()
+        self.invalidated.add(path)
 
     @staticmethod
     def _entry_types(entries):
@@ -127,6 +141,8 @@ class ReadSession:
 
     def validate(self):
         """Never accept a reusable positive result from timestamps alone."""
+        if self.invalidated - self.hashes.keys():
+            raise ValueError(f"unverified write during verification: {sorted(self.invalidated - self.hashes.keys())}")
         for path in self.guarded:
             self._guard(path)
         for (root, relative), (expected, check) in self.paths.items():
@@ -182,3 +198,9 @@ def document(path, limit):
     if path.stat().st_size > limit:
         raise ValueError(f"verification manifest exceeds {limit} bytes: {path}")
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def before_write(path):
+    reads = active()
+    if reads is not None:
+        reads.invalidate(path)

@@ -46,7 +46,7 @@
 - [ ] T17 Capture recipe-aware run statistics and publish a compact intake summary with expandable/linked details: input/outcome counts, overlay types, each attempted/executed/skipped/failed step, reconstruction/composition, ... ([intake performance](plans/2026-10-28-intake-performance.md))
 - [ ] S27 Complete the isolated full replay, installed verification, Gallery/Overview/Review/history and materialized backup recovery; persist phase times, overlapping storage scopes, equality results and baseline seals. Show ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S30 After the replay blocker is resolved, audit real Various-to-Sister/Angel admissions, cast core/workflow retention, eligible low-score releases/Review/reassignment, and original-name plus surname presentation. ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
-- [ ] LY14c Before any further full re-run, fix early exact-content alias handling across incoming Various and the effective baseline. Reuse one prepared input per verified SHA/domain/recipe, prefer an existing assigned canonical, ... ([library layout](plans/2026-11-02-library-layout.md))
+- [ ] LY4 Reset the sandbox from production (`sandbox-reset --full` plus the carried bundle), run the clean LEAN rebase in place with per-step timings (Acronis off), verify Gallery/Overview/Review, then hand to storage S32/S27 and ... ([library layout](plans/2026-11-02-library-layout.md))
 - [ ] LY13 Cast-name collision. `Potentials\Camaris` is not a new identity: Production has had it since Oct 8 (two photos). Its `z_camaris_bloom.txt` says "Camaris Bloom", "returned to Potentials; replaced as Camaris by Ruby Eden" ... ([library layout](plans/2026-11-02-library-layout.md))
 
 **P2 (normal)**
@@ -83,7 +83,7 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-10-25-reference-rendering.md](plans/2026-10-25-reference-rendering.md) | holding | 27 |
 | [2026-10-28-intake-performance.md](plans/2026-10-28-intake-performance.md) | active | 7 |
 | [2026-10-28-storage-operations-and-retention.md](plans/2026-10-28-storage-operations-and-retention.md) | active | 13 |
-| [2026-11-02-library-layout.md](plans/2026-11-02-library-layout.md) | active | 2 |
+| [2026-11-02-library-layout.md](plans/2026-11-02-library-layout.md) | active | 1 |
 | [2026-11-02-sovereign-spelling-rename.md](plans/2026-11-02-sovereign-spelling-rename.md) | holding | 7 |
 
 </details>

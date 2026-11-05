@@ -3,7 +3,7 @@
 **Status:** active (LY1 decided Nov 2: all five recommendations accepted; LY2,
 LY3 publication/undo and LY5 implemented and tested Nov 2)
 
-**Queue focus:** LY14c, LY11, LY13, LY14, LY12, LY9, LY6, LY8
+**Queue focus:** LY4, LY11, LY13, LY14, LY12, LY9, LY6, LY8
 
 ## Nov 3: authorized new source rehearsal
 
@@ -424,7 +424,7 @@ check passed afterwards.
   both. A reports-only retry is selected when the run receipt is already
   `applied`; it never reapplies a hash-bound matching plan. Prior step logs and
   failed records are retained as numbered attempts and flow history.
-- [ ] **P1 ai** LY14c Before any further full re-run, fix early exact-content
+- [x] **P1 ai** LY14c Before any further full re-run, fix early exact-content
   alias handling across incoming Various and the effective baseline. Reuse
   one prepared input per verified SHA/domain/recipe, prefer an existing
   assigned canonical, and record every arrival as an alias rather than a new
@@ -434,6 +434,51 @@ check passed afterwards.
   arbitrary names, same-ID conflicts, protected/workflow decisions, source
   changes, install and undo. The installed run is a diagnostic baseline,
   not deduplication acceptance; do not rewrite its bound receipts.
+- [x] **P1 ai** LY14d Implement/test the Nov 4 22:02 approved disposable
+  sandbox recovery policy: no full baseline backup or pre-intake derivative
+  generation, keep transaction rollback until publication is verified, then
+  retire it. Retain source/alias evidence and movement/Families reports.
+  Bind recovery mode to the saved run; refuse Production/FULL evidence and
+  explicit undo. FULL retains its existing backup/undo contract. FAST's
+  stronger omissions remain a separate unimplemented profile.
+- [x] **P1 ai** LY14e Reuse operation-local verification through derivative
+  and detail phases, with checked invalidation before intentional metadata
+  writes and a final content/path seal. Cache only within the operation;
+  tampered evidence must still refuse. Cover read-only gallery maintenance
+  without extending a stale cache across its apply-time writes. New-run
+  measurement transfers explicitly to LY4/N15, not an implementation claim.
+
+**Prerequisite validation:** the 151-test targeted run's only failure was an
+undersized synthetic headshot fixture, corrected and rerun. Final 17 focused
+tests pass (one symlink-privilege skip), including byte-exact cached/uncached
+derivatives, stale/tamper rejection, interrupted/unknown/edited rollback
+cleanup, transactional publication failure and FULL exact undo.
+All 399 likeness-library and 67 viewer/maintenance tests pass.
+Supported launcher preview/help, generated todo and routine hygiene/data
+checks pass. No subject-detection or crop/erase quality guard was removed.
+
+**Nov 4 22:02 fresh-run authorization:** after LY14c/LY14d/LY14e's focused
+tests and hygiene pass, reset the sandbox Working directory completely from
+current Production and run `fresh-20261104-lean2` with
+`--recovery-mode disposable`, keeping `--cast-seeds core
+--record-core-protection`. N15/LY4 still own whole-run acceptance; LY10's
+earlier core comparison is already complete. Do not
+replay the installed diagnostic result as proof. Preserve only required
+historical receipts/source evidence through the supported reset; no
+baseline backup of the discarded sandbox. The last run did use core seeds:
+209 cast photos were released and 1,057 retained. Non-core photos remain
+eligible to leave; family surnames do not protect membership.
+
+**Read-only Production preflight (22:18):** excluding Artists as the full
+sandbox reset does, the revised overlay plans **3,290 outcomes and 3,290
+distinct input SHA-256 values**, versus the diagnostic run's 3,517 outcomes.
+The 2,421 assigned inputs plus 3,048 Various arrivals become 2,848 incoming
+representatives with 200 aliases, 175 same-ID newer-byte replacements and
+869 new canonical inputs. This removes all 227 extra matching/preparation
+rows measured above without deleting Production sources. The scoped scan
+took 24.84 s; it proves input enumeration, not full-run performance or
+placement acceptance. Evidence:
+`tmp/session-logs/2026-11-04/production-alias-preflight.json`.
 
 **Nov 4 measured bottlenecks** (the `fresh-20261103-core` run; the apply log had
 no timestamps outside verification, so derivative time is a 30-photo benchmark):
@@ -812,5 +857,18 @@ space reconciliation -> copy/verification proposals above; no source deletion):
 
 ````text
 I also don't understand the increase in size from the previous run - I still feel like we're making too many copies or backups during the process or something is off in how we're handling things.  So we definitely have some issues along the way.  I did include a bunch more items on the Production Various/gallery that are duplicates of many already processed - I was planning on sending those in for complete re-processing in case I missed items - so our de-duplication of photos should be catching that and throwing them out as duplicates.  So maybe that's an issue that doesn't work well in our system.
+````
+
+Chat (Nov 4, 22:02 continuation; coverage: fresh-reset acceptance -> N15/LY4;
+core-only retention -> existing cast/engine policy, not whole-folder protection;
+disposable recovery and speed fixes -> LY14c/LY14d/LY14e. Production/FULL stay
+protected; FAST is not silently implemented):
+
+````text
+Don't stop the analysis you are doing, just want to make sure that If we again need to start completely fresh sandbox working directory - that's what I expect after we find and fix the issues with the performance concerns, duplicates and space issues from the last run.  We need those identified so we can get to a clean run that meets my expectations.
+
+And when we run we're just supposed to protect the core of the sisters and angels in the run as well - so that if some of their photos move out - that should be happening.  I don't know if that was part of the run we did this last time or not - but that was one of the key things we were working on testing before we worked on the family tree fixes.  So things are complicated, yes - but we'll get there eventually.
+
+You can start the totally fresh run when you are satisfied you have address some of the key issues that are causing the major slowness and how it all works.  Adding checks or threading to places where it makes sense to speed things up when in LEAN mode and decrease the number of back-ups and extra copies.  Maybe we can skip some roll-backs since we are in the sandbox and don't need backups as we'll just start fresh again.  So that's the type of thinking I am looking for.  When it comes to production or a FULL run then we need those items, but LEAN should assume a positive outcome or a fresh rebase in the sandbox.  FULL is protective and still needs to exist - but LEAN is LEAN.  The FAST one is supposed to be even more aggressive at skipping all backups, rollbacks and cutting corners.  LEAN is the balance on quality and speed - but the rollbacks are actually less important.  Showing what went where and the report is a LEAN item - but maybe in FAST we don't even track all that and that's a key difference.  So, just more items to digest before you get through and re-run everything while I am asleep.
 ````
 <!-- markdownlint-enable MD013 -->

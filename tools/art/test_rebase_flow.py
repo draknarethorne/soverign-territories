@@ -5,6 +5,7 @@ import sys
 import tempfile
 import unittest
 from contextlib import redirect_stdout
+from unittest import mock
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 
@@ -53,6 +54,19 @@ class RebaseFlowTests(unittest.TestCase):
         self.assertEqual(by_id["intake"]["argv"][-2:], ["--workers", "6"])
         self.assertIn("--preserve-legacy-derivatives", by_id["install"]["argv"])
         self.assertIn(str(self.run / "policy.json"), by_id["gallery-check"]["argv"])
+
+    def test_cli_binds_disposable_mode_and_refuses_a_later_mode_switch(self):
+        (self.working.parent / "Source").mkdir(parents=True)
+        argv = ["--root", str(self.working), "--run", "trial", "--recovery-mode", "disposable", "--apply"]
+        with mock.patch.object(rebase_flow, "flow_paths", return_value=self.paths), \
+                mock.patch.object(rebase_flow, "run_flow", return_value=0) as run, \
+                redirect_stdout(io.StringIO()):
+            self.assertEqual(rebase_flow.main(argv), 0)
+            state = run.call_args.args[1]
+            self.assertEqual(state["recoveryMode"], "disposable")
+            self.paths[1].write_text(json.dumps(state), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "recovery mode differs"):
+                rebase_flow.main(["--root", str(self.working), "--run", "trial", "--apply"])
 
     def test_flow_records_phases_photos_space_and_recap(self):
         flow = [
@@ -167,6 +181,17 @@ class RebaseFlowTests(unittest.TestCase):
         real = rebase_flow.steps(self.working, self.run, 4)
         self.assertEqual([step["id"] for step in real if step.get("optional")],
                          ["reset-preview", "intake-preview", "intake-check"])
+
+    def test_disposable_skips_preintake_derivatives_and_backup_even_with_previews(self):
+        flow = rebase_flow.steps(self.working, self.run, 4, "disposable")
+        state = rebase_flow.load_state(self.paths[1], self.working, self.run, 4, flow)
+        rebase_flow.apply_optional(state, flow, True)
+        for name in ("originals", "originals-check", "backup"):
+            self.assertEqual(state["steps"][name]["status"], "skipped")
+        for step in flow:
+            if step["argv"][0] == "bin\\sandbox-rebase.cmd":
+                self.assertIn("--recovery-mode", step["argv"])
+                self.assertIn("disposable", step["argv"])
 
     def test_progress_eta_and_heartbeat(self):
         live = {"id": "intake", "started": 0.0, "last_output": 700.0, "phases": [],

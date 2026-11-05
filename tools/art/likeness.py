@@ -3519,6 +3519,9 @@ def main(argv=None, embedder=None, *, domain="general"):
     s.add_argument("--storage-mode", choices=("full", "lean"),
                    help="new-run evidence storage; omitted resumes the saved mode or starts LEAN; "
                         "LEAN shares installed native bytes and pads only the recommendation")
+    s.add_argument("--recovery-mode", choices=("full", "disposable"),
+                   help="sandbox rebase only: full requires backup and keeps undo; disposable requires LEAN "
+                        "evidence, skips baseline backup and retires rollback after verified publication")
     s.add_argument("--include-current-various", action="store_true",
                    help="stage current Working Various images over matching immutable IDs and include genuinely new images")
     s.add_argument("--baseline", choices=("source", "working"),

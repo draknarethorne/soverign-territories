@@ -241,7 +241,10 @@ def _curation_inventory(layout, catalog=None):
             else:
                 seen.add(photo_id)
         elif relative not in source_rows:
-            raise ValueError(f"current photo lacks immutable continuity: {relative}")
+            alias = overlay_inputs.get(relative, {})
+            if (not alias or alias.get("sha256") != source_rows.get(alias.get("target"))
+                    or metadata.content_sha256(path) != alias["sha256"]):
+                raise ValueError(f"current photo lacks immutable continuity: {relative}")
         current[relative] = metadata.content_sha256(path)
     if catalog:
         missing = (set(catalog["photos"]) & source_ids) - seen
@@ -279,6 +282,11 @@ def _working_baseline(layout):
 def _current_various_overlay_rows(layout, source_rows=None):
     """Map active Working Various images to immutable IDs without losing either byte version."""
     import image_preparation
+    from tools.art import originals
+
+    def input_id(name):
+        return (metadata.photo_id_from_name(name)
+                or metadata.photo_id_from_name(originals.standard_name(name, "incoming")))
 
     if source_rows is None:
         source_rows = clean_preparation.inventory(layout)
@@ -287,7 +295,7 @@ def _current_various_overlay_rows(layout, source_rows=None):
     for relative in source_rows:
         if relative.startswith("Artists/"):
             continue
-        photo_id = metadata.photo_id_from_name(pathlib.PurePosixPath(relative).name)
+        photo_id = input_id(pathlib.PurePosixPath(relative).name)
         if photo_id:
             source_ids[photo_id].append(relative)
 
@@ -298,7 +306,7 @@ def _current_various_overlay_rows(layout, source_rows=None):
     current_ids = collections.defaultdict(list)
     current_without_id = []
     for path in current_paths:
-        photo_id = metadata.photo_id_from_name(path.name)
+        photo_id = input_id(path.name)
         if photo_id:
             current_ids[photo_id].append(path)
         else:
@@ -355,12 +363,12 @@ def _current_various_overlay_rows(layout, source_rows=None):
 
         if immutable_matches:
             original_hash = layout["manifest_files"][immutable_matches[0]][1]
-            originals = grouped.get(original_hash, [])
-            if len(originals) != 1:
+            original_paths = grouped.get(original_hash, [])
+            if len(original_paths) != 1:
                 raise ValueError(
                     f"duplicate current Various ID has no unique byte-verified immutable match: {photo_id}"
                 )
-            canonical = originals[0]
+            canonical = original_paths[0]
             add(canonical, immutable_matches[0], photo_id)
             for digest, duplicates in sorted(grouped.items()):
                 if digest == original_hash:
@@ -384,7 +392,34 @@ def _current_various_overlay_rows(layout, source_rows=None):
     for path in sorted(current_without_id, key=lambda item: item.relative_to(layout["working_root"]).as_posix().casefold()):
         relative = path.relative_to(layout["working_root"]).as_posix()
         add(path, relative, None)
-    return source_rows, rows
+    # Resolve exact incoming aliases against the final byte versions, not replaced baseline bytes.
+    replacements = {row["target"]: row["sha256"] for row in rows}
+    canonical = {}
+    for relative, digest in sorted(source_rows.items(), key=lambda item: item[0].casefold()):
+        if relative.startswith("Artists/") or replacements.get(relative, digest) != digest:
+            continue
+        canonical.setdefault(digest, relative)
+    representatives = {}
+    for row in sorted(rows, key=lambda item: (
+            item["target"] not in source_rows, item["photoId"] is None, item["target"].casefold())):
+        if len(pathlib.PurePosixPath(row["current"]).parts) > 3:
+            representatives[row["target"]] = row
+            continue
+        replacement = row["target"] in source_rows and source_rows[row["target"]] != row["sha256"]
+        target = row["target"] if replacement else canonical.setdefault(row["sha256"], row["target"])
+        canonical.setdefault(row["sha256"], target)
+        if target not in representatives:
+            representatives[target] = {
+                **row, "target": target,
+                "photoId": (row["photoId"] if target == row["target"]
+                            else input_id(pathlib.PurePosixPath(target).name)),
+                "aliases": list(row["aliases"]),
+            }
+        else:
+            representatives[target]["aliases"].extend([
+                {"current": row["current"], "sha256": row["sha256"]}, *row["aliases"],
+            ])
+    return source_rows, list(representatives.values())
 
 
 def _verify_source_overlay(layout, run):
@@ -2325,6 +2360,7 @@ def create_plan(
             "manifestSHA256": metadata.content_sha256(preparation[0] / "manifest.json"),
             "recipe": preparation[1]["recipe"],
             "inputCount": len(prepared_rows),
+            "storageMode": preparation[1].get("storageMode", "full"),
             "artistCount": sum(row["source"].startswith("Artists/") for row in prepared_rows.values()),
         }
         for name in ("clean_preparation.py", "retained_preparation.py", "derivatives.py",
@@ -2572,6 +2608,9 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
 
     phase = _phase_timer("Install")
     working, source = layout["working_root"], layout["source_root"]
+    disposable = plan.get("recoveryMode", "full") == "disposable"
+    if disposable:
+        _require_disposable_sandbox(layout, run, plan)
     if plan.get("preparation") and _curation_inventory(layout) != plan["workingInputs"]:
         raise ValueError("Working inputs changed since matching preview; regenerate preview")
     current_catalog_path = metadata.path_for_root(working)
@@ -2592,7 +2631,10 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
             path = working.joinpath(*parts)
             if not path.is_file() or metadata.content_sha256(path) != expected_hash:
                 raise ValueError(f"Working cast reference differs from Source: {path}")
-    library_backup.verify_backup(library_backup.latest_work_root_backup(working))
+    if disposable:
+        print("DISPOSABLE SANDBOX: no baseline backup; recovery is a full reset, not undo.", flush=True)
+    else:
+        library_backup.verify_backup(library_backup.latest_work_root_backup(working))
     phase("preflight and backup verification")
     staged, previous = run / "staged", run / "previous"
     if not resume_install and (staged.exists() or previous.exists()):
@@ -2666,23 +2708,29 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
                 (gallery / file_name).write_text(payload, encoding="utf-8")
     phase("staging copies and retained preparation")
     if plan.get("preparation") and not resume_install:
-        from . import derivatives
+        from . import derivatives, verification_reads
 
         measured = json.loads((run / "likeness-cache.json").read_text(encoding="utf-8"))["emb"]
-        for row in plan["photos"]:
-            path = staged / row["destination"]
-            face = measured.get(hashlib.sha1(path.read_bytes()).hexdigest(), {})
-            if row["preparationOutcome"] == "unprocessable":
-                print(f"DERIVATIVE HOLD: undecodable source retained without derivatives: {row['source']}")
-                continue
-            _, messages = derivatives.maintain(path, face.get("box"), face.get("px", 0), apply=True)
-            for message in messages:
-                print(f"DERIVATIVE: {message}")
+        with verification_reads.session(staged, label="Install derivatives"):
+            for index, row in enumerate(plan["photos"], 1):
+                path = staged / row["destination"]
+                face = measured.get(hashlib.sha1(path.read_bytes()).hexdigest(), {})
+                if row["preparationOutcome"] == "unprocessable":
+                    print(f"DERIVATIVE HOLD: undecodable source retained without derivatives: {row['source']}")
+                    continue
+                _, messages = derivatives.maintain(path, face.get("box"), face.get("px", 0), apply=True)
+                for message in messages:
+                    print(f"DERIVATIVE: {message}")
+                if index % 100 == 0:
+                    print(f"DERIVATIVES: {index}/{len(plan['photos'])} photos", flush=True)
         phase("944x1104 derivatives")
-        for row in plan["photos"]:
-            retained_preparation.refresh_detail(
-                staged, staged / row["destination"], include_gallery_navigation=True,
-            )
+        with verification_reads.session(staged, label="Install details"):
+            for index, row in enumerate(plan["photos"], 1):
+                retained_preparation.refresh_detail(
+                    staged, staged / row["destination"], include_gallery_navigation=True,
+                )
+                if index % 100 == 0:
+                    print(f"DETAILS: {index}/{len(plan['photos'])} photos", flush=True)
         phase("detail pages")
         plan["publishedFiles"] = [
             {"path": path.relative_to(staged).as_posix(), "sha256": metadata.content_sha256(path)}
@@ -2780,6 +2828,43 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
             if directory.is_dir() and not any(directory.iterdir()):
                 directory.rmdir()
         raise
+    if disposable:
+        retire_disposable_rollback(layout, run, plan)
+
+
+def _require_disposable_sandbox(layout, run, plan):
+    working = layout["working_root"]
+    if (not sandbox.is_sandbox_working_path(working)
+            or working.parent != layout["sandbox_root"]
+            or not (working.parent / "Source").is_dir()
+            or not (working.parent / "source-manifest.json").is_file()
+            or pathlib.Path(run).parent != working / "_sandbox-state"
+            or plan.get("preparation", {}).get("storageMode") != "lean"):
+        raise ValueError("disposable recovery requires a verified sandbox-local LEAN prepared run")
+    for path in (working, working.parent, pathlib.Path(run)):
+        if _is_reparse_point(path):
+            raise ValueError(f"linked disposable sandbox path: {path}")
+
+
+def retire_disposable_rollback(layout, run, plan):
+    """Keep transaction rollback until publication is verified, then recover by fresh reset only."""
+    _require_disposable_sandbox(layout, run, plan)
+    if plan["status"] != "applied":
+        raise ValueError("cannot retire rollback before verified publication")
+    _check_publication(layout["working_root"], plan)
+    previous = _publication_path(pathlib.Path(run), "previous")
+    expected = dict(plan.get("previousCategoryFiles", {}))
+    expected.update({f"external/{key}": value for key, value in plan.get("previousExternalHashes", {}).items()})
+    if previous.exists():
+        for path in _source_files(previous):
+            relative = path.relative_to(previous).as_posix()
+            if expected.get(relative) != metadata.content_sha256(path):
+                raise ValueError(f"unverified disposable rollback artifact: {path}")
+        sandbox._remove_tree(previous)
+    plan["rollbackRetired"] = True
+    _write_json(pathlib.Path(run) / "run.json", plan)
+    print("DISPOSABLE SANDBOX: transaction rollback retired; exact source evidence and movement reports retained.",
+          flush=True)
 
 
 def _restore_catalog(path, data):
@@ -2794,6 +2879,8 @@ def _restore_catalog(path, data):
 
 def undo_plan(layout, run, plan):
     """Restore saved categories and withdraw only this run's verified cast additions."""
+    if plan.get("recoveryMode") == "disposable":
+        raise ValueError("disposable sandbox has no undo contract; use a full sandbox reset")
     if plan["status"] != "applied":
         raise ValueError("only an applied clean rebase can be undone")
     working = layout["working_root"]
@@ -2982,6 +3069,11 @@ def command(args, api):
         raise ValueError("run directory must be outside identity category roots")
     intake_only = getattr(args, "intake_only", False)
     storage_mode = getattr(args, "storage_mode", None)
+    recovery_mode = getattr(args, "recovery_mode", None)
+    if recovery_mode not in (None, "full", "disposable"):
+        raise ValueError("recovery mode must be full or disposable")
+    if recovery_mode == "disposable" and storage_mode == "full":
+        raise ValueError("disposable sandbox recovery requires LEAN storage")
     if storage_mode not in (None, "full", "lean"):
         raise ValueError("storage mode must be full or lean")
     resume_install = getattr(args, "resume_install", False)
@@ -3054,6 +3146,11 @@ def command(args, api):
     elif include_various and not (args.check or args.undo or args.replan):
         layout = _create_source_overlay(layout, run, current_working=current_working)
     plan_path = run / "run.json"
+    if (run / "intake.json").exists():
+        saved_recovery = json.loads((run / "intake.json").read_text(encoding="utf-8")).get("recoveryMode", "full")
+        if recovery_mode is not None and recovery_mode != saved_recovery:
+            raise ValueError("saved intake recovery mode differs; use the saved mode or a new run")
+        recovery_mode = saved_recovery
     if storage_mode is not None and (run / "intake.json").exists():
         _, saved_preparation = clean_preparation.verify(layout, run)
         if saved_preparation.get("storageMode", "full") != storage_mode:
@@ -3063,7 +3160,7 @@ def command(args, api):
             output, data = clean_preparation.verify(layout, run)
         elif args.apply:
             output, data = clean_preparation.prepare(
-                layout, run, getattr(args, "workers", None), storage_mode=storage_mode)
+                layout, run, getattr(args, "workers", None), storage_mode=storage_mode, recovery_mode=recovery_mode)
             from . import preparation_history
 
             storage_cfg = api.cw.load_cfg()
@@ -3078,6 +3175,8 @@ def command(args, api):
         return {"status": "intake", "inputCount": len(data["photos"]), "report": str(output / "index.html")}
     if plan_path.exists():
         plan = json.loads(plan_path.read_text(encoding="utf-8"))
+        if recovery_mode is not None and recovery_mode != plan.get("recoveryMode", "full"):
+            raise ValueError("saved run recovery mode differs; use the saved mode or a new run")
         if (
             (plan["policy"] != policy or plan.get("castSeedPolicy", "all") != cast_seeds)
             and not (args.replan or args.undo or args.check)
@@ -3088,6 +3187,7 @@ def command(args, api):
         if plan.get("sourceOverlaySHA256") != layout.get("source_overlay_sha256"):
             raise ValueError("saved plan source overlay differs; use the same verified overlay")
         if args.replan:
+            saved_recovery_mode = plan.get("recoveryMode", "full")
             if (
                 plan["status"] not in ("preview", "undone") or not plan["embeddingCacheStartedEmpty"]
                 or plan["embeddingCache"] != str(run / "likeness-cache.json")
@@ -3105,6 +3205,7 @@ def command(args, api):
                 preparation=clean_preparation.verify(layout, run) if plan.get("preparation") else None,
                 cast_seeds=cast_seeds,
             )
+            plan["recoveryMode"] = recovery_mode or saved_recovery_mode
             _write_json(plan_path, plan)
     else:
         if args.check or args.undo:
@@ -3114,7 +3215,7 @@ def command(args, api):
         if args.replan and not ((run / "intake.json").is_file() and (run / "likeness-cache.json").is_file()):
             raise ValueError("resuming incomplete matching requires verified preparation and saved measurements")
         preparation = clean_preparation.prepare(
-            layout, run, getattr(args, "workers", None), storage_mode=storage_mode)
+            layout, run, getattr(args, "workers", None), storage_mode=storage_mode, recovery_mode=recovery_mode)
         from . import preparation_history
 
         storage_cfg = api.cw.load_cfg()
@@ -3129,6 +3230,9 @@ def command(args, api):
             reuse_measurements=args.replan, preparation=preparation,
             cast_seeds=cast_seeds,
         )
+        plan["recoveryMode"] = recovery_mode or "full"
+        if plan["recoveryMode"] == "disposable":
+            _require_disposable_sandbox(layout, run, plan)
         _write_json(plan_path, plan)
     if plan.get("preparation"):
         verified = _phase_timer("Plan")
@@ -3155,6 +3259,8 @@ def command(args, api):
     if args.apply:
         if plan["status"] == "applied":
             _check_publication(layout["working_root"], plan)
+            if plan.get("recoveryMode") == "disposable" and not plan.get("rollbackRetired"):
+                retire_disposable_rollback(layout, run, plan)
         else:
             install_plan(layout, run, plan, resume_install=resume_install, preserve_legacy=preserve_legacy)
         _write_json(run / "policy.json", plan["policy"])
@@ -3216,7 +3322,9 @@ def command(args, api):
             "",
             "Cast-seed decisions, source scores, protection/workflow conflicts and actual thresholds "
             "are recorded per photo in photos.csv.",
-            "Previous category directories are retained in previous/ after installation.",
+            ("Disposable sandbox: no baseline backup or post-publication undo; recover by full reset."
+             if plan.get("recoveryMode") == "disposable"
+             else "Previous category directories are retained in previous/ after installation."),
             "",
             "## Initial reference folders", "",
         ] + [f"- {folder}" for folder in plan["referenceFolders"]]

@@ -57,6 +57,11 @@ family name. Families are presentation only, never matching evidence.
   is blocked by held filename collisions; duplicate correctness is
   [layout LY14c](2026-11-02-library-layout.md#nov-4-copy-and-verification-proposals).
   Keep N15 open; the diagnostic installed run is not full intake acceptance.
+  At 22:02 the user authorizes another **completely fresh** reset/run after
+  LY14c/LY14d/LY14e pass, as `fresh-20261104-lean2` with explicit disposable
+  sandbox recovery. Keep core-only cast protection and eligible releases.
+  The earlier command above identifies the diagnostic run, not the next run;
+  the pinned recap owns the exact updated command.
 - [ ] **P1 you** N7 Review actual sandbox family groups, exceptions and
   proposed names in the N15 recap; accept or tune the band before Production.
 

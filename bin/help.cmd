@@ -58,8 +58,10 @@ echo                                    --sequence --enhancements compares nativ
 echo    overlay-review.cmd --report DIR --sources LIST.json --out "Working\_reports\eraser-compare\NEW" [--dry-run ^| --apply ^| --check]
 echo                                    unconfirmed logo/pill reference proposals anywhere in the image; no source repainting or automatic confirmation
 echo                                    comparison only: no selection, assignment, model load or source change; --check verifies every hash read-only
-echo    rebase-flow.cmd --root "SANDBOX\Working" --run NAME [--dry-run ^| --apply ^| --check] [--workers N] [--from STEP] [--until STEP] [--with-previews]
+echo    rebase-flow.cmd --root "SANDBOX\Working" --run NAME [--dry-run ^| --apply ^| --check] [--recovery-mode full ^| disposable] [--workers N] [--from STEP] [--until STEP] [--with-previews]
 echo                                    the whole fresh rebase in order: full reset, originals + check, backup of the fresh baseline, intake, matching plan, install, checks
+echo                                    explicit disposable sandbox/LEAN skips originals + baseline backup, retires transaction rollback after verified publication; reset-only recovery, reports retained
+echo                                    full recovery is the default, with backup and exact undo; use the SAME recovery mode on resume/check
 echo                                    reset preview, intake inventory and the separate intake check are skipped unless --with-previews (the apply steps repeat their guards)
 echo                                    live progress: per-step start/finish, phase timings, photo count + ETA, space after each step; resumes at the first unfinished step
 echo                                    process-flow recap and per-step logs: tmp\session-logs\rebase-flow\NAME\flow.md; --check prints it read-only
@@ -67,6 +69,7 @@ echo    sandbox-rebase.cmd "SANDBOX\Working" "RUN-DIR" --dry-run  inventory ALL 
 echo                                    --baseline working freezes current galleries plus Various for a fresh Production-like rehearsal; historical Source stays untouched
 echo                                    --include-current-various adds current Working\Various inputs via a hash-bound run-local recovery overlay
 echo                                    --intake-only --apply prepares all images and stops for review; --check verifies without writes
+echo                                    --recovery-mode disposable binds sandbox/LEAN reset-only recovery to intake/matching; full retains backup/undo
 echo                                    --workers N sets parallel intake processes ^(default: up to 3 by free memory; ST_INTAKE_WORKERS overrides^); matching stays single-process
 echo                                    new runs default to LEAN installed original/selected native reuse, retaining differing originals; omitted resumes the recorded mode; --storage-mode full keeps richer diagnostics
 echo                                    same command with no flags prepares/resumes then previews fresh-cache matching; --apply installs only a saved preview

@@ -10,7 +10,7 @@ deletion or folder moves, when a photo has catalogue decisions or retained sets.
 | --- | --- | --- |
 | Inspect crop/erase candidates without changing sources | `bin\prepare-images.cmd` | Sandbox sidecars; v20 recommended sequence, no identity assignment |
 | Prepare immutable sandbox inputs, optionally stop, then match/install | `bin\sandbox-rebase.cmd` | Implemented retained-cast flow; real acceptance still pending |
-| Run the whole fresh sandbox rebase with live progress, timings and space | `bin\rebase-flow.cmd` | Preview/apply/check; optional inventories, required matching plan, install and checks; resumes failed steps, using reports-only recovery if already installed; preserves attempt logs/timings |
+| Run the whole fresh sandbox rebase with live progress, timings and space | `bin\rebase-flow.cmd` | Preview/apply/check; optional inventories, required matching plan, install and checks; full backup/undo by default or explicit disposable sandbox/LEAN; resumes failed steps and preserves attempt logs/timings |
 | Maintain names/derivatives and refresh galleries without matching | `bin\people-gallery.cmd` | Preview/check/apply with backup and action-undo guards |
 | Rebuild only People viewers after exact recovery | `bin\people-gallery.cmd --reports-only` | Preview/check/apply; existing photos and maintained derivatives are not renamed, pruned or regenerated |
 | Change one photo or a recorded name deliberately | `bin\likeness-actions.cmd` | Validate/preview first; supported actions use backed-up transactions |
@@ -415,6 +415,22 @@ The menu's preparation preview offers `full`, `lean` or saved/default mode.
 Older processing recipes keep FULL compatibility. Fresh
 `sandbox-rebase.cmd` runs also default to LEAN;
 ordinary `library.cmd` has not changed defaults.
+
+Recovery is a separate, run-bound policy. `rebase-flow.cmd --recovery-mode
+disposable` is explicitly sandbox/LEAN only: freeze raw inputs without
+pre-intake originals/derivative generation or a full baseline backup,
+recognize their IDs without renaming them, and normalize final destinations.
+Exact byte-identical loose Various arrivals fold into canonical inputs before
+preparation/matching, retaining alias provenance rather than extra votes;
+changed same-ID inputs and Artist/named identity boundaries remain guarded.
+Transaction rollback remains until publication is verified, then its
+run-local old trees retire after hash/inventory verification. Cleanup failure
+leaves an applied receipt and can resume; unknown/edited rollback files refuse
+deletion. Exact source evidence, movement/Families reports and viewers remain.
+Use the same recovery mode on apply/resume/check. No undo is promised in this
+profile: recovery is a full sandbox reset. Ordinary `full` recovery still
+requires the baseline backup and retains exact undo. This does not enable
+FAST or skip subject/crop/erase quality guards.
 
 LEAN preserves original/control/recommended panel labels while aliasing
 exact-byte roles within each photo to the same file, including previews.

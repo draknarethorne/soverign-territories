@@ -48,11 +48,13 @@ SPACE_COLUMNS = (
 PEOPLE = ("Angels", "Sisters", "Models", "Prospects", "Potentials", "Various")
 
 
-def steps(working, run, workers):
+def steps(working, run, workers, recovery_mode="full"):
     """The ordered flow; every command is a bin launcher run from the repository root."""
     w, r = str(working), str(run)
     rebase = ["bin\\sandbox-rebase.cmd", w, r, *REBASE_FLAGS]
-    return [
+    if recovery_mode == "disposable":
+        rebase += ["--recovery-mode", recovery_mode]
+    flow = [
         {"id": "reset-preview", "title": "Full reset preview (blockers, Production baseline)",
          "argv": ["bin\\likeness.cmd", "--root", w, "sandbox-reset", "--full"],
          "expect": r'"resetReady": true', "optional": True},
@@ -86,6 +88,14 @@ def steps(working, run, workers):
          "argv": ["bin\\people-gallery.cmd", "--root", w, "--cache", str(run / "likeness-cache.json"),
                   "--policy", str(run / "policy.json"), "--check"]},
     ]
+    if recovery_mode == "disposable":
+        for step in flow:
+            if step["id"] in ("originals", "originals-check", "backup"):
+                step["skipReason"] = (
+                    "disposable sandbox: freeze raw inputs; normalize only final destinations; "
+                    "no pre-intake derivatives or baseline backup"
+                )
+    return flow
 
 
 def flow_paths(run_name):
@@ -175,6 +185,10 @@ def load_state(state_path, working, run, workers, flow):
 def apply_optional(state, flow, with_previews):
     """Skip read-only previews and duplicate checks unless asked; the apply steps repeat their guards."""
     for step in flow:
+        if step.get("skipReason"):
+            if state["steps"][step["id"]]["status"] != "done":
+                state["steps"][step["id"]] = {"status": "skipped", "note": step["skipReason"]}
+            continue
         if not step.get("optional"):
             continue
         record = state["steps"][step["id"]]
@@ -482,6 +496,9 @@ def main(argv=None):
     parser.add_argument("--root", required=True, help="the sandbox Working folder")
     parser.add_argument("--run", required=True, help="new run name under Working\\_sandbox-state")
     parser.add_argument("--workers", type=int, default=4)
+    parser.add_argument("--recovery-mode", choices=("full", "disposable"), default="full",
+                        help="full keeps backup/undo; disposable skips pre-intake derivatives and backup, "
+                             "retires rollback after publication; sandbox LEAN only")
     parser.add_argument("--heartbeat", type=int, default=120, help="seconds between progress lines")
     parser.add_argument("--from", dest="start", help="redo from this step (earlier records kept in history)")
     parser.add_argument("--until", help="stop after this step")
@@ -501,7 +518,7 @@ def main(argv=None):
     if not RUN_NAME.match(args.run):
         raise ValueError("--run must be a plain folder name such as fresh-20261104-lean")
     run = working / "_sandbox-state" / args.run
-    flow = steps(working, run, args.workers)
+    flow = steps(working, run, args.workers, args.recovery_mode)
     ids = [step["id"] for step in flow]
     for name in (args.start, args.until):
         if name is not None and name not in ids:
@@ -512,10 +529,16 @@ def main(argv=None):
             print(f"No flow recorded for {args.run} ({paths[1]}).")
             return 1
         state = load_state(paths[1], working, run, args.workers, flow)
+        if state.get("recoveryMode", "full") != args.recovery_mode and paths[1].exists():
+            raise ValueError("saved flow recovery mode differs; use the same mode or a new run")
+        state["recoveryMode"] = args.recovery_mode
         print(render_markdown(state, flow))
         failed = [step_id for step_id, record in state["steps"].items() if record["status"] == "failed"]
         return 1 if failed else 0
     state = load_state(paths[1], working, run, args.workers, flow)
+    if paths[1].exists() and state.get("recoveryMode", "full") != args.recovery_mode:
+        raise ValueError("saved flow recovery mode differs; use the same mode or a new run")
+    state["recoveryMode"] = args.recovery_mode
     apply_optional(state, flow, args.with_previews)
     if not args.apply:
         return preview(flow, state, paths[2])

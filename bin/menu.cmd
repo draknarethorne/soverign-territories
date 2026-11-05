@@ -226,6 +226,7 @@ if /i "%VERIFY%"=="y" (
   call "%~dp0sandbox-rebase.cmd" "%ROOT%" "%RUN%" --dry-run
 )
 echo Whole fresh rebase with live progress: bin\rebase-flow.cmd --root "%ROOT%" --run NAME --apply (preview without --apply)
+echo Explicit disposable sandbox/LEAN: add --recovery-mode disposable on every command; skips pre-intake derivatives/backup, reset-only recovery.
 pause
 goto menu
 :retention

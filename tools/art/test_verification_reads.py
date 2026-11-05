@@ -45,6 +45,59 @@ class VerificationReadsTests(unittest.TestCase):
             self.assertNotEqual(reads.sha256(self.source), original)
         self.assertIsNone(reads.active())
 
+    def test_explicit_write_invalidates_document_and_prepared_then_seals_new_bytes(self):
+        self.source.write_text('{"value":1}', encoding="utf-8")
+        with reads.session(self.root) as proof:
+            reads.document(self.source, 100)
+            proof.prepared[self.source] = True
+            reads.before_write(self.source)
+            self.assertEqual(proof.prepared, {})
+            self.source.write_text('{"value":2}', encoding="utf-8")
+            self.assertEqual(reads.document(self.source, 100), {"value": 2})
+        self.assertEqual(proof.stats["sealReads"], 1)
+
+    def test_write_invalidation_refuses_preexisting_tamper(self):
+        with reads.session(self.root):
+            reads.sha256(self.source)
+            self.source.write_bytes(b"modified")
+            with self.assertRaisesRegex(ValueError, "changed before write"):
+                reads.before_write(self.source)
+            self.source.write_bytes(b"original")
+
+    def test_invalidated_write_requires_new_content_proof_before_seal(self):
+        with self.assertRaisesRegex(ValueError, "unverified write"):
+            with reads.session(self.root):
+                reads.sha256(self.source)
+                reads.before_write(self.source)
+                self.source.write_bytes(b"modified")
+
+    def test_derivative_mutations_match_uncached_pixels_and_manifest_exactly(self):
+        from PIL import Image, ImageDraw
+        from likeness_library import derivatives, retained_preparation
+
+        source = self.root / "Prospects/Person/gallery/person_image_123456.png"
+        source.parent.mkdir(parents=True)
+        image = Image.new("RGB", (900, 1350), "navy")
+        ImageDraw.Draw(image).rectangle((270, 150, 540, 1200), fill="orange")
+        image.save(source)
+
+        def contents():
+            return {path: path.read_bytes() for path in source.parent.parent.rglob("*") if path.is_file()}
+
+        with mock.patch.object(retained_preparation, "_source_is_prepared", return_value=False):
+            derivatives.maintain(source, [.2, .1, .2, .2], 100, apply=True)
+            baseline = contents()
+            derivatives.maintain(source, [.3, .2, .2, .2], 100, apply=True)
+            expected = contents()
+            for path, payload in baseline.items():
+                path.write_bytes(payload)
+            with reads.session(self.root) as proof:
+                changes, diagnostics = derivatives.maintain(source, [.3, .2, .2, .2], 100, apply=True)
+            self.assertTrue(changes)
+            self.assertEqual(diagnostics, [])
+            self.assertGreater(proof.stats["reusedHashes"], 0)
+            self.assertEqual(contents(), expected)
+
     def test_parsed_manifest_changes_fail_even_if_mtime_is_restored(self):
         self.source.write_text('{"value":1}', encoding="utf-8")
         before = self.source.stat()
@@ -81,6 +134,10 @@ class VerificationReadsTests(unittest.TestCase):
                     pass
             with self.assertRaisesRegex(ValueError, "exceeds"):
                 reads.document(self.source, 1)
+            self.source.write_text('{"value":1}', encoding="utf-8")
+            reads.document(self.source, 100)
+            with self.assertRaisesRegex(ValueError, "exceeds"):
+                reads.document(self.source, 2)
 
     def test_owner_entry_type_replacement_with_same_name_fails_seal(self):
         with self.assertRaisesRegex(ValueError, "directory changed"):

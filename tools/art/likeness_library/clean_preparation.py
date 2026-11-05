@@ -24,13 +24,16 @@ def inventory(layout):
     return rows
 
 
-def prepare(layout, run, workers=None, *, storage_mode=None):
+def prepare(layout, run, workers=None, *, storage_mode=None, recovery_mode=None):
     """Copy inputs once, then use the ordinary preparation runner without live writes."""
     import image_preparation
 
     run = pathlib.Path(run)
     receipt = run / "intake.json"
     if receipt.exists():
+        saved = json.loads(receipt.read_text(encoding="utf-8")).get("recoveryMode", "full")
+        if recovery_mode is not None and recovery_mode != saved:
+            raise ValueError("saved intake recovery mode differs; use the saved mode or a new run")
         output, data = verify(layout, run)
         if storage_mode is not None and data.get("storageMode", "full") != storage_mode:
             raise ValueError("saved intake storage mode differs; use the saved mode or a new run")
@@ -65,6 +68,7 @@ def prepare(layout, run, workers=None, *, storage_mode=None):
         "sourceOverlaySHA256": layout.get("source_overlay_sha256"),
         "inputs": rows, "preparationManifestSHA256": metadata.content_sha256(output / "manifest.json"),
         "recipe": data["recipe"], "assessmentErrors": bool(result),
+        "recoveryMode": recovery_mode or "full",
         "configurationReceipt": metadata.cw.storage_configuration_receipt(
             cfg,
             layout["working_root"],

@@ -37,6 +37,16 @@ remain in layout LY14 and performance T17/T18; no detection skips, source
 deletion or storage redesign was silently authorized. See the pinned recap
 above for measured totals and the unchanged run/resume command.
 
+**Nov 4 22:02 authorization:** fix early exact-content aliases and bounded
+verification reuse, then completely reset from Production again as
+`fresh-20261104-lean2`. Explicit `--recovery-mode disposable` skips pre-intake
+derivatives and the full baseline backup, retaining transaction rollback
+until verified publication and retiring it afterward. Sandbox/LEAN only;
+FULL/Production remain protective, reports and image-quality guards remain,
+and FAST remains deferred. LY14c/LY14d/LY14e prerequisites now pass; N15/LY4
+still own fresh-run acceptance. Keep core-only cast protection and eligible
+non-core releases. The pinned recap now owns the updated commands.
+
 **Nov 4 family naming decided and built:** score-band family trees. A new or
 renamed non-cast identity joins the family of its closest cast member when that
 score is yellow (0.30) or better, otherwise of its closest peer identity at

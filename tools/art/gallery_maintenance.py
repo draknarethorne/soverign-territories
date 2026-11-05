@@ -15,7 +15,7 @@ sys.path.insert(0, str(ROOT / "tools/workflows"))
 import comfy_workflows as cw  # noqa: E402
 import library_backup  # noqa: E402
 import originals  # noqa: E402
-from likeness_library import derivatives, metadata  # noqa: E402
+from likeness_library import derivatives, metadata, verification_reads  # noqa: E402
 from likeness_library.policy import load_policy  # noqa: E402
 from likeness_library.sandbox import is_sandbox_working_path, require_sandbox_cache, require_sandbox_output  # noqa: E402
 
@@ -317,7 +317,12 @@ def main(argv=None):
     if args.reports_only and (args.no_reports or args.settle_actions or args.preserve_action_undo):
         parser.error("--reports-only cannot be combined with housekeeping or --no-reports options")
     try:
-        return run(args, cw.load_cfg())
+        cfg = cw.load_cfg()
+        root = pathlib.Path(args.root or cw.work_root(cfg)).expanduser().resolve()
+        if args.check and args.cache and root in pathlib.Path(args.cache).resolve().parents:
+            with verification_reads.session(root, label="Gallery check"):
+                return run(args, cfg)
+        return run(args, cfg)
     except (OSError, ValueError) as exc:
         print(f"maintenance refused: {exc}", file=sys.stderr)
         return 2

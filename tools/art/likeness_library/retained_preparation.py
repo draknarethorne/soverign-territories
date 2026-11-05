@@ -235,12 +235,16 @@ def refresh_detail(root, current_photo, photo_id=None, *, include_gallery_naviga
     for entry in updated["artifacts"]:
         if entry["path"] == data["detail"]:
             entry["sha256"] = hashlib.sha256(payload).hexdigest()
+    verification_reads.before_write(detail)
+    verification_reads.before_write(manifest)
     try:
         detail.write_bytes(payload)
         manifest.write_bytes((json.dumps(updated, indent=2) + "\n").encode("utf-8"))
         if verify_link(root, current_photo, photo_id) is None:
             raise ValueError("refreshed retained detail verification failed")
     except Exception:
+        verification_reads.before_write(detail)
+        verification_reads.before_write(manifest)
         detail.write_bytes(before)
         manifest.write_bytes(prior_manifest)
         raise

@@ -1182,6 +1182,79 @@ class CleanRebaseTests(unittest.TestCase):
         self.assertEqual(receipt["immutableInputCount"], 0)
         self.assertEqual(list((self.working / "_tmp").iterdir()), [])
 
+    def test_overlay_collapses_various_exact_bytes_before_preparation_across_id_styles(self):
+        baseline = self.working / self.relative
+        baseline.parent.mkdir(parents=True)
+        baseline.write_bytes(b"photo bytes")
+        various = self.working / "Various" / "gallery"
+        various.mkdir(parents=True)
+        names = [
+            "facebook_1791422955236_123456.jpg", "various_image_654321.jpg",
+            "odd incoming name.jpg",
+        ]
+        for name in names:
+            (various / name).write_bytes(b"photo bytes")
+        with mock.patch.dict("sys.modules", {"image_preparation": self.image_inventory_mock()}):
+            layout = clean_rebase._create_source_overlay(self.layout, self.run, current_working=True)
+            inputs = clean_rebase.clean_preparation.inventory(layout)
+            current = clean_rebase._curation_inventory(layout)
+        self.assertEqual(inputs, {self.relative: self.digest})
+        self.assertEqual(len(current), 4)
+        manifest = layout["source_overlay_manifest"]
+        self.assertEqual(manifest["newInputCount"], 0)
+        self.assertEqual(manifest["workingVariousCount"], 3)
+        self.assertEqual({row["target"] for row in manifest["currentVarious"]}, {self.relative})
+        self.assertEqual(len(manifest["rawRecovery"]), 2)
+        self.assertTrue(all(path.is_file() for path in various.iterdir()))
+
+    def test_overlay_does_not_deduplicate_replaced_old_bytes_or_artist_scope(self):
+        baseline = self.working / self.relative
+        baseline.parent.mkdir(parents=True)
+        baseline.write_bytes(b"photo bytes")
+        artist = self.working / "Artists/Painter/Person/gallery/person_image_999999.jpg"
+        artist.parent.mkdir(parents=True)
+        artist.write_bytes(b"artist bytes")
+        various = self.working / "Various/gallery"
+        various.mkdir(parents=True)
+        for name, payload in (
+            ("new_image_123456.jpg", b"changed bytes"),
+            ("old_image_888888.jpg", b"photo bytes"),
+            ("copy_image_777777.jpg", b"artist bytes"),
+        ):
+            (various / name).write_bytes(payload)
+        with mock.patch.dict("sys.modules", {"image_preparation": self.image_inventory_mock()}):
+            layout = clean_rebase._create_source_overlay(self.layout, self.run, current_working=True)
+            inputs = clean_rebase.clean_preparation.inventory(layout)
+        self.assertEqual(len(inputs), 4)
+        self.assertEqual(inputs[self.relative], metadata.content_sha256(various / "new_image_123456.jpg"))
+        self.assertEqual(layout["source_overlay_manifest"]["replacementCount"], 1)
+
+    def test_raw_named_id_replacement_is_resolved_without_originals_renames(self):
+        baseline = self.working / self.relative
+        baseline.parent.mkdir(parents=True)
+        baseline.write_bytes(b"photo bytes")
+        incoming = self.working / "Various/gallery/facebook_1791422955236_123456.jpg"
+        incoming.parent.mkdir(parents=True)
+        incoming.write_bytes(b"updated raw bytes")
+        with mock.patch.dict("sys.modules", {"image_preparation": self.image_inventory_mock()}):
+            layout = clean_rebase._create_source_overlay(self.layout, self.run, current_working=True)
+            inputs = clean_rebase.clean_preparation.inventory(layout)
+        self.assertEqual(inputs, {self.relative: metadata.content_sha256(incoming)})
+        self.assertEqual(layout["source_overlay_manifest"]["replacementCount"], 1)
+        self.assertTrue(incoming.is_file())
+
+    def test_explicit_various_identity_does_not_lose_naming_scope_to_byte_alias(self):
+        baseline = self.working / self.relative
+        baseline.parent.mkdir(parents=True)
+        baseline.write_bytes(b"photo bytes")
+        incoming = self.working / "Various/Named Person/gallery/person_image_654321.jpg"
+        incoming.parent.mkdir(parents=True)
+        incoming.write_bytes(b"photo bytes")
+        with mock.patch.dict("sys.modules", {"image_preparation": self.image_inventory_mock()}):
+            layout = clean_rebase._create_source_overlay(self.layout, self.run, current_working=True)
+            inputs = clean_rebase.clean_preparation.inventory(layout)
+        self.assertEqual(set(inputs), {self.relative, incoming.relative_to(self.working).as_posix()})
+
     def test_overlay_copy_failure_cleans_owner_locked_stage(self):
         with mock.patch.dict("sys.modules", {"image_preparation": self.image_inventory_mock()}), \
                 mock.patch.object(clean_rebase.shutil, "copy2", side_effect=OSError("copy failed")):

@@ -25,6 +25,14 @@ fix before any further full intake. Performance T17/T18 and LY14 now contain
 ranked proposals with cons, not authorization for detection skips, backup
 waivers or a broad storage refactor. Preserve this installed diagnostic
 baseline for review while deciding the next bounded implementation.
+**22:02 supersession:** the user authorizes early aliasing LY14c,
+operation-local derivative/detail verification LY14e and explicit disposable
+sandbox recovery LY14d, then a completely fresh Production-based reset/run
+`fresh-20261104-lean2`. Pre-intake derivatives/baseline backup are skipped only
+in that sandbox/LEAN profile; rollback retires after verified publication.
+FULL/Production protection, movement reports and core-only cast policy stay.
+The [pinned recap](../recap/2026-11-04-1130-recap.md) owns updated commands.
+N15/LY4 acceptance and human quality gates remain open.
 
 **Earlier scheduling (Nov 3 review):**
 the fresh `fresh-20261102` sandbox is installed and its ordinary post-install
