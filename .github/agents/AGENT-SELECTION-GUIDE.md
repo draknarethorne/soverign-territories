@@ -14,8 +14,10 @@ Their role descriptions do not override scope, approval or safety gates.
   MVP/design rules and runtime schemas beat the game bible's future vision.
   The current release is local-first PvE Sovereign Dawn; Unity is planned,
   and Nakama/PvP/alliances/territory/AFK systems remain later-phase scope.
-- **One work order:** [the plan index](../../docs/plans/README.md) owns
-  scheduling. The [generated queue](../../docs/todo.md) shows active focus
+- **One work order:** [the execution spine](../../docs/plans/2026-11-05-priority-reset.md#execution-spine)
+  owns selected task execution, milestone order and closeout; the
+  [plan index](../../docs/plans/README.md) owns the agreement and domain
+  inventory. The [generated queue](../../docs/todo.md) shows active focus
   and links deferred work. Holding is not completion; pinned handoffs in
   [the recap index](../../docs/recap/README.md) own current resume details.
   Do not change priorities merely because another agent is available.
@@ -25,7 +27,9 @@ Their role descriptions do not override scope, approval or safety gates.
   [the archive guide](../../docs/archive-guide.md) for matching physical
   groups, indexes and references; archival does not close implementation.
 - **Bounded execution:** one primary milestone, with only the independent
-  analysis/quality slices allowed by the plan index. Delegation needs a
+  companion analysis/quality slices selected by the spine. Domain
+  contracts may be consulted without reactivating their backlog; transfer
+  selected task ownership before execution. Delegation needs a
   concrete scope and stop condition; do not recursively hand a task around.
   A read-only assignment remains read-only even for an edit-capable agent.
 - **Tools:** use only tools actually exposed by the current host; discover

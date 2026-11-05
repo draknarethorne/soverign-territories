@@ -143,9 +143,12 @@ caches live outside it. Set up a new Windows machine in this order:
   calling `tools\` scripts directly; most preview with `--dry-run` and check
   read-only with `--check`. New routines become launchers.
 - **Plans and status.** [docs/STATUS.md](docs/STATUS.md) holds the current
-  decisions; [docs/plans/](docs/plans/README.md) owns the work, with tagged
-  checkboxes (`- [ ] **P1 ai** ID ...`) that `bin\todo.cmd` turns into
-  [docs/todo.md](docs/todo.md). Raw feedback goes in `feedback\<topic>.md`
+  state/decisions; the [execution spine](docs/plans/2026-11-05-priority-reset.md#execution-spine)
+  owns ordered milestones and selected task IDs. The
+  [planning agreement](docs/plans/README.md) defines transfers, holding
+  domain backlog and evidence closeouts; `bin\todo.cmd` generates the
+  current focus in [docs/todo.md](docs/todo.md).
+  Raw feedback goes in `feedback\<topic>.md`
   and is quoted word for word in its owning plan.
 - **Handoffs.** [docs/recap/](docs/recap/README.md) pins the current resume
   recap; read it first on a new machine.
