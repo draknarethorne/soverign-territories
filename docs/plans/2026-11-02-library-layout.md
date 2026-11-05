@@ -467,6 +467,14 @@ checks pass. No subject-detection or crop/erase quality guard was removed.
   remains active, sandbox history stays in the bundle. Unknown metadata and
   image path conflicts still block. All 40 reset/flow tests pass.
 
+- [x] **P1 ai** LY14g Keep the LEAN movement recap honest about the new
+  contract: show explicit exact-arrival aliases with their canonical input
+  and final destination, without adding photo/vote counts, and replace its
+  old undo instruction in disposable runs with reset-only recovery.
+  Bind displayed aliases to the saved overlay hash and canonical photo hash;
+  edited evidence refuses. Historical compact runs do not invent missing
+  alias data. The supported recap preview and all 14 recap tests pass.
+
 **Nov 4 22:02 fresh-run authorization:** after LY14c/LY14d/LY14e's focused
 tests and hygiene pass, reset the sandbox Working directory completely from
 current Production and run `fresh-20261104-lean2` with

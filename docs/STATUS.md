@@ -55,6 +55,9 @@ The preview isolated one changed 75-byte name-history sidecar (LY14f).
 Known gallery `z_*.txt` history now preserves both versions through the
 verified reset metadata bundle; unknown/image conflicts still block.
 The reproducer and all 40 reset/flow tests pass; fresh reset will resume.
+Published as `7fa5198ea`; reset retry finished in 4m51s at 22:42,
+Working 5.21 GiB. Actual intake starts with 3,290 distinct hashes/rows
+and four workers, no pre-intake derivative generation or baseline snapshot.
 
 **Nov 4 family naming decided and built:** score-band family trees. A new or
 renamed non-cast identity joins the family of its closest cast member when that

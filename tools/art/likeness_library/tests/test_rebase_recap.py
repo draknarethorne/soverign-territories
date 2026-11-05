@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Tests for the read-only sandbox rebase recap page."""
 import json
+import hashlib
 import pathlib
 import subprocess
 import sys
@@ -70,6 +71,36 @@ class RebaseRecapTests(unittest.TestCase):
         first = data["rows"][0]
         self.assertTrue(first["preview"].endswith("control-preview.jpg"))
         self.assertTrue(first["detail"].endswith("abc.html"))
+
+    def test_exact_arrival_aliases_show_canonical_routes_without_extra_votes_or_undo(self):
+        overlay_path = self.run / "source-overlay/overlay.json"
+        overlay_path.parent.mkdir()
+        source = "Angels/Ava/gallery/ava_a.jpg"
+        checksum = "a" * 64
+        overlay_path.write_text(json.dumps({
+            "inputs": {source: {"sha256": checksum}},
+            "currentVarious": [{
+                "current": "Various/gallery/copy<&>.jpg", "target": source,
+                "sha256": checksum, "duplicateOf": "Various/gallery/canonical.jpg",
+            }],
+        }), encoding="utf-8")
+        plan = _plan(self.working)
+        plan["photos"][0]["sha256"] = checksum
+        plan["sourceOverlaySHA256"] = hashlib.sha256(overlay_path.read_bytes()).hexdigest()
+        plan["recoveryMode"] = "disposable"
+        (self.run / "run.json").write_text(json.dumps(plan), encoding="utf-8")
+        data = rebase_recap.collect(self.run)
+        self.assertEqual(len(data["incomingAliases"]), 1)
+        self.assertEqual(rebase_recap.summarize(data)["photos"], 4)
+        page = rebase_recap.render(data, self.run / "recap.html")
+        self.assertIn("Exact incoming aliases: 1", page)
+        self.assertIn("copy&lt;&amp;&gt;.jpg", page)
+        self.assertIn(source, page)
+        self.assertIn("no undo; recover by full sandbox reset", page)
+        self.assertNotIn("Undo only through", page)
+        overlay_path.write_text("changed", encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "overlay differs"):
+            rebase_recap.collect(self.run)
 
     def test_page_lists_cast_gains_identities_review_and_relative_links(self):
         out = self.working / "_reports" / "library" / "rebase-recap" / "run1.html"

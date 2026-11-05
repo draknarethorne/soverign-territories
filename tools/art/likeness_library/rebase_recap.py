@@ -95,6 +95,30 @@ def _manifest_rows(run):
     return {row["source"]: row for row in data.get("photos", [])}, path.parent
 
 
+def _incoming_aliases(run, plan):
+    expected = plan.get("sourceOverlaySHA256")
+    if not expected or _historical_run(run):
+        return []
+    payload = (run / "source-overlay" / "overlay.json").read_bytes()
+    if hashlib.sha256(payload).hexdigest() != expected:
+        raise ValueError("recap source overlay differs from saved plan")
+    overlay = json.loads(payload)
+    destinations = {row["source"]: row for row in plan["photos"]}
+    aliases = []
+    for row in overlay["currentVarious"]:
+        if not row.get("duplicateOf"):
+            continue
+        canonical = destinations.get(row["target"])
+        if (row["sha256"] != overlay["inputs"][row["target"]]["sha256"] or not canonical
+                or canonical.get("sha256") != row["sha256"]):
+            raise ValueError("recap incoming alias lacks a canonical destination")
+        aliases.append({
+            "arrival": row["current"], "canonical": row["target"],
+            "destination": canonical["destination"],
+        })
+    return aliases
+
+
 def collect(run):
     """Every planned/applied photo row with its change, plus grouped views; pure data, no HTML."""
     run = pathlib.Path(run)
@@ -161,6 +185,8 @@ def collect(run):
         "createdAt": plan.get("createdAt"), "policy": plan.get("policy", {}).get("version")
         if isinstance(plan.get("policy"), dict) else plan.get("policy"),
         "castSeedPolicy": plan.get("castSeedPolicy", "all"),
+        "recoveryMode": plan.get("recoveryMode", "full"),
+        "incomingAliases": _incoming_aliases(run, plan),
         "preparationIndex": str(preparation / "index.html") if preparation else None,
         "rows": rows,
         "coreReferences": plan.get("coreReferences"),
@@ -975,6 +1001,24 @@ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([body],{
 a.download='rebase-expectations.json';a.click()});"""
 
 
+def _alias_section(data, out_dir):
+    aliases = data.get("incomingAliases", [])
+    if not aliases:
+        return ""
+    rows = []
+    for alias in aliases:
+        destination = _working_target(alias["destination"], data)
+        link = (_safe_link(destination, alias["destination"], out_dir, new_tab=True)
+                if destination else html.escape(alias["destination"]))
+        rows.append(f"<tr><td>{html.escape(alias['arrival'])}</td>"
+                    f"<td>{html.escape(alias['canonical'])}</td><td>{link}</td></tr>")
+    return (f'<h2 id="aliases">Exact incoming aliases: {len(aliases)}</h2>'
+            "<p>These additional arrivals share verified input bytes. They do not add preparation or "
+            "matching votes; their canonical photo and its destination account for them.</p>"
+            "<table><thead><tr><th>Duplicate arrival</th><th>Canonical input</th><th>Destination</th>"
+            "</tr></thead><tbody>" + "".join(rows) + "</tbody></table>")
+
+
 def render(data, out_path, others=()):
     out_dir = pathlib.Path(out_path).parent
     summary = summarize(data)
@@ -1021,16 +1065,22 @@ def render(data, out_path, others=()):
            "are offered and this reset-history copy cannot be used to undo.</p></section>"
            if data.get("historical") else
            "<p class=muted>Thumbnails show the prepared intake image when saved; the final-photo and report links "
-           "open in new tabs. Undo only through sandbox-rebase.cmd ... --undo.</p></section>"),
+           "open in new tabs. "
+           + ("Disposable sandbox: no undo; recover by full sandbox reset."
+              if data.get("recoveryMode") == "disposable"
+              else "Undo only through sandbox-rebase.cmd ... --undo.")
+           + "</p></section>"),
         '<section><h2>Recap sections</h2>'
         + gallery_chrome.navigation([
             ("Expectations", "#expected"), ("Where photos went", "#flows"), ("Identity continuity", "#continuity"),
             ("Angels and Sisters", "#cast"), ("Other identities", "#identities"), ("Families", "#families"),
             ("Review holds", "#review"),
+            *([("Incoming aliases", "#aliases")] if data.get("incomingAliases") else []),
             ("Refinement", "#refinement"), ("Final audit", "#audit"), *(([("Other runs", "#compare")] if others else [])), ("Every photo", "#all"),
         ], "Sandbox rebase recap") + "</section>",
         f"<section>{_expectation_section(data, out_dir)}</section>",
         f"<section>{_flow_section(data)}</section>",
+        f"<section>{_alias_section(data, out_dir)}</section>" if data.get("incomingAliases") else "",
         f"<section>{_continuity_section(data, out_dir)}</section>",
         f"<section>{_cast_section(data, out_dir)}</section>",
         f"<section>{_identity_section(data, out_dir)}</section>",

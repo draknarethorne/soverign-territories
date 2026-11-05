@@ -434,6 +434,9 @@ FAST or skip subject/crop/erase quality guards.
 Full reset retains changed gallery `z_*.txt` name-history sidecars in its
 verified metadata review bundle, keeping current Production's version active.
 Conflicting image bytes or unrecognized metadata still require review.
+The per-run movement recap lists explicit exact-arrival aliases against their
+canonical input and final destination without inflating the photo count.
+Disposable pages explicitly state reset-only recovery, not undo.
 
 LEAN preserves original/control/recommended panel labels while aliasing
 exact-byte roles within each photo to the same file, including previews.
