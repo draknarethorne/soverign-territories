@@ -49,7 +49,8 @@ Start with the [documentation hub](docs/README.md), then read:
 ## Art and video pipeline
 
 Use regular **64-bit CPython 3.14** for the repository's image-processing tools.
-Python 3.12 compatibility is retained; CI covers 3.12, 3.13 and 3.14. Dependency
+Python 3.12 compatibility is retained; routine CI uses 3.14, with 3.12/3.13
+compatibility runs available on explicit dispatch. Dependency
 setup and the distinction from ComfyUI's Python are in the
 [photo-library runtime guide](docs/art/original-photos.md#python-runtime-and-dependencies).
 
@@ -131,7 +132,8 @@ caches live outside it. Set up a new Windows machine in this order:
      `tmp\` (scratch otherwise);
    - ComfyUI installs, models and the `ComfyUI-Inputs`/`Outputs` folders.
 6. **Verify.** `bin\check.cmd` (pre-commit hooks, markdownlint, data
-   validation) and `bin\validate.cmd --quick` (tool tests). `bin\help.cmd`
+   validation) and `bin\validate.cmd --quick` (isolated mutation smoke checks,
+   not the image unit suite). `bin\help.cmd`
    lists every launcher; `bin\library-check.cmd` confirms the library paths
    resolve.
 

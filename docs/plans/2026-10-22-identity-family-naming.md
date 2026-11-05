@@ -62,6 +62,12 @@ family name. Families are presentation only, never matching evidence.
   sandbox recovery. Keep core-only cast protection and eligible releases.
   The earlier command above identifies the diagnostic run, not the next run;
   the pinned recap owns the exact updated command.
+  Nov 5: that fresh run is installed, with all four requested surname
+  roots confirmed in Families; recap/installed-run/reports-only and browser
+  checks pass. Full housekeeping still returns exit 1 on 143 framing
+  diagnostics, not name collisions. Keep N15 open alongside LY4 until that
+  acceptance is resolved; N7 remains separate human review. See the pinned
+  recap's FINAL VERIFIED BASELINE; no new intake is needed.
 - [ ] **P1 you** N7 Review actual sandbox family groups, exceptions and
   proposed names in the N15 recap; accept or tune the band before Production.
 

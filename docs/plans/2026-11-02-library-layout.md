@@ -251,6 +251,15 @@ check passed afterwards.
   the carried bundle), run the clean LEAN rebase in place with per-step timings
   (Acronis off), verify Gallery/Overview/Review, then hand to storage S32/S27
   and retire the old sandbox snapshot and run state.
+  Nov 5: fresh `fresh-20261104-lean2` is installed; installed-run, recap,
+  reports-only and automated browser checks pass. The full gallery scan
+  completed with exit 1 on 143 framing diagnostics (137 unreproducible
+  heads; six unavailable framings for three no-face photos), with zero
+  held collisions, renames or pending derivatives. Keep LY4 open; no
+  quality-policy bypass or further reset/intake. Resolve diagnostic
+  acceptance from existing evidence first. Measurements and remaining
+  speed/space proposals have one home in the
+  [final verified baseline](../recap/2026-11-04-1130-recap.md#final-verified-baseline---nov-5-0448).
   Progress Nov 2 (run `fresh-20261102`, Acronis off), timings in seconds:
   reset preview 221, reset apply 314, `originals` migration 103, backup 83
   (10,550 files, 6.56 GB), rebase dry run 47; intake of 3,093 images started

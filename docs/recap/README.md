@@ -9,7 +9,7 @@ and preserves chronological access to manually archived records.
 
 | State | Recap | Why it remains active |
 | --- | --- | --- |
-| **Pinned — resume** | [2026-11-04-1130](2026-11-04-1130-recap.md) | Diagnostic LEAN run not accepted; 22:02 authorization selects LY14c/LY14d/LY14e fixes, then a completely fresh disposable sandbox run. Updated exact commands, measured copy/time/space analysis and machine setup. |
+| **Pinned — resume** | [2026-11-04-1130](2026-11-04-1130-recap.md) | Nov 5 FINAL VERIFIED BASELINE: fresh disposable run installed; installed/recap/reports/browser checks pass, full gallery check fails on 143 framing diagnostics. No new intake. Final timing/space comparison, exact check-only commands and machine setup. |
 | Previous resume | [2026-11-04-1030](2026-11-04-1030-recap.md) | Score-band family naming built (yellow-band links, own-surname cast roots with Angelica Vale, exclusive surnames). Its no-intake resume is superseded by the fresh LEAN re-run. |
 | Previous resume | [2026-11-04-0230](2026-11-04-0230-recap.md) | Earlier core-trial placement and E16/E17 decision context. Its installed run was removed by the approved fresh reset; use the pinned recap for the current result. |
 | Previous resume | [2026-11-03-0500](2026-11-03-0500-recap.md) | First fresh sandbox applied (all-seeds); Nov 3 review continuation records approved core-protection decisions, complete recap-feedback ownership and the filename fix. Superseded as resume by the Nov 4 core-trial install; retain until its decision context is individually transferred. |

@@ -1,8 +1,19 @@
 # Project Status
 
-**Updated:** 2026-11-04 · This is the one working document: where the project is, what has
+**Updated:** 2026-11-05 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
+
+**Nov 5 final overnight checkpoint:** `fresh-20261104-lean2` is installed;
+installed-run, recap and reports-only checks pass, and Gallery/Overview/Review
+load in the browser. The full gallery scan completed but returned exit 1:
+137 unreproducible head crops plus six unavailable framings for three
+no-face inputs; zero collisions, renames or derivatives pending. LY4/N15
+remain open, not full acceptance. Do not reset/start another intake to fix
+these quality holds. Working is 29.53 GiB (37.5% smaller); disposable rollback
+is retired and baseline-backup bytes are zero. Timings, exact commands,
+remaining hotspots and the new-machine resume baseline are at the top of
+the [pinned recap](recap/2026-11-04-1130-recap.md).
 
 **Nov 4 11:30 LEAN trim and machine hand-off:** measured where the rebase
 spends time and space ([layout LY14](plans/2026-11-02-library-layout.md)).
@@ -58,6 +69,11 @@ The reproducer and all 40 reset/flow tests pass; fresh reset will resume.
 Published as `7fa5198ea`; reset retry finished in 4m51s at 22:42,
 Working 5.21 GiB. Actual intake starts with 3,290 distinct hashes/rows
 and four workers, no pre-intake derivative generation or baseline snapshot.
+Nov 5 01:27: intake verified all 3,290 outcomes in 2h44m32s, with zero
+denoise/tone variants; matching is active. Working is 17.26 GiB before
+installation, with zero backup/processing bytes. Final sizes and automated
+acceptance remain pending; the pinned recap records one distinct-original
+pair converging to identical selected composition bytes.
 
 **Nov 4 family naming decided and built:** score-band family trees. A new or
 renamed non-cast identity joins the family of its closest cast member when that

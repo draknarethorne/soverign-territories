@@ -33,6 +33,12 @@ in that sandbox/LEAN profile; rollback retires after verified publication.
 FULL/Production protection, movement reports and core-only cast policy stay.
 The [pinned recap](../recap/2026-11-04-1130-recap.md) owns updated commands.
 N15/LY4 acceptance and human quality gates remain open.
+**Nov 5 result:** the new disposable run is installed and its installed,
+recap, reports-only and browser checks pass. Full gallery checking completes
+but fails on 143 framing diagnostics, with zero held name collisions or
+pending maintenance. LY4/N15 stay open; investigate those existing quality
+holds without another reset/intake. The pinned recap owns final timings,
+storage and exact check-only commands.
 
 **Earlier scheduling (Nov 3 review):**
 the fresh `fresh-20261102` sandbox is installed and its ordinary post-install
