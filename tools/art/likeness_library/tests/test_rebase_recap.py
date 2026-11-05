@@ -18,6 +18,8 @@ def _plan(working):
         "photos": [
             {"source": "Angels/Ava/gallery/ava_a.jpg", "destination": "Angels/Ava/gallery/ava_a.jpg",
              "oldFolder": "Angels/Ava", "photoId": "photo:a", "reason": "Cast membership retained",
+             "sha256": hashlib.sha256(b"source-a").hexdigest(),
+             "preparedSHA256": hashlib.sha256(b"source-a").hexdigest(),
              "retainedCast": True, "preparationSource": "Angels/Ava/gallery/ava_a.jpg"},
             {"source": "Prospects/Old/gallery/old_b.jpg", "destination": "Angels/Ava/review/ava_b.png",
              "oldFolder": "Prospects/Old", "sourceFolder": "Various", "photoId": "photo:b",
@@ -46,6 +48,9 @@ class RebaseRecapTests(unittest.TestCase):
             {"source": "Angels/Ava/gallery/ava_a.jpg", "detail": "photos/abc.html",
              "variants": {"control": {"path": "candidates/a/control.png", "thumbnail": "candidates/a/control-preview.jpg"}}},
         ]}), encoding="utf-8")
+        source = self.working / "Angels" / "Ava" / "gallery" / "ava_a.jpg"
+        source.parent.mkdir(parents=True)
+        source.write_bytes(b"source-a")
 
     def test_direct_script_entry_point_supports_launcher(self):
         result = subprocess.run(
@@ -127,6 +132,36 @@ class RebaseRecapTests(unittest.TestCase):
         self.assertIn("unsafe destination link unavailable",
                       rebase_recap._destination_links(unsafe, data, out.parent))
 
+    def test_continuation_aliases_use_bound_original_overlay_without_copying(self):
+        original = self.run.parent / "original"
+        overlay_path = original / "source-overlay" / "overlay.json"
+        overlay_path.parent.mkdir(parents=True)
+        source = "Angels/Ava/gallery/ava_a.jpg"
+        checksum = "a" * 64
+        overlay_path.write_text(json.dumps({
+            "inputs": {source: {"sha256": checksum}},
+            "currentVarious": [{
+                "current": "Various/gallery/copy.jpg", "target": source,
+                "sha256": checksum, "duplicateOf": source,
+            }],
+        }), encoding="utf-8")
+        plan = _plan(self.working)
+        plan.update(
+            reusedPreparationFrom=str(original), sourceRoot=str(original / "source-overlay"),
+            sourceOverlaySHA256=hashlib.sha256(overlay_path.read_bytes()).hexdigest(),
+        )
+        plan["photos"][0]["sha256"] = checksum
+        (self.run / "run.json").write_text(json.dumps(plan), encoding="utf-8")
+        self.assertEqual(len(rebase_recap.collect(self.run)["incomingAliases"]), 1)
+        self.assertFalse((self.run / "source-overlay").exists())
+        overlay_path.write_text("changed", encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "overlay differs"):
+            rebase_recap.collect(self.run)
+        plan["sourceRoot"] = str(self.run / "source-overlay")
+        (self.run / "run.json").write_text(json.dumps(plan), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "overlay root"):
+            rebase_recap.collect(self.run)
+
     def test_family_section_shows_tree_links_and_renames(self):
         plan = _plan(self.working)
         plan["familyNaming"] = {
@@ -157,6 +192,20 @@ class RebaseRecapTests(unittest.TestCase):
         self.assertIn("was Nia Moss", page)
         self.assertIn("0.410 yellow", page)
         self.assertIn("family Hadley", page)
+        self.assertIn("Link band <b>yellow</b> (score at least 0.300)", page)
+
+    def test_family_section_prefers_new_distinct_thresholds_when_saved(self):
+        evidence = {
+            "linkBand": "yellow", "linkMinimum": 0.4,
+            "directCastMinimumSimilarity": 0.4,
+            "secondaryMinimumSimilarityExclusive": 0.35,
+            "families": [], "linkedIdentityCount": 0, "renamedIdentityCount": 0,
+            "displacedFamilyCount": 0, "unlinkedIdentityCount": 0, "rule": "",
+        }
+        page = rebase_recap._family_section({"familyNaming": evidence})
+        self.assertIn("Direct-cast minimum similarity &ge; 0.400", page)
+        self.assertIn("secondary minimum similarity &gt; 0.350", page)
+        self.assertNotIn("Link band <b>", page)
 
     def test_family_section_reports_older_runs_without_family_naming(self):
         out = self.working / "_reports" / "library" / "rebase-recap" / "run1.html"
@@ -242,6 +291,9 @@ class RebaseRecapTests(unittest.TestCase):
 
     def test_audit_source_link_falls_back_after_the_source_moved(self):
         plan = _plan(self.working)
+        plan["photos"][0]["sha256"] = hashlib.sha256(b"kept").hexdigest()
+        plan["photos"][2]["sha256"] = hashlib.sha256(b"moved-final").hexdigest()
+        plan["photos"][2]["preparedSHA256"] = hashlib.sha256(b"moved-final").hexdigest()
         plan["finalMembershipAudit"] = {"state": "audited", "rows": [
             {"source": "Angels/Ava/gallery/ava_a.jpg", "destination": "Angels/Ava/gallery/ava_a.jpg",
              "reason": "kept"},
@@ -250,14 +302,64 @@ class RebaseRecapTests(unittest.TestCase):
         ]}
         (self.run / "run.json").write_text(json.dumps(plan), encoding="utf-8")
         kept = self.working / "Angels" / "Ava" / "gallery" / "ava_a.jpg"
-        kept.parent.mkdir(parents=True)
-        kept.write_bytes(b"x")
+        kept.parent.mkdir(parents=True, exist_ok=True)
+        kept.write_bytes(b"kept")
+        final = self.working / "Models" / "Nia Vale" / "gallery" / "nia_vale_c.png"
+        final.parent.mkdir(parents=True)
+        final.write_bytes(b"moved-final")
         data = rebase_recap.collect(self.run)
         page = rebase_recap.render(data, self.working / "report.html")
-        self.assertIn('href="Angels/Ava/gallery/ava_a.jpg" target="_blank" rel="noopener noreferrer">Source photo',
+        self.assertIn('href="Angels/Ava/gallery/ava_a.jpg" target="_blank" rel="noopener noreferrer">Source photo (bytes verified)',
                       page)
         self.assertNotIn('href="Various/gallery/c.jpg"', page)
-        self.assertIn("moved (original path no longer exists)", page)
+        self.assertIn("previous location absent from this working tree", page)
+        self.assertIn('>Verified final photo</a>', page)
+        self.assertNotIn("moved (original path no longer exists)", page)
+        final.write_bytes(b"tampered")
+        changed = rebase_recap.render(rebase_recap.collect(self.run), self.working / "report.html")
+        self.assertIn("photo bytes differ from recorded SHA-256", changed)
+        final.unlink()
+        missing = rebase_recap.render(rebase_recap.collect(self.run), self.working / "report.html")
+        self.assertIn("photo missing", missing)
+
+    def test_reused_preparation_provenance_links_original_intake_and_verified_destination(self):
+        source = "Various/gallery/c.jpg"
+        digest = hashlib.sha256(b"prepared-c").hexdigest()
+        original_run = self.run.parent / "source-run"
+        preparation = original_run / "inputs" / "_reports" / "preparation" / "all"
+        (preparation / "photos").mkdir(parents=True)
+        (preparation / "index.html").write_text("index", encoding="utf-8")
+        (preparation / "photos" / "case.html").write_text("intake", encoding="utf-8")
+        source_payload = json.dumps({"photos": [{
+            "source": source, "detail": "photos/case.html", "sourceSha256": digest,
+        }]}).encode()
+        (preparation / "manifest.json").write_bytes(source_payload)
+        original_receipt = original_run / "intake-receipt.json"
+        original_receipt.write_text("unchanged", encoding="utf-8")
+        local_manifest = self.run / "inputs" / "_reports" / "preparation" / "all" / "manifest.json"
+        local_manifest.unlink()
+
+        plan = _plan(self.working)
+        plan["reusedPreparationFrom"] = str(original_run)
+        plan["photos"] = [{
+            "source": source, "destination": "Various/review/c.jpg", "sha256": digest,
+            "preparedSHA256": digest, "photoId": "photo:c", "reason": "quality hold",
+        }]
+        (self.run / "run.json").write_text(json.dumps(plan), encoding="utf-8")
+        final = self.working / "Various" / "review" / "c.jpg"
+        final.parent.mkdir(parents=True)
+        final.write_bytes(b"prepared-c")
+        data = rebase_recap.collect(self.run)
+        source_cell = rebase_recap._source_link(
+            data["rows"][0]["source"], data["rows"][0], data, self.working,
+        )
+
+        self.assertEqual(pathlib.Path(data["preparationIndex"]), preparation / "index.html")
+        self.assertIn("previous location absent from this working tree", source_cell)
+        self.assertIn("Verified final photo", source_cell)
+        self.assertIn("Intake comparison", source_cell)
+        self.assertEqual(original_receipt.read_text(encoding="utf-8"), "unchanged")
+        self.assertEqual((preparation / "manifest.json").read_bytes(), source_payload)
 
     def test_actual_audit_contract_and_ordered_core_references(self):
         plan = _plan(self.working)
@@ -283,8 +385,13 @@ class RebaseRecapTests(unittest.TestCase):
                 "coreMember": True, "automaticProtection": False, "manualOptOut": True,
                 "rivalMargin": -0.03, "independentProtectionSupport": 2,
                 "protectionReason": "manual <opt-out>",
+                "refinementHoldReason": "remains held: <manual review>",
             }],
         }
+        plan["finalMembershipAudit"]["rows"].append({
+            "source": "Various/gallery/d.jpg", "destination": "Various/review/d.png",
+            "higherRival": False, "followupCandidate": True, "reason": "follow-up only",
+        })
         (self.run / "run.json").write_text(json.dumps(plan), encoding="utf-8")
         data = rebase_recap.collect(self.run)
         references = rebase_recap._core_reference_rows(data, "Angels/Ava")
@@ -292,6 +399,7 @@ class RebaseRecapTests(unittest.TestCase):
         self.assertIsNone(references[0]["castSeedScore"])
         page = rebase_recap.render(data, self.working / "report.html")
         self.assertIn("Audit state: <b>audited</b>", page)
+        self.assertIn("1 photo(s) with a higher rival; 1 additional follow-up-only photo(s), not counted above", page)
         self.assertNotIn("Audit state: <b>passed</b>", page)
         self.assertIn("pass: 1", page)
         self.assertIn("reference: final frozen core &lt;snapshot&gt;", page)
@@ -309,6 +417,7 @@ class RebaseRecapTests(unittest.TestCase):
                       "independentProtectionSupport", "protectionReason"):
             self.assertIn(field, page)
         self.assertIn("protectionReason: manual &lt;opt-out&gt;", page)
+        self.assertIn("refinementHoldReason: remains held: &lt;manual review&gt;", page)
         self.assertIn("predates in-place refinement", page)
         plan["membershipRefinement"] = {
             "schemaVersion": 1, "maxPasses": 4, "passCount": 2, "stopReason": "stable",
@@ -323,6 +432,10 @@ class RebaseRecapTests(unittest.TestCase):
             }, {"pass": 2, "moves": [], "merges": [], "dissolved": [], "reclassified": []}],
             "unresolved": [{"pass": 1, "photoId": "photo:z", "kind": "locked", "detail": "anchored"}],
         }
+        plan["finalMembershipRefinement"] = {
+            "passCount": 1, "stopReason": "stable", "moveCount": 0, "passes": [],
+            "residuals": [{"source": "a.jpg", "reason": "manual <lock>"}],
+        }
         (self.run / "run.json").write_text(json.dumps(plan), encoding="utf-8")
         page = rebase_recap.render(rebase_recap.collect(self.run), self.working / "report.html")
         self.assertIn("id=refinement", page)
@@ -330,6 +443,9 @@ class RebaseRecapTests(unittest.TestCase):
         self.assertIn("Models/Bea &lt;Kay&gt;", page)
         self.assertIn("<td>identity-merge</td><td>2 photo(s)</td><td>Potentials/Cy Dee</td>", page)
         self.assertIn("<td>locked</td><td>photo:z</td><td>anchored</td>", page)
+        self.assertIn("Audit-aligned final-membership refinement", page)
+        self.assertIn("manual &lt;lock&gt;", page)
+        self.assertIn("Stable means no further admitted moves", page)
         table = page.split("<table id=photos>", 1)[1]
         self.assertIn("<b>FINAL photo-to-cast references</b>", table)
         self.assertIn("0.730", table)

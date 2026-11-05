@@ -2,11 +2,142 @@
 
 **Status:** active (Phase 3; C6 installed and independently verified; C7 human identity/quality review remains)
 
-**Queue focus:** C7, C11
+**Queue focus:** C12, C13, C7, C11
 
 **Scheduling:** now: human placement review of the verified installed baseline.
 Other open scenarios, C10 future duplicate selection and eventual Production/
 family gates stay in this plan but are outside today's execution focus.
+
+## Nov 5: cast auto-join and workflow-selection review
+
+The user explicitly reopens these two narrow policies using the installed
+`fresh-20261104-lean2` evidence. Family-link tracing and the complete raw
+request live in [naming N16](2026-10-22-identity-family-naming.md#nov-5-tracing-broad-families-before-tuning).
+No threshold, source, workflow or installed receipt was changed.
+
+### C12 evidence: auto-join is disabled, not merely a high threshold
+
+The rebase validates that every non-retained cast candidate enters Review,
+never Gallery. Refinement also sends cast gains to Review. The category
+`photoRouteMinimum` of 0.55 is not a currently enabled Gallery auto-join
+threshold; `automaticPhotoRoutingEnabled` is false for both cast categories.
+The existing C12 task below owns introducing a deliberate admission gate.
+
+There are 234 cast Review photos (266 total Review photos). Filtering the
+saved final audit, using own-cast similarity and at least 0.10 lead over the
+highest reported rival of any category:
+
+| Own-cast minimum | Score alone | Score plus rival lead |
+| --- | ---: | ---: |
+| 0.40 | 127 | 100 |
+| 0.45 | 108 | 94 |
+| 0.50 | 87 | 82 |
+| 0.55 | 71 | 71 |
+| 0.60 | 64 | 64 |
+| 0.65 | 53 | 53 |
+
+The highest Review score is 0.872295 (Draknora). These are diagnostic
+screening counts, not approval or a rerun of initial routing/quality/support
+gates. Some separate identities score highly too; admission must compare
+against non-cast rivals as well as other cast slots.
+
+Historical 09:08 proposal: 0.55 own-cast minimum and 0.10 rival margin,
+single usable face, no conflicting rejection/lock/quality hold; hold below
+that rather than immediately lowering the minimum. Compare 0.50 as a
+separate candidate (11 more pass these final numerical gates). Define frozen
+reference/support and staged admission explicitly so newly admitted photos
+cannot bootstrap other admissions within the same pass. Reuse shared gates
+and cover initial routing, refinement, validation, catalogue and reporting;
+do not simply flip one category flag or approve every Review row.
+
+**09:36 approval:** Sisters admission **>=0.50 with >=0.10 rival margin**,
+with existing face-quality, independent-evidence and rejection gates.
+The user explicitly named Sisters; do not silently enable the same Gallery
+admission for Angels. Angels remain Review-only pending equivalent approval.
+The prior table combines Angels/Sisters and does not forecast a Sisters-only
+admission count. C12 now owns implementation/preview, not another request to
+approve the Sisters number. No lower value is approved by "thinking a bit
+lower." Cover candidate, group/refinement, validator, final-audit and recap
+surfaces; distinguish cast-return, cast gain and existing cast Review.
+
+### C13 evidence: selection retention is separate from core membership
+
+**Nov 5 implementation checkpoint (before replay):** Sisters Gallery admission
+now uses one staged, frozen all-category comparison pass at >=0.50 / >=0.10,
+with single-face/quality, stale-byte, independent-reference and rejection gates.
+Angels remain Review-only. The receipt distinguishes cast returns, gains and
+existing cast Review admissions; admitted photos cannot support admissions in
+that same pass. Route verification rechecks every recorded gate.
+
+Explicit core rebases now default to resetting all current base/flow cast
+selections. `--workflow-reset all|scoped|low-score|none`,
+`--workflow-reset-slot` (repeatable), and `--workflow-reset-cutoff` provide
+bounded controls. Reset-only photo/anchor/automatic-protection suppression is
+run-local; explicit manual photo protection is the exception, not automatic
+core protection. `workflow-selection.json` records old/new choices, stable
+highest final Gallery leave-one-out selection, and held choices without an
+eligible replacement. Its publication inventory includes alternate LoadImage
+nodes, curated/manual workflows and workspace input hashes. Shared configuration,
+Production workflows and input copies remain unchanged and unauthorized.
+
+`create_plan` accepts frozen `seed_catalog` / `config_snapshot`, original
+`matching_inputs`, and separate current publication `working_inputs`; it saves
+the seed catalogue/configuration before automatic decisions. Focused offline
+tests cover the admission boundaries, provenance, anchors, stable ties,
+missing independent/self evidence and read-only workflow inventory. Combined
+continuation/publication recovery tests and the next saved-input preview,
+installed receipt check and viewer acceptance remain gates; this checkpoint
+does not claim a new replay or live publication.
+
+All 21 cast selections are retained. Five selected photos are outside the
+initial scoring cores and have neither an explicit photo lock nor anchor:
+
+| Slot | Stable photo ID suffix | Initial own-core score | Highest final rival |
+| --- | --- | ---: | --- |
+| Draknava | image_7500636973931726255 | 0.142 | Yvette Orr (0.382) |
+| Drakneta | shot_20260918101800 | 0.158 | Chiara Blake (0.342) |
+| Draknira | shot_20260901154738 | 0.242 | Paige Rowe (0.500) |
+| Draknara | image_7500298757710195803 | 0.312 | Sabine Lujan (0.708) |
+| Angelica | image_7513773530805044436 | 0.370 | Fia Vale (0.621) |
+
+These five do not directly contribute to the current frozen cast cores;
+their selection prevents release and follow-up routing. Other high-scoring
+selected photos do qualify as core members independently. Removing selection
+protection alone would not meet the request to exclude reset selections from
+initial core evidence.
+
+- [ ] **P1 ai** C13 Implement the approved full-rebase workflow
+  selection reset: all cast, selected slots, or selected photos below an
+  own-core cutoff. For the next full rebase, treat current selected cast
+  photos as reset candidates, not just the five low-scoring examples;
+  provide all/scoped/low-score controls for future use. No reset has been
+  applied. Remove selection-only
+  retention and exclude scoped old selections from the initial reference
+  core, then route them as ordinary candidates. Explicit manual photo
+  protection is the approved exception: keep that photo eligible in core
+  likeness subject to face-quality/stale-byte guards. Automatically acquired
+  core protection alone must not defeat the reset or become equivalent to
+  a manual decision. Preserve provenance and unrelated locks/anchors; test
+  legacy records and explicit anchors rather than erasing them silently.
+  If a selection
+  leaves its Gallery, choose the highest own-core-scoring eligible final
+  Gallery photo (not Review, no self-score, with usable output and stable
+  deterministic ties); report and hold if none qualifies. Preserve an
+  existing selection that remains unless reset semantics explicitly say
+  otherwise. Record old/new selections and reasons.
+  Gate: tested reset/protection provenance, stable highest-score selection
+  and explicit publication inventory. This approval is not permission to
+  rewrite live shared Production references during a sandbox rehearsal.
+  Cover base/flow-specific configuration, generated repository/workspace
+  references and input copies; inventory curated/manual and alternate
+  LoadImage references rather than silently skipping or bulk-rewriting
+  them. Reuse existing repoint/input-sync mechanisms with the missing
+  coverage tested. The existing repointer skips handmade workflows and
+  primarily changes the base `photos` mapping; the action refuses sandbox
+  roots because it changes shared configuration. Sandbox preview/install
+  must not repoint Production/shared workspaces without separate approval.
+  Bind decisions in receipts; test fresh/resume/failure recovery and FULL
+  undo without mutating the installed evidence to fake a new preview.
 
 ## Nov 3: selected prerequisites and new source rehearsal
 
@@ -90,7 +221,12 @@ character slots should inherit the same slot-versus-source-person distinction.
   [layout LY10](2026-11-02-library-layout.md) comparison. Gate: threshold/core-only
   decision approved Nov 3; tested E13 acquisition, exact release preview and
   source/preparation reuse verification before a new sandbox install.
-- [ ] **P2 either** C12 Cast auto-join band: define the score and margin above
+- [ ] **P1 ai** C12 Implement the Nov 5 approved Sisters auto-join band:
+  own-cast score >=0.50 and rival margin >=0.10, with the frozen-reference,
+  independent-evidence/quality/rejection gates and read-only scenario preview
+  described above. Angels remain Review-only until separately approved.
+  This supersedes the earlier disabled-all-cast scheduling below.
+  Historical objective: define the score and margin above
   which a cast match joins the Gallery directly (single cast candidate, no
   quality hold), Review below it. Calibrate from the user's LY11 look-alike
   picks and `rebase-expectations.json`, not from fixed guesses. Gate: C11 preview

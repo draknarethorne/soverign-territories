@@ -137,7 +137,7 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% -m unittest tools.art.test_dragon_companions tools.art.test_rename_originals_storage tools.art.test_storage_retention tools.art.test_temporary_storage
+%PY% -m unittest tools.art.test_dragon_companions tools.art.test_rename_originals_storage tools.art.test_storage_retention tools.art.test_temporary_storage tools.art.test_rebase_flow tools.art.test_lean_continue
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1

@@ -9,7 +9,7 @@ and preserves chronological access to manually archived records.
 
 | State | Recap | Why it remains active |
 | --- | --- | --- |
-| **Pinned — resume** | [2026-11-04-1130](2026-11-04-1130-recap.md) | Nov 5 FINAL VERIFIED BASELINE: fresh disposable run installed; installed/recap/reports/browser checks pass, full gallery check fails on 143 framing diagnostics. No new intake. Final timing/space comparison, exact check-only commands and machine setup. |
+| **Pinned — resume** | [2026-11-04-1130](2026-11-04-1130-recap.md) | Nov 5 continuation: `postrun-lean-preview3` matching verified and install/checks authorized; derivatives finish 16:09:59, details start, final checks/viewers not yet verified. User chooses to wait on coding and publish existing tested checkpoint. Earlier FINAL VERIFIED BASELINE and its 143 framing diagnostics remain dated evidence; no new intake. Plans/feedback and pre-new-PC performance scope recorded. |
 | Previous resume | [2026-11-04-1030](2026-11-04-1030-recap.md) | Score-band family naming built (yellow-band links, own-surname cast roots with Angelica Vale, exclusive surnames). Its no-intake resume is superseded by the fresh LEAN re-run. |
 | Previous resume | [2026-11-04-0230](2026-11-04-0230-recap.md) | Earlier core-trial placement and E16/E17 decision context. Its installed run was removed by the approved fresh reset; use the pinned recap for the current result. |
 | Previous resume | [2026-11-03-0500](2026-11-03-0500-recap.md) | First fresh sandbox applied (all-seeds); Nov 3 review continuation records approved core-protection decisions, complete recap-feedback ownership and the filename fix. Superseded as resume by the Nov 4 core-trial install; retain until its decision context is individually transferred. |

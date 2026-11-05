@@ -1,10 +1,11 @@
-"""Bounded in-place refinement of planned provisional identities.
+"""Bounded refinement of provisional identities and audit-aligned memberships.
 
 Runs after first-pass routing and before naming, so merged identities still choose the
 oldest recorded original name and every change flows through the normal install/undo path.
-Each pass freezes its references, applies photo moves, then reciprocal identity merges.
+Provisional passes also merge reciprocal identities; membership passes only move photos.
 """
 import copy
+import pathlib
 
 import numpy as np
 
@@ -13,6 +14,161 @@ from .policy import classify_category, evaluate_photo_route
 from .rejections import excluded_folders
 
 MAX_PASSES = 4
+
+
+def membership_decision(row, policy):
+    """Use audit comparisons, not the provisional category's own-score shortcut."""
+    hold = lambda reason: {"decision": "hold", "reason": reason}
+    required = {
+        "photoId", "ambiguousPhotoId", "qualityEligible", "metadataStale", "protected",
+        "anchor", "workflowSelected", "identityProtected", "rejectionHistory", "bucket",
+        "ownScore", "higherRival", "refinementTarget", "rivals",
+    }
+    missing = sorted(required - row.keys())
+    if missing:
+        return hold("saved comparison evidence unavailable: " + ", ".join(missing))
+    if not row["photoId"] or row["ambiguousPhotoId"]:
+        return hold("missing or ambiguous stable photo ID")
+    if not row["qualityEligible"]:
+        return hold("quality gate: no eligible single-face measurement")
+    if row["metadataStale"]:
+        return hold("stale content-bound metadata")
+    if row["protected"] or row["anchor"] or row["workflowSelected"]:
+        return hold("protected, anchored or workflow-selected photo")
+    if row["identityProtected"]:
+        return hold("protected source identity")
+    if row["rejectionHistory"]:
+        return hold("persistent or stale rejected-identity evidence requires review")
+    if row["bucket"] != "gallery":
+        return hold("Review/unassigned membership requires explicit admission")
+    if row["ownScore"] is None:
+        return hold("own leave-one-out score unavailable")
+    if not row["higherRival"]:
+        return hold("no higher rival")
+    target = row["refinementTarget"]
+    if not isinstance(target, dict) or not {"folder", "score", "independentSupport", "identityProtected"} <= target.keys():
+        return hold("destination frozen-core evidence unavailable")
+    lead = min(
+        target["score"] - row["ownScore"],
+        target["score"] - row["rivals"][1]["score"] if len(row["rivals"]) > 1 else 2.,
+    )
+    if lead < policy["photoRouting"]["minimumOwnCoreLead"]:
+        return hold("insufficient own/rival or runner-up margin")
+    required = policy["protection"]["automatic"]["minimumIndependentReferences"]
+    if target["independentSupport"] < required:
+        return hold("insufficient independent destination-core support")
+    category = target["folder"].split("/", 1)[0]
+    rules = policy["categoryPolicies"][category]
+    if rules["identityProtectedByDefault"]:
+        accepted = (
+            rules["reviewAdmissionEnabled"]
+            and target["score"] >= max(policy["photoRouting"]["reviewMinimum"], rules["photoRouteMinimum"])
+            and lead >= rules["photoRouteMargin"]
+        )
+        destination = f"{target['folder']}/review"
+        reason = "cast Review admission thresholds satisfied" if accepted else "cast Review admission gates not met"
+    else:
+        decision = evaluate_photo_route(
+            category, score=target["score"], margin=min(lead, 2.), policy=policy,
+            identity_protected=target["identityProtected"], propose=True,
+        )
+        accepted = decision["decision"] == "auto-route"
+        destination = f"{target['folder']}/gallery"
+        reason = decision["reason"]
+    return (
+        {"decision": "move", "destination": destination, "reason": reason, "lead": round(lead, 6)}
+        if accepted else hold(reason)
+    )
+
+
+def refine_membership(rows, evaluate, *, max_passes=MAX_PASSES):
+    """Rebuild the audit's frozen final cores between bounded photo-only passes."""
+    if isinstance(max_passes, bool) or not isinstance(max_passes, int) or max_passes < 1:
+        raise ValueError("final-membership pass limit must be a positive integer")
+    rows = copy.deepcopy(rows)
+    by_source = {row["source"]: row for row in rows}
+    if len(by_source) != len(rows):
+        raise ValueError("final-membership refinement requires unique source paths")
+    folder_of = lambda path: pathlib.PurePosixPath(path).parent.as_posix()
+    visited = {source: {folder_of(row["destination"])} for source, row in by_source.items()}
+    frozen, passes = {}, []
+    stop = "stable"
+    for pass_number in range(1, max_passes + 1):
+        audit = evaluate(rows)
+        if {row["source"] for row in audit["rows"]} != set(by_source) or len(audit["rows"]) != len(rows):
+            raise ValueError("final-membership evaluation must account for every source exactly once")
+        moves = []
+        for comparison in sorted(audit["rows"], key=lambda row: row["source"]):
+            source = comparison["source"]
+            decision = comparison["refinementDecision"]
+            if source in frozen or decision["decision"] != "move":
+                continue
+            destination = decision["destination"]
+            if destination in visited[source]:
+                frozen[source] = "oscillation: would return to an earlier membership"
+                continue
+            row = by_source[source]
+            old_path = pathlib.PurePosixPath(row["destination"])
+            moves.append({
+                "source": source, "photoId": comparison["photoId"], "from": old_path.parent.as_posix(),
+                "to": destination, "ownScore": comparison["ownScore"],
+                "rivalScore": comparison["rivals"][0]["score"], "lead": decision["lead"],
+                "reason": decision["reason"],
+            })
+        proposed = {
+            move["source"]: (
+                pathlib.PurePosixPath(move["to"]) / pathlib.PurePosixPath(by_source[move["source"]]["destination"]).name
+            ).as_posix()
+            for move in moves
+        }
+        destinations = []
+        for row in rows:
+            destination = proposed.get(row["source"], row["destination"])
+            if not isinstance(destination, str) or not destination:
+                raise ValueError("final-membership refinement requires nonempty destination paths")
+            destinations.append(destination.casefold())
+        if len(set(destinations)) != len(destinations):
+            raise ValueError("final-membership refinement would collide destination filenames")
+        for move in moves:
+            row = by_source[move["source"]]
+            row["destination"] = proposed[move["source"]]
+            row["reason"] += f"; final-membership pass {pass_number}: {move['reason']}"
+            row.setdefault("refinement", []).append({
+                "pass": pass_number, "kind": "final-membership-move", **move,
+            })
+            if row.get("retainedCast"):
+                row.update(
+                    retainedCast=False, releasedCast=True, castSeedDecision="released",
+                    castSeedReason=(
+                        row["castSeedReason"]
+                        + f"; released by final-membership pass {pass_number}: {move['reason']}"
+                    ),
+                )
+            visited[move["source"]].add(move["to"])
+        passes.append({"pass": pass_number, "moves": moves})
+        if not moves:
+            break
+    else:
+        stop = "pass-limit"
+    final = evaluate(rows)
+    residuals = []
+    for row in final["rows"]:
+        if row["higherRival"]:
+            decision = row["refinementDecision"]
+            reason = frozen.get(row["source"]) or (
+                "pass limit reached; qualifying move remains" if decision["decision"] == "move"
+                else decision["reason"]
+            )
+            residuals.append({
+                "source": row["source"], "photoId": row["photoId"], "destination": row["destination"],
+                "reason": reason, "decision": decision["decision"],
+            })
+    return rows, {
+        "schemaVersion": 1, "maxPasses": max_passes,
+        "reference": final["reference"], "passCount": len(passes),
+        "moveCount": sum(len(item["moves"]) for item in passes), "stopReason": stop,
+        "passes": passes, "residuals": residuals,
+    }
 
 
 def _unit(vector):
@@ -39,8 +195,19 @@ def _rename(value, names):
         return value
     if value in names:
         return names[value]
-    head, _, tail = value.rpartition("/")
-    return f"{names[head]}/{tail}" if head in names else value
+    for folder in sorted(names, key=lambda item: (-len(item), item)):
+        if value.startswith(folder + "/"):
+            return names[folder] + value[len(folder):]
+    return value
+
+
+def rename_membership_evidence(evidence, names):
+    for item in evidence["passes"]:
+        for move in item["moves"]:
+            for key in ("from", "to"):
+                move[key] = _rename(move[key], names)
+    for row in evidence["residuals"]:
+        row["destination"] = _rename(row["destination"], names)
 
 
 def rename_steps(rows, names):

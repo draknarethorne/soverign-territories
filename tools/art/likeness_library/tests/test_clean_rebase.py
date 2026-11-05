@@ -13,7 +13,7 @@ from unittest import mock
 import numpy as np
 
 from tools.art import likeness
-from tools.art.likeness_library import clean_rebase, metadata
+from tools.art.likeness_library import clean_rebase, metadata, refinement
 from tools.art.likeness_library.policy import load_policy
 from tools.art.likeness_library.reconciliation import _average_linkage
 
@@ -157,6 +157,86 @@ class CleanRebaseTests(unittest.TestCase):
             self.working, library, self.run / "likeness-cache.json",
             self.run / "policy.json", reports / "library",
         )
+
+    def test_final_refinement_uses_rebuilt_audit_cores_for_models_and_retained_cast(self):
+        for category in ("Models", "Sisters"):
+            with self.subTest(category=category):
+                photos, routed, paths = [], [], {}
+                catalog = {"schemaVersion": 1, "photos": {}, "people": {}, "actions": []}
+                for group, direction in ((f"{category}/Alpha Ann", 0), ("Models/Beta Bee", 1)):
+                    for index in range(4):
+                        vector = np.zeros(12)
+                        vector[direction] = .85
+                        vector[2 + direction * 4 + index] = np.sqrt(1 - .85 ** 2)
+                        path = self.source / group / "gallery" / f"photo_image_{100000 + len(photos)}.jpg"
+                        path.parent.mkdir(parents=True, exist_ok=True)
+                        path.write_bytes(path.as_posix().encode())
+                        photo = clean_rebase.Photo(
+                            path, group.split("/")[0], group.split("/")[1], "measured",
+                            {"v": vector.tolist(), "faces": 1, "px": 100},
+                        )
+                        photo.vec = vector
+                        photos.append(photo)
+                path = self.source / category / "Alpha Ann/gallery/photo_image_999999.jpg"
+                path.write_bytes(b"misfit")
+                vector = np.array([.6, .8] + [0.] * 10)
+                photo = clean_rebase.Photo(
+                    path, category, "Alpha Ann", "measured",
+                    {"v": vector.tolist(), "faces": 1, "px": 100},
+                )
+                photo.vec = vector
+                photos.append(photo)
+                for photo in photos:
+                    relative = photo.path.relative_to(self.source).as_posix()
+                    paths[relative] = photo.path
+                    routed.append({
+                        "source": relative, "destination": relative, "sha256": metadata.content_sha256(photo.path),
+                        "photoId": metadata.photo_id_from_name(photo.name), "reason": "first pass",
+                        "retainedCast": category == "Sisters" and photo.group == "Sisters",
+                        "castSeedReason": "member of the current configured identity core",
+                    })
+                policy = clean_rebase.core_protection_policy(load_policy())
+                api = SimpleNamespace(cw=SimpleNamespace(photo_key=lambda name: pathlib.Path(name).stem))
+                settings = {"minFace": 60, "multiFace": .3}
+
+                def evaluate(rows):
+                    return clean_rebase._final_membership_outcomes(
+                        photos, rows, catalog, policy, settings, self.base, set(), api, self.source, paths,
+                        acquire_protection=False,
+                    )
+
+                first = evaluate(routed)
+                comparison = first["rows"][-1]
+                self.assertGreaterEqual(comparison["ownScore"], .5)
+                self.assertTrue(comparison["followupCandidate"])
+                self.assertEqual(comparison["refinementDecision"]["decision"], "move")
+                before = copy.deepcopy(catalog)
+                rows, evidence = refinement.refine_membership(routed, evaluate)
+                self.assertEqual(catalog, before, "comparison passes must not acquire protection")
+                self.assertEqual(rows[-1]["destination"], "Models/Beta Bee/gallery/photo_image_999999.jpg")
+                self.assertEqual(evidence["moveCount"], 1)
+                last = evaluate(rows)
+                self.assertNotEqual(first["rows"][-1]["ownScore"], last["rows"][-1]["ownScore"])
+                self.assertFalse(last["rows"][-1]["higherRival"])
+                self.assertEqual(last["rows"][-1]["refinementDecision"]["decision"], "hold")
+                self.assertEqual(last["automaticPhotoProtectionCount"], 0)
+                catalog["photos"][routed[-1]["photoId"]] = {
+                    "contentSha256": routed[-1]["sha256"], "protected": True, "rejectedPersonIds": [],
+                }
+                locked = evaluate(routed)["rows"][-1]
+                self.assertEqual(locked["refinementDecision"]["decision"], "hold")
+                self.assertIn("protected", locked["refinementDecision"]["reason"])
+                photos[-1].vec = np.zeros(12)
+                unavailable = evaluate(routed)
+                self.assertFalse(unavailable["rows"][-1]["qualityEligible"])
+                json.dumps(unavailable, allow_nan=False)
+
+    def test_install_refuses_post_continuity_qualifying_residual_before_writes(self):
+        plan = {"finalMembershipAudit": {"postContinuityPendingCount": 1}}
+        with self.assertRaisesRegex(ValueError, "still has qualifying moves"):
+            clean_rebase.install_plan(self.layout, self.run, plan)
+        self.assertFalse((self.run / "staged").exists())
+        self.assertFalse((self.run / "previous").exists())
 
     def plan(self):
         return {
@@ -669,19 +749,27 @@ class CleanRebaseTests(unittest.TestCase):
                 "held": [],
             }
 
+        def fake_audit(_photos, rows, *_args, **_kwargs):
+            return {
+                "reference": "synthetic frozen final cores", "state": "audited", "automaticMoves": 0,
+                "nextPassNeeded": False,
+                "rows": [{
+                    **row, "higherRival": False,
+                    "refinementDecision": {"decision": "hold", "reason": "synthetic stable membership"},
+                } for row in rows],
+            }
+
         with mock.patch.object(clean_rebase.metadata, "path_for_root", return_value=catalog_path), \
                 mock.patch.object(clean_rebase, "frozen_identity_cores", side_effect=fake_cores), \
                 mock.patch.object(clean_rebase, "plan_reconciliation", side_effect=fake_plan), \
-                mock.patch.object(clean_rebase, "_final_membership_outcomes", return_value={
-                    "state": "audited", "rows": [], "automaticMoves": 0,
-                }) as final_audit:
+                mock.patch.object(clean_rebase, "_final_membership_outcomes", side_effect=fake_audit) as final_audit:
             plan = clean_rebase.create_plan(
                 layout, self.run, policy, api,
                 embedder=embedder or (lambda _path: {
                     "v": [1., 0.], "faces": 1, "s": .95, "px": 100,
                 }),
             )
-        final_audit.assert_called_once()
+        self.assertEqual(sum(call.kwargs.get("acquire_protection", True) for call in final_audit.call_args_list), 1)
         migrated_catalog = json.loads((self.run / "catalog.json").read_text(encoding="utf-8"))
         return plan, migrated_catalog, (oldest_id, younger_id, expected_ids)
 
@@ -1022,6 +1110,31 @@ class CleanRebaseTests(unittest.TestCase):
             "photos": [row], "castSeedPolicy": "core", "policy": load_policy(),
         }
         clean_rebase._verify_routes(plan, self.source)
+        retained = {
+            **row, "destination": relative, "photoId": "photo:image_123456",
+            "retainedCast": True, "releasedCast": False, "castSeedDecision": "retained",
+            "castSeedReason": "member of the current configured identity core",
+            "reason": "initially retained",
+        }
+
+        def evaluate(rows):
+            moved = rows[0]["destination"] != relative
+            return {"reference": "frozen final cores", "rows": [{
+                **rows[0], "higherRival": not moved, "ownScore": .6,
+                "rivals": [{"score": .8}],
+                "refinementDecision": {
+                    "decision": "hold" if moved else "move",
+                    "destination": "Models/Other/gallery", "lead": .2,
+                    "reason": "no higher rival" if moved else "qualifying comparison",
+                },
+            }]}
+
+        refined, _ = refinement.refine_membership([retained], evaluate)
+        refined_plan = {**plan, "photos": refined}
+        clean_rebase._verify_routes(refined_plan, self.source)
+        refined[0]["castSeedDecision"] = "retained"
+        with self.assertRaisesRegex(ValueError, "complete policy evidence"):
+            clean_rebase._verify_routes(refined_plan, self.source)
         plan["castSeedPolicy"] = "all"
         with self.assertRaisesRegex(ValueError, "cannot change cast membership"):
             clean_rebase._verify_routes(plan, self.source)
@@ -1785,7 +1898,10 @@ class CleanRebaseTests(unittest.TestCase):
             invent_name=lambda seed, taken: f"New Name-{seed[-6:]}",
         )
         with mock.patch.object(clean_rebase, "frozen_identity_cores", return_value=(
-            {"Angels/Angelica": {"vector": np.array([0., 1.]), "side": "Prospects"}},
+            {"Angels/Angelica": {
+                "vector": np.array([0., 1.]), "side": "Prospects",
+                "identityProtected": True, "corePhotoIds": [], "photoScores": {},
+            }},
             set(), [],
         )):
             result = clean_rebase.create_plan(

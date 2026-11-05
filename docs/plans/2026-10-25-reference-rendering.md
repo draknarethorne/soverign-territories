@@ -8,6 +8,15 @@ No automatic queueing while baseline installation is blocked; existing outputs
 and pullback evidence remain preserved. GUI execution and later stages remain
 separate decisions, not missing rebase prerequisites.
 
+**Nov 5 sequencing clarification:** backed-up Production cutover is not
+required before supported prompt/art work resumes after cast review and
+selection. Verified sandbox inputs may be used with explicit source bindings;
+R44/manual fidelity, request preview, workspace/shared-selection approval
+and bounded render acceptance still apply. No queue or deployment starts
+during the active installation. See the
+[priority sequence](2026-11-05-priority-reset.md#critical-path-versus-work-that-can-wait);
+Production path comparison/publication remains priority PR3.
+
 ## Oct 30: generated-image round-trip coverage
 
 The `generated_images_to_gallery.md` request belongs to existing R8/R21/R24

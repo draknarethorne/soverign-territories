@@ -60,11 +60,18 @@ echo                                    unconfirmed logo/pill reference proposal
 echo                                    comparison only: no selection, assignment, model load or source change; --check verifies every hash read-only
 echo    rebase-flow.cmd --root "SANDBOX\Working" --run NAME [--dry-run ^| --apply ^| --check] [--recovery-mode full ^| disposable] [--workers N] [--from STEP] [--until STEP] [--with-previews]
 echo                                    the whole fresh rebase in order: full reset, originals + check, backup of the fresh baseline, intake, matching plan, install, checks
-echo                                    explicit disposable sandbox/LEAN skips originals + baseline backup, retires transaction rollback after verified publication; reset-only recovery, reports retained
+echo                                    explicit disposable sandbox/LEAN skips originals + baseline backup and creates NO transaction rollback; reset-only recovery, reports retained
 echo                                    full recovery is the default, with backup and exact undo; use the SAME recovery mode on resume/check
 echo                                    reset preview, intake inventory and the separate intake check are skipped unless --with-previews (the apply steps repeat their guards)
 echo                                    live progress: per-step start/finish, phase timings, photo count + ETA, space after each step; resumes at the first unfinished step
+echo                                    --verbose streams EVERY child line; --heartbeat N sets progress seconds; full per-step logs are always retained
+echo                                    timing references: Nov 5 LEAN for measured disposable steps, Nov 3 otherwise; NOT a new-code forecast; --until bounds remaining work
 echo                                    process-flow recap and per-step logs: tmp\session-logs\rebase-flow\NAME\flow.md; --check prints it read-only
+echo                                    --reuse-run ORIGINAL --recovery-mode disposable starts at matching from verified saved LEAN intake; skips reset/intake and keeps ORIGINAL unchanged
+echo    lean-continue.cmd --root "SANDBOX\Working" --source-run ORIGINAL --run NEW [--dry-run ^| --apply ^| --check ^| --install]
+echo                                    --dry-run is inventory only; --apply builds a SEPARATE matching preview with original prepared pixels and measured faces; no intake or install
+echo                                    --check verifies saved inputs/preview/publication without writes; --install publishes reviewed preview with NO backup or rollback
+echo                                    decisions bind by photo ID and content; generated identities/automatic locks are not seeds; missing measurements or ambiguous manual decisions refuse
 echo    sandbox-rebase.cmd "SANDBOX\Working" "RUN-DIR" --dry-run  inventory ALL immutable inputs; no models, reports or matching
 echo                                    --baseline working freezes current galleries plus Various for a fresh Production-like rehearsal; historical Source stays untouched
 echo                                    --include-current-various adds current Working\Various inputs via a hash-bound run-local recovery overlay

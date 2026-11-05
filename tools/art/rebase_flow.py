@@ -41,6 +41,11 @@ NOV3_MINUTES = {
     "backup": 13, "intake-preview": 3, "intake": 197, "intake-check": 4,
     "match-preview": 12, "install": 311, "install-check": 23, "gallery-check": 5,
 }
+NOV5_SECONDS = {
+    "reset-apply": 4 * 60 + 51, "intake": 2 * 3600 + 44 * 60 + 32,
+    "match-preview": 15 * 60 + 11, "install": 2 * 3600 + 35 * 60 + 23,
+    "install-check": 16 * 60 + 33, "gallery-check": 9 * 60 + 38,
+}
 SPACE_COLUMNS = (
     ("Working", "working"), ("run state", "run"), ("run inputs", "inputs"),
     ("_backup", "_backup"), ("_processing", "_processing"), ("people", "people"),
@@ -48,7 +53,7 @@ SPACE_COLUMNS = (
 PEOPLE = ("Angels", "Sisters", "Models", "Prospects", "Potentials", "Various")
 
 
-def steps(working, run, workers, recovery_mode="full"):
+def steps(working, run, workers, recovery_mode="full", reuse_run=None):
     """The ordered flow; every command is a bin launcher run from the repository root."""
     w, r = str(working), str(run)
     rebase = ["bin\\sandbox-rebase.cmd", w, r, *REBASE_FLAGS]
@@ -95,6 +100,24 @@ def steps(working, run, workers, recovery_mode="full"):
                     "disposable sandbox: freeze raw inputs; normalize only final destinations; "
                     "no pre-intake derivatives or baseline backup"
                 )
+    if reuse_run is not None:
+        continuation = [
+            "bin\\lean-continue.cmd", "--root", w, "--source-run", str(reuse_run), "--run", run.name,
+        ]
+        for step in flow:
+            if step["id"] in ("reset-preview", "reset-apply", "originals", "originals-check",
+                              "backup", "intake-preview", "intake", "intake-check"):
+                step["skipReason"] = "prepared-input LEAN continuation: no reset, intake, backups or rollback"
+            elif step["id"] == "match-preview":
+                step["argv"] = [*continuation, "--apply"]
+            elif step["id"] == "install":
+                step["argv"] = [*continuation, "--install"]
+            elif step["id"] == "install-check":
+                step["argv"] = [*continuation, "--check"]
+    for step in flow:
+        if recovery_mode == "disposable" and step["id"] in NOV5_SECONDS:
+            step["referenceSeconds"] = NOV5_SECONDS[step["id"]]
+            step["referenceLabel"] = "Nov 5 LEAN"
     return flow
 
 
@@ -148,22 +171,32 @@ def measure_space(working, run):
     """Bytes and file counts for the parts of Working the LEAN trim and LY14 decisions affect."""
     working, run = pathlib.Path(working), pathlib.Path(run)
     started = time.perf_counter()
-    space = {"working": 0, "people": 0}
+    space: dict[str, int | float] = {
+        key: 0 for key in ("working", "people", "run", "inputs", "_backup", "_processing")
+    }
     files = 0
+    run_parts = run.relative_to(working).parts
     if working.is_dir():
-        for entry in os.scandir(working):
-            if entry.is_dir(follow_symlinks=False):
-                size, count = _tree_bytes(entry.path)
-            else:
-                size, count = entry.stat().st_size, 1
-            space["working"] += size
-            files += count
-            if entry.name in ("_backup", "_processing"):
-                space[entry.name] = size
-            if entry.name in PEOPLE:
-                space["people"] += size
-    space["run"] = _tree_bytes(run)[0] if run.is_dir() else 0
-    space["inputs"] = _tree_bytes(run / "inputs")[0] if (run / "inputs").is_dir() else 0
+        pending: list[tuple[str, tuple[str, ...]]] = [(str(working), ())]
+        while pending:
+            directory, parents = pending.pop()
+            with os.scandir(directory) as entries:
+                for entry in entries:
+                    parts = (*parents, entry.name)
+                    if entry.is_dir(follow_symlinks=False):
+                        pending.append((entry.path, parts))
+                        continue
+                    size = entry.stat(follow_symlinks=False).st_size
+                    space["working"] += size
+                    files += 1
+                    if parts[0] in ("_backup", "_processing"):
+                        space[parts[0]] += size
+                    if parts[0] in PEOPLE:
+                        space["people"] += size
+                    if parts[:len(run_parts)] == run_parts:
+                        space["run"] += size
+                        if parts[len(run_parts):len(run_parts) + 1] == ("inputs",):
+                            space["inputs"] += size
     space["files"] = files
     space["seconds"] = round(time.perf_counter() - started, 1)
     return space
@@ -211,18 +244,27 @@ def save(state, state_path, md_path, flow, live=None):
 
 
 def estimate_remaining(state, flow, live=None, now=None):
-    """Minutes left: Nov 3 times for pending steps plus what remains of the running one."""
+    """Historical remaining seconds within the requested stop boundary, not a new-code forecast."""
     now = now or time.time()
     remaining = 0.0
     for step in flow:
         record = state["steps"][step["id"]]
-        estimate = NOV3_MINUTES.get(step["id"], 5) * 60
-        if record["status"] == "running" and live is not None:
+        estimate, _ = reference_timing(step)
+        if step.get("skipReason"):
+            pass
+        elif record["status"] == "running" and live is not None:
             eta = progress(live, now).get("eta")
             remaining += eta if eta is not None else max(estimate - (now - live["started"]), 0)
         elif record["status"] in ("pending", "failed", "interrupted"):
             remaining += estimate
+        if step["id"] == state.get("until"):
+            break
     return remaining
+
+
+def reference_timing(step):
+    return (step.get("referenceSeconds", NOV3_MINUTES.get(step["id"], 5) * 60),
+            step.get("referenceLabel", "Nov 3"))
 
 
 def progress(live, now=None):
@@ -253,7 +295,8 @@ def heartbeat_line(step_index, flow, live, state, now=None):
             text += f", {info['rate']:.1f}/min, ETA {_duration(info['eta'])}"
         parts.append(text)
     elif step["id"] in NOV3_MINUTES:
-        parts.append(f"Nov 3 took {NOV3_MINUTES[step['id']]}m")
+        seconds, label = reference_timing(step)
+        parts.append(f"{label} reference {_duration(seconds)} (not a current ETA)")
     if live.get("phases"):
         last = live["phases"][-1]
         parts.append(f"last phase {last['phase']} {_duration(last['seconds'])}")
@@ -261,7 +304,7 @@ def heartbeat_line(step_index, flow, live, state, now=None):
     parts.append(f"last output {_duration(silent)} ago")
     if silent > SILENCE_WARNING_SECONDS:
         parts.append("QUIET: a long silent phase, or the process is suspended (check Task Manager)")
-    parts.append(f"flow remaining ~{_duration(estimate_remaining(state, flow, live, now))}")
+    parts.append(f"historical flow remaining ~{_duration(estimate_remaining(state, flow, live, now))}")
     return "; ".join(parts)
 
 
@@ -271,9 +314,10 @@ def render_markdown(state, flow, live=None):
              f"- Working: `{state['working']}`",
              f"- Run state: `{state['run']}`",
              f"- Created {state['created']}; updated {_now().isoformat()}",
-             f"- Estimated remaining: {_duration(estimate_remaining(state, flow, live, now))} "
-             "(Nov 3 step times; intake uses its live ETA)", "",
-             "| # | Step | Status | Started | Took (recorded attempts) | Nov 3 | Note |",
+             f"- Historical remaining reference: {_duration(estimate_remaining(state, flow, live, now))} "
+             "(not a forecast for changed code; photo ETA uses live throughput)",
+             f"- Stop after: {state.get('until') or 'all steps'}", "",
+             "| # | Step | Status | Started | Took (recorded attempts) | Historical reference | Note |",
              "| --- | --- | --- | --- | --- | --- | --- |"]
     for index, step in enumerate(flow, 1):
         record = state["steps"][step["id"]]
@@ -295,8 +339,9 @@ def render_markdown(state, flow, live=None):
             untimed = sum("seconds" not in attempt for attempt in previous)
             if untimed:
                 note += f"; {untimed} earlier attempt(s) untimed"
+        seconds, label = reference_timing(step)
         lines.append(f"| {index} | {step['id']} | {record['status']} | {record.get('started', '')[11:16]} | "
-                     f"{_duration(took)} | {NOV3_MINUTES.get(step['id'], '')}m | {note} |")
+                     f"{_duration(took)} | {label} {_duration(seconds)} | {note} |")
     phase_rows = [(step["id"], phase) for step in flow
                   for phase in state["steps"][step["id"]].get("phases", [])]
     phase_rows = [
@@ -322,13 +367,15 @@ def render_markdown(state, flow, live=None):
     return "\n".join(lines) + "\n"
 
 
-def _reader(process, log_path, live, echo):
+def _reader(process, log_path, live, echo, echo_all=False):
     with log_path.open("a", encoding="utf-8") as log:
         for raw in process.stdout:
             line = raw.rstrip("\r\n")
             now = time.time()
             log.write(f"{time.strftime('%H:%M:%S', time.localtime(now))} {line}\n")
             log.flush()
+            if echo_all:
+                echo(line.rstrip("\n"))
             live["last_output"] = now
             if line.strip():
                 live["last_line"] = line.strip()[:200]
@@ -343,18 +390,20 @@ def _reader(process, log_path, live, echo):
             match = RECOVERED_LINE.search(line)
             if match:
                 live["done"], live["total"] = int(match.group(1)), int(match.group(2))
-                echo(f"    {line.strip()}")
+                if not echo_all:
+                    echo(f"    {line.strip()}")
                 continue
             match = PHASE_LINE.match(line.strip())
             if match:
                 live["phases"].append({"phase": f"{match.group(1)}: {match.group(2)}",
                                        "seconds": float(match.group(3))})
-                echo(f"    {match.group(1)}: {match.group(2)} took {_duration(float(match.group(3)))}")
-            elif ALERT_LINE.search(line):
+                if not echo_all:
+                    echo(f"    {match.group(1)}: {match.group(2)} took {_duration(float(match.group(3)))}")
+            elif not echo_all and ALERT_LINE.search(line):
                 echo(f"    ! {line.strip()[:240]}")
 
 
-def run_step(index, step, state, paths, flow, *, heartbeat, measure, echo, launcher):
+def run_step(index, step, state, paths, flow, *, heartbeat, measure, echo, launcher, echo_all=False):
     folder, state_path, md_path = paths
     record = state["steps"][step["id"]]
     log_path = folder / f"{index + 1:02d}-{step['id']}.log"
@@ -388,9 +437,10 @@ def run_step(index, step, state, paths, flow, *, heartbeat, measure, echo, launc
     live = {"id": step["id"], "started": started, "last_output": started, "phases": [],
             "expect": step.get("expect"), "expected_seen": False, "done": 0, "total": 0}
     remaining = _duration(estimate_remaining(state, flow, live))
+    reference, label = reference_timing(step)
     echo(f"\n=== [{index + 1}/{len(flow)}] {step['id']}: {step['title']} "
-         f"(started {_now().strftime('%H:%M')}; Nov 3 {NOV3_MINUTES.get(step['id'], '?')}m; "
-         f"flow remaining ~{remaining})")
+         f"(started {_now().strftime('%H:%M')}; {label} reference {_duration(reference)}; "
+         f"historical flow remaining ~{remaining})")
     echo(f"    log: {log_path}")
     save(state, state_path, md_path, flow, live)
     with log_path.open("w", encoding="utf-8") as log:
@@ -398,7 +448,7 @@ def run_step(index, step, state, paths, flow, *, heartbeat, measure, echo, launc
     env = dict(os.environ, PYTHONUNBUFFERED="1", PYTHONIOENCODING="utf-8")
     process = subprocess.Popen(command, cwd=REPO, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                                env=env, text=True, encoding="utf-8", errors="replace")
-    reader = threading.Thread(target=_reader, args=(process, log_path, live, echo), daemon=True)
+    reader = threading.Thread(target=_reader, args=(process, log_path, live, echo, echo_all), daemon=True)
     reader.start()
     next_beat = started + heartbeat
     try:
@@ -433,11 +483,10 @@ def run_step(index, step, state, paths, flow, *, heartbeat, measure, echo, launc
     echo("    measuring space...")
     record["space"] = measure()
     record["status"] = "done"
-    nov3 = NOV3_MINUTES.get(step["id"])
-    compare = f" (Nov 3 {nov3}m)" if nov3 else ""
+    compare = f" ({label} reference {_duration(reference)})"
     space = record["space"]
     echo(f"--- {step['id']} done in {_duration(seconds)}{compare}; Working {_gb(space['working'])}, "
-         f"run state {_gb(space['run'])}; flow remaining ~{_duration(estimate_remaining(state, flow))}")
+         f"run state {_gb(space['run'])}; historical flow remaining ~{_duration(estimate_remaining(state, flow))}")
     save(state, state_path, md_path, flow)
     return True
 
@@ -447,9 +496,13 @@ def _launcher(argv):
 
 
 def run_flow(flow, state, paths, *, start=None, until=None, heartbeat=120, measure,
-             echo=print, launcher=_launcher):
+             echo=print, launcher=_launcher, echo_all=False):
     folder, state_path, md_path = paths
     ids = [step["id"] for step in flow]
+    state["until"] = until
+    stop_index = ids.index(until) if until is not None else len(flow) - 1
+    if start is not None and ids.index(start) > stop_index:
+        raise ValueError("--from must not be after --until")
     if start is not None:
         position = ids.index(start)
         for step_id in ids[position:]:
@@ -463,10 +516,15 @@ def run_flow(flow, state, paths, *, start=None, until=None, heartbeat=120, measu
     flow_started = time.time()
     echo(f"Live process-flow recap: {md_path}")
     for index, step in enumerate(flow):
+        if index > stop_index:
+            break
+        if step.get("skipReason"):
+            state["steps"][step["id"]] = {"status": "skipped", "note": step["skipReason"]}
+            continue
         if state["steps"][step["id"]]["status"] in ("done", "skipped"):
             continue
         if not run_step(index, step, state, paths, flow, heartbeat=heartbeat, measure=measure,
-                        echo=echo, launcher=launcher):
+                        echo=echo, launcher=launcher, echo_all=echo_all):
             return 1
         if until is not None and step["id"] == until:
             echo(f"Stopped after {until} as requested.")
@@ -479,15 +537,21 @@ def run_flow(flow, state, paths, *, start=None, until=None, heartbeat=120, measu
 
 def preview(flow, state, md_path, echo=print):
     echo(f"Preview only; add --apply to run. Live recap will be {md_path}")
-    total = 0
+    within_boundary = True
     for index, step in enumerate(flow, 1):
         record = state["steps"][step["id"]]
-        minutes = NOV3_MINUTES.get(step["id"], 5)
-        if record["status"] not in ("done", "skipped"):
-            total += minutes
-        echo(f"{index:2}. {step['id']:<15} {record['status']:<11} Nov 3 ~{minutes:>3}m  "
-             f"{subprocess.list2cmdline(step['argv'])}")
-    echo(f"Estimated time for steps not done: ~{_duration(total * 60)} (Nov 3 times; LEAN intake should be faster)")
+        seconds, label = reference_timing(step)
+        if not within_boundary:
+            echo(f"{index:2}. {step['id']:<15} deferred    after --until {state['until']}")
+        elif step.get("skipReason"):
+            echo(f"{index:2}. {step['id']:<15} skipped     {step['skipReason']}")
+        else:
+            echo(f"{index:2}. {step['id']:<15} {record['status']:<11} {label} reference {_duration(seconds)}  "
+                 f"{subprocess.list2cmdline(step['argv'])}")
+        if step["id"] == state.get("until"):
+            within_boundary = False
+    echo(f"Historical reference for selected unfinished steps: ~{_duration(estimate_remaining(state, flow))}. "
+         "Not a forecast for the changed code; measure this run.")
     return 0
 
 
@@ -498,8 +562,10 @@ def main(argv=None):
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--recovery-mode", choices=("full", "disposable"), default="full",
                         help="full keeps backup/undo; disposable skips pre-intake derivatives and backup, "
-                             "retires rollback after publication; sandbox LEAN only")
+                             "creates no rollback; sandbox LEAN only")
+    parser.add_argument("--reuse-run", help="reuse a completed LEAN intake by sibling run name; no reset or intake")
     parser.add_argument("--heartbeat", type=int, default=120, help="seconds between progress lines")
+    parser.add_argument("--verbose", action="store_true", help="stream every child-process line to the terminal and step log")
     parser.add_argument("--from", dest="start", help="redo from this step (earlier records kept in history)")
     parser.add_argument("--until", help="stop after this step")
     parser.add_argument("--with-previews", action="store_true",
@@ -518,11 +584,19 @@ def main(argv=None):
     if not RUN_NAME.match(args.run):
         raise ValueError("--run must be a plain folder name such as fresh-20261104-lean")
     run = working / "_sandbox-state" / args.run
-    flow = steps(working, run, args.workers, args.recovery_mode)
+    if args.reuse_run and (not RUN_NAME.fullmatch(args.reuse_run) or args.reuse_run == args.run):
+        raise ValueError("--reuse-run must name a different sibling run")
+    if args.reuse_run and args.recovery_mode != "disposable":
+        raise ValueError("--reuse-run requires --recovery-mode disposable")
+    flow = steps(working, run, args.workers, args.recovery_mode, args.reuse_run)
     ids = [step["id"] for step in flow]
     for name in (args.start, args.until):
         if name is not None and name not in ids:
             raise ValueError(f"unknown step {name}; steps: {', '.join(ids)}")
+    if args.start and args.until and ids.index(args.start) > ids.index(args.until):
+        raise ValueError("--from must not be after --until")
+    if args.heartbeat <= 0:
+        raise ValueError("--heartbeat must be positive")
     paths = flow_paths(args.run)
     if args.check:
         if not paths[1].is_file():
@@ -532,6 +606,8 @@ def main(argv=None):
         if state.get("recoveryMode", "full") != args.recovery_mode and paths[1].exists():
             raise ValueError("saved flow recovery mode differs; use the same mode or a new run")
         state["recoveryMode"] = args.recovery_mode
+        if state.get("reuseRun") != args.reuse_run:
+            raise ValueError("saved flow reused intake differs; use the same source run")
         print(render_markdown(state, flow))
         failed = [step_id for step_id, record in state["steps"].items() if record["status"] == "failed"]
         return 1 if failed else 0
@@ -539,13 +615,18 @@ def main(argv=None):
     if paths[1].exists() and state.get("recoveryMode", "full") != args.recovery_mode:
         raise ValueError("saved flow recovery mode differs; use the same mode or a new run")
     state["recoveryMode"] = args.recovery_mode
+    if paths[1].exists() and state.get("reuseRun") != args.reuse_run:
+        raise ValueError("saved flow reused intake differs; use a new flow name")
+    state["reuseRun"] = args.reuse_run
+    state["until"] = args.until
     apply_optional(state, flow, args.with_previews)
     if not args.apply:
         return preview(flow, state, paths[2])
     if state.get("workers") != args.workers and state["steps"]["intake"]["status"] != "done":
         state["workers"] = args.workers
     return run_flow(flow, state, paths, start=args.start, until=args.until,
-                    heartbeat=args.heartbeat, measure=lambda: measure_space(working, run))
+                    heartbeat=args.heartbeat, measure=lambda: measure_space(working, run),
+                    echo_all=args.verbose)
 
 
 if __name__ == "__main__":

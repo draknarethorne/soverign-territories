@@ -385,6 +385,7 @@ def collect(cfg, st, work, space, groups, rend=None, catalog=None, policy=None):
             )
         scores_by_name = {entry[0].name: entry[4] for entry in scored} if ps else {}
         boxes_by_name = {entry[0].name: entry[0].box for entry in scored} if ps else {}
+        face_data_by_name = {photo.name: (photo.faces, photo.px) for photo in photos}
         identity_scores = {
             name: values["score"] for name, values in identity_by_name.items()
         }
@@ -410,10 +411,19 @@ def collect(cfg, st, work, space, groups, rend=None, catalog=None, policy=None):
         gallery_photos = []
         for photo in ordered_union:
             face_box = boxes_by_name.get(photo.name)
+            face_count, face_px = face_data_by_name.get(photo.name, (None, None))
             stem = re.sub(r"[^A-Za-z0-9_.-]+", "_", photo.stem).strip("._") or "photo"
             asset_base = f"people_gallery_review_files/{stem}"
-            chest_data, chest_key, chest_diagnostic = thumbnail(photo, "chest", face_box)
-            head_data, head_key, head_diagnostic = thumbnail(photo, "head", face_box)
+            chest_data, chest_key, chest_diagnostic = thumbnail(
+                photo, "chest", face_box, px=face_px, faces=face_count,
+            )
+            head_data, head_key, head_diagnostic = thumbnail(
+                photo, "head", face_box, px=face_px, faces=face_count,
+            )
+            framing_info = [message[6:] for message in (chest_diagnostic, head_diagnostic)
+                            if message and message.startswith("INFO: ")]
+            actual_diagnostics = [message for message in (chest_diagnostic, head_diagnostic)
+                                  if message and not message.startswith("INFO: ")]
             gallery_photos.append({
                 "name": photo.name,
                 "path": photo,
@@ -427,7 +437,8 @@ def collect(cfg, st, work, space, groups, rend=None, catalog=None, policy=None):
                 "thumbnail_head": f"{asset_base}_head_{head_key}.jpg",
                 "thumb": chest_data,
                 "thumb_head": head_data,
-                "derivative_diagnostic": "; ".join(filter(None, [chest_diagnostic, head_diagnostic])),
+                "derivative_diagnostic": "; ".join(actual_diagnostics),
+                "framing_unavailable": "; ".join(framing_info),
             })
         row["gallery_photos"] = gallery_photos
         row["gallery_photos_identity"] = ordered
@@ -592,7 +603,13 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
                 if photo.get("identity_score") is not None else
                 f' · Prime-start score {photo["score"]:.3f}' if photo.get("score") is not None else ""
             )
-            title = html.escape(photo["name"] + score_title + " " + photo.get("derivative_diagnostic", ""), quote=True)
+            title = html.escape(
+                photo["name"] + score_title
+                + (" " + photo["derivative_diagnostic"] if photo.get("derivative_diagnostic") else "")
+                + (" Intentional framing exclusion: " + photo["framing_unavailable"]
+                   if photo.get("framing_unavailable") else ""),
+                quote=True,
+            )
             chest_path = thumbnail_dir / photo["thumbnail"] if thumbnail_dir and photo.get("thumbnail") else None
             head_path = thumbnail_dir / photo["thumbnail_head"] if thumbnail_dir and photo.get("thumbnail_head") else None
             chest_src = (
@@ -1086,15 +1103,14 @@ def _main(argv=None, space=None):
     reports = cw.storage_root(cfg, "reports", root=work)
     out = cw.storage_output_path(cfg, "reports", args.out or "library", root=work)
     out.mkdir(parents=True, exist_ok=True)
-    with verification_reads.session(work, label="Overview thumbnails"):
+    with verification_reads.session(work, label="Overview inputs"):
         rows = collect(cfg, st, work, space, groups, rend=rend, policy=policy)
-    provenance_sources = [
-        (photo["path"], photo_id_from_name(photo["name"]))
-        for row in rows for photo in row["gallery_photos"]
-    ]
-    provenance = preparation_provenance.build_index(work, out, provenance_sources, "general")
-    history = provenance.history_html().encode("utf-8")
-    with verification_reads.session(work, label="Overview evidence"):
+        provenance_sources = [
+            (photo["path"], photo_id_from_name(photo["name"]))
+            for row in rows for photo in row["gallery_photos"]
+        ]
+        provenance = preparation_provenance.build_index(work, out, provenance_sources, "general")
+        history = provenance.history_html().encode("utf-8")
         for row in rows:
             for photo in row["gallery_photos"]:
                 photo["preparationEvidence"] = provenance.evidence(

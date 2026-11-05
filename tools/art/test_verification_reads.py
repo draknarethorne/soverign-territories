@@ -33,6 +33,23 @@ class VerificationReadsTests(unittest.TestCase):
         self.assertEqual(proof.stats["sealBytes"], len(b"original"))
         self.assertIsNone(reads.active())
 
+    def test_explicit_disposable_staging_skips_second_content_seal_only(self):
+        with mock.patch.object(reads, "_digest", wraps=reads._digest) as digest:
+            with reads.session(self.root, seal_content=False) as proof:
+                reads.sha256(self.source)
+                reads.sha256(self.source)
+            self.assertEqual(digest.call_count, 1)
+            self.assertEqual(proof.stats["sealReads"], 0)
+        with self.assertRaisesRegex(ValueError, "unverified write"):
+            with reads.session(self.root, seal_content=False):
+                reads.sha256(self.source)
+                reads.before_write(self.source)
+                self.source.write_bytes(b"modified")
+        with self.assertRaisesRegex(ValueError, "directory changed"):
+            with reads.session(self.root, seal_content=False) as proof:
+                proof.children(self.root)
+                (self.root / "new.bin").write_bytes(b"new")
+
     def test_same_size_edit_with_restored_mtime_fails_seal_and_next_operation_is_fresh(self):
         before = self.source.stat()
         with self.assertRaisesRegex(ValueError, "content changed"):

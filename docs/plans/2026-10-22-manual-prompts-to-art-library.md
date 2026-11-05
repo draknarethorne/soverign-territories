@@ -7,6 +7,14 @@ source-faithful `0_Edit`/`1_Prime` work with rendering R44. P14-P17 fidelity,
 token reconciliation and set relocation remain prerequisites for that work,
 not the current sandbox publication. Manual source drafts stay untouched.
 
+**Nov 5 sequencing clarification:** Production cutover is not an additional
+prerequisite. After trusted cast review/selections and explicit resumption,
+use verified sandbox inputs with recorded source bindings for supported
+fidelity/pilot work. Shared workspace/selection deployment retains its own
+preview and approval gates. The active installation remains untouched.
+The [priority map](2026-11-05-priority-reset.md#critical-path-versus-work-that-can-wait)
+owns the wider sequence; PR3 still owns the later Production comparison.
+
 **Oct 30 source coverage:** `edit_and_prime_templates.md` reinforces
 P14's exact manual-nuance ledger, P15's data/component/token mapping including
 camera and lighting, P16's one-workflow-at-a-time fidelity/regression checks,

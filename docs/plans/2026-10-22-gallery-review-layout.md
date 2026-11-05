@@ -4,6 +4,15 @@
 
 **Queue focus:** L18, L21, L22, L23
 
+**Nov 5 parallelism approval:** performance
+[T20-T28](2026-10-28-intake-performance.md#nov-5-approved-downstream-parallelism-and-bounded-speed-work)
+owns ranked implementation/benchmark slices after the active run settles.
+L18 retains cross-page history dependency/invalidation ownership; T25 owns
+independent thumbnail workers. Share evidence and preserve sequential whole
+page publication, rather than launching Review/Overview writers concurrently.
+This does not mark the remaining L18 work delivered or waive linked-page
+acceptance in L21-L23.
+
 **Scope boundary:** Nov 3 selects the fresh-rebase recap improvements below
 alongside human C7/LY11 review and existing report-verification I/O. It does not
 authorize a broad gallery redesign, full intake, pruning, rank-prefixed source
@@ -43,12 +52,33 @@ ground-truth identities.
   rename, and distant/unknown evidence using existing score colors and text
   labels. Naming N5/N14 owns surname rules; no UI-driven filesystem rename.
 - [ ] **P1 ai** L23 Clarify the recap's reason counts and every-photo table.
+  Nov 5: replace misleading "moved (original path no longer exists)" in
+  applied-run source cells with explicit previous-location provenance,
+  verified final photo/destination and intake links. The reported Jade Pryce
+  `image_7514748239698013269` exists at
+  `Various/review/various_image_7514748239698013269.jpg`, matches the saved
+  prepared SHA-256, and its intake detail exists. It was held for 2+ detected
+  faces, not lost. Preserve unavailable/unsafe/historical states; test moved,
+  renamed, quality-held, truly missing and edited targets, never make a
+  success-shaped link from existence alone. Show plain-language disjoint
+  higher-rival/follow-up counts and refinement scope/stop reason from engine
+  E18 so "stable" does not imply global convergence.
   Link each hold group to its actual final destinations and photos, including
   the 52 Model-band and 27 high-cast-similarity holds. Show each photo's top
   three cast references/scores when saved evidence exists; otherwise say
   unmeasured/unavailable rather than invent values or leave ambiguous blanks.
   Label photo-to-core versus cluster-to-cast scores and group size so a
   single photo does not appear to be a "small group" decision without context.
+  Nov 5 implementation: moved-source cells now identify the prior location,
+  verify final bytes against the prepared SHA-256, and link intake detail only
+  when it exists; reused preparation evidence is read from its original run.
+  Audit prose separates higher-rival photos from additional follow-up-only
+  photos, and retains per-row refinement hold reasons. Family threshold prose
+  prefers the newer direct-cast/secondary thresholds when recorded, preserving
+  legacy rendering otherwise. Focused fixtures cover missing/tampered targets.
+  Read-only saved-evidence check confirmed Jade Pryce's final Various/Review
+  bytes match its prepared SHA-256 and the intake detail exists. No B-drive
+  report was generated or published; keep L23 open for linked-page acceptance.
   Distinguish No Change, identity move, Review transition, rename and format
   conversion from frozen intake-path changes. Display engine E14's final
   own-versus-rival audit and whether reassignment/convergence ran or remains
@@ -604,6 +634,14 @@ or conceal pending decisions behind disabled controls.
   Keep explicit limits/errors, complete hash/path/scope checks and final
   content invalidation; no timestamp-only trust, silent latest-run selection
   or automatic acceptance.
+
+Nov 5 bounded pickup increment: Overview collection, history indexing and
+per-photo evidence now share one operation-local verification session,
+with a full content seal before report publication. Repeated source checks
+reuse their first digest; mutations still fail the seal. Cross-page staged
+history audits remain unchanged and open in L18, not silently cached across
+commands. The [pickup gates](../art/likeness.md#pickup-acceptance-gates)
+separate preview evidence from post-install browser/human acceptance.
 
 Oct 31 full-scale evidence strengthens this existing task: the successful
 same-stage apply took 16,734.44 seconds including backup/stage checks and

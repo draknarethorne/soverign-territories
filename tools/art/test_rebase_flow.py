@@ -55,15 +55,104 @@ class RebaseFlowTests(unittest.TestCase):
         self.assertIn("--preserve-legacy-derivatives", by_id["install"]["argv"])
         self.assertIn(str(self.run / "policy.json"), by_id["gallery-check"]["argv"])
 
+    def test_reuse_flow_skips_reset_intake_and_recovery_and_uses_separate_matching_preview(self):
+        flow = rebase_flow.steps(self.working, self.run, 6, "disposable", "old-intake")
+        by_id = {step["id"]: step for step in flow}
+        for step_id in ("reset-preview", "reset-apply", "originals", "originals-check",
+                        "backup", "intake-preview", "intake", "intake-check"):
+            self.assertIn("skipReason", by_id[step_id])
+        for step_id, mode in (("match-preview", "--apply"), ("install", "--install"), ("install-check", "--check")):
+            argv = by_id[step_id]["argv"]
+            self.assertEqual(argv[0], "bin\\lean-continue.cmd")
+            self.assertEqual(argv[-1], mode)
+            self.assertIn("old-intake", argv)
+            self.assertIn(self.run.name, argv)
+
+    def test_from_cannot_reenable_profile_skipped_reset_or_backup(self):
+        forbidden = python_step("reset", "raise RuntimeError('must never reset')")
+        forbidden["skipReason"] = "saved-input continuation"
+        flow = [forbidden, python_step("matching", "print('matching only')")]
+        self.assertEqual(self._run(flow, start="reset"), 0)
+        state = json.loads(self.paths[1].read_text())
+        self.assertEqual(state["steps"]["reset"]["status"], "skipped")
+        self.assertEqual(state["steps"]["matching"]["status"], "done")
+
+    def test_completed_or_skipped_stop_boundary_never_starts_install(self):
+        for skipped in (False, True):
+            with self.subTest(skipped=skipped):
+                flow = [python_step("matching", "print('preview')"),
+                        python_step("install", "raise RuntimeError('must not install')")]
+                if skipped:
+                    flow[0]["skipReason"] = "already satisfied"
+                else:
+                    self.assertEqual(self._run(flow, until="matching"), 0)
+                self.assertEqual(self._run(flow, until="matching"), 0)
+                state = json.loads(self.paths[1].read_text())
+                self.assertEqual(state["steps"]["install"]["status"], "pending")
+                self.assertFalse((self.paths[0] / "02-install.log").exists())
+
+    def test_start_after_stop_is_refused_before_any_processing(self):
+        flow = [python_step("matching", "print('preview')"),
+                python_step("install", "print('must not run')")]
+        with self.assertRaisesRegex(ValueError, "--from must not be after --until"):
+            self._run(flow, start="install", until="matching")
+        self.assertFalse(self.paths[1].exists())
+
+    def test_continuation_reference_is_lean_bounded_and_not_a_forecast(self):
+        flow = rebase_flow.steps(self.working, self.run, 4, "disposable", "old-intake")
+        state = rebase_flow.load_state(self.paths[1], self.working, self.run, 4, flow)
+        state["until"] = "match-preview"
+        self.assertEqual(rebase_flow.estimate_remaining(state, flow), 15 * 60 + 11)
+        rebase_flow.preview(flow, state, self.paths[2], echo=self.lines.append)
+        output = "\n".join(self.lines)
+        self.assertIn("Nov 5 LEAN reference 15m11s", output)
+        self.assertIn("after --until match-preview", output)
+        self.assertIn("Not a forecast", output)
+        state["steps"]["match-preview"]["status"] = "done"
+        self.assertEqual(rebase_flow.estimate_remaining(state, flow), 0)
+        full = rebase_flow.steps(self.working, self.run, 4)
+        install = next(step for step in full if step["id"] == "install")
+        self.assertEqual(rebase_flow.reference_timing(install), (311 * 60, "Nov 3"))
+
+    def test_verbose_echoes_each_child_line_once_and_keeps_complete_log(self):
+        lines = ["ordinary matching row", "Completed worker 1/1 (input 1): ok (a)",
+                 "Install: staging copies in 12.5s", "! WARNING: diagnostic"]
+        flow = [python_step("matching", "; ".join(f"print({line!r})" for line in lines))]
+        self.assertEqual(self._run(flow, echo_all=True), 0)
+        log = [line.split(" ", 1)[1] for line in
+               (self.paths[0] / "01-matching.log").read_text().splitlines()[1:]]
+        for line in lines:
+            self.assertEqual(sum(value.rstrip("\n") == line for value in self.lines), 1)
+            self.assertEqual(log.count(line), 1)
+        state = json.loads(self.paths[1].read_text())
+        self.assertEqual(state["steps"]["matching"]["photos"], {"done": 1, "total": 1})
+        self.assertEqual(len(state["steps"]["matching"]["phases"]), 1)
+
+    def test_space_counts_preparation_without_rewalking_run(self):
+        for relative, size in (("Angels/One/gallery/a.jpg", 3), ("_backup/a", 5),
+                               ("_processing/a", 7), ("_sandbox-state/trial/a", 11),
+                               ("_sandbox-state/trial/inputs/a", 13)):
+            path = self.working / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(b"x" * size)
+        with mock.patch.object(rebase_flow, "_tree_bytes", side_effect=AssertionError("no second tree walk")):
+            sizes = rebase_flow.measure_space(self.working, self.run)
+        self.assertGreaterEqual(sizes.pop("seconds"), 0)
+        self.assertEqual(sizes, {"working": 39, "people": 3, "run": 24, "inputs": 13,
+                                "_backup": 5, "_processing": 7, "files": 5})
+
     def test_cli_binds_disposable_mode_and_refuses_a_later_mode_switch(self):
         (self.working.parent / "Source").mkdir(parents=True)
-        argv = ["--root", str(self.working), "--run", "trial", "--recovery-mode", "disposable", "--apply"]
+        argv = ["--root", str(self.working), "--run", "trial", "--recovery-mode", "disposable",
+                "--apply", "--verbose", "--until", "match-preview"]
         with mock.patch.object(rebase_flow, "flow_paths", return_value=self.paths), \
                 mock.patch.object(rebase_flow, "run_flow", return_value=0) as run, \
                 redirect_stdout(io.StringIO()):
             self.assertEqual(rebase_flow.main(argv), 0)
             state = run.call_args.args[1]
             self.assertEqual(state["recoveryMode"], "disposable")
+            self.assertEqual(state["until"], "match-preview")
+            self.assertTrue(run.call_args.kwargs["echo_all"])
             self.paths[1].write_text(json.dumps(state), encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "recovery mode differs"):
                 rebase_flow.main(["--root", str(self.working), "--run", "trial", "--apply"])

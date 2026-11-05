@@ -5,6 +5,62 @@ Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (gen
 
 ## The pattern
 
+**Nov 5 15:59 core clarification:** the
+[pipeline-wide repeated-work package](2026-10-28-intake-performance.md#nov-5-1559-pipeline-wide-repeated-work-core-and-execution-design)
+extends core assessment to inventory, staging, derivatives, details,
+reports and checks. T30 coordinates findings; existing phase owners keep
+implementation. Remove duplicated work before adding bounded workers;
+threads/processes and ownership units follow measured bottlenecks. Extra
+parallel acceleration retains the earlier measured gate. The active run
+remains untouched.
+
+**Nov 5 14:59 broader review:** the
+[22-plan remaining-work map](2026-11-05-priority-reset.md#remaining-work-map-nov-5-non-archive-plan-inventory)
+separates cast acceptance/selections, manual fidelity, generic workspaces and
+representative end-to-end art from later automation/library/game/tooling work.
+All current plan status/focus/open-task headings are inventoried; this is
+not yet item-level closure/transfer verification. Production comparison
+follows cast review/selections, but the user decides Production cutover
+does **not** block supported prompt/art work using verified sandbox inputs.
+No runtime, source, workspace or Production mutation follows from the map.
+
+**Spelling clarification from this Q&A:** correct meaningful naming in the
+checked-out project, including useful older prose/links; retaining old
+spelling only because a document is archived is not the selected direction.
+Git history can retain it. The [spelling plan](2026-11-02-sovereign-spelling-rename.md#nov-5-clarification-correct-the-visible-project-not-git-history)
+owns raw/bound evidence migration and unusable-document review; these require
+specific dependency/provenance handling, not blind replacements or deletion.
+Local-path selection remains open and no rename occurs during the run.
+
+**Nov 5 priority Q&A:** the [priority reset](2026-11-05-priority-reset.md)
+owns the agreed sequence and bounded consolidation. LEAN acceptance targets
+correctness and demonstrated major bottlenecks, not every optimization.
+Sister/Angel Galleries and their Review queues must be resolved before
+selection review; Production promotion remains undecided until afterward.
+Spelling correction waits for settled processing/evidence, then precedes
+the new-machine clone. Manual fidelity, generic Females and roster workflow
+coverage lead back to representative end-to-end animation/video acceptance.
+The user monitors the running terminal; do not monitor or interrupt it until
+asked. This is planning work, not permission to change frozen runtime inputs.
+
+**Nov 5 14:25 current lane:** the verified `postrun-lean-preview3`
+continuation is authorized through sandbox installation and final checks,
+then Gallery/Overview/Review verification. The existing visible task is left
+alone; completion is not yet claimed. Planning-only work records approved
+[performance T20-T28](2026-10-28-intake-performance.md#nov-5-approved-downstream-parallelism-and-bounded-speed-work)
+and reconciles the five active feedback notes in the
+[filing ledger](#nov-5-active-feedback-reconciliation). No runtime change,
+new intake, Production mutation or live path rename follows from this pass.
+Earlier no-install/matching-only scheduling below is historical.
+
+**Nov 5 14:41 scope decision:** the
+[pre-new-PC bundle](2026-10-28-intake-performance.md#nov-5-1441-bounded-pre-new-pc-benchmark-bundle)
+is baseline T29, inventory T20, derivatives T21, details T22 and gallery L18.
+Thumbnail/hash/staging/check extras must earn inclusion through the agreed
+measured gate; new-machine worker tuning remains later. Basic machine setup
+need not wait for all optimization work. Runtime stays frozen during the
+active installation, and corrected-name cloning retains the spelling gate.
+
 **Current scheduling (Nov 3 12:46 source-rehearsal authorization):**
 the user requests another clean reset from current Production, not the output
 of `fresh-20261102`. Implement and test the selected naming, core-protection,
@@ -39,6 +95,43 @@ but fails on 143 framing diagnostics, with zero held name collisions or
 pending maintenance. LY4/N15 stay open; investigate those existing quality
 holds without another reset/intake. The pinned recap owns final timings,
 storage and exact check-only commands.
+**Nov 5 09:08 review request (09:36 approvals below supersede proposals):** naming N16 owns tracing/tightening family
+links; cast C12 owns revisiting direct cast Gallery admission and C13 owns
+all/scoped workflow-selection reset and replacement. Read-only evidence is
+recorded in those existing plans. Proposed numerical defaults are not
+approved policy changes; no new intake, install or shared-workspace mutation.
+
+**Nov 5 09:36 selected next-rebase prerequisites:** implement naming N16's
+approved direct/secondary thresholds, cast C12's Sisters admission and C13's
+workflow reset/manual exception; engine E18/E19 owns residual final-audit
+coverage and the labelled Briar/Sammara case, gallery L23 the moved-source
+warning and count explanations. Contracts/schema, focused tests and
+saved-evidence previews precede layout LY4's next fresh sandbox run.
+This is one milestone, not a broad calibration/Production rollout.
+Raw feedback lives verbatim at the end of naming's plan; the pinned recap
+owns timing estimates and resume details. Existing crop-status acceptance
+must distinguish intentional exclusions from missing/edited derivatives.
+
+**Nov 5 09:44 pause/reuse clarification:** implement/test the refinement
+alignment, but start no re-run while user review continues. Engine E18 now
+has the additional bounded audit-aligned membership pass and final residual
+installation guard; saved-case acceptance and the rest of the approved
+post-run bundle remain open. A later preview can reuse verified prepared
+inputs/cache and the exact pre-run catalogue rather than repeating intake.
+This is not permission to replan the installed disposable receipt or use its
+generated identities as new seeds. The pinned recap owns the reuse evidence,
+supported-command limitations and skip/recompute matrix. No new primary
+milestone or broad plan reorganization.
+
+**Nov 5 10:32 implementation authorization:** finish the approved post-run
+bundle and the bounded [layout LY15](2026-11-02-library-layout.md#nov-5-1032-finish-post-run-fixes-make-disposable-lean-genuinely-reset-only)
+saved-input continuation. Disposable sandbox LEAN creates no baseline
+backup or transaction rollback, and does not repeat reset/intake when
+reusing verified original evidence. FULL/Production safeguards stay intact.
+The installed baseline stays available for review; do not start a matching
+replay, install or new intake without later authorization. Priority-feedback
+discussion is accounted for in LY15, not permission for a broad reorder,
+workspace/prompt mutation or Production promotion.
 
 **Earlier scheduling (Nov 3 review):**
 the fresh `fresh-20261102` sandbox is installed and its ordinary post-install
@@ -415,10 +508,34 @@ authorizes the documented sandbox run and small Sovereign Females pilot, not
 production processing or broad workflow retargeting. Older uncropped-original recovery is
 deferred; exact current inputs and all user decisions remain protected.
 
+### Nov 5 active feedback reconciliation
+
+Each of the five sources was read in full, compared to its primary plan's
+preserved text, and checked for item-level coverage before individual filing.
+Re-read the bytes immediately before each non-overwriting move, and verify
+the destination bytes and SHA-256 afterward. Spelling and named Various
+preserved prose normalize line-end whitespace only, not words; their
+archived originals keep all original bytes. The local archive README records
+the topic counts.
+
+| Source basename / local archive topic | Primary preserved source and request coverage | Disposition / still open |
+| --- | --- | --- |
+| `priority_plans_review.md` / planning-and-recaps | [Priority reset](2026-11-05-priority-reset.md#nov-5-feedback-reconciliation-and-remaining-gates), full source and Q&A; initial requests, A-G and every later bullet mapped | Individually filed; PR1 full-plan audit/consolidation and PR2 choices remain, no whole-plan archive or runtime authorization inferred |
+| `rebase_fresh_20261102_feedback.md` / gallery-and-actions | [Gallery recap coverage](2026-10-22-gallery-review-layout.md#request-coverage); full source at plan end; L21-L24, N14, E14/E15, C11/C12 and I60 own all cases | Individually filed; implemented presentation is not linked-page/placement acceptance; diagnostics and optional filename workflow still gated |
+| `sovereign_territories_spelling.md` / planning-and-recaps | [Spelling SP1-SP7](2026-11-02-sovereign-spelling-rename.md), complete source and coverage at plan end | Individually filed; in-place GitHub rename chosen, history/local path still need SP1 answers after run settles; three-machine migration not executed |
+| `speed_and_space_optimization.md` / storage-and-configuration | [Layout LY14](2026-11-02-library-layout.md), full source at plan end; cap, original visibility, generate-on-protect, remove-on-unprotect/move, Various and timing all covered | Individually filed; cap is undecided; exact-output concurrency is separately approved in performance T20-T28 |
+| `various_named_person.md` / identity-and-matching | [Naming N12/N13](2026-10-22-identity-family-naming.md#oct-30-named-and-unnamed-various-acceptance-contract), exact note preserved; 11-photo Ela Model core, duplicate filenames/bytes, asserted name and eligible existing matches covered | Individually filed; user supplies/selects later trial, no extra intake or force-merge now |
+
+No unowned request was found; unresolved decisions remain explicit plan gates
+for one-at-a-time Q&A, not guessed answers. Filing removes an incorporated
+source from the inbox, not its unfinished work from the queue. PR1's broader
+plan-by-plan consolidation is not claimed complete by this feedback pass.
+
 ## Plans
 
 | Plan | Status | What it is |
 | --- | --- | --- |
+| [2026-11-05-priority-reset.md](2026-11-05-priority-reset.md) | active | Agreed priority sequence; bounded plan/feedback consolidation with explicit task transfers; cast Gallery AND Review acceptance before selections, manual/workspace work and representative end-to-end character art |
 | [2026-10-09-finals-and-mvp.md](2026-10-09-finals-and-mvp.md) | holding | Resume selected-source/finals/video tests after prepared-library acceptance; no current-input reset |
 | [2026-10-09-cli-simplification.md](2026-10-09-cli-simplification.md) | proposed | Historical inventory supporting only the remaining command folds/forwarders (finals 6.3b/6.5); no new consolidation approved |
 | [2026-10-11-tidy-junk-organise.md](2026-10-11-tidy-junk-organise.md) | holding | Resume selected element/profile classification after prepared-library review; face-pass experiment conditional |
@@ -436,9 +553,9 @@ deferred; exact current inputs and all user decisions remain protected.
 | [2026-10-23-image-intake-preparation.md](2026-10-23-image-intake-preparation.md) | active | Phase 1: I59 actual installed face/history acceptance passed; I60 current quality review remains open. Expanded feedback is fully mapped F01-F31; I68-I70 own next-round cases/masking/enhancement and I71-I76 own UX/scope/naming/Junk follow-ups |
 | [2026-10-23-cast-seeded-library-rebase.md](2026-10-23-cast-seeded-library-rebase.md) | active | Phase 3: C6 installed/recovery/viewer gates passed; C7 human identity/quality review remains, with 99 Review holds. Family/name/Production gates remain separate |
 | [2026-10-25-reference-rendering.md](2026-10-25-reference-rendering.md) | holding | Verified rebase/prepared inputs plus manual fidelity and R44 routing before bounded Prime batch; no queue during install block |
-| [2026-10-28-intake-performance.md](2026-10-28-intake-performance.md) | active | T13 COMPACT/COLLAGE tooling and T16 installed measurements delivered; T17 counters/external phases implemented, finer timings/types remain. T18 profiles P2, T19 CUSTOM P3; T14 retention and T15 progress remain independent |
-| [2026-11-02-library-layout.md](2026-11-02-library-layout.md) | active | `_processing` store separating intake/processing history from person galleries (LY1 decided); clean sandbox reset/LEAN rebase on the new layout precedes storage S32/S27; Nov 2 `_` directory audit and production retirement |
-| [2026-11-02-sovereign-spelling-rename.md](2026-11-02-sovereign-spelling-rename.md) | holding | Correct "Soverign" to "Sovereign" in the repository, local folders, docs and three machines; resume after the sandbox gallery/scripts are accepted clean and SP1 decisions are answered |
+| [2026-10-28-intake-performance.md](2026-10-28-intake-performance.md) | active | Nov 5 T20-T28 owns approved inventory reuse, bounded downstream workers and new-machine tuning with effort/risk/timing gates; no runtime edit during installation. T17 measurements and T18/T19 profiles remain distinct |
+| [2026-11-02-library-layout.md](2026-11-02-library-layout.md) | active | `_processing` separation (LY1 decided); LY15 continuation/preflight and visible task delivered; saved preview verified, install/final checks authorized and in progress, actual LY4/LY11 acceptance still open |
+| [2026-11-02-sovereign-spelling-rename.md](2026-11-02-sovereign-spelling-rename.md) | holding | Correct repository, paths/docs and three machines after running job settles/evidence, before new clone; in-place GitHub rename chosen, remaining SP1 path/history decisions open |
 | [2026-10-28-storage-operations-and-retention.md](2026-10-28-storage-operations-and-retention.md) | active | S26, mixed history trials and S28 backup/archive recovery delivered; fresh v23 LEAN evidence default. S27 complete replay is current. Smaller hot backups measured slower and rejected for replay; old backups with unique bytes held. S25 broader quality/production and S24 generic PRUNE remain gated |
 
 The Oct 22 retained plans have review/questions blocks; affected owners now

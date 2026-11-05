@@ -31,6 +31,7 @@ echo   C  Photo library check (read only: anything waiting?)
 echo   B  Back up the photo library and ComfyUI inputs
 echo      B also offers lossless snapshot archives or a bounded format benchmark (Help lists apply/check)
 echo   X  Intake-aware sandbox clean start (inventory or verify; completed-stage recovery flags in Help)
+echo   LC Preview saved-input LEAN continuation (no reset, intake, matching or install)
 echo   N  Preview sandbox run-retention decisions (read only)
 echo   F  Preview reference-render batch (offline, no workflow deployment or queue)
 echo   D  Refresh rendering selection/results gallery (reports only)
@@ -53,6 +54,7 @@ if /i "%CH%"=="GR" call "%~dp0people-gallery.cmd" --reports-only --dry-run & pau
 if /i "%CH%"=="C" call "%~dp0library-check.cmd" & pause & goto menu
 if /i "%CH%"=="B" goto backup
 if /i "%CH%"=="X" goto sandboxrebase
+if /i "%CH%"=="LC" goto leancontinue
 if /i "%CH%"=="N" goto retention
 if /i "%CH%"=="F" goto referencerender
 if /i "%CH%"=="D" goto rendergallery
@@ -275,6 +277,16 @@ set /p "APPLY=Apply (n = preview only)? (y/n): "
 set "FLAG="
 if /i "%APPLY%"=="y" set "FLAG=--apply"
 call "%~dp0cleanup.cmd" "%WS%" %FLAG%
+pause
+goto menu
+:leancontinue
+set "LCROOT="
+set "LCSOURCE="
+set "LCRUN="
+set /p "LCROOT=Absolute sandbox Working path: "
+set /p "LCSOURCE=Original completed LEAN run name: "
+set /p "LCRUN=New continuation run name: "
+call "%~dp0lean-continue.cmd" --root "%LCROOT%" --source-run "%LCSOURCE%" --run "%LCRUN%" --dry-run
 pause
 goto menu
 :backup

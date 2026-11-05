@@ -125,6 +125,19 @@ class CleanPreparationTests(unittest.TestCase):
         with contextlib.redirect_stdout(io.StringIO()):
             return clean_rebase.command(self.args(**flags), self.api)
 
+    def test_curation_inventory_recognizes_ids_assigned_from_raw_download_names(self):
+        relative = "Various/gallery/facebook_1791423017739_7513772728997485362.jpg"
+        source = self.source / relative
+        source.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(self.source / "Various/gallery/incoming_image_345678.jpg", source)
+        self.inputs[relative] = (source.stat().st_size, metadata.content_sha256(source))
+        published = self.working / "Angels/Fixed/review/fixed_image_7513772728997485362.png"
+        published.parent.mkdir(parents=True, exist_ok=True)
+        Image.new("RGB", (160, 240), "blue").save(published)
+        inventory = clean_rebase._curation_inventory(self.layout)
+        self.assertEqual(inventory[published.relative_to(self.working).as_posix()],
+                         metadata.content_sha256(published))
+
     def test_inventory_preview_is_read_only_and_apply_requires_matching_preview(self):
         result = self.command(dry_run=True)
         self.assertEqual(result["inputCount"], 5)
@@ -153,7 +166,7 @@ class CleanPreparationTests(unittest.TestCase):
         for relative, expected in self.inputs.items():
             self.assertEqual(metadata.content_sha256(self.working / relative), expected[1])
 
-    def test_disposable_lean_installs_without_backup_retires_undo_and_still_checks(self):
+    def test_disposable_lean_installs_without_creating_backup_or_rollback_and_still_checks(self):
         self.command(intake_only=True, apply=True, storage_mode="lean", recovery_mode="disposable")
         with self.assertRaisesRegex(ValueError, "recovery mode differs"):
             self.command(recovery_mode="full")
@@ -161,32 +174,18 @@ class CleanPreparationTests(unittest.TestCase):
         with mock.patch("library_backup.latest_work_root_backup",
                         side_effect=AssertionError("disposable must not require backup")), \
                 mock.patch("library_backup.verify_backup",
-                           side_effect=AssertionError("disposable must not verify backup")):
-            with mock.patch.object(clean_rebase.sandbox, "_remove_tree",
-                                   side_effect=OSError("cleanup interrupted")):
-                with self.assertRaisesRegex(OSError, "cleanup interrupted"):
-                    self.command(apply=True, recovery_mode="disposable")
-            pending = json.loads((self.run / "run.json").read_text())
-            self.assertEqual(pending["status"], "applied")
-            self.assertFalse(pending.get("rollbackRetired"))
-            previous = self.run / "previous"
-            self.assertTrue(previous.is_dir())
-            unknown = previous / "unknown.bin"
-            unknown.write_bytes(b"unaccounted")
-            with self.assertRaisesRegex(ValueError, "unverified disposable rollback"):
-                clean_rebase.retire_disposable_rollback(self.layout, self.run, pending)
-            unknown.unlink()
-            prior = next(path for path in previous.rglob("*") if path.is_file())
-            original = prior.read_bytes()
-            prior.write_bytes(b"tampered")
-            with self.assertRaisesRegex(ValueError, "unverified disposable rollback"):
-                clean_rebase.retire_disposable_rollback(self.layout, self.run, pending)
-            prior.write_bytes(original)
+                           side_effect=AssertionError("disposable must not verify backup")), \
+                mock.patch.object(clean_rebase, "retire_disposable_rollback",
+                                  side_effect=AssertionError("disposable creates no rollback to retire")):
             self.command(apply=True, recovery_mode="disposable")
         self.command(check=True, recovery_mode="disposable")
         plan = json.loads((self.run / "run.json").read_text())
         self.assertTrue(plan["rollbackRetired"])
+        self.assertFalse(plan["rollbackCreated"])
         self.assertFalse((self.run / "previous").exists())
+        self.assertFalse((self.run / "previous-catalog.json").exists())
+        self.assertNotIn("previousCategoryFiles", plan)
+        self.assertNotIn("previousExternalHashes", plan)
         self.assertFalse((self.working / "_backup").exists())
         with self.assertRaisesRegex(ValueError, "no undo contract"):
             self.command(undo=True)
@@ -202,19 +201,21 @@ class CleanPreparationTests(unittest.TestCase):
                 self.run, {"preparation": {"storageMode": "lean"}},
             )
 
-    def test_disposable_publication_failure_restores_originals_before_rollback_retirement(self):
+    def test_disposable_publication_failure_requires_reset_without_restoring_originals(self):
         self.command(intake_only=True, apply=True, storage_mode="lean", recovery_mode="disposable")
         self.command()
         catalog = (self.working / ".likeness-library.json").read_bytes()
         with mock.patch.object(metadata, "save_catalog", side_effect=OSError("publication failed")), \
                 mock.patch.object(clean_rebase, "retire_disposable_rollback",
                                   side_effect=AssertionError("not yet verified")):
-            with self.assertRaisesRegex(OSError, "publication failed"):
+            with self.assertRaisesRegex(RuntimeError, "no rollback exists"):
                 self.command(apply=True)
         self.assertEqual((self.working / ".likeness-library.json").read_bytes(), catalog)
-        self.assertEqual(json.loads((self.run / "run.json").read_text())["status"], "preview")
-        for relative, expected in self.inputs.items():
-            self.assertEqual(metadata.content_sha256(self.working / relative), expected[1])
+        failed = json.loads((self.run / "run.json").read_text())
+        self.assertEqual(failed["status"], "reset-required")
+        self.assertIn("publication failed", failed["publicationError"])
+        self.assertFalse((self.run / "previous").exists())
+        self.assertFalse((self.run / "previous-catalog.json").exists())
 
     def test_intake_preview_and_missing_run_checks_do_not_create_a_directory(self):
         self.run = self.working / "_sandbox-state" / "not-created"

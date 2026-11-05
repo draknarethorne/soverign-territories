@@ -50,6 +50,44 @@ class PeopleGalleryTests(unittest.TestCase):
         self.assertEqual(gallery.likeness.status_of("Models/Freya"), "Models")
         self.assertFalse(gallery.likeness.is_sister("Models/Freya"))
 
+    def test_overview_reuses_reads_then_seals_before_publishing(self):
+        self.root.mkdir(parents=True)
+        source = self.root / "image_123456.jpg"
+        source.write_bytes(b"original")
+        space = types.SimpleNamespace(cfg={}, st={}, work=self.root)
+        reads = gallery.verification_reads
+        rows = [{"status": "Angels", "gallery_photos": [{"path": source, "name": source.name}]}]
+
+        def collect(*args, **kwargs):
+            reads.sha256(source)
+            return rows
+
+        for tamper in (False, True):
+            source.write_bytes(b"original")
+
+            def evidence(*args):
+                reads.sha256(source)
+                if tamper:
+                    source.write_bytes(b"modified")
+                return {"state": "verified"}
+
+            index = types.SimpleNamespace(history_html=lambda: "", evidence=evidence)
+            with self.subTest(tamper=tamper), \
+                    mock.patch.object(gallery, "collect", side_effect=collect), \
+                    mock.patch.object(gallery.preparation_provenance, "build_index", return_value=index), \
+                    mock.patch.object(reads, "_digest", wraps=reads._digest) as digest, \
+                    mock.patch.object(gallery, "render_pairing_report", side_effect=RuntimeError("publication boundary")) as publish:
+                error = ValueError if tamper else RuntimeError
+                message = "content changed" if tamper else "publication boundary"
+                with self.assertRaisesRegex(error, message):
+                    gallery.main(["--no-renders"], space=space)
+                self.assertEqual(digest.call_count, 2)
+                self.assertIsNone(reads.active())
+                if tamper:
+                    publish.assert_not_called()
+                else:
+                    publish.assert_called_once()
+
     def test_identity_rankings_follow_library_hierarchy_then_similarity(self):
         vectors = {
             "Angels/Camaris": np.array([1.0, 0.0]),

@@ -2,6 +2,7 @@
 import hashlib
 import io
 import json
+import math
 import os
 import pathlib
 import time
@@ -134,7 +135,52 @@ def render_pixels(source, framing, box, *, prepared):
     return output.getvalue()
 
 
-def maintain(source, box, px, *, apply=False):
+def expected_unavailability(source, framing, box, px, faces):
+    """Explain only known policy exclusions; malformed or unreadable cache data stays actionable."""
+    if framing not in ("head", "chest"):
+        return None
+    valid_box = (
+        isinstance(box, (list, tuple)) and len(box) == 4
+        and all(isinstance(value, (int, float)) and math.isfinite(value) for value in box)
+        and box[2] > 0 and box[3] > 0
+    )
+    if faces == 0 and not box and px == 0:
+        return "no face detected; head/chest framing intentionally unavailable"
+    if faces and faces > 0 and valid_box and isinstance(px, (int, float)) and px < originals.MIN_FACE_PX:
+        return (f"detected face is {px:g}px, below the {originals.MIN_FACE_PX}px "
+                "minimum; head/chest framing intentionally unavailable")
+    if framing != "head" or not valid_box or not isinstance(px, (int, float)) or px < originals.MIN_FACE_PX:
+        return None
+    try:
+        with Image.open(source) as image:
+            image = ImageOps.exif_transpose(image).convert("RGB")
+        if not retained_preparation.source_is_prepared(source):
+            import screens
+            if screens.is_reel_ui(image):
+                if not screens.head_clear(box):
+                    return None
+                x0, y0, x1, y1 = screens.clean_box(image.size)
+                width, height = image.size
+                box = [(box[0] * width - x0) / (x1 - x0), (box[1] * height - y0) / (y1 - y0),
+                       box[2] * width / (x1 - x0), box[3] * height / (y1 - y0)]
+                image = image.crop((x0, y0, x1, y1))
+        crop = originals.headshot_box(image.size, box, SIZE)
+    except (OSError, ValueError, ZeroDivisionError):
+        return None
+    crop_height = crop[3] - crop[1]
+    minimum = SIZE[1] * 0.3
+    if crop_height < minimum:
+        return (f"head crop is {crop_height}px high, below the {minimum:.1f}px minimum; "
+                "head framing intentionally unavailable")
+    return None
+
+
+def _has_owned_framing(source, framing, data):
+    relative = relative_target(source, framing)
+    return (relative.as_posix() in data["entries"] or (pathlib.Path(source).parent.parent / relative).exists())
+
+
+def maintain(source, box, px, *, apply=False, faces=None):
     source = pathlib.Path(source)
     folder = source.parent.parent
     data = load(folder)
@@ -143,7 +189,14 @@ def maintain(source, box, px, *, apply=False):
         relative = relative_target(source, framing)
         target = folder / relative
         if framing != "padded" and (not box or px < originals.MIN_FACE_PX):
-            diagnostics.append(f"{source}: {framing} unavailable (no usable cached face)")
+            if _has_owned_framing(source, framing, data):
+                diagnostics.append(f"Stale maintained {framing} remains although current face policy excludes it: {target}")
+            else:
+                reason = expected_unavailability(source, framing, box, px, faces)
+                if reason:
+                    diagnostics.append(f"INFO: {source}: {reason}")
+                else:
+                    diagnostics.append(f"{source}: {framing} unavailable (no usable cached face)")
             continue
         try:
             verified(source, framing, box)
@@ -154,7 +207,11 @@ def maintain(source, box, px, *, apply=False):
         try:
             payload = render(source, framing, box)
         except ValueError as exc:
-            diagnostics.append(str(exc))
+            reason = expected_unavailability(source, framing, box, px, faces)
+            if reason and not _has_owned_framing(source, framing, data):
+                diagnostics.append(f"INFO: {source}: {reason}")
+            else:
+                diagnostics.append(str(exc))
             continue
         expected = hashlib.sha256(payload).hexdigest()
         if target.exists() and (not previous or previous.get("sha256") != digest(target)):
@@ -189,7 +246,7 @@ def thumbnail_key(source, framing, box=None):
     return target, key
 
 
-def thumbnail(source, framing, box=None, size=(320, 400)):
+def thumbnail(source, framing, box=None, size=(320, 400), *, px=None, faces=None):
     """Return only a resized derivative, or a visibly diagnostic placeholder."""
     import io
     from PIL import ImageDraw
@@ -199,10 +256,20 @@ def thumbnail(source, framing, box=None, size=(320, 400)):
         with Image.open(target) as image:
             image = image.convert("RGB").resize(size, Image.Resampling.LANCZOS)
     except (OSError, ValueError, KeyError) as exc:
-        diagnostic = str(exc)
+        reason = expected_unavailability(source, framing, box, px, faces)
+        target = pathlib.Path(source).parent.parent / relative_target(source, framing)
+        try:
+            entry = load(pathlib.Path(source).parent.parent)["entries"].get(
+                relative_target(source, framing).as_posix()
+            )
+        except (OSError, ValueError, KeyError):
+            entry = True
+        diagnostic = (f"INFO: {reason}" if reason and not entry and not target.exists() else str(exc))
         key = hashlib.sha256(diagnostic.encode()).hexdigest()[:12]
         image = Image.new("RGB", size, (245, 230, 215))
-        ImageDraw.Draw(image).text((8, 12), f"{framing}: unavailable\nRun gallery maintenance", fill="black")
+        notice = ("Intentional framing exclusion" if diagnostic.startswith("INFO: ")
+                  else "Run gallery maintenance")
+        ImageDraw.Draw(image).text((8, 12), f"{framing}: unavailable\n{notice}", fill="black")
     output = io.BytesIO()
     image.save(output, "JPEG", quality=84)
     return output.getvalue(), key, diagnostic

@@ -1,0 +1,41 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "LEAN pickup - install and final checks",
+			"type": "process",
+			"command": "cmd.exe",
+			"args": [
+				"/d",
+				"/c",
+				"bin\\rebase-flow.cmd",
+				"--root",
+				"B:\\Sovereign Territories Sandbox\\Working",
+				"--run",
+				"postrun-lean-preview3",
+				"--reuse-run",
+				"fresh-20261104-lean2",
+				"--recovery-mode",
+				"disposable",
+				"--heartbeat",
+				"30",
+				"--verbose",
+				"--apply",
+				"--until",
+				"gallery-check"
+			],
+			"isBackground": false,
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"reveal": "always",
+				"focus": true,
+				"panel": "dedicated",
+				"clear": false,
+				"showReuseMessage": true
+			},
+			"problemMatcher": []
+		}
+	]
+}

@@ -1,9 +1,10 @@
-"""Score-band family trees for rebased identities.
+"""Numeric-threshold family trees for rebased identities.
 
 Family surnames are human-facing presentation only and are never matching evidence.
 An identity joins the family of its closest Angel/Sister when that score reaches the
-configured band (yellow by default); otherwise it links to its closest other identity
-in that band. Connected links form one family whose surname comes from the cast root
+inclusive direct threshold; otherwise it links to its closest other identity strictly
+above the secondary threshold. Score colours do not control membership.
+Connected links form one family whose surname comes from the cast root
 (configured override, then recorded person name) or, failing that, the oldest member.
 Surnames are exclusive: Angel/Sister families claim theirs first, then other families and lone
 identities by age; an identity whose surname another family owns gets a fresh unused surname.
@@ -21,11 +22,10 @@ BAND_ORDER = ("green", "yellow", "orange")
 
 def settings(policy):
     config = policy.get("familyNaming") or {}
-    band = config.get("linkMinimumBand", "yellow")
     return {
         "enabled": bool(config.get("enabled", False)),
-        "band": band,
-        "minimum": float(policy["scoreBands"][band]["minimum"]),
+        "directCastMinimumSimilarity": float(config.get("directCastMinimumSimilarity", .4)),
+        "secondaryMinimumSimilarityExclusive": float(config.get("secondaryMinimumSimilarityExclusive", .35)),
         "overrides": dict(config.get("castSurnameOverrides", {})),
     }
 
@@ -84,7 +84,8 @@ def plan(identities, cast, policy, *, reserved=(), surnames=(), first_names=()):
     surnames/first_names: pools for fresh names when a surname belongs to another family or a name is taken.
     """
     config = settings(policy)
-    minimum = config["minimum"]
+    direct_minimum = config["directCastMinimumSimilarity"]
+    secondary_minimum = config["secondaryMinimumSimilarityExclusive"]
     parents = {}
     for key in sorted(identities, key=str.casefold):
         vector = identities[key]["vector"]
@@ -92,7 +93,7 @@ def plan(identities, cast, policy, *, reserved=(), surnames=(), first_names=()):
             ((float(vector @ entry["vector"]), folder) for folder, entry in cast.items()),
             key=lambda row: (-row[0], row[1].casefold()),
         )
-        if ranked_cast and ranked_cast[0][0] >= minimum:
+        if ranked_cast and ranked_cast[0][0] >= direct_minimum:
             score, target = ranked_cast[0]
             parents[key] = {"tier": "cast", "to": target, "score": score}
             continue
@@ -101,7 +102,7 @@ def plan(identities, cast, policy, *, reserved=(), surnames=(), first_names=()):
              for other_key, other in identities.items() if other_key != key),
             key=lambda row: (-row[0], row[1].casefold()),
         )
-        if ranked_peers and ranked_peers[0][0] >= minimum:
+        if ranked_peers and ranked_peers[0][0] > secondary_minimum:
             score, target = ranked_peers[0]
             parents[key] = {"tier": "identity", "to": target, "score": score}
 
@@ -133,7 +134,7 @@ def plan(identities, cast, policy, *, reserved=(), surnames=(), first_names=()):
         node = key
         while node in parents:
             link = parents[node]
-            steps.append({"from": node, "to": link["to"], "score": round(link["score"], 6),
+            steps.append({"from": node, "to": link["to"], "score": link["score"],
                           "band": band_of(link["score"], policy), "tier": link["tier"]})
             node = link["to"]
             if node in cast or node in seen:
@@ -221,7 +222,7 @@ def plan(identities, cast, policy, *, reserved=(), surnames=(), first_names=()):
             rows.append({
                 "identity": key, "name": proposed, "previousName": current, "status": status,
                 "parent": link["to"] if link else None, "tier": link["tier"] if link else "root",
-                "score": round(link["score"], 6) if link else None,
+                "score": link["score"] if link else None,
                 "band": band_of(link["score"], policy) if link else None,
                 "path": path(key),
             })
@@ -245,9 +246,15 @@ def plan(identities, cast, policy, *, reserved=(), surnames=(), first_names=()):
                 "memberCount": len(rows),
             }
     evidence = {
-        "enabled": True, "linkBand": config["band"], "linkMinimum": minimum,
-        "rule": ("closest Angel/Sister at or above the link band, otherwise closest other identity at or "
-                 "above it; connected links share the cast root's surname (configured, then recorded) "
+        "enabled": True,
+        "directCastMinimumSimilarity": direct_minimum,
+        "secondaryMinimumSimilarityExclusive": secondary_minimum,
+        # Retained for older log/report readers; numeric fields above define both link rules.
+        "linkBand": band_of(direct_minimum, policy), "linkMinimum": direct_minimum,
+        "rule": (f"closest Angel/Sister at similarity >= {direct_minimum:g}, otherwise closest other identity "
+                 f"at similarity > {secondary_minimum:g}; every chain edge must qualify. "
+                 "Score colours do not control membership; connected links share the cast root's surname "
+                 "(configured, then recorded) "
                  "or the oldest member's surname. Each surname belongs to one family: Angel/Sister families claim "
                  "first, then the oldest; anyone else holding a claimed surname gets a fresh unused one. "
                  "Presentation only, never matching evidence."),

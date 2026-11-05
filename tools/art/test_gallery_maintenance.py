@@ -165,8 +165,59 @@ class MaintenanceTests(unittest.TestCase):
     def test_missing_and_unprocessable_faces_are_explicit(self):
         _, messages = derivatives.maintain(self.photo, None, 0, apply=True)
         self.assertEqual(len(messages), 2)
-        _, _, diagnostic = derivatives.thumbnail(self.photo, "head", None)
+        _, _, diagnostic = derivatives.thumbnail(self.photo, "head", None, px=0, faces=0)
+        self.assertIn("INFO: no face detected", diagnostic)
+        _, _, diagnostic = derivatives.thumbnail(self.photo, "head", self.box, px=120, faces=1)
         self.assertIn("Missing maintained head", diagnostic)
+
+    def test_quality_exclusions_are_informational_but_stale_derivatives_are_not(self):
+        samples = (
+            ("small_image_101.jpg", "green", {"faces": 1, "box": [0.35, 0.2, 0.3, 0.1], "px": 56}),
+            ("no_face_image_102.jpg", "blue", {"faces": 0, "px": 0}),
+            ("short_head_image_103.jpg", "yellow", {"faces": 1, "box": [0.35, 0.2, 0.3, 0.1], "px": 100}),
+        )
+        cache = json.loads(self.cache.read_text(encoding="utf-8"))
+        for name, color, face in samples:
+            path = self.gallery / name
+            Image.new("RGB", (400, 600), color).save(path)
+            cache["emb"][hashlib.sha1(path.read_bytes()).hexdigest()] = face
+        self.cache.write_text(json.dumps(cache), encoding="utf-8")
+
+        with mock.patch.object(upkeep.cw, "load_cfg", return_value=self.cfg), contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(upkeep.main([
+                "--root", str(self.root), "--cache", str(self.cache), "--no-reports", "--apply",
+            ]), 0)
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                self.assertEqual(upkeep.main([
+                    "--root", str(self.root), "--cache", str(self.cache), "--no-reports", "--check",
+                ]), 0)
+        self.assertIn("5 intentional framing exclusion(s)", output.getvalue())
+        self.assertIn("0 actionable diagnostic(s)", output.getvalue())
+        self.assertIn("below the 331.2px minimum", output.getvalue())
+
+        current = self.gallery / "fixed_slot_image_123.jpg"
+        stale = self.folder / derivatives.relative_target(current, "head")
+        stale.parent.mkdir(parents=True, exist_ok=True)
+        stale.write_bytes(b"unexpected stale output")
+        _, messages = derivatives.maintain(current, None, 0, faces=0)
+        self.assertTrue(any("Stale maintained head remains" in message for message in messages))
+        self.assertFalse(any(message.startswith("INFO:") and "head" in message for message in messages))
+
+    def test_review_gallery_separates_expected_missing_frames_from_derivative_defects(self):
+        photo = type("Photo", (), {
+            "path": self.photo, "box": None, "px": 0, "faces": 0, "sha": "not-used",
+        })()
+        derivatives.maintain(self.photo, None, 0, faces=0, apply=True)
+        item = {
+            "folder": "Angels/Fixed Slot", "group": "Angels", "bucket": "Review",
+            "name": self.photo.name, "score": None, "state": "No face",
+            "comparison": "not scored", "reason": "No face found", "_photo": photo,
+        }
+        rendered, _ = review_gallery.write_thumbnails([item], self.root)
+        self.assertEqual(rendered[0]["derivativeDiagnostics"], [])
+        self.assertTrue(any(value.startswith("head: no face detected")
+                            for value in rendered[0]["framingUnavailable"]))
 
     def test_adopts_only_exact_regeneration_and_preserves_changed_owned_files(self):
         self.assertEqual(self.call("--apply"), 0)

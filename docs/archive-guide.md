@@ -16,10 +16,12 @@ post-reboot handoff in the [recap index](recap/README.md).
 | Incorporated raw feedback | Local `feedback/_archive/`; [source-to-plan ledger](plans/README.md#oct-27-feedback-disposition-and-intake-restart) | Original notes filed after complete preservation/coverage; not a claim their tasks are done |
 
 Feedback remains git-ignored; tracked plans preserve the full source wording.
-The local feedback archive physically groups all 25 filed notes into seven
+The local feedback archive physically groups all 30 filed notes into seven
 topic folders: `planning-and-recaps`, `intake-quality`, `identity-and-matching`,
 `storage-and-configuration`, `gallery-and-actions`, `prompts-and-rendering`,
-and `code-maintainability`. Its README gives counts and owning work.
+and `code-maintainability`. Its README gives counts and owning work;
+the [Nov 5 source ledger](plans/README.md#nov-5-active-feedback-reconciliation)
+records the five latest individual filings and their still-open gates.
 Original filenames/bytes are retained; filing dates remain in tracked
 preservation records. None of these folders is an unfinished inbox.
 

@@ -192,5 +192,163 @@ class RefinementTests(unittest.TestCase):
         self.assertEqual(row["refinement"][0]["to"], "Potentials/Bianca Bell")
 
 
+class FinalMembershipRefinementTests(unittest.TestCase):
+    def setUp(self):
+        self.policy = load_policy()
+        self.comparison = {
+            "photoId": "photo:123456", "ambiguousPhotoId": False,
+            "qualityEligible": True, "metadataStale": False, "protected": False, "anchor": False,
+            "workflowSelected": False, "identityProtected": False, "rejectionHistory": False,
+            "bucket": "gallery", "ownScore": .6, "higherRival": True,
+            "rivals": [{"folder": "Models/Beta Bee", "score": .8}],
+            "refinementTarget": {
+                "folder": "Models/Beta Bee", "score": .8, "independentSupport": 4,
+                "identityProtected": False,
+            },
+        }
+
+    def test_stronger_rival_is_not_skipped_when_own_model_minimum_is_met(self):
+        decision = refinement.membership_decision(self.comparison, self.policy)
+        self.assertEqual(decision["decision"], "move")
+        self.assertEqual(decision["destination"], "Models/Beta Bee/gallery")
+
+    def test_locks_quality_staleness_and_independent_support_hold(self):
+        for field in ("protected", "anchor", "workflowSelected", "identityProtected",
+                      "rejectionHistory", "metadataStale", "ambiguousPhotoId"):
+            with self.subTest(field=field):
+                row = {**self.comparison, field: True}
+                self.assertEqual(refinement.membership_decision(row, self.policy)["decision"], "hold")
+        for row in (
+            {**self.comparison, "photoId": None},
+            {**self.comparison, "qualityEligible": False},
+            {**self.comparison, "bucket": "review"},
+            {**self.comparison, "ownScore": None},
+            {**self.comparison, "refinementTarget": {
+                **self.comparison["refinementTarget"], "independentSupport": 1,
+            }},
+            {**self.comparison, "rivals": [
+                self.comparison["rivals"][0], {"folder": "Models/Gamma Gee", "score": .75},
+            ]},
+        ):
+            with self.subTest(row=row):
+                decision = refinement.membership_decision(row, self.policy)
+                self.assertEqual(decision["decision"], "hold")
+                self.assertTrue(decision["reason"])
+
+    def test_cast_destination_is_review_not_gallery(self):
+        self.comparison["refinementTarget"]["folder"] = "Angels/Xena"
+        decision = refinement.membership_decision(self.comparison, self.policy)
+        self.assertEqual(decision["destination"], "Angels/Xena/review")
+
+    def test_admission_boundary_is_not_rounded_into_acceptance(self):
+        self.comparison["ownScore"] = .1
+        self.comparison["refinementTarget"].update(folder="Angels/Xena", score=.55 - 1e-8)
+        decision = refinement.membership_decision(self.comparison, self.policy)
+        self.assertEqual(decision["decision"], "hold")
+        self.comparison["refinementTarget"]["score"] = .55
+        self.assertEqual(refinement.membership_decision(self.comparison, self.policy)["decision"], "move")
+
+    def rows(self):
+        return [{"source": "old.jpg", "destination": "Models/Alpha Ann/gallery/photo.jpg",
+                 "photoId": "photo:123456", "reason": "first pass"}]
+
+    def evaluator(self, rows):
+        row = rows[0]
+        move = row["destination"].startswith("Models/Alpha Ann/")
+        return {"reference": "frozen final cores", "rows": [{
+            **row, "higherRival": move, "ownScore": .6, "rivals": [{"score": .8}],
+            "refinementDecision": {
+                "decision": "move" if move else "hold", "reason": "qualifying comparison" if move else "no higher rival",
+                "destination": "Models/Beta Bee/gallery", "lead": .2,
+            },
+        }]}
+
+    def test_rebuilds_after_each_frozen_pass_and_does_not_mutate_input(self):
+        rows = self.rows()
+        before = copy.deepcopy(rows)
+        from unittest import mock
+        evaluate = mock.Mock(side_effect=self.evaluator)
+        result, evidence = refinement.refine_membership(rows, evaluate)
+        self.assertEqual(rows, before)
+        self.assertEqual(result[0]["destination"], "Models/Beta Bee/gallery/photo.jpg")
+        self.assertEqual(evidence["moveCount"], 1)
+        self.assertEqual(evidence["stopReason"], "stable")
+        self.assertEqual(evidence["residuals"], [])
+        self.assertEqual(evaluate.call_count, 3)
+
+    def test_retained_cast_move_keeps_release_flags_and_policy_decision_consistent(self):
+        rows = self.rows()
+        rows[0].update(
+            source="Angels/Camaris/gallery/camaris_image_7514747981804668439.jpg",
+            retainedCast=True, releasedCast=False, castSeedDecision="retained",
+            castSeedReason="member of the current configured identity core",
+            castSeedScore=.72, castSeedThreshold=.6, castSeedCore=True,
+        )
+        before = copy.deepcopy(rows)
+        result, evidence = refinement.refine_membership(rows, self.evaluator)
+        row = result[0]
+        self.assertEqual(row["castSeedDecision"], "released")
+        self.assertFalse(row["retainedCast"])
+        self.assertTrue(row["releasedCast"])
+        self.assertIn("member of the current configured identity core", row["castSeedReason"])
+        self.assertIn("final-membership pass 1", row["castSeedReason"])
+        self.assertEqual((row["castSeedScore"], row["castSeedThreshold"], row["castSeedCore"]),
+                         (.72, .6, True))
+        self.assertEqual(evidence["moveCount"], 1)
+        self.assertEqual(rows, before)
+
+    def test_pass_cap_and_oscillation_are_explicit(self):
+        def alternating(rows):
+            audit = self.evaluator(rows)
+            audit["rows"][0]["higherRival"] = True
+            audit["rows"][0]["refinementDecision"].update(
+                decision="move",
+                destination=("Models/Beta Bee/gallery" if "Alpha" in rows[0]["destination"]
+                             else "Models/Alpha Ann/gallery"),
+            )
+            return audit
+
+        _, capped = refinement.refine_membership(self.rows(), alternating, max_passes=1)
+        self.assertEqual(capped["stopReason"], "pass-limit")
+        self.assertIn("pass limit", capped["residuals"][0]["reason"])
+        _, stopped = refinement.refine_membership(self.rows(), alternating)
+        self.assertEqual(stopped["moveCount"], 1)
+        self.assertIn("oscillation", stopped["residuals"][0]["reason"])
+
+    def test_invalid_pass_limit_and_incomplete_evaluation_fail(self):
+        for limit in (0, -1, True):
+            with self.assertRaisesRegex(ValueError, "positive integer"):
+                refinement.refine_membership(self.rows(), self.evaluator, max_passes=limit)
+        with self.assertRaisesRegex(ValueError, "every source"):
+            refinement.refine_membership(self.rows(), lambda rows: {"rows": []})
+
+    def test_destination_collision_refuses_before_changing_inputs(self):
+        rows = self.rows() + [{
+            "source": "other.jpg", "destination": "Models/Beta Bee/gallery/photo.jpg",
+            "photoId": "photo:654321", "reason": "already there",
+        }]
+        original = copy.deepcopy(rows)
+
+        def evaluate(current):
+            audit = self.evaluator(current)
+            audit["rows"].append({
+                **current[1], "higherRival": False,
+                "refinementDecision": {"decision": "hold", "reason": "no higher rival"},
+            })
+            return audit
+
+        with self.assertRaisesRegex(ValueError, "collide destination"):
+            refinement.refine_membership(rows, evaluate)
+        self.assertEqual(rows, original)
+
+    def test_renames_full_paths_in_membership_steps_and_evidence(self):
+        rows, evidence = refinement.refine_membership(self.rows(), self.evaluator)
+        names = {"Models/Beta Bee": "Models/Bianca Bell"}
+        refinement.rename_membership_evidence(evidence, names)
+        refinement.rename_steps(rows, names)
+        self.assertEqual(evidence["passes"][0]["moves"][0]["to"], "Models/Bianca Bell/gallery")
+        self.assertEqual(rows[0]["refinement"][0]["to"], "Models/Bianca Bell/gallery")
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -111,9 +111,11 @@ def validate_policy(policy):
         overrides = family.get("castSurnameOverrides", {}) if isinstance(family, dict) else None
         if (
             not isinstance(family, dict)
-            or set(family) - {"enabled", "linkMinimumBand", "castSurnameOverrides"}
+            or set(family) - {
+                "enabled", "directCastMinimumSimilarity", "secondaryMinimumSimilarityExclusive",
+                "castSurnameOverrides",
+            }
             or not isinstance(family.get("enabled"), bool)
-            or family.get("linkMinimumBand", "yellow") not in ("green", "yellow", "orange")
             or not isinstance(overrides, dict)
             or any(
                 not isinstance(folder, str) or folder.split("/", 1)[0] not in ("Angels", "Sisters")
@@ -123,6 +125,10 @@ def validate_policy(policy):
             )
         ):
             raise ValueError("invalid familyNaming policy")
+        for field, default in (
+            ("directCastMinimumSimilarity", .4), ("secondaryMinimumSimilarityExclusive", .35),
+        ):
+            _number(family.get(field, default), f"familyNaming/{field}", 0, 1)
     for category, rules in category_policies.items():
         required_category_keys = {
             "identityProtectedByDefault",
@@ -135,8 +141,13 @@ def validate_policy(policy):
             "minimumUsablePhotosForOutlierActions",
             "photoRouteMinimum", "photoRouteMargin", "reviewAdmissionEnabled", "mergeMinimum",
         }
-        if set(rules) - {"unmatchedOutlierSplitEnabled"} != required_category_keys:
+        if set(rules) - {"unmatchedOutlierSplitEnabled", "galleryAdmissionEnabled"} != required_category_keys:
             raise ValueError(f"categoryPolicies/{category} keys are incomplete or unsupported")
+        if "galleryAdmissionEnabled" in rules and (
+            not isinstance(rules["galleryAdmissionEnabled"], bool)
+            or rules["galleryAdmissionEnabled"] and category != "Sisters"
+        ):
+            raise ValueError("Gallery admission is approved only for Sisters")
         if "unmatchedOutlierSplitEnabled" in rules and not isinstance(rules["unmatchedOutlierSplitEnabled"], bool):
             raise ValueError(f"categoryPolicies/{category}/unmatchedOutlierSplitEnabled must be boolean")
         for key in (
@@ -703,6 +714,30 @@ def evaluate_identity_action(
             else "split evidence does not meet every automatic threshold"
         ),
     }
+
+
+def evaluate_cast_admission(category, *, score, margin, independent_support,
+                            quality_eligible, rejection_history=False, metadata_stale=False,
+                            protected=False, policy=None):
+    """The staged cast Gallery gate is separate from slot/identity protection."""
+    config = policy or default_policy()
+    rules = config["categoryPolicies"].get(category, {})
+    if score is not None:
+        _number(score, "cast admission score")
+    _number(margin, "cast admission margin", 0, 2)
+    if isinstance(independent_support, bool) or not isinstance(independent_support, int) or independent_support < 0:
+        raise ValueError("cast admission independent support must be a nonnegative integer")
+    reason = (
+        "cast Gallery admission is not approved" if not rules.get("galleryAdmissionEnabled") else
+        "quality or stale-byte gate" if not quality_eligible or metadata_stale else
+        "manual protection or rejection evidence requires review" if protected or rejection_history else
+        "own-core similarity or all-category rival margin below admission minimum"
+        if score is None or score < rules["photoRouteMinimum"] or margin < rules["photoRouteMargin"] else
+        "insufficient independent frozen destination-core support"
+        if independent_support < config["protection"]["automatic"]["minimumIndependentReferences"] else None
+    )
+    return {"decision": "hold" if reason else "admit", "reason": reason or
+            "approved Sisters Gallery admission against one frozen all-category reference set"}
 
 
 def evaluate_photo_route(

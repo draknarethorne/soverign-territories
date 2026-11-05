@@ -88,12 +88,14 @@
   },
   "familyNaming": {
     "enabled": true,
-    "linkMinimumBand": "yellow",
+    "directCastMinimumSimilarity": 0.4,
+    "secondaryMinimumSimilarityExclusive": 0.35,
     "castSurnameOverrides": {}
   },
   "categoryPolicies": {
     "Sisters": {
-      "photoRouteMinimum": 0.55,
+      "galleryAdmissionEnabled": true,
+      "photoRouteMinimum": 0.5,
       "photoRouteMargin": 0.1,
       "reviewAdmissionEnabled": true,
       "mergeMinimum": 0.65,

@@ -87,19 +87,46 @@ def _placement_kind(source, destination, old_person, new_person, old_bucket, new
     return "Path change"
 
 
-def _manifest_rows(run):
-    path = run / "inputs" / "_reports" / "preparation" / "all" / "manifest.json"
-    if not path.is_file():
-        return {}, None
-    data = json.loads(path.read_text(encoding="utf-8"))
-    return {row["source"]: row for row in data.get("photos", [])}, path.parent
+def _preparation_roots(run, plan):
+    reused = plan.get("reusedPreparationFrom")
+    if isinstance(reused, dict):
+        reused = reused.get("run") or reused.get("path") or reused.get("root")
+    if not isinstance(reused, str) or not reused:
+        return []
+    path = pathlib.Path(reused)
+    if not path.is_absolute():
+        path = run.parent / path
+    return [path]
+
+
+def _manifest_rows(run, plan=None):
+    candidates = []
+    for root in [*_preparation_roots(run, plan or {}), run]:
+        candidates.extend((
+            root / "inputs" / "_reports" / "preparation" / "all" / "manifest.json",
+            root / "_reports" / "preparation" / "all" / "manifest.json",
+            root / "manifest.json",
+        ))
+    for path in candidates:
+        if path.is_file():
+            data = json.loads(path.read_text(encoding="utf-8"))
+            return {row["source"]: row for row in data.get("photos", [])}, path.parent
+    return {}, None
 
 
 def _incoming_aliases(run, plan):
     expected = plan.get("sourceOverlaySHA256")
     if not expected or _historical_run(run):
         return []
-    payload = (run / "source-overlay" / "overlay.json").read_bytes()
+    overlay_root = run / "source-overlay"
+    reused = _preparation_roots(run, plan)
+    if reused:
+        original = reused[0]
+        if (original.parent != run.parent or original == run
+                or pathlib.Path(plan.get("sourceRoot", "")) != original / "source-overlay"):
+            raise ValueError("recap continuation overlay root differs from original sibling run")
+        overlay_root = original / "source-overlay"
+    payload = (overlay_root / "overlay.json").read_bytes()
     if hashlib.sha256(payload).hexdigest() != expected:
         raise ValueError("recap source overlay differs from saved plan")
     overlay = json.loads(payload)
@@ -124,7 +151,7 @@ def collect(run):
     run = pathlib.Path(run)
     plan = json.loads((run / "run.json").read_text(encoding="utf-8"))
     historical = _historical_run(run)
-    manifest, preparation = ({}, None) if historical else _manifest_rows(run)
+    manifest, preparation = ({}, None) if historical else _manifest_rows(run, plan)
     rows = []
     for photo in plan["photos"]:
         old_person, old_bucket = person_and_bucket(photo["source"])
@@ -159,6 +186,7 @@ def collect(run):
             "renamed": pathlib.PurePosixPath(source_name).stem != pathlib.PurePosixPath(new_name).stem,
             "converted": pathlib.PurePosixPath(source_name).suffix.lower() != pathlib.PurePosixPath(new_name).suffix.lower(),
             "photoId": photo.get("photoId"), "sha256": photo.get("sha256"), "reason": photo.get("reason", ""),
+            "preparedSHA256": photo.get("preparedSHA256"), "preparedPath": photo.get("preparedPath"),
             "score": photo.get("score"), "bestMatch": photo.get("bestMatch"), "bestScore": photo.get("bestScore"),
             "nearestCast": photo.get("initialBestCast"), "nearestCastScore": photo.get("initialBestCastScore"),
             "secondCast": photo.get("initialSecondCast"), "secondCastScore": photo.get("initialSecondCastScore"),
@@ -192,6 +220,7 @@ def collect(run):
         "coreReferences": plan.get("coreReferences"),
         "finalMembershipAudit": plan.get("finalMembershipAudit"),
         "membershipRefinement": plan.get("membershipRefinement"),
+        "finalMembershipRefinement": plan.get("finalMembershipRefinement"),
         "familyNaming": plan.get("familyNaming"),
         "reassignmentStatus": plan.get("reassignmentStatus"),
         "convergenceStatus": plan.get("convergenceStatus"),
@@ -280,13 +309,63 @@ def _working_target(relative, data):
     path = pathlib.PurePosixPath(raw)
     if not raw or path.is_absolute() or "\\" in raw or ".." in path.parts:
         return None
-    return pathlib.Path(data["workingRoot"]).joinpath(*path.parts)
+    root = pathlib.Path(data["workingRoot"]).resolve()
+    target = root.joinpath(*path.parts)
+    try:
+        target.resolve().relative_to(root)
+    except (OSError, ValueError):
+        return None
+    return target
 
 
 def _safe_link(target, label, out_dir, *, new_tab=False):
     href = html.escape(_href(target, out_dir), quote=True)
     attrs = ' target="_blank" rel="noopener noreferrer"' if new_tab else ""
     return f'<a href="{href}"{attrs}>{html.escape(label)}</a>'
+
+
+def _file_verification(target, expected, data):
+    if not expected:
+        return "unverified"
+    target = pathlib.Path(target)
+    cache = data.setdefault("_sha256_cache", {})
+    key = str(target.resolve())
+    if key not in cache:
+        try:
+            cache[key] = hashlib.sha256(target.read_bytes()).hexdigest() if target.is_file() else None
+        except OSError:
+            cache[key] = None
+    actual = cache[key]
+    return "missing" if actual is None else "verified" if actual == expected else "mismatch"
+
+
+def _verified_photo_link(target, expected, label, data, out_dir):
+    if target is None:
+        return '<span class=muted>unsafe destination link unavailable</span>'
+    status = _file_verification(target, expected, data)
+    if status == "verified":
+        return _safe_link(target, label, out_dir, new_tab=True)
+    reason = {
+        "unverified": "link withheld (expected SHA-256 not recorded)",
+        "missing": "photo missing",
+        "mismatch": "photo bytes differ from recorded SHA-256",
+    }[status]
+    return f'<span class=muted>{html.escape(reason)}</span>'
+
+
+def _intake_detail_link(row, data, out_dir):
+    detail = row.get("detail") if row else None
+    preparation = data.get("preparationIndex")
+    if not detail or not preparation:
+        return ""
+    target = pathlib.Path(detail)
+    try:
+        target.resolve().relative_to(pathlib.Path(preparation).parent.resolve())
+    except ValueError:
+        return '<span class=muted>unsafe intake detail link unavailable</span>'
+    if not target.is_file():
+        return '<span class=muted>intake detail missing</span>'
+    return _safe_link(target, "Intake comparison", out_dir, new_tab=True)
 
 
 def _destination_links(row, data, out_dir):
@@ -299,22 +378,39 @@ def _destination_links(row, data, out_dir):
     )
     page_label = "Review page" if row["newBucket"] == "review" else "People gallery"
     return ("<span class=destination-links>"
-            + (_safe_link(photo, "Final photo", out_dir, new_tab=True) if photo
-               else '<span class=muted>unsafe destination link unavailable</span>') + " · "
-            + _safe_link(gallery, page_label, out_dir, new_tab=True) + "</span>")
+            + _verified_photo_link(
+                photo, row.get("preparedSHA256") or row.get("sha256"), "Final photo (bytes verified)", data, out_dir,
+            ) + " · "
+            + (_safe_link(gallery, page_label, out_dir, new_tab=True) if gallery.is_file()
+               else f'<span class=muted>{html.escape(page_label)} missing</span>') + "</span>")
 
 
 def _source_link(source, row, data, out_dir):
-    """Link the pre-run location only while it exists; after install fall back to intake evidence."""
+    """Distinguish a missing old path from verified final bytes or genuinely missing/tampered files."""
     target = _working_target(source, data)
     if target is None or data.get("historical"):
         return '<span class=muted>source link unavailable</span>'
     if target.is_file():
-        return _safe_link(target, "Source photo", out_dir, new_tab=True)
-    if row and row.get("detail"):
-        return ("<span class=muted>moved (original path no longer exists)</span> · "
-                + _safe_link(row["detail"], "Intake comparison", out_dir, new_tab=True))
-    return '<span class=muted>moved (original path no longer exists)</span>'
+        status = _file_verification(target, row.get("sha256") if row else None, data)
+        if status == "verified":
+            source_link = _safe_link(target, "Source photo (bytes verified)", out_dir, new_tab=True)
+        elif status == "unverified":
+            source_link = '<span class=muted>source exists; hash not recorded, link withheld</span>'
+        else:
+            source_link = '<span class=muted>source bytes differ from recorded SHA-256; link withheld</span>'
+    else:
+        destination = _working_target(row["destination"], data) if row else None
+        final_link = _verified_photo_link(
+            destination,
+            (row.get("preparedSHA256") or row.get("sha256")) if row else None,
+            "Verified final photo",
+            data,
+            out_dir,
+        )
+        source_link = ("<span class=muted>previous location absent from this working tree</span> · "
+                       + final_link)
+    intake_link = _intake_detail_link(row, data, out_dir)
+    return source_link + (f" · {intake_link}" if intake_link else "")
 
 
 def _thumb(row, data, out_dir):
@@ -758,6 +854,18 @@ def _refinement_section(data):
                          f"<tr><td>{esc(row.get('pass'))}</td><td>{esc(row.get('kind'))}</td>"
                          f"<td>{esc(row.get('photoId') or (str(row.get('loser')) + ' -> ' + str(row.get('survivor'))))}</td>"
                          f"<td>{esc(row.get('detail'))}</td></tr>" for row in unresolved) + "</table>")
+    final = data.get("finalMembershipRefinement")
+    if isinstance(final, dict):
+        parts.append(
+            "<h3>Audit-aligned final-membership refinement</h3>"
+            f"<p>{esc(final['passCount'])} pass(es); stop reason <b>{esc(final['stopReason'])}</b>; "
+            f"{esc(final['moveCount'])} photo move(s). No new protection is acquired during these "
+            "comparisons. Stable means no further admitted moves, not zero higher rivals.</p>"
+            "<details><summary>Final-membership moves and residual hold reasons</summary><pre>"
+            + html.escape(json.dumps(final, indent=2, sort_keys=True)) + "</pre></details>"
+        )
+    else:
+        parts.append("<p class=muted>No audit-aligned final-membership refinement was saved in this run.</p>")
     return "".join(parts)
 
 
@@ -778,8 +886,18 @@ def _family_section(data):
         return "".join(parts + ["<p class=muted>Unavailable in this run: no familyNaming was saved; this run "
                                 "predates score-band family naming.</p>"])
     esc = lambda value: html.escape(str(value))
+    if ("directCastMinimumSimilarity" in evidence
+            or "secondaryMinimumSimilarityExclusive" in evidence):
+        thresholds = (
+            "Direct-cast minimum similarity "
+            f"&ge; {_score(evidence.get('directCastMinimumSimilarity'))}; secondary minimum similarity "
+            f"&gt; {_score(evidence.get('secondaryMinimumSimilarityExclusive'))}"
+        )
+    else:
+        thresholds = (f"Link band <b>{esc(evidence.get('linkBand'))}</b> "
+                      f"(score at least {_score(evidence.get('linkMinimum'))})")
     parts.append(
-        f"<p>Link band <b>{esc(evidence.get('linkBand'))}</b> (score at least {_score(evidence.get('linkMinimum'))}); "
+        f"<p>{thresholds}; "
         f"{len(evidence.get('families', []))} families, {esc(evidence.get('linkedIdentityCount'))} linked identities, "
         f"{esc(evidence.get('renamedIdentityCount'))} surname change(s), "
         f"{esc(evidence.get('displacedFamilyCount', 0))} given a fresh surname because theirs belongs to another family, "
@@ -838,10 +956,27 @@ def _audit_section(data, out_dir):
     if audit.get("state") == "audited" and audit.get("automaticMoves") == 0:
         parts.append("<p><b>Audit-only: no convergence or extra moves were performed.</b> "
                      "Higher-rival and follow-up candidates are diagnostics, not completed reassignments.</p>")
+    audit_rows = [item for item in audit.get("rows", []) if isinstance(item, dict)]
+    if any("higherRival" in item or "followupCandidate" in item for item in audit_rows):
+        higher = sum(item.get("higherRival") is True for item in audit_rows)
+        followup_only = sum(
+            item.get("followupCandidate") is True and item.get("higherRival") is not True
+            for item in audit_rows
+        )
+        parts.append(
+            f"<p>Per-photo audit flags: {higher} photo(s) with a higher rival; "
+            f"{followup_only} additional follow-up-only photo(s), not counted above. "
+            "These disjoint counts describe review signals, not moves.</p>"
+        )
+    else:
+        parts.append("<p class=muted>Disjoint higher-rival and follow-up-only counts unavailable: "
+                     "per-photo flags were not recorded.</p>")
     fields = (
         "reference", "pass", "state", "higherRivalCount", "followupCandidateCount", "nextPassNeeded",
         "automaticMoves", "automaticMerges", "refinementPasses", "refinementStopReason",
         "automaticPhotoProtectionCount", "automaticIdentityProtectionCount",
+        "finalRefinementPasses", "finalRefinementMoves", "finalRefinementStopReason",
+        "postContinuityPendingCount",
     )
     parts.append("<ul>" + "".join(
         f"<li>{field}: {html.escape(str(audit[field]))}</li>" for field in fields if field in audit
@@ -854,7 +989,6 @@ def _audit_section(data, out_dir):
         parts.append("<ul>" + "".join(f"<li>{html.escape(str(key))}: {html.escape(str(value))}</li>"
                                        for key, value in sorted(summary.items())) + "</ul>")
     plan_rows = {row["source"]: row for row in data["rows"]}
-    audit_rows = audit.get("rows", [])
     if not audit_rows:
         parts.append("<p class=muted>No per-photo audit rows were saved.</p>")
         return "".join(parts)
@@ -873,7 +1007,13 @@ def _audit_section(data, out_dir):
         source_link = _source_link(source, row, data, out_dir)
         new_person, new_bucket = person_and_bucket(destination)
         final_links = _destination_links(
-            {"destination": destination, "newPerson": new_person, "newBucket": new_bucket}, data, out_dir,
+            {
+                "destination": destination, "newPerson": new_person, "newBucket": new_bucket,
+                "sha256": row.get("sha256") if row else None,
+                "preparedSHA256": row.get("preparedSHA256") if row else item.get("preparedSHA256"),
+            },
+            data,
+            out_dir,
         ) if destination else "unavailable"
         rivals = item.get("rivals", [])
         rival_text = ", ".join(
@@ -889,7 +1029,7 @@ def _audit_section(data, out_dir):
                 f"{field}: {html.escape(str(item.get(field, 'not recorded')))}"
                 for field in ("protected", "anchor", "workflowSelected", "followupCandidate", "coreMember",
                               "automaticProtection", "manualOptOut", "rivalMargin",
-                              "independentProtectionSupport", "protectionReason")
+                              "independentProtectionSupport", "protectionReason", "refinementHoldReason")
             ) + "</td>"
             f"<td>{html.escape(str(item.get('reason', '')))}</td></tr>"
         )

@@ -537,9 +537,102 @@ If the journal says `committed`, rerunning the same apply finishes cleanup and
 returns the existing receipt; it does not reset Working a second time or discard
 the carried metadata bundle.
 
+### Saved-input LEAN continuation (sandbox only)
+
+Use `bin\lean-continue.cmd --root W --source-run ORIGINAL --run NEW
+--dry-run` to inspect the restart boundary without starting matching.
+`W` is the absolute sandbox Working path; run arguments are sibling folder
+names under `_sandbox-state`, not paths. The original applied receipt,
+prepared pixels, cache and current Gallery/Overview/Review stay untouched
+while a separate preview is built.
+
+- `--apply` creates **only a matching preview**. It verifies and references
+  the original intake, copies compact face measurements, and recomputes
+  initial cast cores, workflow exclusion, routing, refinement and names.
+  It does not reset Working, repeat intake or install.
+  If matching saved `run.json` but recap generation failed, repeat the same
+  `--apply` to verify the original preparation/snapshots and refresh only
+  the recap. It neither rematches nor installs. Incomplete runs without
+  `run.json` still require a separately named continuation. Recap aliases
+  reference the original sibling run's hash-bound source overlay; no
+  overlay pixels are copied into the continuation.
+- `--check` verifies the original saved preparation if NEW does not exist,
+  otherwise the preview or installed publication; it does not write.
+- `--install` publishes the reviewed preview, regenerates maintained
+  derivatives and refreshes Gallery/Overview/Review.
+- There is **no backup, previous tree, previous catalogue or rollback**.
+  Partial publication records `reset-required`; recover by a clean sandbox
+  reset/rebase, not by resuming publication or undoing it.
+- The original catalogue is reconstructed from its exact checksum, never
+  from generated identities/automatic locks in the installed result.
+  Explicit intervening protection, anchors and rejection decisions are
+  content-bound; ambiguous/new-identity or placement-history changes refuse
+  rather than silently disappear. Shared workflow configuration is not
+  updated; proposed selection replacements remain sandbox-local.
+- Missing cached measurements refuse rather than loading models or quietly
+  repeating intake. Prepared bytes, recipe, receipt and source bindings are
+  still checked: reset-only recovery does not waive image-quality or path
+  correctness.
+
+The timed launcher supports the same path:
+`bin\rebase-flow.cmd --root W --run NEW --reuse-run ORIGINAL
+--recovery-mode disposable --dry-run`. Add `--apply --until match-preview`
+only when matching is authorized; inspect the new preview before later
+installation. Reset, originals, backup and intake steps are explicitly
+skipped, including when `--with-previews` is selected.
+
+Add `--verbose` to stream every child-process line to the terminal; the
+timestamped per-step logs are always complete, even without that flag.
+`--heartbeat 30` adds a summary every 30 seconds. References use the measured
+Nov 5 LEAN durations for disposable steps where available, and explicitly
+label the older Nov 3 references elsewhere. They are **not forecasts for
+changed code**. `--until match-preview` bounds both the remaining-time
+reference and execution, including a resume whose preview is already done;
+it cannot continue into installation.
+
+Disposable installs omit the two additional staging-content seals and
+rollback inventories/retirement. They still hash final staged output and
+verify installed publication; operation-local reuse never carries a stale
+positive across commands. Space accounting walks Working once instead of
+rescanning run/input subtrees. FULL retains its existing backup, rollback,
+content-seal and undo contract. No detector/crop threshold or FULL behavior
+is relaxed. End-to-end improvement must be measured on the next authorized
+run; historical estimates are not a benchmark of these changes.
+
+#### Pickup acceptance gates
+
+Code tests are not saved-run or human visual acceptance. Run only the
+separately authorized matching preview first; installation needs a later
+explicit go-ahead. Keep the original run, installed viewers, Production
+and shared selections untouched before that decision.
+
+| Stage | Required evidence | Owning tasks |
+| --- | --- | --- |
+| Preview | Original prepared pixels/cache and exact pre-run catalogue bind correctly; no reset/intake, models, backup or rollback; generated identities/automatic locks are not seeds | Layout LY15a |
+| Preview | Family direct links >=0.40, secondary links >0.35, chain explanation and unchanged display colours; trace broad Lujan membership rather than guessing from colour | Naming N16 |
+| Preview | Sisters admission >=0.50 with >=0.10 rival margin plus independent support, quality/rejection/manual gates; Angels remain Review-only | Cast C12 |
+| Preview | Reset selected cast workflow photos out of initial cores except explicitly manually protected photos; record releases and eligible highest-own-core replacement proposals without changing shared configuration | Cast C13 |
+| Preview | Account for every one of the 35 old follow-ups with exact move/hold reasons; show new core evidence, refinement outcomes and post-continuity residuals; do not treat all 270 higher-rival rows as wrong placements | Engine E18/E19 |
+| Preview | Inspect mixed Briar/Sammara photos individually with measured face/core coverage and routing sequence; no whole-Briar merge or unapproved Angel threshold change | Engine E19 |
+| After install | Installed-run check, source/alias/destination count conservation and hash-bound final links; verify the reported Jade photo and its original intake comparison without obsolete-path warnings | Gallery L23, layout LY4 |
+| After install | Gallery/Overview/Review load correctly, with matching counts, working thumbnails/detail/current-native links and no broken images; human review still owns placement/quality approval | Naming N15, layout LY4 |
+| After install | Confirmed intentional unavailable framings are explained; missing/stale/corrupt expected derivatives remain actionable; no crop guard relaxation | Gallery L23 |
+| Measured run | Record phase/wall timings, stage/read-reuse evidence, space layers and zero new backup/previous/rollback bytes; compare only equivalent scopes, retaining distinct raw originals and original reuse evidence | Layout LY14/LY15a |
+
+Overview now shares retained/derivative verification between collection and
+per-photo evidence within one operation, followed by the full content seal
+before publication. Whole-history verification across Review and Overview
+still repeats: gallery L18 remains open. Cross-page sharing needs dependency
+and mutation invalidation tests; it is not bundled speculatively. Moving
+away retained input evidence, derivative caps, FAST/detector shortcuts and
+intake instrumentation remain deferred, not pickup prerequisites.
+
 ### Fresh sandbox from production: step by step
 
-The whole procedure for a new end-to-end rehearsal. `W` stands for
+The FULL-recovery procedure for a new end-to-end rehearsal. For an explicitly
+disposable sandbox LEAN run, the timed launcher's `--recovery-mode disposable`
+skips originals/baseline backup and creates no transaction rollback; recover
+only by a new reset. `W` stands for
 `"B:\Sovereign Territories Sandbox\Working"` and `RUN` for
 `"B:\Sovereign Territories Sandbox\Working\_sandbox-state\<new run name>"`.
 **Always pass `--root W`**: without it `originals`, `library-backup` and the
@@ -619,6 +712,26 @@ frozen; a merge is refused while the loser holds them. Passes stop when
 stable or after four, and oscillations are reported unresolved. The plan's
 `membershipRefinement` and the recap's refinement section list every move,
 merge and unresolved case.
+
+In the explicit core-protection trial, an additional photo-only
+`finalMembershipRefinement` pass uses the audit's `frozen_identity_cores`
+recipe, leave-one-out own scores and all same-domain rivals. It includes
+retained cast and preserved/Review rows, with an explicit admission or hold
+reason; meeting a category's own-score minimum is not an early exit.
+No new protection is acquired during these comparisons. Destination evidence
+must meet the existing independent-reference, quality, rejection and route
+gates. Cast gains still enter Review, not Gallery; the separate approved
+Sisters auto-admission change is not implemented by this pass.
+
+Each frozen pass applies simultaneous moves, then rebuilds references.
+Four passes maximum, visited-membership oscillation holds, filename-collision
+refusal and per-photo residual reasons bound the operation. Name/family
+selection follows the changed membership. After continuity migration, a fresh
+comparison identifies any newly qualifying residuals before protection;
+these cannot acquire automatic protection and block installation until a
+resolved preview is reviewed. The recap shows this separately from the
+earlier provisional refinement. This does not claim global convergence or
+approve a mixed identity's whole-cluster transfer.
 
 A separate final-membership audit then compares each eligible Gallery photo
 with its final own core (leave-one-out for core members) and the top three

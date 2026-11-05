@@ -31,23 +31,34 @@
 
 - [ ] E17 Refinement reclassification demoted Models/Neve Ellery to Potentials after it lost one photo (5 to 4). Decide whether refinement may lower an identity's category or should keep the category it had at the start of ... ([likeness engine acceptance](plans/2026-10-22-likeness-engine-acceptance.md))
 
-### For the assistant, when you say go (17)
+### For the assistant, when you say go (28)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] L18 Finish preparation evidence-index I/O optimization: operation-local retained/derivative reuse and full-scale row/thumbnail/browser equivalence are delivered; next bound the remaining repeated whole-history audits across ... ([gallery review layout](plans/2026-10-22-gallery-review-layout.md))
 - [ ] L21 Bring the recap onto existing shared HTML/CSS/navigation standards, with safe local links opening final person/gallery/Review pages in new tabs. Show old-identity -> final-identity photo counts, original members retained ... ([gallery review layout](plans/2026-10-22-gallery-review-layout.md))
-- [ ] L23 Clarify the recap's reason counts and every-photo table. Link each hold group to its actual final destinations and photos, including the 52 Model-band and 27 high-cast-similarity holds. Show each photo's top three cast ... ([gallery review layout](plans/2026-10-22-gallery-review-layout.md))
+- [ ] L23 Clarify the recap's reason counts and every-photo table. Nov 5: replace misleading "moved (original path no longer exists)" in applied-run source cells with explicit previous-location provenance, verified final ... ([gallery review layout](plans/2026-10-22-gallery-review-layout.md))
+- [ ] N16 Implement the Nov 5 09:36 approved family thresholds: direct identity-to-cast links **>=0.40**, secondary identity-to-identity links **>0.35** (strict). Prefer a qualifying direct cast link, otherwise consider a qualifying ... ([identity family naming](plans/2026-10-22-identity-family-naming.md))
 - [ ] N15 Re-run as a fresh LEAN sandbox run from Production (`bin\rebase-flow.cmd --root W --run fresh-20261104-lean --apply`, layout LY14b; see the [11:30 recap](../recap/2026-11-04-1130-recap.md)) so the LEAN trim (layout LY14a) ... ([identity family naming](plans/2026-10-22-identity-family-naming.md))
+- [ ] E18 Reconcile final audit with refinement before next rebase: Nov 5 09:40 clarification: user explicitly requires refinement logic aligned with the final audit before that audit runs, not merely a report of mismatches ... ([likeness engine acceptance](plans/2026-10-22-likeness-engine-acceptance.md))
+- [ ] E19 Trace Briar Cruz -> Sammara/Adrianna Cruz as a required next-run acceptance scenario. Compare representative measured/aligned faces, all cluster members, Sammara's frozen cores and per-photo/group scores; test ... ([likeness engine acceptance](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] E14 Audit every eligible photo against its final own identity (leave-one-out) and rival identities after the run. Record score meanings, best rivals, margins, evidence/support, core/automatic/manual protection, quality ... ([likeness engine acceptance](plans/2026-10-22-likeness-engine-acceptance.md))
 - [ ] E15 Under E7, run a bounded in-place refinement inside the rebase plan (14:17 request below): frozen references per pass, existing route/merge/category gates, deterministic ties, maximum passes, oscillation detection and ... ([likeness engine acceptance](plans/2026-10-22-likeness-engine-acceptance.md))
+- [ ] C12 Implement the Nov 5 approved Sisters auto-join band: own-cast score >=0.50 and rival margin >=0.10, with the frozen-reference, independent-evidence/quality/rejection gates and read-only scenario preview described above. ... ([cast seeded library rebase](plans/2026-10-23-cast-seeded-library-rebase.md))
+- [ ] C13 Implement the approved full-rebase workflow selection reset: all cast, selected slots, or selected photos below an own-core cutoff. For the next full rebase, treat current selected cast photos as reset candidates, not just ... ([cast seeded library rebase](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] C11 Core-only cast protection. Identity `protected` keeps the slot, name, folder, anchors, workflow-selected and photo-protected images, but no longer freezes every Gallery photo in core mode. Make the Angels/Sisters core ... ([cast seeded library rebase](plans/2026-10-23-cast-seeded-library-rebase.md))
 - [ ] I60 Audit all changed full-run outputs for false positives and incomplete cleanup; audit identity moves and borderline Review reasons under rebase C8/C9. Validate artifacts, recovery and deterministic repeat behavior before ... ([image intake preparation](plans/2026-10-23-image-intake-preparation.md))
+- [ ] T29 After the active run settles, freeze a representative same-machine phase benchmark specification and capture baseline evidence before runtime optimizations/path migration. Cover T20-T22 and gallery L18, separate report ... ([intake performance](plans/2026-10-28-intake-performance.md))
+- [ ] T30 Audit and remove demonstrated avoidable repeated work across inventory, staging, derivatives, retained details, reports and checks, using T29's paired evidence and the coordinator/worker contract. Include affected ... ([intake performance](plans/2026-10-28-intake-performance.md))
+- [ ] T20 After the active run settles, isolate current-category/ external inventory time and repeated retained/derivative verification calls. Reuse verified evidence within one operation and preserve path, hash, owner, scope and ... ([intake performance](plans/2026-10-28-intake-performance.md))
+- [ ] T21 Implement bounded derivative workers partitioned by verified person-folder ownership, with sequential per-folder manifest updates and deterministic aggregation. Refuse overlapping/shared targets; preserve edited/unowned ... ([intake performance](plans/2026-10-28-intake-performance.md))
+- [ ] T22 Parallelize retained-detail refresh by proven independent ownership units, coordinating with T21's executor/error/progress patterns only where genuinely shared. No cross-worker manifest/cache writes or hidden stale ... ([intake performance](plans/2026-10-28-intake-performance.md))
 - [ ] T17 Capture recipe-aware run statistics and publish a compact intake summary with expandable/linked details: input/outcome counts, overlay types, each attempted/executed/skipped/failed step, reconstruction/composition, ... ([intake performance](plans/2026-10-28-intake-performance.md))
 - [ ] S27 Complete the isolated full replay, installed verification, Gallery/Overview/Review/history and materialized backup recovery; persist phase times, overlapping storage scopes, equality results and baseline seals. Show ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S30 After the replay blocker is resolved, audit real Various-to-Sister/Angel admissions, cast core/workflow retention, eligible low-score releases/Review/reassignment, and original-name plus surname presentation. ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] LY4 Reset the sandbox from production (`sandbox-reset --full` plus the carried bundle), run the clean LEAN rebase in place with per-step timings (Acronis off), verify Gallery/Overview/Review, then hand to storage S32/S27 and ... ([library layout](plans/2026-11-02-library-layout.md))
 - [ ] LY13 Cast-name collision. `Potentials\Camaris` is not a new identity: Production has had it since Oct 8 (two photos). Its `z_camaris_bloom.txt` says "Camaris Bloom", "returned to Potentials; replaced as Camaris by Ruby Eden" ... ([library layout](plans/2026-11-02-library-layout.md))
+- [ ] PR1 Review current non-archive plans and active feedback; produce a major-theme/remaining-work map against this sequence, and consolidate related leftovers where their ownership and context transfer are explicit. Distinguish ... ([priority reset](plans/2026-11-05-priority-reset.md))
 
 **P2 (normal)**
 
@@ -78,13 +89,14 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-10-22-likeness-engine-acceptance.md](plans/2026-10-22-likeness-engine-acceptance.md) | active | 18 |
 | [2026-10-22-manual-prompts-to-art-library.md](plans/2026-10-22-manual-prompts-to-art-library.md) | holding | 21 |
 | [2026-10-22-review-actions.md](plans/2026-10-22-review-actions.md) | holding | 10 |
-| [2026-10-23-cast-seeded-library-rebase.md](plans/2026-10-23-cast-seeded-library-rebase.md) | active | 8 |
+| [2026-10-23-cast-seeded-library-rebase.md](plans/2026-10-23-cast-seeded-library-rebase.md) | active | 7 |
 | [2026-10-23-image-intake-preparation.md](plans/2026-10-23-image-intake-preparation.md) | active | 57 |
 | [2026-10-25-reference-rendering.md](plans/2026-10-25-reference-rendering.md) | holding | 27 |
-| [2026-10-28-intake-performance.md](plans/2026-10-28-intake-performance.md) | active | 7 |
+| [2026-10-28-intake-performance.md](plans/2026-10-28-intake-performance.md) | active | 13 |
 | [2026-10-28-storage-operations-and-retention.md](plans/2026-10-28-storage-operations-and-retention.md) | active | 13 |
 | [2026-11-02-library-layout.md](plans/2026-11-02-library-layout.md) | active | 1 |
 | [2026-11-02-sovereign-spelling-rename.md](plans/2026-11-02-sovereign-spelling-rename.md) | holding | 7 |
+| [2026-11-05-priority-reset.md](plans/2026-11-05-priority-reset.md) | active | 3 |
 
 </details>
 

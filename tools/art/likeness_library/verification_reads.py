@@ -1,4 +1,4 @@
-"""Operation-local read reuse, sealed by a second full content/path verification."""
+"""Operation-local read reuse; FULL seals content, disposable staging checks paths only."""
 from __future__ import annotations
 
 import contextvars
@@ -23,9 +23,10 @@ def _digest(path):
 
 
 class ReadSession:
-    def __init__(self, root, *, label=None):
+    def __init__(self, root, *, label=None, seal_content=True):
         self.root = pathlib.Path(root).absolute()
         self.label = label
+        self.seal_content = seal_content
         self.started = time.perf_counter()
         self.hashes = {}
         self.documents = {}
@@ -140,7 +141,7 @@ class ReadSession:
         return self.paths[key][0]
 
     def validate(self):
-        """Never accept a reusable positive result from timestamps alone."""
+        """Check scope/ownership and, by default, seal content independently of timestamps."""
         if self.invalidated - self.hashes.keys():
             raise ValueError(f"unverified write during verification: {sorted(self.invalidated - self.hashes.keys())}")
         for path in self.guarded:
@@ -153,7 +154,7 @@ class ReadSession:
             current = tuple(directory.iterdir()) if exists else ()
             if exists != existed or self._entry_types(current) != types:
                 raise ValueError(f"verification directory changed: {directory}")
-        for path, expected in self.hashes.items():
+        for path, expected in (self.hashes.items() if self.seal_content else ()):
             self.stats["sealReads"] += 1
             self.stats["sealBytes"] += path.stat().st_size
             if _digest(path) != expected:
@@ -166,10 +167,10 @@ def active():
 
 
 @contextmanager
-def session(root, *, label=None):
+def session(root, *, label=None, seal_content=True):
     if active() is not None:
         raise ValueError("nested verification sessions are not supported")
-    reads = ReadSession(root, label=label)
+    reads = ReadSession(root, label=label, seal_content=seal_content)
     token = _ACTIVE.set(reads)
     started = time.perf_counter()
     if label:
@@ -177,7 +178,8 @@ def session(root, *, label=None):
     try:
         yield reads
         if label:
-            print(f"{label}: sealing {len(reads.hashes)} content hashes; rechecking paths and owners", flush=True)
+            print(f"{label}: {'sealing content; ' if seal_content else 'disposable staging; no second content seal; '}"
+                  "rechecking paths and owners", flush=True)
         reads.validate()
         if label:
             print(f"{label}: verified in {time.perf_counter() - started:.2f}s; {reads.stats}", flush=True)

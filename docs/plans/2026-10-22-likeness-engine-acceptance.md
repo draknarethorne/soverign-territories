@@ -1,8 +1,8 @@
 # 2026-10-22: likeness engine acceptance and production rebuilding
 
-**Status:** active (Nov 3 narrow E13/E14/E15 prerequisites to layout LY10 only)
+**Status:** active (Nov 5 E18/E19 selected next-preview prerequisites)
 
-**Queue focus:** E13, E14, E15, E16, E17
+**Queue focus:** E18, E19, E13, E14, E15, E16, E17
 
 **Broader scope:** calibration, convergence, the separate incremental batch
 and Production remain holding under the resume gate below.
@@ -11,6 +11,150 @@ and Production remain holding under the resume gate below.
 placement review before calibration/convergence or the separate incremental
 batch. Reactivate a narrow proven engine blocker if needed; holding never
 waives existing thresholds, protection or Production approval requirements.
+
+## Nov 5: final-audit coverage and Briar Cruz feedback
+
+**12:46 pickup failure:** `postrun-lean-preview2` stopped before writing a
+valid preview/install at the final route validator. Final-membership
+refinement changed retained cast flags to released without updating
+`castSeedDecision`, contradicting the policy evidence. The reported Camaris
+photo was an initial core member in the original run; this is evidence
+bookkeeping, not proof of an incorrect likeness threshold. Refinement now
+updates the release decision/reason while preserving original seed score,
+threshold and core evidence. Tests reproduce the contradiction and verify
+the corrected transition passes strict route validation; deliberately
+contradictory decisions still fail. All 108 focused refinement, routes,
+cast, continuation and flow tests pass. No retry or installation has been
+started for this correction; actual preview acceptance remains open.
+
+The user selects these bounded investigations before the next full rebase.
+Raw feedback and numerical approvals live in
+[naming's Nov 5 09:36 source](2026-10-22-identity-family-naming.md#nov-5-0936-approvals-and-next-rebase-feedback-verbatim).
+No saved run or source pixels were changed by this analysis.
+
+**09:44 implementation request:** the additional `finalMembershipRefinement`
+pass now uses the same core builder and comparison function as final audit,
+without acquiring protection during matching. It evaluates retained cast as
+well as provisional/preserved rows, removes the own-minimum shortcut in this
+additional pass, requires independent destination support and existing
+admission/quality/rejection/lock gates, and records bounded pass/oscillation
+holds. Final naming follows membership changes. A post-continuity confirmation
+blocks installation while qualifying residuals remain and prevents those
+photos acquiring new automatic locks. The recap exposes moves and hold reasons.
+Focused tests include a Model above its own minimum, an unlocked retained cast
+photo, changed cores after a move, exact cast thresholds, locks, pass caps,
+oscillation, collision safety and report escaping.
+Validation: 81 focused refinement/clean-rebase/recap tests pass; the frozen
+library selection passes 47 modules before an unrelated existing
+test-inventory guard fails because the unchanged full launcher omits the
+existing `test_rebase_flow` module. The two remaining quality/isolation
+modules pass separately (20 tests). Routine hygiene/data checks pass.
+Do not describe the broader validation command as green.
+
+E18 remains open for all 35 saved-case traces, post-continuity residual review
+and C12/C13 integration; E19's mixed Briar scenario remains open. This is
+tested implementation, not evidence that the installed run was re-refined.
+The user explicitly forbids starting a re-run while review continues.
+The [pinned recap's reuse boundary](../recap/2026-11-04-1130-recap.md#nov-5-0944-prepared-input-reuse-no-re-run-authorized)
+owns what can be skipped later and the unavailable applied-run replan route.
+
+In `fresh-20261104-lean2`, `higherRivalCount: 270` means only that a final
+own score is available and some rival scores higher. It is not a count of
+approved moves or wrong identities:
+
+| Disjoint audit reason | Photos |
+| --- | ---: |
+| Gallery disagreement without protected/anchor/workflow reason | 201 |
+| Review/unassigned, not an accepted Gallery member | 64 |
+| Protected/anchor/workflow retention reason | 5 |
+
+Only 35 meet `followupCandidate` (Gallery, no photo lock/anchor/workflow
+selection, rival lead >=0.10); 20 are cast (16 Sisters, four Angels),
+15 non-cast. Even these are flags, not proof of quality/rejection/admission
+eligibility. There are 52 higher-rival rows with at least 0.10 rival lead
+across all locations/protection states.
+
+Refinement ran two passes, made six moves and no merges, then stopped
+`stable`; `nextPassNeeded` is still true in the final audit. "Stable" means
+no changes under that refinement's scope/gates, not global convergence.
+It operates on provisional candidates, keeps cast references frozen and
+skips photos meeting category own-score minima (for example Models >=0.50).
+Final audit uses separately rebuilt final Gallery cores, includes retained
+cast and Review, and does not run a further reassignment pass. More passes
+of exactly the same scope need not change anything.
+
+- [ ] **P1 ai** E18 Reconcile final audit with refinement before next rebase:
+  Nov 5 09:40 clarification: user explicitly requires refinement logic
+  aligned with the final audit before that audit runs, not merely a report
+  of mismatches afterward. Build shared final-membership comparison evidence,
+  evaluate eligible residuals in bounded frozen passes, then run an independent
+  final audit over the resulting state. Every residual must have an explicit
+  reason (manual lock, rejection, quality, insufficient margin/support,
+  oscillation/cap or diagnostic-only resemblance); do not suppress audit
+  warnings to claim success. Test cases where a Model passes its own minimum
+  but has a qualifying stronger rival, retained cast was outside provisional
+  refinement, and final-core rebuilding changes the ranking.
+  report all 35 margin-qualified follow-ups with exact blocked/move reasons;
+  include retained cast, workflow reset C13 and approved Sisters admission
+  C12 without weakening manual protections/rejections/quality. Share scoring
+  definitions/frozen references where appropriate; expose differing scopes
+  explicitly. Add a bounded final-membership follow-up or explicit per-row
+  hold as required by the verified cases, with deterministic ties, pass cap,
+  oscillation detection and re-audit. Do not claim convergence from `stable`,
+  equate all 270 with errors, or route solely on a tiny higher score.
+  Tests must show qualified residuals addressed/held, manual locks respected
+  and caps/oscillation clearly reported; E7 broader convergence remains gated.
+
+**Briar Cruz evidence:** the final Model holds 93 photos, including 92
+Various arrivals. Initial cluster-to-Sammara score is 0.4692, below the
+existing high-cast hold threshold of 0.55, so it became a coherent Model
+and inherited Sammara's Cruz surname. Individual initial/final scores are
+not the normalized cluster-centroid score. The final audit has usable scores
+for 90 photos; Sammara occurs in 84 saved top-three cast lists, scores
+0.103610..0.435089, none >=0.50. Omission from a top-three list is not a
+zero score. Seventy Briar audit rows report photo protection, requiring
+manual-versus-automatic provenance scrutiny before any follow-up.
+At 09:40 the user clarifies **many, not all**, are Sammara. Treat this as
+photo-level labelled scenario evidence, not identity-wide merge authority.
+
+Verified routing sequence (`planner.plan_candidates`, `classify_category`,
+then `refinement.refine`):
+
+1. Each candidate is ranked against frozen cast cores. A best cast match
+   goes into the unresolved grouping pool, not directly into cast Review,
+   even when its individual score is high. This is not a recorded expulsion
+   from Sammara; these 93 sources are one Rina Banks photo and 92 arrivals.
+2. Average-linkage grouping at 0.25 builds provisional groups; group-core
+   vectors are ranked against cast again.
+3. Groups of at most four get the special >=0.40 cast-Review hold; larger
+   groups need >=0.55 to trigger high-cast Review. Briar's 93-photo group
+   scores 0.4692, so the >=5-photo 0.40..0.55 Model rule applies.
+4. Refinement can reconsider provisional members, but skips a Model member
+   once own leave-one-out similarity reaches 0.50. Otherwise its cast-Review
+   move still needs cast similarity >=0.55 and margin >=0.10 (existing rules).
+   Thus a group can keep many strong internal matches despite the user's
+   identification of some members as Sammara.
+5. Final cores/protection/audit are rebuilt later. Audit reports differing
+   scores without moving photos. Automatic final protection is not proof
+   that the preceding grouping decision was correct.
+
+No evidence here supports saying one per-photo threshold "kicked them out."
+There are different individual, group-size/classification and refinement
+gates. E19 must trace them by stable photo ID and generalize the scenario
+across cast; do not lower one global number or send the whole group to Review.
+
+- [ ] **P1 ai** E19 Trace Briar Cruz -> Sammara/Adrianna Cruz as a required
+  next-run acceptance scenario. Compare representative measured/aligned
+  faces, all cluster members, Sammara's frozen cores and per-photo/group
+  scores; test detection/preparation, pose/core coverage and rival/margin
+  effects. Explain why the group forms separately and why auto-protection
+  may freeze it. Use saved measurements first; broader pixel changes require
+  targeted proof, not another full intake for diagnosis. Sisters C12 >=0.50
+  does not apply to Angel Sammara, and even extending that value alone would
+  not admit these saved comparisons. Preview any justified cluster-level
+  Review route separately from Gallery auto-accept; do not hardcode a name
+  override, globally lower unrelated thresholds, or force-merge a family.
+  Gate: measured explanation and explicit justified route/hold before rebase.
 
 ## Nov 3: rebase protection and final-membership audit
 

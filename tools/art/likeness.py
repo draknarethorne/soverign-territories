@@ -3521,7 +3521,7 @@ def main(argv=None, embedder=None, *, domain="general"):
                         "LEAN shares installed native bytes and pads only the recommendation")
     s.add_argument("--recovery-mode", choices=("full", "disposable"),
                    help="sandbox rebase only: full requires backup and keeps undo; disposable requires LEAN "
-                        "evidence, skips baseline backup and retires rollback after verified publication")
+                        "evidence, creates no baseline backup or rollback; failed publication requires sandbox reset")
     s.add_argument("--include-current-various", action="store_true",
                    help="stage current Working Various images over matching immutable IDs and include genuinely new images")
     s.add_argument("--baseline", choices=("source", "working"),
@@ -3529,8 +3529,14 @@ def main(argv=None, embedder=None, *, domain="general"):
                         "in a hash-bound run-local overlay without changing Source")
     s.add_argument(
         "--cast-seeds", choices=("all", "core"), default="all",
-        help="retain all existing cast membership (default), or keep only protected/selected/core cast seeds and regroup the rest",
+        help="retain all existing cast membership (default), or reset old workflow selections and regroup non-core cast photos",
     )
+    s.add_argument("--workflow-reset", choices=("all", "scoped", "low-score", "none"),
+                   help="core-rebase selection reset (default all); no shared workspace/configuration changes")
+    s.add_argument("--workflow-reset-slot", action="append", default=[],
+                   help="slot name or category/slot for scoped reset; repeat for multiple slots")
+    s.add_argument("--workflow-reset-cutoff", type=float,
+                   help="reset selections below this own-core score with --workflow-reset low-score")
     s.add_argument("--policy", help="versioned likeness policy JSON")
     s.add_argument("--check", action="store_true", help="verify the saved plan and installed outputs without changing photos")
     s.add_argument("--record-core-protection", action="store_true",

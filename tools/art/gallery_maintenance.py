@@ -196,12 +196,13 @@ def run(args, cfg):
                 sha = hashlib.sha1(photo.read_bytes()).hexdigest()
                 face = cache.get("emb", {}).get(sha, {})
                 box, px = face.get("box"), face.get("px", 0)
+                faces = face.get("faces")
                 if (not isinstance(box, (list, tuple)) or len(box) != 4
                         or not all(isinstance(value, (int, float)) and math.isfinite(value) for value in box)
                         or box[2] <= 0 or box[3] <= 0
                         or not isinstance(px, (int, float)) or not math.isfinite(px)):
                     box, px = None, 0
-                sources.append((photo, final, box, px))
+                sources.append((photo, final, box, px, faces))
                 if photo.name != final.name:
                     renames.append((photo, final, derivatives.digest(photo)))
     print(f"maintenance root: {root}\ncache (housekeeping reads only): {cache_path}")
@@ -215,8 +216,8 @@ def run(args, cfg):
     for problem in problems:
         print("DIAGNOSTIC: " + problem)
     pending = []
-    for source, _target, box, px in sources:
-        made, _messages = derivatives.maintain(source, box, px)
+    for source, _target, box, px, faces in sources:
+        made, _messages = derivatives.maintain(source, box, px, faces=faces)
         pending.extend(made)
     for folder in library:
         if folder in held_folders:
@@ -259,13 +260,14 @@ def run(args, cfg):
                 stage.rename(target)
             else:
                 source.rename(target)
-    changes, diagnostics = [], list(problems)
-    for source, target, box, px in sources:
+    changes, diagnostics, information = [], list(problems), []
+    for source, target, box, px, faces in sources:
         current = target if args.apply else source
         try:
-            made, messages = derivatives.maintain(current, box, px, apply=args.apply)
+            made, messages = derivatives.maintain(current, box, px, apply=args.apply, faces=faces)
             changes.extend(made)
-            diagnostics.extend(messages)
+            information.extend(message[6:] for message in messages if message.startswith("INFO: "))
+            diagnostics.extend(message for message in messages if not message.startswith("INFO: "))
         except (OSError, ValueError) as exc:
             diagnostics.append(f"Unprocessable {current}: {exc}")
     for folder in library:
@@ -276,8 +278,11 @@ def run(args, cfg):
         diagnostics.extend(messages)
     for message in diagnostics:
         print("DIAGNOSTIC: " + message)
+    for message in information:
+        print("INFO: " + message)
     print(f"{len(renames)} rename(s), {len(changes)} derivative(s) "
-          f"{'processed' if args.apply else 'pending'}, {len(diagnostics)} diagnostic(s)")
+          f"{'processed' if args.apply else 'pending'}, {len(diagnostics)} actionable diagnostic(s), "
+          f"{len(information)} intentional framing exclusion(s)")
     if args.check:
         pending_reports = not args.no_reports and reports_pending(
             root, library, cache_path, args.policy, output)

@@ -222,6 +222,11 @@ function card(r, readOnly=false) {
   image.dataset.chest=r.thumbnail; image.dataset.head=r.thumbnailHead; image.alt=r.name;
   image.title=r.name; image.loading="lazy"; image.decoding="async";
   link.append(image); article.append(link);
+  if(r.framingUnavailable&&r.framingUnavailable.length) {
+    const note=document.createElement("div"); note.className="detail";
+    note.textContent="Intentional framing unavailable: "+r.framingUnavailable.join("; ");
+    article.append(note);
+  }
   if(r.thumbnailProvenance) {
     const sources=document.createElement("div"); sources.className="detail";
     sources.append(document.createTextNode("Standard sources: "));
@@ -1471,13 +1476,19 @@ def write_thumbnails(items, out, work=None):
         stem = re.sub(r"[^A-Za-z0-9_.-]+", "_", photo.path.stem).strip("._") or "photo"
         targets = {}
         diagnostics = []
+        unavailable = []
         provenance = {}
         for framing in ("chest", "head", "face"):
             data, key, diagnostic = thumbnail(
                 photo.path, "head" if framing == "face" else framing, photo.box,
-                (320, 320) if framing == "face" else (320, 400))
+                (320, 320) if framing == "face" else (320, 400),
+                px=getattr(photo, "px", None), faces=getattr(photo, "faces", None),
+            )
             if diagnostic:
-                diagnostics.append(diagnostic)
+                if diagnostic.startswith("INFO: "):
+                    unavailable.append(framing + ": " + diagnostic[6:])
+                else:
+                    diagnostics.append(diagnostic)
             else:
                 source, record = verified(photo.path, "head" if framing == "face" else framing, photo.box)
                 provenance[framing] = {"href": source.resolve().as_uri(),
@@ -1513,6 +1524,7 @@ def write_thumbnails(items, out, work=None):
             diagnostics.append(str(exc))
         public = {key: value for key, value in item.items() if key != "_photo"}
         public["derivativeDiagnostics"] = diagnostics
+        public["framingUnavailable"] = unavailable
         public["thumbnailProvenance"] = provenance
         public["alignmentEvidence"] = alignment_evidence(photo, work, out)
         public["reason"] = "; ".join([public.get("reason", ""), *diagnostics]).strip("; ")

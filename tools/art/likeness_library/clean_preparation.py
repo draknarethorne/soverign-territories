@@ -104,6 +104,26 @@ def verify(layout, run):
         if path == layout["working_root"]:
             break
     value = json.loads(receipt.read_text(encoding="utf-8"))
+    if value.get("reusedFrom"):
+        original = pathlib.Path(value["reusedFrom"])
+        if (not original.is_absolute() or original == run
+                or original.parent != run.parent or run.parent != layout["working_root"] / "_sandbox-state"):
+            raise ValueError("reused intake must reference a different sandbox-local sibling run")
+        for path in (original, original / "intake.json"):
+            if sandbox._is_reparse_point(path):
+                raise ValueError(f"linked reused preparation input: {path}")
+        source_receipt = original / "intake.json"
+        if metadata.content_sha256(source_receipt) != value["sourceReceiptSHA256"]:
+            raise ValueError("reused intake receipt changed; prepare a new continuation")
+        original_value = json.loads(source_receipt.read_text(encoding="utf-8"))
+        if original_value.get("reusedFrom"):
+            raise ValueError("chained preparation reuse is not supported; reference the original intake")
+        if value.get("recoveryMode") != "disposable":
+            raise ValueError("prepared-input continuation requires disposable sandbox recovery")
+        output, data = verify(layout, original)
+        if data.get("storageMode", "full") != "lean":
+            raise ValueError("prepared-input continuation requires LEAN evidence")
+        return output, data
     if value.get("schemaVersion") != 1 or value.get("inputs") != inventory(layout):
         raise ValueError("intake input inventory changed; choose a new run")
     if value["sourceManifestSHA256"] != metadata.content_sha256(

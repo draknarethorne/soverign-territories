@@ -5,6 +5,125 @@ LY3 publication/undo and LY5 implemented and tested Nov 2)
 
 **Queue focus:** LY4, LY11, LY13, LY14, LY12, LY9, LY6, LY8
 
+## Nov 5 14:25: current authorization and planning-only lane
+
+LY15c's visible process task is working and the user can see/monitor it.
+`postrun-lean-preview3` passed saved-preview and recap checks after the
+report-only overlay fix. At 13:19 the user authorized installation and final
+checks through `gallery-check`, then Gallery/Overview/Review verification.
+Earlier matching-only/no-install paragraphs below are dated history.
+The install is in progress at this planning checkpoint; no final installed
+or viewer acceptance is claimed.
+
+- [x] **P1 you** LY15c Walk through visible VS Code terminal execution:
+  use a `process` task invoking `cmd.exe`, not the configured Git Bash shell;
+  the user confirms visible progress and owns live monitoring.
+- [x] **P1 you** LY15a Authorize and complete the matching-only saved-input
+  continuation; verify the preview and recap before installation.
+  `postrun-lean-preview3` passes both read-only checks, with 3,290 photos.
+  Subsequent explicit 13:19 authorization selects installation/checks;
+  LY4/N15 and LY11 still own runtime and human acceptance.
+
+While this installation runs, only planning/feedback reconciliation proceeds.
+The approved downstream concurrency slices, historical phase times and
+risks are owned by [performance T20-T28](2026-10-28-intake-performance.md#nov-5-approved-downstream-parallelism-and-bounded-speed-work);
+gallery L18 retains cross-page history reuse. They do not change current
+implementation bindings. LY14's derivative **cap** is a separate behavior/
+storage decision, not implicitly approved by agreeing to exact-output
+parallelism, and is not a new prerequisite for the current pickup.
+The five active feedback notes are reconciled in the
+[source ledger](README.md#nov-5-active-feedback-reconciliation); their
+filing does not close this plan or its outstanding acceptance tasks.
+
+## Nov 5 final pickup preflight; terminal walkthrough next
+
+- [x] **P1 ai** LY15b Finish bounded progress/estimate and report-read changes:
+  label Nov 5 LEAN versus Nov 3 historical references, bound timing and
+  execution by `--until` even on completed-preview resume, provide full
+  child output with `--verbose`, and reuse Overview collection/evidence
+  reads within one fully sealed operation. Record explicit
+  [preview/install acceptance gates](../art/likeness.md#pickup-acceptance-gates).
+LY15c's visible-terminal walkthrough is complete; see the current
+authorization above for actual preview/install sequencing.
+
+No actual matching, installation, reset or intake is authorized here.
+The installed sandbox and original receipts remain available for review.
+The broader L18 cross-page history refactor stays open: its dependency
+invalidation requires more than this narrow operation-local change.
+LY3b artifact moves, derivative caps, FAST shortcuts and intake
+instrumentation remain deferred, not new pickup prerequisites.
+
+Nov 5 11:37 authorized visible-terminal attempt: the task must run as a
+VS Code `process`, not through the configured Git Bash shell, which rewrote
+`cmd /d /c` and stripped launcher backslashes. At 11:46 the matching-only
+attempt stopped before publication: continuity rejected an installed
+Angelica Review photo whose raw Facebook name had been normalized during
+matching. The installed bytes equal the original plan's `preparedSHA256`;
+the guard used only the narrower filename parser. Reuse the matching ID
+resolver for immutable continuity, retaining missing/unknown/ambiguous-input
+checks. Keep failed `postrun-lean-preview` evidence and use a separately
+named `postrun-lean-preview2` after regression verification; no installation
+is authorized.
+
+## Nov 5 10:32: finish post-run fixes; make disposable LEAN genuinely reset-only
+
+The user approves removing sandbox LEAN backup/transaction rollback work,
+not weakening quality, membership or path correctness. FULL/Production
+remains protective. Keep the existing installed baseline for review: this
+request authorizes implementation/testing, **not an actual replay or intake**.
+The [saved-input runbook](../art/likeness.md#saved-input-lean-continuation-sandbox-only)
+owns the commands and exact skip/recompute boundary.
+
+- [x] **P1 ai** LY15 Finish and verify a separately named saved-input LEAN continuation:
+  no reset/intake or generated-identity reseeding; preserve explicit manual
+  decisions by stable ID/content or refuse ambiguous migration. Publish
+  without backup/previous trees, record reset-required on partial failure,
+  avoid duplicate stage/output hashing and repeated space-tree walks.
+  Include launcher/help/menu coverage and FULL regression tests.
+LY15a's matching-only authorization and verified preview are complete;
+actual runtime/space/browser acceptance stays with LY4/N15, not code tests.
+
+Implementation verification: the frozen library selection passed all 54
+modules (954 tests, one environment-dependent symlink skip). After the final
+seed-snapshot serialization regression and logging clarification, 94 focused
+tests passed (the same skip). Policy-schema isolated smoke passed 19/19;
+routine hygiene/data checks passed. Launcher inventory previews were
+read-only and did not create the proposed real continuation directory.
+The installed baseline and original receipts remain unchanged.
+
+The then-protected `feedback/priority_plans_review.md` was retained for the
+requested later discussion: confident cast Gallery first; then selection
+review/replacements; discuss backed-up Sandbox-to-Production promotion;
+restore manual `0_Edit`/`1_Alpha`; discuss generic Sovereign Females naming
+and removal of its female series from Angel Primes; return to character art
+through animation/video; then reassess remaining automation/priorities.
+The complete source is now preserved in the priority-reset plan. This is coverage
+and sequencing context, not authorization for Production promotion, prompt
+mutation, workspace deployment or a broad plan reorder. Preserve/incorporate
+the raw source at that discussion before any archive move (verified during
+the Nov 5 reconciliation above).
+
+## Nov 5 09:44: hold the installed baseline; assess prepared-input reuse
+
+The user explicitly says not to start a re-run yet. Complete and test all
+selected post-run changes first, including engine E18 refinement; then
+present an incremental matching-only preview option using the original
+run's verified prepared inputs/cache and original catalogue. No new intake
+is needed merely to change matching, family or workflow-selection logic.
+Do not treat the current generated identities/automatic locks as fresh
+source truth. An installed-results-only refinement would not test exclusion
+from the initial cast cores.
+
+The existing receipt is applied/disposable with rollback retired, so ordinary
+`--undo`/`--replan` is not a supported restart route. Do not edit its status,
+policy, hashes or receipt, run `--from matching` against it, or copy all of
+Working into repository scratch. A separate bounded verified replay path
+is required before offering an executable command. Retain the current
+Gallery/Overview/Review for ongoing human review. Full fresh-run acceptance
+remains separate from any saved-measurement preview.
+Evidence and skip/recompute boundaries live in the
+[pinned recap](../recap/2026-11-04-1130-recap.md#nov-5-0944-prepared-input-reuse-no-re-run-authorized).
+
 ## Nov 3: authorized new source rehearsal
 
 The 12:46 request selects naming N14/LY13, cast C11/engine E13/E14 and
@@ -251,10 +370,19 @@ check passed afterwards.
   the carried bundle), run the clean LEAN rebase in place with per-step timings
   (Acronis off), verify Gallery/Overview/Review, then hand to storage S32/S27
   and retire the old sandbox snapshot and run state.
+  Nov 5 09:36 next-run prerequisites: approved naming N16 and cast C12/C13,
+  engine E18/E19 residual-audit/Briar scenarios and gallery L23 provenance
+  diagnostics, plus honest crop-status classification. Test before intake;
+  inspect a saved-evidence preview of family links, Sisters admissions,
+  workflow resets/replacements and residual route/holds. Then use a new
+  run name for the full Production-based disposable sandbox rehearsal,
+  preserve progress/timing logs and verify all three viewers. No immediate
+  rerun, Production writes or automatic settlement is authorized by planning.
   Nov 5: fresh `fresh-20261104-lean2` is installed; installed-run, recap,
   reports-only and automated browser checks pass. The full gallery scan
   completed with exit 1 on 143 framing diagnostics (137 unreproducible
-  heads; six unavailable framings for three no-face photos), with zero
+  heads; six unavailable framings for two small-face photos and one
+  no-face photo), with zero
   held collisions, renames or pending derivatives. Keep LY4 open; no
   quality-policy bypass or further reset/intake. Resolve diagnostic
   acceptance from existing evidence first. Measurements and remaining
@@ -897,5 +1025,18 @@ Don't stop the analysis you are doing, just want to make sure that If we again n
 And when we run we're just supposed to protect the core of the sisters and angels in the run as well - so that if some of their photos move out - that should be happening.  I don't know if that was part of the run we did this last time or not - but that was one of the key things we were working on testing before we worked on the family tree fixes.  So things are complicated, yes - but we'll get there eventually.
 
 You can start the totally fresh run when you are satisfied you have address some of the key issues that are causing the major slowness and how it all works.  Adding checks or threading to places where it makes sense to speed things up when in LEAN mode and decrease the number of back-ups and extra copies.  Maybe we can skip some roll-backs since we are in the sandbox and don't need backups as we'll just start fresh again.  So that's the type of thinking I am looking for.  When it comes to production or a FULL run then we need those items, but LEAN should assume a positive outcome or a fresh rebase in the sandbox.  FULL is protective and still needs to exist - but LEAN is LEAN.  The FAST one is supposed to be even more aggressive at skipping all backups, rollbacks and cutting corners.  LEAN is the balance on quality and speed - but the rollbacks are actually less important.  Showing what went where and the report is a LEAN item - but maybe in FAST we don't even track all that and that's a key difference.  So, just more items to digest before you get through and re-run everything while I am asleep.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 5 final-preflight requests (chat, verbatim)
+
+Coverage: remaining bounded coding -> LY15b and gallery L18; visible
+terminal walkthrough after coding -> LY15c; no processing before LY15a.
+
+<!-- markdownlint-disable MD013 -->
+````text
+So, are there any other "low hanging fruit" items from our past iterations that we did not finish that we should couple into this work?  I guess, I want to ensure we don't leave out something prior to this next "pickup run" after intake.  I'd also like to know if you can run items in a terminal for me to see the progress as when you run in a background process - I cannot see output of something running - unless you can tell me how to get to see that from within VS Code.  Address these two questions and then tell me what remains to bundle with this work (if anything) and also how I can see the work running in real-time.
+
+Let's proceed with the last few items we need to get done prior to running and then you and I can walk through how I could run commands in a terminal window directly or you can launch them into a terminal so I can see them.  We'll work on that after you get the final set of coding changes done.
 ````
 <!-- markdownlint-enable MD013 -->

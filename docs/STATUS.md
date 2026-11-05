@@ -4,11 +4,174 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Nov 5 16:10 publication checkpoint:** user chooses to wait on optimization
+coding rather than create an isolated development copy; publish the existing
+tested implementation/plans after hygiene, without changing active runtime
+bytes. Derivatives finish at 16:09:59 in 54m29s and detail refresh starts;
+installation, final checks and viewers are not yet claimed complete.
+The [pinned recap](recap/2026-11-04-1130-recap.md#nov-5-1610-wait-on-coding-publish-existing-checkpoint)
+records counters, verification evidence and safe remaining planning work.
+
+**Nov 5 15:59 repeated-work core:** demonstrated avoidable thrashing anywhere
+in the affected pipeline is core assessment/fix scope, not just derivatives.
+[Performance T30](plans/2026-10-28-intake-performance.md#nov-5-1559-pipeline-wide-repeated-work-core-and-execution-design)
+records phase owners, coordinator/worker ownership, bounded queues,
+invalidation, resource/failure contracts and paired acceptance. The extras
+threshold still governs additional acceleration, not exclusion of cheap
+redundant-work fixes in other phases. No runtime edits or benchmark I/O
+while the active installation runs.
+
+**Nov 5 14:59 wider planning:** the
+[priority map](plans/2026-11-05-priority-reset.md#remaining-work-map-nov-5-non-archive-plan-inventory)
+now inventories all 22 non-archive plans and separates current cast
+acceptance/selections from source-faithful prompts, generic workspaces,
+representative end-to-end art and later automation/tooling/game tracks.
+User decides Production cutover is not a blocker for returning to supported
+prompt/art work with verified sandbox source bindings after cast review/
+selection. Comparison and any Production publication still require their
+own gates. PR1's item-level closure/ownership transfers remain open; no
+whole-plan archival or implementation acceptance inferred.
+
+**Spelling scope clarified:** the user wants meaningful checked-out naming
+and useful older documentation to read consistently correctly; old Git
+history is acceptable. Archive location alone is not an exemption.
+[Spelling SP1b/SP2](plans/2026-11-02-sovereign-spelling-rename.md#nov-5-clarification-correct-the-visible-project-not-git-history)
+now owns this scope, with explicit handling of preserved raw quotations,
+path/hash-bound evidence and any verified obsolete-document retirement.
+Local target path remains undecided. No spelling migration has run.
+
+**Nov 5 14:41 pre-new-PC scope:** user chooses the core-conditional bundle
+and measured stopping rule. Capture this PC's paired baseline before runtime
+optimization/path migration; prioritize inventory reuse, person-owned
+derivatives/details and cross-page history reuse. Conditional extras need
+a remaining phase of at least 10 minutes and demonstrated savings of at
+least 20% and 2 minutes, with unchanged outputs/checks. See
+[performance T29 and the decision](plans/2026-10-28-intake-performance.md#nov-5-1441-bounded-pre-new-pc-benchmark-bundle)
+for exact evidence/stop rules. Basic PC setup need not wait for every extra;
+rename/clone and active-run boundaries remain unchanged. No benchmark or
+runtime modification occurred in this planning exchange.
+
+**Nov 5 14:25 planning lane:** approved downstream performance work is now
+recorded with historical timings, effort/risk, ownership and acceptance in
+[performance T20-T28](plans/2026-10-28-intake-performance.md#nov-5-approved-downstream-parallelism-and-bounded-speed-work).
+First investigate redundant external inventory work, then person-owned
+derivatives/details and report image/history work. New-machine intake worker
+tuning is separate; publication remains ordered. No runtime changes while
+installation is active. The five active feedback notes are fully mapped and
+individually filed with original bytes/hash verification; their tasks and
+decisions remain open in the [source ledger](plans/README.md#nov-5-active-feedback-reconciliation).
+No whole-plan archive or broad consolidation is claimed.
+
+**Current authorization supersedes the earlier matching-only limits below:**
+at 13:19 the user authorized verified `postrun-lean-preview3` through install,
+installed-run and gallery checks, then Gallery/Overview/Review verification.
+The existing visible task is left running for the user to monitor. This is
+an active install/check checkpoint, not a completion claim or human acceptance.
+Production, shared selections, directory names and runtime bindings are
+unchanged by the documentation pass.
+
+**Nov 5 matching preview verified:** `postrun-lean-preview3` completed
+report-only recovery and stopped before installation. The recap now follows
+the original sibling run's hash-bound source overlay instead of expecting
+a copied overlay. All 50 focused tests and hygiene pass; actual continuation
+and recap checks verify the saved preview and current report. Counts:
+3,290 photos, 230 Review, 195 new identities, 139 emptied. These are preview
+results only; human placement/scenario acceptance and installation remain
+separate gates. The installed library is unchanged.
+
+**Nov 5 second pickup guard:** the user reported the matching preview's
+10m10s failure on inconsistent cast evidence. Final-membership release
+flags now update their policy decision/reason consistently, retaining the
+original seed evidence; strict route validation remains. All 108 focused
+tests pass. No valid new preview or installation is claimed; failed run
+artifacts remain, and the terminal has not been restarted for this fix.
+
+**Nov 5 priority decisions:** LEAN readiness is bounded by correctness and
+measured major bottlenecks; routine LEAN processing does not waive Production
+protection. Human acceptance includes both Sister/Angel Galleries and their
+Review queues, then selection review. Snapshot promotion versus Production
+rebase stays undecided until afterward. Correct spelling in place after the
+running job is settled, before the new-machine clone. Re-review updated
+manual prompt fidelity with user oversight; generic Females comes first,
+then full cast workflow/lower-stage coverage and representative animation/
+video acceptance. The user monitors the terminal; leave it alone until asked.
+These are sequencing decisions, not runtime or workspace changes.
+
+**Nov 5 visible pickup:** the user authorized matching-only terminal
+execution. Its first actual attempt stopped before installation on a
+raw-Facebook-name versus normalized-photo-ID continuity mismatch; the
+reported Angelica photo is present and hash-matches the original prepared
+output. The guard now reuses the matching ID resolver, without bypassing
+missing/unknown input checks. All 72 targeted regressions pass; read-only
+real-sandbox inventory verifies 3,290 photos. Keep failed preview evidence;
+the separately named retry remains matching-only. No installation authorized.
+
+**Nov 5 final pickup preflight:** full terminal output is available with
+`--verbose`; timing references distinguish Nov 5 LEAN from Nov 3 and respect
+the requested stop boundary. Completed-preview resume cannot slip into
+installation. Overview collection/evidence now reuse verification within
+one fully sealed operation; broader cross-page history sharing remains L18,
+not an untested cache. The [pickup gates](art/likeness.md#pickup-acceptance-gates)
+cover all approved scenarios. Focused validation passed 110 tests with one
+symlink-privilege skip; real launcher dry-run created no target. No actual
+matching, installation, reset or intake ran. Next is the visible-terminal
+walkthrough, then separate matching-preview authorization.
+
+**Nov 5 post-run implementation:** approved family thresholds, Sisters
+Gallery admission and workflow-photo resets are implemented with
+audit-aligned refinement. Sandbox disposable LEAN now creates no backup or
+transaction rollback; a separately named continuation references original
+prepared pixels/measurements and restarts at matching. Duplicate staging
+hashes/content seals and repeated space-tree walks are reduced; FULL remains
+protective. The [runbook](art/likeness.md#saved-input-lean-continuation-sandbox-only)
+owns the commands and exact contract. Only inventory previews and synthetic
+tests have run: the installed baseline, Production and shared selections are
+unchanged. Actual saved-measurement preview, viewer/placement acceptance and
+new runtime measurements still need authorization. Protected priority notes
+remain in place for the later discussion; no broad plan reorder.
+Validation: 54 library modules / 954 tests (one symlink-privilege skip),
+94 final focused checks, isolated validator 19/19 and routine hygiene/data
+checks pass. No end-to-end rerun or new speed measurement is claimed.
+
+**Nov 5 09:44 no re-run:** refinement now includes an audit-recipe-aligned
+bounded membership pass before protection, with retained cast coverage,
+independent-support/lock/quality holds and post-continuity installation guards
+(engine E18). Saved-run scenario acceptance and the other approved N16,
+C12/C13, E19 and L23 changes remain open. No sandbox inputs, policies,
+receipts or viewers were rewritten. Prepared bytes and cached measurements
+remain available, so a later verified matching-only preview can skip intake;
+the existing applied disposable run cannot be undone/replanned in place.
+The [pinned recap](recap/2026-11-04-1130-recap.md#nov-5-0944-prepared-input-reuse-no-re-run-authorized)
+records the exact reuse boundary and remaining gates. User review continues;
+do not start reset, matching replay or intake without a later go-ahead.
+
+**Nov 5 09:36 approvals:** family direct >=0.40 / secondary >0.35
+(naming N16); Sisters auto-admission >=0.50 plus >=0.10 rival margin (cast
+C12); cast workflow-photo exclusion/reset and manual-protection exception
+(C13). These are approved next-run implementation rules, not applied changes.
+Engine E18/E19 owns the 35 flagged final-audit follow-ups and Briar
+Cruz/Sammara discrepancy; gallery L23 owns misleading moved-source warnings.
+The reported Jade Pryce photo is present and hash-verified in final Review.
+No new intake until tested implementation and saved-evidence previews.
+The pinned recap's next-rebase section gives the 6-7 hour processing forecast
+(reserve 7-8 hours on this machine), dependencies and unchanged Production gate.
+
+**Nov 5 09:08 policy review (superseded by approvals above):** the user asks to tighten broad family links,
+revisit cast auto-accept and allow all/scoped workflow-photo resets during
+full rebase. [Naming N16](plans/2026-10-22-identity-family-naming.md#nov-5-tracing-broad-families-before-tuning)
+records all 31 Lujan paths and threshold sensitivity;
+[cast C12/C13](plans/2026-10-23-cast-seeded-library-rebase.md#nov-5-cast-auto-join-and-workflow-selection-review)
+records Review admission and workflow reset evidence. Cast auto-join is
+currently disabled, not just high-threshold. Five low-score cast selections
+are retained despite already being excluded from scoring cores. Proposed
+defaults are review-only; thresholds/selections and Production are unchanged.
+
 **Nov 5 final overnight checkpoint:** `fresh-20261104-lean2` is installed;
 installed-run, recap and reports-only checks pass, and Gallery/Overview/Review
 load in the browser. The full gallery scan completed but returned exit 1:
 137 unreproducible head crops plus six unavailable framings for three
-no-face inputs; zero collisions, renames or derivatives pending. LY4/N15
+inputs (two faces below the 60-pixel minimum, one undetected);
+zero collisions, renames or derivatives pending. LY4/N15
 remain open, not full acceptance. Do not reset/start another intake to fix
 these quality holds. Working is 29.53 GiB (37.5% smaller); disposable rollback
 is retired and baseline-backup bytes are zero. Timings, exact commands,

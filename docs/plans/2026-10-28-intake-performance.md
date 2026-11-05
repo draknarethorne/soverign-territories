@@ -2,9 +2,392 @@
 
 **Status:** active (T6 recovery and T16 installed measurements verified; next-round statistics, quality and storage work remain)
 
-**Queue focus:** T17
+**Queue focus:** T29, T30, T20, T21, T22, T17
+
+## Nov 5 16:05: small gains and continuous versus reviewed execution
+
+Easy, bounded, behavior-preserving improvements are worthwhile even when
+their immediate gain is small: library growth and later functionality can
+amplify repeated work. Do not reject those fixes because they fail the
+10-minute/20%/2-minute extras gate. That gate remains a prioritization rule
+for substantial additional acceleration, not a minimum gain for every
+simple improvement. Keep focused correctness tests and honest benefit
+evidence; do not broaden a small fix into speculative infrastructure.
+
+The pipeline must support both deliberate review boundaries and efficient
+uninterrupted execution through the same stage logic:
+
+| Execution boundary | Required behavior |
+| --- | --- |
+| Standalone step, resume, or review pause | Re-establish source/config/ownership bindings and validate evidence before reuse; do not assume memory from an earlier process is still valid |
+| Back-to-back stages in one controlled operation | Carry validated inventory, immutable evidence and owned mutable state forward where dependencies remain valid; avoid rebuilding/re-reading/re-writing them solely to emulate separate invocations |
+| Mutation within that operation | Invalidate changed dependencies and their consumers, verify newly produced artifacts, retain unrelated valid evidence; do not reset all caches merely for a stage label |
+| External mutation possible, changed scope/config, process exit or unknown lineage | End the trust scope and revalidate affected inputs; continuous scheduling alone is not proof of immutability |
+| Required independent acceptance, final publication or user approval gate | Preserve the check/approval and durable provenance; a faster continuous path cannot substitute an old cached success or bypass a requested stop |
+
+T30 must map **artificial command/process boundaries** alongside per-photo
+duplication. For each boundary, identify the necessary durable artifact and
+verification versus avoidable intermediate materialization, repeated scans,
+JSON parse/serialization, cache reconstruction or copying. Choose a bounded
+in-process orchestration/context handoff using existing helpers where it
+removes established overhead; subprocess boundaries cannot share ordinary
+memory automatically. Do not introduce a daemon, global cache, unrelated
+framework or persisted "trusted" cache without a demonstrated requirement.
+Before sharing data across workers, retain disjoint ownership and explicit
+mutation/dependency rules from the coordinator contract below.
+
+The continuous path and standalone stages must agree on final outputs,
+routes, manifest evidence, diagnostics and error semantics under equivalent
+inputs. Test both a continuous sequence and stop/review/resume, including
+input/config edits during the pause and a partial worker failure.
+Bounded memory/flush boundaries are legitimate; measure them separately
+from needless per-item disk round-trips. Preserve required receipts and
+review previews; optimize how they are produced/consumed rather than
+silently deleting them. Disposable LEAN remains reset-only and
+FULL/Production retains its existing recovery contract.
+
+This is an extension of T30's core work and T20-T22/L18's implementation
+criteria, not another investigation prerequisite or permission to change
+the current running installation.
+
+### Nov 5 16:07: verified handoffs, not phase-by-phase re-proof
+
+The fragmented standalone command design must not dictate continuous-run
+cost. A verified result with explicit input/config/dependency bindings and
+controlled ownership is consumable evidence, not a hint that the next
+phase should scan/hash/decode the same inputs again. Within the valid
+operation scope, reuse the result and common bounded caches directly.
+Retain adapters for standalone/review/resume entry points; do not make the
+continuous coordinator invoke their full rediscovery/preflight paths.
+
+For T30's boundary ledger, classify each existing check:
+
+- **Already established, dependencies unchanged:** consume the verified
+  result; remove redundant read/hash/parse/rebuild from the internal handoff.
+- **New output or dependency changed:** establish only the missing proof
+  and invalidate affected consumers, not the entire run context.
+- **Unknown ownership, external edit, resumed execution or failed producer:**
+  re-establish the affected evidence or refuse; never manufacture success.
+- **Distinct acceptance/publication property:** retain the check that proves
+  that property, but reuse valid prerequisites instead of repeating their
+  entire verification chain. Existing explicitly independent acceptance
+  contracts remain until a reviewed contract change, not incidental removal.
+
+Record which check was eliminated, which producer evidence replaces it,
+its validity/invalidation boundary and the saved calls/bytes. "Non-stop"
+alone is not the evidence: verified producer results plus unchanged
+dependencies are. Tests must prove both that redundant checks are absent
+in a continuous run and that pause/edit/failure paths still revalidate or
+refuse correctly. This is core end-to-end integration work, not merely
+optional tuning of individually correct commands. Implementation remains
+after the active run settles.
+
+## Nov 5 15:59: pipeline-wide repeated-work core and execution design
+
+The user clarifies that avoidable thrashing anywhere in the process belongs
+in the core assessment, not merely derivatives or optional parallelism.
+This expands T29/T20's coverage under T30 below; it does not authorize
+editing the active run or implementing a generic scheduling framework.
+The previously agreed extras gate applies to **additional parallel
+acceleration**, not to excluding demonstrated straightforward repeated-work
+fixes merely because they occur in staging, hashing, reports or checks.
+Still establish the cost and prove benefit: more threads doing redundant
+work is not a successful optimization.
+
+### Phase-by-phase work package
+
+| Phase / existing owner | Core repeated-work investigation | Bounded execution design / constraint |
+| --- | --- | --- |
+| Preflight and current/external inventory, T20 | Repeated retained-link/ownership traversal, manifest loads and source/derivative hashes across callers | Build one operation-scoped verified inventory for the relevant immutable scope; consume its explicit records rather than independently reconstructing them per photo/framing |
+| Staging, T30 with T24 | Repeated source validation/copying of an identical owned artifact; inventory facts discarded between plan and copy | Coordinator resolves destination/collision/ownership first; copy each required target once, prove resulting bytes; extra parallel copy workers remain measured-conditional |
+| Derivatives, T21 | Manifest read/parse/verify/serialize per framing, repeated prepared-lineage resolution, repeated source opening/decoding | One folder owner loads mutable manifest state, processes its photos/framings and publishes coherent owned results; trial decode-once only with unchanged EXIF/orientation/cleanup/crop/PNG output; different folders can be worker jobs |
+| Retained details, T22 | Verify/read/rewrite/reverify plus global cache invalidation when changing one detail/manifest | Partition by actual shared manifest/dependency ownership, not assumed one-photo independence; refresh only changed content where contract permits; invalidate affected evidence with complete dependency coverage |
+| Review/Overview and other report generation, L18 with T30/T25 | Whole-history re-audits, repeated representative/thumbnail source reads and independently rebuilt evidence indexes | Coordinator supplies an immutable verified evidence view to consumers; publish whole pages in order. Image jobs may use bounded workers only after separating their measured cost |
+| Installed/gallery checks, T30 with T26 | Duplicate reads within a check or between compatible checks, repeated decode/render and directory discovery | Reuse only within a declared unchanged scope; retain independent acceptance/seal checks where required. Independent check workers remain measured-conditional; never substitute install's cached success for a required independent check |
+| Intake/matching, T30 with T27/T28 | Flag demonstrated redundant per-image/config/model/reference construction in the affected path | Reuse invariant evidence where exact behavior is proven; no full intake experiment, new recipe, model change or concurrent dependent refinement passes |
+
+### Coordinator and worker contract
+
+1. **Classify before scheduling.** Use phase and helper timings/call counts
+   to distinguish CPU rendering/decoding, Python orchestration, disk reads/
+   writes and repeated metadata work. Extend existing timing/read counters
+   only where needed; count direct image opens/decodes, manifest loads/
+   writes/bytes, cache hits/misses/invalidations and queue wait separately.
+   Existing `contentReads` is not a unique-file or total-I/O counter.
+2. **Remove duplication first.** Retain one authoritative mutable manifest
+   per owner and reuse immutable verified facts within a bounded operation.
+   Do not add a global persistent cache or timestamp-only trust.
+   Cache keys include source bytes, recipe/config and dependencies;
+   intentional writes invalidate the affected proof, not silently trust it.
+   Current `ReadSession.invalidate` clears all prepared-cache entries:
+   investigate the cost and dependency scope before narrowing invalidation.
+3. **Choose execution per bottleneck.** Compare serial execution with a small
+   bounded thread pool for I/O/native work that releases the GIL, or processes
+   for demonstrated Python CPU bottlenecks where startup/serialization/model
+   memory is justified. Do not select threads from CPU percentage alone.
+   Do not send decoded full-resolution images through process queues without
+   measuring transfer cost; prefer compact path/config/job specifications.
+4. **Keep decisions and shared commits owned.** A coordinator freezes
+   eligibility, routes, job IDs and disjoint output ownership before enqueue.
+   A worker owns an entire folder/manifest dependency unit, or returns
+   independent payloads for a single coordinator writer; never mix both
+   writers for one manifest. Policy decisions, collision resolution,
+   cross-owner aggregation and final publication remain ordered.
+5. **Bound resources and state.** Limit workers and queued/in-flight payloads,
+   decoded image lifetime, open files and native library threads. Apply
+   backpressure rather than loading the full library into memory. Avoid
+   nested executors and CPU oversubscription. Existing ContextVar-backed
+   verification state is not automatically a safe shared worker cache:
+   give workers explicit isolated sessions/evidence and reconcile results
+   at the owner; do not copy/share a mutable session indiscriminately.
+6. **Make failure/progress explicit.** Collect completion without waiting
+   for earlier slow jobs just to show progress; restore deterministic output/
+   diagnostic ordering by job ID. Report active/completed/failed counts,
+   phase/rate/elapsed and queue pressure at existing progress boundaries.
+   On failure stop new submissions, settle running writes safely, report
+   the failed unit and leave no successful receipt for partial publication.
+   Preserve reset-only disposable recovery and existing FULL guarantees.
+7. **Prove then integrate.** Compare the serial baseline, repeated-work-only
+   change and worker-enabled change separately on identical inputs/storage.
+   Assert exact pixels/hashes, manifest entries, routes, reasons/exclusions,
+   counts, links and edited/missing/path-change refusal. Exercise a large
+   single folder, many small folders, shared manifests, mixed Gallery/Review,
+   excluded framing, tampering and worker failure. Record peak memory,
+   wall time and file operations; retain serial execution where faster.
+   Finish with one combined affected-path acceptance, not one full intake
+   per owner.
+
+### Nov 5 16:01: established findings versus unresolved attribution
+
+The existing source traces and historical phase timings already establish
+the findings below. Do not send them back through an open-ended discovery
+or profiling loop before implementing bounded fixes. Timings establish
+phase budgets; they do not isolate every helper's contribution. Code proves
+the repeated work/serial structure, not the eventual speedup.
+
+| Established finding / source | Concrete implementation next step | Remaining proof, not rediscovery |
+| --- | --- | --- |
+| `derivatives.maintain` calls `save` for each created framing; `save` verifies the old manifest, serializes the whole document, then reloads it | T21: load and mutate one owner-scoped manifest in memory; batch coherent publication at a tested ownership boundary rather than per framing | Preserve ownership/tamper detection and safe behavior after partial failure; compare manifest writes/bytes and exact entries |
+| `derivatives.render_pixels` opens the source for separate padded/head/chest rendering; install also directly reads it for the SHA-1 measurement lookup | T21: share a verified per-photo input/decoded representation across compatible framing helpers, with explicit lifetime; avoid redundant lookup reads where existing verified evidence can supply the correct digest | Preserve EXIF orientation, cleanup and framing behavior, exact output bytes and distinct SHA-1/SHA-256 meanings; quantify decode/read reduction |
+| `ReadSession.invalidate` clears the entire prepared cache even for individual derivative/detail writes | T21/T22: replace global eviction with dependency-scoped invalidation where the dependency map proves it valid; separate unrelated derivative outputs from source-lineage dependencies | Prove relevant source/manifest mutations invalidate every dependent claim; no stale-success cache or weakening final checks |
+| `refresh_detail` verifies lineage, reads detail/manifest bytes, writes updated files and verifies again; even unchanged resulting content takes the write path | T22: reuse verified owner-scoped data and skip byte-identical writes with explicit unchanged results; keep post-change verification for actual mutations | Preserve links, artifact hashes and invalidation/failure behavior; unchanged content does not imply unchanged external dependencies |
+| Review and Overview repeat history verification; the narrow Overview-only session did not implement cross-page reuse | L18: provide a single bounded verified history/evidence view to compatible consumers, retaining page-specific dependencies and ordered publication | Complete dependency coverage, mutation refusal and full page/count/link equivalence; do not remove independent installed acceptance checks |
+| Install derivative/detail orchestration is serial; existing intake pools do not parallelize these phases | T21/T22: bounded disjoint owner jobs, coordinator for cross-owner decisions/aggregation; no shared manifest writers | Select thread/process configuration with small comparative trials and measured memory/I/O, not another full rebase to establish that the loop is serial |
+
+T20's external-inventory trace also establishes repeated retained/derivative
+verification calls. Its operation-scoped reuse fix belongs in the queue;
+the precise duration of the current post-preflight interval is **not**
+established by that trace. Do not attribute the entire pause to one helper.
+Staging/check/intake entries in T30's broader phase map remain audit coverage,
+not claims that every proposed duplication or speedup there was verified.
+
+**Execution rule:** reuse saved timing evidence and capture only missing
+same-input baseline/call-count evidence needed for a reliable comparison.
+Then implement the established bounded fix with a focused regression test
+and compare before/after. Baseline capture can be a targeted fixture/phase
+run; it is not permission or a requirement to repeat full intake/rebase.
+No arbitrary savings threshold excludes these known core fixes. Retain the
+extras gate for additional acceleration and report any fix whose safe
+implementation expands substantially. Nothing in this finding ledger
+authorizes runtime changes while the current installation is active.
+
+### Ordered implementation handoff after the run
+
+T29 captures baseline/contracts; T30 identifies and assigns repeated work
+across the affected phases. Start with T20's established inventory path,
+then T21/T22's manifest/decode/cache units and L18's history reuse. Each
+slice is independently tested and benchmarked before the next builds on
+it. Do not require finishing the entire audit before fixing a confirmed
+bounded hotspot. Delegate no new benchmark I/O during installation.
+T30 records every discovered hotspot as fixed/tested, measured-no-gain,
+explicitly deferred with risk/reason, or awaiting evidence; no blanket
+"cache added" or "parallelized" completion claim. Necessary shared helpers
+follow existing mechanisms, not a new generalized engine.
+
+- [ ] **P1 ai** T30 Audit and remove demonstrated avoidable repeated work
+  across inventory, staging, derivatives, retained details, reports and
+  checks, using T29's paired evidence and the coordinator/worker contract.
+  Include affected intake/matching invariant-work observations without
+  activating full intake or algorithm changes. Assign fixes to T20/T21/T22/
+  L18 or the existing phase owner; preserve independent verification and
+  mutation invalidation. Cheap redundant-work fixes are core regardless
+  of phase; optional additional worker pools still use the extras gate.
+  Publish per-hotspot cost, ownership, change/test evidence and disposition;
+  no runtime mutation until the current run settles.
+
+## Nov 5 14:41: bounded pre-new-PC benchmark bundle
+
+**Decision:** core-conditional scope, with the measured-threshold stopping
+rule. This refines the earlier approval of opportunities; it does not make
+every approved candidate a prerequisite for the machine move.
+
+| Before moving performance work to the new PC | Scope |
+| --- | --- |
+| Core investigation/implementation and same-machine evidence | T29 baseline/gates; T30 pipeline-wide repeated work; T20 inventory reuse; T21 person-folder derivatives; T22 independent details; gallery L18 cross-page history reuse |
+| Conditional extras, not automatic prerequisites | T25 thumbnails after report cost split; T23 hashing, T24 staging and T26 verification only when the measured gate below passes |
+| Later/new-PC work | T27 intake worker/thread tuning; FULL assessment on the new machine; T28 matching investigation remains holding |
+| Not included | New intake just to benchmark each change, altered quality/processing policies, derivative caps, concurrent publication or Production mutation |
+
+After the active installation settles and its evidence is recorded, capture
+the current-code baseline **on this PC before runtime optimization or path
+migration**. Historical run totals are context, not a paired benchmark.
+Use the same frozen inputs, recipe/policy, evidence and output requirements,
+ownership units and storage device for before/after comparisons. Measure
+worker settings, RAM, wall time, reads/bytes and cache state; distinguish
+fresh generation from already-current no-op checks. Do not mix regeneration
+in the baseline with cached output reuse in the candidate and call it a
+worker speedup. Isolate tests from active installed outputs without copying
+the whole sandbox into repository scratch or adding LEAN recovery backups.
+Bounded test artifacts are test fixtures, not a new rollback policy.
+
+**Extras gate (15:59 clarification: additional parallel acceleration,
+not straightforward demonstrated repeated-work fixes):** after the core
+work, a remaining phase on this PC must
+measure **at least 10 minutes**, and a bounded same-input candidate trial
+must demonstrate **at least 20% wall-time improvement and at least 2 minutes
+saved for that phase**, with unchanged output/check contracts. All three
+conditions apply. Sample extrapolations must be labelled estimates, not
+proof that the full phase passes; verify phase-level savings before claiming
+acceptance. Split overlapping report costs before applying the gate; never
+count the same saved history reads again as thumbnail-worker benefit.
+Repeat comparisons when close/noisy and record workload/background load.
+Do not deliberately flush system caches or disrupt other work.
+
+Correctness fixes are not subject to the speed threshold. For core slices,
+finish the investigation and evidence, not implementation at any cost:
+if unsafe, substantially expanded or without repeatable benefit, report and
+defer the slice rather than indefinitely blocking the move. No new full
+intake per optimization; share paired phase evidence and run focused
+correctness/equivalence tests, then one combined affected-path acceptance
+when the bundle is ready and execution is approved.
+
+Basic PC setup can proceed independently. Corrected-name cloning retains
+the existing settled-run/spelling gates; finishing every conditional extra
+is not a new prerequisite for the rename, clone or returning to character art.
+Benchmarks on the new PC form a separate baseline, not evidence that the
+software alone improved this PC.
+
+- [ ] **P1 ai** T29 After the active run settles, freeze a representative
+  same-machine phase benchmark specification and capture baseline evidence
+  before runtime optimizations/path migration. Cover T20-T22 and gallery
+  L18, separate report history versus thumbnail cost, record generation/
+  no-op and warm/cache conditions, complete output/diagnostic contracts,
+  input/config/code identifiers, worker/RAM/storage settings and phase wall
+  times. Reuse this evidence for paired candidate trials and final combined
+  acceptance. Apply the 10-minute/20%/2-minute gate to extras; report core
+  slices deferred for risk/no repeatable gain and remaining unknowns.
+  Leave the running terminal and mutable installation untouched.
+
+## Nov 5: approved downstream parallelism and bounded speed work
+
+The user approves the ranked opportunities, effort/risk assessment and
+order from the timing discussion; at 14:25 they select documentation/feedback
+reconciliation while the existing installation runs. **Do not change runtime
+code, implementation hashes, policies or active inputs during that run.**
+Implementation resumes after its results/evidence are recorded. This is
+future work, not parallelism delivered by the earlier read-cache changes.
+
+LEAN's finish line remains correctness and measured major bottlenecks,
+not exhausting all possible optimizations. Use one shared benchmark/evidence
+set across owners, not another full rebase for every task. LEAN processing
+is the routine preference; disposable recovery is sandbox-only and
+Production stays protective. More workers must not weaken FULL guarantees.
+
+### Priority, benefit and risk
+
+The last completed `fresh-20261104-lean2` run supplies historical wall times.
+They are not forecasts for the current changed implementation or the new
+machine. Subcomponents of a phase overlap; do not sum overlapping budgets.
+
+| Scope / owner | Historical time affected | Effort / correctness risk | Benefit and urgency |
+| --- | --- | --- | --- |
+| External inventory reuse, T20 | Long post-preflight interval; no isolated baseline duration established | Small-medium / low-medium; cache invalidation and ownership checks remain mandatory | P1: remove repeated work before parallelizing it; establish current-run attribution first |
+| Person-folder-parallel derivatives, T21 | 54m40s | Medium / medium; each person owns a shared derivative manifest | P1: largest separately measured CPU-oriented install target; more cores can help |
+| Independent retained-detail work, T22 | 17m02s | Small-medium / low-medium; prove separate detail/manifest ownership | P1: bounded ownership-unit parallelism; verify versus HTML cost determines gain |
+| Bounded parallel hashing, T23 | Parts of inventory/staging/checks, not separately timed | Small / low-medium; mutable files, handles, drive contention | P2, elevate if measured major hotspot; fast SSD/NVMe may benefit, saturated disks may not |
+| Independent staging/copies, T24 | 17m30s including retained preparation | Medium / medium; duplicate retained targets and collisions | P2: storage-dependent; more CPU alone does not ensure improvement |
+| Report thumbnail workers, T25 | Part of 41m16s total report refresh | Medium / medium; shared thumbnail/cache output ownership | P1 report target after separating image cost from history verification |
+| Cross-page history reuse, gallery L18 | Another part of the same 41m16s | Medium / medium; complete dependency/mutation invalidation | P1: remove duplicate Review/Overview history work; do not run both whole publishers concurrently |
+| Installed/gallery checks, T26 | 16m33s plus 9m38s | Medium / medium; freeze inputs, preserve diagnostics/seals | P2: independent decode/render/hash checks may scale; never reduce coverage |
+| New-machine intake tuning, T27 | 2h44m32s intake; skipped in pickup | Small configuration experiment / low correctness, moderate memory/oversubscription risk | P1 at new-machine setup; supported workers already exist, benchmark rather than assume |
+| Matching/refinement, T28 | 15m11s historical matching; algorithm has changed | Large / high; dependent passes and shared identity state | P3 holding: profile independent comparisons only after larger targets; no concurrent passes |
+| Final publication/swaps | Not isolated from historical verification/recovery | High correctness risk | Keep ordered; no parallel publication proposal approved |
+
+### Approved execution slices
+
+- [ ] **P1 ai** T20 After the active run settles, isolate current-category/
+  external inventory time and repeated retained/derivative verification
+  calls. Reuse verified evidence within one operation and preserve path,
+  hash, owner, scope and mutation invalidation. Do not waive input or
+  publication checks. Compare call/read/byte counts and elapsed time on the
+  same inputs; report any unresolved bottleneck explicitly.
+- [ ] **P1 ai** T21 Implement bounded derivative workers partitioned by
+  verified person-folder ownership, with sequential per-folder manifest
+  updates and deterministic aggregation. Refuse overlapping/shared targets;
+  preserve edited/unowned assets, quality holds, pixels and manifest entries.
+  Prove serial/parallel equivalence, failure reporting and repeat behavior;
+  benchmark the measured 54m40s phase before choosing worker defaults.
+  **Nov 5 15:26 priority confirmation:** the user identifies the running
+  derivative phase as a definite speed target. Include repeated per-framing
+  source opening/decoding and per-person manifest verification/reload/write
+  costs in T29's baseline and T21's implementation assessment, not worker
+  count alone. Existing operation-local hash reuse does not eliminate those
+  costs. The logged read count is cumulative counted operations, not unique
+  files or all image/direct reads; 100-photo progress lines do not restart
+  the loop. Isolate costs before attributing the slowdown or claiming gains.
+  Preserve framing exclusions and exact pixels/ownership/failure behavior.
+  No runtime edits or benchmark I/O during the active installation.
+- [ ] **P1 ai** T22 Parallelize retained-detail refresh by proven independent
+  ownership units, coordinating with T21's executor/error/progress patterns
+  only where genuinely shared. No cross-worker manifest/cache writes or
+  hidden stale verification positives. Test exact links/content/checksums,
+  tampering, partial worker failure and deterministic diagnostics; benchmark
+  the 17m02s phase.
+- [ ] **P2 ai** T23 Benchmark bounded hash batches on representative library
+  storage, then implement only where wall time improves. Keep verified path
+  checks, stable output ordering, full file reads/seals and explicit errors.
+  Limit open handles and queue memory; compare cold/warm runs and concurrent
+  disk load. No timestamp-only trust or assumed SSD speedup.
+- [ ] **P2 ai** T24 Benchmark ownership-partitioned native/retained staging
+  copies, after T20 establishes redundant verification costs. Resolve
+  duplicate/shared artifacts and destination collisions before submission;
+  deterministic manifests and final hashes remain parent-owned. Keep
+  byte-distinct originals, source evidence and the selected recovery policy.
+  Test failed workers/partial stages; retain serial execution if faster.
+- [ ] **P1 ai** T25 Split report image/thumbnail costs from history audit
+  costs, then use bounded workers for independent thumbnail rendering with
+  one coordinator for shared assets/manifests and ordered page publication.
+  Consume gallery L18's history reuse rather than duplicate it. Compare
+  source/row counts, output images/links, warnings and browser behavior;
+  no simultaneous whole Review/Overview publisher writes.
+- [ ] **P2 ai** T26 After verified publication, parallelize only independent
+  installed/gallery verification units with deterministic complete results.
+  Preserve every hash, path/scope, decode/render comparison, framing exclusion
+  and edited/missing-asset failure; recheck input stability before success.
+  Benchmark separate installed and gallery checks, not just worker CPU time.
+- [ ] **P1 either** T27 On the new machine, benchmark existing intake worker/
+  thread settings against a fixed representative cohort before selecting
+  defaults. Record CPU/RAM/storage, peak memory, ComfyUI load, wall time and
+  exact image/decision equivalence. Prior three-versus-four-worker results
+  on this machine are not a cap for new hardware; more workers are not
+  automatically faster. FULL validation remains separately scheduled there.
+- [ ] **P3 ai** T28 Holding: after larger measured targets, profile matching/
+  refinement and propose any independent comparison/vectorization slice.
+  Resume only if it remains a major bottleneck and the user selects it.
+  Frozen references, sequential pass/core rebuilding, deterministic ties,
+  quality/rejection/protection gates and ordered publication remain intact.
+
+Order (refined at 14:41): active-run evidence -> T29 baseline -> T20 ->
+T21/T22 and gallery L18. T25 and T23/T24/T26 require the extras gate above;
+T27 belongs to new-machine
+setup, not the current install. T17 supplies missing measurements without
+requiring a new broad instrumentation project before every bounded test.
+No numerical speedup is promised. Acceptance is lower verified wall time
+with unchanged pixels, routes, manifest entries and diagnostics, not 100% CPU.
 
 **Scheduling:** T16 installed measurements and actual viewers passed.
+The historical scheduling paragraph below is superseded for the newly
+approved T20-T28 slices by the Nov 5 order above.
 Next, after storage budget review: T17 statistics before bounded I68/I69 experiments.
 T18/T19 profiles/CUSTOM and T13-T15 remain scheduled backlog, not today's
 parallel implementation list.
@@ -1107,5 +1490,91 @@ No broad plan reorganization.
 <!-- markdownlint-disable MD013 -->
 ````text
 So as we look at all the timings - there must be opportunities for looking at where we could optimize and improve further with LEAN processing vs. FULL processing policies/setup we have.  That needs some analysis and some proposals to consider and the cons to doing so.  I know some of the image was optimized, but still we were focused more on quality of the incoming image and thus had to find the person in the image - but we had considered other optimizations that would skip some of that extra work if we know that most images are not actually getting cropped or requiring erasing.  Since we're skipping denoise and tone - that should have cut things down ... but maybe thinking about other options would help as well.  The other question is are we copying files all around during the phases that we could do in a different way having a better structure and referencing files from previous stages and/or how is everything working behind the scenes.  Also, any uncessary backups, copies and such are probably something for us to look at with 3000+ files and different generated images during the process.  Wherever there are big hotspots in consuming time in the process.   LEAN was supposed to get us in better shape and it has - but it's still not truly LEAN in some cases.
+````
+<!-- markdownlint-enable MD013 -->
+
+### Nov 5 14:41 pre-new-PC scope (verbatim)
+
+Coverage: core-conditional bundle and measured stopping rule -> T29 and the
+14:41 decision above; T20-T28/L18 keep implementation ownership.
+The response tokens below identify the choices made in structured Q&A.
+
+<!-- markdownlint-disable MD013 -->
+````text
+We might as well continue with planning activities while we work and sort out just how many of these performance improvements we should make ahead of the new PC setup - since this is the best benchmark for if it benefits this machine specifically or not.
+
+core-conditional
+
+measured-threshold
+````
+<!-- markdownlint-enable MD013 -->
+
+### Nov 5 approval (chat, verbatim)
+
+Coverage: approved effort/risk/benefit order and downstream parallelism ->
+T20-T28 and gallery L18; feedback reconciliation -> priority PR1a and the
+plan index's Nov 5 source ledger. No runtime change during installation.
+
+<!-- markdownlint-disable MD013 -->
+````text
+Which of these are actually easy to implement to improve speed and performance - especially when we get to the new machine which has much more hardware capacity.  Seems like I mentioned doing this several times and we've neglected to achieve parallelism in all long running processes.  I want to know the risk associated with each one and also urgency and benefits for them due to the amount of time spent during each step.
+
+I agree with all of these.  So, while you're waiting we need to update the docs/plans and also address all items in feedback and archive them if we have them in plans or stop and ask me questions about things not already in a plan.  We can do that while we're waiting on this parallel activity - so back to planning we go.
+````
+<!-- markdownlint-enable MD013 -->
+
+### Nov 5 15:26 derivative priority confirmation (verbatim)
+
+Coverage: derivative speed, manifest/source-read attribution and bounded
+optimization remain T21 with baseline T29; no change to the running job.
+
+````text
+This derivative process is super slow - so yes, it's definitely a target
+````
+
+### Nov 5 15:59 pipeline-wide core clarification (verbatim)
+
+Coverage: repeated-work assessment/fixes across phases -> T30 with T29,
+existing phase owners and the coordinator/worker execution contract above.
+Additional worker acceleration retains the measured extras gate.
+
+<!-- markdownlint-disable MD013 -->
+````text
+It's really anyplace in the process that we're thrashing like this that should already be in that core of items to address.  These seem like easy things.  Even if it's a central thread doing the decisions and throwing items into queue for processing - it all depends on where the bottlenecks are and how threading is best achieved.  So I hope you are thinking about that while we're waiting to plan out that next phase of work in enough details we can execute and while we're waiting on this.
+````
+<!-- markdownlint-enable MD013 -->
+
+### Nov 5 16:01 use established findings (verbatim)
+
+Coverage: established-finding ledger and execution rule above; T20-T22/L18
+retain fixes, T29/T30 avoid duplicate discovery while preserving comparison
+and correctness evidence.
+
+<!-- markdownlint-disable MD013 -->
+````text
+I would think the deep code analysis you did should have uncovered the various hot-spots along with the timings work.  Is that true?  I don't want to call out things you've already analyze, but do want to use this time while waiting to formalize places we KNOW need fixing and not just time them again to know it's a problem.
+````
+<!-- markdownlint-enable MD013 -->
+
+### Nov 5 16:05 optimization philosophy and stage boundaries (verbatim)
+
+Coverage: small-gain fixes and continuous versus stop/review/resume execution
+-> T30 core contract above and the existing phase owners. No independent
+acceptance or user-approval gate is waived.
+
+<!-- markdownlint-disable MD013 -->
+````text
+I am always of the mind of optimizing even for small gains as you never know when you add more functionality to something that wasn't a problem and then it's now a problem.  So easy to fix things, even with a small margin to gain is always a key thing.  I understand we might be able to run processes in chunks and that leads to the re-reading and re-writing some same things or creating independent cache to ensure proper boundaries - but IF there are major performance issues, then that's still not a good approach when running things back-to-back without stops.  Hope that helps clarify how I think about the entire process.  It's both the ability to run pieces, do a review before applying and moving on to the next step - but a non-stop run doesn't need all those "extra" pieces when dealing with a huge image library.  So, not sure how that impacts the work we're doing - but it's an important thing to keep in mind.
+````
+<!-- markdownlint-enable MD013 -->
+
+### Nov 5 16:07 verified continuous handoffs (verbatim)
+
+Coverage: T30's handoff/check classification above, existing T20-T22/L18
+implementation and continuous versus standalone regression contracts.
+
+<!-- markdownlint-disable MD013 -->
+````text
+A correctness check is only really needed when the next step is unsure about the previous results - but if we know it's correct in the non-stop flow, then you can skip excessive re-checks, use common cache and not rebuild.  We built this all incrementally and in phases and hence the fragmented approach - which works in that model, but running it non-stop on the full rebase has show those end-to-end design flaws that came naturally in how it is built.
 ````
 <!-- markdownlint-enable MD013 -->

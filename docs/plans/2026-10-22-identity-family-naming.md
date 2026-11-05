@@ -1,8 +1,8 @@
 # 2026-10-22: identity families and safe naming
 
-**Status:** active (Nov 4 score-band family naming built; sandbox re-run and acceptance next)
+**Status:** active (Nov 5 direct/secondary thresholds approved; N16 implementation before next rebase)
 
-**Queue focus:** N15, N7
+**Queue focus:** N16, N15, N7
 
 **Broader scope:** unrelated naming corrections remain holding under the
 resume gate below.
@@ -10,6 +10,104 @@ resume gate below.
 **Resume gate:** after installed baseline and intake tuning, then explicitly
 select N12 corrections/family acceptance. Existing approved decisions and
 stable-name/protection guards remain binding; no bulk renaming during install.
+
+## Nov 5: tracing broad families before tuning
+
+The user asks to revisit family links after seeing 31 Lujan members in
+`fresh-20261104-lean2`. The 09:08 request was review-only; at 09:36 the
+user approved distinct direct/secondary thresholds below.
+Current implementation still uses the entire yellow band (0.30); surnames
+are presentation only and do not influence face matching. Each identity
+prefers a qualifying cast link, otherwise its closest qualifying peer.
+Connected peer chains inherit the cast root's surname.
+
+The 31 Lujan members are separate non-cast identities, excluding Draknara's
+root slot: 17 direct cast links and 14 peer-chain links. Saved evidence:
+
+| Member | Immediate parent | Link score |
+| --- | --- | ---: |
+| Acacia Lujan | Draknara | 0.334 |
+| Afton Lujan | Draknara | 0.362 |
+| Anya Lujan | Draknara | 0.454 |
+| Arwen Lujan | Anya Lujan | 0.316 |
+| Astrid Lujan | Draknara | 0.472 |
+| Avalon Lujan | Celine Lujan | 0.431 |
+| Bellamy Lujan | Tessa Lujan | 0.336 |
+| Brielle Lujan | Draknara | 0.496 |
+| Celine Lujan | Draknara | 0.403 |
+| Chiara Lujan | Celine Lujan | 0.341 |
+| Cleo Lujan | Astrid Lujan | 0.365 |
+| Cressida Lujan | Eloise Lujan | 0.337 |
+| Danica Lujan | Draknara | 0.387 |
+| Elara Lujan | Draknara | 0.318 |
+| Eloise Lujan | Draknara | 0.543 |
+| Enid Lujan | Draknara | 0.306 |
+| Fiorella Lujan | Serena Lujan | 0.320 |
+| Florence Lujan | Draknara | 0.309 |
+| Iliana Lujan | Astrid Lujan | 0.411 |
+| Nelle Lujan | Anya Lujan | 0.393 |
+| Neve Lujan | Draknara | 0.380 |
+| Paloma Lujan | Draknara | 0.460 |
+| Rina Lujan | Draknara | 0.348 |
+| Sabine Lujan | Draknara | 0.356 |
+| Selene Lujan | Astrid Lujan | 0.438 |
+| Serena Lujan | Draknara | 0.490 |
+| Sylvie Lujan | Rina Lujan | 0.379 |
+| Tessa Lujan | Draknara | 0.352 |
+| Vera Lujan | Paloma Lujan | 0.375 |
+| Vivienne Lujan | Selene Lujan | 0.331 |
+| Willa Lujan | Astrid Lujan | 0.391 |
+
+| Minimum on every saved path edge | Connected Lujan identities |
+| --- | ---: |
+| 0.30 | 31 |
+| 0.35 | 19 |
+| 0.40 | 10 |
+| 0.45 | 6 |
+| 0.50 | 1 |
+| 0.55 | 0 |
+
+This filters saved paths, not a replan: higher minima may select different
+peer links. It does not claim that a 0.40 full preview will contain exactly
+10 Lujans. The recap's Families section already exposes each full path.
+Scores here come from `run.json` family evidence, not visual identity labels.
+
+- [ ] **P1 ai** N16 Implement the Nov 5 09:36 approved family thresholds:
+  direct identity-to-cast links **>=0.40**, secondary identity-to-identity
+  links **>0.35** (strict). Prefer a qualifying direct cast link, otherwise
+  consider a qualifying peer; retain chains, with every secondary edge
+  qualifying and a cast-root terminal edge meeting the direct threshold.
+  Keep numeric family policy separate from unchanged score colours.
+  Test exact 0.40 acceptance, exact 0.35 refusal, just-above/below boundaries,
+  chained/disconnected components, exclusive surnames and original-name
+  history. Follow rule -> schema -> validator/tooling -> tests, then compare
+  full family previews on verified saved measurements before any install.
+  Earlier one-threshold path counts above do not predict this two-threshold
+  replan. Broader cast auto-join/workflow-selection requests
+  are owned by [cast C12/C13](2026-10-23-cast-seeded-library-rebase.md#nov-5-cast-auto-join-and-workflow-selection-review).
+  The new approval supersedes the earlier uniform-yellow rule for the next
+  implementation; the saved installed run remains unchanged.
+
+Nov 5 implementation evidence: `familyNaming` now stores
+`directCastMinimumSimilarity: 0.4` and
+`secondaryMinimumSimilarityExclusive: 0.35`, validated independently of
+`scoreBands`. `family_tree.py` prefers qualifying direct cast links and
+otherwise uses strictly qualifying secondary links; connected chains,
+exclusive surnames and previous-name evidence are retained. Saved link
+scores keep full precision so a qualifying value just above 0.35 is not
+rounded down to the rejected boundary. Score colours were not changed.
+Focused launcher-environment tests passed: 47 tests across `test_family_tree`,
+`test_family_preview` and `test_policy`, including the full policy/schema
+contract. The existing synthetic
+`test_create_plan_family_tree_renames_lookalike_and_records_family`
+integration initially passed, including recorded-name/rename-history
+preservation; a subsequent combined run encountered the parallel
+configuration-receipt change's missing mocked `paths.productionRoot`, outside
+the family-naming implementation. Python syntax checks also passed. The
+isolated validator smoke passed 19/19 checks (173 seconds), with the live
+repository read-only. N16 remains open for the saved-measurement full
+preview comparison; no real library processing, installation or commit was
+performed for this implementation.
 
 ## Nov 4: score-band family trees (decided and built)
 
@@ -153,6 +251,19 @@ Do not silently re-label the current frozen baseline or run automatic
 family reconciliation as part of this read-only audit.
 
 ## Oct 30: named and unnamed Various acceptance contract
+
+**Nov 5 feedback reconciliation:** `various_named_person.md` requests a later
+11-photo `Various/Ela Model` trial. N13 is the primary owner; N12 handles
+explicit original-name correction and merge history. Include identical bytes
+under different filenames, a coherent new core, an existing differently
+named identity, and library-wide eligible matches. Explain a conflict or
+mixed-person hold instead of forcing likeness/name changes. Supplied-name
+intent may correct an eligible non-cast identity only through the supported
+preview/correction path; family surname display does not erase original-name
+intent or authorize renaming fixed cast slots. User supplies the 11 photos
+when this trial is selected; do not add them to the active run.
+This is planned acceptance, not an already run test or an automatic
+name-overwrite promise.
 
 - [ ] **P2 either** N13 Cover `Various/<supplied person name>` as explicit
   original-name intent, distinct from unnamed `Various/gallery`. With N12,
@@ -554,5 +665,98 @@ Sorry - but Angelica has a name Angelica Vale as part of her z_ file ... so will
 
 ````text
 I almost feel like we also need a reverse naming to ensure there aren't re-used family names that don't align to the family by score.  If we did keep as the name for Angelica and brought in all related to her and pushed out all that weren't - would that be reasonable because I don't want to be confused if random names are assigned and they aren't part of the family.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 5 09:08 chat: family, cast admission and workspace reset (verbatim)
+
+Coverage: family trace/threshold -> N16 above; cast Gallery auto-accept ->
+cast C12; reset all/some workflow selections, exclude them from initial core
+evidence and reselect after routing -> cast C13. No new threshold, selection
+write, Production mutation or intake was performed during this review.
+
+<!-- markdownlint-disable MD013 -->
+````text
+I need to trace the family names and it's possible we may need to adjust the threshold to be increased as for Lujan I did not expect 31 family members.  So, maybe it isn't the entire yellow band.  I also want to review the auto-accept threshold into a sister and angel and lower that as many of them in review are that should obviously just be accepted in with high scores.  I know we have a high bar for that and just want to revisit where it is and the logic once again.  Lastly - I want the ability to reset all or some of the lower scoring workspace selected photos for sisters and angels in all places.  I feel like in one or two places that photo would fall-out with all the new logic we've added and it could also be pulling in other images that don't belong.  So, in a full rebase, I would want the selected workspace photo to be excluded from the core faces and processed like other images.  If the selected workspace photo is removed, then we'd just auto-select the highest scoring image for the angel or sister as a result.  Can you help me with these 3 things?
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 5 09:36 approvals and next-rebase feedback (verbatim)
+
+Coverage: direct >=0.40 / secondary >0.35 -> N16; Sisters admission >=0.50
+plus 0.10 rival margin and workflow exclusion/manual exception/reselection ->
+cast C12/C13; 270 higher-rival explanation and bounded follow-up -> engine
+E18; Briar Cruz/Sammara labelled discrepancy -> engine E19; moved-source
+warning -> gallery L23; next-run gates -> layout LY4; runtime estimate ->
+pinned recap's Nov 5 09:36 section. Planning only this turn; implementation
+and tested preview precede any fresh intake.
+
+<!-- markdownlint-disable MD013 -->
+````text
+I actually approve of the >=0.40 direct threshold and >0.35 secondary - based on a visual review of a sampling.  I also agree on the Cast acceptance of sisters being lowered to >=0.50 + 0.10 rival margin - I was actually thinking a bit lower based on some of the visual reviews and ones I would have to accept.  I have more trust in the process now that I did when I wanted it disabled.  Lastly - let's implement the workflow photo changes and exclude them as well.  In the future, if I protect that photo manually - not auto protection based on core, then it would be kept in the core likeness, but since we have improved the process - I think the photos actually belong to someone else and I want to let the automation decide where they should go.    Final own-versus-rival membership audit seems to tell me that we needed to do some more refinement but we stopped.  It shows "- higherRivalCount: 270" and makes me think there is more that should be moved around ... or do I not understand what that entire audit stats are telling me.   I also see what looks like a glitch in "FINAL photo-to-cast" section "moved (original path no longer exists) · [Intake comparison](../../../_sandbox-state/fresh-20261104-lean2/inputs/_reports/preparation/all/photos/b087f0b92637eb224f25dd3848afff8eb92bb564112593514b2a30a401370306.html)
+Potentials/Jade Pryce/gallery/jade_pryce_image_7514748239698013269.jpg"   Some look like we lost track of some photos in the process.  Lastly - I just noticed a bunch landed with Briar Cruz that I thought would have landed with Sammara (Adrianna Cruz) in review - they are her.  Review my new feedback items and let's plan to address all these in the next re-run of the full rebase.  Also - how much time do I expect the final end-to-end process to run again.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 5 09:40 clarification (verbatim)
+
+Coverage: mixed Briar membership and sequence-before-policy decision ->
+engine E19; refinement must use final-audit-aligned comparisons before
+independent final audit -> engine E18. No additional routing threshold or
+whole-Briar move is approved by this clarification.
+
+<!-- markdownlint-disable MD013 -->
+````text
+Not all the photos in Briar Cruz are Sammara - but many are, so one threshold must have kicked them out individually?  Instead of ending up in review for Sammara?  We can dig into that as it likely impacts some other sisters or angels - but I want to understand the sequence a bit more before making any decisions.  Secondly, if the audit catches or flags things that the refinement isn't catching - that seems like a gap as it should have caught those things prior to the audit, so we need to ensure that refinement has some more logic added that aligns to the audit to confirm things ahead of the audit.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 5 09:44 saved-input test request (verbatim)
+
+Coverage: refinement implementation -> engine E18; all post-run prerequisites
+and no re-run until later go-ahead -> layout LY4; exact retained evidence,
+safe matching-stage restart and supported-command limitations ->
+[pinned recap](../recap/2026-11-04-1130-recap.md#nov-5-0944-prepared-input-reuse-no-re-run-authorized).
+No incremental matching run or full intake was started.
+
+<!-- markdownlint-disable MD013 -->
+````text
+With the changes we are making - is it possible to use existing sandbox working and bypass the intake sequence or any other step and move forward with the other areas cleaned up from that run and apply the logic changes?  Or do we need to re-run from scratch.  I will re-run from scratch again, but looking if we can do an incremental test with updated logic and save some time.  I know LEAN doesn't alway keep everything since we skipped a lot of steps and we do remove some things.  Just want to know where we can pickup in this specific series of updates.  I do also want to make the refinement updates to it's logic.  Then see about this potential for a re-run.  As long as we've made ALL the changes we discussed after this run.  Don't start the re-run ... just tell me where we can start after this.  I'll continue to review to make sure I don't have any other last minute adjustments as well.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 3 source: various_named_person.md (verbatim; reconciled Nov 5)
+
+Coverage: the complete note below is owned by N13's named-folder acceptance
+matrix and N12's explicit name correction/history work. The proposed 11-photo
+trial is deferred until the user supplies/selects it; it does not authorize
+another intake during installation.
+
+<!-- markdownlint-disable MD013 -->
+````text
+I want to circle back on an previous topic and run a quick test of dropping in a Various/Ela Model with 11 photos that are from the same source to see how the system handles them and whether it correctly identifies and assigns them to the appropriate identity.
+
+I would expect that if these are also duplicates of existing images we'd sort that out, since some will be and my have different filenames - but are identical.
+
+I'd also expect that Ela Model would get a core from those images and it would rename an existing identity that was Ela Model and previously named something.
+
+Basically, I think the system should be setup to favor an incoming name and use it to correctly identify and assign images to the appropriate identity, even if there are existing identities with different names that might match some of the incoming images.
+
+But I honestly don't know if that's the case.  When we're ready to test this - I can drop that set of 11 photos into the system and observe how it handles them, whether it correctly identifies duplicates, and whether it properly assigns them to the appropriate identity based on the incoming name.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 5 10:32 implementation and LEAN continuation request (verbatim)
+
+Coverage: finish N16/C12/C13/E18/E19/L23 implementation and focused tests;
+saved-input continuation without backup/rollback and bounded repeated-I/O
+reductions -> layout LY15. Existing no-re-run instruction remains in force.
+No new processing-quality shortcuts, Production mutation or FULL waiver.
+The separately supplied priority feedback remains protected in place and is
+accounted for in LY15's discussion gate, not broadly executed.
+
+<!-- markdownlint-disable MD013 -->
+````text
+Let's complete all the remaining fixes and also create the path for LEAN flows to proceed the way we are attempting and accept the fact that a rollback is not present.  In fact, we could have skipped that rollback and other protective processes when running LEAN - so even with this plan, I don't expect a backup or any protective measure.  We're assuming with LEAN that if there are issues we will resort to a clean and full rebase after.  So, if there are additional places we missed in implementing the LEAN policy - we can fix those as well.  If we learned about bottlenecks in the last LEAN run where we can improve on multi-threading or caching things in memory or other performance improvements, I would want to see the easy ones taken care of before we do the re-run as well.  I know we're making many changes and there is a risk - since this is sandbox, it's fine.  I want to reduce as much unnecessary work when we use LEAN as we can.
 ````
 <!-- markdownlint-enable MD013 -->

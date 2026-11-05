@@ -26,10 +26,17 @@
       "type": "object",
       "additionalProperties": false,
       "required": ["enabled"],
-      "description": "Score-band family trees: shared surnames are presentation only, never matching evidence.",
+      "description": "Numeric family links independent of score colours: shared surnames are presentation only, never matching evidence.",
       "properties": {
         "enabled": {"type": "boolean"},
-        "linkMinimumBand": {"enum": ["green", "yellow", "orange"]},
+        "directCastMinimumSimilarity": {
+          "type": "number", "minimum": 0, "maximum": 1, "default": 0.4,
+          "description": "Inclusive minimum for a direct identity-to-Angel/Sister link."
+        },
+        "secondaryMinimumSimilarityExclusive": {
+          "type": "number", "minimum": 0, "maximum": 1, "default": 0.35,
+          "description": "Exclusive minimum for every secondary identity-to-identity link; chains are allowed."
+        },
         "castSurnameOverrides": {
           "type": "object",
           "description": "User-decided family surnames for fixed Angels/Sisters slots, keyed by slot folder.",
@@ -250,6 +257,11 @@
     "categoryPolicies": {
       "type": "object",
       "minProperties": 1,
+      "patternProperties": {
+        "^(?!Sisters$)": {
+          "properties": {"galleryAdmissionEnabled": {"const": false}}
+        }
+      },
       "propertyNames": {
         "pattern": "^[A-Za-z][A-Za-z0-9_-]*$"
       },
@@ -356,6 +368,7 @@
       ],
       "properties": {
         "photoRouteMinimum": {"$ref": "#/definitions/score"},
+        "galleryAdmissionEnabled": {"type": "boolean"},
         "unmatchedOutlierSplitEnabled": {"type": "boolean"},
         "photoRouteMargin": {"type": "number", "minimum": 0, "maximum": 2},
         "reviewAdmissionEnabled": {"type": "boolean"},
