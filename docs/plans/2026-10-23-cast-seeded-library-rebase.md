@@ -1,8 +1,15 @@
 # 2026-10-23: all-image preparation and cast-seeded rebase experiments
 
-**Status:** active (Phase 3; C6 installed and independently verified; C7 human identity/quality review remains)
+**Status:** holding (cast contracts and deferred rollout; current acceptance transferred)
 
-**Queue focus:** C12, C13, C7, C11
+## Milestone transfer record
+
+Nov 5 16:45: C12, C13 and C7 execution transfers with the same IDs to the
+[reset spine](2026-11-05-priority-reset.md#execution-spine).
+Complete source contracts, decisions, raw feedback and historical evidence
+remain below as references, not competing execution boxes. Other unfinished
+cast scenarios/Production work stay holding here; select only a bounded
+needed slice through the spine. Transfer is not delivered or human acceptance.
 
 **Scheduling:** now: human placement review of the verified installed baseline.
 Other open scenarios, C10 future duplicate selection and eventual Production/
@@ -115,7 +122,7 @@ selected photos do qualify as core members independently. Removing selection
 protection alone would not meet the request to exclude reset selections from
 initial core evidence.
 
-- [ ] **P1 ai** C13 Verify installed workflow-reset evidence and sandbox-local
+**Transferred contract: C13 -> [reset C13](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** Verify installed workflow-reset evidence and sandbox-local
   selection proposals; implementation/tests are delivered. Preserve the
   approved full-rebase workflow selection reset: all cast, selected slots, or selected photos below an
   own-core cutoff. For the next full rebase, treat current selected cast
@@ -232,7 +239,7 @@ character slots should inherit the same slot-versus-source-person distinction.
   [layout LY10](2026-11-02-library-layout.md) comparison. Gate: threshold/core-only
   decision approved Nov 3; tested E13 acquisition, exact release preview and
   source/preparation reuse verification before a new sandbox install.
-- [ ] **P1 ai** C12 Verify installed Sisters admission scenarios and receipt/
+**Transferred contract: C12 -> [reset C12](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** Verify installed Sisters admission scenarios and receipt/
   viewer evidence; implementation/tests are delivered. Approved band:
   own-cast score >=0.50 and rival margin >=0.10, with the frozen-reference,
   independent-evidence/quality/rejection gates and read-only scenario preview
@@ -813,7 +820,7 @@ implicitly selected here.
   derivative-backed viewers/index. Reconcile obsolete managed outputs safely;
   preserve unknown/edited files and exact action/rebase recovery. Verify selected
   input references; no automatic ComfyUI source retargeting.
-- [ ] **P1 you** C7 Review before/after cast seeds, hair/overlay outcomes and
+**Transferred contract: C7 -> [reset C7](2026-11-05-priority-reset.md#m2-human-acceptance), not completed.** Review before/after cast seeds, hair/overlay outcomes and
   every released cast destination; accept a configuration or request another
   isolated run. Record all image/decision counts and holds. Deliver accepted
   evidence to engine E6/E10 before incremental testing or production approval.

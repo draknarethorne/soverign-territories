@@ -2,6 +2,11 @@
 
 **Status:** holding (Oct 30 scheduling; Phases 1 to 3.1 delivered, classification remains open)
 
+**Stream placement:** M7 classification choice in the
+[execution spine](2026-11-05-priority-reset.md#execution-spine).
+Select/transfer bounded tasks, with any conditional face-pass requirement
+justified by actual evidence rather than the age of this plan.
+
 **Resume gate:** after stable prepared-library review, when element/profile
 classification is selected. Two-image face-pass work is conditional on a
 specific Prime-test need, not a prerequisite for sandbox publication.

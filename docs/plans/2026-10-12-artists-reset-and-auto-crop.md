@@ -2,6 +2,11 @@
 
 **Status:** holding (Oct 30 scheduling; delivered work retained, Artist acceptance open)
 
+**Stream placement:** separate M7 Artist scope in the
+[execution spine](2026-11-05-priority-reset.md#execution-spine).
+Select/transfer exact tasks when requested; cast acceptance cannot close
+Artist-specific review and does not authorize an Artist reset.
+
 **Resume gate:** intake I74's separate Artist scope or a concrete Artist review
 request. Crosscheck review and Artist-specific crop acceptance are not implied
 by successful general-people installation; no new reset is needed now.

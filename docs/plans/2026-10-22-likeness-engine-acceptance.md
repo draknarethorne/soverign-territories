@@ -1,8 +1,15 @@
 # 2026-10-22: likeness engine acceptance and production rebuilding
 
-**Status:** active (Nov 5 E18 implementation/tests delivered; E18/E19 saved-case and installed acceptance remain)
+**Status:** holding (engine contracts/calibration backlog; current acceptance transferred)
 
-**Queue focus:** E18, E19, E13, E14, E15, E16, E17
+## Milestone transfer record
+
+Nov 5 16:45: E18/E19 execution transfers with the same IDs to the
+[reset spine](2026-11-05-priority-reset.md#execution-spine).
+The full saved-case contracts, rules, decisions and evidence below remain
+the technical reference; no code/scenario acceptance is inferred by moving
+the checklist. Other engine/calibration/Production tasks stay holding
+until the spine selects a specific dependency or later milestone.
 
 **Broader scope:** calibration, convergence, the separate incremental batch
 and Production remain holding under the resume gate below.
@@ -83,7 +90,7 @@ Final audit uses separately rebuilt final Gallery cores, includes retained
 cast and Review, and does not run a further reassignment pass. More passes
 of exactly the same scope need not change anything.
 
-- [ ] **P1 ai** E18 Verify saved-case and installed final-audit/refinement
+**Transferred contract: E18 -> [reset E18](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** Verify saved-case and installed final-audit/refinement
   results, including C12/C13 integration; code/tests are delivered, all
   35 follow-up traces and final residual reasons still require evidence.
   Retained implementation contract:
@@ -146,7 +153,7 @@ There are different individual, group-size/classification and refinement
 gates. E19 must trace them by stable photo ID and generalize the scenario
 across cast; do not lower one global number or send the whole group to Review.
 
-- [ ] **P1 ai** E19 Trace Briar Cruz -> Sammara/Adrianna Cruz as a required
+**Transferred contract: E19 -> [reset E19](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** Trace Briar Cruz -> Sammara/Adrianna Cruz as a required
   next-run acceptance scenario. Compare representative measured/aligned
   faces, all cluster members, Sammara's frozen cores and per-photo/group
   scores; test detection/preparation, pose/core coverage and rival/margin

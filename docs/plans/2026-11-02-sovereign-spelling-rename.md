@@ -2,6 +2,11 @@
 
 **Status:** holding
 
+**Stream placement:** bounded machine-transition companion in the
+[execution spine](2026-11-05-priority-reset.md#execution-spine).
+Select/transfer the next safe migration task before execution; baseline/
+settled-run and evidence-preservation gates below remain mandatory.
+
 **Resume gate:** Nov 5 Q&A supersedes the older full-gallery-acceptance
 timing: wait until the running job is settled and its evidence recorded,
 then correct spelling before the new-machine clone. Never move a directory

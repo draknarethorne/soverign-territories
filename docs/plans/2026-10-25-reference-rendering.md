@@ -2,6 +2,12 @@
 
 **Status:** holding (Oct 30 scheduling; completed render receipts retained, downstream integration/acceptance open)
 
+**Stream placement:** R44 supports M5 routing; selected stage/pullback
+coverage supports M6; API/GUI batching remains M7 unless explicitly needed.
+Select/transfer the bounded task IDs through the
+[execution spine](2026-11-05-priority-reset.md#execution-spine), not the
+whole rendering backlog.
+
 **Resume gate:** verified rebase and prepared-input review, then source-faithful
 manual recipe controls and R44 routing before the bounded next render batch.
 No automatic queueing while baseline installation is blocked; existing outputs

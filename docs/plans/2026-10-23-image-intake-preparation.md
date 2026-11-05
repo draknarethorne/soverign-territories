@@ -1,8 +1,17 @@
 # 2026-10-23: source-preserving image intake and preparation
 
-**Status:** active (Phase 1; sandbox clean-start integration implemented; real recipe/flow acceptance and production cutover remain gated)
+**Status:** holding (intake contracts and named-case/recipe backlog; current acceptance transferred)
 
-**Queue focus:** I60
+**Resume gate:** select a demonstrated current-case blocker or a later
+recipe/UX/Artist slice through the reset spine, not a new full intake.
+
+## Milestone transfer record
+
+Nov 5 16:45: I60 execution transfers with the same ID to M2 of the
+[reset spine](2026-11-05-priority-reset.md#m2-human-acceptance).
+The complete source contract, scope/quality rules, raw requests and dated
+evidence below remain here. Other open intake tasks stay holding; neither
+transfer nor a successful artifact check is human quality acceptance.
 
 **Scheduling:** I59 installed evidence/navigation is verified; now: the current
 human-review baseline. I68-I70 are the next bounded quality round after
@@ -230,7 +239,7 @@ clusters can carry changeable family associations, never a merge based on surnam
 - [x] **P1 ai** I59 Persist the exact aligned SFace input face, content/model
   binding and score context; link it and retained intake history from each
   assigned photo in Gallery. Keep people images outside git and checks read-only.
-- [ ] **P1 ai** I60 Audit all changed full-run outputs for false positives and
+**Transferred contract: I60 -> [reset I60](2026-11-05-priority-reset.md#m2-human-acceptance), not completed.** Audit all changed full-run outputs for false positives and
   incomplete cleanup; audit identity moves and borderline Review reasons under
   rebase C8/C9. Validate artifacts, recovery and deterministic repeat behavior
   before the downstream I55 Prime sample.

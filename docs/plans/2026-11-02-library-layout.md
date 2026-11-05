@@ -1,9 +1,20 @@
 # 2026-11-02: library directory layout - separate galleries from intake/processing
 
-**Status:** active (LY1 decided Nov 2: all five recommendations accepted; LY2,
-LY3 publication/undo and LY5 implemented and tested Nov 2)
+**Status:** holding (domain contracts and deferred layout backlog; current execution transferred)
 
-**Queue focus:** LY4, LY11, LY13, LY14, LY12, LY9, LY6, LY8
+**Resume gate:** select a remaining layout task through the reset spine;
+do not reactivate this entire historical checklist.
+
+## Milestone transfer record
+
+Nov 5 16:45 authorization: LY4 and LY11 execution moves to the
+[reset spine](2026-11-05-priority-reset.md#execution-spine), same task IDs.
+The source entries below retain complete contracts, decisions, historical
+commands and evidence, not open execution checkboxes. All other unfinished
+LY tasks stay holding here, including cap, maintenance and retirement scope.
+N15 installed-family/history acceptance is merged into the spine's LY4;
+no extra reset/intake or snapshot retirement follows from that transfer.
+Earlier scheduling is dated context, overridden by the spine.
 
 ## Nov 5 16:35: one run, separate acceptance gates
 
@@ -385,7 +396,7 @@ check passed afterwards.
   to the new API; run the affected test files. Done Nov 2.
 - [ ] **P2 ai** LY3b Install moves the selected run artifacts into `_processing`
   instead of copying (decision d), keeping the run's undo/replay receipts valid.
-- [ ] **P1 ai** LY4 Complete the authorized continuation's install/check/
+**Transferred contract: LY4 -> [reset LY4](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** Complete the authorized continuation's install/check/
   viewer evidence and classify diagnostics; share it with acceptance owners.
   Do not repeat reset/intake solely to close this task. Historical scope:
   reset the sandbox from production (`sandbox-reset --full` plus
@@ -508,7 +519,7 @@ check passed afterwards.
   Drakness -> Nyxene 4. Recap/Gallery/Review pages verified in a browser (all
   images load; source links fixed). Outcome review continues in LY11; decisions
   in engine E16/E17. See the [Nov 4 recap](../recap/2026-11-04-0230-recap.md).
-- [ ] **P1 you** LY11 Review the applied sandbox galleries and the recap; record
+**Transferred contract: LY11 -> [reset LY11](2026-11-05-priority-reset.md#m2-human-acceptance), not completed.** Review the applied sandbox galleries and the recap; record
   look-alike picks and expected placements in `rebase-expectations.json`, and
   feedback on Review volume, cast joins, and the duplicate Camaris name
   (`Prospects\Camaris` versus the Angel).

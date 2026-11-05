@@ -1,8 +1,18 @@
 # 2026-10-22: gallery and Review information layout
 
-**Status:** active (Nov 3 recap feedback: scoped presentation/diagnostic work plus existing L18 speed slice)
+**Status:** holding (gallery contracts and deferred UX; current acceptance/performance transferred)
 
-**Queue focus:** L18, L21, L22, L23
+**Resume gate:** select a remaining UX task through the reset spine; no
+wholesale gallery redesign accompanies current verification.
+
+## Milestone transfer record
+
+Nov 5 16:45: L18 and L21-L23 execution transfers with the same IDs to the
+[reset spine](2026-11-05-priority-reset.md#execution-spine).
+The detailed technical contracts and source/evidence coverage below stay
+here, without competing open execution checkboxes. L22's missing interaction
+scope is retained, not declared delivered by transfer. All other open UX/
+picker/style tasks remain holding until deliberately selected.
 
 **Nov 5 parallelism approval:** performance
 [T20-T28](2026-10-28-intake-performance.md#nov-5-approved-downstream-parallelism-and-bounded-speed-work)
@@ -35,14 +45,14 @@ acceptance of final identity placements. User-reported name-flow examples are
 cases to trace against saved photo IDs; do not turn the examples into verified
 ground-truth identities.
 
-- [ ] **P1 ai** L21 Bring the recap onto existing shared HTML/CSS/navigation
+**Transferred contract: L21 -> [reset L21](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** Bring the recap onto existing shared HTML/CSS/navigation
   standards, with safe local links opening final person/gallery/Review pages
   in new tabs. Show old-identity -> final-identity photo counts, original
   members retained versus arrivals/departures, name continuity reasons and
   distinct renamed/merged/split/emptied states. Harlow Chase and Sophie Lloyd
   are required examples; naming N14 owns the continuity correction. Test
   actual generated links, count conservation, shared styles and repeatability.
-- [ ] **P2 ai** L22 Improve recap identity comparison: show each Angel/Sister's
+**Transferred contract: L22 -> [reset L22](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** Improve recap identity comparison: show each Angel/Sister's
   top ten eligible core references with kept/lost/gained/Review photos and
   person-specific filtering/deep links; evaluate a dedicated page only if
   filtered navigation cannot meet the need. In the surname table show current
@@ -51,7 +61,7 @@ ground-truth identities.
   agree/disagree choice. Distinguish recommended rename, resemblance without
   rename, and distant/unknown evidence using existing score colors and text
   labels. Naming N5/N14 owns surname rules; no UI-driven filesystem rename.
-- [ ] **P1 ai** L23 Clarify the recap's reason counts and every-photo table.
+**Transferred contract: L23 -> [reset L23](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** Clarify the recap's reason counts and every-photo table.
   Nov 5: replace misleading "moved (original path no longer exists)" in
   applied-run source cells with explicit previous-location provenance,
   verified final photo/destination and intake links. The reported Jade Pryce
@@ -626,7 +636,7 @@ or conceal pending decisions behind disabled controls.
   treatment, and delete the preview folder (about 44 MB, not manifest-owned).
   Preview copies retain historical data/scripts, including old Artist entries;
   they demonstrate presentation, not the current general-domain filter.
-- [ ] **P1 ai** L18 Finish preparation evidence-index I/O optimization:
+**Transferred contract: L18 -> [reset L18](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** Finish preparation evidence-index I/O optimization:
   operation-local retained/derivative reuse and full-scale
   row/thumbnail/browser equivalence are delivered; next bound the remaining
   repeated whole-history audits across page generation and read-only

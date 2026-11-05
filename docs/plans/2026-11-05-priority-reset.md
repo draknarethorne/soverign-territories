@@ -1,20 +1,196 @@
 # 2026-11-05: priority reset toward character art
 
-**Status:** active (planning and bounded consolidation only; no competing runtime work)
+**Status:** active (execution spine: LEAN finish line, then trusted cast and character art)
 
-**Queue focus:** PR1
+**Queue focus:** LY4
+
+## Execution spine
+
+This is the single execution owner for the transferred tasks below.
+Domain plans retain technical contracts, decisions, raw feedback and
+deferred work; their old task entries are transfer records, not another
+checklist. This replaces the earlier navigation-only consolidation.
+Read this section and the current milestone before choosing work; dated
+Q&A and inventories below are context, not competing schedules.
+
+**Current milestone: M1, finish LEAN.** Its installation is already
+authorized/running. While it runs, documentation reconciliation is the
+only mutation lane. Read the small flow receipt/log at meaningful boundaries;
+do not restart the process or infer completion from progress messages.
+The user explicitly authorizes completion monitoring at 16:45, superseding
+the earlier user-only monitoring restriction. Runtime bytes and library
+inputs remain frozen until the operation finishes and evidence is recorded.
+
+| Order | Milestone / entry | Exit condition and non-goals |
+| --- | --- | --- |
+| M1 now | Finish LEAN from the authorized saved-input continuation | LY4, N16, C12/C13, E18/E19, L21/L23, L22 review-evidence inventory and S30 evidence or explicit resolved exceptions; bounded T29/T30/T20-T22/L18 package tested/measured before performance closeout. No duplicate full intake; not exhaustive optimization or optional UI completion |
+| M2 next | Trust Sister/Angel Gallery **and Review**, after M1's correctness/viewer evidence | C7, LY11, N7 and I60 results recorded with user acceptance and explicit unresolved cases; not blanket acceptance of all Models/Various or all recipe experiments |
+| M3 | Select inputs after trusted cast | Review selections, promotions/replacements and source validity; explicitly approve changes. Production comparison PR3 follows, but cutover does not block M4-M6 |
+| M4 | Restore current manual-source fidelity using verified sandbox inputs | Manual P14-P16/P21 and PR4 reconciliation, supported clauses/exclusions and human approval; no assumption an earlier pilot was faithful |
+| M5 | Establish generic Sovereign Females after fidelity approval | Manual P17/P19/P20 scoped female pilot, routing R44, checked links/inputs and visual acceptance; preserve cast/manual/curated sets, Males/Deluxe deferred |
+| M6 | Deliver character art after pilot acceptance | Cast workflow/lower-stage outfit/weapon coverage, representative different approaches through animation/video; full-roster final videos are not the first exit gate |
+| M7 | Reassess retained backlog after useful art | Deliberately choose automation, named Various, FULL/new-PC, Artists, classification, tooling or game data; no automatic activation of every holding plan |
+
+**Companion track: spelling and machine setup.** SP1 choices are recorded;
+SP2-SP6 start only after settled processing/evidence and the same-machine
+baseline. Basic PC setup need not wait for all optimization extras.
+This track may not become a second full implementation milestone.
+Protected Production/FULL recovery remains a separate later acceptance
+scope, not a backup silently added to disposable LEAN.
+
+### M1 execution and transfer ledger
+
+Task IDs are preserved so existing references remain meaningful. The linked
+source is the detailed contract/evidence home. No transfer means completion.
+N15 is absorbed into LY4's shared installed/name/history closeout; its
+distinct N7 human review remains in M2. No source raw words are moved/deleted.
+
+| Source | Execution disposition |
+| --- | --- |
+| [Layout](2026-11-02-library-layout.md#milestone-transfer-record) | LY4 -> LY4 here; LY11 -> M2 here. All other open LY tasks remain deferred there, including caps and retirement |
+| [Naming](2026-10-22-identity-family-naming.md#milestone-transfer-record) | N16/N7 -> same IDs here; N15 -> LY4 here with Families/name-history requirements retained |
+| [Cast](2026-10-23-cast-seeded-library-rebase.md#milestone-transfer-record) | C12/C13/C7 -> same IDs here; C11 and broader rollout remain deferred there |
+| [Engine](2026-10-22-likeness-engine-acceptance.md#milestone-transfer-record) | E18/E19 -> same IDs here; remaining calibration, incremental integration and Production tasks stay deferred there |
+| [Gallery](2026-10-22-gallery-review-layout.md#milestone-transfer-record) | L21/L22/L23/L18 -> same IDs here; optional picker/redesign remains deferred there |
+| [Intake](2026-10-23-image-intake-preparation.md#milestone-transfer-record) | I60 -> same ID in M2 here; named-case/recipe/UX/Artist backlog stays deferred there |
+| [Performance](2026-10-28-intake-performance.md#milestone-transfer-record) | T29/T30/T20/T21/T22 -> same IDs here; measured extras and new-PC tuning remain conditional/deferred there |
+| [Storage](2026-10-28-storage-operations-and-retention.md#milestone-transfer-record) | S30 -> same ID here. S27 FULL/materialized recovery stays deferred there; applicable installed/viewer evidence consumes LY4, never repeats it |
+
+- [ ] **P1 ai** LY4 Record current install, installed-check and gallery-check
+  exit results plus exact run/profile/code identifiers and phase times.
+  Verify actual Gallery/Overview/Review links/images/history in a browser,
+  classify exclusions versus broken/missing derivatives, and retain required
+  Families roots, renamed histories and catalogue checks from naming N15.
+  One evidence set serves all tasks below. No automatic snapshot retirement,
+  extra reset/intake or waiver of diagnostics. Detailed retained scope:
+  [LY4 and N15](2026-11-02-library-layout.md#milestone-transfer-record).
+- [ ] **P1 ai** N16 Compare installed direct >=0.40 and strict secondary
+  >0.35 family links, chains, cast roots, exclusive surnames and original
+  history against saved evidence. Code/boundary tests are delivered; link
+  exact results and exceptions, not another threshold implementation.
+  [Full contract](2026-10-22-identity-family-naming.md#milestone-transfer-record).
+- [ ] **P1 ai** C12 Verify installed Sisters >=0.50/margin >=0.10 scenarios,
+  independent frozen-core/quality/protection gates and saved receipt/viewer
+  evidence. Angels remain Review-only.
+  [Full contract](2026-10-23-cast-seeded-library-rebase.md#milestone-transfer-record).
+- [ ] **P1 ai** C13 Verify all/scoped/low-score reset, manual versus acquired
+  protection, old/new selections and deterministic eligible replacement/
+  explicit hold. Shared Production/workspace publication needs separate
+  approval; inventory remaining repoint/reference coverage instead of
+  declaring it delivered.
+  [Full contract](2026-10-23-cast-seeded-library-rebase.md#milestone-transfer-record).
+- [ ] **P1 ai** E18 Reconcile all 35 follow-up reasons, final residual audit,
+  pass/oscillation/lock holds and C12/C13 integration against saved/installed
+  evidence. Code/tests delivered; generic matching success is insufficient.
+  [Full contract](2026-10-22-likeness-engine-acceptance.md#milestone-transfer-record).
+- [ ] **P1 ai** E19 Trace the mixed Briar/Sammara/Adrianna case by stable IDs,
+  frozen core, per-photo versus cluster scores and protection. Explain or
+  fix the justified route/hold from saved measurements; no global threshold
+  lowering, forced identity or full intake for diagnosis.
+  [Full contract](2026-10-22-likeness-engine-acceptance.md#milestone-transfer-record).
+- [ ] **P1 ai** L21 Verify actual shared recap styles/navigation, safe local
+  final-destination links, count conservation and renamed/merged/split/
+  emptied states; include Harlow Chase and Sophie Lloyd continuity.
+  [Full contract](2026-10-22-gallery-review-layout.md#milestone-transfer-record).
+- [ ] **P2 ai** L22 Check delivered top-ten core/member comparisons, filters
+  and paired surname evidence for M1/M2 usability. Inventory missing agree/
+  disagree interaction or dedicated navigation; that optional implementation
+  remains M7 work unless an exact review-blocking failure is demonstrated.
+  Keep L22 open for that remainder rather than force UI completion into the
+  LEAN finish line or claim transfer delivered it. Explicit unknown scores
+  stay unknown; no filesystem rename from UI feedback.
+  [Full contract](2026-10-22-gallery-review-layout.md#milestone-transfer-record).
+- [ ] **P1 ai** L23 Verify moved-source provenance, Jade Pryce's final bytes/
+  intake links, disjoint follow-up/hold counts, per-photo cast evidence and
+  final destinations. Trace the two reported multi-face cases with I60;
+  preserve missing/edited/unavailable states.
+  [Full contract](2026-10-22-gallery-review-layout.md#milestone-transfer-record).
+- [ ] **P1 ai** S30 Consume LY4 and cast/naming evidence to audit real
+  admissions, retention/releases/Review, original names and surname
+  presentation. Record ambiguity and protection; no second matcher, naming
+  engine, replay or fabricated same-person decision.
+  [Full contract](2026-10-28-storage-operations-and-retention.md#milestone-transfer-record).
+
+**Performance gate:** after the run settles, T29 precedes changes; T30's
+known-findings/ownership work guides T20/T21/T22/L18, without delaying a
+confirmed bounded fix for another whole audit. Reuse paired evidence; no
+full intake per task. Runtime implementation still requires the live-run
+freeze to end. Preserve exact outputs, diagnostics and error semantics.
+
+- [ ] **P1 ai** T29 Freeze same-machine representative generation/no-op,
+  warm/cache phase baselines before runtime/path changes, with input/config/
+  code/resource IDs, timings, read/byte counts and output contracts.
+  [Full benchmark contract](2026-10-28-intake-performance.md#milestone-transfer-record).
+- [ ] **P1 ai** T30 Remove established repeated work across phase and
+  standalone/continuous boundaries; publish per-hotspot ownership, cost,
+  cache dependencies/invalidation, tests and fixed/deferred/no-gain status.
+  Coordinator decisions, disjoint workers, bounded memory and explicit
+  pause/edit/failure handling are required; not a new generic framework.
+  [Full execution design](2026-10-28-intake-performance.md#milestone-transfer-record).
+- [ ] **P1 ai** T20 Reuse verified external/retained/derivative inventory
+  within valid operation scope; prove path/hash/owner/mutation guards and
+  paired call/read/byte/time change.
+  [Full contract](2026-10-28-intake-performance.md#milestone-transfer-record).
+- [ ] **P1 ai** T21 Batch derivative manifest work/source decoding and add
+  bounded verified person-folder jobs, sequential coherent manifest
+  publication and deterministic results. Prove exact serial/parallel pixels,
+  ownership, exclusions, retry/failure and resource bounds.
+  [Full contract](2026-10-28-intake-performance.md#milestone-transfer-record).
+- [ ] **P1 ai** T22 Refresh only required retained-detail content with
+  proven independent manifest/dependency owners; test links/checksums,
+  tampering, partial failure, deterministic diagnostics and paired savings.
+  [Full contract](2026-10-28-intake-performance.md#milestone-transfer-record).
+- [ ] **P1 ai** L18 Finish cross-page retained/history reuse and preflight
+  evidence indexing with complete dependency invalidation, hash/path/scope
+  guards, row/thumbnail/browser equivalence and ordered page publication.
+  [Full contract](2026-10-22-gallery-review-layout.md#milestone-transfer-record).
+
+Cheap behavior-preserving duplication fixes are core even for small gains.
+Substantial additional acceleration T23-T26 must meet the agreed remaining
+phase >=10 minutes, >=20% and >=2-minute savings gate. Any deferred core
+slice requires explicit risk/no-gain evidence and closeout disposition,
+not silent removal. Basic machine setup does not await every extra.
+
+### M2 human acceptance
+
+- [ ] **P1 you** C7 Accept Sister/Angel Gallery **and Review**, before/after
+  frozen seeds, hair/overlay results and every released-cast destination;
+  record counts, holds and configuration decision. Saved scores do not
+  establish real identity. [Contract](2026-10-23-cast-seeded-library-rebase.md#milestone-transfer-record).
+- [ ] **P1 you** LY11 Record expected placements/look-alike picks by stable
+  ID in `rebase-expectations.json`, Review/admission feedback and Camaris
+  identity collision outcome. Share C7's review, do not request it twice.
+  [Contract](2026-11-02-library-layout.md#milestone-transfer-record).
+- [ ] **P1 you** N7 Review actual family groups/exceptions/proposed names
+  alongside C7; record accepted presentation or requested tuning before
+  Production. [Contract](2026-10-22-identity-family-naming.md#milestone-transfer-record).
+- [ ] **P1 ai** I60 Audit changed outputs for false positives/incomplete
+  cleanup, borderline Review/moves, artifact/recovery and deterministic
+  behavior; link exact cases to C7 and retain wider C8/C9 scope where not
+  proven. [Contract](2026-10-23-image-intake-preparation.md#milestone-transfer-record).
+
+### Advance and closeout
+
+For each milestone, record input/run IDs, delivered versus tested versus
+runtime-verified versus human-accepted facts, exceptions/deferred owners
+and next entry conditions **here**, linking durable evidence rather than
+copying it into every plan. Change Queue focus in the same update. Future
+milestone activation transfers the selected domain task IDs here before
+execution; unselected domain boxes remain holding backlog, not active work.
+Do not interpret the milestone table as approval to execute all later work.
 
 ## Purpose and operating boundary
 
 Return from open-ended likeness iteration to trusted cast galleries and
 usable character-art workflows. This plan owns sequencing and consolidation,
 not duplicate implementation tasks. Existing domain owners retain their
-tasks until explicit transfers are recorded.
+deferred tasks and detailed contracts; selected execution tasks now have
+explicit transfers in the ledger above.
 
 The user is monitoring the visible install/check terminal, authorized at
-13:19 after the matching preview was verified. Do not monitor,
-interrupt, restart or react to that process until the user requests it.
-Read-only planning and documentation can continue; no runtime, policy,
+13:19 after the matching preview was verified. Earlier monitoring restriction is superseded by the 16:45 authorization;
+do not interrupt or restart that process.
+Planning and documentation can continue; no runtime, policy,
 prompt, workflow, library or Production mutation follows from this Q&A.
 
 **Nov 5 16:10 decision:** after considering isolated implementation, the
@@ -32,6 +208,9 @@ This does not lift the runtime freeze or authorize live rename/deployment,
 new intake, Production changes, human visual acceptance or broad archival.
 
 ## Decisions from the Nov 5 Q&A
+
+<details>
+<summary>Agreed decisions and rationale (current stream above applies their gates)</summary>
 
 | Topic | Agreed direction | Implementation owner / gate |
 | --- | --- | --- |
@@ -62,18 +241,30 @@ non-explicit alternatives. Re-review `prompts/_edit/female` from its current
 bytes; keep the separately experimental `prompts/_edit/deluxe` outside that
 scope unless explicitly selected.
 
+</details>
+
 ## Work and ownership
 
-- [ ] **P1 ai** PR1 Review current non-archive plans and active feedback;
+- [x] **P1 ai** PR1 Review current non-archive plans and active feedback;
   produce a major-theme/remaining-work map against this sequence, and
   consolidate related leftovers where their ownership and context transfer
   are explicit. Distinguish implemented, regression-tested, runtime-verified
   and human-accepted work. Preserve every unfinished task and raw source;
   archive completed or superseded records only with updated indexes/links.
   Leave running implementation bindings and library evidence unchanged.
-- [ ] **P1 you** PR2 Resolve any consolidation or sequencing decisions
+  Result: all 22 current plan scopes are mapped; 21 source IDs transfer to
+  20 executable spine tasks, with N15 merged into LY4. All 272 other source
+  open-task lines and all fenced source blocks in the 21 domain plans
+  remain intact. Eight former active domain plans are holding; all domain
+  headers identify stream placement or transfers. No complete source plan
+  can retire without disposing its independent residual scope. This is
+  documentation ownership reconciliation, not code/scenario acceptance.
+- [x] **P1 you** PR2 Resolve any consolidation or sequencing decisions
   exposed by PR1 one at a time; choose a concrete next execution slice.
   Do not convert the entire backlog into current prerequisites.
+  Result: the user approves the milestone stream at 16:45. Current slice
+  remains M1/LY4, with documentation-only iteration while the run finishes;
+  M2 human acceptance and later decisions retain their own gates.
 - [ ] **P2 either** PR3 After A and B, compare backed-up sandbox promotion
   with Production rebase, including intervening Production additions and
   decisions, path rebinding and post-publication verification. Selection of
@@ -95,12 +286,15 @@ settled processing/evidence, not by completing every later art milestone.
   planning-scope inventory, not code verification or an item-by-item task
   transfer/closure audit.
 
-The inventory contains nine active, twelve holding and one proposed plan.
+At the inventory checkpoint there were nine active, twelve holding and
+one proposed plan; the 16:45 transfer rollout replaces those counts with
+one active spine, 20 holding and one proposed.
 Open checkboxes mix implementation, scenario testing, runtime evidence,
 human decisions and historical umbrella acceptance. Do not equate that
 count with features left to build or close an umbrella from one delivered
-slice. Existing primary owners remain; this map consolidates navigation
-and sequencing, not the underlying facts or ownership.
+slice. The map below is the pre-transfer scope inventory. The execution ledger
+above now supersedes its selected-task ownership; technical facts and
+unselected residual task ownership stay in their domain references.
 
 | Track / place in the sequence | Current plan owners and remaining scope | Treatment before returning to character art |
 | --- | --- | --- |
@@ -188,9 +382,34 @@ filed, so an empty feedback inbox is not the larger planning finish line.
 | SP1, spelling | In-place repo naming and useful visible-doc correction already chosen | Assistant selects corrected local path under delegated authority; planning checkbox closes, all execution/collision/dependency gates stay open |
 | P19/P20 and R44, manual/rendering | Generic-first/on-demand direction and existing source-category output policy | Workspace scope/defaults recorded; actual inventory/mapping, fidelity, registration, sync previews and visual acceptance still open |
 
-This closes a bounded reconciliation slice, not PR1's entire backlog audit.
-No open task has been archived or marked implemented solely from this
-table. No whole plan qualifies for retirement on this evidence.
+At 16:35 this was a bounded slice, not PR1's full reconciliation.
+The later 16:45 transfer rollout closes PR1's documentation audit; no
+underlying implementation or human-acceptance task is closed by the table,
+and no whole domain plan qualifies for retirement on that evidence.
+
+## Nov 5 16:45 milestone-stream rollout
+
+- [x] **P1 ai** PR1d Replace navigation-only priority consolidation with one
+  execution spine: transfer the selected current acceptance/performance/
+  human-review task IDs, merge N15 into LY4 without losing its distinct
+  Families/history requirements, and hold domain residuals. Update working
+  instructions, current navigation, generated queue and transfer checks
+  together; preserve source contracts/raw words.
+
+This completes PR1's documentation ownership rollout, not acceptance of the
+transferred work. The current source inventory identifies every remaining
+domain as either a later stream dependency, bounded companion or M7 backlog.
+No current domain plan is archived merely because its selected tasks moved:
+all still retain independent open scope or current technical contracts.
+Before any later archival, disposition the entire remainder and preserve
+its unique context; do not make a new empty plan merely to reduce file count.
+
+The user authorizes continuous document iteration and lightweight run
+monitoring. Commit/checkpoint coherent validated increments; do not churn
+wording indefinitely or let documentation changes broaden runtime authority.
+If the run fails, preserve the error and current evidence, report it and
+scope diagnosis before changing hash-bound modules. A completion receipt
+authorizes the already-agreed viewer checks, not Production publication.
 
 ## Nov 5 feedback reconciliation and remaining gates
 
@@ -200,8 +419,9 @@ table. No whole plan qualifies for retirement on this evidence.
   Performance T20-T28 records the approved concurrency/risk/benefit work;
   no runtime changes are made during the active installation.
 
-PR1 remains open for the full non-archive plan audit and any justified
-task/context transfers. No whole plan is archived in this bounded pass:
+At the earlier feedback-filing checkpoint PR1 remained open for the full
+non-archive audit/transfers; the 16:45 rollout above completes that
+documentation work. No whole plan is archived:
 the affected owners still contain real implementation, runtime or human
 acceptance tasks. Do not transfer them merely to label a plan finished.
 The [source ledger](README.md#nov-5-active-feedback-reconciliation) records
@@ -209,7 +429,7 @@ all five filings, exact owners and remaining decisions.
 
 | Priority-source request | Coverage / disposition |
 | --- | --- |
-| Feedback cleanup; consolidate remaining plans | PR1a covers the five notes; PR1 retains full audit/transfers, PR2 selects next work |
+| Feedback cleanup; consolidate remaining plans | PR1a covers five notes; PR1/PR1d completes current-domain disposition/transfers; PR2 records approved stream and current M1 slice |
 | Correct spelling everywhere | Spelling SP1-SP7; planning choices settled by 16:35, including assistant-selected local target; actual migration/evidence handling still gated |
 | Productive current machine plus new-machine setup | Spelling SP4-SP6, performance T27; no live directory rename |
 | End-to-end LEAN, speed/storage and routine default | Layout LY4/LY15, performance T20-T28, storage; bounded finish line supersedes exhaustive optimization |
@@ -219,7 +439,7 @@ all five filings, exact owners and remaining decisions.
 | D: current Edit/Alpha fidelity | PR4 and manual P14-P16; current-source audit and supported alternatives with oversight |
 | E: generic Females; remove female series from Angel Primes | Manual P19-P20 and rendering routing; scoped future deployment, not current mutation |
 | F: full cast workflow/lower-stage coverage through video | Agreed F gate above and manual/reference-rendering/finals owners; representative cross-approach end-to-end before acceptance |
-| G: reassess wider priorities; summarize all plans | PR1 theme/transfer audit and PR2 choices; not all prerequisites to art |
+| G: reassess wider priorities; summarize all plans | Current scope/transfer audit complete; M7 deliberately selects future residual work, not all prerequisites to art |
 | FULL assessment later on new machine | New-machine setup then explicitly selected FULL regression/evidence, separate from current disposable sandbox |
 | Named Various / family-name interaction | Naming N12/N13 and the later Ela Model trial; original-name intent is not family presentation |
 | GUI staged actions / command bundle | Actions A7 and rendering R23/R8/R24; trusted local bridge versus bundle remains a later choice |
@@ -313,6 +533,19 @@ decisions above. Runtime/library/workspace mutation remains excluded.
 
 ````text
 Continue with the safe work while this process is still running.  I am switching you to autopilot mode so you can make decisions instead of asking me.  You know what I tend to decide and how we need to get this work done while waiting.
+````
+
+## Nov 5 16:43-16:45 milestone consolidation approval (verbatim)
+
+Coverage: execution spine, M1-M7 and companion gates; actual task transfers,
+working agreement and instruction/navigation updates. The current
+documentation checkpoint was committed before this rollout. Monitoring is
+newly authorized; runtime freeze, human approval and Production gates remain.
+
+````text
+One thing I was hoping to do in the plans was to consolidate plans into a stream of the priorities as well - that's been something we discussed and maybe there's a better way than just updating the top portion and the readme or status with the information.  Do you have thoughts on how we could do that to ensure that we stay focused on the reset plan we ar eworking on?
+
+I am good with that approach while we wait.  Commit the changes now and then start on that approach for the documentation and simplify our lives moving ahead and hopefully we can adjust our working agreement and documentation instructions as well.  Making it a whole sale update.  You can continue to monitor for completion of the run - but in the meantime, just keep iterating on these documents and don't stop unless I tell you to stop.
 ````
 
 ## Nov 5 14:59 larger-planning continuation (verbatim)

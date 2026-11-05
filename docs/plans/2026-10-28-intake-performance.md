@@ -1,8 +1,20 @@
 # Intake performance, the likeness face crop and generated-output storage
 
-**Status:** active (T6 recovery and T16 installed measurements verified; next-round statistics, quality and storage work remain)
+**Status:** holding (performance contracts/evidence; selected core execution transferred)
 
-**Queue focus:** T29, T30, T20, T21, T22, T17
+**Resume gate:** the reset spine selects a measured extra or new-PC tuning;
+the current core package is executed from the spine after the live-run freeze.
+
+## Milestone transfer record
+
+Nov 5 16:45: T29/T30/T20/T21/T22 execution transfers with the same IDs to the
+[reset spine](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger).
+Complete continuous/standalone, ownership/invalidation, correctness,
+resource and measurement contracts, findings, raw words and evidence stay
+below. The old entries are contract references, not competing checkboxes.
+Other open tasks stay holding, including conditional T23-T26, new-PC T27,
+matching T28 and recipe statistics/profile work. Known cheap repeated-work
+fixes remain core; transfer does not weaken the stopping or validation gates.
 
 ## Nov 5 16:05: small gains and continuous versus reviewed execution
 
@@ -204,7 +216,7 @@ explicitly deferred with risk/reason, or awaiting evidence; no blanket
 "cache added" or "parallelized" completion claim. Necessary shared helpers
 follow existing mechanisms, not a new generalized engine.
 
-- [ ] **P1 ai** T30 Audit and remove demonstrated avoidable repeated work
+**Transferred contract: T30 -> [reset T30](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** Audit and remove demonstrated avoidable repeated work
   across inventory, staging, derivatives, retained details, reports and
   checks, using T29's paired evidence and the coordinator/worker contract.
   Include affected intake/matching invariant-work observations without
@@ -267,7 +279,7 @@ is not a new prerequisite for the rename, clone or returning to character art.
 Benchmarks on the new PC form a separate baseline, not evidence that the
 software alone improved this PC.
 
-- [ ] **P1 ai** T29 After the active run settles, freeze a representative
+**Transferred contract: T29 -> [reset T29](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** After the active run settles, freeze a representative
   same-machine phase benchmark specification and capture baseline evidence
   before runtime optimizations/path migration. Cover T20-T22 and gallery
   L18, separate report history versus thumbnail cost, record generation/
@@ -315,13 +327,13 @@ machine. Subcomponents of a phase overlap; do not sum overlapping budgets.
 
 ### Approved execution slices
 
-- [ ] **P1 ai** T20 After the active run settles, isolate current-category/
+**Transferred contract: T20 -> [reset T20](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** After the active run settles, isolate current-category/
   external inventory time and repeated retained/derivative verification
   calls. Reuse verified evidence within one operation and preserve path,
   hash, owner, scope and mutation invalidation. Do not waive input or
   publication checks. Compare call/read/byte counts and elapsed time on the
   same inputs; report any unresolved bottleneck explicitly.
-- [ ] **P1 ai** T21 Implement bounded derivative workers partitioned by
+**Transferred contract: T21 -> [reset T21](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** Implement bounded derivative workers partitioned by
   verified person-folder ownership, with sequential per-folder manifest
   updates and deterministic aggregation. Refuse overlapping/shared targets;
   preserve edited/unowned assets, quality holds, pixels and manifest entries.
@@ -337,7 +349,7 @@ machine. Subcomponents of a phase overlap; do not sum overlapping budgets.
   the loop. Isolate costs before attributing the slowdown or claiming gains.
   Preserve framing exclusions and exact pixels/ownership/failure behavior.
   No runtime edits or benchmark I/O during the active installation.
-- [ ] **P1 ai** T22 Parallelize retained-detail refresh by proven independent
+**Transferred contract: T22 -> [reset T22](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** Parallelize retained-detail refresh by proven independent
   ownership units, coordinating with T21's executor/error/progress patterns
   only where genuinely shared. No cross-worker manifest/cache writes or
   hidden stale verification positives. Test exact links/content/checksums,

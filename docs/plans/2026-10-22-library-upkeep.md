@@ -2,6 +2,11 @@
 
 **Status:** holding (Oct 30 scheduling; delivered derivatives retained, broader integration acceptance open)
 
+**Stream placement:** M1/M3 may select a demonstrated derivative/input
+blocker through the [execution spine](2026-11-05-priority-reset.md#execution-spine).
+Broader upkeep/incremental integration remains deferred M7 work; do not
+start a second maintenance run merely because its helpers are in use.
+
 **Resume gate:** actual installed derivative/selected-input checks reveal a
 specific defect, or baseline acceptance permits U1/U3/U6/U7 follow-through.
 The current installation already uses these helpers; no independent upkeep

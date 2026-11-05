@@ -1,8 +1,20 @@
 # Storage operations, retention and clean sandbox
 
-**Status:** active
+**Status:** holding (storage/recovery contracts and residual backlog; current route audit transferred)
 
-**Queue focus:** S27, S30
+**Resume gate:** select a protected FULL recovery/comparison or other
+specific storage slice through the reset spine; no duplicate disposable replay.
+
+## Milestone transfer record
+
+Nov 5 16:45: S30 execution transfers with the same ID to the
+[reset spine](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger).
+Complete scope, protection, source/raw words and dated evidence remain
+below. S27's independent FULL/materialized recovery, S32 replay design and
+all other unfinished storage/configuration tasks remain holding here.
+Applicable installed route/viewer/timing evidence comes from reset LY4;
+its disposable profile cannot complete FULL recovery. No backup/pruning
+or second replay is authorized merely to close a historical umbrella task.
 
 ## Nov 5 16:35 acceptance sharing, not duplicate replay
 
@@ -370,7 +382,7 @@ authorize FAST processing or migrate existing evidence.
   explicitly approved final purge. Refuse silent permanent-delete fallback
   when the volume/API cannot recycle. No production pruning until these
   sandbox gates pass; do not delete unique legacy recovery bytes by age.
-- [ ] **P1 ai** S30 After the replay blocker is resolved, audit real
+**Transferred contract: S30 -> [reset S30](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** After the replay blocker is resolved, audit real
   Various-to-Sister/Angel admissions, cast core/workflow retention,
   eligible low-score releases/Review/reassignment, and original-name plus
   surname presentation. Cross-reference the existing cast and naming

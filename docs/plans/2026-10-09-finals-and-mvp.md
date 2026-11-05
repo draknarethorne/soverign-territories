@@ -2,6 +2,12 @@
 
 **Status:** holding (Oct 30 scheduling; agreed scope and all open decisions remain)
 
+**Stream placement:** selected current inputs support M3; representative
+finals/video acceptance supports M6. Other scope stays M7 backlog in the
+[execution spine](2026-11-05-priority-reset.md#execution-spine).
+Transfer only selected IDs before execution; old character lists are not
+automatic current input choices.
+
 **Resume gate:** after prepared-library acceptance and an explicit source/render
 priority selection. Finals, video tests, source picks and command folds do not
 block the current sandbox install. Recheck current inputs; old hero lists are

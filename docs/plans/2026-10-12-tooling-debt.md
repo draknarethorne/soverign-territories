@@ -2,6 +2,11 @@
 
 **Status:** holding (Oct 30 scheduling; independent tooling debt, current queue/lifecycle slice delivered)
 
+**Stream placement:** M7 unless a demonstrated blocker or setup requirement
+is selected/transferred through the
+[execution spine](2026-11-05-priority-reset.md#execution-spine).
+Do not reactivate all tooling debt alongside current delivery.
+
 **Resume gate:** a demonstrated blocker or an explicitly selected tooling
 slice after sandbox acceptance. Existing guardrails still apply while this
 plan is on hold; do not reopen broad CI/refactoring work merely to install.

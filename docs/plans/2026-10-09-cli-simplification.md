@@ -2,6 +2,11 @@
 
 **Status:** proposed (remaining folds/forwarders only; no additional consolidation approved)
 
+**Stream placement:** M7 proposal, not accepted runtime scope. The
+[execution spine](2026-11-05-priority-reset.md#execution-spine) must select
+and transfer a supported task before any command/default removal; this
+documentation consolidation is not approval for those changes.
+
 ## Oct 25: continued simplification interest
 
 The [gallery continuation](2026-10-22-gallery-review-layout.md#oct-25-0913-intake-integration-and-next-safe-work)

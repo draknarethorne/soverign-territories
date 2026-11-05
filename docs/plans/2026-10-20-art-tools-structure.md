@@ -2,6 +2,11 @@
 
 **Status:** holding (Oct 30 scheduling; approved behavior-preserving scope retained)
 
+**Stream placement:** M7 except a bounded extraction required by an already
+selected implementation; transfer the specific task through the
+[execution spine](2026-11-05-priority-reset.md#execution-spine).
+The documentation consolidation does not authorize runtime package moves.
+
 **Resume gate:** a bounded extraction required by an approved implementation,
 or explicit selection after library acceptance. Do not start package moves
 while verifying the frozen sandbox engine and rollback.

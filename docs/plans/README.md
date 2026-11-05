@@ -1,9 +1,67 @@
 # Plans of action
 
-One file per piece of work we agreed to act on. This is how we work day to day, so the other documents stay clean.
+One execution spine, ordered milestones, and domain references/backlog.
 Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (generated from the plans); what is decided is [../STATUS.md](../STATUS.md); how each day went is [../recap/](../recap).
 
 ## The pattern
+
+1. Start with the [reset execution spine](2026-11-05-priority-reset.md#execution-spine),
+   not the newest dated paragraph or every domain's old checklist.
+2. Work one milestone to an explicit finish line. Its **Queue focus**
+   selects the actionable slice; later milestone tasks are not current work.
+3. Keep technical rules and detailed contracts in their established homes.
+   The spine owns selected executable tasks, ordering and closeout; domain
+   plans retain deferred tasks and preserved sources, not competing queues.
+4. Transfer a task before activating it: same stable ID where possible,
+   source/destination ledger, source checkbox replaced by a transfer record,
+   complete contract/evidence link retained. Merges name every source ID.
+   Never tick transferred work as implemented.
+5. Advance by verified closeout: inputs/run IDs, test/runtime/human evidence,
+   unresolved exceptions and live owners, then next entry gate and Queue
+   focus. Reuse shared run evidence; do not re-run a pipeline per owner.
+
+## Now, next and holding
+
+| Window | Single authoritative execution home | Boundary |
+| --- | --- | --- |
+| Now | [M1 / current Queue focus](2026-11-05-priority-reset.md#execution-spine) | Current install/final checks, documentation reconciliation while it runs; runtime freeze remains |
+| Next | [M2-M6](2026-11-05-priority-reset.md#execution-spine) | Trusted cast -> selections -> source fidelity -> generic female pilot -> character art/video; advance only at entry gates |
+| Companion | Spelling/new-PC track selected in the spine | Settled processing/evidence and paired baseline before rename; no competing full milestone |
+| Holding | Remaining open domain tasks in the [inventory](#plans) | Deferred, not completed; select/transfer only needed tasks at a milestone gate |
+
+The spine is the **only active plan** in the reset stream. Domain plans use
+`holding` and explicit resume gates; a contract may be consulted without
+reactivating its backlog. There are 22 current plan files: one active,
+20 holding and one proposed. No complete source plan was archived because
+each still owns independent deferred work or preserved current contracts.
+Do not add another active plan simply because a task touches another system.
+An independent project priority needs an explicit scheduling decision.
+
+`bin\todo.cmd` remains the supported generator. Its existing active/focus
+mechanism now enforces this narrow queue without a runtime/tooling change:
+current spine tasks appear; later spine/domain tasks remain linked backlog.
+The generator's legacy fallback (all open tasks if focus is absent) remains
+supported, but **active milestone plans must declare focus**. Update it
+when tasks close; invalid IDs must fail rather than silently hide work.
+
+## Parallel analysis and small improvements
+
+The spine names any companion lane and stop condition. During the current
+installation, documentation-only consolidation and lightweight completion
+monitoring are authorized; no runtime edit, new intake, rename, workspace
+deployment or heavy competing benchmark. Afterward, select bounded
+independent analysis or one tested improvement without expanding it into
+another milestone. Parallel thought is not permission for early mutation.
+
+## Scheduling history - not current authority
+
+<details>
+<summary>Dated Nov 1-5 scheduling and earlier ownership (preserved context)</summary>
+
+The following paragraphs and tables are historical. The execution spine
+and transfer records above override their active-plan counts, queues,
+monitoring restrictions and source-owner scheduling. Preserve evidence and
+raw sources; do not execute an older command merely because it appears here.
 
 **Nov 5 16:35 safe-work result:** the
 [current-milestone reconciliation](2026-11-05-priority-reset.md#nov-5-1635-current-milestone-task-reconciliation)
@@ -194,7 +252,7 @@ S26 and composite-tooling T13 are delivered. S25 mode/default/dependency
 acceptance and S24 amplification/PRUNE remain before another full rebase.
 No frozen report or applied receipt was migrated.
 
-## Now, next and holding
+### Prior now, next and holding
 
 This supersedes Oct 29's choice to keep all independent plans active.
 The Oct 30 scheduling recorded **5 active, 14 holding and 1 proposed plans**;
@@ -250,7 +308,7 @@ deliberately. Within the same plan/priority/owner, focus-list order is retained
 (e.g. S15 before S24/S25). Priorities within later scopes remain unchanged and do not
 bypass prerequisites.
 
-## Parallel analysis and small improvements
+### Prior parallel analysis and small improvements
 
 ### Nov 1 whole-plan completion review
 
@@ -308,16 +366,41 @@ The complete fresh-v23 note is preserved with
 Archiving a captured feedback file is independent of finishing its tasks.
 Root migration/`_Intake` S17-S19 remains proposed, not installed behavior.
 
+</details>
+
+## Document roles
+
 | Kind of document | Where | Rule |
 | --- | --- | --- |
 | Raw feedback and draft thinking | `feedback/<topic>.md` (git-ignored), or directly in chat | Brain-dumps, review notes and drafts, free-form. Preserve each file until its complete text is captured word for word in the owning plan and coverage is verified. Never bulk-clear this directory |
-| A plan we agreed to act on | `docs/plans/YYYY-MM-DD-<slug>.md` (this folder, tracked) | Incorporates file or chat feedback when we agree to act on it. Your words go at the end, word for word |
+| Execution spine | [Priority reset](2026-11-05-priority-reset.md#execution-spine) | Current ordered milestone tasks, transfers, gates and closeouts; only active plan in this stream |
+| Domain reference/backlog | `docs/plans/YYYY-MM-DD-<slug>.md` (this folder, tracked) | Contracts, detailed evidence/source coverage and deferred tasks; select/transfer work before execution, preserve raw words at the end |
 | A finished plan | `docs/plans/_archive/` | `Status: done` or `dropped`, with a `Result` section; it stays as history and is ignored when reading |
 | Current state | [../STATUS.md](../STATUS.md) | Decisions and open questions only. It does not list the plans: this README does |
 | Your queue | [../todo.md](../todo.md) | Generated by `bin\todo.cmd` from active-plan Queue focus (or all open boxes when absent), sorted by priority and owner, with linked deferred/holding counts, card state and your notes. Never ticked by hand |
 | The day | `docs/recap/YYYY-MM-DD-HHMM-recap.md` | A reflection written at the end of a working day (see [../recap/README.md](../recap/README.md)) |
 
 ## How a plan moves
+
+### Milestone closeout and handoff
+
+Use one concise closeout in the execution spine:
+
+| Field | Required content |
+| --- | --- |
+| Scope | Milestone and task IDs, input/config/code/run/profile identifiers; what was intentionally not attempted |
+| Proof | Links to actual tests, final exit results, diagnostics, viewer checks and human decisions; distinguish unrun/pending evidence |
+| Exceptions | Each unresolved/deferred item, risk, owning ID and resume gate; a transfer is not acceptance |
+| Decision | Exit met, explicitly accepted scoped exception, or blocked. Never call a milestone done from a percentage or generic green test |
+| Handoff | Next milestone entry conditions, selected task transfers and updated Queue focus; companion track state |
+
+Store phase times/receipts once in their durable evidence home and reference
+them here. Update the spine's current section rather than prepend another
+competing schedule to every domain/index/status document. Keep older dated
+decisions as context; mark the superseding decision clearly. A documentation
+reorganization cannot grant runtime/publication permissions or human acceptance.
+
+### Capture, work and retire
 
 1. **Capture** raw feedback in `feedback/` or directly in chat. Read it before acting; do not treat a note as agreement to major design decisions. `tmp/` is for disposable tool output, not new user feedback. Existing raw notes there receive the same preservation guarantees.
 2. **Agree and incorporate.** Update the existing owning plan, or create `YYYY-MM-DD-<slug>.md` (the date is the day we agreed), with a `**Status:**` line (`proposed`, `active`, `holding`, `done`, `dropped`) and a row below. Preserve the original file text or relevant chat messages word for word at the end, with their source/date. Turn every request into a step, decision or explicitly recorded disposition; raw text alone is not a plan.
@@ -383,9 +466,10 @@ unowned transfers and competing active ownership, never auto-retire plans.
    explains incomplete-looking checklists without pretending they were done.
 7. **When uncertain, leave it.** Keep the source in place, record the
    uncertainty and next review step, and ask one focused question when needed.
-   Independent plans waiting for user tests remain active; record the blocker
-   rather than manufacturing work or closing them. Revisit a paused plan's
-   assumptions before resuming it.
+   Waiting for user tests does not justify a competing active queue: keep
+   its executable gate in the spine and domain residuals holding. Record
+   the blocker, not manufactured work or false completion. Revisit a
+   paused task's assumptions before selecting/transferring it.
 
 Use `done` only for delivered/accepted scope. For a plan retired because a
 replacement makes it obsolete, use `dropped (superseded; not completed)`.
@@ -410,7 +494,11 @@ target. Source notes are never deleted as a side effect of reconciliation.
 
 ## The queue: priority and owner on every open box
 
-Every open step is a checkbox that starts with a tag, `- [ ] **P1 you** T3 ...`. `bin\todo.cmd` reads the tags of the `active` plans and writes `docs/todo.md` with one queue.
+Every open executable or deferred step is a checkbox starting with a tag,
+`- [ ] **P1 you** T3 ...`. The active spine must declare Queue focus.
+`bin\todo.cmd` reads active/focused tasks and writes one queue; holding
+domain boxes remain backlog. Source transfer records are plain text with
+destination links, never duplicate open or falsely completed checkboxes.
 
 | Tag | Meaning |
 | --- | --- |
@@ -428,7 +516,7 @@ An untagged box counts as `P2 either`. A note that is not a task is a plain bull
 Before we commit and push at the end of a working day, we do these, so nothing is forgotten:
 
 1. **Feedback is accounted for.** Re-read `feedback/*.md`, relevant chat feedback and any legacy raw notes in `tmp/`. Incorporate them into owning plans with raw words preserved and coverage checked before removing any specific source. Notes awaiting decisions stay safely in place; never empty either directory just to satisfy hygiene.
-2. **Plans are current.** Every plan has a `**Status:**` line; finished plans are archived; open boxes carry a tag; the table below is right.
+2. **Plans are current.** One active spine has a current milestone/focus; domain statuses and transfer records agree; no ID has two executable owners. Finished/superseded plans archive only after complete dispositions, not a percentage-complete guess.
 3. **`bin\todo.cmd`** is run, so `docs/todo.md` shows the real queue.
 4. **STATUS.md** has the decisions of the day and no list of plans.
 5. **A recap** is written in `docs/recap/`.
@@ -436,7 +524,9 @@ Before we commit and push at the end of a working day, we do these, so nothing i
 
 ## What a plan contains
 
-- A `**Status:**` line and the date.
+- A `**Status:**` line and the date; active execution requires Queue focus.
+- A milestone's entry, ordered work, exit, exclusions, evidence/exception
+  closeout and successor gate, or a domain's holding reason/resume gate.
 - The threads or goals, in the user's words where they matter.
 - A vocabulary table if the plan introduces names.
 - Decisions (ID, question, recommendation, answer) and phased steps as tagged `- [ ]` checkboxes.
@@ -534,7 +624,7 @@ the topic counts.
 
 | Source basename / local archive topic | Primary preserved source and request coverage | Disposition / still open |
 | --- | --- | --- |
-| `priority_plans_review.md` / planning-and-recaps | [Priority reset](2026-11-05-priority-reset.md#nov-5-feedback-reconciliation-and-remaining-gates), full source and Q&A; initial requests, A-G and every later bullet mapped | Individually filed; PR1 full-plan audit/consolidation and PR2 choices remain, no whole-plan archive or runtime authorization inferred |
+| `priority_plans_review.md` / planning-and-recaps | [Priority reset](2026-11-05-priority-reset.md#nov-5-feedback-reconciliation-and-remaining-gates), full source and Q&A; initial requests, A-G and every later bullet mapped | Individually filed; PR1/PR2 documentation reconciliation/stream decision complete in 16:45 rollout. Underlying implementation/human gates remain; no whole-plan archive or new runtime authority inferred |
 | `rebase_fresh_20261102_feedback.md` / gallery-and-actions | [Gallery recap coverage](2026-10-22-gallery-review-layout.md#request-coverage); full source at plan end; L21-L24, N14, E14/E15, C11/C12 and I60 own all cases | Individually filed; implemented presentation is not linked-page/placement acceptance; diagnostics and optional filename workflow still gated |
 | `sovereign_territories_spelling.md` / planning-and-recaps | [Spelling SP1-SP7](2026-11-02-sovereign-spelling-rename.md), complete source and coverage at plan end | Individually filed; SP1 planning choices settled by 16:35, including assistant-selected local target; evidence-specific migration conflicts and three-machine execution remain |
 | `speed_and_space_optimization.md` / storage-and-configuration | [Layout LY14](2026-11-02-library-layout.md), full source at plan end; cap, original visibility, generate-on-protect, remove-on-unprotect/move, Various and timing all covered | Individually filed; cap is undecided; exact-output concurrency is separately approved in performance T20-T28 |
@@ -543,13 +633,15 @@ the topic counts.
 No unowned request was found; unresolved decisions remain explicit plan gates
 for one-at-a-time Q&A, not guessed answers. Filing removes an incorporated
 source from the inbox, not its unfinished work from the queue. PR1's broader
-plan-by-plan consolidation is not claimed complete by this feedback pass.
+plan-by-plan consolidation was not completed by feedback filing alone;
+the later [milestone rollout](2026-11-05-priority-reset.md#nov-5-1645-milestone-stream-rollout)
+records its actual task transfers, residual dispositions and checks.
 
 ## Plans
 
 | Plan | Status | What it is |
 | --- | --- | --- |
-| [2026-11-05-priority-reset.md](2026-11-05-priority-reset.md) | active | Agreed priority sequence; bounded plan/feedback consolidation with explicit task transfers; cast Gallery AND Review acceptance before selections, manual/workspace work and representative end-to-end character art |
+| [2026-11-05-priority-reset.md](2026-11-05-priority-reset.md) | active | Sole execution spine: M1 LEAN finish line, M2 trusted cast, M3 selections, M4 fidelity, M5 generic workspace, M6 art/video, M7 deliberate backlog selection; explicit source transfers and bounded companion setup |
 | [2026-10-09-finals-and-mvp.md](2026-10-09-finals-and-mvp.md) | holding | Resume selected-source/finals/video tests after prepared-library acceptance; no current-input reset |
 | [2026-10-09-cli-simplification.md](2026-10-09-cli-simplification.md) | proposed | Historical inventory supporting only the remaining command folds/forwarders (finals 6.3b/6.5); no new consolidation approved |
 | [2026-10-11-tidy-junk-organise.md](2026-10-11-tidy-junk-organise.md) | holding | Resume selected element/profile classification after prepared-library review; face-pass experiment conditional |
@@ -557,20 +649,20 @@ plan-by-plan consolidation is not claimed complete by this feedback pass.
 | [2026-10-12-roadmap-and-mvp-data.md](2026-10-12-roadmap-and-mvp-data.md) | holding | Explicitly select the independent Darkness/Light data or game-design track after this milestone |
 | [2026-10-12-tooling-debt.md](2026-10-12-tooling-debt.md) | holding | Resume selected tooling slice or demonstrated blocker; day-close automation/non-art audit remain separate |
 | [2026-10-20-art-tools-structure.md](2026-10-20-art-tools-structure.md) | holding | Resume bounded extraction needed by approved implementation; preserve current engine bindings |
-| [2026-10-22-gallery-review-layout.md](2026-10-22-gallery-review-layout.md) | active | Nov 3 selects recap L21-L23 plus existing L18; actual source-rehearsal viewer acceptance remains open, not a broad redesign |
-| [2026-10-22-likeness-engine-acceptance.md](2026-10-22-likeness-engine-acceptance.md) | active | Narrow E13/E14/E15 prerequisites (protection, audit, bounded in-place refinement) to the single layout LY10 milestone; calibration, broader convergence, separate incremental batch and Production stay holding |
-| [2026-10-22-identity-family-naming.md](2026-10-22-identity-family-naming.md) | active | N16 threshold code/tests delivered; current saved preview verified. N15/N16 consume LY4 final installed/history evidence, N7 human review remains; no duplicate intake |
+| [2026-10-22-gallery-review-layout.md](2026-10-22-gallery-review-layout.md) | holding | L18/L21-L23 execution transferred to spine; detailed contracts/evidence and residual UX/picker work retained |
+| [2026-10-22-likeness-engine-acceptance.md](2026-10-22-likeness-engine-acceptance.md) | holding | E18/E19 execution transferred; calibration, remaining engine/incremental and protected Production gates deferred |
+| [2026-10-22-identity-family-naming.md](2026-10-22-identity-family-naming.md) | holding | N16/N7 transferred; N15 merged into spine LY4 with Families/history acceptance; naming correction/provenance backlog retained |
 | [2026-10-22-review-actions.md](2026-10-22-review-actions.md) | holding | Resume deliberate action UAT on installed baseline, or narrow verified recovery blocker; pending actions untouched |
 | [2026-10-22-face-analysis-evaluation.md](2026-10-22-face-analysis-evaluation.md) | holding | Labelled ambiguity after installed review, or actual blocking alignment defect; no speculative model dependency |
 | [2026-10-22-manual-prompts-to-art-library.md](2026-10-22-manual-prompts-to-art-library.md) | holding | Prepared-input review and explicit selection before P14-P17 fidelity/token/set work; manual drafts preserved |
 | [2026-10-22-library-upkeep.md](2026-10-22-library-upkeep.md) | holding | Actual derivative/input defect or accepted baseline before U1/U3/U6/U7 follow-through; no independent maintenance now |
-| [2026-10-23-image-intake-preparation.md](2026-10-23-image-intake-preparation.md) | active | Phase 1: I59 actual installed face/history acceptance passed; I60 current quality review remains open. Expanded feedback is fully mapped F01-F31; I68-I70 own next-round cases/masking/enhancement and I71-I76 own UX/scope/naming/Junk follow-ups |
-| [2026-10-23-cast-seeded-library-rebase.md](2026-10-23-cast-seeded-library-rebase.md) | active | Phase 3: C6 installed/recovery/viewer gates passed; C7 human identity/quality review remains, with 99 Review holds. Family/name/Production gates remain separate |
+| [2026-10-23-image-intake-preparation.md](2026-10-23-image-intake-preparation.md) | holding | I60 transferred to spine M2; F01-F31/named-case/recipe/UX/Artist scope stays deferred, not completed |
+| [2026-10-23-cast-seeded-library-rebase.md](2026-10-23-cast-seeded-library-rebase.md) | holding | C12/C13/C7 execution transferred; technical contracts, broader scenarios and Production acceptance retained |
 | [2026-10-25-reference-rendering.md](2026-10-25-reference-rendering.md) | holding | Verified rebase/prepared inputs plus manual fidelity and R44 routing before bounded Prime batch; no queue during install block |
-| [2026-10-28-intake-performance.md](2026-10-28-intake-performance.md) | active | Nov 5 T20-T28 owns approved inventory reuse, bounded downstream workers and new-machine tuning with effort/risk/timing gates; no runtime edit during installation. T17 measurements and T18/T19 profiles remain distinct |
-| [2026-11-02-library-layout.md](2026-11-02-library-layout.md) | active | `_processing` separation (LY1 decided); LY15 continuation/preflight and visible task delivered; saved preview verified, install/final checks authorized and in progress, actual LY4/LY11 acceptance still open |
+| [2026-10-28-intake-performance.md](2026-10-28-intake-performance.md) | holding | T29/T30/T20-T22 execution transferred; full benchmark/continuous-run contracts retained; measured extras, statistics/profiles and new-PC tuning deferred |
+| [2026-11-02-library-layout.md](2026-11-02-library-layout.md) | holding | LY4/LY11 transferred to spine; source contracts, installed evidence, cap/maintenance/layout/retirement backlog retained |
 | [2026-11-02-sovereign-spelling-rename.md](2026-11-02-sovereign-spelling-rename.md) | holding | SP1 planning choices settled, including corrected local target and useful historical prose; migration/dependency previews and three-machine execution wait for settled processing/evidence |
-| [2026-10-28-storage-operations-and-retention.md](2026-10-28-storage-operations-and-retention.md) | active | S26, mixed history trials and S28 backup/archive recovery delivered; fresh v23 LEAN evidence default. S27 complete replay is current. Smaller hot backups measured slower and rejected for replay; old backups with unique bytes held. S25 broader quality/production and S24 generic PRUNE remain gated |
+| [2026-10-28-storage-operations-and-retention.md](2026-10-28-storage-operations-and-retention.md) | holding | S30 transferred; LY4 supplies shared applicable evidence. S27 FULL/materialized recovery and remaining retention/configuration/replay scope deferred, not a disposable LEAN blocker |
 
 The Oct 22 retained plans have review/questions blocks; affected owners now
 also record the Oct 23 foundation-first scheduling pivot. The

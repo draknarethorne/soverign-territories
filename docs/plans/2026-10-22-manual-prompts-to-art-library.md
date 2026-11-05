@@ -2,6 +2,11 @@
 
 **Status:** holding (Oct 30 scheduling; tested slices retained, migration/visual acceptance unfinished)
 
+**Stream placement:** M4 source fidelity -> M5 generic workspace -> M6 cast
+art in the [execution spine](2026-11-05-priority-reset.md#execution-spine).
+Select/transfer only that milestone's tasks before execution; the remaining
+boxes here are deferred contracts/backlog, not another active work queue.
+
 **Resume gate:** verified prepared-library inputs and explicit selection of
 source-faithful `0_Edit`/`1_Prime` work with rendering R44. P14-P17 fidelity,
 token reconciliation and set relocation remain prerequisites for that work,

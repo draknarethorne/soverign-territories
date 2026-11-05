@@ -1,8 +1,16 @@
 # 2026-10-22: identity families and safe naming
 
-**Status:** active (Nov 5 threshold implementation tested and saved continuation preview verified; installed scenario and human family acceptance remain)
+**Status:** holding (naming contracts and deferred backlog; current acceptance transferred)
 
-**Queue focus:** N16, N15, N7
+## Milestone transfer record
+
+Nov 5 16:45: N16 and N7 execution moves with the same IDs to the
+[reset spine](2026-11-05-priority-reset.md#execution-spine).
+N15's installed, Families/history and catalogue acceptance merges into
+reset LY4; its separate N7 human gate remains. The source contracts,
+decisions, raw words and dated evidence stay below; transfers are not
+completion and never authorize another intake.
+Other open naming tasks remain holding until selected by a later milestone.
 
 **Broader scope:** unrelated naming corrections remain holding under the
 resume gate below.
@@ -72,7 +80,7 @@ peer links. It does not claim that a 0.40 full preview will contain exactly
 10 Lujans. The recap's Families section already exposes each full path.
 Scores here come from `run.json` family evidence, not visual identity labels.
 
-- [ ] **P1 ai** N16 Verify installed family-threshold results and complete
+**Transferred contract: N16 -> [reset N16](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** Verify installed family-threshold results and complete
   saved-case comparison; implementation is delivered and tested. Contract:
   direct identity-to-cast links **>=0.40**, secondary identity-to-identity
   links **>0.35** (strict). Prefer a qualifying direct cast link, otherwise
@@ -145,7 +153,7 @@ evidence, so the re-run reuses the verified intake and measurements. The
 cast person's `z_` file stays as provenance; the catalogue carries the current
 family name. Families are presentation only, never matching evidence.
 
-- [ ] **P1 ai** N15 Complete installed/gallery/browser acceptance using shared
+**Transferred contract: N15 -> [reset LY4](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), merged not completed.** Complete installed/gallery/browser acceptance using shared
   LY4 continuation evidence, not another fresh intake. Historical run scope:
   re-run as a fresh LEAN sandbox run from Production
   (`bin\rebase-flow.cmd --root W --run fresh-20261104-lean --apply`, layout
@@ -171,7 +179,7 @@ family name. Families are presentation only, never matching evidence.
   diagnostics, not name collisions. Keep N15 open alongside LY4 until that
   acceptance is resolved; N7 remains separate human review. See the pinned
   recap's FINAL VERIFIED BASELINE; no new intake is needed.
-- [ ] **P1 you** N7 Review actual sandbox family groups, exceptions and
+**Transferred contract: N7 -> [reset N7](2026-11-05-priority-reset.md#m2-human-acceptance), not completed.** Review actual sandbox family groups, exceptions and
   proposed names in the N15 recap; accept or tune the band before Production.
 
 ## Nov 3: name continuity and character-slot boundaries

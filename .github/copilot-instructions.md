@@ -8,8 +8,8 @@ territory maps, AFK economy and backend (Nakama) are later-phase vision, not cur
 
 - [docs/STATUS.md](../docs/STATUS.md) - current state, decisions, open questions, next work. Read before design or data work.
 - [docs/README.md](../docs/README.md) - which document owns which topic.
-- [docs/plans/README.md](../docs/plans/README.md) - canonical planning process, now/next/holding order and per-scope owners. Read affected plans and their gates; holding is not completion.
-- [docs/todo.md](../docs/todo.md) - generated execution window from active plans' `Queue focus` (all open tasks if absent), with linked deferred work. Check it before suggesting "what next"; never edit generated tasks by hand.
+- [docs/plans/README.md](../docs/plans/README.md) - canonical milestone planning agreement and domain inventory. Follow its linked execution spine before domain history; read affected contracts and gates.
+- [docs/todo.md](../docs/todo.md) - generated current milestone window from the spine's `Queue focus`, with linked deferred work. Check it before suggesting "what next"; never edit generated tasks by hand.
 - [docs/recap/README.md](../docs/recap/README.md) - pinned current resume and feedback handoffs, not simply the newest dated reflection.
 - [docs/archive-guide.md](../docs/archive-guide.md) - physical topic/status/month filing and matching indexes; archive does not mean implemented or disposable.
 - [docs/QUALITY-GATES.md](../docs/QUALITY-GATES.md) - routine versus explicit targeted/deep validation; use supported launchers.
@@ -69,21 +69,23 @@ If a number or rule here disagrees with those docs, the docs win.
   scoped archive maintenance. Navigation indexes may link to history as history, never current authority.
   Folders like `data/art/_templates`, `_sets`, `_schema` are active, not archives.
 - Do not make major design decisions without user approval, and do not commit code that fails the validators.
-- **Plans:** accept raw notes in `feedback/<topic>.md` (git-ignored) or directly in chat. When agreed, incorporate them into the owning existing plan or `docs/plans/YYYY-MM-DD-<slug>.md`
-  with a `**Status:**` line and a row in the table of `docs/plans/README.md` (STATUS.md does not list plans), ask open decisions one at a
-  time, and keep the user's own words at the end of the plan, word for word. Every open step is a checkbox with a tag,
-  `- [ ] **P1 you** T3 ...` (priority P1 to P3; owner `you` = needs the user's hands or decision, `ai`, or `either`): `bin\todo.cmd`
-  turns the tags into `docs/todo.md`. Use `holding` with a reason/resume gate for deferred scope, and `Queue focus`
-  for an active plan's current open task IDs; update focus when tasks close. A finished plan gets `**Status:** done`
-  and a `Result`, and is `git mv`ed into its archive group with no open boxes left. Superseded plans use `dropped`
-  and explicit task/context transfers, not completion claims. Preserve raw feedback word for word at the end of its
-  primary plan, including relevant chat messages, and record coverage of every request. Re-read each source immediately
-  before individually filing it into the feedback archive topic folder, after preservation/coverage verification.
-  Never bulk-clear `feedback/`; legacy raw notes in `tmp/` have the same protection.
-- **Execution lanes:** keep one primary milestone; bounded independent read-only analysis and one tested quality
-  improvement may accompany it under the plan index's gates. Analysis does not authorize early mutation, a new full
-  intake, threshold/recipe changes or heavy competing I/O. Reuse shared run evidence across acceptance owners,
-  rather than rerunning the same operation for each plan. Merge/split only with explicit ownership transfers.
+- **Plans:** follow [the milestone agreement](../docs/plans/README.md#the-pattern):
+  one active execution spine, ordered entry/exit gates and explicit `Queue focus`.
+  Domain contracts/backlogs stay `holding`; consulting them does not activate their tasks.
+  Transfer selected executable tasks into the spine before work, preserving IDs,
+  complete contracts, decisions, dependencies and raw sources; replace source checkboxes
+  with destination records, never tick a transfer as implemented. Advance through an
+  evidence/exception closeout and update focus, not by stacking new scheduling paragraphs.
+  Every open step has a priority/owner tag (`- [ ] **P1 you** T3 ...`); regenerate
+  `bin\todo.cmd`. Keep technical rules in their canonical homes and dated evidence in recaps.
+  Accept feedback in `feedback/<topic>.md` or chat; preserve exact words and coverage
+  in one primary plan before individually filing verified originals by topic.
+  Never bulk-clear `feedback/` or legacy raw notes in `tmp/`. Archive only wholly
+  completed/superseded plans after explicit residual-task dispositions and link/index repair.
+- **Execution lanes:** the spine selects one primary milestone and any bounded companion
+  lane/stop condition. Analysis is not permission for runtime mutation, new intake,
+  policy changes or competing heavy I/O. Reuse one run's evidence across acceptance
+  tasks; merge/split only with explicit source/destination ownership records.
 - **Specialized agents:** follow the [shared agent contract](agents/AGENT-SELECTION-GUIDE.md#shared-working-contract).
   Verify actual project/tool/model availability before use; a role cannot authorize future-phase Unity/Nakama work,
   change the source of truth, silently substitute a model, or bypass validation/publication approval.

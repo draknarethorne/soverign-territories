@@ -2,6 +2,11 @@
 
 **Status:** holding (Oct 30 scheduling; independent game-data track, not completed)
 
+**Stream placement:** independent M7 priority choice in the
+[execution spine](2026-11-05-priority-reset.md#execution-spine).
+Retain all data/design questions here; select/transfer only explicitly
+chosen tasks, never treat game-data cleanup as a library/art entry gate.
+
 **Resume gate:** explicit selection of the Darkness/Light data or game-design
 track after the current library milestone. Data debt and unanswered design
 questions remain valid; they are not image-install prerequisites.

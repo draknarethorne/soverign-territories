@@ -2,6 +2,12 @@
 
 **Status:** holding (Oct 30 scheduling; tested transactions retained, broader scenario acceptance open)
 
+**Stream placement:** only actions needed for M3 accepted selections may be
+selected/transferred through the
+[execution spine](2026-11-05-priority-reset.md#execution-spine).
+General UAT/GUI bridge automation remains M7; a planning transfer does not
+apply pending actions or settle recovery.
+
 **Resume gate:** installed baseline ready for deliberate action UAT, or a
 verified recovery blocker requiring a bounded slice. Do not apply pending
 actions, settle undo or prune snapshots as part of scheduling cleanup.

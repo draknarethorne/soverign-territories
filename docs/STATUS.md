@@ -4,6 +4,28 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+## Current checkpoint
+
+The [execution spine](plans/2026-11-05-priority-reset.md#execution-spine)
+now owns the ordered LEAN -> trusted cast -> selections -> source fidelity
+-> generic Females -> character art milestones. Selected task IDs have
+actual source/destination transfer records; domain plans retain technical
+contracts and deferred work, not parallel active queues. One plan is active,
+20 holding, one proposed. Working instructions and generated queue follow
+that agreement; no whole plan is falsely completed or archived.
+
+The prior safe-planning changes are committed as `e8b1467a0`.
+Completion monitoring is now authorized; the 16:45 flow receipt still
+reports install running, final checks pending. Runtime/library bytes,
+paths and installed workspaces remain untouched by this consolidation.
+Current run identity/evidence remains in the pinned recap. The later local
+path is selected, not moved; Production/FULL gates remain protective.
+
+## Dated decision record
+
+Earlier state/owner/monitoring wording below is dated evidence, superseded
+where noted by the current checkpoint and spine transfers.
+
 **Nov 5 16:35 autonomous safe-work decisions:** current acceptance tasks now
 name remaining evidence instead of asking to rebuild delivered code or
 repeat intake. LY4 produces shared final-run evidence; naming/cast/engine/
@@ -52,7 +74,8 @@ history is acceptable. Archive location alone is not an exemption.
 [Spelling SP1b/SP2](plans/2026-11-02-sovereign-spelling-rename.md#nov-5-clarification-correct-the-visible-project-not-git-history)
 now owns this scope, with explicit handling of preserved raw quotations,
 path/hash-bound evidence and any verified obsolete-document retirement.
-Local target path remains undecided. No spelling migration has run.
+At that checkpoint the local target was undecided; the 16:35 delegated
+choice above settles it. No spelling migration has run.
 
 **Nov 5 14:41 pre-new-PC scope:** user chooses the core-conditional bundle
 and measured stopping rule. Capture this PC's paired baseline before runtime
