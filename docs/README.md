@@ -20,6 +20,11 @@ For historical material, use the [archive guide](archive-guide.md): it
 separates project/design records, art reports, superseded plans, recaps and
 incorporated feedback. Archives are history, not another active queue.
 
+The [Nov 5 Copilot collaboration review](audits/2026-11-05-copilot-efficiency/README.md)
+records measured session/tool/context overhead, billing limitations and
+proposed skills/launcher/handoff improvements. It is an assessment, not
+another working agreement or permission to change models/tools.
+
 ## Read in this order
 
 1. [Game Bible](game-bible.md) — player promise, principles, and phased vision.

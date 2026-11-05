@@ -20,6 +20,12 @@ do not restart the process or infer completion from progress messages.
 The user explicitly authorizes completion monitoring at 16:45, superseding
 the earlier user-only monitoring restriction. Runtime bytes and library
 inputs remain frozen until the operation finishes and evidence is recorded.
+**17:06 unattended authorization:** push the verified documentation, monitor
+final checks, inspect results and react to failures with focused tested
+fixes/restarts. Diagnose after preserving the error/receipts; do not edit
+modules while their process is still running. Respect implementation-hash
+bindings: no receipt editing to disguise a changed engine, and no new intake/
+Production/shared-workspace publication implied by restart permission.
 
 | Order | Milestone / entry | Exit condition and non-goals |
 | --- | --- | --- |
@@ -37,6 +43,20 @@ baseline. Basic PC setup need not wait for all optimization extras.
 This track may not become a second full implementation milestone.
 Protected Production/FULL recovery remains a separate later acceptance
 scope, not a backup silently added to disposable LEAN.
+
+**Temporary read-only companion, Nov 5 17:11:** the user requests a
+Copilot collaboration/cost assessment while waiting. PR5 owns the report
+series; no new model, instruction, skill or runtime rollout follows from
+the analysis. Final-run monitoring/acceptance stays primary.
+
+- [x] **P2 ai** PR5 Produce the requested
+  [Copilot efficiency assessment](../audits/2026-11-05-copilot-efficiency/README.md):
+  evidence/limits, current practices and lessons, skills-versus-instructions,
+  launchers, sessions/context, tool usage, Q&A and safe unattended execution.
+  Use current-session telemetry; comparable recent repository evidence was
+  unavailable. Separate actual billed cost from token/context proxies.
+  Preserve the exact source below and map every request. Report/proposal
+  only; implementation recommendations remain deferred tooling D23.
 
 ### M1 execution and transfer ledger
 
@@ -170,6 +190,21 @@ not silent removal. Basic machine setup does not await every extra.
   proven. [Contract](2026-10-23-image-intake-preparation.md#milestone-transfer-record).
 
 ### Advance and closeout
+
+**Saved-result inspection, Nov 5 after push (final checks pending):**
+
+| Requirement | Observed saved-plan evidence | Remaining acceptance |
+| --- | --- | --- |
+| Sisters admission | 78 `admit` rows, all Sisters, usable quality, no stale/rejection flag; min score 0.5104872295 and min rival margin 0.1059712526 | Current installed checks and viewer results; human identity approval remains M2 |
+| Family edges | All 342 recorded path edges satisfy cast >=0.40 / peer >0.35. Required roots: Angelica Vale, Ravaelle Montgomery, Draknara Lujan, Drakniss Savannah | Installed catalogue/history/presentation; these surnames do not establish identity |
+| Workflow reset | 21 reset decisions, deterministic eligible final-Gallery replacements, shared publication unauthorized | Installed receipt/links; do not apply the proposed replacements to shared workspaces |
+| Earlier 35 follow-ups | All stable IDs present: 23 changed destination, 12 same; every row has explicit final hold/no-higher-rival reason | Audit integration/actual report checks; changed path may reflect names, not an identity correction |
+| Current residuals | 29 follow-up candidates: 15 insufficient margin, 12 draft-policy visual review, two cast admission gate holds; zero post-continuity pending | Do not call `stable` global convergence; M2 retains review |
+| Briar cohort | All prior 93 photo IDs remain together in current 96-photo `Models/Noelle Cruz`; 70 protected/anchor/workflow holds, 16 no higher rival, four insufficient margin, three unusable single-face measurements | Evidence explains route/protection, not visual same-person acceptance or reason to force-merge Sammara |
+
+These are saved numerical/routing checks during ongoing report publication,
+not final LY4 closure. No final browser/report result or newly installed
+independent verification is inferred from reading an applied run receipt.
 
 For each milestone, record input/run IDs, delivered versus tested versus
 runtime-verified versus human-accepted facts, exceptions/deferred owners
@@ -546,6 +581,43 @@ newly authorized; runtime freeze, human approval and Production gates remain.
 One thing I was hoping to do in the plans was to consolidate plans into a stream of the priorities as well - that's been something we discussed and maybe there's a better way than just updating the top portion and the readme or status with the information.  Do you have thoughts on how we could do that to ensure that we stay focused on the reset plan we ar eworking on?
 
 I am good with that approach while we wait.  Commit the changes now and then start on that approach for the documentation and simplify our lives moving ahead and hopefully we can adjust our working agreement and documentation instructions as well.  Making it a whole sale update.  You can continue to monitor for completion of the run - but in the meantime, just keep iterating on these documents and don't stop unless I tell you to stop.
+````
+
+## Nov 5 17:06 unattended run authorization (verbatim)
+
+Coverage: pushed checkpoint, monitored current flow, focused failure diagnosis/
+tested fix and supported restart permission, final numeric/viewer inspection.
+Production/publication and human visual identity acceptance remain gated.
+
+````text
+Go ahead and push and then you can monitor the results of the run and verify or check for errors.  I have to step away, but you can react to any issues in the run and if there are things to do - go ahead fix them and restart.  You can do an inspection of the final results to see if it aligns with some of our thinking about the changes we've made and meets your expectations.  I'll be back in a few hours - so keep making progress while I am gone.
+````
+
+## Nov 5 Copilot efficiency feedback
+
+Primary source: `feedback/copilot_usage_analysis.md`, read Nov 5 17:11.
+Clarifying questions could not obtain a response before departure;
+conservative defaults are explicitly recorded in the report, not invented
+user approval. The source remains in place pending the user's report review.
+
+| Request | Coverage |
+| --- | --- |
+| Usage/token/credit utilization; lower costs without quality loss | Report evidence and billing limits; quality-adjusted comparison proposal |
+| Current practices; working agreements that do/do not work | Practices/lessons, observed friction and retained safeguards |
+| Skills instead of broad Copilot instructions | Mechanism decision table and candidate skills, no silent activation |
+| Session/context management | Compaction/cache/read evidence, milestone-sized handoff strategy |
+| Series of Markdown documents | Linked report index, evidence, practices, prioritized proposal under docs/audits |
+| More `.cmd` files / on-the-fly commands | Reuse existing 78 launchers, D4 ownership and bounded proposed usage checker |
+| Smaller files/interactions and tools not being used | Measured sizes, targeted reads, tool catalogue/semantic/browser/history constraints |
+| Hours without intervention plus Q&A | Explicit unattended objective/authority/monitoring/recovery/retry/exit contract |
+| Adapt with new plans | Spine selects implementation only after deliberate review; tooling D23 holds recommendations |
+
+````text
+I'd like to take a few minutes to analyze Copilot usage and its impact on our token/credit utilization, how we work together, where we could create agent skills instead of copilot instructions.  How our working agreements do or don't always work right.  How we manage our sessions and context.  Basically I want an indepth summary of our current practices and potential areas for improvement.  Basically a series of .md files written up in docs (somewhere that makes sense) that explain the summary, details and lessons learned.  If we can build more .cmd files, simplify size of files, how we manage out interactions, how you can run for hours without human intervention, but we do go through Q&A where needed.  Bascailly, I want to figure out how to lower my costs without sacrificing my productivity or the quality of our collaboration.
+
+Does that make sense?  I know you generate a lot of on-the-fly commands so maybe we reduce work there.  I know that we also have tools enable that maybe we're not using.  Basically, the reflection of this session and how our interactions, tools, and processes impact our efficiency and costs.
+
+Then we can adapt as we move forward with the new plans.
 ````
 
 ## Nov 5 14:59 larger-planning continuation (verbatim)

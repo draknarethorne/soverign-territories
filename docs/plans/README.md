@@ -53,6 +53,12 @@ deployment or heavy competing benchmark. Afterward, select bounded
 independent analysis or one tested improvement without expanding it into
 another milestone. Parallel thought is not permission for early mutation.
 
+Nov 5 user-selected temporary companion: PR5's
+[Copilot efficiency assessment](../audits/2026-11-05-copilot-efficiency/README.md),
+read-only telemetry/documentation while waiting. Tooling D23 holds proposed
+implementation; no instruction/skill/model/tooling change is implied by
+the report. Run acceptance keeps priority.
+
 ## Scheduling history - not current authority
 
 <details>

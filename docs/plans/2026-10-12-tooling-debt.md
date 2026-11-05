@@ -37,6 +37,15 @@ Found while building and running the artists reset, the crop and the routine, wr
 
 ## Steps
 
+- [ ] **P2 either** D23 Review/select bounded implementation from the
+  [Copilot efficiency proposal](../audits/2026-11-05-copilot-efficiency/proposal.md).
+  Reuse D4's mechanical guard owner, package on-demand handoff/feedback/
+  run-acceptance procedures, and measure equal-quality model/tool/context
+  overhead. Keep instruction/tool/model changes separate from report approval;
+  no automatic new agents, pricing claims, log deletion or runtime rollout.
+  Select/transfer one accepted slice through the reset spine, not a second
+  active milestone. PR5 in the spine preserves raw feedback and coverage.
+
 - [x] **P2 ai** D22 Before the next specialized-agent use, reconcile the seven
   repository agent files against current scope and canonical rules: replace
   game-bible-first authority, automatic-publication recipes, assumed existing
