@@ -457,6 +457,16 @@ All 399 likeness-library and 67 viewer/maintenance tests pass.
 Supported launcher preview/help, generated todo and routine hygiene/data
 checks pass. No subject-detection or crop/erase quality guard was removed.
 
+- [x] **P1 ai** LY14f Resolve the fresh reset's changed `z_*.txt` history
+  collision without losing either version or admitting old generated names
+  as new seeds. The first reset refused at 22:28 after 3m27s, before mutation.
+  The supported preview isolated one 75-byte
+  `Potentials/Uma Rowe/gallery/z_uma_rowe.txt` sidecar, not an image conflict.
+  A failing reproducer now passes: recognized gallery name-history sidecars
+  use the existing hash-verified reset metadata bundle; current Production
+  remains active, sandbox history stays in the bundle. Unknown metadata and
+  image path conflicts still block. All 40 reset/flow tests pass.
+
 **Nov 4 22:02 fresh-run authorization:** after LY14c/LY14d/LY14e's focused
 tests and hygiene pass, reset the sandbox Working directory completely from
 current Production and run `fresh-20261104-lean2` with

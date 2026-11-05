@@ -46,6 +46,15 @@ FULL/Production remain protective, reports and image-quality guards remain,
 and FAST remains deferred. LY14c/LY14d/LY14e prerequisites now pass; N15/LY4
 still own fresh-run acceptance. Keep core-only cast protection and eligible
 non-core releases. The pinned recap now owns the updated commands.
+The fixes are published as `335988add`; the fresh flow started at 22:25
+with reset active. Use its live flow recap for current phase/counts; do not
+mistake launch for completed acceptance.
+The first reset stopped safely after 3m27s on active-path conflicts; no
+new intake began. Inspecting the supported preview before resolving it.
+The preview isolated one changed 75-byte name-history sidecar (LY14f).
+Known gallery `z_*.txt` history now preserves both versions through the
+verified reset metadata bundle; unknown/image conflicts still block.
+The reproducer and all 40 reset/flow tests pass; fresh reset will resume.
 
 **Nov 4 family naming decided and built:** score-band family trees. A new or
 renamed non-cast identity joins the family of its closest cast member when that

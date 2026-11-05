@@ -116,6 +116,34 @@ class SandboxResetTests(unittest.TestCase):
         self.assertFalse(result["applied"])
         self.assertEqual(old.read_bytes(), b"old")
 
+    def test_full_reset_preserves_changed_name_history_in_bundle_not_active_seeds(self):
+        relative = "Potentials/Uma Rowe/gallery/z_uma_rowe.txt"
+        production = self.production / relative
+        production.parent.mkdir(parents=True)
+        production.write_bytes(b"Production original name\r\n")
+        history = self._working_file(relative, b"Sandbox family rename history\r\n")
+        preview = full_reset_preview(self.working, self.production)
+        self.assertTrue(preview["resetReady"])
+        entry = next(row for row in preview["workingActiveFiles"] if row["path"] == relative)
+        self.assertEqual(entry["status"], "review-bundle-metadata")
+        original = history.read_bytes()
+        result = full_reset_apply(self.working, self.production)
+        self.assertTrue(result["applied"])
+        self.assertEqual(history.read_bytes(), production.read_bytes())
+        self.assertEqual((self.working / entry["destination"]).read_bytes(), original)
+        for path, payload in self.source_files.items():
+            self.assertEqual((self.source / path).read_bytes(), payload)
+
+    def test_full_reset_still_blocks_unknown_metadata_path_conflicts(self):
+        relative = "Potentials/Person/gallery/notes.json"
+        production = self.production / relative
+        production.parent.mkdir(parents=True)
+        production.write_bytes(b'{"production":true}')
+        self._working_file(relative, b'{"sandbox":true}')
+        preview = full_reset_preview(self.working, self.production)
+        self.assertFalse(preview["resetReady"])
+        self.assertEqual(preview["resetBlockers"], ["active-path-conflicts"])
+
     def test_full_reset_preview_classifies_active_files_without_writing(self):
         from tools.workflows import comfy_workflows as cw
 

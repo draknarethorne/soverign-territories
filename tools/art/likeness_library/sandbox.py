@@ -399,6 +399,9 @@ def _full_reset_analysis(working_root, production_root=None, cfg=None, layout=No
         elif is_image and processed_sources.get(entry["sha256"]) in production_active_hashes:
             status = "processed-copy-of-production-original"
             destination = None
+        elif pathlib.PurePosixPath(relative).match("*/gallery/z_*.txt"):
+            status = "review-bundle-metadata"
+            destination = f"_reports/reset-review-bundle/{relative}"
         elif production_at_path is not None:
             status = "path-conflict-review-required"
             destination = f"_reports/reset-review-bundle/path-conflicts/{relative}"

@@ -431,6 +431,9 @@ Use the same recovery mode on apply/resume/check. No undo is promised in this
 profile: recovery is a full sandbox reset. Ordinary `full` recovery still
 requires the baseline backup and retains exact undo. This does not enable
 FAST or skip subject/crop/erase quality guards.
+Full reset retains changed gallery `z_*.txt` name-history sidecars in its
+verified metadata review bundle, keeping current Production's version active.
+Conflicting image bytes or unrecognized metadata still require review.
 
 LEAN preserves original/control/recommended panel labels while aliasing
 exact-byte roles within each photo to the same file, including previews.
