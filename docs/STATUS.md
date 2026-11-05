@@ -6,8 +6,10 @@ been decided, what is open, and what is next. Rules live in the canonical docs l
 
 **Nov 4 11:30 LEAN trim and machine hand-off:** measured where the rebase
 spends time and space ([layout LY14](plans/2026-11-02-library-layout.md)).
-Denoise and tone were never auto-selected but used 55% of intake CPU and 8.5 GB
-of run state; LEAN intake no longer renders them (LY14a; FULL still does). The
+Denoise and tone were never auto-selected and occupied about 8.5 GiB of
+historical comparison outputs; LEAN no longer renders them (LY14a; FULL still
+does). The earlier 55% CPU attribution was overstated: variant timers include
+deferred pipeline work, not isolated filter CPU. The
 rebase apply prints per-phase timings. 944x1104 derivatives cost about 54 min
 and 7.2 GB per full apply; capping them to core/protected/workflow photos is an
 open user decision (LY14). The last re-run on this machine is a fresh LEAN run
@@ -18,6 +20,22 @@ fresh run is the chosen test, and the reset removes the old 23 GB run (approved)
 `bin\rebase-flow.cmd` runs the whole sequence with live progress, step and phase
 timings, an ETA and space after each step (LY14b), in
 `tmp\session-logs\rebase-flow\RUN\flow.md`.
+
+**Nov 4 measured result and duplicate finding:** the fresh LEAN run is
+installed, report recovery succeeded and the installed-run check passes.
+Final gallery checking found six held name collisions; its already-failing
+read-only scan was stopped, not accepted as a pass. Intake took 181 min
+for 3,517 outcomes; derivatives and detail refresh took 120 and 80 min.
+Working grew 42.08 -> 47.29 GiB despite run state falling 23.06 -> 20.75 GiB:
+the larger derivative-bearing baseline backup and active trees offset LEAN.
+The user's re-added Various photos expose a real gap: 227 extra byte-identical
+inputs, including 209 ordinarily routed under distinct IDs. Their raw bytes
+do not explain the whole increase; repeated preparation and installed sets
+still waste work and can inflate matching evidence. LY14c owns early
+exact-content aliasing before another full intake. Ranked proposals and cons
+remain in layout LY14 and performance T17/T18; no detection skips, source
+deletion or storage redesign was silently authorized. See the pinned recap
+above for measured totals and the unchanged run/resume command.
 
 **Nov 4 family naming decided and built:** score-band family trees. A new or
 renamed non-cast identity joins the family of its closest cast member when that
@@ -30,8 +48,8 @@ fresh unused surname. Without a recorded surname, the tree adopts the oldest mem
 surname upward. The policy key is `familyNaming`. It runs inside the clean-rebase
 plan, records `names`/`family` in the catalogue, carries `z_` name history
 forward, and shows a Families section in the recap. Production self-heals on its
-next rebase, with no hand edits. Re-run: undo `fresh-20261103-core`, then
-`--replan`, `--apply`, `--check`; no new intake
+next rebase, with no hand edits. The earlier undo/replan command is superseded
+by the fresh `fresh-20261104-lean` sequence above
 ([naming N15](plans/2026-10-22-identity-family-naming.md)). Speed/space
 feedback (cap 944x1104 derivatives to core/protected photos; measure
 bottlenecks first) is

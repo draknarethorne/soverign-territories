@@ -99,13 +99,57 @@ class RebaseFlowTests(unittest.TestCase):
         self.assertEqual(self._run(good), 0)
         self.assertEqual(self._run(good, start="only"), 0)
         state = json.loads(self.paths[1].read_text(encoding="utf-8"))
-        self.assertEqual(state["history"][0]["status"], "done")
+        self.assertEqual([item["status"] for item in state["history"]], ["failed", "done"])
+        self.assertEqual(
+            [item["log"] for item in state["history"]],
+            ["01-only.attempt-1.log", "01-only.attempt-2.log"],
+        )
 
     def test_until_stops_after_named_step(self):
         flow = [python_step("a", "print(1)"), python_step("b", "print(2)")]
         self.assertEqual(self._run(flow, until="a"), 0)
         state = json.loads(self.paths[1].read_text(encoding="utf-8"))
         self.assertEqual(state["steps"]["b"]["status"], "pending")
+
+    def test_installed_run_recovers_reports_without_reapplying_and_keeps_attempts(self):
+        receipt = pathlib.Path(self.tmp.name) / "run.json"
+        receipt.write_text('{"status": "applied"}', encoding="utf-8")
+        step = python_step("install", "raise RuntimeError('must not reapply')")
+        step["runReceipt"] = str(receipt)
+        step["reportsArgv"] = [sys.executable, "-c", "print('reports refreshed')"]
+        flow = [step]
+        self.assertEqual(self._run(flow), 0)
+        self.assertEqual(self._run(flow, start="install"), 0)
+        log = (self.paths[0] / "01-install.log").read_text(encoding="utf-8")
+        self.assertIn("reports refreshed", log)
+        self.assertNotIn("must not reapply", log)
+        self.assertTrue((self.paths[0] / "01-install.attempt-1.log").is_file())
+        state = json.loads(self.paths[1].read_text(encoding="utf-8"))
+        self.assertEqual(state["history"][0]["log"], "01-install.attempt-1.log")
+        self.assertTrue(any("refreshing reports only" in line for line in self.lines))
+
+    def test_recap_includes_failed_attempt_time_and_phases(self):
+        flow = [python_step("install", "print('ok')")]
+        state = rebase_flow.load_state(self.paths[1], self.working, self.run, 4, flow)
+        state["history"] = [{
+            "step": "install", "status": "failed", "seconds": 7200,
+            "phases": [{"phase": "derivatives", "seconds": 6000}],
+        }]
+        state["steps"]["install"] = {"status": "done", "seconds": 600}
+        recap = rebase_flow.render_markdown(state, flow)
+        self.assertIn("2h10m", recap)
+        self.assertIn("2 attempts", recap)
+        self.assertIn("install (prior attempt) | derivatives | 1h40m", recap)
+
+    def test_recap_flags_interrupted_attempt_without_recorded_duration(self):
+        flow = [python_step("install", "print('ok')")]
+        state = rebase_flow.load_state(self.paths[1], self.working, self.run, 4, flow)
+        state["history"] = [{"step": "install", "status": "running"}]
+        state["steps"]["install"] = {"status": "done", "seconds": 600}
+        recap = rebase_flow.render_markdown(state, flow)
+        self.assertIn("Took (recorded attempts)", recap)
+        self.assertIn("2 attempts; 1 earlier attempt(s) untimed", recap)
+        self.assertIn("10m00s", recap)
 
     def test_optional_previews_are_skipped_unless_requested(self):
         flow = [python_step("look", "print('preview')"), python_step("act", "print('apply')")]

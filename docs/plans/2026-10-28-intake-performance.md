@@ -688,8 +688,9 @@ This adds next-round priorities, not changes to the bound v23 run.
   padding do not skip enhancement/cleanup evaluation or implement FAST.
   Nov 2 ([library layout](2026-11-02-library-layout.md#modes-two-separate-axes)):
   LEAN no longer **keeps** unselected `tone`/`denoise` outputs, but they are
-  still **computed** although the recipe never selects enhancement; deciding
-  whether a profile skips that cost (user approval) is part of T18/I70.
+  still **computed** at that checkpoint although the recipe never selects
+  enhancement. Nov 4 LY14a subsequently implements the approved LEAN skip;
+  broader person/composition policy changes remain T18/I70 decisions.
 - [ ] **P3 ai** T19 After T18's reviewed contract and bounded profile evidence,
   implement validated CUSTOM step/node definitions and versioned erase/
   reconstruction alternatives, reusing existing modules rather than rewriting
@@ -703,6 +704,61 @@ comparison is superseded in priority and covered there with I41; its raw
 discussion remains preserved. T8's remaining background-only repair-policy
 decision still needs its own evidence/approval; feedback does not silently
 authorize larger repainted regions.
+
+#### Nov 4: LEAN optimization proposals from the fresh run
+
+Analysis only: no approval to change processing thresholds, skip person
+detection, remove backups or introduce a shared blob store. T17 still owns
+instrumentation and T18 owns processing-profile proposals; this does not
+activate T19 or authorize another full run. Storage/copy implementation belongs
+to [layout LY14](2026-11-02-library-layout.md#nov-4-copy-and-verification-proposals).
+
+**Measured baseline:** 3,517 outcomes; four CPU workers. Intake end-to-end
+10,854 s (180m54s), of which the recorded preparation invocation is 10,382 s
+(173m02s). Previous intake was about 197 min for 2,814 outcomes: approximately
+27% less wall time per outcome, not a controlled same-input speedup. This
+denominator includes repeated inputs; it is not unique-photo throughput or
+proof that all added work was useful (see layout LY14c). Current
+original recommendations are 2,465 (70.1%); 1,048 (29.8%) select a changed
+candidate and four have no usable recommendation. Changed selections comprise
+402 reconstruction, 113 reconstructed composition, 498 composition and 35
+first-crop. All 3,517 denoise/tone steps are skipped.
+
+**Timing correction:** `image_preparation.render_photo` starts a timer between
+generator yields. A variant's `seconds` includes pipeline work before its
+yield plus encoding, not just its named filter. The earlier 305 denoise
+worker-minute attribution therefore does not prove that removing denoise
+removes 52% of CPU work. Skipping the filter/candidate does not skip guarded
+person/composition assessment. T17 must distinguish exclusive helper timing,
+inclusive pipeline timing, encoding and wall time before making a new forecast.
+The existing 8.5 GiB historical comparison-render byte measurement is separate.
+
+| Proposal | Benefit and evidence | Cost / downside / gate |
+| --- | --- | --- |
+| Reuse exact intermediate calculations in FULL and LEAN | Proposal masks, glyph components, RGB extrema and segmentation results can be reused within one immutable image evaluation. Earlier 128-image profiles identify these helpers; no pixel-policy change is intended. | Bound cache keys to bytes, geometry and detector/model config. Tests must prove identical pixels, masks, decisions and failures; no gain estimate yet. |
+| Reuse verified prior preparation for exact unchanged inputs | Avoid rerunning models when source SHA, recipe/model/config and storage-output requirements match; reuse T6's exact checkpoint principles. | No basename/identity/mtime shortcuts. FULL cannot reuse a LEAN result lacking required comparisons. Verify artifacts and preserve cross-run provenance/retention dependencies. |
+| FAST clean-photo branch | Cheap overlay/border/size/aspect checks could skip person segmentation and optional composition for apparently clean images. | Missed overlays and useful crops; 70% original recommendation is an outcome after assessment, not a safe classifier before it. This changes behavior and requires explicit approval and paired quality tests. |
+| OVERLAY-ONLY branch | Preserve known-overlay cleanup, skip aesthetic composition on the clean branch. More narrowly targeted than removing all detection. | Still needs subject protection before any erase/crop; skips useful composition. Reconstruction may still need segmentation. Report skipped assessment, not a claim that the source is clean. |
+| Lower-resolution or lighter subject detector | Potentially reduce the pre-first-step cost while retaining a subject estimate. | Hair, feet, small faces and mask boundaries may be lost; crop/erase guards depend on those masks. This is a new model/recipe experiment, not a transparent LEAN optimization. |
+| Worker/thread tuning | Compare the established three-worker default with the explicit four-worker run on the same bounded input set. | Earlier tests found four no faster. Concurrent ComfyUI/VS Code load affects results; more workers may increase memory pressure. Do not tune against unrelated total-run times. |
+
+**Recommended order:** first remove duplicate verification/navigation work
+under layout's exact-behavior gates, then profile a bounded fixed cohort using
+exclusive timers. Only then choose a FAST/OVERLAY-ONLY experiment. Keep separate
+storage and processing axes: FULL versus LEAN tells us which evidence to keep;
+it must not silently decide whether subject coverage is assessed. The approved
+denoise/tone comparison skip is the explicit exception, not permission to skip
+other stages.
+
+**Bounded acceptance proposal:** reuse saved inputs; stratify at least 30
+unchanged ordinary photos, 30 apparently clean photos with selected composition,
+30 screenshots/overlays, and all four unusable cases, including first-crop,
+reconstruction and difficult hair/body edges within those groups. Ensure
+disjoint cohort membership and record actual counts. Compare unchanged-behavior
+optimizations with exact hashes/decisions and stale/tampered evidence tests.
+For altered processing profiles report missed cleanup, lost useful crops,
+subject loss, artifacts and human review findings separately from speed/bytes.
+No acceptance threshold for quality regressions has been approved.
 
 #### Review composites and eventual production intake
 
@@ -1031,3 +1087,15 @@ calibrated enhancement chooser exists. They are independent comparison-only
 alternatives from the selected cleanup, not automatic recommendations.
 Perceived crispness alone does not establish texture preservation or better
 ComfyUI output; keep the conservative default pending representative evidence.
+
+### Nov 4, 21:44 optimization feedback
+
+Coverage: detection and profiles -> T18's Nov 4 analysis; timer attribution ->
+T17; copying, backups and large install hotspots -> the linked layout analysis.
+No broad plan reorganization.
+
+<!-- markdownlint-disable MD013 -->
+````text
+So as we look at all the timings - there must be opportunities for looking at where we could optimize and improve further with LEAN processing vs. FULL processing policies/setup we have.  That needs some analysis and some proposals to consider and the cons to doing so.  I know some of the image was optimized, but still we were focused more on quality of the incoming image and thus had to find the person in the image - but we had considered other optimizations that would skip some of that extra work if we know that most images are not actually getting cropped or requiring erasing.  Since we're skipping denoise and tone - that should have cut things down ... but maybe thinking about other options would help as well.  The other question is are we copying files all around during the phases that we could do in a different way having a better structure and referencing files from previous stages and/or how is everything working behind the scenes.  Also, any uncessary backups, copies and such are probably something for us to look at with 3000+ files and different generated images during the process.  Wherever there are big hotspots in consuming time in the process.   LEAN was supposed to get us in better shape and it has - but it's still not truly LEAN in some cases.
+````
+<!-- markdownlint-enable MD013 -->

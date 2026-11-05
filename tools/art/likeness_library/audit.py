@@ -156,7 +156,7 @@ def audit_person(vectors, photo_ids, *, anchor_ids=(), protected_ids=(), stale_i
                 comparison = nz(total - vector)
             else:
                 comparison = reference
-            scores[i] = float(vector @ comparison)
+            scores[i] = float(np.clip(vector @ comparison, -1.0, 1.0))
 
     return {
         "mode": mode,

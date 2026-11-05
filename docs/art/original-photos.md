@@ -10,7 +10,7 @@ deletion or folder moves, when a photo has catalogue decisions or retained sets.
 | --- | --- | --- |
 | Inspect crop/erase candidates without changing sources | `bin\prepare-images.cmd` | Sandbox sidecars; v20 recommended sequence, no identity assignment |
 | Prepare immutable sandbox inputs, optionally stop, then match/install | `bin\sandbox-rebase.cmd` | Implemented retained-cast flow; real acceptance still pending |
-| Run the whole fresh sandbox rebase with live progress, timings and space | `bin\rebase-flow.cmd` | Preview/apply/check; full reset, originals, backup, intake, preview, install and checks in order; resumes at a failed step |
+| Run the whole fresh sandbox rebase with live progress, timings and space | `bin\rebase-flow.cmd` | Preview/apply/check; optional inventories, required matching plan, install and checks; resumes failed steps, using reports-only recovery if already installed; preserves attempt logs/timings |
 | Maintain names/derivatives and refresh galleries without matching | `bin\people-gallery.cmd` | Preview/check/apply with backup and action-undo guards |
 | Rebuild only People viewers after exact recovery | `bin\people-gallery.cmd --reports-only` | Preview/check/apply; existing photos and maintained derivatives are not renamed, pruned or regenerated |
 | Change one photo or a recorded name deliberately | `bin\likeness-actions.cmd` | Validate/preview first; supported actions use backed-up transactions |

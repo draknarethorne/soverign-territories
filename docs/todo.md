@@ -31,7 +31,7 @@
 
 - [ ] E17 Refinement reclassification demoted Models/Neve Ellery to Potentials after it lost one photo (5 to 4). Decide whether refinement may lower an identity's category or should keep the category it had at the start of ... ([likeness engine acceptance](plans/2026-10-22-likeness-engine-acceptance.md))
 
-### For the assistant, when you say go (16)
+### For the assistant, when you say go (17)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -46,6 +46,7 @@
 - [ ] T17 Capture recipe-aware run statistics and publish a compact intake summary with expandable/linked details: input/outcome counts, overlay types, each attempted/executed/skipped/failed step, reconstruction/composition, ... ([intake performance](plans/2026-10-28-intake-performance.md))
 - [ ] S27 Complete the isolated full replay, installed verification, Gallery/Overview/Review/history and materialized backup recovery; persist phase times, overlapping storage scopes, equality results and baseline seals. Show ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
 - [ ] S30 After the replay blocker is resolved, audit real Various-to-Sister/Angel admissions, cast core/workflow retention, eligible low-score releases/Review/reassignment, and original-name plus surname presentation. ... ([storage operations and retention](plans/2026-10-28-storage-operations-and-retention.md))
+- [ ] LY14c Before any further full re-run, fix early exact-content alias handling across incoming Various and the effective baseline. Reuse one prepared input per verified SHA/domain/recipe, prefer an existing assigned canonical, ... ([library layout](plans/2026-11-02-library-layout.md))
 - [ ] LY13 Cast-name collision. `Potentials\Camaris` is not a new identity: Production has had it since Oct 8 (two photos). Its `z_camaris_bloom.txt` says "Camaris Bloom", "returned to Potentials; replaced as Camaris by Ruby Eden" ... ([library layout](plans/2026-11-02-library-layout.md))
 
 **P2 (normal)**

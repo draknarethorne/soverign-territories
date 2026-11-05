@@ -76,7 +76,11 @@ def steps(working, run, workers):
         {"id": "match-preview", "title": "Matching plan (likeness, cast, refinement; install needs it)",
          "argv": rebase},
         {"id": "install", "title": "Install, galleries, Overview and Review",
-         "argv": [*rebase, "--apply", "--preserve-legacy-derivatives"]},
+         "argv": [*rebase, "--apply", "--preserve-legacy-derivatives"],
+         "runReceipt": str(run / "run.json"),
+         "reportsArgv": ["bin\\people-gallery.cmd", "--root", w, "--cache",
+                         str(run / "likeness-cache.json"), "--policy", str(run / "policy.json"),
+                         "--reports-only", "--apply"]},
         {"id": "install-check", "title": "Installed run check", "argv": [*rebase, "--check"]},
         {"id": "gallery-check", "title": "People gallery check",
          "argv": ["bin\\people-gallery.cmd", "--root", w, "--cache", str(run / "likeness-cache.json"),
@@ -255,7 +259,7 @@ def render_markdown(state, flow, live=None):
              f"- Created {state['created']}; updated {_now().isoformat()}",
              f"- Estimated remaining: {_duration(estimate_remaining(state, flow, live, now))} "
              "(Nov 3 step times; intake uses its live ETA)", "",
-             "| # | Step | Status | Started | Took | Nov 3 | Note |",
+             "| # | Step | Status | Started | Took (recorded attempts) | Nov 3 | Note |",
              "| --- | --- | --- | --- | --- | --- | --- |"]
     for index, step in enumerate(flow, 1):
         record = state["steps"][step["id"]]
@@ -268,10 +272,23 @@ def render_markdown(state, flow, live=None):
                 note = f"{info['done']:,}/{info['total']:,} photos ({info['percent']:.0f}%)"
                 if "eta" in info:
                     note += f", ETA {_duration(info['eta'])}"
+        previous = [
+            attempt for attempt in state["history"] if attempt["step"] == step["id"]
+        ]
+        if previous:
+            took = (took or 0) + sum(attempt.get("seconds", 0) for attempt in previous)
+            note = f"{len(previous) + 1} attempts; {note}".rstrip("; ")
+            untimed = sum("seconds" not in attempt for attempt in previous)
+            if untimed:
+                note += f"; {untimed} earlier attempt(s) untimed"
         lines.append(f"| {index} | {step['id']} | {record['status']} | {record.get('started', '')[11:16]} | "
                      f"{_duration(took)} | {NOV3_MINUTES.get(step['id'], '')}m | {note} |")
     phase_rows = [(step["id"], phase) for step in flow
                   for phase in state["steps"][step["id"]].get("phases", [])]
+    phase_rows = [
+        (f"{attempt['step']} (prior attempt)", phase)
+        for attempt in state["history"] for phase in attempt.get("phases", [])
+    ] + phase_rows
     if live is not None:
         phase_rows += [(live["id"], phase) for phase in live.get("phases", [])]
     if phase_rows:
@@ -327,7 +344,29 @@ def run_step(index, step, state, paths, flow, *, heartbeat, measure, echo, launc
     folder, state_path, md_path = paths
     record = state["steps"][step["id"]]
     log_path = folder / f"{index + 1:02d}-{step['id']}.log"
-    command = launcher(step["argv"])
+    argv = step["argv"]
+    if step.get("runReceipt") and pathlib.Path(step["runReceipt"]).is_file():
+        receipt = json.loads(pathlib.Path(step["runReceipt"]).read_text(encoding="utf-8"))
+        if receipt["status"] == "applied":
+            argv = step["reportsArgv"]
+            echo("Installed run detected: refreshing reports only; install-check still follows.")
+    if log_path.exists():
+        attempt = 1
+        prior = log_path.with_name(f"{log_path.stem}.attempt-{attempt}.log")
+        while prior.exists():
+            attempt += 1
+            prior = log_path.with_name(f"{log_path.stem}.attempt-{attempt}.log")
+        log_path.rename(prior)
+        if record.get("log") == log_path.name:
+            record["log"] = prior.name
+        else:
+            for previous in reversed(state["history"]):
+                if previous["step"] == step["id"] and previous.get("log") == log_path.name:
+                    previous["log"] = prior.name
+                    break
+    if record["status"] != "pending":
+        state["history"].append({"step": step["id"], **record})
+    command = launcher(argv)
     started = time.time()
     record.clear()
     record.update(status="running", started=_now().isoformat(), log=log_path.name,
@@ -418,6 +457,7 @@ def run_flow(flow, state, paths, *, start=None, until=None, heartbeat=120, measu
         if until is not None and step["id"] == until:
             echo(f"Stopped after {until} as requested.")
             break
+    save(state, state_path, md_path, flow)
     echo(f"\nFlow finished this session in {_duration(time.time() - flow_started)}. Recap: {md_path}")
     echo(render_markdown(state, flow))
     return 0

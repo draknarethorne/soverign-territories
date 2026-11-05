@@ -3,7 +3,7 @@
 **Status:** active (LY1 decided Nov 2: all five recommendations accepted; LY2,
 LY3 publication/undo and LY5 implemented and tested Nov 2)
 
-**Queue focus:** LY11, LY13, LY14, LY12, LY9, LY6, LY8
+**Queue focus:** LY14c, LY11, LY13, LY14, LY12, LY9, LY6, LY8
 
 ## Nov 3: authorized new source rehearsal
 
@@ -208,11 +208,11 @@ rebase procedure; the separate migration tool is dropped.
 | Storage | FULL / LEAN / COMPACT / COLLAGE | [storage](2026-10-28-storage-operations-and-retention.md) | which computed bytes are **kept** |
 | Processing | FULL / FAST / OVERLAY-ONLY | performance [T18](2026-10-28-intake-performance.md), intake [I70](2026-10-23-image-intake-preparation.md) | which steps are **computed** |
 
-Decision (e) tightens LEAN (storage): it no longer keeps unselected
-alternatives. It does not change what is computed. The recipe treats
-enhancement as comparison-only (never selected), so computing `tone`/`denoise`
-is pure cost under LEAN; whether to stop computing them is a T18/I70 processing
-decision that needs user approval, not part of this plan.
+Decision (e) originally tightened LEAN retention without changing computation.
+Nov 4 LY14a adds the approved exception: LEAN skips comparison-only
+`tone`/`denoise` generation. It still runs the guarded person/composition
+assessment. Further processing skips remain explicit T18/I70 decisions, not
+automatic consequences of selecting LEAN.
 
 ## `_` directories (hash audit Nov 2, Acronis off)
 
@@ -392,8 +392,11 @@ check passed afterwards.
   (padded 0.39 s, head and chest the rest), roughly 54 serial minutes of a
   2,814-photo apply. A cap to core/protected/workflow photos would save most
   of that time and space plus the matching `_backup`/`previous` copies. Various
-  holds only about 115 Review photos (0.10 GB), so excluding it alone changes
-  little. If adopted: originals stay and still show in Review; protecting a
+  held only about 115 Review photos (0.10 GB) after the previous install.
+  That is not its pre-intake workload: the Nov 4 reset restored 3,048 Various
+  inputs, so deferring Various derivatives before matching could matter
+  substantially (see the live-run investigation below). If adopted:
+  originals stay and still show in Review; protecting a
   photo generates its derivative; unprotecting or moving out removes them
   through the existing derivative manifest. Confirm the per-phase numbers with
   the timed N15 re-run before deciding. Source: user feedback below (Nov 4).
@@ -418,26 +421,98 @@ check passed afterwards.
   preview, intake dry-run and separate intake check are optional
   (`--with-previews`) because the apply steps repeat their guards. The matching
   plan and the backup of the fresh baseline stay, because the install requires
-  both.
+  both. A reports-only retry is selected when the run receipt is already
+  `applied`; it never reapplies a hash-bound matching plan. Prior step logs and
+  failed records are retained as numbered attempts and flow history.
+- [ ] **P1 ai** LY14c Before any further full re-run, fix early exact-content
+  alias handling across incoming Various and the effective baseline. Reuse
+  one prepared input per verified SHA/domain/recipe, prefer an existing
+  assigned canonical, and record every arrival as an alias rather than a new
+  matching vote. Preserve source/decision/history recovery and Artist scope;
+  changed same-ID incoming bytes remain explicit reprocessing/replacement,
+  not duplicates. Test raw Facebook/inferred IDs, distinct download IDs,
+  arbitrary names, same-ID conflicts, protected/workflow decisions, source
+  changes, install and undo. The installed run is a diagnostic baseline,
+  not deduplication acceptance; do not rewrite its bound receipts.
 
 **Nov 4 measured bottlenecks** (the `fresh-20261103-core` run; the apply log had
 no timestamps outside verification, so derivative time is a 30-photo benchmark):
 
 | Phase | Measure | Note |
 | --- | --- | --- |
-| Intake preparation CPU | about 587 worker-min | denoise 305 (52%), composition 71, head reconstruction 55, control 36, eraser 31.5, tone 20 |
+| Intake variant-labelled elapsed | about 587 worker-min | denoise-labelled 305 (52%), composition 71, head reconstruction 55, control 36, eraser 31.5, tone 20; includes deferred pipeline work, not isolated filter CPU |
 | Run `inputs` on disk | 31,429 files / 17.9 GB | tone 4.6 GB, denoise 3.9 GB, control 3.8 GB; denoise/tone never selected |
 | Apply: Review inputs verify | 1,619 s | 31,637 reads / 13.1 GB, mostly candidates |
 | Apply: Overview thumbnails verify | 510 s | 13,681 reads / 4.5 GB |
 | Apply: Overview evidence verify | 219 s | 11,311 reads / 2.5 GB |
 | Apply: preparation history index (x2) | 268 s + 260 s | full artifact/source checks |
 | Apply: 944x1104 derivatives | about 54 min (estimated) | 1.15 s per photo, 3 framings |
-| Apply: preparation evidence verify (x2) | untimed until now | re-hashes the whole run `inputs`; LY14a halves it |
+| Apply: preparation evidence verify (x2) | untimed until now | re-hashes run `inputs`; LEAN reduces candidate bytes, exact effect depends on workload |
 | Sandbox state | 23 GB | `inputs` 17.9, `previous` 4.5, source overlay 0.6 |
 
-Expected effect of LY14a on the next fresh run: about 8.5 GB less run state,
-about half the preparation CPU, and roughly half the bytes read by every
-`inputs` verification pass.
+The initial LY14a forecast was about 8.5 GB less run state, half the preparation
+CPU and half the input-verification bytes. Only the historical comparison
+render bytes were directly measured: variant timers include deferred pipeline
+work, so the half-CPU claim was overstated. Current outcomes/size differ too.
+Use the fresh-run observations and
+[T17/T18 analysis](2026-10-28-intake-performance.md#nov-4-lean-optimization-proposals-from-the-fresh-run)
+instead of treating that forecast as verified.
+
+**Nov 4 live-run investigation (13:30; not final acceptance):**
+
+- Reset finished in 4m06s; Working fell from 42.08 GB to 5.17 GB.
+- Originals took 12m47s versus about 5 min previously, but generated 3,022
+  full-size copies and 2,051 headshots versus 483 and 96. Current log timestamps
+  isolate 7m09s for full-size copies and 3m49s for headshots after the final
+  rename. This is a much larger generation workload, not evidence that the
+  revised LEAN preparation is slower; originals precedes that preparation.
+- The frozen overlay records 2,421 baseline inputs, 3,048 Various entries,
+  1,096 new inputs and 175 replacements. Intake has 3,517 outcomes versus
+  2,814 last time (25% more); normalize time and retained bytes per outcome
+  and distinguish replacements before drawing optimization conclusions.
+- The new baseline backup completed in 2m46s versus about 13 min, despite
+  growing from 9,697 files / 6,044,502,114 bytes to 16,824 files /
+  10,451,606,474 bytes. These are aggregate timings, not controlled disk
+  benchmarks; cache state and concurrent work can affect them.
+- Originals generates derivatives before matching; backup then copies them,
+  while the installer maintains derivatives for the final prepared assignments.
+  LY14 should consider deferring pre-intake derivative generation as well as
+  the final core/protected/workflow cap. Do not remove normalization or the
+  install's backup prerequisite, or change the engine during this measurement.
+- The first intake sample is too small for a speed verdict. Capture later
+  throughput and completed preparation timings; compare source workload and
+  image-stage costs, not just the running ETA based on Nov 3 estimates.
+- Active recovery binding confirms `storageMode: lean` and
+  `leanComparisons: skipped`; all first 32 completed checkpoints have both
+  denoise and tone skipped. Their guarded sequence averages 16.67 s, including
+  10.98 s before the first step record (cumulative, not additive timers).
+  Subject detection runs before that record even when the first crop is
+  skipped; a skipped crop does not mean zero computation. This sample excludes
+  other render/encoding/checkpoint work and is not the final per-image time.
+- An eight-second resource sample shows the four intake workers consuming
+  about 79% of total machine CPU, VS Code about 15%, and roughly 5.2 GB of
+  physical memory free. Workers are active, not suspended. This supports
+  investigating CPU-bound subject/composition assessment next, not assuming
+  denoise is still running or claiming paging from working-set size alone.
+- Intake ultimately passed in about 180 min for 3,517 outcomes; matching took
+  13m52s. Install staging and retained preparation took 16m57s. At 18:33,
+  derivative generation had produced 7,075 outputs for about 2,389 photos
+  and was still running, so the earlier 54-minute benchmark is not an
+  end-to-end forecast. Code tracing identifies repeated prepared-lineage
+  checks: `derivatives.maintain` calls `render` and records `sourcePrepared`
+  for each framing; both call `source_is_prepared`, whose uncached path scans
+  owner manifests and verifies lineage/artifacts. The install loop does not
+  establish a verification-read scope. Investigate reuse under a safe
+  unchanged-evidence boundary after this run; do not disable verification or
+  treat the pixel-render benchmark as a measurement of these checks.
+- Final install phase timers: derivative generation 7,176.4 s, detail pages
+  4,809.2 s, staged hashes 69.1 s, pre-publication rechecks 115.2 s and
+  publication/checksums 38.4 s. The first apply published the files but failed
+  during report refresh: a normalized cosine could round to
+  `1.0000000000000002`, rejected by strict policy bounds. Audit output now
+  clips normalized dot products to [-1, 1]; a reproducing regression plus
+  audit/policy/Review and flow-recovery tests pass (65 tests). Resume uses the
+  reports-only launcher, preserving the original matching receipt/hashes.
 
 **Nov 3 recap feedback ownership:** the complete
 `rebase_fresh_20261102_feedback.md` is preserved once in
@@ -449,6 +524,130 @@ Sophie/name continuity; engine E14/E15 owns final-rival audits and bounded
 recomparison. C11/engine E13 owns the approved core-protection trial. Reuse
 the same saved run evidence and preserve the installed pages for ongoing
 review; no new full intake or broad plan reorganization is authorized.
+
+## Nov 4 copy and verification proposals
+
+Analysis requested at 21:44; the verbatim request and processing-profile
+trade-offs live in
+[performance T17/T18](2026-10-28-intake-performance.md#nov-4-lean-optimization-proposals-from-the-fresh-run).
+These proposals do not authorize a new storage architecture or waive recovery
+checks. Keep LY14's derivative selection decision open.
+
+### Duplicate correctness finding after the user's added context
+
+The user deliberately re-added already-processed photos to Production Various.
+The apparent 1,096 "new inputs" counts new target paths, **not new unique
+photographs**. Do not treat all 703 additional outcomes as useful new work.
+Read-only grouping of the frozen input SHA-256 receipts finds:
+
+- 3,517 inputs, **3,290 unique hashes**, 207 repeated-byte groups and
+  **227 extra exact copies**, all extra representatives in Various. Of those
+  groups, 181 span Various and an assigned category.
+- The overlay folds nine same-ID/same-byte aliases, but its no-ID path does
+  not compare hashes across the baseline. Matching only byte-deduplicates
+  content-derived IDs: inferred-ID collisions are set to no ID without
+  recording duplicate provenance, and distinct explicit IDs bypass that
+  byte check entirely. **209 of the 227 extra copies enter ordinary routing**;
+  ten extra representatives are duplicate-held and eight missing-ID-held.
+  Across all outcomes, eleven are duplicate-held and eleven missing-ID-held;
+  those totals use different representatives/denominators.
+- Concrete same-byte case: `camaris_image_7514748494547382365.jpg` remains core while
+  `Various/gallery/various_image_7514748520288794438.jpg` gains cast Review.
+  Distinct download IDs do not make those bytes different photos. This can
+  inflate evidence/membership counts, not merely waste time.
+- Raw extra input bytes are **30,524,910 (29.11 MiB)**. The frozen report's
+  image paths are already digest-shared: removing those extra rows would
+  remove **zero image files exclusively referenced by them**. Therefore the
+  duplicates do not explain gigabytes of extra preparation candidate files,
+  despite redundant per-source assessment work.
+- Installation creates **227 additional per-photo retained sets** occupying
+  **339,437,047 bytes (0.316 GiB)** and additional selected natives occupying
+  **197,832,314 bytes (0.184 GiB)**, before derivatives. These are associated
+  footprints, not an approved deletion list or a prediction of total savings.
+
+The largest size increase is instead replicated pre-intake derivatives and
+recovery retention, shown below. LY14c owns the exact-duplicate fix before
+another expensive run. Do not auto-delete visually similar but byte-different
+photos: matching processed/raw versions needs verified original lineage or
+an explicit replacement decision. No source files or installed receipts were
+changed by this investigation.
+
+### What is copied today
+
+1. Full reset copies the current Production baseline into sandbox Working;
+   the historical Source snapshot is left unchanged.
+2. Originals normalizes names and generates full/head derivatives before
+   matching. A full baseline backup then copies Working plus configured
+   ComfyUI inputs and repository configuration.
+3. `source-overlay` freezes the baseline and Various input choices, retaining
+   replaced/aliased source recovery copies. Intake copies frozen source inputs
+   into its own `inputs` mirror.
+4. Image workers retain originals and render candidates, padding, previews and
+   details into recovery staging; publication consolidates the report.
+5. Install copies selected natives into unpublished `staged`, and publishes
+   per-photo retained evidence into its staged `_processing`. LEAN already
+   aliases exact native/original roles within a photo and omits some
+   unselected artifacts; it is not global cross-stage deduplication.
+6. After verification, existing categories are **renamed** into `previous`,
+   and staged categories are renamed into Working. This rollback data is not
+   another full byte-copy at that boundary, but occupies disk alongside the
+   full backup. The installed `_processing` and intake mirror both remain.
+
+Measured after publication: intake mirror 11.319 GiB, `source-overlay`
+0.808 GiB, rollback `previous` 8.568 GiB, baseline backup 9.740 GiB,
+installed `_processing` 4.575 GiB. Those first three are within the 20.747 GiB
+run state; **do not add run state again**. Working totals about 47.29 GiB.
+Backup includes external inputs/config, so not every backup byte duplicates
+`previous`. Historical run state was about 23.06 GiB for fewer inputs.
+
+Approximate non-overlapping comparison (logical GiB; old run state rounded):
+
+| Scope | Previous | Fresh LEAN | Change |
+| --- | ---: | ---: | ---: |
+| Active category trees, including derivatives | 8.84 | 11.28 | +2.44 |
+| Baseline backup | 5.63 | 9.74 | +4.11 |
+| Installed retained preparation | 3.73 | 4.58 | +0.85 |
+| Run state, including inputs/overlay/rollback | 23.06 | 20.75 | -2.31 |
+| Reports and other Working files | 0.82 | 0.95 | +0.13 |
+| **Working total** | **42.08** | **47.29** | **+5.21** |
+
+LEAN really reduced run state, but it does not prevent `originals` making
+derivatives before backup, nor remove the backup/rollback duplication. Thus
+the whole Working tree grew even after the LEAN reduction. Fix correctness
+and unnecessary generation order before concluding that more disk or a new
+full run is required.
+
+### Prioritized proposals and disadvantages
+
+| Priority | Proposal | Opportunity | Disadvantages / acceptance gate |
+| --- | --- | --- | --- |
+| 1 | Reuse verified lineage within a stable phase and index current-path claims | Derivatives took 119m36s; detail refresh 80m09s. Both repeatedly resolve manifests and verify prepared lineage. Avoid repeated whole-owner scans and repeated hashes for the same unchanged evidence. | Do not wrap mutable detail/manifests in an unmodified read-only cache: refresh writes them. Separate immutable image evidence from mutable metadata, invalidate writes, and seal paths/content before publication. Test stale bytes, conflicts, edits and failures. Savings are not yet measured. |
+| 2 | Generate detail navigation once, after derivative availability is known | Detail HTML is created during preparation, adapted at staging, then refreshed for installed navigation. Avoid the expensive final second construction/check cycle where equivalent output can be built once. | Native/detail paths differ by stage; links and manifest hashes must remain correct and recoverable. Keep exact provenance and prove output/link equivalence. |
+| 3 | Normalize names without creating pre-intake derivatives; decide final derivative scope afterward | Originals cost 12m47s and added about 4.25 GiB before backup. Those derivatives also enlarge backup/rollback. This is separate from the final LY14 core/protected/workflow cap. | Requires a tested normalize-only path and preserving selected workflow assets; cannot simply skip originals. Review must work from natives/thumbnails when a framing is absent. Final demand-generation and unprotect cleanup need design. |
+| 4 | Share verified report input snapshots across Review/Overview/history | Review verification 23m02s, Overview thumbnails 8m09s, evidence 2m40s, two history audits about 4m54s together. Existing operation-local reuse still ends at each viewer/phase. | These are not pure hashing times. Publishing viewers mutates output files; share only stable source evidence, retain a final seal and refuse changed membership/content. No mtime-only trusted cache. |
+| 5 | Sandbox-specific recovery policy instead of both a full baseline backup and rollback | Baseline backup 9.74 GiB plus `previous` 8.57 GiB is a large retention budget. Backup creation itself was only 2m46s. Source snapshot/overlay and rollback may support a narrower sandbox guarantee. | Existing install requires a full verified backup. Waiving it requires explicit policy/approval and tested crash/undo recovery, external-input coverage and source availability. Never generalize the waiver to Production. |
+| 6 | One immutable artifact store, with stage manifests referencing hashes | Could avoid copies between overlay, input mirror, retained report originals, selected natives and installed evidence. Audit actual SHA overlap first; not all these images are identical. | Larger architectural change: reference tracking, garbage collection, undo/retention, exports, moving machines, crash recovery and standalone reports. Hard links share mutable bytes and violate current isolation/reparse assumptions; not a safe quick fix. |
+| 7 | Retire reproducible run artifacts after explicit acceptance | Intake report artifacts and rollback need not all live forever once installed provenance and required source recovery are independently retained. | Existing reports and receipts reference run inputs. Use dependency-aware retirement; no blind deletion of `inputs`, backups or source folders. Recovery and historical comparison capability decrease. |
+
+Recommendation: first tackle priorities 1-3 as bounded exact-behavior work,
+then measured cross-viewer reuse. Backup creation and the 0.8 GiB overlay are
+not the largest time hotspots. Defer the shared artifact-store redesign until
+hash-overlap measurements show its value. Processing shortcuts belong to
+T18, with separate visual-quality acceptance. No new full intake is needed to
+test most install/report optimizations: use a small copied immutable fixture
+and preserve this installed review baseline.
+
+The final gallery-check trace adds a concrete priority-1 example:
+`gallery_maintenance.run` invokes `derivatives.maintain` once to find pending
+work and again in its changes/diagnostics loop, including read-only checks.
+Each framing revalidates prepared lineage without an enclosing read session.
+The resumed checker was actively using CPU, not suspended. Six held name
+collisions guarantee the current check returns nonzero because diagnostics
+are always a failure. The check was stopped at 21:59 after about 12m13s;
+its full scan is incomplete, not passed. A shared read-only
+verification session could reuse those reads and seal once; **do not** extend
+that unchanged session across apply-time manifest writes. This is a proposed
+exact-behavior optimization, not permission to bypass those diagnostics.
 
 ## User request (chat, verbatim)
 
@@ -599,5 +798,19 @@ the discarded run -> recap "Last re-run"):
 
 ````text
 Also - I'm thinking the preview steps can be avoided - unless you are reading them to look for issues - otherwise, won't that also cut down on the time and we only worry about preview if we're actively concerned about the changes - but since we're in the sandbox and doing a full reset, I feel like we can skip those steps to save time as well.  Make sense?  Those are optional steps if we need to preview.  We don't need to backup the existing sandbox if we're starting the process all over and trying to see where the bottlenecks still exist and how much space we're taking up.  So both skipping preview and avoiding backing up an invalid run should help.
+````
+
+Chat (Nov 4, 13:28; coverage: live-run investigation above; reuse current run
+evidence rather than competing benchmarks or changing the running engine):
+
+````text
+If we're seeing increases in time taken in our revised steps - I'd want to dig into those while we're waiting for the process to complete and understand what is going on as a whole.
+````
+
+Chat (Nov 4, duplicate context; coverage: exact-byte/ID gaps -> LY14c;
+space reconciliation -> copy/verification proposals above; no source deletion):
+
+````text
+I also don't understand the increase in size from the previous run - I still feel like we're making too many copies or backups during the process or something is off in how we're handling things.  So we definitely have some issues along the way.  I did include a bunch more items on the Production Various/gallery that are duplicates of many already processed - I was planning on sending those in for complete re-processing in case I missed items - so our de-duplication of photos should be catching that and throwing them out as duplicates.  So maybe that's an issue that doesn't work well in our system.
 ````
 <!-- markdownlint-enable MD013 -->

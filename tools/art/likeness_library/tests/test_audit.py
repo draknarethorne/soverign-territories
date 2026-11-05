@@ -29,6 +29,18 @@ class AuditPhoto:
 
 
 class LikenessAuditTests(unittest.TestCase):
+    def test_normalized_cosine_roundoff_stays_within_policy_bounds(self):
+        rng = np.random.default_rng(42)
+        for _ in range(10):
+            vector = rng.normal(size=128)
+            result = audit_person(
+                [vector, vector, -vector], ["a", "b", "opposite"],
+                anchor_ids={"a", "b"},
+            )
+            for score in result["scores"]:
+                self.assertGreaterEqual(score, -1.0)
+                self.assertLessEqual(score, 1.0)
+
     def run_command(self, photos, catalog):
         space = SimpleNamespace(photos=photos)
         args = SimpleNamespace(names=[], group=None, keep=0.25)

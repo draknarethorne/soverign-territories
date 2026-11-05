@@ -52,6 +52,11 @@ family name. Families are presentation only, never matching evidence.
   --record-core-protection`; confirm the
   Families section (Angelica, Drakniss, Draknara, Ravaelle), renamed `z_`
   histories and catalogue validation. Gate: recap and check pass.
+  Nov 4: installed-run and recap checks pass; all four cast surname roots
+  and Fia's Hadley -> Vale history are confirmed. Final housekeeping check
+  is blocked by held filename collisions; duplicate correctness is
+  [layout LY14c](2026-11-02-library-layout.md#nov-4-copy-and-verification-proposals).
+  Keep N15 open; the diagnostic installed run is not full intake acceptance.
 - [ ] **P1 you** N7 Review actual sandbox family groups, exceptions and
   proposed names in the N15 recap; accept or tune the band before Production.
 

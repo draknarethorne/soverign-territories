@@ -16,6 +16,16 @@ supersedes the no-new-intake scheduling paragraph below once the recovery and
 feedback prerequisites pass. Production writes, broader calibration,
 automatic convergence, spelling migration and Sovereign Females remain gated.
 
+**Nov 4 measured checkpoint:** the fresh LEAN run is installed and its
+installed-run check passes; the final gallery check is blocked by six held
+name collisions and was stopped before completing its full scan.
+The user's re-added Various photos expose exact-content aliases routed under
+different IDs. [Layout LY14c](2026-11-02-library-layout.md) owns that correctness
+fix before any further full intake. Performance T17/T18 and LY14 now contain
+ranked proposals with cons, not authorization for detection skips, backup
+waivers or a broad storage refactor. Preserve this installed diagnostic
+baseline for review while deciding the next bounded implementation.
+
 **Earlier scheduling (Nov 3 review):**
 the fresh `fresh-20261102` sandbox is installed and its ordinary post-install
 check passed; human placement/quality review remains open (LY11/C7).
