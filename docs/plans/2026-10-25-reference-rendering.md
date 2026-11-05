@@ -71,6 +71,13 @@ evidence, not acceptance of an exact manual-prompt migration.
 
 Manual migration P14-P16 owns wording/order, token reconciliation and person
 data resolution; P17 owns the generic Female test-bed move and workspace home.
+The [Nov 5 workspace decisions](2026-10-22-manual-prompts-to-art-library.md#nov-5-1635-bounded-workspace-decisions-before-implementation)
+retain generic-first/on-demand jobs and defer Males/experimental drafts.
+For generic unresolved identity, retain a stable source-bound label and
+explicitly unknown category/person; never fabricate a cast identity from
+the workspace or shot name. Reuse R44's versioned path policy and existing
+timestamp/batch/job collision safeguards. This is planning, not a new
+accepted path format or permission to rename legacy jobs.
 This plan owns consuming those exact resolved prompts, freezing their hashes/
 overrides and presenting supported deviations in the request preview.
 Existing R16/R22-R24/R33-R40, visual acceptance and GUI/local-service work stay

@@ -5,6 +5,19 @@ Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (gen
 
 ## The pattern
 
+**Nov 5 16:35 safe-work result:** the
+[current-milestone reconciliation](2026-11-05-priority-reset.md#nov-5-1635-current-milestone-task-reconciliation)
+distinguishes delivered code from installed/scenario/human acceptance.
+LY4 produces shared final-run evidence; other owners consume it without
+duplicate intake/replay. Storage's independent FULL recovery scope remains
+separate from disposable LEAN. Under delegated planning authority, select
+`C:\Sovereign-Territories\sovereign-territories` as this machine's later
+target; SP1's choices are settled, migration remains holding. The
+[workspace scope](2026-10-22-manual-prompts-to-art-library.md#nov-5-1635-bounded-workspace-decisions-before-implementation)
+is female-first/generic-first, named jobs on demand, with Males/experimental
+drafts deferred and no blind reset of manual/curated files. Runtime,
+configuration, installed files and library roots are untouched.
+
 **Nov 5 15:59 core clarification:** the
 [pipeline-wide repeated-work package](2026-10-28-intake-performance.md#nov-5-1559-pipeline-wide-repeated-work-core-and-execution-design)
 extends core assessment to inventory, staging, derivatives, details,
@@ -30,7 +43,8 @@ spelling only because a document is archived is not the selected direction.
 Git history can retain it. The [spelling plan](2026-11-02-sovereign-spelling-rename.md#nov-5-clarification-correct-the-visible-project-not-git-history)
 owns raw/bound evidence migration and unusable-document review; these require
 specific dependency/provenance handling, not blind replacements or deletion.
-Local-path selection remains open and no rename occurs during the run.
+The later 16:35 delegated choice settles the local target; no rename occurs
+during the run.
 
 **Nov 5 priority Q&A:** the [priority reset](2026-11-05-priority-reset.md)
 owns the agreed sequence and bounded consolidation. LEAN acceptance targets
@@ -522,7 +536,7 @@ the topic counts.
 | --- | --- | --- |
 | `priority_plans_review.md` / planning-and-recaps | [Priority reset](2026-11-05-priority-reset.md#nov-5-feedback-reconciliation-and-remaining-gates), full source and Q&A; initial requests, A-G and every later bullet mapped | Individually filed; PR1 full-plan audit/consolidation and PR2 choices remain, no whole-plan archive or runtime authorization inferred |
 | `rebase_fresh_20261102_feedback.md` / gallery-and-actions | [Gallery recap coverage](2026-10-22-gallery-review-layout.md#request-coverage); full source at plan end; L21-L24, N14, E14/E15, C11/C12 and I60 own all cases | Individually filed; implemented presentation is not linked-page/placement acceptance; diagnostics and optional filename workflow still gated |
-| `sovereign_territories_spelling.md` / planning-and-recaps | [Spelling SP1-SP7](2026-11-02-sovereign-spelling-rename.md), complete source and coverage at plan end | Individually filed; in-place GitHub rename chosen, history/local path still need SP1 answers after run settles; three-machine migration not executed |
+| `sovereign_territories_spelling.md` / planning-and-recaps | [Spelling SP1-SP7](2026-11-02-sovereign-spelling-rename.md), complete source and coverage at plan end | Individually filed; SP1 planning choices settled by 16:35, including assistant-selected local target; evidence-specific migration conflicts and three-machine execution remain |
 | `speed_and_space_optimization.md` / storage-and-configuration | [Layout LY14](2026-11-02-library-layout.md), full source at plan end; cap, original visibility, generate-on-protect, remove-on-unprotect/move, Various and timing all covered | Individually filed; cap is undecided; exact-output concurrency is separately approved in performance T20-T28 |
 | `various_named_person.md` / identity-and-matching | [Naming N12/N13](2026-10-22-identity-family-naming.md#oct-30-named-and-unnamed-various-acceptance-contract), exact note preserved; 11-photo Ela Model core, duplicate filenames/bytes, asserted name and eligible existing matches covered | Individually filed; user supplies/selects later trial, no extra intake or force-merge now |
 
@@ -545,7 +559,7 @@ plan-by-plan consolidation is not claimed complete by this feedback pass.
 | [2026-10-20-art-tools-structure.md](2026-10-20-art-tools-structure.md) | holding | Resume bounded extraction needed by approved implementation; preserve current engine bindings |
 | [2026-10-22-gallery-review-layout.md](2026-10-22-gallery-review-layout.md) | active | Nov 3 selects recap L21-L23 plus existing L18; actual source-rehearsal viewer acceptance remains open, not a broad redesign |
 | [2026-10-22-likeness-engine-acceptance.md](2026-10-22-likeness-engine-acceptance.md) | active | Narrow E13/E14/E15 prerequisites (protection, audit, bounded in-place refinement) to the single layout LY10 milestone; calibration, broader convergence, separate incremental batch and Production stay holding |
-| [2026-10-22-identity-family-naming.md](2026-10-22-identity-family-naming.md) | active | Nov 4 score-band family trees built (N15 sandbox re-run, N7 review next); broader family acceptance and unrelated corrections stay holding |
+| [2026-10-22-identity-family-naming.md](2026-10-22-identity-family-naming.md) | active | N16 threshold code/tests delivered; current saved preview verified. N15/N16 consume LY4 final installed/history evidence, N7 human review remains; no duplicate intake |
 | [2026-10-22-review-actions.md](2026-10-22-review-actions.md) | holding | Resume deliberate action UAT on installed baseline, or narrow verified recovery blocker; pending actions untouched |
 | [2026-10-22-face-analysis-evaluation.md](2026-10-22-face-analysis-evaluation.md) | holding | Labelled ambiguity after installed review, or actual blocking alignment defect; no speculative model dependency |
 | [2026-10-22-manual-prompts-to-art-library.md](2026-10-22-manual-prompts-to-art-library.md) | holding | Prepared-input review and explicit selection before P14-P17 fidelity/token/set work; manual drafts preserved |
@@ -555,7 +569,7 @@ plan-by-plan consolidation is not claimed complete by this feedback pass.
 | [2026-10-25-reference-rendering.md](2026-10-25-reference-rendering.md) | holding | Verified rebase/prepared inputs plus manual fidelity and R44 routing before bounded Prime batch; no queue during install block |
 | [2026-10-28-intake-performance.md](2026-10-28-intake-performance.md) | active | Nov 5 T20-T28 owns approved inventory reuse, bounded downstream workers and new-machine tuning with effort/risk/timing gates; no runtime edit during installation. T17 measurements and T18/T19 profiles remain distinct |
 | [2026-11-02-library-layout.md](2026-11-02-library-layout.md) | active | `_processing` separation (LY1 decided); LY15 continuation/preflight and visible task delivered; saved preview verified, install/final checks authorized and in progress, actual LY4/LY11 acceptance still open |
-| [2026-11-02-sovereign-spelling-rename.md](2026-11-02-sovereign-spelling-rename.md) | holding | Correct repository, paths/docs and three machines after running job settles/evidence, before new clone; in-place GitHub rename chosen, remaining SP1 path/history decisions open |
+| [2026-11-02-sovereign-spelling-rename.md](2026-11-02-sovereign-spelling-rename.md) | holding | SP1 planning choices settled, including corrected local target and useful historical prose; migration/dependency previews and three-machine execution wait for settled processing/evidence |
 | [2026-10-28-storage-operations-and-retention.md](2026-10-28-storage-operations-and-retention.md) | active | S26, mixed history trials and S28 backup/archive recovery delivered; fresh v23 LEAN evidence default. S27 complete replay is current. Smaller hot backups measured slower and rejected for replay; old backups with unique bytes held. S25 broader quality/production and S24 generic PRUNE remain gated |
 
 The Oct 22 retained plans have review/questions blocks; affected owners now

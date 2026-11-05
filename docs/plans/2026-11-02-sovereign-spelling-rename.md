@@ -5,8 +5,8 @@
 **Resume gate:** Nov 5 Q&A supersedes the older full-gallery-acceptance
 timing: wait until the running job is settled and its evidence recorded,
 then correct spelling before the new-machine clone. Never move a directory
-with active tools. SP1's local-path decision still needs an answer; the
-visible-tree spelling intent is clarified below.
+with active tools. SP1's planning choices are recorded below; execution
+still requires the path/dependency preview and a quiet workspace.
 Rename on this machine first, validate, and only then clone on the new
 machine and update the older one.
 
@@ -16,6 +16,26 @@ machine and update the older one.
 
 Source: `feedback/sovereign_territories_spelling.md` (Nov 2), preserved word
 for word at the end.
+
+## Nov 5 16:35 delegated planning choice: local target
+
+Select `C:\Sovereign-Territories\sovereign-territories` for this machine:
+correct both existing path components without introducing an unrelated
+directory convention. This is an assistant-selected planning decision under
+the user's authorization to continue safe work without further questions,
+not a claim the user typed that path or that a move happened.
+The new clone uses the corrected repository folder name; its drive/parent
+remains machine-local and must be checked during setup, not assumed to be C:.
+The older clone updates its remote first and moves only when its work is safe.
+
+Before any move, preview source/destination, existing destination conflicts,
+running tools and bound receipts, then close dependent processes/VS Code.
+Never merge into or overwrite an existing destination automatically. Record
+the performance baseline before path changes, recreate rather than copy a
+path-bound environment, and verify launchers/workspaces after reopening.
+Do not install packages or modify environments during this planning pass.
+Retain compatibility for bound historical paths until dependency migration
+is explicit; a correctly named clone alone does not rebind B-drive receipts.
 
 ## Scope (measured Nov 2, read-only)
 
@@ -54,17 +74,19 @@ Meaningless/unusable documents or obsolete generated files can be reviewed
 for retirement; spelling alone does not prove they are disposable. Check
 unique evidence, recovery/readers and incoming links before removal. No
 archive rewrite, deletion, repository rename or path move occurs in this
-planning exchange. Execution remains gated by the settled run and SP1c.
+planning exchange. Execution remains gated by the settled run and SP2-SP4
+previews; SP1's planning choices are now recorded.
 
 ## Steps
 
-- [ ] **P2 you** SP1 Decide: (a) rename the GitHub repository in place (keeps
+- [x] **P2 either** SP1 Record planning choices: (a) rename the GitHub repository in place (keeps
   issues, PRs and history; old URLs redirect), approved Nov 5;
   (b) correct useful visible-tree documentation, including useful archived
   prose, while handling raw/bound evidence explicitly under the Nov 5
   clarification above; Git history may retain the old spelling;
-  (c) the new local path, for example
-  `C:\Sovereign-Territories\sovereign-territories`.
+  (c) select `C:\Sovereign-Territories\sovereign-territories` under the Nov 5
+  16:35 delegated planning authority. Choices are settled; SP2-SP7 execution,
+  collision/dependency previews and evidence exceptions remain open.
 - [ ] **P2 ai** SP2 On this machine, in one commit: fix current docs and useful
   historical prose/links under the reviewed SP1b inventory, `CONTRIBUTING.md`,
   agent names and the workspace file; do not corrupt preserved raw/bound

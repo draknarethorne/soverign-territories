@@ -8,6 +8,15 @@
 Other open scenarios, C10 future duplicate selection and eventual Production/
 family gates stay in this plan but are outside today's execution focus.
 
+**Nov 5 16:35 gate reconciliation:** C12/C13 code and focused tests are
+delivered; `postrun-lean-preview3` matching/recap checks passed and install/
+final verification was separately authorized. Neither task is a request to
+reimplement its policy. Use LY4's shared final evidence for installed
+admissions, reset/selection proposals and viewer checks, then C7 human review.
+Do not repeat intake or repoint shared workflows to close these boxes.
+Earlier "No reset has been applied" describes the implementation checkpoint,
+not a statement about the unverified live installation's current state.
+
 ## Nov 5: cast auto-join and workflow-selection review
 
 The user explicitly reopens these two narrow policies using the installed
@@ -106,12 +115,14 @@ selected photos do qualify as core members independently. Removing selection
 protection alone would not meet the request to exclude reset selections from
 initial core evidence.
 
-- [ ] **P1 ai** C13 Implement the approved full-rebase workflow
-  selection reset: all cast, selected slots, or selected photos below an
+- [ ] **P1 ai** C13 Verify installed workflow-reset evidence and sandbox-local
+  selection proposals; implementation/tests are delivered. Preserve the
+  approved full-rebase workflow selection reset: all cast, selected slots, or selected photos below an
   own-core cutoff. For the next full rebase, treat current selected cast
   photos as reset candidates, not just the five low-scoring examples;
-  provide all/scoped/low-score controls for future use. No reset has been
-  applied. Remove selection-only
+  provide all/scoped/low-score controls for future use. At the implementation
+  checkpoint no reset had been applied; current installed acceptance remains
+  pending LY4 evidence. Remove selection-only
   retention and exclude scoped old selections from the initial reference
   core, then route them as ordinary candidates. Explicit manual photo
   protection is the approved exception: keep that photo eligible in core
@@ -221,7 +232,8 @@ character slots should inherit the same slot-versus-source-person distinction.
   [layout LY10](2026-11-02-library-layout.md) comparison. Gate: threshold/core-only
   decision approved Nov 3; tested E13 acquisition, exact release preview and
   source/preparation reuse verification before a new sandbox install.
-- [ ] **P1 ai** C12 Implement the Nov 5 approved Sisters auto-join band:
+- [ ] **P1 ai** C12 Verify installed Sisters admission scenarios and receipt/
+  viewer evidence; implementation/tests are delivered. Approved band:
   own-cast score >=0.50 and rival margin >=0.10, with the frozen-reference,
   independent-evidence/quality/rejection gates and read-only scenario preview
   described above. Angels remain Review-only until separately approved.

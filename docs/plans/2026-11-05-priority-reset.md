@@ -24,6 +24,13 @@ checkpoint after hygiene checks, leaving active runtime bytes unchanged.
 Independent plan/task reconciliation and unmade setup decisions may continue;
 new art data, prompt/workflow generation and runtime changes are not implied.
 
+**Nov 5 16:35 safe-work delegation:** the user authorizes autonomous
+planning decisions while waiting. Select conservative defaults consistent
+with previous answers, record their rationale in the owning plan, and
+distinguish assistant-selected choices from quoted user decisions.
+This does not lift the runtime freeze or authorize live rename/deployment,
+new intake, Production changes, human visual acceptance or broad archival.
+
 ## Decisions from the Nov 5 Q&A
 
 | Topic | Agreed direction | Implementation owner / gate |
@@ -37,7 +44,7 @@ new art data, prompt/workflow generation and runtime changes are not implied.
 | Cleanup | Consolidate related leftovers with explicit ownership transfers; archive only completed or superseded plans, never imply transferred tasks were completed | PR1; preserve raw sources and incoming links |
 | Spelling timing | After the running job is settled and evidence recorded, before new-machine clone; do not rename a live working directory | Spelling SP1-SP6; supersedes its older requirement to await all cast visual acceptance before starting |
 | GitHub spelling | Rename the existing repository in place to `sovereign-territories`; do not create a replacement repository | Spelling SP3, later execution approval |
-| Visible-tree spelling, Nov 5 clarification | Correct meaningful visible naming and useful older documentation, not just active docs; Git history can retain prior spelling. Inventory raw/bound evidence separately so migration cannot silently falsify or corrupt it | Spelling SP1b/SP2 clarification; local-path SP1c remains open |
+| Visible-tree spelling, Nov 5 clarification | Correct meaningful visible naming and useful older documentation, not just active docs; Git history can retain prior spelling. Inventory raw/bound evidence separately so migration cannot silently falsify or corrupt it | Spelling SP1/SP2; local path selected under 16:35 delegation, migration preview/execution remains open |
 | New machine | Prepare without derailing productive work here; use corrected repository naming for the new clone | Spelling/setup owners; FULL assessment remains later |
 | Pre-new-PC performance scope, Nov 5 14:41 | Core bundle plus measured-only extras; establish this PC's paired baseline before changing runtime or paths, without blocking basic PC setup on all optimization work | Performance T29/T20-T22 and gallery L18; T25/T23/T24/T26 conditional; exact stopping gate in performance plan |
 | Repeated-work scope, Nov 5 15:59 | Demonstrated straightforward thrashing fixes anywhere in the affected pipeline belong to core, not only derivatives. Choose coordinator/ownership/queues and threads versus processes from measured bottlenecks | Performance T30 extends core assessment across phases; additional acceleration remains gated; no active-run mutation |
@@ -160,6 +167,31 @@ filed, so an empty feedback inbox is not the larger planning finish line.
 | Various naming and workflow proliferation | Family/identity naming and workspace routing | Reassess relevance; on-demand character jobs preferred |
 | Other tooling/game-data/Artist tracks | Existing holding plans | Preserve, do not silently make them art prerequisites |
 
+## Nov 5 16:35 current-milestone task reconciliation
+
+- [x] **P1 ai** PR1c Reconcile the current milestone's delivered-code versus
+  remaining acceptance tasks, remove misleading reimplementation/re-intake
+  wording from their queue entries, and assign one shared run-evidence
+  producer. Keep named scenarios, independent FULL recovery and human
+  acceptance explicit; transfer no underlying ownership.
+
+| Task / owner | Already established from recorded evidence | Exact remaining gate / disposition |
+| --- | --- | --- |
+| LY15/LY15b/LY15a/LY15c, layout | Implementation/regressions, visible terminal and verified saved continuation preview/recap are recorded | Already checked tasks remain checked; no claim that installation/viewers are complete |
+| LY4, layout | Fresh baseline previously ran; current continuation reuses original prepared evidence | Capture current final install/installed/gallery results and actual browser checks once; classify quality exclusions versus defects, no duplicate intake |
+| N16, naming | Two-threshold code/schema/tests delivered; continuation preview verified | Compare saved-case family links and installed Families/history with exact threshold evidence; N7 human acceptance remains |
+| N15, naming | Prior fresh-run receipt/browser evidence recorded, plus diagnostic 143 framing result | Consume LY4's current final evidence; no new reset command from this umbrella task |
+| C12/C13, cast | Sisters admission/reset controls and evidence bookkeeping delivered/tested; current matching preview verified | Installed scenario/receipt/viewer checks, sandbox-local old/new selection evidence; no shared workflow repointing or acceptance of unlabelled identities |
+| E18/E19, engine | Audit-aligned bounded refinement and release-evidence guard tested | Exact 35 follow-up reasons, final residual audit, reset/admission integration and mixed Briar/Sammara scenario evidence remain; do not mark done from matching alone |
+| L21-L23, gallery | Shared recap presentation/provenance and focused fixtures recorded | Actual links/images/counts and case-specific comparison/hold evidence; any undelivered L22 interaction remains an implementation gap, not auto-completed |
+| S27/S30, storage | Previous route/history/recovery evidence and current run's reusable scope identified | Reuse LY4 for current applicable facts; FULL/materialized-recovery portion deferred separately, no backup in disposable LEAN and no duplicate replay |
+| SP1, spelling | In-place repo naming and useful visible-doc correction already chosen | Assistant selects corrected local path under delegated authority; planning checkbox closes, all execution/collision/dependency gates stay open |
+| P19/P20 and R44, manual/rendering | Generic-first/on-demand direction and existing source-category output policy | Workspace scope/defaults recorded; actual inventory/mapping, fidelity, registration, sync previews and visual acceptance still open |
+
+This closes a bounded reconciliation slice, not PR1's entire backlog audit.
+No open task has been archived or marked implemented solely from this
+table. No whole plan qualifies for retirement on this evidence.
+
 ## Nov 5 feedback reconciliation and remaining gates
 
 - [x] **P1 ai** PR1a Reconcile the five active feedback notes, preserve full
@@ -178,7 +210,7 @@ all five filings, exact owners and remaining decisions.
 | Priority-source request | Coverage / disposition |
 | --- | --- |
 | Feedback cleanup; consolidate remaining plans | PR1a covers the five notes; PR1 retains full audit/transfers, PR2 selects next work |
-| Correct spelling everywhere | Spelling SP1-SP7; in-place GitHub rename chosen, local path/history decisions still gated |
+| Correct spelling everywhere | Spelling SP1-SP7; planning choices settled by 16:35, including assistant-selected local target; actual migration/evidence handling still gated |
 | Productive current machine plus new-machine setup | Spelling SP4-SP6, performance T27; no live directory rename |
 | End-to-end LEAN, speed/storage and routine default | Layout LY4/LY15, performance T20-T28, storage; bounded finish line supersedes exhaustive optimization |
 | A: trusted Sister/Angel photos | Cast C7 and layout LY11, both Gallery and Review; human acceptance stays open |
@@ -194,9 +226,9 @@ all five filings, exact owners and remaining decisions.
 | Character jobs without workflow explosion | Generic first; named-character jobs on demand, rendering R44 routing/manual workspace owners |
 | Automatic ComfyUI web-API batches/output naming | Reference execution/rendering and later G priority selection; no queue started |
 
-No unowned request was found among the five active notes. Existing decisions
-still need the user at their gates (derivative cap LY14; spelling SP1c
-and any specific bound-evidence migration conflict;
+No unowned request was found among the five active notes. Open choices
+still need deliberate decisions at their gates (derivative cap LY14,
+any specific bound-evidence migration conflict,
 Production PR3; GUI bridge/command bundle and later automation). Their
 presence in a plan is not a decision made by this filing. Ask one at a time
 when selected, rather than inventing answers or interrupting the active run.
@@ -273,6 +305,15 @@ Yes—LEAN processing by default; disposable recovery only in sandbox; Productio
 What I defined in my manual prompts needs to be re-reviewed against what was done for edit as the order, sequence and items in the prompts all matter to get to the proper edits.  We also need to ensure that where I worked on the "bare" aspects of the prompts it was critical to getting to the point where the 1_Alpha items would work properly as well to get to those bare photos (which are not explicit) and will then support the later phases of adding clothing without the bleed through of clothing from original or generated images.  Hope that makes sense in why the current state of the manual prompts is important.  I did try to separate out some of the deluxe items into a separate prompts/_edit/deluxe so what I have in the prompts/_edit/female are the key items and I did update them since we first pulled things into the 0_Edit areas - so we may need to re-do things.  This will be more oversight from me so that things aren't lost or if I need to manually copy pieces into the prompts we can do that.
 ````
 <!-- markdownlint-enable MD013 -->
+
+## Nov 5 16:35 autonomous safe-work continuation (verbatim)
+
+Coverage: operating boundary, PR1c and owner-specific setup/workspace
+decisions above. Runtime/library/workspace mutation remains excluded.
+
+````text
+Continue with the safe work while this process is still running.  I am switching you to autopilot mode so you can make decisions instead of asking me.  You know what I tend to decide and how we need to get this work done while waiting.
+````
 
 ## Nov 5 14:59 larger-planning continuation (verbatim)
 

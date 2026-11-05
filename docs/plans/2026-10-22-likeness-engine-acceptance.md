@@ -1,6 +1,6 @@
 # 2026-10-22: likeness engine acceptance and production rebuilding
 
-**Status:** active (Nov 5 E18/E19 selected next-preview prerequisites)
+**Status:** active (Nov 5 E18 implementation/tests delivered; E18/E19 saved-case and installed acceptance remain)
 
 **Queue focus:** E18, E19, E13, E14, E15, E16, E17
 
@@ -83,7 +83,10 @@ Final audit uses separately rebuilt final Gallery cores, includes retained
 cast and Review, and does not run a further reassignment pass. More passes
 of exactly the same scope need not change anything.
 
-- [ ] **P1 ai** E18 Reconcile final audit with refinement before next rebase:
+- [ ] **P1 ai** E18 Verify saved-case and installed final-audit/refinement
+  results, including C12/C13 integration; code/tests are delivered, all
+  35 follow-up traces and final residual reasons still require evidence.
+  Retained implementation contract:
   Nov 5 09:40 clarification: user explicitly requires refinement logic
   aligned with the final audit before that audit runs, not merely a report
   of mismatches afterward. Build shared final-membership comparison evidence,

@@ -4,6 +4,24 @@
 
 **Queue focus:** S27, S30
 
+## Nov 5 16:35 acceptance sharing, not duplicate replay
+
+Use layout LY4's current saved-input continuation for applicable installed
+routes, Gallery/Overview/Review, retained lineage and timing evidence in
+S27/S30. Do not start another reset/intake/replay just because this owner
+also needs those results. Preserve source/recipe/profile/run identifiers;
+older installed evidence must not masquerade as acceptance of the changed
+family/admission/refinement policies.
+
+S27 also owns FULL comparison/materialized backup recovery: disposable
+LEAN deliberately supplies no new rollback/backup proof. That distinct
+portion stays explicitly deferred to the protected FULL/new-machine scope
+or a separately selected recovery test; it is not a new blocker for the
+current sandbox's cast/art review and not completed by a disposable check.
+S32's older "one backup" wording is not an instruction to create a backup
+in the current reset-only profile. Production protection remains binding.
+No retirement/pruning or additional verification I/O occurs in this pass.
+
 ## Oct 31 authorized backup cleanup
 
 ### Nov 2 stat-only disk inventory and cleanup priority

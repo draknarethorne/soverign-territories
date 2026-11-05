@@ -47,20 +47,49 @@ manual prompts' ordering of pose, background, camera and other details, and
 check whether it should apply to all templates (P14/P15). The old Prime/Bare
 `bare` examples can go once the new prompts replace them.
 
-- [ ] **P2 you** P19 Answer the workspace-organisation questions one at a time:
+- [ ] **P2 either** P19 Verify the workspace inventory and old-to-new
+  reference/collision map against the Nov 5 scope decisions below;
+  bring remaining conflicts to the user one at a time:
   what Sovereign Females/Males contain versus Angel Primes and the Drakn
   workspaces, what `zz_shots` become under generic names, which old
   `bare`/Prime items retire, and conflicts with older docs, `_sets` and current
   generation flows.
-- [ ] **P2 ai** P20 Add Sovereign Females (then Sovereign Males) to
+- [ ] **P2 ai** P20 Add Sovereign Females first (Sovereign Males later,
+  separately selected) to
   `workspaces.json` with scoped workflow selection (which templates or stages
-  go to which workspace). Reset its workflows through generation, generalise
-  the `Angelica_*` `zz_shots` names, remove the generic female/male from Angel
-  Primes, with sync previews and tests. Gate: P19 answers and this plan's
+  go to which workspace). Preview owned generated replacements while
+  preserving curated/manual files; generalise
+  the `Angelica_*` `zz_shots` names, remove the generic female series from Angel
+  Primes only after the accepted female pilot; male removal/deployment is
+  deferred. Use sync previews and tests. Gate: P19 mapping and this plan's
   resume gate.
 - [ ] **P2 ai** P21 Compare the manual prompts' section order (pose, background,
   camera and other details) with every template family, and propose an
   ordering standard as part of P7. Gate: P14 ledger.
+
+## Nov 5 16:35: bounded workspace decisions before implementation
+
+Under delegated safe-planning authority, use the existing generic-first
+direction rather than add another workspace scheme:
+
+| Surface | Planning decision / implementation owner |
+| --- | --- |
+| Sovereign Females | Generic supported female test-bed recipes and neutral reusable shot templates only, selected explicitly in configuration; no generated per-person workflow forest (P19/P20) |
+| Angel Primes / Drakn Sisters | Preserve character-specific workflow sets and input/identity bindings. Remove only the generic female series from Angel Primes after its accepted replacement is deployed and checked (P17/P20) |
+| Sovereign Males | Later separate scope; do not make male setup/removal a prerequisite for the female pilot or silently deploy it with P20 |
+| Generic `zz_shots` | Preserve the existing shot/template identifier, model/stage/variant distinction and references; remove misleading fixed-character naming only through an inventoried old-to-new map. Add deterministic disambiguation if generic names collide, never overwrite (P19/P20) |
+| Named-person requests | On demand, bound to verified source identity/category and frozen job context; use rendering R44's shared naming builder rather than another workspace-specific output convention |
+| Experimental/manual drafts | Deluxe stays manual-only and outside automatic migration/generation until P18 is deliberately selected; source drafts and curated/manual installed workflows are not disposable generated output |
+| Retirement | Preview owned generated replacements/removals, retained manual/curated files and references; retire old generic examples only after accepted replacement and link/input checks |
+
+These are scope/default choices, not implemented workspace registration or
+template/output renaming. P19 stays open for the actual inventory, collision/
+reference map and any conflict with sets/manual workflows. P14-P16 current
+source fidelity and P6 user visual acceptance remain; no prompt wording,
+art data, generators, config or installed workspace was changed here.
+P20 must start with the female pilot, not interpret its older "then Males"
+wording as permission for a combined reset. R44 owns executable output paths
+and lineage; this section deliberately creates no competing path builder.
 
 ## Oct 27: source-faithful prompt reconciliation and Female test bed
 

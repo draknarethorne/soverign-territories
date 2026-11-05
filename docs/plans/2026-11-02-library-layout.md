@@ -5,6 +5,25 @@ LY3 publication/undo and LY5 implemented and tested Nov 2)
 
 **Queue focus:** LY4, LY11, LY13, LY14, LY12, LY9, LY6, LY8
 
+## Nov 5 16:35: one run, separate acceptance gates
+
+The current remaining operation is saved-input continuation acceptance,
+not another full Production reset or intake. LY4 collects one shared set
+of installation/check exit results, diagnostics, actual run/receipt
+identifiers, phase times and Gallery/Overview/Review browser evidence.
+Naming N15/N16, cast C12/C13, engine E18/E19 and gallery L21-L23 consume
+the relevant portion instead of launching duplicate runs. Case-specific
+missing evidence remains open; a successful generic check is not proof
+that every labelled scenario passed. LY11/C7 human review stays separate.
+No new final result is inferred from this planning reconciliation.
+
+Storage S27 retains its separate FULL/materialized recovery scope; the
+disposable run supplies shared route/viewer/timing evidence, not proof of
+a backup/restore that this profile deliberately does not create. Snapshot
+or run-state retirement in historical LY4 scope is separately gated by
+dependency/unique-evidence checks and scoped approval, not automatic cleanup
+after a green page. Keep failed attempts and active source folders intact.
+
 ## Nov 5 14:25: current authorization and planning-only lane
 
 LY15c's visible process task is working and the user can see/monitor it.
@@ -366,7 +385,10 @@ check passed afterwards.
   to the new API; run the affected test files. Done Nov 2.
 - [ ] **P2 ai** LY3b Install moves the selected run artifacts into `_processing`
   instead of copying (decision d), keeping the run's undo/replay receipts valid.
-- [ ] **P1 ai** LY4 Reset the sandbox from production (`sandbox-reset --full` plus
+- [ ] **P1 ai** LY4 Complete the authorized continuation's install/check/
+  viewer evidence and classify diagnostics; share it with acceptance owners.
+  Do not repeat reset/intake solely to close this task. Historical scope:
+  reset the sandbox from production (`sandbox-reset --full` plus
   the carried bundle), run the clean LEAN rebase in place with per-step timings
   (Acronis off), verify Gallery/Overview/Review, then hand to storage S32/S27
   and retire the old sandbox snapshot and run state.

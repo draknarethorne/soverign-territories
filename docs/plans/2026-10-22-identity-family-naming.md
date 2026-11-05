@@ -1,6 +1,6 @@
 # 2026-10-22: identity families and safe naming
 
-**Status:** active (Nov 5 direct/secondary thresholds approved; N16 implementation before next rebase)
+**Status:** active (Nov 5 threshold implementation tested and saved continuation preview verified; installed scenario and human family acceptance remain)
 
 **Queue focus:** N16, N15, N7
 
@@ -72,7 +72,8 @@ peer links. It does not claim that a 0.40 full preview will contain exactly
 10 Lujans. The recap's Families section already exposes each full path.
 Scores here come from `run.json` family evidence, not visual identity labels.
 
-- [ ] **P1 ai** N16 Implement the Nov 5 09:36 approved family thresholds:
+- [ ] **P1 ai** N16 Verify installed family-threshold results and complete
+  saved-case comparison; implementation is delivered and tested. Contract:
   direct identity-to-cast links **>=0.40**, secondary identity-to-identity
   links **>0.35** (strict). Prefer a qualifying direct cast link, otherwise
   consider a qualifying peer; retain chains, with every secondary edge
@@ -85,8 +86,10 @@ Scores here come from `run.json` family evidence, not visual identity labels.
   Earlier one-threshold path counts above do not predict this two-threshold
   replan. Broader cast auto-join/workflow-selection requests
   are owned by [cast C12/C13](2026-10-23-cast-seeded-library-rebase.md#nov-5-cast-auto-join-and-workflow-selection-review).
-  The new approval supersedes the earlier uniform-yellow rule for the next
-  implementation; the saved installed run remains unchanged.
+  The new approval supersedes the earlier uniform-yellow rule in the delivered
+  implementation; earlier installed evidence is not acceptance of the
+  currently installing continuation. Use its saved preview/receipt and
+  linked Families/history outputs, not another intake to re-test thresholds.
 
 Nov 5 implementation evidence: `familyNaming` now stores
 `directCastMinimumSimilarity: 0.4` and
@@ -142,7 +145,9 @@ evidence, so the re-run reuses the verified intake and measurements. The
 cast person's `z_` file stays as provenance; the catalogue carries the current
 family name. Families are presentation only, never matching evidence.
 
-- [ ] **P1 ai** N15 Re-run as a fresh LEAN sandbox run from Production
+- [ ] **P1 ai** N15 Complete installed/gallery/browser acceptance using shared
+  LY4 continuation evidence, not another fresh intake. Historical run scope:
+  re-run as a fresh LEAN sandbox run from Production
   (`bin\rebase-flow.cmd --root W --run fresh-20261104-lean --apply`, layout
   LY14b; see the [11:30 recap](../recap/2026-11-04-1130-recap.md)) so the LEAN trim (layout
   LY14a) and the apply timings apply; this replaces the earlier undo/replan of

@@ -4,6 +4,20 @@
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
+**Nov 5 16:35 autonomous safe-work decisions:** current acceptance tasks now
+name remaining evidence instead of asking to rebuild delivered code or
+repeat intake. LY4 produces shared final-run evidence; naming/cast/engine/
+gallery/storage owners retain their exact scenario and human gates.
+Protected FULL recovery is separate, not a backup added to disposable LEAN.
+Under delegated planning authority select
+`C:\Sovereign-Territories\sovereign-territories` as this machine's later
+local target. Workspace direction is female-first/generic-first with named
+jobs on demand; Males/experimental drafts stay deferred and curated/manual
+files need an explicit migration map. See the
+[reconciliation](plans/2026-11-05-priority-reset.md#nov-5-1635-current-milestone-task-reconciliation).
+No runtime, path, config, library or installed workspace changed; no new
+final verification result is claimed.
+
 **Nov 5 16:10 publication checkpoint:** user chooses to wait on optimization
 coding rather than create an isolated development copy; publish the existing
 tested implementation/plans after hygiene, without changing active runtime
