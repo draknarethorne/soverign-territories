@@ -91,6 +91,47 @@ class RebaseRecapTests(unittest.TestCase):
         data.pop("_review_page", None)
         self.assertIn("Photo review unavailable", rebase_recap._person_link("Angels/Ava", data, out.parent))
 
+    def test_preview_links_use_planned_sections_and_verified_prepared_photos(self):
+        data = rebase_recap.collect(self.run)
+        data["status"] = "preview"
+        out = self.working / "_reports" / "library" / "rebase-recap" / "preview.html"
+        out.parent.mkdir(parents=True)
+        (out.parent.parent / "people_gallery_review.html").write_text("installed review", encoding="utf-8")
+        row = data["rows"][0]
+        row["preparedPath"] = "candidates/a/control.png"
+        prepared = pathlib.Path(data["preparationIndex"]).parent / row["preparedPath"]
+        prepared.parent.mkdir(parents=True, exist_ok=True)
+        prepared.write_bytes(b"source-a")
+        page = rebase_recap.render(data, out)
+        self.assertNotIn("people_gallery_review.html?person=", page)
+        for prefix, person in (("cast", "Angels/Ava"), ("id", "Models/Nia Vale")):
+            anchor = rebase_recap._anchor(prefix, person)
+            self.assertIn(f'href="#{anchor}" target="_blank"', page)
+            self.assertIn(f'id="{anchor}"', page)
+        self.assertIn("not installed", rebase_recap._destination_links(row, data, out.parent))
+        thumb = rebase_recap._thumb(row, data, out.parent)
+        self.assertIn("candidates/a/control.png", thumb)
+        self.assertNotIn("Angels/Ava/gallery/ava_a.jpg", thumb.split('title="')[0])
+        self.assertIn("candidates/a/control.png", rebase_recap._source_link(row["source"], row, data, out.parent))
+        row["preparedPath"] = "../outside.jpg"
+        self.assertNotIn("<a ", rebase_recap._thumb(row, data, out.parent))
+        row["preparedPath"] = "candidates/a/control.png"
+        prepared.write_bytes(b"edited")
+        data.pop("_sha256_cache", None)
+        self.assertNotIn("<img", rebase_recap._thumb(row, data, out.parent))
+
+    def test_direct_only_family_prose_does_not_claim_secondary_links_enabled(self):
+        data = rebase_recap.collect(self.run)
+        data["familyNaming"] = {
+            "families": [], "directCastMinimumSimilarity": .4,
+            "secondaryMinimumSimilarityExclusive": .35, "secondarySurnameLinksEnabled": False,
+        }
+        page = rebase_recap._family_section(data)
+        self.assertIn("secondary surname links disabled", page)
+        self.assertNotIn("secondary minimum similarity", page)
+        data["familyNaming"].pop("secondarySurnameLinksEnabled")
+        self.assertIn("secondary minimum similarity", rebase_recap._family_section(data))
+
     def test_family_comparisons_are_collapsed_bounded_and_linked(self):
         data = rebase_recap.collect(self.run)
         row = next(r for r in data["rows"] if r["newPerson"] == "Models/Nia Vale")

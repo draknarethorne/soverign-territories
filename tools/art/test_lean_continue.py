@@ -148,6 +148,46 @@ class LeanContinuationTests(unittest.TestCase):
         self.assertTrue(result["people"][person_id]["protected"])
         self.assertFalse(seed["people"][person_id]["protected"])
 
+    def test_generated_identity_metadata_changes_are_not_new_manual_decisions(self):
+        person_id = "person_" + "b" * 32
+        empty = {"schemaVersion": 1, "photos": {}, "actions": [], "people": {}}
+        installed = copy.deepcopy(empty)
+        installed["people"][person_id] = {
+            "id": person_id, "folder": "Angels/Fixed", "displayName": "Fixed",
+            "folderHistory": [], "identityAnchors": ["photo:image_123456"], "protected": True,
+        }
+        current = copy.deepcopy(installed)
+        current["people"][person_id].update(
+            names={"currentName": "New surname"}, family={"surname": "New surname"},
+            protectionProvenance={"reason": "automatic core refreshed"},
+        )
+        self.assertEqual(lean_continue.seed_catalog({"photos": []}, current, empty, installed), empty)
+        for field, value in (
+                ("identityAnchors", ["photo:image_654321"]),
+                ("automaticProtectionOverride", "manual-protect")):
+            with self.subTest(field=field):
+                edited = copy.deepcopy(current)
+                edited["people"][person_id][field] = value
+                with self.assertRaisesRegex(ValueError, "manual decisions"):
+                    lean_continue.seed_catalog({"photos": []}, edited, empty, installed)
+        new_manual = copy.deepcopy(empty)
+        new_manual["people"][person_id] = copy.deepcopy(installed["people"][person_id])
+        with self.assertRaisesRegex(ValueError, "manual decisions"):
+            lean_continue.seed_catalog({"photos": []}, new_manual, empty, empty)
+        prior_unprotected = copy.deepcopy(installed)
+        prior_unprotected["people"][person_id]["protected"] = False
+        with self.assertRaisesRegex(ValueError, "manual decisions"):
+            lean_continue.seed_catalog({"photos": []}, new_manual, empty, prior_unprotected)
+
+    def test_manual_migration_refusal_precedes_expensive_preparation_verification(self):
+        self.prepare()
+        with mock.patch.object(lean_continue, "seed_catalog", side_effect=ValueError("explicit migration")), \
+                mock.patch.object(clean_preparation, "verify") as verify:
+            with self.assertRaisesRegex(ValueError, "explicit migration"):
+                self.command(apply=True)
+        verify.assert_not_called()
+        self.assertFalse(self.target.exists())
+
     def test_preview_check_refuses_engine_or_measurement_changes_without_installing(self):
         self.prepare()
         self.command(apply=True)

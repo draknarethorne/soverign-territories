@@ -33,6 +33,31 @@ class VerificationReadsTests(unittest.TestCase):
         self.assertEqual(proof.stats["sealBytes"], len(b"original"))
         self.assertIsNone(reads.active())
 
+    def test_explicit_same_operation_reuse_has_one_seal_and_revalidates_next_operation(self):
+        with mock.patch.object(reads, "_digest", wraps=reads._digest) as digest:
+            with reads.session(self.root) as proof:
+                reads.sha256(self.source)
+                with reads.session(self.root, reuse=True) as shared:
+                    self.assertIs(shared, proof)
+                    reads.sha256(self.source)
+                self.assertEqual(digest.call_count, 1)
+                with self.assertRaisesRegex(ValueError, "same root"):
+                    with reads.session(self.root.parent, reuse=True):
+                        pass
+                with self.assertRaisesRegex(ValueError, "seal policy"):
+                    with reads.session(self.root, seal_content=False, reuse=True):
+                        pass
+            self.assertEqual(digest.call_count, 2)
+            with reads.session(self.root, reuse=True):
+                reads.sha256(self.source)
+            self.assertEqual(digest.call_count, 4)
+        with self.assertRaisesRegex(ValueError, "content changed"):
+            with reads.session(self.root):
+                with reads.session(self.root, reuse=True):
+                    reads.sha256(self.source)
+                self.source.write_bytes(b"modified")
+        self.assertIsNone(reads.active())
+
     def test_explicit_disposable_staging_skips_second_content_seal_only(self):
         with mock.patch.object(reads, "_digest", wraps=reads._digest) as digest:
             with reads.session(self.root, seal_content=False) as proof:

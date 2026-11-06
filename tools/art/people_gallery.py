@@ -1069,12 +1069,12 @@ def render_pairing_report(rows, stamp):
     return "\n".join(lines)
 
 
-def main(argv=None, space=None):
+def main(argv=None, space=None, *, context=None, provenance=None):
     with domains.activate("general", read_only=True):
-        return _main(argv, space)
+        return _main(argv, space, context=context, provenance=provenance)
 
 
-def _main(argv=None, space=None):
+def _main(argv=None, space=None, *, context=None, provenance=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--artists", action="store_true", help="retired: use artists-gallery.cmd")
     ap.add_argument("--out", help="report folder under the configured reports root (relative paths start there)")
@@ -1091,7 +1091,11 @@ def _main(argv=None, space=None):
         for category in policy["categoryOrder"]
         if category != "Artists"
     ]
-    if space is None:
+    if context is not None:
+        cfg, st, work, cache, space = context
+        domains.require_general_space(space)
+        rend = None
+    elif space is None:
         cfg, st, work, cache, space = likeness.build(types.SimpleNamespace(
             root=args.root, cache=args.cache, embedder=None, policy=args.policy,
         ))
@@ -1103,13 +1107,14 @@ def _main(argv=None, space=None):
     reports = cw.storage_root(cfg, "reports", root=work)
     out = cw.storage_output_path(cfg, "reports", args.out or "library", root=work)
     out.mkdir(parents=True, exist_ok=True)
-    with verification_reads.session(work, label="Overview inputs"):
+    with verification_reads.session(work, label="Overview inputs", reuse=context is not None):
         rows = collect(cfg, st, work, space, groups, rend=rend, policy=policy)
         provenance_sources = [
             (photo["path"], photo_id_from_name(photo["name"]))
             for row in rows for photo in row["gallery_photos"]
         ]
-        provenance = preparation_provenance.build_index(work, out, provenance_sources, "general")
+        if provenance is None:
+            provenance = preparation_provenance.build_index(work, out, provenance_sources, "general")
         history = provenance.history_html().encode("utf-8")
         for row in rows:
             for photo in row["gallery_photos"]:

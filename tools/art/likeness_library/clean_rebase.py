@@ -889,9 +889,14 @@ def _apply_family_tree(clusters, cluster_names, name_evidence, candidates, cores
                     "parent": member["parentFolder"], "score": member["score"], "band": member["band"],
                     "status": member["status"],
                 }
+    secondary = (
+        f"secondary > {evidence.get('secondaryMinimumSimilarityExclusive', .35):.2f}"
+        if evidence.get("secondarySurnameLinksEnabled", True)
+        else "secondary surname links disabled"
+    )
     print(
         f"clean rebase: family naming (direct cast >= {evidence['linkMinimum']:.2f}, "
-        f"secondary > {evidence.get('secondaryMinimumSimilarityExclusive', .35):.2f}): "
+        f"{secondary}): "
         f"{len(evidence['families'])} families, {evidence['linkedIdentityCount']} linked, "
         f"{evidence['renamedIdentityCount']} surname change(s), "
         f"{evidence['displacedFamilyCount']} given a fresh surname owned elsewhere",

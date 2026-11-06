@@ -58,6 +58,33 @@ class FamilyTreeTests(unittest.TestCase):
         self.assertEqual(evidence["cast"]["Angels/angelica"]["currentPersonName"], "Angelica Hadley")
         self.assertEqual(evidence["cast"]["Angels/angelica"]["surnameSource"], "configured")
 
+    def test_direct_only_mode_does_not_inherit_cast_surname_through_a_peer(self):
+        cast = {"Sisters/Draknara": {"vector": E[0], "personName": "Lia Lujan"}}
+        direct = blend(E[0], E[1], .45)
+        peer = blend(E[0], E[1], .30)
+        identities = {
+            "Models/Fia Vale": self.identity("Fia Vale", direct),
+            "Models/Nia Stone": self.identity("Nia Stone", peer),
+        }
+        before = copy.deepcopy(identities)
+        _, legacy = family_tree.plan(identities, cast, self.policy)
+        self.assertEqual(len(legacy["families"][0]["members"]), 2)
+        self.policy["familyNaming"]["secondarySurnameLinksEnabled"] = False
+        validate_policy(self.policy)
+        renames, evidence = family_tree.plan(identities, cast, self.policy)
+        self.assertEqual(renames, {"Models/Fia Vale": "Fia Lujan"})
+        self.assertEqual([m["identity"] for m in evidence["families"][0]["members"]], ["Models/Fia Vale"])
+        self.assertFalse(evidence["secondarySurnameLinksEnabled"])
+        self.assertIn("peer resemblance does not confer", evidence["rule"])
+        for key in identities:
+            np.testing.assert_array_equal(identities[key]["vector"], before[key]["vector"])
+        schema = json.loads((ROOT / "data/art/_schema/likeness-engine-policy.schema.json").read_text())
+        jsonschema.Draft7Validator(schema).validate(self.policy)
+        for invalid in (None, 0, "false"):
+            self.policy["familyNaming"]["secondarySurnameLinksEnabled"] = invalid
+            with self.subTest(value=invalid), self.assertRaises(ValueError):
+                validate_policy(self.policy)
+
     def test_below_direct_minimum_cast_falls_back_to_peer_chain(self):
         cast = {"Sisters/Draknara": {"vector": E[0], "personName": "Lia Lujan"}}
         peer = blend(E[1], E[2], .9)

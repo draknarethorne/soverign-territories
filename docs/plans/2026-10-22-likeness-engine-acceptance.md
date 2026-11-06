@@ -148,7 +148,20 @@ then `refinement.refine`):
    scores without moving photos. Automatic final protection is not proof
    that the preceding grouping decision was correct.
 
-No evidence here supports saying one per-photo threshold "kicked them out."
+   **Nov 6 stable-ID continuity:** all 93 original Briar rows now land in
+   the 96-photo `Models/Noelle Cruz` Gallery in installed preview3. Their
+   saved final dispositions are 70 automatic-protection holds (not manual
+   locks), 16 with no higher rival, four insufficient-margin holds and
+   three ineligible single-face measurements. Across the complete 96-photo
+   Noelle cohort, 83 saved top-three cast references mention Sammara,
+   0.112203..0.432019; none reaches even the proposed Angel Gallery 0.45.
+   That is not a claim about missing top-three scores or human identity.
+   Lowering the Gallery-specific gate alone cannot resolve the user's
+   many-but-not-all correction. Carry all 93 stable IDs into the next
+   comparison and preserve per-photo protection/rival/quality dispositions;
+   do not force the entire identity into Sammara or call this human-verified.
+
+   No evidence here supports saying one per-photo threshold "kicked them out."
 There are different individual, group-size/classification and refinement
 gates. E19 must trace them by stable photo ID and generalize the scenario
 across cast; do not lower one global number or send the whole group to Review.
@@ -538,7 +551,6 @@ source rehearsal's audit first.
 It almost seems like an audit is necessary after the run to look for instances where things do seem mis-aligned and we'd want to figure out what to do with those images in the process or re-run them through the likeness again to see where they land?  Basically, iterating and auditing and refining any assignments.  Would that make sense or not end up actually having any impact no the galleries, assignments, and such?
 ````
 <!-- markdownlint-enable MD013 -->
-
 ### Nov 3, 14:17: bounded refinement in place
 
 The user authorizes automatic refinement applied in place after rebase
@@ -557,5 +569,32 @@ naming keeps the oldest original name. Passes stop when stable or at four.
 <!-- markdownlint-disable MD013 -->
 ````text
 I want to see the bounded automatic refinements working in place so that after a rebase - we believe that it's as clean as it's going to get.  This could also include merging more identities as the identities evolve.  It's not just where do individual photo's go - but do we end up realizing that two identities are now the same when images move in/out in this last phase of the likeness.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 6 follow-up: core coverage and unresolved destinations
+
+E19 now additionally owns a saved-measurement comparison of Noelle's
+96 photos against Sammara's 15 frozen seed-core photos and remaining
+Gallery members: normalized core versus best individual reference,
+core coverage, quality/preparation, protection and route/merge gates.
+Scores do not establish alteration or human identity. Do not silently add
+unreviewed Noelle members to Sammara's core or force a whole-group merge.
+
+The separate preview's 40 Various Review photos divide into 21 ambiguous
+cast candidates and 19 quality-ineligible photos (16 multiple-face,
+one no-face, two too-small). This routing question is distinct from the
+199 total Review photos across all folders. Compare one explicit
+candidate-Review destination with retained rival/uncertainty evidence;
+quality-ineligible photos cannot inherit an invented measured identity.
+Any changed destination policy needs an explicit rule, tests and a
+separate preview; installed receipts remain immutable. The existing
+report-verification/publication closeout stays first.
+
+### Raw follow-up source
+
+<!-- markdownlint-disable MD013 -->
+````text
+Keep on monitoring what you are doing and don't stop if you have more work.  When you're done with the other changes - you can help me as I don't understand why Noelle Cruz did not merge into Adrianne Cruz (Sammara)  It's odd since most of them are supposed to be her - unless they are altered and truly don't match her.  But that's one thing that was not yet figured out.  I also think so many for review in Various is a problem and we need to pick one place where to put them instead of leaving them in Various for review.  What I wonder is if there are some photos in Sammara that aren't able to pull these others of her into the library?
 ````
 <!-- markdownlint-enable MD013 -->

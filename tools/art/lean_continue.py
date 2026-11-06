@@ -96,8 +96,17 @@ def seed_catalog(source_plan, current, seed, installed=None):
         old = result["people"].get(person_id)
         manual_protection = person.get("protected") and not person.get("protectionProvenance")
         if old is None:
+            prior = installed["people"].get(person_id) if installed is not None else None
+            if (prior is not None
+                    and all(person.get(field) == prior.get(field)
+                            for field in ("identityAnchors", "automaticProtectionOverride"))
+                    and (not manual_protection or prior.get("protected"))):
+                continue
             if person.get("automaticProtectionOverride") or person.get("identityAnchors") or manual_protection:
-                raise ValueError("new identity manual decisions require explicit migration before saved-input reuse")
+                raise ValueError(
+                    "new identity manual decisions require explicit migration before saved-input reuse: "
+                    f"{person_id} ({person['folder']})"
+                )
             continue
         if person.get("identityAnchors") != old.get("identityAnchors"):
             old["identityAnchors"] = list(person.get("identityAnchors", []))
@@ -195,9 +204,6 @@ def command(args):
         return plan
     if args.check or args.install:
         raise ValueError("create a separate matching preview with --apply before installation")
-    preparation = clean_preparation.verify(layout, source)
-    if metadata.content_sha256(preparation[0] / "manifest.json") != original["preparation"]["manifestSHA256"]:
-        raise ValueError("saved preparation differs from original matching receipt")
     cfg = likeness.cw.load_cfg()
     current = metadata.load_catalog(metadata.path_for_root(working))
     candidates = [
@@ -214,6 +220,10 @@ def command(args):
         raise ValueError("original matched catalogue changed; cannot isolate intervening manual decisions")
     seed = seed_catalog(original, current, metadata.load_catalog(seed_path), metadata.load_catalog(source / "catalog.json"))
     policy = clean_rebase.core_protection_policy(load_policy(args.policy))
+    print("LEAN continuation: verifying saved preparation; cached measurements only.", flush=True)
+    preparation = clean_preparation.verify(layout, source)
+    if metadata.content_sha256(preparation[0] / "manifest.json") != original["preparation"]["manifestSHA256"]:
+        raise ValueError("saved preparation differs from original matching receipt")
     print("LEAN continuation: verifying current-photo continuity against immutable matching IDs.", flush=True)
     working_inputs = clean_rebase._curation_inventory(layout, current)
     target.mkdir()

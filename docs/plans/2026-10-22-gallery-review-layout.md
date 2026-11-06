@@ -109,6 +109,14 @@ ground-truth identities.
   exact two saved images; quality flags are observations, not confirmed
   people counts. Test missing evidence, same-person returns and all reason
   destinations without rerunning intake just to populate a table.
+  Nov 6 visual check: Jade's installed saved photo shows one visible human
+  and a dog, supporting investigation of a false extra-face observation,
+  not automatic quality admission. The current run has 16 two-face holds,
+  not the old feedback's two. The Harlow Chase candidate
+  `image_7515794330224531319` visibly includes multiple background people,
+  so it must **not** be substituted for the user's unlocated second false
+  case. Preserve that identification gap until the exact earlier report
+  row/image can be reconciled; do not suppress a detector flag globally.
 - [ ] **P3 either** L24 Evaluate a ComfyUI-friendly ranked photo picker or
   opt-in export view. Explain that scores/ranks can change as membership
   changes, and compare stable source filenames plus a picker/copyable path

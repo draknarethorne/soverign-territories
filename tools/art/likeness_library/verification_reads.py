@@ -167,8 +167,14 @@ def active():
 
 
 @contextmanager
-def session(root, *, label=None, seal_content=True):
-    if active() is not None:
+def session(root, *, label=None, seal_content=True, reuse=False):
+    current = active()
+    if current is not None and reuse:
+        if pathlib.Path(root).absolute() != current.root or seal_content != current.seal_content:
+            raise ValueError("verification reuse requires the same root and content-seal policy")
+        yield current
+        return
+    if current is not None:
         raise ValueError("nested verification sessions are not supported")
     reads = ReadSession(root, label=label, seal_content=seal_content)
     token = _ACTIVE.set(reads)

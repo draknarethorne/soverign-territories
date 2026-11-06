@@ -41,6 +41,14 @@ or install a preview; the
 [cast comparison](../plans/2026-10-23-cast-seeded-library-rebase.md#nov-6-shared-gate-implementation-and-frozen-comparison)
 owns the proposed minima and saved-evidence results.
 
+Combined Overview/Review refresh shares a general-domain scoring context,
+preparation-history index and operation-local verification session.
+The pages still publish sequentially; successful freshness state is
+recorded only after a full content/path/owner seal. Standalone commands
+rebuild their own context. Freshness includes reader/rendering code and
+configuration changes, so a report-reader fix requires a report refresh
+even when the photos are unchanged.
+
 For current state and the sandbox/production boundary, see
 [STATUS.md](../STATUS.md), the
 [processing contract](likeness-processing-contract.md) and the active
@@ -599,6 +607,15 @@ while a separate preview is built.
   content-bound; ambiguous/new-identity or placement-history changes refuse
   rather than silently disappear. Shared workflow configuration is not
   updated; proposed selection replacements remain sandbox-local.
+  Refreshed automatic protection provenance or generated name/family
+  metadata is not itself a new manual decision when the identity's
+  anchors/override and manual protection remain unchanged. Actual new
+  anchors, overrides or manual protection still require explicit migration.
+  Cheap catalogue/policy refusals precede full preparation verification.
+- An uninstalled recap links proposed people to its own expandable photo
+  evidence, not the installed Photo review roster. Photo links use the
+  original SHA-256-verified prepared input, never a nonexistent proposed
+  destination. Applied recaps retain filtered current Photo review links.
 - Missing cached measurements refuse rather than loading models or quietly
   repeating intake. Prepared bytes, recipe, receipt and source bindings are
   still checked: reset-only recovery does not waive image-quality or path

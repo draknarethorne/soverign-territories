@@ -3,7 +3,8 @@
 Family surnames are human-facing presentation only and are never matching evidence.
 An identity joins the family of its closest Angel/Sister when that score reaches the
 inclusive direct threshold; otherwise it links to its closest other identity strictly
-above the secondary threshold. Score colours do not control membership.
+above the secondary threshold, unless secondary surname links are disabled.
+Score colours do not control membership.
 Connected links form one family whose surname comes from the cast root
 (configured override, then recorded person name) or, failing that, the oldest member.
 Surnames are exclusive: Angel/Sister families claim theirs first, then other families and lone
@@ -26,6 +27,7 @@ def settings(policy):
         "enabled": bool(config.get("enabled", False)),
         "directCastMinimumSimilarity": float(config.get("directCastMinimumSimilarity", .4)),
         "secondaryMinimumSimilarityExclusive": float(config.get("secondaryMinimumSimilarityExclusive", .35)),
+        "secondarySurnameLinksEnabled": config.get("secondarySurnameLinksEnabled", True),
         "overrides": dict(config.get("castSurnameOverrides", {})),
     }
 
@@ -96,6 +98,8 @@ def plan(identities, cast, policy, *, reserved=(), surnames=(), first_names=()):
         if ranked_cast and ranked_cast[0][0] >= direct_minimum:
             score, target = ranked_cast[0]
             parents[key] = {"tier": "cast", "to": target, "score": score}
+            continue
+        if not config["secondarySurnameLinksEnabled"]:
             continue
         ranked_peers = sorted(
             ((float(vector @ other["vector"]), other_key)
@@ -249,11 +253,14 @@ def plan(identities, cast, policy, *, reserved=(), surnames=(), first_names=()):
         "enabled": True,
         "directCastMinimumSimilarity": direct_minimum,
         "secondaryMinimumSimilarityExclusive": secondary_minimum,
+        "secondarySurnameLinksEnabled": config["secondarySurnameLinksEnabled"],
         # Retained for older log/report readers; numeric fields above define both link rules.
         "linkBand": band_of(direct_minimum, policy), "linkMinimum": direct_minimum,
-        "rule": (f"closest Angel/Sister at similarity >= {direct_minimum:g}, otherwise closest other identity "
-                 f"at similarity > {secondary_minimum:g}; every chain edge must qualify. "
-                 "Score colours do not control membership; connected links share the cast root's surname "
+        "rule": (f"closest Angel/Sister at similarity >= {direct_minimum:g}; "
+                 + (f"otherwise closest other identity at similarity > {secondary_minimum:g}; "
+                    "every chain edge must qualify. " if config["secondarySurnameLinksEnabled"] else
+                    "peer resemblance does not confer surname membership. ")
+                 + "Score colours do not control membership; connected links share the cast root's surname "
                  "(configured, then recorded) "
                  "or the oldest member's surname. Each surname belongs to one family: Angel/Sister families claim "
                  "first, then the oldest; anyone else holding a claimed surname gets a fresh unused one. "

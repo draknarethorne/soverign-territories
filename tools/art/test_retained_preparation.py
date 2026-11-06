@@ -82,6 +82,40 @@ class RetainedPreparationTests(unittest.TestCase):
             self.root, self.destination, self.prep, self.row, recipe={"id": "test-v16"},
             storage_mode=getattr(self, "storage_mode", "full"))
 
+    def test_identical_detail_refresh_keeps_verified_bytes_and_skips_both_writes(self):
+        self.stage()
+        photo = self.root / self.destination
+        expected = retained.refresh_detail(self.root, photo, self.row["photoId"])
+        before = {item["path"]: (self.root / item["path"]).read_bytes() for item in expected}
+        with mock.patch.object(pathlib.Path, "write_bytes", side_effect=AssertionError("unnecessary write")), \
+                mock.patch.object(retained, "verify_link", wraps=retained.verify_link) as verify:
+            actual = retained.refresh_detail(self.root, photo, self.row["photoId"])
+        self.assertEqual(actual, expected)
+        self.assertEqual(verify.call_count, 1)
+        self.assertEqual(before, {path: (self.root / path).read_bytes() for path in before})
+        detail = self.root / actual[0]["path"]
+        detail.write_bytes(detail.read_bytes() + b"edited")
+        with self.assertRaisesRegex(ValueError, "stale or invalid"):
+            retained.refresh_detail(self.root, photo, self.row["photoId"])
+
+    def test_identical_refresh_refuses_manifest_changed_after_lineage_verification(self):
+        self.stage()
+        photo = self.root / self.destination
+        retained.refresh_detail(self.root, photo, self.row["photoId"])
+        verify = retained.verify_link
+
+        def verify_then_edit(*args):
+            data = verify(*args)
+            manifest = self.root / data["manifest"]
+            edited = json.loads(manifest.read_bytes())
+            edited["sourceSha256"] = "0" * 64
+            manifest.write_text(json.dumps(edited), encoding="utf-8")
+            return data
+
+        with mock.patch.object(retained, "verify_link", side_effect=verify_then_edit):
+            with self.assertRaisesRegex(ValueError, "changed after verification"):
+                retained.refresh_detail(self.root, photo, self.row["photoId"])
+
     def test_lean_selected_native_has_no_retained_copy_and_original_differs(self):
         self.storage_mode = "lean"
         published = self.stage()

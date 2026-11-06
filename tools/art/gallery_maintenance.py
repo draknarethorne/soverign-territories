@@ -8,6 +8,7 @@ import math
 import os
 import pathlib
 import sys
+from types import SimpleNamespace
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/art"))
@@ -20,6 +21,19 @@ from likeness_library.policy import load_policy  # noqa: E402
 from likeness_library.sandbox import is_sandbox_working_path, require_sandbox_cache, require_sandbox_output  # noqa: E402
 
 SETTLEMENT = ".gallery-maintenance-settlements.json"
+REPORT_IMPLEMENTATION = (
+    pathlib.Path(__file__),
+    *(ROOT / "tools" / "art" / name for name in (
+        "people_gallery.py", "image_preparation.py", "originals.py", "likeness.py",
+    )),
+    *(ROOT / "tools" / "art" / "likeness_library" / name for name in (
+        "review_gallery.py", "preparation_provenance.py", "preparation_history.py",
+        "retained_preparation.py", "verification_reads.py", "derivatives.py",
+        "gallery_chrome.py", "report_assets.py", "policy.py", "engine.py", "scoring.py",
+        "thumbnails.py", "identity_names.py", "metadata.py", "audit.py", "rejections.py",
+    )),
+    ROOT / "tools" / "workflows" / "comfy_workflows.py",
+)
 
 
 def settled(root):
@@ -78,7 +92,9 @@ def report_state(root, library, cache_path, policy_path):
     evidence = {"recipe": derivatives.RECIPE, "sources": {}, "manifests": {},
                 "cache": derivatives.digest(cache_path) if cache_path.is_file() else None,
                 "catalogue": derivatives.digest(metadata.path_for_root(root)),
-                "policy": load_policy(policy_path)}
+                "policy": load_policy(policy_path),
+                "configuration": metadata.content_sha256(cw.CFG_PATH),
+                "implementation": {path.name: metadata.content_sha256(path) for path in REPORT_IMPLEMENTATION}}
     for folder in library:
         manifest = derivatives.manifest_path(folder)
         if manifest.is_file():
@@ -103,15 +119,22 @@ def reports_pending(root, library, cache_path, policy_path, output):
 
 
 def refresh_reports(root, library, cache_path, policy_path, output):
-    from likeness_library import review_gallery
+    from likeness_library import domains, preparation_provenance, review_gallery
     import people_gallery
+    import likeness
 
     shared = ["--root", str(root), "--cache", str(cache_path), "--out", str(output), "--no-renders"]
     if policy_path:
         shared += ["--policy", str(policy_path)]
-    for generate in (review_gallery.main, people_gallery.main):
-        if generate(shared):
-            raise ValueError("gallery report refresh failed")
+    with domains.activate("general", read_only=True):
+        context = likeness.build(SimpleNamespace(
+            root=str(root), cache=str(cache_path), embedder=None, policy=policy_path,
+        ))
+        with verification_reads.session(root, label="Shared gallery inputs"):
+            provenance = preparation_provenance.build_index(root, output, [], "general", cfg=context[0])
+            for generate in (review_gallery.main, people_gallery.main):
+                if generate(shared, context=context, provenance=provenance):
+                    raise ValueError("gallery report refresh failed")
     state = {"inputs": report_state(root, library, cache_path, policy_path),
              "reports": {name: derivatives.digest(output / name)
                          for name in ("people_gallery_review.html", "people_gallery.html")}}

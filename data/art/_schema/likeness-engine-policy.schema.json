@@ -37,6 +37,10 @@
           "type": "number", "minimum": 0, "maximum": 1, "default": 0.35,
           "description": "Exclusive minimum for every secondary identity-to-identity link; chains are allowed."
         },
+        "secondarySurnameLinksEnabled": {
+          "type": "boolean", "default": true,
+          "description": "False permits only direct cast resemblance links to confer surname membership."
+        },
         "castSurnameOverrides": {
           "type": "object",
           "description": "User-decided family surnames for fixed Angels/Sisters slots, keyed by slot folder.",

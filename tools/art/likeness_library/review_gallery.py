@@ -1646,12 +1646,12 @@ def render_html(
 """
 
 
-def main(argv=None):
+def main(argv=None, *, context=None, provenance=None):
     with domains.activate("general", read_only=True):
-        return _main(argv)
+        return _main(argv, context=context, provenance=provenance)
 
 
-def _main(argv=None):
+def _main(argv=None, *, context=None, provenance=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--history-only", action="store_true", help="refresh only checked intake history; preview unless --apply")
     history_mode = parser.add_mutually_exclusive_group()
@@ -1675,9 +1675,13 @@ def _main(argv=None):
     if not args.history_only and (args.dry_run or args.check or args.apply):
         parser.error("--dry-run/--check/--apply require --history-only")
     policy = load_policy(args.policy)
-    cfg, st, work, cache, space = likeness.build(
-        types.SimpleNamespace(root=args.root, cache=args.cache, embedder=None, policy=args.policy)
-    )
+    if context is None:
+        cfg, st, work, cache, space = likeness.build(
+            types.SimpleNamespace(root=args.root, cache=args.cache, embedder=None, policy=args.policy)
+        )
+    else:
+        cfg, st, work, cache, space = context
+        domains.require_general_space(space)
     reports = likeness.cw.storage_root(cfg, "reports", root=work)
     out = likeness.cw.storage_output_path(cfg, "reports", args.out or "library", root=work)
     if args.history_only:
@@ -1697,14 +1701,15 @@ def _main(argv=None):
         include_artists=args.artists, keep=args.keep, policy=policy
     )
     out.mkdir(parents=True, exist_ok=True)
-    provenance = preparation_provenance.build_index(
-        work,
-        out,
-        [(item["_photo"].path, item.get("photoId")) for item in items],
-        "general",
-    )
+    if provenance is None:
+        provenance = preparation_provenance.build_index(
+            work,
+            out,
+            [(item["_photo"].path, item.get("photoId")) for item in items],
+            "general",
+        )
     history = provenance.history_html().encode("utf-8")
-    with verification_reads.session(work, label="Review inputs"):
+    with verification_reads.session(work, label="Review inputs", reuse=context is not None):
         for item in items:
             item["preparationEvidence"] = provenance.evidence(
                 item["_photo"].path, item.get("photoId"),

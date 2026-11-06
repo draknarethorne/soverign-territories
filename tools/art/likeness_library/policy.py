@@ -113,7 +113,7 @@ def validate_policy(policy):
             not isinstance(family, dict)
             or set(family) - {
                 "enabled", "directCastMinimumSimilarity", "secondaryMinimumSimilarityExclusive",
-                "castSurnameOverrides",
+                "castSurnameOverrides", "secondarySurnameLinksEnabled",
             }
             or not isinstance(family.get("enabled"), bool)
             or not isinstance(overrides, dict)
@@ -125,6 +125,8 @@ def validate_policy(policy):
             )
         ):
             raise ValueError("invalid familyNaming policy")
+        if not isinstance(family.get("secondarySurnameLinksEnabled", True), bool):
+            raise ValueError("familyNaming/secondarySurnameLinksEnabled must be boolean")
         for field, default in (
             ("directCastMinimumSimilarity", .4), ("secondaryMinimumSimilarityExclusive", .35),
         ):

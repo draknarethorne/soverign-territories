@@ -1,5 +1,6 @@
 """Local maintenance and derivative provenance integration regressions."""
 import contextlib
+import datetime
 import hashlib
 import io
 import json
@@ -64,12 +65,20 @@ class MaintenanceTests(unittest.TestCase):
 
     def test_reports_only_never_runs_photo_housekeeping(self):
         import people_gallery
+        import likeness
+        from likeness_library import preparation_provenance
 
         before = self.tree()
         args = ["--root", str(self.root), "--cache", str(self.cache), "--reports-only"]
         output = self.root / "_reports" / "library"
 
-        def publish(_args):
+        context = (self.cfg, {}, self.root, None, type("Space", (), {"photos": [], "keys": []})())
+        provenance = object()
+
+        def publish(_args, **kwargs):
+            self.assertIs(kwargs["context"], context)
+            self.assertIs(kwargs["provenance"], provenance)
+            self.assertIsNotNone(upkeep.verification_reads.active())
             output.mkdir(parents=True, exist_ok=True)
             for name in ("people_gallery.html", "people_gallery_review.html"):
                 (output / name).write_text("report", encoding="utf-8")
@@ -80,6 +89,8 @@ class MaintenanceTests(unittest.TestCase):
                 mock.patch.object(upkeep.derivatives, "prune", side_effect=AssertionError("prune")), \
                 mock.patch.object(upkeep.library_backup, "create_backup", side_effect=AssertionError("backup")), \
                 mock.patch.object(upkeep.originals, "standard_name", side_effect=AssertionError("rename")), \
+                mock.patch.object(likeness, "build", return_value=context) as build, \
+                mock.patch.object(preparation_provenance, "build_index", return_value=provenance) as index, \
                 mock.patch.object(review_gallery, "main", side_effect=publish) as review, \
                 mock.patch.object(people_gallery, "main", return_value=0) as overview, \
                 contextlib.redirect_stdout(io.StringIO()):
@@ -94,15 +105,116 @@ class MaintenanceTests(unittest.TestCase):
             self.assertEqual(upkeep.main(args + ["--check"]), 1)
             self.assertEqual(review.call_count, 2)
             self.assertEqual(overview.call_count, 2)
+            self.assertEqual(build.call_count, 2)
+            self.assertEqual(index.call_count, 2)
         for relative, payload in before.items():
             self.assertEqual((self.root / relative).read_bytes(), payload)
         self.assertTrue(self.photo.exists())
+
+    def test_failed_shared_report_build_does_not_publish_success_state(self):
+        import likeness
+        import people_gallery
+        from likeness_library import preparation_provenance
+
+        output = self.root / "_reports" / "library"
+        context = (self.cfg, {}, self.root, None, None)
+
+        def first(_args, **_kwargs):
+            upkeep.verification_reads.sha256(self.photo)
+            return 0
+
+        def second(_args, **_kwargs):
+            self.photo.write_bytes(b"tampered during continuous refresh")
+            return 0
+
+        with mock.patch.object(likeness, "build", return_value=context), \
+                mock.patch.object(preparation_provenance, "build_index"), \
+                mock.patch.object(review_gallery, "main", side_effect=first), \
+                mock.patch.object(people_gallery, "main", side_effect=second), \
+                self.assertRaisesRegex(ValueError, "content changed"):
+            upkeep.refresh_reports(self.root, [self.folder], self.cache, None, output)
+        self.assertFalse((output / ".gallery-maintenance-report-state.json").exists())
+        self.assertIsNone(upkeep.verification_reads.active())
+
+    def test_continuous_and_standalone_reports_are_byte_identical_with_one_build_and_history(self):
+        import likeness
+        import people_gallery
+        from likeness_library import preparation_provenance
+
+        class FixedDateTime(datetime.datetime):
+            @classmethod
+            def now(cls, tz=None):
+                return cls(2026, 11, 6, 12, 0, tzinfo=tz)
+
+        output = self.root / "_reports" / "library"
+        args = ["--root", str(self.root), "--cache", str(self.cache), "--out", str(output), "--no-renders"]
+        with mock.patch.object(upkeep.cw, "load_cfg", return_value=self.cfg), \
+                mock.patch.object(datetime, "datetime", FixedDateTime), \
+                mock.patch.object(likeness, "build", wraps=likeness.build) as build, \
+                mock.patch.object(preparation_provenance, "build_index",
+                                  wraps=preparation_provenance.build_index) as index, \
+                contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(review_gallery.main(args), 0)
+            self.assertEqual(people_gallery.main(args), 0)
+            baseline = {path: path.read_bytes() for path in output.rglob("*") if path.is_file()}
+            self.assertEqual((build.call_count, index.call_count), (2, 2))
+            build.reset_mock()
+            index.reset_mock()
+            upkeep.refresh_reports(self.root, [self.folder], self.cache, None, output)
+            self.assertEqual((build.call_count, index.call_count), (1, 1))
+            for path, payload in baseline.items():
+                self.assertEqual(path.read_bytes(), payload, str(path))
 
     def test_reports_only_rejects_housekeeping_options(self):
         for option in ("--no-reports", "--settle-actions", "--preserve-action-undo"):
             with self.subTest(option=option), contextlib.redirect_stderr(io.StringIO()), \
                     self.assertRaises(SystemExit):
                 upkeep.main(["--reports-only", option])
+
+    def test_report_freshness_changes_with_reader_code_not_just_library_bytes(self):
+        dependency = self.root / "reader.py"
+        dependency.write_bytes(b"old reader")
+        before = dependency.stat()
+        with mock.patch.object(upkeep, "REPORT_IMPLEMENTATION", (dependency,)):
+            original = upkeep.report_state(self.root, [self.folder], self.cache, None)
+            dependency.write_bytes(b"new reader")
+            import os
+            os.utime(dependency, ns=(before.st_atime_ns, before.st_mtime_ns))
+            changed = upkeep.report_state(self.root, [self.folder], self.cache, None)
+            self.assertNotEqual(original, changed)
+            dependency.unlink()
+            with self.assertRaises(OSError):
+                upkeep.report_state(self.root, [self.folder], self.cache, None)
+
+    def test_derivative_framings_publish_one_manifest_and_preserve_partial_progress(self):
+        with mock.patch.object(derivatives, "save", wraps=derivatives.save) as save:
+            changes, messages = derivatives.maintain(self.photo, self.box, 120, apply=True)
+        self.assertEqual(len(changes), 3)
+        self.assertEqual(messages, [])
+        self.assertEqual(save.call_count, 1)
+        for framing in derivatives.KINDS:
+            derivatives.verified(self.photo, framing, self.box)
+        with mock.patch.object(derivatives, "save", wraps=derivatives.save) as save:
+            self.assertEqual(derivatives.maintain(self.photo, self.box, 120, apply=True), ([], []))
+            save.assert_not_called()
+        other = self.gallery / "other_image_999999.jpg"
+        other.write_bytes(self.original)
+        render = derivatives.render
+
+        def fail_second(source, framing, box):
+            if framing == "head":
+                raise OSError("injected render failure")
+            return render(source, framing, box)
+
+        with mock.patch.object(derivatives, "render", side_effect=fail_second), \
+                self.assertRaisesRegex(OSError, "injected render failure"):
+            derivatives.maintain(other, self.box, 120, apply=True)
+        derivatives.verified(other, "padded", self.box)
+        with self.assertRaisesRegex(ValueError, "Missing maintained head"):
+            derivatives.verified(other, "head", self.box)
+        changes, messages = derivatives.maintain(other, self.box, 120, apply=True)
+        self.assertEqual(len(changes), 2)
+        self.assertEqual(messages, [])
 
     def test_preview_and_check_are_read_only_and_apply_is_repeat_safe(self):
         before = self.tree()

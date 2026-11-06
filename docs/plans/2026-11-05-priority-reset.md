@@ -2,7 +2,7 @@
 
 **Status:** active (execution spine: LEAN finish line, then trusted cast and character art)
 
-**Queue focus:** N17, E19, E20, C14, T29
+**Queue focus:** E19, T29, T30
 
 ## Execution spine
 
@@ -150,7 +150,7 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   history against saved evidence. Code/boundary tests are delivered; link
   exact results and exceptions, not another threshold implementation.
   [Full contract](2026-10-22-identity-family-naming.md#milestone-transfer-record).
-- [ ] **P1 ai** N17 Explain oversized families from final saved edges,
+- [x] **P1 ai** N17 Explain oversized families from final saved edges,
   especially Lujan; compare direct-only, stronger secondary and bounded-chain
   alternatives on complete frozen measurements, not merely filtered saved
   winning paths. Keep cast admission and family thresholds separate, retain
@@ -171,7 +171,7 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   independent frozen-core/quality/protection gates and saved receipt/viewer
   evidence. Angels remain Review-only.
   [Full contract](2026-10-23-cast-seeded-library-rebase.md#milestone-transfer-record).
-- [ ] **P1 ai** C14 Standardize gated Gallery admission for Sisters and
+- [x] **P1 ai** C14 Standardize gated Gallery admission for Sisters and
   Angels using the shared frozen-core/all-category evaluator. First preview
   the conservative common >=0.50 score / >=0.10 margin baseline from saved
   inputs, then compare Sisters >=0.50 with Angels >=0.45 under the user's
@@ -195,7 +195,7 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   pass/oscillation/lock holds and C12/C13 integration against saved/installed
   evidence. Code/tests delivered; generic matching success is insufficient.
   [Full contract](2026-10-22-likeness-engine-acceptance.md#milestone-transfer-record).
-- [ ] **P1 ai** E20 Clarify audit/refinement semantics before partial replay:
+- [x] **P1 ai** E20 Clarify audit/refinement semantics before partial replay:
   the saved run has 3,290 final hold decisions and zero eligible automatic
   moves, despite 265 higher rivals and 29 follow-up flags. Follow-ups are
   15 margin holds, 12 draft-policy holds and two cast-admission holds.
@@ -260,7 +260,7 @@ freeze to end. Preserve exact outputs, diagnostics and error semantics.
   proven independent manifest/dependency owners; test links/checksums,
   tampering, partial failure, deterministic diagnostics and paired savings.
   [Full contract](2026-10-28-intake-performance.md#milestone-transfer-record).
-- [ ] **P1 ai** L18 Finish cross-page retained/history reuse and preflight
+- [x] **P1 ai** L18 Finish cross-page retained/history reuse and preflight
   evidence indexing with complete dependency invalidation, hash/path/scope
   guards, row/thumbnail/browser equivalence and ordered page publication.
   [Full contract](2026-10-22-gallery-review-layout.md#milestone-transfer-record).
@@ -354,6 +354,103 @@ E19/L23 retain explicit case dispositions; C14 needs a full shared-cast
 replan rather than just saved-gate comparisons; T29/T20-T22/L18 establish and implement the bounded shared-
 inventory/history/derivative/detail performance package with output
 equivalence. Do not equate this report repair with those implementations.
+
+#### Nov 6 - combined preview4 and performance slice
+
+This later result supersedes the earlier "before another partial run"
+wording above. Under delegated preview authority, direct-cast-only surname
+inheritance and Angels >=0.45 / Sisters >=0.50 are selected for the separate
+`postrun-review-preview4`, using original `fresh-20261104-lean2` pixels and
+cached measurements. **No new intake or installation.** Supported preview,
+matching-only apply and independent `--check` pass. Apply takes 731.92
+seconds; evidence is `tmp\session-logs\nov6-combined-preview4-retry1.log`.
+
+| Exact saved result | Installed preview3 | Separate preview4 |
+| --- | ---: | ---: |
+| Unique stable photo IDs, same complete set | 3,290 | 3,290 |
+| Gallery / Review | 3,060 / 230 | 3,091 / 199 |
+| Angel Gallery / Review | 374 / 104 | 407 / 75 |
+| Sister Gallery / Review | 733 / 85 | 733 / 84 |
+| Lujan linked identities / largest family | 29 / 29 | 7 / 7 |
+| Final audit eligible automatic moves | 0 | 0 |
+| Higher rivals / blocked follow-ups | 265 / 29 | 261 / 27 |
+
+Thirty-three arrivals enter Angel Gallery: 29 from Angel Review and one
+each from Various Review, Sister Review, Prospect Gallery and Model
+Gallery. The net Gallery increase is 31, not 33, because two were already
+Gallery elsewhere. Sister Gallery is unchanged. Preview4's 27 follow-ups
+are 14 insufficient-margin, one cast-Review-admission and 12 draft-policy
+holds; all 3,290 final decisions are explicit holds. Preserve the earlier
+refinement snapshot's raw 268 residual count; it is not the final audit's
+eligible-move count. N17/C14/E20's implementation/preview gates close,
+**not** installation or human identity approval.
+
+The who-went-where page is
+`Working\_reports\library\rebase-recap\postrun-review-preview4.html`.
+Uninstalled person links now target its own photo sections, not the
+installed roster; image links verify original prepared bytes. Actual
+browser checks find zero missing fragment anchors or installed-roster
+person links; Noelle's deep link expands and all 96 images load without
+broken images. Lujan comparison has eight blocks including the cast root,
+40 lazy samples, maximum five/member. `_blank` link intent is verified;
+the browser harness did not expose a click-opened popup, so direct fragment
+navigation separately verifies expansion rather than claiming that event.
+
+**Explicit case dispositions:** all 93 original Briar stable IDs remain
+in Noelle Gallery. E19's owning contract records automatic protection,
+quality and margin holds; the user's "many, not all" correction still
+needs photo-level human labels, not a forced whole-identity transfer.
+Angelica's three explicit anchors survive the preview unchanged. L23's
+Jade image shows one human plus a dog; Harlow's candidate genuinely shows
+background people and is not the unlocated second false detector case.
+These remain visible human/detector follow-ups, not silently accepted
+identity or quality results.
+
+**Performance delivered versus remaining:** the
+[bounded ledger](2026-10-28-intake-performance.md#nov-6-bounded-implementation-and-paired-evidence)
+owns paired manifest/no-op/detail and continuous-report evidence.
+Shared reports eliminate duplicate context/history builds and seal one
+union; derivative manifest writes fall three to one per photo, no-op zero;
+unchanged retained details skip both writes while guarding lineage.
+Reader/configuration changes now invalidate report freshness. Source
+decode reuse, dependency-selective invalidation and owner-folder workers
+remain explicit T20/T21/T22/T30 work with pixel/dependency/concurrency risk;
+this is not whole performance-package or M1 completion.
+
+The first attempt safely refuses before creating a target: whole-record
+comparison mistakes Angelica's derived protection provenance and Nyxene's
+generated surname/family metadata for new manual choices. A failing
+regression reproduces it. The correction distinguishes unchanged explicit
+decisions, still refuses changed anchors/overrides/new manual protection,
+and runs cheap migration checks before full preparation verification.
+All 13 continuation tests pass after correction; the affected baseline
+of 171 tests, 19 isolated validator smoke tests, syntax and routine
+hygiene/schema checks also pass. The original failed log remains preserved.
+Final installed-viewer refresh follows the last runtime guard change;
+record its completion below rather than treating an old fingerprint as
+latest-code acceptance.
+
+**Final latest-code viewer acceptance:** supported report-only apply and
+independent check both finish successfully. Apply takes 1,994.93 seconds;
+one full shared proof takes 1,858.35 seconds (30,787 content reads /
+15,583,262,013 bytes, 100,663 hash reuses; independent final seal of
+30,786 files / 15,534,493,691 bytes). Separate synchronized check takes
+20.08 seconds, reading and sealing 3,545 files / 1,846,752,181 bytes.
+Evidence: `tmp\session-logs\nov6-final-reports.log`. This is real-run
+evidence, not a paired aggregate speedup claim. Actual final Overview loads
+all 1,229 images with zero broken images; full Draknara Photo review shows
+93 photos. Earlier same-slice Drakniss pagination verifies 100 -> 291
+photos with zero broken images. L18 closes.
+
+The applied preview3 run, installed catalogue and frozen cache retain their
+previous exact SHA-256 bindings; all 3,290 installed destinations exist.
+Preview4's run SHA-256 is
+`f777f7c9457ff6346fa3e9430159a01814616c38d7f5150301b7e34aa5d65465`.
+No runtime source changes follow final synchronization. The user's later
+[core-coverage/routing follow-up](2026-10-22-likeness-engine-acceptance.md#nov-6-follow-up-core-coverage-and-unresolved-destinations)
+is recorded verbatim there, with E19 still open; finish publication before
+that next diagnostic phase. Forty of preview4's 199 Review photos are
+Various Review, not all 199.
 
 #### Nov 5 23:20 - report repair and review go/no-go
 

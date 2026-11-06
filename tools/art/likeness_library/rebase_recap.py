@@ -342,10 +342,21 @@ def _person_link(person, data, out_dir, *, bucket=None):
     if "_person_folders" not in data:
         data["_person_folders"] = {row["newPerson"] for row in data["rows"]}
         data["_old_person_folders"] = {row["oldPerson"] for row in data["rows"]}
+        data["_gallery_person_folders"] = {
+            row["newPerson"] for row in data["rows"] if row["newBucket"] == "gallery"
+        }
     if person not in data["_person_folders"]:
         if person in data["_old_person_folders"]:
             return _detail_link(_anchor("continuity", person), person)
         return label
+    if data["status"] != "applied":
+        if person.startswith(CAST):
+            anchor = _anchor("cast", person)
+        elif person in data["_gallery_person_folders"] and not person.startswith("Various"):
+            anchor = _anchor("id", person)
+        else:
+            anchor = "review"
+        return _detail_link(anchor, person)
     if "_review_page" not in data:
         review = pathlib.Path(data["workingRoot"]) / "_reports" / "library" / "people_gallery_review.html"
         data["_review_page"] = (review, review.is_file())
@@ -403,9 +414,31 @@ def _intake_detail_link(row, data, out_dir):
     return _safe_link(target, "Intake comparison", out_dir, new_tab=True)
 
 
+def _prepared_preview_target(row, data):
+    preparation, relative = data.get("preparationIndex"), row.get("preparedPath")
+    if not preparation or not relative:
+        return None
+    path = pathlib.PurePosixPath(relative)
+    if path.is_absolute() or "\\" in relative or ".." in path.parts:
+        return None
+    root = pathlib.Path(preparation).parent.resolve()
+    target = root.joinpath(*path.parts)
+    try:
+        target.resolve().relative_to(root)
+    except (OSError, ValueError):
+        return None
+    return target
+
+
 def _destination_links(row, data, out_dir):
     if data.get("historical"):
         return '<span class=muted>Historical destination only; photo and gallery links unavailable after reset.</span>'
+    if data["status"] != "applied":
+        return (_verified_photo_link(
+            _prepared_preview_target(row, data), row.get("preparedSHA256"),
+            "Prepared preview (bytes verified; not installed)", data, out_dir,
+        ) + " · Planned photo evidence: "
+            + _person_link(row["newPerson"], data, out_dir, bucket=row["newBucket"]))
     photo = _working_target(row["destination"], data)
     return ("<span class=destination-links>"
             + _verified_photo_link(
@@ -419,6 +452,9 @@ def _source_link(source, row, data, out_dir):
     target = _working_target(source, data)
     if target is None or data.get("historical"):
         return '<span class=muted>source link unavailable</span>'
+    if data["status"] != "applied":
+        intake_link = _intake_detail_link(row, data, out_dir)
+        return _destination_links(row, data, out_dir) + (f" · {intake_link}" if intake_link else "")
     if target.is_file():
         status = _file_verification(target, row.get("sha256") if row else None, data)
         if status == "verified":
@@ -448,7 +484,14 @@ def _thumb(row, data, out_dir):
     live = _working_target(row["destination"], data)
     if live is None:
         return '<span class=muted>unsafe destination path</span>'
+    if data["status"] != "applied":
+        live = _prepared_preview_target(row, data)
+        expected = row.get("preparedSHA256")
+        if live is None or _file_verification(live, expected, data) != "verified":
+            return _verified_photo_link(live, expected, "Prepared preview", data, out_dir)
     image = row["preview"] or str(live)
+    if data["status"] != "applied" and not pathlib.Path(image).is_file():
+        image = str(live)
     title = html.escape(f"{row['source']} -> {row['destination']}", quote=True)
     return (f'<a href="{html.escape(_href(live, out_dir), quote=True)}" target="_blank" '
             f'rel="noopener noreferrer" title="{title}">'
@@ -929,8 +972,11 @@ def _family_section(data, out_dir=None):
             or "secondaryMinimumSimilarityExclusive" in evidence):
         thresholds = (
             "Direct-cast minimum similarity "
-            f"&ge; {_score(evidence.get('directCastMinimumSimilarity'))}; secondary minimum similarity "
-            f"&gt; {_score(evidence.get('secondaryMinimumSimilarityExclusive'))}"
+            f"&ge; {_score(evidence.get('directCastMinimumSimilarity'))}; "
+            + ("secondary minimum similarity "
+               f"&gt; {_score(evidence.get('secondaryMinimumSimilarityExclusive'))}"
+               if evidence.get("secondarySurnameLinksEnabled", True)
+               else "secondary surname links disabled (direct cast only)")
         )
     else:
         thresholds = (f"Link band <b>{esc(evidence.get('linkBand'))}</b> "

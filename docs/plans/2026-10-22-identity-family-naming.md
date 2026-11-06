@@ -77,6 +77,21 @@ The full comparison, including member folders and source hashes, is saved
 as `Working\_reports\library\policy-previews\2026-11-06\family-policy-evidence.json`
 in the sandbox, not as an applied policy or receipt.
 
+### Delegated direct-only preview
+
+The Nov 6 instruction to finish autonomously selects direct-cast-only
+surname inheritance for a separate combined **preview**, not installation.
+Optional `secondarySurnameLinksEnabled: false` disables secondary surname
+edges without changing their numerical threshold or any matching rule;
+omitting it preserves the existing planner. Schema/runtime validation and
+a peer-chain regression cover both modes. Keep the existing saved tree
+and resemblance comparisons accessible as evidence. Actual membership and
+collision-safe names must come from the complete continuation, not the
+seven-member frozen projection above.
+The [completed combined preview](2026-11-05-priority-reset.md#nov-6---combined-preview4-and-performance-slice)
+now verifies those actual names/memberships and review navigation;
+it remains uninstalled, not human acceptance of every association.
+
 ## Nov 5: tracing broad families before tuning
 
 The user asks to revisit family links after seeing 31 Lujan members in

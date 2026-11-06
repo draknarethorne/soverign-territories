@@ -5,6 +5,50 @@
 **Resume gate:** the reset spine selects a measured extra or new-PC tuning;
 the current core package is executed from the spine after the live-run freeze.
 
+## Nov 6 bounded implementation and paired evidence
+
+The settled-run freeze ended before these changes. No full intake or
+library installation is used as a benchmark.
+
+| Hotspot | Delivered change | Same-input proof and boundary |
+| --- | --- | --- |
+| Manifest serialization per framing, T21 | One loaded manifest per photo, reused during framing checks, published once after completed work | Reproduced three writes before the fix; one write after for all three framings, zero for a no-op. A second-framing failure still publishes the completed first framing, propagates failure and resumes the remaining two. Existing exact derivative/recovery/tamper tests pass |
+| Duplicate report builds/history, L18 | The continuous report coordinator supplies one general-domain scoring context and one preparation index to sequential Review/Overview writers | Real generator fixture: two builds/two indexes become one/one, with every prior report/thumbnail byte identical under a fixed generation timestamp. Standalone entry points still build their own state |
+| Duplicate proof scopes, L18 | Explicit same-root/same-seal-policy session reuse; one final full content/path/owner seal for the combined operation | Cross-root or different-seal reuse refuses. A same-size edit with restored mtime still fails; a changed input between page writers prevents publishing successful freshness state. A later invocation revalidates rather than inheriting trust |
+| Unchanged retained detail, T22 | Verify current lineage, skip byte-identical detail/manifest writes and avoid the redundant post-write verification | Two writes become zero, two lineage verifications become one; returned hashes/bytes remain identical. Edited detail still refuses. Changed content retains the old transactional verification/recovery path |
+| Report freshness correctness | Bind freshness to reader/rendering code and configuration, not just library bytes | A same-length code edit with restored mtime invalidates freshness; a missing dependency errors explicitly. `--check` remains read-only, not a hidden rebuild |
+
+These are call/read/write-count improvements, not a claimed aggregate wall
+speedup. The actual shared report refresh succeeds in 2,103.67 seconds:
+its shared proof takes 1,950.51 seconds, reads 30,786 contents /
+15,583,261,759 bytes, reuses 100,663 hashes, then independently seals
+30,785 files / 15,534,493,437 bytes. The separate synchronized check passes
+in 20.14 seconds, reading and sealing 3,545 files / 1,846,752,181 bytes.
+Evidence: `tmp\session-logs\nov6-shared-reports.log`. Observed process
+working sets were 393..744 MiB, not a sampled peak-memory guarantee.
+The previous report repair's separate Review/Overview timings are
+historical budgets, not a controlled same-code wall-time benchmark.
+
+The no-op snapshot guard additionally binds read detail/manifest bytes back
+to the just-verified lineage; an intervening manifest edit refuses instead
+of returning a new unchecked checksum. That follow-up changes the
+conservative reader fingerprint, so the final report refresh must follow
+the combined preview before claiming synchronized latest-code reports.
+The complete 171-test retained/provenance/recap/family/rebase/continuation
+selection and 19 isolated validator smoke tests pass, as do syntax and
+routine hygiene/data checks.
+
+**Explicit remaining dispositions:** person-folder parallel writers,
+decode-once across different framing APIs, dependency-selective prepared
+cache invalidation and wider install inventory reuse are not silently
+claimed delivered. The current serial owner model and full invalidation
+remain safe; changing them needs exact pixel/dependency/partial-failure
+proof and a measured benefit. They remain with T20/T21/T22 rather than
+blocking this bounded **matching-only** continuation preview. Any later
+installation/performance closeout must retain their explicit owner/gate.
+No new worker pool, persistent trust cache, recipe change or weakened
+independent installed acceptance is introduced.
+
 ## Milestone transfer record
 
 Nov 5 16:45: T29/T30/T20/T21/T22 execution transfers with the same IDs to the

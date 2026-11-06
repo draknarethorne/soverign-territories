@@ -32,22 +32,23 @@ protective; the later local path is selected, not moved.
 Earlier state/owner/monitoring wording below is dated evidence, superseded
 where noted by the current checkpoint and spine transfers.
 
-**Nov 6 review feedback:** L25 fixes recap person/deep links, collapsed
-five-photo family comparisons, honest missing report links and audit
-wording. The final recap is regenerated; 21 focused tests pass and actual
-browser expansion/navigation is verified. Current Lujan overgrowth comes
-from seven direct links plus 22 peer-chain members. N17 retains tuning;
-the audit has zero saved eligible moves despite 29 blocked follow-ups,
-not 29 missed automatic moves. E20 retains the next-preview gate after
-policy changes. C14 and bounded T29/T20-T22/L18 performance work remain
-before another partial run; no names, policy or installed photos change.
-N17's frozen-vector comparison and C14's shared-gate implementation are
-now recorded in their owning contracts: direct-only surname inheritance
-reduces Lujan to seven on current membership; staged Angel eligibility is
-24 at 0.50 or 33 at 0.45, with Sisters unchanged. These are not installed
-changes or a completed combined replay.
-The [Nov 6 closeout](plans/2026-11-05-priority-reset.md#nov-6---recap-review-usability-and-audit-explanation)
-enumerates requests, actual results and remaining work without another plan.
+**Nov 6 review feedback:** L25 navigation/comparisons and N17/C14/E20's
+complete saved-input preview now pass. `postrun-review-preview4` selects
+direct-only surname inheritance and gated Angels >=0.45 / Sisters >=0.50:
+Lujan 29 -> 7, Review 230 -> 199, 33 Angel Gallery arrivals, all 3,290
+stable IDs conserved, zero eligible residual automatic moves. This is
+**uninstalled**; current Gallery/Overview/Review still describe preview3.
+Preview person/photo links use its own expandable prepared-image evidence,
+not the installed roster. E19/L23 human/detector cases and remaining
+bounded performance work are explicit, not falsely closed. The measured
+manifest/detail/report reuse slice is tested; final latest-code report
+synchronization and independent check pass, with all installed bindings
+and 3,290 destinations unchanged. No full intake,
+installed photo/name/policy mutation or receipt rewriting.
+The [combined-preview closeout](plans/2026-11-05-priority-reset.md#nov-6---combined-preview4-and-performance-slice)
+owns exact counts, tests, browser evidence, preserved refusal/retry and
+remaining gates. The [pinned recap](recap/2026-11-04-1130-recap.md)
+provides direct links to proposed and installed who-went-where reports.
 
 **Nov 5 22:37 review correction:** current placements/catalogue still match
 the final applied run, but Overview predates the retained-reader fix and

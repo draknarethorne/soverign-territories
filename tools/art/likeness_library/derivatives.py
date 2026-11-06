@@ -85,9 +85,14 @@ def legacy_key(key):
 
 def verified(source, framing, box=None):
     source = pathlib.Path(source)
+    return _verified(source, framing, box, load(source.parent.parent))
+
+
+def _verified(source, framing, box, data):
+    source = pathlib.Path(source)
     folder = source.parent.parent
     key = relative_target(source, framing).as_posix()
-    record = load(folder)["entries"].get(key)
+    record = data["entries"].get(key)
     target = folder / key
     if not record or not target.is_file():
         raise ValueError(f"Missing maintained {framing}: {source}; run bin\\people-gallery.cmd --apply")
@@ -185,6 +190,16 @@ def maintain(source, box, px, *, apply=False, faces=None):
     folder = source.parent.parent
     data = load(folder)
     changes, diagnostics = [], []
+    try:
+        return _maintain(source, box, px, apply, faces, data, changes, diagnostics)
+    finally:
+        # Completed framings remain recoverable even if a later render fails.
+        if apply and changes:
+            save(folder, data)
+
+
+def _maintain(source, box, px, apply, faces, data, changes, diagnostics):
+    folder = source.parent.parent
     for framing in ("padded", "head", "chest"):
         relative = relative_target(source, framing)
         target = folder / relative
@@ -199,7 +214,7 @@ def maintain(source, box, px, *, apply=False, faces=None):
                     diagnostics.append(f"{source}: {framing} unavailable (no usable cached face)")
             continue
         try:
-            verified(source, framing, box)
+            _verified(source, framing, box, data)
             continue
         except ValueError:
             pass
@@ -218,8 +233,8 @@ def maintain(source, box, px, *, apply=False, faces=None):
             if digest(target) != expected:
                 diagnostics.append(f"Preserved unowned/edited asset: {target}")
                 continue
-        changes.append(str(target))
         if not apply:
+            changes.append(str(target))
             continue
         target.parent.mkdir(parents=True, exist_ok=True)
         stage = target.with_name(target.name + ".pending")
@@ -233,7 +248,7 @@ def maintain(source, box, px, *, apply=False, faces=None):
                 "sha256": digest(target), "box": list(box) if box else None, "recipe": RECIPE,
                 "sourcePrepared": retained_preparation.source_is_prepared(source),
             }
-            save(folder, data)
+            changes.append(str(target))
         finally:
             if stage.exists():
                 stage.unlink()
