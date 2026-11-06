@@ -24,7 +24,7 @@ Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (gen
 
 | Window | Single authoritative execution home | Boundary |
 | --- | --- | --- |
-| Now | [M1 / current Queue focus](2026-11-05-priority-reset.md#execution-spine) | Installed/check/viewer evidence recorded; remaining saved-case and bounded performance acceptance, not another intake |
+| Now | [M1 / current Queue focus](2026-11-05-priority-reset.md#execution-spine) | Recap review fixes delivered; family/cast-policy previews, saved-case/audit disposition and bounded performance work before a partial replay, not another intake |
 | Next | [M2-M6](2026-11-05-priority-reset.md#execution-spine) | Trusted cast -> selections -> source fidelity -> generic female pilot -> character art/video; advance only at entry gates |
 | Companion | Spelling/new-PC track selected in the spine | Settled processing/evidence and paired baseline before rename; no competing full milestone |
 | Holding | Remaining open domain tasks in the [inventory](#plans) | Deferred, not completed; select/transfer only needed tasks at a milestone gate |

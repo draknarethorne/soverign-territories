@@ -3,10 +3,12 @@
 import json
 import hashlib
 import pathlib
+import re
 import subprocess
 import sys
 import tempfile
 import unittest
+from html.parser import HTMLParser
 
 from tools.art.likeness_library import rebase_recap
 
@@ -59,6 +61,108 @@ class RebaseRecapTests(unittest.TestCase):
         )
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("--dry-run", result.stdout)
+
+    def test_person_links_filter_current_review_and_preserve_old_identity_continuity(self):
+        data = rebase_recap.collect(self.run)
+        out = self.working / "_reports" / "library" / "rebase-recap" / "run1.html"
+        review = out.parent.parent / "people_gallery_review.html"
+        review.parent.mkdir(parents=True, exist_ok=True)
+        review.write_text("review", encoding="utf-8")
+        page = rebase_recap.render(data, out)
+        self.assertIn('people_gallery_review.html?person=Models%2FNia%20Vale', page)
+        self.assertIn('people_gallery_review.html?person=Angels%2FAva&amp;bucket=Review', page)
+        old_anchor = rebase_recap._anchor("continuity", "Prospects/Old")
+        self.assertIn(f'href="#{old_anchor}" target="_blank" rel="noopener noreferrer"', page)
+        self.assertIn(f'id="{old_anchor}"', page)
+        self.assertNotIn('?person=Prospects%2FOld', page)
+        anchor = rebase_recap._anchor("id", "Models/Nia Vale")
+        self.assertIn(f'href="#{anchor}" target="_blank" rel="noopener noreferrer"', page)
+        self.assertIn("target.open=true", page)
+        self.assertIn("scrollIntoView", page)
+        self.assertIn("requestAnimationFrame", page)
+        self.assertIn("window.addEventListener('load',openTarget", page)
+
+        data["historical"] = True
+        self.assertNotIn("people_gallery_review.html?person=", rebase_recap.render(data, out))
+        data["historical"] = False
+        self.assertNotIn("<a ", rebase_recap._person_link("../outside", data, out.parent))
+        self.assertNotIn("<a ", rebase_recap._person_link("Models/Unknown", data, out.parent))
+        review.unlink()
+        data.pop("_review_page", None)
+        self.assertIn("Photo review unavailable", rebase_recap._person_link("Angels/Ava", data, out.parent))
+
+    def test_family_comparisons_are_collapsed_bounded_and_linked(self):
+        data = rebase_recap.collect(self.run)
+        row = next(r for r in data["rows"] if r["newPerson"] == "Models/Nia Vale")
+        data["rows"].extend({**row, "source": f"Various/gallery/sample_{i}.jpg",
+                             "destination": f"Models/Nia Vale/gallery/sample_{i}.png"} for i in range(7))
+        data["familyNaming"] = {"families": [{
+            "rootFolder": "Angels/Ava", "surname": "Hadley", "members": [
+                {"folder": "Angels/Ava", "status": "cast", "score": None, "path": []},
+                {"folder": "Models/Nia Vale", "status": "renamed", "previousName": "Nia Moss",
+                 "parentFolder": "Angels/Ava", "score": .41, "path": []},
+            ]}]}
+        out_dir = self.working / "_reports" / "library" / "rebase-recap"
+        out_dir.mkdir(parents=True)
+        (out_dir.parent / "people_gallery_review.html").write_text("review", encoding="utf-8")
+        page = rebase_recap._family_section(data, out_dir)
+
+        class Images(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.images = []
+                self.comparisons = []
+
+            def handle_starttag(self, tag, attrs):
+                attrs = dict(attrs)
+                if tag == "img":
+                    self.images.append(attrs)
+                if tag == "details":
+                    self.comparisons.append(attrs)
+
+        parsed = Images()
+        parsed.feed(page)
+        self.assertEqual(len(parsed.images), 6)  # One root, at most five member samples.
+        self.assertTrue(all(i.get("loading") == "lazy" for i in parsed.images))
+        self.assertTrue(parsed.comparisons)
+        self.assertTrue(all("open" not in d for d in parsed.comparisons))
+        self.assertIn("up to five", page)
+        self.assertIn("<template class=family-samples>", page)
+        self.assertIn("?person=Models%2FNia%20Vale", page)
+        self.assertEqual(page, rebase_recap._family_section(data, out_dir))
+        data["historical"] = True
+        historical = rebase_recap._family_section(data, out_dir)
+        self.assertNotIn("<img", historical)
+        self.assertNotIn("people_gallery_review.html?person=", historical)
+
+    def test_missing_supplementary_reports_are_not_dead_links(self):
+        data = rebase_recap.collect(self.run)
+        out = self.working / "report.html"
+        page = rebase_recap.render(data, out)
+        self.assertNotIn('href="_sandbox-state/run1/report.md"', page)
+        self.assertIn("Run report unavailable", page)
+        (self.run / "report.md").write_text("report", encoding="utf-8")
+        self.assertIn('href="_sandbox-state/run1/report.md"', rebase_recap.render(data, out))
+
+    def test_audit_distinguishes_blocked_followups_from_eligible_moves(self):
+        data = rebase_recap.collect(self.run)
+        base = {"source": data["rows"][0]["source"], "higherRival": True, "followupCandidate": True,
+                "refinementDecision": {"decision": "hold", "reason": "margin gate"},
+                "refinementHoldReason": "margin gate"}
+        data["finalMembershipAudit"] = {"state": "audited", "automaticMoves": 0, "nextPassNeeded": True,
+                                        "rows": [dict(base) for _ in range(29)]}
+        page = rebase_recap._audit_section(data, self.working)
+        self.assertIn("Eligible automatic moves remaining: 0", page)
+        self.assertIn("margin gate: 29", page)
+        self.assertIn("nextPassNeeded: True", page)
+        self.assertIn("does not by itself mean another automatic pass", page)
+        self.assertNotIn("no convergence or extra moves were performed", page)
+        data["finalMembershipAudit"]["rows"].append(
+            {**base, "refinementDecision": {"decision": "move"}, "refinementHoldReason": None})
+        self.assertIn("Eligible automatic moves remaining: 1", rebase_recap._audit_section(data, self.working))
+        data["finalMembershipAudit"]["rows"].append({"source": base["source"]})
+        self.assertIn("Eligible automatic moves remaining: unavailable",
+                      rebase_recap._audit_section(data, self.working))
 
     def test_collect_classifies_moves_renames_review_and_identity_changes(self):
         data = rebase_recap.collect(self.run)
@@ -122,7 +226,7 @@ class RebaseRecapTests(unittest.TestCase):
         self.assertIn('target="_blank" rel="noopener noreferrer"', page)
         self.assertIn("unavailable (not recorded)", page)
         self.assertIn("Final photo", page)
-        self.assertIn("Review page", page)
+        self.assertIn("Photo review", page)
         self.assertIn("count conservation", page.lower())
         self.assertNotIn("file:///", page)
         self.assertIn("run1.html", (out.parent / "index.html").read_text(encoding="utf-8"))
@@ -187,7 +291,8 @@ class RebaseRecapTests(unittest.TestCase):
         page = out.read_text(encoding="utf-8")
         self.assertIn('id=families', page)
         self.assertIn('href="#families"', page)
-        self.assertIn("Angels/Ava: Hadley", page)
+        self.assertIn("Angels/Ava", page)
+        self.assertIn(": Hadley", re.sub("<[^>]+>", "", page))
         self.assertIn("Ava Vale &rarr; <b>Ava Hadley</b>", page)
         self.assertIn("was Nia Moss", page)
         self.assertIn("0.410 yellow", page)
@@ -403,7 +508,7 @@ class RebaseRecapTests(unittest.TestCase):
         self.assertNotIn("Audit state: <b>passed</b>", page)
         self.assertIn("pass: 1", page)
         self.assertIn("reference: final frozen core &lt;snapshot&gt;", page)
-        self.assertIn("Audit-only: no convergence or extra moves were performed.", page)
+        self.assertIn("The audit itself is read-only; it performs no extra moves.", page)
         for field in ("higherRivalCount", "followupCandidateCount", "nextPassNeeded", "automaticMoves",
                       "automaticPhotoProtectionCount", "automaticIdentityProtectionCount",
                       "protectionEvidence", "diagnostics", "protected", "anchor", "workflowSelected",

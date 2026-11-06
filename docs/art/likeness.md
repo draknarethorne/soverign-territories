@@ -21,6 +21,17 @@ a report/retained-reader fix, preview `bin\people-gallery.cmd --reports-only
 and `--check`. This refreshes reports without matching, photo moves, new
 intake, derivative maintenance or backups; reload the browser afterward.
 
+The recap's person links open a new tab: current people go to filtered
+Photo review; previous/emptied names go to saved continuity evidence.
+Cast/Other-identities links open their expandable recap details. Families
+keep compact score/path tables and offer collapsed comparisons with up to
+five saved Gallery samples per member (Review fallback if no Gallery).
+These deterministic samples are not a measured core ranking. Missing
+supplementary reports are labelled unavailable rather than linked.
+The final audit separately shows saved eligible automatic moves and blocked
+follow-up reasons. Legacy `nextPassNeeded` is not proof another automatic
+pass can move a photo; policy/margin/protection holds remain visible.
+
 For current state and the sandbox/production boundary, see
 [STATUS.md](../STATUS.md), the
 [processing contract](likeness-processing-contract.md) and the active

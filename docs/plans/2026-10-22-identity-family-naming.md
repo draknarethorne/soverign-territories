@@ -19,6 +19,19 @@ resume gate below.
 select N12 corrections/family acceptance. Existing approved decisions and
 stable-name/protection guards remain binding; no bulk renaming during install.
 
+## Nov 6 family review feedback
+
+Execution owner: spine N17, selected without reactivating this backlog.
+The installed Lujan group still contains 29 records. The current algorithm
+prefers a direct >=0.40 cast link, otherwise a strongest peer >0.35;
+connected peer chains inherit one exclusive surname. Every edge passing
+its gate does not imply that every member resembles the cast root, or
+every other member. This is the mechanism to investigate, not proof that
+the user should accept a large family. No new threshold/cap is approved.
+L25 supplies linked five-photo comparisons before a policy decision.
+Use complete frozen vectors for alternative replans; saved winning paths
+alone cannot predict a changed tree.
+
 ## Nov 5: tracing broad families before tuning
 
 The user asks to revisit family links after seeing 31 Lujan members in

@@ -2,7 +2,7 @@
 
 **Status:** active (execution spine: LEAN finish line, then trusted cast and character art)
 
-**Queue focus:** E19
+**Queue focus:** N17, E19, E20, C14, T29
 
 ## Execution spine
 
@@ -13,10 +13,32 @@ checklist. This replaces the earlier navigation-only consolidation.
 Read this section and the current milestone before choosing work; dated
 Q&A and inventories below are context, not competing schedules.
 
+**Nov 6 review-feedback order:** L25 unblocks recap review first; N17
+investigates over-connected families before changing their rules. E19 and
+the new audit/refinement disposition investigation share saved evidence,
+then C14 standardizes cast admission and T29/T20-T22/L18 cover the bounded
+performance prerequisites. Only then preview another saved-input partial
+run; no fresh intake, threshold change or applied-receipt rewrite follows
+from improving the report. Earlier consistency acceptance is not human
+acceptance of family associations or convergence.
+
+| Nov 6 request / retained blocker | Executable owner / acceptance |
+| --- | --- |
+| Lujan and other oversized families | N17: current Lujan has seven direct and 22 peer-chain members; compare direct-only surname inheritance versus the current tree on frozen measurements, retaining peer resemblance links as evidence. This comparison is selected, not an installed rule or a prediction that only seven will remain |
+| Every recap person reference needs a review route | L25: new-tab filtered Photo review for current people; old names link continuity evidence, historical names never pretend to be current |
+| Inline comparisons without bloating count tables | L25: keep tables compact; collapsed family comparisons show up to five deterministic saved photos per member including a root comparison |
+| Other-identities links should open/expand their evidence | L25: stable same-report anchors open a new tab, expand details and scroll; cast expandable layout remains intact |
+| Audit still lists refinement candidates | E20: distinguish actual eligible moves from margin/protection/admission holds, preserve raw flags and expose hold reasons; do not force moves or call higher rivals unhandled bugs |
+| Correct Sisters/Angels admission | C14: common baseline plus slightly lower Angel preview; preserve all non-score gates |
+| Broken supplementary report/CSV links | L25: explicit unavailable text instead of dead links, without inventing reports |
+| Performance before another partial run | T29/T20-T22/L18: shared verified inventory/history/read sessions, batched derivative work and bounded jobs/detail refresh, paired identical-output evidence; no new full intake |
+| Known mixed-identity/detector cases | E19/L23: preserve stable-ID evidence and unresolved human cases; carry explicit dispositions into next preview rather than silently accepting them |
+
 **Current milestone: M1, finish LEAN.** Installation, installed-run check
 and corrected Gallery check finish successfully at 18:40. LY4/N16 and
-C12/C13/E18/L21/S30 are verified below. E19 is the next saved-evidence
-scenario, followed by L23 and bounded performance work, not new intake.
+C12/C13/E18/L21/S30 are verified below for the installed policy. The Nov 6
+Queue focus above selects remaining family/case/policy/performance work,
+not new intake.
 **Nov 5 22:37 correction:** installed routing/count evidence remains valid,
 but the Overview file was not rebuilt after the retained-reader fix.
 Report-only repair now passes apply/check and current browser verification;
@@ -128,6 +150,23 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   history against saved evidence. Code/boundary tests are delivered; link
   exact results and exceptions, not another threshold implementation.
   [Full contract](2026-10-22-identity-family-naming.md#milestone-transfer-record).
+- [ ] **P1 ai** N17 Explain oversized families from final saved edges,
+  especially Lujan; compare direct-only, stronger secondary and bounded-chain
+  alternatives on complete frozen measurements, not merely filtered saved
+  winning paths. Keep cast admission and family thresholds separate, retain
+  original names/exclusive surnames, obtain approval for a changed membership
+  rule and show before/after counts and representative member comparisons
+  before a partial replan. No arbitrary family-size cap or silent renames.
+  [Contract](2026-10-22-identity-family-naming.md#nov-6-family-review-feedback).
+- [x] **P1 ai** L25 Make the recap reviewable: every person reference in
+  tables links to current filtered Photo review in a new tab, or a specific
+  expandable recap section when more appropriate; old/emptied/historical
+  identities must not pretend to be current. Other-identities deep links
+  open a new tab, expand and scroll to that person's evidence. Families
+  offer collapsed comparisons with up to five existing sample images per
+  member, not extra image-heavy tables. Preserve cast gains/losses layout,
+  safe missing-link states, deterministic samples and no source mutations.
+  [Contract](2026-10-22-gallery-review-layout.md#nov-6-review-navigation).
 - [x] **P1 ai** C12 Verify installed Sisters >=0.50/margin >=0.10 scenarios,
   independent frozen-core/quality/protection gates and saved receipt/viewer
   evidence. Angels remain Review-only.
@@ -153,6 +192,14 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   pass/oscillation/lock holds and C12/C13 integration against saved/installed
   evidence. Code/tests delivered; generic matching success is insufficient.
   [Full contract](2026-10-22-likeness-engine-acceptance.md#milestone-transfer-record).
+- [ ] **P1 ai** E20 Clarify audit/refinement semantics before partial replay:
+  the saved run has 3,290 final hold decisions and zero eligible automatic
+  moves, despite 265 higher rivals and 29 follow-up flags. Follow-ups are
+  15 margin holds, 12 draft-policy holds and two cast-admission holds.
+  Correct recap explanation now without rewriting receipts; verify the next
+  preview still has zero eligible residual moves or explicit blocking
+  dispositions after policy changes. Raw legacy `nextPassNeeded` is review/
+  continuity evidence, not proof another automatic pass will help.
 - [ ] **P1 ai** E19 Trace the mixed Briar/Sammara/Adrianna case by stable IDs,
   frozen core, per-photo versus cluster scores and protection. Explain or
   fix the justified route/hold from saved measurements; no global threshold
@@ -240,6 +287,54 @@ not silent removal. Basic machine setup does not await every extra.
   proven. [Contract](2026-10-23-image-intake-preparation.md#milestone-transfer-record).
 
 ### Advance and closeout
+
+#### Nov 6 - recap review usability and audit explanation
+
+L25 is delivered and the final-run recap regenerated through its launcher
+preview/write/check path. Current-person links in flow, continuity, family,
+identity and audit/reference tables open filtered Photo review in a new
+tab. Old/emptied names link their continuity row with final-destination
+links; historical evidence never pretends to be current membership.
+Cast/Other-identities links open expandable same-report details in a new
+tab; the load/hash handler expands then scrolls after layout.
+
+Families keep compact score/path tables and add collapsed comparisons:
+up to five deterministic saved Gallery images per member, Review fallback
+when no Gallery exists, plus the cast root. Thirty-nine comparison panels
+keep their images inside inert templates until opened; browser evidence
+shows zero family image nodes before expansion, so collapsed families do
+not add thumbnail requests. Opening Lujan shows 30 comparison blocks
+(29 recorded members plus Draknara), 112 sample images, maximum five per
+block, no observed broken images. Closing/reopening does not duplicate
+the 112 nodes. These samples are not a measured ranking or identity verdict.
+An actual Other-identities deep link opens Enid Lujan's 41-photo detail
+and scrolls it to the viewport top after load. The existing report is
+large; a slow initial load is not reported as instant navigation.
+
+The audit explanation now separates **zero saved eligible automatic moves**
+from 265 higher rivals / 29 blocked follow-ups: 15 margin, 12 draft-policy,
+two cast-admission holds. All 3,290 final evaluator decisions are holds.
+The raw `nextPassNeeded: true` field remains unchanged and is explained as
+legacy review/continuity evidence, not proof another automatic pass could
+move these rows. The independent audit is not supposed to hide higher
+rivals; similarity alone does not override admission/protection/margins.
+E20's next-preview correctness gate remains open after policy changes.
+Missing supplementary `report.md` and `photos.csv` now show unavailable
+text rather than dead links; no fabricated report is written.
+
+Twenty-one recap tests pass, including the reproduced navigation/comparison/
+missing-link failures, safe historical/old-name behavior and complete versus
+unknown automatic-move status. Pylance syntax checks pass. No installed
+photo, family name, policy, workflow selection or receipt changes, and no
+new intake or partial replan occurs.
+
+**Remaining before another partial run:** N17 previews family-policy
+alternatives (seven current Lujan direct links versus 22 peer-chain members
+explains the overgrowth, not the result of a full alternate replan);
+E19/L23 retain explicit case dispositions; C14 previews shared cast
+admission; T29/T20-T22/L18 establish and implement the bounded shared-
+inventory/history/derivative/detail performance package with output
+equivalence. Do not equate this report repair with those implementations.
 
 #### Nov 5 23:20 - report repair and review go/no-go
 
@@ -895,3 +990,18 @@ choice; final installation requires verified preview, not forced admission.
 ````text
 You need to decide if we need to stop, fix the performance optimizations and go a clean rebase or if the state of things it accurate and stable.  If it's stable and matches a rebase, I will review.  If there are questions, then we need to fix the performance and try again.  You decide and don't let me down.
 ````
+
+## Nov 6 09:38 recap/family/refinement feedback (verbatim)
+
+Coverage: the enumerated Nov 6 table near the execution spine maps every
+request. L25 owns navigation/comparison/report-link fixes; N17 owns family
+tuning; E20 owns the audit/refinement distinction and next-preview gate;
+C14, E19/L23 and T29/T20-T22/L18 retain outstanding policy/case/performance
+ownership. No partial run is started before those prerequisites are
+dispositioned. User identity/family acceptance is not inferred from tests.
+
+<!-- markdownlint-disable MD013 -->
+````text
+Family naming still needs some tuning as it's still far too many being associated together in the same names.  The Lujan family has far too many and I don't have links into the people gallery for each one to compare - or better yet having some inline photos in the Families (score-band family) tree section.  There's other places where we could use links into the People Gallery Review page or being able to include some images in the rows.  Or have an expandable section that shows 5 of each member for comparison.  Really - all tables like Where photos went - should provide a link to the people gallery review in another tab when we reference the persons name (i.e  Models/Noelle Cruz) in the recap report.  That way I can bring them up and do a quick review.  Some tables when comparing things benefit from having images, but not all of them as it bloats the tables.  So you need to use some judgement and figure that out.  Otherwise, I'm having a hard time tracking some things down.  If there is a section in the report that has photos - the link can open a new tab and jump to that specific section in the existing report.  Either works - it's just a matter of being able to open a new tab to see the photos in question.   The Angels and Sisters section is nice as I like how that shows what happened in the expandable section below the table.   Other identities is decent, but the links should open a new tab and take to the section in the recap report and expand it.  That way it's more useful.  That's a better experience.  I still see the audit finds things that the refinement was supposed to catch - I thought we fixed that.  Please enumerate all these items and let's fix this as well as the other outstanding issues we need to address.  We're likely going to have to re-run another partial run like we did, but we need some performance improvements on top of these fixes.
+````
+<!-- markdownlint-enable MD013 -->

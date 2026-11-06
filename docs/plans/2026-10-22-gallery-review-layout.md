@@ -29,6 +29,19 @@ authorize a broad gallery redesign, full intake, pruning, rank-prefixed source
 filenames, or unreviewed grouping/threshold changes. Preserve the installed
 baseline until a separately previewed and verified run is approved.
 
+## Nov 6 review navigation
+
+Execution owner: spine L25. Compact count/flow/audit tables use person
+links, not repeated image columns. Links open a new tab to filtered Photo
+review, or a stable recap detail anchor that expands and scrolls on load
+and hash changes. Old names resolve to saved continuity evidence rather
+than empty current-person filters; historical snapshots never imply
+current membership. Families retain their score/path table and add a
+collapsed comparison of up to five deterministic saved sample photos per
+member. These are comparison samples, not verified identity/core rankings.
+Retain the useful expandable cast gains/losses layout and missing-evidence
+states. No library mutation or broad gallery redesign is necessary.
+
 ## Nov 3: fresh rebase recap feedback
 
 Selected implementation: shared chrome and safe new-tab links, identity

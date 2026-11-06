@@ -7,11 +7,15 @@
 
 ## Open work, by priority
 
-### For the assistant, when you say go (1)
+### For the assistant, when you say go (5)
 
 **P1 (blocks other work, or cheap and valuable)**
 
+- [ ] N17 Explain oversized families from final saved edges, especially Lujan; compare direct-only, stronger secondary and bounded-chain alternatives on complete frozen measurements, not merely filtered saved winning paths. Keep ... ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] E19 Trace the mixed Briar/Sammara/Adrianna case by stable IDs, frozen core, per-photo versus cluster scores and protection. Explain or fix the justified route/hold from saved measurements; no global threshold lowering, forced ... ([priority reset](plans/2026-11-05-priority-reset.md))
+- [ ] E20 Clarify audit/refinement semantics before partial replay: the saved run has 3,290 final hold decisions and zero eligible automatic moves, despite 265 higher rivals and 29 follow-up flags. Follow-ups are 15 margin holds, 12 ... ([priority reset](plans/2026-11-05-priority-reset.md))
+- [ ] C14 Standardize gated Gallery admission for Sisters and Angels using the shared frozen-core/all-category evaluator. First preview the conservative common >=0.50 score / >=0.10 margin baseline from saved inputs, then compare ... ([priority reset](plans/2026-11-05-priority-reset.md))
+- [ ] T29 Freeze same-machine representative generation/no-op, warm/cache phase baselines before runtime/path changes, with input/config/ code/resource IDs, timings, read/byte counts and output contracts. [Full benchmark ... ([priority reset](plans/2026-11-05-priority-reset.md))
 
 <details>
 <summary>Deferred work by owning plan</summary>
@@ -42,7 +46,7 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-10-28-storage-operations-and-retention.md](plans/2026-10-28-storage-operations-and-retention.md) | holding | 14 |
 | [2026-11-02-library-layout.md](plans/2026-11-02-library-layout.md) | holding | 7 |
 | [2026-11-02-sovereign-spelling-rename.md](plans/2026-11-02-sovereign-spelling-rename.md) | holding | 6 |
-| [2026-11-05-priority-reset.md](plans/2026-11-05-priority-reset.md) | active | 15 |
+| [2026-11-05-priority-reset.md](plans/2026-11-05-priority-reset.md) | active | 13 |
 
 </details>
 

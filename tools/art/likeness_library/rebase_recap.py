@@ -261,14 +261,14 @@ def _score_text(value):
     return "unavailable (not recorded)" if value is None else _score(value)
 
 
-def _cast_reference_table(references, data):
+def _cast_reference_table(references, data, out_dir):
     if not isinstance(references, list) or not references:
         return '<span class=muted>unavailable (not recorded)</span>'
     items = [item for item in references if isinstance(item, dict) and item.get("folder")][:3]
     if not items:
         return '<span class=muted>unavailable (not recorded)</span>'
     return '<ol>' + "".join(
-        f'<li>{html.escape(str(item["folder"]))}: '
+        f'<li>{_person_link(str(item["folder"]), data, out_dir)}: '
         f'<span class="score-badge {_score_class(item.get("score"), data)}">'
         f'{_score_text(item.get("score"))}</span></li>' for item in items
     ) + '</ol>'
@@ -324,6 +324,41 @@ def _safe_link(target, label, out_dir, *, new_tab=False):
     return f'<a href="{href}"{attrs}>{html.escape(label)}</a>'
 
 
+def _detail_link(anchor, label):
+    return (f'<a href="#{html.escape(anchor, quote=True)}" target="_blank" rel="noopener noreferrer">'
+            f'{html.escape(label)}</a>')
+
+
+def _person_link(person, data, out_dir, *, bucket=None):
+    person = str(person or "")
+    label = html.escape(person or "not recorded")
+    if data.get("historical"):
+        return label
+    valid = data.setdefault("_person_path_validity", {})
+    if person not in valid:
+        valid[person] = _working_target(person, data) is not None
+    if not valid[person]:
+        return label
+    if "_person_folders" not in data:
+        data["_person_folders"] = {row["newPerson"] for row in data["rows"]}
+        data["_old_person_folders"] = {row["oldPerson"] for row in data["rows"]}
+    if person not in data["_person_folders"]:
+        if person in data["_old_person_folders"]:
+            return _detail_link(_anchor("continuity", person), person)
+        return label
+    if "_review_page" not in data:
+        review = pathlib.Path(data["workingRoot"]) / "_reports" / "library" / "people_gallery_review.html"
+        data["_review_page"] = (review, review.is_file())
+    review, available = data["_review_page"]
+    if not available:
+        return label + ' <span class=muted>(Photo review unavailable)</span>'
+    params = {"person": person}
+    if bucket in {"gallery", "review"}:
+        params["bucket"] = bucket.title()
+    href = _href(review, out_dir) + "?" + urllib.parse.urlencode(params, quote_via=urllib.parse.quote)
+    return f'<a href="{html.escape(href, quote=True)}" target="_blank" rel="noopener noreferrer">{label}</a>'
+
+
 def _file_verification(target, expected, data):
     if not expected:
         return "unverified"
@@ -372,17 +407,11 @@ def _destination_links(row, data, out_dir):
     if data.get("historical"):
         return '<span class=muted>Historical destination only; photo and gallery links unavailable after reset.</span>'
     photo = _working_target(row["destination"], data)
-    work = pathlib.Path(data["workingRoot"])
-    gallery = work / "_reports" / "library" / (
-        "people_gallery_review.html" if row["newBucket"] == "review" else "people_gallery.html"
-    )
-    page_label = "Review page" if row["newBucket"] == "review" else "People gallery"
     return ("<span class=destination-links>"
             + _verified_photo_link(
                 photo, row.get("preparedSHA256") or row.get("sha256"), "Final photo (bytes verified)", data, out_dir,
             ) + " · "
-            + (_safe_link(gallery, page_label, out_dir, new_tab=True) if gallery.is_file()
-               else f'<span class=muted>{html.escape(page_label)} missing</span>') + "</span>")
+            + "Photo review: " + _person_link(row["newPerson"], data, out_dir, bucket=row["newBucket"]) + "</span>")
 
 
 def _source_link(source, row, data, out_dir):
@@ -493,7 +522,7 @@ def _cast_section(data, out_dir):
         lost = [r for r in rows if r["oldPerson"] == person and r["newPerson"] != person]
         gained = [r for r in rows if r["newPerson"] == person and r["oldPerson"] != person]
         anchor = _anchor("cast", person)
-        parts.append(f'<tr><td><a href="#{anchor}">{html.escape(person)}</a></td><td>{len(kept)}</td>'
+        parts.append(f'<tr><td>{_detail_link(anchor, person)}</td><td>{len(kept)}</td>'
                      f'<td class={"warn" if lost else ""}>{len(lost)}</td><td>{len(gained)}</td><td>{len(held)}</td></tr>')
         eligible = _core_reference_rows(data, person)
         core = (_cards(eligible, data, out_dir, lambda r: f"Eligible core reference; score {_score_text(r['castSeedScore'])}")
@@ -502,6 +531,7 @@ def _cast_section(data, out_dir):
         details.append(
             f'<details id="{anchor}"{" open" if lost or gained else ""}><summary>{html.escape(person)}: '
             f'{len(kept)} kept, {len(lost)} lost, {len(gained)} gained, {len(held)} in Review</summary>'
+            f"<p>Full Photo review: {_person_link(person, data, out_dir)}</p>"
             f"<h4>Top ten recorded eligible core references</h4>{core}"
             f"<h4>Lost</h4>{_cards(lost, data, out_dir, lambda r: f'to {r['newPerson']} ({r['newBucket']}); {r['reason']}')}"
             f"<h4>Gained</h4>{_cards(gained, data, out_dir, lambda r: f'from {_origin(r)}; cluster-to-cast score {_score_text(r['bestScore'])}; nearest cast per-photo score {_score_text(r['nearestCastScore'])}')}"
@@ -570,18 +600,18 @@ def _identity_section(data, out_dir):
             if member:
                 naming = (f"{html.escape(member['status'])}"
                           + (f" (was {html.escape(member['previousName'])})" if member["status"].startswith("renamed") else "")
-                          + f"<br><span class=muted>via {html.escape(str(member.get('parentFolder') or 'root'))}"
+                          + f"<br><span class=muted>via {_person_link(member.get('parentFolder') or 'root', data, out_dir)}"
                           + (f" {_score(member['score'])} {html.escape(str(member['band']))}"
                              if member.get("score") is not None else "") + "</span>")
             else:
                 naming = '<span class=muted>Not in a family</span>' if data.get("familyNaming") else \
                     '<span class=muted>Not recorded</span>'
             parts.append(
-                f'<tr><td><a href="#{anchor}">{html.escape(person)}</a>'
+                f'<tr><td>{_detail_link(anchor, person)}'
                 f'<br><span class=muted>family {html.escape(surname if len(people) > 1 or member else "not grouped")}</span></td>'
                 f'<td>{naming}</td>'
-                f'<td>{len(group)}</td><td>{html.escape(", ".join(f"{k} {v}" for k, v in origins.most_common(4)))}</td>'
-                f'<td>{html.escape(top)} ({count}/{len(group)}, '
+                f'<td>{len(group)}</td><td>{", ".join(f"{_person_link(k, data, out_dir)} {v}" for k, v in origins.most_common(4))}</td>'
+                f'<td>{_person_link(top, data, out_dir)} ({count}/{len(group)}, '
                 f'<span class="score-badge {_score_class(mean, data)}">{_score_text(mean)}</span>'
                 f'<small>{html.escape(_score_band_label(mean, data))}</small>)</td>'
                 f'<td class=paired-images><div><b>Current identity</b>{_thumb(representative, data, out_dir)}'
@@ -595,6 +625,7 @@ def _identity_section(data, out_dir):
                 f"{options}</select></td></tr>")
             details.append(
                 f'<details id="{anchor}"><summary>{html.escape(person)}: {len(group)} photos</summary>'
+                f"<p>Full Photo review: {_person_link(person, data, out_dir)}</p>"
                 f"{_cards(group, data, out_dir, lambda r: f'from {_origin(r)}; nearest {r['nearestCast'] or '-'} {_score(r['nearestCastScore'])}')}"
                 "</details>")
     parts.append("</table><p><button id=save-picks>Save my picks</button> "
@@ -730,12 +761,14 @@ def _comparison_section(data, others, out_dir):
             parts.append("<p>Preserved reset history: "
                          + _safe_link(page, "Historical recap (images unavailable)", out_dir, new_tab=True) + "</p>")
         flows = collections.Counter(
-            (mine["newPerson"] + (" (review)" if mine["newBucket"] == "review" else ""),
-             theirs["newPerson"] + (" (review)" if theirs["newBucket"] == "review" else ""))
+            (mine["newPerson"], mine["newBucket"], theirs["newPerson"], theirs["newBucket"])
             for mine, theirs in differences)
         parts.append("<table><tr><th>This run</th><th>" + html.escape(name) + "</th><th>Photos</th></tr>")
-        parts.extend(f"<tr><td>{html.escape(a)}</td><td>{html.escape(b)}</td><td>{count}</td></tr>"
-                     for (a, b), count in flows.most_common(60))
+        parts.extend(
+            f"<tr><td>{_person_link(a, data, out_dir, bucket=ab)} ({html.escape(ab)})</td>"
+            f"<td>{_safe_link(out_dir / _run_page_name(other), b, out_dir, new_tab=True)}"
+            f" ({html.escape(bb)})</td><td>{count}</td></tr>"
+            for (a, ab, b, bb), count in flows.most_common(60))
         parts.append("</table>")
     return "".join(parts)
 
@@ -790,7 +823,12 @@ def _continuity_section(data, out_dir):
         departures = sum(r["oldPerson"] == person and (r["newPerson"] != person or r["newBucket"] == "review")
                          for r in rows)
         parts.append(
-            f"<tr><td>{html.escape(person)}</td><td>{old_counts[person]}</td><td>{retained}</td>"
+            f'<tr id="{_anchor("continuity", person)}"><td>{_person_link(person, data, out_dir)}'
+            + ("<br>Final destinations: " + ", ".join(
+                _person_link(target, data, out_dir) for target in sorted({r["newPerson"] for r in source_rows})
+            ) if not final_gallery[person] and not final_review[person] else "")
+            + "</td>"
+            f"<td>{old_counts[person]}</td><td>{retained}</td>"
             f"<td>{arrivals}</td><td>{departures}</td><td>{final_gallery[person]}</td>"
             f"<td>{final_review[person]}</td><td>{html.escape(_continuity_state(person, source_rows))}</td></tr>"
         )
@@ -801,12 +839,13 @@ def _continuity_section(data, out_dir):
         reasons = collections.Counter(row["reason"].split(";")[0] for row in group)
         reason_text = "; ".join(f"{html.escape(reason)} ({count})" for reason, count in reasons.most_common())
         links = _destination_links(group[0], data, out_dir)
-        parts.append(f"<tr><td>{html.escape(old)}</td><td>{html.escape(new)} ({html.escape(bucket)})</td>"
+        parts.append(f"<tr><td>{_person_link(old, data, out_dir)}</td>"
+                     f"<td>{_person_link(new, data, out_dir, bucket=bucket)} ({html.escape(bucket)})</td>"
                      f"<td>{len(group)}</td><td>{reason_text}<br>{links}</td></tr>")
     parts.append("</table>")
     if data["emptiedIdentities"]:
         parts.append("<h3>Empty final identities</h3><ul>"
-                     + "".join(f"<li>{html.escape(person)} — no rows now land in this identity.</li>"
+                     + "".join(f"<li>{_person_link(person, data, out_dir)} — no rows now land in this identity.</li>"
                                for person in data["emptiedIdentities"]) + "</ul>")
     return "".join(parts)
 
@@ -879,7 +918,7 @@ def _family_members(data):
     return lookup
 
 
-def _family_section(data):
+def _family_section(data, out_dir=None):
     evidence = data.get("familyNaming")
     parts = ["<h2 id=families>Families (score-band family tree)</h2>"]
     if not isinstance(evidence, dict):
@@ -907,13 +946,14 @@ def _family_section(data):
                          key=lambda item: (item.get("rootKind") != "cast", -len(item.get("members", [])),
                                            str(item.get("rootFolder")))):
         cast = (evidence.get("cast") or {}).get(family.get("root"), {})
-        heading = (f"{esc(family.get('rootFolder'))}: {esc(family.get('surname'))}"
+        person_link = lambda person: _person_link(person, data, out_dir) if out_dir is not None else esc(person)
+        heading = (f"{person_link(family.get('rootFolder'))}: {esc(family.get('surname'))}"
                    f" <span class=muted>({esc(family.get('surnameSource'))}; "
                    f"{len(family.get('members', []))} member(s))</span>")
         parts.append(f"<h3>{heading}</h3>")
         if family.get("displacedFrom"):
             parts.append(f"<p>Surname {esc(family['displacedFrom'].get('surname'))} belongs to the family of "
-                         f"{esc(family['displacedFrom'].get('owner'))}, so this unrelated identity gets "
+                         f"{person_link(family['displacedFrom'].get('owner'))}, so this unrelated identity gets "
                          f"<b>{esc(family.get('surname'))}</b>.</p>")
         if cast:
             parts.append(f"<p>Cast person name: {esc(cast.get('recordedPersonName') or 'not recorded')} &rarr; "
@@ -922,16 +962,34 @@ def _family_section(data):
             parts.append(
                 "<table><tr><th>Identity</th><th>Status</th><th>Linked to</th><th>Score</th><th>Path to root</th></tr>"
                 + "".join(
-                    f"<tr><td>{esc(member.get('folder'))}"
+                    f"<tr><td>{person_link(member.get('folder'))}"
                     + (f"<br><span class=muted>was {esc(member.get('previousName'))}</span>"
                        if str(member.get("status", "")).startswith("renamed") else "")
                     + f"</td><td>{esc(member.get('status'))}</td>"
-                    f"<td>{esc(member.get('parentFolder') or 'root')} <span class=muted>{esc(member.get('tier'))}</span></td>"
+                    f"<td>{person_link(member.get('parentFolder') or 'root')} <span class=muted>{esc(member.get('tier'))}</span></td>"
                     f"<td>{_score(member['score']) + ' ' + esc(member.get('band')) if member.get('score') is not None else '-'}</td>"
-                    f"<td>{' &rarr; '.join(esc(step.get('toFolder')) + ' ' + _score(step.get('score')) for step in member.get('path', [])) or '-'}</td></tr>"
+                    f"<td>{' &rarr; '.join(person_link(step.get('toFolder')) + ' ' + _score(step.get('score')) for step in member.get('path', [])) or '-'}</td></tr>"
                     for member in family["members"]
                 ) + "</table>"
             )
+            if out_dir is not None and not data.get("historical"):
+                people = list(dict.fromkeys([family.get("rootFolder"),
+                                             *(m.get("folder") for m in family["members"])]))
+                parts.append('<details class=family-comparison><summary>Compare family members: up to five '
+                             'saved photos each</summary><p class=muted>Deterministic Gallery samples, '
+                             'then Review if no Gallery exists; not a measured core ranking or identity verdict.</p>'
+                             '<template class=family-samples>')
+                for person in people:
+                    if not person:
+                        continue
+                    members = [r for r in data["rows"] if r["newPerson"] == person]
+                    gallery = [r for r in members if r["newBucket"] == "gallery"]
+                    sample = sorted(gallery or members, key=lambda r: r["source"])[:5]
+                    parts.append(f"<div class=family-member><h4>{person_link(person)}</h4>"
+                                 + ('<div class=grid>' + "".join(_thumb(r, data, out_dir) for r in sample) + "</div>"
+                                    if sample else '<p class=muted>No saved member photos available.</p>')
+                                 + "</div>")
+                parts.append("</template></details>")
     return "".join(parts)
 
 
@@ -954,9 +1012,33 @@ def _audit_section(data, out_dir):
                  f"Reassignment: {html.escape(str(reassignment))}; "
                  f"convergence: {html.escape(str(convergence))}.</p>")
     if audit.get("state") == "audited" and audit.get("automaticMoves") == 0:
-        parts.append("<p><b>Audit-only: no convergence or extra moves were performed.</b> "
-                     "Higher-rival and follow-up candidates are diagnostics, not completed reassignments.</p>")
+        parts.append("<p><b>The audit itself is read-only; it performs no extra moves.</b> "
+                     "Recorded refinement passes above are separate. Higher-rival and follow-up "
+                     "candidates are diagnostics, not completed reassignments.</p>")
     audit_rows = [item for item in audit.get("rows", []) if isinstance(item, dict)]
+    decisions = [row.get("refinementDecision") for row in audit_rows]
+    if decisions and all(isinstance(item, dict) and item.get("decision") in {"hold", "move"}
+                         for item in decisions):
+        eligible = sum(item["decision"] == "move" for item in decisions)
+        holds = collections.Counter(
+            row.get("refinementHoldReason") or row["refinementDecision"].get("reason") or "reason not recorded"
+            for row in audit_rows if row.get("followupCandidate")
+            and row["refinementDecision"]["decision"] == "hold"
+        )
+        parts.append(f"<p><b>Eligible automatic moves remaining: {eligible}.</b> "
+                     "This is the saved final evaluator result, not a fresh re-evaluation under changed policy. "
+                     "A higher rival alone does not pass quality, protection, admission and margin gates.</p>")
+        if holds:
+            parts.append("<p>Blocked follow-ups (not missed automatic moves):</p><ul>" + "".join(
+                f"<li>{html.escape(str(reason))}: {count}</li>" for reason, count in sorted(holds.items())
+            ) + "</ul>")
+    else:
+        parts.append("<p class=muted>Eligible automatic moves remaining: unavailable; "
+                     "this run did not save a complete per-photo refinement decision set.</p>")
+    if "nextPassNeeded" in audit:
+        parts.append("<p class=muted>Legacy <code>nextPassNeeded</code> records review/follow-up evidence "
+                     "or pending continuity work; it does not by itself mean another automatic pass can move "
+                     "these photos. The saved field is preserved below.</p>")
     if any("higherRival" in item or "followupCandidate" in item for item in audit_rows):
         higher = sum(item.get("higherRival") is True for item in audit_rows)
         followup_only = sum(
@@ -1017,13 +1099,13 @@ def _audit_section(data, out_dir):
         ) if destination else "unavailable"
         rivals = item.get("rivals", [])
         rival_text = ", ".join(
-            f"{html.escape(str(rival.get('folder', '')))}: {_score_text(rival.get('score'))}"
+            f"{_person_link(rival.get('folder', ''), data, out_dir)}: {_score_text(rival.get('score'))}"
             for rival in rivals if isinstance(rival, dict)
         ) or "none recorded"
         parts.append(
             f"<tr><td>{source_link}<br>{html.escape(source)}</td><td>{final_links}</td>"
             f"<td>{_score_text(item.get('ownScore'))}</td><td>{rival_text}</td>"
-            f"<td>{_cast_reference_table(item.get('castReferences'), data)}</td>"
+            f"<td>{_cast_reference_table(item.get('castReferences'), data, out_dir)}</td>"
             f"<td>{html.escape(str(item.get('higherRival', 'not recorded')))}</td>"
             "<td>" + "<br>".join(
                 f"{field}: {html.escape(str(item.get(field, 'not recorded')))}"
@@ -1051,17 +1133,18 @@ def _review_section(data, out_dir):
     return "".join(parts)
 
 
-def _flow_section(data):
+def _flow_section(data, out_dir):
     flows = collections.Counter((row["oldPerson"], row["newPerson"], row["newBucket"])
                                 for row in data["rows"] if row["kind"] != "stayed")
     parts = ["<h2 id=flows>Where photos went</h2><table><tr><th>From</th><th>To</th><th>Count</th></tr>"]
     for (old, new, bucket), count in flows.most_common():
-        target = new + (" (review)" if bucket == "review" else "")
-        parts.append(f"<tr><td>{html.escape(old)}</td><td>{html.escape(target)}</td><td>{count}</td></tr>")
+        target = _person_link(new, data, out_dir, bucket=bucket) + (" (review)" if bucket == "review" else "")
+        parts.append(f"<tr><td>{_person_link(old, data, out_dir)}</td><td>{target}</td><td>{count}</td></tr>")
     parts.append("</table>")
     if data["emptiedIdentities"]:
         parts.append("<h3>Identities emptied by the rebase</h3><ul>"
-                     + "".join(f"<li>{html.escape(p)}</li>" for p in data["emptiedIdentities"]) + "</ul>")
+                     + "".join(f"<li>{_person_link(p, data, out_dir)}</li>"
+                               for p in data["emptiedIdentities"]) + "</ul>")
     return "".join(parts)
 
 
@@ -1088,15 +1171,17 @@ def _all_rows(data, out_dir):
         top = final_cast[row["source"]] if is_final else row["topCast"]
         refs = ("<b>FINAL photo-to-cast references</b>" if is_final else
                 "<b>INITIAL per-photo cast references</b><p class=muted>FINAL references unavailable in this run.</p>")
-        refs += _cast_reference_table(top, data)
+        refs += _cast_reference_table(top, data, out_dir)
         if top and len(top) < 3:
             refs += '<p class=muted>Remaining cast references unavailable (only partial ranking saved).</p>'
         group_size = str(row["groupSize"]) if row["groupSize"] is not None else "unavailable (not recorded)"
         detail = f'<br>{_safe_link(row["detail"], "intake", out_dir, new_tab=True)}' if row["detail"] else ""
         parts.append(
             f'<tr data-kind="{row["kind"]}"><td class=t>{_thumb(row, data, out_dir)}{detail}</td>'
-            f'<td>{html.escape("; ".join(distinctions))}</td><td>{html.escape(row["source"])}</td>'
-            f'<td>{html.escape(row["destination"])}<br>{_destination_links(row, data, out_dir)}</td>'
+            f'<td>{html.escape("; ".join(distinctions))}</td>'
+            f'<td>{_person_link(row["oldPerson"], data, out_dir)}<br>{html.escape(row["source"])}</td>'
+            f'<td>{_person_link(row["newPerson"], data, out_dir, bucket=row["newBucket"])}'
+            f'<br>{html.escape(row["destination"])}<br>{_destination_links(row, data, out_dir)}</td>'
             f'<td>{html.escape(group_size)}</td><td>{_score_text(row["bestScore"])}</td>'
             f'<td>{refs}</td><td>{html.escape(row["reason"])}</td></tr>')
     parts.append("</table>")
@@ -1111,6 +1196,7 @@ font-size:13px;vertical-align:top;text-align:left}th{background:var(--st-accent-
 .muted{color:var(--st-muted)}.warn{background:#fde2e2}.grid{display:flex;flex-wrap:wrap;gap:8px}
 figure{margin:0;width:160px;font-size:12px;overflow-wrap:anywhere}figure img{width:150px;height:150px;
 object-fit:cover;border:1px solid var(--st-line);border-radius:6px}
+.family-member{margin:12px 0}.family-member img{width:110px;height:130px;object-fit:cover;border-radius:6px}
 td.t img{width:80px;height:94px;object-fit:cover;border:1px solid var(--st-line)}
 details{margin:8px 0;padding:8px 12px;border:1px solid var(--st-line);border-radius:var(--st-radius);background:var(--st-card)}
 summary{cursor:pointer;margin:4px 0;font-weight:600}.cards{display:flex;gap:10px;flex-wrap:wrap}
@@ -1131,7 +1217,16 @@ function filterCast(){const selected=location.hash.slice(1);const links=[...docu
 const active=links.find(a=>a.dataset.castFilter!=='all'&&a.dataset.castFilter===selected);
 for(const d of document.querySelectorAll('details[id^="cast-"]')){d.hidden=!!active&&d.id!==active.dataset.castFilter;
 if(active&&d.id===active.dataset.castFilter)d.open=true}}
-window.addEventListener('hashchange',filterCast);filterCast();
+function openTarget(){filterCast();const id=location.hash.slice(1);
+const target=document.getElementById(id);if(!target)return;
+for(let node=target;node;node=node.parentElement){if(node.tagName==='DETAILS')node.open=true}
+if(target.tagName==='DETAILS')target.open=true;
+requestAnimationFrame(()=>target.scrollIntoView({block:'start',behavior:'instant'}))}
+window.addEventListener('hashchange',openTarget);openTarget();
+window.addEventListener('load',openTarget,{once:true});
+for(const panel of document.querySelectorAll('details.family-comparison')){
+panel.addEventListener('toggle',()=>{const template=panel.querySelector('template.family-samples');
+if(panel.open&&template){panel.append(template.content.cloneNode(true));template.remove()}})}
 const saved=__EXPECTATIONS__;
 document.getElementById('save-picks').addEventListener('click',()=>{
 const identities={...(saved.identities||{})};
@@ -1160,6 +1255,8 @@ def _alias_section(data, out_dir):
 
 
 def render(data, out_path, others=()):
+    data = {key: value for key, value in data.items()
+            if key not in {"_person_path_validity", "_person_folders", "_old_person_folders", "_review_page"}}
     out_dir = pathlib.Path(out_path).parent
     summary = summarize(data)
     work = pathlib.Path(data["workingRoot"])
@@ -1200,7 +1297,9 @@ def render(data, out_path, others=()):
         f'{summary["finalPhotos"]} final destinations; {"verified" if summary["countConserved"] else "not conserved"}.</p>'
         + "</section>",
         '<section><h2>Run and report links</h2><nav class="person-nav" aria-label="Related run pages">'
-        + "".join(_safe_link(path, label, out_dir, new_tab=True) for path, label in links) + "</nav>"
+        + "".join(_safe_link(path, label, out_dir, new_tab=True) if path == out_dir / "index.html" or path.is_file()
+                  else f'<span class=muted>{html.escape(label)} unavailable</span>'
+                  for path, label in links) + "</nav>"
         + ("<p class=muted>Historical run.json is preserved evidence only; no historical photo or intake links "
            "are offered and this reset-history copy cannot be used to undo.</p></section>"
            if data.get("historical") else
@@ -1219,12 +1318,12 @@ def render(data, out_path, others=()):
             ("Refinement", "#refinement"), ("Final audit", "#audit"), *(([("Other runs", "#compare")] if others else [])), ("Every photo", "#all"),
         ], "Sandbox rebase recap") + "</section>",
         f"<section>{_expectation_section(data, out_dir)}</section>",
-        f"<section>{_flow_section(data)}</section>",
+        f"<section>{_flow_section(data, out_dir)}</section>",
         f"<section>{_alias_section(data, out_dir)}</section>" if data.get("incomingAliases") else "",
         f"<section>{_continuity_section(data, out_dir)}</section>",
         f"<section>{_cast_section(data, out_dir)}</section>",
         f"<section>{_identity_section(data, out_dir)}</section>",
-        f"<section>{_family_section(data)}</section>",
+        f"<section>{_family_section(data, out_dir)}</section>",
         f"<section>{_review_section(data, out_dir)}</section>",
         f"<section>{_refinement_section(data)}</section>",
         f"<section>{_audit_section(data, out_dir)}</section>",

@@ -1,6 +1,6 @@
 # Project Status
 
-**Updated:** 2026-11-05 · This is the one working document: where the project is, what has
+**Updated:** 2026-11-06 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
@@ -21,8 +21,9 @@ check all pass; actual viewers and installed family/name histories are
 verified. A tested empty-retired-folder reader fix resolves the first
 Gallery failure without reset/intake/reinstall or receipt edits. Exact
 results are in the [spine closeout](plans/2026-11-05-priority-reset.md#nov-5-1840---final-continuation-and-viewer-acceptance).
-LY4/N16 and shared C12/C13/E18/L21/S30 scenario checks close; E19 is next,
-not automatic human identity approval or M1 performance completion.
+LY4/N16 and shared C12/C13/E18/L21/S30 scenario checks close for that
+installed policy; the Nov 6 record below sets the revised review-feedback
+order, not automatic human identity approval or M1 performance completion.
 Production/FULL/shared-publication boundaries stay
 protective; the later local path is selected, not moved.
 
@@ -30,6 +31,18 @@ protective; the later local path is selected, not moved.
 
 Earlier state/owner/monitoring wording below is dated evidence, superseded
 where noted by the current checkpoint and spine transfers.
+
+**Nov 6 review feedback:** L25 fixes recap person/deep links, collapsed
+five-photo family comparisons, honest missing report links and audit
+wording. The final recap is regenerated; 21 focused tests pass and actual
+browser expansion/navigation is verified. Current Lujan overgrowth comes
+from seven direct links plus 22 peer-chain members. N17 retains tuning;
+the audit has zero saved eligible moves despite 29 blocked follow-ups,
+not 29 missed automatic moves. E20 retains the next-preview gate after
+policy changes. C14 and bounded T29/T20-T22/L18 performance work remain
+before another partial run; no names, policy or installed photos change.
+The [Nov 6 closeout](plans/2026-11-05-priority-reset.md#nov-6---recap-review-usability-and-audit-explanation)
+enumerates requests, actual results and remaining work without another plan.
 
 **Nov 5 22:37 review correction:** current placements/catalogue still match
 the final applied run, but Overview predates the retained-reader fix and
