@@ -89,6 +89,13 @@ are now identified by stable ID and hash-verified in installed Review.
 The saved detector model reproduces a background-region second detection
 for each; this does not justify a global threshold change.
 
+**Nov 6 bounded performance follow-up:** recap continuity counts now
+aggregate once rather than scan all photos per identity. Both actual
+recaps remain byte-identical; isolated section timings improve by about
+0.12 seconds, not a full-run speedup. The five-photo generation probe now
+also records process memory and repeatable output hashes. T29/T30 and the
+remaining T20-T22 work stay open; no proof or recovery guard was weakened.
+
 **Nov 5 22:37 review correction:** current placements/catalogue still match
 the final applied run, but Overview predates the retained-reader fix and
 contained obsolete crop diagnostics. Supported report-only refresh and
