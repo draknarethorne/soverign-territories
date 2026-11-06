@@ -236,6 +236,9 @@ An added regression confirms that intentional writes to a native, retained
 original or retained manifest invalidate the cached decision and refuse
 stale lineage. Suppressing eviction in a test-only mutation makes all
 three cases fail; this is a guard for future work, not the selective fix.
+A separate negative-claim regression verifies that a manifest write making
+the native prepared changes a cached false result to true; suppressing
+eviction makes that regression fail too.
 
 ## Milestone transfer record
 

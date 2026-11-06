@@ -287,6 +287,23 @@ class RetainedPreparationTests(unittest.TestCase):
             finally:
                 target.write_bytes(original)
 
+    def test_intentional_manifest_write_invalidates_negative_prepared_decision(self):
+        self.stage()
+        native = self.root / self.destination
+        data = retained.verify_link(self.root, native)
+        manifest = self.root / data["manifest"]
+        original = manifest.read_bytes()
+        unclaimed = json.loads(original)
+        unclaimed["current"] = "Various/review/other_image_999.jpg"
+        unclaimed["photoId"] = "photo:image_999"
+        manifest.write_text(json.dumps(unclaimed), encoding="utf-8")
+
+        with verification_reads.session(self.root):
+            self.assertFalse(retained.source_is_prepared(native))
+            verification_reads.before_write(manifest)
+            manifest.write_bytes(original)
+            self.assertTrue(retained.source_is_prepared(native))
+
     def test_operation_reuse_keeps_artist_domain_and_photo_id_checks_separate(self):
         self.stage()
         artist_row = json.loads(json.dumps(self.row))
