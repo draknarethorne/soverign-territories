@@ -17,6 +17,14 @@ Q&A and inventories below are context, not competing schedules.
 and corrected Gallery check finish successfully at 18:40. LY4/N16 and
 C12/C13/E18/L21/S30 are verified below. E19 is the next saved-evidence
 scenario, followed by L23 and bounded performance work, not new intake.
+**Nov 5 22:37 correction:** installed routing/count evidence remains valid,
+but the Overview file was not rebuilt after the retained-reader fix.
+Report-only repair now passes apply/check and current browser verification;
+the obsolete crop diagnostics are gone. Overview deliberately limits
+each person to nine photos; Photo review contains the full cohort.
+The user corrects cast intent to include both Sisters and Angels, Sisters
+no easier than Angels. C14 owns the new policy/preview, not a silent change
+to the already installed receipt or a full clean intake.
 While a process runs, documentation reconciliation remains the only
 mutation lane. Read the small flow receipt/log at meaningful boundaries;
 do not restart the process or infer completion from progress messages.
@@ -124,6 +132,17 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   independent frozen-core/quality/protection gates and saved receipt/viewer
   evidence. Angels remain Review-only.
   [Full contract](2026-10-23-cast-seeded-library-rebase.md#milestone-transfer-record).
+- [ ] **P1 ai** C14 Standardize gated Gallery admission for Sisters and
+  Angels using the shared frozen-core/all-category evaluator. First preview
+  the conservative common >=0.50 score / >=0.10 margin baseline from saved
+  inputs, then compare Sisters >=0.50 with Angels >=0.45 under the user's
+  delegated decision authority. The latter is a preview choice, not an
+  installed/approved production rule. Preserve quality, independent support, stale/rejection/protection
+  gates; cover policy validation, routing/refinement, receipt/report wording
+  and positive/negative tests. Record arrivals/remaining holds by stable ID,
+  preview before installation, and never modify the applied run's policy or
+  hashes to disguise changes. No full intake or Production approval implied.
+  [Corrected contract](2026-10-23-cast-seeded-library-rebase.md#nov-5-2237-cast-policy-correction).
 - [x] **P1 ai** C13 Verify all/scoped/low-score reset, manual versus acquired
   protection, old/new selections and deterministic eligible replacement/
   explicit hold. Shared Production/workspace publication needs separate
@@ -221,6 +240,52 @@ not silent removal. Basic machine setup does not await every extra.
   proven. [Contract](2026-10-23-image-intake-preparation.md#milestone-transfer-record).
 
 ### Advance and closeout
+
+#### Nov 5 23:20 - report repair and review go/no-go
+
+**Decision: keep the installed baseline and proceed with manual review;
+do not discard it for a full clean intake/rebase.** This is consistency
+acceptance of the installed Sisters-only policy, not a claim that the
+corrected Angel admission intent is already implemented. C14 remains open
+for the shared gated-policy saved-input preview/replan; performance owners
+remain open independently. A clean intake is not the fix for stale HTML.
+
+The supported report-only preview/apply/check uses explicit Working root,
+`postrun-lean-preview3` cache/policy and library report output. Apply exits
+0; final report-only check exits 0 in 20.54 s. Review inputs seal 30,780
+files / 15,485,247,284 bytes in 1,266.47 s; Overview inputs seal 13,081
+files in 681.93 s. Repeated history auditing and separate page read sessions
+are real performance evidence under T20-T22/L18, not a corruption signal or
+a paired optimization result.
+
+Both rebuilt HTML pages have zero `legacy crop refused` strings. Actual
+Overview browser: 250 people / 3,060 photos, all 1,229 images loaded,
+zero broken. Draknara's full Photo review: all 93 photos (85 Gallery /
+eight Review), all 94 image elements loaded, zero broken, no stale crop
+errors and no staged actions. Overview names link to full per-person
+Gallery; Review links select that person's holds. Overview intentionally
+shows up to nine per person; full review uses a Show next 100 control for
+larger cohorts.
+Actual Drakniss pagination advances 100 -> 200 -> all 291 photos
+(280 Gallery / 11 Review), with zero observed broken images or stale crop
+errors; off-screen lazy thumbnails are not labelled missing. Browser is
+left on that expanded full per-person review, without staged identity actions.
+
+After refresh, run SHA-256 remains
+`60679f89990ce4e395a9c2cfb7863c017204f2e735d6883c46d74079575987f3`;
+installed catalogue still matches
+`dd276e95f873a2747657b59dd39061ac1dc211125faa7f79a0c9bc9c20a2be5f`.
+All 3,290 final destinations exist: 3,060 Gallery / 230 Review. The report
+operation did not change applied policy, receipts, names or placements,
+and performed no full intake, matching, photo housekeeping or backup.
+This is stronger evidence than file existence alone: installed verification
+already passed, fresh page input seals and synchronized report checks now
+pass, and catalogue/run identity is unchanged.
+
+Supplementary recap `report.md`/`photos.csv` links remain missing and must
+not be represented as verified navigation. The who-went-where recap itself
+uses the correct installed run. E19/L23 and human identity/quality/family
+judgment remain open; consistent bytes/scores are not identity sign-off.
 
 #### Nov 5 18:40 - final continuation and viewer acceptance
 
@@ -805,4 +870,28 @@ No new human/Production approval is inferred.
 
 ````text
 If the lessons learned are things you can do without needing me present - you can actually start on those while I am away.  If we are creating skills and such - that's all fine you can update whatever you can do without me needing to be here and update the docs to say what you decided and if I want to adjust that's fine.  Just go ahead and do what we need to in order to improve out collaborations without impacting productivity and success.
+````
+
+## Nov 5 22:37 cast and Gallery feedback (verbatim)
+
+Coverage: C14 owns standardized cast admission and the unspecified
+Sister/Angel differential. LY4's current browser acceptance is qualified
+until the supported report-only refresh verifies stale HTML repair; the
+nine-photo Overview limit is intentional, not missing installed files.
+T29/T20-T22/L18 retain performance ownership. A full clean intake/rebase
+remains a question, not an approved response to a report-layer defect.
+
+````text
+That was a miss on our part then.  We should standardize on Sisters and Angels and to be honest sister is slightly higher bar than angels.  Also the file:///B:/Sovereign%20Territories%20Sandbox/Working/_reports/library/people_gallery.html doesn't show all the images.  Wondering if we need to address performance concerns and run a full and clean rebase.  Something it a problem
+````
+
+## Nov 5 review go/no-go delegation (verbatim)
+
+Coverage: the 23:20 closeout above owns the decision and exact evidence.
+No clean intake is needed for the repaired report layer. C14 records the
+conservative common-threshold comparison and slightly lower Angel preview
+choice; final installation requires verified preview, not forced admission.
+
+````text
+You need to decide if we need to stop, fix the performance optimizations and go a clean rebase or if the state of things it accurate and stable.  If it's stable and matches a rebase, I will review.  If there are questions, then we need to fix the performance and try again.  You decide and don't let me down.
 ````

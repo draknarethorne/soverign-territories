@@ -31,6 +31,23 @@ protective; the later local path is selected, not moved.
 Earlier state/owner/monitoring wording below is dated evidence, superseded
 where noted by the current checkpoint and spine transfers.
 
+**Nov 5 22:37 review correction:** current placements/catalogue still match
+the final applied run, but Overview predates the retained-reader fix and
+contained obsolete crop diagnostics. Supported report-only refresh and
+synchronized check now pass; rebuilt Overview loads all 1,229 images with
+zero broken/stale errors, and full Draknara review shows all 93 photos.
+A normal Gallery check had not rebuilt the HTML. Overview's
+nine-photo limit is intentional; Photo review has the full cohort.
+The user corrects cast intent to both Sisters and Angels, with Sisters
+slightly harder. Spine C14 owns the gated saved-input preview: first the
+common >=0.50 baseline, then Angels >=0.45 versus Sisters >=0.50 under
+delegated decision authority, keeping >=0.10 margin and other gates.
+Neither policy nor installed receipts changed. Decision: the installed
+baseline is consistent and ready for manual review, not a full clean
+intake; it still reflects the old Sisters-only admission policy.
+The [23:20 closeout](plans/2026-11-05-priority-reset.md#nov-5-2320---report-repair-and-review-gono-go)
+supersedes the stale-page qualification with actual repaired-page evidence.
+
 **Nov 5 18:54 collaboration implementation:** the user authorizes
 independent improvements while away. PR6 delivers three repository-local
 on-demand procedures and narrowly tested customization-prose quality

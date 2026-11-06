@@ -11,6 +11,16 @@ The tools can preview and, with explicit `--apply`, perform selected file
 operations. Similarity is evidence for review, not proof of identity. The
 people gallery and review gallery are local HTML reports; neither moves files.
 
+**Review navigation:** Overview intentionally shows up to nine photos per
+person (plus a pinned workflow selection where applicable); use Photo review
+for the full Gallery and Review cohorts. The who-went-where report is under
+`_reports/library/rebase-recap/index.html`, not the Intake runs preparation
+viewer. A successful maintenance check does not rebuild stale HTML. After
+a report/retained-reader fix, preview `bin\people-gallery.cmd --reports-only
+--dry-run` with explicit sandbox root/cache/output/policy, then use `--apply`
+and `--check`. This refreshes reports without matching, photo moves, new
+intake, derivative maintenance or backups; reload the browser afterward.
+
 For current state and the sandbox/production boundary, see
 [STATUS.md](../STATUS.md), the
 [processing contract](likeness-processing-contract.md) and the active

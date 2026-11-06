@@ -76,6 +76,27 @@ approve the Sisters number. No lower value is approved by "thinking a bit
 lower." Cover candidate, group/refinement, validator, final-audit and recap
 surfaces; distinguish cast-return, cast gain and existing cast Review.
 
+### Nov 5 22:37 cast-policy correction
+
+The user corrects the earlier Sisters-only interpretation: both Sisters
+and Angels should support gated Gallery admission, with Sisters slightly
+harder than Angels. The installed run still uses Sisters >=0.50 / margin
+>=0.10 and Angels Review-only; it must not be represented as implementing
+the corrected intent. All 230 Review destinations are accounted for:
+85 Sisters, 104 Angels, 41 Various. Of 100 Angel admission decisions blocked
+by disabled approval, 24 meet the same numerical/quality/support gates in
+saved evidence; that is not a promised replay or install count.
+
+Execution transfers to spine C14. A common >=0.50 / >=0.10 saved-input
+preview is the conservative first comparison. Under the later delegated
+decision authority, compare Angels >=0.45 versus Sisters >=0.50 with the
+same >=0.10 margin: a bounded 0.05 difference, still above the >=0.40
+cast-resemblance boundary. This is a saved-input preview choice, not an
+installed or Production-approved rule. Retain all independent
+support, quality, stale/rejection/protection and frozen-reference gates.
+No applied receipt/policy rewriting, new full intake or Production change.
+The older approval and implementation below remain dated evidence.
+
 ### C13 evidence: selection retention is separate from core membership
 
 **Nov 5 implementation checkpoint (before replay):** Sisters Gallery admission

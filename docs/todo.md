@@ -42,7 +42,7 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-10-28-storage-operations-and-retention.md](plans/2026-10-28-storage-operations-and-retention.md) | holding | 14 |
 | [2026-11-02-library-layout.md](plans/2026-11-02-library-layout.md) | holding | 7 |
 | [2026-11-02-sovereign-spelling-rename.md](plans/2026-11-02-sovereign-spelling-rename.md) | holding | 6 |
-| [2026-11-05-priority-reset.md](plans/2026-11-05-priority-reset.md) | active | 14 |
+| [2026-11-05-priority-reset.md](plans/2026-11-05-priority-reset.md) | active | 15 |
 
 </details>
 
