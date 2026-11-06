@@ -81,7 +81,8 @@ preview6 remains uninstalled and human identity review remains open.
 **Nov 6 detector-label clarification:** the preview6 recap's 16 saved
 multi-face holds now explicitly distinguish detector observations from
 confirmed people counts. The saved reasons and holds remain intact; the
-upstream wording and detector calibration remain open under L23/I60.
+producer wording is corrected for new runs; detector calibration remains
+open under L23/I60.
 Both installed preview3 and uninstalled preview6 recaps were rebuilt and
 checked; this is not detector or identity acceptance.
 The [historical two cases](plans/2026-10-22-gallery-review-layout.md#milestone-transfer-record)
@@ -89,9 +90,19 @@ are now identified by stable ID and hash-verified in installed Review.
 The saved detector model reproduces a background-region second detection
 for each; this does not justify a global threshold change.
 
+**Nov 6 preview7:** the same saved inputs and combined policy were replanned
+after adding a missing likeness-producer implementation binding. Preview7
+passes independent continuation and recap checks and remains uninstalled.
+All photo records match preview6 except 20 reason-text substitutions;
+family, refinement, audit and cast-admission objects match. The 16
+multi-face Review cards use the new uncertain wording. Preview6 lacks the
+new binding and is historical review evidence, not an install candidate.
+Installed preview3 and its catalogue are unchanged. See the
+[pinned recap](recap/2026-11-04-1130-recap.md) for the new review link.
+
 **Nov 6 bounded performance follow-up:** recap continuity counts now
 aggregate once rather than scan all photos per identity. Both actual
-recaps remain byte-identical; isolated section timings improve by about
+recaps were byte-identical at that optimization; isolated section timings improve by about
 0.12 seconds, not a full-run speedup. The five-photo generation probe now
 also records process memory and repeatable output hashes. T29/T30 and the
 remaining T20-T22 work stay open; no proof or recovery guard was weakened.

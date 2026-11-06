@@ -31,6 +31,26 @@ baseline until a separately previewed and verified run is approved.
 
 ## Nov 6 review navigation
 
+The quality-reason producer now calls a qualifying second detection a
+possible additional face requiring review, not a confirmed other person.
+The numerical gate, holds and historical saved reasons remain unchanged.
+The missing `likeness.py` implementation binding was also added to new
+previews; unpublished older previews without it cannot pass continuation
+check or installation and must be replanned. Already-applied historical
+receipts are not rewritten. Preview7 uses the same saved inputs and policy;
+independent verification and comparison do not replace human acceptance.
+
+**Preview7 result:** saved-input creation, independent continuation check and
+recap check pass. All 3,290 photo records agree with preview6 apart from 20
+exact reason-string substitutions; family naming, both refinement objects,
+final audit and cast admission match. Preview7 remains uninstalled. Its
+recap shows the new wording on all 16 Review cards with this hold; a browser
+check confirmed the original case's expanded deep link and loaded image.
+Preview6 now correctly refuses continuation check because its receipt lacks
+the new producer binding; it remains historical review evidence, not an
+installation candidate. Preview7 run SHA-256:
+`ede43edf6b66c7b07098443d511a27bb4db5ce632f12ad794f39bab2e826bd10`.
+
 Each Review-hold photo card now displays its own saved final photo-to-cast
 comparisons, linked to cast evidence in a new tab; missing scores stay
 unavailable, and similarity is explicitly not an identity decision. This

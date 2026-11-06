@@ -29,6 +29,19 @@ from .sandbox import (
 )
 
 
+def _implementation_path(name):
+    module = pathlib.Path(__file__)
+    return module.parent.parent / name if name == "likeness.py" else module.with_name(name)
+
+
+def _verify_implementation_hashes(plan):
+    hashes = plan.get("implementationHashes", {})
+    if "likeness.py" not in hashes:
+        raise ValueError("engine binding missing likeness.py; create a new preview")
+    if any(metadata.content_sha256(_implementation_path(name)) != digest for name, digest in hashes.items()):
+        raise ValueError("engine changed since preview; create a new preview")
+
+
 def _write_json(path, value):
     payload = json.dumps(value, indent=2).replace("\n", os.linesep).encode("utf-8")
     retention_root = None
@@ -2665,10 +2678,10 @@ def create_plan(
         "seedCatalogSHA256": metadata.content_sha256(run / "seed-catalog.json"),
         "configSnapshotSHA256": metadata.content_sha256(run / "config-snapshot.json"),
         "implementationHashes": {
-            name: metadata.content_sha256(pathlib.Path(__file__).with_name(name))
+            name: metadata.content_sha256(_implementation_path(name))
             for name in ("clean_rebase.py", "planner.py", "policy.py", "reconciliation.py",
                          "audit.py", "engine.py", "rejections.py", "protection.py", "refinement.py",
-                         "family_tree.py", "cast_workflow.py")
+                         "family_tree.py", "cast_workflow.py", "likeness.py")
         },
         "status": "preview",
     }
@@ -3632,11 +3645,7 @@ def command(args, api):
         raise ValueError("matcher-only previews cannot be installed; create a new intake-aware run")
     _verify_routes(plan, layout["source_root"])
     if args.apply or resume_install:
-        if any(
-            metadata.content_sha256(pathlib.Path(__file__).with_name(name)) != digest
-            for name, digest in plan.get("implementationHashes", {}).items()
-        ):
-            raise ValueError("engine changed since preview; replan before applying")
+        _verify_implementation_hashes(plan)
     if args.check and (resume_install or preserve_legacy):
         if plan["status"] != "preview":
             raise ValueError("installation recovery preview requires an unpublished plan; use ordinary --check")

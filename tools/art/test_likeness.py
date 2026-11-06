@@ -557,7 +557,10 @@ class LikenessTests(unittest.TestCase):
         g = self.lib / "Prospects/Person 0/gallery"
         (g / "person_0_image_901.jpg").write_text("w1|901|2|0.8")  # a real second person
         (g / "person_0_image_902.jpg").write_text("w1|902|2|0.1")  # a passer-by in the background
-        self.assertEqual(self.run_tool("junk").count("2+ faces"), 2, "only the real second person is junk (listed in the summary and the line)")
+        preview = self.run_tool("junk")
+        self.assertEqual(preview.count("2+ faces"), 2, "only the qualifying detection is junk")
+        self.assertIn("possible additional face detected", preview)
+        self.assertNotIn("someone else is in the picture", preview)
         self.run_tool("junk", apply=True)
         junk = self.lib / "_junk/Prospects"
         self.assertEqual([p.name for p in junk.glob("*.jpg")], ["person_0_image_901.jpg"])

@@ -205,6 +205,25 @@ class LeanContinuationTests(unittest.TestCase):
             self.command(check=True)
         self.assertEqual(json.loads(receipt.read_text())["status"], "preview")
 
+    def test_preview_requires_bound_likeness_producer_before_check_or_install(self):
+        self.prepare()
+        self.command(apply=True)
+        receipt = self.target / "run.json"
+        plan = json.loads(receipt.read_text())
+        digest = plan["implementationHashes"]["likeness.py"]
+        self.assertEqual(digest, metadata.content_sha256(pathlib.Path(clean_rebase.__file__).parent.parent / "likeness.py"))
+        for altered in (None, "0" * 64):
+            if altered is None:
+                del plan["implementationHashes"]["likeness.py"]
+            else:
+                plan["implementationHashes"]["likeness.py"] = altered
+            receipt.write_text(json.dumps(plan), encoding="utf-8")
+            for flag in ("check", "install"):
+                with self.subTest(altered=altered, flag=flag), \
+                        self.assertRaisesRegex(ValueError, "engine changed|engine binding missing"):
+                    self.command(**{flag: True})
+        self.assertEqual(json.loads(receipt.read_text())["status"], "preview")
+
     def test_seed_snapshot_uses_its_own_receipt_not_live_catalogue_serialization(self):
         original = self.prepare()
         snapshot = self.source / "seed-catalog.json"

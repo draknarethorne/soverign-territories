@@ -176,9 +176,7 @@ def command(args):
         if plan["status"] == "reset-required":
             raise ValueError("previous publication failed without rollback; reset sandbox before continuing")
         if plan["status"] != "applied" and (args.install or args.check):
-            for name, digest in plan["implementationHashes"].items():
-                if metadata.content_sha256(pathlib.Path(clean_rebase.__file__).with_name(name)) != digest:
-                    raise ValueError("engine changed since preview; create a new continuation")
+            clean_rebase._verify_implementation_hashes(plan)
             if metadata.content_sha256(target / "likeness-cache.json") != plan["continuationCacheSHA256"]:
                 raise ValueError("continuation measurements changed since preview")
         if args.install:

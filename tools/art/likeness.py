@@ -2362,13 +2362,13 @@ def cmd_lookalikes(args):
 
 
 def junk_reason(p, st, multi=True):
-    """Why a photo is no use as the input of a Prime, or None: no face, a face too small to work with, a second person in the picture, or (a phone screenshot) the app's bars lying over her head."""
+    """Explain a quality exclusion, including a possible additional detected face."""
     if p.raw is None:
         return "no face found" if p.faces == 0 else "cannot be read"
     if p.px < st["minFace"]:
         return f"face too small ({p.px}px)"
     if multi and p.faces > 1 and p.f2 >= st.get("multiFace", 0.3):
-        return "2+ faces: someone else is in the picture"
+        return "2+ faces: possible additional face detected; review required"
     if "_shot_" in p.name and p.box:
         from PIL import Image
         try:
