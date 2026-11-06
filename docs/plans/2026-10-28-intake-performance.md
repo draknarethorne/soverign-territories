@@ -160,6 +160,24 @@ manifest writes, exclusions, edited assets, failure handling and the full
 phase. This is not a phase-level acceptance, an approval to parallelize
 publication, or evidence that the extra-acceleration gate is met.
 
+**Synthetic ownership follow-up:** the same five verified prepared bytes
+were individually copied into five disjoint synthetic owner galleries under
+an automatically cleaned `tmp` test tree. Each owner ran existing
+`derivatives.maintain(..., apply=True)` in its own content-sealed session;
+serial and two-thread variants used separate equivalent trees. Two
+serial/two-thread generation pairs took 3.5635/2.8469 and
+3.6331/2.6199 seconds. Subsequent no-op calls took 0.4789/0.4414 and
+0.5643/0.4268 seconds. Each variant generated three derivatives per
+owner, had no diagnostics or subsequent changes, and produced the same
+25-file path/hash aggregate
+`bc2a731ef324ca500698ceb71b6d0d9b4e1bef9c2d87b0a1c12f64a513e25715`.
+The synthetic copies have no retained-lineage sets and therefore exercise
+unprepared rather than the real installed lineage path. The probe did not
+test shared owners, edited assets, worker failure, queue pressure or
+phase-level memory, and did not publish anything in the sandbox. It is
+encouraging evidence for a bounded prototype, not worker implementation
+or acceptance.
+
 ### Nov 6: retained navigation manifest lookup probe
 
 One read-only `_detail_navigation` call for installed Sammara photo
