@@ -141,13 +141,18 @@ def validate_policy(policy):
             "minimumUsablePhotosForOutlierActions",
             "photoRouteMinimum", "photoRouteMargin", "reviewAdmissionEnabled", "mergeMinimum",
         }
-        if set(rules) - {"unmatchedOutlierSplitEnabled", "galleryAdmissionEnabled"} != required_category_keys:
+        if set(rules) - {
+            "unmatchedOutlierSplitEnabled", "galleryAdmissionEnabled", "galleryAdmissionMinimumSimilarity",
+        } != required_category_keys:
             raise ValueError(f"categoryPolicies/{category} keys are incomplete or unsupported")
         if "galleryAdmissionEnabled" in rules and (
             not isinstance(rules["galleryAdmissionEnabled"], bool)
-            or rules["galleryAdmissionEnabled"] and category != "Sisters"
+            or rules["galleryAdmissionEnabled"] and category not in ("Sisters", "Angels")
         ):
-            raise ValueError("Gallery admission is approved only for Sisters")
+            raise ValueError("Gallery admission is available only for Sisters and Angels")
+        if "galleryAdmissionMinimumSimilarity" in rules:
+            _number(rules["galleryAdmissionMinimumSimilarity"],
+                    f"{category} Gallery admission minimum", 0, 1)
         if "unmatchedOutlierSplitEnabled" in rules and not isinstance(rules["unmatchedOutlierSplitEnabled"], bool):
             raise ValueError(f"categoryPolicies/{category}/unmatchedOutlierSplitEnabled must be boolean")
         for key in (
@@ -179,6 +184,14 @@ def validate_policy(policy):
         minimum_photos = rules["minimumUsablePhotosForOutlierActions"]
         if isinstance(minimum_photos, bool) or not isinstance(minimum_photos, int) or minimum_photos < 1:
             raise ValueError(f"categoryPolicies/{category} minimum usable photo count must be positive")
+
+    sisters = category_policies.get("Sisters", {})
+    angels = category_policies.get("Angels", {})
+    if sisters.get("galleryAdmissionEnabled") and angels.get("galleryAdmissionEnabled") and (
+        sisters.get("galleryAdmissionMinimumSimilarity", sisters["photoRouteMinimum"])
+        < angels.get("galleryAdmissionMinimumSimilarity", angels["photoRouteMinimum"])
+    ):
+        raise ValueError("Sisters Gallery admission minimum must not be lower than Angels")
 
     bands = policy["scoreBands"]
     if set(bands) != {"green", "yellow", "orange", "red"}:
@@ -732,12 +745,13 @@ def evaluate_cast_admission(category, *, score, margin, independent_support,
         "quality or stale-byte gate" if not quality_eligible or metadata_stale else
         "manual protection or rejection evidence requires review" if protected or rejection_history else
         "own-core similarity or all-category rival margin below admission minimum"
-        if score is None or score < rules["photoRouteMinimum"] or margin < rules["photoRouteMargin"] else
+        if score is None or score < rules.get("galleryAdmissionMinimumSimilarity", rules["photoRouteMinimum"])
+        or margin < rules["photoRouteMargin"] else
         "insufficient independent frozen destination-core support"
         if independent_support < config["protection"]["automatic"]["minimumIndependentReferences"] else None
     )
     return {"decision": "hold" if reason else "admit", "reason": reason or
-            "approved Sisters Gallery admission against one frozen all-category reference set"}
+            f"approved {category} Gallery admission against one frozen all-category reference set"}
 
 
 def evaluate_photo_route(

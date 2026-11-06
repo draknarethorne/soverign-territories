@@ -41,6 +41,11 @@ the audit has zero saved eligible moves despite 29 blocked follow-ups,
 not 29 missed automatic moves. E20 retains the next-preview gate after
 policy changes. C14 and bounded T29/T20-T22/L18 performance work remain
 before another partial run; no names, policy or installed photos change.
+N17's frozen-vector comparison and C14's shared-gate implementation are
+now recorded in their owning contracts: direct-only surname inheritance
+reduces Lujan to seven on current membership; staged Angel eligibility is
+24 at 0.50 or 33 at 0.45, with Sisters unchanged. These are not installed
+changes or a completed combined replay.
 The [Nov 6 closeout](plans/2026-11-05-priority-reset.md#nov-6---recap-review-usability-and-audit-explanation)
 enumerates requests, actual results and remaining work without another plan.
 

@@ -181,6 +181,9 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   and positive/negative tests. Record arrivals/remaining holds by stable ID,
   preview before installation, and never modify the applied run's policy or
   hashes to disguise changes. No full intake or Production approval implied.
+  Nov 6 shared-gate code and frozen staged comparisons are delivered:
+  24 versus 33 Angels qualify, with 78 Sisters unchanged. Complete replay/
+  refinement/naming acceptance remains, after performance prerequisites.
   [Corrected contract](2026-10-23-cast-seeded-library-rebase.md#nov-5-2237-cast-policy-correction).
 - [x] **P1 ai** C13 Verify all/scoped/low-score reset, manual versus acquired
   protection, old/new selections and deterministic eligible replacement/
@@ -328,11 +331,27 @@ unknown automatic-move status. Pylance syntax checks pass. No installed
 photo, family name, policy, workflow selection or receipt changes, and no
 new intake or partial replan occurs.
 
-**Remaining before another partial run:** N17 previews family-policy
-alternatives (seven current Lujan direct links versus 22 peer-chain members
-explains the overgrowth, not the result of a full alternate replan);
-E19/L23 retain explicit case dispositions; C14 previews shared cast
-admission; T29/T20-T22/L18 establish and implement the bounded shared-
+**N17 comparison now measured:** the complete frozen-vector planner
+reproduces all 163 saved family records before comparing alternatives.
+Lujan has 29/18/13/11 members under secondary >0.35/>0.40/>0.45/>0.50,
+and seven with direct-cast-only surname inheritance. No names change.
+The [owning family contract](2026-10-22-identity-family-naming.md#frozen-measurement-comparison)
+holds the input binding, full table, recommendation and limitations.
+
+**C14 shared gates now implemented:** explicit Angel admission uses the
+same evaluator and route verifier as Sisters. An independent Gallery-only
+minimum preserves Review/core/family rules. All 263 saved staged decisions
+reproduce before comparison: common >=0.50 makes 24 Angels eligible;
+Angels >=0.45 versus Sisters >=0.50 makes 33 eligible. Sisters remain 78.
+These are frozen-stage comparisons, not final installation counts.
+Eighty-nine focused tests pass. The
+[cast contract](2026-10-23-cast-seeded-library-rebase.md#nov-6-shared-gate-implementation-and-frozen-comparison)
+owns full details; C14 stays open for complete preview/acceptance.
+
+**Remaining before another partial run:** N17 needs the surname-inheritance
+decision and full naming/continuity preview, not another saved-path count;
+E19/L23 retain explicit case dispositions; C14 needs a full shared-cast
+replan rather than just saved-gate comparisons; T29/T20-T22/L18 establish and implement the bounded shared-
 inventory/history/derivative/detail performance package with output
 equivalence. Do not equate this report repair with those implementations.
 

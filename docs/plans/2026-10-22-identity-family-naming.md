@@ -32,6 +32,51 @@ L25 supplies linked five-photo comparisons before a policy decision.
 Use complete frozen vectors for alternative replans; saved winning paths
 alone cannot predict a changed tree.
 
+### Frozen-measurement comparison
+
+The Nov 6 comparison reconstructs every final non-cast Gallery centroid
+from the saved prepared-photo embeddings and the recorded centering mean,
+plus the frozen cast cores from their saved core-member flags. The cache's
+SHA256 matches the applied run's `continuationCacheSHA256`:
+`146f7a8e34dcf0e35ef55a3c253870a01af35746b97637ab305b9681a693e194`.
+Before any comparison, the current planner reproduces all 163 saved
+family member parent/tier/score records, including unlinked roots, with
+score tolerance `1e-10`; additional ungrouped Gallery identities are also
+included in the candidate population. Current cast-root assignments agree
+exactly. No image inference, preparation, filesystem renaming or catalogue
+write is involved.
+
+Each alternative reruns the full existing closest-cast/closest-peer
+planner on those vectors, rather than filtering saved winning paths.
+The direct cast resemblance link remains >=0.40 in every row.
+
+| Secondary surname-link rule | Lujan members, excluding cast root | Largest member group | All cast-linked non-cast members | Changed cast-root assignments |
+| --- | ---: | ---: | ---: | ---: |
+| Current peer >0.35 | 29 | 29 | 82 | 0 |
+| Peer >0.40 | 18 | 18 | 56 | 26 |
+| Peer >0.45 | 13 | 13 | 42 | 40 |
+| Peer >0.50 | 11 | 11 | 39 | 43 |
+| Direct cast only; no peer surname inheritance | 7 | 7 | 31 | 51 |
+
+**Recommendation for review:** direct-cast-only surname inheritance is
+the clearest way to prevent transitive resemblance from implying a shared
+cast surname. Keep peer resemblance links as review evidence, not surname
+membership. Raising the peer threshold still leaves chain inheritance and
+more than seven Lujan members. This is a proposed rule, not approval to
+rename the installed library; the seven-member comparison can be reviewed
+using the recap's current family table and collapsed sample panel.
+
+These are frozen-membership comparisons, not predictions of a combined
+cast-admission replay, which can change centroids. Final surname allocation,
+historical age priority and collision-safe first names were not previewed;
+the comparison measures connected membership only. A bounded-chain rule
+would require an explicitly defined new planner, not truncating current
+paths. N17 remains open for the rule decision and resulting complete
+naming/continuity preview.
+The full comparison, including member folders and source hashes, is saved
+as `Working\_reports\library\policy-previews\2026-11-06\family-policy-evidence.json`
+in the sandbox, not as an applied policy or receipt.
+
 ## Nov 5: tracing broad families before tuning
 
 The user asks to revisit family links after seeing 31 Lujan members in

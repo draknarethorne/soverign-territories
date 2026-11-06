@@ -258,7 +258,7 @@
       "type": "object",
       "minProperties": 1,
       "patternProperties": {
-        "^(?!Sisters$)": {
+        "^(?!(?:Sisters|Angels)$)": {
           "properties": {"galleryAdmissionEnabled": {"const": false}}
         }
       },
@@ -369,6 +369,7 @@
       "properties": {
         "photoRouteMinimum": {"$ref": "#/definitions/score"},
         "galleryAdmissionEnabled": {"type": "boolean"},
+        "galleryAdmissionMinimumSimilarity": {"type": "number", "minimum": 0, "maximum": 1},
         "unmatchedOutlierSplitEnabled": {"type": "boolean"},
         "photoRouteMargin": {"type": "number", "minimum": 0, "maximum": 2},
         "reviewAdmissionEnabled": {"type": "boolean"},

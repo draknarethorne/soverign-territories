@@ -97,6 +97,48 @@ support, quality, stale/rejection/protection and frozen-reference gates.
 No applied receipt/policy rewriting, new full intake or Production change.
 The older approval and implementation below remain dated evidence.
 
+#### Nov 6 shared-gate implementation and frozen comparison
+
+The schema and runtime validator now permit explicit Gallery admission
+for Angels as well as Sisters, never other categories. The shared
+evaluator, staged audit/admission and saved-route verifier use the same
+quality, independent frozen references, all-category rival margin,
+rejection, stale-byte and protection gates for both.
+Optional `galleryAdmissionMinimumSimilarity` overrides only the Gallery
+gate; omitted values retain the old `photoRouteMinimum` behavior. It
+does not lower cast Review routing, core retention or family thresholds.
+When both categories enable admission, the runtime rejects a Sister
+minimum below the Angel minimum. Equal minima remain valid for the
+conservative baseline comparison. Existing policies, including disabled
+Angels, retain their prior decisions; no installed/default policy changes.
+
+All 263 saved staged decisions/reasons reproduce exactly before changing
+the in-memory preview policy. Comparisons then reuse those original
+frozen cores, margins and support; admitted photos never bootstrap others.
+
+| Saved staged gate comparison | Sisters eligible | Angels eligible | Newly eligible versus installed decision set | Remaining staged holds |
+| --- | ---: | ---: | ---: | ---: |
+| Installed Sisters >=0.50; Angels disabled | 78 | 0 | 0 | 185 |
+| Both >=0.50; margin >=0.10 | 78 | 24 | 24 | 161 |
+| Sisters >=0.50, Angels >=0.45; margin >=0.10 | 78 | 33 | 33 | 152 |
+
+These are **saved staged eligibility counts**, not promised final
+Gallery/Review totals, a fresh membership/refinement replay, family-name
+preview or installation. All remaining preview holds fail score or margin;
+all other gates are still evaluated. The nine additional Angel candidates
+between 0.45 and 0.50 need visual review in the eventual complete preview.
+
+Eighty-nine focused admission/policy/refinement/rebase tests pass,
+including Angel staged audit/routing/route verification, boundary values,
+each independent hold, no bootstrapping, schema parity and the legacy
+Sisters-only default. Pylance syntax checks pass. C14 remains open for
+the complete saved-input preview and its correctness/review acceptance
+after the performance prerequisites, not for another gate implementation.
+Isolated validator smoke validation also passes 19/19 cases. Full
+per-stable-ID decisions and both preview policies are preserved in sandbox
+`Working\_reports\library\policy-previews\2026-11-06\cast-admission-preview.json`,
+labelled saved-stage comparisons rather than installable run receipts.
+
 ### C13 evidence: selection retention is separate from core membership
 
 **Nov 5 implementation checkpoint (before replay):** Sisters Gallery admission

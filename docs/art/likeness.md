@@ -32,6 +32,15 @@ The final audit separately shows saved eligible automatic moves and blocked
 follow-up reasons. Legacy `nextPassNeeded` is not proof another automatic
 pass can move a photo; policy/margin/protection holds remain visible.
 
+Explicit staged Gallery admission can be enabled for both Sisters and
+Angels. `galleryAdmissionMinimumSimilarity` optionally separates that gate
+from `photoRouteMinimum`; omitting it preserves existing behavior.
+Sisters cannot have a lower Gallery minimum than Angels when both enable
+admission. This capability does not enable Angels in an existing policy
+or install a preview; the
+[cast comparison](../plans/2026-10-23-cast-seeded-library-rebase.md#nov-6-shared-gate-implementation-and-frozen-comparison)
+owns the proposed minima and saved-evidence results.
+
 For current state and the sandbox/production boundary, see
 [STATUS.md](../STATUS.md), the
 [processing contract](likeness-processing-contract.md) and the active
