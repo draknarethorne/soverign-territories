@@ -74,6 +74,30 @@ class RebaseRecapTests(unittest.TestCase):
         self.assertEqual(page.count("Detector observations are not confirmed people counts"), 2)
         self.assertEqual(row["reason"], original)
 
+    def test_preview_review_destination_links_to_exact_expanded_photo(self):
+        data = rebase_recap.collect(self.run)
+        data["status"] = "preview"
+        out = self.working / "_reports" / "library" / "rebase-recap" / "preview.html"
+        row = next(row for row in data["rows"] if row["newBucket"] == "review")
+        anchor = rebase_recap._anchor("review-photo", row["source"])
+        page = rebase_recap.render(data, out)
+        self.assertIn(f'href="#{anchor}" target="_blank" rel="noopener noreferrer"', page)
+        self.assertEqual(page.count(f'id="{anchor}"'), 1)
+        self.assertRegex(page, rf'<details><summary>[^<]+</summary><div class=grid>.*id="{anchor}"')
+        self.assertIn("if(node.tagName==='DETAILS')node.open=true", page)
+        self.assertIn("image.loading='eager'", page)
+        unmatched = {"destination": "Various/review/missing.jpg", "newPerson": "Various",
+                     "newBucket": "review"}
+        self.assertNotIn("review-photo-", rebase_recap._destination_links(unmatched, data, out.parent))
+        data["finalMembershipAudit"] = {"rows": [
+            {"source": row["source"], "destination": row["destination"], "rivals": []},
+            {"source": "not-in-plan.jpg", "destination": "Various/review/missing.jpg", "rivals": []},
+        ]}
+        audit = rebase_recap._audit_section(data, out.parent)
+        self.assertIn(f'href="#{anchor}"', audit)
+        self.assertNotIn(rebase_recap._anchor("review-photo", "not-in-plan.jpg"), audit)
+        self.assertIn("source evidence unavailable (photo not recorded in run)", audit)
+
     def test_person_links_filter_current_review_and_preserve_old_identity_continuity(self):
         data = rebase_recap.collect(self.run)
         out = self.working / "_reports" / "library" / "rebase-recap" / "run1.html"

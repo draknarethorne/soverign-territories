@@ -232,6 +232,11 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   The producer's wording remains open. Both original reported cases are
   now identified and traced in the linked contract; detector calibration
   and quality decisions remain open, not globally suppressed.
+  Preview6 per-photo Review evidence links now open the exact photo inside
+  its expanded hold group rather than just jumping to the Review heading.
+  The target thumbnail is requested eagerly on a deep link; the other
+  thumbnails remain lazy. A real browser check verified the expanded case
+  and loaded image, and all 1,158 links resolve to 199 unique targets.
   [Full contract](2026-10-22-gallery-review-layout.md#milestone-transfer-record).
 - [x] **P1 ai** L26 Make Photo Review text search find the displayed closest
   identity evidence as well as the owner, filename and reason. Keep the

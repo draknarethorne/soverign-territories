@@ -440,11 +440,17 @@ def _destination_links(row, data, out_dir):
     if data.get("historical"):
         return '<span class=muted>Historical destination only; photo and gallery links unavailable after reset.</span>'
     if data["status"] != "applied":
+        if "_review_photo_keys" not in data:
+            data["_review_photo_keys"] = {
+                (item["source"], item["destination"]) for item in data["rows"] if item["newBucket"] == "review"
+            }
+        evidence = (_detail_link(_anchor("review-photo", row["source"]), row["newPerson"])
+                    if (row.get("source"), row["destination"]) in data["_review_photo_keys"]
+                    else _person_link(row["newPerson"], data, out_dir, bucket=row["newBucket"]))
         return (_verified_photo_link(
             _prepared_preview_target(row, data), row.get("preparedSHA256"),
             "Prepared preview (bytes verified; not installed)", data, out_dir,
-        ) + " · Planned photo evidence: "
-            + _person_link(row["newPerson"], data, out_dir, bucket=row["newBucket"]))
+        ) + " · Planned photo evidence: " + evidence)
     photo = _working_target(row["destination"], data)
     return ("<span class=destination-links>"
             + _verified_photo_link(
@@ -459,6 +465,8 @@ def _source_link(source, row, data, out_dir):
     if target is None or data.get("historical"):
         return '<span class=muted>source link unavailable</span>'
     if data["status"] != "applied":
+        if row is None:
+            return '<span class=muted>source evidence unavailable (photo not recorded in run)</span>'
         intake_link = _intake_detail_link(row, data, out_dir)
         return _destination_links(row, data, out_dir) + (f" · {intake_link}" if intake_link else "")
     if target.is_file():
@@ -504,9 +512,10 @@ def _thumb(row, data, out_dir):
             f'<img loading="lazy" src="{html.escape(_href(image, out_dir), quote=True)}" alt=""></a>')
 
 
-def _card(row, data, out_dir, note):
+def _card(row, data, out_dir, note, *, anchor=None):
     links = f' · {_safe_link(row["detail"], "intake", out_dir, new_tab=True)}' if row["detail"] else ""
-    return (f'<figure>{_thumb(row, data, out_dir)}<figcaption>{html.escape(note)}'
+    identifier = f' id="{html.escape(anchor, quote=True)}"' if anchor else ""
+    return (f'<figure{identifier}>{_thumb(row, data, out_dir)}<figcaption>{html.escape(note)}'
             f'<br>{_destination_links(row, data, out_dir)}{links}</figcaption></figure>')
 
 
@@ -516,10 +525,13 @@ def _origin(row):
     return f"{row['oldPerson']} (first intake {row['originalFolder']})"
 
 
-def _cards(rows, data, out_dir, note):
+def _cards(rows, data, out_dir, note, *, review_anchors=False):
     if not rows:
         return "<p class=muted>None.</p>"
-    return '<div class=grid>' + "".join(_card(row, data, out_dir, note(row)) for row in rows) + "</div>"
+    return '<div class=grid>' + "".join(
+        _card(row, data, out_dir, note(row),
+              anchor=_anchor("review-photo", row["source"]) if review_anchors else None)
+        for row in rows) + "</div>"
 
 
 def _core_reference_rows(data, person):
@@ -1143,9 +1155,10 @@ def _audit_section(data, out_dir):
         new_person, new_bucket = person_and_bucket(destination)
         final_links = _destination_links(
             {
-                "destination": destination, "newPerson": new_person, "newBucket": new_bucket,
+                "source": source, "destination": destination, "newPerson": new_person, "newBucket": new_bucket,
                 "sha256": row.get("sha256") if row else None,
                 "preparedSHA256": row.get("preparedSHA256") if row else item.get("preparedSHA256"),
+                "preparedPath": row.get("preparedPath") if row and row["destination"] == destination else None,
             },
             data,
             out_dir,
@@ -1183,7 +1196,7 @@ def _review_section(data, out_dir):
     for reason, group in sorted(reasons.items(), key=lambda item: -len(item[1])):
         parts.append(
             f"<details><summary>{html.escape(reason)}: {len(group)}</summary>"
-            f"{_cards(group, data, out_dir, lambda r: f'{r['newPerson']} ({r['newBucket']}); was {r['oldPerson']}; {r['reason']}')}"
+            f"{_cards(group, data, out_dir, lambda r: f'{r['newPerson']} ({r['newBucket']}); was {r['oldPerson']}; {r['reason']}', review_anchors=True)}"
             "</details>")
     return "".join(parts)
 
@@ -1278,6 +1291,7 @@ function openTarget(){filterCast();const id=location.hash.slice(1);
 const target=document.getElementById(id);if(!target)return;
 for(let node=target;node;node=node.parentElement){if(node.tagName==='DETAILS')node.open=true}
 if(target.tagName==='DETAILS')target.open=true;
+if(id.startsWith('review-photo-'))for(const image of target.querySelectorAll('img[loading="lazy"]'))image.loading='eager';
 requestAnimationFrame(()=>target.scrollIntoView({block:'start',behavior:'instant'}))}
 window.addEventListener('hashchange',openTarget);openTarget();
 window.addEventListener('load',openTarget,{once:true});
