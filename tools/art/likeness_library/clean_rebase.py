@@ -2701,6 +2701,18 @@ def create_plan(
 
 
 def _prior_external_files(working, plan, *, preserve_legacy=False):
+    from . import verification_reads
+
+    with verification_reads.session(working, label="External inventory", reuse=True) as reads:
+        files = _collect_prior_external_files(working, plan, preserve_legacy=preserve_legacy)
+        for relative, expected in files.items():
+            path = _publication_path(working, relative)
+            if reads.digest(path) != expected:
+                raise ValueError(f"external inventory changed during verification: {path}")
+        return files
+
+
+def _collect_prior_external_files(working, plan, *, preserve_legacy=False):
     from . import derivatives, retained_preparation
 
     native = {

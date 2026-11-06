@@ -60,6 +60,14 @@ Weak Various candidates need an explicit destination choice; quality
 holds cannot inherit invented identities. Human labels and routing
 approval remain open, not another automatic intake or forced merge.
 
+**Nov 6 external-inventory progress:** a sealed, owner-scoped T20
+improvement passes focused tests and same-owner paired measurements.
+Latest-code preview5 passes independent saved-input check and exactly
+matches preview4's photo, family, refinement and audit records. Both
+remain uninstalled; the full read-only cast inventory independently seals
+all 11,786 paths. This is not installation acceptance.
+The [pinned recap](recap/2026-11-04-1130-recap.md) links preview5.
+
 **Nov 5 22:37 review correction:** current placements/catalogue still match
 the final applied run, but Overview predates the retained-reader fix and
 contained obsolete crop diagnostics. Supported report-only refresh and

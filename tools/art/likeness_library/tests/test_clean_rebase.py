@@ -55,6 +55,103 @@ class CleanRebaseTests(unittest.TestCase):
 
         return SimpleNamespace(inventory=inventory)
 
+    def test_external_inventory_reuses_and_seals_one_operation(self):
+        from PIL import Image
+        from tools.art.likeness_library import derivatives, retained_preparation, verification_reads
+
+        gallery = self.working / "Angels" / "Reference" / "gallery"
+        gallery.mkdir(parents=True)
+        paths = []
+        box = [.3, .2, .3, .3]
+        for index in range(2):
+            path = gallery / f"reference_image_{123450 + index}.jpg"
+            Image.new("RGB", (400, 600), ("red", "blue")[index]).save(path)
+            paths.append(path)
+        plan = {
+            "workingInputs": {p.relative_to(self.working).as_posix(): metadata.content_sha256(p) for p in paths},
+            "photos": [{"destination": p.relative_to(self.working).as_posix()} for p in paths],
+        }
+        with mock.patch.object(retained_preparation, "source_is_prepared", return_value=False), \
+                mock.patch.object(retained_preparation, "crop_guard", return_value=False):
+            for path in paths:
+                derivatives.maintain(path, box, 120, apply=True)
+            actual_verified = derivatives.verified
+
+            def require_shared_proof(*args, **kwargs):
+                self.assertIsNotNone(verification_reads.active())
+                return actual_verified(*args, **kwargs)
+
+            with mock.patch.object(derivatives, "verified", side_effect=require_shared_proof):
+                inventory = clean_rebase._prior_external_files(self.working, plan)
+
+            self.assertEqual(len(inventory), 9)
+            for relative, expected in inventory.items():
+                self.assertEqual(metadata.content_sha256(self.working / relative), expected)
+
+            def mutate_after_verification(*args, **kwargs):
+                result = actual_verified(*args, **kwargs)
+                target = result[0]
+                contents = target.read_bytes()
+                target.write_bytes(bytes([contents[0] ^ 1]) + contents[1:])
+                return result
+
+            with mock.patch.object(derivatives, "verified", side_effect=mutate_after_verification), \
+                    self.assertRaisesRegex(ValueError, "content changed"):
+                clean_rebase._prior_external_files(self.working, plan)
+        self.assertIsNone(verification_reads.active())
+
+    def test_external_inventory_refuses_changed_unprepared_native_without_derivatives(self):
+        source = self.working / "Angels" / "Reference" / "gallery" / "reference_image_123450.jpg"
+        source.parent.mkdir(parents=True)
+        source.write_bytes(b"old")
+        relative = source.relative_to(self.working).as_posix()
+        plan = {"workingInputs": {relative: metadata.content_sha256(source)}, "photos": []}
+        source.write_bytes(b"new")
+
+        with mock.patch("tools.art.likeness_library.retained_preparation.crop_guard", return_value=False), \
+                self.assertRaisesRegex(ValueError, "external inventory changed"):
+            clean_rebase._prior_external_files(self.working, plan)
+
+    def test_external_inventory_reuses_matching_outer_proof_and_seals_native(self):
+        from tools.art.likeness_library import retained_preparation, verification_reads
+
+        source = self.working / "Angels" / "Reference" / "gallery" / "reference_image_123450.jpg"
+        source.parent.mkdir(parents=True)
+        source.write_bytes(b"native")
+        relative = source.relative_to(self.working).as_posix()
+        plan = {"workingInputs": {relative: metadata.content_sha256(source)}, "photos": []}
+
+        with mock.patch.object(retained_preparation, "crop_guard", return_value=False), \
+                verification_reads.session(self.working) as proof:
+            inventory = clean_rebase._prior_external_files(self.working, plan)
+        self.assertEqual(inventory, plan["workingInputs"])
+        self.assertEqual(proof.stats["sealReads"], 1)
+        with verification_reads.session(self.working, seal_content=False), \
+                self.assertRaisesRegex(ValueError, "seal policy"):
+            clean_rebase._prior_external_files(self.working, plan)
+
+    def test_external_inventory_preserves_explicit_legacy_collision_policy(self):
+        from tools.art.likeness_library import derivatives, retained_preparation
+
+        source = self.working / "Angels" / "Reference" / "gallery" / "reference_image_123450.jpg"
+        source.parent.mkdir(parents=True)
+        source.write_bytes(b"native")
+        relative = source.relative_to(self.working).as_posix()
+        legacy = source.parent.parent / derivatives.relative_target(source, "padded")
+        legacy.parent.mkdir(parents=True)
+        legacy.write_bytes(b"unowned")
+        plan = {
+            "workingInputs": {relative: metadata.content_sha256(source)},
+            "photos": [{"destination": relative}],
+        }
+
+        with mock.patch.object(retained_preparation, "crop_guard", return_value=False):
+            with self.assertRaisesRegex(ValueError, "unowned legacy derivative collisions"):
+                clean_rebase._prior_external_files(self.working, plan)
+            inventory = clean_rebase._prior_external_files(self.working, plan, preserve_legacy=True)
+        self.assertEqual(inventory[legacy.relative_to(self.working).as_posix()],
+                         metadata.content_sha256(legacy))
+
     def test_final_membership_records_recoverable_core_locks_and_honest_rival_audit(self):
         import copy
         import json

@@ -357,6 +357,24 @@ equivalence. Do not equate this report repair with those implementations.
 
 #### Nov 6 - combined preview4 and performance slice
 
+**Later Nov 6:** the scoped external-inventory improvement and its
+same-owner paired proof are recorded in the
+[performance owner](2026-10-28-intake-performance.md#nov-6-external-inventory-reuse-trial).
+Because the engine module changed, preview4 is review evidence, not the
+latest-code install candidate. A separate `postrun-review-preview5` using
+the same saved intake and policy passes continuation and independent
+check; every one of its 3,290 photo records and the full family/refinement/
+final-audit objects match preview4. Its recap check passes and the Lujan
+comparison shows eight member blocks and 40 loaded images, none broken.
+No install or fresh intake. Preview5's run SHA-256 is
+`8e41d51d9c3d2763a74252a5f24eba9b4466cb6833678fd967233832691c6c8f`;
+its matching-plus-check log is
+`tmp\session-logs\nov6-external-inventory-preview5.log` (909.29 seconds).
+The separate read-only installed-cast external inventory also passes its
+independent seal for all 11,786 paths; exact counters and limits are in
+the performance owner. This is not an installation or a paired full-phase
+speedup. The Noelle fragment opens its 96-photo detail.
+
 This later result supersedes the earlier "before another partial run"
 wording above. Under delegated preview authority, direct-cast-only surname
 inheritance and Angels >=0.45 / Sisters >=0.50 are selected for the separate

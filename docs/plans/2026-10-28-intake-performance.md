@@ -49,6 +49,129 @@ installation/performance closeout must retain their explicit owner/gate.
 No new worker pool, persistent trust cache, recipe change or weakened
 independent installed acceptance is introduced.
 
+### Nov 6: bounded decode-sharing trial
+
+The current-code generation probe used five SHA-256-verified prepared
+inputs from the frozen preview4/cache, one each from Angels, Sisters,
+Potentials, Prospects and Various. It rendered all three framings with
+the saved face boxes and `prepared=True`, in one process on the sandbox's
+existing B: drive; it did not copy or mutate library inputs. The five
+source files total 1,461,566 bytes. Python 3.14.3, Pillow 12.1.1,
+Windows 11 and an AMD Ryzen 5 5500 (6 cores / 12 logical threads,
+25,655,050,240 bytes physical memory) were used; no cache flush or
+competing-load control was attempted.
+
+The source IDs were `image_7514747935627264261`,
+`image_7517962558582853855`, `image_7513274258273458465`,
+`image_7500298447818601013` and `image_7513775101895217549`.
+The original derivative module SHA-256 was
+`4b86e27e8d3d01e5ec7014ded2c0bc060f333050913abaf4542fdc58741c5dd`;
+preview4 run and frozen-cache hashes remain recorded in the spine.
+Two instrumented baseline repetitions took 1.759 and 1.796 seconds and
+opened source images 15 times for 15 output PNGs. The ordered aggregate
+of per-output SHA-256 records was
+`c8a7ebe19fb54b42f7d25cc828c93b9a373277a3b2b3627814928a5b5a1e815d`.
+
+Three adjacent baseline/prototype pairs took respectively 1.7643/1.7156,
+1.7666/1.6834 and 1.7614/1.6292 seconds; each pair's 15 PNG byte hashes
+matched exactly. The prototype decoded each input once and supplied copies
+in memory to the existing render functions. **It was a read-only hypothesis
+trial, not a production implementation:** it omitted source mutation/
+ownership guards and exercises prepared images only, not screenshot cleanup,
+EXIF edge cases, no-op verification, error recovery or memory bounds.
+Its apparent 0.05-0.13-second savings are not a full-phase speedup or
+evidence that a safe implementation is faster.
+
+T21 decode sharing remains open. Implementing it safely spans the separate
+originals helpers, staging and standalone/recovery consumers and requires
+the explicit mutation and output-equivalence contracts above. The small
+trial alone does not justify silently discarding those checks or claiming
+the decode-sharing slice complete. No policy, receipt or library image
+changed for this probe.
+
+### Nov 6: external inventory reuse trial
+
+A bounded, read-only T20 comparison on the current installed
+`Angels/sammara` owner used all 19 Gallery/Review originals and their
+associated retained and derivative evidence. Both paths called the same
+existing external-inventory collector against the same snapshot. The
+standalone baseline took 35.893 seconds and made 2,092 instrumented
+verification digest reads / 960,851,593 bytes. An explicit operation-local
+verification session, including its independent content seal, took 9.565
+seconds and made 352 digest reads / 198,501,039 bytes. Both returned the
+same 186 path/digest entries (ordered inventory digest
+`5c4104d720a08e81e8af774786287bb10e456c792751c8e4787aa8a2e7b4ef86`).
+Session counters additionally recorded 186 content reads, 905 hash reuses,
+20 JSON loads and 186 independent seal reads. Instrumented digest bytes
+do not include every other application read.
+
+These are single-owner trial timings while a separate read-only baseline
+was active, not a controlled whole-install speedup. They establish a useful
+candidate for operation-scoped reuse, not permission to reuse results across
+the later staging/publication boundary or to omit the final independent
+acceptance. The next implementation must reject source/manifest mutations,
+preserve the complete inventory and old error behavior, and avoid changing
+the active run's runtime bytes until the baseline finishes. Since
+`clean_rebase.py` is bound into preview4, any engine change makes that
+saved preview unsuitable for install/check on the new code; preserve it as
+review evidence and require a new checked saved-input preview before install.
+
+After the no-op baseline ended, `_prior_external_files` was changed to
+reuse one root-bound verification session, check every returned native,
+retained, derivative and legacy path against its expected digest, and seal
+the content before returning. A compatible outer proof can own that seal;
+an incompatible root or no-seal session refuses. It does not retain trust
+across stages or replace independent publication checks.
+
+Two paired real-owner reruns of the implemented path produced the same
+186-entry inventory as the unoptimized collector:
+37.009/10.549 seconds and 34.615/8.492 seconds, respectively. In each
+pair, instrumented digest reads/bytes were
+2,092 / 960,851,593 versus 352 / 198,501,039. The optimized session
+performed 186 independent seal reads / 99,474,864 bytes. These are
+warm-cache owner measurements, not a phase-wide claim; the first pair
+overlapped other affected-path tests. All 107 rebase, continuation, read
+session and maintenance tests passed (one Windows symlink-privilege
+skip). The new tests cover mutation during collection, a changed
+unprepared native with no derivatives, and compatible/incompatible
+outer proof scopes. A first combined test command had an incorrect
+continuation module name; the corrected complete selection passed.
+
+The separate `postrun-review-preview5` now passes the saved-input
+continuation and independent check using the same combined policy.
+All 3,290 full per-photo records, family naming, both refinement records
+and final audit are equal to preview4; preview5 remains uninstalled.
+Browser review confirms its Lujan comparison contains eight member blocks
+and 40 loaded images without broken images; the Noelle fragment opens its
+96-photo detail. The separate read-only full installed-cast external
+inventory completed and independently sealed 11,786 paths in 587.721
+seconds. It read and sealed 5,854,285,911 bytes, reused 66,845 hashes,
+loaded 1,317 JSON files, scanned 52 directories and performed 9,315 path
+checks. Its ordered path/digest SHA-256 is
+`2a7df1d706b2654037b5f29cb6ba8e07fbf1de35f208ff374db4a307b068899a`;
+the log is `tmp\session-logs\nov6-external-inventory-full-check.log`.
+This verifies the current collector on the real inventory; it is not a
+paired whole-install speedup or an installed acceptance.
+
+### Nov 6: installed no-op baseline
+
+The supported `people-gallery.cmd --check --no-reports` ran read-only
+against the installed preview3 root, saved cache and saved policy. It
+returned zero with zero renames, pending derivatives or actionable
+diagnostics and 143 intentional framing exclusions. The operation took
+696.75 seconds, including its full independent seal: 30,780 content
+reads / 15,485,247,284 bytes, 44,055 hash reuses, 3,541 JSON loads,
+282 directory scans, 24,656 path checks and 30,780 seal reads of the
+same byte count. Log:
+`tmp\session-logs\nov6-noop-maintenance-baseline.log`.
+
+This is the installed no-op/check path, not fresh derivative generation
+or a paired before/after result for the external-inventory change.
+One small external-inventory experiment overlapped the read-only run,
+so elapsed time is observational rather than an isolated performance
+claim. T29 remains open for its complete generation/no-op, memory,
+cache-state and phase coverage.
+
 ## Milestone transfer record
 
 Nov 5 16:45: T29/T30/T20/T21/T22 execution transfers with the same IDs to the
