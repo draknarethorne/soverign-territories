@@ -102,6 +102,24 @@ EXIF edge cases, no-op verification, error recovery or memory bounds.
 Its apparent 0.05-0.13-second savings are not a full-phase speedup or
 evidence that a safe implementation is faster.
 
+**Memory and repeatability follow-up:** the same five IDs and
+SHA-256-verified prepared inputs from preview6 were rendered in memory on
+the same B: drive, using the installed preview3 cache's saved face boxes,
+Python 3.14.3 and Pillow 12.1.1. Three consecutive warm runs took
+1.6717, 1.7486 and 1.8618 seconds, each making 15 `Image.open` calls for
+15 PNG payloads with the same ordered ID/framing/output-hash aggregate
+`bbbc89eac98f5511b44ef054e8321bd6971a3c6ad1c6c4287f6e744ddbe3a071`.
+That aggregate uses a different serialization from the earlier trial and
+is not directly comparable to its aggregate. Windows process working sets
+after the three runs were 163,864,576 / 164,589,568 / 165,519,360 bytes;
+the cumulative process peak was 198,451,200 bytes. The process had already
+peaked at 192,073,728 bytes while importing and loading the cache, so this
+is not an isolated rendering peak or an install-wide bound. No cache flush,
+competing-load control, file output, source mutation or candidate
+optimization was used. `prepared=True` exercises the rendering path only;
+matching saved SHA-256 is not a substitute for full lineage verification.
+T29 remains open for its broader phase/cache/resource coverage.
+
 T21 decode sharing remains open. Implementing it safely spans the separate
 originals helpers, staging and standalone/recovery consumers and requires
 the explicit mutation and output-equivalence contracts above. The small
