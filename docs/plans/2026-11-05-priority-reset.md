@@ -2,7 +2,7 @@
 
 **Status:** active (execution spine: LEAN finish line, then trusted cast and character art)
 
-**Queue focus:** C12
+**Queue focus:** E19
 
 ## Execution spine
 
@@ -14,9 +14,9 @@ Read this section and the current milestone before choosing work; dated
 Q&A and inventories below are context, not competing schedules.
 
 **Current milestone: M1, finish LEAN.** Installation, installed-run check
-and corrected Gallery check finish successfully at 18:40; LY4/N16 are
-verified below. C12 is the next shared-evidence acceptance slice, followed
-by the remaining M1 scenarios and bounded performance work, not new intake.
+and corrected Gallery check finish successfully at 18:40. LY4/N16 and
+C12/C13/E18/L21/S30 are verified below. E19 is the next saved-evidence
+scenario, followed by L23 and bounded performance work, not new intake.
 While a process runs, documentation reconciliation remains the only
 mutation lane. Read the small flow receipt/log at meaningful boundaries;
 do not restart the process or infer completion from progress messages.
@@ -92,17 +92,17 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   history against saved evidence. Code/boundary tests are delivered; link
   exact results and exceptions, not another threshold implementation.
   [Full contract](2026-10-22-identity-family-naming.md#milestone-transfer-record).
-- [ ] **P1 ai** C12 Verify installed Sisters >=0.50/margin >=0.10 scenarios,
+- [x] **P1 ai** C12 Verify installed Sisters >=0.50/margin >=0.10 scenarios,
   independent frozen-core/quality/protection gates and saved receipt/viewer
   evidence. Angels remain Review-only.
   [Full contract](2026-10-23-cast-seeded-library-rebase.md#milestone-transfer-record).
-- [ ] **P1 ai** C13 Verify all/scoped/low-score reset, manual versus acquired
+- [x] **P1 ai** C13 Verify all/scoped/low-score reset, manual versus acquired
   protection, old/new selections and deterministic eligible replacement/
   explicit hold. Shared Production/workspace publication needs separate
   approval; inventory remaining repoint/reference coverage instead of
   declaring it delivered.
   [Full contract](2026-10-23-cast-seeded-library-rebase.md#milestone-transfer-record).
-- [ ] **P1 ai** E18 Reconcile all 35 follow-up reasons, final residual audit,
+- [x] **P1 ai** E18 Reconcile all 35 follow-up reasons, final residual audit,
   pass/oscillation/lock holds and C12/C13 integration against saved/installed
   evidence. Code/tests delivered; generic matching success is insufficient.
   [Full contract](2026-10-22-likeness-engine-acceptance.md#milestone-transfer-record).
@@ -111,7 +111,7 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   fix the justified route/hold from saved measurements; no global threshold
   lowering, forced identity or full intake for diagnosis.
   [Full contract](2026-10-22-likeness-engine-acceptance.md#milestone-transfer-record).
-- [ ] **P1 ai** L21 Verify actual shared recap styles/navigation, safe local
+- [x] **P1 ai** L21 Verify actual shared recap styles/navigation, safe local
   final-destination links, count conservation and renamed/merged/split/
   emptied states; include Harlow Chase and Sophie Lloyd continuity.
   [Full contract](2026-10-22-gallery-review-layout.md#milestone-transfer-record).
@@ -128,7 +128,7 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   final destinations. Trace the two reported multi-face cases with I60;
   preserve missing/edited/unavailable states.
   [Full contract](2026-10-22-gallery-review-layout.md#milestone-transfer-record).
-- [ ] **P1 ai** S30 Consume LY4 and cast/naming evidence to audit real
+- [x] **P1 ai** S30 Consume LY4 and cast/naming evidence to audit real
   admissions, retention/releases/Review, original names and surname
   presentation. Record ambiguity and protection; no second matcher, naming
   engine, replay or fabricated same-person decision.
@@ -269,10 +269,51 @@ check is correctness recovery, not a controlled T29 optimization claim.
   shows all 146 `was` histories and required roots Vale 21, Montgomery two,
   Lujan 29, Savannah seven. Colours remain score bands, not membership gates.
 
-This closes installed/viewer/naming correctness only. C12/C13/E18/E19,
-L21-L23/S30 scenario closeout and T29 onward remain explicit M1 owners.
+This initial closeout covers installed/viewer/naming correctness. The
+scenario continuation below consumes the same installed evidence.
 M2 human identity, placement, family-presentation and quality approval
 remain untouched; zero diagnostics does not accept those judgments.
+
+#### Nov 5 after final checks - shared scenario acceptance
+
+**C12/C13/E18/L21/S30 verified**, not all of M1. Shared suite runs through
+launcher environment/test-scratch helpers: 169 tests, one Windows symlink-
+privilege skip, no failures. This combines the 101 reader/provenance/
+maintenance tests, 20 cast-reset/policy tests, 31 refinement/audit tests and
+17 recap tests; do not add these nested test counts twice. Scratch is
+repository `tmp`; `combined-acceptance-tests.log` joins the flow logs.
+
+| Owner | Exact saved/installed scenario evidence |
+| --- | --- |
+| C12 | All 263 decisions exactly reproduce the approved evaluator's decision **and reason**. All 78 admits exist in the intended Sister Gallery: 72 Various gains, six Sister returns. Minimum score 0.5104872295, margin 0.1059712526, independent support 12 (policy minimum four). Frozen final cores/own leave-one-out, quality, stale/rejection/manual gates hold. Zero Angel admissions; 185 holds remain, not fabricated identities |
+| C13 | All 21 reset/replacement decisions exactly reproduce from the independent final audit and intended final Gallery sources exist. Receipt equals installed plan; `mode=all`, shared publication false. Scoped/low-score/none, manual-versus-acquired protection, initial-core exclusion, missing replacement and stable ties pass fixture tests. No manual-protection exception occurs in this actual cohort; that branch is tested, not claimed observed. Inventory: 67,025 references / 67,023 files, 64 manual reference records, zero unreadable records. Later approved shared-reference repointing remains M3, not delivered publication |
+| E18 | All 35 earlier follow-ups survive by stable ID with explicit final/refinement reasons: 23 destination changes, 12 unchanged. Reasons: four no-higher-rival, 11 insufficient margin, two cast gates, eight draft-policy review, one unassigned Review admission, nine protection/anchor/workflow holds. Initial refinement: two passes/seven moves; final: three passes/12 moves, stable under four-pass cap. Independent final audit retains 265 higher rivals, 29 follow-ups, zero post-continuity pending, `nextPassNeeded=true`; no global-convergence claim |
+| L21 | Shared header/style/navigation and working current-photo/detail/history links are browser-verified, along with Harlow Chase split/empty and Sophie Lloyd split/retained/arrivals/departures. Count conservation and explicit changed/missing/edited/unsafe states pass recap fixtures. This does not close L22's optional interaction or L23's detector-case investigation |
+| S30 | All 1,029 retained cast rows preserve their person/bucket/stem apart from format, with explicit policy reasons. All 237 releases have reasons: final Gallery Models 56, Potentials 58, Prospects 27, Sister returns six; final Review cast 75 and Various 15. Consume C12's real 72 Various-to-Sister gains, C13's reset/protection record and N16's family/history proof. No Angel auto-admission, forced merge or fabricated original-name/identity label |
+
+**Explicit remaining evidence, not silently closed:**
+
+- **E19:** all prior 93 Briar IDs remain together inside current Noelle's
+  96-photo group. Final holds: 70 protection/anchor/workflow, 16 no higher
+  rival, four insufficient margins, three unusable single-face measurements.
+  Saved top-three cast evidence contains Sammara for 83/93, similarity range
+  0.112203-0.432019, against ten recorded Sammara core references. The highest
+  example `photo:image_7519493589368736991` is 0.432019 to Sammara versus
+  0.644345 own-core. This explains the available individual measurements,
+  not every member's all-cast comparison or the whole-cluster score/pose/
+  aligned-face explanation. Ten absent top-three entries stay unmeasured
+  here; do not infer zero. Complete from saved cache/reference evidence,
+  not a new intake, global Angel-threshold change or forced Sammara merge.
+- **L23 / I60:** Jade provenance/current bytes and honest framing states
+  pass, but the raw feedback's **two** disputed detector cases are not
+  stable-ID-labelled in that source. This original prepared run contains
+  16 explicit multi-face holds; do not guess which pair the user meant or
+  call face-candidate counts confirmed people. Preserve this distinction
+  while tracing linked intake evidence. L23 stays open.
+- **L22** optional agree/disagree/dedicated-page work stays open under its
+  existing M7 gate. **T29** representative paired baseline and subsequent
+  bounded optimizations remain unstarted; the full-run timing table alone
+  does not satisfy paired generation/no-op/warm output-equivalence proof.
 
 **Saved-result inspection, Nov 5 after push (final checks pending):**
 

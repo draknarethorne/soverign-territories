@@ -382,7 +382,7 @@ authorize FAST processing or migrate existing evidence.
   explicitly approved final purge. Refuse silent permanent-delete fallback
   when the volume/API cannot recycle. No production pruning until these
   sandbox gates pass; do not delete unique legacy recovery bytes by age.
-**Transferred contract: S30 -> [reset S30](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** After the replay blocker is resolved, audit real
+**Transferred contract: S30 -> [reset S30](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger); completion tracked only in the spine.** After the replay blocker is resolved, audit real
   Various-to-Sister/Angel admissions, cast core/workflow retention,
   eligible low-score releases/Review/reassignment, and original-name plus
   surname presentation. Cross-reference the existing cast and naming

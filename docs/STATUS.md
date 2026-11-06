@@ -21,8 +21,9 @@ check all pass; actual viewers and installed family/name histories are
 verified. A tested empty-retired-folder reader fix resolves the first
 Gallery failure without reset/intake/reinstall or receipt edits. Exact
 results are in the [spine closeout](plans/2026-11-05-priority-reset.md#nov-5-1840---final-continuation-and-viewer-acceptance).
-LY4/N16 close; C12 is next, not automatic human identity approval or M1
-performance completion. Production/FULL/shared-publication boundaries stay
+LY4/N16 and shared C12/C13/E18/L21/S30 scenario checks close; E19 is next,
+not automatic human identity approval or M1 performance completion.
+Production/FULL/shared-publication boundaries stay
 protective; the later local path is selected, not moved.
 
 ## Dated decision record

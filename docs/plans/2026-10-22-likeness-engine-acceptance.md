@@ -90,7 +90,7 @@ Final audit uses separately rebuilt final Gallery cores, includes retained
 cast and Review, and does not run a further reassignment pass. More passes
 of exactly the same scope need not change anything.
 
-**Transferred contract: E18 -> [reset E18](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** Verify saved-case and installed final-audit/refinement
+**Transferred contract: E18 -> [reset E18](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger); completion tracked only in the spine.** Verify saved-case and installed final-audit/refinement
   results, including C12/C13 integration; code/tests are delivered, all
   35 follow-up traces and final residual reasons still require evidence.
   Retained implementation contract:

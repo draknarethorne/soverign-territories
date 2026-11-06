@@ -45,7 +45,7 @@ acceptance of final identity placements. User-reported name-flow examples are
 cases to trace against saved photo IDs; do not turn the examples into verified
 ground-truth identities.
 
-**Transferred contract: L21 -> [reset L21](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** Bring the recap onto existing shared HTML/CSS/navigation
+**Transferred contract: L21 -> [reset L21](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger); completion tracked only in the spine.** Bring the recap onto existing shared HTML/CSS/navigation
   standards, with safe local links opening final person/gallery/Review pages
   in new tabs. Show old-identity -> final-identity photo counts, original
   members retained versus arrivals/departures, name continuity reasons and

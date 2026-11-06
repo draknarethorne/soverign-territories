@@ -122,7 +122,7 @@ selected photos do qualify as core members independently. Removing selection
 protection alone would not meet the request to exclude reset selections from
 initial core evidence.
 
-**Transferred contract: C13 -> [reset C13](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** Verify installed workflow-reset evidence and sandbox-local
+**Transferred contract: C13 -> [reset C13](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger); completion tracked only in the spine.** Verify installed workflow-reset evidence and sandbox-local
   selection proposals; implementation/tests are delivered. Preserve the
   approved full-rebase workflow selection reset: all cast, selected slots, or selected photos below an
   own-core cutoff. For the next full rebase, treat current selected cast
@@ -239,7 +239,7 @@ character slots should inherit the same slot-versus-source-person distinction.
   [layout LY10](2026-11-02-library-layout.md) comparison. Gate: threshold/core-only
   decision approved Nov 3; tested E13 acquisition, exact release preview and
   source/preparation reuse verification before a new sandbox install.
-**Transferred contract: C12 -> [reset C12](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** Verify installed Sisters admission scenarios and receipt/
+**Transferred contract: C12 -> [reset C12](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger); completion tracked only in the spine.** Verify installed Sisters admission scenarios and receipt/
   viewer evidence; implementation/tests are delivered. Approved band:
   own-cast score >=0.50 and rival margin >=0.10, with the frozen-reference,
   independent-evidence/quality/rejection gates and read-only scenario preview
