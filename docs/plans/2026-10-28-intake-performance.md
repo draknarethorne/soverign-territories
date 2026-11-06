@@ -135,6 +135,22 @@ behavior there. These synthetic tests strengthen the T21 equivalence
 contract; they do not prove lineage, concurrent mutation safety, memory
 bounds or a production decode-sharing speedup.
 
+### Nov 6: retained navigation manifest lookup probe
+
+One read-only `_detail_navigation` call for installed Sammara photo
+`sammara_image_7513252963464388301.png` returned seven links and made six
+calls to the derivative manifest loader: one direct and one through
+`verified` for each framing. A standalone call took 0.519 seconds; a call
+inside an operation-local session, including its independent content seal,
+took 0.303 seconds and recorded 20 JSON loads, 29 content reads and 29
+seal reads. Both rendered the same navigation SHA-256
+`f51f247029fe0f243f7708b2dd4e7e2863cb17355ae0394106407802fe96730d`.
+These are single warm observations, not a paired speedup or a phase-wide
+measurement; the six loader calls do not imply six disk reads in a session.
+Sharing the document outside the session would change its concurrent-edit
+and transient-failure boundaries. No caching change is made without a safe
+equivalence test and measured benefit; T22 remains open.
+
 ### Nov 6: external inventory reuse trial
 
 A bounded, read-only T20 comparison on the current installed
