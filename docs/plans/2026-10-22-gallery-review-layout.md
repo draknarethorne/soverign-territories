@@ -31,6 +31,19 @@ baseline until a separately previewed and verified run is approved.
 
 ## Nov 6 review navigation
 
+**L22 preview7 inventory:** the actual proposed recap contains 21 cast
+detail panels and 22 cast-filter links. Nineteen panels have ten saved core
+reference cards and two have nine; none claimed an unrecorded tenth. A
+browser click on Camaris filtered the view to one open panel. All 229
+other-identity rows have two representative image elements and an existing
+`Looks like` selector; the first pair decoded successfully, and its identity
+link opened the corresponding detail. The save control downloads
+`rebase-expectations.json` and explains its sandbox-parent destination.
+This is not a full 458-image load test or user acceptance. The selector is
+an identity expectation, not the requested dedicated surname agree/disagree
+interaction; L22 remains open for its existing deferred remainder, with no
+filesystem rename or identity decision implied.
+
 Review holds now have a local text filter over source/destination paths,
 the displayed person and reason, and the saved cast-comparison text.
 Matching groups expand automatically; a live count reports matching photos.
