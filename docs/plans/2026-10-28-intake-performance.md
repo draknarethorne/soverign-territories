@@ -185,6 +185,10 @@ hashes, three derivatives per owner, diagnostics and no-op repeats. An
 injected second-owner head-render failure leaves its completed padded
 derivative verifiable while the other owner finishes; a serial retry
 creates the remaining two derivatives and matches the serial tree exactly.
+Another paired case preserves an unowned chest asset for one owner and
+intentionally excludes head/chest for a no-face second owner; serial and
+threaded paths have identical normalized changes, diagnostics, file hashes
+and no-op results.
 The retained-preparation and verification suites pass 60 tests, with one
 Windows symlink-privilege skip. This is component equivalence only:
 independent worker seals do not replace the existing operation-wide final

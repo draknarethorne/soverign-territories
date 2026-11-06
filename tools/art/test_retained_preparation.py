@@ -120,10 +120,18 @@ class RetainedPreparationTests(unittest.TestCase):
         retained.stage_photo(self.root, second, self.prep, row, recipe={"id": "test-v16"})
         parallel = self.base / "parallel"
         failed = self.base / "failed"
+        protected = self.base / "protected"
+        protected_parallel = self.base / "protected-parallel"
         shutil.copytree(self.root, parallel)
         shutil.copytree(self.root, failed)
+        shutil.copytree(self.root, protected)
         paths = [self.destination, second]
         box = [0.35, 0.2, 0.3, 0.25]
+        manual = (protected / self.destination).parent.parent / derivatives.relative_target(
+            protected / self.destination, "chest")
+        manual.parent.mkdir(parents=True, exist_ok=True)
+        manual.write_bytes(b"manual derivative")
+        shutil.copytree(protected, protected_parallel)
 
         def unit(root, relative):
             photo = root / relative
@@ -168,6 +176,34 @@ class RetainedPreparationTests(unittest.TestCase):
         recovered, diagnostics = unit(failed, second)
         self.assertEqual((len(recovered), diagnostics), (2, []))
         self.assertEqual(tree(self.root), tree(failed))
+
+        def protected_unit(root, relative):
+            if relative == self.destination:
+                return unit(root, relative)
+            photo = root / relative
+            with verification_reads.session(root):
+                self.assertTrue(retained.source_is_prepared(photo))
+                return derivatives.maintain(photo, None, 0, apply=True, faces=0)
+
+        protected_results = [protected_unit(protected, path) for path in paths]
+        with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+            protected_parallel_results = list(
+                pool.map(lambda path: protected_unit(protected_parallel, path), paths))
+        for root, results in ((protected, protected_results),
+                              (protected_parallel, protected_parallel_results)):
+            self.assertEqual([len(changes) for changes, _ in results], [2, 1])
+            self.assertEqual(len(results[0][1]), 1)
+            self.assertIn("Preserved unowned/edited asset", results[0][1][0])
+            self.assertEqual(len(results[1][1]), 2)
+            self.assertTrue(all(message.startswith("INFO:") for message in results[1][1]))
+            self.assertEqual((root / manual.relative_to(protected)).read_bytes(), b"manual derivative")
+            for path, (_, messages) in zip(paths, results):
+                self.assertEqual(protected_unit(root, path), ([], messages))
+        for serial, threaded in zip(protected_results, protected_parallel_results):
+            for left, right in zip(serial, threaded):
+                self.assertEqual([item.replace(str(protected), "<root>") for item in left],
+                                 [item.replace(str(protected_parallel), "<root>") for item in right])
+        self.assertEqual(tree(protected), tree(protected_parallel))
 
     def test_identical_refresh_refuses_manifest_changed_after_lineage_verification(self):
         self.stage()
