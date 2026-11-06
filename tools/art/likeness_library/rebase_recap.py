@@ -205,6 +205,7 @@ def collect(run):
             row["groupSize"] = cluster_sizes[row["clusterId"]]
     old_people = {row["oldPerson"] for row in rows} | set(plan.get("referenceFolders", []))
     new_people = {row["newPerson"] for row in rows}
+    final_audit = plan.get("finalMembershipAudit") or {}
     return {
         "run": str(run), "workingRoot": plan["workingRoot"], "status": plan["status"],
         "historical": historical,
@@ -217,7 +218,7 @@ def collect(run):
         "incomingAliases": _incoming_aliases(run, plan),
         "preparationIndex": str(preparation / "index.html") if preparation else None,
         "rows": rows,
-        "coreReferences": plan.get("coreReferences"),
+        "coreReferences": final_audit.get("coreReferences", plan.get("coreReferences")),
         "finalMembershipAudit": plan.get("finalMembershipAudit"),
         "membershipRefinement": plan.get("membershipRefinement"),
         "finalMembershipRefinement": plan.get("finalMembershipRefinement"),
@@ -554,8 +555,9 @@ def _cast_section(data, out_dir):
              + "".join(f'<a href="#{anchor}" data-cast-filter="{anchor}">{html.escape(person)}</a>'
                        for anchor, person in anchors)
              + "</nav>",
-             "<p class=muted>Eligible core references use the run's ordered <code>coreReferences</code> top ten "
-             "when present, otherwise recorded <code>castSeedCore</code> members. Retained Gallery membership "
+             "<p class=muted>Eligible core references use the final membership audit's ordered "
+             "<code>coreReferences</code> top ten when recorded. Older runs fall back to top-level "
+             "<code>coreReferences</code>, then recorded <code>castSeedCore</code> members. Retained Gallery membership "
              "alone is not treated as a measured core rank.</p>",
              "<table><tr><th>Person</th><th>Kept</th><th>Lost</th><th>Gained</th><th>Now in Review</th></tr>"]
     details = []
@@ -569,8 +571,8 @@ def _cast_section(data, out_dir):
                      f'<td class={"warn" if lost else ""}>{len(lost)}</td><td>{len(gained)}</td><td>{len(held)}</td></tr>')
         eligible = _core_reference_rows(data, person)
         core = (_cards(eligible, data, out_dir, lambda r: f"Eligible core reference; score {_score_text(r['castSeedScore'])}")
-                if eligible else '<p class=muted>Top ten eligible core references unavailable: this run did not record '
-                'verified castSeedCore membership for this person.</p>')
+                if eligible else '<p class=muted>No eligible core references recorded for this person; '
+                'Gallery membership alone does not establish a measured core rank.</p>')
         details.append(
             f'<details id="{anchor}"{" open" if lost or gained else ""}><summary>{html.escape(person)}: '
             f'{len(kept)} kept, {len(lost)} lost, {len(gained)} gained, {len(held)} in Review</summary>'

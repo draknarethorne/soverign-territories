@@ -50,6 +50,16 @@ owns exact counts, tests, browser evidence, preserved refusal/retry and
 remaining gates. The [pinned recap](recap/2026-11-04-1130-recap.md)
 provides direct links to proposed and installed who-went-where reports.
 
+**Nov 6 core-coverage follow-up:** E19's
+[measured Noelle/Sammara comparison](plans/2026-10-22-likeness-engine-acceptance.md#measured-noellesammara-core-coverage)
+now provides verified exact recognizer crops and separates core coverage
+from protection, averaging and human identity. A tested recap-only fix
+shows final audit core references instead of stale initial seeds; both
+recaps are rebuilt. No matching-engine binding or installed state changes.
+Weak Various candidates need an explicit destination choice; quality
+holds cannot inherit invented identities. Human labels and routing
+approval remain open, not another automatic intake or forced merge.
+
 **Nov 5 22:37 review correction:** current placements/catalogue still match
 the final applied run, but Overview predates the retained-reader fix and
 contained obsolete crop diagnostics. Supported report-only refresh and

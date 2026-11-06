@@ -446,11 +446,18 @@ The applied preview3 run, installed catalogue and frozen cache retain their
 previous exact SHA-256 bindings; all 3,290 installed destinations exist.
 Preview4's run SHA-256 is
 `f777f7c9457ff6346fa3e9430159a01814616c38d7f5150301b7e34aa5d65465`.
-No runtime source changes follow final synchronization. The user's later
+No Overview/Photo review reader changes follow final synchronization. The user's later
 [core-coverage/routing follow-up](2026-10-22-likeness-engine-acceptance.md#nov-6-follow-up-core-coverage-and-unresolved-destinations)
-is recorded verbatim there, with E19 still open; finish publication before
-that next diagnostic phase. Forty of preview4's 199 Review photos are
-Various Review, not all 199.
+is recorded verbatim there, with E19 still open. After publication, its
+[measured comparison](2026-10-22-likeness-engine-acceptance.md#measured-noellesammara-core-coverage)
+rules out protection or averaging alone as the explanation and supplies
+hash-verified side-by-side recognizer crops. A narrow, regression-tested
+recap correction now displays final audit cores rather than stale initial
+seed references; both recaps are refreshed without rerunning matching.
+Forty of preview4's 199 Review photos are Various Review, not all 199.
+Their [destination decision](2026-10-22-likeness-engine-acceptance.md#remaining-various-destination-decision)
+remains explicit: group-level ambiguity does not establish a strong
+individual candidate. No forced Noelle merge or destination-rule change.
 
 #### Nov 5 23:20 - report repair and review go/no-go
 

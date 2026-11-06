@@ -591,6 +591,69 @@ Any changed destination policy needs an explicit rule, tests and a
 separate preview; installed receipts remain immutable. The existing
 report-verification/publication closeout stays first.
 
+### Measured Noelle/Sammara core coverage
+
+The read-only
+[comparison with exact recognizer crops](file:///B:/Sovereign%20Territories%20Sandbox/Working/_reports/library/policy-previews/2026-11-06/noelle-sammara-diagnostic.html)
+and [structured evidence](file:///B:/Sovereign%20Territories%20Sandbox/Working/_reports/library/policy-previews/2026-11-06/noelle-sammara-diagnostic.json)
+bind preview4, the original saved cache and installed catalogue by SHA-256.
+All 153 displayed observations have verified prepared-input bytes; 152
+have verified exact aligned-face PNGs, and the no-face case explicitly
+has no alignment. The browser loads all 392 image elements without a
+broken image. Only the strongest pair's crops were visually inspected;
+this is not visual identity acceptance of the whole cohort.
+
+Of Noelle's 96 Gallery photos, 93 satisfy the final single-face quality
+gate; three contain multiple detected faces. Reconstructing centered,
+normalized vectors reproduces all 84 saved Sammara top-three references
+within `4.967e-7` rounding error. The initial frozen core has 15 references;
+the final core has 17. Maximum eligible Noelle similarity rises only from
+`0.432019` to `0.437214`: none reaches the current Angel Gallery minimum
+of `0.45`, before considering margin or protection.
+
+Best-individual-reference comparisons rule out averaging as the only
+explanation: of 93 eligible photos, 12 reach `0.40`, three reach `0.45`,
+one reaches `0.50`, and none reaches `0.55` against any initial seed.
+The two additional final references do not increase the count reaching
+`0.45`. These pair scores are diagnostics, not substitutes for core-based
+Gallery admission. The strongest three pair matches are still closer to
+their own Noelle core. Removing automatic protection alone cannot fix
+the current core-score shortfall.
+
+The prior group/protection trace still applies: provisional-cluster merges
+do not wholesale merge a Model into a fixed cast identity. Low similarity
+does not prove alteration or a different person. Next calibration needs a
+small human-labelled positive/negative subset, not an arbitrary global
+threshold reduction or adding all Noelle photos to Sammara's core.
+
+The diagnostic also exposed a recap evidence defect: collection read only
+top-level `coreReferences`, but actual final references are nested in
+`finalMembershipAudit`. The recap now prefers the final ordered records,
+including an explicit empty list, with legacy records/seed flags retained
+for older runs. Two regression tests first fail; all 25 recap tests then
+pass. Both real recaps are regenerated through the supported launcher's
+preview/apply/check without changing receipt, catalogue or cache bindings.
+Overview/Photo review readers are untouched; this report-only module is
+not part of their freshness dependency set.
+
+### Remaining Various destination decision
+
+All 21 quality-eligible Various holds have final per-photo cast references,
+but their best scores range from `0.258221` to `0.471198`; only four
+reach `0.40`. The group-level best cast agrees with the final per-photo
+best in only 10 of 21 cases. A close group-level match is not a strong
+individual match, and blindly routing by the group label would be
+misleading.
+
+One tentative best-candidate cast **Review** destination could retain the
+runner-up, score and explicit uncertainty without Gallery/core admission.
+However, routing all 21 this way would intentionally accept weak candidate
+destinations below existing matching gates. Obtain the user's focused
+choice before changing that behavior. The 19 quality-ineligible photos
+need a distinct quality/provenance disposition, not invented measured
+identities. No destination-policy change, new replan or installation has
+occurred in this diagnostic.
+
 ### Raw follow-up source
 
 <!-- markdownlint-disable MD013 -->

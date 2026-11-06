@@ -507,6 +507,41 @@ class RebaseRecapTests(unittest.TestCase):
         self.assertEqual(original_receipt.read_text(encoding="utf-8"), "unchanged")
         self.assertEqual((preparation / "manifest.json").read_bytes(), source_payload)
 
+    def test_final_audit_core_references_override_initial_seed_and_legacy_references(self):
+        plan = _plan(self.working)
+        plan["photos"][0]["castSeedCore"] = True
+        plan["coreReferences"] = {"Angels/Ava": [{
+            "source": plan["photos"][0]["source"], "destination": plan["photos"][0]["destination"],
+            "photoId": "photo:a", "score": 0.6,
+        }]}
+        arrival = plan["photos"][1]
+        arrival["destination"] = "Angels/Ava/gallery/ava_b.png"
+        arrival["preparedPath"] = "candidates/b/control.png"
+        arrival["preparedSHA256"] = "saved-prepared-digest"
+        plan["finalMembershipAudit"] = {"coreReferences": {"Angels/Ava": [{
+            "source": arrival["source"], "destination": arrival["destination"],
+            "photoId": "photo:b", "score": 0.87,
+        }]}}
+        (self.run / "run.json").write_text(json.dumps(plan), encoding="utf-8")
+
+        data = rebase_recap.collect(self.run)
+        references = rebase_recap._core_reference_rows(data, "Angels/Ava")
+
+        self.assertEqual([row["photoId"] for row in references], ["photo:b"])
+        self.assertEqual(references[0]["castSeedScore"], 0.87)
+        self.assertEqual(references[0]["preparedPath"], arrival["preparedPath"])
+        self.assertEqual(references[0]["preparedSHA256"], arrival["preparedSHA256"])
+
+    def test_explicit_empty_final_core_does_not_restore_initial_seed_references(self):
+        plan = _plan(self.working)
+        plan["photos"][0]["castSeedCore"] = True
+        plan["finalMembershipAudit"] = {"coreReferences": {"Angels/Ava": []}}
+        (self.run / "run.json").write_text(json.dumps(plan), encoding="utf-8")
+
+        data = rebase_recap.collect(self.run)
+
+        self.assertEqual(rebase_recap._core_reference_rows(data, "Angels/Ava"), [])
+
     def test_actual_audit_contract_and_ordered_core_references(self):
         plan = _plan(self.working)
         plan["coreReferences"] = {"Angels/Ava": [
