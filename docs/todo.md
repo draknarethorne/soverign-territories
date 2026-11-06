@@ -11,7 +11,7 @@
 
 **P1 (blocks other work, or cheap and valuable)**
 
-- [ ] LY4 Record current install, installed-check and gallery-check exit results plus exact run/profile/code identifiers and phase times. Verify actual Gallery/Overview/Review links/images/history in a browser, classify exclusions ... ([priority reset](plans/2026-11-05-priority-reset.md))
+- [ ] C12 Verify installed Sisters >=0.50/margin >=0.10 scenarios, independent frozen-core/quality/protection gates and saved receipt/viewer evidence. Angels remain Review-only. [Full ... ([priority reset](plans/2026-11-05-priority-reset.md))
 
 <details>
 <summary>Deferred work by owning plan</summary>
@@ -42,7 +42,7 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-10-28-storage-operations-and-retention.md](plans/2026-10-28-storage-operations-and-retention.md) | holding | 14 |
 | [2026-11-02-library-layout.md](plans/2026-11-02-library-layout.md) | holding | 7 |
 | [2026-11-02-sovereign-spelling-rename.md](plans/2026-11-02-sovereign-spelling-rename.md) | holding | 6 |
-| [2026-11-05-priority-reset.md](plans/2026-11-05-priority-reset.md) | active | 21 |
+| [2026-11-05-priority-reset.md](plans/2026-11-05-priority-reset.md) | active | 19 |
 
 </details>
 

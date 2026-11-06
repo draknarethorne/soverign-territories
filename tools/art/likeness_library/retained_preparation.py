@@ -422,7 +422,13 @@ def _manifests(root, current):
         _safe(root, child.relative_to(root).as_posix())
         # Owner folders can nest (e.g. Artists/<artist>/<person>); only 32-hex folders are sets.
         if child.is_dir() and re.fullmatch("[0-9a-f]{32}", child.name):
-            paths.append(_safe(root, f"{prefix}/{owner}/{child.name}/{MANIFEST}"))
+            manifest = _safe(root, f"{prefix}/{owner}/{child.name}/{MANIFEST}")
+            if not manifest.exists():
+                # External publication can leave empty retired folders, not retained claims.
+                entries = reads.children(child) if reads is not None else tuple(child.iterdir())
+                if not entries:
+                    continue
+            paths.append(manifest)
         elif not child.is_dir():
             raise ValueError(f"unexpected file in processing store: {child}")
     if reads is not None:

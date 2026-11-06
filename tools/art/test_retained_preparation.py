@@ -541,6 +541,32 @@ class RetainedPreparationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "legacy crop refused"):
             retained.source_is_prepared(native)
 
+    def test_empty_retired_set_does_not_invalidate_current_preparation(self):
+        self.stage()
+        empty = self.root / "_processing" / "Various" / ("0" * 32)
+        empty.mkdir()
+        for reuse in (False, True):
+            with self.subTest(reuse=reuse):
+                scope = verification_reads.session(self.root) if reuse else contextlib.nullcontext()
+                with scope:
+                    self.assertTrue(retained.crop_guard(self.root, self.destination, "photo:image_123"))
+        (empty / "orphan.jpg").write_bytes(b"not an empty retired folder")
+        for reuse in (False, True):
+            with self.subTest(reuse=reuse, damaged=True):
+                scope = verification_reads.session(self.root) if reuse else contextlib.nullcontext()
+                with scope:
+                    with self.assertRaisesRegex(ValueError, "legacy crop refused"):
+                        retained.crop_guard(self.root, self.destination, "photo:image_123")
+
+    def test_empty_set_population_during_verification_is_rejected(self):
+        self.stage()
+        empty = self.root / "_processing" / "Various" / ("0" * 32)
+        empty.mkdir()
+        with self.assertRaisesRegex(ValueError, "verification directory changed"):
+            with verification_reads.session(self.root):
+                self.assertTrue(retained.crop_guard(self.root, self.destination, "photo:image_123"))
+                (empty / "manifest.json").write_text("{}", encoding="utf-8")
+
     def test_manual_review_reject_retire_and_junk_roundtrip_complete_retained_set(self):
         from likeness_library import actions
 

@@ -14,12 +14,16 @@ contracts and deferred work, not parallel active queues. One plan is active,
 20 holding, one proposed. Working instructions and generated queue follow
 that agreement; no whole plan is falsely completed or archived.
 
-The prior safe-planning changes are committed as `e8b1467a0`.
-Completion monitoring is now authorized; the 16:45 flow receipt still
-reports install running, final checks pending. Runtime/library bytes,
-paths and installed workspaces remain untouched by this consolidation.
-Current run identity/evidence remains in the pinned recap. The later local
-path is selected, not moved; Production/FULL gates remain protective.
+Documentation/working-agreement rollout and the requested Copilot
+efficiency assessment are pushed through `035221410`.
+At 18:40 the continuation install, installed-run check and corrected Gallery
+check all pass; actual viewers and installed family/name histories are
+verified. A tested empty-retired-folder reader fix resolves the first
+Gallery failure without reset/intake/reinstall or receipt edits. Exact
+results are in the [spine closeout](plans/2026-11-05-priority-reset.md#nov-5-1840---final-continuation-and-viewer-acceptance).
+LY4/N16 close; C12 is next, not automatic human identity approval or M1
+performance completion. Production/FULL/shared-publication boundaries stay
+protective; the later local path is selected, not moved.
 
 ## Dated decision record
 

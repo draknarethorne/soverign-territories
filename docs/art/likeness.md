@@ -619,6 +619,12 @@ and shared selections untouched before that decision.
 | After install | Confirmed intentional unavailable framings are explained; missing/stale/corrupt expected derivatives remain actionable; no crop guard relaxation | Gallery L23 |
 | Measured run | Record phase/wall timings, stage/read-reuse evidence, space layers and zero new backup/previous/rollback bytes; compare only equivalent scopes, retaining distinct raw originals and original reuse evidence | Layout LY14/LY15a |
 
+Retiring external cast evidence can leave empty set directories. These are
+not retained claims: enumeration ignores only a missing-manifest folder
+verified empty, and an operation-local seal detects any new contents.
+Nonempty folders with missing/invalid manifests still block processing;
+this is not permission to hide damaged lineage or remove source folders.
+
 Overview now shares retained/derivative verification between collection and
 per-photo evidence within one operation, followed by the full content seal
 before publication. Whole-history verification across Review and Overview

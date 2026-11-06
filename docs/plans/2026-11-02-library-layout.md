@@ -396,7 +396,7 @@ check passed afterwards.
   to the new API; run the affected test files. Done Nov 2.
 - [ ] **P2 ai** LY3b Install moves the selected run artifacts into `_processing`
   instead of copying (decision d), keeping the run's undo/replay receipts valid.
-**Transferred contract: LY4 -> [reset LY4](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** Complete the authorized continuation's install/check/
+**Transferred contract: LY4 -> [reset LY4](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger); completion tracked only in the spine.** Complete the authorized continuation's install/check/
   viewer evidence and classify diagnostics; share it with acceptance owners.
   Do not repeat reset/intake solely to close this task. Historical scope:
   reset the sandbox from production (`sandbox-reset --full` plus

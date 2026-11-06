@@ -2,7 +2,7 @@
 
 **Status:** active (execution spine: LEAN finish line, then trusted cast and character art)
 
-**Queue focus:** LY4
+**Queue focus:** C12
 
 ## Execution spine
 
@@ -13,9 +13,12 @@ checklist. This replaces the earlier navigation-only consolidation.
 Read this section and the current milestone before choosing work; dated
 Q&A and inventories below are context, not competing schedules.
 
-**Current milestone: M1, finish LEAN.** Its installation is already
-authorized/running. While it runs, documentation reconciliation is the
-only mutation lane. Read the small flow receipt/log at meaningful boundaries;
+**Current milestone: M1, finish LEAN.** Installation, installed-run check
+and corrected Gallery check finish successfully at 18:40; LY4/N16 are
+verified below. C12 is the next shared-evidence acceptance slice, followed
+by the remaining M1 scenarios and bounded performance work, not new intake.
+While a process runs, documentation reconciliation remains the only
+mutation lane. Read the small flow receipt/log at meaningful boundaries;
 do not restart the process or infer completion from progress messages.
 The user explicitly authorizes completion monitoring at 16:45, superseding
 the earlier user-only monitoring restriction. Runtime bytes and library
@@ -76,7 +79,7 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
 | [Performance](2026-10-28-intake-performance.md#milestone-transfer-record) | T29/T30/T20/T21/T22 -> same IDs here; measured extras and new-PC tuning remain conditional/deferred there |
 | [Storage](2026-10-28-storage-operations-and-retention.md#milestone-transfer-record) | S30 -> same ID here. S27 FULL/materialized recovery stays deferred there; applicable installed/viewer evidence consumes LY4, never repeats it |
 
-- [ ] **P1 ai** LY4 Record current install, installed-check and gallery-check
+- [x] **P1 ai** LY4 Record current install, installed-check and gallery-check
   exit results plus exact run/profile/code identifiers and phase times.
   Verify actual Gallery/Overview/Review links/images/history in a browser,
   classify exclusions versus broken/missing derivatives, and retain required
@@ -84,7 +87,7 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   One evidence set serves all tasks below. No automatic snapshot retirement,
   extra reset/intake or waiver of diagnostics. Detailed retained scope:
   [LY4 and N15](2026-11-02-library-layout.md#milestone-transfer-record).
-- [ ] **P1 ai** N16 Compare installed direct >=0.40 and strict secondary
+- [x] **P1 ai** N16 Compare installed direct >=0.40 and strict secondary
   >0.35 family links, chains, cast roots, exclusive surnames and original
   history against saved evidence. Code/boundary tests are delivered; link
   exact results and exceptions, not another threshold implementation.
@@ -190,6 +193,86 @@ not silent removal. Basic machine setup does not await every extra.
   proven. [Contract](2026-10-23-image-intake-preparation.md#milestone-transfer-record).
 
 ### Advance and closeout
+
+#### Nov 5 18:40 - final continuation and viewer acceptance
+
+**LY4 and N16 verified; M1 as a whole remains open.** Final run
+`postrun-lean-preview3` reuses immutable preparation from
+`fresh-20261104-lean2`, disposable recovery, core cast seeds and policy
+`draft-2026-11-04.2-core-rebase-v1`. No additional reset, originals,
+backup, intake, rollback or shared publication runs.
+
+| Phase / result | Measured evidence |
+| --- | --- |
+| Install | Exit 0; 13:20:37-17:41:12; 15,634.7 s (4h20m35s) |
+| Installed-run check | Exit 0; 17:41:15-17:58:45; 1,049.7 s; `LEAN continuation verified: applied` |
+| First Gallery check | Exit 1; 1,575.0 s; 2,436 actionable diagnostics and 121 observed intentional exclusions; preserved, not reclassified as success |
+| Corrected Gallery check | Exit 0; 18:29:48-18:40:32; 644.3 s; zero pending renames/derivatives, zero actionable diagnostics, 143 intentional framing exclusions |
+| Read evidence | Corrected check: 30,784 content reads / 15,580,835,505 bytes, 47,596 hash reuses, 3,541 JSON loads, 282 directory scans, complete content seal |
+| Space | Working 29.81 GB, this run state 0.11 GB, processing 4.26 GB; zero backup bytes and zero new run-input bytes; 82,716 files before/after check |
+
+Flow evidence is in repository ignored
+`tmp/session-logs/rebase-flow/postrun-lean-preview3/flow.json` and numbered
+logs; library plan is under Working's `_sandbox-state/postrun-lean-preview3`.
+Final run JSON SHA-256:
+`60679f89990ce4e395a9c2cfb7863c017204f2e735d6883c46d74079575987f3`.
+Installed catalogue hash exactly matches `installedCatalogSHA256`; it
+contains 250 people. Receipt hashes were never edited to disguise the fix.
+
+**Focused failure and recovery:** external cast publication retires files
+but can leave empty processing-set folders. Manifest enumeration treated
+these as live claims, so one empty folder invalidated unrelated good
+lineage for its entire owner. A real Drakniss photo reproduces false before/
+true after filtering only confirmed empty folders. Added failing tests,
+then fixed enumeration: operation-local empty-folder observations are
+sealed, while nonempty missing-manifest folders still fail closed.
+All 101 retained/preparation-read/provenance/Gallery tests and Pylance file
+syntax checks pass. No crop/quality threshold, matcher or library file
+changes. Failed log/flow JSON/flow Markdown copies are hash-verified as
+`failed-20261105-1825-*` before supported flow resume; only Gallery check
+repeats. Install and installed-check remain completed, not rerun.
+
+Original installed retained-reader implementation hash remains
+`7ae9548cfbf30aabdb9e4a8a85cf49e3316ac916cbb2a2e1aa2c768f6bf1d58d`;
+post-install verification-reader fix hash is
+`0d1840dfafbb72f061a56a788cb284590bde41afa8671b09892b8b54a88fd79c`.
+The original applied-plan binding is unchanged. The shorter successful
+check is correctness recovery, not a controlled T29 optimization claim.
+
+**Actual browser proof:**
+
+- Overview: 250 people / 3,060 Gallery photos; all 1,229 Overview images
+  loaded with nonzero dimensions, zero broken images. Review/name/native/
+  detail/history links are present and use current destinations. All 250
+  distinct linked original `z_` profile/history files exist.
+- Review: 3,290 total, including the 230-photo Review queue; filters work,
+  no staged actions. `Models/Noelle Cruz` shows all 96 photos, with original
+  name Noelle Park retained; this does not accept their real identities.
+- Required Jade stable photo `photo:image_7514748239698013269`: current
+  `Various/review` native plus padded/chest/head links, loaded thumbnail
+  and retained detail all work. Detail preserves original Jade Pryce source,
+  two-face evidence, exact retained input and current-native link; no
+  obsolete-path warning. The independent installed check binds final bytes.
+- Sammara `photo:image_7513253188381013242`: head below minimum is explicitly
+  unavailable; selecting Head loads a labelled intentional-exclusion
+  placeholder, not a broken image or silently relaxed crop. Padded/chest
+  remain linked.
+- Recap: 3,290 source rows -> 3,060 Gallery + 230 Review, count conserved.
+  Harlow Chase is split/emptied (100 departures); Sophie Lloyd is split
+  (39 original, 16 retained, eight arrivals, 23 departures, 24 final).
+  Row reasons and current-photo links remain explicit, not identity verdicts.
+- Families: 47 exclusive surnames; all 163 member records including roots
+  match installed name/family/previous-name/original-name records. All 152
+  linked members and 342 path-edge occurrences satisfy exact thresholds
+  and resolve to actual current folders; 146 renamed records match saved
+  counts (including nine first-name collision disambiguations). Browser
+  shows all 146 `was` histories and required roots Vale 21, Montgomery two,
+  Lujan 29, Savannah seven. Colours remain score bands, not membership gates.
+
+This closes installed/viewer/naming correctness only. C12/C13/E18/E19,
+L21-L23/S30 scenario closeout and T29 onward remain explicit M1 owners.
+M2 human identity, placement, family-presentation and quality approval
+remain untouched; zero diagnostics does not accept those judgments.
 
 **Saved-result inspection, Nov 5 after push (final checks pending):**
 

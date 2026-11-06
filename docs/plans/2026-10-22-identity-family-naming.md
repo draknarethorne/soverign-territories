@@ -80,7 +80,7 @@ peer links. It does not claim that a 0.40 full preview will contain exactly
 10 Lujans. The recap's Families section already exposes each full path.
 Scores here come from `run.json` family evidence, not visual identity labels.
 
-**Transferred contract: N16 -> [reset N16](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), not completed.** Verify installed family-threshold results and complete
+**Transferred contract: N16 -> [reset N16](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger); completion tracked only in the spine.** Verify installed family-threshold results and complete
   saved-case comparison; implementation is delivered and tested. Contract:
   direct identity-to-cast links **>=0.40**, secondary identity-to-identity
   links **>0.35** (strict). Prefer a qualifying direct cast link, otherwise
@@ -153,7 +153,7 @@ evidence, so the re-run reuses the verified intake and measurements. The
 cast person's `z_` file stays as provenance; the catalogue carries the current
 family name. Families are presentation only, never matching evidence.
 
-**Transferred contract: N15 -> [reset LY4](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), merged not completed.** Complete installed/gallery/browser acceptance using shared
+**Transferred contract: N15 -> [reset LY4](2026-11-05-priority-reset.md#m1-execution-and-transfer-ledger), merged; completion tracked only in the spine.** Complete installed/gallery/browser acceptance using shared
   LY4 continuation evidence, not another fresh intake. Historical run scope:
   re-run as a fresh LEAN sandbox run from Production
   (`bin\rebase-flow.cmd --root W --run fresh-20261104-lean --apply`, layout
