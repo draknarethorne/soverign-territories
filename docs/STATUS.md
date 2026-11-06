@@ -78,6 +78,13 @@ pass; the report-only sandbox refresh and synchronized check pass. The
 installed preview3 page finds 46 Noelle photos when searching Sammara;
 preview6 remains uninstalled and human identity review remains open.
 
+**Nov 6 detector-label clarification:** the preview6 recap's 16 saved
+multi-face holds now explicitly distinguish detector observations from
+confirmed people counts. The saved reasons and holds remain intact; the
+upstream wording and exact second reported case remain open under L23/I60.
+Both installed preview3 and uninstalled preview6 recaps were rebuilt and
+checked; this is not detector or identity acceptance.
+
 **Nov 5 22:37 review correction:** current placements/catalogue still match
 the final applied run, but Overview predates the retained-reader fix and
 contained obsolete crop diagnostics. Supported report-only refresh and

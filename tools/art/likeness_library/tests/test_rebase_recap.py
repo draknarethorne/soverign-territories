@@ -62,6 +62,18 @@ class RebaseRecapTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("--dry-run", result.stdout)
 
+    def test_review_explains_saved_multiface_labels_are_detector_observations(self):
+        data = rebase_recap.collect(self.run)
+        row = next(row for row in data["rows"] if row["newBucket"] == "review")
+        original = "quality hold: 2+ faces: someone else is in the picture; excluded from matching"
+        out = self.working / "_reports" / "library" / "rebase-recap" / "run1.html"
+        self.assertNotIn("Detector observations are not confirmed people counts", rebase_recap.render(data, out))
+        row["reason"] = original
+        page = rebase_recap.render(data, out)
+        self.assertIn(original, page)
+        self.assertEqual(page.count("Detector observations are not confirmed people counts"), 2)
+        self.assertEqual(row["reason"], original)
+
     def test_person_links_filter_current_review_and_preserve_old_identity_continuity(self):
         data = rebase_recap.collect(self.run)
         out = self.working / "_reports" / "library" / "rebase-recap" / "run1.html"

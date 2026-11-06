@@ -32,6 +32,11 @@ EXPECTATIONS_NAME = "rebase-expectations.json"
 NEW_PERSON = "new person"
 UNSURE = "unsure"
 HISTORY_PARTS = ("_reports", "reset-review-bundle", "rebase-runs")
+MULTIFACE_NOTE = (
+    "<p class=muted>Saved 2+ faces labels reflect the detector's observations. "
+    "Detector observations are not confirmed people counts; inspect the photo before deciding. "
+    "The saved label and quality hold are unchanged.</p>"
+)
 
 
 def _historical_run(run):
@@ -1173,6 +1178,8 @@ def _review_section(data, out_dir):
     for row in rows:
         reasons[row["reason"].split(";")[0]].append(row)
     parts = [f"<h2 id=review>Review holds ({len(rows)})</h2>"]
+    if any("2+ faces" in row["reason"] for row in rows):
+        parts.append(MULTIFACE_NOTE)
     for reason, group in sorted(reasons.items(), key=lambda item: -len(item[1])):
         parts.append(
             f"<details><summary>{html.escape(reason)}: {len(group)}</summary>"
@@ -1209,6 +1216,8 @@ def _all_rows(data, out_dir):
              "<table id=photos><tr><th>Photo</th><th>Change state</th><th>Before</th><th>Final destination</th>"
              "<th>Group size</th><th>Group-to-core score</th><th>Top three per-photo cast references</th>"
              "<th>Saved reason</th></tr>"]
+    if any("2+ faces" in row["reason"] for row in data["rows"]):
+        parts.insert(1, MULTIFACE_NOTE)
     for row in sorted(data["rows"], key=lambda r: (r["kind"] == "stayed", r["oldPerson"], r["source"])):
         distinctions = [row["placementKind"]]
         if row["renamed"] and "Rename" not in distinctions[0]:

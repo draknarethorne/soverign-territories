@@ -223,7 +223,13 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
 - [ ] **P1 ai** L23 Verify moved-source provenance, Jade Pryce's final bytes/
   intake links, disjoint follow-up/hold counts, per-photo cast evidence and
   final destinations. Trace the two reported multi-face cases with I60;
-  preserve missing/edited/unavailable states.
+  preserve missing/edited/unavailable states. The saved preview6 contains
+  16 holds labelled as if a second person were confirmed. The recap now
+  explains that these are detector observations, not confirmed people
+  counts, while preserving the original saved reasons and holds. The
+  installed preview3 and uninstalled preview6 recaps were rebuilt and
+  checked; the real preview6 page shows the caveat alongside all 16 holds.
+  The producer's wording and the unlocated second case remain open.
   [Full contract](2026-10-22-gallery-review-layout.md#milestone-transfer-record).
 - [x] **P1 ai** L26 Make Photo Review text search find the displayed closest
   identity evidence as well as the owner, filename and reason. Keep the
