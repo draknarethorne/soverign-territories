@@ -181,11 +181,15 @@ or acceptance.
 An automated synthetic retained-lineage test now stages two distinct
 owners with verified preparation sets and compares serial versus two-thread
 derivative maintenance with isolated sealed sessions. It checks all file
-hashes, three derivatives per owner, diagnostics and no-op repeats.
-The retained-preparation and maintenance suites pass 71 tests. This is
-component equivalence only: independent worker seals do not replace the
-existing operation-wide final seal, and overlapping owners, partial
-worker failures and coordinator-wide revalidation remain unimplemented.
+hashes, three derivatives per owner, diagnostics and no-op repeats. An
+injected second-owner head-render failure leaves its completed padded
+derivative verifiable while the other owner finishes; a serial retry
+creates the remaining two derivatives and matches the serial tree exactly.
+The retained-preparation and verification suites pass 60 tests, with one
+Windows symlink-privilege skip. This is component equivalence only:
+independent worker seals do not replace the existing operation-wide final
+seal, and overlapping-owner exclusion, coordinator failure handling and
+coordinator-wide revalidation remain unimplemented.
 An additional read-session regression demonstrates the boundary: a
 same-size, timestamp-restored edit made after one owner's seal is detected
 when that completed proof is independently validated again after other work.

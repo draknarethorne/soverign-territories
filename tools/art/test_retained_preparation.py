@@ -119,7 +119,9 @@ class RetainedPreparationTests(unittest.TestCase):
         self.put(self.root, second, selected)
         retained.stage_photo(self.root, second, self.prep, row, recipe={"id": "test-v16"})
         parallel = self.base / "parallel"
+        failed = self.base / "failed"
         shutil.copytree(self.root, parallel)
+        shutil.copytree(self.root, failed)
         paths = [self.destination, second]
         box = [0.35, 0.2, 0.3, 0.25]
 
@@ -145,6 +147,27 @@ class RetainedPreparationTests(unittest.TestCase):
         for root in (self.root, parallel):
             for path in paths:
                 self.assertEqual(unit(root, path), ([], []))
+
+        render = derivatives.render
+
+        def fail_head(source, framing, face_box):
+            if source.parent.parent.name == "Other" and framing == "head":
+                raise OSError("injected owner failure")
+            return render(source, framing, face_box)
+
+        with mock.patch.object(derivatives, "render", side_effect=fail_head), \
+                concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+            futures = [pool.submit(unit, failed, path) for path in paths]
+            self.assertEqual(len(futures[0].result()[0]), 3)
+            with self.assertRaisesRegex(OSError, "injected owner failure"):
+                futures[1].result()
+        derivatives.verified(failed / second, "padded", box)
+        with self.assertRaisesRegex(ValueError, "Missing maintained head"):
+            derivatives.verified(failed / second, "head", box)
+        self.assertEqual(unit(failed, paths[0]), ([], []))
+        recovered, diagnostics = unit(failed, second)
+        self.assertEqual((len(recovered), diagnostics), (2, []))
+        self.assertEqual(tree(self.root), tree(failed))
 
     def test_identical_refresh_refuses_manifest_changed_after_lineage_verification(self):
         self.stage()
