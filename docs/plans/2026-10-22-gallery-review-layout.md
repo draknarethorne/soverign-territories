@@ -31,6 +31,16 @@ baseline until a separately previewed and verified run is approved.
 
 ## Nov 6 review navigation
 
+Review holds now have a local text filter over source/destination paths,
+the displayed person and reason, and the saved cast-comparison text.
+Matching groups expand automatically; a live count reports matching photos.
+An exact-photo deep link clears a conflicting filter so the target remains
+reachable. It does not change any decisions or create a review queue.
+On the real preview7 page the original case ID finds one of 199 photos,
+`sammara` finds 41, a nonexistent term finds zero, and clearing restores
+199. A conflicting-filter deep link opens the original case and its image.
+The installed preview3 and proposed preview7 recaps were rebuilt and checked.
+
 The quality-reason producer now calls a qualifying second detection a
 possible additional face requiring review, not a confirmed other person.
 The numerical gate, holds and historical saved reasons remain unchanged.

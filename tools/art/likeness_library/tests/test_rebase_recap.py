@@ -4,6 +4,7 @@ import json
 import hashlib
 import pathlib
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -83,7 +84,7 @@ class RebaseRecapTests(unittest.TestCase):
         page = rebase_recap.render(data, out)
         self.assertIn(f'href="#{anchor}" target="_blank" rel="noopener noreferrer"', page)
         self.assertEqual(page.count(f'id="{anchor}"'), 1)
-        self.assertRegex(page, rf'<details><summary>[^<]+</summary><div class=grid>.*id="{anchor}"')
+        self.assertRegex(page, rf'<details data-review-group><summary>[^<]+</summary><div class=grid>.*id="{anchor}"')
         self.assertIn("if(node.tagName==='DETAILS')node.open=true", page)
         self.assertIn("image.loading='eager'", page)
         unmatched = {"destination": "Various/review/missing.jpg", "newPerson": "Various",
@@ -109,10 +110,10 @@ class RebaseRecapTests(unittest.TestCase):
         }]}
         page = rebase_recap._review_section(data, self.working)
         first = re.search(
-            rf'<figure id="{rebase_recap._anchor("review-photo", rows[0]["source"])}">(.*?)</figure>', page,
+            rf'<figure id="{rebase_recap._anchor("review-photo", rows[0]["source"])}"[^>]*>(.*?)</figure>', page,
         ).group(1)
         second = re.search(
-            rf'<figure id="{rebase_recap._anchor("review-photo", rows[1]["source"])}">(.*?)</figure>', page,
+            rf'<figure id="{rebase_recap._anchor("review-photo", rows[1]["source"])}"[^>]*>(.*?)</figure>', page,
         ).group(1)
         self.assertIn("Final photo-to-cast similarity (not an identity decision)", first)
         self.assertIn("0.471", first)
@@ -120,6 +121,51 @@ class RebaseRecapTests(unittest.TestCase):
         self.assertIn("Models/&lt;untrusted&gt;", first)
         self.assertNotIn("0.471", second)
         self.assertIn("unavailable (not recorded)", second)
+
+    def test_review_filter_exposes_paths_and_keeps_photo_deep_links_reachable(self):
+        data = rebase_recap.collect(self.run)
+        row = next(row for row in data["rows"] if row["newBucket"] == "review")
+        row["source"] = 'Various/gallery/photo_"<&.jpg'
+        page = rebase_recap.render(data, self.working / "report.html")
+        self.assertIn('id="review-filter" type="search"', page)
+        self.assertIn('id="review-filter-count" role="status">2 of 2 photos', page)
+        self.assertIn('data-review-paths="Various/gallery/photo_&quot;&lt;&amp;.jpg ', page)
+        self.assertIn("card.dataset.reviewPaths+' '+card.textContent", page)
+        self.assertIn("if(id.startsWith('review-photo-')&&target.hidden)", page)
+
+    def test_review_filter_executes_filename_evidence_and_empty_search(self):
+        node = shutil.which("node")
+        if not node:
+            self.skipTest("Node.js is required to exercise the generated Review filter")
+        script = rebase_recap.SCRIPT
+        start = script.index("function filterReview()")
+        end = script.index("reviewFilter.addEventListener", start)
+        program = """
+const reviewFilter={value:''},reviewCount={textContent:''};
+const reviewCards=[
+  {dataset:{reviewPaths:'Various/gallery/image_123.jpg Various/review/image_123.jpg'},
+   textContent:'quality hold Angels/Sammara 0.471',hidden:false},
+  {dataset:{reviewPaths:'Various/gallery/image_456.jpg Various/review/image_456.jpg'},
+   textContent:'unmeasured detector observation',hidden:false}
+];
+const reviewGroups=reviewCards.map(card=>({
+  hidden:false,open:false,querySelectorAll:()=>[card]
+}));
+""" + script[start:end] + """
+function run(value){reviewFilter.value=value;filterReview();return {
+  count:reviewCount.textContent, cards:reviewCards.map(c=>c.hidden),
+  groups:reviewGroups.map(g=>g.hidden),open:reviewGroups.map(g=>g.open)}}
+console.log(JSON.stringify(['image_123','SAMMARA','no match',''].map(run)));
+"""
+        result = subprocess.run([node, "-e", program], capture_output=True, text=True, check=True)
+        cases = json.loads(result.stdout)
+        self.assertEqual([case["count"] for case in cases],
+                         ["1 of 2 photos", "1 of 2 photos", "0 of 2 photos", "2 of 2 photos"])
+        self.assertEqual(cases[0]["cards"], [False, True])
+        self.assertEqual(cases[1]["groups"], [False, True])
+        self.assertEqual(cases[0]["open"], [True, False])
+        self.assertEqual(cases[2]["groups"], [True, True])
+        self.assertEqual(cases[3]["cards"], [False, False])
 
     def test_person_links_filter_current_review_and_preserve_old_identity_continuity(self):
         data = rebase_recap.collect(self.run)

@@ -516,10 +516,12 @@ def _thumb(row, data, out_dir):
             f'<img loading="lazy" src="{html.escape(_href(image, out_dir), quote=True)}" alt=""></a>')
 
 
-def _card(row, data, out_dir, note, *, anchor=None, evidence=""):
+def _card(row, data, out_dir, note, *, anchor=None, evidence="", searchable=False):
     links = f' · {_safe_link(row["detail"], "intake", out_dir, new_tab=True)}' if row["detail"] else ""
     identifier = f' id="{html.escape(anchor, quote=True)}"' if anchor else ""
-    return (f'<figure{identifier}>{_thumb(row, data, out_dir)}<figcaption>{html.escape(note)}'
+    search = (f' data-review-paths="{html.escape(row["source"] + " " + row["destination"], quote=True)}"'
+              if searchable else "")
+    return (f'<figure{identifier}{search}>{_thumb(row, data, out_dir)}<figcaption>{html.escape(note)}'
             f'<br>{_destination_links(row, data, out_dir)}{links}{evidence}</figcaption></figure>')
 
 
@@ -535,7 +537,7 @@ def _cards(rows, data, out_dir, note, *, review_anchors=False, evidence=None):
     return '<div class=grid>' + "".join(
         _card(row, data, out_dir, note(row),
               anchor=_anchor("review-photo", row["source"]) if review_anchors else None,
-              evidence=evidence(row) if evidence else "")
+              evidence=evidence(row) if evidence else "", searchable=review_anchors)
         for row in rows) + "</div>"
 
 
@@ -1206,12 +1208,15 @@ def _review_section(data, out_dir):
     reasons = collections.defaultdict(list)
     for row in rows:
         reasons[row["reason"].split(";")[0]].append(row)
-    parts = [f"<h2 id=review>Review holds ({len(rows)})</h2>"]
+    parts = [f"<h2 id=review>Review holds ({len(rows)})</h2>",
+             '<label for="review-filter">Filter Review holds by photo, person, reason or cast evidence: </label>'
+             '<input id="review-filter" type="search" autocomplete="off">'
+             f' <span id="review-filter-count" role="status">{len(rows)} of {len(rows)} photos</span>']
     if any("2+ faces" in row["reason"] for row in rows):
         parts.append(MULTIFACE_NOTE)
     for reason, group in sorted(reasons.items(), key=lambda item: -len(item[1])):
         parts.append(
-            f"<details><summary>{html.escape(reason)}: {len(group)}</summary>"
+            f"<details data-review-group><summary>{html.escape(reason)}: {len(group)}</summary>"
             f"{_cards(group, data, out_dir, lambda r: f'{r['newPerson']} ({r['newBucket']}); was {r['oldPerson']}; {r['reason']}', review_anchors=True, evidence=evidence)}"
             "</details>")
     return "".join(parts)
@@ -1299,12 +1304,23 @@ SCRIPT = """const f=document.getElementById('filter'),c=document.getElementById(
 function apply(){const q=f.value.toLowerCase();for(const r of document.querySelectorAll('#photos tr[data-kind]')){
 r.style.display=(c.checked&&r.dataset.kind==='stayed')||(q&&!r.textContent.toLowerCase().includes(q))?'none':''}}
 f.addEventListener('input',apply);c.addEventListener('change',apply);apply();
+const reviewFilter=document.getElementById('review-filter'),reviewCount=document.getElementById('review-filter-count');
+const reviewGroups=[...document.querySelectorAll('details[data-review-group]')];
+const reviewCards=reviewGroups.flatMap(group=>[...group.querySelectorAll('figure[data-review-paths]')]);
+function filterReview(){const q=reviewFilter.value.trim().toLocaleLowerCase();let visible=0;
+for(const group of reviewGroups){let matches=0;for(const card of group.querySelectorAll('figure[data-review-paths]')){
+const show=!q||(card.dataset.reviewPaths+' '+card.textContent).toLocaleLowerCase().includes(q);
+card.hidden=!show;if(show){matches++;visible++}}
+group.hidden=matches===0;if(q&&matches)group.open=true}
+reviewCount.textContent=visible+' of '+reviewCards.length+' photos'}
+reviewFilter.addEventListener('input',filterReview);
 function filterCast(){const selected=location.hash.slice(1);const links=[...document.querySelectorAll('[data-cast-filter]')];
 const active=links.find(a=>a.dataset.castFilter!=='all'&&a.dataset.castFilter===selected);
 for(const d of document.querySelectorAll('details[id^="cast-"]')){d.hidden=!!active&&d.id!==active.dataset.castFilter;
 if(active&&d.id===active.dataset.castFilter)d.open=true}}
 function openTarget(){filterCast();const id=location.hash.slice(1);
 const target=document.getElementById(id);if(!target)return;
+if(id.startsWith('review-photo-')&&target.hidden){reviewFilter.value='';filterReview()}
 for(let node=target;node;node=node.parentElement){if(node.tagName==='DETAILS')node.open=true}
 if(target.tagName==='DETAILS')target.open=true;
 if(id.startsWith('review-photo-'))for(const image of target.querySelectorAll('img[loading="lazy"]'))image.loading='eager';
