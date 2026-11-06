@@ -357,11 +357,22 @@ equivalence. Do not equate this report repair with those implementations.
 
 #### Nov 6 - combined preview4 and performance slice
 
+**Subsequent manifest-digest change:** preview5's engine binding is now
+historical. Preview6 passes independent saved-input and recap checks;
+its full photo, family, refinement and audit records match preview5.
+Its Noelle fragment opens the 96-photo detail. It remains uninstalled;
+no new intake was run. Its run SHA-256 is
+`1a172a26bbdfc6f31eecd735fde1325492ce1a17f16f8a9f6c2271ed29dd9281`
+and combined apply/check/recap-check took 847.84 seconds. The
+[performance owner](2026-10-28-intake-performance.md#nov-6-external-derivative-manifest-digest-reuse)
+records the small measured read reduction and absence of a demonstrated
+wall-time gain.
+
 **Later Nov 6:** the scoped external-inventory improvement and its
 same-owner paired proof are recorded in the
 [performance owner](2026-10-28-intake-performance.md#nov-6-external-inventory-reuse-trial).
 Because the engine module changed, preview4 is review evidence, not the
-latest-code install candidate. A separate `postrun-review-preview5` using
+then-current install candidate. A separate `postrun-review-preview5` using
 the same saved intake and policy passes continuation and independent
 check; every one of its 3,290 photo records and the full family/refinement/
 final-audit objects match preview4. Its recap check passes and the Lujan

@@ -62,11 +62,14 @@ approval remain open, not another automatic intake or forced merge.
 
 **Nov 6 external-inventory progress:** a sealed, owner-scoped T20
 improvement passes focused tests and same-owner paired measurements.
-Latest-code preview5 passes independent saved-input check and exactly
+Preview5 passes independent saved-input check and exactly
 matches preview4's photo, family, refinement and audit records. Both
 remain uninstalled; the full read-only cast inventory independently seals
 all 11,786 paths. This is not installation acceptance.
-The [pinned recap](recap/2026-11-04-1130-recap.md) links preview5.
+The later manifest-digest reuse changes the engine binding: preview5 is
+review evidence, while separately checked preview6 matches its full photo,
+family, refinement and audit records and remains uninstalled.
+The [pinned recap](recap/2026-11-04-1130-recap.md) links preview6.
 
 **Nov 5 22:37 review correction:** current placements/catalogue still match
 the final applied run, but Overview predates the retained-reader fix and

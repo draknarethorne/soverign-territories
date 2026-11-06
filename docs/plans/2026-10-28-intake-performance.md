@@ -175,7 +175,7 @@ cache-state and phase coverage.
 ### Nov 6: current-category attribution boundary
 
 The shared install phase label "current category and external inventory"
-does not identify the cost of either component. The current preview5
+does not identify the cost of either component. Preview5
 records `recoveryMode: disposable`: in that mode `install` checks the
 category roots for unsafe paths and enumerates their files, but skips
 `_category_inventory` and its previous-category content hashes. It still
@@ -239,6 +239,37 @@ three cases fail; this is a guard for future work, not the selective fix.
 A separate negative-claim regression verifies that a manifest write making
 the native prepared changes a cached false result to true; suppressing
 eviction makes that regression fail too.
+
+### Nov 6: external derivative-manifest digest reuse
+
+The external inventory already parses each derivative manifest through the
+operation-scoped verification session, but subsequently reread it outside
+the session for its inventory digest. The collector now reuses the parsed
+document's verified digest; the independent content seal remains. A focused
+test first reproduced the extra direct read, then confirmed it is absent.
+A separate test edits the manifest after it is loaded and confirms the
+operation still refuses at its final content seal even when the edit has
+the same byte length and its original modification time is restored.
+
+On the same 19-photo Sammara owner, two warm-cache baseline/reuse pairs
+took 7.962/8.018 and 8.358/8.432 seconds. Each returned the same 186
+entries and ordered inventory digest
+`8e6ba4d24fb294aee04b11f2d180a1a3b9afa6ca41c9cfad1ed3ece4eb6549df`.
+The change eliminates one direct manifest read of 27,954 bytes per
+operation in this sample; these timings show **no measurable wall-time
+improvement**. This is not a phase-wide gain. The 109-test rebase/
+continuation/read-session/maintenance selection passes with one Windows
+symlink-privilege skip. Log:
+`tmp\session-logs\nov6-manifest-digest-paired.log`.
+
+The engine binding changed, so preview5 is historical review evidence.
+Separate preview6 creation, independent saved-input check and recap check
+pass; all 3,290 photo records and the full family/refinement/final-audit
+objects match preview5. It remains uninstalled. The combined run took
+847.84 seconds; log `tmp\session-logs\nov6-manifest-digest-preview6.log`.
+Preview6 run SHA-256:
+`1a172a26bbdfc6f31eecd735fde1325492ce1a17f16f8a9f6c2271ed29dd9281`.
+Do not install it on the basis of this measurement.
 
 ## Milestone transfer record
 

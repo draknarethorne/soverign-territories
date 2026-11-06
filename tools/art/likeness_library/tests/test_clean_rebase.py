@@ -4,6 +4,7 @@ import copy
 import hashlib
 import io
 import json
+import os
 import pathlib
 import tempfile
 import unittest
@@ -81,7 +82,16 @@ class CleanRebaseTests(unittest.TestCase):
                 self.assertIsNotNone(verification_reads.active())
                 return actual_verified(*args, **kwargs)
 
-            with mock.patch.object(derivatives, "verified", side_effect=require_shared_proof):
+            manifest = derivatives.manifest_path(gallery.parent)
+            actual_hash = metadata.content_sha256
+
+            def no_direct_manifest_read(path):
+                if pathlib.Path(path) == manifest:
+                    raise AssertionError("manifest must reuse the session's verified digest")
+                return actual_hash(path)
+
+            with mock.patch.object(derivatives, "verified", side_effect=require_shared_proof), \
+                    mock.patch.object(metadata, "content_sha256", side_effect=no_direct_manifest_read):
                 inventory = clean_rebase._prior_external_files(self.working, plan)
 
             self.assertEqual(len(inventory), 9)
@@ -99,6 +109,36 @@ class CleanRebaseTests(unittest.TestCase):
                     self.assertRaisesRegex(ValueError, "content changed"):
                 clean_rebase._prior_external_files(self.working, plan)
         self.assertIsNone(verification_reads.active())
+
+    def test_external_inventory_seal_rejects_manifest_edit_after_cached_read(self):
+        from PIL import Image
+        from tools.art.likeness_library import derivatives, retained_preparation
+
+        source = self.working / "Angels" / "Reference" / "gallery" / "reference_image_123450.jpg"
+        source.parent.mkdir(parents=True)
+        Image.new("RGB", (400, 600), "red").save(source)
+        relative = source.relative_to(self.working).as_posix()
+        plan = {"workingInputs": {relative: metadata.content_sha256(source)}, "photos": []}
+        with mock.patch.object(retained_preparation, "source_is_prepared", return_value=False), \
+                mock.patch.object(retained_preparation, "crop_guard", return_value=False):
+            derivatives.maintain(source, None, 0, apply=True, faces=0)
+            manifest = derivatives.manifest_path(source.parent.parent)
+            actual_verified = derivatives.verified
+
+            def edit_after_manifest_load(*args, **kwargs):
+                result = actual_verified(*args, **kwargs)
+                before = manifest.stat()
+                original = manifest.read_bytes()
+                changed = original.replace(b"\n", b" ", 1)
+                self.assertEqual(len(changed), len(original))
+                self.assertNotEqual(changed, original)
+                manifest.write_bytes(changed)
+                os.utime(manifest, ns=(before.st_atime_ns, before.st_mtime_ns))
+                return result
+
+            with mock.patch.object(derivatives, "verified", side_effect=edit_after_manifest_load), \
+                    self.assertRaisesRegex(ValueError, "content changed"):
+                clean_rebase._prior_external_files(self.working, plan)
 
     def test_external_inventory_refuses_changed_unprepared_native_without_derivatives(self):
         source = self.working / "Angels" / "Reference" / "gallery" / "reference_image_123450.jpg"

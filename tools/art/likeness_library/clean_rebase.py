@@ -2713,7 +2713,7 @@ def _prior_external_files(working, plan, *, preserve_legacy=False):
 
 
 def _collect_prior_external_files(working, plan, *, preserve_legacy=False):
-    from . import derivatives, retained_preparation
+    from . import derivatives, retained_preparation, verification_reads
 
     native = {
         relative: digest for relative, digest in plan["workingInputs"].items()
@@ -2742,7 +2742,7 @@ def _collect_prior_external_files(working, plan, *, preserve_legacy=False):
                 raise ValueError(f"unknown external derivative target: {manifest}: {target}")
             output, checked = derivatives.verified(source, framing, record.get("box"))
             files[output.relative_to(working).as_posix()] = checked["sha256"]
-        files[manifest.relative_to(working).as_posix()] = metadata.content_sha256(manifest)
+        files[manifest.relative_to(working).as_posix()] = verification_reads.sha256(manifest)
     legacy = {}
     for row in plan["photos"]:
         if not row["destination"].startswith(("Angels/", "Sisters/")):
