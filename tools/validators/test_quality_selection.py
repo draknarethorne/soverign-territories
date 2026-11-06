@@ -14,6 +14,41 @@ class QualitySelectionTests(unittest.TestCase):
         self.assertFalse(plan["full"])
         self.assertEqual(quality.commands_for(plan), [])
 
+    def test_known_customization_prose_selects_quality_guards_only(self):
+        paths = [
+            ".github/copilot-instructions.md",
+            ".github/agents/AGENT-SELECTION-GUIDE.md",
+            ".github/skills/milestone-handoff/SKILL.md",
+            ".github/skills/feedback-filing/SKILL.md",
+            ".github/skills/long-run-acceptance/SKILL.md",
+        ]
+        for path in paths:
+            with self.subTest(path=path):
+                plan = quality.select([path.replace("/", "\\")])
+                self.assertFalse(plan["full"])
+                self.assertFalse(plan["mutations"])
+                self.assertEqual(plan["scopes"], ["quality"])
+                commands = quality.commands_for(plan)
+                self.assertTrue(any(c[-1] == "tools.validators.test_quality_gates" for c in commands))
+                self.assertTrue(all(c[1:3] == ["-m", "unittest"] for c in commands))
+
+    def test_customization_neighbors_and_mixed_infrastructure_still_fail_closed(self):
+        for path in (
+            ".github/skills/milestone-handoff/scripts/check.py",
+            ".github/skills/milestone-handoff/hooks.json",
+            ".github/skills/unknown/SKILL.md",
+            ".github/skills/milestone-handoff/extra.md",
+            ".github/skills/milestone-handoff/../other/SKILL.md",
+            ".github/hooks/check.json",
+            ".github/workflows/quality.yml",
+            ".github/agents/Sovereign-Code-Mode.agent.md",
+            ".github/new-instructions.md",
+        ):
+            with self.subTest(path=path):
+                plan = quality.select([".github/copilot-instructions.md", path])
+                self.assertTrue(plan["full"])
+                self.assertTrue(plan["mutations"])
+
     def test_reference_workflow_skips_intake_library_and_mutations(self):
         plan = quality.select(["tools/workflows/reference_rendering.py"])
         self.assertEqual(plan["scopes"], ["workflow"])

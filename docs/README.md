@@ -22,8 +22,9 @@ incorporated feedback. Archives are history, not another active queue.
 
 The [Nov 5 Copilot collaboration review](audits/2026-11-05-copilot-efficiency/README.md)
 records measured session/tool/context overhead, billing limitations and
-proposed skills/launcher/handoff improvements. It is an assessment, not
-another working agreement or permission to change models/tools.
+skills/launcher/handoff proposals. Its linked adoption record distinguishes
+the user-authorized repository skills/quality slice from deferred proposals;
+it is not another working agreement or permission to change models.
 
 ## Read in this order
 

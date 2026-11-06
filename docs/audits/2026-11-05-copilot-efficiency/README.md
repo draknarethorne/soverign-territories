@@ -1,6 +1,7 @@
 # Copilot collaboration efficiency review - Nov 5, 2026
 
-**Status:** assessment and proposal, not an instruction/tooling rollout.
+**Status:** assessment plus a bounded, user-authorized PR6 skills/quality
+rollout; remaining proposals are not implemented.
 
 ## Bottom line
 
@@ -15,7 +16,7 @@ commands should prove mechanical facts. Neither replaces judgment or tests.
 | --- | --- |
 | [Evidence and limits](evidence.md) | Session telemetry, attribution, actual file/tool inventory and billing caveats |
 | [Practices and lessons](practices.md) | What works, observed friction, instructions versus skills, context and Q&A |
-| [Prioritized proposal](proposal.md) | Bounded improvements, risk, acceptance, launchers and unattended-work protocol |
+| [Proposal and adoption record](proposal.md) | Delivered PR6 skills/quality slice, validation limits, deferred improvements and unattended-work protocol |
 
 ## Recommended sequence
 
@@ -32,10 +33,12 @@ commands should prove mechanical facts. Neither replaces judgment or tests.
 6. Use milestone-sized sessions and event-driven monitoring; leave the
    heavy job running independently of model conversation.
 
-These are proposals, not new skill files, settings changes, models or
-commands implemented by this assessment. The already approved milestone
-agreement remains in force. Main-run acceptance has priority over this
-bounded read-only/documentation companion.
+The report itself did not authorize implementation. The user's subsequent
+18:54 approval selects three repository-local skills and narrowly tested
+customization quality selection through PR6. See the
+[adoption record](proposal.md#adopted-nov-5-under-pr6) for exact delivery and
+limits. No new models/settings/hooks/launchers or financial savings are
+claimed. The milestone agreement and primary E19 focus remain in force.
 
 ## Scope and decisions
 
@@ -44,7 +47,9 @@ skills, agreements, sessions, tools, launchers and unattended work. A
 clarification form could not obtain a response before departure. Conservative
 defaults: this session plus available recent repository history; telemetry
 only, no billing access; write findings/proposals without an additional
-runtime/instruction/skill rollout.
+runtime/instruction/skill rollout. Those were the assessment-stage defaults;
+the later PR6 authorization above supersedes the no-skill-rollout limit only
+for its explicit bounded slice.
 
 The available current session spans Oct 29-Nov 5. Recent-session searches
 did not establish a comparable dataset for this repository; no unrelated

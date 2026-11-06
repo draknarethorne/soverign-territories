@@ -49,6 +49,14 @@ PowerShell policy in Phase 1:
 - The broader image/launcher regressions remain available through
   `bin\validate.cmd`; `bin\validate.cmd --isolated --quick` is the bounded
   validator smoke suite. Neither is automatically run by commit/push.
+- Known collaboration prose has an exact selection allowlist: Copilot
+  instructions, the shared agent guide and the three repository collaboration
+  `SKILL.md` entry files. These select quality guards plus routine lint, not
+  art regressions or mutations. Skill metadata/link/wiring checks live in
+  `test_quality_gates.py`. Scripts, hooks, extra resources, agent definitions
+  and unknown infrastructure remain conservative; mixed changes retain
+  their own coverage. Editing the selector itself still triggers full
+  selection, not its prose exemption.
 - Preview relevant tests with `cmd /c bin\validate.cmd --changed HEAD --dry-run`,
   then execute with `cmd /c bin\validate.cmd --changed HEAD --check`.
   This includes tracked changes against the base plus non-ignored untracked

@@ -13,6 +13,12 @@ INTAKE = {
     "test_image_preparation", "test_overlays", "test_intake_sequence",
     "test_eraser_benchmark", "test_overlay_reference_review",
 }
+COLLABORATION_SKILLS = ("milestone-handoff", "feedback-filing", "long-run-acceptance")
+CUSTOMIZATION_PROSE = {
+    ".github/copilot-instructions.md",
+    ".github/agents/AGENT-SELECTION-GUIDE.md",
+    *(f".github/skills/{name}/SKILL.md" for name in COLLABORATION_SKILLS),
+}
 
 
 def module_scope(path):
@@ -36,7 +42,10 @@ def select(paths):
     for raw in paths:
         path = raw.replace("\\", "/")
         name = pathlib.PurePosixPath(path).name
-        if path.startswith(("docs/", "feedback/")) or name in {"README.md", "CONTRIBUTING.md", "LICENSE"}:
+        if path in CUSTOMIZATION_PROSE:
+            scopes.add("quality")
+            reasons.append(f"{path}: known customization prose; quality guards and routine lint")
+        elif path.startswith(("docs/", "feedback/")) or name in {"README.md", "CONTRIBUTING.md", "LICENSE"}:
             reasons.append(f"{path}: documentation; routine lint only")
         elif path.startswith(("tools/validators/", "data/schemas/", "data/art/_schema/")):
             full = True

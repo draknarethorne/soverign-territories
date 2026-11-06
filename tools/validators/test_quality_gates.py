@@ -1,10 +1,28 @@
-"""Prevent new offline test modules from silently falling outside the CI launcher."""
+"""Guard validation coverage, lightweight CI and repository skill contracts."""
+import json
 import pathlib
 import re
 import unittest
 
+from tools.validators.quality_selection import COLLABORATION_SKILLS
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 LIBRARY_TESTS = pathlib.Path("tools", "art", "likeness_library", "tests")
+
+
+def skill_metadata(text):
+    """Local procedural skills use only a plain name and JSON-quoted YAML description."""
+    match = re.fullmatch(
+        r'---\nname: ([a-z0-9]+(?:-[a-z0-9]+)*)\ndescription: ("[^\n]+")\n---\n(.+)',
+        text, re.DOTALL,
+    )
+    if not match:
+        raise ValueError("expected name and quoted description only; no executable frontmatter")
+    name, description, body = match.groups()
+    description = json.loads(description)
+    if len(name) > 64 or not description.strip() or len(description) > 1024 or not body.strip():
+        raise ValueError("invalid skill name, description or body")
+    return name, description, body
 
 
 def uncovered_tests(root, launcher):
@@ -33,6 +51,40 @@ def uncovered_tests(root, launcher):
 
 
 class QualityGateTests(unittest.TestCase):
+    def test_collaboration_skills_have_valid_metadata_and_resolving_local_links(self):
+        entry = (ROOT / ".github" / "copilot-instructions.md").read_text(encoding="utf-8")
+        for name in COLLABORATION_SKILLS:
+            with self.subTest(skill=name):
+                path = ROOT / ".github" / "skills" / name / "SKILL.md"
+                text = path.read_text(encoding="utf-8")
+                actual, description, body = skill_metadata(text)
+                self.assertEqual(actual, name)
+                self.assertIn("Use ", description)
+                self.assertLess(len(text.encode("utf-8")), 12000)
+                self.assertIn(f"skills/{name}/SKILL.md", entry)
+                links = re.findall(r"\[[^\]\n]+\]\(([^)\n]+)\)", body)
+                self.assertTrue(links)
+                for link in links:
+                    self.assertNotIn("://", link, "Skills must not depend on external procedures")
+                    target = (path.parent / link).resolve()
+                    target.relative_to(ROOT)
+                    self.assertTrue(target.is_file(), link)
+
+    def test_skill_contract_rejects_malformed_or_executable_frontmatter(self):
+        good = '---\nname: example\ndescription: "Use for handoff."\n---\n# Procedure\n'
+        self.assertEqual(skill_metadata(good)[0], "example")
+        for bad in (
+            good.replace('description: "Use for handoff."', 'description: Use: invalid YAML'),
+            good.replace("name: example", "name: Wrong_Name"),
+            good.replace('description: "Use for handoff."', 'description: ""'),
+            good.replace("\n---\n# Procedure", "\nhooks: {}\n---\n# Procedure"),
+            good.replace("\n---\n# Procedure", "\nmodel: other\n---\n# Procedure"),
+            good.replace('description: "Use for handoff."', 'description: "' + "x" * 1025 + '"'),
+        ):
+            with self.subTest(frontmatter=bad[:100]):
+                with self.assertRaises(ValueError):
+                    skill_metadata(bad)
+
     def test_every_active_test_module_is_selected_by_validation(self):
         launcher = (ROOT / "bin" / "validate.cmd").read_text(encoding="utf-8")
         self.assertEqual(

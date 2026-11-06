@@ -61,6 +61,34 @@ the analysis. Final-run monitoring/acceptance stays primary.
   Preserve the exact source below and map every request. Report/proposal
   only; implementation recommendations remain deferred tooling D23.
 
+### Bounded collaboration companion
+
+**Nov 5 18:54:** the user now authorizes independent implementation, not
+just assessment. PR6 selects D23's three repository-local on-demand
+procedures plus a narrow quality-selector/customization-validation slice.
+Keep the main E19 focus; this companion ends at verified publication.
+No model changes, automatic hooks, Production/image processing or broad
+always-on instruction rewrite.
+
+- [x] **P2 ai** PR6 Package milestone handoff, feedback preservation/filing
+  and long-run acceptance as discoverable workspace skills; wire the
+  always-on entry point without removing safety invariants. Test metadata/
+  links and known customization-prose selection with negative cases for
+  scripts/hooks/unknown paths. Record limitations and adopted/deferred
+  decisions in the efficiency review; preserve this authorization verbatim.
+  D23 retains its other recommendations; D4's checker is not completed by
+  adding procedures. Stop after routine/targeted validation and publication.
+  **Result:** three minimal, repository-local skills linked from always-on
+  instructions, with existing safety invariants retained. Exact five-file
+  prose allowlist selects quality guards; scripts/hooks/agent definitions/
+  unknown/mixed infrastructure retain conservative coverage. All 31 quality
+  tests pass through the launcher; isolated mutation smoke 19/19 passes,
+  Pylance syntax checks pass. No dependencies, models, hooks or library
+  runtime behavior changed. Fresh-session invocation/behavior and actual
+  token/cost improvement remain unmeasured, explicitly under D23. Detailed
+  decisions/limits live in the
+  [adoption record](../audits/2026-11-05-copilot-efficiency/proposal.md#adopted-nov-5-under-pr6).
+
 ### M1 execution and transfer ledger
 
 Task IDs are preserved so existing references remain meaningful. The linked
@@ -767,3 +795,14 @@ checkpoint, no isolated coding. PR1's planning reconciliation remains open.
 I guess we should just wait for now.  We can probably commit the changes we do have made and push as well.  If we run into issues we won't get into a bind with files in tmp ... I'll just wait and see if you feel like there are other areas within the repo we could work on while waiting that won't impact this code.
 ````
 <!-- markdownlint-enable MD013 -->
+
+## Nov 5 18:54 collaboration implementation authorization (verbatim)
+
+Coverage: PR6 above owns this bounded skills/validation rollout; the
+efficiency proposal records decisions and limits. D23 retains subsequent
+tooling/context experiments; D4 keeps mechanical day-close ownership.
+No new human/Production approval is inferred.
+
+````text
+If the lessons learned are things you can do without needing me present - you can actually start on those while I am away.  If we are creating skills and such - that's all fine you can update whatever you can do without me needing to be here and update the docs to say what you decided and if I want to adjust that's fine.  Just go ahead and do what we need to in order to improve out collaborations without impacting productivity and success.
+````

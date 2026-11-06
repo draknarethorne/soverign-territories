@@ -59,6 +59,11 @@ If a number or rule here disagrees with those docs, the docs win.
 
 ## Working style
 
+- **On-demand procedures:** use [milestone-handoff](skills/milestone-handoff/SKILL.md)
+  for resume/transfer/closeout, [feedback-filing](skills/feedback-filing/SKILL.md)
+  for source coverage and safe filing, and [long-run-acceptance](skills/long-run-acceptance/SKILL.md)
+  for authorized job monitoring/recovery/viewer proof. If the host does not discover
+  a skill, read its file directly; skill availability never waives the invariants below.
 - Be concise; use tables and bullets for complex topics; no emojis unless the user uses them.
 - Use absolute paths with file tools. Read a file before editing it.
 - Documentation: one home per fact. Follow the archive guide: tracked history uses `git mv` into the appropriate

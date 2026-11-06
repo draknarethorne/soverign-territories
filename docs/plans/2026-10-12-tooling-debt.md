@@ -45,6 +45,11 @@ Found while building and running the artists reset, the crop and the routine, wr
   no automatic new agents, pricing claims, log deletion or runtime rollout.
   Select/transfer one accepted slice through the reset spine, not a second
   active milestone. PR5 in the spine preserves raw feedback and coverage.
+  **Nov 5 18:54 partial selection:** three on-demand procedures and narrow
+  customization quality checks transfer to spine PR6, with its bounded
+  implementation/validation/stop contract. D23 stays open for remaining
+  proposals; D4 remains the mechanical day-close checker owner. This is not
+  permission to activate the rest of the tooling backlog.
 
 - [x] **P2 ai** D22 Before the next specialized-agent use, reconcile the seven
   repository agent files against current scope and canonical rules: replace

@@ -24,7 +24,7 @@ Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (gen
 
 | Window | Single authoritative execution home | Boundary |
 | --- | --- | --- |
-| Now | [M1 / current Queue focus](2026-11-05-priority-reset.md#execution-spine) | Current install/final checks, documentation reconciliation while it runs; runtime freeze remains |
+| Now | [M1 / current Queue focus](2026-11-05-priority-reset.md#execution-spine) | Installed/check/viewer evidence recorded; remaining saved-case and bounded performance acceptance, not another intake |
 | Next | [M2-M6](2026-11-05-priority-reset.md#execution-spine) | Trusted cast -> selections -> source fidelity -> generic female pilot -> character art/video; advance only at entry gates |
 | Companion | Spelling/new-PC track selected in the spine | Settled processing/evidence and paired baseline before rename; no competing full milestone |
 | Holding | Remaining open domain tasks in the [inventory](#plans) | Deferred, not completed; select/transfer only needed tasks at a milestone gate |
@@ -46,18 +46,20 @@ when tasks close; invalid IDs must fail rather than silently hide work.
 
 ## Parallel analysis and small improvements
 
-The spine names any companion lane and stop condition. During the current
-installation, documentation-only consolidation and lightweight completion
-monitoring are authorized; no runtime edit, new intake, rename, workspace
-deployment or heavy competing benchmark. Afterward, select bounded
-independent analysis or one tested improvement without expanding it into
-another milestone. Parallel thought is not permission for early mutation.
+The spine names any companion lane and stop condition. While an authorized
+job runs, its runtime/library freeze still applies; lightweight planning is
+not permission for competing heavy I/O, a new intake or deployment.
+Afterward, select bounded independent analysis or one tested improvement
+without expanding it into another milestone.
 
-Nov 5 user-selected temporary companion: PR5's
-[Copilot efficiency assessment](../audits/2026-11-05-copilot-efficiency/README.md),
-read-only telemetry/documentation while waiting. Tooling D23 holds proposed
-implementation; no instruction/skill/model/tooling change is implied by
-the report. Run acceptance keeps priority.
+Nov 5 18:54: after PR5's
+[efficiency assessment](../audits/2026-11-05-copilot-efficiency/README.md),
+the user authorizes independent collaboration improvements. Spine PR6
+delivers three repository-local on-demand skills plus tested narrow
+customization quality checks; this companion stops at verified publication. See the
+[adoption record](../audits/2026-11-05-copilot-efficiency/proposal.md#adopted-nov-5-under-pr6).
+D23 retains remaining proposals; D4's checker is still open. No model/tool
+settings, human approvals or Production boundaries change.
 
 ## Scheduling history - not current authority
 

@@ -31,6 +31,15 @@ protective; the later local path is selected, not moved.
 Earlier state/owner/monitoring wording below is dated evidence, superseded
 where noted by the current checkpoint and spine transfers.
 
+**Nov 5 18:54 collaboration implementation:** the user authorizes
+independent improvements while away. PR6 delivers three repository-local
+on-demand procedures and narrowly tested customization-prose quality
+selection; primary E19 focus and all human/Production gates remain.
+The [adoption record](audits/2026-11-05-copilot-efficiency/proposal.md#adopted-nov-5-under-pr6)
+distinguishes actual validation from unmeasured host-discovery/credit
+benefits. No model changes, automatic hooks, new dependencies or broad
+always-on safeguard removal. D4 and residual D23 proposals remain holding.
+
 **Nov 5 16:35 autonomous safe-work decisions:** current acceptance tasks now
 name remaining evidence instead of asking to rebuild delivered code or
 repeat intake. LY4 produces shared final-run evidence; naming/cast/engine/
