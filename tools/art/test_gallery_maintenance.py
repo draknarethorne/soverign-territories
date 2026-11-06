@@ -216,6 +216,56 @@ class MaintenanceTests(unittest.TestCase):
         self.assertEqual(len(changes), 2)
         self.assertEqual(messages, [])
 
+    def test_derivative_pixels_preserve_exif_orientation(self):
+        source = self.gallery / "oriented.jpg"
+        image = Image.new("RGB", (600, 400), "red")
+        image.paste("blue", (0, 0, 200, 200))
+        exif = Image.Exif()
+        exif[274] = 6
+        image.save(source, exif=exif)
+        from PIL import ImageOps
+        with Image.open(source) as raw:
+            oriented = ImageOps.exif_transpose(raw).convert("RGB")
+        normalized = self.gallery / "normalized.png"
+        oriented.save(normalized)
+        for framing in derivatives.KINDS:
+            with self.subTest(framing=framing):
+                actual = derivatives.render_pixels(source, framing, self.box, prepared=False)
+                expected = derivatives.render_pixels(normalized, framing, self.box, prepared=True)
+                self.assertEqual(actual, expected)
+
+    def test_derivative_pixels_preserve_screenshot_cleanup_and_exclusions(self):
+        import screens
+
+        source = self.gallery / "screenshot.png"
+        image = Image.new("RGB", (400, 900), (200, 30, 30))
+        image.paste((0, 0, 0), (0, 810, 400, 864))
+        image.paste((232, 232, 236), (0, 864, 400, 900))
+        image.save(source)
+        self.assertTrue(screens.is_reel_ui(image))
+        box = [0.3, 0.3, 0.2, 0.2]
+        x0, y0, x1, y1 = screens.clean_box(image.size)
+        width, height = image.size
+        clean_box = [(box[0] * width - x0) / (x1 - x0), (box[1] * height - y0) / (y1 - y0),
+                     box[2] * width / (x1 - x0), box[3] * height / (y1 - y0)]
+        cleaned = self.gallery / "cleaned.png"
+        screens.clean(image).save(cleaned)
+        for framing in derivatives.KINDS:
+            with self.subTest(framing=framing):
+                actual = derivatives.render_pixels(source, framing, box, prepared=False)
+                expected = derivatives.render_pixels(cleaned, framing, clean_box, prepared=True)
+                self.assertEqual(actual, expected)
+
+        under_bar = [0.3, 0.11, 0.2, 0.1]
+        self.assertFalse(screens.head_clear(under_bar))
+        for framing in ("head", "chest"):
+            with self.subTest(framing=framing), self.assertRaises(ValueError):
+                derivatives.render_pixels(source, framing, under_bar, prepared=False)
+        self.assertEqual(
+            derivatives.render_pixels(source, "padded", under_bar, prepared=False),
+            derivatives.render_pixels(source, "padded", under_bar, prepared=True),
+        )
+
     def test_preview_and_check_are_read_only_and_apply_is_repeat_safe(self):
         before = self.tree()
         self.assertEqual(self.call("--dry-run"), 0)

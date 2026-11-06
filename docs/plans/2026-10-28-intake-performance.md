@@ -127,6 +127,14 @@ trial alone does not justify silently discarding those checks or claiming
 the decode-sharing slice complete. No policy, receipt or library image
 changed for this probe.
 
+Focused derivative regression fixtures now compare exact PNG bytes for all
+three framings of an EXIF-oriented JPEG against its normalized pixels, and
+for an unprepared screenshot against its explicitly cleaned equivalent.
+They also check head/chest refusal under screenshot UI and unchanged padded
+behavior there. These synthetic tests strengthen the T21 equivalence
+contract; they do not prove lineage, concurrent mutation safety, memory
+bounds or a production decode-sharing speedup.
+
 ### Nov 6: external inventory reuse trial
 
 A bounded, read-only T20 comparison on the current installed
