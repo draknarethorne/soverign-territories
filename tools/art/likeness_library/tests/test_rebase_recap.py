@@ -127,6 +127,18 @@ class RebaseRecapTests(unittest.TestCase):
         data.pop("_review_page", None)
         self.assertIn("Photo review unavailable", rebase_recap._person_link("Angels/Ava", data, out.parent))
 
+    def test_continuity_counts_distinguish_gallery_arrivals_and_review_departures(self):
+        data = rebase_recap.collect(self.run)
+        page = rebase_recap._continuity_section(data, self.working)
+        for person, expected in {
+            "Angels/Ava": ["1", "1", "0", "0", "1", "1"],
+            "Prospects/Old": ["1", "0", "0", "1", "0", "0"],
+            "Various": ["2", "0", "0", "2", "0", "1"],
+        }.items():
+            anchor = rebase_recap._anchor("continuity", person)
+            row = re.search(rf'<tr id="{anchor}">(.*?)</tr>', page).group(1)
+            self.assertEqual(re.findall(r"<td>(\d+)</td>", row), expected)
+
     def test_preview_links_use_planned_sections_and_verified_prepared_photos(self):
         data = rebase_recap.collect(self.run)
         data["status"] = "preview"

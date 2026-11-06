@@ -866,8 +866,19 @@ def _continuity_section(data, out_dir):
     for row in rows:
         outgoing[row["oldPerson"]].append(row)
     flows = collections.defaultdict(list)
+    retained = collections.Counter()
+    arrivals = collections.Counter()
+    departures = collections.Counter()
     for row in rows:
-        flows[(row["oldPerson"], row["newPerson"], row["newBucket"])].append(row)
+        old, new, bucket = row["oldPerson"], row["newPerson"], row["newBucket"]
+        flows[(old, new, bucket)].append(row)
+        if bucket == "gallery":
+            if old == new:
+                retained[old] += 1
+            else:
+                arrivals[new] += 1
+        if old != new or bucket == "review":
+            departures[old] += 1
     parts = [
         "<h2 id=continuity>Identity membership and name continuity</h2>",
         f"<p>{len(rows)} source photo rows → {sum(final_gallery.values())} final Gallery + "
@@ -878,20 +889,14 @@ def _continuity_section(data, out_dir):
     ]
     for person in sorted(old_counts, key=str.casefold):
         source_rows = outgoing[person]
-        retained = sum(r["oldPerson"] == person and r["newPerson"] == person and r["newBucket"] == "gallery"
-                       for r in rows)
-        arrivals = sum(r["newPerson"] == person and r["oldPerson"] != person and r["newBucket"] == "gallery"
-                       for r in rows)
-        departures = sum(r["oldPerson"] == person and (r["newPerson"] != person or r["newBucket"] == "review")
-                         for r in rows)
         parts.append(
             f'<tr id="{_anchor("continuity", person)}"><td>{_person_link(person, data, out_dir)}'
             + ("<br>Final destinations: " + ", ".join(
                 _person_link(target, data, out_dir) for target in sorted({r["newPerson"] for r in source_rows})
             ) if not final_gallery[person] and not final_review[person] else "")
             + "</td>"
-            f"<td>{old_counts[person]}</td><td>{retained}</td>"
-            f"<td>{arrivals}</td><td>{departures}</td><td>{final_gallery[person]}</td>"
+            f"<td>{old_counts[person]}</td><td>{retained[person]}</td>"
+            f"<td>{arrivals[person]}</td><td>{departures[person]}</td><td>{final_gallery[person]}</td>"
             f"<td>{final_review[person]}</td><td>{html.escape(_continuity_state(person, source_rows))}</td></tr>"
         )
     parts.append("</table><h3>Old identity → final destination counts</h3>"

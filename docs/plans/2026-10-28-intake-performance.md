@@ -10,6 +10,26 @@ the current core package is executed from the spine after the live-run freeze.
 The settled-run freeze ended before these changes. No full intake or
 library installation is used as a benchmark.
 
+### Nov 6: recap continuity row aggregation
+
+The recap previously rescanned all photo rows three times per old identity
+to count retained Gallery photos, Gallery arrivals and departures. It now
+aggregates those same counts once while building the existing flow groups.
+An executable fixture checks retained, moved and Review cases; all 28 recap
+tests pass. Installed preview3 and uninstalled preview6 recaps were both
+regenerated through the supported preview/apply/check launcher, with each
+entire HTML file byte-identical to its prior version.
+
+On the 3,290 saved preview6 rows, five isolated runs of the continuity
+section with person/destination links mocked took 0.147..0.157 seconds
+before and 0.022..0.033 seconds after; each returned the same 132,092 bytes
+and SHA-256
+`166c5affe3402af3c369bc5027253229b397514f5e7dd0daeb05355a0697c579`.
+The runs were consecutive in separate processes, not controlled alternating
+pairs, and exclude real link verification and page publication. This is a
+small CPU-only repeated-work fix, not a measured full-report or intake
+speedup; T29/T30 remain open for their complete evidence and contracts.
+
 | Hotspot | Delivered change | Same-input proof and boundary |
 | --- | --- | --- |
 | Manifest serialization per framing, T21 | One loaded manifest per photo, reused during framing checks, published once after completed work | Reproduced three writes before the fix; one write after for all three framings, zero for a no-op. A second-framing failure still publishes the completed first framing, propagates failure and resumes the remaining two. Existing exact derivative/recovery/tamper tests pass |
