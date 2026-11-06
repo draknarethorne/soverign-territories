@@ -185,11 +185,21 @@ before publication; disposable recovery is reset-only, not FULL rollback.
 These paths are in `tools/art/likeness_library/clean_rebase.py`.
 
 The 587.721-second measurement above is the external collector alone, not
-the entire labelled install phase or a current-category measurement. No
-separate duration for category enumeration or FULL content hashing is
-established. Do not remove the enumeration or the independent FULL recheck
-on this evidence, and do not run a FULL installation merely to attribute
-the LEAN result. T20/T29/T30 remain open for the outstanding affected-path
+the entire labelled install phase or a current-category measurement.
+A separate read-only run of the same LEAN root safety checks and
+`_source_files` enumeration on preview5's installed Working roots counted
+19,223 files in 7.090 seconds: Models 1,942 / 0.565 s, Prospects 4,659 /
+1.323 s, Potentials 1,569 / 0.886 s, Various 157 / 0.046 s, and their
+processing trees 2,553 / 1.010 s, 5,868 / 2.306 s, 2,233 / 0.865 s and
+242 / 0.086 s respectively. The total includes root safety checks; per-root
+times measure enumeration only. This did not hash file contents, install
+or mutate anything; it followed other reads and is a warm-cache observation,
+not a paired comparison or a FULL content-hashing duration. Log:
+`tmp\session-logs\nov6-lean-category-enumeration.log`.
+
+Do not remove the enumeration or the independent FULL recheck on this
+evidence, and do not run a FULL installation merely to attribute the LEAN
+result. T20/T29/T30 remain open for the outstanding affected-path
 coverage and paired measurements.
 
 ## Milestone transfer record
