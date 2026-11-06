@@ -143,6 +143,23 @@ ground-truth identities.
   entries, with two through seven detected rows and `f2` 0.31..0.98.
   Keep the holds and route decisions unchanged; I60/E6 still own labelled
   false-positive and true-multiple-person comparison before any policy fix.
+
+  **Nov 6 bounded confidence counterfactual:** rerunning the same detector
+  on all 16 hash-verified installed holds reproduces every saved accepted
+  face count and `f2` ratio. A hypothetical unconditional 0.85 confidence
+  cutoff would leave fewer than two accepted detections in nine cases,
+  including both original reports; in seven of those nine it would leave
+  **zero** detections, not a verified single face. It would retain the
+  multi-face flag in the other seven, including the visibly multi-person
+  Harlow image. This is a detector-output comparison, not a full pipeline
+  reroute: zero detections would require a no-face disposition.
+  Close-up `shot_20260830115136` and `image_7518022535991337255` each
+  visibly contain one person but produced three and five partially
+  overlapping low-confidence boxes respectively, after the 0.50 fallback.
+  Distinct overlapping detections, background false positives and genuine
+  multiple people are different failure modes; neither global 0.85
+  filtering nor discarding every low-confidence detection is justified.
+  No settings, cache, source photos or saved routes changed.
 - [ ] **P3 either** L24 Evaluate a ComfyUI-friendly ranked photo picker or
   opt-in export view. Explain that scores/ranks can change as membership
   changes, and compare stable source filenames plus a picker/copyable path
