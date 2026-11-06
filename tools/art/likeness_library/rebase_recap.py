@@ -516,11 +516,11 @@ def _thumb(row, data, out_dir):
             f'<img loading="lazy" src="{html.escape(_href(image, out_dir), quote=True)}" alt=""></a>')
 
 
-def _card(row, data, out_dir, note, *, anchor=None):
+def _card(row, data, out_dir, note, *, anchor=None, evidence=""):
     links = f' · {_safe_link(row["detail"], "intake", out_dir, new_tab=True)}' if row["detail"] else ""
     identifier = f' id="{html.escape(anchor, quote=True)}"' if anchor else ""
     return (f'<figure{identifier}>{_thumb(row, data, out_dir)}<figcaption>{html.escape(note)}'
-            f'<br>{_destination_links(row, data, out_dir)}{links}</figcaption></figure>')
+            f'<br>{_destination_links(row, data, out_dir)}{links}{evidence}</figcaption></figure>')
 
 
 def _origin(row):
@@ -529,12 +529,13 @@ def _origin(row):
     return f"{row['oldPerson']} (first intake {row['originalFolder']})"
 
 
-def _cards(rows, data, out_dir, note, *, review_anchors=False):
+def _cards(rows, data, out_dir, note, *, review_anchors=False, evidence=None):
     if not rows:
         return "<p class=muted>None.</p>"
     return '<div class=grid>' + "".join(
         _card(row, data, out_dir, note(row),
-              anchor=_anchor("review-photo", row["source"]) if review_anchors else None)
+              anchor=_anchor("review-photo", row["source"]) if review_anchors else None,
+              evidence=evidence(row) if evidence else "")
         for row in rows) + "</div>"
 
 
@@ -1196,6 +1197,12 @@ def _audit_section(data, out_dir):
 
 def _review_section(data, out_dir):
     rows = [row for row in data["rows"] if row["newBucket"] == "review"]
+    final_cast = _final_cast_by_source(data)
+
+    def evidence(row):
+        return ("<br>Final photo-to-cast similarity (not an identity decision): "
+                + _cast_reference_table(final_cast.get(row["source"]), data, out_dir))
+
     reasons = collections.defaultdict(list)
     for row in rows:
         reasons[row["reason"].split(";")[0]].append(row)
@@ -1205,7 +1212,7 @@ def _review_section(data, out_dir):
     for reason, group in sorted(reasons.items(), key=lambda item: -len(item[1])):
         parts.append(
             f"<details><summary>{html.escape(reason)}: {len(group)}</summary>"
-            f"{_cards(group, data, out_dir, lambda r: f'{r['newPerson']} ({r['newBucket']}); was {r['oldPerson']}; {r['reason']}', review_anchors=True)}"
+            f"{_cards(group, data, out_dir, lambda r: f'{r['newPerson']} ({r['newBucket']}); was {r['oldPerson']}; {r['reason']}', review_anchors=True, evidence=evidence)}"
             "</details>")
     return "".join(parts)
 

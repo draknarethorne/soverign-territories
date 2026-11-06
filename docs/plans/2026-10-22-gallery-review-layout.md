@@ -31,6 +31,15 @@ baseline until a separately previewed and verified run is approved.
 
 ## Nov 6 review navigation
 
+Each Review-hold photo card now displays its own saved final photo-to-cast
+comparisons, linked to cast evidence in a new tab; missing scores stay
+unavailable, and similarity is explicitly not an identity decision. This
+does not move any photo or alter a hold. Both recaps were rebuilt and
+checked. In the actual preview6 page all 199 cards show the evidence label,
+21 explicitly lack recorded references, and all 534 displayed candidate
+links resolve to existing recap anchors with new-tab safety attributes.
+The originally traced deep link still expands its group and loads its image.
+
 Applied-run thumbnails now use the same recorded final-photo SHA-256
 check as adjacent destination links. Missing, changed or unrecorded final
 bytes withhold the image link with a diagnostic, even when a separate

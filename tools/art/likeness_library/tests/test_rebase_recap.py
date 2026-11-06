@@ -98,6 +98,29 @@ class RebaseRecapTests(unittest.TestCase):
         self.assertNotIn(rebase_recap._anchor("review-photo", "not-in-plan.jpg"), audit)
         self.assertIn("source evidence unavailable (photo not recorded in run)", audit)
 
+    def test_review_cards_show_only_their_own_final_cast_evidence(self):
+        data = rebase_recap.collect(self.run)
+        data["status"] = "preview"
+        rows = [row for row in data["rows"] if row["newBucket"] == "review"]
+        data["finalMembershipAudit"] = {"rows": [{
+            "source": rows[0]["source"],
+            "castReferences": [{"folder": "Angels/Ava", "score": 0.471198},
+                               {"folder": "Models/<untrusted>", "score": None}],
+        }]}
+        page = rebase_recap._review_section(data, self.working)
+        first = re.search(
+            rf'<figure id="{rebase_recap._anchor("review-photo", rows[0]["source"])}">(.*?)</figure>', page,
+        ).group(1)
+        second = re.search(
+            rf'<figure id="{rebase_recap._anchor("review-photo", rows[1]["source"])}">(.*?)</figure>', page,
+        ).group(1)
+        self.assertIn("Final photo-to-cast similarity (not an identity decision)", first)
+        self.assertIn("0.471", first)
+        self.assertIn('href="#' + rebase_recap._anchor("cast", "Angels/Ava") + '" target="_blank"', first)
+        self.assertIn("Models/&lt;untrusted&gt;", first)
+        self.assertNotIn("0.471", second)
+        self.assertIn("unavailable (not recorded)", second)
+
     def test_person_links_filter_current_review_and_preserve_old_identity_continuity(self):
         data = rebase_recap.collect(self.run)
         out = self.working / "_reports" / "library" / "rebase-recap" / "run1.html"
