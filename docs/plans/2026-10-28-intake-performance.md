@@ -216,6 +216,21 @@ this is not a retained-generation, shared-owner, mutation/failure or
 phase-level benchmark. Keep the existing serial runtime until those
 contracts and the applicable acceptance gate are established.
 
+**Preview7 ownership inventory:** a read-only scan of the 3,290 receipt
+destinations (run SHA-256
+`ede43edf6b66c7b07098443d511a27bb4db5ce632f12ad794f39bab2e826bd10`)
+finds 251 case-folded person-folder owners: 27 with one photo, 112 with
+two to four, 40 with five to nine, 56 with ten to 49 and 16 with at least
+50. The largest, Sisters/Drakniss, has 290 photos (280 Gallery and ten
+Review). Twenty owners contain both buckets, which must not become
+separate concurrent manifest writers. All rows use Gallery or Review;
+none is marked unprocessable and no case-folded destination repeats.
+Using the actual `derivatives.relative_target` function for all three
+candidate framings yields 9,870 distinct case-folded target paths and no
+collision in this receipt. This is a receipt-specific scheduling inventory,
+not validation of existing paths, a general collision guard, a memory or
+phase-time benchmark, or authorization to parallelize publication.
+
 ### Nov 6: retained navigation manifest lookup probe
 
 One read-only `_detail_navigation` call for installed Sammara photo
