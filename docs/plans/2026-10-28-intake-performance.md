@@ -172,6 +172,26 @@ so elapsed time is observational rather than an isolated performance
 claim. T29 remains open for its complete generation/no-op, memory,
 cache-state and phase coverage.
 
+### Nov 6: current-category attribution boundary
+
+The shared install phase label "current category and external inventory"
+does not identify the cost of either component. The current preview5
+records `recoveryMode: disposable`: in that mode `install` checks the
+category roots for unsafe paths and enumerates their files, but skips
+`_category_inventory` and its previous-category content hashes. It still
+collects and seals the external cast inventory. FULL additionally records
+the previous-category hashes and later independently checks those hashes
+before publication; disposable recovery is reset-only, not FULL rollback.
+These paths are in `tools/art/likeness_library/clean_rebase.py`.
+
+The 587.721-second measurement above is the external collector alone, not
+the entire labelled install phase or a current-category measurement. No
+separate duration for category enumeration or FULL content hashing is
+established. Do not remove the enumeration or the independent FULL recheck
+on this evidence, and do not run a FULL installation merely to attribute
+the LEAN result. T20/T29/T30 remain open for the outstanding affected-path
+coverage and paired measurements.
+
 ## Milestone transfer record
 
 Nov 5 16:45: T29/T30/T20/T21/T22 execution transfers with the same IDs to the
