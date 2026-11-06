@@ -225,6 +225,18 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   final destinations. Trace the two reported multi-face cases with I60;
   preserve missing/edited/unavailable states.
   [Full contract](2026-10-22-gallery-review-layout.md#milestone-transfer-record).
+- [x] **P1 ai** L26 Make Photo Review text search find the displayed closest
+  identity evidence as well as the owner, filename and reason. Keep the
+  owner dropdown's exact semantics and similarity labels; test rendered
+  search including missing/fallback evidence, regenerate and check the
+  sandbox viewers without changing photos, policy or identity decisions.
+  Search and focused executable-JavaScript tests pass; a synthetic browser
+  exercise verifies closest, fallback, owner and no-result queries and the
+  owner dropdown's conjunction. The installed-policy report-only refresh
+  and independent check pass in 1,981.87 seconds together. On the real
+  installed page, searching Sammara with owner Models/Noelle Cruz shows
+  46 photos; selecting Potentials/Noelle Knight shows zero. The first five
+  visible thumbnails load. This is preview3's installed view, not preview6.
 - [x] **P1 ai** S30 Consume LY4 and cast/naming evidence to audit real
   admissions, retention/releases/Review, original names and surname
   presentation. Record ambiguity and protection; no second matcher, naming
@@ -475,7 +487,8 @@ The applied preview3 run, installed catalogue and frozen cache retain their
 previous exact SHA-256 bindings; all 3,290 installed destinations exist.
 Preview4's run SHA-256 is
 `f777f7c9457ff6346fa3e9430159a01814616c38d7f5150301b7e34aa5d65465`.
-No Overview/Photo review reader changes follow final synchronization. The user's later
+No Overview/Photo review reader changes followed that synchronization until
+the later L26 search change and separately checked refresh above. The user's later
 [core-coverage/routing follow-up](2026-10-22-likeness-engine-acceptance.md#nov-6-follow-up-core-coverage-and-unresolved-destinations)
 is recorded verbatim there, with E19 still open. After publication, its
 [measured comparison](2026-10-22-likeness-engine-acceptance.md#measured-noellesammara-core-coverage)
@@ -1155,5 +1168,21 @@ dispositioned. User identity/family acceptance is not inferred from tests.
 <!-- markdownlint-disable MD013 -->
 ````text
 Family naming still needs some tuning as it's still far too many being associated together in the same names.  The Lujan family has far too many and I don't have links into the people gallery for each one to compare - or better yet having some inline photos in the Families (score-band family) tree section.  There's other places where we could use links into the People Gallery Review page or being able to include some images in the rows.  Or have an expandable section that shows 5 of each member for comparison.  Really - all tables like Where photos went - should provide a link to the people gallery review in another tab when we reference the persons name (i.e  Models/Noelle Cruz) in the recap report.  That way I can bring them up and do a quick review.  Some tables when comparing things benefit from having images, but not all of them as it bloats the tables.  So you need to use some judgement and figure that out.  Otherwise, I'm having a hard time tracking some things down.  If there is a section in the report that has photos - the link can open a new tab and jump to that specific section in the existing report.  Either works - it's just a matter of being able to open a new tab to see the photos in question.   The Angels and Sisters section is nice as I like how that shows what happened in the expandable section below the table.   Other identities is decent, but the links should open a new tab and take to the section in the recap report and expand it.  That way it's more useful.  That's a better experience.  I still see the audit finds things that the refinement was supposed to catch - I thought we fixed that.  Please enumerate all these items and let's fix this as well as the other outstanding issues we need to address.  We're likely going to have to re-run another partial run like we did, but we need some performance improvements on top of these fixes.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 6 weekend execution direction (verbatim)
+
+Coverage: this execution spine remains the owner for the planned milestones,
+verification and issue recovery. Continue safe autonomous work and keep
+the plan and review handoff current. Bounded GUI/process quality-of-life
+improvements can accompany the active milestone when tested; preserve
+scope, provenance and explicit failures. Human-in-the-loop acceptance,
+unresolved identity decisions and Production publication are not implied by
+permission to prepare the work for review.
+
+<!-- markdownlint-disable MD013 -->
+````text
+Don't forget what you are doing - but I am leaving for the weekend and wanted to give some final direction before I go.  You can continue to do the work for everything in the plan we need to do and iterate on it and validate the results and fix any issues or errors.  If you also see suggestions on things we did not discuss you can implement them, especially if they are quality of life improvements in how the GUI works or the Process runs.  I give you permission to fully execute the plan we wrote up and update it as you go and progress to the point when I return that I can do the final human in the loop review with many quality and features in the GUI to make it easy for me to complete the review.
 ````
 <!-- markdownlint-enable MD013 -->

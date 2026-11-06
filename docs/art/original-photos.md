@@ -1135,7 +1135,10 @@ the chosen-photo status.
 For high-volume maintenance, run `bin\people-gallery-review.cmd` when only
 the review page needs refreshing. That page includes every Gallery and
 Review photo, core-similarity ordering, identity/protection state, filters and
-content-cached lazy-loaded thumbnails. Per-photo controls stage anchor,
+content-cached lazy-loaded thumbnails. Search matches the folder, filename,
+reason and the closest identities displayed on each photo; the Person
+dropdown still restricts results to that exact owner. Closest matches are
+similarity evidence, not identity or routing decisions. Per-photo controls stage anchor,
 protection, Review, Reject-to-Various, Review approval, recoverable retirement
 or unwanted/unusable Junk; use the
 downloaded manifest with `bin\likeness-actions.cmd validate FILE.json` or

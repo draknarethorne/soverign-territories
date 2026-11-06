@@ -71,6 +71,13 @@ review evidence, while separately checked preview6 matches its full photo,
 family, refinement and audit records and remains uninstalled.
 The [pinned recap](recap/2026-11-04-1130-recap.md) links preview6.
 
+**Nov 6 review-search update:** L26 adds text search over the closest
+identity evidence already displayed in Photo Review; the exact-owner
+dropdown and routing remain unchanged. Focused JavaScript and browser checks
+pass; the report-only sandbox refresh and synchronized check pass. The
+installed preview3 page finds 46 Noelle photos when searching Sammara;
+preview6 remains uninstalled and human identity review remains open.
+
 **Nov 5 22:37 review correction:** current placements/catalogue still match
 the final applied run, but Overview predates the retained-reader fix and
 contained obsolete crop diagnostics. Supported report-only refresh and

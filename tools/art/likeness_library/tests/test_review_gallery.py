@@ -2,6 +2,8 @@
 """Tests for the local, read-only likeness review gallery."""
 import pathlib
 import copy
+import shutil
+import subprocess
 import tempfile
 import unittest
 import json
@@ -685,7 +687,7 @@ class ReviewGalleryTests(unittest.TestCase):
         self.assertIn('id="framing"', page)
         self.assertIn('class="filter-controls"', page)
         self.assertIn('class="search-control"', page)
-        self.assertIn('placeholder="folder, filename, reason"', page)
+        self.assertIn('placeholder="folder, filename, reason, closest identity"', page)
         self.assertIn('class="filter-options"', page)
         self.assertIn('class="sort-controls"', page)
         self.assertIn('<span class="count" id="count"></span>', page)
@@ -717,6 +719,38 @@ class ReviewGalleryTests(unittest.TestCase):
         self.assertNotIn("https://", page)
         self.assertNotIn("data:image", page)
         self.assertIn("205", page)
+
+    def test_review_search_finds_displayed_closest_identities(self):
+        node = shutil.which("node")
+        if not node:
+            self.skipTest("Node.js is required to exercise the generated search function")
+        script = review_gallery.SCRIPT
+        start = script.index("function matchesQuery(")
+        end = script.index("\n}", start) + 2
+        search = script[start:end]
+        cases = [
+            [{"folder": "Models/Noelle", "name": "photo.jpg", "reason": "review",
+              "closestMatches": [{"folder": "Angels/Sammara", "category": "Angels",
+                                  "name": "Sammara", "score": .42}]}, "SAMMARA", True],
+            [{"folder": "Models/Noelle", "name": "photo.jpg", "reason": "review",
+              "best_other": "Sisters/Draknara (0.4)"}, "draknara", True],
+            [{"folder": "Models/Noelle", "name": "photo.jpg", "reason": "review"}, "noelle", True],
+            [{"folder": "Models/Noelle", "name": "photo.jpg", "reason": "review",
+              "closestMatches": [], "best_other": ""}, "missing", False],
+            [{"folder": "Models/Noelle", "name": "photo.jpg", "reason": "review",
+              "closestMatches": [{"folder": "Angels/Sammara", "category": "Angels",
+                                  "name": "Sammara", "score": .42}],
+              "best_other": "Hidden fallback"}, "hidden fallback", False],
+        ]
+        program = search + """
+const cases=JSON.parse(require("fs").readFileSync(0,"utf8"));
+console.log(JSON.stringify(cases.map(([record, query])=>matchesQuery(record,query.toLocaleLowerCase()))));
+"""
+        result = subprocess.run([node, "-e", program], input=json.dumps(cases),
+                                capture_output=True, text=True, check=True)
+        self.assertEqual(json.loads(result.stdout), [case[2] for case in cases])
+        self.assertIn("(!person.value||r.folder===person.value)", script)
+        self.assertIn("matchesQuery(r,q)", script)
 
     def test_render_shows_deduplicated_person_classification_and_full_rankings(self):
         item = {

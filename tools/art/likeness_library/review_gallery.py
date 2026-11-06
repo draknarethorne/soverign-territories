@@ -698,6 +698,14 @@ function groupCards(items) {
   }
   return nodes;
 }
+function matchesQuery(record, query) {
+  if(!query)return true;
+  const closest=record.closestMatches?.length
+    ? record.closestMatches.map(match=>[match.folder,match.category,match.name].join(" ")).join(" ")
+    : (record.best_other||"");
+  return [record.folder,record.name,record.reason,closest].join(" ").toLocaleLowerCase().includes(query);
+}
+
 function render() {
   const q=query.value.trim().toLocaleLowerCase();
   visible=records.filter(r=>
@@ -706,7 +714,7 @@ function render() {
     (!bucket.value||r.bucket===bucket.value) &&
     (!state.value||r.state===state.value) &&
     (!person.value||r.folder===person.value) &&
-    (!q||(r.folder+" "+r.name+" "+r.reason).toLocaleLowerCase().includes(q))
+    matchesQuery(r,q)
   ).sort((a,b)=>{
     const groupDiff=(groupOrder.get(a.group)??99)-(groupOrder.get(b.group)??99);
     if(groupDiff)return groupDiff;
@@ -1615,7 +1623,7 @@ def render_html(
 {warning_html}
 <div class="controls">
 <div class="filter-controls">
-<label class="search-control">Search <input id="query" type="search" placeholder="folder, filename, reason"></label>
+<label class="search-control">Search <input id="query" type="search" placeholder="folder, filename, reason, closest identity"></label>
 <div class="filter-options">
 <label>View <select id="mode"><option value="people">People</option><option value="review">Review queue</option><option value="low">Low scores</option><option value="all">All photos (flat)</option></select></label>
 <label>Category <select id="group"></select></label>
