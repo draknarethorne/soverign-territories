@@ -188,7 +188,8 @@ creates the remaining two derivatives and matches the serial tree exactly.
 Another paired case preserves an unowned chest asset for one owner and
 intentionally excludes head/chest for a no-face second owner; serial and
 threaded paths have identical normalized changes, diagnostics, file hashes
-and no-op results.
+and no-op results. A separate pair edits an already-owned chest derivative
+and verifies that both paths preserve its bytes and emit the same diagnostic.
 The retained-preparation and verification suites pass 60 tests, with one
 Windows symlink-privilege skip. This is component equivalence only:
 independent worker seals do not replace the existing operation-wide final

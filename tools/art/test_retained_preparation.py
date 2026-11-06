@@ -205,6 +205,28 @@ class RetainedPreparationTests(unittest.TestCase):
                                  [item.replace(str(protected_parallel), "<root>") for item in right])
         self.assertEqual(tree(protected), tree(protected_parallel))
 
+        edited = self.base / "edited"
+        edited_parallel = self.base / "edited-parallel"
+        shutil.copytree(self.root, edited)
+        edited_target = edited / manual.relative_to(protected)
+        edited_target.write_bytes(b"edited owned derivative")
+        shutil.copytree(edited, edited_parallel)
+        edited_results = [unit(edited, path) for path in paths]
+        with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+            edited_parallel_results = list(pool.map(lambda path: unit(edited_parallel, path), paths))
+        for root, results in ((edited, edited_results), (edited_parallel, edited_parallel_results)):
+            self.assertEqual([changes for changes, _ in results], [[], []])
+            self.assertEqual(len(results[0][1]), 1)
+            self.assertIn("Preserved unowned/edited asset", results[0][1][0])
+            self.assertEqual(results[1][1], [])
+            self.assertEqual((root / edited_target.relative_to(edited)).read_bytes(),
+                             b"edited owned derivative")
+        for serial, threaded in zip(edited_results, edited_parallel_results):
+            for left, right in zip(serial, threaded):
+                self.assertEqual([item.replace(str(edited), "<root>") for item in left],
+                                 [item.replace(str(edited_parallel), "<root>") for item in right])
+        self.assertEqual(tree(edited), tree(edited_parallel))
+
     def test_identical_refresh_refuses_manifest_changed_after_lineage_verification(self):
         self.stage()
         photo = self.root / self.destination
