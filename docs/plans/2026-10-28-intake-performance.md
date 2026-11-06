@@ -178,6 +178,22 @@ phase-level memory, and did not publish anything in the sandbox. It is
 encouraging evidence for a bounded prototype, not worker implementation
 or acceptance.
 
+**Real retained no-op follow-up:** five hash-verified installed preview3
+Gallery natives, one each from Angels, Sisters, Models, Prospects and
+Potentials, were checked read-only with one independent content-sealed
+session per owner. The stable IDs were `7514747935627264261`,
+`7500298447818601013`, `7514747981804668439`, `7515798601427539145`
+and `7514748402014472867`. All five resolved as prepared and returned
+zero pending changes and zero diagnostics. Two serial/two-thread pairs
+took 2.058/1.634 and 2.010/1.376 seconds, with identical outcomes and
+aggregated session counters on both sides: 200 content reads and 200
+seal reads of 23,639,603 bytes each, 165 JSON loads, nine directory scans,
+358 path checks and 30 hash reuses. These counts include each independent
+session's work and are not unique files or total I/O. There were no writes;
+this is not a retained-generation, shared-owner, mutation/failure or
+phase-level benchmark. Keep the existing serial runtime until those
+contracts and the applicable acceptance gate are established.
+
 ### Nov 6: retained navigation manifest lookup probe
 
 One read-only `_detail_navigation` call for installed Sammara photo
