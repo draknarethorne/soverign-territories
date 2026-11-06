@@ -135,6 +135,31 @@ behavior there. These synthetic tests strengthen the T21 equivalence
 contract; they do not prove lineage, concurrent mutation safety, memory
 bounds or a production decode-sharing speedup.
 
+### Nov 6: bounded two-thread rendering hypothesis
+
+The same five prepared IDs listed above were read from preview7's saved
+preparation, checked against its SHA-256 values and rendered without
+writing files. The current derivative module is still SHA-256
+`4b86e27e8d3d01e5ec7014ded2c0bc060f333050913abaf4542fdc58741c5dd`.
+Python 3.14.3 and Pillow 12.1.1 were used on the same B: drive and machine.
+Three adjacent serial/two-thread pairs took 1.6769/1.1067,
+1.8720/1.0899 and 1.9075/1.1382 seconds; each produced the same 15
+ordered PNG hashes, aggregate SHA-256
+`3c148230e1e7387310466d77073d255a6fe550a6033cbc07ca652dd0bab40992`.
+This aggregate uses a different serialization from the earlier probe.
+
+Separate processes in serial/thread/thread/serial order took
+1.6561/0.9987/1.0184/1.6278 seconds with the same aggregate. Their
+working-set peaks were respectively 191,365,120 / 209,653,760 /
+209,047,552 / 192,188,416 bytes; before rendering the process had already
+peaked at 186,724,352 / 186,368,000 / 186,458,112 / 186,544,128 bytes
+while loading imports and cache. These are cumulative process peaks, not
+isolated per-worker bounds. The two-thread candidate merits further bounded
+owner-partition tests, but these five prepared images bypass lineage,
+manifest writes, exclusions, edited assets, failure handling and the full
+phase. This is not a phase-level acceptance, an approval to parallelize
+publication, or evidence that the extra-acceleration gate is met.
+
 ### Nov 6: retained navigation manifest lookup probe
 
 One read-only `_detail_navigation` call for installed Sammara photo
