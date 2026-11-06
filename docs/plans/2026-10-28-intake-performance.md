@@ -186,6 +186,10 @@ The retained-preparation and maintenance suites pass 71 tests. This is
 component equivalence only: independent worker seals do not replace the
 existing operation-wide final seal, and overlapping owners, partial
 worker failures and coordinator-wide revalidation remain unimplemented.
+An additional read-session regression demonstrates the boundary: a
+same-size, timestamp-restored edit made after one owner's seal is detected
+when that completed proof is independently validated again after other work.
+This tests the primitive, not a coordinator or atomic publication.
 
 **Real retained no-op follow-up:** five hash-verified installed preview3
 Gallery natives, one each from Angels, Sisters, Models, Prospects and

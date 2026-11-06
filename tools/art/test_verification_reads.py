@@ -87,6 +87,19 @@ class VerificationReadsTests(unittest.TestCase):
             self.assertNotEqual(reads.sha256(self.source), original)
         self.assertIsNone(reads.active())
 
+    def test_completed_owner_proof_must_be_revalidated_after_other_work(self):
+        other = self.root / "other.bin"
+        other.write_bytes(b"untouched")
+        before = self.source.stat()
+        with reads.session(self.root) as first:
+            reads.sha256(self.source)
+        with reads.session(self.root):
+            reads.sha256(other)
+            self.source.write_bytes(b"modified")
+            os.utime(self.source, ns=(before.st_atime_ns, before.st_mtime_ns))
+        with self.assertRaisesRegex(ValueError, "content changed"):
+            first.validate()
+
     def test_explicit_write_invalidates_document_and_prepared_then_seals_new_bytes(self):
         self.source.write_text('{"value":1}', encoding="utf-8")
         with reads.session(self.root) as proof:
