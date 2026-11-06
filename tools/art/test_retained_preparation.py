@@ -1,20 +1,25 @@
 """Destination-owned retained preparation and shared browser continuity."""
 import contextlib
+import concurrent.futures
+import copy
 import hashlib
 import io
 import json
 import pathlib
+import shutil
 import sys
 import tempfile
 import unittest
 from unittest import mock
+
+from PIL import Image
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "art"))
 import library_backup  # noqa: E402
 import originals  # noqa: E402
 from likeness_library import (
-    domains, maintenance, preparation_provenance, retained_preparation as retained,
+    derivatives, domains, maintenance, preparation_provenance, retained_preparation as retained,
 )  # noqa: E402
 from likeness_library import metadata  # noqa: E402
 from likeness_library import verification_reads  # noqa: E402
@@ -97,6 +102,49 @@ class RetainedPreparationTests(unittest.TestCase):
         detail.write_bytes(detail.read_bytes() + b"edited")
         with self.assertRaisesRegex(ValueError, "stale or invalid"):
             retained.refresh_detail(self.root, photo, self.row["photoId"])
+
+    def test_disjoint_retained_owners_match_serial_derivative_maintenance(self):
+        image = io.BytesIO()
+        Image.new("RGB", (400, 600), "red").save(image, format="PNG")
+        selected = image.getvalue()
+        composition = self.row["variants"]["composition"]
+        self.put(self.prep, composition["path"], selected)
+        composition["sha256"] = sha(selected)
+        self.put(self.root, self.destination, selected)
+        self.stage()
+        second = "Models/Other/gallery/other_image_456.jpg"
+        row = copy.deepcopy(self.row)
+        row["source"] = "Models/Other/gallery/other_image_456.jpg"
+        row["photoId"] = "photo:image_456"
+        self.put(self.root, second, selected)
+        retained.stage_photo(self.root, second, self.prep, row, recipe={"id": "test-v16"})
+        parallel = self.base / "parallel"
+        shutil.copytree(self.root, parallel)
+        paths = [self.destination, second]
+        box = [0.35, 0.2, 0.3, 0.25]
+
+        def unit(root, relative):
+            photo = root / relative
+            with verification_reads.session(root):
+                self.assertTrue(retained.source_is_prepared(photo))
+                return derivatives.maintain(photo, box, 120, apply=True)
+
+        serial_results = [unit(self.root, path) for path in paths]
+        with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+            parallel_results = list(pool.map(lambda path: unit(parallel, path), paths))
+        self.assertEqual([(len(changes), messages) for changes, messages in serial_results],
+                         [(3, []), (3, [])])
+        self.assertEqual([(len(changes), messages) for changes, messages in parallel_results],
+                         [(3, []), (3, [])])
+
+        def tree(root):
+            return {path.relative_to(root).as_posix(): sha(path.read_bytes())
+                    for path in root.rglob("*") if path.is_file()}
+
+        self.assertEqual(tree(self.root), tree(parallel))
+        for root in (self.root, parallel):
+            for path in paths:
+                self.assertEqual(unit(root, path), ([], []))
 
     def test_identical_refresh_refuses_manifest_changed_after_lineage_verification(self):
         self.stage()

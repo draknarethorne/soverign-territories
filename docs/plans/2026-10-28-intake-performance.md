@@ -178,6 +178,15 @@ phase-level memory, and did not publish anything in the sandbox. It is
 encouraging evidence for a bounded prototype, not worker implementation
 or acceptance.
 
+An automated synthetic retained-lineage test now stages two distinct
+owners with verified preparation sets and compares serial versus two-thread
+derivative maintenance with isolated sealed sessions. It checks all file
+hashes, three derivatives per owner, diagnostics and no-op repeats.
+The retained-preparation and maintenance suites pass 71 tests. This is
+component equivalence only: independent worker seals do not replace the
+existing operation-wide final seal, and overlapping owners, partial
+worker failures and coordinator-wide revalidation remain unimplemented.
+
 **Real retained no-op follow-up:** five hash-verified installed preview3
 Gallery natives, one each from Angels, Sisters, Models, Prospects and
 Potentials, were checked read-only with one independent content-sealed
