@@ -202,6 +202,37 @@ evidence, and do not run a FULL installation merely to attribute the LEAN
 result. T20/T29/T30 remain open for the outstanding affected-path
 coverage and paired measurements.
 
+### Nov 6: prepared-cache eviction attribution
+
+The current verification session clears all prepared-lineage results on
+every intentional write. A read-only paired trial used the installed
+Sammara owner's 19 prepared natives and existing padded derivatives, three
+passes in one operation, with a simulated derivative write guard and target
+rehash for each photo. **No file was written.** Both sides performed the
+same guards, rehashes and independent content seal; the comparison side
+deliberately suppressed every prepared-cache eviction. It is an unsafe
+hypothesis, not a proposed implementation.
+
+The two warm-cache pairs took 5.798/2.674 and 5.732/2.651 seconds.
+The existing path resolved prepared lineage 57 times versus 19 in the unsafe
+comparison; all 57 results were true on both sides. Each operation recorded
+186 content reads / 101,645,088 bytes and 148 independent seal reads /
+62,568,532 bytes. Reused-hash calls fell from 511 to 97. Guard reads are
+not all counted as `contentReads`; these numbers are not total I/O or a
+full-phase speedup. Input native hashes match preview5's saved inputs;
+the ordered JSON path/hash list SHA-256 is
+`12cdb9bd3b79cdfe92b5c600610d244280a138a7051d3f0727025725e0b0788c`.
+The trial log is `tmp\session-logs\nov6-prepared-eviction-paired.log`.
+
+The trial demonstrates potential repeated lineage resolution, not a safe
+invalidation boundary. Prepared results also depend on owner/legacy
+layout, processing-store discovery, native and retained artifacts, all
+owner manifests and directory membership. A correct selective change must
+cover those dependencies, negative claims, configuration, external edits,
+intentional writes, rollback and final seals; a derivative-looking path or
+an unchanged timestamp alone is insufficient. T21/T22 cache invalidation
+therefore remains open. No runtime code, preview binding or policy changed.
+
 ## Milestone transfer record
 
 Nov 5 16:45: T29/T30/T20/T21/T22 execution transfers with the same IDs to the
