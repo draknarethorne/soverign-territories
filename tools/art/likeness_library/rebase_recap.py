@@ -503,6 +503,10 @@ def _thumb(row, data, out_dir):
         expected = row.get("preparedSHA256")
         if live is None or _file_verification(live, expected, data) != "verified":
             return _verified_photo_link(live, expected, "Prepared preview", data, out_dir)
+    else:
+        expected = row.get("preparedSHA256") or row.get("sha256")
+        if _file_verification(live, expected, data) != "verified":
+            return _verified_photo_link(live, expected, "Final photo", data, out_dir)
     image = row["preview"] or str(live)
     if data["status"] != "applied" and not pathlib.Path(image).is_file():
         image = str(live)

@@ -168,6 +168,35 @@ class RebaseRecapTests(unittest.TestCase):
         data.pop("_sha256_cache", None)
         self.assertNotIn("<img", rebase_recap._thumb(row, data, out.parent))
 
+    def test_applied_thumbnail_requires_verified_final_photo(self):
+        data = rebase_recap.collect(self.run)
+        row = data["rows"][0]
+        final = self.working / row["destination"]
+        preview = self.working / "preview.jpg"
+        preview.write_bytes(b"preview")
+        row["preview"] = str(preview)
+        verified = rebase_recap._thumb(row, data, self.working)
+        self.assertIn('<img ', verified)
+        self.assertIn('href="Angels/Ava/gallery/ava_a.jpg"', verified)
+
+        for payload, expected in ((b"tampered", "photo bytes differ from recorded SHA-256"),
+                                  (None, "photo missing")):
+            if payload is None:
+                final.unlink()
+            else:
+                final.write_bytes(payload)
+            data.pop("_sha256_cache", None)
+            result = rebase_recap._thumb(row, data, self.working)
+            self.assertIn(expected, result)
+            self.assertNotIn("<a ", result)
+            self.assertNotIn("<img", result)
+
+        row["preparedSHA256"] = None
+        row["sha256"] = None
+        final.write_bytes(b"source-a")
+        data.pop("_sha256_cache", None)
+        self.assertIn("expected SHA-256 not recorded", rebase_recap._thumb(row, data, self.working))
+
     def test_direct_only_family_prose_does_not_claim_secondary_links_enabled(self):
         data = rebase_recap.collect(self.run)
         data["familyNaming"] = {
@@ -185,6 +214,13 @@ class RebaseRecapTests(unittest.TestCase):
         row = next(r for r in data["rows"] if r["newPerson"] == "Models/Nia Vale")
         data["rows"].extend({**row, "source": f"Various/gallery/sample_{i}.jpg",
                              "destination": f"Models/Nia Vale/gallery/sample_{i}.png"} for i in range(7))
+        for item in data["rows"]:
+            if item["newPerson"] != "Models/Nia Vale":
+                continue
+            target = self.working / item["destination"]
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(b"fixture")
+            item["preparedSHA256"] = hashlib.sha256(b"fixture").hexdigest()
         data["familyNaming"] = {"families": [{
             "rootFolder": "Angels/Ava", "surname": "Hadley", "members": [
                 {"folder": "Angels/Ava", "status": "cast", "score": None, "path": []},
@@ -638,7 +674,8 @@ class RebaseRecapTests(unittest.TestCase):
                       "protectionEvidence", "diagnostics", "protected", "anchor", "workflowSelected",
                       "followupCandidate"):
             self.assertIn(field, page)
-        self.assertIn('href="Angels/Ava/gallery/extra.png" target="_blank"', page)
+        self.assertNotIn('href="Angels/Ava/gallery/extra.png" target="_blank"', page)
+        self.assertIn("link withheld (expected SHA-256 not recorded)", page)
         self.assertIn("Eligible core reference; score unavailable (not recorded)", page)
         self.assertIn("Eligible core reference; score 0.810", page)
         self.assertIn(f'data-cast-filter="{rebase_recap._anchor("cast", "Angels/Ava")}"', page)

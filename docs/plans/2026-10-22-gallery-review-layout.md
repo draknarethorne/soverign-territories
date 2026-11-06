@@ -31,6 +31,14 @@ baseline until a separately previewed and verified run is approved.
 
 ## Nov 6 review navigation
 
+Applied-run thumbnails now use the same recorded final-photo SHA-256
+check as adjacent destination links. Missing, changed or unrecorded final
+bytes withhold the image link with a diagnostic, even when a separate
+preview image exists. This is a report-generation snapshot, not protection
+against edits after the report is generated. The installed preview3 recap
+was regenerated and checked; it had no withheld links for these reasons
+and its HTML hash was unchanged. L23's remaining acceptance stays open.
+
 Execution owner: spine L25. Compact count/flow/audit tables use person
 links, not repeated image columns. Links open a new tab to filtered Photo
 review, or a stable recap detail anchor that expands and scrolls on load
