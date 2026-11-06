@@ -229,7 +229,9 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   counts, while preserving the original saved reasons and holds. The
   installed preview3 and uninstalled preview6 recaps were rebuilt and
   checked; the real preview6 page shows the caveat alongside all 16 holds.
-  The producer's wording and the unlocated second case remain open.
+  The producer's wording remains open. Both original reported cases are
+  now identified and traced in the linked contract; detector calibration
+  and quality decisions remain open, not globally suppressed.
   [Full contract](2026-10-22-gallery-review-layout.md#milestone-transfer-record).
 - [x] **P1 ai** L26 Make Photo Review text search find the displayed closest
   identity evidence as well as the owner, filename and reason. Keep the
@@ -449,9 +451,10 @@ quality and margin holds; the user's "many, not all" correction still
 needs photo-level human labels, not a forced whole-identity transfer.
 Angelica's three explicit anchors survive the preview unchanged. L23's
 Jade image shows one human plus a dog; Harlow's candidate genuinely shows
-background people and is not the unlocated second false detector case.
-These remain visible human/detector follow-ups, not silently accepted
-identity or quality results.
+background people and is not either original false-detector case. The
+later L23 reconciliation identifies both original stable IDs and verifies
+their current bytes. These remain human/detector follow-ups, not silently
+accepted identity or quality results.
 
 **Performance delivered versus remaining:** the
 [bounded ledger](2026-10-28-intake-performance.md#nov-6-bounded-implementation-and-paired-evidence)

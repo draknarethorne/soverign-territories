@@ -81,9 +81,13 @@ preview6 remains uninstalled and human identity review remains open.
 **Nov 6 detector-label clarification:** the preview6 recap's 16 saved
 multi-face holds now explicitly distinguish detector observations from
 confirmed people counts. The saved reasons and holds remain intact; the
-upstream wording and exact second reported case remain open under L23/I60.
+upstream wording and detector calibration remain open under L23/I60.
 Both installed preview3 and uninstalled preview6 recaps were rebuilt and
 checked; this is not detector or identity acceptance.
+The [historical two cases](plans/2026-10-22-gallery-review-layout.md#milestone-transfer-record)
+are now identified by stable ID and hash-verified in installed Review.
+The saved detector model reproduces a background-region second detection
+for each; this does not justify a global threshold change.
 
 **Nov 5 22:37 review correction:** current placements/catalogue still match
 the final applied run, but Overview predates the retained-reader fix and

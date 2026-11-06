@@ -114,9 +114,35 @@ ground-truth identities.
   not automatic quality admission. The current run has 16 two-face holds,
   not the old feedback's two. The Harlow Chase candidate
   `image_7515794330224531319` visibly includes multiple background people,
-  so it must **not** be substituted for the user's unlocated second false
-  case. Preserve that identification gap until the exact earlier report
-  row/image can be reconciled; do not suppress a detector flag globally.
+  so it must **not** be substituted for either earlier case.
+
+  **Nov 6 historical-case reconciliation:** the compact
+  `fresh-20261102` run retains both original rows even though its historical
+  page no longer contains images. They are `image_7517956508498686634`
+  and `image_7518041966060682367`, not Jade or Harlow. Both are still in
+  installed Various/Review, with actual SHA-256 matching both the historic
+  prepared hash and the preview3/preview6 prepared hash. The current images
+  each visibly show one person; the original historical image bytes are
+  represented by matching hashes, not independently retained historical
+  image files. Saved preview3 cache records two faces with `f2` 0.50 and
+  0.40, respectively, above the 0.30 hold threshold.
+
+  A read-only rerun of the saved detector model and OpenCV 4.13.0 on those
+  exact current bytes reproduces those counts and ratios. Its second
+  boxes, native pixel `(x, y, width, height)`, are approximately
+  `(1058, 18, 278, 240)` at confidence 0.764 for the first image and
+  `(875, 765, 280, 433)` at 0.710 for the second; these are background
+  regions, not visibly another person. The detector model SHA-256 matches
+  each saved alignment's detector provenance
+  `8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4`.
+  The current `human_rows` rule keeps all detected rows when the best
+  confidence is below 0.90: these reruns' best scores are 0.8955 and 0.8610.
+  Saved best scores are rounded, so a displayed 0.90 is not proof of
+  crossing that boundary. These two examples do not establish a safe
+  global threshold: all 16 installed multi-face holds have saved cache
+  entries, with two through seven detected rows and `f2` 0.31..0.98.
+  Keep the holds and route decisions unchanged; I60/E6 still own labelled
+  false-positive and true-multiple-person comparison before any policy fix.
 - [ ] **P3 either** L24 Evaluate a ComfyUI-friendly ranked photo picker or
   opt-in export view. Explain that scores/ranks can change as membership
   changes, and compare stable source filenames plus a picker/copyable path
