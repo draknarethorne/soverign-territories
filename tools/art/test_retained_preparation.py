@@ -264,6 +264,29 @@ class RetainedPreparationTests(unittest.TestCase):
                 self.assertTrue(retained.source_is_prepared(self.root / self.destination))
                 new_set.mkdir()
 
+    def test_intentional_lineage_writes_invalidate_prepared_decisions(self):
+        self.stage()
+        native = self.root / self.destination
+        data = retained.verify_link(self.root, native)
+        targets = (native, self.root / data["original"], self.root / data["manifest"])
+        for target in targets:
+            original = target.read_bytes()
+            try:
+                with self.subTest(target=target), verification_reads.session(self.root):
+                    self.assertTrue(retained.source_is_prepared(native))
+                    verification_reads.before_write(target)
+                    if target.name == retained.MANIFEST:
+                        changed = json.loads(original)
+                        changed["currentSha256"] = "0" * 64
+                        target.write_text(json.dumps(changed), encoding="utf-8")
+                    else:
+                        target.write_bytes(original + b"changed")
+                    with self.assertRaisesRegex(ValueError, "legacy crop refused"):
+                        retained.source_is_prepared(native)
+                    verification_reads.sha256(target)
+            finally:
+                target.write_bytes(original)
+
     def test_operation_reuse_keeps_artist_domain_and_photo_id_checks_separate(self):
         self.stage()
         artist_row = json.loads(json.dumps(self.row))

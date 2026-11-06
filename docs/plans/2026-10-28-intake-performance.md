@@ -232,6 +232,10 @@ cover those dependencies, negative claims, configuration, external edits,
 intentional writes, rollback and final seals; a derivative-looking path or
 an unchanged timestamp alone is insufficient. T21/T22 cache invalidation
 therefore remains open. No runtime code, preview binding or policy changed.
+An added regression confirms that intentional writes to a native, retained
+original or retained manifest invalidate the cached decision and refuse
+stale lineage. Suppressing eviction in a test-only mutation makes all
+three cases fail; this is a guard for future work, not the selective fix.
 
 ## Milestone transfer record
 
