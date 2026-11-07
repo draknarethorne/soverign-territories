@@ -100,6 +100,14 @@ new binding and is historical review evidence, not an install candidate.
 Installed preview3 and its catalogue are unchanged. See the
 [pinned recap](recap/2026-11-04-1130-recap.md) for the new review link.
 
+**Nov 6 preview8:** a retained-detail refresh now refuses an edited detail
+or manifest before a navigation-changing write. This makes preview7's
+implementation binding stale; do not install it. The saved-input preview8
+passes independent continuation and recap checks and matches preview7's
+photo, family, refinement, audit and admission records. It remains
+uninstalled. The [pinned recap](recap/2026-11-04-1130-recap.md) links the
+current review and records the comparison; human acceptance remains open.
+
 **Nov 6 bounded performance follow-up:** recap continuity counts now
 aggregate once rather than scan all photos per identity. Both actual
 recaps were byte-identical at that optimization; isolated section timings improve by about

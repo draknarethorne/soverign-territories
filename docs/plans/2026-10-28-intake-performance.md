@@ -216,6 +216,22 @@ this is not a retained-generation, shared-owner, mutation/failure or
 phase-level benchmark. Keep the existing serial runtime until those
 contracts and the applicable acceptance gate are established.
 
+**Retained-detail verification boundary:** the no-op refresh already
+compared the freshly read detail and manifest against its verified
+lineage, but the changed-navigation branch did not. Focused tests
+reproduced both an edited detail and a valid edited manifest being
+accepted after lineage verification. Both branches now refuse those
+changes before writing; malformed edited manifests also raise an explicit
+error. The retained-preparation, verification, clean-preparation and
+continuation suites pass 115 tests with one Windows symlink-privilege
+skip. This is a pre-write consistency guard, not an atomic lock against
+an external edit after the check or evidence that T22 is complete.
+Because the implementation is receipt-bound, preview7 is no longer an
+install candidate. Preview8 was independently checked with the same saved
+inputs: all photo, family, refinement, audit and admission records match
+preview7. It remains uninstalled; see the [pinned recap](../recap/2026-11-04-1130-recap.md)
+for its receipt and review link.
+
 **Preview7 ownership inventory:** a read-only scan of the 3,290 receipt
 destinations (run SHA-256
 `ede43edf6b66c7b07098443d511a27bb4db5ce632f12ad794f39bab2e826bd10`)

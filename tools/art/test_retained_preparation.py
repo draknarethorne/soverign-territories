@@ -245,6 +245,46 @@ class RetainedPreparationTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "changed after verification"):
                 retained.refresh_detail(self.root, photo, self.row["photoId"])
 
+    def test_changed_refresh_refuses_detail_or_manifest_edited_after_verification(self):
+        body = b"<html><body>original evidence</body></html>"
+        self.put(self.prep, self.row["detail"], body)
+        self.row["detailSha256"] = sha(body)
+        self.stage()
+        photo = self.root / self.destination
+        data = retained.verify_link(self.root, photo, self.row["photoId"])
+        detail = self.root / data["detail"]
+        manifest = self.root / data["manifest"]
+        original_detail, original_manifest = detail.read_bytes(), manifest.read_bytes()
+        verify = retained.verify_link
+
+        for edit in ("detail", "manifest", "malformed manifest"):
+            with self.subTest(edit=edit):
+                detail.write_bytes(original_detail)
+                manifest.write_bytes(original_manifest)
+
+                def verify_then_edit(*args):
+                    result = verify(*args)
+                    if edit == "manifest":
+                        edited = json.loads(manifest.read_bytes())
+                        edited["externalEdit"] = True
+                        manifest.write_text(json.dumps(edited), encoding="utf-8")
+                    elif edit == "malformed manifest":
+                        manifest.write_bytes(b"not valid JSON")
+                    else:
+                        detail.write_bytes(detail.read_bytes() + b"externally edited")
+                    return result
+
+                with mock.patch.object(retained, "verify_link", side_effect=verify_then_edit):
+                    with self.assertRaisesRegex(ValueError, "changed after verification"):
+                        retained.refresh_detail(self.root, photo, self.row["photoId"],
+                                                include_gallery_navigation=True)
+                if edit == "manifest":
+                    self.assertTrue(json.loads(manifest.read_bytes())["externalEdit"])
+                elif edit == "malformed manifest":
+                    self.assertEqual(manifest.read_bytes(), b"not valid JSON")
+                else:
+                    self.assertTrue(detail.read_bytes().endswith(b"externally edited"))
+
     def test_lean_selected_native_has_no_retained_copy_and_original_differs(self):
         self.storage_mode = "lean"
         published = self.stage()

@@ -231,16 +231,19 @@ def refresh_detail(root, current_photo, photo_id=None, *, include_gallery_naviga
     payload = text.encode("utf-8")
     manifest = _safe(root, data["manifest"])
     prior_manifest = manifest.read_bytes()
+    expected = {key: value for key, value in data.items() if key != "manifest"}
+    detail_sha = next(entry["sha256"] for entry in data["artifacts"] if entry["path"] == data["detail"])
+    try:
+        updated = json.loads(prior_manifest)
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError("retained detail or manifest changed after verification") from exc
+    if updated != expected or hashlib.sha256(before).hexdigest() != detail_sha:
+        raise ValueError("retained detail or manifest changed after verification")
     if payload == before:
-        expected = {key: value for key, value in data.items() if key != "manifest"}
-        detail_sha = next(entry["sha256"] for entry in data["artifacts"] if entry["path"] == data["detail"])
-        if json.loads(prior_manifest) != expected or hashlib.sha256(before).hexdigest() != detail_sha:
-            raise ValueError("retained detail or manifest changed after verification")
         return [
             {"path": data["detail"], "sha256": hashlib.sha256(before).hexdigest()},
             {"path": data["manifest"], "sha256": hashlib.sha256(prior_manifest).hexdigest()},
         ]
-    updated = json.loads(prior_manifest)
     for entry in updated["artifacts"]:
         if entry["path"] == data["detail"]:
             entry["sha256"] = hashlib.sha256(payload).hexdigest()

@@ -230,8 +230,11 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   installed preview3 and uninstalled preview6 recaps were rebuilt and
   checked; the real preview6 page shows the caveat alongside all 16 holds.
   The producer now describes a possible additional detected face in new
-  runs; preview7 is independently checked and remains uninstalled. The
-  numerical hold rule is unchanged. Both original reported cases are
+  runs; preview7 was independently checked and remains uninstalled. Its
+  implementation binding subsequently became stale after the retained-detail
+  guard fix; independently checked preview8 preserves its photo and audit
+  records and is the current uninstalled review candidate. The numerical
+  hold rule is unchanged. Both original reported cases are
   now identified and traced in the linked contract; detector calibration
   and quality decisions remain open, not globally suppressed.
   Preview6 per-photo Review evidence links now open the exact photo inside
