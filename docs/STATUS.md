@@ -57,6 +57,22 @@ Other cast cohorts also changed, with causes still unisolated. Keep E19 and
 independent complete-rebase/viewer acceptance open; no deletion, routing
 change, fresh intake or install was performed for this explanation.
 
+**Nov 8 21:57 scoring/legacy-rule review:** the
+[pipeline assessment and measured 0.60 sensitivity](plans/2026-10-22-likeness-engine-acceptance.md#nov-8-2157-scoring-path-review-and-legacy-rule-assessment)
+find group formation, cast association, Gallery admission and outlier
+reconsideration enforce different contracts. Raising only the group cutoff
+changes zero planner/refinement destinations because of the Model-band gap;
+raising both shifts 27 Angelica holds into the same combined Model groups,
+not the original separate identities. No other destinations change in this
+bounded stage; final admission/publication were not rerun. Main correction
+candidates are preserving provisional alternatives, revalidating automatic
+Review associations and consolidating the older own-score shortcut, while
+retaining frozen evidence, quality, margins and manual intent. Three
+sensitivity assertions and 40 existing tests pass. Proposed behavior needs
+agreement/labelled positives and negatives before implementation; E19 and
+independent complete-rebase acceptance remain open. No runtime or installed
+state change.
+
 **Nov 8 extended-history correction:** the
 [older receipt chronology](plans/2026-10-22-likeness-engine-acceptance.md#nov-8-extended-chronology-naming-and-clean-rebase-question)
 shows Freya was a separate Model in Nov 2/3 and first joined Angelica

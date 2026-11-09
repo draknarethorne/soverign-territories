@@ -1161,6 +1161,202 @@ benchmark. Scratch probe/evidence are under ignored
 `tmp\session-logs\2026-11-08-freya-cause`; the durable findings are recorded
 here rather than relying on that disposable directory.
 
+## Nov 8 21:57 scoring-path review and legacy-rule assessment
+
+This is the requested deeper read-only review, not approval of a new
+threshold or matching design. Actual preview8 policy, source, saved vectors
+and executable gate behavior were examined. The repository base policy is
+not identical to that preview: core-rebase overlays use cast core >=0.40,
+and preview8 additionally enables Angels Gallery >=0.45, Sisters >=0.50,
+both with >=0.10 all-category rival margin. Base-file-only analysis would
+misstate the tested system.
+
+### The numbers represent different questions
+
+| Stage in this rebase | Current mechanism | What it does not prove |
+| --- | --- | --- |
+| Candidate grouping | Average-linkage >=0.25, then provisional leave-one-out core >=0.15 | Same person rather than relatives; every pair need not pass 0.25 |
+| Individual attachment / provisional group attachment | Category-specific photo score and rival margin; group attachment also checks incoming members against the frozen target | These stricter attachment gates are not retroactively applied to all members formed by initial linkage |
+| Group-to-cast classification | Normalized group core >=0.55 and cast-only owner margin >=0.10; small groups up to four have a separate >=0.40 Review rule | Every member individually fits that cast, or beats a non-cast alternative |
+| Provisional non-cast refinement | Bounded photo reassignment, reciprocal merges and category reclassification | Cast-owned Review groups are not included in its recovery pool |
+| Final Gallery membership refinement | Own leave-one-out, rival score/margin, independent references, quality and decision metadata | Review holds are explicitly excluded; a low own score alone is not an ejection rule |
+| Cast Gallery admission | One frozen all-category pass, >=0.45 Angel / >=0.50 Sister, >=0.10 lead, >=4 diverse eligible references and quality/decision guards | Failed admissions are not automatically reassociated, and missing non-cast groups cannot compete as cores |
+| Final audit / automatic protection | Record residual evidence and acquire qualifying core protection | Zero eligible moves is stability under these gates, not human identity correctness |
+
+These are centered cosine similarities, not identity probabilities.
+Photo-to-core, group-to-core and leave-one-out values cannot be calibrated
+as if a common 0.55 meant a common error rate. A normalized average vector
+can legitimately have a higher score than any individual member. The error
+is treating that group score as sufficient evidence for every member's cast
+association, not the normalization arithmetic itself.
+
+### Measured 0.60 sensitivity: it does not restore separate people
+
+Three trials reconstruct all 2,230 original eligible candidates, the same
+initial cast cores and mean, and execute the real initial planner plus
+provisional refinement. Baseline sample cluster IDs/scores match the
+receipt; all trials conserve candidates. Final Gallery refinement,
+admission, naming, protection and publication are **not** rerun, so these
+are not predictions of a complete replacement library.
+
+| Trial | Changed photo destinations at this stage | Outcome |
+| --- | ---: | --- |
+| Actual 0.55 baseline | reference | Freya eight and Fia/Jacinta nineteen remain Angelica Review |
+| Only raise `highCastSimilarityMinimum` to 0.60 | **0** | All 27 still go to Angelica Review: Models stops at 0.55, so they fall through to no matching category rule |
+| Raise that limit and Models' upper band to 0.60 | **27** | Same eight-member and nineteen-member groups become Models; all 27 were Angelica Review, no other destinations change in this measured stage |
+
+The original six/ten/seven groups do **not** return in either 0.60 trial.
+Cluster membership is identical for the disputed cohorts. All three
+trials have two provisional passes, seven moves and zero merges/dissolutions.
+Thus 0.60 is a possible *cast-association sensitivity experiment*, not a
+group separation fix. It does not change the separate 0.25 clustering or
+non-cast merge thresholds. The uncovered 0.55..0.60 category gap also
+demonstrates why changing a single policy number without its neighboring
+contracts is unsafe.
+
+### Concrete scoring and revalidation gaps
+
+1. **A group's strong aggregate hides weak cast membership.** In preview8,
+   Freya's eight members average **0.395735** against the initial Angelica
+   core. Normalizing their mean produces **0.592512**; five members are
+   below 0.40. The nineteen-member group averages **0.337230**, but its
+   normalized score is **0.555148**. Its strongest individual cast score is
+   only **0.453139**, and sixteen are below 0.40. Neither centroid proves
+   that the low members belong in Angelica.
+2. **The core cleanup asks the wrong identity question for this case.**
+   All eight and all nineteen survive the provisional 0.15 core filter.
+   Their within-group leave-one-out scores range 0.4393..0.6578 and
+   0.4142..0.7091 respectively. The workflow photo scores **0.601247**
+   against the other eighteen, but **0.369553** against the initial
+   Angelica core and **0.345101** against her final core. It is not a
+   red outlier of its candidate group; it is a questionable *association
+   of that group with Angelica*. Throwing it out of that group just
+   because its Angelica score is low would confuse the two questions again.
+3. **Cast Review is effectively an absorbing state for refinement.**
+   Provisional recovery only considers unowned holds, and final membership
+   refinement returns early for non-Gallery membership. In the actual final
+   audit, **159** photos are cast Review: **157** quality-eligible rows are
+   held with `Review/unassigned membership requires explicit admission`;
+   two have quality holds. **112** have assigned-cast scores below 0.40,
+   all unprotected; **67** have a higher rival. This is not a remaining
+   pass-count problem. Raising the iteration cap would hit the same guards.
+4. **The competitor set can lose the alternatives we need.** When the
+   nineteen are held together under Angelica, separate Fia/Jacinta Gallery
+   identities are never created. Later all-category comparison includes
+   extant Gallery cores, not these absent subgroups. A strong margin against
+   the surviving roster is therefore not proof the candidate beat the
+   alternative grouping that was discarded earlier. In the final audit
+   147 of the 159 cast Review photos have a non-cast best rival, but only
+   67 have any rival higher than own; do not conflate those counts.
+5. **Support count measures diversity, not positive votes.** The current
+   four-reference gate removes self/same bytes/near-duplicates and counts
+   eligible distinct core references; it does not require four separate
+   photo-to-reference scores above the admission threshold. Centroid score,
+   quality and rival margin still apply, so this is not an arbitrary
+   admission bypass. The label must not be interpreted as four affirmative
+   identity observations. Whether a positive-support requirement improves
+   precision without losing valid pose/lighting variation needs labelled
+   testing.
+
+The initial/provisional stage has 43 cast-owned Review groups containing
+265 photos before subsequent Gallery/refinement/admission changes; 39 groups
+contain a member below 0.40 against their assigned initial cast core.
+This identifies wider test coverage, not 265 wrong identities or final
+Review size. The final Gallery has no measured own score below 0.15;
+this snapshot does not demonstrate a library-wide red-Gallery-outlier leak.
+
+### Older rules: retain, revise, or investigate
+
+| Existing rule | Assessment under newer changes | Bounded response |
+| --- | --- | --- |
+| High group resemblance consumes the entire group into cast Review instead of preserving a provisional identity | Protective when cast arrivals were deliberately Review-only; now suppresses alternative groups and leaves weak members attached after selective admission | First correction candidate: separate group resemblance suggestion from per-photo membership/ownership |
+| No automatic re-evaluation of cast-owned Review holds | Prevents unreviewed admission but also prevents harmless reconsideration of a failed automatic suggestion | Preserve no automatic Gallery approval; distinguish machine-proposed Review associations from explicit human decisions and re-evaluate the former |
+| Provisional own-score >= category protection minimum skips rival comparison | Intentional older core-retention shortcut, explicitly covered by an existing test; final Gallery refinement was later added to compare stronger rivals anyway | Candidate for consolidation, not blind removal. Measure differences; retain manual locks and verify temporary category/merge decisions do not rely on the shortcut |
+| 0.25 linkage and 0.15 provisional cleanup | Useful recall mechanism, not a validated same-person certificate; can build stable related-person groups before stricter attachment gates run | Retain candidate discovery; do not let initial linkage bypass downstream member/competitor checks. Calibrate only with labelled cases |
+| Separate legacy individual cast Review minimum (Angel 0.55 / Sister 0.50), lower newer Gallery minima (0.45 / 0.50) | Deliberate compatibility choice; two overlapping paths are now hard to reason about and do not mean Review requires stronger identity evidence than Gallery | Make decision roles explicit and test shared evidence without silently equalizing every threshold |
+| Source-wide centering | Adding usable input can alter all scores/core eligibility even when existing pixels do not change | Keep a frozen recorded mean for comparisons; do not call cached-input identity equality proof of fresh-population equivalence |
+| Near-duplicate exclusion, frozen evidence, leave-one-out, rival margins, quality/stale-byte guards | Still necessary; help prevent self-evidence, duplicate support and feedback loops | Keep; consider clearer support semantics rather than deleting the safeguards |
+| Manual protection, anchors and persistent identity rejection | Human intent must remain stronger than automatic re-grouping | Keep content/stable-ID binding and explicit migration; do not erase locks to make a run appear converged |
+| Bounded passes, oscillation refusal and draft/Production authorization | Still appropriate | Keep; explicitly report blocked versus eligible residuals instead of equating stability with correctness |
+
+Established-library `reconcile` also checks member support in both directions
+for reciprocal identity merges; provisional rebase refinement checks the
+moved loser members against a survivor and has its own minima/shortcuts.
+These are not interchangeable guarantees. This is an identified policy
+parity risk, not proof another command was involved in the two reproduced
+transitions or permission to replace one path wholesale.
+
+The latest final audit has zero eligible Gallery moves, with higher-rival
+holds accounted for by 181 margin holds, twelve draft-policy holds and one
+cast-admission hold. Its 111 staged Gallery admissions have no final
+higher-rival flags. A post-protection reread calls 105 admitted photos
+protected, not newly failed similarity admissions; do not misreport those
+as 105 regressions. None of these safeguards answers the cast-Review
+absorbing-state issue.
+
+### Smallest proposed correction and what the user needs to decide
+
+Recommendation: **correct the decision contract before retuning global
+numbers.** Keep grouping as a hypothesis. Preserve a proposed non-cast
+identity/subgroup and its evidence even when its centroid resembles a cast.
+A group may nominate a target, but must not transfer all weak members'
+identity association merely through a normalized centroid.
+
+For an individual who initially fails, a later reconsideration is valid
+when independent accepted evidence grows: compare that photo again against
+the updated frozen identity references and rivals, without counting itself
+or a same-pass admission. Group support should trigger that reconsideration,
+not certify membership. Strong coherent subgroups may need a narrowly
+tested group-assisted path for pose variation; that requires independent
+support/member consistency/rival checks and labelled positives, not simply
+reimposing the same individual threshold on everyone or lowering it.
+
+Revalidate both ends: keep qualified members, withdraw unsupported
+machine-generated cast associations, and reassess Gallery members against
+changed cores. A questionable photo can remain in its natural provisional
+group or an explicit unresolved hold without being declared Angelica.
+Weakness against Angelica is not a reason to delete the photo or eject it
+from an otherwise coherent different identity. Manual decisions stay
+separate. Merely making Review movable is insufficient: this workflow
+photo's best final rival is Paloma Goodwin at 0.508723, but it has only two
+independent references versus four required, so the existing Gallery move
+gate would still hold it. Do not lower support globally to force that move.
+
+For this case the user's useful input is a small **identity judgement**,
+not setting every numeric threshold: which authentic Angelica examples
+are trusted; whether representative Freya/Fia/Jacinta/workflow images are
+the same person, different related people, or uncertain. Use actual aligned
+face/native images rather than surnames or scores as truth. Do not blanket
+protect the mixed nineteen, delete bridge photos, or apply a preview as
+accepted. Once confident about an individual non-match, the existing
+content-bound **Reject identity permanently** action can preserve it;
+ordinary Reject-to-Various does not. Any such action changes the installed
+catalogue and requires supported preview/apply and regeneration of stale
+rebase previews. No manual action is being requested or executed here.
+
+Acceptance before another independent full rebase:
+
+1. Keep the two reproduced bridge cohorts as negative/ambiguity cases and
+   add genuine same-person cross-pose positives so the remedy does not
+   merely block useful recovery of previously missed photos.
+2. Test proposed-Review reconsideration, subgroup preservation, member
+   evidence and competitor availability; keep quality/manual/rejection/
+   duplicate/frozen-evidence guards. Compare old/new cast and non-cast
+   grouping/refinement on all saved inputs, not only net Review counts.
+3. Inventory every moved-in/moved-out/changed-owner photo, intact/split/
+   merged group, and newly unsupported member. Review all eleven
+   cast destinations already identified rather than assuming this is unique.
+4. Only after the user agrees the behavior, implement the smallest shared
+   producer correction with focused regressions. Then freeze sources/seeds/
+   policy and perform the requested independent complete-rebase plus
+   Gallery/Overview/Review acceptance. Matching-only probes do not waive it.
+
+All three sensitivity-trial assertions pass; 40 existing policy,
+refinement and cast-admission tests pass. Scratch diagnostic/evidence live
+under ignored `tmp\session-logs\2026-11-08-scoring-review`. Source receipt/
+cache hashes are checked unchanged. No runtime policy, implementation,
+photos, installed catalogue, intake or rebase publication changed.
+
 ### Raw follow-up source
 
 <!-- markdownlint-disable MD013 -->
@@ -1190,5 +1386,17 @@ I am curious why so many of the images ended up with Angelica in this run - like
 <!-- markdownlint-disable MD013 -->
 ````text
 I dont understand why when most previous run that Freya and many hadley sisters remained outside Angelica and when we excluded the workflow photo from the core it also pulled that core away from her.  So, I need to understand that issue more indepthly and where it actually happened.  When I had asked for the full rebase to exclude workflow selected photos - it then was working properly for Angelica.  We then shifted to the family names and might have run another full rebase and I did not catch the shifts in Angelica.  This is just one instance I am noticing, but maybe others shared same pattern.  So, without me truly understanding when and why that happened for Freya and Angelica.  I am unclear at your explanation.  Then we can address other issues I am seeing.  I think that trying to skip steps of re-running another full-rebase complicated things as well - since we were then focusing on family names and performance without seeing the Angelica related issue.
+````
+<!-- markdownlint-enable MD013 -->
+
+### Raw Nov 8 21:57 scoring review and follow-up
+
+<!-- markdownlint-disable MD013 -->
+````text
+So, in this case a .60 group rating would have kept them separate - but then I don't know what else that excludes that merges with other groups - which is a portion of the testing and tuning.  Yes, we were making more and more changes to organicially adjust the groups and bring photos into groups that might be mis-placed and we are dealing with images that are family relation and not identical to the entire group individually - but were also excluded from the group as individuals - which has a higher bar, but we were also tuning that somewhat in auto-accpeting things in review that individually meet the group.  So if you look at the current scoring for how it works do you see flaws in the scoring system and how things are initially accepted, but then later allow a larger group to join or what I might do in this particular case - which also likely impacts so many other groups.  Ultimately the goal is - if we know it's the same person, get the photos into a group properly.  If we later think that some photos of a person that didn't pass the individual threshold do actually represent that person we'd bring them in - but then the system should also throw out lower scoring items as we would have done with some of the Freya photos individually - like the workflow photo - which scores higher with those other Freya photos than with Angelica.  So, maybe we have some numbers that are not yet right in the system as a whole.  Can you take a much deeper review of that all - and ultimately, I want to understand what I need to do in this case without blowing up the entire system.
+````
+
+````text
+Also, is there something we put in place a while ago that with the newer and more recent changes might be unnecessary or actually detrimental to how things are working overall.  Include that with the previous work you are doing right now.
 ````
 <!-- markdownlint-enable MD013 -->

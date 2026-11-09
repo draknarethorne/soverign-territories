@@ -230,6 +230,14 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   Keep both cohort reversals and other affected cast cohorts as explicit
   acceptance cases; do not delete bridge photos or claim independent
   complete-rebase/viewer acceptance from these matching-only probes.
+  The [21:57 scoring and legacy-rule assessment](2026-10-22-likeness-engine-acceptance.md#nov-8-2157-scoring-path-review-and-legacy-rule-assessment)
+  measures the 0.60 alternative and records the proposed narrow behavior
+  contract: preserve provisional alternatives, separately validate photo
+  membership, and reconsider unsupported automatic Review associations.
+  Older retention shortcuts need parity tests, not blanket removal of
+  quality/manual/frozen-evidence guards. No new threshold or implementation
+  is approved by the review; require labelled cross-pose positives alongside
+  bridge negatives and retain independent complete-rebase acceptance.
 - [x] **P1 ai** L21 Verify actual shared recap styles/navigation, safe local
   final-destination links, count conservation and renamed/merged/split/
   emptied states; include Harlow Chase and Sophie Lloyd continuity.
