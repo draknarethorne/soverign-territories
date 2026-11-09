@@ -222,6 +222,14 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   not every possible historical input/measurement effect. Resolve the
   association contract and freeze source/seed/reset evidence before an
   independent clean-rebase acceptance; no speculative full intake.
+  The [21:39 causal probes](2026-10-22-likeness-engine-acceptance.md#nov-8-causal-probes-two-distinct-candidate-bridges)
+  now prove candidate bridges in two separate transitions: new Various
+  input changes Freya's group in first LEAN; releasing the old workflow
+  selection joins Fia/Jacinta in preview3 despite successful initial-core
+  exclusion. Five bounded full-pool baseline/reversal assertions pass.
+  Keep both cohort reversals and other affected cast cohorts as explicit
+  acceptance cases; do not delete bridge photos or claim independent
+  complete-rebase/viewer acceptance from these matching-only probes.
 - [x] **P1 ai** L21 Verify actual shared recap styles/navigation, safe local
   final-destination links, count conservation and renamed/merged/split/
   emptied states; include Harlow Chase and Sophie Lloyd continuity.

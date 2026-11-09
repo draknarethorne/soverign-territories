@@ -42,6 +42,21 @@ that traffic. E19 now explicitly retains the cast Review association
 question. No routing change or installation is approved by this analysis;
 preview8 is not a resolution of the concern. Installed preview3 is unchanged.
 
+**Nov 8 21:39 causal follow-up:** the
+[saved-vector ablations](plans/2026-10-22-likeness-engine-acceptance.md#nov-8-causal-probes-two-distinct-candidate-bridges)
+now isolate two different transitions. In first LEAN, removing only the
+new Various candidate restores Freya's six as separate Models (0.5063
+instead of the eight-member group's 0.5938). In preview3, removing only the
+released old workflow candidate restores Fia ten / Jacinta seven as separate
+Models (0.5139 / 0.4136 instead of the combined 19-member group's 0.5551).
+Means, cores, other candidates and policies stay fixed in each probe.
+All five full-pool baseline/reversal assertions pass. The workflow exclusion
+worked for initial cores but its candidate participation **did** pull other
+groups toward Angelica; the earlier core-only explanation was insufficient.
+Other cast cohorts also changed, with causes still unisolated. Keep E19 and
+independent complete-rebase/viewer acceptance open; no deletion, routing
+change, fresh intake or install was performed for this explanation.
+
 **Nov 8 extended-history correction:** the
 [older receipt chronology](plans/2026-10-22-likeness-engine-acceptance.md#nov-8-extended-chronology-naming-and-clean-rebase-question)
 shows Freya was a separate Model in Nov 2/3 and first joined Angelica

@@ -844,11 +844,13 @@ changes from 27 to 28 photos. The planner and first-refinement implementation
 hashes are identical across those two receipts; relevant score, clustering
 and core thresholds and runtime settings are also equal.
 
-This identifies a changed input/reference/group context alongside the
-new naming feature, not a proven single cause among those simultaneous
-changes. Historical preparation/cache trees were retired: the compact
-receipts alone cannot isolate every changed vector or supply a controlled
-old-input counterfactual. The 3,517-row run also included exact duplicates;
+At the receipt-only investigation stage this identified a changed input/
+reference/group context, not an isolated cause. The subsequent
+[saved-vector ablations](#nov-8-causal-probes-two-distinct-candidate-bridges)
+below recover the relevant historical vectors through their SHA-256
+alignment bindings in the surviving cache and isolate the candidate bridges.
+This does not recover the complete original input/cache tree.
+The 3,517-row run also included exact duplicates;
 the later 3,290-row run corrected alias intake, so those rows are not all
 distinct new photos or identities. Surnames and count totals are not
 sufficient identifiers for this comparison.
@@ -941,8 +943,9 @@ the first answer's time window was insufficient. Multiple workstreams
 obscured which input/policy/identity change each run represented. The
 evidence does **not** show the later performance continuations retaining
 old generated clusters or restoring this workflow photo as an initial
-seed. It shows a group-association policy that recomputes the disputed
-result with the expanded population, even after selection reset.
+seed. That rules out one mechanism, not the workflow photo's influence
+through candidate grouping: the subsequent causal probes below demonstrate
+that second mechanism for Fia/Jacinta, separately from Freya's earlier shift.
 
 A clean end-to-end rebase is appropriate as final acceptance **after**
 the association/seed contract is fixed and frozen, not as a speculative
@@ -979,6 +982,185 @@ Additional historical receipt SHA-256:
 - Nov 3 core: `68d5dbaf93bfe6b68ee86a19ac898b23834d390957e69c842924e129704da931`
 - Nov 4 LEAN: `bf1cb7414021a289d3a2739163ed20c599e503e3bbfd1d6f25edfff0daf94a08`
 
+## Nov 8 causal probes: two distinct candidate bridges
+
+The user's 21:39 follow-up asks for an explanation of the previously
+verified separation, not another statement that the final reruns agree.
+The earlier answer was incomplete: **excluding a photo from cast reference
+cores does not stop that photo joining a candidate group and changing where
+the other members are routed.** That is now demonstrated, not hypothetical.
+No routing change or live rebase was performed to obtain these results.
+
+### Locate the user's known-good review
+
+The preserved [Nov 4 family request](2026-10-22-identity-family-naming.md#nov-4-chat-family-names-after-the-fresh-20261103-core-review-verbatim)
+explicitly says the user was happy with Fia/Freya falling out of Angelica
+as Models and wanted surname relationships. The core-trial receipt agrees.
+That is the accepted separation the investigation must explain losing.
+
+The preserved [Nov 5 workflow-reset request and approvals](2026-10-22-identity-family-naming.md#nov-5-0908-chat-family-cast-admission-and-workspace-reset-verbatim)
+postdate the Nov 4 family implementation. This distinguishes the earlier
+core-only trial from the later reset-all-selected-photos implementation.
+In the earlier trial Angelica's selected photo already failed core
+eligibility, but selection-only retention still kept it in her Gallery.
+The later reset actually released it into the common candidate pool.
+There is no completed retained receipt in this sequence showing reset-all
+with Fia/Jacinta still separate; that does not invalidate the user's
+earlier successful core-trial review.
+
+### Probe method and limits
+
+The surviving `fresh-20261104-lean2\likeness-cache.json` has face vectors
+bound by `alignmentEvidence.sourceSha256`. These bind to selected-prepared
+SHA-256 values in the historical receipts, not current filenames or later
+folder labels. All 27 old and 28 new Angelica initial core vectors and
+the relevant Freya/bridge vectors are available. Of the full Nov 3
+population, 102 selected-byte bindings are unavailable, so no complete
+Nov 3 replay is claimed.
+
+The read-only diagnostic reconstructs each recorded centered vector as
+`normalize(rawVector - recordedMean)`, then reconstructs the recorded
+initial cast reference from its `castSeedCore` IDs. It runs the actual
+planner and average-linkage grouper, without naming, final-membership
+refinement, Gallery admission, publication or model loading. It asserts
+the baseline cluster IDs, scores, Review destinations and relevant complete
+group membership against the actual receipts before accepting a
+counterfactual. Diagnostic names are placeholders, not proposed renames.
+
+For each candidate-removal probe, the saved mean, all cast reference
+vectors, every other candidate and policy stay fixed. Thus an observed
+change isolates candidate participation rather than fresh detection,
+centering drift, revised thresholds or family surnames. It is not a
+proposal to delete those photos or a full install-equivalence test.
+
+### Transition A: Freya changes in the first Nov 4 LEAN run
+
+The incoming Various photo `photo:shot_20261023110958` was absent from the
+Nov 3 receipt by stable ID, original SHA-256 and selected-prepared
+SHA-256. It scores 0.863136 against the already released Angelica photo
+`photo:shot_20261019152041`, using the Nov 4 saved mean. This is measured
+resemblance, not proof they depict the same person.
+
+The full Nov 4 candidate-pool probe proves the grouping effect:
+
+| Fixed Nov 4 reference/policy context | Candidates | Freya group | Group-to-Angelica score | Initial planner result |
+| --- | ---: | ---: | ---: | --- |
+| All actual eligible candidates | 2,418 | eight | 0.5938 | Angelica Review; exact recorded group `f7d685f303de16a3` |
+| Remove only new Various `shot_20261023110958` from candidate participation | 2,417 | original six | 0.5063 | Separate Model; exact original group `3c798cab0d46106f` |
+| Remove that photo and released `shot_20261019152041` | 2,416 | original six | 0.5063 | Same separate Model |
+
+With the bridge absent, `shot_20261019152041` participates in a different
+group (`349379d171140879`, score 0.8318), not Freya's. Average-linkage
+chooses from the whole candidate pool: adding a strong neighboring photo
+can change which grouping wins. A calculation restricted to only the
+six or eight displayed photos is insufficient to reconstruct that choice.
+
+Separate numerical ablations isolate score effects once membership is
+known:
+
+| Membership / reference / mean | Exact group-to-Angelica score |
+| --- | ---: |
+| Freya six, old 27-photo Angelica core, old mean | 0.500323813 |
+| Same six, new 28-photo core, new mean | 0.506312236 |
+| Eight members, old 27-photo core, old mean | 0.587653390 |
+| Eight members, new 28-photo core, new mean | 0.593786623 |
+
+Both historical rounded scores reproduce. Mean/reference changes alone
+leave the six below the 0.55 cast-Review gate. The membership expansion
+crosses it even with the old core and old mean. The changed initial
+Angelica core adds `shot_20261019151900`, **not** the workflow selection.
+The old workflow photo is neither in those initial cores nor in Freya's
+eight-photo group.
+
+### Transition B: the workflow reset joins Fia and Jacinta in preview3
+
+This is the missing workflow-photo effect. After the reset releases
+`photo:image_7513773530805044436` as a candidate, the planner forms group
+`cac88bd590615b5b` containing:
+
+- all ten photos in the earlier Fia Hadley Model group;
+- all seven photos in the earlier Jacinta Alden Model group;
+- the old workflow selection itself;
+- another released Angelica photo, `shot_20261019151745`.
+
+The **19-photo group's** score is 0.5551, just above the unchanged 0.55
+gate. The planner routes the whole group to Angelica Review. It does not
+require each photo to qualify individually for that cast association.
+
+| Fixed preview3 reference/policy context | Candidate participation | Fia / Jacinta result |
+| --- | --- | --- |
+| Actual 2,230 eligible candidates | Old workflow photo included as ordinary candidate | Exact recorded 19-photo group, 0.5551, Angelica Review |
+| Same context, omit only that one candidate | Other 2,229 candidates and every cast core unchanged | Fia ten stay separate Models, 0.5139; Jacinta seven stay separate Models, 0.4136 |
+
+The second probe restores the original ten/seven membership IDs and group
+IDs (`5a2e0bcdf6544080` / `4c8dce9f6230e1b5`). Angelica's initial 30
+core IDs are identical between lean2 and preview3: this particular change
+does not need her core to be contaminated or restored. The suspect photo
+influences the result **as a candidate bridge**, despite successful initial
+core exclusion. No change to its mean contribution is made in this probe.
+
+This means the workflow reset did have an unintended grouping consequence
+in the direction the user objected to. The earlier conclusion that it
+never returned to the core was true but insufficient, and should not have
+been used to imply it could not pull other photos back toward Angelica.
+
+### Cohort history, without relying on changed surnames
+
+These are the fixed membership IDs from the Nov 3 destinations, not
+same-name folders assumed to mean the same membership in later runs:
+
+| Nov 3 cohort | Nov 3 core | Nov 4 LEAN and lean2 | Installed preview3 and preview8 |
+| --- | --- | --- | --- |
+| Freya Hadley, six | Separate Model | Six Angelica Review | Six Angelica Review |
+| Fia Hadley, ten | Separate Model | Separate Fia Vale Model | Ten Angelica Review |
+| Jacinta Alden, seven | Separate Model | Separate Jacinta Vale Model | Seven Angelica Review |
+| Arwen Preston, five | Separate Prospect | Four remain outside cast, one Angelica Review | Same four outside cast, one Angelica Review |
+
+Thus there was not one moment when "the Hadleys" all returned. Freya
+changed in the family-era full run with new input; Fia/Jacinta stayed
+separate through both LEAN runs and changed in the later workflow-reset
+continuation. Later performance-only previews preserved both decisions.
+
+A bounded screen of common non-null stable IDs also finds 47 former
+Gallery photos entering cast Review across **11 cast destinations** in
+Nov 3 core -> first LEAN: Angelica 13, Drakniss nine, Draknoxa eight,
+Draknara five, Camaris three, Sammara/Ravaelle/Draknava two each, and
+Drakness/Nyxene/Remiah one each. Examples include six Evangeline Blackwell
+photos -> Drakniss and five Quinn Iverson photos -> Draknoxa. This is not
+an exhaustive all-input accounting or proof those cohorts share Freya's
+specific bridge cause; their causal ablations remain open.
+
+### What this changes in the decision
+
+The causal concern is substantiated. It is not answered by empty seed
+catalogues, no Gallery-admission regression, or exact agreement among later
+previews. Those checks missed an unintended consequence of releasing
+selected photos into group matching. Family surname changes did not
+implement either demonstrated transition; bundling input changes, resets,
+naming, refinement and performance acceptance obscured them.
+
+For visual context, the uninstalled preview8 recap has verified targets
+for [a Freya member](file:///B:/Sovereign%20Territories%20Sandbox/Working/_reports/library/rebase-recap/postrun-review-preview8.html#review-photo-074f040175a0)
+and [the old workflow photo in the Fia/Jacinta group](file:///B:/Sovereign%20Territories%20Sandbox/Working/_reports/library/rebase-recap/postrun-review-preview8.html#review-photo-8fae6321a780).
+These show the current disputed grouping, not a newly installed correction.
+
+Repeated end-to-end reruns alone are not a fix for the demonstrated
+behavior, but the user's request for an independent complete rebase
+acceptance must not be replaced by component or saved-input equivalence
+claims. First agree the group-versus-individual association contract, then
+test both bridges and the other affected cast cohorts as explicit
+before/after acceptance cases, and perform the independent rebase with
+frozen sources, reset semantics and seeds. No automatic photo deletion,
+identity assertion, threshold change, new intake or install is authorized
+by this explanation. E19 and final clean-rebase/viewer acceptance stay open.
+
+The five planner probes completed in about 24 seconds total under
+single-thread BLAS limits. All exact baseline/reversal assertions passed.
+This is measured diagnosis from cached data, not a rebase performance
+benchmark. Scratch probe/evidence are under ignored
+`tmp\session-logs\2026-11-08-freya-cause`; the durable findings are recorded
+here rather than relying on that disposable directory.
+
 ### Raw follow-up source
 
 <!-- markdownlint-disable MD013 -->
@@ -1000,5 +1182,13 @@ You may need to look back farther and how the family names were being handled as
 <!-- markdownlint-disable MD013 -->
 ````text
 I am curious why so many of the images ended up with Angelica in this run - like Freya Hadley and others that previously were not.  I know we changed what would automatically be accepted into Angels and Sisters, but did that then open up a door to allow more to go into Review?  The idea was to try to keep the Review photos less - but should not have allowed move things to move into Review.  Seems like we changed something that went the wrong way?  We need more analysis of what was changed and what actually happened and why.  This is just one example - but I feel like something didn't work quite right.
+````
+<!-- markdownlint-enable MD013 -->
+
+### Raw Nov 8 21:39 causal-history question
+
+<!-- markdownlint-disable MD013 -->
+````text
+I dont understand why when most previous run that Freya and many hadley sisters remained outside Angelica and when we excluded the workflow photo from the core it also pulled that core away from her.  So, I need to understand that issue more indepthly and where it actually happened.  When I had asked for the full rebase to exclude workflow selected photos - it then was working properly for Angelica.  We then shifted to the family names and might have run another full rebase and I did not catch the shifts in Angelica.  This is just one instance I am noticing, but maybe others shared same pattern.  So, without me truly understanding when and why that happened for Freya and Angelica.  I am unclear at your explanation.  Then we can address other issues I am seeing.  I think that trying to skip steps of re-running another full-rebase complicated things as well - since we were then focusing on family names and performance without seeing the Angelica related issue.
 ````
 <!-- markdownlint-enable MD013 -->
