@@ -1,6 +1,6 @@
 # Project Status
 
-**Updated:** 2026-11-06 · This is the one working document: where the project is, what has
+**Updated:** 2026-11-08 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
@@ -31,6 +31,16 @@ protective; the later local path is selected, not moved.
 
 Earlier state/owner/monitoring wording below is dated evidence, superseded
 where noted by the current checkpoint and spine transfers.
+
+**Nov 8 cast Review investigation:** the
+[Angelica/Freya stable-ID trace](plans/2026-10-22-likeness-engine-acceptance.md#nov-8-angelicafreya-review-attribution)
+confirms preview3 -> preview8 adds no Review photos or changes to remaining
+Review owners; 31 leave Review. However, older group-driven cast Review
+associations can persist with weak per-photo matches. The earlier original
+result -> preview3 replay added 47 holds while removing 83; net totals hid
+that traffic. E19 now explicitly retains the cast Review association
+question. No routing change or installation is approved by this analysis;
+preview8 is not a resolution of the concern. Installed preview3 is unchanged.
 
 **Nov 6 review feedback:** L25 navigation/comparisons and N17/C14/E20's
 complete saved-input preview now pass. `postrun-review-preview4` selects

@@ -208,6 +208,12 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   fix the justified route/hold from saved measurements; no global threshold
   lowering, forced identity or full intake for diagnosis.
   [Full contract](2026-10-22-likeness-engine-acceptance.md#milestone-transfer-record).
+  The [Nov 8 Angelica/Freya attribution](2026-10-22-likeness-engine-acceptance.md#nov-8-angelicafreya-review-attribution)
+  extends this to group-driven cast Review ownership. Latest admission
+  changes add zero Review photos, but earlier group holds persist despite
+  weak individual matches. Preview8 must not be installed as a resolution;
+  propose a separately agreed per-photo association rule and retain the
+  no-new-Review comparison separately from quality/core releases.
 - [x] **P1 ai** L21 Verify actual shared recap styles/navigation, safe local
   final-destination links, count conservation and renamed/merged/split/
   emptied states; include Harlow Chase and Sophie Lloyd continuity.

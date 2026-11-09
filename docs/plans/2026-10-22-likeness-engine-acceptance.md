@@ -654,10 +654,165 @@ need a distinct quality/provenance disposition, not invented measured
 identities. No destination-policy change, new replan or installation has
 occurred in this diagnostic.
 
+## Nov 8: Angelica/Freya Review attribution
+
+The user asks whether enabling easier Angel/Sister Gallery acceptance
+also expanded Review. This read-only analysis compares all 3,290 stable
+photo IDs, not totals alone. No photo, policy, receipt, cache or viewer
+was changed, and no intake, matching replay or installation was run.
+This extends E19's group-versus-photo investigation; it is not identity
+acceptance or approval for a new routing rule.
+
+### Separate the three baselines
+
+| Saved run | Total Review | Angelica Gallery | Angelica Review | Freya Hadley photos in Angelica Review |
+| --- | ---: | ---: | ---: | ---: |
+| Original saved-intake matching result, `fresh-20261104-lean2` | 266 | 31 | 35 | 6 |
+| Installed `postrun-lean-preview3` | 230 | 30 | 55 | 6 |
+| Uninstalled `postrun-review-preview8` | 199 | 41 | 45 | 6 |
+
+Latest admission/family change, installed preview3 to preview8:
+
+- All 3,060 Gallery photos remain in Gallery; two change from a non-cast
+  Gallery into Angel Gallery. **Zero Gallery photos enter Review.**
+- Thirty-one Review photos enter Gallery; 199 stay in Review, with
+  **zero Review-owner changes** among those remaining.
+- All 33 additional Angel admissions reconcile: 29 Angel Review, one
+  Sister Review, one Various Review, one Model Gallery and one Prospect
+  Gallery. Sisters retain 78 admissions; the total staged admissions rise
+  from 78 to 111.
+- Every cast slot's Review count stays the same or falls. Angels fall
+  104 -> 75, Sisters 85 -> 84, Various 41 -> 40.
+- Angelica gains 11 Gallery photos: ten from her existing Review and one
+  from Drakniss Review. She gains no new Review photos or former Gallery
+  demotions in this comparison. Her total grows 85 -> 86 only because of
+  that one cross-slot Gallery admission.
+
+The older original-result-to-installed-preview3 comparison is different:
+83 Review photos entered Gallery, **47 Gallery photos entered Review**,
+and 183 stayed in Review. Twenty of those 47 new holds went to Angelica:
+nine originally Angelica, seven Jacinta Alden and four Fia Hadley.
+Thus lower net Review totals did hide earlier Gallery-to-Review traffic.
+Freya's six were already held in the original result, not among these 20.
+
+The older continuation included workflow selection reset and changed
+core/protection/refinement behavior, not just easier admission. The
+receipt records reset mode `all`; for example Angelica's previous selected
+photo `image_7513773530805044436` was originally retained solely as
+workflow-selected, then released and regrouped. Fia/Jacinta's earlier
+Model group had saved cast score 0.5139; the later group containing
+released Angelica candidates has 0.5551, crossing the unchanged 0.55
+group-Review boundary. This identifies the changed seed/group context,
+not an isolated counterfactual proving which individual reset caused
+every one of the 47 changes.
+
+### What actually changed in the latest policy
+
+The complete installed-preview3-to-preview8 policy diff is:
+Angels `galleryAdmissionEnabled=true` and explicit Gallery minimum 0.45;
+Sisters explicit Gallery minimum 0.50 (same effective minimum as before);
+secondary surname inheritance disabled; and the policy version.
+Runtime `settings` are equal. The Review rules did not change:
+high group similarity >=0.55, small groups of up to four at >=0.40,
+and cast Review destination margin >=0.10.
+
+Commit `0ead7c186` changes `evaluate_cast_admission`, not
+`classify_category`'s Review thresholds. A focused execution of the
+eight-photo, 0.5925 classification against all three saved policies
+returns the same Angelica Review result. That fixture supplies margin
+0.10 to isolate the policy boundary; it is not a reconstruction of the
+original group's exact runner-up margin.
+
+### Why Freya goes to Angelica despite weak individual matches
+
+All six Freya photos share saved cluster `f7d685f303de16a3` with one
+released Angelica photo and one Various photo. The eight-photo group's
+saved Angelica score is **0.5925** in all three receipts. The planner
+classifies its normalized group/core representation against cast,
+crosses 0.55 and gives every group member the same cast Review owner.
+It does **not** require each member to independently clear a per-photo
+cast-Review score or all-category rival margin at that boundary.
+
+Initial and final photo scores must not be substituted for that group
+score. Here are the saved final Angelica scores against the final core:
+
+| Stable photo ID suffix | Final Angelica similarity | Final Angelica lead over strongest other identity |
+| --- | ---: | ---: |
+| `image_7518040364541922309` | 0.372602 | -0.049225 |
+| `image_7518040823226708895` | 0.339679 | -0.033080 |
+| `shot_20261019151807` | 0.198142 | -0.091997 |
+| `shot_20261019152007` | 0.381498 | 0.000678 |
+| `shot_20261019152019` | 0.316649 | -0.045029 |
+| `shot_20261019152059` | 0.490720 | 0.086539 |
+
+None qualifies for Angel Gallery under the separate >=0.45 score and
+>=0.10 all-category margin gate. Four have a stronger non-cast rival;
+the other two fail score and/or margin. The strongest photo clears the
+score minimum but not the margin. These are likeness measurements, not
+proof that the photos are Angelica, Freya, altered, or different people.
+
+The group hold also persists: final membership refinement explicitly
+holds Review/unassigned members pending admission, and `_admit_cast`
+only changes a destination after an `admit` decision. A failed Gallery
+admission leaves the earlier group-derived Review association intact;
+it does not repair it or return the photo to its historical identity.
+The reason text "high cast similarity" describes the **group**, although
+it reads like a claim about each individual photo.
+
+### This is broader than one example
+
+All 45 remaining Angelica holds are quality-eligible in the final audit.
+Thirty-three have final own-cast similarity below 0.40, and 24 have a
+stronger non-cast best candidate. Origins: 16 Angelica, eight Jacinta,
+six Freya, four Fia, eight Various and one each Ariadne, Arwen and Bea.
+Thirty-four carry the high-group-similarity reason; 11 the small-group
+resemblance reason.
+
+Across all cast Review, 159 holds remain: 85 high-group and 74 small-group
+resemblance reasons. Of the 157 final-quality-eligible holds, 112 have
+own-cast similarity below 0.40 and 60 have a stronger non-cast best
+candidate. These counts describe the unresolved association problem;
+0.40 is a diagnostic band here, not a newly approved per-photo threshold.
+
+**Disposition:** the latest Gallery relaxation did not open a new Review
+door, but the older group-to-cast Review rule can over-associate weak
+individual members, and reducing net totals was insufficient acceptance.
+Do not install preview8 as a resolution of this concern, revert safe
+Gallery admissions merely to hide it, lower Gallery gates further, or
+return all held photos to historical owners as if those were ground truth.
+The next focused proposal should separate:
+
+1. Group resemblance/candidate evidence from an actual per-photo cast
+   Review association, including non-cast rivals and explicit uncertainty.
+2. Admission-only changes (require no new Gallery-to-Review or remaining
+   Review-owner changes) from deliberately approved quality/core releases,
+   which need their own before/after cohort accounting.
+3. Failed admission from final disposition: keeping an uncertain photo
+   unresolved must not imply a verified cast identity or invent a new one.
+
+Any different destination/threshold needs a separately agreed rule and
+saved-input comparison. Merely moving holds back to Various or renaming
+Review would not reduce actual human uncertainty. Dedicated Review
+association calibration remains open under E19; no new rule is activated.
+
+Receipt SHA-256 bindings:
+
+- Original result: `ecb91eafc362511cd72e515a224aa69015bb4624f518206bff8b7b200c204cdb`
+- Installed preview3: `60679f89990ce4e395a9c2cfb7863c017204f2e735d6883c46d74079575987f3`
+- Preview8: `e9d95427b1db8748565b0ba5e7c42fd912f1ee10fb452e246f912c5f72076a10`
+
 ### Raw follow-up source
 
 <!-- markdownlint-disable MD013 -->
 ````text
 Keep on monitoring what you are doing and don't stop if you have more work.  When you're done with the other changes - you can help me as I don't understand why Noelle Cruz did not merge into Adrianne Cruz (Sammara)  It's odd since most of them are supposed to be her - unless they are altered and truly don't match her.  But that's one thing that was not yet figured out.  I also think so many for review in Various is a problem and we need to pick one place where to put them instead of leaving them in Various for review.  What I wonder is if there are some photos in Sammara that aren't able to pull these others of her into the library?
+````
+<!-- markdownlint-enable MD013 -->
+
+### Raw Nov 8 Angelica/Freya question
+
+<!-- markdownlint-disable MD013 -->
+````text
+I am curious why so many of the images ended up with Angelica in this run - like Freya Hadley and others that previously were not.  I know we changed what would automatically be accepted into Angels and Sisters, but did that then open up a door to allow more to go into Review?  The idea was to try to keep the Review photos less - but should not have allowed move things to move into Review.  Seems like we changed something that went the wrong way?  We need more analysis of what was changed and what actually happened and why.  This is just one example - but I feel like something didn't work quite right.
 ````
 <!-- markdownlint-enable MD013 -->
