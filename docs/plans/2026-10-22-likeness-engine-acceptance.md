@@ -801,11 +801,197 @@ Receipt SHA-256 bindings:
 - Installed preview3: `60679f89990ce4e395a9c2cfb7863c017204f2e735d6883c46d74079575987f3`
 - Preview8: `e9d95427b1db8748565b0ba5e7c42fd912f1ee10fb452e246f912c5f72076a10`
 
+## Nov 8: extended chronology, naming and clean-rebase question
+
+The user's follow-up correctly challenges the limited comparison above.
+There "original result" meant `fresh-20261104-lean2`, not the earliest
+trial. Historical receipts now establish that Freya **was** a separate
+Model before the Nov 4 LEAN runs. Looking only at preview3 -> preview8
+could not identify when that changed.
+
+### Historical route timeline
+
+| Run name (not local completion date) | Matching photos | Initial cast policy | Angelica Gallery / Review | Freya's six destinations | Freya group score | Lujan non-cast family members |
+| --- | ---: | --- | --- | --- | ---: | ---: |
+| `fresh-20261102` | 2,814 | all cast retained | 61 / 14 | Models/Freya Hadley Gallery | 0.5056 | not recorded |
+| `fresh-20261103-core` | 2,814 | cast cores plus then-retained selections | 28 / 23 | Models/Freya Hadley Gallery | 0.5003 | not recorded |
+| `fresh-20261104-lean` | 3,517 | cast cores plus then-retained selections | 29 / 50 | Angelica Review | 0.5938 | 26 |
+| `fresh-20261104-lean2` | 3,290 | cast cores plus then-retained selections | 31 / 35 | Angelica Review | 0.5925 | 31 |
+| Installed `postrun-lean-preview3` | 3,290 | cast cores, workflow reset all | 30 / 55 | Angelica Review | 0.5925 | 29 |
+| Uninstalled preview4 through preview8 | 3,290 | cast cores, workflow reset all | 41 / 45 | Angelica Review | 0.5925 | 7 |
+
+Preserved Nov 2/3/4 receipts live in
+`Working\_reports\reset-review-bundle\rebase-runs`, not their retired run
+folders. The Nov 3 recap records an actual reset from Production, without
+the preceding rebase outputs as input. Nov 2/3 matching receipts have
+missing IDs on some unrelated records; comparisons of their full input
+populations therefore use unique source paths, not a dictionary that would
+collapse missing IDs. All six Freya IDs are present and stable throughout.
+
+**First observed transition:** Nov 3 core -> Nov 4 LEAN. The six-photo
+Freya group becomes eight photos by joining:
+
+- released Angelica `shot_20261019152041`;
+- incoming Various `shot_20261023110958`.
+
+The group's score crosses the **unchanged** 0.55 cast-Review threshold.
+The six Freya original and selected-prepared SHA-256 values are unchanged
+across every receipt above. This is not evidence that the later performance
+fixes reprocessed Freya differently. At this transition the input grows by
+703 rows, 101 common-source original/prepared bindings change, the saved
+centering mean changes and Angelica's recorded initial core membership
+changes from 27 to 28 photos. The planner and first-refinement implementation
+hashes are identical across those two receipts; relevant score, clustering
+and core thresholds and runtime settings are also equal.
+
+This identifies a changed input/reference/group context alongside the
+new naming feature, not a proven single cause among those simultaneous
+changes. Historical preparation/cache trees were retired: the compact
+receipts alone cannot isolate every changed vector or supply a controlled
+old-input counterfactual. The 3,517-row run also included exact duplicates;
+the later 3,290-row run corrected alias intake, so those rows are not all
+distinct new photos or identities. Surnames and count totals are not
+sufficient identifiers for this comparison.
+
+### What happened to the old workflow photo
+
+The recorded old Angelica selection is
+`photo:image_7513773530805044436`, not
+`photo:shot_20261019152041`. Its actual visual identity is not established
+by the user's tentative Freya attribution or by these measurements.
+
+- Nov 3/4 receipts mark it `castSeedCore=false`: it was kept in Gallery
+  because it was workflow-selected, not because it qualified for the
+  initial scoring core.
+- Preview3 resets that selection, removes selection-only retention, and
+  releases it to ordinary matching. It lands in Angelica **Review** in
+  cluster `cac88bd590615b5b`, group score 0.5551.
+- Preview4 through preview8 leave it **in Review**, with
+  `castSeedCore=false` and `castSeedWorkflowSelected=false`. It did not
+  return to Gallery or become an initial seed during the performance runs.
+- The different Angelica photo `shot_20261019152041`, from Freya's
+  eight-photo group, does enter Gallery in preview4 onward under the
+  separately enabled admission gate. That is a real later return of a
+  different photo, not proof the old workflow selection was resurrected.
+
+Removing a workflow photo from initial reference evidence is not deleting
+it from the dataset. It remains a candidate and can form a group under
+the same rules. Also, current centering uses all usable input faces,
+not only the cast seed faces. Thus "not a core seed" must not be reported
+as "cannot influence any matching calculation." Excluding it entirely
+from the population would be a different, unapproved behavior.
+
+### What the continuations actually reuse
+
+Direct receipt and seed-file checks for preview3 through preview8 find:
+
+- All six completed continuations reference **the original**
+  `fresh-20261104-lean2`, not the preceding preview.
+- Every seed catalogue is the same empty catalogue: zero people, photos
+  and actions, SHA-256
+  `3d181f272d6c783f4ce369b902f66ffdc90f2171d55a59f9a3ee61e65b5c4fce`.
+  Generated memberships, family names and automatic protection are not
+  carried in as identity seeds in these actual runs.
+- Configuration snapshots match; all reset mode `all`; all have exactly
+  the same 1,041 recorded initial core photo IDs, all from Angels/Sisters.
+  No reset old selection without manual protection occurs in that set.
+- The immutable matching source paths, original/prepared bytes and saved
+  measurements are reused, but the code recenters the population, builds
+  cast cores, clusters candidates, refines, admits, then names them again.
+  Original folder names support provenance/name continuity, not initial
+  non-cast face-reference cores.
+- No source input is cast Review; no resulting route is a retained-source
+  cast-Review hold, an explicit named-person override, or a protected/
+  workflow candidate-preservation route. The current 199 holds were not
+  imported from installed Review just because the folder existed.
+- `postrun-lean-preview` and `postrun-lean-preview2` have no completed
+  `run.json`; they are failed attempts, not intermediate accepted
+  membership baselines. Continuation rejects chained sources and incomplete
+  reuse rather than treating those attempts as success.
+
+Three existing focused tests pass: original-pixel continuation/install
+isolation, generated family/name/automatic-metadata exclusion from seeds,
+and explicit manual-photo protection rebinding. These do not replace a
+full independent clean-install equivalence trial, but support the actual
+receipt evidence against the stale-generated-seed hypothesis.
+
+### Where family naming fits
+
+Nov 4's requested resemblance surnames were implemented after membership
+planning, using the yellow band (0.30) and transitive peer connections.
+That explains Lujan's connected-family explosion; a family was never meant
+to assert one identity. Later direct >=0.40 / peer >0.35 rules and finally
+direct-only surname inheritance reduce Lujan 31 -> 29 -> 7 in the
+3,290-photo sequence.
+
+The same period also changed the input population, selection resets,
+core/protection and admission rules. These were not a naming-only
+controlled experiment. However, the actual family application changes
+non-cast presentation names after routing/admission, not the cast folder
+or bucket of the six Freya photos. The unchanged planner and explicit
+group evidence put their first transition before surname assignment.
+Later empty-seed continuations do not feed generated surnames or their
+automatic locks back into initial matching. This does not claim that every
+historical tool or a future rebase from current Working is equally isolated.
+
+### Revised conclusion and safe next execution gate
+
+The user's recollection of earlier separate identities is correct, and
+the first answer's time window was insufficient. Multiple workstreams
+obscured which input/policy/identity change each run represented. The
+evidence does **not** show the later performance continuations retaining
+old generated clusters or restoring this workflow photo as an initial
+seed. It shows a group-association policy that recomputes the disputed
+result with the expanded population, even after selection reset.
+
+A clean end-to-end rebase is appropriate as final acceptance **after**
+the association/seed contract is fixed and frozen, not as a speculative
+way to clear a rule-driven result. With the same inputs, measurements,
+cores and rules, rebuilding them again is expected to reproduce it;
+fresh preparation is not yet demonstrated necessary. Before execution:
+
+1. Freeze one input/alias manifest and explicitly identify the allowed
+   Angel/Sister reference photo IDs. Exclude old workflow choices as
+   choices, preserve only explicitly approved manual exceptions, and
+   verify actual eligible seed membership rather than assuming an
+   automatically inferred core is human-correct.
+2. Resolve group-level resemblance versus individual cast-Review
+   association, plus any per-photo Gallery-return concerns. Compare all
+   affected cohorts, not just Angelica or Lujan, without inventing identities.
+3. Perform an independent clean matching/publication rehearsal without
+   generated non-cast membership/family/protection seeds, with workflow
+   reset explicit; compare against the saved-input result by stable IDs,
+   seed membership and exact pixels. Preserve the installed baseline
+   until the guarded replacement is ready; never use current Review
+   folders as presumed ground-truth seeds.
+4. Separate semantic policy changes from performance-only changes and
+   require exact route equivalence for the latter. Record every new Review
+   entry, exit, cast owner and workflow-photo disposition, then verify the
+   actual viewers. Do not equate lower net Review totals with acceptance.
+
+This is the investigation and execution gate, not authority to start full
+intake or overwrite the sandbox now. No image, policy, seed, runtime code,
+cache, receipt or installed catalogue changed for this analysis.
+
+Additional historical receipt SHA-256:
+
+- Nov 2: `4b7a9ff2d3ccdbe04892f980c59b88cb3a1bec81274d075eea3c2adf57654431`
+- Nov 3 core: `68d5dbaf93bfe6b68ee86a19ac898b23834d390957e69c842924e129704da931`
+- Nov 4 LEAN: `bf1cb7414021a289d3a2739163ed20c599e503e3bbfd1d6f25edfff0daf94a08`
+
 ### Raw follow-up source
 
 <!-- markdownlint-disable MD013 -->
 ````text
 Keep on monitoring what you are doing and don't stop if you have more work.  When you're done with the other changes - you can help me as I don't understand why Noelle Cruz did not merge into Adrianne Cruz (Sammara)  It's odd since most of them are supposed to be her - unless they are altered and truly don't match her.  But that's one thing that was not yet figured out.  I also think so many for review in Various is a problem and we need to pick one place where to put them instead of leaving them in Various for review.  What I wonder is if there are some photos in Sammara that aren't able to pull these others of her into the library?
+````
+<!-- markdownlint-enable MD013 -->
+
+### Raw Nov 8 extended-history question
+
+<!-- markdownlint-disable MD013 -->
+````text
+You may need to look back farther and how the family names were being handled as well as other changes - it's not just the last run, it's a series of updates and fixes and we weren't focused on Angelica - but on the Lujuan family name explosion.  So it's a bit more complex than just this past 1 run and it might have happened earlier in some series of updates and runs.  So make sure you look at more series of updates and how things were working and what we may have changed that allowed it.   We were working multiple changes in parallel and I suspect that some of my directions may have caused it.    So our partial re-runs might have not cleared things and we need to really do a full re-base with only the sisters and angels cores included and not the workflow photo (which I think is actually Freya in Angelica's)  It did drop out at one time as expected ... but then subsequent runs caused issues with our attempt to work on performance and not do a full-rebase.  How does this align with what you just figure dout.
 ````
 <!-- markdownlint-enable MD013 -->
 

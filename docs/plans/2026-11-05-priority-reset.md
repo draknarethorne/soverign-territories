@@ -214,6 +214,14 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   weak individual matches. Preview8 must not be installed as a resolution;
   propose a separately agreed per-photo association rule and retain the
   no-new-Review comparison separately from quality/core releases.
+  The [extended historical trace](2026-10-22-likeness-engine-acceptance.md#nov-8-extended-chronology-naming-and-clean-rebase-question)
+  locates Freya's first change in Nov 3 core -> Nov 4 LEAN, before later
+  admission changes, and separates transitive surname propagation from
+  cast association. Empty seed catalogues and identical initial core IDs
+  rule out inherited generated memberships in the completed continuations,
+  not every possible historical input/measurement effect. Resolve the
+  association contract and freeze source/seed/reset evidence before an
+  independent clean-rebase acceptance; no speculative full intake.
 - [x] **P1 ai** L21 Verify actual shared recap styles/navigation, safe local
   final-destination links, count conservation and renamed/merged/split/
   emptied states; include Harlow Chase and Sophie Lloyd continuity.

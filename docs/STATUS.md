@@ -42,6 +42,20 @@ that traffic. E19 now explicitly retains the cast Review association
 question. No routing change or installation is approved by this analysis;
 preview8 is not a resolution of the concern. Installed preview3 is unchanged.
 
+**Nov 8 extended-history correction:** the
+[older receipt chronology](plans/2026-10-22-likeness-engine-acceptance.md#nov-8-extended-chronology-naming-and-clean-rebase-question)
+shows Freya was a separate Model in Nov 2/3 and first joined Angelica
+Review in Nov 4 LEAN: six members became eight and the group score crossed
+the unchanged 0.55 gate. Population, centering and reference context changed
+together; the planner/refinement implementations did not. The original
+workflow selection has stayed out of the initial core and in Review since
+preview3. All completed continuations rebuild from the original inputs and
+the same empty seed catalogue, not installed generated memberships.
+Lujan's surname-chain issue is separate from this earlier group association.
+Freeze the input/seed/reset contract and resolve association behavior before
+an independent clean-rebase acceptance; another blind full intake is not
+justified. Three focused continuation tests pass. No installed state changed.
+
 **Nov 6 review feedback:** L25 navigation/comparisons and N17/C14/E20's
 complete saved-input preview now pass. `postrun-review-preview4` selects
 direct-only surname inheritance and gated Angels >=0.45 / Sisters >=0.50:
