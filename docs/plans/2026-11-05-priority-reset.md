@@ -203,10 +203,11 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   preview still has zero eligible residual moves or explicit blocking
   dispositions after policy changes. Raw legacy `nextPassNeeded` is review/
   continuity evidence, not proof another automatic pass will help.
-- [ ] **P1 ai** E19 Trace the mixed Briar/Sammara/Adrianna case by stable IDs,
-  frozen core, per-photo versus cluster scores and protection. Explain or
-  fix the justified route/hold from saved measurements; no global threshold
-  lowering, forced identity or full intake for diagnosis.
+- [ ] **P1 you** E19 Review the traced mixed-identity outcomes, including
+  Briar/Sammara/Adrianna and the Freya/Fia/Jacinta/Draknora comparisons.
+  Confirm same person versus related person/variant where numeric evidence
+  cannot decide; no forced identity, global threshold lowering or new intake
+  merely to obtain a preferred label.
   [Full contract](2026-10-22-likeness-engine-acceptance.md#milestone-transfer-record).
   The [Nov 8 Angelica/Freya attribution](2026-10-22-likeness-engine-acceptance.md#nov-8-angelicafreya-review-attribution)
   extends this to group-driven cast Review ownership. Latest admission
@@ -238,6 +239,23 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   quality/manual/frozen-evidence guards. No new threshold or implementation
   is approved by the review; require labelled cross-pose positives alongside
   bridge negatives and retain independent complete-rebase acceptance.
+  **Later Nov 8 approval supersedes that analysis-only boundary:** the
+  [individual-association implementation](2026-10-22-likeness-engine-acceptance.md#nov-8-approved-individual-association-implementation)
+  keeps cast-like groups as provisional alternatives and reconsiders
+  automatic Review suggestions, without unlocking explicit manual decisions.
+  The legacy own-score shortcut is disabled in this new mode, not deleted
+  from historical policies. Targeted grouping/recovery/admission tests pass;
+  original-intake matching replay is in progress under a new receipt.
+  Do not close E19 or claim identity acceptance before population/cohort
+  comparisons and actual-viewer checks.
+  **Nov 9:** implementation, original-intake rebuild and actual browser
+  comparisons are complete in preview11. Automatic group locks are also
+  prevented at acquisition, not just renamed into non-cast identities.
+  The [current human handoff](../recap/2026-11-04-1130-recap.md#nov-9---individual-association-baseline-and-human-review)
+  links the exact cohorts and distinguishes candidate groups from verified
+  people. Final installed/Gallery checks pass. E19 stays open with
+  the user as owner for the remaining identity judgments; T29/T30 remain
+  the bounded performance follow-up, not permission for new intake.
 - [x] **P1 ai** L21 Verify actual shared recap styles/navigation, safe local
   final-destination links, count conservation and renamed/merged/split/
   emptied states; include Harlow Chase and Sophie Lloyd continuity.

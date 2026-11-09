@@ -20,6 +20,7 @@ class ProtectionTests(unittest.TestCase):
         self.addCleanup(self.temporary.cleanup)
         self.root = pathlib.Path(self.temporary.name).resolve()
         self.policy = load_policy()
+        self.policy["groupCastReviewEnabled"] = True
         self.person_id = "person_" + "1" * 32
         self.folder = "Prospects/A"
         self.catalog = {
@@ -74,6 +75,43 @@ class ProtectionTests(unittest.TestCase):
             self.catalog["people" if "personId" in action else "photos"][action.get("personId", action.get("photoId"))] = action["after"]
         metadata.validate_catalog(self.catalog)
         self.assertEqual(self.plan()[0], [])
+
+    def test_individual_association_keeps_unconfirmed_group_evidence_without_locks(self):
+        self.policy["groupCastReviewEnabled"] = False
+        before = copy.deepcopy(self.catalog)
+        actions, evidence = self.plan()
+        self.assertEqual(actions, [])
+        self.assertEqual(self.catalog, before)
+        self.assertEqual(sum(row.get("score") is not None for row in evidence), 5)
+        self.assertTrue(any("advisory" in row["reason"] for row in evidence))
+        self.assertTrue(all(row["decision"] == "hold" for row in evidence))
+        self.catalog["people"][self.person_id]["protected"] = True
+        actions, _ = self.plan()
+        self.assertEqual(sum("photoId" in row for row in actions), 5)
+        self.assertFalse(any("personId" in row for row in actions))
+
+    def test_automatic_identity_provenance_is_not_manual_trust(self):
+        self.policy["groupCastReviewEnabled"] = False
+        person = self.catalog["people"][self.person_id]
+        person.update(protected=True, protectionProvenance={"reason": "old machine decision"})
+        before = copy.deepcopy(person)
+        self.assertEqual(self.plan()[0], [])
+        self.assertEqual(person, before, "existing recorded decisions must not be silently unprotected")
+
+    def test_cast_core_acquisition_is_unchanged_in_individual_mode(self):
+        self.policy["groupCastReviewEnabled"] = False
+        old_folder, self.folder = self.folder, "Angels/A"
+        self.catalog["people"][self.person_id]["folder"] = self.folder
+        self.core[self.folder] = self.core.pop(old_folder)
+        self.core[self.folder]["category"] = "Angels"
+        self.space.by_key = {self.folder: self.photos}
+        for photo in self.photos:
+            path = self.root / self.folder / "gallery" / photo.name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            photo.path.rename(path)
+            photo.path, photo.key = path, self.folder
+        actions, _ = self.plan()
+        self.assertEqual(len(actions), 6)
 
     def test_protection_does_not_remove_preexisting_core_eligibility(self):
         for action in self.plan()[0]:

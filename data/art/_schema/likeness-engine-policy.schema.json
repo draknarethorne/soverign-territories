@@ -22,6 +22,11 @@
     "protection"
   ],
   "properties": {
+    "groupCastReviewEnabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Legacy whole-group cast Review routing and retention mode. False keeps unconfirmed non-cast identities provisional, avoids automatic candidate-group locks and uses individual membership/admission gates; missing retains historical behavior."
+    },
     "familyNaming": {
       "type": "object",
       "additionalProperties": false,

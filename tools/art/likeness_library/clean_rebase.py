@@ -1788,6 +1788,7 @@ def _final_membership_outcomes(photos, routed, catalog, policy, settings, root, 
             "coreMember": bool(own and photo_id in own["corePhotoIds"]),
             "automaticProtection": bool(photo_record.get("protectionProvenance")),
             "manualOptOut": photo_record.get("automaticProtectionOverride") == "disabled",
+            "automaticReviewAssociation": row.get("automaticReviewAssociation") is True,
             "rivalMargin": round(score - rivals[0]["score"], 6) if score is not None and rivals else None,
             "independentProtectionSupport": protection_by_photo.get(photo_id, {}).get("independentSupport"),
             "protectionReason": protection_by_photo.get(photo_id, {}).get("reason"),
@@ -2518,6 +2519,17 @@ def create_plan(
         acquire_protection=False,
     )
     routed, cast_admission = _admit_cast(routed, admission_audit, policy)
+    if final_refinement and not policy.get("groupCastReviewEnabled", True):
+        admission_boundary = final_refinement["passCount"]
+        routed, final_refinement = refinement.refine_membership(
+            routed, evaluate_membership, prior_evidence=final_refinement,
+        )
+        final_refinement["admissionBoundaryAfterPass"] = admission_boundary
+        print(
+            f"clean rebase: post-admission membership {final_refinement['passCount'] - admission_boundary} "
+            f"pass(es); {final_refinement['moveCount']} total move(s); "
+            f"{final_refinement['stopReason']}", flush=True,
+        )
     membership = collections.defaultdict(list)
     for row in routed:
         destination = pathlib.PurePosixPath(row["destination"])

@@ -39,7 +39,11 @@ def membership_decision(row, policy):
         return hold("protected source identity")
     if row["rejectionHistory"]:
         return hold("persistent or stale rejected-identity evidence requires review")
-    if row["bucket"] != "gallery":
+    if row["bucket"] != "gallery" and not (
+        not policy.get("groupCastReviewEnabled", True)
+        and row.get("automaticReviewAssociation") is True
+        and row["bucket"] == "review"
+    ):
         return hold("Review/unassigned membership requires explicit admission")
     if row["ownScore"] is None:
         return hold("own leave-one-out score unavailable")
@@ -81,7 +85,7 @@ def membership_decision(row, policy):
     )
 
 
-def refine_membership(rows, evaluate, *, max_passes=MAX_PASSES):
+def refine_membership(rows, evaluate, *, max_passes=MAX_PASSES, prior_evidence=None):
     """Rebuild the audit's frozen final cores between bounded photo-only passes."""
     if isinstance(max_passes, bool) or not isinstance(max_passes, int) or max_passes < 1:
         raise ValueError("final-membership pass limit must be a positive integer")
@@ -92,8 +96,22 @@ def refine_membership(rows, evaluate, *, max_passes=MAX_PASSES):
     folder_of = lambda path: pathlib.PurePosixPath(path).parent.as_posix()
     visited = {source: {folder_of(row["destination"])} for source, row in by_source.items()}
     frozen, passes = {}, []
+    offset, total_limit = 0, max_passes
+    if prior_evidence is not None:
+        passes = copy.deepcopy(prior_evidence["passes"])
+        offset = prior_evidence["passCount"]
+        total_limit += prior_evidence["maxPasses"]
+        for item in passes:
+            for move in item["moves"]:
+                if move["source"] not in visited:
+                    raise ValueError("prior membership evidence references an unknown source")
+                visited[move["source"]].update((move["from"], move["to"]))
+        frozen = {
+            row["source"]: row["reason"] for row in prior_evidence["residuals"]
+            if row["reason"].startswith("oscillation:")
+        }
     stop = "stable"
-    for pass_number in range(1, max_passes + 1):
+    for pass_number in range(offset + 1, offset + max_passes + 1):
         audit = evaluate(rows)
         if {row["source"] for row in audit["rows"]} != set(by_source) or len(audit["rows"]) != len(rows):
             raise ValueError("final-membership evaluation must account for every source exactly once")
@@ -132,6 +150,7 @@ def refine_membership(rows, evaluate, *, max_passes=MAX_PASSES):
         for move in moves:
             row = by_source[move["source"]]
             row["destination"] = proposed[move["source"]]
+            row["automaticReviewAssociation"] = pathlib.PurePosixPath(row["destination"]).parent.name == "review"
             row["reason"] += f"; final-membership pass {pass_number}: {move['reason']}"
             row.setdefault("refinement", []).append({
                 "pass": pass_number, "kind": "final-membership-move", **move,
@@ -164,7 +183,7 @@ def refine_membership(rows, evaluate, *, max_passes=MAX_PASSES):
                 "reason": reason, "decision": decision["decision"],
             })
     return rows, {
-        "schemaVersion": 1, "maxPasses": max_passes,
+        "schemaVersion": 1, "maxPasses": total_limit,
         "reference": final["reference"], "passCount": len(passes),
         "moveCount": sum(len(item["moves"]) for item in passes), "stopReason": stop,
         "passes": passes, "residuals": residuals,
@@ -269,12 +288,17 @@ def refine(result, candidates, cores, policy, *, locked_ids=(), max_passes=MAX_P
         photo_id = row.get("photoId")
         if (
             photo_id in vectors and photo_id not in locked and not row.get("preserveStaged")
-            and not row.get("reviewDestination") and photo_id not in held
+            and (
+                not row.get("reviewDestination")
+                or not policy.get("groupCastReviewEnabled", True)
+                and row.get("automaticReviewAssociation") is True
+            )
+            and photo_id not in held
         ):
             held[photo_id] = row
     visited = {photo_id: {folder} for folder, ids in members.items() for photo_id in ids}
     for photo_id in held:
-        visited.setdefault(photo_id, set()).add("Various/review")
+        visited.setdefault(photo_id, set()).add(held[photo_id].get("reviewDestination") or "Various/review")
     frozen, unresolved, passes = set(), [], []
     stop_reason = "stable"
 
@@ -305,7 +329,10 @@ def refine(result, candidates, cores, policy, *, locked_ids=(), max_passes=MAX_P
                 own_vector = _unit(np.mean(others, axis=0)) if others else None
                 own = float(vector @ own_vector) if own_vector is not None else None
                 minimum = minima.get(_category(folder))
-                if own is not None and minimum is not None and own >= minimum:
+                if (
+                    policy.get("groupCastReviewEnabled", True)
+                    and own is not None and minimum is not None and own >= minimum
+                ):
                     continue
                 rival_refs = {**{k: v for k, v in references.items() if k != folder}, **cast_vectors}
                 excluded = excluded_folders([by_id[photo_id]], cast)
@@ -365,7 +392,8 @@ def refine(result, candidates, cores, policy, *, locked_ids=(), max_passes=MAX_P
                 frozen.add(photo_id)
                 continue
             moves.append({
-                "photoId": photo_id, "kind": "review-attach", "from": "Various/review", "to": target,
+                "photoId": photo_id, "kind": "review-attach",
+                "from": held[photo_id].get("reviewDestination") or "Various/review", "to": target,
                 "ownScore": None, "rivalScore": round(best, 6), "lead": round(lead, 6),
             })
 
@@ -377,7 +405,8 @@ def refine(result, candidates, cores, policy, *, locked_ids=(), max_passes=MAX_P
                 row = held.pop(photo_id)
                 result["held"].remove(row)
                 row = {key: value for key, value in row.items() if key not in ("reviewDestination",
-                                                                              "reviewAlternatives")}
+                                                                              "reviewAlternatives",
+                                                                              "automaticReviewAssociation")}
                 row.update(destination=move["to"], destinationType="provisional")
                 assignments[photo_id] = row
                 result["assignments"].append(row)
@@ -391,7 +420,10 @@ def refine(result, candidates, cores, policy, *, locked_ids=(), max_passes=MAX_P
                     row = {key: value for key, value in row.items() if key not in ("destination",
                                                                                   "destinationType")}
                     row["reviewDestination"] = move["to"]
+                    row["automaticReviewAssociation"] = True
                     result["held"].append(row)
+                    if not policy.get("groupCastReviewEnabled", True):
+                        held[photo_id] = row
                 else:
                     row["destination"] = move["to"]
                     members[move["to"]].add(photo_id)
@@ -497,6 +529,7 @@ def refine(result, candidates, cores, policy, *, locked_ids=(), max_passes=MAX_P
                     row = {key: value for key, value in row.items()
                            if key not in ("destination", "destinationType")}
                     row["reviewDestination"] = classification["reviewDestination"]
+                    row["automaticReviewAssociation"] = bool(classification["reviewDestination"])
                     row["reason"] += f"; refinement pass {pass_number}: identity dissolved ({classification['reason']})"
                     row.setdefault("refinement", []).append({
                         "pass": pass_number, "kind": "identity-dissolved", "from": folder,

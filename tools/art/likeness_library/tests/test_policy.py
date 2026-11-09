@@ -25,6 +25,27 @@ from tools.art.likeness_library.policy import (  # noqa: E402
 class LikenessPolicyTests(unittest.TestCase):
     def setUp(self):
         self.policy = load_policy()
+        self.policy["groupCastReviewEnabled"] = True
+
+    def test_individual_association_keeps_competing_groups_without_category_gaps(self):
+        policy = load_policy()
+        self.assertFalse(policy["groupCastReviewEnabled"])
+        for count, score, expected in ((1, .9, "Potentials"), (4, .46, "Potentials"),
+                                        (5, .55, "Models"), (19, .9, "Models"), (5, .39, "Prospects")):
+            with self.subTest(count=count, score=score):
+                result = classify_category(
+                    count, score, policy, best_cast_folder="Angels/Angelica", cast_margin=.2,
+                )
+                self.assertEqual(result["category"], expected)
+                self.assertIsNone(result["reviewDestination"])
+                self.assertEqual(result["castSimilarity"], score)
+        legacy = copy.deepcopy(policy)
+        del legacy["groupCastReviewEnabled"]
+        self.assertEqual(classify_category(19, .9, legacy)["category"], "Review")
+        for value in (0, None, "false"):
+            policy["groupCastReviewEnabled"] = value
+            with self.subTest(value=value), self.assertRaisesRegex(ValueError, "groupCastReviewEnabled"):
+                validate_policy(policy)
 
     def test_versioned_policy_matches_its_schema(self):
         schema_path = ROOT / "data" / "art" / "_schema" / "likeness-engine-policy.schema.json"

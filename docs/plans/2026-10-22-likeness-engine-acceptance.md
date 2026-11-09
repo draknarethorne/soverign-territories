@@ -1400,3 +1400,124 @@ So, in this case a .60 group rating would have kept them separate - but then I d
 Also, is there something we put in place a while ago that with the newer and more recent changes might be unnecessary or actually detrimental to how things are working overall.  Include that with the previous work you are doing right now.
 ````
 <!-- markdownlint-enable MD013 -->
+
+### Nov 8 approved individual-association implementation
+
+The following approval selects the narrow producer correction, not a
+blanket threshold increase: keep cast-like candidate groups as provisional
+identities; retain cast resemblance as advisory evidence; reconsider
+automatic associations through existing individual gates; remove the
+legacy own-score shortcut only in the new mode. Historical policy receipts
+without the new control retain their semantics. Explicit manual decisions,
+quality/content binding, independent-reference and rival-margin checks
+remain authoritative. Test first, then rebuild matching from the verified
+original saved intake under a new receipt; no chaining previews or fresh
+pixel processing merely to change grouping. Publication is sandbox-only,
+after route/count/report checks. No human identity acceptance is implied.
+The execution spine's E19 remains open for human identity judgments even
+after implementation and installed-run verification pass.
+
+**Iteration evidence:** preview9 conserved all 3,290 photos and 1,041
+initial cast core IDs, changed no prepared bytes or policy thresholds, and
+preserved workflow reset inputs. Its apparent initial convergence was
+insufficient: after the single frozen Gallery-admission pass, the final
+continuity comparison found one newly qualifying Drakness Review move.
+Installation correctly refused before mutation; the installed catalogue
+remained `dd276e95f873a2747657b59dd39061ac1dc211125faa7f79a0c9bc9c20a2be5f`.
+Do not install or reinterpret that receipt as accepted. The narrow follow-up
+runs a second bounded membership phase **after** admission, carrying prior
+visited memberships and oscillation holds, then names/re-audits normally.
+It does not recursively admit new Gallery members, lower gates or bypass
+publication checks. A regression reproduces changed evidence after an
+initially stable pass and verifies continued moves and cross-stage
+oscillation prevention. The final targeted suite passes 133 tests; Pylance
+confirms all 15 `refine_membership` callers remain signature-compatible.
+Preview10 rebuilds from the original intake, not preview9, with this fix.
+
+**Preview10 verified matching result:** all 3,290 sources, content hashes,
+prepared hashes and the 1,041 initial core IDs match preview8. Workflow
+reset **inputs** match; two automatically chosen replacement workflow
+photos change as an output of the new membership. Policy changes are
+limited to the association-mode switch/version; Angels/Sisters minima,
+all-category margins, independent-reference counts and direct-only surname
+policy are unchanged. Final refinement takes five of at most eight passes,
+makes 17 moves and has zero eligible residual or post-continuity moves.
+The supported preview check passes. Preview10 was installed as an
+intermediate baseline; final acceptance is superseded by the browser
+protection correction below.
+
+| Comparison with preview8 | Result |
+| --- | --- |
+| Population | 3,290 -> 3,290; no photo deletion or fresh intake |
+| Gallery / Review | 3,091 / 199 -> 3,270 / 20 |
+| Review traffic | 179 Review -> Gallery; no Gallery -> Review |
+| Changed destination paths | 531, including 352 Gallery -> Gallery; names are not identity proof |
+| Distinct owner folders | 251 -> 301; mostly former group holds now remain candidate identities, not 50 verified new people |
+| Frozen cast Gallery admissions | 111 -> 23; 88 previously admitted photos instead retain stronger provisional alternatives |
+| Freya six | All leave Angelica Review for Models/Freya Vale; the eight-member candidate group remains intact |
+| Fia ten / Jacinta seven | Both leave Angelica Review for Models/Mira Vale; their combined 19-member hypothesis, including the old workflow photo, is **not** forcibly split |
+| Angelica | 41 Gallery / 45 Review -> 30 Gallery / 0 Review; her initial 30 core IDs remain intact |
+| Larger cross-cast effect | Draknora's 51 former additional Gallery photos stay together in the Sabine Santos hypothesis; their new own scores are 0.582-0.891, median 0.812, not 51 singleton fragments |
+| Weak/unsafe Gallery output | Zero quality-held Gallery photos and zero final Gallery own scores below 0.15 |
+
+These are routing and convergence results, **not identity truth**. A lower
+Review count largely reflects preserved non-cast candidate groups instead
+of cast ownership; it must not be presented as 179 independently verified
+identity corrections. Draknora/Sabine, Drakness/Cerys and Fia/Jacinta remain
+important human comparisons. Do not recover the old names/groups by
+deleting bridge photos or raising thresholds. The new draft removes
+whole-group ownership, not the underlying uncertainty about relatives,
+pose changes or the initial 0.25 discovery linkage.
+
+**Nov 9 browser protection correction:** real Overview/Photo review
+navigation verified Freya's eight and Mira's nineteen thumbnails and the
+intentional nine-photo Overview limit. It also exposed a remaining legacy
+interaction: automatic establishment labelled the new Mira candidate
+identity **protected**, which would recreate the lock under a different
+owner. Preview10 is therefore not the final accepted handoff.
+
+The shared protection producer now keeps numeric, independent
+leave-one-out evidence for unconfirmed Models/Prospects/Potentials but
+does not acquire identity/photo locks from that candidate group's own
+members. Explicit manual identity/photo protection, opt-outs, anchors,
+rejections and cast-core acquisition keep their existing behavior. Existing
+stored decisions are not silently unprotected: the authorized fresh
+original-input rebuild discards generated seed locks through the existing
+manual-intent filter, then applies the revised acquisition policy. Legacy
+policies retain the old acquisition behavior.
+
+The final shared library selector runs 1,020 tests successfully (one
+skipped), including manual trust versus automatic provenance, preserved
+cast protection, family-metadata apply/exact undo and final audit
+integration. Isolated mutation smoke is 19/19 and routine hygiene passes.
+After the date/version update, 33 policy/protection tests pass again.
+Preview11 is rebuilt from original intake and passes the supported preview
+check: all 3,290 destination paths are identical to preview10, as are seed
+catalogue and pixels; all candidate identity/photo automatic locks are
+absent, and every cast photo's protected/unprotected state is unchanged.
+No eligible post-continuity moves remain. Preview11 installation and
+viewer rebuild finish successfully. Browser verification confirms no
+automatic identity lock on Mira, all 8 / 19 / 54 photos available in the
+Freya/Mira/Sabine filters, zero broken thumbnails, 20/20 Review rows and
+the applied recap's expanding/new-tab links. Overview intentionally shows
+nine of Mira's nineteen, with a working full-Review link. Supported
+installed-receipt and Gallery checks both pass: applied continuation
+verified, zero renames/derivatives pending, zero actionable diagnostics.
+The 143 intentional framing exclusions retain their photos; they are not
+missing Gallery entries. Gallery sealing verifies 30,834 files in 589.56s.
+Against the formerly installed preview3, all 3,290 photos remain and
+Review falls from 230 to 20: 210 Review-to-Gallery, zero Gallery-to-Review.
+
+Coverage: stronger competing identities, relative-versus-pose ambiguity,
+legacy group ownership, retained shortcut and automatic candidate-group
+lock reacquisition are covered by implementation
+and focused regressions; the original-input rerun measures the historical
+Freya, Fia/Jacinta/workflow cohorts plus all-cast/global changes. Unresolved
+identity labels remain explicit human-review items rather than inferred
+success from a lower Review count.
+
+<!-- markdownlint-disable MD013 -->
+````text
+So, restating - I the automatic admissinon of a group into review blocked all future improvements we've made to help organically adjust the system and ensure that photos end up with the person they are most likely associated to.   Ultimately, that's what I want and the group casting was a way to catch things I saw were falling out that I knew were a person well ahead of all many other newer features.  So, it should not "lock" a photo if there is a mathmatical higher association to someone else that a group "might" be similar to.  Ultimately, I don't want to many things in review because they might look like someone if there is proof they look like someone else and I don't want to cluster the Hadley family if they don't really belong together - even though they are similar.  But I also don't want dozens of Hadleys when it's just a side photo or facial expression or something that brings it to a separate group.  I understand it's tricky, but seems like you have a core understanding of my requirements.  If this doesn't change your opinion, help me figure out what to do next and implement it.  I'll be back in the morning to see how it worked and you can run a rull re-base if that is necessary based on the rule changes or pickup after the intake or where ever makes sense.
+````
+<!-- markdownlint-enable MD013 -->

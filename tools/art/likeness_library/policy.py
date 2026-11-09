@@ -40,11 +40,13 @@ def validate_policy(policy):
         "categoryPolicies",
         "protection",
     }
-    optional = {"smallGroupMaximumUsablePhotos", "rebaseProtection", "familyNaming"}
+    optional = {"smallGroupMaximumUsablePhotos", "rebaseProtection", "familyNaming", "groupCastReviewEnabled"}
     if not required <= set(policy) or set(policy) - required - optional:
         missing = sorted(required - set(policy))
         extra = sorted(set(policy) - required - optional)
         raise ValueError(f"likeness policy keys mismatch; missing={missing}, extra={extra}")
+    if "groupCastReviewEnabled" in policy and not isinstance(policy["groupCastReviewEnabled"], bool):
+        raise ValueError("groupCastReviewEnabled must be a boolean")
     small_group_maximum = policy.get("smallGroupMaximumUsablePhotos", 4)
     if (
         isinstance(small_group_maximum, bool) or not isinstance(small_group_maximum, int)
@@ -488,7 +490,8 @@ def classify_category(
             "reviewDestination": None,
             "reviewAlternatives": [],
         }
-    if cast_similarity is not None and cast_similarity >= config["highCastSimilarityMinimum"]:
+    group_cast_review = config.get("groupCastReviewEnabled", True)
+    if group_cast_review and cast_similarity is not None and cast_similarity >= config["highCastSimilarityMinimum"]:
         reason = (
             "high cast similarity may indicate a same-person match; do not auto-classify"
         )
@@ -500,7 +503,8 @@ def classify_category(
             reason = "high similarity to multiple cast identities; hold for ambiguous cast review"
         return review_result(reason)
     if (
-        usable_photo_count <= config.get("smallGroupMaximumUsablePhotos", 4)
+        group_cast_review
+        and usable_photo_count <= config.get("smallGroupMaximumUsablePhotos", 4)
         and cast_similarity is not None
         and cast_similarity >= config["smallGroupCastReviewMinimum"]
     ):
@@ -531,6 +535,7 @@ def classify_category(
             continue
         if (
             rule.get("maximumCastSimilarityExclusive") is not None
+            and (group_cast_review or rule["category"] != "Models")
             and cast_similarity is not None
             and cast_similarity >= rule["maximumCastSimilarityExclusive"]
         ):

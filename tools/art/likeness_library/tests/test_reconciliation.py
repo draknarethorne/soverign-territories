@@ -40,6 +40,36 @@ def stable_name(seed, taken):
 
 
 class ReconciliationTests(unittest.TestCase):
+    def test_high_group_cast_resemblance_does_not_consume_a_competing_identity(self):
+        from tools.art.likeness_library.policy import load_policy
+
+        rows = []
+        for index in range(6):
+            vector = np.zeros(8)
+            vector[0], vector[1] = .395, .4
+            vector[index + 2] = np.sqrt(1 - .395**2 - .4**2)
+            rows.append(candidate(f"photo:image_{910000 + index}", vector))
+        centroid = np.mean([row["vector"] for row in rows], axis=0)
+        self.assertGreater(centroid[0] / np.linalg.norm(centroid), .55)
+        self.assertTrue(all(row["vector"][0] < .4 for row in rows))
+        cores = {"Angels/Angelica": {
+            "vector": np.eye(8)[0], "side": "Prospects", "category": "Angels",
+        }}
+        policy = load_policy()
+        result = plan_reconciliation(rows, cores, policy=policy, name_factory=stable_name)
+        self.assertEqual(result["assignedCount"], 6)
+        self.assertEqual(result["heldCount"], 0)
+        self.assertTrue(result["clusters"][0]["destination"].startswith("Models/"))
+        self.assertEqual(result["clusters"][0]["photoIds"], sorted(row["photoId"] for row in rows))
+        reverse = plan_reconciliation(list(reversed(rows)), cores, policy=policy, name_factory=stable_name)
+        self.assertEqual(result["assignments"], reverse["assignments"])
+        self.assertEqual(result["clusters"], reverse["clusters"])
+        policy["groupCastReviewEnabled"] = True
+        legacy = plan_reconciliation(rows, cores, policy=policy, name_factory=stable_name)
+        self.assertEqual(legacy["assignedCount"], 0)
+        self.assertTrue(all(row["reviewDestination"] == "Angels/Angelica/review"
+                            and row["automaticReviewAssociation"] for row in legacy["held"]))
+
     def test_individually_yellow_cast_matches_can_build_a_model_cluster(self):
         from tools.art.likeness_library.policy import load_policy
 
@@ -158,7 +188,7 @@ class ReconciliationTests(unittest.TestCase):
         self.assertEqual(result["held"][0]["reviewDestination"], "Prospects/Protected/review")
         self.assertIn("protected Gallery", result["held"][0]["reason"])
 
-    def test_small_incoming_cast_like_cluster_is_held_for_the_best_cast_review(self):
+    def test_small_incoming_cast_like_cluster_remains_provisional_under_individual_policy(self):
         from tools.art.likeness_library.policy import load_policy
 
         vectors = []
@@ -194,7 +224,12 @@ class ReconciliationTests(unittest.TestCase):
             name_factory=stable_name,
         )
 
-        self.assertEqual(result["assignments"], [])
+        self.assertEqual(result["assignedCount"], 4)
+        self.assertEqual(result["heldCount"], 0)
+        self.assertTrue(result["clusters"][0]["destination"].startswith("Potentials/"))
+        legacy_policy = load_policy()
+        legacy_policy["groupCastReviewEnabled"] = True
+        result = plan_reconciliation(rows, cores, policy=legacy_policy, name_factory=stable_name)
         self.assertEqual(result["heldCount"], 4)
         self.assertEqual(
             {row["reviewDestination"] for row in result["held"]},

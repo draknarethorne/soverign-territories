@@ -185,6 +185,7 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
                 rows, cast_ranked, classification["reason"],
                 reviewDestination=classification["reviewDestination"],
                 reviewAlternatives=classification["reviewAlternatives"],
+                automaticReviewAssociation=bool(classification["reviewDestination"]),
             ))
             continue
         group_id = _group_id(rows)

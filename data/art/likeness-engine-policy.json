@@ -1,7 +1,8 @@
 {
   "schemaVersion": 1,
-  "version": "draft-2026-11-04.2",
+  "version": "draft-2026-11-09-individual-association",
   "status": "draft",
+  "groupCastReviewEnabled": false,
   "runtimeSettings": {
     "mixed": ["Artists/*", "Various", "Prospects/Various", "Potentials/Various"],
     "pool": ["Various", "Prospects/Various", "Potentials/Various"],

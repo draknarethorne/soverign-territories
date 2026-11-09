@@ -7,11 +7,16 @@
 
 ## Open work, by priority
 
-### For the assistant, when you say go (3)
+### Your queue: needs your hands or a decision (1)
 
 **P1 (blocks other work, or cheap and valuable)**
 
-- [ ] E19 Trace the mixed Briar/Sammara/Adrianna case by stable IDs, frozen core, per-photo versus cluster scores and protection. Explain or fix the justified route/hold from saved measurements; no global threshold lowering, forced ... ([priority reset](plans/2026-11-05-priority-reset.md))
+- [ ] E19 Review the traced mixed-identity outcomes, including Briar/Sammara/Adrianna and the Freya/Fia/Jacinta/Draknora comparisons. Confirm same person versus related person/variant where numeric evidence cannot decide; no forced ... ([priority reset](plans/2026-11-05-priority-reset.md))
+
+### For the assistant, when you say go (2)
+
+**P1 (blocks other work, or cheap and valuable)**
+
 - [ ] T29 Freeze same-machine representative generation/no-op, warm/cache phase baselines before runtime/path changes, with input/config/ code/resource IDs, timings, read/byte counts and output contracts. [Full benchmark ... ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] T30 Remove established repeated work across phase and standalone/continuous boundaries; publish per-hotspot ownership, cost, cache dependencies/invalidation, tests and fixed/deferred/no-gain status. Coordinator decisions, ... ([priority reset](plans/2026-11-05-priority-reset.md))
 

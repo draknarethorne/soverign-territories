@@ -157,9 +157,14 @@ class RefinementTests(unittest.TestCase):
         self.policy["rebaseProtection"] = {
             "enabled": True, "minimumOwnCoreSimilarities": {"Prospects": .60, "Potentials": None},
         }
+        self.policy["groupCastReviewEnabled"] = True
         refined, evidence = self.run_refine()
         self.assertEqual(self.destination_of(refined, "photo:x"), "Prospects/Alpha Ann")
         self.assertEqual(evidence["moveCount"], 0)
+        self.policy["groupCastReviewEnabled"] = False
+        refined, evidence = self.run_refine()
+        self.assertEqual(self.destination_of(refined, "photo:x"), "Potentials/Beta Bee")
+        self.assertEqual(evidence["moveCount"], 1)
 
     def test_cast_lookalike_moves_to_cast_review_not_gallery(self):
         self.cluster("Potentials/Alpha Ann", [
@@ -191,6 +196,22 @@ class RefinementTests(unittest.TestCase):
         row = next(row for row in refined["assignments"] if row["photoId"] == "photo:m")
         self.assertEqual(row["refinement"][0]["to"], "Potentials/Bianca Bell")
 
+    def test_automatic_cast_review_keeps_recovery_path_but_manual_review_does_not(self):
+        self.two_identities_with_misfit()
+        for photo_id in ("photo:auto", "photo:manual"):
+            self.photo(photo_id, near(A, 21))
+            self.held.append({
+                "photoId": photo_id, "sourceFolder": "Various", "sourceBucket": "Pool",
+                "reason": "cast resemblance", "reviewDestination": "Angels/Xena/review",
+                "automaticReviewAssociation": photo_id == "photo:auto",
+            })
+        refined, evidence = self.run_refine()
+        self.assertEqual(self.destination_of(refined, "photo:auto"), "Potentials/Alpha Ann")
+        self.assertEqual(self.destination_of(refined, "photo:manual"), "Angels/Xena/review")
+        moves = [move for item in evidence["passes"] for move in item["moves"]
+                 if move["photoId"] == "photo:auto"]
+        self.assertEqual(moves[0]["from"], "Angels/Xena/review")
+
 
 class FinalMembershipRefinementTests(unittest.TestCase):
     def setUp(self):
@@ -211,6 +232,24 @@ class FinalMembershipRefinementTests(unittest.TestCase):
         decision = refinement.membership_decision(self.comparison, self.policy)
         self.assertEqual(decision["decision"], "move")
         self.assertEqual(decision["destination"], "Models/Beta Bee/gallery")
+
+    def test_only_automatic_review_association_can_be_reconsidered(self):
+        row = {**self.comparison, "bucket": "review", "automaticReviewAssociation": True}
+        decision = refinement.membership_decision(row, self.policy)
+        self.assertEqual(decision["destination"], "Models/Beta Bee/gallery")
+        for overrides in (
+            {"automaticReviewAssociation": False}, {"protected": True}, {"anchor": True},
+            {"workflowSelected": True}, {"rejectionHistory": True}, {"qualityEligible": False},
+            {"metadataStale": True}, {"identityProtected": True},
+            {"refinementTarget": {**row["refinementTarget"], "independentSupport": 1}},
+        ):
+            with self.subTest(overrides=overrides):
+                self.assertEqual(refinement.membership_decision(
+                    {**row, **overrides}, self.policy,
+                )["decision"], "hold")
+        legacy = copy.deepcopy(self.policy)
+        legacy.pop("groupCastReviewEnabled")
+        self.assertEqual(refinement.membership_decision(row, legacy)["decision"], "hold")
 
     def test_locks_quality_staleness_and_independent_support_hold(self):
         for field in ("protected", "anchor", "workflowSelected", "identityProtected",
@@ -314,6 +353,36 @@ class FinalMembershipRefinementTests(unittest.TestCase):
         _, stopped = refinement.refine_membership(self.rows(), alternating)
         self.assertEqual(stopped["moveCount"], 1)
         self.assertIn("oscillation", stopped["residuals"][0]["reason"])
+
+    def test_post_admission_refinement_rechecks_changed_cores_and_preserves_history(self):
+        def before_admission(rows):
+            audit = self.evaluator(rows)
+            audit["rows"][0].update(higherRival=False)
+            audit["rows"][0]["refinementDecision"].update(decision="hold", reason="no higher rival")
+            return audit
+
+        rows, first = refinement.refine_membership(self.rows(), before_admission)
+        self.assertEqual(first["moveCount"], 0)
+        rows, after = refinement.refine_membership(rows, self.evaluator, prior_evidence=first)
+        self.assertEqual(rows[0]["destination"], "Models/Beta Bee/gallery/photo.jpg")
+        self.assertEqual(after["moveCount"], 1)
+        self.assertEqual(after["passCount"], 3)
+        self.assertEqual(after["maxPasses"], 8)
+        self.assertEqual(after["residuals"], [])
+        self.assertEqual(rows[0]["refinement"][-1]["pass"], 2)
+
+        def reverse_after_more_evidence(rows):
+            audit = self.evaluator(rows)
+            audit["rows"][0].update(higherRival=True)
+            audit["rows"][0]["refinementDecision"].update(
+                decision="move", destination="Models/Alpha Ann/gallery",
+            )
+            return audit
+
+        rows, stopped = refinement.refine_membership(rows, reverse_after_more_evidence, prior_evidence=after)
+        self.assertEqual(rows[0]["destination"], "Models/Beta Bee/gallery/photo.jpg")
+        self.assertEqual(stopped["moveCount"], 1)
+        self.assertIn("oscillation:", stopped["residuals"][0]["reason"])
 
     def test_invalid_pass_limit_and_incomplete_evaluation_fail(self):
         for limit in (0, -1, True):

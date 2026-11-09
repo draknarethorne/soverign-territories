@@ -1,10 +1,23 @@
 # Project Status
 
-**Updated:** 2026-11-08 · This is the one working document: where the project is, what has
+**Updated:** 2026-11-09 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
 ## Current checkpoint
+
+**Nov 9:** the [individual-association correction](plans/2026-10-22-likeness-engine-acceptance.md#nov-8-approved-individual-association-implementation)
+is implemented and installed in sandbox preview11 from original verified
+intake. All 3,290 photos remain: 3,270 Gallery / 20 Review, versus the
+formerly installed 3,060 / 230. Group resemblance no longer owns a whole
+cast Review group or automatically locks an unconfirmed non-cast identity.
+Existing manual/workflow/cast safeguards remain. Final matching has zero
+eligible post-continuity moves; real Overview/Review/recap checks pass,
+including all Freya/Mira/Sabine thumbnails and Mira's unprotected identity.
+Supported installed-receipt/Gallery CLI checks also pass. The
+[human review handoff](recap/2026-11-04-1130-recap.md#nov-9---individual-association-baseline-and-human-review)
+keeps unresolved identities explicit. E19 is now user-owned; T29/T30 remain
+the bounded performance follow-up. No fresh intake or Production publication.
 
 The [execution spine](plans/2026-11-05-priority-reset.md#execution-spine)
 now owns the ordered LEAN -> trusted cast -> selections -> source fidelity
@@ -16,8 +29,8 @@ that agreement; no whole plan is falsely completed or archived.
 
 Documentation/working-agreement rollout and the requested Copilot
 efficiency assessment are pushed through `035221410`.
-At 18:40 the continuation install, installed-run check and corrected Gallery
-check all pass; actual viewers and installed family/name histories are
+At the earlier Nov 5 18:40 checkpoint, the continuation install,
+installed-run check and corrected Gallery check all pass; actual viewers and installed family/name histories are
 verified. A tested empty-retired-folder reader fix resolves the first
 Gallery failure without reset/intake/reinstall or receipt edits. Exact
 results are in the [spine closeout](plans/2026-11-05-priority-reset.md#nov-5-1840---final-continuation-and-viewer-acceptance).
@@ -31,6 +44,17 @@ protective; the later local path is selected, not moved.
 
 Earlier state/owner/monitoring wording below is dated evidence, superseded
 where noted by the current checkpoint and spine transfers.
+
+**Nov 8 individual-association approval:** the user authorizes the
+[narrow implementation and sandbox replay](plans/2026-10-22-likeness-engine-acceptance.md#nov-8-approved-individual-association-implementation),
+superseding the preceding analysis-only boundary. Cast resemblance no
+longer consumes a whole provisional identity into cast Review under the
+new draft policy. Automatic Review suggestions may be reconsidered; explicit
+manual intent and existing quality/support/margin gates remain intact.
+The shared library regression selector passes 1,015 tests, the final
+focused suite passes 78, and isolated mutation smoke passes 19/19.
+A new original-intake matching replay is underway; no new intake,
+Production publication or human identity acceptance.
 
 **Nov 8 cast Review investigation:** the
 [Angelica/Freya stable-ID trace](plans/2026-10-22-likeness-engine-acceptance.md#nov-8-angelicafreya-review-attribution)

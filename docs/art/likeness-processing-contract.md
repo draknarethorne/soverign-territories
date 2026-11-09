@@ -9,6 +9,29 @@ additional shipped CLI contracts. Production remains unapproved.
 
 ## Latest precedence and ownership
 
+- Nov 8 approves individual association rather than whole-group cast Review
+  ownership. Candidate groups remain provisional non-cast identities even
+  when their normalized centroid resembles a cast; that resemblance remains
+  advisory evidence. Eligible individual photos can join through the frozen
+  all-category admission gates or move toward a sufficiently stronger rival.
+  An automatic Review suggestion is not a manual lock. Reconsideration must
+  retain quality, content binding, independent support, rival margins,
+  explicit manual protection/anchors/rejections and bounded oscillation
+  guards. After the single frozen Gallery-admission pass changes accepted
+  evidence, run another bounded membership refinement before naming,
+  retaining earlier transition history so admission cannot reset an
+  oscillation guard. Do not recursively bootstrap further Gallery admission
+  from that same operation. The final continuity/publication guard stays
+  authoritative. Do not raise global thresholds or manufacture identity labels to
+  recover a desired historical grouping. Preserve competing provisional
+  identities without acquiring automatic identity/photo locks from their
+  own candidate members. Their leave-one-out scores and reference evidence
+  remain visible, but do not certify a manually unconfirmed non-cast
+  identity. Explicit manual identity/photo protection and cast-core
+  acquisition retain their existing gates. Coherent pose variations may
+  stay together, while uncertain
+  related-person groups require human acceptance. The sandbox may rebuild
+  from verified saved intake; Production publication remains unapproved.
 - Nov 3 approves core-only rebase protection with automatically recorded
   per-photo evidence. The [cast decision table](../plans/2026-10-23-cast-seeded-library-rebase.md#nov-3-cast-feedback-after-the-fresh-sandbox-rebase)
   owns category trial minima; engine E13 owns support/quality/manual override

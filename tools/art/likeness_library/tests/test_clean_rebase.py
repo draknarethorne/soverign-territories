@@ -222,12 +222,22 @@ class CleanRebaseTests(unittest.TestCase):
         policy = clean_rebase.core_protection_policy(load_policy())
         api = SimpleNamespace(cw=SimpleNamespace(photo_key=lambda name: pathlib.Path(name).stem))
         settings = {"minFace": 60, "multiFace": .3}
+        advisory = clean_rebase._final_membership_outcomes(
+            photos, routed, catalog, policy, settings, self.base, set(), api, self.source, paths,
+        )
+        self.assertEqual(advisory["automaticPhotoProtectionCount"], 0)
+        self.assertEqual(advisory["automaticIdentityProtectionCount"], 0)
+        self.assertEqual(catalog, original_catalog)
+        self.assertTrue(all(not row["protected"] and row["coreMember"] for row in advisory["rows"]))
+        policy["groupCastReviewEnabled"] = True
         outcome = clean_rebase._final_membership_outcomes(
             photos, routed, catalog, policy, settings, self.base, set(), api, self.source, paths,
         )
         self.assertEqual(outcome["automaticPhotoProtectionCount"], 5)
         self.assertEqual(outcome["automaticIdentityProtectionCount"], 1)
         self.assertEqual(outcome["higherRivalCount"], 0)
+        self.assertEqual([row["ownScore"] for row in advisory["rows"]],
+                         [row["ownScore"] for row in outcome["rows"]])
         json.dumps(outcome, allow_nan=False)
         self.assertTrue(all(row["protected"] and not row["anchor"] for row in outcome["rows"]))
         metadata.validate_catalog(catalog)

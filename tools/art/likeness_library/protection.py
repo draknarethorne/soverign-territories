@@ -174,6 +174,19 @@ def plan_protection(space, cores, catalog, policy, *, root, moving_photo_ids=(),
                 qualified.append((row, diagnostic))
         established_support = len(_independent([row for row, _ in qualified], policy))
         established = established_support >= settings["minimumEstablishedPhotos"]
+        if (
+            not policy.get("groupCastReviewEnabled", True)
+            and cores[folder]["category"] in ("Models", "Prospects", "Potentials")
+            and not (person.get("protected") and not person.get("protectionProvenance"))
+        ):
+            reason = "provisional identity; automatic core evidence is advisory, not a membership lock"
+            for _, diagnostic in qualified:
+                diagnostic.update(decision="hold", reason=reason)
+            evidence.append({
+                "personId": person_id, "decision": "hold", "independentSupport": established_support,
+                "reason": reason,
+            })
+            continue
         provenance = {
             "recipeVersion": settings["recipeVersion"], "policyVersion": policy["version"],
             "model": MODEL, "coreVersion": core_version,

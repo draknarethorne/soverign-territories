@@ -163,23 +163,26 @@ class FamilyProposalTests(unittest.TestCase):
             person["protected"] = False
         self.policy["status"] = "approved"
         before = copy.deepcopy(self.catalog)
-        locks, _ = protection.plan_protection(self.space, self.cores, self.catalog, self.policy, root=self.root)
-        combined, diagnostics = identity_families.augment_actions(
-            locks, self.space, self.cores, self.catalog, self.policy, self.root,
-        )
-        self.assertEqual(len([row for row in combined if "personId" in row]), 2, diagnostics)
-        self.assertTrue(all("family" in row["after"] for row in combined if "personId" in row))
-        local = self.root / ".likeness-library.json"
-        metadata.save_catalog(self.catalog, local)
-        journal = maintenance.apply_moves(
-            self.root, [], self.policy, {}, metadata_actions=combined, backup_fn=lambda *_: "verified",
-        )
-        applied = metadata.load_catalog(local)
-        self.assertTrue(all(person["protected"] for person in applied["people"].values()))
-        self.assertTrue(all(photo["protected"] for photo in applied["photos"].values()))
-        self.assertEqual(len({person["family"]["id"] for person in applied["people"].values()}), 1)
-        maintenance.undo_moves(self.root, journal, {}, apply=True, backup_fn=lambda *_: "verified")
-        self.assertEqual(metadata.load_catalog(local), before)
+        for legacy in (True, False):
+            with self.subTest(groupCastReviewEnabled=legacy):
+                self.policy["groupCastReviewEnabled"] = legacy
+                locks, _ = protection.plan_protection(self.space, self.cores, self.catalog, self.policy, root=self.root)
+                combined, diagnostics = identity_families.augment_actions(
+                    locks, self.space, self.cores, self.catalog, self.policy, self.root,
+                )
+                self.assertEqual(len([row for row in combined if "personId" in row]), 2, diagnostics)
+                self.assertTrue(all("family" in row["after"] for row in combined if "personId" in row))
+                local = self.root / ".likeness-library.json"
+                metadata.save_catalog(self.catalog, local)
+                journal = maintenance.apply_moves(
+                    self.root, [], self.policy, {}, metadata_actions=combined, backup_fn=lambda *_: "verified",
+                )
+                applied = metadata.load_catalog(local)
+                self.assertTrue(all(person["protected"] == legacy for person in applied["people"].values()))
+                self.assertTrue(all(photo["protected"] == legacy for photo in applied["photos"].values()))
+                self.assertEqual(len({person["family"]["id"] for person in applied["people"].values()}), 1)
+                maintenance.undo_moves(self.root, journal, {}, apply=True, backup_fn=lambda *_: "verified")
+                self.assertEqual(metadata.load_catalog(local), before)
 
     def test_family_metadata_rechecks_history_after_backup(self):
         self.policy["status"] = "approved"
