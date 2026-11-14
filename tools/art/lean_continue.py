@@ -55,7 +55,7 @@ def inspect(working, source_name, target_name):
     return source, target, plan
 
 
-def seed_catalog(source_plan, current, seed, installed=None):
+def seed_catalog(source_plan, current, seed, installed=None, *, verified_quality_action_ids=()):
     """Keep original identity evidence; carry only explicit content-bound decisions."""
     result = copy.deepcopy(seed)
     if installed is not None:
@@ -67,6 +67,7 @@ def seed_catalog(source_plan, current, seed, installed=None):
         unsupported = [
             row for row in current["actions"]
             if row["id"] not in known_actions and row["type"] not in supported
+            and row["id"] not in verified_quality_action_ids
         ]
         if unsupported:
             raise ValueError("intervening placement/retirement/rename decisions require explicit migration before reuse")
@@ -144,8 +145,57 @@ def _layout(working, source):
     return clean_rebase._verify_source_overlay(layout, source) if (source / "source-overlay").exists() else layout
 
 
+def verified_undone_quality(working, current, directory, source_plan=None):
+    """Verify one explicit completed recovery; never whitelist arbitrary placement actions."""
+    from tools.art.likeness_library import quality_disposition
+
+    run = pathlib.Path(directory).resolve()
+    root = pathlib.Path(working).resolve()
+    if not run.is_relative_to(root):
+        raise ValueError("undone quality run must belong to this Working root")
+    receipt = load(run / "quality-disposition.json")
+    if receipt["status"] != "undone":
+        raise ValueError("quality disposition must be completely undone before continuation")
+    plan = load(run / "run.json")
+    if source_plan is not None:
+        tuples = lambda data: sorted((row["photoId"], row["sha256"],
+                                      row.get("preparedSHA256", row["sha256"]))
+                                     for row in data["photos"])
+        if tuples(plan) != tuples(source_plan):
+            raise ValueError("undone quality recovery belongs to different prepared inputs")
+    installed = metadata.load_catalog(run / "catalog.json")
+    if metadata.content_sha256(run / "catalog.json") != plan["catalogSHA256"]:
+        raise ValueError("quality source installed catalogue changed")
+    restored = copy.deepcopy(installed)
+    original_ids = {move["actionId"] for move in receipt["moves"]}
+    undo_positions = [index for index, row in enumerate(current["actions"])
+                      if row.get("undoes") in original_ids]
+    if not undo_positions:
+        raise ValueError("quality undo history unavailable")
+    restored["actions"] = copy.deepcopy(current["actions"][:max(undo_positions) + 1])
+    quality_disposition._verify(root, run, plan, receipt, likeness.cw.load_cfg(), catalog_override=restored)
+    allowed = [row for row in current["actions"]
+               if row.get("batchId") == receipt["batchId"] or row.get("undoes") in original_ids]
+    junk = [row for row in allowed if row.get("batchId") == receipt["batchId"]]
+    undos = [row for row in allowed if row.get("undoes") in original_ids]
+    if (any(row["type"] != "photo-junked" for row in junk)
+            or any(row["type"] != "action-undone" for row in undos)
+            or {row["undoes"] for row in undos} != {row["id"] for row in junk}):
+        raise ValueError("quality recovery action/undo population differs")
+    return {row["id"] for row in allowed}, {
+        "run": str(run), "receiptSHA256": metadata.content_sha256(run / "quality-disposition.json"),
+        "runSHA256": receipt["runSHA256"], "currentCatalogSHA256": receipt["currentCatalogSHA256"],
+        "actionIds": sorted(row["id"] for row in allowed),
+        "conservation": receipt["conservation"],
+    }
+
+
 def command(args):
     regroup = args.regroup
+    dominant_provisional = bool(getattr(args, "dominant_provisional", False))
+    undone_quality_run = getattr(args, "undone_quality_run", None)
+    if dominant_provisional and not args.directed:
+        raise ValueError("dominant provisional assignment requires explicit directed mode")
     if args.directed and not regroup:
         raise ValueError("directed mode requires regrouping")
     if args.directed and not args.directed_recipe:
@@ -165,6 +215,10 @@ def command(args):
         "regroup": regroup, "directedRecipe": recipe,
         "reviewSource": str(review_source) if review_source else None,
     }
+    if dominant_provisional:
+        grouping["dominantProvisional"] = True
+    if undone_quality_run:
+        grouping["undoneQualityRun"] = str(pathlib.Path(undone_quality_run).resolve())
     working = pathlib.Path(args.root)
     source, target, original = inspect(working, args.source_run, args.run)
     if args.dry_run or not any((args.apply, args.check, args.install)):
@@ -173,6 +227,9 @@ def command(args):
         print("No reset, intake, backup or rollback. Recovery after failed installation is a fresh sandbox reset.")
         print("--apply creates matching preview only; --install publishes it; --check verifies without writes.")
         print(f"Grouping: {'directed ' + recipe if recipe else 'historical regroup' if regroup else 'historical default'}")
+        print(f"Dominant-face provisional assignment opt-in: {dominant_provisional}; no reference authority.")
+        if undone_quality_run:
+            print(f"Undone quality recovery to verify before matching: {grouping['undoneQualityRun']}")
         print(f"Original intake count: {original['preparation']['inputCount']}; no matching was started.")
         return {"status": "inventory"}
     layout = _layout(working, source)
@@ -192,6 +249,16 @@ def command(args):
         for name, digest in receipt["sourceFiles"].items():
             if metadata.content_sha256(source / name) != digest:
                 raise ValueError(f"saved continuation source changed: {name}")
+        recovery = receipt.get("undoneQualityVerification")
+        if recovery and (
+                metadata.content_sha256(pathlib.Path(recovery["run"]) / "run.json") != recovery["runSHA256"]
+                or metadata.content_sha256(pathlib.Path(recovery["run"]) / "quality-disposition.json")
+                != recovery["receiptSHA256"]):
+            raise ValueError("verified undone quality recovery changed since continuation preview")
+        if recovery:
+            from tools.art.likeness_library import quality_disposition
+            if metadata.content_sha256(pathlib.Path(quality_disposition.__file__)) != recovery["verifierSHA256"]:
+                raise ValueError("quality recovery verifier changed since continuation preview")
         plan = load(target / "run.json") if (target / "run.json").is_file() else None
         if plan is None:
             raise ValueError("incomplete continuation preview; choose a new run (no intake is repeated)")
@@ -243,7 +310,13 @@ def command(args):
         raise ValueError("exact original catalogue is unavailable; supply a fresh source rebase instead")
     if metadata.content_sha256(source / "catalog.json") != original["catalogSHA256"]:
         raise ValueError("original matched catalogue changed; cannot isolate intervening manual decisions")
-    seed = seed_catalog(original, current, metadata.load_catalog(seed_path), metadata.load_catalog(source / "catalog.json"))
+    verified_ids, quality_binding = verified_undone_quality(
+        working, current, undone_quality_run, original,
+    ) if undone_quality_run else (set(), None)
+    seed = seed_catalog(
+        original, current, metadata.load_catalog(seed_path), metadata.load_catalog(source / "catalog.json"),
+        verified_quality_action_ids=verified_ids,
+    )
     policy = clean_rebase.core_protection_policy(load_policy(args.policy))
     print("LEAN continuation: verifying saved preparation; cached measurements only.", flush=True)
     preparation = clean_preparation.verify(layout, source)
@@ -255,10 +328,14 @@ def command(args):
     receipt = {
         "schemaVersion": 1, "sourceRun": str(source), "recoveryMode": "disposable",
         "grouping": grouping,
+        "undoneQualityVerification": quality_binding,
         "sourceFiles": {name: metadata.content_sha256(source / name) for name in (
             "run.json", "intake.json", "likeness-cache.json",
         )},
     }
+    if quality_binding:
+        from tools.art.likeness_library import quality_disposition
+        quality_binding["verifierSHA256"] = metadata.content_sha256(pathlib.Path(quality_disposition.__file__))
     clean_rebase._write_json(target / "continuation.json", receipt)
     clean_rebase._write_json(target / "intake.json", {
         "schemaVersion": 1, "reusedFrom": str(source), "recoveryMode": "disposable",
@@ -274,6 +351,7 @@ def command(args):
         matching_inputs={row["source"]: row["sha256"] for row in original["photos"]},
         workflow_reset={"mode": "all"},
         regroup=regroup, review_source=review_source, directed_recipe=recipe,
+        dominant_provisional=dominant_provisional,
     )
     plan.update(
         recoveryMode="disposable", reusedPreparationFrom=str(source), rollbackCreated=False,
@@ -296,6 +374,10 @@ def main(argv=None):
     parser.add_argument("--directed", action="store_true")
     parser.add_argument("--directed-recipe")
     parser.add_argument("--review-source")
+    parser.add_argument("--dominant-provisional", action="store_true",
+                        help="opt in to existing dominant-face guard for provisional intake only, never references")
+    parser.add_argument("--undone-quality-run",
+                        help="explicit applied run with exactly verified undone quality disposition")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--dry-run", action="store_true")
     mode.add_argument("--apply", action="store_true", help="create matching preview only, without intake or install")

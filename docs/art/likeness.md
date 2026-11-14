@@ -266,6 +266,32 @@ explicit selection instead of silently showing unrelated photos. Empty
 catalogue identity warnings remain visible; retained history is not deleted
 to silence missing-folder diagnostics.
 
+The bounded dominant-face adaptation is opt-in on the existing continuation
+launcher: `lean-continue.cmd --regroup --directed --directed-recipe NAME
+--dominant-provisional ...`. It uses the unchanged configured strict
+`secondaryFaceRatio < multiFace` guard and minimum usable face pixels, with an
+explicitly available secondary ratio and the saved largest-human-face embedding.
+Only safe Various intake may use it, only for coherent provisional Potentials.
+It does not enable parent admission, cast/correction matching, references or
+reference growth. Missing ratios, substantial second faces, unavailable vectors,
+quality holds, negatives and placement locks retain their independent safeguards.
+These are dominant-face candidates, not assertions that other detections are ads
+or UI. `assignmentPolicy` binds the opt-in, floors, measurement basis and exact
+assigned IDs; content-bound membership evidence retains the face-count/ratio
+provenance across export/reload. Named provisional Gallery members remain
+reference-ineligible and cannot attract later arrivals.
+
+After guarded quality undo, original prepared-source continuation may additionally
+select `--undone-quality-run ABSOLUTE_APPLIED_RUN`. Before matching it verifies the
+exact undone disposition once, including run/input tuples, restored catalogue
+hash, quarantine/undo action populations, retained bytes, conservation and recovery
+backups. Only those verified Junk/undo record IDs bypass the existing intervening
+placement-action refusal; unrelated placements still refuse. Later supported
+authored protections/rejections continue through normal content-bound migration,
+not the exemption. The original catalogue bytes are never restored manually or
+discarded. New continuation receipts bind the recovery receipt/run hashes and
+reject drift or changed grouping/opt-in options on resume/check/install.
+
 Maintained directed receipts keep scalar decisions and compact stage rows
 readable. Complete per-photo witness/rival diagnostics are stored once in
 `groupLifecycle.decisionEvidence` as deterministic gzip/base64 JSON, bound

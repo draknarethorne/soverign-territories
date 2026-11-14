@@ -74,6 +74,7 @@ echo                                    --reuse-run ORIGINAL --recovery-mode dis
 echo    lean-continue.cmd --root "SANDBOX\Working" --source-run ORIGINAL --run NEW [--dry-run ^| --apply ^| --check ^| --install]
 echo                                    --dry-run is inventory only; --apply builds a SEPARATE matching preview with original prepared pixels and measured faces; no intake or install
 echo                                    --regroup --directed --directed-recipe NAME selects the SAME experimental lifecycle; --review-source ABS_DIR passes direct constraints; choices bind resumes/checks
+echo                                    --dominant-provisional explicitly permits existing dominant-face measurements ONLY for non-reference provisional intake; --undone-quality-run ABS_RUN verifies exact completed quality undo before original-input reuse
 echo                                    --check verifies saved inputs/preview/publication without writes; --install publishes reviewed preview with NO backup or rollback
 echo                                    decisions bind by photo ID and content; generated identities/automatic locks are not seeds; missing measurements or ambiguous manual decisions refuse
 echo    likeness-shadow.cmd --run "ABSOLUTE-RUN-DIR" --out "ABSOLUTE-REPO-TMP-DIR" [--dry-run ^| --apply ^| --check] [--compare-order]

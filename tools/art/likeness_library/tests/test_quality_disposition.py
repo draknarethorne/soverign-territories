@@ -45,7 +45,9 @@ class QualityDispositionTests(unittest.TestCase):
             "status": "applied", "workingRoot": str(self.root), "photos": self.rows,
             "installedCatalogSHA256": metadata.content_sha256(self.root / ".likeness-library.json"),
             "groupLifecycle": {"assignmentSummary": {"activeVarious": len(self.rows)}},
+            "catalogSHA256": metadata.content_sha256(self.root / ".likeness-library.json"),
         }
+        metadata.save_catalog(self.catalog, self.run / "catalog.json")
         self.write_plan()
 
     def write_plan(self):
@@ -207,6 +209,49 @@ class QualityDispositionTests(unittest.TestCase):
         self.execute(check=True)
         for relative, content in originals.items():
             self.assertEqual((self.root / relative).read_bytes(), content)
+
+    def test_exact_undone_quality_continuation_verifies_once_and_only_exempts_bound_records(self):
+        from tools.art import lean_continue
+        self.execute(apply=True)
+        self.execute(undo=True, apply=True)
+        catalog = metadata.load_catalog(self.root / ".likeness-library.json")
+        with mock.patch.object(lean_continue.likeness.cw, "load_cfg", return_value=self.cfg):
+            ids, binding = lean_continue.verified_undone_quality(self.root, catalog, self.run, self.plan)
+        self.assertEqual(len(ids), 4)
+        self.assertEqual(binding["conservation"]["active"], 5)
+        result = lean_continue.seed_catalog(
+            self.plan, catalog, self.catalog, installed=self.catalog, verified_quality_action_ids=ids,
+        )
+        self.assertEqual(result, self.catalog)
+        with self.assertRaisesRegex(ValueError, "explicit migration"):
+            lean_continue.seed_catalog(self.plan, catalog, self.catalog, installed=self.catalog)
+        # A later supported authored decision must still be carried, not swallowed with quality recovery.
+        pid = self.rows[0]["photoId"]
+        catalog["photos"][pid]["automaticProtectionOverride"] = "disabled"
+        later = {**catalog["actions"][0], "id": "action_" + "e" * 32,
+                 "batchId": "batch_" + "e" * 32, "type": "photo-unprotected"}
+        catalog["actions"].append(later)
+        metadata.save_catalog(catalog, self.root / ".likeness-library.json")
+        with mock.patch.object(lean_continue.likeness.cw, "load_cfg", return_value=self.cfg):
+            later_ids, _ = lean_continue.verified_undone_quality(self.root, catalog, self.run, self.plan)
+        self.assertEqual(later_ids, ids)
+        self.assertNotIn(later["id"], later_ids)
+        result = lean_continue.seed_catalog(
+            self.plan, catalog, self.catalog, installed=self.catalog, verified_quality_action_ids=ids,
+        )
+        self.assertEqual(result["photos"][pid]["automaticProtectionOverride"], "disabled")
+        unrelated = copy.deepcopy(catalog)
+        unrelated["actions"].append({**catalog["actions"][0], "id": "action_" + "f" * 32,
+                                     "batchId": "batch_" + "f" * 32})
+        with self.assertRaisesRegex(ValueError, "explicit migration"):
+            lean_continue.seed_catalog(
+                self.plan, unrelated, self.catalog, installed=self.catalog, verified_quality_action_ids=ids,
+            )
+        with mock.patch.object(lean_continue.likeness.cw, "load_cfg", return_value=self.cfg):
+            altered = copy.deepcopy(self.plan)
+            altered["photos"][0]["sha256"] = "0" * 64
+            with self.assertRaisesRegex(ValueError, "different prepared inputs"):
+                lean_continue.verified_undone_quality(self.root, catalog, self.run, altered)
 
 
 if __name__ == "__main__":

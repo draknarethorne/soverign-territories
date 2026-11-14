@@ -2189,6 +2189,7 @@ def _quality_hold_evidence(photo, settings, reason):
     return {
         "classification": kind, "reason": reason, "faces": photo.faces, "facePixels": photo.px,
         "minimumFacePixels": settings["minFace"], "secondaryFaceRatio": photo.f2,
+        "secondaryFaceRatioAvailable": bool(getattr(photo, "secondary_face_ratio_available", False)),
         "recoverableJunkCandidate": kind in ("measured-face-too-small", "measured-head-obstruction"),
     }
 
@@ -2197,8 +2198,10 @@ def create_plan(
     layout, run, policy, api, embedder=None, *, reuse_measurements=False,
     preparation=None, cast_seeds="all", seed_catalog=None, config_snapshot=None,
     working_inputs=None, matching_inputs=None, workflow_reset=None, regroup=False, review_source=None,
-    directed_recipe=None,
+    directed_recipe=None, dominant_provisional=False,
 ):
+    if dominant_provisional and directed_recipe is None:
+        raise ValueError("dominant provisional assignment requires directed mode")
     """Flatten source photos before building any non-cast identity references."""
     if cast_seeds not in {"all", "core"}:
         raise ValueError("cast seed policy must be all or core")
@@ -2723,6 +2726,7 @@ def create_plan(
         routed, group_lifecycle = lifecycle.regroup(
             routed, measured, catalog, policy, selected_ids, run.name, name_factory=api.invent_name, pairs=ledger["pairs"],
             reference_exclusions=reference_exclusions, directed_recipe=directed_recipe,
+            dominant_provisional=dominant_provisional,
         )
         group_lifecycle["evaluation"]["reviewedPairCount"] = len(ledger["pairs"])
         final_members = collections.defaultdict(list)

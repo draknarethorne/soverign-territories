@@ -3,6 +3,7 @@ import copy
 import io
 import json
 import pathlib
+import subprocess
 import unittest
 from types import SimpleNamespace
 from unittest import mock
@@ -19,6 +20,11 @@ class LeanContinuationTests(unittest.TestCase):
         self.addCleanup(self.fixture.doCleanups)
         self.working, self.source = self.fixture.working, self.fixture.run
         self.target = self.source.parent / "continued"
+        cfg = json.loads(lean_continue.likeness.cw.CFG_PATH.read_text(encoding="utf-8"))
+        for workflows in (lean_continue.likeness.cw, metadata.cw):
+            patch = mock.patch.object(workflows, "load_cfg", return_value=cfg)
+            patch.start()
+            self.addCleanup(patch.stop)
 
     def prepare(self):
         catalog_path = self.working / ".likeness-library.json"
@@ -49,18 +55,41 @@ class LeanContinuationTests(unittest.TestCase):
             self.assertEqual(self.command(dry_run=True)["status"], "inventory")
         self.assertFalse(self.target.exists())
 
+    def test_dominant_assignment_refuses_without_explicit_directed_mode(self):
+        with self.assertRaisesRegex(ValueError, "requires explicit directed"):
+            self.command(dry_run=True, dominant_provisional=True)
+
+    def test_supported_launcher_previews_explicit_dominant_and_undone_quality_options(self):
+        self.prepare()
+        launcher = lean_continue.REPO / "bin" / "lean-continue.cmd"
+        result = subprocess.run([
+            "cmd", "/c", "call", str(launcher), "--root", str(self.working),
+            "--source-run", self.source.name, "--run", self.target.name,
+            "--regroup", "--directed", "--directed-recipe", "directed-core-continuity",
+            "--dominant-provisional", "--undone-quality-run", str(self.source), "--dry-run",
+        ], cwd=lean_continue.REPO, capture_output=True, text=True, timeout=60)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("no matching was started", result.stdout)
+        self.assertFalse(self.target.exists())
+
     def test_selected_directed_options_reach_planner_and_bind_continuation(self):
         self.prepare()
         review = self.working / "review-evidence"
         with mock.patch.object(clean_rebase, "create_plan", return_value={"status": "preview", "policy": {}}) as create, \
                 mock.patch.object(lean_continue.rebase_recap, "main", return_value=0):
             self.command(apply=True, regroup=True, directed=True,
-                         directed_recipe="directed-core-continuity", review_source=str(review))
+                         directed_recipe="directed-core-continuity", review_source=str(review),
+                         dominant_provisional=True)
         self.assertTrue(create.call_args.kwargs["regroup"])
         self.assertEqual(create.call_args.kwargs["directed_recipe"], "directed-core-continuity")
         self.assertEqual(create.call_args.kwargs["review_source"], review)
         receipt = json.loads((self.target / "continuation.json").read_text())
         self.assertEqual(receipt["grouping"]["directedRecipe"], "directed-core-continuity")
+        self.assertTrue(receipt["grouping"]["dominantProvisional"])
+        self.assertTrue(create.call_args.kwargs["dominant_provisional"])
+        with self.assertRaisesRegex(ValueError, "grouping mode/recipe"):
+            self.command(check=True, regroup=True, directed=True,
+                         directed_recipe="directed-core-continuity", review_source=str(review))
 
     def test_existing_continuation_refuses_grouping_recipe_switch(self):
         self.prepare()
@@ -68,6 +97,37 @@ class LeanContinuationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "grouping mode/recipe"):
             self.command(check=True, regroup=True, directed=True,
                          directed_recipe="directed-core-continuity")
+
+    def test_quality_recovery_is_verified_once_and_receipt_drift_blocks_every_saved_mode(self):
+        self.prepare()
+        quality_receipt = self.source / "quality-disposition.json"
+        quality_receipt.write_text("{}", encoding="utf-8")
+        binding = {
+            "run": str(self.source), "runSHA256": metadata.content_sha256(self.source / "run.json"),
+            "receiptSHA256": metadata.content_sha256(quality_receipt),
+        }
+        with mock.patch.object(lean_continue, "verified_undone_quality", return_value=(set(), binding)) as verify, \
+                mock.patch.object(clean_rebase, "create_plan", return_value={"status": "preview", "policy": {}}), \
+                mock.patch.object(lean_continue.rebase_recap, "main", return_value=0):
+            self.command(apply=True, undone_quality_run=str(self.source))
+        verify.assert_called_once()
+        saved = json.loads((self.target / "continuation.json").read_text())
+        self.assertIn("verifierSHA256", saved["undoneQualityVerification"])
+        self.assertEqual(saved["grouping"]["undoneQualityRun"], str(self.source))
+        invalid = copy.deepcopy(saved)
+        invalid["undoneQualityVerification"]["verifierSHA256"] = "0" * 64
+        (self.target / "continuation.json").write_text(json.dumps(invalid), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "verifier changed"):
+            self.command(check=True, undone_quality_run=str(self.source))
+        (self.target / "continuation.json").write_text(json.dumps(saved), encoding="utf-8")
+        quality_receipt.write_text('{"changed": true}', encoding="utf-8")
+        with mock.patch.object(lean_continue, "verified_undone_quality",
+                               side_effect=AssertionError("must not repeat full recovery verification")):
+            for mode in ("apply", "check", "install"):
+                with self.subTest(mode=mode), self.assertRaisesRegex(ValueError, "recovery changed"):
+                    self.command(**{mode: True}, undone_quality_run=str(self.source))
+        with self.assertRaisesRegex(ValueError, "grouping mode/recipe"):
+            self.command(check=True)
 
     def test_verified_reuse_uses_original_pixels_not_copies_and_never_undo(self):
         self.prepare()

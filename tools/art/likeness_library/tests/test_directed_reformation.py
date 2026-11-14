@@ -736,6 +736,79 @@ class DirectedReformationTests(unittest.TestCase):
                          len(created) + 1)
         self.assert_reference_exports(output, report, catalog)
 
+    def test_dominant_optin_only_provisional_never_reference_or_parent_and_survives_reload(self):
+        baseline = self.fixture()
+        rows, measured, catalog, cohorts = baseline[:4]
+        dominant = set(cohorts["Various"][:6])
+        for row in rows:
+            if row["photoId"] in dominant:
+                measured[row["source"]].faces = 2
+                measured[row["source"]].f2 = .1
+                measured[row["source"]].secondary_face_ratio_available = True
+        output, report = self.run_fixture(copy.deepcopy(baseline))
+        self.assertTrue(all(row["destination"].startswith("Various/")
+                            for row in output if row["photoId"] in dominant))
+        output, report = self.run_fixture(baseline, dominant_provisional=True)
+        selected = [row for row in output if row["photoId"] in dominant]
+        self.assertEqual(len({row["membership"]["personId"] for row in selected}), 1)
+        self.assertTrue(all(row["destination"].startswith("Potentials/") for row in selected))
+        self.assertTrue(all(row["membership"]["assignmentDisposition"] == "provisional"
+                            and not row["membership"]["coreUse"] for row in selected))
+        self.assertEqual(report["assignmentPolicy"]["assignedDominantPhotoIds"], sorted(dominant))
+        self.assertEqual(selected[0]["membership"]["assignmentEvidence"]["dominantFace"]["secondaryFaceRatio"], .1)
+        self.assert_reference_exports(output, report, catalog)
+        parent = selected[0]["membership"]["personId"]
+        replay, replay_measurements = [], {}
+        for row in output:
+            replay.append({**row, "source": row["destination"],
+                           "oldFolder": str(pathlib.PurePosixPath(row["destination"]).parent.parent)})
+            replay_measurements[row["destination"]] = measured[row["source"]]
+        incoming_id = "photo:image_999001"
+        incoming_source = "Various/gallery/incoming_image_999001.jpg"
+        replay.append({
+            "photoId": incoming_id, "source": incoming_source, "destination": incoming_source,
+            "oldFolder": "Various", "sha256": "f" * 64,
+        })
+        incoming_photo = copy.deepcopy(measured[selected[0]["source"]])
+        incoming_photo.faces, incoming_photo.f2 = 1, 0
+        replay_measurements[incoming_source] = incoming_photo
+        catalog = json.loads(json.dumps(catalog))
+        output, report = self.run_fixture((replay, replay_measurements, catalog))
+        self.assertTrue(all(not row["membership"]["coreUse"] for row in output
+                            if row["photoId"] in dominant))
+        self.assertFalse(any(view["qualifiedReferencePhotoIds"] for view in report["qualifiedReferences"]
+                             if view["personId"] == parent))
+        self.assertTrue(all(row["membership"]["assignmentEvidence"].get("dominantFace")
+                            for row in output if row["photoId"] in dominant))
+        self.assertNotEqual(next(row["membership"]["personId"] for row in output
+                                 if row["photoId"] == incoming_id), parent)
+        self.assert_reference_exports(output, report, catalog)
+
+    def test_dominant_boundary_quality_and_lock_safeguards_are_not_relaxed(self):
+        fixture = self.fixture()
+        rows, measured, catalog, cohorts = fixture[:4]
+        ids = cohorts["Various"][:6]
+        for index, pid in enumerate(ids):
+            row = next(item for item in rows if item["photoId"] == pid)
+            photo = measured[row["source"]]
+            photo.faces, photo.f2 = 2, [.3, .31, -.1, .1, .1, .1][index]
+            photo.secondary_face_ratio_available = True
+            if index == 3:
+                photo.px = 20
+            if index == 4:
+                row["qualityHold"] = True
+            if index == 5:
+                catalog["photos"][pid] = {"contentSha256": row["sha256"], "protected": True}
+        missing_ratio = cohorts["Various"][-2]
+        row = next(item for item in rows if item["photoId"] == missing_ratio)
+        measured[row["source"]].faces = 2
+        measured[row["source"]].f2 = 0
+        measured[row["source"]].secondary_face_ratio_available = False
+        ids = [*ids, missing_ratio]
+        output, report = self.run_fixture(fixture, dominant_provisional=True)
+        self.assertFalse(report["assignmentPolicy"]["assignedDominantPhotoIds"])
+        self.assertTrue(all(row["source"] == row["destination"] for row in output if row["photoId"] in ids))
+
     def test_selected_angel_and_sister_arrivals_and_wrong_cast_correction_use_shared_gates(self):
         from tools.art.likeness_library.policy import load_policy, validate_policy
         fixture = self.fixture()

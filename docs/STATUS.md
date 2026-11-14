@@ -1,10 +1,73 @@
 # Project Status
 
-**Updated:** 2026-11-13 · This is the one working document: where the project is, what has
+**Updated:** 2026-11-14 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
 ## Current checkpoint
+
+**Dominant-provisional10 installed and verified:** original3,290content tuples and
+1,034qualified/exported reference tuples match exactly.20additional intake
+photos now have provisional non-reference placement; pre-disposition Various13 comprised
+10substantial-multiface,2measured-small-face and1zero-face exception.
+Review remains9.656provisional assignments occupy345containers/219singletons,
+not345certified people; all547owners have explicit family assessment status.
+200tentative rival associations intentionally retain their original physical
+home, without reference authority. Independent preview check exits0.
+Install exits0; shared-gallery verification3449.84s,31,087content reads/
+15,583,346,998bytes. Actual Overview1,404/1,404thumbnails load with zero
+broken images (545active named containers/3,268Gallery photos).
+Independent applied check exits0 (`10-installed-check.log`).
+Guarded quality preview/apply/check exit0:3,288active+2recoverably quarantined
+=3,290exact tuples conserved. Batch `batch_04a088ae80314c24af16a156f973c779`
+has a verified seven-file5,248,896byte backup;11genuine intake holds remain.
+Reports-only refresh/check and subsequent quality check exit0; undo preserved.
+Refresh3562.97s/31,079content reads/15,580,789,171bytes; independent report
+check21.55s. Actual final Overview1,404/1,404, Various11/11, Angelica61/61,
+Draknara98/98and provisional control2/2images load; native/detail/group
+controls resolve and actual Angelica padded image is944x1104.
+Full changed-file publication validation exits0, including isolated mutations
+and selected regressions (regression subprocess1653.81s); all nine routine
+hooks, markdownlint and whitespace checks pass. Incremental publication is
+authorized on `work/sandbox-rebase-acceptance`; no Production deployment.
+The scope-test's current A01-A17 table records integrity passes separately
+from unresolved fragmentation,11cast-core insufficiencies, actual full-order
+parity and independent/human accuracy acceptance. Production untouched.
+Actual dominant provisional control Isadora Davenant loads2/2images and
+explicitly displays core-use-no/no-reference-authority and dominant-face
+opt-in uncertainty. All11final Various exceptions load with explicit reasons.
+237targeted tests/19isolated schema checks also pass. No active library writer;
+original inputs and recovery receipts remain intact. Ready for human review,
+not numerical/identity acceptance or permission for another unattended rebase.
+
+### Earlier checkpoints (superseded by the current checkpoint above)
+
+**Real quality transaction/recovery verified:** apply/check0 conserved
+3,288active+2quarantined=3,290, scoped seven-file5.24MBbackup.
+Guarded undo preview/apply/check0 restores3,290active with exact same hash;
+durable receipt retained as `undone`, no source deletion. No live writer.
+Next bounded implementation: opt-in existing dominant-face ratio guard for
+provisional non-reference intake only, plus receipt-bound undone-quality
+continuation handling.20candidates may resolve;10substantial-secondary and
+1zero-face remain exceptions. No core/cast/correction gate relaxation.
+Implementation progress published at `ecf8b3369`; next real full acceptance
+and final publication still pending.
+
+**Quality09 preview0/apply active:** two measured56px single-face photos
+previewed to recoverable Sandbox `_junk`;31other exceptions preserved.
+Preview conserves3,290tuples. Apply PID52568/shell `intake-quality-apply09`,
+log `09-quality-apply.log`; freeze through quality check. No deletion or
+unknown/multiface Junk. Next adaptation can provisionally place20dominant-
+face cases under existing ratio guard without core authority; correct
+post-action continuation/undo sequence must be verified first.
+
+**Install09 exits0, applied check running:**3,290photos published, Overview
+1,387loaded thumbnails/zero broken; provisional control displays explicit
+no-reference-authority/core-use-no. Wait `directed-intake-installed-check09`
+before guarded quality disposition. Full changed-file validation and routine/
+commit gates pass; verified incremental commit `ecf8b3369` pushed to existing
+work branch. Actual quality/check/final viewer and outcome acceptance pending.
+No Production/threshold changes.
 
 **Intake09 verified; install active:** preview/check exit0;59,786,159-byte
 receipt conserves3,290contents and1,034qualified references. Various33 now

@@ -61,7 +61,7 @@ def _conservation(root, plan, moves, *, applied):
             "quarantined": len(moved) if applied else 0, "tupleSHA256": _digest(sorted(tuples))}
 
 
-def _verify(root, run, plan, receipt, cfg):
+def _verify(root, run, plan, receipt, cfg, *, catalog_override=None):
     required = {"version", "root", "runSHA256", "status", "installedCatalogSHA256",
                 "currentCatalogSHA256", "batchId", "actionRecordsSHA256", "backup",
                 "backupManifestSHA256", "moves", "conservation"}
@@ -71,8 +71,12 @@ def _verify(root, run, plan, receipt, cfg):
             or receipt.get("installedCatalogSHA256") != plan.get("installedCatalogSHA256")
             or receipt.get("status") not in ("applied", "undone")):
         raise ValueError("incomplete or changed disposition binding; inspect action history/recovery")
-    catalog = metadata.load_catalog(root / ".likeness-library.json")
-    if metadata.content_sha256(root / ".likeness-library.json") != receipt["currentCatalogSHA256"]:
+    catalog = catalog_override if catalog_override is not None else metadata.load_catalog(root / ".likeness-library.json")
+    catalog_hash = (
+        hashlib.sha256((json.dumps(catalog, ensure_ascii=False, indent=2, sort_keys=True) + "\n").encode()).hexdigest()
+        if catalog_override is not None else metadata.content_sha256(root / ".likeness-library.json")
+    )
+    if catalog_hash != receipt["currentCatalogSHA256"]:
         raise ValueError("catalogue changed since disposition; inspect newer actions")
     records = [item for item in catalog["actions"] if item.get("batchId") == receipt["batchId"]]
     if _digest(records) != receipt["actionRecordsSHA256"]:
@@ -95,9 +99,14 @@ def _verify(root, run, plan, receipt, cfg):
     if receipt["status"] == "undone":
         if not {"undoBatchId", "undoBackup", "undoBackupManifestSHA256", "undoActionRecordsSHA256"} <= receipt.keys():
             raise ValueError("incomplete undo disposition binding")
-        undo_records = [item for item in catalog["actions"] if item.get("batchId") == receipt["undoBatchId"]]
-        if _digest(undo_records) != receipt["undoActionRecordsSHA256"]:
+        action_ids = {item["actionId"] for item in receipt["moves"]}
+        undo_records = [item for item in catalog["actions"] if item.get("undoes") in action_ids]
+        # Older receipts incorrectly selected undo records by batchId; their full catalogue hash still binds them.
+        legacy_empty = "undoActionIds" not in receipt and receipt["undoActionRecordsSHA256"] == _digest([])
+        if not legacy_empty and _digest(undo_records) != receipt["undoActionRecordsSHA256"]:
             raise ValueError("undo action history changed")
+        if {item.get("undoes") for item in undo_records} != action_ids or len(undo_records) != len(action_ids):
+            raise ValueError("undo action population differs")
         undo_backup = pathlib.Path(receipt["undoBackup"])
         actions.library_backup.verify_backup(undo_backup)
         if metadata.content_sha256(undo_backup / "manifest.json") != receipt["undoBackupManifestSHA256"]:
@@ -154,10 +163,12 @@ def execute(run, cfg, *, apply=False, check=False, undo=False, backup_fn=None):
                            undoBackupManifestSHA256=metadata.content_sha256(pathlib.Path(backup) / "manifest.json"),
                            currentCatalogSHA256=metadata.content_sha256(root / ".likeness-library.json"),
                            conservation=_conservation(root, plan, receipt["moves"], applied=False))
-            receipt["undoActionRecordsSHA256"] = _digest([
+            undo_records = [
                 item for item in metadata.load_catalog(root / ".likeness-library.json")["actions"]
-                if item.get("batchId") == batch
-            ])
+                if item.get("undoes") in {move["actionId"] for move in receipt["moves"]}
+            ]
+            receipt["undoActionRecordsSHA256"] = _digest(undo_records)
+            receipt["undoActionIds"] = [item["id"] for item in undo_records]
             receipt["actionRecordsSHA256"] = _digest([
                 item for item in metadata.load_catalog(root / ".likeness-library.json")["actions"]
                 if item.get("batchId") == receipt["batchId"]

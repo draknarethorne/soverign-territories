@@ -15,21 +15,54 @@ policy/design conflicts before independently checked Sandbox publication and
 actual viewer verification under RA2l/RA2m. No new reset/intake/extraction.
 Numerical acceptance remains RA2d; Production remains untouched.
 
-## Current checkpoint: Nov 13 transient-intake completion repair
+## Current checkpoint: iteration10 installed and quality disposition verified
 
-`directed-repair-20261113-04` preview, independent check, authorized Sandbox
-install and installed check all exit0;3,290 photos conserved.192 focused
-runtime tests pass. The later clarification below supersedes accepting680
-explained Various holds as completion: separate assignment from reference
-eligibility and finish intake, appearance/family outcome and no-attraction
-assertions under RA2j.11 cast reference-core insufficiencies remain evidence
-limitations, not automatic permission for eviction or numeric relaxation.
-The [A01-A17 disposition](#candidate06-a01-a17-disposition-after-installed-check)
-separates delivered behavior from limitations. Main viewer Various inclusion
-repair passes63 tests; supported refresh/check and actual680/680browser
-loading verified. Human visual review/RA2d acceptance remain open.
-Production untouched. Exact sources, failed-run evidence and earlier gates
-remain below as dated history, not current process instructions.
+`directed-intake-dominant-20261114` preview/check/install/applied-check and
+guarded quality preview/apply/check all exit0. All3,290content tuples remain:
+3,288active plus2recoverably quarantined. Various11contains10substantial-
+multiface and1zero-face exception, not reference-insufficient usable holds.
+Review remains9.20dominant-face candidates now have provisional-only homes;
+all1,034qualified reference-owner/photo tuples exactly equal exports.
+Reports-only refresh/check and subsequent quality check exit0; recovery undo
+remains available. Actual Overview1,404/1,404images, Various11/11,
+Angelica61/61and Isadora Davenant2/2load. Native/detail/group/944x1104
+controls resolve. Full changed-file validation and routine gates pass; no claim of completion
+or numerical/human accuracy acceptance follows from output integrity.
+
+**Publication gate:** `bin\validate.cmd --changed HEAD --check` exits0,
+including exhaustive isolated mutations and the selected full regression
+launcher (regression subprocess1653.81s). All nine `bin\check.cmd` hooks,
+markdownlint and `git diff --check` pass. Incremental commit/push is authorized
+on the existing work branch; this does not close RA2j/RA2d or approve Production.
+
+### Iteration10 A01-A17 disposition
+
+| ID | Disposition | Evidence and remaining boundary |
+| --- | --- | --- |
+| A01 | Pass integrity; visual replacement acceptance pending |3,290original/prepared tuples preserved; original175prepared same-ID replacements reused, no new intake |
+| A02 | Evidence exception retained |589initial cast-core members retained;151independently verified strong baseline members;11cast owners still lack qualified cores |
+| A03 | Pass selected integration; independent accuracy pending | All-category hypotheses/configured negatives retained; unchanged authoritative reference version and1,034exports |
+| A04 | Pass installed accounting |3,290unique preview destinations; applied check0;200tentative rival associations explicitly retain source physical home |
+| A05 | Pass disposition with11genuine exceptions | Incoming869=656provisional+135supported Prospects+54Sisters+11tentative Prospects+11quality exceptions+2recoverable Junk; Review9unchanged |
+| A06 | Evidence exception, not forced recovery |121qualified upward associations overall; incoming cast gains54, including49Draknora; no threshold relaxation to force more |
+| A07 | Pass reassessment/continuity; human accuracy pending | Zero cast outflows/strong corrections; weak-member uncertainty retained, not certified correct by placement |
+| A08 | Pass output shape; fragmentation remains |1,039named groups=255supported+784tentative;3,207unique grouped members, no duplicate group membership or tentative reference use |
+| A09 | Pass assignment/reference separation |8qualified independent identities/79members;656provisional assignments in345containers/219singletons, not345confirmed people |
+| A10 | Pass all-owner assessment; human naming pending |547owner statuses:345provisional-unavailable+167reference-insufficient+25qualified lower+10qualified cast;4family links/3surname changes |
+| A11 | Pass exact invariant |1,034qualified tuples equal catalogue core exports; zero dominant/provisional/tentative reference leaks;50bounded original-witness additions |
+| A12 | Pass fixtures/observed intent; actual correction not exercised |3hard-lock blocks,589initial retained; zero actual exceptional corrections |
+| A13 | Explicit unresolved numerical exception |545active named containers,345provisional/219singletons; true-person count/under100expectation not established; Review9not expanded |
+| A14 | Partial actual breadth | All21cast evaluated; actual Angelica61/61, Overview1,404/1,404, provisional dominant2/2and Various11/11browser controls; independent labels unavailable |
+| A15 | Pass installed/viewer integrity; full order parity not exercised | Preview/applied/report/quality checks0, true stage receipts, native/detail/group/944controls; fixtures do not establish full-population repeat/order parity |
+| A16 | Pass conflict audit, not unconditional design acceptance | Assignment/reference conflation repaired; provisional-only dominant guard opt-in; quality separate guarded transaction; ordinary incremental/profile/roles/readiness/GUI residuals remain owned outside this increment |
+| A17 | Explicitly deferred generalization | Prior bounded contextual controls retained; no new model extraction or unsupported fusion; fragment reduction remains numerical/human acceptance work |
+
+This supersedes candidate06's intake outcome, not its retained historical
+evidence. The selected operational simplification is prepare once, resolve
+with one reference ledger, then guarded publication/disposition and reports.
+It does not mean the underlying face evidence now resolves all plausible
+same-person fragments. Do not silently relax reference gates or call
+provisional folder creation identity accuracy. Production remains untouched.
 
 ## Earlier shadow implementation checkpoint: historical, not installation acceptance
 
@@ -1939,6 +1972,106 @@ is fixed without runtime changes. Existing codex-drift ResourceWarnings
 remain visible; no failed first run is recast as success. Incremental
 publication is selected under explicit user authority, while actual install09/
 post-install quality/consumer acceptance continue separately.
+
+**Incremental publication verified:** commit `ecf8b3369` pushed successfully
+to `origin/work/sandbox-rebase-acceptance`; full changed-file validation02,
+routine check and commit hooks all exit0. This records implementation
+progress, not automatic closure of outcome/visual requirements.
+
+**Install09 exits0:**3,290photos published; shared input verification
+3,448.33s,31,080content reads/15,583,337,705bytes,278,285reused hashes.
+Supported applied check runs `directed-intake-installed-check09`; quality
+transaction waits for its successful exit. Actual Overview1,387/1,387loaded
+images, zero broken;539active named containers/3,248Gallery originals.
+New Anouk Devereux two-photo provisional container opens correctly and
+explicitly says not certified/no reference authority, tentative/core use no.
+No additional actual quarantine/overall acceptance claimed yet.
+
+**Installed check09 exits0; quality preview active:** supported applied
+verification passed. Guarded quality dry-run PID4092/shell
+`intake-quality-preview09` verifies immutable publication and exact content;
+CPU progress observed, no duplicate operation. Only two measured56px
+single-face candidates meet current reversible quality disposition.
+Thirty multiface and one zero-face measurement remain preserved, not Junk
+merely because assignment cannot yet qualify.
+
+**Bounded assignment adaptation selected for next iteration:** read-only
+cache/policy audit finds20of30multiface cases have secondary/main face-area
+ratio0.01-0.16 with dominant face>=60px;10have ratio>=0.30. Shared legacy
+assignment already uses configured0.30 substantial-secondary guard; directed
+qualification currently demands exactly one face. Reuse that existing guard
+only through an explicit opt-in provisional-assignment policy, with measured
+largest-face/content provenance. Do not relax core/reference/cast/correction,
+call secondary faces UI/ad detections, or grant attraction authority. The20
+may enter non-core provisional Potentials;10substantial-secondary and1zero
+remain explicit exceptions. Regression coverage must include boundary/missing
+ratios, default-off behavior, grouping and export/reload/new-arrival exclusion.
+No edits until active quality preview/apply/check exits; no actual adaptation
+run or outcome acceptance yet.
+
+**Quality09 preview exits0:** two measured56px photos selected to
+Sandbox `_junk/Various/gallery`;31other intake exceptions held.
+Preview3290active/0quarantined conservation tupleSHA256
+`a2f34d5b589f904b1db89fd4e4ad415c70c898c27cc10e0bd8586496fe9eaf34`.
+Supported apply runs PID52568/shell `intake-quality-apply09`,
+log `09-quality-apply.log`; no competing writer/module edits. Actual
+quarantine/check remains pending. Verify post-action continuation or guarded
+undo before the next dominant-face iteration; never reinterpret historical
+pre-disposition publication checks as current action acceptance.
+
+**Actual reversible quality acceptance complete:** apply/check exit0,
+batch `batch_61564e04567f4bf1ab0b931979608ef0`;3,288active+2quarantined
+conserve3,290tuples with unchanged tuple hash above. Scoped backup seven files/
+5,242,691bytes, no full-library snapshot or source deletion. To continue the
+accepted dominant-face provisional adaptation, guarded undo preview/apply/
+check also exit0; undo batch `batch_6c490301c190474f8f80a1140a24fda7`,
+seven-file5,248,451-byte recovery. Both native/retained paths restored,
+receipt explicitly `undone`,3,290active/0quarantined, exact same conservation.
+This tests real recovery; it is not a permanent quarantine outcome yet.
+No live writer. Same runtime owner now implements the accepted opt-in
+dominant-face provisional-only policy and narrowly verified undone-quality
+continuation recognition. Only verified exact action batches may be exempted
+from intervening-placement refusal; no generic Junk/undo ignoring or catalogue
+byte restoration. Preserve authored exclusions and bind recovery proof into
+new continuation. Final candidate install/quality/browser acceptance still owed.
+
+**Dominant provisional/receipt-bound continuation delivered:**237targeted
+tests/165.334s,19isolated schema mutation checks and routine checks pass.
+Supported launcher exposes explicit `--dominant-provisional` and
+`--undone-quality-run ABS_RUN`; default unchanged. Receipt pins policy,
+largest-face/source provenance and exact verified quality undo batches;
+unknown/missing/boundary/substantial-secondary cases refuse provisional
+eligibility. Reference/cast/correction gates unchanged and dominant-only
+assignment stays excluded after reload/new arrivals. Verified current undone
+receipt SHA
+`04df38f69862f37181dd43e1d5a3f2781fe92c52d4d5e0a2e72a3c74a8e1d3ed`.
+Scoped runtime fingerprint
+`cbc1e9d86df9e3b070fb76bc0fd5988828a2f794065da2c26045b00b0ce2c06c`.
+Actual supported dry-run exits0; new `directed-intake-dominant-20261114`
+apply PID48692/shell `directed-intake-preview10`, log `10-preview.log`.
+Original3,290prepared inputs reused, frozen through acceptance; expected
+20additional provisional assignments remain to be measured, not claimed.
+
+**Iteration10 actual preview and independent check pass:** run
+`directed-intake-dominant-20261114` conserves all3,290original/prepared content
+tuples and unique physical destinations.1,034qualified reference-owner/photo
+tuples exactly equal catalogue core exports.20dominant-face intake photos
+now receive provisional non-reference placement; all656provisional and
+846tentative-parent assignments remain excluded from reference use.
+Various13=10substantial-multiface+2measured-small-face+1zero-face, each
+with explicit evidence; Review9unchanged.3,207members have one group each,
+with matching membership/group owner IDs.200tentative rival associations
+intentionally retain their source physical home rather than falsely moving
+uncertain established members; all have explicit retained-home reasons.
+345provisional containers/219singletons are not certified people.
+All547catalogue owners have explicit family assessment status:
+345provisional-unavailable,167reference-insufficient,25qualified lower
+owners and10qualified cast;4family links remain. Full-population reverse
+parity and human identity acceptance are not inferred.
+Independent supported `--check` exits0 (`10-check.log`).
+Authorized install PID6312/shell `directed-intake-install10`, log
+`10-install.log`; runtime/input freeze continues through applied check,
+guarded quality disposition and actual browser checks. Production untouched.
 
 ### Exact user sources
 

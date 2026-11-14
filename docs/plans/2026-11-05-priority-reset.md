@@ -569,6 +569,19 @@ unresolved human identity acceptance remains open.
   no-attraction assertions, then full cached Sandbox run/check/install/viewer.
   Do not lower numeric thresholds silently or mutate Production.
   Earlier diagnostic-review stop is superseded; RA2j remains selected/open.
+  **Current iteration10:** preview and independent check pass; all3,290
+  content tuples conserved,1,034reference tuples equal,20dominant intake
+  assignments remain provisional-only. Various13 has explicit quality
+  exceptions; Review9unchanged. See the
+  [shared outcome ledger](2026-11-12-member-refinement-scope-test.md)
+  for group/owner/family accounting and current A01-A17 dispositions.
+  `directed-intake-dominant-20261114` install/applied-check/quality/report
+  checks pass:3,288active+2recoverable Junk,11genuine intake exceptions.
+  Actual Overview/Various/cast/provisional/group/detail/944controls load.
+  Full publication validation and routine gates pass; review evidence and residual gates
+  are in the
+  [pinned resume](../recap/2026-11-11-1141-recap.md#current-resume-nov-13-full-reassessment-audit).
+  No RA2j/human acceptance closure or Production publication inferred.
   Continue to preserve
   default historical/non-opt-in behavior; expose an explicitly selected
   experimental directed Sandbox mode and bind it to previews/resumes.

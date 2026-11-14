@@ -341,6 +341,7 @@ class Photo:
         self.key = group if group == folder else f"{group}/{folder}"
         self.faces = (data or {}).get("faces", -1)
         self.f2 = (data or {}).get("f2", 0)
+        self.secondary_face_ratio_available = "f2" in (data or {})
         self.animals = (data or {}).get("an", 0)
         self.raw = np.array(data["v"], float) if data and data.get("v") else None
         self.box = (data or {}).get("box")

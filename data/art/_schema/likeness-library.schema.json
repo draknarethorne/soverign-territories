@@ -72,6 +72,16 @@
             "supportPhotoIds": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/definitions/photoId"}},
             "blockers": {"type": "array", "items": {"type": "string"}},
             "qualityReason": {"type": ["string", "null"]},
+            "dominantFace": {
+              "type": "object", "additionalProperties": false,
+              "required": ["faces", "secondaryFaceRatio", "exclusiveMaximum", "measurementBasis"],
+              "properties": {
+                "faces": {"type": "integer", "minimum": 2},
+                "secondaryFaceRatio": {"type": "number", "minimum": 0, "maximum": 1},
+                "exclusiveMaximum": {"type": "number", "minimum": 0, "maximum": 1},
+                "measurementBasis": {"const": "existing-largest-human-face"}
+              }
+            },
             "source": {"type": "string"},
             "sourceSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
           }

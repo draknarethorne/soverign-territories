@@ -1723,12 +1723,16 @@ def unpack_runtime_decisions(packed):
 
 
 def regroup_runtime(rows, valid_vectors, catalog, policy, selected, run_id, *, recipe,
-                   at=None, pairs=(), reference_exclusions=(), name_factory=None):
+                   at=None, pairs=(), reference_exclusions=(), name_factory=None,
+                   dominant_assignment_vectors=None, dominant_provisional=False):
     """Run the directed evidence engine on maintained rebase inputs and preserve its ledger."""
     from . import clean_rebase, group_lifecycle, rejections
 
     validate_recipe(recipe)
     policy = runtime_policy(policy, recipe)
+    dominant_assignment_vectors = dominant_assignment_vectors or {}
+    if dominant_assignment_vectors and not dominant_provisional:
+        raise ValueError("dominant-face assignment requires explicit opt-in")
     at = at or datetime.datetime.now(datetime.timezone.utc).isoformat()
     rows = copy.deepcopy(rows)
     by_id = {}
@@ -2062,6 +2066,10 @@ def regroup_runtime(rows, valid_vectors, catalog, policy, selected, run_id, *, r
             ),
             "sourcePersonIds": sorted(_identity_ids(evidence, [pid])),
             "assignmentEvidence": {
+                **({"dominantFace": copy.deepcopy(
+                    catalog["photos"][pid]["membership"]["assignmentEvidence"]["dominantFace"]
+                )} if catalog["photos"].get(pid, {}).get("membership", {}).get(
+                    "assignmentEvidence", {}).get("dominantFace") else {}),
                 "source": by_id[pid]["source"], "sourceSha256": hashes[pid],
                 "blockers": list(decision["placementBlocks"]),
             },
@@ -2201,12 +2209,27 @@ def regroup_runtime(rows, valid_vectors, catalog, policy, selected, run_id, *, r
             action_categories[pid] = "independent" if supported else "hold"
 
     provisional_containers = []
+    dominant_ids = set(dominant_assignment_vectors)
     intake_ids = [
         pid for pid, row in by_id.items() if _category(row.get("oldFolder", "")) == "Various"
         and state_by_photo[pid]["status"] != "supported"
     ]
+    dominant_safe = [
+        pid for pid in intake_ids if pid in dominant_ids
+        and not decision_by_id[pid]["placementBlocks"]
+        and not decision_by_id[pid].get("explicitIntentFolder")
+        and not set(evidence.source[pid].get("reasons", [])) - {"quality-ineligible"}
+    ]
     for pid in intake_ids:
         decision = decision_by_id[pid]
+        if pid in dominant_safe:
+            quality = by_id[pid]["qualityEvidence"]
+            state_by_photo[pid]["assignmentEvidence"]["dominantFace"] = {
+                "faces": quality["faces"], "secondaryFaceRatio": quality["secondaryFaceRatio"],
+                "exclusiveMaximum": policy["runtimeSettings"]["multiFace"],
+                "measurementBasis": "existing-largest-human-face",
+            }
+            continue
         if pid not in evidence.eligible or decision["placementBlocks"] \
                 or decision.get("explicitIntentFolder") or evidence.source[pid].get("reasons"):
             blockers = list(dict.fromkeys([
@@ -2264,7 +2287,16 @@ def regroup_runtime(rows, valid_vectors, catalog, policy, selected, run_id, *, r
         and not evidence.source[pid].get("reasons")
         and not decision_by_id[pid].get("assignmentGallery")
     ]
-    for cohort in _complete_link_clusters(unmatched, evidence, .45, MAX_CLUSTER_OPERATIONS):
+    unmatched = sorted(set(unmatched) | set(dominant_safe))
+    assignment_evidence = evidence
+    if dominant_safe:
+        from . import reformation
+        assignment_evidence = copy.copy(evidence)
+        assignment_evidence.cache = reformation._FrozenScores({
+            pid: dominant_assignment_vectors[pid] if pid in dominant_ids else evidence.vectors[pid]
+            for pid in unmatched
+        })
+    for cohort in _complete_link_clusters(unmatched, assignment_evidence, .45, MAX_CLUSTER_OPERATIONS):
         prior = active_people.get(group_lifecycle._key("person_", cohort))
         candidate = next((item for item in residual_classifications
                           if item.get("candidateId") and item["memberPhotoIds"] == cohort), None)
@@ -2306,6 +2338,13 @@ def regroup_runtime(rows, valid_vectors, catalog, policy, selected, run_id, *, r
             state_by_photo[pid]["assignmentEvidence"]["blockers"] = [
                 candidate["disposition"] if candidate else "no-credible-unambiguous-qualified-parent",
             ]
+            if pid in dominant_ids:
+                state_by_photo[pid]["assignmentEvidence"]["blockers"] = [
+                    "multiple-detections-reference-ineligible; explicit dominant-face provisional assignment only",
+                ]
+                state_by_photo[pid]["reason"] += (
+                    "; dominant-face opt-in: existing largest-face measurement, not UI/ad identification"
+                )
             decision_by_id[pid].update(
                 candidateDestination=folder, assignmentGallery=True, shadowAction="provisional-assignment",
                 membershipState="provisional-assigned", referenceUseEligible=False,
@@ -2318,7 +2357,8 @@ def regroup_runtime(rows, valid_vectors, catalog, policy, selected, run_id, *, r
         status, parent_id, view_id, source_folder = key
         parent_folder = folder_by_person[parent_id]
         for cluster in _complete_link_clusters(
-                members, evidence, recipe["residualSimilarity"], MAX_CLUSTER_OPERATIONS):
+                members, assignment_evidence if set(members) & dominant_ids else evidence,
+                recipe["residualSimilarity"], MAX_CLUSTER_OPERATIONS):
             if not cluster:
                 continue
             cluster_key = [recipe["name"], status, parent_id, view_id, source_folder, *cluster]
@@ -2568,6 +2608,14 @@ def regroup_runtime(rows, valid_vectors, catalog, policy, selected, run_id, *, r
         "qualifiedReferences": list(view_by_id.values()),
         "independentIdentities": independent_identities,
         "provisionalContainers": provisional_containers,
+        "assignmentPolicy": {
+            "dominantFaceProvisionalEnabled": bool(dominant_provisional),
+            "secondaryFaceRatioExclusiveMaximum": policy["runtimeSettings"]["multiFace"],
+            "minimumFacePixels": policy["runtimeSettings"]["minFace"],
+            "measurementBasis": "existing largest detected human face embedding; no new inference",
+            "referenceAuthority": "none; reference/cast/correction eligibility unchanged",
+            "assignedDominantPhotoIds": sorted(dominant_safe),
+        },
         "assignmentSummary": {
             **dict(collections.Counter(state["assignmentDisposition"] for state in state_by_photo.values())),
             "confirmedIndependentIdentities": len(independent_identities),

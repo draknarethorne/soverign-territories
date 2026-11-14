@@ -166,7 +166,7 @@ def review_evidence(source, rows):
 
 
 def regroup(rows, measured, catalog, policy, selected, run_id, *, at=None, pairs=(), name_factory=None,
-            reference_exclusions=(), directed_recipe=None):
+            reference_exclusions=(), directed_recipe=None, dominant_provisional=False):
     """Rebuild unprotected hypotheses; old folders provide lineage, never admission."""
     live_clock = at is None
     at = at or datetime.datetime.now(datetime.timezone.utc).isoformat()
@@ -181,6 +181,7 @@ def regroup(rows, measured, catalog, policy, selected, run_id, *, at=None, pairs
                 raise ValueError("regrouping requires unambiguous stable photo IDs")
             by_id[pid] = row
     valid = {}
+    assignment_vectors = {}
     for pid, row in by_id.items():
         photo = measured.get(row["source"])
         if (photo is not None and photo.vec is not None and photo.usable(policy["runtimeSettings"]["minFace"])
@@ -217,6 +218,15 @@ def regroup(rows, measured, catalog, policy, selected, run_id, *, at=None, pairs
                         "not proof image is unusable"
                     )
             row["qualityEvidence"] = {**(row.get("qualityEvidence") or {}), **quality}
+            if (dominant_provisional and row.get("oldFolder") == "Various" and photo is not None
+                    and photo.vec is not None and photo.usable(policy["runtimeSettings"]["minFace"])
+                    and getattr(photo, "secondary_face_ratio_available", False)
+                    and photo.faces > 1 and 0 <= photo.f2 < policy["runtimeSettings"]["multiFace"]
+                    and not row.get("qualityHold") and not row.get("castSeedQualityReason")):
+                vector = np.asarray(photo.vec, dtype=float)
+                norm = np.linalg.norm(vector)
+                if np.isfinite(vector).all() and norm > 0:
+                    assignment_vectors[pid] = vector / norm
     ids = sorted(valid)
     if not ids:
         raise ValueError("regrouping requires eligible face measurements")
@@ -231,6 +241,7 @@ def regroup(rows, measured, catalog, policy, selected, run_id, *, at=None, pairs
         return directed_reformation.regroup_runtime(
             rows, valid, catalog, policy, set(selected), run_id, recipe=recipe,
             at=at, pairs=pairs, reference_exclusions=reference_exclusions, name_factory=name_factory,
+            dominant_assignment_vectors=assignment_vectors, dominant_provisional=dominant_provisional,
         )
     indices = {pid: i for i, pid in enumerate(ids)}
     matrix = np.asarray([valid[pid] for pid in ids])
