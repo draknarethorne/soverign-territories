@@ -55,6 +55,228 @@ class RebaseRecapTests(unittest.TestCase):
         source.parent.mkdir(parents=True)
         source.write_bytes(b"source-a")
 
+    def test_family_coverage_and_provisional_authority_are_not_reported_as_confirmed_identity(self):
+        data = {"familyNaming": {
+            "families": [], "ownerAssessment": [{
+                "personId": "owner", "folder": "Potentials/Una Vale", "identityStatus": "provisional",
+                "qualifiedReferenceCount": 0, "status": "provisional-no-reference-authority",
+            }],
+        }}
+        page = rebase_recap._family_section(data)
+        self.assertIn("All-category owner assessment", page)
+        self.assertIn("Potentials/Una Vale", page)
+        self.assertIn("provisional-no-reference-authority", page)
+        self.assertIn("not certified identities", page)
+        data["groupLifecycle"] = {
+            "assignmentSummary": {"supported": 1, "provisional": 6, "activeVarious": 0, "junk": 0,
+                                  "confirmedIndependentIdentities": 0, "provisionalContainers": 1},
+            "stages": [{"id": "publication", "rows": [{
+                "destination": "Potentials/Una Vale/gallery/u.jpg",
+                "status": "tentative", "actionCategory": "provisional",
+            }]}],
+        }
+        page = rebase_recap._lifecycle_placement_summary(data)
+        self.assertIn("6 provisional", page)
+        self.assertIn("0 activeVarious", page)
+        self.assertIn("0 confirmedIndependentIdentities", page)
+        self.assertIn("not certified distinct identities", page)
+
+    def test_final_projection_is_not_presented_as_an_intermediate_snapshot(self):
+        plan = _plan(self.working)
+        plan["status"] = "preview"
+        plan["groupLifecycle"] = {
+            "recipe": "directed-core-continuity", "evaluation": {},
+            "stages": [{
+                "id": "references", "title": "References", "evidenceKind": "final-projection",
+                "rows": [{
+                    **plan["photos"][0], "sourceReferenceHold": True,
+                    "referenceUseDisposition": "withdrawn-or-unqualified-independent-of-placement",
+                    "referenceWithdrawalReason": "independent validation failed",
+                    "admissionReason": "insufficient-independent-member-support",
+                }],
+            }],
+        }
+        (self.run / "run.json").write_text(json.dumps(plan), encoding="utf-8")
+        out = self.working / "report.html"
+        self.assertEqual(rebase_recap.main([str(self.run), "--out", str(out)]), 0)
+        page = next((self.run / "group-lifecycle").glob("*.html")).read_text(encoding="utf-8")
+        self.assertIn("Final projection only: no intermediate state was saved", page)
+        self.assertIn("Source has no qualified reference view: True", page)
+        self.assertIn("independent validation failed", page)
+        self.assertIn("insufficient-independent-member-support", page)
+        self.assertIn("final-projection", page)
+
+    def test_packed_boundary_pages_match_full_rows_without_changing_snapshot_meaning(self):
+        from tools.art.likeness_library.directed_reformation import pack_lifecycle_stages
+        plan = _plan(self.working)
+        plan["status"] = "preview"
+        plan["groupLifecycle"] = {"recipe": "directed", "evaluation": {}, "stages": [{
+            "id": "publication", "title": "Final", "evidenceKind": "proposal-snapshot",
+            "rows": [{**plan["photos"][0], "status": "supported", "coreUse": True,
+                      "personId": "person:one", "reason": "independent admission passed",
+                      "independentCandidateFolder": "Potentials/Nova Candidate",
+                      "independentCandidateDisposition": "independent-reference-insufficient"}],
+            "referenceInventory": {"view-one": ["photo:a"]},
+        }]}
+        (self.run / "run.json").write_text(json.dumps(plan), encoding="utf-8")
+        out = self.working / "report.html"
+        self.assertEqual(rebase_recap.main([str(self.run), "--out", str(out)]), 0)
+        page = next((self.run / "group-lifecycle").glob("*.html"))
+        original = page.read_bytes()
+        self.assertIn(b"Potentials/Nova Candidate", original)
+        self.assertIn(b"independent-reference-insufficient", original)
+        pack_lifecycle_stages(plan["groupLifecycle"])
+        (self.run / "run.json").write_text(json.dumps(plan), encoding="utf-8")
+        self.assertEqual(rebase_recap.main([str(self.run), "--out", str(out)]), 0)
+        self.assertEqual(page.read_bytes(), original)
+        self.assertEqual(rebase_recap.main([str(self.run), "--out", str(out), "--check"]), 0)
+
+    def test_group_lifecycle_pages_are_bounded_verified_and_checked(self):
+        plan = _plan(self.working)
+        plan["status"] = "preview"
+        overlay = self.run / "source-overlay"
+        source = overlay / "Angels" / "Ava" / "gallery" / "ava_a.jpg"
+        source.parent.mkdir(parents=True)
+        source.write_bytes(b"source-a")
+        payload = json.dumps({"currentVarious": [], "inputs": {}}).encode()
+        (overlay / "overlay.json").write_bytes(payload)
+        plan["sourceOverlaySHA256"] = hashlib.sha256(payload).hexdigest()
+        row = {"photoId": "photo:a", "source": "Angels/Ava/gallery/ava_a.jpg",
+               "destination": "Angels/Ava/gallery/ava_a.jpg", "personId": "person:1",
+               "groupId": "group_1", "status": "tentative", "coreUse": False,
+               "reason": "<unsafe>", "score": 0.7, "rivalScore": 0.6, "margin": 0.1}
+        plan["groupLifecycle"] = {"recipe": "test", "evaluation": {"kept": 101},
+                                  "stages": [{"id": "test", "title": "Stage", "at": "then",
+                                              "rows": [row] * 101, "summary": {"count": 101}}]}
+        (self.run / "run.json").write_text(json.dumps(plan), encoding="utf-8")
+        out = self.working / "report.html"
+        self.assertEqual(rebase_recap.main([str(self.run), "--out", str(out)]), 0)
+        pages = sorted((self.run / "group-lifecycle").glob("*.html"))
+        self.assertEqual(len(pages), 2)
+        first = pages[0].read_text(encoding="utf-8")
+        self.assertEqual(first.count("<article>"), 100)
+        self.assertIn("nothing installed", first)
+        self.assertIn("ava_a.jpg", first)
+        self.assertIn("&lt;unsafe&gt;", first)
+        self.assertNotIn("<unsafe>", first)
+        self.assertIn("Image load error", first)
+        self.assertEqual(rebase_recap.main([str(self.run), "--out", str(out), "--check"]), 0)
+        before = [page.read_bytes() for page in pages]
+        self.assertEqual(rebase_recap.main([str(self.run), "--out", str(out)]), 0)
+        self.assertEqual(before, [page.read_bytes() for page in pages])
+        plan["status"] = "applied"
+        (self.run / "run.json").write_text(json.dumps(plan), encoding="utf-8")
+        self.assertEqual(rebase_recap.main([str(self.run), "--out", str(out)]), 0)
+        applied = pages[0].read_text(encoding="utf-8")
+        self.assertIn("Installed destination", applied)
+        self.assertIn("current applied files", applied)
+        self.assertIn("source-overlay", applied)
+        self.assertEqual(rebase_recap.main([str(self.run), "--out", str(out), "--check"]), 0)
+        source.write_bytes(b"changed")
+        self.assertEqual(rebase_recap.main([str(self.run), "--out", str(out), "--check"]), 1)
+
+    def test_group_stage_summarizes_large_evidence_and_explains_population_scope(self):
+        data = rebase_recap.collect(self.run)
+        row = {"photoId": "photo:a", "source": "Angels/Ava/gallery/ava_a.jpg",
+               "destination": "Angels/Ava/gallery/ava_a.jpg", "reason": "reason"}
+        evidence = [{"secret": "LARGE-EVIDENCE-MARKER" * 100}] * 10000
+        data["groupLifecycle"] = {
+            "recipe": "test", "evaluation": {
+                "photoCount": 3290, "supported": 2000, "referenceVersion": "<version>",
+                "stagedDependencies": evidence, "referenceQualificationBoundaries": evidence,
+                "withdrawalBoundaries": evidence,
+            },
+            "stages": [
+                {"id": "withdrawal", "title": "Withdrawal", "at": "then", "rows": [row],
+                 "scope": "withdrawn references", "populationCount": 3290, "summary": {"withdrawn": 1}},
+                {"id": "all", "title": "All inputs", "at": "later", "rows": [row] * 101,
+                 "scope": "all inputs", "populationCount": 101, "summary": {"supported": 101}},
+            ],
+        }
+        rendered = rebase_recap._stage_pages(data)
+        self.assertEqual(len(rendered), 3)
+        withdrawal, full, last = rendered.values()
+        self.assertLess(max(len(page) for page in rendered.values()), 150000)
+        self.assertNotIn("LARGE-EVIDENCE-MARKER", withdrawal)
+        self.assertIn("stagedDependencies: 10000 entries", withdrawal)
+        self.assertIn("referenceQualificationBoundaries: 10000 entries", withdrawal)
+        self.assertIn("withdrawalBoundaries: 10000 entries", withdrawal)
+        self.assertIn("photoCount: 3290", withdrawal)
+        self.assertIn("&lt;version&gt;", withdrawal)
+        self.assertIn("Scope: withdrawn references · snapshot rows: 1 · input population: 3290", withdrawal)
+        self.assertIn("Scope: all inputs · snapshot rows: 101 · input population: 101", full)
+        self.assertIn("Full saved run evidence", withdrawal)
+        self.assertIn("run.json", withdrawal)
+        self.assertIn('aria-label="Lifecycle stages"', withdrawal)
+        self.assertIn('aria-label="Stage pages"', last)
+        self.assertIn("minmax(min(100%,230px),1fr)", full)
+        self.assertEqual(full.count("<article>"), 100)
+        self.assertEqual(last.count("<article>"), 1)
+
+    def test_directed_stage_and_recap_keep_decision_classes_distinct(self):
+        data = rebase_recap.collect(self.run)
+        rows = [
+            {"photoId": f"photo:{index}", "source": f"Angels/Ava/gallery/{index}.jpg",
+             "sourceDestination": f"Angels/Ava/gallery/{index}.jpg",
+             "destination": f"{destination}/gallery/{index}.jpg",
+             "proposedDestination": f"{destination}/gallery/{index}.jpg",
+             "actionCategory": action, "status": "supported", "coreUse": False,
+             "personId": "person:1", "groupId": None, "reason": action}
+            for index, (action, destination) in enumerate((
+                ("same-home", "Angels/Ava"), ("upward", "Sisters/Parent"),
+                ("same-rank", "Angels/Other"), ("correction", "Models/Corrected"),
+                ("hold", "Angels/Ava"),
+            ))
+        ]
+        data["groupLifecycle"] = {
+            "evaluation": {
+                "sameHomeAssignments": 1, "upwardAssignments": 1, "sameRankAssignments": 1,
+                "correctionAssignments": 1, "heldAssignments": 1,
+            },
+            "stages": [{"id": "publication", "title": "Publication", "rows": rows}],
+        }
+        summary = rebase_recap._lifecycle_placement_summary(data)
+        self.assertIn("Directed decisions: 1 same-home · 1 upward · 1 same-rank · 1 correction · 1 hold", summary)
+        stage = next(iter(rebase_recap._stage_pages(data).values()))
+        for action in ("same-home", "upward", "same-rank", "correction", "hold"):
+            self.assertIn(f"Directed decision: {action}", stage)
+        self.assertIn("Inherited home", stage)
+        self.assertIn("Directed proposal", stage)
+
+    def test_family_reconciliation_and_placement_keep_history_and_status_distinct(self):
+        data = rebase_recap.collect(self.run)
+        data["familyNaming"] = {
+            "families": [], "linkBand": "test", "linkMinimum": 0.3,
+            "previousCatalogueFamilies": {"person_a": {"surname": "Old"}},
+            "catalogueReconciliation": [
+                {"personId": "person_a", "previousFamily": {"surname": "Old"},
+                 "currentFamily": {"surname": "<New>"}, "decision": "refreshed", "reason": "recomputed"},
+                {"personId": "person_b", "previousFamily": {"surname": "Former", "previousPersonName": "Prior Name"},
+                 "currentFamily": None, "decision": "retired", "reason": "<retired>"},
+            ],
+        }
+        data["groupLifecycle"] = {"stages": [{"id": "publication", "rows": [
+            {"personId": "person_a", "destination": "Models/Current/gallery/a.jpg", "status": "supported"},
+            {"destination": "Models/Other/gallery/b.jpg", "status": "tentative"},
+            {"destination": "Models/Other/gallery/c.jpg", "status": "quality-hold"},
+            {"destination": "Various/review/d.jpg", "status": "unresolved"},
+        ]}]}
+        out = self.working / "report.html"
+        page = rebase_recap.render(data, out)
+        self.assertIn("Prior creative family records reconciled: 2 (1 refreshed, 1 retired)", page)
+        self.assertIn("Models/Current<br>person_a", page)
+        self.assertIn("Prior Name<br>person_b", page)
+        self.assertIn("&lt;New&gt;", page)
+        self.assertIn("&lt;retired&gt;", page)
+        self.assertNotIn("<retired>", page)
+        self.assertIn("none (retired or not recorded)", page)
+        self.assertIn("not claims of biological kinship", page)
+        self.assertIn("saved run evidence", page)
+        self.assertIn("Gallery: 1 quality-hold, 1 supported, 1 tentative", page)
+        self.assertIn("Review: 1 unresolved", page)
+        self.assertIn("Physical Gallery placement is distinct", page)
+        self.assertIn("do not guarantee", page)
+
     def test_direct_script_entry_point_supports_launcher(self):
         result = subprocess.run(
             [sys.executable, str(pathlib.Path(rebase_recap.__file__).resolve()), "--help"],

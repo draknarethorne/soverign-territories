@@ -1,0 +1,2 @@
+# Optional, isolated local observation experiment; ordinary library runs do not import this.
+transformers==4.57.6

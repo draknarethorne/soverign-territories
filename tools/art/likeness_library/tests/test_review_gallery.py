@@ -22,6 +22,33 @@ from tools.art.likeness_library import review_gallery
 
 
 class ReviewGalleryTests(unittest.TestCase):
+    def test_many_diagnostics_are_collapsed_counted_and_preserved(self):
+        warnings = [f"Catalogue folder not found: Old {i} → Folder {i}" for i in range(210)]
+        warnings += ["Other <important> diagnostic"]
+        page = review_gallery.render_html([], "now", warnings, section_links=[])
+        self.assertIn('<details class="warnings"><summary>Diagnostics: 211 warnings', page)
+        self.assertNotIn('<details class="warnings" open', page)
+        self.assertIn("Catalogue folder not found: Old 0 → Folder 0", page)
+        self.assertIn("Catalogue folder not found: Old 209 → Folder 209", page)
+        self.assertIn("Other &lt;important&gt; diagnostic", page)
+        self.assertIn(".warnings ul{max-height:24rem;overflow:auto", page)
+        self.assertLess(page.index("</details>"), page.index('id="query"'))
+        self.assertEqual(page.count("<li>"), len(warnings))
+
+    def test_appearance_metadata_is_distinct_from_identity_and_safe_in_script(self):
+        group_id = "group_" + "b" * 32
+        catalog = {"photos": {"photo:a": {"membership": {"groupId": group_id,
+                    "status": "supported", "coreUse": False, "reason": "</script>"}}},
+                   "photoGroups": {group_id: {"name": "<name>", "sourcePersonIds": ["person:old"]}}}
+        value = review_gallery.group_views.describe(catalog, "photo:a")
+        self.assertEqual(value["membership"]["status"], "supported")
+        self.assertFalse(value["membership"]["coreUse"])
+        self.assertEqual(value["group"]["sourcePersonIds"], ["person:old"])
+        self.assertEqual(value["label"], "<name>")
+        self.assertIn("Appearance group (within identity)", review_gallery.SCRIPT)
+        self.assertIn('detail.textContent="Appearance group (within identity): "+r.appearance.label', review_gallery.SCRIPT)
+        self.assertIn("textContent", review_gallery.SCRIPT)
+
     def test_report_output_is_validated_before_catalog_or_collection(self):
         with tempfile.TemporaryDirectory() as directory:
             root = pathlib.Path(directory) / "library"
@@ -350,6 +377,41 @@ class ReviewGalleryTests(unittest.TestCase):
             self.assertIn('identityId.className="detail identity-id"', page)
             self.assertIn('"unassigned (Various hold)"', page)
 
+    def test_various_gallery_and_review_holds_preserve_locations_without_identity_core(self):
+        for locations in (("gallery",), ("gallery", "review")):
+            with self.subTest(locations=locations), tempfile.TemporaryDirectory() as directory:
+                root = pathlib.Path(directory)
+                st = likeness.settings({})
+                for i, bucket in enumerate(locations):
+                    folder = root / "Various" / bucket
+                    folder.mkdir(parents=True)
+                    (folder / f"person_image_{123450 + i}.jpg").write_bytes(f"photo-{i}".encode())
+                cache = likeness.Cache(root / "cache.json")
+                space = likeness.Space([], st, mean=[0., 0.])
+                with mock.patch.object(likeness, "library_people", return_value=[]), \
+                        mock.patch.object(likeness, "cleanup_hold", return_value=set()):
+                    items, warnings = review_gallery.collect_items(
+                        {}, st, root, cache, space,
+                        {"schemaVersion": 1, "people": {}, "photos": {}, "actions": []},
+                        embed=lambda _: {"v": [1., 0.], "px": 100, "faces": 1, "s": .95},
+                    )
+                self.assertFalse(warnings)
+                self.assertEqual(len(items), len(locations))
+                self.assertEqual({item["bucket"] for item in items},
+                                 {bucket.title() for bucket in locations})
+                self.assertEqual(len({item["photoId"] for item in items}), len(items))
+                self.assertTrue(all(item["folder"] == "Various" and item["personId"] is None
+                                    and item["state"] == "Hold" and not item["primaryReference"]
+                                    and not item["scoreContext"]["coreMember"] for item in items))
+                for item in items:
+                    self.assertEqual(item["_photo"].path.parent.name, item["bucket"].lower())
+                    self.assertEqual([kind for kind, _ in item["stageOptions"]],
+                                     ["photo-retired", "photo-junked"])
+                page = review_gallery.render_html(
+                    [{k: v for k, v in item.items() if not k.startswith("_")} for item in items], "now")
+                self.assertIn('person.add(new Option(requestedPerson+" (unavailable)",requestedPerson))', page)
+                self.assertIn('"bucket": "Gallery"', page)
+
     def test_closest_other_uses_each_photo_vector_and_skips_other_sides(self):
         photo = SimpleNamespace(
             usable=lambda min_face: min_face == 60,
@@ -519,6 +581,12 @@ class ReviewGalleryTests(unittest.TestCase):
         self.assertTrue(list(validator.iter_errors(manifest)))
 
     def test_collection_scores_review_against_gallery_without_including_it(self):
+        self._check_review_collection(new_arrival=False)
+
+    def test_new_arrival_does_not_influence_regrouped_review_cores(self):
+        self._check_review_collection(new_arrival=True)
+
+    def _check_review_collection(self, *, new_arrival):
         with tempfile.TemporaryDirectory() as tmp:
             folder = pathlib.Path(tmp) / "Prospects" / "Sophie"
             gallery_dir, review_dir = folder / "gallery", folder / "review"
@@ -561,7 +629,9 @@ class ReviewGalleryTests(unittest.TestCase):
             cfg = {"photos": {"Sophie": gallery_paths[0].name}}
             settings = {"minFace": 60, "odd": 0.15, "mixed": []}
             anchor_id = "photo:image_222222"
+            group_id = "group_" + "a" * 32
             data = {
+                "photoGroups": {group_id: {"name": "Appearance", "sourcePersonIds": ["person_old"]}},
                 "people": {
                     "person_test": {
                         "id": "person_test",
@@ -571,12 +641,31 @@ class ReviewGalleryTests(unittest.TestCase):
                     }
                 },
                 "photos": {
+                    "photo:image_111111": {
+                        "contentSha256": hashlib.sha256(gallery_paths[0].read_bytes()).hexdigest(),
+                        "protected": False,
+                        "membership": {"groupId": group_id, "status": "supported", "coreUse": True},
+                    },
                     anchor_id: {
                         "contentSha256": hashlib.sha256(gallery_paths[1].read_bytes()).hexdigest(),
                         "protected": False,
+                        "membership": {"groupId": group_id, "status": "tentative",
+                                       "coreUse": False, "reason": "reviewed"},
+                    },
+                    "photo:image_444444": {
+                        "contentSha256": hashlib.sha256(review_path.read_bytes()).hexdigest(),
+                        "protected": False,
+                        "membership": {"groupId": group_id, "status": "tentative",
+                                       "coreUse": False, "reason": "hold"},
                     }
                 },
             }
+            if not new_arrival:
+                data["photos"]["photo:image_333333"] = {
+                    "contentSha256": hashlib.sha256(gallery_paths[2].read_bytes()).hexdigest(),
+                    "protected": False,
+                    "membership": {"groupId": group_id, "status": "supported", "coreUse": True},
+                }
             original_data = json.loads(json.dumps(data))
             embedding = lambda _path: {"faces": 1, "px": 100, "v": [-1.0, 0.0]}
             with mock.patch.object(
@@ -593,7 +682,9 @@ class ReviewGalleryTests(unittest.TestCase):
                 review_gallery.originals,
                 "images",
                 side_effect=lambda path: gallery_paths if path == gallery_dir else [review_path],
-            ):
+            ), mock.patch.object(
+                review_gallery, "audit_person", wraps=review_gallery.audit_person,
+            ) as audit:
                 items, _warnings = review_gallery.collect_items(
                     cfg, settings, pathlib.Path(tmp), cache, space, data, embed=embedding
                 )
@@ -602,13 +693,21 @@ class ReviewGalleryTests(unittest.TestCase):
             gallery_item = next(item for item in items if item["bucket"] == "Gallery")
             selected_item = next(item for item in items if item["name"] == gallery_paths[0].name)
             anchor_item = next(item for item in items if item["name"] == gallery_paths[1].name)
+            arrival_item = next(item for item in items if item["name"] == gallery_paths[2].name)
+            self.assertEqual(len(audit.call_args_list), 2)
+            for call in audit.call_args_list:
+                self.assertEqual("photo:image_333333" in call.kwargs["excluded_ids"], new_arrival)
+            self.assertEqual(arrival_item["membershipExcluded"], new_arrival)
+            self.assertEqual(arrival_item["scoreContext"]["coreMember"], not new_arrival)
+            self.assertEqual(anchor_item["appearance"]["group"]["name"], "Appearance")
+            self.assertEqual(review_item["appearance"]["membership"]["reason"], "hold")
             self.assertEqual(review_item["state"], "Review")
             self.assertLess(review_item["score"], 0)
             self.assertIn("never enters its core", review_item["reason"])
             self.assertEqual(review_item["photoId"], "photo:image_444444")
             self.assertEqual(review_item["personId"], "person_test")
             self.assertEqual(review_item["scoreContext"]["facePixels"], 100)
-            self.assertEqual(review_item["scoreContext"]["coreSize"], 3)
+            self.assertEqual(review_item["scoreContext"]["coreSize"], 1 if new_arrival else 2)
             self.assertFalse(review_item["scoreContext"]["coreMember"])
             self.assertEqual(review_item["best_other"], "Angels/Camaris (0.46)")
             self.assertEqual(gallery_item["best_other"], "Angels/Camaris (0.46)")
@@ -622,7 +721,9 @@ class ReviewGalleryTests(unittest.TestCase):
             self.assertTrue(selected_item["workflowSelected"])
             self.assertTrue(selected_item["primaryReference"])
             self.assertEqual(selected_item["referenceLabel"], "Workflow-selected photo")
-            self.assertTrue(anchor_item["identityAnchor"])
+            self.assertFalse(anchor_item["identityAnchor"])
+            self.assertEqual(anchor_item["state"], "Excluded from core")
+            self.assertTrue(anchor_item["membershipExcluded"])
             self.assertFalse(anchor_item["primaryReference"])
             self.assertFalse(review_item["identityAnchor"])
             self.assertEqual(data, original_data)

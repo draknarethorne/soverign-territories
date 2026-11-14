@@ -44,6 +44,7 @@ def inspect(working, source_name, target_name):
     plan = load(source / "run.json")
     if (pathlib.Path(plan["workingRoot"]) != working or not plan.get("preparation")
             or plan["preparation"].get("storageMode") != "lean"
+            or plan["preparation"].get("processingProfile", "standard") != "standard"
             or plan["status"] not in ("applied", "preview")):
         raise ValueError("source must be a completed LEAN matching run belonging to this sandbox")
     intake = load(source / "intake.json")
@@ -144,6 +145,26 @@ def _layout(working, source):
 
 
 def command(args):
+    regroup = args.regroup
+    if args.directed and not regroup:
+        raise ValueError("directed mode requires regrouping")
+    if args.directed and not args.directed_recipe:
+        raise ValueError("directed mode requires an explicit recipe")
+    if args.directed_recipe and not args.directed:
+        raise ValueError("directed recipe requires directed mode")
+    if args.review_source and not regroup:
+        raise ValueError("review evidence requires regrouping")
+    recipe = None
+    if args.directed:
+        from tools.art.likeness_library.directed_reformation import recipe_named
+        recipe = recipe_named(args.directed_recipe)["name"]
+    review_source = pathlib.Path(args.review_source) if args.review_source else None
+    if review_source is not None and not review_source.is_absolute():
+        raise ValueError("review evidence path must be absolute")
+    grouping = {
+        "regroup": regroup, "directedRecipe": recipe,
+        "reviewSource": str(review_source) if review_source else None,
+    }
     working = pathlib.Path(args.root)
     source, target, original = inspect(working, args.source_run, args.run)
     if args.dry_run or not any((args.apply, args.check, args.install)):
@@ -151,6 +172,7 @@ def command(args):
         print("Reuse original prepared pixels and measured faces; recompute cast cores, grouping, refinement and names.")
         print("No reset, intake, backup or rollback. Recovery after failed installation is a fresh sandbox reset.")
         print("--apply creates matching preview only; --install publishes it; --check verifies without writes.")
+        print(f"Grouping: {'directed ' + recipe if recipe else 'historical regroup' if regroup else 'historical default'}")
         print(f"Original intake count: {original['preparation']['inputCount']}; no matching was started.")
         return {"status": "inventory"}
     layout = _layout(working, source)
@@ -160,6 +182,11 @@ def command(args):
         return {"status": "source-verified"}
     if target.exists():
         receipt = load(target / "continuation.json")
+        recorded_grouping = receipt.get("grouping", {
+            "regroup": False, "directedRecipe": None, "reviewSource": None,
+        })
+        if recorded_grouping != grouping:
+            raise ValueError("saved continuation grouping mode/recipe or review source differs")
         if receipt["sourceRun"] != str(source):
             raise ValueError("continuation belongs to another original intake")
         for name, digest in receipt["sourceFiles"].items():
@@ -227,6 +254,7 @@ def command(args):
     target.mkdir()
     receipt = {
         "schemaVersion": 1, "sourceRun": str(source), "recoveryMode": "disposable",
+        "grouping": grouping,
         "sourceFiles": {name: metadata.content_sha256(source / name) for name in (
             "run.json", "intake.json", "likeness-cache.json",
         )},
@@ -245,6 +273,7 @@ def command(args):
         working_inputs=working_inputs,
         matching_inputs={row["source"]: row["sha256"] for row in original["photos"]},
         workflow_reset={"mode": "all"},
+        regroup=regroup, review_source=review_source, directed_recipe=recipe,
     )
     plan.update(
         recoveryMode="disposable", reusedPreparationFrom=str(source), rollbackCreated=False,
@@ -263,6 +292,10 @@ def main(argv=None):
     parser.add_argument("--source-run", required=True)
     parser.add_argument("--run", required=True)
     parser.add_argument("--policy")
+    parser.add_argument("--regroup", action="store_true")
+    parser.add_argument("--directed", action="store_true")
+    parser.add_argument("--directed-recipe")
+    parser.add_argument("--review-source")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--dry-run", action="store_true")
     mode.add_argument("--apply", action="store_true", help="create matching preview only, without intake or install")

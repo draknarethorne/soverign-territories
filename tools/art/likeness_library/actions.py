@@ -3,6 +3,7 @@
 import argparse
 import copy
 import datetime
+import hashlib
 import json
 import os
 import pathlib
@@ -472,11 +473,37 @@ def _ensure_person(catalog, action, root):
     return person_id, person
 
 
-def _catalog_state(catalog, person_id, photo_id):
-    return {
+def _catalog_state(catalog, person_id, photo_id, group_ids=()):
+    state = {
         "person": copy.deepcopy(catalog["people"].get(person_id)),
         "photo": copy.deepcopy(catalog["photos"].get(photo_id)),
     }
+    group_id = (state["photo"] or {}).get("membership", {}).get("groupId")
+    keys = set(group_ids) | ({group_id} if group_id else set())
+    if keys:
+        state["photoGroups"] = {key: copy.deepcopy(catalog["photoGroups"][key]) for key in sorted(keys)}
+    return state
+
+
+def _group_transitions(plans, catalog):
+    proposed = {
+        p["action"]["photoId"]: p for p in plans
+        if p["type"] in ("match-accepted", "review-approved", "sent-to-review")
+    }
+    result = {}
+    for group_id, group in catalog.get("photoGroups", {}).items():
+        members = group["memberPhotoIds"]
+        if not members or not all(pid in proposed for pid in members):
+            continue
+        destinations = {
+            (proposed[pid]["action"].get("destinationPersonId", group["personId"]),
+             "supported" if proposed[pid]["type"] == "review-approved" else "tentative")
+            for pid in members
+        }
+        if len(destinations) == 1:
+            person_id, status = next(iter(destinations))
+            result[group_id] = {"personId": person_id, "status": status}
+    return result
 
 
 def _relative_file(root, path):
@@ -486,7 +513,7 @@ def _relative_file(root, path):
         raise ValueError(f"path is outside the photo-library root: {path}") from exc
 
 
-def _apply_catalog_action(catalog, plan, root, batch_id):
+def _apply_catalog_action(catalog, plan, root, batch_id, group_transitions=None):
     action = plan["action"]
     photo_id = action["photoId"]
     source = plan["source"]
@@ -505,6 +532,12 @@ def _apply_catalog_action(catalog, plan, root, batch_id):
     )
     photo = copy.deepcopy(old_photo) if old_photo else {}
     photo.update({"contentSha256": actual_hash, "protected": protected})
+    if "photoGroups" in catalog and "membership" not in photo:
+        photo["membership"] = {
+            "personId": person_id, "groupId": None, "status": "tentative", "coreUse": False,
+            "reason": "new member requires explicit membership assessment; placement alone grants no reference authority",
+            "referenceVersion": hashlib.sha256(batch_id.encode()).hexdigest(),
+        }
 
     action_type = action["type"]
     if action_type == "anchor-added":
@@ -525,8 +558,46 @@ def _apply_catalog_action(catalog, plan, root, batch_id):
         ]
     if action_type == "match-rejected":
         photo["rejectedPersonIds"] = sorted(set(photo.get("rejectedPersonIds", [])) | {person_id})
+    membership = photo.get("membership")
+    if membership:
+        group_id = membership["groupId"]
+        group = catalog.get("photoGroups", {}).get(group_id)
+        if action_type in MOVE_ACTIONS:
+            complete_group_target = (group_transitions or {}).get(group_id)
+            if group:
+                group["referencePhotoIds"] = [pid for pid in group["referencePhotoIds"] if pid != photo_id]
+                if complete_group_target:
+                    group["sourcePersonIds"] = sorted(set(group["sourcePersonIds"]) | {group["personId"]})
+                    group["personId"] = complete_group_target["personId"]
+                    group["status"], group["referencePhotoIds"] = complete_group_target["status"], []
+                else:
+                    group["memberPhotoIds"].remove(photo_id)
+                    membership["groupId"] = None
+                group["history"].append({
+                    "timestamp": datetime.datetime.now().astimezone().isoformat(timespec="seconds"),
+                    "runId": batch_id, "reason": f"{action_type}: explicit member/group action; no stale snapshot restoration",
+                })
+            target_id = action.get("destinationPersonId", person_id)
+            if action_type in ("rejected-to-various", "match-rejected", "photo-junked", "photo-retired"):
+                target_id = None
+            membership.update(
+                personId=target_id, coreUse=False,
+                status="supported" if action_type == "review-approved" else "tentative" if target_id else "unresolved",
+                reason=f"explicit user action: {action_type}; automatic references require reassessment",
+            )
+        elif action_type in ANCHOR_ACTIONS:
+            if membership["status"] != "supported":
+                raise ValueError("approve membership before promoting an identity anchor")
+            membership["coreUse"] = action_type == "anchor-added"
+            if group:
+                group["referencePhotoIds"] = sorted(
+                    (set(group["referencePhotoIds"]) - {photo_id})
+                    | ({photo_id} if membership["coreUse"] else set())
+                )
+        if action_type in MOVE_ACTIONS or action_type in ANCHOR_ACTIONS:
+            membership["referenceVersion"] = hashlib.sha256(batch_id.encode()).hexdigest()
     catalog["photos"][photo_id] = photo
-    after_state = _catalog_state(catalog, person_id, photo_id)
+    after_state = _catalog_state(catalog, person_id, photo_id, before_state.get("photoGroups", {}))
     source_relative = _relative_file(root, source)
     destination_relative = (
         _relative_file(root, plan["destination"]) if plan["destination"] is not None else source_relative
@@ -836,6 +907,7 @@ def apply_actions(document, root, catalog, cfg, pool_folder, *, backup_fn=None, 
     transfers = _retained_plans(root, plans)
     batch_id = "batch_" + uuid.uuid4().hex
     updated = copy.deepcopy(catalog)
+    group_transitions = _group_transitions(plans, catalog)
     rename_record = None
     for plan in plans:
         if plan["type"] == person_rename.ACTION:
@@ -845,7 +917,7 @@ def apply_actions(document, root, catalog, cfg, pool_folder, *, backup_fn=None, 
         elif plan.get("workflow"):
             _apply_workflow_action(updated, plan, root, batch_id)
         else:
-            _apply_catalog_action(updated, plan, root, batch_id)
+            _apply_catalog_action(updated, plan, root, batch_id, group_transitions)
     metadata.validate_catalog(updated)
 
     catalog_guard = _catalog_guard(root, catalog)
@@ -1012,7 +1084,7 @@ def plan_undo(catalog, root, batch_id=None, chosen_ids=(), cfg=None):
         photo_id = action["photoIds"][0]
         if action["source"] != action["destination"] and photo_id in chosen_ids:
             return [f"photo {photo_id} is selected by an active workflow and cannot be moved during undo"], None, []
-        current_state = _catalog_state(simulated, person_id, photo_id)
+        current_state = _catalog_state(simulated, person_id, photo_id, action["afterState"].get("photoGroups", {}))
         if current_state != action["afterState"]:
             return [f"catalogue state changed after action {action['id']}"], None, []
         source = _safe_relative_path(root, action["source"])
@@ -1060,6 +1132,8 @@ def plan_undo(catalog, root, batch_id=None, chosen_ids=(), cfg=None):
                 return [f"photo changed after action {action['id']}: {source}"], None, []
 
         before = action["beforeState"]
+        if "photoGroups" in before:
+            simulated["photoGroups"].update(copy.deepcopy(before["photoGroups"]))
         if action["type"] in WORKFLOW_ACTIONS:
             if before["photo"] is None:
                 simulated["photos"][photo_id] = {
@@ -1138,6 +1212,8 @@ def undo_actions(catalog, root, cfg, pool_folder, *, batch_id=None, backup_fn=No
             continue
         action = item["actionRecord"]
         before = item["beforeState"]
+        if "photoGroups" in before:
+            updated["photoGroups"].update(copy.deepcopy(before["photoGroups"]))
         person_id = action.get("personId")
         photo_id = action["photoIds"][0] if action["photoIds"] else None
         if action["type"] == person_rename.ACTION:
@@ -1238,6 +1314,13 @@ def undo_actions(catalog, root, cfg, pool_folder, *, batch_id=None, backup_fn=No
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
+    quality_parser = subparsers.add_parser("quality", help="run-bound Sandbox measured-unusable quarantine")
+    quality_parser.add_argument("run", help="installed directed run directory")
+    quality_mode = quality_parser.add_mutually_exclusive_group()
+    quality_mode.add_argument("--dry-run", action="store_true", help="preview only (default)")
+    quality_mode.add_argument("--apply", action="store_true", help="use existing backed-up action transaction")
+    quality_mode.add_argument("--check", action="store_true", help="verify durable disposition and conservation")
+    quality_parser.add_argument("--undo", action="store_true", help="preview or apply exact guarded action undo")
     for command in ("validate", "preview", "apply"):
         subparser = subparsers.add_parser(command, help=f"{command} a staged action manifest")
         subparser.add_argument("manifest", help="JSON file downloaded from the review gallery")
@@ -1252,6 +1335,10 @@ def main(argv=None):
 
     try:
         cfg = likeness.cw.load_cfg()
+        if args.command == "quality":
+            from likeness_library import quality_disposition
+            quality_disposition.execute(args.run, cfg, apply=args.apply, check=args.check, undo=args.undo)
+            return 0
         root = pathlib.Path(args.root) if args.root else pathlib.Path(likeness.cw.work_root(cfg))
         root = root.resolve()
         if (

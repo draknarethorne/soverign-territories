@@ -7,6 +7,31 @@ the current core package is executed from the spine after the live-run freeze.
 
 ## Nov 6 bounded implementation and paired evidence
 
+### Nov 11 FAST likeness-first profile clarification
+
+The user's current FAST rebase intent is owned by the
+[phase07 profile contract](likeness_process/07_rebase_and_acceptance.md#nov-11-fast-likeness-first-rebase-contract):
+minimum image analysis for intake/likeness, real assignments and file
+move/rename lifecycle, but no composition/cleanup/enhancement or 944x1104
+generation. LEAN is the balanced route; FULL is final complete processing
+after likeness acceptance. This revises the older cheap-composition FAST
+proposal for this use case; do not silently implement that older proposal
+instead. Profile, evidence storage and recovery remain separate axes.
+
+T18 retains versioned processing/profile specification and bounded tests;
+RA2c retains rebase publication and original-backed Gallery/Overview/Review.
+The clarified acceptance must prove zero image-edit/padding/derivative calls
+through install and report maintenance, not merely fewer retained files or
+a pre-intake skip. It must also cover later selective/all FULL completion
+with stable IDs/provenance, compatible cache invalidation and explicit
+grouping deltas for changed pixels. The mode inventory is **not** an
+implementation claim: the initial launcher-help/invalid-FAST probe showed
+no supported FAST mode at that checkpoint. The subsequently selected
+[RA2e increment](likeness_process/07_rebase_and_acceptance.md#nov-11-selected-flow-increment-fast-first-compatible-lean-and-full)
+now supplies bounded FAST intake/publication and shared three-profile
+testing. No full intake, real library installation or Production snapshot
+is authorized by that implementation.
+
 The settled-run freeze ended before these changes. No full intake or
 library installation is used as a benchmark.
 
@@ -1526,6 +1551,20 @@ This adds next-round priorities, not changes to the bound v23 run.
   still **computed** at that checkpoint although the recipe never selects
   enhancement. Nov 4 LY14a subsequently implements the approved LEAN skip;
   broader person/composition policy changes remain T18/I70 decisions.
+  **Nov 11 clarified rebase contract:** the
+  [likeness-first FAST requirements](#nov-11-fast-likeness-first-profile-clarification)
+  supersede the cheap-composition-only interpretation for the requested
+  rebase. Specify minimum analysis plus skipped editing/944x1104 generation
+  across preparation, install and viewers; RA2c owns its executable rebase/
+  file-publication integration. LEAN balanced and FULL final remain distinct;
+  no automatic loss of recovery guarantees. Do not mark this implemented
+  from storage-mode or disposable-recovery support.
+  **Nov 11 executable seam:** spine RA2e now selects a separately versioned
+  original-byte FAST producer and common FAST/LEAN/FULL lifecycle tests;
+  [phase07 records delivery and outstanding gates](likeness_process/07_rebase_and_acceptance.md#nov-11-selected-flow-increment-fast-first-compatible-lean-and-full).
+  Existing standard preparation is preserved rather than rewritten into a
+  generic recipe engine. T18 remains open for selective later completion,
+  configurable recipe steps and complete performance/quality acceptance.
 - [ ] **P3 ai** T19 After T18's reviewed contract and bounded profile evidence,
   implement validated CUSTOM step/node definitions and versioned erase/
   reconstruction alternatives, reusing existing modules rather than rewriting

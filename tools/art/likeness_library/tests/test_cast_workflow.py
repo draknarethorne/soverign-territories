@@ -69,7 +69,7 @@ class CastWorkflowTests(unittest.TestCase):
                 })
 
     def test_create_plan_excludes_old_selection_and_anchor_before_reference_matching(self):
-        from .test_clean_rebase import CleanRebaseTests
+        from tools.art.likeness_library.tests.test_clean_rebase import CleanRebaseTests
 
         fixture = CleanRebaseTests()
         fixture.setUp()

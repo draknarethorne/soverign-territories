@@ -24,18 +24,27 @@ Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (gen
 
 | Window | Single authoritative execution home | Boundary |
 | --- | --- | --- |
-| Now | [M1 / current Queue focus](2026-11-05-priority-reset.md#execution-spine) | Recap review fixes delivered; family/cast-policy previews, saved-case/audit disposition and bounded performance work before a partial replay, not another intake |
+| Now | [M1 / current Queue focus](2026-11-05-priority-reset.md#execution-spine) | RA2j continues: Various is transient, target zero except true exceptions. Separate tentative/provisional assignment from reference authority; appearance/family/full-outcome assertions and new checked Sandbox iteration required. Candidate06 preserved baseline. Incremental verified commit/push authorized; no Production writes |
 | Next | [M2-M6](2026-11-05-priority-reset.md#execution-spine) | Trusted cast -> selections -> source fidelity -> generic female pilot -> character art/video; advance only at entry gates |
 | Companion | Spelling/new-PC track selected in the spine | Settled processing/evidence and paired baseline before rename; no competing full milestone |
 | Holding | Remaining open domain tasks in the [inventory](#plans) | Deferred, not completed; select/transfer only needed tasks at a milestone gate |
 
 The spine is the **only active plan** in the reset stream. Domain plans use
 `holding` and explicit resume gates; a contract may be consulted without
-reactivating its backlog. There are 22 current plan files: one active,
-20 holding and one proposed. No complete source plan was archived because
+reactivating its backlog. There are 24 current plan files: one active,
+22 holding and one proposed. No complete source plan was archived because
 each still owns independent deferred work or preserved current contracts.
 Do not add another active plan simply because a task touches another system.
 An independent project priority needs an explicit scheduling decision.
+
+The [likeness numbered phase sheets](likeness_process/README.md) are
+supporting delivery contracts under the existing reassessment, not seven
+new active plans. They map Q&A1-40 and OST/RA obligations, delivered evidence,
+missing implementation, dependencies and exit gates. Task checkboxes remain
+in the existing spine/domain owners; the nested sheets are not silently
+ignored execution queues. The generated todo reader selects dated
+top-level plans; this structure deliberately adds no second queue or
+generator change. The 24-plan count above refers to those dated plans.
 
 `bin\todo.cmd` remains the supported generator. Its existing active/focus
 mechanism now enforces this narrow queue without a runtime/tooling change:
@@ -650,6 +659,8 @@ records its actual task transfers, residual dispositions and checks.
 | Plan | Status | What it is |
 | --- | --- | --- |
 | [2026-11-05-priority-reset.md](2026-11-05-priority-reset.md) | active | Sole execution spine: M1 LEAN finish line, M2 trusted cast, M3 selections, M4 fidelity, M5 generic workspace, M6 art/video, M7 deliberate backlog selection; explicit source transfers and bounded companion setup |
+| [2026-11-09-likeness-process-reassessment.md](2026-11-09-likeness-process-reassessment.md) | holding | Requirements/raw Q&A and evidence owner; [numbered phase contracts](likeness_process/README.md) map the complete outcome. OST2 baseline is RA1; remaining OST8 reformation construction transfers to RA2b shadow stage; RA2d accepts rules, RA2c owns full replay/install; cues/layout retain gates |
+| [2026-11-12-member-refinement-scope-test.md](2026-11-12-member-refinement-scope-test.md) | proposed | Nov 12 Q&A source and directed-reformation contract; answers 1-13 transfer bounded shadow implementation/comparison into RA2b, not a second queue or permission to install |
 | [2026-10-09-finals-and-mvp.md](2026-10-09-finals-and-mvp.md) | holding | Resume selected-source/finals/video tests after prepared-library acceptance; no current-input reset |
 | [2026-10-09-cli-simplification.md](2026-10-09-cli-simplification.md) | proposed | Historical inventory supporting only the remaining command folds/forwarders (finals 6.3b/6.5); no new consolidation approved |
 | [2026-10-11-tidy-junk-organise.md](2026-10-11-tidy-junk-organise.md) | holding | Resume selected element/profile classification after prepared-library review; face-pass experiment conditional |

@@ -146,6 +146,288 @@ class CleanPreparationTests(unittest.TestCase):
             self.command(apply=True)
         self.assertFalse(self.measured)
 
+    def test_fast_raw_intake_install_viewers_check_and_exact_undo(self):
+        from tools.art.likeness_library import fast_preparation, preparation_provenance
+
+        before = {relative: (self.working / relative).read_bytes() for relative in self.inputs}
+        with mock.patch.object(image_preparation, "publish", side_effect=AssertionError("FAST must not edit")), \
+                mock.patch.object(derivatives, "render", side_effect=AssertionError("FAST must not render")), \
+                mock.patch.object(derivatives, "maintain", side_effect=AssertionError("FAST install must skip derivatives")):
+            self.command(intake_only=True, apply=True, profile="fast")
+            output, intake = clean_preparation.verify(self.layout, self.run)
+            self.assertEqual(intake["processingProfile"], "fast")
+            self.assertEqual(len(intake["photos"]), 5)
+            self.assertFalse(self.measured)
+            self.assertIn('loading="lazy"', (output / "index.html").read_text())
+            for row in intake["photos"]:
+                self.assertEqual(row["outcome"], "analysis-only")
+                self.assertEqual(clean_preparation.selected_path(output, row).read_bytes(), before[row["source"]])
+                self.assertEqual(row["variants"], {})
+                self.assertNotIn("recommendedPadded", row)
+            with self.assertRaisesRegex(ValueError, "processing profile differs"):
+                self.command(profile="lean")
+            self.command()  # Omission must resume FAST, not start standard LEAN.
+            with mock.patch("library_backup.latest_work_root_backup", return_value=self.base), \
+                    mock.patch("library_backup.verify_backup"):
+                self.command(apply=True)
+            self.command(check=True)
+        plan = json.loads((self.run / "run.json").read_text())
+        self.assertEqual(plan["preparation"]["processingProfile"], "fast")
+        self.assertEqual(plan["recoveryMode"], "full")
+        self.assertIn("fast_preparation.py", plan["implementationHashes"])
+        self.assertEqual(len(plan["photos"]), 4)  # Artist is intentionally outside general matching.
+        self.assertFalse(list(self.working.rglob(derivatives.MANIFEST)))
+        for row in plan["photos"]:
+            native = self.working / row["destination"]
+            self.assertEqual(native.read_bytes(), before[row["source"]])
+            self.assertTrue(fast_preparation.deferred(native))
+            link = retained_preparation.verify_link(self.working, native)
+            self.assertTrue(link)
+            self.assertIn('aria-label="Retained intake navigation"',
+                          (self.working / link["detail"]).read_text())
+            with mock.patch.object(derivatives, "render", side_effect=AssertionError("no backfill")):
+                changes, messages = derivatives.maintain(native, [.25, .1, .3, .3], 100, apply=True)
+            self.assertEqual(changes, [])
+            self.assertIn("deferred", messages[0])
+        faces = mock.Mock()
+        faces.of.side_effect = AssertionError("FAST originals maintenance must not detect faces")
+        with mock.patch.object(likeness.originals, "fit", side_effect=AssertionError("no scaled writer")), \
+                mock.patch.object(likeness.originals, "headshot", side_effect=AssertionError("no headshot writer")), \
+                contextlib.redirect_stdout(io.StringIO()):
+            likeness.originals.main(
+                ["--root", str(self.working), "--only", "Known Person",
+                 "--apply", "--force", "--no-repoint"], faces=faces)
+        faces.of.assert_not_called()
+        self.assertFalse(list(self.working.rglob(derivatives.MANIFEST)))
+        report_root = self.working / "_reports" / "library"
+        index = preparation_provenance.build_index(self.working, report_root, [], "general")
+        staged = [run for run in index.history_runs if run.get("staged")]
+        self.assertEqual(len(staged), 1)
+        self.assertTrue(staged[0]["status"].startswith("verified staged"), staged)
+        self.assertEqual(len(staged[0]["photos"]), 4)
+        self.assertTrue(all(photo["thumbnail"] for photo in staged[0]["photos"]))
+        self.command(undo=True)
+        for relative, expected in before.items():
+            self.assertEqual((self.working / relative).read_bytes(), expected)
+
+    def test_fast_disposable_profile_remains_separate_from_recovery(self):
+        self.command(intake_only=True, apply=True, profile="fast", recovery_mode="disposable")
+        self.command()
+        with mock.patch("library_backup.latest_work_root_backup", side_effect=AssertionError("no backup")):
+            self.command(apply=True)
+        self.command(check=True)
+        self.assertFalse((self.run / "previous").exists())
+        with self.assertRaisesRegex(ValueError, "no undo contract"):
+            self.command(undo=True)
+        with self.assertRaisesRegex(ValueError, "processing profile differs"):
+            self.command(profile="full", check=True)
+
+    def test_fast_profile_preserves_actual_assignment_move_and_stable_name(self):
+        def assign(candidates, cores, **kwargs):
+            return {
+                "assignments": [{"photoId": row["photoId"], "destination": "Potentials/Generated",
+                                 "reason": "Test assignment"} for row in candidates],
+                "held": [],
+                "clusters": [{"clusterId": "test", "destination": "Potentials/Generated",
+                              "photoIds": [row["photoId"] for row in candidates]}],
+            }
+        with mock.patch.object(clean_rebase, "plan_reconciliation", side_effect=assign):
+            self.command(profile="fast")
+        with mock.patch("library_backup.latest_work_root_backup", return_value=self.base), \
+                mock.patch("library_backup.verify_backup"):
+            self.command(apply=True, profile="fast")
+        self.command(check=True)
+        plan = json.loads((self.run / "run.json").read_text())
+        incoming = next(row for row in plan["photos"] if row["source"].startswith("Various/gallery/"))
+        # Placeholder destinations receive the normal character-facing name.
+        self.assertTrue(incoming["destination"].startswith("Potentials/New Person/gallery/"))
+        self.assertIn("image_345678", incoming["destination"])
+        self.assertEqual((self.working / incoming["destination"]).read_bytes(),
+                         (self.source / incoming["source"]).read_bytes())
+        known = next(row for row in plan["photos"] if "Known Person" in row["source"])
+        self.assertTrue(known["destination"].startswith("Potentials/Known Person/gallery/"))
+        self.assertEqual({row["photoId"] for row in plan["photos"]},
+                         {"photo:image_123456", "photo:image_345678",
+                          "photo:image_456789", "photo:image_654321"})
+
+    def test_fast_resume_and_tamper_refusal(self):
+        from tools.art.likeness_library import fast_preparation
+
+        self.command(intake_only=True, apply=True, profile="fast", storage_mode="full")
+        output, data = clean_preparation.verify(self.layout, self.run)
+        saved = (output / "manifest.json").read_bytes()
+        with mock.patch.object(fast_preparation, "publish", side_effect=AssertionError("do not rerender")):
+            self.command(intake_only=True, apply=True)
+        self.assertEqual((output / "manifest.json").read_bytes(), saved)
+        with self.assertRaisesRegex(ValueError, "storage mode differs"):
+            self.command(profile="fast", storage_mode="lean", check=True)
+        original = clean_preparation.selected_path(output, data["photos"][0])
+        original.write_bytes(b"edited")
+        with self.assertRaisesRegex(ValueError, "FAST input changed"):
+            self.command(check=True)
+
+    def test_fast_complete_intake_stage_resumes_but_refuses_extra_products(self):
+        self.command(intake_only=True, apply=True, profile="fast")
+        output, data = clean_preparation.verify(self.layout, self.run)
+        original = (output / "manifest.json").read_bytes()
+        (self.run / "intake.json").unlink()
+        stage = output.with_name(output.name + ".partial")
+        output.rename(stage)
+        with mock.patch.object(image_preparation, "decode_file", side_effect=AssertionError("no repeat decode")):
+            self.command(intake_only=True, apply=True, profile="fast")
+        self.assertEqual((output / "manifest.json").read_bytes(), original)
+        extra = output / "unexpected-944x1104.png"
+        extra.write_bytes(b"undeclared")
+        with self.assertRaisesRegex(ValueError, "FAST artifact inventory differs"):
+            self.command(check=True)
+        self.assertEqual(len(data["photos"]), 5)
+
+    def test_fast_refuses_linked_output_ancestor_before_writing(self):
+        from tools.art.likeness_library import fast_preparation
+
+        output = self.source / "_reports" / "preparation" / "fast"
+        with mock.patch("image_preparation.sandbox._is_reparse_point",
+                        side_effect=lambda path: pathlib.Path(path).name == "preparation"):
+            with self.assertRaisesRegex(ValueError, "refusing linked path"):
+                fast_preparation.publish(self.source, output, {}, "lean")
+        self.assertFalse(output.parent.exists())
+
+    def test_fast_completed_install_stage_resumes_without_derivatives(self):
+        self.command(intake_only=True, apply=True, profile="fast")
+        plan = self.completed_stage()
+        self.assertEqual(self.command(check=True, resume_install=True)["status"], "staged-verified")
+        staged = self.run / "staged"
+        extra = staged / "unexpected-944x1104.png"
+        extra.write_bytes(b"undeclared")
+        with self.assertRaisesRegex(ValueError, "staged inventory changed"):
+            self.command(check=True, resume_install=True)
+        extra.unlink()
+        with mock.patch("library_backup.latest_work_root_backup", return_value=self.base), \
+                mock.patch("library_backup.verify_backup"), \
+                mock.patch.object(derivatives, "maintain", side_effect=AssertionError("no derivatives")), \
+                mock.patch.object(retained_preparation, "stage_photo", side_effect=AssertionError("no recopy")):
+            self.command(apply=True, resume_install=True)
+        self.command(check=True)
+        self.command(undo=True)
+        self.assertEqual(len(plan["photos"]), 4)
+
+    def test_fast_decode_error_is_explicit_not_a_clean_photo(self):
+        from tools.art.likeness_library import fast_preparation
+
+        source = self.source / "Various/gallery/bad_image_999999.jpg"
+        source.write_bytes(b"broken jpeg")
+        self.inputs[source.relative_to(self.source).as_posix()] = (
+            source.stat().st_size, metadata.content_sha256(source))
+        self.command(intake_only=True, apply=True, profile="fast")
+        output, data = clean_preparation.verify(self.layout, self.run)
+        failed = next(row for row in data["photos"] if row["source"].endswith(source.name))
+        self.assertEqual(failed["outcome"], "unprocessable")
+        self.assertIn("Decode failed", failed["diagnostics"][-1])
+        self.assertEqual(clean_preparation.selected_path(output, failed).read_bytes(), b"broken jpeg")
+        self.assertTrue(json.loads((self.run / "intake.json").read_text())["assessmentErrors"])
+        native = self.working / "Various" / "review" / source.name
+        native.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, native)
+        retained_preparation.stage_photo(
+            self.working, native.relative_to(self.working), output, failed,
+            recipe=data["recipe"], storage_mode="lean")
+        preview, _key, diagnostic = derivatives.thumbnail(native, "chest", faces=0, px=0)
+        self.assertTrue(preview.startswith(b"\xff\xd8"))
+        self.assertIn("cannot identify image file", diagnostic)
+        with mock.patch.object(fast_preparation, "RECIPE", {"id": "incompatible"}):
+            with self.assertRaisesRegex(ValueError, "recipe/profile/storage/implementation changed"):
+                self.command(check=True)
+
+    def test_profiles_share_input_population_and_bind_different_pixel_recipes(self):
+        populations = []
+        for profile in ("fast", "lean", "full"):
+            with self.subTest(profile=profile):
+                self.run = self.working / "_sandbox-state" / profile
+                self.command(intake_only=True, apply=True, profile=profile)
+                output, data = clean_preparation.verify(self.layout, self.run)
+                populations.append({row["source"]: row["sourceSha256"] for row in data["photos"]})
+                self.assertEqual(data.get("storageMode", "full"), "full" if profile == "full" else "lean")
+                self.assertEqual(data.get("processingProfile", "standard"), "fast" if profile == "fast" else "standard")
+                if profile != "fast":
+                    self.assertTrue(any(clean_preparation.selected_path(output, row).read_bytes()
+                                        != (self.source / row["source"]).read_bytes() for row in data["photos"]))
+        self.assertEqual(populations[0], populations[1])
+        self.assertEqual(populations[0], populations[2])
+        with self.assertRaisesRegex(ValueError, "processing profile differs"):
+            self.command(profile="fast")
+        with self.assertRaisesRegex(ValueError, "--profile and --storage-mode differ"):
+            self.command(profile="full", storage_mode="lean")
+
+    def test_all_profiles_publish_check_and_undo_the_same_photo_ids(self):
+        populations = []
+        for profile in ("fast", "lean", "full"):
+            with self.subTest(profile=profile):
+                self.run = self.working / "_sandbox-state" / ("installed-" + profile)
+                self.command(profile=profile)
+                with mock.patch("library_backup.latest_work_root_backup", return_value=self.base), \
+                        mock.patch("library_backup.verify_backup"):
+                    self.command(apply=True, profile=profile)
+                self.command(check=True, profile=profile)
+                plan = json.loads((self.run / "run.json").read_text())
+                populations.append({row["photoId"] for row in plan["photos"]})
+                self.assertEqual(plan["preparation"]["storageMode"], "full" if profile == "full" else "lean")
+                manifests = list(self.working.rglob(derivatives.MANIFEST))
+                # Inputs keep prior runs' evidence, but only installed native owners count here.
+                installed = [path for path in manifests if "_sandbox-state" not in path.relative_to(self.working).parts]
+                self.assertEqual(bool(installed), profile != "fast")
+                for row in plan["photos"]:
+                    native = self.working / row["destination"]
+                    self.assertTrue(native.is_file())
+                    self.assertTrue(retained_preparation.verify_link(self.working, native))
+                    if profile == "fast":
+                        self.assertEqual(native.read_bytes(), (self.source / row["source"]).read_bytes())
+                self.command(undo=True, profile=profile)
+        self.assertEqual(populations[0], populations[1])
+        self.assertEqual(populations[0], populations[2])
+
+    def test_regroup_profiles_publish_membership_and_exact_undo(self):
+        manifest_path = self.base / "source-manifest.json"
+        manifest = json.loads(manifest_path.read_text())
+        for index, row in enumerate(manifest["files"]):
+            source = self.source / row["path"]
+            image = Image.new("RGB", (640, 960), "black")
+            ImageDraw.Draw(image).rectangle((12, 12, 627, 947), fill=(65 + index * 25, 65, 35))
+            image.save(source)
+            shutil.copy2(source, self.working / row["path"])
+            row["bytes"], row["sha256"] = source.stat().st_size, metadata.content_sha256(source)
+            self.inputs[row["path"]] = row["bytes"], row["sha256"]
+        manifest["totalBytes"] = sum(row["bytes"] for row in manifest["files"])
+        manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+        def varied_embedding(path):
+            angle = int(metadata.content_sha256(path)[:8], 16) / (2 ** 32) * np.pi * 2
+            return {"v": [float(np.cos(angle)), float(np.sin(angle))], "faces": 1,
+                    "s": .95, "px": 100, "box": [.25, .1, .3, .3]}
+
+        self.embed = varied_embedding
+        populations = []
+        for profile in ("fast", "lean", "full"):
+            with self.subTest(profile=profile):
+                self.run = self.working / "_sandbox-state" / ("grouped-" + profile)
+                flags = dict(profile=profile, cast_seeds="core", regroup=True)
+                self.command(**flags)
+                with mock.patch("library_backup.latest_work_root_backup", return_value=self.base), \
+                        mock.patch("library_backup.verify_backup"):
+                    self.command(apply=True, **flags)
+                self.command(check=True, **flags)
+                plan = json.loads((self.run / "run.json").read_text())
+                catalog = json.loads((self.run / "catalog.json").read_text())
+                metadata.validate_catalog(catalog)
+                populations.append({row["photoId"] for row in plan["photos"]})
+                self.assertEqual(plan["groupLifecycle"]["evaluation"]["identifiedPhotos"], 4)
+                for row in plan["photos"]:
+                    self.assertIn("membership", row)
+                    self.assertTrue((self.working / row["destination"]).is_file())
+                    self.assertEqual(catalog["photos"][row["photoId"]]["membership"], row["membership"])
+                self.command(undo=True, **flags)
+        self.assertEqual(populations[0], populations[1])
+        self.assertEqual(populations[0], populations[2])
+
     def test_lean_new_run_install_check_and_exact_undo(self):
         self.command(intake_only=True, apply=True, storage_mode="lean")
         with self.assertRaisesRegex(ValueError, "storage mode differs"):
@@ -799,6 +1081,24 @@ class CleanPreparationTests(unittest.TestCase):
         actual = self.run / "actual.json"
         clean_rebase._write_json(actual, value)
         self.assertEqual(actual.read_bytes(), expected.read_bytes())
+
+    def test_grouped_run_retains_all_evidence_compactly_with_the_same_byte_bound(self):
+        self.command()
+        journal = self.run / "run.json"
+        plan = json.loads(journal.read_text(encoding="utf-8"))
+        plan["groupLifecycle"] = {"stages": [{
+            "id": "test", "rows": [{"photoId": f"photo:image_{i}", "reason": "exact evidence"} for i in range(256)],
+        }]}
+        compact = json.dumps(plan, separators=(",", ":")).encode("utf-8")
+        self.assertGreater(len(json.dumps(plan, indent=2).encode("utf-8")), len(compact) + 1)
+        with mock.patch.object(storage_retention, "MAX_RUN_MANIFEST_BYTES", len(compact) + 1):
+            clean_rebase._write_json(journal, plan)
+        self.assertEqual(journal.read_bytes(), compact)
+        self.assertEqual(storage_retention._read_json(journal), plan)
+        with mock.patch.object(storage_retention, "MAX_RUN_MANIFEST_BYTES", len(compact) - 1):
+            with self.assertRaisesRegex(ValueError, "run manifest exceeds"):
+                clean_rebase._write_json(journal, plan)
+        self.assertEqual(journal.read_bytes(), compact)
 
     def test_another_clean_start_preserves_prior_prepared_lineage_and_exact_undo(self):
         catalog_path = self.working / ".likeness-library.json"

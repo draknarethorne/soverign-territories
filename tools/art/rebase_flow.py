@@ -26,6 +26,8 @@ import threading
 import time
 
 REPO = pathlib.Path(__file__).resolve().parents[2]
+if str(REPO) not in sys.path:
+    sys.path.insert(0, str(REPO))
 FLOW_ROOT = REPO / "tmp" / "session-logs" / "rebase-flow"
 REBASE_FLAGS = ("--baseline", "working", "--cast-seeds", "core", "--record-core-protection")
 RUN_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
@@ -53,10 +55,41 @@ SPACE_COLUMNS = (
 PEOPLE = ("Angels", "Sisters", "Models", "Prospects", "Potentials", "Various")
 
 
-def steps(working, run, workers, recovery_mode="full", reuse_run=None):
+def steps(working, run, workers, recovery_mode="full", reuse_run=None, profile=None,
+          regroup=False, baseline="source", review_source=None, directed=False, directed_recipe=None):
     """The ordered flow; every command is a bin launcher run from the repository root."""
     w, r = str(working), str(run)
     rebase = ["bin\\sandbox-rebase.cmd", w, r, *REBASE_FLAGS]
+    if profile not in (None, "fast", "lean", "full"):
+        raise ValueError("profile must be fast, lean or full")
+    if reuse_run is not None and profile not in (None, "lean"):
+        raise ValueError("prepared-input continuation supports only LEAN; use a new run for FAST/FULL")
+    if profile == "full" and recovery_mode == "disposable":
+        raise ValueError("FULL evidence requires full recovery")
+    if profile is not None:
+        rebase += ["--profile", profile]
+    if baseline not in ("source", "working"):
+        raise ValueError("baseline must be source or working")
+    if regroup:
+        rebase += ["--regroup"]
+    if directed and not regroup:
+        raise ValueError("directed mode requires regrouping")
+    if directed and not directed_recipe:
+        raise ValueError("directed mode requires an explicit recipe")
+    if directed_recipe and not directed:
+        raise ValueError("directed recipe requires directed mode")
+    if directed:
+        from tools.art.likeness_library.directed_reformation import recipe_named
+
+        directed_recipe = recipe_named(directed_recipe)["name"]
+        rebase += ["--directed", "--directed-recipe", directed_recipe]
+    if review_source:
+        if not regroup:
+            raise ValueError("review evidence requires regrouping")
+        rebase += ["--review-source", str(review_source)]
+    if baseline == "working":
+        if reuse_run is not None:
+            raise ValueError("current Working baseline cannot reuse a prepared-input continuation")
     if recovery_mode == "disposable":
         rebase += ["--recovery-mode", recovery_mode]
     flow = [
@@ -100,10 +133,24 @@ def steps(working, run, workers, recovery_mode="full", reuse_run=None):
                     "disposable sandbox: freeze raw inputs; normalize only final destinations; "
                     "no pre-intake derivatives or baseline backup"
                 )
+    if profile == "fast":
+        for step in flow:
+            if step["id"] in ("originals", "originals-check"):
+                step["skipReason"] = "FAST: original-byte likeness intake; editing and 944x1104 outputs deferred"
+    if baseline == "working":
+        for step in flow:
+            if step["id"] in ("reset-preview", "reset-apply"):
+                step["skipReason"] = "current Working baseline: preserve installed inputs; no reset to older Production"
     if reuse_run is not None:
         continuation = [
             "bin\\lean-continue.cmd", "--root", w, "--source-run", str(reuse_run), "--run", run.name,
         ]
+        if regroup:
+            continuation.append("--regroup")
+        if directed:
+            continuation.extend(["--directed", "--directed-recipe", directed_recipe])
+        if review_source is not None:
+            continuation.extend(["--review-source", str(review_source)])
         for step in flow:
             if step["id"] in ("reset-preview", "reset-apply", "originals", "originals-check",
                               "backup", "intake-preview", "intake", "intake-check"):
@@ -210,6 +257,10 @@ def load_state(state_path, working, run, workers, flow):
     else:
         state = {"schemaVersion": 1, "working": str(working), "run": str(run), "workers": workers,
                  "created": _now().isoformat(), "steps": {}, "history": []}
+    state.setdefault("regroup", False)
+    state.setdefault("directed", False)
+    state.setdefault("directedRecipe", None)
+    state.setdefault("baseline", "source")
     for step in flow:
         state["steps"].setdefault(step["id"], {"status": "pending"})
     return state
@@ -313,6 +364,8 @@ def render_markdown(state, flow, live=None):
     lines = [f"# Rebase flow `{pathlib.Path(state['run']).name}`", "",
              f"- Working: `{state['working']}`",
              f"- Run state: `{state['run']}`",
+             f"- Directed Sandbox mode: {'enabled' if state.get('directed') else 'disabled'}"
+             + (f" · recipe `{state['directedRecipe']}`" if state.get("directedRecipe") else ""),
              f"- Created {state['created']}; updated {_now().isoformat()}",
              f"- Historical remaining reference: {_duration(estimate_remaining(state, flow, live, now))} "
              "(not a forecast for changed code; photo ETA uses live throughput)",
@@ -536,7 +589,9 @@ def run_flow(flow, state, paths, *, start=None, until=None, heartbeat=120, measu
 
 
 def preview(flow, state, md_path, echo=print):
-    echo(f"Preview only; add --apply to run. Live recap will be {md_path}")
+    mode = "directed experimental" if state.get("directed") else "historical/default"
+    recipe = f" recipe={state['directedRecipe']}" if state.get("directedRecipe") else ""
+    echo(f"Preview only; add --apply to run. Mode: {mode}{recipe}. Live recap will be {md_path}")
     within_boundary = True
     for index, step in enumerate(flow, 1):
         record = state["steps"][step["id"]]
@@ -560,6 +615,19 @@ def main(argv=None):
     parser.add_argument("--root", required=True, help="the sandbox Working folder")
     parser.add_argument("--run", required=True, help="new run name under Working\\_sandbox-state")
     parser.add_argument("--workers", type=int, default=4)
+    parser.add_argument("--profile", choices=("fast", "lean", "full"),
+                        help="FAST original-byte likeness testing, LEAN balanced, FULL final processing; "
+                             "saved flow profile must match on resume; independent of recovery")
+    parser.add_argument("--regroup", action="store_true", help="maintained member/appearance lifecycle and stage viewers")
+    from tools.art.likeness_library.directed_reformation import recipe_names
+    parser.add_argument("--directed", action="store_true",
+                        help="opt into experimental directed Sandbox regrouping; no matching policy default")
+    parser.add_argument("--directed-recipe", choices=recipe_names(),
+                        help="explicit experimental recipe required with --directed")
+    parser.add_argument("--baseline", choices=("source", "working"), default="source",
+                        help="source resets from Production as before; working preserves current assigned inputs")
+    parser.add_argument("--review-source", type=pathlib.Path,
+                        help="absolute bound assessment directory supplying direct human pair evidence")
     parser.add_argument("--recovery-mode", choices=("full", "disposable"), default="full",
                         help="full keeps backup/undo; disposable skips pre-intake derivatives and backup, "
                              "creates no rollback; sandbox LEAN only")
@@ -588,7 +656,8 @@ def main(argv=None):
         raise ValueError("--reuse-run must name a different sibling run")
     if args.reuse_run and args.recovery_mode != "disposable":
         raise ValueError("--reuse-run requires --recovery-mode disposable")
-    flow = steps(working, run, args.workers, args.recovery_mode, args.reuse_run)
+    flow = steps(working, run, args.workers, args.recovery_mode, args.reuse_run, args.profile,
+                 args.regroup, args.baseline, args.review_source, args.directed, args.directed_recipe)
     ids = [step["id"] for step in flow]
     for name in (args.start, args.until):
         if name is not None and name not in ids:
@@ -603,6 +672,14 @@ def main(argv=None):
             print(f"No flow recorded for {args.run} ({paths[1]}).")
             return 1
         state = load_state(paths[1], working, run, args.workers, flow)
+        if (state.get("regroup", False) != args.regroup or state.get("baseline", "source") != args.baseline
+                or state.get("directed", False) != args.directed
+                or state.get("directedRecipe") != args.directed_recipe):
+            raise ValueError("saved flow baseline/regrouping/directed recipe differs")
+        if state.get("reviewSource") != (str(args.review_source) if args.review_source else None):
+            raise ValueError("saved flow human evidence source differs")
+        if state.get("profile") != args.profile:
+            raise ValueError("saved flow profile differs; use the same profile or a new run")
         if state.get("recoveryMode", "full") != args.recovery_mode and paths[1].exists():
             raise ValueError("saved flow recovery mode differs; use the same mode or a new run")
         state["recoveryMode"] = args.recovery_mode
@@ -612,6 +689,20 @@ def main(argv=None):
         failed = [step_id for step_id, record in state["steps"].items() if record["status"] == "failed"]
         return 1 if failed else 0
     state = load_state(paths[1], working, run, args.workers, flow)
+    if paths[1].exists() and (
+        state.get("regroup", False) != args.regroup or state.get("baseline", "source") != args.baseline
+        or state.get("directed", False) != args.directed
+        or state.get("directedRecipe") != args.directed_recipe
+    ):
+        raise ValueError("saved flow baseline/regrouping/directed recipe differs")
+    state["regroup"], state["baseline"] = args.regroup, args.baseline
+    state["directed"], state["directedRecipe"] = args.directed, args.directed_recipe
+    if paths[1].exists() and state.get("reviewSource") != (str(args.review_source) if args.review_source else None):
+        raise ValueError("saved flow human evidence source differs")
+    state["reviewSource"] = str(args.review_source) if args.review_source else None
+    if paths[1].exists() and state.get("profile") != args.profile:
+        raise ValueError("saved flow profile differs; use the same profile or a new run")
+    state["profile"] = args.profile
     if paths[1].exists() and state.get("recoveryMode", "full") != args.recovery_mode:
         raise ValueError("saved flow recovery mode differs; use the same mode or a new run")
     state["recoveryMode"] = args.recovery_mode

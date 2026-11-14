@@ -6,6 +6,7 @@ import io
 import json
 import os
 import pathlib
+import subprocess
 import tempfile
 import unittest
 from types import SimpleNamespace
@@ -17,6 +18,514 @@ from tools.art import likeness
 from tools.art.likeness_library import clean_rebase, metadata, refinement
 from tools.art.likeness_library.policy import load_policy
 from tools.art.likeness_library.reconciliation import _average_linkage
+
+
+class GroupLifecycleTests(unittest.TestCase):
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+
+    def fixture(self):
+        from tools.art.likeness_library.engine import Photo
+        rows, measured = [], {}
+        people = {}
+        for side, name in enumerate(("Mira Vale", "Elana Vale")):
+            folder = "Models/" + name
+            person = f"person_{side + 1:032x}"
+            people[person] = {"id": person, "folder": folder, "displayName": name,
+                              "folderHistory": [], "identityAnchors": [], "protected": False}
+            for i in range(7):
+                number = side * 7 + i
+                pid = f"photo:image_{1000 + number}"
+                relative = f"{folder}/gallery/mira_image_{1000 + number}.jpg"
+                vector = np.zeros(16)
+                vector[side] = .8
+                vector[2 + number] = .6
+                photo = Photo(pathlib.Path(relative), "Models", name, f"{number:064x}",
+                              {"faces": 1, "px": 150, "v": vector.tolist()})
+                photo.vec = vector
+                measured[relative] = photo
+                rows.append({"photoId": pid, "source": relative, "destination": relative,
+                             "oldFolder": folder, "sha256": f"{number:064x}", "reason": "old placement"})
+        return rows, measured, {"schemaVersion": 1, "people": people, "photos": {}, "actions": []}
+
+    def build(self, fixture=None, **kwargs):
+        from tools.art.likeness_library import group_lifecycle
+        rows, measured, catalog = fixture or self.fixture()
+        result = group_lifecycle.regroup(
+            rows, measured, catalog, load_policy(), set(), "test",
+            at="2026-11-11T12:37:00+00:00",
+            name_factory=lambda seed, taken: "Nova " + seed[-8:], **kwargs,
+        )
+        return result, catalog
+
+    def test_member_first_complete_cycle_and_schema(self):
+        (rows, report), catalog = self.build()
+        self.assertEqual(len(rows), 14)
+        self.assertEqual(report["evaluation"]["supported"], 14)
+        self.assertEqual(report["evaluation"]["tentativeReferences"], 0)
+        self.assertEqual(report["evaluation"]["directConflictAdmissions"], 0)
+        self.assertTrue({"input", "references", "membership", "growth", "residual", "appearances",
+                         "refinement", "publication"} <= {stage["id"] for stage in report["stages"]})
+        self.assertTrue(all(len(stage["rows"]) == 14 for stage in report["stages"]))
+        metadata.validate_catalog(catalog)
+
+    def test_directed_recipe_runs_inside_maintained_regroup_and_keeps_holds_home(self):
+        from tools.art.likeness_library.engine import Photo
+
+        fixture = self.fixture()
+        rows, measured, catalog = fixture
+        people = list(catalog["people"].values())
+        for person in people:
+            folder_rows = [row for row in rows if row["oldFolder"] == person["folder"]]
+            person["identityAnchors"] = [row["photoId"] for row in folder_rows]
+            for row in folder_rows:
+                catalog["photos"][row["photoId"]] = {
+                    "contentSha256": row["sha256"], "protected": False,
+                }
+
+        source_id = "person_" + "3" * 32
+        catalog["people"][source_id] = {
+            "id": source_id, "folder": "Potentials/Nova", "displayName": "Nova",
+            "folderHistory": [], "identityAnchors": [], "protected": False,
+        }
+        source_vector = measured[rows[0]["source"]].vec.copy()
+        for number, vector in ((1014, source_vector), (1015, np.eye(1, 16, 15)[0])):
+            relative = f"Potentials/Nova/gallery/nova_image_{number}.jpg"
+            pid = f"photo:image_{number}"
+            photo = Photo(
+                pathlib.Path(relative), "Potentials", "Nova", f"{number:064x}",
+                {"faces": 1, "px": 150, "v": vector.tolist()},
+            )
+            photo.vec = vector
+            measured[relative] = photo
+            rows.append({
+                "photoId": pid, "source": relative, "destination": relative,
+                "oldFolder": "Potentials/Nova", "sha256": f"{number:064x}",
+                "reason": "old placement",
+            })
+
+        for row in rows:
+            row["destination"] = f'Potentials/Flattened/gallery/{pathlib.PurePosixPath(row["source"]).name}'
+        (output, report), catalog = self.build(fixture, directed_recipe="directed-core-continuity")
+        upward = next(row for row in output if row["photoId"] == "photo:image_1014")
+        held = next(row for row in output if row["photoId"] == "photo:image_1015")
+        self.assertEqual(report["mode"], "experimental-directed-sandbox")
+        self.assertEqual(report["recipe"], "directed-core-continuity")
+        self.assertEqual(upward["directedReformation"]["actionCategory"], "upward")
+        self.assertTrue(upward["destination"].startswith("Models/Mira Vale/gallery/"))
+        self.assertEqual(held["directedReformation"]["actionCategory"], "hold")
+        self.assertEqual(held["destination"], held["source"])
+        self.assertFalse(held["destination"].startswith("Various/review/"))
+        for row in output:
+            if row["directedReformation"]["actionCategory"] in ("hold", "same-home"):
+                self.assertEqual(row["destination"], row["source"])
+        self.assertEqual(report["evaluation"]["sameHomeAssignments"], 14)
+        self.assertEqual(report["evaluation"]["upwardAssignments"], 1)
+        self.assertEqual(report["evaluation"]["heldAssignments"], 1)
+        for stage in report["stages"]:
+            self.assertIsInstance(stage["rows"], list)
+            self.assertEqual(len(stage["rows"]), len(output))
+            self.assertEqual({row["photoId"] for row in stage["rows"]},
+                             {row["photoId"] for row in output})
+            for stage_row in stage["rows"]:
+                self.assertNotIn("tentativeAssociations", stage_row)
+                self.assertNotIn("sourceIncompatibility", stage_row)
+        from tools.art.likeness_library.directed_reformation import unpack_runtime_decisions
+        details = unpack_runtime_decisions(report["decisionEvidence"])
+        self.assertIn("sourceIncompatibility", details[held["photoId"]])
+        self.assertIn("tentativeAssociations", details[held["photoId"]])
+        for field in ("sameHomeAssignments", "upwardAssignments", "sameRankAssignments",
+                      "correctionAssignments", "heldAssignments"):
+            self.assertIn(field, report["evaluation"])
+        metadata.validate_catalog(catalog)
+
+    def test_directed_cast_arrival_binds_frozen_admission_and_respects_disabled_gate(self):
+        from tools.art.likeness_library import group_lifecycle
+        from tools.art.likeness_library.engine import Photo
+
+        for enabled in (True, False):
+            with self.subTest(enabled=enabled):
+                rows, measured, catalog = self.fixture()
+                old_folder, folder = "Models/Mira Vale", "Sisters/Mira Vale"
+                for person in catalog["people"].values():
+                    if person["folder"] == old_folder:
+                        person["folder"] = folder
+                    members = [row for row in rows if row["oldFolder"] == old_folder]
+                    if person["folder"] == folder:
+                        person["identityAnchors"] = [row["photoId"] for row in members]
+                for row in rows:
+                    if row["oldFolder"] == old_folder:
+                        photo = measured.pop(row["source"])
+                        row.update(source=row["source"].replace(old_folder, folder),
+                                   destination=row["destination"].replace(old_folder, folder),
+                                   oldFolder=folder)
+                        measured[row["source"]] = photo
+                relative = "Potentials/Nova/gallery/nova_image_9999.jpg"
+                data = b"cast admission source"
+                digest = hashlib.sha256(data).hexdigest()
+                photo = Photo(pathlib.Path(relative), "Potentials", "Nova", digest,
+                              {"faces": 1, "px": 150, "v": measured[rows[0]["source"]].vec.tolist()})
+                photo.vec = measured[rows[0]["source"]].vec.copy()
+                measured[relative] = photo
+                rows.append({"photoId": "photo:image_9999", "source": relative,
+                             "destination": relative, "oldFolder": "Potentials/Nova",
+                             "sha256": digest, "reason": "old placement"})
+                policy = load_policy()
+                policy["categoryPolicies"]["Sisters"]["galleryAdmissionEnabled"] = enabled
+                output, report = group_lifecycle.regroup(
+                    rows, measured, catalog, policy, set(), "admission-test",
+                    directed_recipe="directed-core-continuity")
+                arrival = next(row for row in output if row["source"] == relative)
+                if enabled:
+                    self.assertTrue(arrival["destination"].startswith(folder + "/gallery/"))
+                    self.assertEqual(arrival["castAdmission"]["decision"], "admit")
+                    self.assertGreaterEqual(arrival["castAdmission"]["independentSupport"], 2)
+                    source = pathlib.Path(self.temporary.name)
+                    path = source / relative
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_bytes(data)
+                    clean_rebase._verify_routes({"photos": [arrival], "policy": policy}, source)
+                else:
+                    self.assertEqual(arrival["destination"], relative)
+                    self.assertEqual(arrival["directedReformation"]["actionCategory"], "hold")
+                    self.assertEqual(report["evaluation"]["proposedCrossFolderMoves"], 0)
+
+    def test_core_selection_preview_marks_metadata_tiers_unmeasured(self):
+        from tools.art.likeness_library import directed_reformation
+
+        working = pathlib.Path(self.temporary.name) / "Working"
+        folder = working / "Angels" / "Source" / "gallery"
+        folder.mkdir(parents=True)
+        ids = ("photo:image_2001", "photo:image_2002", "photo:image_2003")
+        paths = [folder / f"source_image_{2001 + index}.jpg" for index in range(3)]
+        for index, path in enumerate(paths):
+            path.write_bytes(f"synthetic-photo-{index}".encode())
+        derivative = working / "Angels" / "Source" / "gallery_944x1104"
+        derivative.mkdir(parents=True)
+        (derivative / "source_image_2001_944x1104.png").write_bytes(b"synthetic derivative")
+        incoming = working / "Various" / "gallery"
+        incoming.mkdir(parents=True)
+        (incoming / "portrait_image_2001.jpg").write_bytes(b"separate incoming bytes")
+        (incoming / "unresolved-photo.jpg").write_bytes(b"no stable filename id")
+        nested_incoming = working / "Various" / "incoming"
+        nested_incoming.mkdir(parents=True)
+        for index in range(11):
+            (nested_incoming / f"new_image_{4000 + index}.jpg").write_bytes(
+                f"nested-incoming-{index}".encode(),
+            )
+        catalog = {
+            "schemaVersion": 1,
+            "people": {
+                "person_" + "4" * 32: {
+                    "id": "person_" + "4" * 32, "folder": "Angels/Source",
+                    "displayName": "Source", "folderHistory": [], "identityAnchors": [ids[0]],
+                    "protected": False,
+                },
+            },
+            "photos": {
+                ids[0]: {"contentSha256": metadata.content_sha256(paths[0]), "protected": False},
+                ids[1]: {"contentSha256": metadata.content_sha256(paths[1]), "protected": True},
+                ids[2]: {
+                    "contentSha256": metadata.content_sha256(paths[2]), "protected": True,
+                    "protectionProvenance": {
+                        "recipeVersion": "independent-gallery-loo-v1", "frozenCorePhotoIds": [ids[2]],
+                    },
+                },
+            },
+            "actions": [],
+        }
+        report = clean_rebase.core_selection_preview(
+            working, catalog, load_policy(), directed_reformation.recipe_named("directed-core-continuity"),
+            catalog_source="synthetic Sandbox-local catalogue",
+        )
+        by_id = {row["photoId"]: row for row in report["photos"]}
+        self.assertEqual(report["candidatePhotoCount"], 3)
+        self.assertEqual(report["baselineInventory"]["imageFileCount"], 16)
+        self.assertEqual(report["baselineInventory"]["sourcePhotoCount"], 16)
+        self.assertEqual(report["baselineInventory"]["allImageFileCount"], 17)
+        self.assertEqual(report["baselineInventory"]["uniqueStablePhotoIdCount"], 14)
+        self.assertEqual(report["baselineInventory"]["unresolvedPhotoIdCount"], 1)
+        self.assertEqual(report["baselineInventory"]["duplicateStablePhotoIdCount"], 1)
+        self.assertEqual(report["baselineInventory"]["regenerableDerivatives"]["imageFileCount"], 1)
+        self.assertEqual(report["incomingVarious"]["imageFileCount"], 13)
+        self.assertEqual(report["incomingVarious"]["galleryReviewImageFileCount"], 2)
+        self.assertEqual(report["incomingVarious"]["nestedIncomingImageFileCount"], 11)
+        self.assertEqual(report["incomingVarious"]["duplicateStablePhotoIdCount"], 0)
+        self.assertEqual(
+            report["incomingVarious"]["role"],
+            "incoming mixed intake; excluded from core/reference candidates",
+        )
+        self.assertEqual(by_id[ids[0]]["stableIdStatus"], "duplicate-stable-id")
+        self.assertTrue(by_id[ids[0]]["authoredIdentityAnchor"])
+        self.assertTrue(by_id[ids[1]]["legacyProtectedPlacementHold"])
+        self.assertFalse(by_id[ids[1]]["protectionProvenanceCoreCandidate"])
+        self.assertTrue(by_id[ids[2]]["protectionProvenanceCoreCandidate"])
+        self.assertTrue(all("not measured" in row["measurementEligibility"] for row in report["photos"]))
+        self.assertIn("not evaluated", report["measuredEligibility"])
+        outputs = clean_rebase.write_core_selection_preview(
+            report, pathlib.Path(self.temporary.name) / "preview",
+        )
+        self.assertTrue(pathlib.Path(outputs["json"]).is_file())
+        page = pathlib.Path(outputs["html"]).read_text(encoding="utf-8")
+        self.assertIn("incoming mixed intake", page)
+        self.assertIn("file:///", page)
+        self.assertIn("unresolved", page)
+        self.assertIn("no cap or truncation", page)
+        self.assertIn("Source-photo duplicate IDs", page)
+        self.assertNotIn("gallery_944x1104/source_image_2001_944x1104.png", page)
+        self.assertIn("Regenerable derivative image inventory (1)", page)
+
+    def test_candidate_viewer_paginates_and_filters_complete_cast_source_set(self):
+        from tools.art.likeness_library import directed_reformation
+
+        working = pathlib.Path(self.temporary.name) / "PagedWorking"
+        catalog = {"schemaVersion": 1, "people": {}, "photos": {}, "actions": []}
+        for index in range(27):
+            category, name = ("Angels", "Ava") if index < 14 else ("Sisters", "Bella")
+            gallery = working / category / name / "gallery"
+            gallery.mkdir(parents=True, exist_ok=True)
+            (gallery / f"photo_image_{5000 + index}.jpg").write_bytes(f"candidate-{index}".encode())
+        duplicate_gallery = working / "Models" / "Diagnostics" / "gallery"
+        duplicate_gallery.mkdir(parents=True)
+        for index in range(51):
+            for copy_index in range(2):
+                (duplicate_gallery / f"copy{copy_index}_image_{7000 + index}.jpg").write_bytes(
+                    f"duplicate-{index}-{copy_index}".encode(),
+                )
+        derivative = working / "Angels" / "Ava" / "944x1104" / "full"
+        derivative.mkdir(parents=True)
+        (derivative / "photo_image_5000_944x1104.png").write_bytes(b"not a source duplicate")
+
+        report = clean_rebase.core_selection_preview(
+            working, catalog, load_policy(),
+            directed_reformation.recipe_named("directed-core-continuity"),
+        )
+        self.assertEqual(report["candidatePhotoCount"], 27)
+        self.assertEqual(report["baselineInventory"]["duplicateStablePhotoIdCount"], 51)
+        self.assertEqual(len(report["baselineInventory"]["duplicatePhotoIds"]), 51)
+        self.assertEqual(report["baselineInventory"]["regenerableDerivatives"]["imageFileCount"], 1)
+        outputs = clean_rebase.write_core_selection_preview(
+            report, pathlib.Path(self.temporary.name) / "paged-preview",
+        )
+        page = pathlib.Path(outputs["html"]).read_text(encoding="utf-8")
+        self.assertIn("value=\"Angels\">Angels</option>", page)
+        self.assertIn("Angels/Ava (14)", page)
+        self.assertIn("Sisters/Bella (13)", page)
+        self.assertIn("Showing at most 50 of 51 source-photo duplicate IDs", page)
+        self.assertEqual(page.count("<li>"), 50)
+        self.assertIn("const pageSize = 24;", page)
+        self.assertIn("selection.slice(start, start + pageSize)", page)
+        self.assertIn("category.addEventListener", page)
+        self.assertIn("identity.addEventListener", page)
+        self.assertIn("auto-fit", page)
+        self.assertIn("@media(max-width:480px)", page)
+        self.assertIn("duplicate IDs among source photos", page)
+        self.assertEqual(page.count("<img "), 0)
+        self.assertEqual(len(json.loads(pathlib.Path(outputs["json"]).read_text(encoding="utf-8"))["photos"]), 27)
+
+    def test_core_preview_never_falls_back_to_repository_catalogue(self):
+        working = pathlib.Path(self.temporary.name) / "EmptyWorking"
+        working.mkdir()
+        catalog, source = clean_rebase._core_preview_catalog(working)
+        self.assertEqual(catalog["people"], {})
+        self.assertEqual(catalog["photos"], {})
+        self.assertIn("repository catalogue deliberately not used", source)
+
+    def test_reversed_sources_have_identical_state_and_no_mutation(self):
+        fixture = self.fixture()
+        before = copy.deepcopy(fixture[0])
+        (rows, report), catalog = self.build(fixture)
+        reverse = self.fixture()
+        reverse[0].reverse()
+        (other, second), _ = self.build(reverse)
+        self.assertEqual(sorted(rows, key=lambda r: r["photoId"]), sorted(other, key=lambda r: r["photoId"]))
+        self.assertEqual(report["evaluation"], second["evaluation"])
+        self.assertEqual(fixture[0], before)
+        self.assertEqual(catalog["photoGroups"], {})
+
+    def test_known_conflict_is_never_certified_under_same_person(self):
+        fixture = self.fixture()
+        pairs = [{"photoIds": ["photo:image_1000", "photo:image_1001"], "label": "different"}]
+        (rows, report), catalog = self.build(fixture, pairs=pairs)
+        left, right = [catalog["photos"][pid]["membership"] for pid in pairs[0]["photoIds"]]
+        self.assertFalse(left["status"] == right["status"] == "supported"
+                         and left["personId"] == right["personId"])
+        self.assertEqual(report["evaluation"]["directConflictAdmissions"], 0)
+        metadata.validate_catalog(catalog)
+
+    def test_cached_centroids_exclude_all_equal_content_witnesses(self):
+        fixture = self.fixture()
+        rows, measured, _ = fixture
+        rows[1]["sha256"] = rows[0]["sha256"]
+        (_, report), _ = self.build(fixture)
+        final = next(stage for stage in report["stages"] if stage["id"] == "refinement")
+        for result in final["rows"]:
+            row = next(r for r in rows if r["photoId"] == result["photoId"])
+            witnesses = [
+                measured[r["source"]].vec for r in rows
+                if r["oldFolder"] == row["oldFolder"] and r["sha256"] != row["sha256"]
+            ]
+            center = np.sum(witnesses, axis=0)
+            expected = float(measured[row["source"]].vec @ center / np.linalg.norm(center))
+            self.assertAlmostEqual(result["score"], expected)
+
+    def test_staged_growth_reassesses_against_surviving_original_witnesses(self):
+        fixture = self.fixture()
+        rows, measured, _ = fixture
+        for photo in measured.values():
+            photo.vec = np.pad(photo.vec, (0, 1))
+        row = copy.deepcopy(rows[0])
+        row.update(photoId="photo:image_1014", source="Models/Mira Vale/gallery/mira_image_1014.jpg",
+                   destination="Models/Mira Vale/gallery/mira_image_1014.jpg", sha256=f"{14:064x}")
+        extra = copy.deepcopy(measured[rows[0]["source"]])
+        extra.vec = np.zeros(17)
+        extra.vec[0], extra.vec[16] = .55, np.sqrt(1 - .55 ** 2)
+        rows.append(row)
+        measured[row["source"]] = extra
+        (_, report), catalog = self.build(fixture)
+        evaluation = report["evaluation"]
+        self.assertEqual(evaluation["stagedReferenceOccurrences"], 1)
+        self.assertEqual({b["phase"] for b in evaluation["withdrawalBoundaries"]}, {"membership", "post-growth"})
+        dependencies = evaluation["stagedDependencies"]
+        self.assertEqual(dependencies[0]["photoId"], row["photoId"])
+        self.assertEqual(len(dependencies[0]["originalWitnessPhotoIds"]), 7)
+        self.assertNotIn(row["photoId"], dependencies[0]["originalWitnessPhotoIds"])
+        self.assertTrue(catalog["photos"][row["photoId"]]["membership"]["coreUse"])
+        member = rows[0]
+        center = np.sum([
+            measured[r["source"]].vec for r in rows
+            if r["oldFolder"] == member["oldFolder"] and r["photoId"] != member["photoId"]
+        ], axis=0)
+        expected = float(measured[member["source"]].vec @ center / np.linalg.norm(center))
+        final = next(stage for stage in report["stages"] if stage["id"] == "refinement")
+        self.assertAlmostEqual(next(r for r in final["rows"] if r["photoId"] == member["photoId"])["score"], expected)
+        metadata.validate_catalog(catalog)
+
+    def test_quality_hold_and_manual_protection_are_explicit(self):
+        fixture = self.fixture()
+        rows, measured, catalog = fixture
+        measured[rows[0]["source"]].faces = 2
+        catalog["photos"][rows[1]["photoId"]] = {"contentSha256": rows[1]["sha256"], "protected": True}
+        (output, _), catalog = self.build(fixture)
+        self.assertEqual(output[0]["membership"]["status"], "quality-hold")
+        self.assertEqual(output[1]["destination"], rows[1]["destination"])
+        self.assertFalse(output[1]["membership"]["coreUse"])
+        metadata.validate_catalog(catalog)
+
+    def test_family_refresh_retires_stale_edges_without_losing_names_or_history(self):
+        _, _, catalog = self.fixture()
+        root, child = catalog["people"].values()
+        old = {
+            "id": "family_" + "1" * 32, "referencePersonId": root["id"], "surname": "Vale",
+            "score": .8, "policyVersion": "old", "previousPersonName": "Mira Vale",
+            "reason": "historical creative family",
+        }
+        for person in (root, child):
+            person["family"] = copy.deepcopy(old)
+            person["names"] = {
+                "originalName": person["displayName"].split()[0] + " Original",
+                "currentName": person["displayName"], "originalSource": "recorded-history",
+            }
+        before = copy.deepcopy({p["id"]: p["family"] for p in (root, child)})
+        root["folder"], root["displayName"] = "Models/Mira Ember", "Mira Ember"
+        evidence = {
+            "linkBand": "yellow",
+            "families": [{
+                "id": "family_" + "2" * 32, "rootFolder": root["folder"], "rootKind": "identity",
+                "surname": "Ember", "surnameSource": "creative test",
+                "members": [{
+                    "folder": root["folder"], "identity": "Models/Mira Vale", "parent": None,
+                    "previousName": "Mira Vale", "name": "Mira Ember", "score": None,
+                }],
+            }],
+        }
+        clean_rebase._record_families(catalog, evidence, {}, {}, pathlib.Path(), load_policy(), replace=True)
+        self.assertNotIn("family", child)
+        self.assertEqual(root["names"]["originalName"], "Mira Original")
+        self.assertEqual(child["names"]["currentName"], "Elana Vale")
+        self.assertEqual(evidence["previousCatalogueFamilies"], before)
+        self.assertEqual({r["decision"] for r in evidence["catalogueReconciliation"]}, {"refreshed", "retired"})
+        metadata.validate_catalog(catalog)
+
+    def test_bad_inventory_and_duplicate_ids_fail_explicitly(self):
+        fixture = self.fixture()
+        fixture[0].append(copy.deepcopy(fixture[0][0]))
+        with self.assertRaisesRegex(ValueError, "unambiguous"):
+            self.build(fixture)
+
+    def test_tentative_reference_and_broken_group_links_fail_schema_validation(self):
+        (_, _), catalog = self.build()
+        person_id = next(iter(catalog["people"]))
+        pid = next(iter(catalog["photos"]))
+        group_id = "group_" + "1" * 32
+        catalog["photoGroups"][group_id] = {
+            "id": group_id, "personId": person_id, "name": "Evening", "status": "tentative",
+            "memberPhotoIds": [pid], "referencePhotoIds": [pid], "sourcePersonIds": [],
+            "history": [], "reason": "test",
+        }
+        with self.assertRaisesRegex(ValueError, "tentative groups|bidirectionally"):
+            metadata.validate_catalog(catalog)
+
+    def test_group_lineage_survives_singleton_shrink_without_stale_members(self):
+        from tools.art.likeness_library.group_lifecycle import reconcile_history
+        group_id = "group_" + "1" * 32
+        previous = {group_id: {
+            "id": group_id, "personId": "parent", "name": "Evening", "status": "tentative",
+            "memberPhotoIds": ["one", "two"], "referencePhotoIds": [],
+            "sourcePersonIds": [], "history": [], "reason": "original",
+        }}
+        states = {
+            "one": {"personId": "parent", "status": "tentative", "coreUse": False},
+            "two": {"personId": "other", "status": "supported", "coreUse": True},
+        }
+        groups = reconcile_history({}, previous, states, "next", "2026-11-11T13:00:00+00:00")
+        self.assertEqual(groups[group_id]["memberPhotoIds"], ["one"])
+        self.assertEqual(groups[group_id]["name"], "Evening")
+        self.assertEqual(groups[group_id]["referencePhotoIds"], [])
+        self.assertEqual(states["one"]["groupId"], group_id)
+        self.assertNotIn("groupId", states["two"])
+
+    def test_policy_and_exact_labels_bind_reference_version(self):
+        (_, first), _ = self.build()
+        (_, second), _ = self.build(pairs=[
+            {"photoIds": ["photo:image_1000", "photo:image_1001"], "label": "same"},
+        ])
+        self.assertNotEqual(first["evaluation"]["referenceVersion"], second["evaluation"]["referenceVersion"])
+
+    def test_runtime_policy_is_versioned_idempotent_and_preserves_general_approval(self):
+        from tools.art.likeness_library.group_lifecycle import runtime_policy, ENTRANCE, CORE, MARGIN
+        from tools.art.likeness_library.policy import validate_policy
+        before = load_policy()
+        policy = runtime_policy(before)
+        validate_policy(policy)
+        self.assertEqual(policy, runtime_policy(policy))
+        self.assertNotEqual(before["version"], policy["version"])
+        self.assertEqual(before["status"], policy["status"])
+        for category in ENTRANCE:
+            rules = policy["categoryPolicies"][category]
+            self.assertEqual(rules["photoRouteMinimum"], ENTRANCE[category])
+            self.assertEqual(rules["identityCoreMinimumSimilarity"], CORE[category])
+            self.assertEqual(rules["photoRouteMargin"], MARGIN[category])
+
+    def test_explicit_reference_withdrawal_cannot_regain_authority_through_growth(self):
+        pid = "photo:image_1000"
+        (rows, report), _ = self.build(reference_exclusions={pid})
+        row = next(row for row in rows if row["photoId"] == pid)
+        self.assertEqual(row["membership"]["status"], "supported")
+        self.assertFalse(row["membership"]["coreUse"])
+        self.assertEqual(report["evaluation"]["reviewedReferenceExclusions"], [pid])
+
+    def test_small_coherent_residual_retains_named_candidate_without_reference_claim(self):
+        rows, measured, catalog = self.fixture()
+        rows = [row for row in rows if row["photoId"] not in {f"photo:image_{n}" for n in range(1002, 1007)}]
+        (output, report), catalog = self.build((rows, measured, catalog))
+        pair = [row for row in output if row["photoId"] in {"photo:image_1000", "photo:image_1001"}]
+        self.assertEqual(report["evaluation"]["independentResidualCandidates"], 1)
+        self.assertTrue(all(row["membership"]["status"] == "tentative" and not row["membership"]["coreUse"] for row in pair))
+        self.assertTrue(all(row["destination"].startswith("Models/Mira Vale/review/") for row in pair))
+        self.assertTrue(all(row["membership"]["groupId"] is None for row in pair))
+        metadata.validate_catalog(catalog)
 
 
 class CleanRebaseTests(unittest.TestCase):
@@ -40,6 +549,74 @@ class CleanRebaseTests(unittest.TestCase):
         }
         (self.base / "source-manifest.json").write_text("{}", encoding="utf-8")
 
+    def test_quality_evidence_separates_measured_unusable_from_unknown_and_multiface(self):
+        settings = {"minFace": 100, "multiFace": .3}
+        cases = [
+            (None, 0, 0, 0, "no face found", "missing-or-unusable-measurement", False),
+            ([1, 0], 150, 2, .5, "2+ faces", "ambiguous-multiface", False),
+            ([1, 0], 50, 1, 0, "face too small (50px)", "measured-face-too-small", True),
+            ([1, 0], 150, 1, 0, "the app's bars cover her head (screenshot)",
+             "measured-head-obstruction", True),
+            ([1, 0], 150, 1, 0, "unknown quality", "unclassified-quality-hold", False),
+        ]
+        for vec, px, faces, f2, reason, classification, candidate in cases:
+            with self.subTest(classification=classification):
+                evidence = clean_rebase._quality_hold_evidence(
+                    SimpleNamespace(vec=vec, px=px, faces=faces, f2=f2), settings, reason,
+                )
+                self.assertEqual(evidence["classification"], classification)
+                self.assertEqual(evidence["recoverableJunkCandidate"], candidate)
+                self.assertEqual(evidence["reason"], reason)
+
+    def test_supported_launcher_generates_synthetic_directed_candidate_viewer(self):
+        fixture_root = self.base / "launcher-fixture"
+        sandbox_root = fixture_root / "Sovereign Territories Sandbox"
+        working = sandbox_root / "Working"
+        source = sandbox_root / "Source"
+        production = fixture_root / "Sovereign Territories"
+        source.mkdir(parents=True)
+        working.mkdir()
+        (sandbox_root / "source-manifest.json").write_text(json.dumps({
+            "schemaVersion": 1, "snapshotRoot": "Source", "workingRootAtCreation": "Working",
+            "sourceRoot": str(production), "fileCount": 0, "totalBytes": 0, "files": [],
+        }), encoding="utf-8")
+        cast = working / "Angels" / "Source" / "gallery" / "angel_image_765431.jpg"
+        cast.parent.mkdir(parents=True)
+        cast.write_bytes(b"synthetic candidate")
+        incoming = working / "Various" / "gallery" / "incoming_image_765432.jpg"
+        incoming.parent.mkdir(parents=True)
+        incoming.write_bytes(b"synthetic incoming")
+        input_hashes = {
+            cast: hashlib.sha256(cast.read_bytes()).hexdigest(),
+            incoming: hashlib.sha256(incoming.read_bytes()).hexdigest(),
+        }
+        run = working / "_sandbox-state" / "directed-preview"
+        launcher = pathlib.Path(__file__).resolve().parents[4] / "bin" / "sandbox-rebase.cmd"
+        result = subprocess.run(
+            [
+                "cmd", "/c", "call", str(launcher), str(working), str(run),
+                "--baseline", "working", "--cast-seeds", "core", "--regroup", "--directed",
+                "--directed-recipe", "directed-core-continuity", "--dry-run",
+                "--core-selection-preview",
+            ],
+            cwd=pathlib.Path(__file__).resolve().parents[4],
+            capture_output=True, text=True, timeout=60,
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("experimental-directed-sandbox; preview only", result.stdout)
+        self.assertIn("directed-core-continuity", result.stdout)
+        report_path = run / "core-selection-preview" / "core-selection-preview.json"
+        report = json.loads(report_path.read_text(encoding="utf-8"))
+        self.assertEqual(report["candidatePhotoCount"], 1)
+        self.assertEqual(report["incomingVarious"]["imageFileCount"], 1)
+        self.assertEqual(report["baselineInventory"]["regenerableDerivatives"]["imageFileCount"], 0)
+        self.assertIn("repository catalogue deliberately not used", report["catalogSource"])
+        self.assertTrue((report_path.parent / "core-selection-preview.html").is_file())
+        self.assertEqual(
+            {path: hashlib.sha256(path.read_bytes()).hexdigest() for path in input_hashes},
+            input_hashes,
+        )
+
     def image_inventory_mock(self):
         categories = {"Angels", "Sisters", "Models", "Prospects", "Potentials", "Artists", "Various"}
 
@@ -55,6 +632,130 @@ class CleanRebaseTests(unittest.TestCase):
             )
 
         return SimpleNamespace(inventory=inventory)
+
+    def test_directed_fresh_create_plan_persists_people_references_routes_and_distinct_family_names(self):
+        from tools.art.likeness_library import group_lifecycle
+        from tools.art.likeness_library.tests.test_directed_reformation import DirectedReformationTests
+        rows, measured, empty, cohorts, _add = DirectedReformationTests().fixture()
+        empty_id = "person_" + "e" * 32
+        empty["people"][empty_id] = {
+            "id": empty_id, "folder": "Prospects/No Evidence", "folderHistory": [],
+            "displayName": "No Evidence",
+            "identityAnchors": [], "protected": False,
+        }
+        self.source_photo.unlink()
+        folders, manifest, vectors = {}, {}, {}
+        for row in rows:
+            relative = row["source"]
+            folder = row["oldFolder"]
+            path = self.source / pathlib.PurePosixPath(relative)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            payload = row["photoId"].encode()
+            path.write_bytes(payload)
+            manifest[relative] = (len(payload), hashlib.sha256(payload).hexdigest())
+            category, _, name = folder.partition("/")
+            folders[folder] = (category, name or "Various", self.source / pathlib.PurePosixPath(folder))
+            vector = measured[relative].vec.copy()
+            if category == "Angels":
+                vector[1] = np.sqrt(.75)
+                vector[vector == np.sqrt(.36)] = np.sqrt(.25)
+            if category == "Models":
+                vector[1], vector[2] = .6, np.sqrt(.28)
+            vectors[relative] = vector
+        catalog_path = self.working / ".likeness-library.json"
+        metadata.save_catalog(empty, catalog_path)
+        api = SimpleNamespace(
+            cw=SimpleNamespace(
+                load_cfg=lambda: {}, storage_root=likeness.cw.storage_root,
+                photo_folders=lambda _cfg, _root: list(folders.values()), photo_key=likeness.cw.photo_key,
+            ),
+            settings=likeness.settings, originals=likeness.originals, nz=likeness.nz,
+            chosen_keys=lambda _cfg: set(), invent_name=likeness.invent_name,
+            junk_reason=lambda photo, settings: "synthetic quality hold" if photo.name.endswith("800037.jpg") else None,
+        )
+        policy = load_policy()
+        policy["familyNaming"] = {"enabled": True, "linkMinimumBand": "yellow",
+                                  "castSurnameOverrides": {"Angels/Angel Source": "Hadley"}}
+        pair = {"photoIds": [cohorts["Models/Model Source"][0], cohorts["Angels/Angel Source"][0]],
+                "label": "different"}
+        with mock.patch.object(metadata, "path_for_root", return_value=catalog_path), \
+                mock.patch.object(group_lifecycle, "review_evidence", return_value=({"pairs": [pair]}, {})):
+            plan = clean_rebase.create_plan(
+                {**self.layout, "manifest_files": manifest}, self.run, policy, api,
+                embedder=lambda path: {
+                    "v": vectors[path.relative_to(self.source).as_posix()].tolist(),
+                    "faces": 1, "s": .95, "px": 150,
+                },
+                seed_catalog=empty, regroup=True, cast_seeds="core", review_source=self.source,
+                directed_recipe="directed-core-continuity",
+            )
+        saved = json.loads((self.run / "catalog.json").read_text(encoding="utf-8"))
+        self.assertEqual(len(saved["people"]), 8)
+        self.assertTrue(saved["photoGroups"])
+        self.assertEqual(plan["groupLifecycle"]["evaluation"]["independentResidualCandidates"], 1)
+        self.assertTrue(plan["policy"]["categoryPolicies"]["Angels"]["galleryAdmissionEnabled"])
+        family = next(f for f in plan["familyNaming"]["families"] if f["rootFolder"] == "Angels/Angel Source")
+        self.assertEqual(family["surname"], "Hadley")
+        relative = next(row["destination"] for row in plan["photos"]
+                        if row["photoId"] == cohorts["Models/Model Source"][0])
+        self.assertIn("Hadley/gallery/", relative)
+        person_id = next(row["membership"]["personId"] for row in plan["photos"]
+                         if row["photoId"] == cohorts["Models/Model Source"][0])
+        self.assertNotEqual(person_id, next(p["id"] for p in saved["people"].values()
+                                           if p["folder"] == "Angels/Angel Source"))
+        assessments = {item["personId"]: item for item in plan["familyNaming"]["ownerAssessment"]}
+        self.assertEqual(set(assessments), set(saved["people"]))
+        self.assertEqual(assessments[empty_id]["status"], "insufficient-qualified-references")
+        self.assertEqual(assessments[person_id]["status"], "qualified-owner-assessed")
+        self.assertEqual(assessments[person_id]["folder"], saved["people"][person_id]["folder"])
+        self.assertEqual(sum(item["qualifiedReferenceCount"] for item in assessments.values()),
+                         sum(row["membership"]["coreUse"] for row in plan["photos"]))
+        provisional = [item for item in assessments.values() if item["identityStatus"] == "provisional"]
+        self.assertEqual(len(provisional), 1)
+        self.assertEqual(provisional[0]["status"], "provisional-no-reference-authority")
+        self.assertEqual(provisional[0]["qualifiedReferenceCount"], 0)
+        from tools.art.likeness_library.directed_reformation import unpack_runtime_decisions
+        decisions = unpack_runtime_decisions(plan["groupLifecycle"]["decisionEvidence"])
+        for row in plan["photos"]:
+            self.assertEqual(decisions[row["photoId"]]["proposedDestination"], row["destination"])
+        metadata.validate_catalog(saved)
+        clean_rebase._verify_routes(plan, self.source)
+
+    def test_synthetic_directed_residual_preview_apply_and_publication_check(self):
+        from tools.art.likeness_library import group_lifecycle
+        from tools.art.likeness_library.tests.test_directed_reformation import DirectedReformationTests
+        rows, measured, catalog, cohorts, _add = DirectedReformationTests().fixture()
+        incoming = set(cohorts["Various"])
+        rows = [row for row in rows if row["photoId"] in incoming]
+        for row in rows:
+            path = self.source / pathlib.PurePosixPath(row["source"])
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(row["photoId"].encode())
+            row["sha256"] = metadata.content_sha256(path)
+        output, lifecycle = group_lifecycle.regroup(
+            rows, measured, catalog, load_policy(), set(), "synthetic",
+            at="2026-11-13T18:00:00+00:00", directed_recipe="directed-core-continuity",
+            name_factory=lambda seed, _taken: "Nova " + seed[-8:],
+        )
+        metadata.save_catalog(catalog, self.run / "catalog.json")
+        plan = {
+            "status": "preview", "photos": output, "policy": load_policy(),
+            "groupLifecycle": lifecycle, "catalogSHA256": metadata.content_sha256(self.run / "catalog.json"),
+        }
+        clean_rebase._verify_routes(plan, self.source)
+        with mock.patch("library_backup.latest_work_root_backup", return_value=self.base), \
+                mock.patch("library_backup.verify_backup"):
+            clean_rebase.install_plan(self.layout, self.run, plan)
+        self.assertEqual(plan["status"], "applied")
+        clean_rebase._check_publication(self.working, plan)
+        self.assertEqual(sum(row["destination"].startswith("Prospects/") for row in output), 6)
+        self.assertEqual(sum(row["destination"].startswith("Potentials/") for row in output), 1)
+        self.assertEqual(sum(row["destination"].startswith("Various/") for row in output), 1)
+        self.assertEqual(lifecycle["assignmentSummary"]["activeVarious"], 1)
+        for row in output:
+            self.assertEqual(metadata.content_sha256(self.working / row["destination"]), row["sha256"])
+        installed = metadata.load_catalog(self.working / ".likeness-library.json")
+        self.assertEqual(sum(row["membership"]["coreUse"] for row in installed["photos"].values()), 6)
 
     def test_external_inventory_reuses_and_seals_one_operation(self):
         from PIL import Image

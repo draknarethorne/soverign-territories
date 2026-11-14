@@ -100,6 +100,51 @@ def validation_errors(data):
                 anchor_owners[photo_id] = person_id
 
     action_ids = set()
+    group_owners = {}
+    for group_id, group in data.get("photoGroups", {}).items():
+        if group["id"] != group_id or group["personId"] not in people:
+            errors.append(f"photoGroups/{group_id}: invalid group key or parent identity")
+        elif people[group["personId"]].get("mergedInto"):
+            errors.append(f"photoGroups/{group_id}: current group parent is merged history")
+        if any(pid not in people for pid in group["sourcePersonIds"]):
+            errors.append(f"photoGroups/{group_id}: unknown source lineage identity")
+        if group["status"] == "tentative" and group["referencePhotoIds"]:
+            errors.append(f"photoGroups/{group_id}: tentative groups cannot contribute references")
+        if not set(group["referencePhotoIds"]) <= set(group["memberPhotoIds"]):
+            errors.append(f"photoGroups/{group_id}: references must be current group members")
+        for pid in group["referencePhotoIds"]:
+            membership = photos.get(pid, {}).get("membership", {})
+            if membership.get("status") != "supported" or not membership.get("coreUse"):
+                errors.append(f"photoGroups/{group_id}: reference {pid} lacks supported core membership")
+        for pid in group["memberPhotoIds"]:
+            if pid not in photos or pid in group_owners:
+                errors.append(f"photoGroups/{group_id}: missing or multiply owned photo {pid}")
+            group_owners[pid] = group_id
+    for photo_id, photo in photos.items():
+        membership = photo.get("membership")
+        if not membership:
+            continue
+        person_id, group_id = membership["personId"], membership["groupId"]
+        if person_id is not None and (person_id not in people or people[person_id].get("mergedInto")):
+            errors.append(f"photos/{photo_id}/membership: unknown or merged current parent")
+        if membership["status"] != "supported" and membership["coreUse"]:
+            errors.append(f"photos/{photo_id}/membership: only supported members may contribute references")
+        if membership.get("assignmentDisposition") in ("tentative-parent", "provisional", "exception") \
+                and membership["coreUse"]:
+            errors.append(f"photos/{photo_id}/membership: assignment-only members cannot contribute references")
+        if person_id in people and people[person_id].get("identityStatus") == "provisional" \
+                and membership["coreUse"]:
+            errors.append(f"photos/{photo_id}/membership: provisional containers cannot contribute references")
+        if any(pid not in people for pid in membership.get("sourcePersonIds", [])):
+            errors.append(f"photos/{photo_id}/membership: unknown source lineage identity")
+        if membership["status"] == "supported" and person_id is None:
+            errors.append(f"photos/{photo_id}/membership: supported membership requires a canonical parent")
+        if group_id != group_owners.get(photo_id):
+            errors.append(f"photos/{photo_id}/membership: group membership is not bidirectionally consistent")
+        if group_id:
+            group = data.get("photoGroups", {}).get(group_id)
+            if group is None or group["personId"] != person_id or group["status"] != membership["status"]:
+                errors.append(f"photos/{photo_id}/membership: group parent/status differs")
     for photo_id, photo in photos.items():
         for person_id in photo.get("rejectedPersonIds", []):
             if person_id not in people:

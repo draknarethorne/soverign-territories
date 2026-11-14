@@ -16,7 +16,7 @@ sys.path.insert(0, str(ROOT / "tools/workflows"))
 import comfy_workflows as cw  # noqa: E402
 import library_backup  # noqa: E402
 import originals  # noqa: E402
-from likeness_library import derivatives, metadata, verification_reads  # noqa: E402
+from likeness_library import derivatives, fictional_relationships, group_views, metadata, verification_reads  # noqa: E402
 from likeness_library.policy import load_policy  # noqa: E402
 from likeness_library.sandbox import is_sandbox_working_path, require_sandbox_cache, require_sandbox_output  # noqa: E402
 
@@ -28,8 +28,9 @@ REPORT_IMPLEMENTATION = (
     )),
     *(ROOT / "tools" / "art" / "likeness_library" / name for name in (
         "review_gallery.py", "preparation_provenance.py", "preparation_history.py",
-        "retained_preparation.py", "verification_reads.py", "derivatives.py",
-        "gallery_chrome.py", "report_assets.py", "policy.py", "engine.py", "scoring.py",
+        "retained_preparation.py", "verification_reads.py", "derivatives.py", "fast_preparation.py",
+        "gallery_chrome.py", "group_views.py", "report_assets.py", "policy.py", "engine.py", "scoring.py",
+        "fictional_relationships.py", "fictional_relationships.js",
         "thumbnails.py", "identity_names.py", "metadata.py", "audit.py", "rejections.py",
     )),
     ROOT / "tools" / "workflows" / "comfy_workflows.py",
@@ -113,6 +114,10 @@ def reports_pending(root, library, cache_path, policy_path, output):
         report = output / name
         if not report.is_file() or state.get("reports", {}).get(name) != derivatives.digest(report):
             pending = True
+    if not group_views.reports_current(metadata.load_catalog(metadata.path_for_root(root)), output):
+        pending = True
+    if not fictional_relationships.reports_current(output):
+        pending = True
     if pending:
         print("OUT OF SYNC: derivative-backed gallery reports need refresh")
     return pending

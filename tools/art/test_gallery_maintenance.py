@@ -15,7 +15,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/art"))
 from PIL import Image  # noqa: E402
 import gallery_maintenance as upkeep  # noqa: E402
-from likeness_library import actions, derivatives, metadata, person_rename, review_gallery  # noqa: E402
+from likeness_library import actions, derivatives, fictional_relationships, group_views, metadata, person_rename, report_assets, review_gallery  # noqa: E402
 
 
 class MaintenanceTests(unittest.TestCase):
@@ -82,6 +82,9 @@ class MaintenanceTests(unittest.TestCase):
             output.mkdir(parents=True, exist_ok=True)
             for name in ("people_gallery.html", "people_gallery_review.html"):
                 (output / name).write_text("report", encoding="utf-8")
+            generated = group_views.publish(self.catalog, [], output)
+            generated.update(fictional_relationships.publish(self.catalog, output, library_root=self.root))
+            report_assets.record(output, generated)
             return 0
 
         with mock.patch.object(upkeep.cw, "load_cfg", return_value=self.cfg), \
@@ -110,6 +113,58 @@ class MaintenanceTests(unittest.TestCase):
         for relative, payload in before.items():
             self.assertEqual((self.root / relative).read_bytes(), payload)
         self.assertTrue(self.photo.exists())
+
+    def test_check_and_noop_maintenance_require_current_group_reports(self):
+        output = self.root / "_reports" / "library"
+        output.mkdir(parents=True)
+        group_id = "group_" + "a" * 32
+        catalog = {**self.catalog, "photoGroups": {group_id: {
+            "id": group_id, "personId": "person_a", "name": "Appearance",
+            "status": "supported", "memberPhotoIds": [], "referencePhotoIds": [],
+            "sourcePersonIds": [], "history": [], "reason": "test",
+        }}}
+        for name in ("people_gallery.html", "people_gallery_review.html"):
+            (output / name).write_bytes(b"report")
+
+        def publish_groups():
+            generated = group_views.publish(catalog, [], output)
+            generated.update(fictional_relationships.publish(catalog, output, library_root=self.root))
+            report_assets.record(output, generated)
+
+        publish_groups()
+        state = {"inputs": upkeep.report_state(self.root, [self.folder], self.cache, None),
+                 "reports": {name: derivatives.digest(output / name)
+                             for name in ("people_gallery.html", "people_gallery_review.html")}}
+        (output / ".gallery-maintenance-report-state.json").write_text(json.dumps(state), encoding="utf-8")
+        args = ["--root", str(self.root), "--cache", str(self.cache)]
+        group_index = output / "photo-groups" / group_id / "index.html"
+        root_index = output / "photo-groups" / "index.html"
+        receipt = output / "people-gallery-manifest.json"
+        paths = (root_index, group_index, group_index.with_name("manifest.json"),
+                 output / fictional_relationships.PAGE, receipt)
+        with mock.patch.object(upkeep.cw, "load_cfg", return_value=self.cfg), \
+                mock.patch.object(upkeep.metadata, "load_catalog", return_value=catalog), \
+                mock.patch.object(upkeep.derivatives, "maintain", return_value=([], [])), \
+                mock.patch.object(upkeep.derivatives, "prune", return_value=([], [])), \
+                mock.patch.object(upkeep.originals, "standard_name", side_effect=lambda name, *_: name), \
+                mock.patch.object(upkeep, "refresh_reports", side_effect=lambda *_: publish_groups()) as refresh, \
+                contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(upkeep.main([*args, "--check"]), 0)
+            for path in paths:
+                with self.subTest(path=path):
+                    original = path.read_bytes()
+                    path.write_bytes(b"tampered")
+                    self.assertEqual(upkeep.main([*args, "--reports-only", "--check"]), 1)
+                    self.assertEqual(upkeep.main([*args, "--check"]), 1)
+                    path.unlink()
+                    self.assertEqual(upkeep.main([*args, "--reports-only", "--check"]), 1)
+                    self.assertEqual(upkeep.main([*args, "--check"]), 1)
+                    path.write_bytes(original)
+                    self.assertEqual(upkeep.main([*args, "--check"]), 0)
+            root_index.unlink()
+            self.assertEqual(upkeep.main([*args, "--apply"]), 0)
+            refresh.assert_called_once()
+            self.assertEqual(upkeep.main([*args, "--check"]), 0)
 
     def test_failed_shared_report_build_does_not_publish_success_state(self):
         import likeness
@@ -460,6 +515,12 @@ class MaintenanceTests(unittest.TestCase):
         report = self.root / "_reports" / "library" / "people_gallery_review.html"
         self.assertIn("thumbnailProvenance", report.read_text(encoding="utf-8"))
         self.assertIn("chest_944x1104", report.read_text(encoding="utf-8"))
+        output = report.parent
+        self.assertTrue(fictional_relationships.reports_current(output))
+        self.assertIn("not biological relationships", (output / fictional_relationships.PAGE).read_text(encoding="utf-8"))
+        for name in ("people_gallery.html", "people_gallery_review.html"):
+            self.assertIn('href="fictional_relationships.html"', (output / name).read_text(encoding="utf-8"))
+        self.assertFalse((self.root / fictional_relationships.DATA_FILE).exists())
 
     def test_collision_holds_original_names_but_maintains_both_derivatives(self):
         other = self.gallery / "fixed_slot_image_123.jpg"

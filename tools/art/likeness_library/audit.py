@@ -67,7 +67,19 @@ def _filter_core_by_leave_one_out(vectors, core_indices, anchor_indices, minimum
     return core
 
 
-def audit_person(vectors, photo_ids, *, anchor_ids=(), protected_ids=(), stale_ids=(), ambiguous_ids=(),
+def membership_excluded(catalog, photo_ids=(), *, require_record=True):
+    excluded = set()
+    for photo_id in set(catalog.get("photos", {})) | set(photo_ids):
+        state = catalog.get("photos", {}).get(photo_id, {}).get("membership")
+        if state is None:
+            if require_record and "photoGroups" in catalog:
+                excluded.add(photo_id)
+        elif state["status"] != "supported" or not state["coreUse"]:
+            excluded.add(photo_id)
+    return excluded
+
+
+def audit_person(vectors, photo_ids, *, anchor_ids=(), protected_ids=(), stale_ids=(), ambiguous_ids=(), excluded_ids=(),
                  minimum_core=3, seed_floor=0.2, core_minimum=0.3):
     """Score one folder, keeping trusted anchors distinct from provisional core members."""
     vectors = np.asarray(vectors, dtype=float)
@@ -92,7 +104,7 @@ def audit_person(vectors, photo_ids, *, anchor_ids=(), protected_ids=(), stale_i
             raise ValueError(f"{label} must be between -1 and 1")
     vectors = nz(vectors)
 
-    anchors = set(anchor_ids) - set(stale_ids) - set(ambiguous_ids)
+    anchors = set(anchor_ids) - set(stale_ids) - set(ambiguous_ids) - set(excluded_ids)
     protected = set(protected_ids) - set(stale_ids) - set(ambiguous_ids)
     stale = set(stale_ids)
     ambiguous = set(ambiguous_ids)
@@ -100,7 +112,7 @@ def audit_person(vectors, photo_ids, *, anchor_ids=(), protected_ids=(), stale_i
     protected_indices = [i for i, photo_id in enumerate(photo_ids) if photo_id in protected]
     blocked_indices = {
         i for i, photo_id in enumerate(photo_ids)
-        if photo_id in stale or photo_id in ambiguous
+        if photo_id in stale or photo_id in ambiguous or photo_id in excluded_ids
     }
     eligible = [
         i for i, photo_id in enumerate(photo_ids)

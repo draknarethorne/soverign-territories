@@ -7,6 +7,11 @@
   "required": ["schemaVersion", "people", "photos", "actions"],
   "properties": {
     "schemaVersion": {"const": 1},
+    "photoGroups": {
+      "type": "object",
+      "propertyNames": {"pattern": "^group_[0-9a-f]{32}$"},
+      "additionalProperties": {"$ref": "#/definitions/photoGroup"}
+    },
     "people": {
       "type": "object",
       "propertyNames": {"pattern": "^person_[0-9a-f]{32}$"},
@@ -23,6 +28,56 @@
     }
   },
   "definitions": {
+    "photoGroup": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "personId", "name", "status", "memberPhotoIds", "referencePhotoIds", "sourcePersonIds", "history", "reason"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^group_[0-9a-f]{32}$"},
+        "personId": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"},
+        "name": {"type": "string", "minLength": 1},
+        "status": {"enum": ["supported", "tentative"]},
+        "memberPhotoIds": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/definitions/photoId"}},
+        "referencePhotoIds": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/definitions/photoId"}},
+        "sourcePersonIds": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"}},
+        "history": {
+          "type": "array", "items": {
+            "type": "object", "additionalProperties": false, "required": ["timestamp", "runId", "reason"],
+            "properties": {
+              "timestamp": {"type": "string", "format": "date-time"},
+              "runId": {"type": "string", "minLength": 1},
+              "reason": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "membership": {
+      "type": "object", "additionalProperties": false,
+      "required": ["personId", "groupId", "status", "coreUse", "reason", "referenceVersion"],
+      "properties": {
+        "personId": {"type": ["string", "null"], "pattern": "^person_[0-9a-f]{32}$"},
+        "groupId": {"type": ["string", "null"], "pattern": "^group_[0-9a-f]{32}$"},
+        "status": {"enum": ["supported", "tentative", "unresolved", "quality-hold"]},
+        "coreUse": {"type": "boolean"},
+        "reason": {"type": "string", "minLength": 1},
+        "referenceVersion": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "assignmentDisposition": {"enum": ["supported", "tentative-parent", "provisional", "exception"]},
+        "sourcePersonIds": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"}},
+        "assignmentEvidence": {
+          "type": "object", "additionalProperties": false,
+          "properties": {
+            "score": {"type": ["number", "null"], "minimum": -1, "maximum": 1},
+            "margin": {"type": ["number", "null"], "minimum": -2, "maximum": 2},
+            "supportPhotoIds": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/definitions/photoId"}},
+            "blockers": {"type": "array", "items": {"type": "string"}},
+            "qualityReason": {"type": ["string", "null"]},
+            "source": {"type": "string"},
+            "sourceSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+          }
+        }
+      }
+    },
     "protectionProvenance": {
       "type": "object",
       "additionalProperties": false,
@@ -97,6 +152,7 @@
           "items": {"$ref": "#/definitions/photoId"}
         },
         "protected": {"type": "boolean"},
+        "identityStatus": {"enum": ["confirmed", "provisional"]},
         "automaticProtectionOverride": {"enum": ["disabled", "enabled"]},
         "protectionProvenance": {"$ref": "#/definitions/protectionProvenance"},
         "mergedInto": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"}
@@ -107,6 +163,7 @@
       "additionalProperties": false,
       "required": ["contentSha256", "protected"],
       "properties": {
+        "membership": {"$ref": "#/definitions/membership"},
         "contentSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
         "protected": {"type": "boolean"},
         "automaticProtectionOverride": {"enum": ["disabled", "enabled"]},
@@ -239,6 +296,11 @@
       "additionalProperties": false,
       "required": ["person", "photo"],
       "properties": {
+        "photoGroups": {
+          "type": "object",
+          "propertyNames": {"pattern": "^group_[0-9a-f]{32}$"},
+          "additionalProperties": {"$ref": "#/definitions/photoGroup"}
+        },
         "person": {
           "oneOf": [
             {"type": "null"},

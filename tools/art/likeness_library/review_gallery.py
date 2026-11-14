@@ -17,8 +17,8 @@ ROOT = pathlib.Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "tools/art"))
 import likeness  # noqa: E402
 import originals  # noqa: E402
-from likeness_library import domains, gallery_chrome, identity_names, metadata, person_rename, preparation_history, preparation_provenance, protection, rejections, report_assets  # noqa: E402
-from likeness_library.audit import audit_person, catalog_photo_flags, core_excluded_protection, identity_order_key  # noqa: E402
+from likeness_library import domains, gallery_chrome, group_views, identity_names, metadata, person_rename, preparation_history, preparation_provenance, protection, rejections, report_assets  # noqa: E402
+from likeness_library.audit import audit_person, catalog_photo_flags, core_excluded_protection, identity_order_key, membership_excluded  # noqa: E402
 from likeness_library.cross_reference import CATEGORY_ORDER, rank_identity_centroids, score_band  # noqa: E402
 from likeness_library.policy import (
     default_policy,
@@ -36,6 +36,7 @@ ACTION_ROOTS = {"Angels", "Sisters", "Models", "Prospects", "Potentials"}
 
 CSS = """
 .note{color:var(--st-muted);max-width:1100px}.warnings{color:#8a3b16}
+.warnings ul{max-height:24rem;overflow:auto;overflow-wrap:anywhere}
 .controls{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 20px;align-items:end;margin:16px 0;padding:14px 16px;background:var(--st-card);border:1px solid var(--st-line);border-radius:var(--st-radius);box-shadow:var(--st-shadow)}
 .filter-controls{display:grid;gap:8px;min-width:0}.search-control{display:flex;flex-direction:column;align-items:flex-start;gap:4px;width:min(100%,520px)}
 .search-control input{width:100%;box-sizing:border-box}.filter-options{display:flex;justify-content:flex-start;gap:10px;flex-wrap:wrap}
@@ -171,6 +172,9 @@ if(requestedPerson) {
     group.value=target.group;
     fillPeople();
     person.value=target.folder;
+  } else {
+    person.add(new Option(requestedPerson+" (unavailable)",requestedPerson));
+    person.value=requestedPerson;
   }
 }
 function compare(a,b) {
@@ -222,6 +226,13 @@ function card(r, readOnly=false) {
   image.dataset.chest=r.thumbnail; image.dataset.head=r.thumbnailHead; image.alt=r.name;
   image.title=r.name; image.loading="lazy"; image.decoding="async";
   link.append(image); article.append(link);
+  const filename=document.createElement("a");filename.className="detail original-filename";
+  filename.href=r.href;filename.target="_blank";filename.rel="noopener noreferrer";filename.textContent=r.name;
+  article.append(filename);
+  image.addEventListener("error",()=>{
+    const notice=document.createElement("div");notice.className="detail";
+    notice.textContent="Image preview unavailable; use the original filename link.";article.append(notice);
+  },{once:true});
   if(r.framingUnavailable&&r.framingUnavailable.length) {
     const note=document.createElement("div"); note.className="detail";
     note.textContent="Intentional framing unavailable: "+r.framingUnavailable.join("; ");
@@ -267,6 +278,22 @@ function card(r, readOnly=false) {
       r.folder==="Various"?"Various is an unassigned holding area, not a person identity":
       "This folder has no registered catalogue identity";
     article.append(identityId);
+    if(r.appearance){
+      const m=r.appearance.membership, g=r.appearance.group;
+      const detail=document.createElement("div");detail.className="detail appearance";
+      detail.textContent="Appearance group (within identity): "+r.appearance.label+
+        " · "+(m.status||"unrecorded")+" · core use: "+(m.coreUse?"yes":"no")+
+        " · "+(m.reason||"")+" · reference version: "+(m.referenceVersion||"unrecorded")+
+        " · group reason: "+(g.reason||"")+" · source identities: "+(g.sourcePersonIds||[]).join(", ")+
+        " · lineage: "+(g.history||[]).map(h=>[h.timestamp,h.runId,h.reason].filter(Boolean).join(" / ")).join("; ");
+      article.append(detail);
+      if(/^group_[0-9a-f]{32}$/.test(m.groupId||"")){
+        const link=document.createElement("a");
+        link.href="photo-groups/"+m.groupId+"/index.html";
+        link.textContent="Browse group originals and manifest";
+        article.append(link);
+      }
+    }
     if(r.identityNames){
       const names=document.createElement("div");names.className="detail identity-names";
       names.textContent="Person: "+(r.identityNames.currentPersonName||"not recorded")+
@@ -513,8 +540,8 @@ function groupCards(items) {
     fact("Original person name",names.originalPersonName||"Not recorded");
     fact("Original-name source",names.originalNameSource||"unavailable");
     if(names.characterName)fact("Character name",names.characterName);
-    if(names.familySurname)fact("Family surname",names.familySurname);
-    if(names.familyReason)fact("Family evidence",names.familyReason);
+    if(names.familySurname)fact("Fictional family surname (creative, not biological)",names.familySurname);
+    if(names.familyReason)fact("Creative family rationale",names.familyReason);
     if(info.identityProtectionInfo)fact("Protection rule",info.identityProtectionInfo);
     if(/^(Angels|Sisters)\\//.test(folder))fact("Fixed cast slot",folder.split("/").slice(1).join("/"));
     fact("Identity ID",allPhotos.find(item=>item.personId)?.personId||
@@ -933,8 +960,10 @@ def assign_primary_references(items):
     for item in items:
         by_folder[item["folder"]].append(item)
     for folder_items in by_folder.values():
-        gallery_items = [item for item in folder_items if item["bucket"] == "Gallery"]
-        workflows = [item for item in folder_items if item["workflowSelected"]]
+        gallery_items = [item for item in folder_items
+                         if item["bucket"] == "Gallery" and not item.get("membershipExcluded")]
+        workflows = [item for item in folder_items
+                     if item["workflowSelected"] and not item.get("membershipExcluded")]
         anchors = [item for item in gallery_items if item["identityAnchor"]]
         core = [item for item in gallery_items if item["state"] == "Core member"]
         if workflows:
@@ -988,9 +1017,9 @@ def collect_items(
         (key, folder) for key, folder in likeness.library_people(cfg, st, work)
         if likeness.status_of(key) in groups
     ]
-    if (pathlib.Path(work) / "Various" / "review").is_dir() and originals.images(
-        pathlib.Path(work) / "Various" / "review"
-    ):
+    if any((pathlib.Path(work) / "Various" / bucket).is_dir()
+           and originals.images(pathlib.Path(work) / "Various" / bucket)
+           for bucket in ("gallery", "review")):
         folders.append(("Various", pathlib.Path(work) / "Various"))
     selected_names = list(cfg.get("photos", {}).values())
     base_selected_by_hero = {
@@ -1023,6 +1052,13 @@ def collect_items(
             photo, added = _load_photo(path, key, cache, embed, st, space)
             added_embeddings |= added
             reviews.append((photo, photo.sha in held))
+        if key == "Various":
+            for path in originals.images(folder / "gallery"):
+                photo = active_by_path.get(_local_photo_path(path))
+                if photo is None:
+                    photo, added = _load_photo(path, key, cache, embed, st, space)
+                    added_embeddings |= added
+                reviews.append((photo, photo.sha in held))
         gallery_by_key[key] = gallery
         review_by_key[key] = reviews
     if added_embeddings:
@@ -1036,6 +1072,7 @@ def collect_items(
     person_order = {key: index for index, (key, _folder) in enumerate(folders)}
     all_photos = list(space.photos)
     all_photos.extend(photo for records in review_by_key.values() for photo, _ in records)
+    all_photos = list({_local_photo_path(photo.path): photo for photo in all_photos}.values())
     content_hashes = {}
 
     def manifest_hash(photo):
@@ -1072,12 +1109,14 @@ def collect_items(
             photo for photo in gallery_by_key[key]
             if photo.usable(st["minFace"])
         ]
+        photo_ids = [metadata.photo_id_from_name(photo.name) for photo in usable]
         category_policy = policy["categoryPolicies"].get(likeness.status_of(key), {})
         audit = audit_person(
             [photo.vec for photo in usable],
-            [metadata.photo_id_from_name(photo.name) for photo in usable],
+            photo_ids,
             anchor_ids=person["identityAnchors"] if person else (),
             protected_ids=core_excluded_protection(catalog, protected_ids),
+            excluded_ids=membership_excluded(catalog, photo_ids),
             stale_ids=stale_ids,
             ambiguous_ids=ambiguous_ids,
             minimum_core=category_policy.get("minimumUsablePhotosForOutlierActions", 3),
@@ -1102,6 +1141,10 @@ def collect_items(
     for key, folder in folders:
         gallery = gallery_by_key[key]
         reviews = review_by_key[key]
+        membership_exclusions = membership_excluded(
+            catalog, [metadata.photo_id_from_name(photo.name)
+                      for photo in [*gallery, *(photo for photo, _ in reviews)]],
+        )
         records = people_by_folder.get(key, [])
         conflict = len(records) > 1
         person = records[0][1] if len(records) == 1 else None
@@ -1120,6 +1163,7 @@ def collect_items(
             photo_ids,
             anchor_ids=anchors if not conflict else (),
             protected_ids=core_excluded_protection(catalog, protected_ids),
+            excluded_ids=membership_exclusions,
             stale_ids=stale_ids,
             ambiguous_ids=ambiguous_ids,
             minimum_core=category_policy.get("minimumUsablePhotosForOutlierActions", 3),
@@ -1160,6 +1204,8 @@ def collect_items(
                 state, reason = "Stale metadata", "Content hash changed; stored anchor/protection decisions are ignored"
             elif photo_id in ambiguous_ids:
                 state, reason = "Ambiguous ID", "Duplicate source ID; excluded from the identity core"
+            elif photo_id in membership_exclusions:
+                state, reason = "Excluded from core", "Recorded membership does not authorize core use"
             elif index is not None and index in result["anchor_indices"]:
                 state, reason = "Identity anchor", "User-selected trusted likeness anchor"
             elif photo_id in protected_ids:
@@ -1212,6 +1258,8 @@ def collect_items(
                 "bucket": "Gallery",
                 "name": photo.name,
                 "photoId": photo_id,
+                "appearance": group_views.describe(catalog, photo_id),
+                "membershipExcluded": photo_id in membership_exclusions,
                 "contentSha256": manifest_hash(photo),
                 **rejection_context(photo, photo_id),
                 "personId": person_id,
@@ -1225,9 +1273,11 @@ def collect_items(
                 "workflowSelected": photo_id in selected_ids,
                 "identityAnchor": bool(
                     photo_id in anchors and photo_id not in stale_ids and photo_id not in ambiguous_ids
+                    and photo_id not in membership_exclusions
                 ),
                 "identityOrder": identity_order_key(
-                    photo_id in anchors and photo_id not in stale_ids and photo_id not in ambiguous_ids,
+                    photo_id in anchors and photo_id not in stale_ids and photo_id not in ambiguous_ids
+                    and photo_id not in membership_exclusions,
                     index in core,
                     score,
                     photo.name,
@@ -1267,6 +1317,7 @@ def collect_items(
             })
 
         for photo, cleanup_held in reviews:
+            actual_bucket = "Gallery" if photo.path.parent.name == "gallery" else "Review"
             photo_id = metadata.photo_id_from_name(photo.name)
             score = None
             if photo.usable(st["minFace"]) and result["core_vector"] is not None:
@@ -1291,7 +1342,7 @@ def collect_items(
                 reason += "; no usable score"
             context = score_context(
                 photo,
-                bucket="Review",
+                bucket=actual_bucket,
                 core_size=len(core),
                 core_mode=result["mode"],
                 core_member=False,
@@ -1308,9 +1359,11 @@ def collect_items(
                 "identityMatches": identity_rankings.get(key, []),
                 "groupOrder": group_order[likeness.status_of(key)],
                 "personOrder": person_order[key],
-                "bucket": "Review",
+                "bucket": actual_bucket,
                 "name": photo.name,
                 "photoId": photo_id,
+                "appearance": group_views.describe(catalog, photo_id),
+                "membershipExcluded": photo_id in membership_exclusions,
                 "contentSha256": manifest_hash(photo),
                 **rejection_context(photo, photo_id),
                 "personId": person_id,
@@ -1324,6 +1377,7 @@ def collect_items(
                 "workflowSelected": photo_id in selected_ids,
                 "identityAnchor": bool(
                     photo_id in anchors and photo_id not in stale_ids and photo_id not in ambiguous_ids
+                    and photo_id not in membership_exclusions
                 ),
                 "identityOrder": identity_order_key(False, False, score, photo.name)[0],
                 "primaryReference": False,
@@ -1333,7 +1387,7 @@ def collect_items(
                     and action_folder_supported(key)
                 ),
                 "stageOptions": action_options(
-                    "Review", photo_id, folder=key, protected=photo_id in protected_ids,
+                    actual_bucket, photo_id, folder=key, protected=photo_id in protected_ids,
                     registered=bool(person_id),
                     workflow_selected=photo_id in selected_ids,
                     stageable=(
@@ -1481,6 +1535,20 @@ def write_thumbnails(items, out, work=None):
 
     for item in items:
         photo = item["_photo"]
+        from . import fast_preparation
+
+        if fast_preparation.deferred(photo.path):
+            href = photo.path.resolve().as_uri()
+            public = {key: value for key, value in item.items() if key != "_photo"}
+            public.update(
+                href=href, thumbnail=href, thumbnailHead=href, thumbnailFace="",
+                derivativeDiagnostics=[],
+                framingUnavailable=["FAST original: editing and 944x1104 outputs deferred; no head/chest/face framing."],
+                thumbnailProvenance={},
+                alignmentEvidence=alignment_evidence(photo, work, out),
+            )
+            public_items.append(public)
+            continue
         stem = re.sub(r"[^A-Za-z0-9_.-]+", "_", photo.path.stem).strip("._") or "photo"
         targets = {}
         diagnostics = []
@@ -1604,7 +1672,11 @@ def render_html(
     warning_html = ""
     if warnings:
         entries = "".join(f"<li>{html.escape(message)}</li>" for message in warnings)
-        warning_html = f'<ul class="warnings">{entries}</ul>'
+        warning_html = (
+            f'<details class="warnings"><summary>Diagnostics: {len(warnings)} '
+            f'{"warning" if len(warnings) == 1 else "warnings"} — expand to review</summary>'
+            f'<ul>{entries}</ul></details>'
+        )
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>People gallery review</title><style>{gallery_chrome.CSS}{CSS}</style></head><body id="top">
@@ -1617,7 +1689,7 @@ def render_html(
 <p class="note">Stage actions here, then download the manifest to review and apply separately.</p></div>
 <div class="header-side"><div class="header-label">Likeness</div>
 <div class="score-legend">{render_score_legend(policy)}</div></div></header>
-{gallery_chrome.navigation([("Overview", "people_gallery.html"), ("Photo review", "people_gallery_review.html"), ("Intake runs", "intake_runs.html")], "Photo review")}
+{gallery_chrome.navigation(gallery_chrome.PEOPLE_LINKS, "Photo review")}
 {render_policy_panel(policy)}
 <script type="application/json" id="likeness-policy-data">{policy_payload}</script>
 {warning_html}
@@ -1738,7 +1810,11 @@ def _main(argv=None, *, context=None, provenance=None):
         encoding="utf-8",
     )
     (out / "intake_runs.html").write_bytes(history)
-    report_assets.record(out, {report.name: report.read_bytes(), "intake_runs.html": history})
+    generated = {report.name: report.read_bytes(), "intake_runs.html": history}
+    generated.update(group_views.publish(
+        catalog, [(item.get("photoId"), item["_photo"].path) for item in items], out, source_root=work,
+    ))
+    report_assets.record(out, generated)
     print(f"people gallery review: {len(public_items)} photo(s)")
     print(f"  {report}")
     print(f"  {thumb_dir} ({len(list(thumb_dir.glob('*.jpg')))} cached thumbnails)")

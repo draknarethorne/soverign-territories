@@ -35,7 +35,8 @@ class LeanContinuationTests(unittest.TestCase):
     def command(self, **flags):
         args = SimpleNamespace(
             root=str(self.working), source_run=self.source.name, run=self.target.name, policy=None,
-            **{**dict(apply=False, check=False, install=False, dry_run=False), **flags},
+            **{**dict(apply=False, check=False, install=False, dry_run=False,
+                      regroup=False, directed=False, directed_recipe=None, review_source=None), **flags},
         )
         with contextlib.redirect_stdout(io.StringIO()), \
                 mock.patch.object(lean_continue, "_layout", return_value=self.fixture.layout), \
@@ -47,6 +48,26 @@ class LeanContinuationTests(unittest.TestCase):
         with mock.patch.object(clean_rebase, "create_plan", side_effect=AssertionError("preview started matching")):
             self.assertEqual(self.command(dry_run=True)["status"], "inventory")
         self.assertFalse(self.target.exists())
+
+    def test_selected_directed_options_reach_planner_and_bind_continuation(self):
+        self.prepare()
+        review = self.working / "review-evidence"
+        with mock.patch.object(clean_rebase, "create_plan", return_value={"status": "preview", "policy": {}}) as create, \
+                mock.patch.object(lean_continue.rebase_recap, "main", return_value=0):
+            self.command(apply=True, regroup=True, directed=True,
+                         directed_recipe="directed-core-continuity", review_source=str(review))
+        self.assertTrue(create.call_args.kwargs["regroup"])
+        self.assertEqual(create.call_args.kwargs["directed_recipe"], "directed-core-continuity")
+        self.assertEqual(create.call_args.kwargs["review_source"], review)
+        receipt = json.loads((self.target / "continuation.json").read_text())
+        self.assertEqual(receipt["grouping"]["directedRecipe"], "directed-core-continuity")
+
+    def test_existing_continuation_refuses_grouping_recipe_switch(self):
+        self.prepare()
+        self.command(apply=True)
+        with self.assertRaisesRegex(ValueError, "grouping mode/recipe"):
+            self.command(check=True, regroup=True, directed=True,
+                         directed_recipe="directed-core-continuity")
 
     def test_verified_reuse_uses_original_pixels_not_copies_and_never_undo(self):
         self.prepare()

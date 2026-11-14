@@ -155,6 +155,11 @@ def collect(run):
     """Every planned/applied photo row with its change, plus grouped views; pure data, no HTML."""
     run = pathlib.Path(run)
     plan = json.loads((run / "run.json").read_text(encoding="utf-8"))
+    lifecycle = plan.get("groupLifecycle") or {}
+    if "decisionEvidence" in lifecycle:
+        from tools.art.likeness_library.directed_reformation import unpack_runtime_decisions
+
+        unpack_runtime_decisions(lifecycle["decisionEvidence"])
     historical = _historical_run(run)
     manifest, preparation = ({}, None) if historical else _manifest_rows(run, plan)
     rows = []
@@ -228,6 +233,9 @@ def collect(run):
         "membershipRefinement": plan.get("membershipRefinement"),
         "finalMembershipRefinement": plan.get("finalMembershipRefinement"),
         "familyNaming": plan.get("familyNaming"),
+        "groupLifecycle": plan.get("groupLifecycle"),
+        "sourceOverlaySHA256": plan.get("sourceOverlaySHA256"),
+        "overlayRoot": str((_preparation_roots(run, plan) or [run])[0] / "source-overlay"),
         "reassignmentStatus": plan.get("reassignmentStatus"),
         "convergenceStatus": plan.get("convergenceStatus"),
         "scoreBands": plan.get("policy", {}).get("scoreBands")
@@ -673,8 +681,12 @@ def _identity_section(data, out_dir):
                           + (f" {_score(member['score'])} {html.escape(str(member['band']))}"
                              if member.get("score") is not None else "") + "</span>")
             else:
-                naming = '<span class=muted>Not in a family</span>' if data.get("familyNaming") else \
-                    '<span class=muted>Not recorded</span>'
+                assessment = next((item for item in (data.get("familyNaming") or {}).get("ownerAssessment", [])
+                                   if item.get("folder") == person), None)
+                naming = '<span class=muted>' + html.escape(
+                    assessment["status"] if assessment else
+                    "Not in a family" if data.get("familyNaming") else "Not recorded"
+                ) + '</span>'
             parts.append(
                 f'<tr><td>{_detail_link(anchor, person)}'
                 f'<br><span class=muted>family {html.escape(surname if len(people) > 1 or member else "not grouped")}</span></td>'
@@ -992,9 +1004,56 @@ def _family_members(data):
     return lookup
 
 
+def _family_reconciliation(data, evidence, out_dir):
+    rows = evidence.get("catalogueReconciliation")
+    if not isinstance(rows, list):
+        return ""
+    rows = [row for row in rows if isinstance(row, dict)]
+    decisions = collections.Counter(str(row.get("decision") or "unrecorded") for row in rows)
+    identities = {}
+    lifecycle = data.get("groupLifecycle") or {}
+    if isinstance(lifecycle, dict):
+        for stage in reversed(lifecycle.get("stages", [])):
+            if stage.get("id") != "publication":
+                continue
+            from .directed_reformation import lifecycle_stage
+            for item in lifecycle_stage(stage).get("rows", []):
+                if item.get("personId") and item.get("destination"):
+                    identities.setdefault(item["personId"], person_and_bucket(item["destination"])[0])
+            break
+    counts = ", ".join(f"{count} {html.escape(decision)}" for decision, count in sorted(decisions.items()))
+    parts = [
+        f"<p>Prior creative family records reconciled: {len(rows)} ({counts or 'none'}). "
+        "Refreshed records were recomputed from final qualified references; retired records are not current. "
+        "Both remain saved run history, not biology or proof of identity.</p>",
+        '<details><summary>Review prior and current creative family records</summary>',
+        '<table><thead><tr><th>Identity</th><th>Previous surname</th><th>Current surname</th>'
+        '<th>Decision</th><th>Reason</th></tr></thead><tbody>',
+    ]
+    for row in rows:
+        person_id = str(row.get("personId") or "not recorded")
+        previous = row.get("previousFamily") if isinstance(row.get("previousFamily"), dict) else {}
+        current = row.get("currentFamily") if isinstance(row.get("currentFamily"), dict) else {}
+        name = identities.get(person_id) or current.get("previousPersonName") or previous.get("previousPersonName")
+        identity = html.escape(str(name or "Name not recorded")) + "<br>" + html.escape(person_id)
+        parts.append(
+            f"<tr><td>{identity}</td><td>{html.escape(str(previous.get('surname') or 'not recorded'))}</td>"
+            f"<td>{html.escape(str(current.get('surname') or 'none (retired or not recorded)'))}</td>"
+            f"<td>{html.escape(str(row.get('decision') or 'not recorded'))}</td>"
+            f"<td>{html.escape(str(row.get('reason') or 'not recorded'))}</td></tr>"
+        )
+    parts.append("</tbody></table></details>")
+    if out_dir is not None and not data.get("historical"):
+        parts.append("<p>Exact prior family records and lineage: "
+                     + _safe_link(pathlib.Path(data["run"]) / "run.json", "saved run evidence", out_dir, new_tab=True)
+                     + ".</p>")
+    return "".join(parts)
+
+
 def _family_section(data, out_dir=None):
     evidence = data.get("familyNaming")
-    parts = ["<h2 id=families>Families (score-band family tree)</h2>"]
+    parts = ["<h2 id=families>Fictional families (score-band creative naming)</h2>"
+             "<p>Creative labels for characters, not claims of biological kinship.</p>"]
     if not isinstance(evidence, dict):
         return "".join(parts + ["<p class=muted>Unavailable in this run: no familyNaming was saved; this run "
                                 "predates score-band family naming.</p>"])
@@ -1019,6 +1078,21 @@ def _family_section(data, out_dir=None):
         f"{esc(evidence.get('displacedFamilyCount', 0))} given a fresh surname because theirs belongs to another family, "
         f"{esc(evidence.get('unlinkedIdentityCount'))} unlinked. {esc(evidence.get('rule'))}</p>"
     )
+    parts.append(_family_reconciliation(data, evidence, out_dir))
+    assessments = evidence.get("ownerAssessment")
+    if assessments is not None:
+        parts.append(
+            "<h3>All-category owner assessment</h3>"
+            "<p>Includes owners without photos or qualified references. Provisional containers are not "
+            "certified identities and supply no family-scoring authority.</p>"
+            "<table><tr><th>Owner/container</th><th>Identity status</th><th>Qualified references</th>"
+            "<th>Family assessment</th></tr>"
+            + "".join(
+                f"<tr><td>{esc(item['folder'])}</td><td>{esc(item['identityStatus'])}</td>"
+                f"<td>{esc(item['qualifiedReferenceCount'])}</td><td>{esc(item['status'])}</td></tr>"
+                for item in assessments
+            ) + "</table>"
+        )
     for family in sorted(evidence.get("families", []),
                          key=lambda item: (item.get("rootKind") != "cast", -len(item.get("members", [])),
                                            str(item.get("rootFolder")))):
@@ -1357,6 +1431,214 @@ def _alias_section(data, out_dir):
             "</tr></thead><tbody>" + "".join(rows) + "</tbody></table>")
 
 
+STAGE_PAGE_SIZE = 100
+
+
+def _stage_specs(data):
+    lifecycle = data.get("groupLifecycle")
+    if data.get("historical") or not isinstance(lifecycle, dict) or not isinstance(lifecycle.get("stages"), list):
+        return []
+    directory = pathlib.Path(data["run"]) / "group-lifecycle"
+    specs = []
+    for index, stage in enumerate(lifecycle["stages"]):
+        from .directed_reformation import lifecycle_stage
+        stage = lifecycle_stage(stage)
+        rows = stage.get("rows", [])
+        if not isinstance(rows, list):
+            continue
+        count = max(1, (len(rows) + STAGE_PAGE_SIZE - 1) // STAGE_PAGE_SIZE)
+        stem = f'{index + 1:02d}-{hashlib.sha256(str(stage.get("id", index)).encode()).hexdigest()[:10]}'
+        for page in range(count):
+            specs.append((stage, rows, page, count, directory / f"{stem}-{page + 1:03d}.html"))
+    return specs
+
+
+def _stage_evaluation(value):
+    """Keep scalar outcomes and collection sizes, not potentially huge evidence arrays."""
+    if not isinstance(value, dict):
+        return "Unavailable"
+    parts = []
+    for key in sorted(value, key=str)[:40]:
+        item = value[key]
+        if isinstance(item, (list, dict)):
+            text = f"{len(item)} entries (full evidence in run.json)"
+        elif item is None or isinstance(item, (str, int, float, bool)):
+            text = str(item)
+            if len(text) > 256:
+                text = text[:256] + "…"
+        else:
+            continue
+        parts.append(f"{html.escape(str(key)[:128])}: {html.escape(text)}")
+    if len(value) > 40:
+        parts.append("Additional evaluation fields available in run.json")
+    return " · ".join(parts) or "No evaluation recorded"
+
+
+def _lifecycle_placement_summary(data):
+    lifecycle = data.get("groupLifecycle")
+    if not isinstance(lifecycle, dict):
+        return ""
+    stage = next((stage for stage in reversed(lifecycle.get("stages", []))
+                  if stage.get("id") == "publication" and isinstance(stage.get("rows"), list)), None)
+    if stage is None:
+        return ""
+    from .directed_reformation import lifecycle_stage
+    stage = lifecycle_stage(stage)
+    counts = collections.Counter(
+        (person_and_bucket(str(row.get("destination") or ""))[1], str(row.get("status") or "unrecorded"))
+        for row in stage["rows"]
+    )
+    entries = []
+    for bucket in ("gallery", "review"):
+        states = sorted((status, count) for (location, status), count in counts.items() if location == bucket)
+        if states:
+            entries.append(html.escape(bucket.title()) + ": " + ", ".join(
+                f"{count} {html.escape(status)}" for status, count in states))
+    for (location, status), count in sorted(counts.items()):
+        if location not in ("gallery", "review"):
+            entries.append(f"{count} {html.escape(status)} at other/unrecorded destination")
+    decisions = collections.Counter(
+        str(row.get("actionCategory") or "unrecorded") for row in stage["rows"]
+    )
+    decision_text = " · ".join(
+        f"{decisions.get(name, 0)} {name}"
+        for name in ("same-home", "upward", "same-rank", "correction", "independent",
+                     "tentative-parent", "provisional", "hold")
+        if decisions.get(name, 0)
+    )
+    assignment = lifecycle.get("assignmentSummary") or {}
+    assignment_text = " · ".join(
+        f"{assignment.get(key, 0)} {key}" for key in
+        ("supported", "tentative-parent", "provisional", "exception", "activeVarious", "review", "junk",
+         "confirmedIndependentIdentities", "provisionalContainers")
+    ) if assignment else ""
+    return ('<section><h2>Final planned placement and membership</h2><p>'
+            + " · ".join(entries)
+            + (f"</p><p>Directed decisions: {html.escape(decision_text)}" if decision_text else "")
+            + (f"</p><p>Assignment dispositions: {html.escape(assignment_text)}" if assignment_text else "")
+            + "</p><p>Physical Gallery placement is distinct from supported membership and core use. "
+            "Provisional containers are not certified distinct identities. "
+            "Tentative and quality-held photos can remain in Gallery; these counts do not guarantee "
+            "that groups are contamination-free.</p></section>")
+
+
+def _stage_pages(data):
+    """Render bounded pages from saved lifecycle rows, never from current membership."""
+    specs = _stage_specs(data)
+    if not specs:
+        return {}
+    lifecycle = data["groupLifecycle"]
+    directory = pathlib.Path(data["run"]) / "group-lifecycle"
+    pages = {}
+    stage_navigation = " · ".join(
+        _safe_link(path, str(stage.get("title") or stage.get("id") or "Stage"), directory)
+        for stage, _, page, _, path in specs if page == 0
+    )
+    by_source = {row["source"]: row for row in data["rows"]}
+    by_id = collections.defaultdict(list)
+    for row in data["rows"]:
+        by_id[row.get("photoId")].append(row)
+    for stage, rows, page, count, path in specs:
+        cards = []
+        for item in rows[page * STAGE_PAGE_SIZE:(page + 1) * STAGE_PAGE_SIZE]:
+            saved = by_source.get(item.get("source"))
+            if saved is None and item.get("photoId") and len(by_id[item["photoId"]]) == 1:
+                saved = by_id[item["photoId"]][0]
+            image = None
+            if saved and not data.get("historical"):
+                raw = str(saved["source"])
+                rel = pathlib.PurePosixPath(raw)
+                root = pathlib.Path(data["overlayRoot"]).resolve()
+                if data.get("sourceOverlaySHA256") and raw and not rel.is_absolute() and "\\" not in raw and ".." not in rel.parts:
+                    candidate = root.joinpath(*rel.parts)
+                    try:
+                        candidate.resolve().relative_to(root)
+                        if _file_verification(candidate, saved.get("sha256"), data) == "verified":
+                            image = candidate
+                    except (OSError, ValueError):
+                        pass
+                if image is None:
+                    candidate = _prepared_preview_target(saved, data)
+                    if candidate and _file_verification(candidate, saved.get("preparedSHA256"), data) == "verified":
+                        image = candidate
+            if image:
+                href = html.escape(_href(image, directory), quote=True)
+                image_html = (f'<a href="{href}"><img loading="lazy" src="{href}" alt="" '
+                              'onerror="this.hidden=true;this.nextElementSibling.hidden=false">'
+                              '<span hidden>Image load error</span></a><br>'
+                              + _safe_link(image, image.name, directory, new_tab=True))
+            else:
+                image_html = '<strong>Missing or unverified immutable image evidence</strong>'
+            final = ""
+            if saved and data["status"] == "applied" and not data.get("historical"):
+                final = "<br>Installed destination: " + _verified_photo_link(
+                    _working_target(saved["destination"], data),
+                    saved.get("preparedSHA256") or saved.get("sha256"),
+                    pathlib.PurePosixPath(saved["destination"]).name, data, directory)
+            details = " · ".join(
+                f'{html.escape(label)}: {html.escape(str(item.get(key) if item.get(key) is not None else "unrecorded"))}'
+                for key, label in (("photoId", "Photo"), ("actionCategory", "Directed decision"),
+                                   ("source", "Source"), ("sourceDestination", "Inherited home"),
+                                   ("destination", "Planned destination"),
+                                   ("proposedDestination", "Directed proposal"),
+                                   ("personId", "Identity"), ("groupId", "Appearance group"), ("status", "Status"),
+                                   ("coreUse", "Core use"), ("score", "Score"), ("rivalScore", "Rival"),
+                                   ("margin", "Margin"), ("reason", "Reason"),
+                                   ("referenceUseDisposition", "Reference disposition"),
+                                   ("sourceReferenceHold", "Source has no qualified reference view"),
+                                   ("referenceWithdrawalReason", "Reference withdrawal"),
+                                   ("admissionReason", "Admission evidence or blocker"),
+                                   ("referenceEligibleAtBoundary", "Qualified reference at boundary"),
+                                   ("qualifiedOwnReferenceCount", "Own reference count at boundary"),
+                                   ("qualifiedOwnReferenceViewIds", "Own reference views at boundary"),
+                                   ("independentSupportPhotoIds", "Independent witness examples"),
+                                   ("admissionBlockers", "Boundary admission blockers"),
+                                   ("candidateReferenceQualification", "Initial independent reference qualification"),
+                                   ("independentCandidateFolder", "Named independent candidate; not an admitted owner"),
+                                   ("independentCandidateDisposition", "Independent candidate hold"),
+                                   ("assignmentDisposition", "Physical assignment disposition"),
+                                   ("assignmentEvidence", "Assignment evidence; not reference authority"))
+            )
+            cards.append(f"<article>{image_html}{final}<p>{details}</p></article>")
+        title = html.escape(str(stage.get("title") or stage.get("id") or "Stage"))
+        status = "Historical saved evidence; not current membership." if data.get("historical") else (
+            "Saved stage evidence; installed destination links refer to current applied files."
+            if data["status"] == "applied" else "Saved stage evidence; nothing installed.")
+        if stage.get("evidenceKind") == "final-projection":
+            status += " Final projection only: no intermediate state was saved at this phase."
+        stage_pages = [(item_page, item_path) for item_stage, _, item_page, _, item_path in specs
+                       if item_stage is stage]
+        page_navigation = " · ".join(
+            _safe_link(item_path, str(item_page + 1), directory)
+            for item_page, item_path in stage_pages
+        )
+        scope = html.escape(str(stage.get("scope", "not recorded")))
+        population = html.escape(str(stage.get("populationCount", "not recorded")))
+        page_html = (
+            '<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width">'
+            f"<title>{title}</title><style>body{{font-family:sans-serif}}nav{{line-height:2}}"
+            "body{overflow-wrap:anywhere}main{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:12px}"
+            "article{min-width:0;overflow-wrap:anywhere;border:1px solid #ccc;padding:8px}img{max-width:100%;height:220px;"
+            "object-fit:contain}</style>"
+            f"<h1>{title}</h1><p>{html.escape(status)}</p>"
+            f"<p>Evidence kind: {html.escape(str(stage.get('evidenceKind', 'legacy saved rows; boundary timing unverified')))}</p>"
+            f"<p>Stage time: {html.escape(str(stage.get('at', 'unrecorded')))} · "
+            f"Recipe: {html.escape(str(lifecycle.get('recipe', 'unrecorded')))} · page {page + 1}/{count}</p>"
+            f"<p>Scope: {scope} · snapshot rows: {len(rows)} · input population: {population}</p>"
+            f"<p>Witness policy: {html.escape(json.dumps(stage.get('witnessPolicy', {}), sort_keys=True))}</p>"
+            f"<p>Frozen reference inventory and withdrawal records: "
+            f"{len(stage.get('referenceInventory', {}))} views; "
+            f"{len(stage.get('referenceWithdrawals', []))} withdrawal records. Full IDs are in the saved run evidence.</p>"
+            f"<p>Summary: {html.escape(json.dumps(stage.get('summary', {}), sort_keys=True, ensure_ascii=False))}</p>"
+            f"<p>Evaluation: {_stage_evaluation(lifecycle.get('evaluation', {}))}</p>"
+            f'<p>{_safe_link(pathlib.Path(data["run"]) / "run.json", "Full saved run evidence", directory, new_tab=True)}</p>'
+            f'<nav aria-label="Lifecycle stages">{stage_navigation}</nav>'
+            f'<nav aria-label="Stage pages">Pages: {page_navigation}</nav><main>{"".join(cards)}</main>'
+        )
+        pages[path] = page_html
+    return pages
+
+
 def render(data, out_path, others=()):
     data = {key: value for key, value in data.items()
             if key not in {"_person_path_validity", "_person_folders", "_old_person_folders", "_review_page"}}
@@ -1399,6 +1681,7 @@ def render(data, out_path, others=()):
         + f'<p class=muted>Count conservation: {summary["sourcePhotos"]} source rows → '
         f'{summary["finalPhotos"]} final destinations; {"verified" if summary["countConserved"] else "not conserved"}.</p>'
         + "</section>",
+        _lifecycle_placement_summary(data),
         '<section><h2>Run and report links</h2><nav class="person-nav" aria-label="Related run pages">'
         + "".join(_safe_link(path, label, out_dir, new_tab=True) if path == out_dir / "index.html" or path.is_file()
                   else f'<span class=muted>{html.escape(label)} unavailable</span>'
@@ -1423,6 +1706,11 @@ def render(data, out_path, others=()):
         f"<section>{_expectation_section(data, out_dir)}</section>",
         f"<section>{_flow_section(data, out_dir)}</section>",
         f"<section>{_alias_section(data, out_dir)}</section>" if data.get("incomingAliases") else "",
+        ('<section><h2>Appearance lifecycle snapshots</h2><p>Saved stage evidence, not independent '
+         'identities; fictional family labels are creative, not biological.</p><nav>'
+         + " · ".join(_safe_link(path, f'{stage.get("title") or stage.get("id") or "Stage"} {page + 1}/{count}', out_dir)
+                      for stage, _, page, count, path in _stage_specs(data))
+         + "</nav></section>") if data.get("groupLifecycle") and not data.get("historical") else "",
         f"<section>{_continuity_section(data, out_dir)}</section>",
         f"<section>{_cast_section(data, out_dir)}</section>",
         f"<section>{_identity_section(data, out_dir)}</section>",
@@ -1538,6 +1826,10 @@ def main(argv=None):
         if not out.is_file() or out.stat().st_mtime < newest:
             print(f"Recap missing or older than run.json/expectations: {out}")
             return 1
+        for path, content in _stage_pages(data).items():
+            if not path.is_file() or path.read_text(encoding="utf-8") != content:
+                print(f"Lifecycle snapshot missing or out of date: {path}")
+                return 1
         print(f"Recap current: {out}")
         return 0
     others, entries = [], []
@@ -1558,6 +1850,13 @@ def main(argv=None):
             entries.append((label, other["status"], other["castSeedPolicy"], other["createdAt"],
                             summarize(other), page))
     _write(out, render(data, out, others))
+    stage_pages = _stage_pages(data)
+    if stage_pages and (run / "group-lifecycle").is_symlink():
+        raise ValueError("linked lifecycle report directory")
+    for path, content in stage_pages.items():
+        if path.is_symlink():
+            raise ValueError(f"linked lifecycle report file: {path}")
+        _write(path, content)
     entries.append((run.name, data["status"], data["castSeedPolicy"], data["createdAt"], summary, out))
     entries.sort(key=lambda entry: str(entry[3]), reverse=True)
     _write(out.parent / "index.html", render_index(entries, out.parent))

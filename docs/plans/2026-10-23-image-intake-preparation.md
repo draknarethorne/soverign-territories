@@ -146,7 +146,7 @@ examples retain distinct sub-observations. Shared tasks implement themes once.
 | F04 | Total/stage/per-image timing, averages by processing path, bottlenecks and recipe changes reflected automatically | T17, P1; distinguish summed worker time from wall time |
 | F05 | Dimensions beside every image, not only in opened files | I72, P2; original/native/variant/padded labels |
 | F06 | Core intake is standard, experiments are named recipes; audit active docs/code/config/communications | I73, P2; no historical rewrite or false Production acceptance |
-| F07 | FULL current flow; FAST size/aspect/overlay heuristics; OVERLAY-ONLY early exit; compare quality/time and resubmit selected images for composition | T18, P2; explicit profile experiments, no silent default change |
+| F07 | FULL current flow; older FAST size/aspect/overlay proposal revised for likeness-first rebase: minimum analysis, no editing/944x1104 generation; OVERLAY-ONLY remains distinct | [T18 / phase07 contract](likeness_process/07_rebase_and_acceptance.md#nov-11-fast-likeness-first-rebase-contract); RA2c file/viewer integration; not implemented by storage modes |
 | F08 | LEAN references identical original/control/recommendation once; optional enhancement suppression and trusted-original path | Storage S25, P1 scope/design; T18 processing toggle; I70 quality proof; hashes/provenance retained |
 | F09 | COLLAGE for report images; storage properties independent of processing flow; full-size alternatives not always retained | S25 with T13/T14, P1 storage design; composites not substitutes for required recovery/workflow evidence |
 | F10 | CUSTOM steps/order/nodes and erase/reconstruction versions; side-by-side recipe comparisons | T18, P2 contract; T19, P3 gated implementation |

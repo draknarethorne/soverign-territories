@@ -1,6 +1,7 @@
 import io
 import json
 import pathlib
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -20,6 +21,14 @@ def python_step(step_id, code, expect=None):
 
 
 class RebaseFlowTests(unittest.TestCase):
+    def test_direct_script_help_resolves_repository_imports(self):
+        result = subprocess.run(
+            [sys.executable, str(pathlib.Path(rebase_flow.__file__)), "--help"],
+            cwd=pathlib.Path(rebase_flow.__file__).parent,
+            capture_output=True, text=True, check=False)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("--directed-recipe", result.stdout)
+
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         base = pathlib.Path(self.tmp.name)
@@ -54,6 +63,84 @@ class RebaseFlowTests(unittest.TestCase):
         self.assertEqual(by_id["intake"]["argv"][-2:], ["--workers", "6"])
         self.assertIn("--preserve-legacy-derivatives", by_id["install"]["argv"])
         self.assertIn(str(self.run / "policy.json"), by_id["gallery-check"]["argv"])
+
+    def test_all_profiles_forward_to_same_lifecycle_without_weakening_recovery(self):
+        for profile in ("fast", "lean", "full"):
+            by_id = {step["id"]: step for step in rebase_flow.steps(
+                self.working, self.run, 2, profile=profile)}
+            for step_id in ("intake", "match-preview", "install", "install-check"):
+                argv = by_id[step_id]["argv"]
+                self.assertEqual(argv[argv.index("--profile")+1], profile)
+            self.assertNotIn("skipReason", by_id["backup"])
+            self.assertEqual("skipReason" in by_id["originals"], profile == "fast")
+            self.assertEqual("skipReason" in by_id["originals-check"], profile == "fast")
+        with self.assertRaisesRegex(ValueError, "FULL evidence requires"):
+            rebase_flow.steps(self.working, self.run, 2, "disposable", profile="full")
+        with self.assertRaisesRegex(ValueError, "only LEAN"):
+            rebase_flow.steps(self.working, self.run, 2, "disposable", "old", "fast")
+
+    def test_current_baseline_and_review_evidence_forward_in_all_profiles(self):
+        evidence = self.working / "review-evidence"
+        for profile in ("fast", "lean", "full"):
+            flow = rebase_flow.steps(self.working, self.run, 2, profile=profile,
+                                     regroup=True, baseline="working", review_source=evidence)
+            by_id = {step["id"]: step for step in flow}
+            self.assertIn("skipReason", by_id["reset-apply"])
+            self.assertIn("skipReason", by_id["reset-preview"])
+            self.assertNotIn("skipReason", by_id["backup"])
+            for name in ("intake", "match-preview", "install", "install-check"):
+                self.assertIn("--regroup", by_id[name]["argv"])
+                self.assertIn(str(evidence), by_id[name]["argv"])
+        with self.assertRaisesRegex(ValueError, "requires regrouping"):
+            rebase_flow.steps(self.working, self.run, 2, review_source=evidence)
+
+    def test_directed_recipe_is_explicit_forwarded_and_flow_bound(self):
+        recipe = "directed-core-continuity"
+        by_id = {step["id"]: step for step in rebase_flow.steps(
+            self.working, self.run, 2, regroup=True, directed=True, directed_recipe=recipe,
+        )}
+        for step_id in ("intake-preview", "intake", "match-preview", "install", "install-check"):
+            argv = by_id[step_id]["argv"]
+            self.assertIn("--directed", argv)
+            self.assertEqual(argv[argv.index("--directed-recipe") + 1], recipe)
+        with self.assertRaisesRegex(ValueError, "explicit recipe"):
+            rebase_flow.steps(self.working, self.run, 2, regroup=True, directed=True)
+        with self.assertRaisesRegex(ValueError, "requires regrouping"):
+            rebase_flow.steps(self.working, self.run, 2, directed=True, directed_recipe=recipe)
+
+    def test_prepared_reuse_preserves_selected_grouping_recipe_and_review(self):
+        review = self.working / "review-evidence"
+        by_id = {step["id"]: step for step in rebase_flow.steps(
+            self.working, self.run, 2, "disposable", "old", "lean",
+            regroup=True, review_source=review,
+            directed=True, directed_recipe="directed-core-continuity",
+        )}
+        for step_id in ("match-preview", "install", "install-check"):
+            argv = by_id[step_id]["argv"]
+            self.assertEqual(argv[0], "bin\\lean-continue.cmd")
+            self.assertIn("--regroup", argv)
+            self.assertIn("--directed", argv)
+            self.assertEqual(argv[argv.index("--directed-recipe") + 1], "directed-core-continuity")
+            self.assertEqual(argv[argv.index("--review-source") + 1], str(review))
+
+    def test_directed_recipe_is_bound_on_flow_resume(self):
+        recipe = "directed-core-continuity"
+        (self.working.parent / "Source").mkdir(parents=True)
+        argv = ["--root", str(self.working), "--run", "directed",
+                "--regroup", "--directed", "--directed-recipe", recipe,
+                "--apply", "--until", "match-preview"]
+        with mock.patch.object(rebase_flow, "flow_paths", return_value=self.paths), \
+                mock.patch.object(rebase_flow, "run_flow", return_value=0) as run, \
+                redirect_stdout(io.StringIO()):
+            self.assertEqual(rebase_flow.main(argv), 0)
+            state = run.call_args.args[1]
+            self.assertTrue(state["directed"])
+            self.assertEqual(state["directedRecipe"], recipe)
+            self.paths[1].write_text(json.dumps(state), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "directed recipe differs"):
+                rebase_flow.main([
+                    "--root", str(self.working), "--run", "directed", "--regroup", "--check",
+                ])
 
     def test_reuse_flow_skips_reset_intake_and_recovery_and_uses_separate_matching_preview(self):
         flow = rebase_flow.steps(self.working, self.run, 6, "disposable", "old-intake")

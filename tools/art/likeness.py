@@ -3519,6 +3519,23 @@ def main(argv=None, embedder=None, *, domain="general"):
     s.add_argument("--storage-mode", choices=("full", "lean"),
                    help="new-run evidence storage; omitted resumes the saved mode or starts LEAN; "
                         "LEAN shares installed native bytes and pads only the recommendation")
+    s.add_argument("--profile", choices=("fast", "lean", "full"),
+                   help="FAST keeps original pixels and defers editing/944x1104 outputs; "
+                        "LEAN/FULL use standard preparation with lean/full evidence; omitted resumes "
+                        "the saved profile or starts LEAN. Recovery remains separately selected.")
+    s.add_argument("--regroup", action="store_true",
+                   help="rebuild member-first identities and named appearances with maintained stage viewers; "
+                        "requires --cast-seeds core, compatible with FAST/LEAN/FULL")
+    from likeness_library.directed_reformation import recipe_names
+    s.add_argument("--directed", action="store_true",
+                   help="opt into experimental directed regrouping; requires an explicit --directed-recipe")
+    s.add_argument("--directed-recipe", choices=recipe_names(),
+                   help="select one existing experimental recipe; no recipe is a default")
+    s.add_argument("--core-selection-preview", action="store_true",
+                   help="with --dry-run --directed --regroup, print read-only Working cast-core metadata candidates; "
+                        "does not measure faces or establish trusted cores")
+    s.add_argument("--review-source", type=pathlib.Path,
+                   help="absolute verified assessment directory supplying unchanged exact human evidence for --regroup")
     s.add_argument("--recovery-mode", choices=("full", "disposable"),
                    help="sandbox rebase only: full requires backup and keeps undo; disposable requires LEAN "
                         "evidence, creates no baseline backup or rollback; failed publication requires sandbox reset")

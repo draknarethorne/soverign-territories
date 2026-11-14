@@ -186,7 +186,11 @@ def _has_owned_framing(source, framing, data):
 
 
 def maintain(source, box, px, *, apply=False, faces=None):
+    from . import fast_preparation
+
     source = pathlib.Path(source)
+    if fast_preparation.deferred(source):
+        return [], [f"INFO: FAST original; image editing and 944x1104 outputs deferred: {source}"]
     folder = source.parent.parent
     data = load(folder)
     changes, diagnostics = [], []
@@ -262,16 +266,26 @@ def thumbnail_key(source, framing, box=None):
 
 
 def thumbnail(source, framing, box=None, size=(320, 400), *, px=None, faces=None):
-    """Return only a resized derivative, or a visibly diagnostic placeholder."""
+    """Return a verified-source preview, or a visibly diagnostic placeholder."""
     import io
     from PIL import ImageDraw
     diagnostic = None
+    from . import fast_preparation
+
+    fast = fast_preparation.deferred(source)
     try:
-        target, key = thumbnail_key(source, framing, box)
-        with Image.open(target) as image:
-            image = image.convert("RGB").resize(size, Image.Resampling.LANCZOS)
+        if fast:
+            with Image.open(source) as original:
+                image = ImageOps.exif_transpose(original).convert("RGB")
+                image.thumbnail(size, Image.Resampling.LANCZOS)
+            key = hashlib.sha256(("fast-original-preview-v1" + digest(source) + str(size)).encode()).hexdigest()[:12]
+            diagnostic = "INFO: FAST original preview; head/chest framing and 944x1104 outputs deferred"
+        else:
+            target, key = thumbnail_key(source, framing, box)
+            with Image.open(target) as image:
+                image = image.convert("RGB").resize(size, Image.Resampling.LANCZOS)
     except (OSError, ValueError, KeyError) as exc:
-        reason = expected_unavailability(source, framing, box, px, faces)
+        reason = None if fast else expected_unavailability(source, framing, box, px, faces)
         target = pathlib.Path(source).parent.parent / relative_target(source, framing)
         try:
             entry = load(pathlib.Path(source).parent.parent)["entries"].get(
@@ -282,7 +296,8 @@ def thumbnail(source, framing, box=None, size=(320, 400), *, px=None, faces=None
         diagnostic = (f"INFO: {reason}" if reason and not entry and not target.exists() else str(exc))
         key = hashlib.sha256(diagnostic.encode()).hexdigest()[:12]
         image = Image.new("RGB", size, (245, 230, 215))
-        notice = ("Intentional framing exclusion" if diagnostic.startswith("INFO: ")
+        notice = ("FAST original cannot be decoded" if fast else
+                  "Intentional framing exclusion" if diagnostic.startswith("INFO: ")
                   else "Run gallery maintenance")
         ImageDraw.Draw(image).text((8, 12), f"{framing}: unavailable\n{notice}", fill="black")
     output = io.BytesIO()

@@ -7,16 +7,27 @@
 
 ## Open work, by priority
 
-### Your queue: needs your hands or a decision (1)
+### Your queue: needs your hands or a decision (3)
 
 **P1 (blocks other work, or cheap and valuable)**
 
+- [ ] RA2l Reviewing baseline and trusted cast references, then authorising one selected maintained Sandbox matching proposal. After gate 1 approval, AI prepares only the required intake, verifies it and stops at `match-preview` ... ([priority reset](plans/2026-11-05-priority-reset.md))
+- [ ] RA2m Authorising installation only after gate 2, then verifying actual Gallery/Overview/Review at gate 3. AI uses the same frozen run and recoverable publication, verifies original/content conservation, cast continuity, named ... ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] E19 Review the traced mixed-identity outcomes, including Briar/Sammara/Adrianna and the Freya/Fia/Jacinta/Draknora comparisons. Confirm same person versus related person/variant where numeric evidence cannot decide; no forced ... ([priority reset](plans/2026-11-05-priority-reset.md))
 
-### For the assistant, when you say go (2)
+### Either of us (2)
 
 **P1 (blocks other work, or cheap and valuable)**
 
+- [ ] RA2d Establish leakage-safe evaluation groups and agree numeric recovery/false-merge/reference-contamination/churn bounds before choosing or enabling a new member rule. Owns this evaluation/acceptance portion transferred from ... ([priority reset](plans/2026-11-05-priority-reset.md))
+- [ ] RA2 Use RA1's stable-ID scope/audit evidence to establish bounded cross-pose positives, similar-person negatives and uncertain photo-level labels/held-out cases with numeric false-merge/core-churn acceptance. Then extend ... ([priority reset](plans/2026-11-05-priority-reset.md))
+
+### For the assistant, when you say go (4)
+
+**P1 (blocks other work, or cheap and valuable)**
+
+- [ ] RA2j Integrating the agreed directed rules into the maintained `group_lifecycle` rebase path, not another shadow-only engine. **Nov 13 16:49-clarification continuation:** user explicitly requests continued automated ... ([priority reset](plans/2026-11-05-priority-reset.md))
+- [ ] RA2b Build the opt-in shadow reformation state from saved measurements: cross-folder member-first consolidation, supported/tentative appearance groups, independent reference withdrawal/staged growth and residual reassessment. ... ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] T29 Freeze same-machine representative generation/no-op, warm/cache phase baselines before runtime/path changes, with input/config/ code/resource IDs, timings, read/byte counts and output contracts. [Full benchmark ... ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] T30 Remove established repeated work across phase and standalone/continuous boundaries; publish per-hotspot ownership, cost, cache dependencies/invalidation, tests and fixed/deferred/no-gain status. Coordinator decisions, ... ([priority reset](plans/2026-11-05-priority-reset.md))
 
@@ -49,7 +60,8 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-10-28-storage-operations-and-retention.md](plans/2026-10-28-storage-operations-and-retention.md) | holding | 14 |
 | [2026-11-02-library-layout.md](plans/2026-11-02-library-layout.md) | holding | 7 |
 | [2026-11-02-sovereign-spelling-rename.md](plans/2026-11-02-sovereign-spelling-rename.md) | holding | 6 |
-| [2026-11-05-priority-reset.md](plans/2026-11-05-priority-reset.md) | active | 11 |
+| [2026-11-05-priority-reset.md](plans/2026-11-05-priority-reset.md) | active | 12 |
+| [2026-11-09-likeness-process-reassessment.md](plans/2026-11-09-likeness-process-reassessment.md) | holding | 6 |
 
 </details>
 

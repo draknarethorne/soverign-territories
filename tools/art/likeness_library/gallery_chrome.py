@@ -22,6 +22,11 @@ GALLERY_VERSION = "2026.10.26.1"
 SECTIONS = (("People", "library/people_gallery.html"), ("Artists", "artists/artists_gallery.html"),
             ("Rendering", "../_generation/index.html"), ("Outputs", "../_generation/outputs.html"),
             ("Comparison", "../_generation/comparison.html"))
+PEOPLE_LINKS = (
+    ("Overview", "people_gallery.html"), ("Photo review", "people_gallery_review.html"),
+    ("Fictional relationships", "fictional_relationships.html"),
+    ("Appearance groups", "photo-groups/index.html"), ("Intake runs", "intake_runs.html"),
+)
 CARD_USE_GUIDANCE = {
     "Potentials": "Browsing guidance: consider for common/uncommon card art.",
     "Prospects": "Browsing guidance: consider for broader card-art use.",

@@ -1,10 +1,756 @@
 # Project Status
 
-**Updated:** 2026-11-09 · This is the one working document: where the project is, what has
+**Updated:** 2026-11-13 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
 ## Current checkpoint
+
+**Intake09 verified; install active:** preview/check exit0;59,786,159-byte
+receipt conserves3,290contents and1,034qualified references. Various33 now
+fully explained:30multiface,2measured small face,1zero-face measurement;
+none is silently marked unusable.636provisional/846tentative remain non-core,
+Review9. Supported installer PID39676/shell `directed-intake-install09`,
+log09-install. After installed check use guarded quality preview/apply/check
+for only eligible measured unusable photos; then actual browser acceptance.
+Full publication validation initially failed one discovery-mode test import,
+fixed and exact5test selector passes; complete validation02 reruns.
+No commit/push until gates pass, no Production/threshold changes.
+
+**Intake09 active / recoverable disposition implemented:**259 targeted
+tests pass for guarded quality transactions, retained-byte undo, assignment
+and publication. Supported `likeness-actions.cmd quality RUN` preview/apply/
+check/undo verified synthetically. No unknown/multiface automatic Junk;
+durable receipt verifies active+quarantined conservation without rewriting
+rebase history. New quality-classified candidate
+`directed-intake-completion-20261113-02` runs PID46516/shell
+`directed-intake-preview09`, log09. Frozen runtime; actual quality counts,
+install/check/quarantine/browser remain pending. Supported full changed-file
+publication validation runs independently; incremental commit/push authorized.
+No Production changes or thresholds lowered.
+
+**Intake08 preview/check exit0; quality follow-through active:** all3,290
+contents conserved;1,034qualified refs equal exports; Various680drops to33.
+636incoming photos assigned provisional Potentials,11tentative Prospects;
+Review remains9.339provisional containers/222singletons are explicitly not
+confirmed persons. Family assessment now covers all541owners with distinct
+qualified/provisional/insufficient statuses;4links, not forced relationships.
+13quality exceptions have evidence;20generic missing-reason exceptions need
+repair before safe disposition. No active writer/install. Same runtime
+owner traces reason propagation and supported recoverable quarantine; no
+threshold relaxation or automatic Junk from absent/ambiguous detection.
+
+**Intake-completion candidate08 active:**296 focused tests plus19isolated
+schema checks and routine hygiene pass. Runtime now separates safe tentative/
+provisional assignment from permanent non-reference authority, including
+reload/next-run safeguards; family assessment uses final all-owner qualified
+evidence. Candidate `directed-intake-completion-20261113` reuses original
+3,290 prepared inputs; PID49832/shell `directed-intake-preview08`,
+log `08-preview.log`. Frozen through independent check. Actual residual/
+family/container counts still unverified. Recoverable automatic Junk remains
+an explicit integration gap; quality exceptions preserved, not silently
+discarded. No thresholds/Production changes or Git publication yet.
+
+**Nov 13 intake-completion continuation selected:** user clarifies Various
+must empty except genuine unresolvable exceptions;680 explained holds is
+not the required end state. RA2j reopens assignment/reference separation:
+credible tentative assignment or named provisional non-core Potential,
+recoverable unusable disposition only with quality evidence, no automatic
+Review merely for low scores. Provisional/tentative members cannot attract
+or vote after reload/next run. Same implementation owner active, no library
+writer. Appearance/family outcome assertions and A01-A17 re-audit required.
+User authorizes incremental verified commit/push; Production still untouched.
+Numeric threshold adaptations are measured recommendations, not silent
+relaxation. Exact authority/words preserved in the scope-test record.
+
+**Installed Sandbox ready for diagnostic human review:** candidate
+`directed-repair-20261113-04` preview/check/install/installed-check exit0.
+Reader fix63tests, supported reports-only refresh/check exit0; browser
+now exposes all680 Various holds,680/680 thumbnails loaded without errors.
+Overview793/793 images load; its all-location Various link is correct.
+Review total3,290 agrees installed population. Actual named Gallery cases
+and retained detail/navigation also verified. No process remains from these
+jobs. Human identity/quality approval is not claimed:11cast owners have no
+qualified core,680Various holds and fragmentation remain explicit evidence/
+policy limitations. Next review the installed result and choose measured
+reference/policy follow-through under RA2d, not another automatic reset.
+Production untouched; no commit/push.
+
+**Sandbox install06 exits0; consumer acceptance still open:** all3,290
+assignments installed. Installed-publication check runs as PID5656/shell
+`directed-repair-installed-check06`; reports-only Gallery check exits0.
+Actual Overview793/793 thumbnails load; Draknara Gallery97 photos/98visible
+images load without errors; retained detail/native/944 links open correctly.
+Found a real viewer gap:680 Various Gallery holds are excluded from main
+Review, while Overview's unresolved link silently clears its absent Various
+filter. Existing recap/lifecycle includes them, not an adequate main viewer
+substitute. Reader repair selected after verifier exits; no rematch/reinstall.
+Two diagnostics concern absent empty catalogue folders, not lost images.
+Production untouched; final viewer-ready claim remains blocked.
+
+**Candidate06 preview/check exit0; Sandbox install active:** receipt
+56,884,983 bytes, all3,290 content tuples conserved,1,034 qualified reference
+tuples equal exports. Configured Brielle/Draknara negative resolves to stable
+owners; zero prohibited crossings or cast outflows.121 upward assignments,
+eight qualified independent cohorts/79 assignments; no forced tentative moves.
+680 Various remain:200 tentative,172 no qualifying cluster,150 insufficient
+independent references,125 classification-review hold,33 quality hold.
+These are explicit evidence/policy exceptions, not silently waived.
+Supported installer PID8060/shell `directed-repair-install06`, log
+`06-install.log`; actual installed checks/viewers remain pending.
+Eleven cast owners still lack qualified cores; membership stays in place.
+No threshold changes or Production writes; human identity acceptance remains.
+
+**Candidate05 exits2; no install:** new overlapping reference hypotheses
+expose decision-evidence size114,766,748 bytes after interning, above unchanged
+64MiB. No run/catalogue saved. Five input artifacts remain immutable in
+`directed-repair-20261113-03`; exact failure log copied there with SHA
+verification. Worker exited; same implementation owner investigates lossless
+hypothesis/evidence redundancy before another distinct candidate. Do not
+raise limits, truncate rivals, alter bindings or treat this as outcome
+acceptance. Candidate04 remains independently verified; original prepared
+inputs intact. No reset/intake/extraction/installation/Production changes.
+
+**Candidate04 preview/check both exit0:** `directed-repair-20261113-02`
+conserves all3,290 prepared outcomes;1,000 final qualified references equal
+catalogue exports exactly. Invalid tentative independent moves are gone;
+ten new qualified independent cohorts all have measured cast similarity
+below0.30.685 Various residuals remain. No writer/check remains.
+Next bounded repair is selected: enforce configured identity negatives lost
+by the directed adapter, and supplement overly restrictive complete-link
+reference reconstruction with independently qualifying neighbourhood views,
+without connectivity unions or threshold relaxation. Same runtime agent
+owns fixes/tests; original candidates remain immutable. No install or
+Production changes. Full Sandbox completion still requires actual audit/
+install/viewer evidence after these demonstrated defects are addressed.
+
+**Retry03 saved, not accepted:** preview exits0;53,922,036-byte receipt
+retains all3,290 photos and ten actual boundaries within unchanged64MiB.
+Independent check exits2: only `directed_reformation.py` differs from its
+saved implementation binding. Do not edit that binding or install.
+Actual audit exposes null cast-similarity classification for all99 new
+candidates,81 new Potentials with no qualified references, tentative physical
+routing and many cast identities without a qualified core. Same-task causal
+repair/re-audit owns these gaps; no matching writer remains. Bounded source
+viewer loads100/100 thumbnails without broken images/overflow; this is not
+final Gallery acceptance. Original inputs/proposals remain reusable; no reset,
+intake or Production writes. Authorized full Sandbox completion remains open.
+Current-byte secondary controls reuse24 hash-verified descriptors without
+extraction or fusion; head-context succeeds only on tiny inherited development
+controls, so no calibrated broad identity override is established.
+
+**Retry02 exited2; no install:** decision packing now fits, but full manifest
+79,192,840 bytes exceeds unchanged64MiB, principally real stage rows32.5MB
+and workflow inventory25.5MB. Seven artifacts plus exact failure log are
+non-overwriting/hash-preserved in `directed-repair-20261113-failed02`.
+No matching worker remains. Lossless stage storage repair is selected.
+Intermediate catalogue also exposes unresolved fragmentation/core issues
+(293 people, zeroModels, Angelica zeroqualified core); these are actual audit
+exceptions, not accepted identity results or reasons to tune to a quota.
+Detailed counts/score-metric distinction live in the scope-test evidence.
+
+**Retry02 live:** lossless repeated-evidence interning is fixture-tested
+(178 focused tests); original64MiB stored-uncompressed/SHA bounds remain.
+Supported cached corrected proposal retry runs as PID20236, shell
+`directed-repair-preview02`, log
+`tmp/session-logs/directed-repair-20261113/02-preview.log`.
+Original and failed01 evidence preserved. Runtime frozen; no duplicate
+writer. Actual outcome/receipt size and installation remain unverified.
+
+**Nov 13 actual-population retry required:** the first corrected cached
+candidate exits2 after all3,290 cached measurements: directed decision
+evidence exceeds unchanged64MiB uncompressed bound. No accepted proposal
+or installation. Five incomplete files and exact log are non-overwriting/
+hash-verified preserved in `directed-repair-20261113-failed01`; original
+intake/proposal intact. Matching PID17656 has exited; no live library job.
+Same-task evidence-redundancy repair in progress, not threshold relaxation
+or witness truncation. User additionally authorizes autonomous full Sandbox
+audit/fix/re-run iterations through actual assignment Gallery; main versions
+and core944x1104 sufficient, all variants unnecessary. Human visual acceptance
+remains later; Production untouched.
+
+**Nov 13 complete Sandbox run authorized and started:** user now selects
+the whole Sandbox process through actual movement/publication and final
+viewers while away. Separate cached candidate `directed-repair-20261113`
+reuses the verified3,290 prepared outcomes from `directed-rehearsal-20261112`;
+old proposal preserved. One matching worker, shell `directed-repair-preview`,
+PID17656, log `tmp/session-logs/directed-repair-20261113/01-preview.log`.
+New true-boundary/high-baseline-correction follow-through passes261 combined
+tests; original-preparation check exits0. Audit A01-A17, independent candidate
+check, supported Sandbox install and actual consumer verification remain to
+be performed; no outcome success claimed yet. This supersedes preview-only/
+installation permission holds below for this one candidate. LEAN/disposable
+recovery; no new reset/intake/extraction, Production/shared-workspace changes
+or commit/push. [Exact authority](plans/2026-11-12-member-refinement-scope-test.md#nov-13-complete-sandbox-execution-authority).
+
+**Nov 13 goals agreed; runtime repair selected:** front-door
+[goals and A01-A17 iteration checklist](plans/2026-11-09-likeness-process-reassessment.md#end-goals-and-operating-principles---nov-13-agreement)
+now define the outcome and review contract. User clarifies0.80+ as starting
+Angels/Sisters reference preservation, not admission policy or a hard lock;
+very clear independent wrong-person correction remains automatic.
+Actual saved scores have87 >=.80 across5of21 identities, so0.80-only sole
+seeding would empty16 identities and is not selected. RA2j repairs
+maintained-path defects, then re-audits complete requirements and design/
+configuration conflicts. One bounded implementation agent; no live library
+job, new reset/intake/extraction, replan, installation or Production writes.
+Conditional secondary-cue tests precede individual-case questions if
+corrected face/multi-view evidence still falls short.
+
+**Nov 13: clean proposal behavior incomplete; full audit complete.** Human
+review rejects treating the proposal as complete regrouping: unmatched
+incoming clusters did not become new identities. Read-only inspection also
+finds missing lower-category target owners, unavailable cast reference
+views, asymmetric cast admission and exported references disagreeing with
+qualification. [The full audit](plans/2026-11-12-member-refinement-scope-test.md#nov-13-full-reassessment-audit)
+owns counts, code/config evidence and complete requirement coverage.
+RA2n closes on the coverage map; RA2j is reopened; RA2k baseline remains valid. RA2l human
+proposal acceptance and RA2m installation are blocked. No active job,
+new reset/replan/intake, installation or Production writes.
+
+### Earlier run checkpoints (historical, not current behavioral acceptance)
+
+**Flow reconciled at proposal gate:** supported flow reconciliation exits0
+and records match-preview done, with intake/check skipped as already
+complete. It explicitly stopped before install; no active job remains.
+Human gate2 and actual browser verification remain open (browser tool
+timeouts), not another automatic run.
+
+**Verified proposal saved; browser verification blocked:** resume08 exits0
+and independent supported `--check` exits0 for all3,290 outcomes. The saved
+preview is63,743,825 bytes, below64MiB. Exact folder comparison finds55
+cross-folder proposals:54 Various arrivals plus one Potentials arrival into
+Sisters, zero cast-folder departures. Targets: Draknora49, Drakniss3,
+Drakness2, Draknisa1; all589 strong initial cast-core members remain.
+Filename/format changes are not identity moves. All231 stage pages have
+100-or-fewer images and23,030 image references resolve. Two integrated
+browser opens timed out; visual acceptance is NOT claimed. Supported flow
+reconciliation is running as shell `directed-flow-reconcile`, bounded at
+match-preview, reusing the saved proposal and skipping finished intake.
+No install or Production writes. Human gate2 remains open.
+
+**Measured receipt repair; resume08 active:** profile07 shows55.6MB photo
+rows (50.8MB directed diagnostics),25.5MB workflow inventory and16MB stages.
+Complete directed diagnostics now use deterministic lossless compression
+inside the same hash-bound receipt; readable scalar/stage summaries remain
+and both64MiB limits stay enforced.179 tests/routine checks pass.
+Incoming correction yields55 qualified proposals in the failed profile,
+not yet an accepted preview. Cached resume08 is active
+(`directed-match-resume08`, PID18568); verify actual receipt/browser next.
+No repeat intake/reset or installation.
+
+**Receipt-size diagnosis ongoing:** resume06 still exceeds the unchanged
+64MiB bound (105,497,982 bytes); no run.json or accepted proposal exists.
+Refusal now reports largest section/field sizes instead of guessing at
+further reductions. Fresh Various qualification is fixed with evidence and
+cast gates retained;178 tests/routine checks pass. Same-cache profile07
+is live, shell `directed-match-profile07`, PID13916. No repeat intake,
+reset or installation. Actual receipt size and viewer remain unverified.
+
+**Receipt compaction; resume06 active:** route guards now pass with one
+qualified move and additional held cast candidates. The proposal exceeded
+the unchanged 64 MiB manifest bound because full decision evidence was copied
+into each stage. Stage snapshots now link to complete per-photo evidence
+instead of duplicating it;177 affected/retention tests and routine checks
+pass. Cached shell `directed-match-resume06`, PID56180, is live. No install.
+Fresh Various routing coverage remains a separate unresolved acceptance
+gap; successful receipt publication alone is not the requested outcome.
+
+**Cast-admission evidence wired; resume05 active:** diagnostic04 identifies
+the Potentials/Calliope Brantley to Sisters/Drakness proposal missing its
+required admission receipt. Runtime now evaluates frozen original support
+and unchanged shared admission gates before proposing cast arrivals, carries
+the receipt on qualified rows and holds failed gates. The actual route
+validator and disabled-admission regression pass; 171 affected tests and
+routine checks pass. Same-cache shell `directed-match-resume05`, PID 56332,
+is active. No installation, repeat intake or reset. Full incoming routing
+coverage and actual proposal/browser acceptance remain open.
+
+**Source-continuity correction:** resume02 was blocked by the existing cast
+admission validator. It exposed old flattened routes surviving directed
+hold/same-home decisions. The adapter now restores exact source destination
+unless a qualified proposal changes it; strengthened fixtures and 170 tests
+pass, with routine checks. Same-run cached resume03 is active, shell
+`directed-match-resume03`, PID 58596. Existing cast guards are unchanged;
+no installation or repeated intake. Route conservation remains an explicit
+real-run acceptance check.
+
+**Matching resume02 active:** the first recovery passed missing-vector
+handling but found directed stage rows nested as a dictionary. The producer
+now returns the required row list; full stage-population assertions and 170
+affected tests pass, as do routine checks. Same-run cached matching resumes
+as shell `directed-match-resume02`, PID 57212. No repeat intake or install.
+
+**Rehearsal recovery checkpoint:** all 3,290 intake outcomes completed and
+the separate intake check passed. Matching failed on an unmeasured cast
+member incorrectly sent to vector-cache support scoring. Failure logs and
+flow receipt were hash-preserved under the run's
+`failure-evidence-20261112-match01`. The targeted guard retains unmeasured
+members with explicit uncertain membership; 134 affected tests pass.
+Supported `sandbox-rebase --replan` now resumes the same run using verified
+preparation and saved measurements, not another intake or reset. Shell
+`directed-match-resume01`, PID 58188; no installation or Production changes.
+
+**Nov 12 16:57 gate 1 approved:** user approves the starting baseline and
+required intake/matching under RA2l. Selected current-Working LEAN disposable
+run `directed-rehearsal-20261112` uses three workers and the labelled
+experimental directed-core-continuity recipe. Supported preview and 26 flow
+tests pass after fixing a direct-launch import error. Execution stops at
+`match-preview` for human proposal review; no install or Production writes.
+Baseline approval does not declare all cast photos trusted references.
+
+**Nov 12 14:57 real-flow sequence approved:** the user approves integrating
+the directed rules into the maintained rebase, preparing a clean current-
+Production-derived Sandbox and stopping at baseline/trusted-core review,
+then pre-install matching review, then separately approved installed review.
+Selected tasks RA2j/RA2k/RA2l/RA2m now live in the existing spine.
+One bounded runtime agent implements RA2j. The supported full reset and
+corrected read-only postcheck exit zero; active file/byte totals and
+Gallery/Review image-file counts match current Production. Incident/source
+evidence is preserved outside Working with verified hashes. Preservation
+removed manifests needed by reset's processed-copy classifier: 943 prepared
+copies were unintentionally carried, then individually hash-verified and
+moved to external holding without deletion. The original receipt is unchanged;
+the [baseline disposition](plans/2026-11-12-member-refinement-scope-test.md#nov-12-1457-approved-execution-transfer)
+records this correction and zero remaining active carry forwards.
+RA2j/RA2k implementation and baseline viewer are verified: 168 focused tests
+and routine checks pass. The source-only viewer separates 5,480 originals
+from 4,738 derivatives and presents all 1,266 hash-verified cast candidates
+with filters and pagination. Candidates are explicitly unmarked/unmeasured:
+no compatible Sandbox catalogue exists. Next is RA2l human baseline review,
+not automatic trusted-core selection. No intake, matching or installation
+has run. Production remains read-only. Old shadow bindings are now
+historical, not a valid viewer of reset Working or proof of baseline acceptance.
+
+**Nov 12 directed-reformation Q&A selected shadow implementation:** answers
+1-13 in the [scope-test source](plans/2026-11-12-member-refinement-scope-test.md#nov-12-directed-reformation-qa)
+now select bounded RA2b saved-input shadow behavior and explicit recipe
+comparison. The [phase02 contract](plans/likeness_process/02_identity_reformation.md#nov-12-directed-reformation-contract)
+owns upward canonical consolidation, named supported/tentative groups across
+categories and strong-evidence versus borderline corrections. Phase04 owns
+validated reference recovery; phase05/06 retain separate fictional-role and
+GUI/protection integrations. Approximate `.60`/`.30` values are illustrative,
+not selected policy. Review comparison results before any installation.
+The installed incident run, originals and Production remain untouched.
+
+**Nov 12 directed shadow viewer ready:** the full 3,290-photo saved-input
+comparison, reverse-order verification, receipt check and actual paginated
+image/group browser verification pass. Independent initial reference
+validation, coherent subset reconciliation, separate same-rank ownership and
+jointly validated original-witness growth now precede proposals. Base/lower
+admission recipes propose 63/86 upward associations, including 46 Sabine
+photos into Draknora; all initial cast placements and 589 strong cast-core
+members stay put. Eight Sabine-source photos remain held. Thirty-four
+directed regressions pass; all 3,290 current image mappings resolve.
+The
+[scope-test checkpoint](plans/2026-11-12-member-refinement-scope-test.md#current-implementation-checkpoint-partial-not-ready-for-installation)
+owns the final viewer, exact exceptions and no-growth deltas. Earlier
+report01-04 are development history. No active job or installed change;
+next is human RA2d review, not recipe selection, recovery or Production.
+
+**Nov 12 Overview layout:** the maintained Sandbox report-only refresh and
+check pass. Names appear above/below photo grids; per-thumbnail captions
+are removed only on Overview. Browser checks cover all 161 cards; 60
+focused tests and routine hygiene pass. This does not change assignments
+or resolve the cast-placement incident below.
+
+**Nov 12 cast-placement incident: FAST outcome acceptance suspended.**
+The user reports depleted Sisters/Angels galleries. Read-only inspection
+confirms actual rebase moves, not just a viewer filter: Draknava, Draknira
+and Nyxene have no remaining Gallery/Review originals in their cast folders;
+Drakness has two Gallery originals versus 93 pre-run photos. The earlier
+file-conservation/report checks did not establish appropriate cast placement,
+and must not be described as acceptance of this result. All 3,290 current
+destinations still exist with original hashes. All 1,051 pre-run cast
+originals also verify in the retained external rollback area.
+The [incident ledger](plans/likeness_process/07_rebase_and_acceptance.md#nov-12-cast-placement-incident)
+owns exact counts and recovery location. No repair, undo, restore, new
+matching or Production operation has been performed.
+
+**Nov 12 whole-process Q&A reconciliation:** the user's intent was not
+misstated as "never reassess core." The Q&A allows deliberate rebase to
+reassess unprotected core members and qualify arrivals, while requiring
+member-level evidence, separate source/reference/placement gates, and no
+identity change based only on lost reference support. The receipt routed 166
+non-cast-origin photos into cast folders (71 recorded as cast admissions),
+but also routed 303 cast-origin photos out; neither direction proves
+correctness. The likely gap is that global regrouping rebuilds targets and
+rewrites routes without a source-association fallback when evidence is weak.
+The [Q&A reconciliation](plans/likeness_process/07_rebase_and_acceptance.md#nov-12-whole-process-qa-reconciliation)
+and [proposed scope test](plans/2026-11-12-member-refinement-scope-test.md)
+record that earlier comparison. Answers 1-13 above now resolve tentative
+routing and select bounded shadow code only; recovery, installed threshold
+changes and a new installed run remain unapproved.
+
+**Nov 11 evening GUI continuation:** RA2i selects a non-biometric fictional
+relationship editor with active-on-save authored story roles, reject/edit/
+undo, durable history and explicit failed/stale-write handling. It is now
+published and report-checked in Sandbox, with source tests and isolated
+browser interaction tests passing. No conceptual answer is needed to open
+it; connecting the library directory grants file permission for actual saves.
+The verified FAST run below is not completion of every GUI or
+broader identity-lifecycle requirement. Photographs, matching, identity
+membership and existing generated family naming remain unchanged.
+The [editor runbook](art/likeness.md#fictional-relationship-editor) explains
+save versus export, narrative-only scope and remaining display limitations.
+
+**Nov 11 full-cycle FAST verified:** RA2h completes the explicitly
+authorised current-Working Sandbox run `fast-cycle-20261111`. All 3,290
+FAST intake outcomes are verified and face measurements are saved. The
+recoverable installer, installed-run check, People maintenance check and
+report-only refresh/check pass. Every installed original retains its exact
+hash/ID; actual stage, appearance, Gallery/Overview/Review browser checks
+pass. Preview11 is now the pre-run historical baseline. The new opt-in
+recipe and maintained viewers preserve supported/tentative/quality/unresolved
+states rather than certify contamination-free results. LEAN/FULL share
+tested integration and launcher previews, not full-sized run acceptance.
+Production is untouched; the pre-existing action-undo batch was not settled.
+The [phase07 checkpoint](plans/likeness_process/07_rebase_and_acceptance.md)
+owns exact results, recovery, diagnostics, timings and remaining acceptance;
+the full raw request remains in the main reassessment. The
+[current recap](recap/2026-11-11-1141-recap.md) and generated queue are updated.
+
+### Earlier checkpoints
+
+The entries below retain their increment-specific scope. RA2h above
+supersedes their no-intake/no-installed-change statements only for the
+selected Sandbox run; broader accuracy and Production gates remain.
+
+**Nov 11 planning/recap checkpoint:** the
+[current resume](recap/2026-11-11-1141-recap.md) now separates installed
+preview11, experimental grouping and bounded FAST/shared-profile delivery.
+Today's recap/pinned-index omission is repaired, not a whole-day closeout.
+Named appearances are the next bounded design dependency under RA2b;
+the [proposed contract](plans/likeness_process/02_identity_reformation.md#nov-11-appearance-organisation-checkpoint-proposed-not-activated)
+keeps supported/tentative membership, person/group IDs and reference
+authority distinct. RA2f is resolved: the user selected `primary-singletons`,
+preserving supported isolated non-core photos in the primary Gallery and
+stable lineage when a coherent appearance later shrinks.
+No new rule/path migration, numerical acceptance or contamination-free
+claim is made. The same spine/phase owners and FAST -> LEAN -> FULL order
+remain; genuine unresolved/error Review tasks are still necessary.
+
+**Nov 11 rival-reference follow-through:** RA2g's
+[shared/exclusive evidence](plans/likeness_process/02_identity_reformation.md#nov-11-shared-and-exclusive-rival-evidence)
+publishes current `view-associations-02`: 23 partial-overlap / 30 disjoint
+tentative rows, unchanged 48 unique tentative photos and zero new qualified
+placements. Prior decisions/full-population state match suffix01 exactly.
+Candidate source-group filtering and inline subset examples are verified;
+44 focused tests and actual launcher/reverse/receipt/mobile browser checks
+pass. This is diagnostic instrumentation, not activated group membership
+or permission to ignore competing hypotheses.
+
+**Nov 11 FAST/shared-flow increment:** `--profile fast|lean|full` now selects
+the maintained sandbox rebase/flow path.
+[Phase07 owns the verified increment and limits](plans/likeness_process/07_rebase_and_acceptance.md#nov-11-selected-flow-increment-fast-first-compatible-lean-and-full).
+FAST publishes unchanged originals and defers editing/944x1104 generation
+through install and maintenance, retaining separate full/disposable
+recovery. Shared matcher/naming/route publication remains in use; the new
+experimental person/view/association lifecycle is not silently activated.
+The final 168-test suite passes, including all three profiles' synthetic
+install/check/undo and stable IDs, plus actual launcher previews and
+original/filename/deferred/mobile browser checks.
+RA2e closes only this bounded seam. FAST is primary for grouping/naming/
+association testing, then LEAN, then FULL acceptance; selective later
+completion and full-population acceptance remain open. A final Production
+snapshot requires separate approval. No real Working change, intake or
+Production operation was performed.
+
+**Nov 11 smaller-view / FAST continuation:** the initial non-core state viewer was
+`view-associations-01`.
+[Phase02 records the implemented state and verification](plans/likeness_process/02_identity_reformation.md#nov-11-smaller-view-non-core-associations).
+It scopes 93 photos across fourteen uncertified views and constructs
+48 unique tentative non-core associations (53 rows), without reference
+influence, rival removal or new qualified placements. Full signed margins
+still block those rows; pooled/partial rival overlap is the next concrete
+diagnosis, not permission to discard rivals. All 3,290 photos remain
+represented. The 179-test combined run and actual launcher/reverse/browser
+checks pass. No installed changes or intake.
+The user clarifies [FAST likeness-first rebase](plans/likeness_process/07_rebase_and_acceptance.md#nov-11-fast-likeness-first-rebase-contract):
+skip editing/944x1104 generation while preserving real intake, comparisons,
+assignment/move/rename and original-backed viewers; LEAN balances, FULL
+finishes final processing. At that checkpoint runtime did not expose the
+bypass; the bounded increment above now supplies it.
+T18 owns processing semantics; RA2c owns rebase/viewer integration.
+The existing saved-evidence experiments already avoid image generation.
+
+**Nov 11 original-anchor reconciliation:** current viewer is
+`hypothesis-reconciliation-02`.
+[Phase02 records the paired result and limits](plans/likeness_process/02_identity_reformation.md#nov-11-original-anchor-multi-view-reconciliation).
+One additional 18-reference Ione view passes every original-anchor and
+joint-core check; fourteen uncertified views remain outside rivals with
+explicit directional reference exceptions. Against matching saved controls,
+both no-growth and growth variants restore two admissions and lose none.
+Cross-folder proposals are 36/39 versus 35/38; all 3,290 photos are conserved.
+Fifteen of the earlier 17 no-growth margin holds remain, not evictions or
+different-person findings. Small views can lack reverse witness coverage
+without being contaminated. The viewer shows strongest rival scores,
+active/fallback status and inline exception examples. The 140-test related
+suite passes. No new required review, model, installed policy/protection/
+library change or intake. RA2b/RA2d/RA2c remain open.
+
+**Nov 10 ordered-range and view-reconciliation follow-through:** the current
+experimental viewer is `entrance-range-trial-04`, with exact unchanged
+scored evidence from the ten-variant suffix02 run.
+[Phase02 records recipes, gains, regressions and next boundary](plans/likeness_process/02_identity_reformation.md#ordered-entrance-and-core-range-experiments).
+The experimental ladder is consistently Sister/Angel/Model/Prospect;
+membership retention, entrance, core qualification and physical protection
+are separate. Ordinary core qualification materially improves reference
+coverage; lowering entrance alone does not repair the splits. Three
+member-safe provisional reference unions include Dahlia/Ione and
+Sabine/Draknora. Paired cross-folder proposals rise from three to 35
+(38 with staged growth), with 66 newly qualified and 17 no-longer-qualified
+entrances versus middle. Those 17 are competitor-margin holds, not photo
+evictions or different-person findings. Known split recovery remains open.
+The viewer preserves original names, distinguishes scoring view from
+provisional display owner, exposes regressions and is 97.70% smaller than
+the initial full-evidence HTML. The 124-test suite passes; launcher
+preview/apply/repeat/check and browser mobile/reference checks pass.
+The user's [fictional card-art/narrative purpose](plans/likeness_process/05_readiness_continuity_and_relationships.md#nov-10-clarification-fictional-character-art-clusters-not-identification)
+is explicit; no real-world identification or biological kinship inference.
+Installed policies/libraries/protections remain unchanged; no intake.
+
+**Nov 10 category/cue continuation:** the current diagnostic viewer is
+`category-diagnostics-03`, a sidecar to unchanged `membership-reassessment-05`.
+[Phase02 records the measured distinction](plans/likeness_process/02_identity_reformation.md#own-core-retention-and-category-diagnostics):
+796 measured photos are retainable under maintained existing-member rules
+but fail the shadow's new-join recipe; 200 below `.50` are retainable.
+Another 1,823 have only original-view scores, not qualified active cores.
+These are not identity confirmations or different-person findings.
+Saved category floors differ; the shadow's `.55` reference/protection
+coupling materially restricts coverage. No threshold is selected/enabled.
+[Phase03's existing-CLIP ablation](plans/likeness_process/03_secondary_evidence.md#bounded-existing-clip-region-and-cache-ablation)
+executes 16 development pairs / 24 images / 48 region descriptors with
+exact persistent warm/reverse reuse and zero new extraction. Head-context
+is promising on this small sample but includes the face, so it is not
+independent hair evidence or accepted identity gain. Thirteen new tests,
+100 related regressions and actual launcher/browser checks pass.
+No user review is required now; known splits, runtime integration and
+accepted full rebase remain open. Installed libraries/policy and intake
+remain unchanged.
+
+**Nov 10 17:14 continuation:** the current viewer is
+`membership-reassessment-05`; all paged photos now render inline beside
+original filename links. The [frozen-reference follow-through](plans/likeness_process/02_identity_reformation.md#frozen-reference-follow-through-and-inline-review)
+reaches a two-boundary fixed point with 662 refs and no pending views.
+Placement outcomes remain unchanged; known splits are not declared solved.
+A pinned, isolated local SmolVLM-500M CPU observer has also been set up and
+tested on six below-face crops in both orders (final
+`local-cue-observer-02`: 12 calls / 307.945s; all six order checks match).
+[Model disposition](plans/likeness_process/03_secondary_evidence.md#nov-10-local-observer-selected-for-feasibility):
+coarse review assistance only, no demonstrated identity recovery gain or
+automatic fusion. AI observations do not replace human labels. Installed
+sandbox/Production and policy remain unchanged; no intake.
+The 87-test focused suite, routine checks and actual launcher/report/browser
+verification pass.
+
+**Nov 10 own-membership and repooling implementation:** the opt-in shadow
+replay now separately assesses current membership, reference fitness and
+physical locks, then permits eligible members to regroup across folders.
+The [implementation evidence and limits](plans/likeness_process/02_identity_reformation.md#own-membership-assessment-and-reassessment-pool)
+record 3,290 conserved photos, 486 supported current memberships, 113
+questionable unprotected memberships logically released, and 1,830 pooled
+photos in 446 provisional clusters. No named singleton identities or new
+qualified regroupings on this dataset. Three reference boundaries remain
+incomplete; known splits are not declared solved. The current viewer is
+`membership-reassessment-03`, with person-scoped view IDs, own/rival
+evidence and logical-pool status. Its decisions match suffix02; no installed changes or intake.
+RA2b remains the active implementation owner; no new review is required.
+
+**Nov 10 16:42 viewer meaning correction:** "unresolved" meant no newly
+qualified regrouping, not loss of the existing identity/location or a fresh
+correctness confirmation. The
+[report reading contract](plans/likeness_process/02_identity_reformation.md#reading-the-report-retained-is-not-verified)
+separates retained/no regrouping, blocked HOLD, automatic grouping proposals
+and recorded human intent. Suffix04 republishes suffix03's identical state
+without scoring; installed photos, memberships and policy are unchanged.
+Sample feedback is optional, evaluates handling rather than asserting
+same/different labels, and is not a request to place 2,170 photos manually.
+
+**Nov 10 15:45 actual reformation construction:** RA2b now builds
+cross-folder proposed person/face-view/residual state from saved measurements,
+not only rankings. All 3,290 photos are conserved: 283 automatic proposed
+memberships, 28 explicit intent, 809 held and 2,170 unresolved. One automatic
+cross-folder person hypothesis contains 63 Sabine/Draknora members; six
+other cross-folder hypotheses reflect explicit intent, not automatic
+recovery. The four-pass run still has three pending reference withdrawals
+and is clearly `bounded-incomplete`. Ione/Dahlia/Katerina remain unresolved;
+Nyxene/Anya's common intent is not an automatic recovery gain.
+The [implementation and next boundary](plans/likeness_process/02_identity_reformation.md#nov-10-implemented-shadow-construction)
+record missing general-person multi-view reconciliation, reference growth,
+residual reforming, cue/owner/family/runtime integration and acceptance.
+The final before/after viewer is `reformation-candidate-03`; 62 focused
+tests and actual report/reverse/browser checks pass. Cached scoring retains
+all rivals, matches the initial implementation on a 383-photo cohort and
+brings full construction/reverse/publication to 18.109s. Zero direct
+negative/uncertain co-assignment violations does not establish accuracy:
+only six of 197 labelled positive pairs share a proposed person.
+No installed
+changes, threshold tuning, model download or intake.
+
+**Nov 10 15:14 rebase-scope correction:** the entire reassessment/Q&A was
+reread. Current full-population experiments largely reconstruct references
+inside existing identity folders; they do not implement the intended
+cross-folder person/appearance reformation lifecycle. Old partitions and
+current holds are not the target answer. The
+[numbered phase map](plans/likeness_process/README.md) now records all
+Q&A1-40 requirements, component evidence, missing behavior, implementation
+steps and exit gates without moving the original sources or creating a
+second queue. RA2b's opt-in shadow reformation is the explicit next build;
+runtime activation still requires RA2d acceptance, and RA2c retains full
+replay/install/viewers. Same-person appearance groups, tentative associations
+and distinct fictional-family links remain different outcomes. Secondary
+cues must be evaluated before acceptance if face-only is inadequate.
+This is a planning/ownership correction, not newly implemented regrouping.
+Installed sandbox, Production, thresholds, models and intake are unchanged.
+
+**Nov 10 returned action evaluation:** ten cases validate; nine Agree,
+one Disagree, and all prior image labels are unchanged. The
+[complete-member split investigation](plans/2026-11-09-likeness-process-reassessment.md#returned-action-evaluation-and-complete-member-split-investigation)
+checks three group pairings across 138 photos, with 227 directed member
+rows and 23 representative images. Saved history confirms Ione-origin
+fragments and Nyxene/Anya provisional routing. Nyxene's reference set
+already includes two Anya-filed photos: intended person, appearance,
+physical owner and old family suggestion must be reconciled separately.
+High group similarity does not supply enough individual support for a
+blanket merge. The user's Nyxene owner preference is preserved; no
+installed changes, model inference, threshold changes or intake.
+RA2d follow-through, not lifecycle/rebase acceptance or a new questionnaire.
+
+**Nov 10 14:13 review clarity:** the
+[recommendation-first candidate page](plans/2026-11-09-likeness-process-reassessment.md#returned-candidate-feedback-distinguish-rivals-from-proposed-moves)
+now distinguishes hold from move proposals, shows subgroup scores,
+difference/support and policy reasons, and collects action agreement/
+explanation separately from identity and exact-photo labels. Weak rivals
+remain useful diagnostic controls, not implied moves. Ten returned
+image-label cases load unchanged; action answers start unevaluated.
+Suffix04 reuses existing numerical/context evidence without inference or
+installed changes. Combined action/image evaluation binds packet/result
+hashes; existing image-only feedback stays compatible. 46 targeted tests
+and browser controls pass. This closes the presentation correction,
+not matching accuracy, lifecycle, secondary-model or rebase acceptance.
+
+**Nov 10 14:06 returned candidate feedback:** ten answers validate:
+all ten current identities fit; six displayed outside rivals are different,
+four comparisons fit both identities. All six rejected rivals were held,
+not move proposals; five even score below the current identity. The page
+misleadingly calls held outsiders "Suggested identity." The one displayed
+move proposal is Both, supporting a split rather than wrong current
+ownership. Record this as a candidate/presentation limitation, not accepted
+cleanup or installed regression. Exact pairs: 18 same / 12 different.
+See the [returned-feedback disposition](plans/2026-11-09-likeness-process-reassessment.md#returned-candidate-feedback-distinguish-rivals-from-proposed-moves).
+RA2d must separate actual moves, held rivals and split associations before
+another candidate claim; no threshold relaxation, installed change or intake.
+
+**Nov 10 connected candidate:** the
+[photo-based candidate replay](plans/2026-11-09-likeness-process-reassessment.md#nov-10-connected-candidate-delivery-and-reconciliation-contract)
+now feeds original/repaired subgroup scoring through the existing
+membership-decision function without direct pair labels in scoring.
+All 3,290 photos remain accounted for: two non-executable move proposals,
+3,288 holds and 53 repair-affected decisions/associations, not proven fixes.
+Neither move results from repair; broad cleanup is not yet demonstrated.
+Ten new queries / 40 photos show current versus proposed handling, with
+39 available local contexts. 103 related tests and actual browser/source/
+receipt/repeat checks pass. Numerical evidence is reused across publisher
+fixes rather than rescored. RA7 is a diagnostic integration seam, not
+accepted full lifecycle or a completed rebase. Local VLMs remain an explicit
+uninstalled option; no download/upload, threshold change, install or intake.
+RA2d/RA2b/RA2c/OST4 retain the unfinished outcome requirements.
+
+**Nov 10 appearance/family handoff:** the
+[explicit member-scoped disposition layer](plans/2026-11-09-likeness-process-reassessment.md#nov-10-appearance-and-family-disposition-handoff)
+now carries verified RA5 evidence into seven same-person appearance
+candidates, two conditional separate-lookalike handoffs and one unresolved
+case. Fourteen appearance hypotheses are not verified outfit groups or
+whole-folder admissions. All 3,290 photos remain conserved; family types,
+automatic discoveries and executable moves are zero. Viola's conflict and
+residual uncertainty stay visible. Ten new tests and 22 related tests pass;
+actual preview/apply/repeat/check verifies the frozen source chain without
+rescoring. RA6 closes only this report-only contract. Proposed acceptance
+gates await approval; unlabelled behavior, runtime integration and actual
+sandbox viewer/recovery acceptance remain with RA2d/RA2b/RA2c and OST4.
+No new manual full-gallery task, installed changes, downloads or intake.
+
+**Nov 10 reconciliation implementation:** the
+[four-variant full-population comparison](plans/2026-11-09-likeness-process-reassessment.md#nov-10-implemented-reference-repair-and-direct-association-comparison)
+implements frozen reference-use repair and direct appearance associations,
+not just another questionnaire. All four variants conserve 3,290 photos.
+Three shadow withdrawals change 39 tentative suggestions versus the same
+updated-label control; 16 human-supported association records cover nine
+queries. These are not 39 proven corrections or automatic discoveries.
+An earlier same/new different Viola pair is held uncertain, and Neither
+retains no guessed owner. 116 tests and actual reverse/repeat/receipt
+checks pass. No installed changes. RA5 is complete in bounded experimental
+scope; RA2d evaluation, RA2b lifecycle, RA2c rebase/viewers and OST4
+secondary cues remain open under the existing outcome map.
+
+**Nov 10 11:47 fragment answers:** all ten validate against the exact
+[fragment packet; results and disposition](plans/2026-11-09-likeness-process-reassessment.md#nov-10-returned-fragment-review-and-rule-disposition):
+seven same-person split associations, two current-only and one Neither;
+19 same / 11 different displayed pairs. Four supported targets also have
+specific different-person reference exceptions. The richer Angelica/Ruby
+Both answer revises its earlier identity-level rejection, with both exports
+preserved. Context was helpful nine times and misleading once, but machine
+scores overlap same/different pairs. Keep member-first fragment discovery,
+not whole-group merges or a context identity threshold. RA2d owns exact
+fixture/evaluation follow-through before RA2b/RA2c integration/rebase gates.
+No new manual packet merely to reconfirm these splits, no installed changes.
+
+**Nov 10 outcome alignment:** the
+[original-step traceability checkpoint](plans/2026-11-09-likeness-process-reassessment.md#nov-10-outcome-checkpoint-and-original-step-traceability)
+maps RA increments to OST obligations without closing them by implication.
+RA4's coherent-subgroup/context experiment is delivered, not integrated rebase
+behavior. Its [new review and measured result](plans/2026-11-09-likeness-process-reassessment.md#nov-10-coherent-fragments-and-a-bounded-non-face-diagnostic)
+cover 3,290 conserved rows, 482 reference subgroups and ten comparisons
+using 39 distinct photos with separate identity/pair/context answers.
+Five supported prior fixtures clear subgroup qualification, neither rejected
+fixture does; all 24 retain their suggested target, not a proved cleanup.
+All rows remain non-executable/reconsiderable; context crops do not complete
+the planned series/hair/cache work. The review has now returned; next is rule disposition/
+acceptance under RA2d, accepted lifecycle integration under RA2b, and full
+replay/install approval/viewer verification under RA2c. Reports alone are
+not the intended outcome; no full intake or installed changes.
+
+**Nov 10 returned general review:** all 24 candidate-07 answers validate:
+22 support / two reject. The
+[mixed-reference clarification](plans/2026-11-09-likeness-process-reassessment.md#nov-10-completed-general-review-and-mixed-reference-clarification)
+preserves visual support, not preferred placement or clean references.
+The [09:24 fragmentation clarification](plans/2026-11-09-likeness-process-reassessment.md#nov-10-same-person-fragments-versus-preferred-placement)
+adds that current cast identity and outside suggested identity may both
+represent the intended person. Quinn/Drakness and Xena/Drakniss are explicit
+examples; additional associations and spelling limits stay in the plan.
+The answers remain valid, but 22 supports are not 22 misplaced photos.
+Occasional 30-40-image coverage is authorized; next review distinguishes
+current/target/both/neither compatibility and individual reference exceptions.
+Zoe Mallory, Viola Lujan, Ruby Vale, Xena Eden and Francesca Oakes
+have user-reported mixed examples, with no exact offending photo IDs yet.
+All supported proposals still fail placement qualification; both rejected proposals
+are blocked too. Next compare reference coherence/member support without
+blanket gate relaxation. Raw answers are preserved, not converted into pair
+labels or core approvals; no installed changes or measured accuracy claim.
+
+**Nov 10 review usability:** the
+[whole-library candidate review](plans/2026-11-09-likeness-process-reassessment.md#meaningful-next-reassessment-without-sorting-809-cases)
+now opens as a guided 24-case comparison: queried photo, suggested identity
+examples and current identity context are explicitly separated. Plain
+Same/Different/Cannot-tell answers record and advance; Back/revision,
+answered progress and export/import support stopping and resuming.
+Technical tables and fictional drafts are optional collapsed context.
+Matching decisions, thresholds, installed library and review sample are
+unchanged; existing candidate-05 answer exports remain compatible.
+
+**Nov 9 whole-library candidate:** the
+[general realignment increment](plans/2026-11-09-likeness-process-reassessment.md#nov-9-whole-library-realignment-candidate)
+now rebuilds provisional reference and member/face-view hypotheses across
+all 3,290 saved photos, including non-character identities. This is opt-in
+experimental pipeline code, not just another cast-answer report or an
+installed matching change. Automatic targets remain tentative: none clears
+all existing safeguards. A diversified 24-case window with candidate-bound
+assessment export/import supports the next meaningful user reassessment,
+without asking for full-library manual sorting. RA3 stops at this verified
+candidate; RA2/RA2d still own acceptance before lifecycle/routing integration
+and rebase installation. Secondary appearance cues, physical groups and
+workflow invalidation remain separately gated. No production changes,
+fresh intake, installed moves or new Review locks.
 
 **Nov 9:** the [individual-association correction](plans/2026-10-22-likeness-engine-acceptance.md#nov-8-approved-individual-association-implementation)
 is implemented and installed in sandbox preview11 from original verified
@@ -24,7 +770,7 @@ now owns the ordered LEAN -> trusted cast -> selections -> source fidelity
 -> generic Females -> character art milestones. Selected task IDs have
 actual source/destination transfer records; domain plans retain technical
 contracts and deferred work, not parallel active queues. One plan is active,
-20 holding, one proposed. Working instructions and generated queue follow
+21 holding, one proposed. Working instructions and generated queue follow
 that agreement; no whole plan is falsely completed or archived.
 
 Documentation/working-agreement rollout and the requested Copilot
@@ -44,6 +790,102 @@ protective; the later local path is selected, not moved.
 
 Earlier state/owner/monitoring wording below is dated evidence, superseded
 where noted by the current checkpoint and spine transfers.
+
+**Nov 9 likeness-process reassessment approval:** the user's
+[separate held plan](plans/2026-11-09-likeness-process-reassessment.md)
+has evolved from the outfit-series theory into whole-process Q&A and a
+staged evolution of the existing engine. It records identity,
+reference, protection and appearance-group distinctions; face-first paired
+tests, broader Vale/outlier scope and full saved-batch shadow acceptance
+before publication. Performance/churn and reversible browsing remain gates.
+The user now authorizes incremental work. The
+[spine's RA1/RA2](plans/2026-11-05-priority-reset.md#nov-9-likeness-reassessment-increments)
+owns the receipt/cache-only baseline foundation, then photo-level acceptance
+cases and isolated face/member/reference variants. OST2 has an explicit
+ownership transfer; the domain plan is not a second active queue.
+No new intake, model download, secondary-cue analysis, directory migration
+or installation follows from this first slice; preview11 remains unchanged.
+RA1 is now verified: the new `bin\likeness-shadow.cmd` binds 148 identities /
+2,237 photos while replaying all 2,230 original scored candidates against
+21 original cast cores. All saved initial scores and recorded provisional
+refinement numeric signatures match; repeat/reversed-input decisions agree.
+Each trial takes 8.5-9.3 seconds with no image reads or inference. This is
+initial-stage evidence, not final Gallery parity or identity acceptance.
+[Exact measurements and next boundary](plans/2026-11-09-likeness-process-reassessment.md#verified-first-increment-results)
+remain in the owning plan; RA2 is next.
+RA2 now has a
+[visual baseline packet](plans/2026-11-09-likeness-process-reassessment.md#nov-9-next-increment-visual-baseline-review):
+70 cases / 199 unique photos, current/rival references and optional
+pair-label export/import. Saved final own/rival arithmetic is verified,
+but no new grouping rules or independent final-decision replay ran.
+RA2 remains open for small balanced human labels, leakage-safe held-out
+groups, acceptance bounds and isolated member/reference trials.
+The user has now completed all 371 pair answers. Four focused
+[clarifications](plans/2026-11-09-likeness-process-reassessment.md#nov-9-completed-human-packet-and-clarification-ledger)
+resolve the detected pair/chain contradictions without editing raw feedback;
+uncertain judgments remain uncertain. Effective-label ingestion is delivered
+in the next increment below; leakage-safe evaluation and acceptance bounds
+remain open, not another full manual review or intake.
+The
+[inherited-core risk](plans/2026-11-09-likeness-process-reassessment.md#nov-9-inherited-core-risk-and-practical-success-criteria)
+is now explicit: preserving an existing core is not proof it is clean.
+RA2 must separate reference repair from incoming-member decisions;
+reference trust, gallery placement and deliberate art selection are
+distinct concerns. Production contamination is a hypothesis, not a finding.
+The subsequently authorized
+[source-copy audit](plans/2026-11-09-likeness-process-reassessment.md#nov-9-read-only-production-snapshot-cast-assertions)
+verifies all 1,266 Angels/Sisters Gallery source hashes across 21 identities.
+Saved prepared-reference evidence contains six human-different pairs in
+Angelica's inherited core; using only her three configured anchors still
+scores those members above the existing 0.4 core similarity minimum. This supports
+reference/member reassessment, not blanket two/three-image truncation.
+The Oct 21 snapshot and prepared-versus-original measurement limits are
+recorded; live production and installed memberships remain unchanged.
+The
+[cleanup sequence](plans/2026-11-09-likeness-process-reassessment.md#nov-9-actionable-cleanup-sequence-and-fictional-associations)
+now explicitly targets improved rebase outcomes, not parity alone:
+tested label ingestion, bounded character-seed confirmation, separate
+reference/member trials and provisional non-character groups. Appearance
+support remains a measured follow-up; fictional family links are creative
+associations independent of identity matching. No rule or install changed.
+The
+[next delivered increment](plans/2026-11-09-likeness-process-reassessment.md#nov-9-implemented-label-intake-and-six-character-confirmation-packet)
+validates the completed human pair inputs and produces a separate
+six-character confirmation packet: Angelica 12 photos plus five contrasting
+Angels/Sisters at eight each. Tested label ingestion preserves uncertainty
+and raw feedback; character intent is never prefilled from pair labels.
+All 70 targeted tests and launcher/browser checks pass; 104 images load.
+Next needs human reference-intent answers, held-out/budget gates and
+isolated variants. Installed preview11 and production remain unchanged.
+The [returned character confirmation](plans/2026-11-09-likeness-process-reassessment.md#nov-9-completed-character-reference-answers)
+now validates all 52 answers: 42 references, two same/non-reference, five
+different and three uncertain. It confirms both disputed Angelica members
+and individual supported photos elsewhere across several characters.
+Ravaelle's confirmed example currently under Draknira is an explicit
+cross-character case, not an authorized move. RA2 reference/member trials,
+evaluation gates and the other 15 character confirmations remain open.
+The [autonomous frozen-reference increment](plans/2026-11-09-likeness-process-reassessment.md#nov-9-implemented-full-population-frozen-reference-trial)
+now delivers a reusable full-population trial and visual results, not
+another questionnaire. All 3,290 saved rows remain; 42 confirmed references,
+nine cross-folder withdrawals and 149 changed strongest rivals produce
+zero moves under existing gates. Mean and individual-reference scalar
+profiles still overlap on the three characters with explicit negatives.
+RA2a now selects per-member evidence/abstention, followed by independent
+reference lifecycle and complete routing replay; appearance support remains
+a measured conditional prerequisite. The 96-test suite, launcher receipts
+and browser controls pass. No intake, installed reference/member changes,
+new model or production publication.
+The [next implemented member-outcomes increment](plans/2026-11-09-likeness-process-reassessment.md#nov-9-implemented-per-photo-outcomes-and-abstention)
+closes RA2a's record/abstention construction: all 3,290 photos have independent
+reference proposals, placement proposals, saved safeguards and evidence.
+Ten recoveries and 34 retains reflect explicit human intent, three current
+members need reassessment, and 3,243 photos hold. The 335 experimental
+reference withdrawals include 318 unselected examples, not 335 proven
+wrong identities or approved removals. All 112 targeted tests, reversed
+population, hash receipts and browser filters/image checks pass. Evaluation
+and numeric budgets transfer to RA2d before enabling new rules; lifecycle
+and full routing integration remain RA2b/RA2c. Installed preview11,
+Production, raw feedback and matching thresholds remain unchanged.
 
 **Nov 8 individual-association approval:** the user authorizes the
 [narrow implementation and sandbox replay](plans/2026-10-22-likeness-engine-acceptance.md#nov-8-approved-individual-association-implementation),

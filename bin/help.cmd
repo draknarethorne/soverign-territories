@@ -58,10 +58,13 @@ echo                                    --sequence --enhancements compares nativ
 echo    overlay-review.cmd --report DIR --sources LIST.json --out "Working\_reports\eraser-compare\NEW" [--dry-run ^| --apply ^| --check]
 echo                                    unconfirmed logo/pill reference proposals anywhere in the image; no source repainting or automatic confirmation
 echo                                    comparison only: no selection, assignment, model load or source change; --check verifies every hash read-only
-echo    rebase-flow.cmd --root "SANDBOX\Working" --run NAME [--dry-run ^| --apply ^| --check] [--recovery-mode full ^| disposable] [--workers N] [--from STEP] [--until STEP] [--with-previews]
+echo    rebase-flow.cmd --root "SANDBOX\Working" --run NAME [--profile fast ^| lean ^| full] [--dry-run ^| --apply ^| --check] [--recovery-mode full ^| disposable] [--workers N] [--from STEP] [--until STEP] [--with-previews]
+echo                                    --baseline working skips destructive reset; --regroup enables the maintained appearance lifecycle and stage viewers
+echo                                    --directed --directed-recipe NAME explicitly selects the experimental directed Sandbox path; saved preview/resume/check must use the same recipe
 echo                                    the whole fresh rebase in order: full reset, originals + check, backup of the fresh baseline, intake, matching plan, install, checks
 echo                                    explicit disposable sandbox/LEAN skips originals + baseline backup and creates NO transaction rollback; reset-only recovery, reports retained
 echo                                    full recovery is the default, with backup and exact undo; use the SAME recovery mode on resume/check
+echo                                    FAST skips pre-intake originals/check, image editing and installed 944x1104 generation; backup remains with full recovery. All profiles share matching/publication/checks
 echo                                    reset preview, intake inventory and the separate intake check are skipped unless --with-previews (the apply steps repeat their guards)
 echo                                    live progress: per-step start/finish, phase timings, photo count + ETA, space after each step; resumes at the first unfinished step
 echo                                    --verbose streams EVERY child line; --heartbeat N sets progress seconds; full per-step logs are always retained
@@ -70,10 +73,66 @@ echo                                    process-flow recap and per-step logs: tm
 echo                                    --reuse-run ORIGINAL --recovery-mode disposable starts at matching from verified saved LEAN intake; skips reset/intake and keeps ORIGINAL unchanged
 echo    lean-continue.cmd --root "SANDBOX\Working" --source-run ORIGINAL --run NEW [--dry-run ^| --apply ^| --check ^| --install]
 echo                                    --dry-run is inventory only; --apply builds a SEPARATE matching preview with original prepared pixels and measured faces; no intake or install
+echo                                    --regroup --directed --directed-recipe NAME selects the SAME experimental lifecycle; --review-source ABS_DIR passes direct constraints; choices bind resumes/checks
 echo                                    --check verifies saved inputs/preview/publication without writes; --install publishes reviewed preview with NO backup or rollback
 echo                                    decisions bind by photo ID and content; generated identities/automatic locks are not seeds; missing measurements or ambiguous manual decisions refuse
+echo    likeness-shadow.cmd --run "ABSOLUTE-RUN-DIR" --out "ABSOLUTE-REPO-TMP-DIR" [--dry-run ^| --apply ^| --check] [--compare-order]
+echo                                    receipt/cache-only Vale + named-outlier scope; full original candidate competition; --apply writes experiment JSON only, NEVER installs
+echo                                    --dry-run verifies scope and original cast-score parity; --compare-order tests repeat/reverse stability; --check verifies saved evidence read-only
+echo                                    first contract: applied core-seed baseline with empty manual seed and all-workflow reset; --max-photos refuses scope overflow, never truncates
+echo                                    separate global limits: --max-candidates 2500 and --max-json-mib 128 by default; raise only explicitly, never shrink competition silently
+echo    likeness-review-packet.cmd --experiment "ABSOLUTE-SHADOW-DIR" --out "ABSOLUTE-REPO-REPORTS\likeness-reassessment\NAME" [--dry-run ^| --apply ^| --check]
+echo                                    visual final-baseline placements, own/rival examples and optional individual-pair label export/import; NEVER moves photos or changes rules
+echo                                    preview checks saved final-score arithmetic and displayed source hashes; apply writes bounded report thumbnails/HTML only; check is read-only
+echo                                    all seed identities plus --neighbours 12 distinct competitors by default; explicit 100-case / 700-photo report cap
+echo    likeness-character-packet.cmd --experiment "ABS-SHADOW" --review-packet "ABS-PAIR-REPORT" --feedback "ABS-EXPORT.json" --clarifications "ABS-OVERRIDES.json" --out "ABS-REPORT" [--dry-run ^| --apply ^| --check]
+echo                                    validates completed pair labels and separate chat overrides, then builds Angelica plus five contrasting cast shortlists; NEVER changes library
+echo                                    apply writes effective-labels.json and full-photo/face character review; autosave plus export/import; preview/check read-only
+echo                                    --check --answers "ABS-CHARACTER-EXPORT.json" validates character decisions without installing; no fixed reference-photo quota
+echo    likeness-reference-trial.cmd --experiment "ABS-SHADOW" --character-packet "ABS-CHARACTER-REPORT" --answers "ABS-CHARACTER-EXPORT.json" --out "ABS-REPORT" [--compare-order] [--dry-run ^| --apply ^| --check]
+echo                                    full saved-population frozen-reference comparison and existing membership-policy probes; self excluded even across folders; no intake or library mutation
+echo                                    apply writes experimental reference-seed.json, result.json, member-outcomes.json and browsable proposals/holds; no auto-growth, new thresholds, models or installation
+echo                                    --max-photos 4000 refuses population overflow; --compare-order requires identical reverse-order result; check/repeated apply verify unchanged evidence
+echo                                    --realign additionally rebuilds ALL provisional reference sets, general member candidates, face-view hypotheses and separate lookalike links
+echo                                    realignment.html is the whole-library landscape; realignment.json + evaluation.json bind proposals and label-blinded diagnostics; NO locked Review, physical moves or installation
+echo    likeness-fragment-trial.cmd --experiment "ABS-SHADOW" --candidate "ABS-REALIGNMENT-REPORT" --feedback "ABS-24-ANSWERS.json" --context-checkpoint "ABS-LOCAL-ViT-B-32.safetensors" --out "ABS-REPORT" [--dry-run ^| --apply ^| --check]
+echo                                    full-population coherent-subgroup evidence; 30-40 distinct-photo review separates current/target/both/neither and exact reference exceptions; NEVER merges or installs
+echo                                    preview checks evidence/sources but no context inference; apply uses ONLY local cached CLIP on below-face context, not identity; NO downloads or accepted fusion threshold
+echo                                    --check --answers "ABS-FRAGMENT-EXPORT.json" validates new review labels; repeated apply verifies receipts; --max-photos 40 is a display/measurement budget, not scoring truncation
+echo    likeness-reconcile-trial.cmd --source "ABS-FRAGMENT-REPORT" --answers "ABS-FRAGMENT-ANSWERS.json" --out "ABS-REPORT" [--dry-run ^| --apply ^| --check]
+echo                                    preview binds direct pairs and proposes reference-use repair; apply compares label-control/repair/association/combined across all saved photos; no model, merge or installation
+echo                                    repeat apply checks immutable receipt; exact conflicting labels stay uncertain, associations never certify unseen members; no accepted automatic routing
+echo    likeness-disposition-trial.cmd --source "ABS-RECONCILIATION-REPORT" --out "ABS-REPORT" [--dry-run ^| --apply ^| --check]
+echo                                    derives direct-member appearance/separate-lookalike/unresolved handoffs; no rescoring, model calls, family types, folder unions or installation
+echo    likeness-candidate-replay.cmd --source "ABS-RECONCILIATION-REPORT" --out "ABS-REPORT" [--dry-run ^| --apply ^| --check]
+echo                                    connects label-blind original/repaired subgroup scoring to existing membership policy; full saved population, new 30-40-photo visual comparisons
+echo                                    apply runs scoring/reverse checks plus existing local context only; no downloads, installed moves, full intake or accepted accuracy claim
+echo                                    repeat/check verify receipts without rescoring; --check --answers "ABS-FRAGMENT-EXPORT.json" validates returned feedback
+echo                                    --reuse-result "ABS-FROZEN-CANDIDATE" republishes verified results after publisher-only changes; analysis/helper changes refuse reuse
+echo                                    --prior-answers "ABS-FRAGMENT-EXPORT.json" restores exact image labels in reused review; action agreement/reasons start separate and unevaluated
+echo                                    --check --evaluation "ABS-CANDIDATE-EVALUATION.json" validates packet/result-bound action judgments plus image labels
+echo                                    --split-evaluation "ABS-CANDIDATE-EVALUATION.json" --reuse-result "ABS-FROZEN-CANDIDATE" investigates supported group pairs and every member; bounded photos, no merge or model
+echo                                    split preview/apply/check uses the same arguments; frozen group centroids, exact cross-pair distributions, member support/holds and saved routing history stay separate
+echo                                    --reform --reuse-result "ABS-FROZEN-CANDIDATE" constructs actual cross-folder person/face-view/residual state; optional --split-evaluation binds latest safety labels
+echo                                    reformation apply publishes before/after viewer with frozen support, full rivals, bounded reference withdrawals and reverse checks; no physical moves or runtime activation
+echo                                    --reform-view "ABS-REFORMATION-REPORT" with --reform republishes unchanged verified state after wording-only changes; same source/reuse/evaluation arguments, no scoring
+echo                                    --assess-membership with --reform assesses own identity and all rivals, withdraws weak reference influence and regroups non-core/released photos in a shadow pool; no installed moves or named singleton people
+echo                                    bounded reference continuation freezes discovery/rivals, withdraws invalid references and reassesses dependent members; inline ledger images plus filename links
+echo    likeness-observe.cmd --setup [--dry-run ^| --apply]  explicit pinned SmolVLM-500M Apache-2.0 download and isolated optional CPU runtime; ordinary library dependencies unchanged
+echo    likeness-observe.cmd --source "ABS-ASSESSED-REPORT" --out "ABS-NEW-REPORT" [--dry-run ^| --apply ^| --check]  up to six below-face crops, two invocation orders, local-only observations; NO identity labels or placement changes
+echo    likeness-diagnostics.cmd --source "ABS-ASSESSED-REPORT" --out "ABS-NEW-REPORT" [--dry-run ^| --apply ^| --check]  same-evidence category/core diagnostics plus bounded existing-CLIP crop/cache ablation; NO moves or threshold activation
+echo    likeness-entrance-trial.cmd --source "ABS-ASSESSED-REPORT" --out "ABS-NEW-REPORT" [--dry-run ^| --apply ^| --check]  eight ordered entrance/core/retention ranges with separate protection and staged frozen-core growth; NO installed policy change, moves, models or intake
+echo                                    --coalesce adds two paired mutual-reference-view union variants; every photo still requires individual admission; existing names and separate cast slots preserved
+echo                                    --directed compares the current ordered-middle control with four bounded directed recipes; separated core/retention/reference/release evidence; writes a non-installable report only
+echo                                    --reuse-result "ABS-VERIFIED-ENTRANCE-REPORT" republishes byte-identical scored evidence after publisher-only changes; no rescoring, changed analysis refuses reuse
+echo    likeness-hypothesis-trial.cmd --source "ABS-ASSESSED-REPORT" --baseline "ABS-VERIFIED-COALESCED-REPORT" --out "ABS-NEW-REPORT" [--dry-run ^| --apply ^| --check]  reuse middle/coalesced controls; reconcile fully witnessed sibling views, show exceptions and retain all outside rivals; NO installed changes or intake
+echo    likeness-view-associations.cmd --source "ABS-ASSESSED-REPORT" --baseline "ABS-VERIFIED-HYPOTHESIS-REPORT" --out "ABS-NEW-REPORT" [--dry-run ^| --apply ^| --check]  per-photo non-core association state for smaller views; tentative is NOT assigned or core; unchanged full rivals, no installed changes or intake
 echo    sandbox-rebase.cmd "SANDBOX\Working" "RUN-DIR" --dry-run  inventory ALL immutable inputs; no models, reports or matching
+echo                                    --profile fast^|lean^|full: FAST keeps original pixels, defers editing/944x1104, uses original-backed viewers; LEAN/FULL preserve standard preparation. No implicit recovery change
 echo                                    --baseline working freezes current galleries plus Various for a fresh Production-like rehearsal; historical Source stays untouched
+echo                                    --regroup --cast-seeds core enables member-first identity/appearance lifecycle and maintained stage viewers in every profile
+echo                                    --dry-run --core-selection-preview separates originals from derivatives; JSON is complete, HTML filters/pages 24 original-backed cast cards and bounds diagnostics
+echo                                    Various stays incoming/excluded; metadata tiers are not measured eligibility or trusted cores; no face analysis, intake or matching
 echo                                    --include-current-various adds current Working\Various inputs via a hash-bound run-local recovery overlay
 echo                                    --intake-only --apply prepares all images and stops for review; --check verifies without writes
 echo                                    --recovery-mode disposable binds sandbox/LEAN reset-only recovery to intake/matching; full retains backup/undo
@@ -98,6 +157,7 @@ echo    likeness-actions.cmd validate FILE.json  check staged actions against cu
 echo    likeness-actions.cmd preview FILE.json   show intended destinations; never moves photos or edits metadata
 echo    likeness-actions.cmd apply FILE.json --apply  verified backup, then apply staged moves and metadata decisions
 echo    likeness-actions.cmd undo [BATCH_ID] --apply  verified backup, then undo the newest action batch
+echo    likeness-actions.cmd quality APPLIED_RUN [--dry-run ^| --apply ^| --check] [--undo]  Sandbox-only measured unusable intake via existing guarded Junk actions; scoped recovery, retained preparation and bound conservation receipt; no models
 echo    likeness.cmd crops              one web page with every cropped photo, the uncropped original beside it ^(likeness.cmd crop --undo --apply reverses the last batch^)
 echo    likeness.cmd                    general roots ONLY: Angels, Sisters, Models, Prospects, Potentials, Various; Artists are excluded
 echo    likeness-artists.cmd --root "SANDBOX\Working" --dry-run group --singles  shared engine, artist-only preview; --check scans without cache/history writes

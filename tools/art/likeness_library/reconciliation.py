@@ -4,7 +4,7 @@ import heapq
 
 import numpy as np
 
-from .audit import audit_person, core_excluded_protection
+from .audit import audit_person, core_excluded_protection, membership_excluded
 from .scoring import nz
 from . import rejections
 
@@ -70,6 +70,7 @@ def frozen_identity_cores(
             protected_ids=core_excluded_protection(catalog, protected_ids),
             stale_ids=stale_ids,
             ambiguous_ids=ambiguous_ids,
+            excluded_ids=membership_excluded(catalog, photo_ids, require_record=category != "Artists"),
             minimum_core=category_policy.get("minimumUsablePhotosForOutlierActions", 3),
             core_minimum=category_policy.get("identityCoreMinimumSimilarity", 0.3),
             seed_floor=category_policy.get("identityCoreMinimumSimilarity", 0.3),

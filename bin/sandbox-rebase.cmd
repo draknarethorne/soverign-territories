@@ -9,6 +9,10 @@ if "%~2"=="" (
   echo Completed unpublished stage: --resume-install --check, then --resume-install --apply
   echo Unowned legacy cast collisions: explicitly add --preserve-legacy-derivatives to check/apply
   echo Approved core trial: keep --cast-seeds core --record-core-protection on every step
+  echo --profile fast^|lean^|full: FAST keeps originals and defers editing/944x1104; recovery is separate
+  echo --regroup --cast-seeds core: member-first identity/appearance lifecycle, maintained stage reports
+  echo --regroup --directed --directed-recipe NAME: explicit experimental directed mode; no default recipe
+  echo --dry-run --core-selection-preview: writes a read-only JSON receipt and original-backed HTML candidate viewer; no face/model work
   exit /b 2
 )
 set "ST_REBASE_ROOT=%~1"

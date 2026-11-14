@@ -24,14 +24,20 @@ def inventory(layout):
     return rows
 
 
-def prepare(layout, run, workers=None, *, storage_mode=None, recovery_mode=None):
+def prepare(layout, run, workers=None, *, storage_mode=None, recovery_mode=None, processing_profile=None):
     """Copy inputs once, then use the ordinary preparation runner without live writes."""
     import image_preparation
 
     run = pathlib.Path(run)
     receipt = run / "intake.json"
+    if processing_profile not in (None, "standard", "fast"):
+        raise ValueError("processing profile must be standard or fast")
     if receipt.exists():
-        saved = json.loads(receipt.read_text(encoding="utf-8")).get("recoveryMode", "full")
+        saved_receipt = json.loads(receipt.read_text(encoding="utf-8"))
+        saved = saved_receipt.get("recoveryMode", "full")
+        if (processing_profile is not None
+                and processing_profile != saved_receipt.get("processingProfile", "standard")):
+            raise ValueError("saved intake processing profile differs; use a new run")
         if recovery_mode is not None and recovery_mode != saved:
             raise ValueError("saved intake recovery mode differs; use the saved mode or a new run")
         output, data = verify(layout, run)
@@ -59,9 +65,15 @@ def prepare(layout, run, workers=None, *, storage_mode=None, recovery_mode=None)
             metadata.report_assets.rename_directory(stage, mirror)
     output = metadata.cw.storage_root(cfg, "reports", root=mirror) / "preparation" / "all"
     paths = [mirror / relative for relative in rows]
-    mode = image_preparation.resolve_storage_mode(mirror, output, storage_mode)
-    result = image_preparation.publish(mirror, output, paths, workers=workers, storage_mode=mode)
-    data = image_preparation.verify(mirror, output)
+    if processing_profile == "fast":
+        from . import fast_preparation
+
+        data = fast_preparation.publish(mirror, output, rows, storage_mode or "lean")
+        result = any(row["outcome"] == "unprocessable" for row in data["photos"])
+    else:
+        mode = image_preparation.resolve_storage_mode(mirror, output, storage_mode)
+        result = image_preparation.publish(mirror, output, paths, workers=workers, storage_mode=mode)
+        data = image_preparation.verify(mirror, output)
     source_manifest = layout["sandbox_root"] / "source-manifest.json"
     value = {
         "schemaVersion": 1, "sourceManifestSHA256": metadata.content_sha256(source_manifest),
@@ -69,6 +81,7 @@ def prepare(layout, run, workers=None, *, storage_mode=None, recovery_mode=None)
         "inputs": rows, "preparationManifestSHA256": metadata.content_sha256(output / "manifest.json"),
         "recipe": data["recipe"], "assessmentErrors": bool(result),
         "recoveryMode": recovery_mode or "full",
+        "processingProfile": processing_profile or "standard",
         "configurationReceipt": metadata.cw.storage_configuration_receipt(
             cfg,
             layout["working_root"],
@@ -121,7 +134,8 @@ def verify(layout, run):
         if value.get("recoveryMode") != "disposable":
             raise ValueError("prepared-input continuation requires disposable sandbox recovery")
         output, data = verify(layout, original)
-        if data.get("storageMode", "full") != "lean":
+        if (data.get("storageMode", "full") != "lean"
+                or data.get("processingProfile", "standard") != "standard"):
             raise ValueError("prepared-input continuation requires LEAN evidence")
         return output, data
     if value.get("schemaVersion") != 1 or value.get("inputs") != inventory(layout):
@@ -138,7 +152,17 @@ def verify(layout, run):
     ) / "preparation" / "all"
     if metadata.content_sha256(output / "manifest.json") != value["preparationManifestSHA256"]:
         raise ValueError("intake manifest changed since preparation")
-    data = image_preparation.verify(mirror, output)
+    profile = value.get("processingProfile", "standard")
+    if profile == "fast":
+        from . import fast_preparation
+
+        data = fast_preparation.verify(mirror, output, value["inputs"])
+    elif profile == "standard":
+        data = image_preparation.verify(mirror, output)
+    else:
+        raise ValueError("unknown saved intake processing profile")
+    if data.get("processingProfile", "standard") != profile:
+        raise ValueError("intake processing profile receipt mismatch")
     actual = {row["source"]: row["sourceSha256"] for row in data["photos"]}
     if actual != value["inputs"] or len(actual) != len(data["photos"]):
         raise ValueError("intake did not account for every supplied image exactly once")

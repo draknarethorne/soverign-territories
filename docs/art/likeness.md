@@ -21,6 +21,393 @@ a report/retained-reader fix, preview `bin\people-gallery.cmd --reports-only
 and `--check`. This refreshes reports without matching, photo moves, new
 intake, derivative maintenance or backups; reload the browser afterward.
 
+Overview repeats each person's linked name above and below the photo grid.
+Individual thumbnails have no visible filename or appearance captions;
+filenames and recorded appearance details remain in image tooltips and
+accessible text. Other report pages retain their detailed captions.
+
+## Directed reformation shadow
+
+The entrance-trial harness has an opt-in `--directed` comparison mode for
+saved, own-membership-assessed reports. It pairs the existing
+`ordered-middle` entrance/core/retention control with four explicit directed
+recipes. Preview first, then publish only to a new ignored report directory:
+
+```cmd
+bin\likeness-entrance-trial.cmd --source "ABS-ASSESSED-REPORT" --out "ABS-NEW-REPORT" --directed --dry-run
+bin\likeness-entrance-trial.cmd --source "ABS-ASSESSED-REPORT" --out "ABS-NEW-REPORT" --directed --apply
+bin\likeness-entrance-trial.cmd --source "ABS-ASSESSED-REPORT" --out "ABS-NEW-REPORT" --directed --check
+```
+
+The report compares category-specific admission, frozen source-core
+continuity, own-membership retention, independent reference eligibility, and
+strong wrong-identity release as separate evidence axes. The `.60` core
+diagnostic and `.30/.60/.30` release example are comparison values, not
+selected or installed defaults. Candidate upward ownership is considered
+only after an individual has independently qualified as the same-identity
+appearance. Distinct cast slots remain rivals; full relevant rival evidence,
+including close and overlapping-reference rivals and exact negative or
+uncertain conflicts, remains in the report. Reference inventories are stored
+once per appearance; each rival preserves reference/overlap counts and support
+witnesses, with exact conflict IDs retained.
+
+Before admission, each historical reference inventory is independently
+core-validated. Withdrawn/unstable views remain explicit in the validation
+ledger; their members retain physical placement and frozen core diagnostics.
+An unestablished pooled hypothesis is not a named destination. Reconciled
+same-rank appearances use a deterministic existing owner, separately labelled
+from upward promotions; distinct assigned cast slots never merge.
+
+Tentative and residual clusters have stable report IDs/names and lineage;
+tentative links preserve their physical source home and provide no reference
+authority. Mutual subset reconciliation validates both sides, coherent
+reference cores and every outside rival before removing a proven duplicate
+subset from distinct-person competition; mixed exceptions remain rivals.
+The existing higher-ranked owner receives a named appearance, not a folder.
+Repeated frozen recovery boundaries may add only independently accepted,
+content-distinct members with original-base admission/core witnesses.
+Each growth cohort is jointly core-validated without invalidating its
+frozen-base prerequisites; rejected additions are held with reasons and
+cannot oscillate back into the same run's reference inventory.
+The same recipe records no-growth versus staged-growth upward admission.
+There is no tentative-member certification or chained identity union. Caps fail as incomplete,
+not as a successful report. `index.html` and `directed.json` provide a
+browsable decision summary; `directed-details.json.gz` contains the complete
+candidate/rival evidence and is hash-checked with the report receipt. The
+output is a saved-measurement shadow only:
+it enumerates only active Gallery/Review filenames to locate current originals
+by unique stable ID, checking their current catalogue content bindings.
+This location manifest is receipt-bound; missing, ambiguous and changed
+bindings are explicit, not wrong-image fallbacks. It does not copy library photos, read images, call models, change
+files, install policy, or activate `group_lifecycle`.
+
+The saved evidence does not encode the newly requested overrideable **Keep**
+control, so existing placement locks/intents are preserved and Keep behavior
+is deferred, not simulated. Fictional-family eligibility is a candidate
+assessment only when distinctness and independently supported resemblance
+coexist; no family fact, default story role, or live GUI action is inferred.
+The report's reviewed positive fixtures are development controls, not blind
+accuracy. Independent rule selection and acceptance remain separate gates.
+
+## Maintained directed Sandbox reformation
+
+The saved-report shadow and the maintained runtime are separate surfaces.
+The maintained path is opt-in through `clean-rebase --regroup --directed`;
+`--directed-recipe` is mandatory and there is no selected default. The
+historical regroup path remains unchanged when `--directed` is omitted.
+Supported recipe names are `directed-core-continuity`,
+`directed-lower-category-admission`, `directed-stricter-retention`, and
+`directed-stronger-release`. Their values are experimental and must be
+reviewed with the source-core candidates before matching:
+
+| Recipe axis | Core continuity Sisters/Angels/Models/Prospects/Potentials | Admission Sisters/Angels/Models/Prospects/Potentials | Retention | Strong release source/destination/margin |
+| --- | --- | --- | --- | --- |
+| directed-core-continuity | .60/.60/.50/.45/.40 | .50/.45/.40/.35/.35 | existing ordered-middle recipe | .30/.60/.30 |
+| directed-lower-category-admission | .60/.60/.50/.45/.40 | .50/.45/.35/.30/.25 | existing ordered-middle recipe | .30/.60/.30 |
+| directed-stricter-retention | .60/.60/.50/.45/.40 | .50/.45/.40/.35/.35 | .35/.30/.25/.20/.20 | .30/.60/.30 |
+| directed-stronger-release | .60/.60/.50/.45/.40 | .50/.45/.40/.35/.35 | existing ordered-middle recipe | .25/.65/.35 |
+
+These are selectable experiments, not routine policy. A read-only
+pre-intake candidate review can enumerate current Sandbox Working
+Angels/Sisters Gallery rows and their authored anchor, saved supported
+core-use, content-matched protection-provenance, and legacy protected
+placement metadata:
+
+```cmd
+bin\sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\RUN" --baseline working --cast-seeds core --regroup --directed --directed-recipe directed-core-continuity --dry-run --core-selection-preview
+```
+
+The command writes `RUN\core-selection-preview\core-selection-preview.json`
+and an HTML viewer that links directly to current source Gallery images. It
+counts Gallery/Review originals separately from regenerable derivatives;
+duplicate-ID diagnostics use original-source files only. Various is incoming
+mixed intake and is reported as direct Gallery/Review files plus nested
+incoming files, not as unexplained fragmentation or a core/reference source.
+The JSON inventory and candidate list are complete and uncapped. The HTML
+viewer shows 24 original-backed cards per page, with category and identity
+filters in a responsive layout; long duplicate diagnostics are collapsed and
+show at most 50 entries in-page, with the full list in JSON. If Working has no local
+`.likeness-library.json`, the preview does not fall back to the repository
+catalogue. Candidate rows show authored anchors, content-matched supported
+memberships and protection provenance, and legacy protected placement holds
+separately. Every row is `candidate only`; face quality, independent support,
+measurement eligibility, and workflow selection remain unevaluated. Legacy
+protected placement is not evidence that a photo is a trusted reference. This
+command hashes the displayed cast Gallery inputs but does not prepare images,
+detect faces, invoke a model, write a catalogue, or match. Human gate 1 must
+choose the trusted references and recipe; no inferred measurement is implied
+by the metadata tiers.
+
+After that gate, `rebase-flow.cmd --regroup --directed
+--directed-recipe NAME --dry-run` binds the selected mode and recipe into
+every matching preview, resume, install and check command. Saved flows and
+clean-rebase previews reject recipe changes. Maintained stage pages and the
+recap distinguish same-home, upward, same-rank, correction, and held rows;
+assignment disposition is separate from reference qualification.
+Residual cohorts are classified using their independent centroid against
+authoritative qualified cast-view centroids (best score per distinct cast
+owner), not an absent cast score. The existing category and visual-review
+gates remain unchanged for confirming independent identities.
+`residualClassifications` records
+their stable candidate names, measured cast scores, core floors, pair-support
+counts and explicit hold reasons; appearance/publication pages expose the
+candidate name and qualification blocker separately from physical assignment.
+Only independently qualified, non-review-held cohorts create confirmed
+independent identities.
+
+Various is transient intake. After supported matching, a credible unambiguous
+parent may receive a **tentative/non-core Gallery assignment** using the
+existing admission floor, reference-support count, full distinct-rival margin,
+quality, negative, rejection and placement checks. Independent cast admission
+is not bypassed. Otherwise usable, safe unmatched photos receive named
+**provisional Potentials**, grouped by the existing bounded coherent-cohort
+routine; a singleton container is allowed. Needing an output folder does not
+certify a distinct person or satisfy a visual-review/core gate. Existing cast
+uncertainty does not authorize ejecting its members. Explicit locks and
+unavailable/ineligible quality remain enumerated intake exceptions rather than
+forced assignments.
+
+Catalogue `identityStatus=provisional` and membership
+`assignmentDisposition`, `sourcePersonIds` and content-bound `assignmentEvidence`
+preserve this distinction and configured-negative lineage. Tentative/provisional
+members always have `coreUse=false`; Gallery location cannot restore their
+reference eligibility after serialization, reload or later directed runs.
+They cannot vote, grow reference views or attract arrivals. Readers label
+provisional containers as uncertified, and `assignmentSummary` separately counts
+supported/tentative/provisional photos, confirmed new identities, provisional
+containers, Review, Junk and remaining Various exceptions.
+
+Quality exceptions preserve measured reasons separately: possible additional
+faces and unavailable measurements are not automatically unusable. Measured
+small faces/head obstruction are recorded as recoverable-Junk candidates.
+The immutable rebase proposal retains these as explicit exceptions. After
+installation, use the existing action launcher for a separately bound
+recoverable disposition; no storage destination is added to clean-rebase:
+
+```bat
+bin\likeness-actions.cmd quality "ABSOLUTE_APPLIED_SANDBOX_RUN" --dry-run
+bin\likeness-actions.cmd quality "ABSOLUTE_APPLIED_SANDBOX_RUN" --apply
+bin\likeness-actions.cmd quality "ABSOLUTE_APPLIED_SANDBOX_RUN" --check
+bin\likeness-actions.cmd quality "ABSOLUTE_APPLIED_SANDBOX_RUN" --undo --dry-run
+bin\likeness-actions.cmd quality "ABSOLUTE_APPLIED_SANDBOX_RUN" --undo --apply
+```
+
+Only recorded small-face measurements with one detected face, or recorded
+head-obstructing screenshot bars with one detected face, qualify. Multiface,
+unknown/no-face measurements, identity scores and an unverified candidate flag
+never qualify automatically. Existing action validation still rejects protected,
+anchored, workflow-selected, changed or colliding photos. Automatic preparation
+quarantine is not reused: it deliberately refuses catalogue-owned photos.
+
+The wrapper uses the existing `photo-junked` transaction, configured Junk root,
+retained-preparation transfer journal and guarded undo. The same transaction's
+verified recovery backup is scoped to the catalogue and affected photo/retained
+files; it does not copy the full library or create a second recovery snapshot.
+`RUN\quality-disposition.json` binds the applied run hash, installed/current
+catalogue hashes, exact batch/action records, original and prepared tuple digest,
+source/destination content hashes and backup-manifest hash. Check verifies every
+run photo exactly once across active and quarantined locations, unchanged
+catalogue/action bindings, recoverability and retained evidence. Apply/check and
+undo repeat safely; an interrupted prepared receipt fails explicitly for recovery
+inspection rather than blindly repeating a possibly completed transaction.
+Run receipts remain unchanged; their ordinary publication check describes the
+pre-disposition state. After quarantine use the disposition check for current
+active-plus-quarantine acceptance; undo restores the original routes. Refresh
+reports separately using the supported reports-only launcher. Remaining quality
+exceptions retain explicit measured/unknown reasons and are not claimed as Junk.
+
+Family naming runs once over all final qualified lower-owner clusters against
+final qualified cast references, never pre-validation seed cores or provisional
+members. `familyNaming.ownerAssessment` covers every active catalogue owner,
+including empty owners and provisional containers, with canonical folder,
+reference count and explicit insufficient/no-authority/name-ineligible status.
+The recap exposes this coverage separately from actual family assignments;
+an absent family score is not a negative match or permission to fabricate one.
+
+The continuity recipe requires four independent pair witnesses for each
+core member, hence at least five independent photos. A two-to-four-photo
+Potential candidate cannot bootstrap itself into a qualified core. Initial
+reference reconstruction preserves coherent subsets at the same gates; it
+does not convert a pooled historical seed-centroid score into pair evidence.
+Alongside complete-link candidate subsets, reconstruction tries deterministic
+per-anchor independent-support neighbourhoods. Each neighbourhood must
+independently pass the unchanged core qualifier; overlapping qualified views
+remain separate hypotheses. No connected-component union, promoted-reference
+bootstrap, or transitive identity merge is performed. The existing per-call
+two-million-operation bound also limits neighbourhood construction and
+qualification; exceeding it fails explicitly rather than publishing a partial
+result.
+
+Configured `runtimeSettings.different` folder pairs are separate from human
+reviewed photo pairs. Directed matching resolves them case-insensitively
+against active catalogue folders and their recorded folder histories, then
+enforces stable person-ID exclusions across canonical reconciliation,
+destination admission, reference qualification and residual source lineage.
+Ambiguous aliases or both endpoints resolving to the same owner fail.
+Absent owners are explicitly nonparticipating, not guessed from similar names.
+`configuredIdentityNegatives` records the resolution, including absent folders;
+boundary witness policies retain the resolved ID pairs. Renaming a destination
+cannot remove its exclusion. Final row reasons replace pre-directed routing
+prose, and residual holds distinguish no qualifying cluster, classification
+review and insufficient independent references.
+Strong correction still requires affirmative source incompatibility, an
+independently qualified destination, and the full distinct-rival margin.
+The mode is experimental and proposes destinations only; installation,
+Production changes, Keep transactions, live GUI controls and independent
+accuracy acceptance remain separate human gates.
+
+The main Photo review browser includes unassigned `Various/gallery` and
+`Various/review` originals. Overview's **Unassigned Various holds (all
+locations)** link selects `person=Various` without a bucket restriction.
+Each card retains its actual Gallery/Review location and source lineage;
+Various is not a person and its Gallery holds never establish an identity
+core or primary reference. An unavailable requested person remains an empty
+explicit selection instead of silently showing unrelated photos. Empty
+catalogue identity warnings remain visible; retained history is not deleted
+to silence missing-folder diagnostics.
+
+Maintained directed receipts keep scalar decisions and compact stage rows
+readable. Complete per-photo witness/rival diagnostics are stored once in
+`groupLifecycle.decisionEvidence` as deterministic gzip/base64 JSON, bound
+by uncompressed byte count and SHA-256. The versioned interned representation
+stores identical nested view/reference/witness structures once, losslessly.
+Version `gzip-base64-interned-json-v2` also shares scalar strings (including
+photo/view IDs) and dictionary key schemas. Overlapping but nonidentical
+reference inventories therefore reuse their ID vocabulary and option field
+names without deleting any inventory, hypothesis or per-member score.
+String-only inventories store their ordered numeric vocabulary indices once
+per distinct list; decoding restores the exact original order and full IDs.
+`unpack_runtime_decisions` resolves
+the evidence by photo ID; route verification and recap generation validate
+the content binding and materializes independent mutable objects for consumers;
+legacy receipts remain readable. Interned **uncompressed stored evidence** and
+the ordinary run manifest retain their 64 MiB limits; compression does not waive
+either. Expanded consumer JSON may exceed that stored limit because it repeats
+the shared evidence. Receipts record exact stored/expanded byte counts and
+per-section expanded serialization bytes, stored node/string/schema bytes and
+shared-table counts; an over-limit refusal includes those
+diagnostics. No rivals, reference IDs, blockers or witnesses are truncated.
+Fresh Various inputs may qualify against existing destinations, but are
+never reference seeds merely because they are incoming. Cast arrivals
+additionally require the unchanged shared frozen-reference admission gates.
+
+The selected directed recipe produces a copied, versioned experimental policy:
+its admission floors/margins are shared with route verification, and missing
+Sister/Angel Gallery admission flags are enabled for this experiment. Explicit
+`false` refusals remain refusals. Quality, independent-witness, rejection,
+content-binding, protection and distinct-rival checks are unchanged; the
+standard draft policy file is not modified. The receipt exposes this effective
+`admissionPolicy`, rather than treating a directed score as admission approval.
+
+Fresh catalogues reconstruct every existing source owner across the category
+ladder. Gallery rows are reference **candidates**, not trusted by folder.
+Initial inventories and coherent reconstructed subviews must independently
+qualify at the selected recipe's unchanged core floors. Qualified references,
+including certified staged additions, are exported once in
+`groupLifecycle.qualifiedReferences`; membership `coreUse`, group reference
+IDs and packed decisions are checked against this ledger. Explicit withdrawals
+cannot re-enter through growth or serialized resume. Owners with insufficient
+references remain visible in `sourceCoreSelection.referenceUnavailablePersonIds`;
+reference loss alone does not eject members.
+Exact different/uncertain pairs inside one source owner create an explicit
+source-reference hold: splitting them into two appearances cannot silently
+certify contradictory people as the same owner.
+
+Verified starting Sister/Angel references with independent own-seed scores
+of **0.80+** form the strong baseline backbone. This score is recomputed from
+eligible, content-bound, independently selected own-seed witnesses, excluding
+self, identical-content and near-duplicate votes. It is not a calibrated
+probability, arrival threshold, sole seed cutoff or physical lock. Other
+qualified subviews remain usable below .80; a singleton or invalid saved high
+score cannot certify itself. Strong members can still be corrected only with
+independently qualified destination evidence, affirmative source contradiction
+and the existing exceptional-correction gates.
+
+Eligible parentless residual cohorts reuse the maintained stable identity/name
+machinery and existing category classification. They become actual person
+records, named supported or tentative appearance groups and Gallery/Review
+routes; ambiguous, singleton and quality-held exceptions are not forced into
+people. Creative naming and configured family surnames run after identity
+decisions and do not establish same-person evidence or fictional roles.
+
+Directed phase pages retain immutable computational boundary rows for qualified
+references, reconciliation, initial admission-option evaluation, each accepted
+growth boundary, settled membership, appearance hypotheses, named runtime groups
+and final publication. Each captures its actual frozen reference inventory and
+witness policy; the reference boundary includes withdrawals. Initial reference/
+option rows explicitly say membership is not yet decided and retain source paths,
+rather than copying final routes or claiming reference eligibility is membership.
+Final canonical/family renames update only the publication snapshot. Combined
+boundary evidence is capped at 64 MiB; exceeding it refuses incomplete output.
+Serialized stage rows keep a readable photo/status/core index plus lossless
+`boundaryEvidence`; `lifecycle_stage` restores the full immutable boundary.
+Repeated paths, views, witness structures and inventories are interned instead
+of copying all expanded rows into the run manifest. Legacy full-row receipts
+remain readable; recap pages resolve the same full rows through this helper.
+The reference boundary records initial independent own-centroid scores,
+pair-support counts/floors, conflicts and candidate inventories separately from
+qualified inventory. Qualification uses centered normalized cached face vectors:
+the centroid score and pair-support count are distinct gates. A historical
+cast-seed score is not interchangeable with a pair similarity or independently
+qualified score; the actual recognizer/cache binding belongs to the source run,
+not an assumed ArcFace model or calibrated probability.
+Older receipts with final projections retain that explicit warning.
+Bounded recap pages show exact sources/destinations, withdrawal reasons,
+admission blockers and unavailable-reference holds with verified original links.
+
+Cached continuation preserves the same explicit selection:
+
+```cmd
+bin\lean-continue.cmd --root "SANDBOX\Working" --source-run "ABS-PREPARED-RUN" --run "ABS-NEW-CANDIDATE" --regroup --directed --directed-recipe directed-core-continuity --dry-run
+```
+
+Repeat `--regroup --directed --directed-recipe NAME` and any `--review-source`
+on resume/check. The continuation receipt binds these flags and refuses changed
+mode/evidence; cached rebase-flow continuation must not fall back to legacy
+matching. This preview does not authorize applying a new candidate or installation.
+
+## Fictional relationship editor
+
+The maintained **Fictional relationships** navigation opens
+`_reports/library/fictional_relationships.html`. This is a separate manual
+story editor, not a facial matching tool or a replacement for existing
+family surnames. Choose two catalogue characters, a fictional role and a
+narrative note. A successfully saved new assignment is active immediately:
+there is no pending-approval status. Edit, reject with a reason, or undo the
+latest change on a relationship; history is retained. Editing a rejected
+record does not silently reactivate it.
+
+Roles currently include ally, rival, mentor, student, companion, spouse,
+sibling, parent, child and other. Use parent/child/sibling with a narrative
+note for fictional mother/daughter/sister wording; there is no separate
+custom-role field or automatic reciprocal-edge creation.
+
+On each page session, **Connect library narrative file** and choose the
+library root shown on the page. Desktop Chromium with File System Access
+and Web Locks writes only that root's `.fictional-relationships.json`.
+Directory permission is a browser safety requirement, not approval of
+individual relationships. A verified successful write is explicitly shown;
+failed writes and stale-file conflicts do not advance the displayed saved
+state. Reload the connected file after a conflict. Avoid concurrent edits
+from other applications: browser locking is not an operating-system atomic
+compare-and-swap.
+
+Import is read-only inspection; export downloads a copy and is **not** a
+library save. Nothing is persisted in localStorage. The editor loads its
+mutable history when connected, so a report refresh never overwrites it.
+Normal report-only checks verify the generated editor and catalogue
+snapshot; connecting validates the narrative file. Regenerate reports if
+the catalogue changes: selectors validate against the generated snapshot.
+
+Assignments are shown on the dedicated page. Overview and Photo review
+link to it; they do not yet render these story edges in every identity
+panel or the existing family tree. Existing generated family links,
+surnames, identity ownership, photo paths, matching, core use and action
+undo are unchanged. No story roles are inferred from images and this
+increment does not supply automatic AI-authored relationship suggestions.
+
+## Rebase recap navigation
+
 The recap's person links open a new tab: current people go to filtered
 Photo review; previous/emptied names go to saved continuity evidence.
 Cast/Other-identities links open their expandable recap details. Families
@@ -62,6 +449,42 @@ recipe/identity/gallery acceptance and the incremental production cutover are
 not complete. The repository policy remains draft. Use the
 [clean-start sequence](#clean-sandbox-rebuild-versus-category-reclassification),
 not a historical reset or legacy sorter, for the next reviewed experiment.
+
+## Sandbox processing profiles
+
+`bin\sandbox-rebase.cmd W RUN --profile fast|lean|full` selects the processing
+path. `bin\rebase-flow.cmd --root W --run NAME --profile fast|lean|full`
+forwards the same choice to intake, matching, install and checks.
+Preview first; a flow's `--apply` includes reset and installation and is
+**not** implied by selecting FAST. Continue to require separate approval
+for an actual library run.
+
+| Profile | Image processing | Evidence and recovery |
+| --- | --- | --- |
+| FAST | Safe source decode, matching's normal face measurements, original-byte native publication; editing and 944x1104 products deferred | LEAN evidence by default; `--storage-mode full` can retain richer evidence independently. Recovery defaults to full backup/undo |
+| LEAN | Existing balanced preparation and selected padding, then normal installed derivatives | LEAN evidence; explicit disposable sandbox recovery remains optional |
+| FULL | Existing complete preparation/diagnostic products and installed derivatives | FULL evidence; full recovery required |
+
+Omitting the profile resumes the saved intake; a new omitted-profile run
+still starts standard LEAN. Explicit profile/storage/recovery mismatches
+refuse rather than reinterpreting a checkpoint. FAST has its own versioned
+recipe and fresh matching cache; it never reuses a prepared image's scores
+as raw-image evidence.
+
+FAST Photo review uses the original image with its filename link.
+Overview's small display thumbnails are resized originals, not generated
+head/chest crops. Retained details and history label editing as deferred,
+not clean, missing or complete. Gallery maintenance and `originals.cmd`
+honor verified FAST lineage rather than silently generating 944x1104 files.
+FAST does not change matching thresholds, protections, names or artist scope.
+
+Keep FAST/LEAN/FULL runs separate while comparing them. The existing
+`lean-continue.cmd` accepts standard LEAN evidence only, not FAST.
+Selective completion into LEAN/FULL and changed-pixel grouping-delta
+acceptance are still open under
+[phase07](../plans/likeness_process/07_rebase_and_acceptance.md#nov-11-selected-flow-increment-fast-first-compatible-lean-and-full).
+FAST first, then LEAN, then FULL acceptance precedes any separately approved
+final Sandbox-to-Production snapshot; this feature performs no snapshot.
 
 ## General and artist entry points
 

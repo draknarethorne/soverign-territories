@@ -4,9 +4,11 @@ import copy
 import csv
 import datetime
 import hashlib
+import html
 import json
 import os
 import pathlib
+import re
 import shutil
 import time
 import uuid
@@ -43,7 +45,10 @@ def _verify_implementation_hashes(plan):
 
 
 def _write_json(path, value):
-    payload = json.dumps(value, indent=2).replace("\n", os.linesep).encode("utf-8")
+    if path.name == "run.json" and value.get("groupLifecycle"):
+        payload = json.dumps(value, separators=(",", ":")).encode("utf-8")
+    else:
+        payload = json.dumps(value, indent=2).replace("\n", os.linesep).encode("utf-8")
     retention_root = None
     if path.name == "run.json" and isinstance(value.get("workingRoot"), str):
         working_root = pathlib.Path(value["workingRoot"])
@@ -51,7 +56,26 @@ def _write_json(path, value):
             from . import storage_retention
 
             if len(payload) > storage_retention.MAX_RUN_MANIFEST_BYTES:
-                raise ValueError(f"run manifest exceeds {storage_retention.MAX_RUN_MANIFEST_BYTES} bytes: {path}")
+                sections = {
+                    key: len(json.dumps(item, separators=(",", ":")).encode("utf-8"))
+                    for key, item in value.items()
+                }
+                for section in ("photos", "groupLifecycle", "finalMembershipAudit", "workflowSelection"):
+                    item = value.get(section)
+                    if isinstance(item, dict):
+                        for key, child in item.items():
+                            sections[f"{section}.{key}"] = len(
+                                json.dumps(child, separators=(",", ":")).encode("utf-8"))
+                    elif isinstance(item, list):
+                        for key in {key for row in item for key in row}:
+                            sections[f"{section}.{key}"] = sum(
+                                len(json.dumps(row[key], separators=(",", ":")).encode("utf-8"))
+                                for row in item if key in row)
+                raise ValueError(
+                    f"run manifest exceeds {storage_retention.MAX_RUN_MANIFEST_BYTES} bytes "
+                    f"(actual {len(payload)}): {path}; section bytes: "
+                    f"{json.dumps(dict(sorted(sections.items(), key=lambda item: -item[1])[:16]))}"
+                )
             retention_root = working_root
     original = path.read_bytes() if retention_root is not None and path.exists() else None
     temporary = path.with_suffix(".tmp")
@@ -918,10 +942,16 @@ def _apply_family_tree(clusters, cluster_names, name_evidence, candidates, cores
     return evidence
 
 
-def _record_families(catalog, evidence, cluster_names, name_evidence, source, policy):
+def _record_families(catalog, evidence, cluster_names, name_evidence, source, policy, *, replace=False):
     """Write catalogue family/name records so galleries present the same families as the plan."""
     if not evidence:
         return
+    previous_families = {}
+    if replace:
+        previous_families = {
+            pid: person.pop("family") for pid, person in catalog["people"].items() if person.get("family")
+        }
+        evidence["previousCatalogueFamilies"] = copy.deepcopy(previous_families)
     people = {
         person["folder"].casefold(): person for person in catalog["people"].values()
         if not person.get("mergedInto")
@@ -958,6 +988,11 @@ def _record_families(catalog, evidence, cluster_names, name_evidence, source, po
                 "originalName": (winner or {}).get("originalName") or member["previousName"],
                 "originalSource": (winner or {}).get("nameSource") or "catalogue-registration",
             }
+            if replace and winner is None and person.get("names"):
+                original = {
+                    "originalName": person["names"]["originalName"],
+                    "originalSource": person["names"]["originalSource"],
+                }
             via = (f"{member['tier']} link to {member['parentFolder']} {member['score']:.3f} ({member['band']})"
                    if member["parent"] else "family root (oldest member)")
             entries.append((person, member["previousName"], member["name"],
@@ -981,6 +1016,16 @@ def _record_families(catalog, evidence, cluster_names, name_evidence, source, po
             recorded += 1
         family["catalogueRecorded"] = True
     evidence["catalogueRecordCount"] = recorded
+    if replace:
+        evidence["catalogueReconciliation"] = [
+            {
+                "personId": pid, "previousFamily": previous,
+                "currentFamily": copy.deepcopy(catalog["people"][pid].get("family")),
+                "decision": "refreshed" if catalog["people"][pid].get("family") else "retired",
+                "reason": "recomputed from final qualified references; prior creative family retained as run history",
+            }
+            for pid, previous in sorted(previous_families.items())
+        ]
 
 
 def _migrate_continuity(catalog, rows, working, images, *, current_inputs=None,
@@ -1466,6 +1511,18 @@ def _named_routes(source, catalog, api):
 
 
 def _verify_routes(plan, source):
+    lifecycle = plan.get("groupLifecycle") or {}
+    if "decisionEvidence" in lifecycle:
+        from .directed_reformation import unpack_runtime_decisions
+
+        evidence = unpack_runtime_decisions(lifecycle["decisionEvidence"])
+        expected = {row["photoId"] for row in plan["photos"] if row.get("directedReformation")}
+        if set(evidence) != expected:
+            raise ValueError("directed decision evidence population differs")
+        for row in plan["photos"]:
+            for key, value in row.get("directedReformation", {}).items():
+                if key != "decisionEvidencePhotoId" and evidence[row["photoId"]].get(key) != value:
+                    raise ValueError("directed decision evidence summary differs")
     sources, destinations = set(), set()
     for row in plan["photos"]:
         relative = pathlib.PurePosixPath(row["source"])
@@ -1557,7 +1614,11 @@ def _verify_routes(plan, source):
                 "rejectionHistory", "protected", "folder",
             }
             if not required <= admission.keys() or admission["folder"] != destination.parent.parent.as_posix():
-                raise ValueError("cast candidates may enter Gallery, never the cast core without frozen evidence")
+                raise ValueError(
+                    "cast candidates may enter Gallery, never the cast core without frozen evidence: "
+                    f"{relative} -> {destination}; retainedCast={row.get('retainedCast')}; "
+                    f"admissionFolder={admission.get('folder')}"
+                )
             decision = evaluate_cast_admission(
                 destination.parts[0], score=admission["score"], margin=admission["margin"],
                 independent_support=admission["independentSupport"],
@@ -1925,7 +1986,7 @@ def _admit_cast(rows, audit, policy):
 
 def _cast_seed_outcomes(
     entries, cores, catalog, selected, policy, api, seed_policy, min_face,
-    quality_exclusions=None, reset_photo_ids=(),
+    quality_exclusions=None, reset_photo_ids=(), insufficient_reference_holds=False,
 ):
     """Split cast Gallery inputs into retained seeds and ordinary matching candidates."""
     if seed_policy not in {"all", "core"}:
@@ -1991,7 +2052,7 @@ def _cast_seed_outcomes(
                         and photo_id not in reset_photo_ids)
 
         core = cores.get(folder)
-        if core is None and not all(
+        if core is None and not insufficient_reference_holds and not all(
                 identity_retains(metadata.photo_id_from_name(photo.name))
                 or catalog["photos"].get(metadata.photo_id_from_name(photo.name), {}).get("protected")
                 or metadata.photo_id_from_name(photo.name) in anchor_ids
@@ -2025,6 +2086,7 @@ def _cast_seed_outcomes(
         minimum_usable = policy["categoryPolicies"][folder.split("/", 1)[0]][
             "minimumUsablePhotosForOutlierActions"
         ]
+        reference_hold = insufficient_reference_holds and (not core or len(usable_ids) < minimum_usable)
         releasable = [
             photo for _relative, photo in gallery
             if not (
@@ -2035,7 +2097,7 @@ def _cast_seed_outcomes(
                 or metadata.photo_id_from_name(photo.name) in core_ids
             )
         ]
-        if releasable and len(usable_ids) < minimum_usable:
+        if releasable and len(usable_ids) < minimum_usable and not reference_hold:
             raise ValueError(
                 f"cast seed release refused for {folder}: {len(usable_ids)} usable Gallery photos "
                 f"are below the configured {minimum_usable}-photo outlier-action minimum"
@@ -2058,6 +2120,8 @@ def _cast_seed_outcomes(
             photo_protected = bool(photo_record.get("protected"))
             workflow_selected = api.cw.photo_key(photo.name) in selected
             reasons = []
+            if reference_hold:
+                reasons.append("reference-needed hold: insufficient eligible core; no automatic release or reference authority")
             if identity_retains(photo_id):
                 reasons.append("protected identity")
             if photo_protected:
@@ -2070,7 +2134,7 @@ def _cast_seed_outcomes(
                 reasons.append("member of the current configured identity core")
             keep = bool(
                 identity_retains(photo_id)
-                or photo_protected or anchor or workflow_selected or core_member
+                or photo_protected or anchor or workflow_selected or core_member or reference_hold
             )
             reason = "; ".join(reasons) if keep else (
                 "below configured identity-core similarity minimum"
@@ -2086,6 +2150,7 @@ def _cast_seed_outcomes(
                 "castSeedMinimumUsablePhotos": minimum_usable,
                 "castSeedQualityReason": quality_exclusions.get(relative),
                 "castSeedCore": core_member, "castSeedAnchor": anchor,
+                "castSeedReferenceHold": reference_hold,
                 "castSeedProtectedIdentity": identity_protected,
                 "castSeedProtectedPhoto": photo_protected,
                 "castSeedWorkflowSelected": workflow_selected,
@@ -2113,14 +2178,36 @@ def _cast_seed_outcomes(
     return retained, released, evidence
 
 
+def _quality_hold_evidence(photo, settings, reason):
+    kind = (
+        "ambiguous-multiface" if photo.faces > 1 and photo.f2 >= settings.get("multiFace", .3)
+        else "measured-face-too-small" if 0 < photo.px < settings["minFace"]
+        else "measured-head-obstruction" if reason and "bars cover her head" in reason
+        else "missing-or-unusable-measurement" if photo.vec is None
+        else "unclassified-quality-hold"
+    )
+    return {
+        "classification": kind, "reason": reason, "faces": photo.faces, "facePixels": photo.px,
+        "minimumFacePixels": settings["minFace"], "secondaryFaceRatio": photo.f2,
+        "recoverableJunkCandidate": kind in ("measured-face-too-small", "measured-head-obstruction"),
+    }
+
+
 def create_plan(
     layout, run, policy, api, embedder=None, *, reuse_measurements=False,
     preparation=None, cast_seeds="all", seed_catalog=None, config_snapshot=None,
-    working_inputs=None, matching_inputs=None, workflow_reset=None,
+    working_inputs=None, matching_inputs=None, workflow_reset=None, regroup=False, review_source=None,
+    directed_recipe=None,
 ):
     """Flatten source photos before building any non-cast identity references."""
     if cast_seeds not in {"all", "core"}:
         raise ValueError("cast seed policy must be all or core")
+    if regroup and directed_recipe is None:
+        from .group_lifecycle import runtime_policy
+        policy = runtime_policy(policy)
+    elif regroup:
+        from . import directed_reformation
+        policy = directed_reformation.runtime_policy(policy, directed_reformation.recipe_named(directed_recipe))
     source = layout["source_root"]
     cache_path = run / "likeness-cache.json"
     if cache_path.exists() and not reuse_measurements:
@@ -2266,6 +2353,7 @@ def create_plan(
             space.by_key[photo.key].append(photo)
     space.keys = sorted(space.by_key)
     catalog = metadata.with_configured_anchors(catalog, cfg, cast_photos)
+    regroup_catalog = copy.deepcopy(catalog) if regroup else catalog
     core_catalog = catalog
     if preparation:
         core_catalog = copy.deepcopy(catalog)
@@ -2314,6 +2402,7 @@ def create_plan(
         cast_entries, cores, core_catalog, selected, policy, api, cast_seeds,
         settings["minFace"], cast_quality_exclusions,
         reset_photo_ids=reset_ids,
+        insufficient_reference_holds=regroup,
     )
     records.update(released_cast)
     duplicates = {}
@@ -2402,6 +2491,7 @@ def create_plan(
                 **base,
                 "destination": f"Various/review/{photo.name}",
                 "qualityHold": True,
+                "qualityEvidence": _quality_hold_evidence(photo, settings, quality_reason),
                 "reason": (
                     f"quality hold: {quality_reason}; excluded from matching"
                     if quality_reason else
@@ -2415,13 +2505,20 @@ def create_plan(
             **rejections.photo_state(core_catalog, photo),
         })
     print(f"clean rebase: {len(cores)} cast-only cores; {len(candidates)} flattened candidates", flush=True)
-    result = plan_reconciliation(
-        candidates, cores, assign=settings["assign"], margin=settings["margin"],
-        cluster=policy["identityActions"]["identityClusterMinimumSimilarity"],
-        minimum_cluster=settings["minCluster"], cast_merge=settings["castMerge"],
-        name_factory=lambda seed, taken: api.invent_name(seed, taken),
-        policy=policy,
-    )
+    if regroup:
+        result = {
+            "assignments": [], "clusters": [],
+            "held": [{"photoId": row["photoId"], "reason": "released to member-first regrouping; not yet assessed"}
+                     for row in candidates],
+        }
+    else:
+        result = plan_reconciliation(
+            candidates, cores, assign=settings["assign"], margin=settings["margin"],
+            cluster=policy["identityActions"]["identityClusterMinimumSimilarity"],
+            minimum_cluster=settings["minCluster"], cast_merge=settings["castMerge"],
+            name_factory=lambda seed, taken: api.invent_name(seed, taken),
+            policy=policy,
+        )
     locked_ids = {
         photo_id for photo_id, record in core_catalog["photos"].items() if record.get("protected")
     } | {
@@ -2470,7 +2567,7 @@ def create_plan(
         raise AssertionError("clean rebase did not account for every source candidate")
     routed += cast_rows
     final_refinement = None
-    if policy.get("rebaseProtection", {}).get("enabled"):
+    if policy.get("rebaseProtection", {}).get("enabled") and not regroup:
         if preparation:
             _bind_preparation(routed, prepared_rows, preparation[0], api)
         analysis_paths = {relative: photo.path for relative, photo in quality_photos.items()}
@@ -2561,11 +2658,12 @@ def create_plan(
     refinement.rename_steps(routed, cluster_names)
     if preparation:
         _bind_preparation(routed, prepared_rows, preparation[0], api)
-        _migrate_continuity(
-            catalog, routed, source if seed_catalog is not None else layout["working_root"],
-            api.originals.images, current_inputs=matching_inputs,
-            rebase_protection=bool(policy.get("rebaseProtection", {}).get("enabled")),
-        )
+        if not regroup:
+            _migrate_continuity(
+                catalog, routed, source if seed_catalog is not None else layout["working_root"],
+                api.originals.images, current_inputs=matching_inputs,
+                rebase_protection=bool(policy.get("rebaseProtection", {}).get("enabled")),
+            )
     else:
         for row in routed:
             if row.get("photoIdOrigin") == "originals-content-id":
@@ -2592,9 +2690,149 @@ def create_plan(
             "folderHistory": [], "identityAnchors": [],
             "protected": policy["categoryPolicies"][category]["identityProtectedByDefault"],
         }
-    _record_families(catalog, family_evidence, cluster_names, name_evidence, source, policy)
+    if not regroup:
+        _record_families(catalog, family_evidence, cluster_names, name_evidence, source, policy)
+    group_lifecycle = None
+    review_bindings = {}
+    if regroup:
+        from . import group_lifecycle as lifecycle
+
+        catalog = regroup_catalog
+        for folder in sorted({row["oldFolder"] for row in routed if row["oldFolder"].startswith(("Angels/", "Sisters/"))}):
+            if not any(person["folder"] == folder for person in catalog["people"].values()):
+                person_id = "person_" + uuid.uuid5(uuid.NAMESPACE_URL, f"likeness:{source}:{folder.casefold()}").hex
+                catalog["people"][person_id] = {
+                    "id": person_id, "folder": folder, "displayName": folder.split("/", 1)[-1],
+                    "folderHistory": [], "identityAnchors": [], "protected": True,
+                }
+        measured = {p.path.relative_to(source).as_posix(): quality_photos[p.path.relative_to(source).as_posix()]
+                    for p in photos}
+        # Quality photos retain the selected pixels; centering belongs to this complete input population.
+        for photo in photos:
+            measured[photo.path.relative_to(source).as_posix()].vec = photo.vec
+        selected_ids = {
+            input_ids[relative] for relative, photo in (
+                (p.path.relative_to(source).as_posix(), p) for p in photos
+            ) if input_ids.get(relative) and api.cw.photo_key(photo.name) in selected
+        }
+        ledger, review_bindings = lifecycle.review_evidence(review_source, routed) if review_source else ({"pairs": []}, {})
+        reference_exclusions = {
+            proposal["photoId"] for proposal in ledger.get("referenceProposals", [])
+            if proposal["referenceUse"] == "withdraw-in-shadow"
+        }
+        routed, group_lifecycle = lifecycle.regroup(
+            routed, measured, catalog, policy, selected_ids, run.name, name_factory=api.invent_name, pairs=ledger["pairs"],
+            reference_exclusions=reference_exclusions, directed_recipe=directed_recipe,
+        )
+        group_lifecycle["evaluation"]["reviewedPairCount"] = len(ledger["pairs"])
+        final_members = collections.defaultdict(list)
+        for row in routed:
+            if row["membership"]["status"] == "supported" and row["membership"]["coreUse"]:
+                folder = pathlib.PurePosixPath(row["destination"]).parent.parent.as_posix()
+                final_members[folder].append(row["photoId"])
+        final_clusters = [{"destination": folder, "photoIds": ids} for folder, ids in sorted(final_members.items())]
+        cluster_names = {group["destination"]: group["destination"] for group in final_clusters}
+        name_evidence = {
+            folder: {"decision": "retained original identity name", "name": folder.split("/", 1)[-1],
+                     "originalCandidates": [], "reason": "member-first canonical naming after grouping"}
+            for folder in final_members
+        }
+        if directed_recipe is not None:
+            independent_folders = {item["folder"] for item in group_lifecycle["independentIdentities"]}
+            named_clusters = [
+                {**group, "clusterId": group["destination"]}
+                for group in final_clusters
+                if group["destination"].split("/", 1)[0] in RESET_CATEGORIES
+                and group["destination"] not in independent_folders
+            ]
+            directed_names, directed_name_evidence = _cluster_name_routes(
+                named_clusters, {row["photoId"]: row for row in routed if row["photoId"]},
+                catalog, source, api, settings["minCluster"], cast_folders=cores,
+                preserved=preserved,
+                rebase_protection=bool(policy.get("rebaseProtection", {}).get("enabled")),
+            )
+            cluster_names.update(directed_names)
+            name_evidence.update(directed_name_evidence)
+            for folder in independent_folders & name_evidence.keys():
+                name_evidence[folder]["decision"] = "created independent identity name"
+        family_candidates = [
+            {"photoId": row["photoId"], "vector": measured[row["source"]].vec}
+            for row in routed if row["photoId"] and measured[row["source"]].vec is not None
+        ]
+        family_cores = cores
+        if directed_recipe is not None:
+            family_vectors = {item["photoId"]: item["vector"] for item in family_candidates}
+            family_cores = {
+                folder: {"vector": family_tree.centroid([family_vectors[pid] for pid in ids
+                                                       if pid in family_vectors])}
+                for folder, ids in final_members.items() if folder.startswith(("Angels/", "Sisters/"))
+            }
+        family_evidence = _apply_family_tree(
+            final_clusters, cluster_names, name_evidence, family_candidates, family_cores, catalog, source, policy,
+            preserved, api,
+        )
+        if directed_recipe is not None and family_evidence:
+            family_evidence["ownerAssessment"] = [{
+                "personId": person_id, "sourceFolder": person["folder"],
+                "folder": cluster_names.get(person["folder"], person["folder"]),
+                "identityStatus": person.get("identityStatus", "confirmed"),
+                "qualifiedReferenceCount": len(final_members.get(person["folder"], [])),
+                "status": (
+                    "provisional-no-reference-authority" if person.get("identityStatus") == "provisional"
+                    else "insufficient-qualified-references" if not final_members.get(person["folder"])
+                    else "cast-reference-assessed" if person["folder"].startswith(("Angels/", "Sisters/"))
+                    else "name-not-family-eligible" if not identity_names.is_full_person_name(
+                        cluster_names.get(person["folder"], person["folder"]).split("/", 1)[-1])
+                    else "qualified-owner-assessed"
+                ),
+            } for person_id, person in sorted(catalog["people"].items()) if not person.get("mergedInto")]
+            family_evidence["ownerAssessmentCounts"] = dict(collections.Counter(
+                item["status"] for item in family_evidence["ownerAssessment"]
+            ))
+        for person in catalog["people"].values():
+            folder = person["folder"]
+            if folder in cluster_names and cluster_names[folder] != folder:
+                person["folderHistory"].append(folder)
+                person["folder"] = cluster_names[folder]
+                person["displayName"] = person["folder"].split("/", 1)[-1]
+        for row in routed:
+            destination = pathlib.PurePosixPath(row["destination"])
+            folder = destination.parent.parent.as_posix()
+            if folder in cluster_names:
+                row["destination"] = f"{cluster_names[folder]}/{destination.parent.name}/{destination.name}"
+            row["identityNameEvidence"] = {
+                "decision": "member-first evidence before canonical creative name",
+                "personId": row["membership"]["personId"],
+                "sourceFolder": row["oldFolder"],
+            }
+        _record_families(catalog, family_evidence, cluster_names, name_evidence, source, policy, replace=True)
+        if preparation:
+            _bind_preparation(routed, prepared_rows, preparation[0], api)
+        final_destinations = {row["photoId"]: row["destination"] for row in routed if row["photoId"]}
+        if directed_recipe is not None:
+            from . import directed_reformation
+            decisions = directed_reformation.unpack_runtime_decisions(group_lifecycle["decisionEvidence"])
+            for row in routed:
+                if row.get("photoId") not in decisions:
+                    continue
+                decision = decisions[row["photoId"]]
+                decision["matchingProposedDestination"] = decision["proposedDestination"]
+                decision["proposedDestination"] = row["destination"]
+                row["directedReformation"] = decision
+            group_lifecycle["decisionEvidence"] = directed_reformation.pack_runtime_decisions(routed)
+            for view in group_lifecycle["qualifiedReferences"]:
+                view["proposedCanonicalFolder"] = cluster_names.get(view["folder"], view["folder"])
+        for stage in group_lifecycle["stages"]:
+            if stage["id"] == "publication":
+                for stage_row in stage["rows"]:
+                    if stage_row["photoId"] in final_destinations:
+                        stage_row["destination"] = final_destinations[stage_row["photoId"]]
+                        stage_row["proposedDestination"] = final_destinations[stage_row["photoId"]]
+        summary = {key: value for key, value in group_lifecycle["evaluation"].items()
+                   if isinstance(value, (str, int, float))}
+        print(f"clean rebase: {lifecycle.RECIPE}: {summary}", flush=True)
     pending = {}
-    if final_refinement:
+    if final_refinement and not regroup:
         confirmation = _final_membership_outcomes(
             photos, routed, catalog, policy, settings, layout["sandbox_root"], selected, api,
             source, {relative: photo.path for relative, photo in quality_photos.items()},
@@ -2608,7 +2846,19 @@ def create_plan(
         photos, routed, catalog, policy, settings, layout["sandbox_root"], selected, api,
         source, {relative: photo.path for relative, photo in quality_photos.items()},
         moving_photo_ids={row["photoId"] for row in pending.values()},
+        acquire_protection=not regroup,
     )
+    if regroup:
+        for comparison in final_audit["rows"]:
+            row = next(r for r in routed if r["source"] == comparison["source"])
+            comparison["groupMembership"] = row.get("membership")
+            if "refinementDecision" in comparison:
+                comparison["legacyRefinementDecision"] = comparison["refinementDecision"]
+            comparison["refinementDecision"] = {
+                "decision": "keep" if row["membership"]["status"] == "supported" else "hold",
+                "reason": row["membership"]["reason"],
+            }
+        final_audit["nextPassNeeded"] = False
     final_audit.update(
         automaticMoves=refinement_evidence["moveCount"] + (final_refinement["moveCount"] if final_refinement else 0),
         automaticMerges=refinement_evidence["mergeCount"],
@@ -2616,7 +2866,7 @@ def create_plan(
         refinementStopReason=refinement_evidence["stopReason"],
         state="refined-then-audited",
     )
-    if final_refinement:
+    if final_refinement and not regroup:
         final_audit.update(
             finalRefinementPasses=final_refinement["passCount"],
             finalRefinementMoves=final_refinement["moveCount"],
@@ -2659,7 +2909,13 @@ def create_plan(
         "sourceOverlaySHA256": layout.get("source_overlay_sha256"),
         "policy": policy, "settings": settings, "referenceFolders": sorted(cores),
         "castSeedPolicy": cast_seeds,
+        "directedReformation": {
+            "enabled": directed_recipe is not None,
+            "recipe": directed_recipe,
+        },
         "workflowSelection": workflow_receipt,
+        "groupLifecycle": group_lifecycle,
+        "reviewEvidenceBindings": review_bindings,
         "castSeedThresholds": {
             category: {
                 "identityCoreMinimumSimilarity": policy["categoryPolicies"][category][
@@ -2705,11 +2961,24 @@ def create_plan(
             "recipe": preparation[1]["recipe"],
             "inputCount": len(prepared_rows),
             "storageMode": preparation[1].get("storageMode", "full"),
+            "processingProfile": preparation[1].get("processingProfile", "standard"),
             "artistCount": sum(row["source"].startswith("Artists/") for row in prepared_rows.values()),
         }
-        for name in ("clean_preparation.py", "retained_preparation.py", "derivatives.py",
+        for name in ("clean_preparation.py", "retained_preparation.py", "derivatives.py", "fast_preparation.py",
                      "verification_reads.py", "metadata.py"):
             plan["implementationHashes"][name] = metadata.content_sha256(pathlib.Path(__file__).with_name(name))
+    if regroup:
+        plan["implementationHashes"]["group_lifecycle.py"] = metadata.content_sha256(
+            pathlib.Path(__file__).with_name("group_lifecycle.py"),
+        )
+    if directed_recipe is not None:
+        for name in (
+            "directed_reformation.py", "entrance_trial.py", "membership_reassessment.py",
+            "fragment_evidence.py", "reformation.py", "metadata.py",
+        ):
+            plan["implementationHashes"][name] = metadata.content_sha256(
+                pathlib.Path(__file__).with_name(name),
+            )
     source_manifest = layout["sandbox_root"] / "source-manifest.json"
     plan["configurationReceipt"] = metadata.cw.storage_configuration_receipt(
         cfg if config_snapshot is not None else metadata.cw.load_cfg(),
@@ -2722,6 +2991,8 @@ def create_plan(
         },
     )
     _verify_routes(plan, source)
+    if directed_recipe is not None:
+        directed_reformation.pack_lifecycle_stages(plan["groupLifecycle"])
     return plan
 
 
@@ -2858,7 +3129,8 @@ def verify_staged_install(layout, run, plan):
             expected[artifact["path"]] = artifact["sha256"]
         manifest_path = _publication_path(staged, link["manifest"])
         expected[link["manifest"]] = metadata.content_sha256(manifest_path)
-        if row["preparationOutcome"] == "unprocessable":
+        if (row["preparationOutcome"] == "unprocessable"
+                or plan["preparation"].get("processingProfile") == "fast"):
             continue
         face = measured.get(hashlib.sha1(native.read_bytes()).hexdigest(), {})
         box, px = face.get("box"), face.get("px", 0)
@@ -3076,8 +3348,9 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
         from . import derivatives, verification_reads
 
         measured = json.loads((run / "likeness-cache.json").read_text(encoding="utf-8"))["emb"]
+        fast = plan["preparation"].get("processingProfile") == "fast"
         with verification_reads.session(staged, label="Install derivatives", seal_content=not disposable):
-            for index, row in enumerate(plan["photos"], 1):
+            for index, row in enumerate(() if fast else plan["photos"], 1):
                 path = staged / row["destination"]
                 face = measured.get(hashlib.sha1(path.read_bytes()).hexdigest(), {})
                 if row["preparationOutcome"] == "unprocessable":
@@ -3088,7 +3361,7 @@ def install_plan(layout, run, plan, *, resume_install=False, preserve_legacy=Fal
                     print(f"DERIVATIVE: {message}")
                 if index % 100 == 0:
                     print(f"DERIVATIVES: {index}/{len(plan['photos'])} photos", flush=True)
-        phase("944x1104 derivatives")
+        phase("FAST: editing and 944x1104 derivatives deferred" if fast else "944x1104 derivatives")
         with verification_reads.session(staged, label="Install details", seal_content=not disposable):
             for index, row in enumerate(plan["photos"], 1):
                 retained_preparation.refresh_detail(
@@ -3444,6 +3717,498 @@ def _refresh_galleries(working, run):
     )
 
 
+def _core_preview_catalog(working):
+    catalog_path = pathlib.Path(working) / ".likeness-library.json"
+    if _is_reparse_point(catalog_path):
+        raise ValueError(f"unsafe Sandbox-local catalogue: {catalog_path}")
+    if not catalog_path.exists():
+        return {
+            "schemaVersion": 1, "people": {}, "photos": {}, "actions": [],
+        }, "no Sandbox-local catalogue; repository catalogue deliberately not used"
+    if not catalog_path.is_file():
+        raise ValueError(f"unsafe Sandbox-local catalogue: {catalog_path}")
+    return metadata.load_catalog(catalog_path), f"Sandbox-local catalogue: {catalog_path}"
+
+
+def _preview_image_inventory(working):
+    image_extensions = {
+        ".avif", ".bmp", ".gif", ".jpeg", ".jpg", ".png", ".tif", ".tiff", ".webp",
+    }
+    categories = ("Sisters", "Angels", "Models", "Prospects", "Potentials", "Various")
+    source_rows, derivative_rows, other_rows = [], [], []
+
+    def is_regenerable_derivative(parts, filename):
+        for part in (value.casefold() for value in parts):
+            if part == "944x1104" or part == "headshots" or part == "_processing":
+                return True
+            if re.search(r"(?:gallery|review|headshot|chest).*_\d+x\d+(?:_org)?$", part):
+                return True
+        return bool(re.search(r"(?:_head|_chest)?_944x1104$", pathlib.Path(filename).stem.casefold()))
+
+    for category in categories:
+        root = pathlib.Path(working) / category
+        if _is_reparse_point(root):
+            raise ValueError(f"unsafe baseline category root: {root}")
+        if not root.is_dir():
+            continue
+        for path in _source_files(root):
+            if path.suffix.casefold() not in image_extensions:
+                continue
+            relative = path.relative_to(working).as_posix()
+            parts = pathlib.PurePosixPath(relative).parts
+            if "_archive" in {part.casefold() for part in parts}:
+                continue
+            if is_regenerable_derivative(parts[1:-1], path.name):
+                derivative_rows.append({
+                    "category": category, "source": relative, "bytes": path.stat().st_size,
+                })
+                continue
+            folder_parts = parts[1:-1]
+            direct_gallery_review = (
+                len(folder_parts) == 2 and folder_parts[-1].casefold() in ("gallery", "review")
+            )
+            direct_various = (
+                category == "Various" and len(folder_parts) == 1
+                and folder_parts[0].casefold() in ("gallery", "review")
+            )
+            nested_various = category == "Various" and not direct_various
+            if not (direct_gallery_review or direct_various or nested_various):
+                other_rows.append({
+                    "category": category, "source": relative, "bytes": path.stat().st_size,
+                })
+                continue
+            source_rows.append({
+                "category": category, "source": relative,
+                "photoId": metadata.photo_id_from_name(path.name),
+                "bytes": path.stat().st_size,
+                "inventoryTier": "nested-incoming" if nested_various else "gallery-review",
+            })
+
+    def summary(items):
+        ids = collections.defaultdict(list)
+        unresolved = 0
+        for item in items:
+            if item["photoId"] is None:
+                unresolved += 1
+            else:
+                ids[item["photoId"]].append(item["source"])
+        duplicate_ids = {
+            photo_id: sorted(paths) for photo_id, paths in ids.items() if len(paths) > 1
+        }
+        return {
+            "imageFileCount": len(items),
+            "uniqueStablePhotoIdCount": len(ids),
+            "unresolvedPhotoIdCount": unresolved,
+            "duplicateStablePhotoIdCount": len(duplicate_ids),
+            "duplicateFileCount": sum(len(paths) - 1 for paths in duplicate_ids.values()),
+            "duplicatePhotoIds": [
+                {"photoId": photo_id, "sources": paths}
+                for photo_id, paths in sorted(duplicate_ids.items())
+            ],
+        }
+
+    per_category = {
+        category: {
+            **summary([row for row in source_rows if row["category"] == category]),
+            "galleryReviewImageFileCount": sum(
+                row["inventoryTier"] == "gallery-review"
+                for row in source_rows if row["category"] == category
+            ),
+            "nestedIncomingImageFileCount": sum(
+                row["inventoryTier"] == "nested-incoming"
+                for row in source_rows if row["category"] == category
+            ),
+        }
+        for category in categories
+    }
+    derivative_summary = {
+        "imageFileCount": len(derivative_rows),
+        "categories": {
+            category: sum(row["category"] == category for row in derivative_rows)
+            for category in categories
+        },
+    }
+    other_summary = {
+        "imageFileCount": len(other_rows),
+        "categories": {
+            category: sum(row["category"] == category for row in other_rows)
+            for category in categories
+        },
+    }
+    return source_rows, summary(source_rows), per_category, derivative_summary, other_summary
+
+
+def core_selection_preview(working, catalog, policy, recipe, *, catalog_source=None):
+    """Review current Sandbox candidate metadata without face analysis or intake."""
+    working = pathlib.Path(working)
+    (
+        baseline_files, baseline_summary, category_summaries,
+        derivative_summary, other_summary,
+    ) = _preview_image_inventory(working)
+    ids_by_source = {
+        row["source"]: row["photoId"] for row in baseline_files
+    }
+    id_counts = collections.Counter(
+        row["photoId"] for row in baseline_files if row["photoId"] is not None
+    )
+    people_by_folder = {
+        person["folder"]: (person_id, person) for person_id, person in catalog["people"].items()
+        if not person.get("mergedInto")
+    }
+    photos = catalog.get("photos", {})
+    groups = catalog.get("photoGroups", {})
+    candidates = []
+    for item in baseline_files:
+        relative = item["source"]
+        parts = pathlib.PurePosixPath(relative).parts
+        if (not parts or parts[0] not in ("Angels", "Sisters") or "gallery" not in parts
+                or parts.index("gallery") != len(parts) - 2 or "_processing" in parts):
+            continue
+        digest = metadata.content_sha256(working / pathlib.Path(relative))
+        folder = "/".join(parts[:parts.index("gallery")])
+        pid = ids_by_source[relative]
+        owner = people_by_folder.get(folder)
+        person_id, person = owner if owner else (None, None)
+        record = photos.get(pid, {}) if pid else {}
+        provenance = record.get("protectionProvenance")
+        proof_ids = set((provenance or {}).get("frozenCorePhotoIds", []))
+        proof_current = bool(
+            provenance and provenance.get("recipeVersion") == "independent-gallery-loo-v1"
+            and pid in proof_ids and record.get("contentSha256") == digest
+        )
+        anchor = bool(pid and person and pid in person.get("identityAnchors", []))
+        content_matched_anchor = bool(anchor and record.get("contentSha256") == digest)
+        supported_core = bool(
+            pid and record.get("membership", {}).get("status") == "supported"
+            and record.get("membership", {}).get("coreUse")
+            and record.get("membership", {}).get("personId") == person_id
+            and record.get("contentSha256") == digest
+        )
+        group_refs = sorted(
+            group_id for group_id, group in groups.items()
+            if group.get("status") == "supported" and group.get("personId") == person_id
+            and pid in group.get("referencePhotoIds", [])
+            and record.get("contentSha256") == digest
+            and record.get("membership", {}).get("status") == "supported"
+            and record.get("membership", {}).get("coreUse")
+        )
+        legacy_protected = bool(record.get("protected") and not provenance)
+        sources = []
+        if anchor:
+            sources.append("authored identity anchor")
+        if supported_core:
+            sources.append("saved supported core-use membership")
+        if proof_current:
+            sources.append("content-matched automatic protection core")
+        if group_refs:
+            sources.append("supported appearance reference: " + ", ".join(group_refs))
+        if legacy_protected:
+            sources.append("legacy protected placement; not automatic reference evidence")
+        if not sources:
+            sources.append("unmarked Gallery member; candidate only")
+        candidates.append({
+            "photoId": pid, "source": relative, "identityFolder": folder,
+            "personId": person_id, "candidateSources": sources,
+            "contentSha256": digest, "byteLength": item["bytes"],
+            "stableIdStatus": (
+                "unresolved" if pid is None else
+                "duplicate-stable-id" if id_counts[pid] > 1 else "unique-stable-id"
+            ),
+            "authoredIdentityAnchor": anchor,
+            "identityAnchorContentMatched": content_matched_anchor,
+            "savedSupportedCoreUse": supported_core,
+            "protectionProvenanceCoreCandidate": proof_current,
+            "legacyProtectedPlacementHold": legacy_protected,
+            "staleOrUnqualifiedProtectionProvenance": bool(provenance and not proof_current),
+            "measurementEligibility": "not measured; face count, quality, vectors, and independent support are unknown",
+            "selection": "candidate only; requires human review",
+        })
+    counts = collections.Counter(
+        source for row in candidates for source in row["candidateSources"]
+    )
+    return {
+        "kind": "directed-core-selection-candidate-preview",
+        "baselineRoot": str(working.resolve()),
+        "scope": (
+            "The six active photo categories count source photos, regenerable derivatives, and other "
+            "images separately; only Angels/Sisters direct Gallery rows are core candidates. Various "
+            "is incoming mixed intake, not a core source. Read-only."
+        ),
+        "catalogSource": catalog_source or "caller-supplied catalogue",
+        "baselineInventory": {
+            **baseline_summary,
+            "sourcePhotoCount": baseline_summary["imageFileCount"],
+            "allImageFileCount": (
+                baseline_summary["imageFileCount"] + derivative_summary["imageFileCount"]
+                + other_summary["imageFileCount"]
+            ),
+            "categories": category_summaries,
+            "regenerableDerivatives": derivative_summary,
+            "otherNonSourceImages": other_summary,
+            "truncated": False, "selectionCap": None,
+        },
+        "incomingVarious": {
+            **category_summaries["Various"],
+            "sourcePhotoCount": category_summaries["Various"]["imageFileCount"],
+            "role": "incoming mixed intake; excluded from core/reference candidates",
+        },
+        "photoCount": len(candidates),
+        "candidatePhotoCount": len(candidates),
+        "candidateIdSummary": {
+            "unresolvedPhotoIdCount": sum(row["photoId"] is None for row in candidates),
+            "duplicateStablePhotoIdCount": len({
+                row["photoId"] for row in candidates
+                if row["photoId"] is not None and id_counts[row["photoId"]] > 1
+            }),
+        },
+        "candidateSourceCounts": dict(sorted(counts.items())),
+        "policyCastCoreThresholds": {
+            category: {
+                "identityCoreMinimumSimilarity": policy["categoryPolicies"][category][
+                    "identityCoreMinimumSimilarity"
+                ],
+                "minimumUsablePhotosForOutlierActions": policy["categoryPolicies"][category][
+                    "minimumUsablePhotosForOutlierActions"
+                ],
+            }
+            for category in ("Angels", "Sisters")
+        },
+        "directedRecipe": {
+            "name": recipe["name"], "core": copy.deepcopy(recipe["core"]),
+            "admission": copy.deepcopy(recipe["admission"]),
+            "retention": copy.deepcopy(recipe["retention"]),
+            "strongRelease": copy.deepcopy(recipe["strongRelease"]),
+            "joinSupport": recipe["joinSupport"], "coreSupport": recipe["coreSupport"],
+            "retainSupport": recipe["retainSupport"], "referenceSupport": recipe["referenceSupport"],
+            "sameIdentityMargin": copy.deepcopy(recipe["sameIdentityMargin"]),
+        },
+        "measuredEligibility": "not evaluated; this preview does not establish a trusted core",
+        "workflowSelection": "not read; workflow intent is evaluated only by the matched run",
+        "photos": candidates,
+    }
+
+
+def write_core_selection_preview(report, output_dir):
+    """Write a JSON receipt and original-backed local HTML candidate viewer."""
+    output_dir = pathlib.Path(output_dir)
+    if _is_reparse_point(output_dir):
+        raise ValueError(f"unsafe candidate preview output directory: {output_dir}")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    json_path = output_dir / "core-selection-preview.json"
+    html_path = output_dir / "core-selection-preview.html"
+    json_path.write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    def format_count(value):
+        return f"{value:,}"
+
+    def category_row(category, values):
+        label = category + (
+            " (incoming mixed intake; excluded from core)" if category == "Various" else ""
+        )
+        return (
+            "<tr><th>" + html.escape(label) + "</th><td>"
+            + format_count(values["galleryReviewImageFileCount"]) + "</td><td>"
+            + format_count(values["nestedIncomingImageFileCount"]) + "</td><td>"
+            + format_count(values["uniqueStablePhotoIdCount"]) + "</td><td>"
+            + format_count(values["unresolvedPhotoIdCount"]) + "</td><td>"
+            + format_count(values["duplicateStablePhotoIdCount"]) + "</td></tr>"
+        )
+
+    def render_duplicate(item):
+        return (
+            "<li><code>" + html.escape(item["photoId"]) + "</code>: "
+            + html.escape(" | ".join(item["sources"])) + "</li>"
+        )
+
+    duplicate_limit = 50
+    duplicates = report["baselineInventory"]["duplicatePhotoIds"]
+    duplicate_rows = "".join(render_duplicate(item) for item in duplicates[:duplicate_limit])
+    if not duplicate_rows:
+        duplicate_rows = "<li>None detected among original-source photos.</li>"
+    duplicate_note = (
+        f"<p>Showing at most {duplicate_limit:,} of {len(duplicates):,} source-photo duplicate IDs; "
+        "the JSON receipt contains the complete list.</p>"
+        if len(duplicates) > duplicate_limit else
+        f"<p>Complete source-photo duplicate list ({len(duplicates):,} IDs).</p>"
+    )
+    categories = report["baselineInventory"]["categories"]
+    category_rows = "".join(category_row(category, values) for category, values in categories.items())
+    derivative_rows = "".join(
+        "<tr><th>" + html.escape(category) + "</th><td>"
+        + format_count(count) + "</td></tr>"
+        for category, count in report["baselineInventory"]["regenerableDerivatives"]["categories"].items()
+    )
+    other_rows = "".join(
+        "<tr><th>" + html.escape(category) + "</th><td>"
+        + format_count(count) + "</td></tr>"
+        for category, count in report["baselineInventory"]["otherNonSourceImages"]["categories"].items()
+    )
+    cards = []
+    for row in report["photos"]:
+        source = pathlib.PurePosixPath(row["source"])
+        image_uri = (pathlib.Path(report["baselineRoot"]) / pathlib.Path(*source.parts)).resolve().as_uri()
+        cards.append({**row, "imageUrl": image_uri})
+    card_data = json.dumps(cards, ensure_ascii=False).replace("<", "\\u003c").replace(
+        ">", "\\u003e",
+    ).replace("&", "\\u0026")
+    recipe = report["directedRecipe"]
+    recipe_rows = "".join(
+        "<tr><th>" + html.escape(category) + "</th><td>" + html.escape(str(recipe["core"][category]))
+        + "</td><td>" + html.escape(str(recipe["admission"][category])) + "</td><td>"
+        + html.escape(str(recipe["retention"][category])) + "</td><td>"
+        + html.escape(str(recipe["sameIdentityMargin"][category])) + "</td></tr>"
+        for category in recipe["core"]
+    )
+    policy_rows = "".join(
+        "<tr><th>" + html.escape(category) + "</th><td>"
+        + html.escape(str(values["identityCoreMinimumSimilarity"])) + "</td><td>"
+        + html.escape(str(values["minimumUsablePhotosForOutlierActions"])) + "</td></tr>"
+        for category, values in report["policyCastCoreThresholds"].items()
+    )
+    identities = collections.Counter(row["identityFolder"] for row in report["photos"])
+    identity_options = "".join(
+        "<option value=\"" + html.escape(folder, quote=True) + "\">"
+        + html.escape(folder) + " (" + format_count(count) + ")</option>"
+        for folder, count in sorted(identities.items())
+    )
+    source_count = report["baselineInventory"]["sourcePhotoCount"]
+    derivative_count = report["baselineInventory"]["regenerableDerivatives"]["imageFileCount"]
+    other_count = report["baselineInventory"]["otherNonSourceImages"]["imageFileCount"]
+    page = f"""<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>Directed core selection candidates</title>
+<style>
+*{{box-sizing:border-box}} body{{font:14px/1.45 system-ui,sans-serif;margin:0;color:#222}}
+main{{max-width:1280px;margin:0 auto;padding:clamp(.65rem,2vw,1.5rem);min-width:0}}
+table{{border-collapse:collapse;width:100%}} .table-wrap{{max-width:100%;overflow-x:auto}}
+th,td{{border:1px solid #bbb;padding:.4rem;text-align:left;vertical-align:top;overflow-wrap:anywhere}}
+code{{overflow-wrap:anywhere;word-break:break-word}} .warning{{background:#fff3cd;padding:.8rem}}
+.small{{font-size:12px;color:#444}} details{{margin:.7rem 0}} summary{{cursor:pointer;font-weight:600}}
+.filters,.pager{{display:flex;align-items:center;gap:.65rem;flex-wrap:wrap;margin:.8rem 0}}
+label{{display:flex;align-items:center;gap:.35rem}} select,button{{font:inherit;padding:.45rem;max-width:100%}}
+#cards{{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:1rem}}
+.card{{border:1px solid #bbb;border-radius:.4rem;padding:.65rem;min-width:0;overflow:hidden}}
+.card img{{display:block;width:100%;height:auto;max-height:60vh;object-fit:contain;background:#f2f2f2}}
+.card h3{{font-size:1rem;margin:.5rem 0}} .card p{{margin:.25rem 0;overflow-wrap:anywhere}}
+.hash{{font-size:.75rem;color:#555}} button:disabled{{opacity:.45}}
+@media(max-width:480px){{main{{padding:.5rem}} .filters label{{width:100%;align-items:flex-start;flex-direction:column}}}}
+</style><body><main>
+<h1>Directed core candidate review</h1>
+<p class="warning">Candidate metadata only. No face quality, measurements, independent support,
+workflow selection, or trusted-core decision was evaluated. Various is incoming mixed intake,
+not a core/reference source. No matching or intake was run.</p>
+<p>Baseline: <code>{html.escape(report["baselineRoot"])}</code><br>
+Catalogue: {html.escape(report["catalogSource"])}</p>
+<h2>Source-photo inventory (all counts complete; no cap or truncation)</h2>
+<p>{format_count(source_count)} source photo files (including Various nested incoming);
+{format_count(report["baselineInventory"]["uniqueStablePhotoIdCount"])} unique filename-derived IDs;
+{format_count(report["baselineInventory"]["unresolvedPhotoIdCount"])} unresolved IDs;
+{format_count(report["baselineInventory"]["duplicateStablePhotoIdCount"])} duplicate IDs among source photos.
+Regenerable derivatives are counted separately ({format_count(derivative_count)}); other non-source
+images are separate ({format_count(other_count)}). Neither contributes to source duplicate counts.</p>
+<div class="table-wrap"><table><thead><tr><th>Category</th><th>Direct Gallery/Review sources</th>
+<th>Nested Various incoming</th><th>Unique source IDs</th><th>Unresolved source IDs</th>
+<th>Duplicate source IDs</th></tr></thead><tbody>{category_rows}</tbody></table></div>
+<details><summary>Source-photo duplicate IDs ({format_count(len(duplicates))}; complete list in JSON)</summary>
+{duplicate_note}<ul>{duplicate_rows}</ul></details>
+<details><summary>Regenerable derivative image inventory ({format_count(derivative_count)})</summary>
+<div class="table-wrap"><table><thead><tr><th>Category</th><th>Derivative files</th></tr></thead>
+<tbody>{derivative_rows}</tbody></table></div></details>
+<details><summary>Other non-source image inventory ({format_count(other_count)})</summary>
+<div class="table-wrap"><table><thead><tr><th>Category</th><th>Other files</th></tr></thead>
+<tbody>{other_rows}</tbody></table></div></details>
+<details><summary>Recipe and configured thresholds (comparison only)</summary>
+<h2>Selected experimental recipe: {html.escape(recipe["name"])}</h2>
+<div class="table-wrap"><table><thead><tr><th>Category</th><th>Core</th><th>Admission</th><th>Retention</th>
+<th>Same-identity margin</th></tr></thead><tbody>{recipe_rows}</tbody></table></div>
+<p>Strong release source/destination/margin: {recipe["strongRelease"]["sourceMaximum"]}/
+{recipe["strongRelease"]["destinationMinimum"]}/{recipe["strongRelease"]["signedMargin"]}.
+Independent support: join {recipe["joinSupport"]}, core {recipe["coreSupport"]},
+retention {recipe["retainSupport"]}, references {recipe["referenceSupport"]}.</p>
+<h3>Configured cast-core policy thresholds</h3>
+<div class="table-wrap"><table><thead><tr><th>Category</th><th>Identity core minimum</th>
+<th>Minimum usable photos for outlier actions</th></tr></thead><tbody>{policy_rows}</tbody></table></div>
+</details>
+<h2>Angels/Sisters Gallery candidates ({report["candidatePhotoCount"]})</h2>
+<p class="small">Only visible page cards are created in the DOM. All {report["candidatePhotoCount"]}
+candidate records remain in this viewer and the complete JSON receipt; each image links directly
+to its original source bytes. Hashes bind the preview to observed bytes, not identity correctness.</p>
+<div class="filters">
+<label>Category <select id="category-filter"><option value="">All cast categories</option>
+<option value="Angels">Angels</option><option value="Sisters">Sisters</option></select></label>
+<label>Identity <select id="identity-filter"><option value="">All cast identities</option>
+{identity_options}</select></label>
+</div>
+<div class="pager"><button id="previous-page" type="button">Previous</button>
+<span id="page-status" aria-live="polite"></span>
+<button id="next-page" type="button">Next</button></div>
+<section id="cards" aria-live="polite"></section>
+<div class="pager"><button id="previous-page-bottom" type="button">Previous</button>
+<span id="page-status-bottom" aria-live="polite"></span>
+<button id="next-page-bottom" type="button">Next</button></div>
+<script id="candidate-data" type="application/json">{card_data}</script>
+<script>
+(() => {{
+  const rows = JSON.parse(document.getElementById("candidate-data").textContent);
+  const pageSize = 24;
+  let pageIndex = 0;
+  const category = document.getElementById("category-filter");
+  const identity = document.getElementById("identity-filter");
+  const cards = document.getElementById("cards");
+  const previous = [document.getElementById("previous-page"), document.getElementById("previous-page-bottom")];
+  const next = [document.getElementById("next-page"), document.getElementById("next-page-bottom")];
+  const statuses = [document.getElementById("page-status"), document.getElementById("page-status-bottom")];
+  const filtered = () => rows.filter(row =>
+    (!category.value || row.identityFolder.split("/")[0] === category.value) &&
+    (!identity.value || row.identityFolder === identity.value));
+  const addText = (parent, tag, text, className) => {{
+    const node = document.createElement(tag);
+    node.textContent = text;
+    if (className) node.className = className;
+    parent.appendChild(node);
+    return node;
+  }};
+  const render = () => {{
+    const selection = filtered();
+    const pageCount = Math.max(1, Math.ceil(selection.length / pageSize));
+    pageIndex = Math.min(pageIndex, pageCount - 1);
+    const start = pageIndex * pageSize;
+    cards.replaceChildren();
+    for (const row of selection.slice(start, start + pageSize)) {{
+      const card = document.createElement("article");
+      card.className = "card";
+      const image = document.createElement("img");
+      image.src = row.imageUrl;
+      image.alt = row.source;
+      image.loading = "eager";
+      image.decoding = "async";
+      card.appendChild(image);
+      addText(card, "h3", row.identityFolder);
+      addText(card, "p", row.photoId || "Unresolved filename-derived ID");
+      addText(card, "p", row.stableIdStatus + " · " + row.selection);
+      addText(card, "p", row.source);
+      addText(card, "p", "Metadata: " + row.candidateSources.join("; "));
+      addText(card, "p", "SHA-256 " + row.contentSha256, "hash");
+      cards.appendChild(card);
+    }}
+    const status = selection.length
+      ? `Showing ${{start + 1}}–${{Math.min(start + pageSize, selection.length)}} of ${{selection.length}} candidates · page ${{pageIndex + 1}} of ${{pageCount}}`
+      : "No candidates match these filters.";
+    statuses.forEach(node => node.textContent = status);
+    previous.forEach(button => button.disabled = pageIndex === 0);
+    next.forEach(button => button.disabled = pageIndex >= pageCount - 1);
+  }};
+  previous.forEach(button => button.addEventListener("click", () => {{ pageIndex--; render(); }}));
+  next.forEach(button => button.addEventListener("click", () => {{ pageIndex++; render(); }}));
+  category.addEventListener("change", () => {{ pageIndex = 0; render(); }});
+  identity.addEventListener("change", () => {{ pageIndex = 0; render(); }});
+  render();
+}})();
+</script></main></body></html>"""
+    html_path.write_text(page, encoding="utf-8")
+    return {"json": str(json_path.resolve()), "html": str(html_path.resolve())}
+
+
 def command(args, api):
     if sum(bool(flag) for flag in (args.apply, args.check, args.dry_run, args.undo, args.replan)) > 1:
         raise ValueError("choose only one of --apply, --check, --dry-run, --undo, or --replan")
@@ -3475,6 +4240,40 @@ def command(args, api):
         raise ValueError("run directory must be outside identity category roots")
     intake_only = getattr(args, "intake_only", False)
     storage_mode = getattr(args, "storage_mode", None)
+    profile = getattr(args, "profile", None)
+    regroup = getattr(args, "regroup", False)
+    review_source = getattr(args, "review_source", None)
+    directed = getattr(args, "directed", False)
+    directed_recipe = getattr(args, "directed_recipe", None)
+    core_selection_preview_requested = getattr(args, "core_selection_preview", False)
+    if review_source and not regroup:
+        raise ValueError("--review-source requires --regroup")
+    if regroup and cast_seeds != "core":
+        raise ValueError("--regroup requires --cast-seeds core")
+    if directed and not regroup:
+        raise ValueError("--directed requires --regroup")
+    if directed and not directed_recipe:
+        raise ValueError("--directed requires an explicit --directed-recipe")
+    if directed_recipe and not directed:
+        raise ValueError("--directed-recipe requires --directed")
+    if directed:
+        from . import directed_reformation
+
+        directed_recipe = directed_reformation.recipe_named(directed_recipe)["name"]
+    if core_selection_preview_requested and not (
+        args.dry_run and directed and regroup and cast_seeds == "core"
+    ):
+        raise ValueError("--core-selection-preview requires --dry-run --regroup --cast-seeds core --directed")
+    if regroup and not directed:
+        from .group_lifecycle import runtime_policy
+        policy = runtime_policy(policy)
+    if profile not in (None, "fast", "lean", "full"):
+        raise ValueError("profile must be fast, lean or full")
+    processing_profile = None if profile is None else "fast" if profile == "fast" else "standard"
+    if profile in ("lean", "full"):
+        if storage_mode is not None and storage_mode != profile:
+            raise ValueError("--profile and --storage-mode differ")
+        storage_mode = profile
     recovery_mode = getattr(args, "recovery_mode", None)
     if recovery_mode not in (None, "full", "disposable"):
         raise ValueError("recovery mode must be full or disposable")
@@ -3497,6 +4296,35 @@ def command(args, api):
     if intake_only and (args.undo or args.replan):
         raise ValueError("--intake-only cannot undo or replan matching")
     if args.dry_run:
+        if core_selection_preview_requested:
+            catalog, catalog_source = _core_preview_catalog(layout["working_root"])
+            report = core_selection_preview(
+                layout["working_root"], catalog, policy,
+                directed_reformation.recipe_named(directed_recipe),
+                catalog_source=catalog_source,
+            )
+            report_paths = write_core_selection_preview(report, run / "core-selection-preview")
+            summary = {
+                "status": "core-selection-preview",
+                "directedMode": "experimental-directed-sandbox; preview only",
+                "recipe": report["directedRecipe"]["name"],
+                "candidatePhotoCount": report["candidatePhotoCount"],
+                "baselineSourcePhotoCount": report["baselineInventory"]["sourcePhotoCount"],
+                "baselineAllImageFileCount": report["baselineInventory"]["allImageFileCount"],
+                "regenerableDerivativeImageCount": report["baselineInventory"][
+                    "regenerableDerivatives"
+                ]["imageFileCount"],
+                "unresolvedPhotoIdCount": report["baselineInventory"]["unresolvedPhotoIdCount"],
+                "duplicateStablePhotoIdCount": report["baselineInventory"]["duplicateStablePhotoIdCount"],
+                "incomingVariousImageFileCount": report["incomingVarious"]["imageFileCount"],
+                "incomingVariousNestedImageFileCount": report["incomingVarious"][
+                    "nestedIncomingImageFileCount"
+                ],
+                "truncated": False,
+                "reportPaths": report_paths,
+            }
+            print(json.dumps(summary, indent=2, ensure_ascii=False))
+            return summary
         if include_various:
             if current_working:
                 baseline_layout, baseline_rows = _working_baseline(layout)
@@ -3515,6 +4343,8 @@ def command(args, api):
             rows = clean_preparation.inventory(layout)
             print(f"Clean-start preview: {len(rows)} immutable images will receive preparation outcomes.")
         print("No images, reports, caches or models changed.")
+        if profile is not None:
+            print(f"Profile: {profile.upper()}; recovery: {recovery_mode or 'full'} (separate contract).")
         if cast_seeds == "all":
             print("Cast-seed policy: all. The matched preview will retain existing cast membership.")
         else:
@@ -3553,7 +4383,12 @@ def command(args, api):
         layout = _create_source_overlay(layout, run, current_working=current_working)
     plan_path = run / "run.json"
     if (run / "intake.json").exists():
-        saved_recovery = json.loads((run / "intake.json").read_text(encoding="utf-8")).get("recoveryMode", "full")
+        saved_intake = json.loads((run / "intake.json").read_text(encoding="utf-8"))
+        saved_profile = saved_intake.get("processingProfile", "standard")
+        if processing_profile is not None and processing_profile != saved_profile:
+            raise ValueError("saved intake processing profile differs; use a new run")
+        processing_profile = saved_profile
+        saved_recovery = saved_intake.get("recoveryMode", "full")
         if recovery_mode is not None and recovery_mode != saved_recovery:
             raise ValueError("saved intake recovery mode differs; use the saved mode or a new run")
         recovery_mode = saved_recovery
@@ -3565,22 +4400,31 @@ def command(args, api):
         if args.check:
             output, data = clean_preparation.verify(layout, run)
         elif args.apply:
+            had_intake = (run / "intake.json").is_file()
             output, data = clean_preparation.prepare(
-                layout, run, getattr(args, "workers", None), storage_mode=storage_mode, recovery_mode=recovery_mode)
+                layout, run, getattr(args, "workers", None), storage_mode=storage_mode,
+                recovery_mode=recovery_mode, processing_profile=processing_profile)
             from . import preparation_history
 
             storage_cfg = api.cw.load_cfg()
             reports_root = api.cw.storage_root(
                 storage_cfg, "reports", root=layout["working_root"]
             )
-            preparation_history.publish_staged(
-                layout["working_root"], reports_root / "library", cfg=storage_cfg
-            )
+            if not had_intake:
+                preparation_history.publish_staged(
+                    layout["working_root"], reports_root / "library", cfg=storage_cfg
+                )
         print(f"Intake verified: {len(data['photos'])} outcomes. Review {output / 'index.html'}")
         print("Stopped before matching/assignment. The same run resumes without repeating preparation.")
         return {"status": "intake", "inputCount": len(data["photos"]), "report": str(output / "index.html")}
     if plan_path.exists():
         plan = json.loads(plan_path.read_text(encoding="utf-8"))
+        if regroup != bool(plan.get("groupLifecycle")) and not (args.check or args.undo):
+            raise ValueError("saved run regrouping mode differs; repeat --regroup or use a new run")
+        saved_directed = plan.get("directedReformation", {"enabled": False, "recipe": None})
+        expected_directed = {"enabled": bool(directed), "recipe": directed_recipe}
+        if saved_directed != expected_directed:
+            raise ValueError("saved directed reformation mode or recipe differs; repeat the same flags or use a new run")
         if (
             cast_seeds == "core" and not (args.replan or args.undo or args.check)
             and (plan.get("workflowSelection") or {}).get("policy") != workflow_reset
@@ -3616,6 +4460,9 @@ def command(args, api):
                 preparation=clean_preparation.verify(layout, run) if plan.get("preparation") else None,
                 cast_seeds=cast_seeds,
                 workflow_reset=workflow_reset,
+                regroup=regroup,
+                review_source=review_source,
+                directed_recipe=directed_recipe,
             )
             plan["recoveryMode"] = recovery_mode or saved_recovery_mode
             _write_json(plan_path, plan)
@@ -3626,22 +4473,28 @@ def command(args, api):
             raise ValueError("create and review the prepared matching preview before --apply")
         if args.replan and not ((run / "intake.json").is_file() and (run / "likeness-cache.json").is_file()):
             raise ValueError("resuming incomplete matching requires verified preparation and saved measurements")
+        had_intake = (run / "intake.json").is_file()
         preparation = clean_preparation.prepare(
-            layout, run, getattr(args, "workers", None), storage_mode=storage_mode, recovery_mode=recovery_mode)
+            layout, run, getattr(args, "workers", None), storage_mode=storage_mode,
+            recovery_mode=recovery_mode, processing_profile=processing_profile)
         from . import preparation_history
 
         storage_cfg = api.cw.load_cfg()
         reports_root = api.cw.storage_root(
             storage_cfg, "reports", root=layout["working_root"]
         )
-        preparation_history.publish_staged(
-            layout["working_root"], reports_root / "library", cfg=storage_cfg
-        )
+        if not had_intake:
+            preparation_history.publish_staged(
+                layout["working_root"], reports_root / "library", cfg=storage_cfg
+            )
         plan = create_plan(
             layout, run, policy, api, getattr(args, "embedder", None),
             reuse_measurements=args.replan, preparation=preparation,
             cast_seeds=cast_seeds,
             workflow_reset=workflow_reset,
+            regroup=regroup,
+            review_source=review_source,
+            directed_recipe=directed_recipe,
         )
         plan["recoveryMode"] = recovery_mode or "full"
         if plan["recoveryMode"] == "disposable":
@@ -3649,15 +4502,21 @@ def command(args, api):
         _write_json(plan_path, plan)
     if plan.get("preparation"):
         verified = _phase_timer("Plan")
-        output, _ = clean_preparation.verify(layout, run)
+        output, verified_data = clean_preparation.verify(layout, run)
+        if (plan["preparation"].get("processingProfile", "standard")
+                != verified_data.get("processingProfile", "standard")):
+            raise ValueError("saved plan processing profile differs from intake")
         if metadata.content_sha256(output / "manifest.json") != plan["preparation"]["manifestSHA256"]:
             raise ValueError("prepared inputs changed since matching; use a new run")
         verified("preparation evidence verification")
     elif args.apply:
         raise ValueError("matcher-only previews cannot be installed; create a new intake-aware run")
     _verify_routes(plan, layout["source_root"])
-    if args.apply or resume_install:
+    if args.apply or args.check or resume_install:
         _verify_implementation_hashes(plan)
+    for path, digest in plan.get("reviewEvidenceBindings", {}).items():
+        if metadata.content_sha256(path) != digest:
+            raise ValueError(f"bound human evidence changed since preview: {path}")
     if args.check and (resume_install or preserve_legacy):
         if plan["status"] != "preview":
             raise ValueError("installation recovery preview requires an unpublished plan; use ordinary --check")

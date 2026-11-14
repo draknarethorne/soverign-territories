@@ -295,8 +295,9 @@ class PreparationIndex:
                         for artifact in row_artifact_hashes(row):
                             _safe(report, artifact)
                     _safe(report, "index.html")
+                    fast = receipt.get("processingProfile") == "fast"
                     recorded_root = str(mirror)
-                    if preview.get("root") != recorded_root:
+                    if not fast and preview.get("root") != recorded_root:
                         bindings = receipt["configurationReceipt"]["resolvedPaths"]
                         original_root = pathlib.Path(bindings["libraryRoot"])
                         if not original_root.is_absolute() or ".." in original_root.parts:
@@ -310,8 +311,13 @@ class PreparationIndex:
                         recorded_root = bindings["inputMirror"]
                         if preview.get("root") != recorded_root:
                             raise ValueError("relocated staged manifest root differs from receipt")
-                    data = verify(mirror, report, current_sources=True, recorded_root=recorded_root)
-                    if data.get("root") != recorded_root:
+                    if fast:
+                        from . import fast_preparation
+
+                        data = fast_preparation.verify(mirror, report, expected)
+                    else:
+                        data = verify(mirror, report, current_sources=True, recorded_root=recorded_root)
+                    if not fast and data.get("root") != recorded_root:
                         raise ValueError("staged preparation root differs from receipt mirror")
                     if data.get("recipe") != receipt["recipe"]:
                         raise ValueError("staged receipt recipe differs from preparation manifest")
@@ -349,7 +355,8 @@ class PreparationIndex:
                 "outcome": row.get("outcome", "unknown"),
                 **_summary(row),
                 "href": self._href(run / row["detail"]),
-                "thumbnail": self._href(run / variant["thumbnail"]) if variant.get("thumbnail") else "",
+                "thumbnail": (self._href(run / row["retained"]) if row.get("processingProfile") == "fast"
+                              else self._href(run / variant["thumbnail"]) if variant.get("thumbnail") else ""),
                 "preview": preview,
             })
         if len(entry["photos"]) == len(data["photos"]):

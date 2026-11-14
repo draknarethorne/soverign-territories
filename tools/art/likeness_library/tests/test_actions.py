@@ -63,6 +63,85 @@ class LikenessActionTests(unittest.TestCase):
         self.assertEqual(self.photo.read_bytes(), before)
         self.assertFalse((self.gallery.parent / "review").exists())
 
+    def group_fixture(self):
+        source_id, target_id = "person_" + "a" * 32, "person_" + "b" * 32
+        group_id = "group_" + "c" * 32
+        catalog = copy.deepcopy(self.catalog)
+        catalog["people"] = {
+            key: {"id": key, "folder": folder, "displayName": folder.split("/")[-1],
+                  "folderHistory": [], "identityAnchors": []}
+            for key, folder in ((source_id, "Prospects/Sophie"), (target_id, "Prospects/Other"))
+        }
+        (self.root / "Prospects" / "Other").mkdir()
+        second = self.gallery / "sophie_image_123457.jpg"
+        second.write_bytes(b"second original")
+        for path in (self.photo, second):
+            pid = metadata.photo_id_from_name(path.name)
+            catalog["photos"][pid] = {
+                "contentSha256": metadata.content_sha256(path), "protected": False,
+                "membership": {
+                    "personId": source_id, "groupId": group_id, "status": "supported", "coreUse": True,
+                    "reason": "qualified appearance", "referenceVersion": "d" * 64,
+                },
+            }
+        catalog["photoGroups"] = {group_id: {
+            "id": group_id, "personId": source_id, "name": "Evening", "status": "supported",
+            "memberPhotoIds": list(catalog["photos"]), "referencePhotoIds": list(catalog["photos"]),
+            "sourcePersonIds": [], "history": [], "reason": "fixture",
+        }}
+        return catalog, group_id, source_id, target_id
+
+    def test_group_member_extraction_preserves_singleton_and_exact_undo(self):
+        catalog, group_id, _, _ = self.group_fixture()
+        initial = copy.deepcopy(catalog)
+
+        def save(updated):
+            catalog.clear()
+            catalog.update(copy.deepcopy(updated))
+
+        batch, _ = actions.apply_actions(
+            self.manifest, self.root, catalog, {}, "Various",
+            backup_fn=lambda *args: "test-backup", save_fn=save,
+        )
+        self.assertEqual(len(catalog["photoGroups"][group_id]["memberPhotoIds"]), 1)
+        self.assertIsNone(catalog["photos"][self.photo_id]["membership"]["groupId"])
+        actions.undo_actions(catalog, self.root, {}, "Various", batch_id=batch,
+                             backup_fn=lambda *args: "test-backup", save_fn=save)
+        self.assertEqual(catalog["photoGroups"], initial["photoGroups"])
+        self.assertEqual(catalog["photos"], initial["photos"])
+        self.assertEqual(self.photo.read_bytes(), b"photo bytes")
+
+    def test_complete_group_attach_preserves_id_and_undo_checks_entire_group_state(self):
+        catalog, group_id, source_id, target_id = self.group_fixture()
+        initial = copy.deepcopy(catalog)
+        decisions = [
+            {**self.action("match-accepted", photo_id=pid, photo_hash=record["contentSha256"]),
+             "personId": source_id, "destinationPersonId": target_id, "destinationFolder": "Prospects/Other"}
+            for pid, record in catalog["photos"].items()
+        ]
+
+        def save(updated):
+            catalog.clear()
+            catalog.update(copy.deepcopy(updated))
+
+        batch, _ = actions.apply_actions(
+            {**self.manifest, "actions": decisions}, self.root, catalog, {}, "Various",
+            backup_fn=lambda *args: "test-backup", save_fn=save,
+        )
+        group = catalog["photoGroups"][group_id]
+        self.assertEqual(group["personId"], target_id)
+        self.assertEqual(group["status"], "tentative")
+        self.assertEqual(group["referencePhotoIds"], [])
+        self.assertIn(source_id, group["sourcePersonIds"])
+        catalog["photoGroups"][group_id]["name"] = "changed after attach"
+        errors, _, _ = actions.plan_undo(catalog, self.root, batch_id=batch, cfg={})
+        self.assertTrue(any("catalogue state changed" in error for error in errors))
+        catalog["photoGroups"][group_id]["name"] = group["name"] = "Evening"
+        actions.undo_actions(catalog, self.root, {}, "Various", batch_id=batch,
+                             backup_fn=lambda *args: "test-backup", save_fn=save)
+        self.assertEqual(catalog["photoGroups"], initial["photoGroups"])
+        self.assertEqual(catalog["photos"], initial["photos"])
+
     def test_every_nonworkflow_photo_option_round_trips_through_json_apply_and_undo(self):
         action_types = {
             "anchor-added", "anchor-removed", "photo-protected", "photo-unprotected",

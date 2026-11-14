@@ -2,6 +2,9 @@
 """Tests for the local photo-library people gallery."""
 import pathlib
 import copy
+import hashlib
+import shutil
+import subprocess
 import sys
 import tempfile
 import types
@@ -18,12 +21,315 @@ from likeness_library.policy import validate_policy  # noqa: E402
 
 class PeopleGalleryTests(unittest.TestCase):
     def setUp(self):
-        self.tmp = pathlib.Path(tempfile.mkdtemp())
+        (ROOT / "tmp").mkdir(exist_ok=True)
+        self.tmp = pathlib.Path(tempfile.mkdtemp(dir=ROOT / "tmp", prefix="people-gallery-"))
         self.root = self.tmp / "library"
 
     def tearDown(self):
         import shutil
         shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def test_fictional_editor_is_label_only_receipted_and_source_preserving(self):
+        module = gallery.fictional_relationships
+        catalog = {
+            "people": {"person_a": {"displayName": "</script><img src=x>", "folder": "SECRET_FOLDER",
+                                     "embedding": "SECRET_EMBEDDING"},
+                       "person_b": {"displayName": "B"}},
+            "families": [{"secret": "INFERRED_FAMILY"}],
+            "photos": {"photo": {"score": "SECRET_SCORE"}},
+        }
+        before = copy.deepcopy(catalog)
+        output = self.tmp / "reports"
+        output.mkdir()
+        generated = module.publish(catalog, output, library_root=self.root)
+        self.assertEqual(list(generated), ["fictional_relationships.html"])
+        page = (output / module.PAGE).read_text(encoding="utf-8")
+        for secret in ("SECRET_FOLDER", "SECRET_EMBEDDING", "INFERRED_FAMILY", "SECRET_SCORE"):
+            self.assertNotIn(secret, page)
+        self.assertNotIn("<img", page)
+        self.assertIn("\\u003c/script\\u003e", page)
+        self.assertIn("not biological relationships", page)
+        self.assertIn("without an approval gate", page)
+        for control in ("connect", "reload", "search", "first", "second", "role", "note",
+                        "reason", "history", "import", "export"):
+            self.assertIn(f'id="{control}"', page)
+        self.assertIn('role="status" aria-live="polite"', page)
+        self.assertIn('aria-current="page">Fictional relationships', page)
+        gallery.report_assets.record(output, generated)
+        self.assertTrue(module.reports_current(output))
+        (output / module.PAGE).write_text("tampered", encoding="utf-8")
+        self.assertFalse(module.reports_current(output))
+        (output / module.PAGE).unlink()
+        self.assertFalse(module.reports_current(output))
+        self.assertEqual(catalog, before)
+        self.assertFalse(self.root.exists())
+        for name in ("fictional_relationships.py", "fictional_relationships.js"):
+            import gallery_maintenance
+            self.assertIn(name, [path.name for path in gallery_maintenance.REPORT_IMPLEMENTATION])
+
+    def test_fictional_editor_javascript_history_guards_and_persistence(self):
+        node = shutil.which("node")
+        if not node:
+            self.skipTest("Node.js is required for fictional relationship execution tests")
+        script = gallery.fictional_relationships.SCRIPT_PATH.read_text(encoding="utf-8")
+        program = script + r"""
+const assert = require("node:assert/strict");
+const f = globalThis.FictionalRelationships, people = new Set(["person_a", "person_b", "person_c"]);
+const id = "rel_00000000-0000-4000-8000-000000000001";
+const secondId = "rel_00000000-0000-4000-8000-000000000002";
+const create = {id, action:"create", first:"person_a", second:"person_b", role:"ally", note:"Fictional allies."};
+const initial = f.empty();
+let doc = f.change(initial, create, people);
+assert.equal(doc.revision, 1);
+assert.equal(f.validate(doc, people).states.get(id).status, "active");
+assert.deepEqual(initial, f.empty());
+const created = structuredClone(doc);
+doc = f.change(doc, {...create, action:"edit", note:"Edited fiction."}, people);
+assert.equal(f.validate(doc, people).states.get(id).note, "Edited fiction.");
+doc = f.change(doc, {id, action:"reject", reason:"Does not fit this story."}, people);
+assert.equal(f.validate(doc, people).states.get(id).status, "rejected");
+assert.equal(f.validate(doc, people).states.get(id).rejectionReason, "Does not fit this story.");
+const rejected = structuredClone(doc);
+assert.throws(() => f.change(doc, {...create, id:secondId}, people), /already exist/);
+doc = f.change(doc, {...create, action:"edit", note:"Still rejected."}, people);
+assert.equal(f.validate(doc, people).states.get(id).status, "rejected");
+doc = f.change(doc, {id, action:"undo"}, people);
+assert.deepEqual(f.validate(doc, people).states.get(id), f.validate(rejected, people).states.get(id));
+const rejectedEdit = structuredClone(doc);
+doc = f.change(doc, {id, action:"undo"}, people);
+assert.equal(f.validate(doc, people).states.get(id).note, "Still rejected."); // undo of undo
+assert.deepEqual(doc.history.slice(0, rejectedEdit.history.length), rejectedEdit.history);
+let undone = f.change(created, {id, action:"undo"}, people);
+assert.equal(f.validate(undone, people).states.size, 0);
+assert.throws(() => f.change(undone, create, people), /creation/);
+undone = f.change(undone, {id, action:"undo"}, people);
+assert.deepEqual(f.validate(undone, people).states.get(id), f.validate(created, people).states.get(id));
+const rejectionUndo = f.change(rejected, {id, action:"undo"}, people);
+assert.equal(f.validate(rejectionUndo, people).states.get(id).status, "active");
+for (const command of [
+  {...create, first:"unknown"}, {...create, second:"person_a"}, {...create, role:"inferred"},
+  {...create, note:""}, {...create, note:"x".repeat(2001)}, {...create, first:"x".repeat(161)},
+  {...create, note:"bad\u0000text"}, {...create, id:"../../catalog"},
+  {id, action:"reject", reason:""}, {id, action:"reject", reason:"x".repeat(1001)}
+]) assert.throws(() => f.change(command.action === "reject" ? created : initial, command, people));
+for (const alter of [
+  d => d.revision++, d => d.history[0].after.first = "missing",
+  d => d.history[0].after.status = "pending", d => d.history[0].before = d.history[0].after,
+  d => d.history[0].after.extra = "not allowed", d => d.history[0].at = "yesterday",
+  d => d.history[0].undoOf = 1, d => d.history[0].action = "approve"
+]) { const invalid = structuredClone(created); alter(invalid); assert.throws(() => f.validate(invalid, people)); }
+const invalidUndo = structuredClone(rejectionUndo);
+invalidUndo.history.at(-1).after.note = "not the exact preceding snapshot";
+assert.throws(() => f.validate(invalidUndo, people), /Undo/);
+assert.throws(() => f.parse("not json", people));
+assert.throws(() => f.parse(" ".repeat(8 * 1024 * 1024 + 1), people), /8 MiB/);
+assert.deepEqual(f.parse("", people), initial);
+assert.deepEqual(f.parse(JSON.stringify(doc), people), doc);
+function mockSession() {
+  let disk = "", buffered = "", aborted = 0, closed = 0, opened = 0, reads = 0;
+  const session = {people, raw:"", doc:f.empty()};
+  session.handle = {
+    async getFile() {
+      reads++;
+      if (session.conflictAt === reads) disk = JSON.stringify(created);
+      return {size:Buffer.byteLength(disk), text:async () => disk};
+    },
+    async createWritable(options) {
+      opened++; assert.equal(options.mode, "exclusive");
+      if (session.openFailure) throw Error("permission denied");
+      return {
+        async write(value) { if (session.writeFailure) throw Error("disk full"); buffered = value; },
+        async close() { if (session.closeFailure) throw Error("close failed"); disk = buffered; closed++;
+          if (session.verifyFailure) disk = "{}"; },
+        async abort() { aborted++; }
+      };
+    }
+  };
+  return {session, get disk() {return disk;}, set disk(value) {disk = value;},
+    get aborted() {return aborted;}, get closed() {return closed;}, get opened() {return opened;}};
+}
+(async () => {
+  const fixture = mockSession();
+  await f.persist(fixture.session, create);
+  assert.equal(fixture.closed, 1);
+  assert.equal(fixture.session.raw, fixture.disk);
+  assert.deepEqual(f.parse(fixture.disk, people), fixture.session.doc);
+  await f.persist(fixture.session, {...create, action:"edit", note:"Persisted edit."});
+  await f.persist(fixture.session, {id, action:"reject", reason:"Persisted rejection."});
+  const savedRejection = f.parse(fixture.disk, people);
+  await f.persist(fixture.session, {id, action:"undo"});
+  const reopened = f.parse(fixture.disk, people);
+  assert.equal(f.validate(reopened, people).states.get(id).status, "active");
+  assert.deepEqual(reopened.history.slice(0, 3), savedRejection.history);
+  fixture.disk = JSON.stringify({...reopened, revision:123});
+  await assert.rejects(() => f.persist(fixture.session, {id, action:"undo"}), /Stale/);
+  assert.equal(fixture.session.doc.revision, 4);
+  const staleSameRevision = mockSession();
+  await f.persist(staleSameRevision.session, create);
+  const external = JSON.parse(staleSameRevision.disk); external.history[0].after.note = "External edit";
+  staleSameRevision.disk = JSON.stringify(external);
+  await assert.rejects(() => f.persist(staleSameRevision.session, {id, action:"undo"}), /Stale/);
+  for (const [failure, message] of [
+    ["openFailure", /permission/], ["writeFailure", /disk full/], ["closeFailure", /close failed/],
+    ["verifyFailure", /verification/]
+  ]) {
+    const broken = mockSession(); broken.session[failure] = true;
+    await assert.rejects(() => f.persist(broken.session, create), message);
+    assert.deepEqual(broken.session.doc, f.empty());
+    assert.equal(broken.session.raw, "");
+    if (failure === "writeFailure" || failure === "closeFailure") assert.equal(broken.aborted, 1);
+  }
+  for (const conflictAt of [1, 2, 3]) {
+    const conflict = mockSession(); conflict.session.conflictAt = conflictAt;
+    await assert.rejects(() => f.persist(conflict.session, create), /Stale/);
+    assert.equal(conflict.closed, 0);
+    assert.equal(conflict.session.raw, "");
+    if (conflictAt > 1) assert.equal(conflict.aborted, 1);
+  }
+  await assert.rejects(() => f.persist({people, raw:null, doc:initial}, create), /Connect/);
+  const invalid = mockSession();
+  await assert.rejects(() => f.persist(invalid.session, {...create, second:"unknown"}), /Unknown/);
+  assert.equal(invalid.opened, 0);
+  console.log("fictional relationship execution passed");
+})().catch(error => {console.error(error); process.exitCode = 1;});
+"""
+        result = subprocess.run([node, "-e", program], cwd=self.tmp, capture_output=True,
+                                text=True, timeout=30)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("execution passed", result.stdout)
+
+    def test_group_index_links_unique_originals_and_records_lineage(self):
+        original = self.root / "Models" / "A" / "gallery" / "image_a.jpg"
+        original.parent.mkdir(parents=True)
+        original.write_bytes(b"original")
+        group_id = "group_" + "a" * 32
+        member = {"personId": "person:a", "groupId": group_id, "status": "tentative",
+                  "coreUse": False, "reason": "<reason>", "referenceVersion": "v1"}
+        catalog = {"photos": {"photo:a": {"membership": member,
+                                          "contentSha256": hashlib.sha256(b"original").hexdigest()}},
+                   "photoGroups": {group_id: {"id": group_id, "personId": "person:a",
+                       "name": "<appearance>", "status": "tentative", "memberPhotoIds": ["photo:a"],
+                       "referencePhotoIds": [], "sourcePersonIds": ["person:old"],
+                       "history": [{"timestamp": "then", "runId": "run", "reason": "retained"}],
+                       "reason": "because"}}}
+        out = self.tmp / "reports"
+        generated = gallery.group_views.publish(catalog, [("photo:a", original)], out)
+        page = (out / "photo-groups" / group_id / "index.html").read_text(encoding="utf-8")
+        self.assertIn(original.resolve().as_uri(), page)
+        self.assertIn('<img loading="lazy"', page)
+        self.assertIn("image_a.jpg", page)
+        self.assertIn("Original path:", page)
+        self.assertIn("&lt;appearance&gt;", page)
+        self.assertIn("person:old", page)
+        self.assertIn("photo-groups/index.html", generated)
+        self.assertEqual(original.read_bytes(), b"original")
+        page_path = out / "photo-groups" / group_id / "index.html"
+        gallery.group_views.publish(catalog, [("photo:a", original), ("photo:a", original)], out)
+        self.assertIn("Missing, ambiguous", page_path.read_text(encoding="utf-8"))
+        generated = gallery.group_views.publish(catalog, [("photo:a", original)], out)
+        gallery.report_assets.record(out, generated)
+        self.assertTrue(gallery.group_views.reports_current(catalog, out))
+        page_path.write_text("changed", encoding="utf-8")
+        self.assertFalse(gallery.group_views.reports_current(catalog, out))
+        generated = gallery.group_views.publish(catalog, [("photo:a", original)], out)
+        gallery.report_assets.record(out, generated)
+        gallery.group_views.publish({"photos": {}, "photoGroups": {}}, [], out)
+        retired = page_path.read_text(encoding="utf-8")
+        self.assertIn("no longer in the current catalogue", retired)
+        self.assertNotIn(original.resolve().as_uri(), retired)
+
+    def test_primary_photo_label_is_shared_and_visible_in_overview(self):
+        group_id = "group_" + "a" * 32
+        memberships = {
+            "primary": {"personId": "person_a", "groupId": None, "status": "supported", "coreUse": True},
+            "primary_noncore": {"personId": "person_a", "groupId": None, "status": "supported", "coreUse": False},
+            "unresolved": {"personId": None, "groupId": None, "status": "unresolved", "coreUse": False},
+            "missing_parent": {"personId": None, "groupId": None, "status": "supported", "coreUse": True},
+            "tentative": {"personId": "person_a", "groupId": None, "status": "tentative", "coreUse": False},
+            "named": {"personId": "person_a", "groupId": group_id, "status": "supported", "coreUse": True},
+            "missing_group": {"personId": "person_a", "groupId": "missing", "status": "supported", "coreUse": True},
+        }
+        catalog = {"photos": {key: {"membership": member} for key, member in memberships.items()},
+                   "photoGroups": {group_id: {"name": "<Named>"}}}
+        descriptions = {key: gallery.group_views.describe(catalog, key) for key in memberships}
+        self.assertEqual(descriptions["primary"]["label"], "Primary photos")
+        self.assertEqual(descriptions["primary_noncore"]["label"], "Primary photos")
+        self.assertEqual(descriptions["unresolved"]["label"], "Unresolved")
+        self.assertEqual(descriptions["missing_parent"]["label"], "Appearance unassigned")
+        self.assertEqual(descriptions["tentative"]["label"], "Tentative; no reference authority")
+        self.assertEqual(descriptions["named"]["label"], "<Named>")
+        self.assertIn("name unrecorded", descriptions["missing_group"]["label"])
+        self.assertIsNone(gallery.group_views.describe(catalog, "unrecorded"))
+        folder = self.root / "Angels" / "Draknara"
+        row = {"status": "Angels", "folder": "Draknara", "key": "Angels/Draknara", "photos": 1,
+               "review": 0, "chosen": False, "score": None, "source": "image_7500642296988890059.jpg",
+               "tags": {}, "gallery_path": folder / "gallery", "z_path": None,
+               "gallery_photos": [{"name": "image_7500642296988890059.jpg",
+                                   "path": folder / "gallery" / "image_7500642296988890059.jpg",
+                                   "thumb": b"thumb", "appearance": descriptions["primary"]}]}
+        page = gallery.render_html([row], "now", {"Angels": 1})
+        self.assertIn("Primary photos · supported · core use True", page)
+        self.assertNotIn("unassigned · supported", page)
+
+    def test_overview_names_above_and_below_captionless_photo_grid(self):
+        for category in ("Sisters", "Angels", "Models", "Prospects"):
+            for profile in ("fast", "lean", "full"):
+                with self.subTest(category=category, profile=profile):
+                    folder = self.root / category / "Example & Name"
+                    row = {
+                        "status": category, "folder": "Example & Name", "photos": 9,
+                        "review": 0, "chosen": False, "score": None, "tags": {},
+                        "source": None, "gallery_path": folder / "gallery", "z_path": None,
+                        "gallery_photos": [
+                            {"name": f"image_{index}.jpg",
+                             "path": folder / "gallery" / f"image_{index}.jpg",
+                             "thumb": b"thumb", "processing_profile": profile,
+                             "appearance": {"label": "Named appearance",
+                                            "membership": {"status": "supported", "coreUse": True}}}
+                            for index in range(9)
+                        ],
+                    }
+                    page = gallery.render_html([row], "now", {category: 1})
+                    card = page.split('<figure class="card"', 1)[1].split("</figure>", 1)[0]
+                    above, rest = card.split('<div class="photos">', 1)
+                    grid, below = rest.split("</div><figcaption>", 1)
+                    self.assertIn("Example &amp; Name</a>", above)
+                    self.assertIn("Example &amp; Name</a>", below)
+                    self.assertEqual(grid.count("<img "), 9)
+                    self.assertNotIn("<span", grid)
+                    self.assertEqual(grid.count('"></a>'), 9)
+                    self.assertIn('data-photo-name="image_0.jpg"', grid)
+                    self.assertIn("Named appearance · supported", grid)
+
+    def test_group_index_disambiguates_same_named_parent_appearances(self):
+        first, second, missing = ("group_" + char * 32 for char in "abc")
+        catalog = {
+            "people": {
+                "person_1": {"displayName": "Draknara", "folder": "Sisters/Draknara"},
+                "person_2": {"displayName": "<Another>", "folder": "Models/Another"},
+            },
+            "photos": {},
+            "photoGroups": {
+                first: {"id": first, "personId": "person_1", "name": "Variation appearance",
+                        "status": "supported", "memberPhotoIds": []},
+                second: {"id": second, "personId": "person_2", "name": "Variation appearance",
+                         "status": "supported", "memberPhotoIds": []},
+                missing: {"id": missing, "personId": "person_unknown", "name": "Variation appearance",
+                          "status": "tentative", "memberPhotoIds": []},
+            },
+        }
+        out = self.tmp / "reports"
+        gallery.group_views.publish(catalog, [], out)
+        index = (out / "photo-groups" / "index.html").read_text(encoding="utf-8")
+        self.assertIn(f'href="{first}/index.html">Variation appearance</a> · supported · '
+                      f'Parent: Draknara (Sisters/Draknara; person_1) · Group ID: {first}', index)
+        self.assertIn(f'href="{second}/index.html">Variation appearance</a> · supported · '
+                      f'Parent: &lt;Another&gt; (Models/Another; person_2) · Group ID: {second}', index)
+        self.assertIn(f'Parent: Parent name unavailable (folder unavailable; person_unknown) · Group ID: {missing}', index)
+        detail = (out / "photo-groups" / second / "index.html").read_text(encoding="utf-8")
+        self.assertIn("Person: &lt;Another&gt; (Models/Another; person_2)", detail)
+        missing_detail = (out / "photo-groups" / missing / "index.html").read_text(encoding="utf-8")
+        self.assertIn("Person: Parent name unavailable (folder unavailable; person_unknown)", missing_detail)
 
     def test_explicit_report_output_refuses_source_or_external_paths_before_collecting(self):
         cfg = {"storageRoots": {"reports": "operations/reports"}}
@@ -360,6 +666,9 @@ class PeopleGalleryTests(unittest.TestCase):
                                 "thumbnail": "people_gallery_review_files/one_chest_abc.jpg"}],
         }
         output = gallery.render_html([row], "now", {"Prospects": 1})
+        self.assertIn("?person=Various", output)
+        self.assertNotIn("?person=Various&amp;bucket=Review", output)
+        self.assertIn("Unassigned Various holds (all locations)", output)
 
         self.assertIn(gallery.gallery_chrome.CARD_USE_GUIDANCE["Prospects"], output)
         self.assertIn("Not a rarity rule or automatic assignment.", output)

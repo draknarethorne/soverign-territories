@@ -36,8 +36,8 @@ import comfy_workflows as cw  # noqa: E402
 import likeness  # noqa: E402
 import originals  # noqa: E402
 import people  # noqa: E402
-from likeness_library import domains, gallery_chrome, identity_names, preparation_provenance, protection, report_assets  # noqa: E402
-from likeness_library.audit import audit_person, catalog_photo_flags, core_excluded_protection, identity_order_key  # noqa: E402
+from likeness_library import domains, fictional_relationships, gallery_chrome, group_views, identity_names, preparation_provenance, protection, report_assets  # noqa: E402
+from likeness_library.audit import audit_person, catalog_photo_flags, core_excluded_protection, identity_order_key, membership_excluded  # noqa: E402
 from likeness_library.cross_reference import CATEGORY_ORDER, rank_identity_centroids, score_band  # noqa: E402
 from likeness_library.metadata import (  # noqa: E402
     content_sha256, load_catalog, path_for_root, photo_id_from_name, with_configured_anchors,
@@ -50,7 +50,7 @@ from likeness_library.policy import (  # noqa: E402
 )
 from likeness_library.derivatives import thumbnail  # noqa: E402
 from likeness_library.overview_photos import MAX_PHOTOS, arrange_workflow_photo, top_gallery_photos  # noqa: E402
-from likeness_library import verification_reads  # noqa: E402
+from likeness_library import fast_preparation, verification_reads  # noqa: E402
 
 THUMB = (176, 220)  # match the review gallery's 4:5 portrait framing
 SECTIONS = [
@@ -270,6 +270,7 @@ def collect(cfg, st, work, space, groups, rend=None, catalog=None, policy=None):
                     content_sha256(path) if photo_id in catalog["photos"] else None,
                 ))
     protected_ids, stale_ids, ambiguous_ids = catalog_photo_flags(source_records, catalog)
+    membership_exclusions = membership_excluded(catalog)
     catalog_by_folder = {}
     for person_id, record in catalog["people"].items():
         catalog_by_folder.setdefault(record["folder"], []).append((person_id, record))
@@ -290,6 +291,7 @@ def collect(cfg, st, work, space, groups, rend=None, catalog=None, policy=None):
             ids,
             anchor_ids=anchors,
             protected_ids=core_excluded_protection(catalog, protected_ids),
+            excluded_ids=membership_exclusions,
             stale_ids=stale_ids,
             ambiguous_ids=ambiguous_ids,
             minimum_core=category_policy.get("minimumUsablePhotosForOutlierActions", 3),
@@ -303,6 +305,7 @@ def collect(cfg, st, work, space, groups, rend=None, catalog=None, policy=None):
             photo_id = ids[index]
             is_anchor = (
                 photo_id in anchors and photo_id not in stale_ids and photo_id not in ambiguous_ids
+                and photo_id not in membership_exclusions
             )
             score = audit["scores"][index]
             is_core = index in audit["core_indices"]
@@ -319,6 +322,10 @@ def collect(cfg, st, work, space, groups, rend=None, catalog=None, policy=None):
                    (person and person.get("protected")) or category_policy.get("identityProtectedByDefault")
                )}
         row["identityNames"] = identity_names.presentation(person, folder, catalog=catalog)
+        row["appearanceGroups"] = [
+            group for group in catalog.get("photoGroups", {}).values()
+            if person_records and group.get("personId") == person_records[0][0]
+        ] if not conflict else []
         row["identityProtectionInfo"] = protection.describe(person)
         min_face = st.get("minFace", likeness.SETTINGS["minFace"])
         photos = [p for p in getattr(space, "photos", []) if p.key == key]
@@ -439,6 +446,8 @@ def collect(cfg, st, work, space, groups, rend=None, catalog=None, policy=None):
                 "thumb_head": head_data,
                 "derivative_diagnostic": "; ".join(actual_diagnostics),
                 "framing_unavailable": "; ".join(framing_info),
+                "processing_profile": "fast" if fast_preparation.deferred(photo) else "standard",
+                "appearance": group_views.describe(catalog, photo_id_from_name(photo.name)),
             })
         row["gallery_photos"] = gallery_photos
         row["gallery_photos_identity"] = ordered
@@ -507,7 +516,7 @@ CSS = """h2{margin:32px 0 10px;border-bottom:2px solid var(--st-line);padding-bo
 .category-nav{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}.category-nav a{text-decoration:none;padding:5px 11px;border:1px solid var(--st-line);border-radius:999px;background:var(--st-card)}.category-nav a:hover{background:var(--st-accent-soft)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px}
 .card{background:var(--st-card);border:1px solid var(--st-line);border-radius:8px;padding:9px;margin:0;box-shadow:var(--st-shadow)}.photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px}.photos a:nth-child(n+10){display:none}
-.photos img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px;background:#eee}
+.photos img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px;background:#eee}.person-title-top{margin-bottom:7px}
 .photos a.workflow-photo{outline:5px solid #8b6d32;outline-offset:-5px;border-radius:3px;background:transparent;color:inherit}.photos a.workflow-photo.workflow-extra{outline-style:dashed}.photos a.workflow-photo.score-green{outline-color:#2e7d32}.photos a.workflow-photo.score-yellow{outline-color:#b38b00}.photos a.workflow-photo.score-orange{outline-color:#c46b16}.photos a.workflow-photo.score-red{outline-color:#a52d2d}
 .card b{font-size:1.05em}.meta{color:#666;font-size:.85em;margin-top:4px}.chosen{background:#2e7d32;color:#fff;border-radius:3px;padding:0 5px;font-size:.8em}.status{color:#888;font-size:.8em}.identity{font-size:.82em;color:#34495e;margin-top:4px}
 .summary{color:#555;font-size:.9em;margin-top:3px}.readiness{color:#555;font-size:.82em;margin-top:5px}.matches,.pairing{font-size:.82em;margin-top:5px}.relationship-row{margin:3px 0}.gallery-jump{margin-left:5px;text-decoration:none;font-weight:700}.pairing-subsection{margin-top:9px;padding-top:7px;border-top:1px solid #e7e0d4}.fit-detail{margin-left:4px}.noimg{display:flex;align-items:center;justify-content:center;aspect-ratio:4/5;background:#eee;color:#999;font-size:.8em}.gallery-controls{display:flex;justify-content:flex-end;gap:12px;flex-wrap:wrap;margin:12px 0}.person-title{display:flex;align-items:center;gap:5px}.identity-tags{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:5px}.source-photo{margin-left:5px}.full-details{font-size:.82em;margin-top:5px}.full-details ol{margin:4px 0;padding-left:24px}.preparation-evidence{font-size:.8em;margin-top:6px;overflow-wrap:anywhere}.preparation-evidence summary{cursor:pointer;color:#34495e}.preparation-evidence ul{padding-left:20px}.preparation-evidence li{margin:5px 0}.preparation-evidence code{overflow-wrap:anywhere}.policy-panel{margin:10px 0;padding:8px 10px;background:var(--st-card);border:1px solid var(--st-line);border-radius:6px;font-size:.84em}.policy-panel summary{cursor:pointer;font-weight:600;color:#34495e}.policy-panel pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:520px;overflow:auto;background:#f5f3ee;padding:10px;border-radius:4px;font-size:.9em}body[data-detail-level="summary"] .full-details{display:none}"""
@@ -575,10 +584,13 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
                '<div class="site-page">',
                '<header class="page-header"><div><h1>People gallery</h1>'
            f'<p class="meta">Generated {html.escape(stamp)} · {len(rows)} {people_label} · {photo_count} {photos_label}</p>'
-           f'           <p class="page-note">Names open Review; score markers jump within Gallery · <a href="{html.escape(identity_report_href, quote=True)}">Full library rankings</a> · <a href="{html.escape(review_href, quote=True)}?person=Various&amp;bucket=Review">Unresolved holds in Review</a> · Up to nine photos per person</p></div>'
+           f'           <p class="page-note">Names open Review; score markers jump within Gallery · <a href="{html.escape(identity_report_href, quote=True)}">Full library rankings</a> · <a href="{html.escape(review_href, quote=True)}?person=Various">Unassigned Various holds (all locations)</a> · Up to nine photos per person</p></div>'
            '<div class="header-side"><div class="header-label">Likeness</div>'
            f'<div class="score-legend">{render_score_legend(policy)}</div></div></header>',
-           gallery_chrome.navigation([("Overview", "people_gallery.html"), ("Photo review", review_href), ("Intake runs", "intake_runs.html")], "Overview"),
+           gallery_chrome.navigation([
+               (label, review_href if label == "Photo review" else href)
+               for label, href in gallery_chrome.PEOPLE_LINKS
+           ], "Overview"),
            policy_panel,
            '<div class="gallery-controls"><label>Details <select id="detail-level"><option value="summary">Summary</option><option value="full">Full details</option></select></label> '
            '<label>Photo order <select id="gallery-sort"><option value="identity">Core identity first</option><option value="high">Highest identity score</option></select></label> '
@@ -603,6 +615,13 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
                 if photo.get("identity_score") is not None else
                 f' · Prime-start score {photo["score"]:.3f}' if photo.get("score") is not None else ""
             )
+            appearance = photo.get("appearance")
+            if appearance:
+                membership = appearance["membership"]
+                score_title += (f' · {appearance["label"]}'
+                                f' · {membership.get("status", "unrecorded")}'
+                                f' · core use {membership.get("coreUse", False)}'
+                                f' · {membership.get("reason", "")}')
             title = html.escape(
                 photo["name"] + score_title
                 + (" " + photo["derivative_diagnostic"] if photo.get("derivative_diagnostic") else "")
@@ -665,6 +684,14 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
             )
         summary = profile_summary(r["tags"])
         summary_html = f'<div class="summary">{html.escape(summary)}</div>' if summary else ""
+        if r.get("appearanceGroups"):
+            summary_html += '<p class="detail">Appearance groups (within this identity): ' + ", ".join(
+                html.escape(str(group.get("name") or group.get("id") or "unnamed"))
+                + " (" + html.escape(str(group.get("status", ""))) + ")"
+                + " · reason: " + html.escape(str(group.get("reason", "")))
+                + " · source identities: " + html.escape(", ".join(map(str, group.get("sourcePersonIds", []))))
+                for group in r["appearanceGroups"]
+            ) + '</p><p><a href="photo-groups/index.html">Browse original-backed groups and lineage</a></p>'
         if r.get("identityProtectionInfo"):
             summary_html += '<p class="detail protection-info">' + html.escape(r["identityProtectionInfo"]) + "</p>"
         names = r.get("identityNames", {})
@@ -674,7 +701,7 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
                 ("Current person name", names.get("currentPersonName")),
                 ("Original person name", names.get("originalPersonName")),
                 ("Original-name source", names.get("originalNameSource")),
-                ("Family surname", names.get("familySurname")),
+                ("Fictional family surname (creative, not biological)", names.get("familySurname")),
             ]
             summary_html += '<dl class="identity-names">' + "".join(
                 f'<dt>{label}</dt><dd>{html.escape(str(value or "Not recorded"))}</dd>'
@@ -841,7 +868,7 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
             '<span class="category-badge protected-badge">Protected identity</span>'
             if r.get("identity_protected") else ""
         )
-        out.append(f'<figure class="card" id="{card_id}"><div class="photos">{"".join(imgs)}</div><figcaption><div class="person-title"><b>{name}</b></div><div class="identity-tags"><span class="category-badge category-{category_class}">{html.escape(r["status"])}</span>{protected_badge}{flag}{history_link}{count}</div>'
+        out.append(f'<figure class="card" id="{card_id}"><div class="person-title person-title-top"><b>{name}</b></div><div class="photos">{"".join(imgs)}</div><figcaption><div class="person-title"><b>{name}</b></div><div class="identity-tags"><span class="category-badge category-{category_class}">{html.escape(r["status"])}</span>{protected_badge}{flag}{history_link}{count}</div>'
                    f'{summary_html}{identity_html}{preparation_panel}'
                    f'<div class="meta">{caption_html}</div>{readiness_html}{matches_html}{pairing_html}</figcaption></figure>')
     if current:
@@ -1151,6 +1178,19 @@ def _main(argv=None, space=None, *, context=None, provenance=None):
                                                      ]), encoding="utf-8")
     generated = {name: (out / name).read_bytes()
                  for name in ("people_gallery.html", "people_gallery.md", "identity-rankings.md")}
+    catalog = load_catalog(path_for_root(work))
+    sources = [
+        (photo_id_from_name(photo.name), photo)
+        for _, folder in likeness.library_people(cfg, st, work)
+        for bucket in ("gallery", "review")
+        for photo in originals.images(folder / bucket)
+    ]
+    generated.update(group_views.publish(catalog, sources, out, source_root=work))
+    generated.update(fictional_relationships.publish(
+        catalog, out, library_root=work,
+        reports_prefix=gallery_chrome.reports_prefix(out, reports),
+        section_links=gallery_chrome.configured_sections(work, cfg),
+    ))
     (out / "intake_runs.html").write_bytes(history)
     generated["intake_runs.html"] = history
     for row in rows:

@@ -351,6 +351,12 @@ def make_headshots(sources, folder, size, args, tally, faces):
     wanted, made, skipped = set(), 0, 0
     for path, final in sources:
         name = f"{re.sub(r'_[0-9]+x[0-9]+$', '', os.path.splitext(final)[0])}_head_{size[0]}x{size[1]}.png"  # _head_ keeps it apart from the full photo's copy in a ComfyUI input folder
+        from likeness_library import fast_preparation
+
+        if fast_preparation.deferred(path):
+            wanted.add(name.lower())
+            print(f"  FAST deferred headshot: {final}")
+            continue
         box, px = faces.of(path)
         if not box or px < MIN_FACE_PX:
             skipped += 1
@@ -461,6 +467,11 @@ def process_folder(folder, label, size, args, tally):
             tally["skipped"] += 1
             continue
         wanted[out_name.lower()] = out_name  # kept even if it cannot be read now, so its old copy is not pruned
+        from likeness_library import fast_preparation
+
+        if fast_preparation.deferred(path):
+            print(f"  FAST deferred 944x1104 output: {final}")
+            continue
         dest = out_dir / out_name
         if not args.apply:
             if args.force or not is_fresh(path, current_copy(dest, folder, size), size):
