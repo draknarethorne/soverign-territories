@@ -6,11 +6,31 @@ been decided, what is open, and what is next. Rules live in the canonical docs l
 
 ## Current checkpoint
 
+Post-run13: the [next-preview contract](plans/2026-11-16-simple-review-and-tuning.md#nov-19-post-run13-tuning)
+stages stricter starting cores and resolves duplicate IDs before matching.
+Keep cast Review at 0.35 and outbound cast placement locked. Replay from the
+frozen Production-derived Source, not run13's inputs or results. Baseline
+`simple-clean-20261119-14` is restored and verified; old Working and run13
+are preserved. Fresh LEAN `simple-rebase-20261119-14` preview exited 0 and
+is ready for review: 1,979 archive proposals, 1,185 path changes and no
+apply-blocking collision. No replay placements or archives have been
+applied by SIMPLE.
+
+The separately authorized [raw-baseline cleanup](art/likeness.md#clean-exact-various-copies-and-replace-approved-originals-before-a-rebase)
+verified Sandbox Working and Production: 1,799 exact Various copies removed
+and 180 approved edits installed per root with displaced originals retained.
+The frozen Source was not changed. The run14 preview is now historical.
+A read-only census verified all 180 replacements are eligible for fresh
+preparation. Both live Various galleries contain
+1,069 photos and have zero candidates under the shared exact-only preflight.
+New LEAN `simple-rebase-20261119-15` is previewing cleaned Sandbox Working.
+Run14 cannot be applied to these changed inputs.
+
 **Nov19 installed SIMPLE result.** LEAN run13 applied successfully on existing
 Sandbox Working without reset or repeated preparation. The
 [installed closeout](plans/2026-11-16-simple-review-and-tuning.md#nov19-installed-run13-closeout)
 records apply/check/repeat exit0 and actual Gallery/Overview/Review, retained
-detail/history and applied recap/audit browser evidence. No writer remains.
+detail/history and applied recap/audit browser evidence. No run13 writer remains.
 There are 733 publication rows (686 changed paths, 47 same-path updates),
 including 123 cast Gallery and 271 cast Review admissions, with no existing
 cast Gallery departures. Drakness receives 13 Gallery/10 Review; Nyxene one

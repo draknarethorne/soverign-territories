@@ -16,6 +16,138 @@ The completed run's evidence stays immutable. The Nov17 selection below
 permits bounded code/report work while broader viewer/human acceptance stays
 open. The Nov18 17:21 authorization below now selects a real sandbox run.
 
+## Nov 19 post-run13 tuning
+
+The spine's RA2j follow-up stages three changes/decisions before a fresh preview:
+
+- Raise initial core floors to 0.38 for Sisters, Angels and Models, and 0.20
+  for Prospects and Potentials. This does not open outbound cast moves or
+  change Artist policy, Gallery admission, margins or Review suggestions.
+- Resolve same-ID collisions before voting. Archive exact duplicates, retained
+  raw aliases and earlier versions under `_duplicates`; a verified prepared
+  native is not a newer edit just because its pixels were processed. Route
+  the keeper under the normal rules. Keep byte, date, archive and hold evidence
+  in the saved movement recap. See the [runbook](../art/likeness.md#draft-sandbox-likeness-policy).
+  An apply cannot complete with duplicate active IDs in SIMPLE's general
+  library scope. Ordinary timestamp ties have a recorded deterministic keeper;
+  a protected Gallery conflict also selects a keeper and archives the other
+  copies. Invalid lineage that cannot be safely archived blocks apply.
+- Keep the cast Review floor at 0.35 pending a duplicate-resolved preview.
+  At fixed run13 scores, 0.38 would exclude 116 of 271 cast Review rows from
+  that tier; 0.40 would exclude 157. Neither would promote a photo into Gallery.
+
+The reported Joyce/Rachel case is deferred to RA2d. The installed receipt
+records 30 photo placements into the same existing identity (28 Gallery,
+two Review), not a whole-identity merge. This says nothing about whether the
+placements are correct.
+
+**Replay baseline clarification.** Use the frozen Production-derived Sandbox
+`Source` from `simple-clean-20261116-01`, not run13's starting or installed
+placements. Retain the snapshot's original folder paths and replay arrivals
+in `Various/gallery`; do not move existing named-folder copies into Various
+to manufacture test cases. Report named-folder collisions and Various replays
+separately where present. No live Production or Source writes.
+
+The frozen manifest still matches the recorded baseline hash. It has 5,731
+Gallery/Review paths, including 3,048 in `Various/gallery`. Run13's starting
+inventory has 5,454, including 1,990 in `Various/gallery`; all 1,990 match
+Source by path and bytes, but 1,332 snapshot paths are absent from run13's
+starting inventory. A run13 undo alone is therefore not the selected replay.
+The filename-ID census finds 286 groups spanning named folders and
+`Various/gallery` (202 byte-identical groups and 84 with differing bytes),
+plus one exact-byte Various-only group. It finds no repeated explicit ID
+across two named Gallery/Review paths. This is not the final normalized-ID
+census; do not manufacture a named-only example in the real snapshot.
+All 550 original inputs from the saved run10 preparation match Source by path
+and hash. That is not complete preparation coverage: reuse also requires
+recipe/artifact validation and a prepared result for every selected raw
+keeper. Do not assume a partial preparation manifest can be used as if it
+covers the new selection.
+
+**Frozen replay baseline verified.** The original dry run stopped with exit 2
+at a regular older Working proof file with a 260-character Windows path.
+The new frozen-source mode stages only the manifest-bound Source, preserves
+Working via same-volume rename without walking those proof files, and never
+refreshes Source. Twelve baseline tests pass, including interruption between
+renames. Baseline `simple-clean-20261119-14` dry-run/apply/check each exited
+0. Working matches all 11,048 paths, hashes and Source modification times
+(5,496,847,211 bytes). Run13 and run10 preparation were preserved under
+`Working-before-simple-clean-20261119-14`; their applied receipt and
+preparation manifest hashes are unchanged. The new baseline receipt SHA-256
+is `0d5f3de8afe870983624a4bba0857df10da66642bae9900618b67b7efe593516`.
+
+**Preview finished:** LEAN `simple-rebase-20261119-14` exited 0 after about
+4 hours 20 minutes, including fresh preparation. All 3,287 selected
+original paths and SHA-256 values match
+both the frozen manifest and the preparation start receipt's input-set
+binding. None matches a run10 prepared input by path and hash; at most 549
+could match through hash-only aliases, before artifact validation. The
+other 2,738 have no saved run10 source hash, so run10 cannot supply the
+complete selected set. Replay uses the new core floors and duplicate
+resolution with the unchanged 0.35 Review floor and no outgoing cast
+reassignment.
+
+The saved receipt SHA-256 is
+`56fe6cc71b0637a40f96f2e6efa7d391081cbc855dc40bc1bdc12bcee8f067e5`.
+All 5,469 source rows match frozen Source by path and hash. The preview
+proposes 1,979 archives (1,799 exact copies, 180 different-byte versions):
+1,966 from 1,954 named/Various groups and 13 from four Various-only groups.
+No group has two named copies. The receipt verification found one keeper
+per ID, distinct archive destinations, and no apply-blocking collision.
+The early filename-only census did not count the full normalized population.
+The 3,287 publication rows comprise 1,185 path changes and 2,102 in-place
+preparations. Proposed cast arrivals include 96 Gallery and 286 Review;
+no starting cast Gallery photo would leave or be archived. The browser
+recap shows the collision decisions including the case now proposed for
+Draknoxa Review. Its one Review-snapshot diagnostic correctly says a
+preview is not installed Review evidence. No writer remains. Review these
+proposals before apply; no replay move or archive has been published.
+
+**Authorized raw-baseline cleanup (separate from SIMPLE publication).**
+The reviewed run14 input hashes produced a portable cleanup plan
+(`2a1a34699bf025560c3c4af79a9f0a46d8896df1458aaedf4685deaaa6e85914`).
+Dry-run, apply and check passed on Sandbox Working and Production.
+On each root, 1,795 verified exact Various copies were removed without a
+second backup, 180 approved edits took the original named paths (including
+30 blocked by the earlier protected-Gallery selection rule), and all 180
+displaced originals were moved to `_archive/various-cleanup/2a1a34699bf02556`.
+The exact-only follow-up found and removed four additional pool-only
+copies per root (1,799 total), leaving 1,069 Various photos and zero
+remaining candidates under this rule. Sealed Source was not changed.
+As a result run14 is historical and cannot be applied to Working.
+Keep the cleaned Working baseline for the next preview; a reset from old
+Source would reintroduce the old inputs.
+
+The post-cleanup inventory/classification selected all 180 installed edits
+for fresh preparation, along with all 463 Angels and 803 Sisters Gallery
+originals. It selected 3,285 raw inputs overall; no detector or matching
+run was started. All 867 eligible Prospects and 267 eligible Potentials
+in the cleaned census are included in those 3,285 raw inputs. Models
+are supported by the same inventory; neither current live root has a
+Models folder. The later exact-only pass removed the other four same-ID
+archive candidates, not their keepers. The 21 named Gallery files with
+identical bytes under different IDs were preserved without an extra vote
+or preparation.
+
+**Shared daily intake and rebase preflight:** `various-cleanup --scan-exact`
+finds same-ID, same-current-byte arrivals before preparation or backup.
+The discard plan is root- and hash-bound. Explicit apply rechecks a live
+keeper and does not back up or archive the redundant arrival. Different
+IDs with the same bytes, uncertain lineage and differing versions remain
+visible to the normal path. An original alias of a different-byte prepared
+native remains subject to retained-lineage rules. This preflight does not
+silently delete on intake or rebase and is separate from the approved 180
+raw-baseline edits.
+
+**Cleaned-baseline execution:** User authorizes any run/re-run needed for
+review and bound Sandbox apply, then grouped commit/push when verification
+is solid; human identity/crop acceptance follows. Fresh LEAN
+`simple-rebase-20261119-15` started at 17:07 CT on cleaned Working, no
+reset or Production operation. Verify selected preparations include all
+180 approved edits, no existing cast Gallery departure, source accounting,
+and zero unresolved duplicate IDs before applying the exact preview.
+Do not invoke run14 or copy the uncleaned Source back over Working.
+
 ## Next SIMPLE run: foundational corrective contract
 
 **Current pre-run contract.** This section consolidates the Nov18 discussion;
@@ -1709,6 +1841,18 @@ Lastly - you need to write up the recap for today as well as updating older reca
 
 <!-- markdownlint-enable MD013 -->
 
+### Nov 19 core and duplicate policy follow-up - verbatim non-case excerpt
+
+<!-- markdownlint-disable MD013 -->
+
+```text
+1) I think we might want to bump those thresholds up to 0.38 and 0.20 in preparation for the next run, just to exclude some lower scoring images that could possibly move out if we make them eligible in Sisters and Angels in our next runs - meaning to move cross or downward.  But that will happen later, for now - I just want things excluded from the core that are lower scoring.  2) If we end up with duplicate ID's I thought the logic was supposed to check if they are identical and move one of them to _duplicates and process the other one based on the rules.  If they are same id, but not byte identical (I may have used tools to alter them and send them in again) we'd take the one with the newest date and process that one (it could be in Various/gallery with a generic name) and we'd put the other one into _duplicates.  We'd track that in the processing and the reports so we know we had id collisions and I can review those in the GUI as well.  Ultimately we can't have duplicates as that'll contaminate the system like it did in this run.    3) When you talk about raising the review floor - what are you recommending to help with that.  If we address these issues, I think that the next run will be even cleaner.
+```
+
+<!-- markdownlint-enable MD013 -->
+
+The source chat retains the named-photo case at the end of the message.
+
 ### Explicit continuation and monitoring authority
 
 ```text
@@ -1984,6 +2128,48 @@ I think that's the best plausable plan at this point and we can work the impleme
 
 ```text
 approved-pairs-first
+```
+
+### Nov 19 duplicate archive and protected-Gallery clarification - verbatim chat
+
+```text
+We definitely need to deal with duplicates and the process must move one of them out to _duplicates and not allow two to exist during a run.  That's my mistake in trying to replay a bunch of existing that I might have altered and just to force Various to have a bunch more things and check that our duplicate logic was working right - which apparently it's a gap right now as it forced fragments to be left behind.  It was always my expectation that we would never have two of the same id's co-existing in an ambigious state.  That's probably a conservative decision made while I was away and not able to answer.  Don't lose track of the work you're doing - but we do need to fix this and as long as something lands in _duplicates and it's in the recap and I can see that in the GUI somewhere - then we are ok.  That's why we're running this all in the sandbox to work out this minor kinks in our processing as a whole.  But that last round was so much better in terms of reducing some fragments.
+```
+
+```text
+If it conflicts with a protected gallery photo, then I would still want one to be put into duplicates and not stop the run.
+```
+
+```text
+I say that because as long as they have gone through image processing, they should get the clean-up that I might have done by hand and ultimately I get a single "good" photo to use.  Some existing ones that are protected might have had logos, icons and overlays - which I might have tried to fix by hand prior to the image processing.
+```
+
+### Nov 19 replay baseline and test coverage - verbatim chat
+
+```text
+If they weren't in Various/gallery at the very start of this rebase - then I would want them left where they were as part of this run.  Basically I want to get to a point where the results of the intake matched what was in the snapshot of the copy of Production and run from there.  If we had previous image id duplication in Production, then I want to see how this will clean that up as well as deal with the fact I put duplicate copies into Various/gallery - both scenarios are valid to prove out in handling the duplicates properly.
+```
+
+### Nov 19 approved baseline replacement and future intake - verbatim excerpts
+
+```text
+In terms of the duplicates, if the file is in Various Gallery and it does not match the original - then I did clean it up by hand and did intend for it to replace the original one, keeping a copy of that one.  Even if it was a protected one.
+```
+
+```text
+So you are free to verify the script would preview and then apply it when you are done.
+```
+
+```text
+Meaning, double check items in the Various/gallery for being exact duplicates and just "discard" them and not even store them ahead of time?
+```
+
+```text
+So, even on a rebase with items in Various/gallery that are exact copies, we can discard those and not backup or make them duplicates.  Duplicates to me are different ID's but same bytes vs. same ID (different name) and same bytes.
+```
+
+```text
+You are free to run and actually apply all changes if we need to run or re-run anything to get me to the point I can do the review of the outcome of all our updates.  Thanks again, commit and push when done and at a solid point - even if waiting for my review.
 ```
 
 <!-- markdownlint-enable MD013 -->

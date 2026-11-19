@@ -1,6 +1,6 @@
 ---
 name: long-run-acceptance
-description: "Monitor, resume and verify authorized long-running Sovereign Territories sandbox jobs. Use for rebase-flow, LEAN continuation, per-image recovery, process liveness, final checks or Gallery/Overview/Review acceptance. Preserve receipts and distinguish disposable from FULL recovery."
+description: "Monitor, report progress on, resume and verify authorized long-running Sovereign Territories sandbox jobs. Use for rebase-flow, LEAN continuation, per-image recovery, process liveness, final checks or Gallery/Overview/Review acceptance. Preserve receipts and distinguish disposable from FULL recovery."
 ---
 
 # Long-run acceptance and recovery
@@ -21,6 +21,28 @@ step log and completion waiter from current evidence. Reuse an existing job;
 do not start duplicate writers or waiters. Inspect small receipts/log tails
 at phase transitions and wait for completion notifications, not a tight
 model polling loop. A long-lived service needs readiness proof, not an exit.
+
+## Report progress while monitoring
+
+- Send a brief user-facing update after each progress check, including the
+  first check when resuming an existing run. Report the timestamp, run and
+  current phase, completed/total and phase percentage when available, and
+  what changed since the previous check. While actively supervising a long
+  single phase, check about every 15 minutes by default unless the user
+  requests another cadence. Report observed phase changes, blockers and
+  completion promptly; reuse the existing completion notification.
+- Give a recent rate and rough phase ETA only when comparable samples
+  support them. Name the remaining phases separately; a phase percentage
+  is not whole-run progress, and a phase ETA is not a finish time.
+- If no count is available or it has not advanced, report the last log
+  update and any observed CPU/I/O movement for the verified process instead.
+  Distinguish active, quiet but still working, exited, and stalled only
+  as the evidence supports. Say when status or ETA is unknown.
+- Use the existing process, bounded log tails and small receipts. Keep
+  monitoring after reporting; do not restart the job, add another waiter
+  or alter bound inputs just to get a progress update. If the session
+  cannot continue checking, state that limit and identify the existing
+  completion notification or next check rather than promising updates.
 
 ## Diagnose without destroying evidence
 

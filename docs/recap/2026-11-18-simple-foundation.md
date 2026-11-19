@@ -8,6 +8,39 @@ and [execution spine](../plans/2026-11-05-priority-reset.md) own selected
 rules, exact user sources, unfinished tasks and publication permission.
 This is today's evidence/reflection, not a second plan.
 
+## Nov 19 frozen replay follow-up
+
+The [replay contract](../plans/2026-11-16-simple-review-and-tuning.md#nov-19-post-run13-tuning)
+keeps original named-folder and Various paths, raises only the starting core
+floors, and resolves same-ID copies before scoring. The frozen-baseline
+launcher avoided the old Working long-path failure by preserving the whole
+tree without traversing it. Baseline dry-run/apply/check passed; all 11,048
+files and their Source modification times were verified before a fresh LEAN
+preview launched. Run13 and run10 preparation hashes still match after the
+rename. Source and Production were not refreshed.
+
+The LEAN preview finished at about 4:04 p.m. CT, exit 0. All 3,287
+preparation rows completed and the preparation-origin seal was written.
+Receipt checks verified one keeper per ID across 5,469 source rows; the
+browser recap displayed the 1,979 proposed archives, including the
+Florence Brookfield copy whose retained Various version is proposed for
+Draknoxa Review. There are also 1,185 proposed path changes and 2,102
+in-place preparations. The proposals are not installed outcomes or human
+identity/crop acceptance. No writer remains.
+
+The user then authorized a separate raw-baseline cleanup. The portable JSON
+and launcher passed dry-run/apply/check on Sandbox Working and Production:
+1,795 exact copies removed, 180 approved edits installed at their existing
+named paths and 180 previous originals retained per root. The shared
+preflight then removed four pool-only copies on each root (1,799 total).
+The remaining Various Gallery contains 1,069 photos on each root and the
+exact-only rescan found zero eligible discards. Frozen Source still
+contains 3,048. Run14 cannot be applied to the changed inputs. The read-only
+post-cleanup census confirms all 180 edits are eligible for fresh LEAN
+preparation. The user authorized bound Sandbox apply after verification.
+Fresh LEAN run15 started at 17:07 CT against cleaned Working without reset;
+the [pinned recap](2026-11-11-1141-recap.md) owns live continuation.
+
 ## Delivered and verified before the real run
 
 - Implemented the selected cast-priority/upward-recovery foundation and
@@ -216,6 +249,17 @@ Remote-head verification belongs beside run13 execution evidence; a push
 does not claim remote CI or human identity/crop acceptance.
 
 ## Reflection
+
+**Nov 19 follow-up:** run13's user review selected higher core floors and
+recoverable same-ID archives ahead of matching. The [owning plan](../plans/2026-11-16-simple-review-and-tuning.md#nov-19-post-run13-tuning)
+records the Review-floor counterfactual and deferred case. A synthetic
+cache-only FAST launcher preview produced one keeper, one proposed archive
+and an ID-collisions section verified in the browser. The final protected
+Gallery launcher fixture produced one keeper, two proposed archives and
+zero blocking collisions without changing inputs. All 204 focused tests
+passed, including isolated publication and recovery of exact bytes, dates
+and verified preparation lineage; routine checks passed. No new run was
+launched against Sandbox Working.
 
 The central correction was contractual: SIMPLE must reconsider eligible
 existing lower Gallery/core members, not merely lower receiving thresholds

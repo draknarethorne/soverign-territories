@@ -1053,13 +1053,36 @@ Models. Similarity of 0.55 or higher remains a cast-review threshold, not
 proof of identity.
 
 The draft core/action values are category-specific: Prospects and Potentials
-use 0.15 as the minimum core similarity and 0.30 as the Review-suggestion
-boundary; Models use 0.30 for both; Angels and Sisters use 0.30 for core
-membership and 0.15 for red-band Review suggestions. Candidate grouping uses a
+use 0.20 as the minimum core similarity and 0.30 as the Review-suggestion
+boundary; Models use 0.38 for core similarity and 0.30 for Review suggestions;
+Angels and Sisters use 0.38 for core membership and 0.15 for red-band Review
+suggestions. These are core-selection floors, not Gallery admission or
+removal thresholds. Eligible anchors and the provisional single-reference
+fallback still apply. Existing cast Gallery placements are not eligible to
+move cross-cast or down. Candidate grouping uses a
 separate 0.25 average-linkage threshold and retains pairs and singletons.
 Robust provisional cores exclude red outliers. Photo-to-core attachment and
 group-to-core attachment use distinct tier thresholds; an action-support
 minimum does not erase a small candidate group.
+
+SIMPLE resolves same-ID collisions after inventory and lineage verification,
+before preparation, initial cores or matching. Exact copies yield one keeper.
+A verified prepared native and its exact retained raw original are one version,
+not two edits. Otherwise newest filesystem modification time wins and routes
+normally. A tie favors a catalogue-bound version, then the stable keeper
+order. A protected Gallery copy wins over an unprotected edit; when more than
+one protected Gallery has the ID, prefer existing anchor, workflow or
+catalogue evidence, then the stable keeper order. Archive the other copies
+and report the decision without stopping the run. Invalid lineage that
+cannot be archived reliably still blocks apply.
+The LEAN/FULL keeper uses the standard preparation recipe if still raw, or
+preserves its verified prior preparation. Neither age nor protection certifies
+a clean crop or complete overlay removal.
+Preview records the decision, source hashes and dates, and proposed archive
+paths. Apply moves only proven redundant copies to `_duplicates` in the same
+recoverable transaction as placements. Use **ID collisions** in the saved
+movement recap for keeper decisions, holds and archive links. This contract
+does not redefine the separate legacy duplicates command or normal intake.
 
 Automatic organizational-family association is enabled in the current draft
 under the independent-evidence gates described
@@ -1504,11 +1527,75 @@ an interrupted Working reset resumes the existing journal. Repeat apply with
 the same run ID verifies the completed baseline rather than resetting twice.
 Use a new run ID for a deliberately new baseline.
 
+To replay an existing frozen Source instead of refreshing it, pass its
+recorded `--frozen-source-sha256` and a new `--run-id` to
+`bin\sandbox-baseline.cmd`. Start with `--dry-run`, then use the same arguments
+for `--apply` and `--check`. This mode stages and verifies a Source copy,
+preserves file modification times, and publishes it as Working. The prior
+Working tree remains intact at `Working-before-<run-id>` (its absolute links
+refer to the original Working path). Source and Production stay unchanged.
+After an interruption during the switch, resume with the exact same apply
+command; do not rename the staged or preserved roots by hand.
+
 `--check` verifies the untouched baseline before intake, not a fully processed
 library afterward. End-to-end SIMPLE output has its own check. Preserve each
 baseline receipt's original implementation binding; a later helper change
 does not authorize rewriting that receipt or resetting an installed baseline
 solely to make its code hash current.
+
+### Clean exact Various copies and replace approved originals before a rebase
+
+Use `bin\various-cleanup.cmd` with the reviewed cleanup JSON and its SHA-256
+on a matching raw copy of Production or Sandbox Working. The JSON uses
+library-relative paths, so the drive can change. Preview first, close other
+library writers, and run from the repository root:
+
+```cmd
+set "LIBRARY=B:\Sovereign Territories"
+set "PLAN=C:\path\simple-run14-various-cleanup.json"
+set "SHA=EXACT-PLAN-SHA256"
+bin\various-cleanup.cmd --root "%LIBRARY%" --plan "%PLAN%" --sha256 "%SHA%" --dry-run
+bin\various-cleanup.cmd --root "%LIBRARY%" --plan "%PLAN%" --sha256 "%SHA%" --apply --backup-confirmed
+bin\various-cleanup.cmd --root "%LIBRARY%" --plan "%PLAN%" --sha256 "%SHA%" --check
+```
+
+Apply with `--backup-confirmed` only if the redundant incoming copies need
+no additional backup. The command checks the old original and incoming
+SHA-256 values before changes. It deletes only listed exact Various copies
+and moves each approved different-byte version into the existing named
+path. It moves the displaced original (without re-encoding) to
+`_archive\various-cleanup\<plan-hash-prefix>` under its original relative
+path. Protected cast placement and the photo's filename/ID are unchanged.
+This tool refuses catalogue-managed roots rather than invalidating a
+content-bound protection or retained preparation. Unlisted files are not
+touched, and an ambiguous edit or mismatched hash stops preflight.
+
+After an interruption, repeat the same apply command to finish with the
+verified archive. Keep the sealed `Source` and its manifest unchanged;
+apply against its Working copy, or create a new baseline from newly cleaned
+Production using the normal baseline launcher. Existing rebase previews are
+historical after cleanup; do not apply them against changed inputs.
+
+For routine intake or rebase, scan the current library instead of supplying
+the historical replacement plan. Save the JSON and its SHA-256 as the
+discard record. Run this before preparation, backup, or rebase preview:
+
+```cmd
+bin\various-cleanup.cmd --root "%LIBRARY%" --scan-exact > "%PLAN%"
+certutil -hashfile "%PLAN%" SHA256
+```
+
+Review the listed source and keeper paths, then use the same `--apply
+--backup-confirmed` and `--check` commands above with that JSON and hash.
+The exact-only scan works on raw or catalogue-managed libraries. It
+matches stable ID and full bytes, and never backs up or archives a discarded
+incoming file. A verified active file must remain; a pool-only group with
+identical bytes keeps one incoming copy. Different bytes, different IDs,
+ambiguous owners and incoming files with retained preparation or configured
+selection stay for normal processing and review. A prepared native with
+different current bytes is not an exact match and is handled by the
+retained-lineage rules instead. Neither intake nor rebase silently discards
+files: the preflight is a separate opt-in step.
 
 ### Stable whole-library SIMPLE preview, apply and check
 
@@ -1532,6 +1619,13 @@ references and candidates before freezing cores; FAST uses raw pixels and
 explicitly defers editing, so it is not a substitute for fresh prepared-pixel
 acceptance. Required model weights must already exist locally. Missing weights
 fail explicitly; neither preview nor apply may download replacements.
+
+A fresh FULL/LEAN rebase assesses eligible originals across the general
+Gallery/Review domain, including established Angels and Sisters; no duplicate
+submission is needed. It assesses one eligible source per logical input,
+not every physical file. Archived duplicates, non-voting holds, and Artists
+are outside this pass, and verified retained preparations can be reused.
+Assessment can keep the original bytes if no edit passes the recipe.
 
 For FULL/LEAN, a newly prepared same-path Review admission still publishes
 the selected native and fresh preparation/history evidence; unchanged

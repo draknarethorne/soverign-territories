@@ -4,15 +4,33 @@
 
 **Queue focus:** RA2d, RA2j, T29, T30, RA2o
 
+**Nov19 follow-up:** RA2j owns the
+[core and duplicate-readiness slice](2026-11-16-simple-review-and-tuning.md#nov-19-post-run13-tuning).
+RA2d owns human review and the deferred misplacement case; no new Review
+cutoff was selected. The replay starts from the frozen Production-derived
+snapshot, preserving named-folder and Various arrivals where they began.
+The frozen replay baseline `simple-clean-20261119-14` passed preview, apply
+and check. Original Working (including run13) is preserved intact; Source
+and Production were not written. Fresh LEAN `simple-rebase-20261119-14`
+preview exited 0. The user then authorized the separate
+[raw-baseline cleanup](2026-11-16-simple-review-and-tuning.md#nov-19-post-run13-tuning):
+Sandbox Working and Production passed apply/check, with 1,799 exact incoming
+copies removed and 180 approved versions installed per root. Frozen Source
+remains unchanged. The prior preview is historical. LEAN
+`simple-rebase-20261119-15` previews cleaned Working without reset. The user
+authorizes bound Sandbox publication after verification; no run15
+placements have been published. The opt-in, hash-bound preflight is now
+available before daily intake or SIMPLE without automatic deletion.
+
 **Nov19 installed closeout:** RA2j's bounded SIMPLE foundation is installed
 on existing Sandbox Working, LEAN `simple-rebase-20261118-13`.
 The [verified closeout](2026-11-16-simple-review-and-tuning.md#nov19-installed-run13-closeout)
 records apply/check/repeat exit0, actual movement conservation and installed
 Gallery/Overview/Review, retained-history/detail and applied recap/audit proof.
-No writer remains. There are 123 cast Gallery/271 cast Review admissions,
+No run13 writer remains. There are 123 cast Gallery/271 cast Review admissions,
 no existing cast Gallery departures, and 733 publication rows (686 changed
 paths/47 same-path updates). Keep run09/baseline02/preparation/failure evidence
-intact; no reset, new intake, experiments or Production write.
+intact through the frozen replay; no new intake, experiments or Production write.
 The [daily recap](../recap/2026-11-18-simple-foundation.md) records the measured
 debugging chain, 53/53 mutations, 1,048 library/290 remaining tests and the
 140-test staging/87-test report fixes. The first installed check caught

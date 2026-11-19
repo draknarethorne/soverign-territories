@@ -24,7 +24,7 @@ Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (gen
 
 | Window | Single authoritative execution home | Boundary |
 | --- | --- | --- |
-| Now | [M1 / current Queue focus](2026-11-05-priority-reset.md#execution-spine) | [Installed LEAN run13](2026-11-16-simple-review-and-tuning.md#nov19-installed-run13-closeout): apply/check/repeat, actual movement/viewer proof and Various accounting pass; no writer remains. 123 cast Gallery/271 cast Review admissions, no cast Gallery departures. Preserve failures and baseline02/run09; no reset or experiments. RA2d human review and residual-core/version diagnosis remain; T29/T30 retain performance. Production read-only; grouped commits/push follow final hygiene |
+| Now | [M1 / current Queue focus](2026-11-05-priority-reset.md#execution-spine) | [Frozen replay follow-up](2026-11-16-simple-review-and-tuning.md#nov-19-post-run13-tuning): raw cleanup verified, run13 and frozen Source preserved. RA2j owns the next cleaned-baseline preview and the daily exact-copy follow-up; RA2d retains human acceptance and deferred diagnosis. T29/T30 retain performance. |
 | Next | [M2-M6](2026-11-05-priority-reset.md#execution-spine) | Trusted cast -> selections -> source fidelity -> generic female pilot -> character art/video; advance only at entry gates |
 | Companion | Spelling/new-PC track selected in the spine | Settled processing/evidence and paired baseline before rename; no competing full milestone |
 | Holding | Remaining open domain tasks in the [inventory](#plans) | Deferred, not completed; select/transfer only needed tasks at a milestone gate |
