@@ -15,6 +15,7 @@
       "**/.vs": true
     },
     "editor.wordWrapColumn": 500,
-    "editor.wordWrapIndicator": true
+    "editor.wordWrapIndicator": true,
+    "powershell.cwd": "soverign-territories"
   }
 }
