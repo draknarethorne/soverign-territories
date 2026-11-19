@@ -19,6 +19,7 @@ echo   A  Animate a hero (video prompts, workflows, deploy)
 echo   L  Normal photo intake: bounded FULL/LEAN/FAST pipeline verified; current-library, fresh-baseline and human review remain gated
 echo   LM Preview full-rebase manifest (source checks only; no reset, matching, or library writes)
 echo   SB Preview clean Sandbox baseline (Production to Source to Working; no changes)
+echo   VC Scan for exact Various arrivals or preview a reviewed cleanup plan (no changes)
 echo   SR Preview SIMPLE whole-library rebase (can prepare/measure the full library)
 echo   RR Preview saved SIMPLE recap/audit (reports only; no matching or moves)
 echo   EX Experimental likeness operation (explicit operation; directed rebase also requires a recipe)
@@ -69,6 +70,7 @@ if /i "%CH%"=="K" call "%~dp0backdrop.cmd" --repo --workspaces --check & pause &
 if /i "%CH%"=="L" goto normalintake
 if /i "%CH%"=="LM" goto rebasemanifest
 if /i "%CH%"=="SB" goto sandboxbaseline
+if /i "%CH%"=="VC" goto variouscleanup
 if /i "%CH%"=="SR" goto simplerebase
 if /i "%CH%"=="EX" goto likenessexperiments
 if /i "%CH%"=="R" call "%~dp0people-gallery-review.cmd" & pause & goto menu
@@ -191,6 +193,23 @@ pause
 goto menu
 :sandboxbaseline
 call "%~dp0sandbox-baseline.cmd" --root "B:\Sovereign Territories Sandbox\Working" --dry-run
+pause
+goto menu
+:variouscleanup
+set "VCROOT="
+set "VCPLAN="
+set "VCSHA="
+set /p "VCROOT=Absolute library path (blank cancels): "
+if "%VCROOT%"=="" goto menu
+set /p "VCPLAN=Absolute cleanup plan JSON path (blank scans for exact arrivals): "
+if "%VCPLAN%"=="" (
+  call "%~dp0various-cleanup.cmd" --root "%VCROOT%" --scan-exact
+  pause
+  goto menu
+)
+set /p "VCSHA=Cleanup plan SHA-256 (blank cancels): "
+if "%VCSHA%"=="" goto menu
+call "%~dp0various-cleanup.cmd" --root "%VCROOT%" --plan "%VCPLAN%" --sha256 "%VCSHA%" --dry-run
 pause
 goto menu
 :simplerecap

@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import os
 import pathlib
 import tempfile
 import unittest
@@ -81,6 +82,46 @@ class SandboxBaselineTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Source to match"):
             sandbox.full_reset_apply(self.working, discard_working_history=True)
         self.assertEqual((self.working / self.relative).read_bytes(), b"experimental pixels")
+
+    def test_frozen_replay_preserves_working_and_does_not_consult_live_production(self):
+        manifest = self.source.parent / "source-manifest.json"
+        original_manifest = manifest.read_bytes()
+        digest = hashlib.sha256(original_manifest).hexdigest()
+        source_native = self.source / self.relative
+        os.utime(source_native, ns=(1_700_000_000_000_000_000,) * 2)
+        with mock.patch.object(sandbox, "_full_reset_analysis", side_effect=AssertionError("live comparison")):
+            proposal = baseline.frozen_preview(self.working, "replay", digest)
+            self.assertTrue(proposal["resetReady"])
+            result = baseline.frozen_apply(self.working, "replay", digest)
+            self.assertTrue(baseline.frozen_check(self.working, "replay", digest)["checked"])
+        self.assertEqual((self.working / self.relative).read_bytes(), b"old snapshot")
+        self.assertEqual((self.working / self.relative).stat().st_mtime_ns, source_native.stat().st_mtime_ns)
+        preserved = pathlib.Path(result["preservedWorking"])
+        self.assertEqual((preserved / self.relative).read_bytes(), b"experimental pixels")
+        self.assertEqual((preserved / "_reports/obsolete.html").read_bytes(), b"old report")
+        self.assertFalse((self.working / "_reports").exists())
+        self.assertEqual(manifest.read_bytes(), original_manifest)
+        self.assertEqual((self.production / self.relative).read_bytes(), b"current production")
+        with self.assertRaisesRegex(ValueError, "SHA-256"):
+            baseline.frozen_preview(self.working, "different", "a" * 64)
+
+    def test_frozen_replay_resumes_after_interruption_between_renames(self):
+        digest = sandbox._file_digest(self.source.parent / "source-manifest.json")
+        original = pathlib.Path.rename
+
+        def interrupt_swap(path, target):
+            if path.name == "working-new":
+                raise KeyboardInterrupt
+            return original(path, target)
+
+        with mock.patch.object(pathlib.Path, "rename", interrupt_swap):
+            with self.assertRaises(KeyboardInterrupt):
+                baseline.frozen_apply(self.working, "interrupted", digest)
+        preserved = self.working.parent / "Working-before-interrupted"
+        self.assertFalse(self.working.exists())
+        self.assertEqual((preserved / self.relative).read_bytes(), b"experimental pixels")
+        self.assertTrue(baseline.frozen_apply(self.working, "interrupted", digest)["checked"])
+        self.assertEqual((self.working / self.relative).read_bytes(), b"old snapshot")
 
     def test_copy_failure_preserves_both_old_trees_and_can_retry(self):
         with mock.patch.object(sandbox, "_copy_verified_file", side_effect=OSError("copy failed")):

@@ -201,7 +201,7 @@ def _tree_inventory(root, hash_files, excluded_roots=()):
     return inventory, file_count, total_bytes, excluded_count, excluded_bytes
 
 
-def validate_sandbox(working_root):
+def validate_sandbox(working_root, *, allow_missing_working=False):
     """Validate layout and the immutable source snapshot before any reset."""
     started = time.perf_counter()
     working_root = pathlib.Path(working_root).expanduser()
@@ -214,10 +214,12 @@ def validate_sandbox(working_root):
         raise ValueError("sandbox reset requires a 'Sovereign Territories Sandbox\\Working' path")
 
     for path in (sandbox_root, working_root):
+        if path == working_root and allow_missing_working and not path.exists() and not _is_reparse_point(path):
+            continue
         if _is_reparse_point(path) or not path.is_dir():
             raise ValueError(f"missing or unsafe sandbox directory: {path}")
     sandbox_root = sandbox_root.resolve(strict=True)
-    working_root = working_root.resolve(strict=True)
+    working_root = working_root.resolve(strict=not allow_missing_working)
     if (
         sandbox_root.name.casefold() != "sovereign territories sandbox"
         or working_root.name.casefold() != "working"

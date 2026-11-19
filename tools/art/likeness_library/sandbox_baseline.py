@@ -1,4 +1,4 @@
-"""Refresh the disposable Sandbox baseline without inheriting Working history."""
+"""Refresh or replay the Sandbox baseline without inheriting Working history."""
 
 import argparse
 import json
@@ -24,7 +24,7 @@ def _implementation_hashes():
     }
 
 
-def _paths(working):
+def _paths(working, *, allow_missing=False):
     working = pathlib.Path(working).expanduser()
     if not working.is_absolute() or not sandbox.is_sandbox_working_path(working):
         raise ValueError("baseline requires an absolute Sovereign Territories Sandbox\\Working root")
@@ -32,9 +32,9 @@ def _paths(working):
                  working.parent / "source-manifest.json", working.parent / "_baseline-state"):
         if sandbox._is_reparse_point(path):
             raise ValueError(f"refusing linked baseline path: {path}")
-    if not working.is_dir() or not working.parent.is_dir():
+    if not working.parent.is_dir() or (not working.is_dir() and (not allow_missing or working.exists())):
         raise ValueError(f"missing sandbox Working: {working}")
-    working = working.resolve(strict=True)
+    working = working.resolve(strict=not allow_missing)
     if any(parent.name.casefold() == "sovereign territories" for parent in working.parents):
         raise ValueError("sandbox baseline must not be inside Production")
     return working, working.parent / "_baseline-state"
@@ -206,6 +206,132 @@ def _receipt_path(state_root, run_id):
     return path / f"{run_id}.json"
 
 
+def _frozen_source(working, digest, *, allow_missing=False):
+    manifest = working.parent / "source-manifest.json"
+    if not re.fullmatch(r"[a-f0-9]{64}", digest) or sandbox._file_digest(manifest) != digest:
+        raise ValueError("frozen Source manifest does not match the requested SHA-256")
+    layout = sandbox.validate_sandbox(working, allow_missing_working=allow_missing)
+    if not layout["manifest_files"] or sandbox._file_digest(manifest) != digest:
+        raise ValueError("frozen Source is empty or its manifest changed")
+    return layout
+
+
+def _frozen_paths(state_root, run_id):
+    receipt = _receipt_path(state_root, run_id)
+    preserved = state_root.parent / f"Working-before-{run_id}"
+    for path in (receipt, preserved):
+        if sandbox._is_reparse_point(path):
+            raise ValueError(f"unsafe frozen replay path: {path}")
+    return receipt, preserved
+
+
+def frozen_preview(working, run_id, digest):
+    working, state_root = _paths(working)
+    receipt, preserved = _frozen_paths(state_root, run_id)
+    layout = _frozen_source(working, digest)
+    return {
+        "previewOnly": True, "resetReady": not (receipt.exists() or preserved.exists()),
+        "runId": run_id, "workingRoot": str(working), "preservedWorking": str(preserved),
+        "sourceRoot": str(layout["source_root"]), "sourceManifestSHA256": digest,
+        "sourceFileCount": layout["file_count"], "sourceBytes": layout["total_bytes"],
+        "sourceNeedsRefresh": False, "carryForwardCounts": {},
+        "workingEntriesToPreserve": sorted(path.name for path in working.iterdir()),
+    }
+
+
+def _verify_frozen_copy(layout, target):
+    expected = layout["manifest_files"]
+    _verify_tree(target, expected)
+    for relative in expected:
+        source = layout["source_root"] / relative
+        if (target / relative).stat().st_mtime_ns != source.stat().st_mtime_ns:
+            raise ValueError(f"frozen copy did not preserve modification time: {relative}")
+
+
+def frozen_check(working, run_id, digest):
+    working, state_root = _paths(working)
+    receipt, preserved = _frozen_paths(state_root, run_id)
+    data = json.loads(receipt.read_text(encoding="utf-8"))
+    if (data.get("workingRoot") != str(working) or data.get("preservedWorking") != str(preserved)
+            or data.get("sourceManifestSHA256") != digest or data.get("runId") != run_id
+            or data.get("implementationSHA256") != _implementation_hashes() or not preserved.is_dir()):
+        raise ValueError("frozen replay receipt binding changed")
+    _verify_frozen_copy(_frozen_source(working, digest), working)
+    return {**data, "checked": True, "receipt": str(receipt)}
+
+
+def frozen_apply(working, run_id, digest):
+    working, state_root = _paths(working, allow_missing=True)
+    receipt, preserved = _frozen_paths(state_root, run_id)
+    with temporary_storage.resumable_staging_directory(state_root, "transaction") as state:
+        journal_path, staged = state / "journal.json", state / "working-new"
+        if any(sandbox._is_reparse_point(path) for path in (journal_path, staged)):
+            raise ValueError("unsafe frozen replay staging")
+        binding = {
+            "kind": "frozen-source-replay", "runId": run_id, "workingRoot": str(working),
+            "preservedWorking": str(preserved), "sourceManifestSHA256": digest,
+            "implementationSHA256": _implementation_hashes(),
+        }
+        if journal_path.exists():
+            saved = json.loads(journal_path.read_text(encoding="utf-8"))
+            if any(saved.get(key) != value for key, value in binding.items()):
+                raise ValueError("unfinished baseline transaction belongs to another operation")
+        elif receipt.exists():
+            if any(state.iterdir()):
+                raise ValueError("unclassified baseline staging files")
+            result = frozen_check(working, run_id, digest)
+            state.rmdir()
+            return result
+        else:
+            if any(state.iterdir()) or preserved.exists() or not working.is_dir():
+                raise ValueError("frozen replay requires original Working and an unused preservation path")
+            saved = {**binding, "phase": "copying"}
+            sandbox._write_reset_journal(journal_path, saved)
+
+        layout = _frozen_source(working, digest, allow_missing=preserved.is_dir())
+        if saved["phase"] == "copying":
+            if preserved.exists() or not working.is_dir():
+                raise ValueError("original Working changed before frozen replay staging")
+            if staged.exists():
+                _discard_child(state, staged.name)
+            staged.mkdir()
+            for relative, (size, checksum) in sorted(layout["manifest_files"].items()):
+                sandbox._copy_verified_file(layout["source_root"] / relative, staged / relative, size, checksum)
+            saved["phase"] = "publishing"
+            sandbox._write_reset_journal(journal_path, saved)
+        if saved["phase"] != "publishing":
+            raise ValueError("unknown frozen replay phase")
+        if preserved.exists() and not preserved.is_dir():
+            raise ValueError("invalid frozen replay preservation path")
+        if staged.exists():
+            _verify_frozen_copy(layout, staged)
+            if not preserved.exists():
+                working.rename(preserved)
+            elif working.exists():
+                raise ValueError("both original Working and its preservation path exist")
+            try:
+                staged.rename(working)
+            except OSError:
+                if not working.exists():
+                    preserved.rename(working)
+                raise
+        if not preserved.is_dir():
+            raise ValueError("frozen replay is missing its preserved Working")
+        _verify_frozen_copy(layout, working)
+        data = {
+            **binding, "schemaVersion": 1, "sourceFileCount": layout["file_count"],
+            "sourceBytes": layout["total_bytes"], "carryForwardCounts": {},
+        }
+        if not receipt.exists():
+            receipt.parent.mkdir(parents=True, exist_ok=True)
+            sandbox._write_reset_journal(receipt, data)
+        elif json.loads(receipt.read_text(encoding="utf-8")) != data:
+            raise ValueError("frozen replay receipt changed")
+        journal_path.unlink()
+        state.rmdir()
+    return {**data, "applied": True, "checked": True, "receipt": str(receipt)}
+
+
 def apply(working, run_id, *, cfg=None):
     working, state_root = _paths(working)
     cfg = cw.load_cfg() if cfg is None else cfg
@@ -225,7 +351,8 @@ def apply(working, run_id, *, cfg=None):
             return result
         if journal_path.exists():
             journal = json.loads(journal_path.read_text(encoding="utf-8"))
-            if journal["workingRoot"] != str(working) or journal["runId"] != run_id:
+            if (journal.get("kind") == "frozen-source-replay"
+                    or journal["workingRoot"] != str(working) or journal["runId"] != run_id):
                 raise ValueError("unfinished baseline transaction belongs to another root/run")
             _recover_source(working, state, journal)
         else:
@@ -290,15 +417,19 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", required=True, type=pathlib.Path)
     parser.add_argument("--run-id")
+    parser.add_argument("--frozen-source-sha256", help="replay the exact existing Source; preserve old Working")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--dry-run", action="store_true")
     mode.add_argument("--apply", action="store_true")
     mode.add_argument("--check", action="store_true")
     args = parser.parse_args(argv)
-    if (args.apply or args.check) and not args.run_id:
-        parser.error("--apply/--check require --run-id")
+    if (args.apply or args.check or args.frozen_source_sha256) and not args.run_id:
+        parser.error("--apply/--check and frozen Source require --run-id")
     try:
-        if args.apply:
+        if args.frozen_source_sha256:
+            action = frozen_apply if args.apply else frozen_check if args.check else frozen_preview
+            result = action(args.root, args.run_id, args.frozen_source_sha256)
+        elif args.apply:
             result = apply(args.root, args.run_id)
         elif args.check:
             result = check(args.root, args.run_id)

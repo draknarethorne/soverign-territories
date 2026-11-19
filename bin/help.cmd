@@ -23,6 +23,11 @@ echo    library.cmd [--photo-id ID ...] [--profile lean^|full^|fast] [--apply]  
 echo                                    bounded three-profile proof passed; full-current-library, fresh-baseline and human identity/crop acceptance remain gated
 echo                                    FULL/LEAN use the same offline native recipe and matcher; FULL retains richer products; FAST defers editing/944 and never certifies raw pixels clean
 echo    library.cmd --update-photo-id ID --run-id RUN [--apply]  explicit recoverable same-photo replacement; retains existing owner and name
+echo    various-cleanup.cmd --root RAW_LIBRARY --plan PLAN --sha256 HASH [--dry-run ^| --check ^| --apply --backup-confirmed]
+echo                                    replay a reviewed SIMPLE raw-baseline cleanup: remove exact Various copies, move intentional edits into the original path, archive older originals
+echo                                    dry-run before applying; does not touch sealed Source or a catalogue-managed library
+echo    various-cleanup.cmd --root LIBRARY --scan-exact  print hash-bound discard plan for same-ID, same-byte arrivals before intake or rebase
+echo                                    exact-only plans also work on catalogue-managed libraries and never archive the discarded files
 echo    library.cmd --recover --run-id RUN [--apply]  preview/apply exact partial-publication recovery from its journal
 echo    library-preview.cmd [--photo-id ID ...] [--profile P]  preview pending/selected intake; no library writes
 echo    library-check.cmd --photo-id ID [--photo-id ID ...]  read-only selected intake check; --run-id ID verifies an applied receipt
@@ -30,6 +35,7 @@ echo    library.cmd --undo --run-id ID [--apply]  preview or execute exact backe
 echo    rebase-manifest.cmd --run-id ID [--dry-run ^| --apply ^| --check]  Production originals + verified unique Sandbox arrivals; review-only proposal, never resets/publishes
 echo    sandbox-baseline.cmd --root ABS_SANDBOX_WORKING [--dry-run ^| --run-id ID --apply ^| --run-id ID --check]
 echo                                    refresh verified Production Source then reset disposable Working with NO old history/carry-forward; preview first, Production read-only
+echo                                    --frozen-source-sha256 HASH --run-id ID replays existing sealed Source, preserves old Working, and never refreshes Source
 echo    normal-rebase.cmd --root ABS_SANDBOX_WORKING --profile lean --run-id ID [--dry-run ^| --apply ^| --check]
 echo                                    SIMPLE whole-library composition, distinct from incremental library.cmd; preview can prepare/measure all selected inputs, without publishing assignments
 echo                                    --repeat verifies applied receipt; --recover previews exact recovery, --recover-apply restores; draft apply requires --sandbox-apply-draft in Sandbox only
