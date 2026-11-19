@@ -4,6 +4,11 @@ call "%~dp0_env.cmd"
 call "%~dp0_test-env.cmd"
 if errorlevel 1 exit /b 1
 rem Fast code tests for workflow tools, prompt generation and photo-library galleries.
+%PY% -m unittest tools.art.likeness_utils.tests.test_diagnostics tools.art.likeness_utils.tests.test_diagnostics_routing tools.art.likeness_utils.tests.test_family_preview
+if errorlevel 1 (
+  call "%~dp0_end.cmd" 1
+  exit /b 1
+)
 %PY% -m unittest tools.workflows.test_reference_rendering tools.workflows.test_reference_execution tools.workflows.test_reference_gallery tools.workflows.test_reference_outputs tools.workflows.test_reference_comparison tools.workflows.test_backdrop
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
@@ -24,7 +29,7 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% -m unittest tools.art.test_clean_preparation tools.art.test_retained_preparation tools.art.test_storage_retention
+%PY% -m unittest tools.art.test_clean_preparation tools.art.test_retained_preparation tools.art.test_storage_retention tools.art.test_normal_finish
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1

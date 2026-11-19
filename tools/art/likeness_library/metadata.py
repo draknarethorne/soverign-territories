@@ -125,6 +125,13 @@ def validation_errors(data):
         if not membership:
             continue
         person_id, group_id = membership["personId"], membership["groupId"]
+        admission = membership.get("assignmentEvidence", {}).get("castAdmission", {})
+        if admission.get("mode") == "optimistic-gallery" and (
+            membership["status"] != "tentative" or membership["coreUse"]
+            or membership.get("assignmentDisposition") != "provisional"
+            or photo.get("protected") or photo_id in anchor_owners
+        ):
+            errors.append(f"photos/{photo_id}/membership: unconfirmed Gallery cannot be core, protected or anchored")
         if person_id is not None and (person_id not in people or people[person_id].get("mergedInto")):
             errors.append(f"photos/{photo_id}/membership: unknown or merged current parent")
         if membership["status"] != "supported" and membership["coreUse"]:

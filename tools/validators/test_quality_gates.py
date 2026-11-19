@@ -7,7 +7,10 @@ import unittest
 from tools.validators.quality_selection import COLLABORATION_SKILLS
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-LIBRARY_TESTS = pathlib.Path("tools", "art", "likeness_library", "tests")
+DISCOVERED_TEST_DIRS = {
+    pathlib.Path("tools", "art", "likeness_library", "tests"),
+    pathlib.Path("tools", "art", "likeness_utils", "tests"),
+}
 
 
 def skill_metadata(text):
@@ -33,16 +36,19 @@ def uncovered_tests(root, launcher):
         token.replace("\\", ".").replace("/", ".").removesuffix(".py")
         for token in re.findall(r"tools(?:[\\/]|\.)[\w.\\/-]*test_\w+(?:\.py)?", commands)
     }
-    discovery = re.search(
-        r"(?m)^%PY% -m unittest discover -s tools[\\/]art[\\/]likeness_library[\\/]tests -p test_\*\.py$",
-        commands,
-    )
+    discoveries = {
+        pathlib.Path(*match.replace("\\", "/").split("/"))
+        for match in re.findall(
+            r"(?m)^%PY% -m unittest discover -s (tools[\\/][^ ]+) -p test_\*\.py$",
+            commands,
+        )
+    }
     missing = []
     for path in (root / "tools").rglob("test_*.py"):
         relative = path.relative_to(root)
         if "_archive" in relative.parts or "__pycache__" in relative.parts:
             continue
-        if discovery and relative.parent == LIBRARY_TESTS:
+        if relative.parent in DISCOVERED_TEST_DIRS and relative.parent in discoveries:
             continue
         module = ".".join(relative.with_suffix("").parts)
         if module not in references:
@@ -109,6 +115,21 @@ class QualityGateTests(unittest.TestCase):
         self.assertIn(
             "tools/art/likeness_library/tests/test_sandbox_reset.py",
             uncovered_tests(ROOT, launcher),
+        )
+
+    def test_utility_discovery_is_required_for_utility_tests(self):
+        launcher = (ROOT / "bin" / "validate.cmd").read_text(encoding="utf-8")
+        launcher = launcher.replace(
+            "%PY% -m unittest discover -s tools/art/likeness_utils/tests -p test_*.py",
+            "",
+        )
+        self.assertEqual(
+            uncovered_tests(ROOT, launcher),
+            [
+                "tools/art/likeness_utils/tests/test_diagnostics.py",
+                "tools/art/likeness_utils/tests/test_diagnostics_routing.py",
+                "tools/art/likeness_utils/tests/test_family_preview.py",
+            ],
         )
 
     def test_ci_uses_shared_selector_instead_of_duplicate_suites(self):

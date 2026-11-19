@@ -1,5 +1,5 @@
 @echo off
-rem library-check    read only: is the library in step (names, scaled copies, headshots, frames), any duplicates, any photo waiting to be sorted? exit 1 when work is waiting. Then run library.cmd
+rem library-check    read-only selected-pool intake check; use --run-id to check an applied receipt.
 call "%~dp0_env.cmd"
-%PY% tools\art\library_sync.py --check %*
+%PY% tools\art\likeness_library\normal_import.py --check %*
 call "%~dp0_end.cmd" %errorlevel%

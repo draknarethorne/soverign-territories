@@ -59,6 +59,14 @@ class LeanContinuationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "requires explicit directed"):
             self.command(dry_run=True, dominant_provisional=True)
 
+    def test_regroup_capture_requires_matching_preview_and_explicit_directed_mode(self):
+        with self.assertRaisesRegex(ValueError, "requires a matching"):
+            self.command(
+                dry_run=True, regroup=True, directed=True,
+                directed_recipe="directed-corrective-starting-050",
+                capture_regroup_call=True,
+            )
+
     def test_supported_launcher_previews_explicit_dominant_and_undone_quality_options(self):
         self.prepare()
         launcher = lean_continue.REPO / "bin" / "lean-continue.cmd"
@@ -79,13 +87,15 @@ class LeanContinuationTests(unittest.TestCase):
                 mock.patch.object(lean_continue.rebase_recap, "main", return_value=0):
             self.command(apply=True, regroup=True, directed=True,
                          directed_recipe="directed-core-continuity", review_source=str(review),
-                         dominant_provisional=True)
+                         dominant_provisional=True, capture_regroup_call=True)
         self.assertTrue(create.call_args.kwargs["regroup"])
         self.assertEqual(create.call_args.kwargs["directed_recipe"], "directed-core-continuity")
         self.assertEqual(create.call_args.kwargs["review_source"], review)
+        self.assertTrue(create.call_args.kwargs["capture_regroup_call"])
         receipt = json.loads((self.target / "continuation.json").read_text())
         self.assertEqual(receipt["grouping"]["directedRecipe"], "directed-core-continuity")
         self.assertTrue(receipt["grouping"]["dominantProvisional"])
+        self.assertTrue(receipt["grouping"]["captureRegroupCall"])
         self.assertTrue(create.call_args.kwargs["dominant_provisional"])
         with self.assertRaisesRegex(ValueError, "grouping mode/recipe"):
             self.command(check=True, regroup=True, directed=True,

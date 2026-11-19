@@ -103,6 +103,114 @@ class RetainedPreparationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "stale or invalid"):
             retained.refresh_detail(self.root, photo, self.row["photoId"])
 
+    def test_normal_upward_publication_reuses_retained_native_all_profiles_and_recovers(self):
+        from types import SimpleNamespace
+        from tools.art.likeness_library import normal_products, normal_transaction
+
+        image = io.BytesIO()
+        Image.new("RGB", (400, 600), "navy").save(image, format="PNG")
+        selected = image.getvalue()
+        self.put(self.root, self.destination, selected)
+        composition = self.row["variants"]["composition"]
+        self.put(self.prep, composition["path"], selected)
+        composition["sha256"] = sha(selected)
+        self.stage()
+        original = retained.verify_link(self.root, self.destination)
+        old_manifest = self.root / original["manifest"]
+        old_manifest_bytes = old_manifest.read_bytes()
+        catalog = {"schemaVersion": 1, "people": {}, "photos": {}, "actions": []}
+        metadata.save_catalog(catalog, self.root / ".likeness-library.json")
+        move = {
+            "photoId": self.row["photoId"], "source": self.destination,
+            "destination": "Models/Recovered/gallery/recovered_image_123.jpg",
+            "sha256": sha(selected), "reason": "qualified upward recovery",
+        }
+        source = self.root / self.destination
+        photo = SimpleNamespace(name=source.name, box=[.2, .1, .7, .6], px=100, faces=1)
+        for profile in ("fast", "lean", "full"):
+            with self.subTest(profile=profile):
+                stage = self.root / "_reports" / "runs" / profile / "publication"
+                published, _updated, removed = normal_products.stage(
+                    self.root, stage, [move], None, profile=profile, photos=[photo],
+                    cfg={}, catalog=catalog, policy=load_policy(),
+                )
+                self.assertEqual(published[0]["sha256"], sha(selected))
+                self.assertEqual(old_manifest.read_bytes(), old_manifest_bytes)
+                self.assertEqual(source.read_bytes(), selected)
+                self.assertTrue(list((stage / "_processing" / "Models" / "Recovered").rglob("manifest.json")))
+        journal = stage.parent / "publication-journal.json"
+        with contextlib.redirect_stdout(io.StringIO()):
+            normal_transaction.publish(
+                self.root, stage, [move["source"], *removed], journal=journal,
+                bindings={}, profile="full", run_id="retained-upward-proof",
+            )
+        normal_transaction.verify(self.root, journal)
+        self.assertIsNotNone(retained.verify_link(self.root, move["destination"]))
+        self.assertEqual(old_manifest.read_bytes(), old_manifest_bytes)
+        normal_transaction.recover(self.root, journal, apply=True)
+        self.assertEqual(source.read_bytes(), selected)
+        self.assertIsNotNone(retained.verify_link(self.root, self.destination))
+        self.assertFalse((self.root / move["destination"]).exists())
+
+    def test_normal_membership_only_keeps_existing_active_preparation_claim(self):
+        from tools.art.likeness_library import normal_products
+
+        self.stage()
+        original = retained.verify_link(self.root, self.destination)
+        manifest = self.root / original["manifest"]
+        before = manifest.read_bytes()
+        stage = self.root / "_reports" / "runs" / "membership-only" / "publication"
+        move = {
+            "photoId": self.row["photoId"], "source": self.destination, "destination": self.destination,
+            "sha256": sha(self.selected), "reason": "persist non-recruiting Review evidence",
+            "normalAdmission": True, "membershipOnly": True, "preparationOnly": True,
+            "referenceVersion": "a" * 64, "referenceEligible": False,
+        }
+        catalog = {"schemaVersion": 1, "people": {}, "photos": {}, "actions": []}
+        _published, updated, _removed = normal_products.stage(
+            self.root, stage, [move], None, profile="fast", photos=[], cfg={},
+            catalog=catalog, policy=load_policy(),
+        )
+        self.assertEqual(updated["photos"][self.row["photoId"]]["membership"]["status"], "tentative")
+        self.assertFalse((stage / "_processing").exists())
+        self.assertEqual(manifest.read_bytes(), before)
+        self.assertIsNotNone(retained.verify_link(self.root, self.destination))
+
+    def test_normal_same_owner_review_promotion_preserves_old_manifest_and_recovers(self):
+        from tools.art.likeness_library import normal_products, normal_transaction
+
+        self.storage_mode = "lean"
+        detail = (self.prep / self.row["detail"]).read_bytes() + b"\n<p>Multiline retained detail.</p>\n"
+        self.put(self.prep, self.row["detail"], detail)
+        self.row["detailSha256"] = sha(detail)
+        self.stage()
+        original = retained.verify_link(self.root, self.destination)
+        old_manifest = self.root / original["manifest"]
+        before = old_manifest.read_bytes()
+        catalog = {"schemaVersion": 1, "people": {}, "photos": {}, "actions": []}
+        metadata.save_catalog(catalog, self.root / ".likeness-library.json")
+        move = {
+            "photoId": self.row["photoId"], "source": self.destination,
+            "destination": "Various/gallery/incoming_image_123.jpg",
+            "sha256": sha(self.selected), "reason": "same-owner Review promotion",
+        }
+        stage = self.root / "_reports" / "runs" / "same-owner" / "publication"
+        normal_products.stage(
+            self.root, stage, [move], None, profile="fast", photos=[], cfg={},
+            catalog=catalog, policy=load_policy(),
+        )
+        journal = stage.parent / "journal.json"
+        with contextlib.redirect_stdout(io.StringIO()):
+            normal_transaction.publish(
+                self.root, stage, [move["source"]], journal=journal,
+                bindings={}, profile="fast", run_id="same-owner",
+            )
+        self.assertEqual(old_manifest.read_bytes(), before)
+        self.assertIsNotNone(retained.verify_link(self.root, move["destination"]))
+        normal_transaction.recover(self.root, journal, apply=True)
+        self.assertEqual(old_manifest.read_bytes(), before)
+        self.assertIsNotNone(retained.verify_link(self.root, self.destination))
+
     def test_disjoint_retained_owners_match_serial_derivative_maintenance(self):
         image = io.BytesIO()
         Image.new("RGB", (400, 600), "red").save(image, format="PNG")
@@ -800,6 +908,49 @@ class RetainedPreparationTests(unittest.TestCase):
                 with scope:
                     with self.assertRaisesRegex(ValueError, "legacy crop refused"):
                         retained.crop_guard(self.root, self.destination, "photo:image_123")
+
+    def test_conflicting_alias_thumbnail_keeps_lineage_refusal_actionable(self):
+        self.stage()
+        alias = self.put(self.root, "Various/gallery/incoming_copy_image_123.jpg", b"unprepared alias")
+        before = alias.read_bytes()
+        with self.assertRaisesRegex(ValueError, "conflicting"):
+            retained.source_is_prepared(alias)
+        with mock.patch.object(derivatives, "expected_unavailability",
+                               side_effect=AssertionError("invalid lineage is not a framing exclusion")):
+            payload, _key, diagnostic = derivatives.thumbnail(alias, "head", px=0, faces=0)
+        self.assertIn("legacy crop refused", diagnostic)
+        self.assertFalse(diagnostic.startswith("INFO:"))
+        with Image.open(io.BytesIO(payload)) as image:
+            self.assertEqual(image.format, "JPEG")
+        self.assertEqual(alias.read_bytes(), before)
+        self.assertIsNotNone(retained.verify_link(self.root, self.destination))
+        with self.assertRaisesRegex(ValueError, "conflicting"):
+            retained.source_is_prepared(alias)
+
+    def test_review_reports_conflicting_alias_without_aborting_or_using_prepared_pixels(self):
+        from types import SimpleNamespace
+        from likeness_library import review_gallery
+
+        self.stage()
+        alias = self.put(self.root, "Various/gallery/incoming_copy_image_123.jpg", b"unprepared alias")
+        photo = SimpleNamespace(path=alias, box=None, px=0, faces=0, sha=sha(alias.read_bytes()))
+        out = self.root / "_reports" / "library"
+        item = {"_photo": photo, "photoId": "photo:image_123", "reason": "held conflicting source"}
+        with mock.patch.object(review_gallery, "alignment_evidence", return_value={"state": "unavailable"}):
+            items, _directory = review_gallery.write_thumbnails([item], out, self.root)
+        result = items[0]
+        self.assertEqual(result["href"], alias.as_uri())
+        self.assertIn("held conflicting source", result["reason"])
+        self.assertIn("legacy crop refused", result["reason"])
+        self.assertTrue(any(str(alias) in diagnostic for diagnostic in result["derivativeDiagnostics"]))
+        self.assertFalse(result["framingUnavailable"])
+        self.assertFalse(result["thumbnailProvenance"])
+        for field in ("thumbnail", "thumbnailHead", "thumbnailFace"):
+            with Image.open(out / result[field]) as image:
+                self.assertEqual(image.format, "JPEG")
+        self.assertIsNotNone(retained.verify_link(self.root, self.destination))
+        with self.assertRaisesRegex(ValueError, "conflicting"):
+            retained.source_is_prepared(alias)
 
     def test_empty_set_population_during_verification_is_rejected(self):
         self.stage()

@@ -132,14 +132,14 @@ class MembershipReassessmentTests(unittest.TestCase):
 
     def test_category_specific_admission_floors_are_used(self):
         state = self.build()
-        self.assertEqual(self.row(state, "p5")["membershipAssessment"]["own"]["routeMinimum"], .5)
+        self.assertEqual(self.row(state, "p5")["membershipAssessment"]["own"]["routeMinimum"], .4)
         for photo, saved, row in zip(self.run["photos"], self.run["finalMembershipAudit"]["rows"], self.candidate["rows"]):
             photo["destination"] = photo["destination"].replace("Models/A", "Prospects/A")
             saved["destination"] = photo["destination"]
             row["currentFolder"] = row["currentFolder"].replace("Models/A", "Prospects/A")
         self.candidate["identities"][0]["folder"] = "Prospects/A"
         row = self.row(self.build(), "p5")
-        self.assertEqual(row["membershipAssessment"]["own"]["routeMinimum"], .4)
+        self.assertEqual(row["membershipAssessment"]["own"]["routeMinimum"], .35)
 
     def test_conservation_order_and_positive_labels_cannot_create_destinations(self):
         before = copy.deepcopy((self.run, self.candidate, self.ledger))

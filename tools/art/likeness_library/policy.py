@@ -40,7 +40,7 @@ def validate_policy(policy):
         "categoryPolicies",
         "protection",
     }
-    optional = {"smallGroupMaximumUsablePhotos", "rebaseProtection", "familyNaming", "groupCastReviewEnabled"}
+    optional = {"smallGroupMaximumUsablePhotos", "rebaseProtection", "familyNaming", "groupCastReviewEnabled", "castAdmission"}
     if not required <= set(policy) or set(policy) - required - optional:
         missing = sorted(required - set(policy))
         extra = sorted(set(policy) - required - optional)
@@ -59,6 +59,33 @@ def validate_policy(policy):
         raise ValueError("likeness policy version must be a non-empty string")
     if policy["status"] not in POLICY_STATUSES:
         raise ValueError("likeness policy status must be draft or approved")
+    admission = policy.get("castAdmission")
+    if "castAdmission" in policy:
+        if not isinstance(admission, dict) or set(admission) != {
+            "reviewMinimum", "minimumIndependentReferences", "approvedClosePairs",
+        }:
+            raise ValueError("castAdmission keys are incomplete or unsupported")
+        _number(admission["reviewMinimum"], "castAdmission/reviewMinimum", 0, 1)
+        minimum = admission["minimumIndependentReferences"]
+        if isinstance(minimum, bool) or not isinstance(minimum, int) or minimum < 2:
+            raise ValueError("castAdmission requires at least two independent destination references")
+        pairs = admission["approvedClosePairs"]
+        if not isinstance(pairs, list):
+            raise ValueError("castAdmission/approvedClosePairs must be an array")
+        seen_pairs = set()
+        for pair in pairs:
+            if not isinstance(pair, list) or len(pair) != 2 or any(
+                not isinstance(folder, str) or folder.count("/") != 1
+                or folder.split("/")[0] not in ("Sisters", "Angels")
+                or not folder.split("/")[1].strip()
+                or folder.split("/")[1] in (".", "..") or "\\" in folder or ":" in folder
+                for folder in pair
+            ) or pair[0].casefold() == pair[1].casefold():
+                raise ValueError("approved close pairs require two distinct cast folders")
+            key = frozenset(folder.casefold() for folder in pair)
+            if key in seen_pairs:
+                raise ValueError("approved close pairs must be unique in both directions")
+            seen_pairs.add(key)
     runtime = policy["runtimeSettings"]
     if set(runtime) != {
         "mixed", "pool", "minCluster", "odd", "alike", "minFace", "multiFace",
@@ -147,6 +174,7 @@ def validate_policy(policy):
         }
         if set(rules) - {
             "unmatchedOutlierSplitEnabled", "galleryAdmissionEnabled", "galleryAdmissionMinimumSimilarity",
+            "reviewRouteMinimum", "reviewRouteMargin",
         } != required_category_keys:
             raise ValueError(f"categoryPolicies/{category} keys are incomplete or unsupported")
         if "galleryAdmissionEnabled" in rules and (
@@ -157,6 +185,10 @@ def validate_policy(policy):
         if "galleryAdmissionMinimumSimilarity" in rules:
             _number(rules["galleryAdmissionMinimumSimilarity"],
                     f"{category} Gallery admission minimum", 0, 1)
+        if category in ("Sisters", "Angels") and admission is not None and (
+            admission["reviewMinimum"] > rules.get("galleryAdmissionMinimumSimilarity", rules["photoRouteMinimum"])
+        ):
+            raise ValueError("cast Review minimum must not exceed its Gallery minimum")
         if "unmatchedOutlierSplitEnabled" in rules and not isinstance(rules["unmatchedOutlierSplitEnabled"], bool):
             raise ValueError(f"categoryPolicies/{category}/unmatchedOutlierSplitEnabled must be boolean")
         for key in (
@@ -170,6 +202,10 @@ def validate_policy(policy):
                 raise ValueError(f"categoryPolicies/{category}/{key} must be boolean")
         _number(rules["photoRouteMinimum"], f"{category} photo route minimum")
         _number(rules["photoRouteMargin"], f"{category} photo route margin", 0, 2)
+        if "reviewRouteMinimum" in rules:
+            _number(rules["reviewRouteMinimum"], f"{category} Review minimum")
+        if "reviewRouteMargin" in rules:
+            _number(rules["reviewRouteMargin"], f"{category} Review margin", 0, 2)
         _number(rules["mergeMinimum"], f"{category} merge minimum")
         core_min = _number(
             rules["identityCoreMinimumSimilarity"],

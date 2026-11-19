@@ -166,6 +166,25 @@ class DuplicatesTests(unittest.TestCase):
         self.assertEqual(ids, [])
         self.assertIn("newest modification time stays in gallery", out)
 
+    def test_incoming_version_selector_is_read_only_and_uses_existing_unique_newest_rule(self):
+        older = self.photo("Various", "Various", "older_shot_20261014123456.jpg", b"older")
+        newest = self.photo("Various", "Various", "newest_shot_20261014123456.jpg", b"newest")
+        existing = self.photo("Angels", "angelica", "angelica_shot_20261014123456.jpg", b"existing")
+        os.utime(older, ns=(1_000_000_000, 1_000_000_000))
+        os.utime(newest, ns=(2_000_000_000, 2_000_000_000))
+        entries = [
+            (older, "Various", older.parent.parent, "gallery"),
+            (newest, "Various", newest.parent.parent, "gallery"),
+            (existing, "Angels", existing.parent.parent, "gallery"),
+        ]
+
+        selection = duplicates.select_incoming_version(entries)
+
+        self.assertEqual(selection["status"], "selected-incoming")
+        self.assertIs(selection["selected"][0], newest)
+        self.assertEqual(set(selection["incoming"]), set(entries[:2]))
+        self.assertTrue(older.exists() and newest.exists() and existing.exists())
+
     def test_older_incoming_copy_does_not_overwrite_existing_duplicates_review(self):
         older = self.photo("Various", "Various", "older_shot_20261014123456.jpg", b"older")
         newest = self.photo("Various", "Various", "newest_shot_20261014123456.jpg", b"newest")

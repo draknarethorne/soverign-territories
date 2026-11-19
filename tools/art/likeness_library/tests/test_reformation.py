@@ -124,9 +124,10 @@ class ReformationTests(unittest.TestCase):
             self.photos.append(photo)
             self.audit.append({**self.audit[0], **photo})
             self.candidate["rows"].append({"photoId": pid, "currentFolder": "Prospects/Rival"})
-        # Raise only the fixture's discovery floor to isolate the rival; production
-        # gates are unchanged and exact recipe settings remain in output.
+        # Isolate the rival with explicit fixture discovery/separation gates;
+        # production defaults and exact recipe settings remain unchanged.
         self.settings["identityActions"]["identityClusterMinimumSimilarity"] = .5
+        self.settings["categoryPolicies"]["Models"]["photoRouteMargin"] = .15
         state = self.build()
         self.assertGreater(state["rows"][1]["competitorPersonCount"], 1)
         self.assertIn("ambiguous-full-competitor-margin", state["rows"][1]["reasons"])

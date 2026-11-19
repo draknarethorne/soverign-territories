@@ -30,6 +30,17 @@ class AlignmentEvidenceError(ValueError):
     """A requested exact SFace alignment could not be safely persisted."""
 
 
+def alignment_evidence_path(path):
+    """Keep full content/model IDs usable beyond Windows MAX_PATH."""
+    path = pathlib.Path(path).absolute()
+    value = str(path)
+    if os.name != "nt" or value.startswith("\\\\?\\"):
+        return path
+    if value.startswith("\\\\"):
+        return pathlib.Path("\\\\?\\UNC\\" + value[2:])
+    return pathlib.Path("\\\\?\\" + value)
+
+
 class Embedder:
     """Find faces and return normalized identity vectors using local OpenCV models."""
 
@@ -170,7 +181,7 @@ class Embedder:
             detector = model.get("detector") if isinstance(model, dict) else None
             recognizer = model.get("recognizer") if isinstance(model, dict) else None
             expected_name = f"{source_sha256}-{model_id}.png"
-            target = self.evidence_root / expected_name
+            target = alignment_evidence_path(self.evidence_root / expected_name)
             return (
                 evidence.get("sourceSha256") != source_sha256
                 or not isinstance(detector, dict)
@@ -234,7 +245,7 @@ class Embedder:
                 if cw.is_reparse_point(current):
                     raise AlignmentEvidenceError("linked likeness evidence path is not permitted")
             self.evidence_root.mkdir(parents=True, exist_ok=True)
-            target = self.evidence_root / artifact
+            target = alignment_evidence_path(self.evidence_root / artifact)
             if cw.is_reparse_point(target):
                 raise AlignmentEvidenceError(f"linked aligned-face evidence is not permitted: {target}")
             if target.is_file():

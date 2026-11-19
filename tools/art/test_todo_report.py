@@ -20,7 +20,16 @@ class TodoReportTests(unittest.TestCase):
             self.assertIn(f"| {hero} |", text)
 
     def test_open_work_comes_from_the_active_plans_as_one_queue_with_the_user_first(self):
-        text = tr.build()
+        with tempfile.TemporaryDirectory(dir=tr.ROOT / "tmp") as directory:
+            root = pathlib.Path(directory)
+            plans = root / "docs" / "plans"
+            plans.mkdir(parents=True)
+            (plans / "2026-10-30-now.md").write_text(
+                "# Now\n\n**Status:** active\n\n"
+                "- [ ] **P1 ai** T1 Verify the implementation\n"
+                "- [ ] **P1 you** T2 Review the result\n", encoding="utf-8")
+            with mock.patch.object(tr, "ROOT", root):
+                text = tr.build()
         self.assertIn("## Open work, by priority", text)
         self.assertIn("- [ ]", text)
         self.assertLess(text.index("Your queue"), text.index("For the assistant"))

@@ -52,7 +52,7 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% -m unittest tools.art.test_clean_preparation tools.art.test_retained_preparation tools.art.test_verification_reads tools.art.test_preparation_history_bundle tools.art.test_library_storage_experiment tools.art.test_library_rebase_replay
+%PY% -m unittest tools.art.test_clean_preparation tools.art.test_retained_preparation tools.art.test_verification_reads tools.art.test_preparation_history_bundle tools.art.test_library_storage_experiment tools.art.test_library_rebase_replay tools.art.test_normal_finish
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
@@ -88,6 +88,11 @@ if errorlevel 1 (
   exit /b 1
 )
 %PY% -m unittest discover -s tools/art/likeness_library/tests -p test_*.py
+if errorlevel 1 (
+  call "%~dp0_end.cmd" 1
+  exit /b 1
+)
+%PY% -m unittest discover -s tools/art/likeness_utils/tests -p test_*.py
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1

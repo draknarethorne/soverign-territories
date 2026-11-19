@@ -1,9 +1,33 @@
-"""Extracted reconciliation command implementation."""
+"""Explicit legacy reconciliation experiment controller."""
 import datetime
 import json
 import pathlib
+import sys
 
-from . import identity_families, identity_maintenance, maintenance, protection, rejections
+ART_ROOT = pathlib.Path(__file__).resolve().parents[1]
+if str(ART_ROOT) not in sys.path:
+    sys.path.insert(0, str(ART_ROOT))
+from likeness_library import identity_families, identity_maintenance, maintenance, protection, rejections  # noqa: E402
+
+
+def main(argv=None):
+    from tools.art import likeness
+
+    arguments = list(argv or [])
+    global_options, command_options = [], []
+    index = 0
+    while index < len(arguments):
+        value = arguments[index]
+        if value in ("--root", "--cache"):
+            global_options.extend(arguments[index:index + 2])
+            index += 2
+        elif value.startswith("--root=") or value.startswith("--cache="):
+            global_options.append(value)
+            index += 1
+        else:
+            command_options.append(value)
+            index += 1
+    return likeness.main([*global_options, "reconcile", *command_options])
 
 
 def _save_report(output, report):

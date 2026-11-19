@@ -19,10 +19,31 @@ echo    animate.cmd HERO                video prompts, MiniMax workflows, deploy
 echo    pull.cmd HERO [STAGE]           keep what you made or edited in ComfyUI (new = curated; edits to curated, zz_Shots, candidates and finals are captured; a final's image goes to assets\art)
 echo.
 echo  PHOTO LIBRARY: THE ROUTINE (drop new photos in Various\gallery, then)
-echo    library.cmd                     everything; automatically makes a full pre-run snapshot and prefers one updated incoming same-ID photo
-echo                                    draft likeness policy refuses before housekeeping; use library-preview.cmd until approved
-echo    library-preview.cmd             the same, every step as a preview ^(nothing moves^)
-echo    library-check.cmd               read only: is it in step, any duplicates, any photo waiting? Exit 1 when work is waiting
+echo    library.cmd [--photo-id ID ...] [--profile lean^|full^|fast] [--apply]  selected normal pipeline includes frozen audit/family metadata and Gallery/Overview/Review publication; preview is default
+echo                                    bounded three-profile proof passed; full-current-library, fresh-baseline and human identity/crop acceptance remain gated
+echo                                    FULL/LEAN use the same offline native recipe and matcher; FULL retains richer products; FAST defers editing/944 and never certifies raw pixels clean
+echo    library.cmd --update-photo-id ID --run-id RUN [--apply]  explicit recoverable same-photo replacement; retains existing owner and name
+echo    library.cmd --recover --run-id RUN [--apply]  preview/apply exact partial-publication recovery from its journal
+echo    library-preview.cmd [--photo-id ID ...] [--profile P]  preview pending/selected intake; no library writes
+echo    library-check.cmd --photo-id ID [--photo-id ID ...]  read-only selected intake check; --run-id ID verifies an applied receipt
+echo    library.cmd --undo --run-id ID [--apply]  preview or execute exact backed-up membership recovery
+echo    rebase-manifest.cmd --run-id ID [--dry-run ^| --apply ^| --check]  Production originals + verified unique Sandbox arrivals; review-only proposal, never resets/publishes
+echo    sandbox-baseline.cmd --root ABS_SANDBOX_WORKING [--dry-run ^| --run-id ID --apply ^| --run-id ID --check]
+echo                                    refresh verified Production Source then reset disposable Working with NO old history/carry-forward; preview first, Production read-only
+echo    normal-rebase.cmd --root ABS_SANDBOX_WORKING --profile lean --run-id ID [--dry-run ^| --apply ^| --check]
+echo                                    SIMPLE whole-library composition, distinct from incremental library.cmd; preview can prepare/measure all selected inputs, without publishing assignments
+echo                                    --repeat verifies applied receipt; --recover previews exact recovery, --recover-apply restores; draft apply requires --sandbox-apply-draft in Sandbox only
+echo                                    --measure-missing is post-apply local-model report-only; general-domain cache only, no fallback/cache/source/alignment writes or downloads
+echo                                    recoverable image errors produce an incomplete receipt and nonzero exit; core qualification is skipped
+echo                                    stable IDs disclose original + existing standard_name normalization; verified retained versions preserve lineage and are not extra voters
+echo                                    --check rehashes source bytes and report bindings; actual reference/candidate IDs require human review
+echo                                    --lock-cast-admission locks Sisters/Angels receiving only; repeat on preview/apply/check; cast rivals stay visible
+echo    library-legacy.cmd              former whole-library originals/duplicates/crop/reconcile routine; not the normal default
+echo    likeness-experiments.cmd legacy-reconcile [--root WORKING --cache FILE --out FILE]
+echo                                    explicit legacy merge/category/protection experiment; preview by default; no normal-intake import
+echo    likeness-experiments.cmd directed-rebase --root WORKING --run RUN --baseline working --regroup --directed --directed-recipe RECIPE
+echo                                    experimental composition only; directed rebase requires its explicit recipe
+echo    likeness.cmd reconcile           explicit legacy compatibility alias for likeness-experiments legacy-reconcile
 echo    library-backup.cmd [--apply ^| --full ^| --verify SNAPSHOT]  preview, create, or verify a dated snapshot (^--full keeps generated derivatives)
 echo    library-backup.cmd --restore SNAPSHOT --destination NEW_DIR [--apply]  preview/materialize exact recovery with regenerated derivatives; never overwrites a live tree
 echo    library-backup.cmd --benchmark SNAPSHOT [--limit 24] [--max-mib 32] [--out REPO_TMP_DIR] [--dry-run ^| --apply ^| --check]  bounded directory/ZIP64 stored/deflate1 measurements; never changes library or backup defaults
@@ -40,6 +61,8 @@ echo                                    --history-only [--dry-run ^| --check ^| 
 echo    artists-gallery.cmd [--root DIR] [--cache FILE] [--dry-run ^| --check ^| --apply]  separate Artist overview/photo review; shared small thumbnails in _reports\artists, NO matching or source changes
 echo    prepare-images.cmd --root "SANDBOX\Working" --out "Working\_reports\preparation\RUN" [--limit 28] [--dry-run ^| --apply ^| --check]  sidecar original/control/geometry/denoise/tone, larger pages and padded examples; NO source or identity changes
 echo                                    new v23 runs default to LEAN: exact-byte role reuse and recommended padding only; --storage-mode full keeps richer diagnostics; saved/interrupted modes persist. NOT FAST
+echo    originals.cmd --root DIR --only Various [--apply ^| --check]  independent framing maintenance; does not assign identities
+echo    originals.cmd --root DIR --photo-id ID --no-repoint [--dry-run ^| --apply ^| --check]  selected framing only; no native rename/cleanup, unrelated pruning or reassignment
 echo    preparation-history.cmd --root "SANDBOX\Working" --report "REPORT" --out "Working\_reports\preparation-history\NEW" --mode compact [--dry-run ^| --apply ^| --check]
 echo                                    compact downsizes diagnostics; collage makes labelled sheets; both retain exact originals/selected native/padded bytes once per photo. Independent new bundle, NO source PRUNE
 echo    storage-experiment.cmd --root "SOURCE\Working" --out "REPO\tmp\NEW" [--limit 24] [--dry-run ^| --apply ^| --check]  mixed 20-30 photo copied FULL/LEAN rebase, matching, publication, backup and restore; source stays read-only
@@ -75,6 +98,7 @@ echo    lean-continue.cmd --root "SANDBOX\Working" --source-run ORIGINAL --run N
 echo                                    --dry-run is inventory only; --apply builds a SEPARATE matching preview with original prepared pixels and measured faces; no intake or install
 echo                                    --regroup --directed --directed-recipe NAME selects the SAME experimental lifecycle; --review-source ABS_DIR passes direct constraints; choices bind resumes/checks
 echo                                    --dominant-provisional explicitly permits existing dominant-face measurements ONLY for non-reference provisional intake; --undone-quality-run ABS_RUN verifies exact completed quality undo before original-input reuse
+echo                                    --capture-regroup-call on --apply --regroup --directed writes exact input/output evidence and name transcript beside run.json; repeat on --check/--install
 echo                                    --check verifies saved inputs/preview/publication without writes; --install publishes reviewed preview with NO backup or rollback
 echo                                    decisions bind by photo ID and content; generated identities/automatic locks are not seeds; missing measurements or ambiguous manual decisions refuse
 echo    likeness-shadow.cmd --run "ABSOLUTE-RUN-DIR" --out "ABSOLUTE-REPO-TMP-DIR" [--dry-run ^| --apply ^| --check] [--compare-order]
@@ -124,7 +148,7 @@ echo    likeness-observe.cmd --source "ABS-ASSESSED-REPORT" --out "ABS-NEW-REPOR
 echo    likeness-diagnostics.cmd --source "ABS-ASSESSED-REPORT" --out "ABS-NEW-REPORT" [--dry-run ^| --apply ^| --check]  same-evidence category/core diagnostics plus bounded existing-CLIP crop/cache ablation; NO moves or threshold activation
 echo    likeness-entrance-trial.cmd --source "ABS-ASSESSED-REPORT" --out "ABS-NEW-REPORT" [--dry-run ^| --apply ^| --check]  eight ordered entrance/core/retention ranges with separate protection and staged frozen-core growth; NO installed policy change, moves, models or intake
 echo                                    --coalesce adds two paired mutual-reference-view union variants; every photo still requires individual admission; existing names and separate cast slots preserved
-echo                                    --directed compares the current ordered-middle control with four bounded directed recipes; separated core/retention/reference/release evidence; writes a non-installable report only
+echo                                    --directed compares the current ordered-middle control with four historical plus three corrective directed recipes; separated core/retention/reference/release evidence; writes a non-installable report only
 echo                                    --reuse-result "ABS-VERIFIED-ENTRANCE-REPORT" republishes byte-identical scored evidence after publisher-only changes; no rescoring, changed analysis refuses reuse
 echo    likeness-hypothesis-trial.cmd --source "ABS-ASSESSED-REPORT" --baseline "ABS-VERIFIED-COALESCED-REPORT" --out "ABS-NEW-REPORT" [--dry-run ^| --apply ^| --check]  reuse middle/coalesced controls; reconcile fully witnessed sibling views, show exceptions and retain all outside rivals; NO installed changes or intake
 echo    likeness-view-associations.cmd --source "ABS-ASSESSED-REPORT" --baseline "ABS-VERIFIED-HYPOTHESIS-REPORT" --out "ABS-NEW-REPORT" [--dry-run ^| --apply ^| --check]  per-photo non-core association state for smaller views; tentative is NOT assigned or core; unchanged full rivals, no installed changes or intake
@@ -147,6 +171,7 @@ echo                                    --resume-install --check verifies comple
 echo                                    --preserve-legacy-derivatives explicitly journals unowned cast collisions byte-for-byte for undo; edited owned derivatives still refuse
 echo                                    no matcher-only legacy preview can be installed
 echo    rebase-recap.cmd "RUN-DIR" [--dry-run ^| --check] [--out FILE] [--expectations FILE]  per-run HTML of every move, rename, Review hold, cast gain/loss, new identity, other-run differences
+echo    rebase-recap.cmd "SIMPLE-RECEIPT.json" [--dry-run ^| --apply ^| --check] [--compare OTHER.json]  fast saved-run recap and placement/reference audit; no scoring, image hashing, or membership changes
 echo                                    automatic after every sandbox-rebase preview/replan/apply/check/undo; Working\_reports\library\rebase-recap\RUN.html + index.html
 echo                                    "Looks like" picks and expected placements: SANDBOX\rebase-expectations.json beside Working ^(kept by resets^), scored on every run
 echo    storage-retention.cmd --root "SANDBOX\Working" preview       read-only inventory; unknown, incomplete, latest accepted and report-linked runs stay
@@ -211,12 +236,13 @@ echo    deploy-templates.cmd / pull-templates.cmd     the ST stage templates, to
 echo    inputs.cmd [status ^| pull -w WS ^| reset --hero H ^| photos ^| set HERO --photo F ...]  which images each hero's workflows read; pull keeps the default images you chose in ComfyUI in workspaces.json (do it before reset); photos re-points a chosen photo that was renamed
 echo    compare-primes.cmd [HERO ...]   Prime renders side by side, Qwen and FireRed, normal and configured alternate flows, with a face score against the photo each started from  ^(docs\art\prime-flows.md^)
 echo    originals.cmd [--dry-run] [--only NAME] [--no-headshots] [--archive-old]   the photo library: name originals after their folder, scale to 944x1104 into PERSON\944x1104\full,head,chest ^(former gallery_/headshot_944x1104 folders are moved in^) ^(reel screenshots cut to the picture^), make face headshots, move old copies to _archive, re-point chosen photos  ^(docs\art\original-photos.md^)
-echo    likeness.cmd diagnostics --out DIR [--policy FILE]  one-pass calibration + active-person folder checks; writes CSVs and a Markdown report ^(read only; explicit --root and --cache for sandbox^)
-echo    likeness.cmd family-preview [--policy FILE] [--out DIR]  direct reference scores, surname reuse and naming collisions ^(JSON + HTML; suggestions only, no library changes^)
+echo    likeness.cmd diagnostics --out DIR [--policy FILE]  active standalone report utility: one-pass calibration + active-person folder checks; CSV/Markdown; no identity or photo changes
+echo                                    --root, --cache, and --out are required; sandbox paths stay under Working; report output is new and cache reads/writes are separate
+echo    likeness.cmd family-preview [--policy FILE] [--out DIR]  active standalone report utility: direct reference scores, surname reuse and naming collisions ^(JSON + HTML; suggestions only^)
 echo    likeness.cmd sandbox-reset       preview restoring only Models, Prospects, Potentials from the verified sandbox Source snapshot; --apply to restore ^(requires --root ...\Working^)
 echo    likeness.cmd sandbox-reset --full  read-only exact Working reset preview against current Production; --apply stages and verifies the baseline, preserves unique active photos and review metadata
 echo    sandbox-rebase.cmd "SANDBOX\Working" "SANDBOX\Working\_sandbox-state\RUN" --cast-seeds core --record-core-protection [--dry-run ^| --intake-only --apply ^| --apply ^| --check]  approved run-local core thresholds, automatic protection and final own/rival audit; keep the flags on every step
-echo    likeness.cmd audit-core ^| calibrate ^| folder ^| clean ^| sisters ^| pairs ^| alike ^| compare ^| like ^| sort --singles ^| reconcile ^| singles ^| junk ^| review --out ^| loosen ^| lookalikes ^| names ^| index ^| profile ^| who ^| merge ^| retire ^| retire-empty ^| archive-list ^| promote ^| rename ^| undo   general faces: read-only core/outlier audit, combined Review + Various preview, one-person checks, sisters as a family, angel-to-sister pairing, empty Various, unusable photos to _junk, look-alike guard, names, who-could-play-what table ^(previews; --apply moves; --sheet F.png^)  ^(docs\art\likeness.md^)
+echo    likeness.cmd audit-core ^| calibrate ^| folder ^| clean ^| sisters ^| pairs ^| alike ^| compare ^| like ^| sort --singles ^| reconcile ^| singles ^| junk ^| review --out ^| loosen ^| lookalikes ^| names ^| index ^| profile ^| who ^| merge ^| retire ^| retire-empty ^| archive-list ^| promote ^| rename ^| undo   core and explicit maintenance operations; moving commands preview before --apply  ^(docs\art\likeness.md^)
 echo    likeness.cmd policy                 show the validated draft shared likeness thresholds; rebaseline remains gated pending review
 echo    likeness.cmd reconcile [--out FILE.json] [--apply]  incoming, Review, outliers, identity merges and category moves; verified backup, journal and read-only final-core check; production requires approved policy
 echo                                    also previews evidence-based identity/photo protection, original-name provenance and virtual family naming; manual unprotect persists until explicitly protected again

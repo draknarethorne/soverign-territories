@@ -1,5 +1,7 @@
 """Local model files for intake: fetched once into the per-user model folder, verified, then loaded lazily."""
 import functools
+import contextlib
+import contextvars
 import hashlib
 import os
 import pathlib
@@ -19,6 +21,16 @@ MODELS = {
         "sha256": "7ba7aa7ac37a4d41fdbbeba3a2af7ead18058552997e3a3cd1a3b2210c9e6b4c",
     },
 }
+NO_DOWNLOAD = contextvars.ContextVar("intake_no_download", default=False)
+
+
+@contextlib.contextmanager
+def offline():
+    token = NO_DOWNLOAD.set(True)
+    try:
+        yield
+    finally:
+        NO_DOWNLOAD.reset(token)
 
 
 def folder():
@@ -38,6 +50,8 @@ def path(kind):
     spec = MODELS[kind]
     target = folder() / spec["file"]
     if not target.is_file():
+        if NO_DOWNLOAD.get():
+            raise OSError(f"offline preparation requires existing local {kind} model: {target}")
         target.parent.mkdir(parents=True, exist_ok=True)
         partial = target.with_name(target.name + ".part")
         print(f"Downloading the {kind} model {spec['file']} once into {target.parent} ...")

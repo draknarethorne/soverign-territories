@@ -54,6 +54,23 @@ class LikenessPolicyTests(unittest.TestCase):
         self.assertEqual(errors, [])
         self.assertEqual(DEFAULT_POLICY_PATH, ROOT / "data" / "art" / "likeness-engine-policy.json")
 
+    def test_cast_pair_settings_reject_invalid_support_paths_and_duplicate_pairs(self):
+        for change in (
+            {"minimumIndependentReferences": 1},
+            {"minimumIndependentReferences": True},
+            {"reviewMinimum": float("nan")},
+            {"approvedClosePairs": [["Sisters/Drakness", "Models/Fragment"]]},
+            {"approvedClosePairs": [["Sisters/../Drakness", "Angels/Nyxene"]]},
+            {"approvedClosePairs": [["Sisters/Drakness", "Sisters/Drakness"]]},
+            {"approvedClosePairs": [
+                ["Sisters/Drakness", "Angels/Nyxene"], ["Angels/Nyxene", "Sisters/Drakness"],
+            ]},
+        ):
+            policy = copy.deepcopy(self.policy)
+            policy["castAdmission"].update(change)
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                validate_policy(policy)
+
     def test_score_bands_use_existing_gallery_boundaries(self):
         self.assertEqual(score_band(0.55, self.policy), "green")
         self.assertEqual(score_band(0.5499, self.policy), "yellow")

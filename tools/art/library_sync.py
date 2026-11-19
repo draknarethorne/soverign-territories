@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
-"""The whole photo-library routine in one command: drop new photos into Various\\gallery, run this, and the library ends sorted, de-duplicated and in step.
+"""Legacy whole-photo-library compatibility routine; not the normal intake default.
 
-  python tools/art/library_sync.py              do everything (bin\\library.cmd)
-  python tools/art/library_sync.py --dry-run    preview every step, move nothing (bin\\library-preview.cmd)
-  python tools/art/library_sync.py --check      read only: what is waiting, and is the library in step? exit 1 when work is waiting (bin\\library-check.cmd)
+Drop new photos into Various\\gallery and invoke this path explicitly:
 
-The steps, in order (each is the normal command; run one alone if you want to look closer):
+  bin\\library-legacy.cmd              do everything
+  bin\\library-legacy.cmd --dry-run    preview every step, move nothing
+  bin\\library-legacy.cmd --check      read only; exit 1 when work is waiting
+
+The steps, in order (each is a legacy command; run one alone if you want to look closer):
   0  likeness seed        Various\\<Name>\\gallery holds photos of one known person: the whole folder moves to <Name> first
   1  originals            name every original after its folder, make the scaled copy and headshot
   2  duplicates           the same picture kept twice (any folder, any name) is set aside in _archive, a chosen photo and the higher folder first
   3  likeness crop        general photos use the legacy crop; likeness_artists crop/junk runs the same code on Artists separately. The uncropped original is kept in _archive\\...\\gallery_uncropped
      likeness junk       active photos that cannot feed a Prime go to _junk; existing Junk is not implicitly reconsidered
-  4  likeness reconcile   one shared policy-driven plan for incoming and Review candidates, with verified backup and a reversible move journal
+  4  likeness reconcile   explicit legacy experimental proposal for incoming and Review candidates, with verified backup and a reversible move journal
   5  likeness_artists group  shared grouping with artist-only discovery/cache/history; artists are never mixed with the general identity pool
   6  likeness retire-empty  prospects with no gallery or review photos are moved intact to _retired (previewed on --dry-run)
   7  duplicates, originals  again, because the moves create new names; then `originals --check` must say IN SYNC

@@ -321,6 +321,35 @@ class RebaseRecapTests(unittest.TestCase):
         self.assertNotIn(rebase_recap._anchor("review-photo", "not-in-plan.jpg"), audit)
         self.assertIn("source evidence unavailable (photo not recorded in run)", audit)
 
+    def test_stage_recap_exposes_frozen_reference_provenance_and_no_quality_fallback(self):
+        data = {
+            "run": str(self.run), "overlayRoot": str(self.working),
+            "sourceOverlaySHA256": None, "historical": False, "status": "preview",
+            "rows": [],
+            "groupLifecycle": {"stages": [{
+                "id": "references", "title": "Validated frozen references",
+                "rows": [{
+                    "photoId": "photo:missing", "source": "Angels/Source/gallery/missing.jpg",
+                    "destination": "Angels/Source/gallery/missing.jpg",
+                    "candidateReferenceQualification": {
+                        "independentOwnCentroidScore": None,
+                        "candidateReferencePhotoIds": ["photo:ref-a", "photo:ref-b"],
+                    },
+                    "sourceReferenceEvidence": {
+                        "frozenOwnScore": None,
+                        "candidateReferencePhotoIds": ["photo:ref-a", "photo:ref-b"],
+                        "qualifiedReferencePhotoIds": [],
+                        "reason": "frozen-source-score-unavailable; no quality-score substitution",
+                    },
+                }],
+            }]},
+        }
+        rendered = "\n".join(rebase_recap._stage_pages(data).values())
+        self.assertIn("Frozen source-reference provenance; no quality fallback", rendered)
+        self.assertIn("frozen-source-score-unavailable; no quality-score substitution", rendered)
+        self.assertIn("candidateReferencePhotoIds", rendered)
+        self.assertIn("qualifiedReferencePhotoIds", rendered)
+
     def test_review_cards_show_only_their_own_final_cast_evidence(self):
         data = rebase_recap.collect(self.run)
         data["status"] = "preview"

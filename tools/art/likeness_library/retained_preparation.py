@@ -426,6 +426,9 @@ def _manifests(root, current):
     children = reads.children(directory) if reads is not None else None
     if not directory.exists():
         return []
+    from . import normal_history
+
+    retired = normal_history.retired(root, directory)
     paths = []
     children = children if children is not None else directory.iterdir()
     for count, child in enumerate(children):
@@ -440,7 +443,10 @@ def _manifests(root, current):
                 entries = reads.children(child) if reads is not None else tuple(child.iterdir())
                 if not entries:
                     continue
-            paths.append(manifest)
+            if manifest not in retired:
+                paths.append(manifest)
+        elif child.name == normal_history.INDEX and child.is_file():
+            continue
         elif not child.is_dir():
             raise ValueError(f"unexpected file in processing store: {child}")
     if reads is not None:
@@ -630,7 +636,7 @@ def _library_root(native):
     return None
 
 
-def plan_transfer(root, source, destination):
+def plan_transfer(root, source, destination, *, generation=None):
     """Freeze a complete, checksum-verified set move for a maintenance journal."""
     root = pathlib.Path(root).absolute()
     source, destination = str(source), str(destination)
@@ -643,18 +649,28 @@ def plan_transfer(root, source, destination):
         raise ValueError("retained preparation cannot cross artist/general domains")
     old_owner, new_owner = _owner(source, root), _owner(destination, root)
     old_set = _set_folder(root, old_owner, data["setKey"])
-    new_set = _set_folder(root, new_owner, data["setKey"])
+    manifest = _safe(root, data["manifest"])
+    before = manifest.read_text(encoding="utf-8")
+    updated = json.loads(before)
+    updated["current"] = destination
+    updated["photoId"] = metadata.photo_id_from_name(pathlib.PurePosixPath(destination).name) or data["photoId"]
+    if generation is not None:
+        if not isinstance(generation, str) or not generation.strip():
+            raise ValueError("retained publication generation must be a non-empty string")
+        updated["recipe"] = {**updated["recipe"], "normalPublicationGeneration": generation}
+        updated["setKey"] = _set_key(
+            updated["sourceSha256"], updated["row"]["source"], updated["row"].get("photoId"),
+            updated["domain"], updated["recipe"],
+        )
+        if updated["setKey"] == data["setKey"] and old_owner == new_owner:
+            raise ValueError("retained publication must create a distinct generation")
+    new_set = _set_folder(root, new_owner, updated["setKey"])
 
     def moved(relative):
         if relative == source:
             return destination
         return new_set + relative[len(old_set):] if relative.startswith(old_set + "/") else relative
 
-    manifest = _safe(root, data["manifest"])
-    before = manifest.read_text(encoding="utf-8")
-    updated = json.loads(before)
-    updated["current"] = destination
-    updated["photoId"] = metadata.photo_id_from_name(pathlib.PurePosixPath(destination).name) or data["photoId"]
     files = []
     for entry in [*data["artifacts"], {"path": data["manifest"], "sha256": _digest(manifest)}]:
         files.append({"source": entry["path"], "destination": moved(entry["path"]), "sha256": entry["sha256"]})
@@ -686,6 +702,7 @@ def plan_transfer(root, source, destination):
     return {
         "sourcePhoto": source, "destinationPhoto": destination,
         "sourceSha256": data["sourceSha256"], "currentSha256": data["currentSha256"], "setKey": data["setKey"],
+        **({"destinationSetKey": updated["setKey"]} if generation is not None else {}),
         "files": files, "manifestBefore": before,
         "manifestAfter": json.dumps(updated, indent=2) + "\n",
         "detailBefore": detail_before, "detailAfter": detail_after,
@@ -702,7 +719,9 @@ def validate_transfers(root, transfers, *, reverse=False):
         data = verify_link(root, source_photo)
         if (data is None or data["sourceSha256"] != transfer["sourceSha256"]
                 or data["currentSha256"] != transfer["currentSha256"]
-                or data["setKey"] != transfer["setKey"]):
+                or data["setKey"] != (
+                    transfer.get("destinationSetKey", transfer["setKey"]) if reverse else transfer["setKey"]
+                )):
             raise ValueError("retained preparation source version changed")
         current_manifest = _safe(root, data["manifest"])
         expected_manifest = transfer["manifestAfter"] if reverse else transfer["manifestBefore"]
@@ -721,9 +740,13 @@ def validate_transfers(root, transfers, *, reverse=False):
             if destination in seen:
                 raise ValueError("retained preparation repeats a destination")
             seen.add(destination)
-        if _owner(transfer["sourcePhoto"], root) != _owner(transfer["destinationPhoto"], root):
+        if (
+            _owner(transfer["sourcePhoto"], root) != _owner(transfer["destinationPhoto"], root)
+            or transfer.get("destinationSetKey", transfer["setKey"]) != transfer["setKey"]
+        ):
             target_photo = transfer["sourcePhoto"] if reverse else transfer["destinationPhoto"]
-            folder = _safe(root, _set_folder(root, _owner(target_photo, root), transfer["setKey"]))
+            target_key = transfer["setKey"] if reverse else transfer.get("destinationSetKey", transfer["setKey"])
+            folder = _safe(root, _set_folder(root, _owner(target_photo, root), target_key))
             if folder.exists():
                 raise ValueError(f"retained preparation target set exists: {folder}")
 
@@ -775,8 +798,12 @@ def execute_transfer(root, transfer, *, reverse=False):
             raise ValueError("transferred retained preparation failed verification")
         old_photo = transfer["destinationPhoto"] if reverse else transfer["sourcePhoto"]
         new_photo = transfer["sourcePhoto"] if reverse else transfer["destinationPhoto"]
-        if _owner(old_photo, root) != _owner(new_photo, root):
-            _prune_empty(root, _set_folder(root, _owner(old_photo, root), transfer["setKey"]))
+        if (
+            _owner(old_photo, root) != _owner(new_photo, root)
+            or transfer.get("destinationSetKey", transfer["setKey"]) != transfer["setKey"]
+        ):
+            old_key = transfer.get("destinationSetKey", transfer["setKey"]) if reverse else transfer["setKey"]
+            _prune_empty(root, _set_folder(root, _owner(old_photo, root), old_key))
     except Exception:
         if pending.exists():
             pending.unlink()

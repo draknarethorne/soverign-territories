@@ -33,6 +33,42 @@ def jpeg(path, size=(60, 30), orientation=None):
 
 @unittest.skipIf(Image is None, "Pillow is not installed")
 class OriginalsTests(unittest.TestCase):
+    def test_selected_framing_keeps_names_unselected_images_and_derivatives(self):
+        gallery = self.gallery("Prospects", "Known")
+        selected = gallery / "oldprefix_image_123456.jpg"
+        other = gallery / "other_image_234567.jpg"
+        jpeg(selected)
+        jpeg(other)
+        derivatives = gallery.parent / "94x110" / "full"
+        derivatives.mkdir(parents=True)
+        stale = derivatives / "unrelated_94x110.png"
+        Image.new("RGB", (94, 110), (1, 2, 3)).save(stale)
+        original_hashes = {path.name: path.read_bytes() for path in (selected, other, stale)}
+
+        self.run_tool("--photo-id", "photo:image_123456")
+
+        self.assertTrue((derivatives / "oldprefix_image_123456_94x110.png").is_file())
+        self.assertFalse((derivatives / "other_image_234567_94x110.png").exists())
+        for path in (selected, other, stale):
+            self.assertEqual(path.read_bytes(), original_hashes[path.name])
+        self.assertNotIn("OUT OF SYNC", self.run_tool("--photo-id", "photo:image_123456", "--check", apply=False))
+
+    def test_selected_framing_rejects_ambiguous_or_missing_photo_before_writing(self):
+        for name in ("One", "Two"):
+            jpeg(self.gallery("Prospects", name) / f"{name.lower()}_image_123456.jpg")
+        for photo_id in ("photo:image_123456", "photo:image_999999"):
+            with self.subTest(photo_id=photo_id), contextlib.redirect_stderr(io.StringIO()):
+                with self.assertRaises(SystemExit):
+                    self.run_tool("--photo-id", photo_id)
+        self.assertFalse(list(self.lib.rglob("*94x110.png")))
+
+    def test_selected_framing_surfaces_renderer_failure(self):
+        gallery = self.gallery("Prospects", "Known")
+        jpeg(gallery / "known_image_123456.jpg")
+        with mock.patch.object(originals, "fit", side_effect=OSError("write failed")):
+            with self.assertRaisesRegex(OSError, "selected framing failed"):
+                self.run_tool("--photo-id", "photo:image_123456")
+
     def test_explicit_cleanup_bypass_preserves_native_padding_and_head_framing(self):
         source = self.tmp / "prepared.png"
         Image.new("RGB", (400, 900), (120, 50, 25)).save(source)

@@ -281,10 +281,10 @@ class FinalMembershipRefinementTests(unittest.TestCase):
 
     def test_admission_boundary_is_not_rounded_into_acceptance(self):
         self.comparison["ownScore"] = .1
-        self.comparison["refinementTarget"].update(folder="Angels/Xena", score=.55 - 1e-8)
+        self.comparison["refinementTarget"].update(folder="Angels/Xena", score=.5 - 1e-8)
         decision = refinement.membership_decision(self.comparison, self.policy)
         self.assertEqual(decision["decision"], "hold")
-        self.comparison["refinementTarget"]["score"] = .55
+        self.comparison["refinementTarget"]["score"] = .5
         self.assertEqual(refinement.membership_decision(self.comparison, self.policy)["decision"], "move")
 
     def rows(self):

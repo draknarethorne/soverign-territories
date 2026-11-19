@@ -21,6 +21,7 @@ import base64
 import datetime
 import html
 import json
+import math
 import os
 import pathlib
 import re
@@ -517,6 +518,9 @@ CSS = """h2{margin:32px 0 10px;border-bottom:2px solid var(--st-line);padding-bo
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px}
 .card{background:var(--st-card);border:1px solid var(--st-line);border-radius:8px;padding:9px;margin:0;box-shadow:var(--st-shadow)}.photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px}.photos a:nth-child(n+10){display:none}
 .photos img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px;background:#eee}.person-title-top{margin-bottom:7px}
+.photos a.assignment-optimistic,.photos a.assignment-ambiguous{display:block;position:relative;box-sizing:border-box;border-radius:3px}.photos a.assignment-optimistic{border:5px solid #65416f}.photos a.assignment-ambiguous{border:4px dashed #9a6a22}
+.assignment-badge{position:absolute;top:5px;left:5px;z-index:1;max-width:calc(100% - 20px);padding:3px 6px;border-radius:3px;background:#49314f;color:#fff;font-size:.72em;font-weight:700;line-height:1.2;overflow-wrap:anywhere}.assignment-ambiguous .assignment-badge{background:#5b431e}
+.assignment-evidence{margin:7px 0;padding:6px 8px;border-left:4px solid #65416f;background:var(--st-accent-soft);font-size:.84em;overflow-wrap:anywhere}.assignment-evidence.assignment-ambiguous{border-left-style:dashed;border-left-color:#9a6a22}.assignment-evidence p{margin:4px 0}.assignment-evidence ul{margin:4px 0;padding-left:22px}
 .photos a.workflow-photo{outline:5px solid #8b6d32;outline-offset:-5px;border-radius:3px;background:transparent;color:inherit}.photos a.workflow-photo.workflow-extra{outline-style:dashed}.photos a.workflow-photo.score-green{outline-color:#2e7d32}.photos a.workflow-photo.score-yellow{outline-color:#b38b00}.photos a.workflow-photo.score-orange{outline-color:#c46b16}.photos a.workflow-photo.score-red{outline-color:#a52d2d}
 .card b{font-size:1.05em}.meta{color:#666;font-size:.85em;margin-top:4px}.chosen{background:#2e7d32;color:#fff;border-radius:3px;padding:0 5px;font-size:.8em}.status{color:#888;font-size:.8em}.identity{font-size:.82em;color:#34495e;margin-top:4px}
 .summary{color:#555;font-size:.9em;margin-top:3px}.readiness{color:#555;font-size:.82em;margin-top:5px}.matches,.pairing{font-size:.82em;margin-top:5px}.relationship-row{margin:3px 0}.gallery-jump{margin-left:5px;text-decoration:none;font-weight:700}.pairing-subsection{margin-top:9px;padding-top:7px;border-top:1px solid #e7e0d4}.fit-detail{margin-left:4px}.noimg{display:flex;align-items:center;justify-content:center;aspect-ratio:4/5;background:#eee;color:#999;font-size:.8em}.gallery-controls{display:flex;justify-content:flex-end;gap:12px;flex-wrap:wrap;margin:12px 0}.person-title{display:flex;align-items:center;gap:5px}.identity-tags{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:5px}.source-photo{margin-left:5px}.full-details{font-size:.82em;margin-top:5px}.full-details ol{margin:4px 0;padding-left:24px}.preparation-evidence{font-size:.8em;margin-top:6px;overflow-wrap:anywhere}.preparation-evidence summary{cursor:pointer;color:#34495e}.preparation-evidence ul{padding-left:20px}.preparation-evidence li{margin:5px 0}.preparation-evidence code{overflow-wrap:anywhere}.policy-panel{margin:10px 0;padding:8px 10px;background:var(--st-card);border:1px solid var(--st-line);border-radius:6px;font-size:.84em}.policy-panel summary{cursor:pointer;font-weight:600;color:#34495e}.policy-panel pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:520px;overflow:auto;background:#f5f3ee;padding:10px;border-radius:4px;font-size:.9em}body[data-detail-level="summary"] .full-details{display:none}"""
@@ -560,6 +564,89 @@ def relationship_link(category, name, review_href, score=None):
         f'<a class="gallery-jump{icon_class}" href="#{person_anchor(category, name)}" '
         f'aria-label="Stay in People gallery at {html.escape(name, quote=True)}" '
         f'title="{html.escape(icon_title, quote=True)}">{icon}</a>'
+    )
+
+
+def cast_admission(appearance):
+    membership = (appearance or {}).get("membership") or {}
+    evidence = membership.get("assignmentEvidence") or {}
+    admission = evidence.get("castAdmission") or {}
+    mode = admission.get("mode")
+    if mode not in ("optimistic-gallery", "ambiguous-review"):
+        return None
+    return mode, admission
+
+
+def admission_score(value):
+    try:
+        score = float(value)
+    except (OverflowError, TypeError, ValueError):
+        return "unavailable"
+    return f"{score:.2f}" if math.isfinite(score) else "unavailable"
+
+
+def admission_identity_link(folder, review_href, score=None):
+    folder = str(folder or "")
+    category, separator, name = folder.partition("/")
+    if separator and category and name:
+        score_value = None
+        try:
+            score_value = float(score)
+        except (OverflowError, TypeError, ValueError):
+            pass
+        if score_value is not None and math.isfinite(score_value):
+            return relationship_link(category, name, review_href, score_value)
+        return relationship_link(category, name, review_href)
+    return html.escape(folder or "identity unavailable")
+
+
+def render_admission_details(photo, review_href):
+    admission_data = cast_admission(photo.get("appearance"))
+    if not admission_data:
+        return ""
+    mode, admission = admission_data
+    optimistic = mode == "optimistic-gallery"
+    label = "High rival / unconfirmed" if optimistic else "Tentative / ambiguous review"
+    css_class = "assignment-optimistic" if optimistic else "assignment-ambiguous"
+    winner = admission.get("winner")
+    winner_html = admission_identity_link(winner, review_href, admission.get("score"))
+    score = admission_score(admission.get("score"))
+    margin = admission_score(admission.get("margin"))
+    alternatives = []
+    candidates = admission.get("alternatives", [])
+    if not isinstance(candidates, list):
+        candidates = []
+    for candidate in candidates:
+        if not isinstance(candidate, dict):
+            continue
+        candidate_folder = candidate.get("folder")
+        candidate_score = candidate.get("score")
+        candidate_html = admission_identity_link(candidate_folder, review_href, candidate_score)
+        alternatives.append(
+            f'<li>{candidate_html} · score {html.escape(admission_score(candidate_score))}</li>'
+        )
+    alternatives_html = (
+        "<div>Rival alternatives:</div><ul>" + "".join(alternatives) + "</ul>"
+        if alternatives else "<div>No rival alternatives recorded.</div>"
+    )
+    explanation = (
+        "Provisional Gallery assignment only: not confirmed, not core-authoritative, "
+        "and not protected. Explicit confirmation is required before core/reference use "
+        "or protection."
+        if optimistic else
+        "Tentative Review placement: not confirmed and never a core/reference vote; "
+        "the best-cast candidate and alternatives remain provisional."
+    )
+    winner_detail = (
+        f'Best cast candidate: {winner_html} · score {html.escape(score)} · '
+        f'lead {html.escape(margin)}.'
+        if winner else
+        f'Best-candidate score: {html.escape(score)} · lead {html.escape(margin)}.'
+    )
+    return (
+        f'<div class="assignment-evidence {css_class}">'
+        f'<strong>{label}</strong><div>{winner_detail}</div>'
+        f'{alternatives_html}<p>{explanation}</p></div>'
     )
 
 
@@ -609,6 +696,7 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
             r["gallery_photos"], r["source"] if r["chosen"] else None,
         )
         for photo in display_photos:
+            assignment = cast_admission(photo.get("appearance"))
             href = html.escape(pathlib.Path(photo["path"]).resolve().as_uri(), quote=True)
             score_title = (
                 f' · Identity score {photo["identity_score"]:.3f}'
@@ -648,6 +736,26 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
                 f' class="workflow-photo{workflow_score_class}{" workflow-extra" if workflow_pinned else ""}"'
                 if is_workflow_photo else ""
             )
+            assignment_class = ""
+            assignment_badge = ""
+            if assignment:
+                assignment_mode = assignment[0]
+                assignment_class = (
+                    " assignment-optimistic" if assignment_mode == "optimistic-gallery"
+                    else " assignment-ambiguous"
+                )
+                assignment_label = (
+                    "High rival / unconfirmed" if assignment_mode == "optimistic-gallery"
+                    else "Tentative / ambiguous review"
+                )
+                thumbnail_label = "High rival" if assignment_mode == "optimistic-gallery" else "Tentative"
+                assignment_badge = (
+                    f'<span class="assignment-badge" title="{assignment_label}">{thumbnail_label}</span>'
+                )
+            if workflow_class:
+                workflow_class = workflow_class[:-1] + assignment_class + '"'
+            elif assignment_class:
+                workflow_class = f' class="{assignment_class.strip()}"'
             image_title = (
                 "Workflow photo (shown last; outside current top nine)"
                 if is_workflow_photo and workflow_pinned else
@@ -661,7 +769,7 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
                 f'data-identity-score="{photo.get("identity_score") if photo.get("identity_score") is not None else ""}" '
                 f'data-prime-score="{photo.get("score") if photo.get("score") is not None else ""}" '
                 f'data-photo-name="{html.escape(photo["name"], quote=True)}" '
-                f'alt="{title}" title="{title}"></a>'
+                f'alt="{title}" title="{title}">{assignment_badge}</a>'
             )
         if not imgs:
             imgs.append('<div class="noimg">no photos</div>')
@@ -842,6 +950,10 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
             f'<ul>{preparation_html}</ul></details>'
             if display_photos else ""
         )
+        assignment_panels = "".join(
+            render_admission_details(photo, review_href)
+            for photo in display_photos[:MAX_PHOTOS]
+        )
         if r.get("chosen") and r.get("source_path"):
             source_href = html.escape(pathlib.Path(r["source_path"]).resolve().as_uri(), quote=True)
             visible_names = {photo["name"] for photo in display_photos[:MAX_PHOTOS]}
@@ -869,7 +981,7 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
             if r.get("identity_protected") else ""
         )
         out.append(f'<figure class="card" id="{card_id}"><div class="person-title person-title-top"><b>{name}</b></div><div class="photos">{"".join(imgs)}</div><figcaption><div class="person-title"><b>{name}</b></div><div class="identity-tags"><span class="category-badge category-{category_class}">{html.escape(r["status"])}</span>{protected_badge}{flag}{history_link}{count}</div>'
-                   f'{summary_html}{identity_html}{preparation_panel}'
+                   f'{summary_html}{identity_html}{assignment_panels}{preparation_panel}'
                    f'<div class="meta">{caption_html}</div>{readiness_html}{matches_html}{pairing_html}</figcaption></figure>')
     if current:
         out.append("</div>")

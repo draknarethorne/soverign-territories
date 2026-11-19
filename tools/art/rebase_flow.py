@@ -79,7 +79,7 @@ def steps(working, run, workers, recovery_mode="full", reuse_run=None, profile=N
     if directed_recipe and not directed:
         raise ValueError("directed recipe requires directed mode")
     if directed:
-        from tools.art.likeness_library.directed_reformation import recipe_named
+        from tools.art.likeness_experiments.directed_reformation import recipe_named
 
         directed_recipe = recipe_named(directed_recipe)["name"]
         rebase += ["--directed", "--directed-recipe", directed_recipe]
@@ -619,10 +619,9 @@ def main(argv=None):
                         help="FAST original-byte likeness testing, LEAN balanced, FULL final processing; "
                              "saved flow profile must match on resume; independent of recovery")
     parser.add_argument("--regroup", action="store_true", help="maintained member/appearance lifecycle and stage viewers")
-    from tools.art.likeness_library.directed_reformation import recipe_names
     parser.add_argument("--directed", action="store_true",
                         help="opt into experimental directed Sandbox regrouping; no matching policy default")
-    parser.add_argument("--directed-recipe", choices=recipe_names(),
+    parser.add_argument("--directed-recipe",
                         help="explicit experimental recipe required with --directed")
     parser.add_argument("--baseline", choices=("source", "working"), default="source",
                         help="source resets from Production as before; working preserves current assigned inputs")
@@ -643,6 +642,13 @@ def main(argv=None):
     mode.add_argument("--dry-run", action="store_true", help="preview only (the default)")
     mode.add_argument("--check", action="store_true", help="read-only status of this flow")
     args = parser.parse_args(argv)
+    if args.directed:
+        from tools.art.likeness_experiments.directed_reformation import recipe_names
+
+        if args.directed_recipe not in recipe_names():
+            parser.error("--directed-recipe must name one of the explicit experimental recipes")
+    elif args.directed_recipe:
+        parser.error("--directed-recipe requires --directed")
     # Progress must reach a redirected console log immediately, not when the buffer fills.
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(line_buffering=True)

@@ -131,14 +131,15 @@ def refresh_reports(root, library, cache_path, policy_path, output):
     shared = ["--root", str(root), "--cache", str(cache_path), "--out", str(output), "--no-renders"]
     if policy_path:
         shared += ["--policy", str(policy_path)]
+    cache_only = lambda _path: {"faces": -1, "normalDeferredMeasurement": True}
     with domains.activate("general", read_only=True):
         context = likeness.build(SimpleNamespace(
-            root=str(root), cache=str(cache_path), embedder=None, policy=policy_path,
+            root=str(root), cache=str(cache_path), embedder=cache_only, policy=policy_path,
         ))
         with verification_reads.session(root, label="Shared gallery inputs"):
             provenance = preparation_provenance.build_index(root, output, [], "general", cfg=context[0])
-            for generate in (review_gallery.main, people_gallery.main):
-                if generate(shared, context=context, provenance=provenance):
+            for generate, kwargs in ((review_gallery.main, {"embed": cache_only}), (people_gallery.main, {})):
+                if generate(shared, context=context, provenance=provenance, **kwargs):
                     raise ValueError("gallery report refresh failed")
     state = {"inputs": report_state(root, library, cache_path, policy_path),
              "reports": {name: derivatives.digest(output / name)

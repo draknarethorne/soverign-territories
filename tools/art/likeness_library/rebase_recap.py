@@ -372,7 +372,8 @@ def _person_link(person, data, out_dir, *, bucket=None):
             anchor = "review"
         return _detail_link(anchor, person)
     if "_review_page" not in data:
-        review = pathlib.Path(data["workingRoot"]) / "_reports" / "library" / "people_gallery_review.html"
+        library = pathlib.Path(data.get("libraryRoot", pathlib.Path(data["workingRoot"]) / "_reports" / "library"))
+        review = library / "people_gallery_review.html"
         data["_review_page"] = (review, review.is_file())
     review, available = data["_review_page"]
     if not available:
@@ -445,6 +446,18 @@ def _prepared_preview_target(row, data):
 
 
 def _destination_links(row, data, out_dir):
+    if data.get("normalReport"):
+        if data["status"] != "applied":
+            return '<span class=muted>Planned destination; not certified installed.</span>'
+        target = _working_target(row["destination"], data)
+        if target is None or not target.is_file():
+            return '<span class=muted>Current destination unavailable; saved movement evidence retained.</span>'
+        link = _safe_link(target, "Current photo (not rehashed)", out_dir, new_tab=True)
+        if data.get("auditPageName"):
+            href = data["auditPageName"] + "#photo-" + hashlib.sha256(row["destination"].encode("utf-8")).hexdigest()
+            link += (' · <a href="' + html.escape(href, quote=True) + '" target="_blank" '
+                     'rel="noopener noreferrer">Photo audit / scores</a>')
+        return link
     if data.get("historical"):
         return '<span class=muted>Historical destination only; photo and gallery links unavailable after reset.</span>'
     if data["status"] != "applied":
@@ -469,6 +482,9 @@ def _destination_links(row, data, out_dir):
 
 def _source_link(source, row, data, out_dir):
     """Distinguish a missing old path from verified final bytes or genuinely missing/tampered files."""
+    if data.get("normalReport"):
+        return (html.escape(source) + " · " + _destination_links(row, data, out_dir)
+                if row else html.escape(source) + " (source record only)")
     target = _working_target(source, data)
     if target is None or data.get("historical"):
         return '<span class=muted>source link unavailable</span>'
@@ -501,6 +517,16 @@ def _source_link(source, row, data, out_dir):
 
 
 def _thumb(row, data, out_dir):
+    if data.get("normalReport"):
+        preview = row.get("preview")
+        if not preview or not pathlib.Path(preview).is_file():
+            return '<span class=muted>Cached thumbnail unavailable; use Photo Review.</span>'
+        target = _working_target(row["destination"], data)
+        if target is None:
+            return '<span class=muted>Unsafe destination unavailable.</span>'
+        return (f'<a href="{html.escape(_href(target, out_dir), quote=True)}" target="_blank" '
+                f'rel="noopener noreferrer"><img loading="lazy" '
+                f'src="{html.escape(_href(preview, out_dir), quote=True)}" alt=""></a>')
     if data.get("historical"):
         return '<span class=muted>Historical image unavailable: compact run evidence contains no images.</span>'
     live = _working_target(row["destination"], data)
@@ -1587,6 +1613,7 @@ def _stage_pages(data):
                                    ("referenceUseDisposition", "Reference disposition"),
                                    ("sourceReferenceHold", "Source has no qualified reference view"),
                                    ("referenceWithdrawalReason", "Reference withdrawal"),
+                                   ("sourceReferenceEvidence", "Frozen source-reference provenance; no quality fallback"),
                                    ("admissionReason", "Admission evidence or blocker"),
                                    ("referenceEligibleAtBoundary", "Qualified reference at boundary"),
                                    ("qualifiedOwnReferenceCount", "Own reference count at boundary"),
@@ -1789,16 +1816,21 @@ def render_index(entries, out_dir):
             f'{gallery_chrome.footer("Saved run summaries · No new intake or identity decision")}</main></body></html>')
 
 
-def _write(path, text):
+def _write(path, text, *, newline=None):
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(".tmp")
-    temporary.write_text(text, encoding="utf-8")
+    temporary.write_text(text, encoding="utf-8", newline=newline)
     os.replace(temporary, path)
 
 
 def main(argv=None):
+    arguments = list(sys.argv[1:] if argv is None else argv)
+    if arguments and pathlib.Path(arguments[0]).suffix.lower() == ".json":
+        from tools.art.likeness_library import normal_recap
+
+        return normal_recap.main(arguments)
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("run", help="the sandbox run directory holding run.json")
+    parser.add_argument("run", help="sandbox run directory holding run.json, or SIMPLE receipt JSON (preview by default)")
     parser.add_argument("--out", help=f"HTML file (default: WORKING\\_reports\\library\\{OUT_DIR}\\RUN.html)")
     parser.add_argument("--expectations", help=f"your placements/look-alikes JSON (default: beside Working, {EXPECTATIONS_NAME})")
     mode = parser.add_mutually_exclusive_group()

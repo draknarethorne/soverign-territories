@@ -191,6 +191,27 @@ class MaintenanceTests(unittest.TestCase):
         self.assertFalse((output / ".gallery-maintenance-report-state.json").exists())
         self.assertIsNone(upkeep.verification_reads.active())
 
+    def test_reports_only_cache_misses_defer_without_models_or_persisting_measurements(self):
+        import likeness
+
+        review = self.folder / "review" / "other_image_124.jpg"
+        review.parent.mkdir()
+        Image.new("RGB", (410, 610), "blue").save(review)
+        self.cache.write_text('{"emb": {}}', encoding="utf-8")
+        before = {path: path.read_bytes() for path in (self.photo, review, self.cache)}
+        output = self.root / "_reports" / "library"
+        with mock.patch.object(upkeep.cw, "load_cfg", return_value=self.cfg), \
+                mock.patch.object(likeness, "Embedder", side_effect=AssertionError("reports cannot initialize models")), \
+                contextlib.redirect_stdout(io.StringIO()):
+            upkeep.refresh_reports(self.root, [self.folder], self.cache, None, output)
+        self.assertEqual({path: path.read_bytes() for path in before}, before)
+        page = (output / "people_gallery_review.html").read_text(encoding="utf-8")
+        self.assertIn(self.photo.name, page)
+        self.assertIn(review.name, page)
+        records = json.loads(page.split('<script id="review-data" type="application/json">', 1)[1].split("</script>", 1)[0])
+        self.assertEqual(len(records), 2)
+        self.assertTrue(all(record["score"] is None for record in records))
+
     def test_continuous_and_standalone_reports_are_byte_identical_with_one_build_and_history(self):
         import likeness
         import people_gallery

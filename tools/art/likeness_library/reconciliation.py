@@ -6,7 +6,7 @@ import numpy as np
 
 from .audit import audit_person, core_excluded_protection, membership_excluded
 from .scoring import nz
-from . import rejections
+from . import protection, rejections
 
 
 def frozen_identity_cores(
@@ -17,6 +17,7 @@ def frozen_identity_cores(
     content_sha256_fn,
     additional_photos=(),
     policy=None,
+    require_single_face=False,
 ):
     """Build immutable person-core vectors using only current, unambiguous metadata."""
     all_photos = list(space.photos) + list(additional_photos)
@@ -49,12 +50,21 @@ def frozen_identity_cores(
             diagnostics.append(f"{folder}: conflicting catalogue records; skipped")
             continue
         photos = space.by_key[folder]
-        usable = [photo for photo in photos if photo.usable(space.st["minFace"])]
+        usable = [
+            photo for photo in photos if photo.usable(space.st["minFace"])
+            and (
+                not require_single_face
+                or photo.faces == 1 and getattr(photo, "f2", 0.) <= space.st["multiFace"]
+            )
+        ]
         if not usable:
             continue
         person_id, person = records[0] if records else (None, None)
         if person and person.get("mergedInto"):
             diagnostics.append(f"{folder}: merged identity history is not an active reference; skipped")
+            continue
+        if require_single_face and person and person.get("identityStatus") == "provisional":
+            diagnostics.append(f"{folder}: provisional container has no reference authority; skipped")
             continue
         anchor_ids = set(person["identityAnchors"]) if person else set()
         photo_ids = [photo_id_fn(photo.name) for photo in usable]
@@ -99,6 +109,138 @@ def frozen_identity_cores(
         }
 
     return cores, protected_ids | ambiguous_ids | effective_anchor_ids, diagnostics
+
+
+def fragment_proposals(cores, references, policy, *, blocked_ids=()):
+    """Describe direct upward identity hypotheses; never authorize or suppress a rival."""
+    categories = policy["categoryPolicies"]
+    order = {category: index for index, category in enumerate(policy["categoryOrder"])}
+    minimum = policy["identityActions"]["autoMergeMinimumIndependentPhotos"]
+    blocked_ids = set(blocked_ids)
+    counts = {}
+    for folder, core in cores.items():
+        ids = list(core["corePhotoIds"])
+        if len(ids) != len(set(ids)):
+            raise ValueError(f"{folder}: repeated frozen core photo ID")
+        for photo_id in ids:
+            counts[photo_id] = counts.get(photo_id, 0) + 1
+    prepared = {}
+    for folder, core in sorted(cores.items()):
+        core_vector = np.asarray(core["vector"], dtype=float)
+        zero_core = core_vector.ndim == 1 and np.isfinite(core_vector).all() and not np.linalg.norm(core_vector)
+        if (
+            core_vector.ndim != 1 or not np.isfinite(core_vector).all()
+            or not zero_core and not np.isclose(np.linalg.norm(core_vector), 1.)
+        ):
+            raise ValueError(f"{folder}: invalid frozen fragment core vector")
+        members = references.get(folder, [])
+        by_id = {}
+        for row in members:
+            photo_id = row["photoId"]
+            if photo_id in by_id:
+                raise ValueError(f"{folder}: repeated fragment reference {photo_id}")
+            vector = np.asarray(row["vector"], dtype=float)
+            if (
+                vector.ndim != 1 or vector.shape != core_vector.shape
+                or not np.isfinite(vector).all()
+                or not zero_core and not np.isclose(np.linalg.norm(vector), 1.)
+                or not isinstance(row.get("sha256"), str) or not row["sha256"]
+            ):
+                raise ValueError(f"{folder}: invalid fragment reference {photo_id}")
+            by_id[photo_id] = row
+        ids = set(core["corePhotoIds"])
+        rows = [by_id[photo_id] for photo_id in sorted(ids & by_id.keys())]
+        reason = (
+            "zero-norm frozen core cannot qualify a fragment" if zero_core else
+            "frozen core reference evidence is incomplete" if ids != set(by_id) or not ids else
+            "ambiguous reference photo ID" if any(counts[photo_id] != 1 for photo_id in ids) else
+            "reference quality or rejection metadata requires review"
+            if any(not row["qualityEligible"] or row.get("rejectionMetadataStale") for row in rows) else
+            None
+        )
+        prepared[folder] = (rows, protection._independent(rows, policy), reason)
+    different = {
+        frozenset(folder.replace("\\", "/") for folder in pair)
+        for pair in policy["runtimeSettings"]["different"]
+    }
+    results = []
+    for source, source_core in sorted(cores.items()):
+        source_category = source_core.get("category", source.split("/", 1)[0])
+        if source_category not in ("Models", "Prospects", "Potentials"):
+            continue
+        source_rows, source_support, source_reason = prepared[source]
+        source_rules = categories[source_category]
+        for target, target_core in sorted(cores.items()):
+            target_category = target_core.get("category", target.split("/", 1)[0])
+            if (
+                order[target_category] >= order[source_category]
+                or source_core["side"] != target_core["side"]
+            ):
+                continue
+            target_rows, target_support, target_reason = prepared[target]
+            target_rules = categories[target_category]
+            threshold = max(source_rules["mergeMinimum"], target_rules["mergeMinimum"])
+            floor = target_rules.get("galleryAdmissionMinimumSimilarity", target_rules["photoRouteMinimum"])
+            score = float(source_core["vector"] @ target_core["vector"])
+            reason = (
+                source_reason or target_reason
+                or ("protected source identity or reference"
+                    if source_core.get("identityProtected")
+                    or not source_rules["automaticMergeEnabled"]
+                    or blocked_ids.intersection(source_core["corePhotoIds"]) else None)
+                or ("explicit different-identity evidence"
+                    if frozenset((source, target)) in different else None)
+                or ("explicit rejected-identity evidence"
+                    if target in rejections.excluded_folders(source_rows, cores)
+                    or source in rejections.excluded_folders(target_rows, cores) else None)
+                or ("shared source/target content is not independent identity evidence"
+                    if {row["sha256"] for row in source_rows}
+                    & {row["sha256"] for row in target_rows} else None)
+                or ("core similarity is below the stricter identity-merge threshold"
+                    if score < threshold else None)
+                or ("insufficient independent frozen references on one or both sides"
+                    if min(len(source_support), len(target_support)) < minimum else None)
+            )
+            member_evidence = []
+            if not reason:
+                for row in source_rows:
+                    member_score = float(row["vector"] @ target_core["vector"])
+                    witnesses = [
+                        other for other in target_support
+                        if other["photoId"] != row["photoId"]
+                        and other["sha256"] != row["sha256"]
+                        and float(row["vector"] @ other["vector"]) >= floor
+                    ]
+                    member_evidence.append({
+                        "photoId": row["photoId"], "score": member_score,
+                        "witnessPhotoIds": [other["photoId"] for other in witnesses[:minimum]],
+                        "independentSupportCount": len(witnesses),
+                        "qualified": member_score >= floor and len(witnesses) >= minimum,
+                    })
+                if not all(row["qualified"] for row in member_evidence):
+                    reason = "not every source core member has independent destination support"
+            results.append({
+                "sourceFolder": source, "targetFolder": target, "score": score,
+                "identityMinimum": threshold, "memberMinimum": floor,
+                "minimumIndependentReferences": minimum,
+                "sourceIndependentPhotoIds": [row["photoId"] for row in source_support],
+                "targetIndependentPhotoIds": [row["photoId"] for row in target_support],
+                "members": member_evidence,
+                "decision": "hold" if reason else "candidate",
+                "reason": reason or "direct independently supported fragment hypothesis; not movement authorization",
+            })
+    for source in sorted({row["sourceFolder"] for row in results}):
+        qualified = [row for row in results if row["sourceFolder"] == source and row["decision"] == "candidate"]
+        if len(qualified) > 1:
+            for row in qualified:
+                row["decision"] = "hold"
+                row["reason"] = "multiple higher identity hypotheses qualify; no automatic equivalence"
+    return {
+        "recipe": "conservative-direct-core-v1", "activation": "diagnostic-only",
+        "candidateLinks": [row for row in results if row["decision"] == "candidate"],
+        "comparisons": results,
+        "scope": "frozen direct proposals only; no rival suppression, transitive closure, movement or reference growth",
+    }
 
 
 def _candidate_key(candidate):
@@ -181,6 +323,7 @@ def plan_reconciliation(
     names_taken=(),
     name_factory,
     policy=None,
+    admission_context=None,
 ):
     """Plan assignments from one frozen set of identity cores and candidate vectors.
 
@@ -267,7 +410,12 @@ def plan_reconciliation(
             and candidate.get("outlierCandidate")
             and candidate.get("sourceFolder") in cores
         )
-        if candidate.get("sourceBucket") not in {"Pool", "Review"} and not gallery_outlier:
+        rebase_member = (
+            admission_context is not None and candidate.get("rebaseCandidate")
+            and candidate.get("sourceBucket") == "Gallery"
+            and candidate.get("sourceFolder", "").split("/", 1)[0] in ("Models", "Prospects", "Potentials")
+        )
+        if candidate.get("sourceBucket") not in {"Pool", "Review"} and not gallery_outlier and not rebase_member:
             raise ValueError(f"{photo_id}: sourceBucket must be Pool, Review or a validated Gallery outlier")
         if candidate.get("side") not in {"Prospects", "Artists"}:
             raise ValueError(f"{photo_id}: side must be Prospects or Artists")
@@ -288,7 +436,10 @@ def plan_reconciliation(
     if policy is not None:
         from .planner import plan_candidates
 
-        result = plan_candidates(prepared, cores, policy, name_factory, names_taken, _average_linkage)
+        result = plan_candidates(
+            prepared, cores, policy, name_factory, names_taken, _average_linkage,
+            admission_context=admission_context,
+        )
         result["held"].extend(held)
         result["assignments"].sort(key=lambda row: row["photoId"])
         result["held"].sort(key=lambda row: (row.get("photoId") or "", row.get("sourceFolder") or ""))

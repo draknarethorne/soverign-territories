@@ -23,7 +23,7 @@ class CastAdmissionTests(unittest.TestCase):
 
     def test_boundary_and_all_independent_gates(self):
         self.assertEqual(evaluate_cast_admission("Sisters", **self.gates)["decision"], "admit")
-        self.assertEqual(evaluate_cast_admission("Angels", **self.gates)["decision"], "hold")
+        self.assertEqual(evaluate_cast_admission("Angels", **self.gates)["decision"], "admit")
         for override in (
             {"score": .499999}, {"margin": .099999}, {"independent_support": 3},
             {"quality_eligible": False}, {"rejection_history": True},

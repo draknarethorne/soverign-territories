@@ -3,6 +3,7 @@ import collections
 import copy
 import csv
 import datetime
+import gzip
 import hashlib
 import html
 import json
@@ -33,7 +34,18 @@ from .sandbox import (
 
 def _implementation_path(name):
     module = pathlib.Path(__file__)
-    return module.parent.parent / name if name == "likeness.py" else module.with_name(name)
+    if name == "likeness.py":
+        return module.parent.parent / name
+    if name in {
+        "group_lifecycle.py",
+        "directed_reformation.py",
+        "entrance_trial.py",
+        "membership_reassessment.py",
+        "fragment_evidence.py",
+        "reformation.py",
+    }:
+        return module.parent.parent / "likeness_experiments" / name
+    return module.with_name(name)
 
 
 def _verify_implementation_hashes(plan):
@@ -93,6 +105,80 @@ def _write_json(path, value):
                 temporary.write_bytes(original)
                 temporary.replace(path)
             raise
+
+
+def _capture_json_value(value):
+    if isinstance(value, np.ndarray):
+        return value.tolist()
+    if isinstance(value, np.generic):
+        return value.item()
+    if isinstance(value, pathlib.Path):
+        return value.as_posix()
+    if isinstance(value, dict):
+        return {str(key): _capture_json_value(child) for key, child in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_capture_json_value(child) for child in value]
+    if isinstance(value, (set, frozenset)):
+        return sorted((_capture_json_value(child) for child in value), key=repr)
+    return value
+
+
+def _capture_regroup_photo(photo):
+    return {
+        "path": _capture_json_value(photo.path),
+        "group": photo.group,
+        "folder": photo.folder,
+        "sha": photo.sha,
+        "key": photo.key,
+        "faces": _capture_json_value(photo.faces),
+        "f2": _capture_json_value(photo.f2),
+        "secondary_face_ratio_available": bool(photo.secondary_face_ratio_available),
+        "animals": _capture_json_value(photo.animals),
+        "raw": _capture_json_value(photo.raw),
+        "box": _capture_json_value(photo.box),
+        "px": _capture_json_value(photo.px),
+        "alignment_evidence": _capture_json_value(photo.alignment_evidence),
+        "name": photo.name,
+        "vec": _capture_json_value(photo.vec),
+    }
+
+
+def _write_regroup_call_capture(path, inputs, name_calls, output):
+    input_bytes = json.dumps(
+        inputs, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False,
+    ).encode("utf-8")
+    payload = {
+        "schemaVersion": 1,
+        "format": "group-lifecycle-regroup-call-v1",
+        "inputSHA256": hashlib.sha256(input_bytes).hexdigest(),
+        "inputs": inputs,
+        "nameFactoryReplay": {
+            "mode": "strict ordered transcript; replay seed and sorted taken names exactly",
+            "calls": name_calls,
+            "requireAllCallsConsumed": True,
+        },
+        "outputs": output,
+    }
+    encoded = json.dumps(
+        payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False,
+    ).encode("utf-8")
+    if len(encoded) > 192 * 1024 * 1024:
+        raise ValueError("regroup call capture exceeds the 192 MiB evidence bound")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(path.name + ".tmp")
+    try:
+        temporary.write_bytes(gzip.compress(encoded, mtime=0))
+        temporary.replace(path)
+    finally:
+        if temporary.exists():
+            temporary.unlink()
+    return {
+        "file": path.name,
+        "sha256": metadata.content_sha256(path),
+        "inputSHA256": payload["inputSHA256"],
+        "nameFactoryCallCount": len(name_calls),
+        "schema": payload["format"],
+    }
 
 
 def _bind_preparation(rows, prepared_rows, output, api):
@@ -2198,18 +2284,20 @@ def create_plan(
     layout, run, policy, api, embedder=None, *, reuse_measurements=False,
     preparation=None, cast_seeds="all", seed_catalog=None, config_snapshot=None,
     working_inputs=None, matching_inputs=None, workflow_reset=None, regroup=False, review_source=None,
-    directed_recipe=None, dominant_provisional=False,
+    directed_recipe=None, dominant_provisional=False, capture_regroup_call=False,
 ):
     if dominant_provisional and directed_recipe is None:
         raise ValueError("dominant provisional assignment requires directed mode")
+    if capture_regroup_call and (not regroup or directed_recipe is None):
+        raise ValueError("regroup call capture requires explicit directed regrouping")
     """Flatten source photos before building any non-cast identity references."""
     if cast_seeds not in {"all", "core"}:
         raise ValueError("cast seed policy must be all or core")
     if regroup and directed_recipe is None:
-        from .group_lifecycle import runtime_policy
+        from tools.art.likeness_experiments.group_lifecycle import runtime_policy
         policy = runtime_policy(policy)
     elif regroup:
-        from . import directed_reformation
+        from tools.art.likeness_experiments import directed_reformation
         policy = directed_reformation.runtime_policy(policy, directed_reformation.recipe_named(directed_recipe))
     source = layout["source_root"]
     cache_path = run / "likeness-cache.json"
@@ -2696,9 +2784,10 @@ def create_plan(
     if not regroup:
         _record_families(catalog, family_evidence, cluster_names, name_evidence, source, policy)
     group_lifecycle = None
+    regroup_capture_receipt = None
     review_bindings = {}
     if regroup:
-        from . import group_lifecycle as lifecycle
+        from tools.art.likeness_experiments import group_lifecycle as lifecycle
 
         catalog = regroup_catalog
         for folder in sorted({row["oldFolder"] for row in routed if row["oldFolder"].startswith(("Angels/", "Sisters/"))}):
@@ -2723,11 +2812,64 @@ def create_plan(
             proposal["photoId"] for proposal in ledger.get("referenceProposals", [])
             if proposal["referenceUse"] == "withdraw-in-shadow"
         }
+        if capture_regroup_call:
+            at = datetime.datetime.now(datetime.timezone.utc).isoformat()
+            name_calls = []
+
+            def record_name_call(seed, taken):
+                taken_names = sorted(str(name) for name in taken)
+                name = api.invent_name(seed, taken)
+                name_calls.append({
+                    "index": len(name_calls), "seed": _capture_json_value(seed),
+                    "taken": taken_names, "name": _capture_json_value(name),
+                })
+                return name
+
+            regroup_inputs = {
+                "rows": copy.deepcopy(routed),
+                "measured": {
+                    source_path: _capture_regroup_photo(photo)
+                    for source_path, photo in sorted(measured.items())
+                },
+                "catalog": copy.deepcopy(catalog),
+                "policy": copy.deepcopy(policy),
+                "selected": sorted(selected_ids),
+                "runId": run.name,
+                "at": at,
+                "pairs": copy.deepcopy(ledger["pairs"]),
+                "referenceExclusions": sorted(reference_exclusions),
+                "directedRecipe": directed_recipe,
+                "dominantProvisional": dominant_provisional,
+            }
+            regroup_name_factory = record_name_call
+        else:
+            regroup_inputs = None
+            name_calls = None
+            at = None
+            regroup_name_factory = api.invent_name
+        regroup_kwargs = {
+            "name_factory": regroup_name_factory,
+            "pairs": ledger["pairs"],
+            "reference_exclusions": reference_exclusions,
+            "directed_recipe": directed_recipe,
+            "dominant_provisional": dominant_provisional,
+        }
+        if capture_regroup_call:
+            regroup_kwargs["at"] = at
         routed, group_lifecycle = lifecycle.regroup(
-            routed, measured, catalog, policy, selected_ids, run.name, name_factory=api.invent_name, pairs=ledger["pairs"],
-            reference_exclusions=reference_exclusions, directed_recipe=directed_recipe,
-            dominant_provisional=dominant_provisional,
+            routed, measured, catalog, policy, selected_ids, run.name, **regroup_kwargs,
         )
+        if capture_regroup_call:
+            regroup_capture_receipt = _write_regroup_call_capture(
+                run / "regroup-call-input.json.gz",
+                regroup_inputs,
+                name_calls,
+                {
+                    "rows": copy.deepcopy(routed),
+                    "catalog": copy.deepcopy(catalog),
+                    "report": copy.deepcopy(group_lifecycle),
+                },
+            )
         group_lifecycle["evaluation"]["reviewedPairCount"] = len(ledger["pairs"])
         final_members = collections.defaultdict(list)
         for row in routed:
@@ -2814,7 +2956,7 @@ def create_plan(
             _bind_preparation(routed, prepared_rows, preparation[0], api)
         final_destinations = {row["photoId"]: row["destination"] for row in routed if row["photoId"]}
         if directed_recipe is not None:
-            from . import directed_reformation
+            from tools.art.likeness_experiments import directed_reformation
             decisions = directed_reformation.unpack_runtime_decisions(group_lifecycle["decisionEvidence"])
             for row in routed:
                 if row.get("photoId") not in decisions:
@@ -2826,12 +2968,22 @@ def create_plan(
             group_lifecycle["decisionEvidence"] = directed_reformation.pack_runtime_decisions(routed)
             for view in group_lifecycle["qualifiedReferences"]:
                 view["proposedCanonicalFolder"] = cluster_names.get(view["folder"], view["folder"])
-        for stage in group_lifecycle["stages"]:
+        for stage_index, stage in enumerate(group_lifecycle["stages"]):
             if stage["id"] == "publication":
-                for stage_row in stage["rows"]:
+                if "boundaryEvidence" in stage:
+                    full_stage = directed_reformation.lifecycle_stage(stage)
+                else:
+                    full_stage = stage
+                for stage_row in full_stage["rows"]:
                     if stage_row["photoId"] in final_destinations:
                         stage_row["destination"] = final_destinations[stage_row["photoId"]]
                         stage_row["proposedDestination"] = final_destinations[stage_row["photoId"]]
+                if "boundaryEvidence" in stage:
+                    compact = directed_reformation.pack_boundary_snapshot(full_stage)
+                    for key in ("title", "at", "scope", "populationCount", "summary"):
+                        if key in stage:
+                            compact[key] = stage[key]
+                    group_lifecycle["stages"][stage_index] = compact
         summary = {key: value for key, value in group_lifecycle["evaluation"].items()
                    if isinstance(value, (str, int, float))}
         print(f"clean rebase: {lifecycle.RECIPE}: {summary}", flush=True)
@@ -2973,16 +3125,16 @@ def create_plan(
             plan["implementationHashes"][name] = metadata.content_sha256(pathlib.Path(__file__).with_name(name))
     if regroup:
         plan["implementationHashes"]["group_lifecycle.py"] = metadata.content_sha256(
-            pathlib.Path(__file__).with_name("group_lifecycle.py"),
+            _implementation_path("group_lifecycle.py"),
         )
     if directed_recipe is not None:
         for name in (
             "directed_reformation.py", "entrance_trial.py", "membership_reassessment.py",
             "fragment_evidence.py", "reformation.py", "metadata.py",
         ):
-            plan["implementationHashes"][name] = metadata.content_sha256(
-                pathlib.Path(__file__).with_name(name),
-            )
+            plan["implementationHashes"][name] = metadata.content_sha256(_implementation_path(name))
+    if regroup_capture_receipt is not None:
+        plan["regroupCallCapture"] = regroup_capture_receipt
     source_manifest = layout["sandbox_root"] / "source-manifest.json"
     plan["configurationReceipt"] = metadata.cw.storage_configuration_receipt(
         cfg if config_snapshot is not None else metadata.cw.load_cfg(),
@@ -4261,7 +4413,7 @@ def command(args, api):
     if directed_recipe and not directed:
         raise ValueError("--directed-recipe requires --directed")
     if directed:
-        from . import directed_reformation
+        from tools.art.likeness_experiments import directed_reformation
 
         directed_recipe = directed_reformation.recipe_named(directed_recipe)["name"]
     if core_selection_preview_requested and not (

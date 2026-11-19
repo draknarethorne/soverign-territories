@@ -32,7 +32,7 @@ Workspace likeness settings retain explicit anchors and workflow metadata.
   likeness like path\\to\\photo.jpg      which folders a new photo looks like
   likeness sort                       Various: photos that match an existing person move there, clusters of one new person
                                       go to a new Prospects/<invented name> folder; the rest stay
-  likeness reconcile                 preview Review + Various together against one frozen identity snapshot
+  likeness reconcile                 legacy experimental compatibility alias; use `likeness-experiments legacy-reconcile`
   likeness seed                       Various\\<Name>\\gallery (photos of one known person): the whole folder goes to <Name>,
                                       an existing person of that name or a new Prospects/Potentials/<Name>; no face matching
   likeness merge Mia "Eva Emily"      move every photo of one folder into another (one person under two names)
@@ -77,7 +77,6 @@ import people  # noqa: E402
 import library_backup  # noqa: E402
 from likeness_library import domains, metadata, rejections, seeded_folders  # noqa: E402
 from likeness_library.audit import audit_person, core_excluded_protection  # noqa: E402
-from likeness_library.diagnostics import collect_diagnostics, write_report  # noqa: E402
 from likeness_library.sandbox import (  # noqa: E402
     full_reset_apply,
     full_reset_preview,
@@ -598,6 +597,8 @@ def cmd_calibrate(args):
 
 
 def cmd_diagnostics(args):
+    from likeness_utils.diagnostics import collect_diagnostics, write_report
+
     started = time.perf_counter()
     sandbox_root = bool(args.root and is_sandbox_working_path(args.root))
     if sandbox_root:
@@ -875,7 +876,7 @@ def cmd_sort(args):
 
 
 def cmd_reconcile(args):
-    from likeness_library.reconcile_command import run
+    from tools.art.likeness_experiments.reconcile_command import run
     return run(args, sys.modules[__name__])
 
 
@@ -3309,7 +3310,7 @@ def cmd_names(args):
 
 
 def cmd_family_preview(args):
-    from likeness_library.family_preview import run
+    from likeness_utils.family_preview import run
     run(args, sys.modules[__name__])
     return 0
 
@@ -3444,7 +3445,10 @@ def main(argv=None, embedder=None, *, domain="general"):
     s.add_argument("--singles", action="store_true", help="a photo that matches nobody and has no look-alike in the pool gets a new folder of its own, so the pool ends up holding only photos with no usable face")
     s.add_argument("--assign", type=float, help="score that makes a match for this run (default: settings assign, 0.40); a lower one is a looser second look, best used after `pullback`")
     add("seed", cmd_seed, apply=True, help="Various/<Name>/gallery: move a folder of one known person to <Name> (existing person, or a new Prospect/Potential)")
-    s = add("reconcile", cmd_reconcile, apply=True)
+    s = add(
+        "reconcile", cmd_reconcile, apply=True,
+        help="explicit legacy experimental reconciliation compatibility alias",
+    )
     s.add_argument("--out", help="write the shared reconciliation proposal as JSON")
     s.add_argument("--policy", help="versioned likeness policy JSON")
     s.add_argument("--sandbox-apply-draft", action="store_true", help="allow draft-policy apply only in sandbox Working")
@@ -3526,10 +3530,9 @@ def main(argv=None, embedder=None, *, domain="general"):
     s.add_argument("--regroup", action="store_true",
                    help="rebuild member-first identities and named appearances with maintained stage viewers; "
                         "requires --cast-seeds core, compatible with FAST/LEAN/FULL")
-    from likeness_library.directed_reformation import recipe_names
     s.add_argument("--directed", action="store_true",
                    help="opt into experimental directed regrouping; requires an explicit --directed-recipe")
-    s.add_argument("--directed-recipe", choices=recipe_names(),
+    s.add_argument("--directed-recipe",
                    help="select one existing experimental recipe; no recipe is a default")
     s.add_argument("--core-selection-preview", action="store_true",
                    help="with --dry-run --directed --regroup, print read-only Working cast-core metadata candidates; "

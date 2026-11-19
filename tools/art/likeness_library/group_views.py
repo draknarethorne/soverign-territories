@@ -117,9 +117,29 @@ def publish(catalog, sources, out, *, source_root=None):
                         f'{html.escape(path.name)}</a>')
             else:
                 card = "Missing, ambiguous, inconsistent, or unverified original"
+            source_refs = (membership.get("assignmentEvidence") or {}).get("sourceReferenceEvidence")
+            source_reference_detail = ""
+            if isinstance(source_refs, dict):
+                source_reference_detail = (
+                    "<br>Frozen source-reference provenance: "
+                    f"{html.escape(str(source_refs.get('frozenOwnScore')))} · candidates/selected/qualified: "
+                    f"{html.escape(str(source_refs.get('candidateReferenceCount', 0)))}/"
+                    f"{html.escape(str(source_refs.get('startingSelectedReferenceCount', 0)))}/"
+                    f"{html.escape(str(source_refs.get('qualifiedReferenceCount', 0)))} · core minimum: "
+                    f"{html.escape(str(source_refs.get('referenceCoreMinimum')))} · independent pair support: "
+                    f"{html.escape(str(source_refs.get('actualIndependentPairSupport')))} / "
+                    f"{html.escape(str(source_refs.get('requiredIndependentPairSupport')))} · "
+                    f"{html.escape(str(source_refs.get('reason') or ''))}"
+                )
+                blockers = source_refs.get("blockers") or []
+                if blockers:
+                    source_reference_detail += "<br>Source-reference blockers: " + html.escape(
+                        ", ".join(blockers),
+                    )
             cards.append(f"<li>{card}<br>{label} · {html.escape(str(membership.get('status', 'unrecorded')))}"
                          f" · core use: {html.escape(str(membership.get('coreUse', False)))}"
                          f"<br>Reason: {html.escape(str(membership.get('reason', '')))}"
+                         f"{source_reference_detail}"
                          f"<br>Reference version: {html.escape(str(membership.get('referenceVersion', '')))}"
                          f"<br>Original path: {html.escape(str(path or 'unavailable'))}</li>")
         manifest = {"group": group, "members": records}

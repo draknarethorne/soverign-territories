@@ -47,6 +47,23 @@ class MaintenanceTests(unittest.TestCase):
         self.assertEqual(metadata.content_sha256(self.root / row["source"]), row["sha256"])
         self.assertEqual(json.loads(journal.read_text())["status"], "undone")
 
+    def test_pool_gallery_normalization_remains_unassigned_and_recoverable(self):
+        row = self.move()
+        row["destination"] = "Various/gallery/various_image_123456.jpg"
+        original = (self.root / row["source"]).read_bytes()
+        journal = maintenance.apply_moves(
+            self.root, [row], self.policy, {}, backup_fn=lambda *_: "verified",
+        )
+        self.assertEqual((self.root / row["destination"]).read_bytes(), original)
+        self.assertEqual(metadata.load_catalog(self.root / ".likeness-library.json")["people"], {})
+        maintenance.undo_moves(self.root, journal, {}, apply=True, backup_fn=lambda *_: "verified")
+        self.assertEqual((self.root / row["source"]).read_bytes(), original)
+        catalog = metadata.load_catalog(self.root / ".likeness-library.json")
+        catalog["photos"][row["photoId"]] = {"contentSha256": row["sha256"], "protected": True}
+        metadata.save_catalog(catalog, self.root / ".likeness-library.json")
+        with self.assertRaisesRegex(ValueError, "protected or workflow-selected"):
+            maintenance._validate_permissions(self.root, [row], self.policy, {})
+
     def test_journal_uses_configured_reports_root(self):
         row = self.move()
         cfg = {"storageRoots": {"reports": "operations/reports"}}
@@ -74,6 +91,24 @@ class MaintenanceTests(unittest.TestCase):
             )
         backup.assert_not_called()
         self.assertFalse((self.root / "_reports").exists())
+
+    def test_draft_override_is_limited_to_explicit_normal_flow_proof_roots(self):
+        self.policy["status"] = "draft"
+        proof_root = pathlib.Path(
+            "B:/Sovereign Territories Sandbox/Working/_sandbox-state/normal-flow-proof-fixture",
+        )
+        maintenance.require_authorization(
+            proof_root, self.policy, sandbox_override=True, allow_isolated_proof=True,
+        )
+        with self.assertRaisesRegex(ValueError, "restricted to sandbox"):
+            maintenance.require_authorization(
+                proof_root, self.policy, sandbox_override=True,
+            )
+        with self.assertRaisesRegex(ValueError, "restricted to sandbox"):
+            maintenance.require_authorization(
+                proof_root.parent / "other-proof", self.policy,
+                sandbox_override=True, allow_isolated_proof=True,
+            )
 
     def test_failed_move_rolls_back_completed_moves(self):
         rows = [self.move(), self.move(654321)]

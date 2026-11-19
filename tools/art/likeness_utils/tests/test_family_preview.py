@@ -14,7 +14,8 @@ from unittest import mock
 import numpy as np
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2]))
-from tools.art.likeness_library import family_preview, policy  # noqa: E402
+from tools.art.likeness_library import policy  # noqa: E402
+from likeness_utils import family_preview  # noqa: E402
 
 
 class Identity(TypedDict):
@@ -231,7 +232,7 @@ class FamilyPreviewTests(unittest.TestCase):
     def test_cli_adapter_returns_success_exit_status_not_report_dictionary(self):
         from tools.art import likeness
 
-        with mock.patch("likeness_library.family_preview.run", return_value={"identityCount": 4}) as run:
+        with mock.patch("likeness_utils.family_preview.run", return_value={"identityCount": 4}) as run:
             args = SimpleNamespace()
             self.assertEqual(likeness.cmd_family_preview(args), 0)
             run.assert_called_once_with(args, likeness)

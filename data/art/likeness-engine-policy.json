@@ -1,8 +1,13 @@
 {
   "schemaVersion": 1,
-  "version": "draft-2026-11-09-individual-association",
+  "version": "draft-2026-11-18-cast-priority",
   "status": "draft",
   "groupCastReviewEnabled": false,
+  "castAdmission": {
+    "reviewMinimum": 0.35,
+    "minimumIndependentReferences": 2,
+    "approvedClosePairs": [["Sisters/Drakness", "Angels/Nyxene"]]
+  },
   "runtimeSettings": {
     "mixed": ["Artists/*", "Various", "Prospects/Various", "Potentials/Various"],
     "pool": ["Various", "Prospects/Various", "Potentials/Various"],
@@ -110,7 +115,8 @@
       "minimumUsablePhotosForOutlierActions": 4
     },
     "Angels": {
-      "photoRouteMinimum": 0.55,
+      "galleryAdmissionEnabled": true,
+      "photoRouteMinimum": 0.5,
       "photoRouteMargin": 0.1,
       "reviewAdmissionEnabled": true,
       "mergeMinimum": 0.65,
@@ -125,8 +131,10 @@
     },
     "Models": {
       "unmatchedOutlierSplitEnabled": true,
-      "photoRouteMinimum": 0.5,
-      "photoRouteMargin": 0.15,
+      "photoRouteMinimum": 0.4,
+      "photoRouteMargin": 0.1,
+      "reviewRouteMinimum": 0.3,
+      "reviewRouteMargin": 0.05,
       "reviewAdmissionEnabled": true,
       "mergeMinimum": 0.55,
       "identityProtectedByDefault": false,
@@ -140,8 +148,10 @@
     },
     "Prospects": {
       "unmatchedOutlierSplitEnabled": true,
-      "photoRouteMinimum": 0.4,
+      "photoRouteMinimum": 0.35,
       "photoRouteMargin": 0.1,
+      "reviewRouteMinimum": 0.3,
+      "reviewRouteMargin": 0.05,
       "reviewAdmissionEnabled": true,
       "mergeMinimum": 0.48,
       "identityProtectedByDefault": false,
@@ -155,8 +165,10 @@
     },
     "Potentials": {
       "unmatchedOutlierSplitEnabled": true,
-      "photoRouteMinimum": 0.4,
+      "photoRouteMinimum": 0.3,
       "photoRouteMargin": 0.1,
+      "reviewRouteMinimum": 0.3,
+      "reviewRouteMargin": 0.05,
       "reviewAdmissionEnabled": true,
       "mergeMinimum": 0.48,
       "identityProtectedByDefault": false,

@@ -67,6 +67,10 @@ def plan_protection(space, cores, catalog, policy, *, root, moving_photo_ids=(),
             reason = "missing or ambiguous stable photo ID"
         elif getattr(photo, "bucket", photo.path.parent.name).casefold() != "gallery":
             reason = "Review and non-Gallery photos cannot acquire protection"
+        elif record and record.get("membership", {}).get("assignmentDisposition") in (
+            "tentative-parent", "provisional", "exception",
+        ):
+            reason = "unconfirmed assignment-only members cannot acquire automatic protection"
         elif photo_id in moving_ids or photo.key in moving_folders:
             reason = "membership changes require fresh reconciliation evidence"
         elif (

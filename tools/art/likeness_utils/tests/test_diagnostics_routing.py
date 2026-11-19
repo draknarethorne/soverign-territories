@@ -7,6 +7,7 @@ from unittest import mock
 
 from tools.art import likeness
 from tools.workflows import comfy_workflows as cw
+from likeness_utils import diagnostics
 
 
 class DiagnosticsOutputRoutingTests(unittest.TestCase):
@@ -33,11 +34,11 @@ class DiagnosticsOutputRoutingTests(unittest.TestCase):
                 ),
                 mock.patch.object(likeness, "load_policy", return_value={"categoryOrder": []}),
                 mock.patch.object(
-                    likeness,
+                    diagnostics,
                     "collect_diagnostics",
                     return_value=(None, [], [], [], {}),
                 ),
-                mock.patch.object(likeness, "write_report") as write_report,
+                mock.patch.object(diagnostics, "write_report") as write_report,
             ):
                 with self.assertRaises(ValueError):
                     likeness.cmd_diagnostics(args)

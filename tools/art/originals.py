@@ -33,6 +33,7 @@ The routine: drop or move originals, delete the ones that did not work out, run 
   python tools/art/originals.py --archive-old      # move the *_org folders already in the library into _archive (--apply; --undo-archive reverses it)
 """
 import argparse
+import collections
 import datetime
 import fnmatch
 import json
@@ -275,27 +276,44 @@ def headshot(src, dest, size, box, *, cleanup=True):
 class Faces:
     """Where the main face is in each photo: the likeness tool's cache (by file content), asking its detector only for photos it has not seen."""
 
-    def __init__(self):
+    def __init__(self, root=None, *, read_only=False):
         import likeness
         self.likeness = likeness
-        self.cache = likeness.Cache(likeness.DATA / "likeness_cache.json")
+        self.root = pathlib.Path(root).resolve() if root is not None else None
+        self.read_only = read_only
+        self.cache = likeness.Cache(
+            likeness.cache_path(argparse.Namespace(cache=None), self.root)
+            if self.root is not None else likeness.DATA / "likeness_cache.json"
+        )
         self.embed = None
 
     def of(self, path):
         """(box, face size in pixels), or (None, 0) when there is no face."""
-        sha = self.cache.sha(path)
+        if self.root is not None:
+            import hashlib
+
+            sha = hashlib.sha1(pathlib.Path(path).read_bytes()).hexdigest()
+        else:
+            sha = self.cache.sha(path)
         data = self.cache.emb.get(sha)
         if data is None:
             self.embed = self.embed or self.likeness.Embedder()
             try:
-                data = self.embed(path) or {"faces": -1}
+                if self.root is not None:
+                    with self.likeness.domains.activate("general", read_only=True):
+                        data = self.embed(path) or {"faces": -1}
+                else:
+                    data = self.embed(path) or {"faces": -1}
             except Exception:  # noqa: BLE001 - one unreadable photo must not stop the rest
+                if self.root is not None:
+                    raise
                 data = {"faces": -1}
             self.cache.emb[sha] = data
         return data.get("box"), data.get("px", 0)
 
     def save(self):
-        self.cache.save()
+        if not self.read_only:
+            self.cache.save()
 
 
 def same_bytes(a, b):
@@ -353,7 +371,7 @@ def make_headshots(sources, folder, size, args, tally, faces):
         name = f"{re.sub(r'_[0-9]+x[0-9]+$', '', os.path.splitext(final)[0])}_head_{size[0]}x{size[1]}.png"  # _head_ keeps it apart from the full photo's copy in a ComfyUI input folder
         from likeness_library import fast_preparation
 
-        if fast_preparation.deferred(path):
+        if fast_preparation.deferred(path) and not getattr(args, "photo_id", None):
             wanted.add(name.lower())
             print(f"  FAST deferred headshot: {final}")
             continue
@@ -366,7 +384,7 @@ def make_headshots(sources, folder, size, args, tally, faces):
         if not args.force and is_fresh(path, current_copy(dest, folder, size), size):
             continue
         if not args.apply:
-            if headshot(path, None, size, box):
+            if headshot(path, None, size, box, cleanup=not bool(getattr(args, "photo_id", None))):
                 made += 1
             else:
                 skipped += 1
@@ -374,15 +392,19 @@ def make_headshots(sources, folder, size, args, tally, faces):
             continue
         out_dir.mkdir(parents=True, exist_ok=True)
         try:
-            ok = headshot(path, dest, size, box)
+            ok = headshot(path, dest, size, box, cleanup=not bool(getattr(args, "photo_id", None)))
         except Exception as e:  # noqa: BLE001
+            if getattr(args, "photo_id", None):
+                raise OSError(f"selected head framing failed for {final}: {e}") from e
             print(f"  WARNING no headshot for {final}: {e}")
             ok = False
         made += ok
         skipped += not ok
         if not ok:
             wanted.discard(name.lower())
-    stale = [p for p in images(out_dir) if p.name.lower() not in wanted]
+    stale = [] if getattr(args, "photo_id", None) else [
+        p for p in images(out_dir) if p.name.lower() not in wanted
+    ]
     for p in stale:
         print(f"  {'PRUNED' if args.apply else 'prune  '} headshot {p.name}  (original gone or no usable face; kept in {archive.name})")
         if args.apply:
@@ -411,19 +433,24 @@ def process_folder(folder, label, size, args, tally):
     gallery, out_dir = folder / "gallery", cw.derivative_dir(folder, "full", size)
     prefix = prefix_of(folder.name)
     print(f"----------------------------------------------------------\n>>> {label}   (prefix: {prefix})")
-    moved, conflicts = migrate_layout(folder, size, args.apply)
+    scoped = bool(getattr(args, "photo_id", None))
+    moved, conflicts = (0, []) if scoped else migrate_layout(folder, size, args.apply)
     if moved:
         print(f"  {'MOVED' if args.apply else 'move '} {moved} scaled cop{'y' if moved == 1 else 'ies'} into {cw.derivative_root(folder, size).name}/")
     for conflict in conflicts:
         print(f"  WARNING kept in the old folder: {conflict}")
     tally["layout"] = tally.get("layout", 0) + (0 if args.apply else moved) + len(conflicts)
     files = images(gallery)
+    if scoped:
+        from likeness_library.metadata import photo_id_from_name
+
+        files = [path for path in files if photo_id_from_name(path.name) in args.photo_id]
     taken = {p.name.lower() for p in files}
     # prefixes these files still carry (the folder was renamed, or they came from another one) are swapped like any other folder's
     known = sorted(set(args.known) | folder_prefixes([p.name for p in files], prefix), key=len, reverse=True)
     sources = []
     for p in files:
-        new = standard_name(p.name, prefix, known, lambda p=p: content_id(p))
+        new = p.name if scoped else standard_name(p.name, prefix, known, lambda p=p: content_id(p))
         path, final = p, p.name
         if p.name != new:
             case_only = p.name.lower() == new.lower()
@@ -469,7 +496,7 @@ def process_folder(folder, label, size, args, tally):
         wanted[out_name.lower()] = out_name  # kept even if it cannot be read now, so its old copy is not pruned
         from likeness_library import fast_preparation
 
-        if fast_preparation.deferred(path):
+        if fast_preparation.deferred(path) and not scoped:
             print(f"  FAST deferred 944x1104 output: {final}")
             continue
         dest = out_dir / out_name
@@ -482,12 +509,17 @@ def process_folder(folder, label, size, args, tally):
             continue
         out_dir.mkdir(parents=True, exist_ok=True)
         try:
-            fit(path, dest, size, args.faces.of(path)[0] if getattr(args, "faces", None) else None)
+            fit(
+                path, dest, size, args.faces.of(path)[0] if getattr(args, "faces", None) else None,
+                cleanup=not scoped,
+            )
             made += 1
         except Exception as e:  # noqa: BLE001 - an unreadable image must not stop the rest
+            if scoped:
+                raise OSError(f"selected framing failed for {final}: {e}") from e
             print(f"  WARNING cannot read {final}: {e}")
             tally["skipped"] += 1
-    stale = [p for p in images(out_dir) if p.name.lower() not in wanted]
+    stale = [] if scoped else [p for p in images(out_dir) if p.name.lower() not in wanted]
     archive = archive_dir(folder, args.work, f"gallery_{size[0]}x{size[1]}_org")
     for p in stale:
         why = "original gone" if p.name.lower().startswith(prefix + "_") else "old name or another folder"
@@ -510,6 +542,7 @@ def main(argv=None, faces=None, *, configuration=None):
     ap.add_argument("--apply", action="store_true", help="really do it (default: preview only)")
     ap.add_argument("--dry-run", action="store_true", help="preview (the bin launcher adds --apply itself)")
     ap.add_argument("--only", action="append", help="a folder name or pattern, e.g. Angelica or 'Drakn*' (repeatable)")
+    ap.add_argument("--photo-id", action="append", help="frame only these stable Gallery photo IDs; no rename, layout migration or unrelated pruning (repeatable)")
     ap.add_argument("--root", help="the folder that holds Angels, Sisters, Prospects, Artists and Various (default: workspaces.json paths.productionRoot)")
     ap.add_argument("--force", action="store_true", help="make every copy again, even ones newer than their original")
     ap.add_argument("--no-repoint", action="store_true", help="do not re-point chosen photos in workspaces.json and the workflows")
@@ -518,11 +551,20 @@ def main(argv=None, faces=None, *, configuration=None):
     ap.add_argument("--archive-old", action="store_true", help="move the *_org folders already in the library into <work root>/_archive (mirrored paths, with a manifest)")
     ap.add_argument("--undo-archive", action="store_true", help="put the files of the last --archive-old back")
     args = ap.parse_args(argv)
+    if args.photo_id and (args.archive_old or args.undo_archive):
+        ap.error("--photo-id is a framing scope, not an archive operation")
+    if args.photo_id and not args.no_repoint:
+        ap.error("selected framing requires --no-repoint; it never changes identity or workflow selection")
     if configuration is not None and args.apply and not (args.no_repoint or args.dry_run or args.check):
         ap.error("scoped originals requires --no-repoint; refresh selected inputs explicitly")
-    args.faces = None if args.no_headshots or args.archive_old or args.undo_archive else (faces or Faces())
     if args.dry_run or args.check:
         args.apply = False
+    args.faces = None
+    if not (args.no_headshots or args.archive_old or args.undo_archive):
+        args.faces = faces or (
+            Faces(args.root or cw.work_root(cw.load_cfg()), read_only=not args.apply)
+            if args.photo_id else Faces()
+        )
     try:
         import PIL  # noqa: F401
     except ImportError:
@@ -538,6 +580,21 @@ def main(argv=None, faces=None, *, configuration=None):
         return
     print(f"library: {', '.join(r.name for r in roots)}   size {size[0]}x{size[1]}   " + ("" if args.apply else "(preview; use --apply)"))
     folders = cw.photo_folders(cfg, args.root)
+    if args.photo_id:
+        from likeness_library.metadata import photo_id_from_name
+
+        counts = collections.Counter(
+            photo_id_from_name(path.name)
+            for _group, name, folder in folders
+            if not args.only or any(
+                fnmatch.fnmatch(folder.name.lower(), pattern.lower())
+                or fnmatch.fnmatch(name.lower(), pattern.lower()) for pattern in args.only
+            )
+            for path in images(folder / "gallery")
+        )
+        invalid = sorted(photo_id for photo_id in set(args.photo_id) if counts[photo_id] != 1)
+        if invalid:
+            ap.error("selected framing needs exactly one Gallery source per photo ID: " + ", ".join(invalid))
     # every folder's prefix, longest first: an original that still carries another folder's prefix gets this folder's instead
     args.known = sorted({prefix_of(d.name) for _, _, d in folders} | {"various"}, key=len, reverse=True)
     tally = {"renamed": 0, "made": 0, "pruned": 0, "skipped": 0}
@@ -554,7 +611,12 @@ def main(argv=None, faces=None, *, configuration=None):
         todo = {"renamed": tally["renamed"], "scaled copies to make": tally["made"], "scaled copies to prune": tally["pruned"], "headshots to make": tally.get("headshots", 0),
                 "headshots to prune": tally.get("headshots_pruned", 0), f"scaled copies to move into {size[0]}x{size[1]}/ (or kept back by a conflict)": tally.get("layout", 0)}
         todo = {k: v for k, v in todo.items() if v}
-        print("IN SYNC: every gallery has its scaled copy and headshot, and nothing is left over." if not todo
+        synced = (
+            "IN SYNC: selected Gallery photos have their requested scaled copies/headshots; unrelated products were not checked."
+            if args.photo_id else
+            "IN SYNC: every gallery has its scaled copy and headshot, and nothing is left over."
+        )
+        print(synced if not todo
               else "OUT OF SYNC: " + ", ".join(f"{v} {k}" for k, v in todo.items()) + ".  Run bin\\originals.cmd to bring them in step.")
         return 1 if todo else 0
     if args.no_repoint:

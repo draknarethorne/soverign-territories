@@ -26,6 +26,81 @@ class FakeCache:
         return self.pair_scores.get(tuple(sorted((a, b))), .1)
 
 
+class MatrixCache:
+    def __init__(self, vectors):
+        self.ids = tuple(sorted(vectors))
+        self.indices = {pid: index for index, pid in enumerate(self.ids)}
+        matrix = np.asarray([vectors[pid] for pid in self.ids])
+        self.values = matrix @ matrix.T
+
+    def get(self, a, b):
+        return self.values[self.indices[a], self.indices[b]]
+
+
+class MatrixEvidence:
+    def __init__(self, vectors):
+        self.vectors = vectors
+        self.hashes = {pid: "hash-" + pid for pid in vectors}
+        self.cache = MatrixCache(vectors)
+        self.settings = {"identityActions": {"independentEvidenceMaximumSimilarity": .95}}
+        self.negatives = defaultdict(set)
+        self.independence = {}
+        self.globally_independent = all(
+            self.hashes[left] != self.hashes[right]
+            and float(self.vectors[left] @ self.vectors[right]) <= .95
+            for index, left in enumerate(self.cache.ids)
+            for right in self.cache.ids[index + 1:]
+        )
+
+    def independent(self, ids):
+        key = tuple(sorted(set(ids)))
+        if self.globally_independent:
+            return list(key)
+        if key not in self.independence:
+            chosen, hashes = [], set()
+            for pid in key:
+                if self.hashes[pid] in hashes:
+                    continue
+                if all(float(self.vectors[pid] @ self.vectors[other]) <= .95 for other in chosen):
+                    chosen.append(pid)
+                    hashes.add(self.hashes[pid])
+            self.independence[key] = chosen
+        return list(self.independence[key])
+
+    def others(self, pid, refs):
+        return [other for other in refs if pid != other and self.hashes[pid] != self.hashes[other]
+                and self.cache.get(pid, other) <= .95]
+
+    def support(self, pid, refs, floor):
+        return self.independent([
+            other for other in self.others(pid, refs) if self.cache.get(pid, other) >= floor
+        ])
+
+    def measure(self, pid, refs):
+        refs = self.independent(self.others(pid, refs))
+        if not refs:
+            return None
+        total = np.sum([self.vectors[other] for other in refs], axis=0)
+        norm = np.linalg.norm(total)
+        return float(self.vectors[pid] @ total / norm) if norm else None
+
+    def qualify(self, view_row, refs, recipe):
+        if view_row.get("explicitIntent"):
+            return sorted(refs), True
+        refs = sorted(set(refs))
+        floor = recipe["core"][view_row["category"]]
+        for _ in range(directed.entrance_trial.MAX_BOUNDARIES):
+            kept = [
+                pid for pid in refs if not self.negatives[pid].intersection(refs)
+                and len(self.support(pid, refs, floor)) >= recipe["coreSupport"]
+                and (self.measure(pid, refs) or -1) >= floor
+            ]
+            if kept == refs:
+                return kept, True
+            refs = kept
+        return refs, False
+
+
 class FakeEvidence:
     def __init__(self, *, identities, views, scores, supports, own_scores, labels=(),
                  stage_scores=None, duplicates=(), pair_scores=None):
@@ -141,6 +216,10 @@ class DirectedReformationTests(unittest.TestCase):
             for photo in range(3290):
                 source = f"Potentials/Existing Person {photo % 194:03d}/gallery/original_long_source_image_{photo:08d}.jpg"
                 destination = source if boundary < 5 else source.replace("Potentials", "Prospects")
+                refs = [
+                    f"photo:image_{(photo // 6 * 6 + offset):08d}"
+                    for offset in range(32)
+                ]
                 rows.append({
                     "photoId": f"photo:image_{photo:08d}", "source": source, "sourceDestination": source,
                     "destination": destination, "proposedDestination": destination,
@@ -153,6 +232,11 @@ class DirectedReformationTests(unittest.TestCase):
                     "admissionBlockers": [] if photo % 3 else ["insufficient-independent-member-support"],
                     "reason": "actual frozen computational boundary; source routes unchanged until a qualified proposal is recorded",
                     "contentHash": f"{photo:064x}",
+                    "sourceReferenceEvidence": {
+                        "candidateReferencePhotoIds": refs,
+                        "qualifiedReferencePhotoIds": refs,
+                        "scoreBasis": "frozen independent-reference centroid",
+                    },
                 })
             lifecycle["stages"].append({
                 "id": f"boundary-{boundary}", "title": f"Actual boundary {boundary}",
@@ -163,6 +247,22 @@ class DirectedReformationTests(unittest.TestCase):
             })
         expected = copy.deepcopy(lifecycle)
         old_bytes = len(json.dumps(lifecycle["stages"], sort_keys=True, separators=(",", ":")).encode())
+        self.assertGreater(old_bytes, 64 * 1024 * 1024)
+        lifecycle["stages"] = [
+            directed.pack_boundary_snapshot(stage) for stage in lifecycle["stages"]
+        ]
+        packed_bytes = sum(
+            stage["boundaryEvidence"]["uncompressedBytes"] for stage in lifecycle["stages"]
+        )
+        expanded_bytes = sum(
+            stage["boundaryEvidence"]["expandedBytes"] for stage in lifecycle["stages"]
+        )
+        self.assertGreater(expanded_bytes, 64 * 1024 * 1024)
+        self.assertLess(packed_bytes, 64 * 1024 * 1024)
+        self.assertEqual(
+            [directed.unpack_boundary_snapshot(stage) for stage in lifecycle["stages"]],
+            expected["stages"],
+        )
         directed.pack_lifecycle_stages(lifecycle)
         new_bytes = len(json.dumps(lifecycle["stages"], sort_keys=True, separators=(",", ":")).encode())
         self.assertGreater(old_bytes - new_bytes, 79_192_840 - 64 * 1024 * 1024)
@@ -174,6 +274,48 @@ class DirectedReformationTests(unittest.TestCase):
         lifecycle["stages"][0]["rows"][0]["coreUse"] = False
         with self.assertRaisesRegex(ValueError, "readable row index"):
             directed.lifecycle_stage(lifecycle["stages"][0])
+
+    def test_packed_boundary_snapshot_roundtrip_rejects_bad_binding_index_and_size(self):
+        snapshot = {
+            "id": "references", "evidenceKind": "computational-boundary-snapshot",
+            "rows": [{"photoId": "photo:one", "status": "supported", "coreUse": True}],
+            "referenceInventory": {"view:one": ["photo:one", "photo:two"]},
+            "witnessPolicy": {"configuredDistinctPersonPairs": [["person:a", "person:b"]]},
+        }
+        packed = directed.pack_boundary_snapshot(snapshot)
+        self.assertEqual(directed.unpack_boundary_snapshot(packed), snapshot)
+        lifecycle = {**packed, "title": "Validated references", "scope": "all inputs"}
+        self.assertEqual(
+            directed.lifecycle_stage(lifecycle)["title"], "Validated references",
+        )
+        self.assertEqual(directed.lifecycle_stage(lifecycle)["scope"], "all inputs")
+
+        bad_binding = copy.deepcopy(packed)
+        bad_binding["boundaryEvidence"]["sha256"] = "0" * 64
+        with self.assertRaisesRegex(ValueError, "content binding"):
+            directed.unpack_boundary_snapshot(bad_binding)
+
+        bad_index = copy.deepcopy(packed)
+        bad_index["rows"][0]["coreUse"] = False
+        with self.assertRaisesRegex(ValueError, "readable row index"):
+            directed.unpack_boundary_snapshot(bad_index)
+
+        oversized = copy.deepcopy(packed)
+        oversized["boundaryEvidence"]["uncompressedBytes"] = directed.MAX_PACKED_EVIDENCE_BYTES + 1
+        with self.assertRaisesRegex(ValueError, "invalid directed evidence size"):
+            directed.unpack_boundary_snapshot(oversized)
+
+        bad_version = copy.deepcopy(packed)
+        bad_version["boundaryEvidenceVersion"] = 2
+        with self.assertRaisesRegex(ValueError, "unsupported directed boundary evidence version"):
+            directed.unpack_boundary_snapshot(bad_version)
+
+        bounded_first = copy.deepcopy(packed)
+        bounded_second = copy.deepcopy(packed)
+        bounded_first["boundaryEvidence"]["uncompressedBytes"] = directed.MAX_PACKED_EVIDENCE_BYTES
+        bounded_second["boundaryEvidence"]["uncompressedBytes"] = directed.MAX_PACKED_EVIDENCE_BYTES
+        with self.assertRaisesRegex(ValueError, "exceeds 64 MiB after lifecycle repack"):
+            directed.pack_lifecycle_stages({"stages": [bounded_first, bounded_second]})
 
     def test_legacy_receipt_and_interned_size_binding_remain_verified(self):
         import base64
@@ -347,10 +489,14 @@ class DirectedReformationTests(unittest.TestCase):
         from tools.art.likeness_library import group_lifecycle
         from tools.art.likeness_library.policy import load_policy
         rows, measured, catalog = fixture[:3]
+        directed_recipe = kwargs.pop("directed_recipe", "directed-core-continuity")
+        name_factory = kwargs.pop(
+            "name_factory", lambda seed, taken: "Nova " + seed,
+        )
         return group_lifecycle.regroup(
             rows, measured, catalog, kwargs.pop("policy", load_policy()), set(), "repair",
-            at="2026-11-13T10:28:00+00:00", directed_recipe="directed-core-continuity",
-            name_factory=lambda seed, taken: "Nova " + seed[-8:], **kwargs,
+            at="2026-11-13T10:28:00+00:00", directed_recipe=directed_recipe,
+            name_factory=name_factory, **kwargs,
         )
 
     def assert_reference_exports(self, output, report, catalog):
@@ -425,6 +571,72 @@ class DirectedReformationTests(unittest.TestCase):
         self.assertFalse(any(row["coreUse"] for row in stages["references"]["rows"]))
         self.assertTrue(any(row["coreUse"] for row in stages["publication"]["rows"]))
 
+    def test_source_incompatible_cohort_gets_provisional_noncore_owner_without_weak_score_eviction(self):
+        fixture = self.fixture()
+        rows, measured, _catalog, cohorts, add = fixture
+        weak = add("Sisters/Sister Source", 8, count=2, pair=.75)
+        for index, photo_id in enumerate(weak):
+            source = next(row["source"] for row in rows if row["photoId"] == photo_id)
+            vector = np.zeros(192)
+            vector[8] = np.sqrt(.75)
+            vector[32 + index] = np.sqrt(.25)
+            measured[source].vec = vector
+        output, report = self.run_fixture(
+            fixture, directed_recipe="directed-corrective-starting-050",
+        )
+        by_id = {row["photoId"]: row for row in output}
+        weak_rows = [by_id[photo_id] for photo_id in weak]
+        self.assertTrue(all(row["destination"].startswith("Potentials/Nova ") for row in weak_rows))
+        self.assertTrue(all(row["destination"].endswith("/gallery/" + pathlib.PurePosixPath(row["source"]).name)
+                            for row in weak_rows))
+        self.assertTrue(all(row["membership"]["assignmentDisposition"] == "provisional"
+                            and not row["membership"]["coreUse"]
+                            for row in weak_rows))
+        self.assertEqual(len({row["membership"]["personId"] for row in weak_rows}), 1)
+        owner = next(person for person in fixture[2]["people"].values()
+                     if person["id"] == weak_rows[0]["membership"]["personId"])
+        self.assertEqual(owner["identityStatus"], "provisional")
+        provenance = weak_rows[0]["membership"]["assignmentEvidence"]["sourceReferenceEvidence"]
+        self.assertIsNotNone(provenance)
+        self.assertEqual(provenance["requiredIndependentPairSupport"], 3)
+        self.assertGreater(provenance["candidateReferenceCount"], 0)
+        from tools.art.likeness_library import group_views, review_gallery
+        self.assertIn("Frozen source-reference provenance:", review_gallery.SCRIPT)
+        with tempfile.TemporaryDirectory() as temporary:
+            pages = group_views.publish(fixture[2], [], pathlib.Path(temporary))
+            group_id = weak_rows[0]["membership"]["groupId"]
+            group_page = pages[f"photo-groups/{group_id}/index.html"].decode("utf-8")
+            self.assertIn("Frozen source-reference provenance", group_page)
+        self.assertEqual(report["evaluation"]["sourceIncompatibleProvisionalAssignments"], 2)
+        source_candidates = next(item for item in report["residualClassifications"]
+                                 if set(item["memberPhotoIds"]) == set(weak))
+        self.assertEqual(set(source_candidates["sourceIncompatiblePhotoIds"]), set(weak))
+        self.assertEqual(source_candidates["qualifiedReferencePhotoIds"], [])
+        self.assertEqual(source_candidates["disposition"], "independent-reference-insufficient")
+        self.assertTrue(all(row["source"] != row["destination"] for row in weak_rows))
+        decisions = directed.unpack_runtime_decisions(report["decisionEvidence"])
+        self.assertTrue(all(decisions[pid]["sourceIncompatibility"]["qualified"] for pid in weak))
+        self.assert_reference_exports(output, report, fixture[2])
+        locked_fixture = self.fixture()
+        locked_rows, locked_measured, locked_catalog, _locked_cohorts, locked_add = locked_fixture
+        locked_weak = locked_add("Sisters/Sister Source", 8, count=2, pair=.75)
+        for index, photo_id in enumerate(locked_weak):
+            source = next(row["source"] for row in locked_rows if row["photoId"] == photo_id)
+            vector = np.zeros(192)
+            vector[8] = np.sqrt(.75)
+            vector[32 + index] = np.sqrt(.25)
+            locked_measured[source].vec = vector
+        locked_row = next(row for row in locked_rows if row["photoId"] == locked_weak[0])
+        locked_catalog["photos"][locked_weak[0]] = {
+            "contentSha256": locked_row["sha256"], "protected": True,
+        }
+        locked_output, _ = self.run_fixture(
+            locked_fixture, directed_recipe="directed-corrective-starting-050",
+        )
+        locked_by_id = {row["photoId"]: row for row in locked_output}
+        self.assertTrue(all(locked_by_id[photo_id]["source"] == locked_by_id[photo_id]["destination"]
+                            for photo_id in locked_weak))
+
     def test_verified_point80_baseline_can_be_corrected_after_new_exact_contradiction_unless_locked(self):
         baseline = self.fixture()
         output, _ = self.run_fixture(baseline)
@@ -471,6 +683,80 @@ class DirectedReformationTests(unittest.TestCase):
         self.assertEqual({len(view["qualifiedReferencePhotoIds"]) for view in rescued}, {6})
         self.assert_reference_exports(output, report, fixture[2])
 
+    def test_corrective_recipe_keeps_historical_default_and_separates_three_cast_selection_candidates(self):
+        historical = directed.recipe_named("directed-core-continuity")
+        self.assertEqual(historical["core"], {
+            "Sisters": .60, "Angels": .60, "Models": .50, "Prospects": .45, "Potentials": .40,
+        })
+        self.assertEqual(historical["coreSupport"], 4)
+        self.assertNotIn("startingCastSelectionMinimum", historical)
+        candidates = [
+            recipe for recipe in directed.recipes()
+            if recipe["name"].startswith("directed-corrective-starting-")
+        ]
+        self.assertEqual(
+            [recipe["startingCastSelectionMinimum"] for recipe in candidates], [.45, .50, .60],
+        )
+        for recipe in candidates:
+            self.assertEqual(recipe["core"], {
+                "Sisters": .40, "Angels": .35, "Models": .30, "Prospects": .25, "Potentials": .25,
+            })
+            self.assertEqual(recipe["coreSupport"], 3)
+            self.assertEqual(recipe["tentativeCastSupport"], 2)
+
+    def test_starting_cast_selection_is_frozen_separate_and_reports_sparse_core_loss(self):
+        refs = [f"cast-{index}" for index in range(7)]
+        scores = dict(zip(refs, (.95, .75, .70, .65, .55, .48, .20)))
+        identities = {
+            pid: {"folder": "Sisters/Cast", "personId": "cast-owner", "refs": refs,
+                  "ownView": "cast-view"}
+            for pid in refs
+        }
+        supports = {
+            pid: {other: .9 for other in refs if other != pid}
+            for pid in refs
+        }
+        base = FakeEvidence(
+            identities=identities,
+            views=[view("Sisters/Cast", "Sisters", "cast-owner", "cast-view", refs)],
+            scores={}, supports=supports, own_scores=scores,
+        )
+        base.configured_identity_negatives = set()
+        original_population = set(base.source)
+        results = {}
+        for floor in (.45, .50, .60):
+            recipe = copy.deepcopy(directed.recipe_named(
+                f"directed-corrective-starting-{int(floor * 100):03d}",
+            ))
+            prepared, _withdrawals = directed.prepare_reference_views(copy.deepcopy(base), recipe)
+            source_view = next(item for item in prepared.views if item["appearanceId"] == "cast-view")
+            selection = source_view["startingCastSelection"]
+            results[floor] = (set(selection["selectedPhotoIds"]), set(source_view["original"]))
+            self.assertEqual(set(selection["candidatePhotoIds"]), set(refs))
+            self.assertEqual(selection["minimumOwnScore"], floor)
+            self.assertEqual(selection["scoreBasis"],
+                             "content-bound independent own-core score against the complete original candidate inventory")
+        observed = copy.deepcopy(base)
+        qualified_inputs = []
+        original_qualify = observed.qualify
+
+        def count_qualification(view_row, refs, recipe):
+            qualified_inputs.append(tuple(sorted(set(refs))))
+            return original_qualify(view_row, refs, recipe)
+
+        observed.qualify = count_qualification
+        directed.prepare_reference_views(
+            observed, directed.recipe_named("directed-corrective-starting-045"),
+        )
+        self.assertEqual(qualified_inputs.count(tuple(refs[:6])), 1)
+        self.assertEqual(results[.45][0], set(refs[:6]))
+        self.assertEqual(results[.50][0], set(refs[:5]))
+        self.assertEqual(results[.60][0], set(refs[:4]))
+        self.assertEqual(results[.45][1], set(refs[:6]))
+        self.assertEqual(results[.50][1], set(refs[:5]))
+        self.assertEqual(results[.60][1], set(refs[:4]))
+        self.assertEqual(set(base.source), original_population)
+
     def test_withdrawn_stale_duplicate_and_no_reference_owners_do_not_self_certify(self):
         fixture = self.fixture()
         rows, measured, catalog, cohorts, add = fixture
@@ -493,9 +779,11 @@ class DirectedReformationTests(unittest.TestCase):
         self.assertEqual(catalog["photos"][stale]["contentSha256"], "f" * 64)
         self.assertFalse(by_id[alone_cast]["directedReformation"]["verifiedStrongBaseline"])
         stages = {stage["id"]: stage for stage in report["stages"]}
-        self.assertTrue(stages["references"]["referenceWithdrawals"])
-        initial = next(row for row in stages["references"]["rows"] if row["photoId"] == withdrawn)
-        final = next(row for row in stages["publication"]["rows"] if row["photoId"] == withdrawn)
+        reference_stage = directed.lifecycle_stage(stages["references"])
+        publication_stage = directed.lifecycle_stage(stages["publication"])
+        self.assertTrue(reference_stage["referenceWithdrawals"])
+        initial = next(row for row in reference_stage["rows"] if row["photoId"] == withdrawn)
+        final = next(row for row in publication_stage["rows"] if row["photoId"] == withdrawn)
         self.assertFalse(initial["referenceEligibleAtBoundary"])
         self.assertEqual(initial["status"], "membership-not-yet-assessed")
         self.assertEqual(final["status"], "supported")
@@ -504,7 +792,7 @@ class DirectedReformationTests(unittest.TestCase):
         for folder in ("Models/Only One", "Angels/Only One", "Potentials/Duplicate Source"):
             owner = next(p["id"] for p in catalog["people"].values() if p["folder"] == folder)
             self.assertIn(owner, unavailable)
-        alone_state = next(row for row in stages["references"]["rows"] if row["photoId"] == alone_cast)
+        alone_state = next(row for row in reference_stage["rows"] if row["photoId"] == alone_cast)
         qualification = alone_state["candidateReferenceQualification"]
         self.assertIsNone(qualification["independentOwnCentroidScore"])
         self.assertEqual(qualification["actualIndependentPairSupport"], 0)
@@ -566,14 +854,17 @@ class DirectedReformationTests(unittest.TestCase):
         self.assert_reference_exports(output, report, fixture[2])
 
     def test_small_residual_cohorts_receive_provisional_noncore_routes_without_bootstrap(self):
-        for count in (1, 2, 3, 4):
+        for count in (1, 2, 3):
             fixture = self.fixture()
             incoming = set(fixture[3]["Various"][:count])
             rows = [row for row in fixture[0] if row["photoId"] in incoming]
             for row in rows:
                 row["reason"] = "stale pre-directed approved cast admission"
                 row["castAdmission"] = {"approved": True}
-            output, report = self.run_fixture((rows, *fixture[1:]))
+            output, report = self.run_fixture(
+                (rows, *fixture[1:]),
+                directed_recipe="directed-corrective-starting-050",
+            )
             self.assertEqual(len(fixture[2]["people"]), 1)
             self.assertEqual(len(fixture[2]["photoGroups"]), 1)
             self.assertFalse(report["independentIdentities"])
@@ -583,13 +874,14 @@ class DirectedReformationTests(unittest.TestCase):
                 for row in output:
                     self.assertEqual(row["membership"]["assignmentDisposition"], "provisional")
                     self.assertFalse(row["membership"]["coreUse"])
+                self.assert_reference_exports(output, report, fixture[2])
                 continue
             held = report["residualClassifications"][0]
             self.assertEqual(held["classification"]["category"], "Potentials")
             self.assertTrue(held["candidateFolder"].startswith("Potentials/Nova "))
             self.assertEqual(held["disposition"], "independent-reference-insufficient")
             self.assertEqual(held["qualifiedReferencePhotoIds"], [])
-            self.assertEqual(held["coreSupportMinimum"], 4)
+            self.assertEqual(held["coreSupportMinimum"], 3)
             self.assertTrue(all(item["independentPairSupport"] == count - 1
                                 for item in held["candidateQualification"]))
             publication = next(stage for stage in report["stages"] if stage["id"] == "publication")
@@ -603,6 +895,21 @@ class DirectedReformationTests(unittest.TestCase):
                 self.assertNotIn("stale pre-directed", row["reason"])
                 self.assertNotIn("castAdmission", row)
             self.assert_reference_exports(output, report, fixture[2])
+
+        fixture = self.fixture()
+        incoming = set(fixture[3]["Various"][:4])
+        rows = [row for row in fixture[0] if row["photoId"] in incoming]
+        for row in rows:
+            row["reason"] = "stale pre-directed approved cast admission"
+            row["castAdmission"] = {"approved": True}
+        output, report = self.run_fixture(
+            (rows, *fixture[1:]),
+            directed_recipe="directed-corrective-starting-050",
+        )
+        self.assertEqual(len(report["independentIdentities"]), 1)
+        identity = report["independentIdentities"][0]
+        self.assertEqual(set(identity["qualifiedReferencePhotoIds"]), incoming)
+        self.assertTrue(all(not row["membership"]["coreUse"] for row in output))
 
     def test_provisional_export_reload_second_run_never_bootstraps_or_attracts(self):
         fixture = self.fixture()
@@ -665,6 +972,148 @@ class DirectedReformationTests(unittest.TestCase):
             self.assertFalse(row["membership"]["coreUse"])
             self.assert_reference_exports(output, report, catalog)
             measured = replay_measurements
+
+    def test_two_supporter_cast_candidate_can_be_tentative_but_not_qualified_or_reference_eligible(self):
+        from tools.art.likeness_library.policy import load_policy
+        evidence = self.build(
+            category="Potentials", person="lower-id", own=.1,
+            targets=[{
+                "id": "angel-view", "folder": "Angels/Angel", "category": "Angels",
+                "personId": "angel-owner", "score": .55,
+            }],
+        )
+        source = evidence.source["candidate"]
+        source.update(oldFolder="Various", oldPersonId=None, membershipAssessment={"own": {}})
+        source["runtimeCastAdmission"] = {
+            "qualityEligible": True, "metadataStale": False,
+            "rejectionHistory": False, "protected": False,
+        }
+        evidence.settings = load_policy()
+        evidence.supports["candidate"] = {
+            "angel-view-r0": .9, "angel-view-r1": .9,
+        }
+        recipe = directed.recipe_named("directed-corrective-starting-050")
+        result = directed.run_variant(evidence, recipe)
+        row = self.row(result)
+        option = next(item for item in row["tentativeAssociations"]
+                      if item["personId"] == "angel-owner")
+        self.assertFalse(option["individuallyQualified"])
+        self.assertIn("insufficient-independent-member-support", option["blockers"])
+        self.assertEqual(len(option["independentSupportPhotoIds"]), 2)
+        self.assertEqual(option["castAdmission"]["decision"], "hold")
+        self.assertTrue(option["tentativeAssignmentEligible"])
+        self.assertEqual(option["tentativeAssignmentBlockers"], [])
+        self.assertFalse(row["referenceUseEligible"])
+        self.assertIsNone(row["candidateDestination"])
+
+    def test_tentative_cast_assignment_stays_nonreference_after_reload_and_new_arrival(self):
+        fixture = self.fixture()
+        rows, measured, catalog, cohorts, add = fixture
+        cast_ids = cohorts["Angels/Angel Source"]
+        for index, photo_id in enumerate(cast_ids):
+            source = next(row["source"] for row in rows if row["photoId"] == photo_id)
+            vector = np.zeros(192)
+            if index < 2:
+                vector[11], vector[12], vector[20 + index] = .9, .25, np.sqrt(.1275)
+            else:
+                vector[11], vector[12], vector[30 + index] = .35, .85, np.sqrt(.155)
+            measured[source].vec = vector
+        candidate = add("Various", 11, count=1)[0]
+        measured[rows[-1]["source"]].vec = np.eye(1, 192, 11)[0]
+        output, report = self.run_fixture(
+            fixture, directed_recipe="directed-corrective-starting-050",
+        )
+        by_id = {row["photoId"]: row for row in output}
+        assigned = by_id[candidate]
+        self.assertTrue(assigned["destination"].startswith("Angels/Angel Source/gallery/"))
+        self.assertEqual(assigned["membership"]["assignmentDisposition"], "tentative-parent")
+        self.assertFalse(assigned["membership"]["coreUse"])
+        decision = directed.unpack_runtime_decisions(report["decisionEvidence"])[candidate]
+        option = next(item for item in decision["tentativeAssociations"]
+                      if item["folder"] == "Angels/Angel Source")
+        self.assertTrue(option["tentativeAssignmentEligible"])
+        self.assertEqual(len(option["independentSupportPhotoIds"]), 2)
+        self.assertFalse(option["individuallyQualified"])
+        self.assertGreaterEqual(option["score"], option["admissionFloor"])
+        self.assertGreaterEqual(option["signedDistinctRivalMargin"], .10)
+        self.assertIn("insufficient independent frozen destination-core support",
+                      option["castAdmission"]["reason"])
+        self.assert_reference_exports(output, report, catalog)
+
+        added = add("Various", 11, count=1)[0]
+        measured[rows[-1]["source"]].vec = np.eye(1, 192, 11)[0]
+        replay, replay_measurements = [], {}
+        for item in output:
+            replay.append({
+                **item, "source": item["destination"],
+                "oldFolder": str(pathlib.PurePosixPath(item["destination"]).parent.parent),
+            })
+            replay_measurements[item["destination"]] = measured[item["source"]]
+        replay.append(rows[-1])
+        replay_measurements[rows[-1]["source"]] = measured[rows[-1]["source"]]
+        replay_catalog = json.loads(json.dumps(catalog))
+        second, second_report = self.run_fixture(
+            (replay, replay_measurements, replay_catalog),
+            directed_recipe="directed-corrective-starting-050",
+        )
+        second_by_id = {row["photoId"]: row for row in second}
+        for photo_id in (candidate, added):
+            row = second_by_id[photo_id]
+            self.assertTrue(row["destination"].startswith("Angels/Angel Source/gallery/"))
+            self.assertEqual(row["membership"]["assignmentDisposition"], "tentative-parent")
+            self.assertFalse(row["membership"]["coreUse"])
+        self.assert_reference_exports(second, second_report, replay_catalog)
+
+    def test_missing_source_score_reports_exact_reference_inventory_without_quality_fallback(self):
+        evidence = self.build(category="Angels", person="angel-owner")
+        source_view = evidence.views[0]
+        source_view["original"].append("candidate")
+        source_view["frozenReferencePhotoIds"].append("candidate")
+        evidence.vectors.pop("candidate")
+        evidence.cache.indices.pop("candidate")
+        evidence.cache.indices = {
+            pid: index for index, pid in enumerate(sorted(evidence.cache.indices))
+        }
+        evidence.eligible.discard("candidate")
+        evidence.source["candidate"]["reasons"] = ["quality-ineligible"]
+        result = directed.run_variant(
+            evidence, directed.recipe_named("directed-corrective-starting-050"), reconcile=True,
+        )
+        boundary = directed.unpack_boundary_snapshot(
+            next(stage for stage in result["boundarySnapshots"] if stage["id"] == "references")
+        )
+        row = next(item for item in boundary["rows"] if item["photoId"] == "candidate")
+        provenance = row["sourceReferenceEvidence"]
+        self.assertIsNone(provenance["frozenOwnScore"])
+        self.assertEqual(provenance["candidateReferenceCount"], 5)
+        self.assertEqual(set(provenance["candidateReferencePhotoIds"]),
+                         {"candidate", "src0", "src1", "src2", "src3"})
+        self.assertEqual(provenance["qualifiedReferencePhotoIds"], [])
+        self.assertIn("quality-ineligible", provenance["qualityAndInputReasons"])
+        self.assertIn("no quality-score substitution", provenance["reason"])
+        self.assertIn("frozen-source-score-unavailable; no quality-score substitution",
+                      provenance["blockers"])
+        page = directed.summary_for_page({"variants": [result]})
+        page_row = next(item for item in page["variants"][0]["rows"]
+                        if item["photoId"] == "candidate")
+        self.assertEqual(page_row["sourceReferenceEvidence"]["candidateReferenceCount"], 5)
+        self.assertEqual(page_row["sourceReferenceEvidence"]["qualifiedReferenceCount"], 0)
+        rendered = directed.render({
+            "control": {
+                "name": "control", "populationCount": 1, "proposalCount": 0,
+                "logicalReleases": 0, "changedSourceDestinations": 0,
+            },
+            "variants": [result],
+            "verification": {"reverseOrderVerified": True},
+        }, {})
+        self.assertIn("Frozen source-reference gate:", rendered)
+        self.assertIn("Source-reference blockers:", rendered)
+        self.assertIn("Family-semantic audit:", rendered)
+        qualification = row["candidateReferenceQualification"]
+        self.assertIsNone(qualification["independentOwnCentroidScore"])
+        self.assertEqual(qualification["candidateReferencePhotoIds"],
+                         provenance["candidateReferencePhotoIds"])
+        self.assertEqual(qualification["requiredIndependentPairSupport"], 3)
 
     def test_intake_quality_and_physical_locks_are_explicit_exceptions_not_forced_junk(self):
         fixture = self.fixture()
@@ -1003,6 +1452,44 @@ class DirectedReformationTests(unittest.TestCase):
         _, second = self.run_fixture(replay)
         self.assertEqual(report["qualifiedReferences"], second["qualifiedReferences"])
 
+    def test_constrained_average_link_reduces_fragmentation_without_bridges_or_cannot_link_merges(self):
+        evidence = self.build()
+        ids = ["cohort-a", "cohort-b", "cohort-c", "cohort-d"]
+        for index, pid in enumerate(ids):
+            evidence.source[pid] = {
+                "photoId": pid, "oldFolder": "Various", "oldPersonId": None,
+                "sourceIdentityIds": [],
+            }
+            evidence.hashes[pid] = f"content-{index}"
+            evidence.cache.indices[pid] = len(evidence.cache.indices)
+        high = {
+            ("cohort-a", "cohort-b"), ("cohort-a", "cohort-c"),
+            ("cohort-b", "cohort-c"), ("cohort-b", "cohort-d"),
+            ("cohort-c", "cohort-d"),
+        }
+        for left_index, left in enumerate(ids):
+            for right in ids[left_index + 1:]:
+                evidence.cache.pair_scores[tuple(sorted((left, right)))] = (
+                    .8 if (left, right) in high else .1
+                )
+        strict = directed._complete_link_clusters(ids, evidence, .45, directed.MAX_CLUSTER_OPERATIONS)
+        bounded = directed._constrained_average_link_clusters(
+            ids, evidence, threshold=.25, minimum_member_support=2,
+            max_operations=directed.MAX_CLUSTER_OPERATIONS,
+        )
+        self.assertIn(ids, bounded)
+        self.assertEqual(strict, [["cohort-a", "cohort-b", "cohort-c"], ["cohort-d"]])
+        evidence.negatives["cohort-a"].add("cohort-c")
+        evidence.negatives["cohort-c"].add("cohort-a")
+        vetoed = directed._constrained_average_link_clusters(
+            ids, evidence, threshold=.25, minimum_member_support=2,
+            max_operations=directed.MAX_CLUSTER_OPERATIONS,
+        )
+        self.assertFalse(any({"cohort-a", "cohort-c"} <= set(cluster) for cluster in vetoed))
+        evidence.source["cohort-a"].update(oldFolder="Sisters/A", oldPersonId="cast-a")
+        evidence.source["cohort-d"].update(oldFolder="Sisters/D", oldPersonId="cast-d")
+        self.assertTrue(directed._cohort_conflict(evidence, "cohort-a", "cohort-d"))
+
     def test_serialized_resume_never_restores_withdrawn_core_or_self_only_references(self):
         fixture = self.fixture()
         excluded = fixture[3]["Models/Model Source"][0]
@@ -1163,6 +1650,93 @@ class DirectedReformationTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "operation cap"):
                 list(directed._anchor_reference_hypotheses(
                     evidence, view, candidates, self.recipe()))
+
+    def test_independent_anchor_reference_masks_match_exact_qualification_and_order(self):
+        rng = np.random.default_rng(411)
+        residual = rng.normal(size=(28, 63))
+        residual /= np.linalg.norm(residual, axis=1)[:, None]
+        vectors = {
+            f"photo:{index:03d}": np.concatenate(([np.sqrt(.61)], np.sqrt(.39) * residual[index]))
+            for index in range(len(residual))
+        }
+        evidence = MatrixEvidence(vectors)
+        self.assertTrue(evidence.globally_independent)
+        evidence.negatives["photo:000"].add("photo:001")
+        evidence.negatives["photo:001"].add("photo:000")
+        candidates = sorted(vectors)
+        view_row = {"category": "Sisters"}
+        recipe = directed.recipe_named("directed-corrective-starting-045")
+
+        def exact_hypotheses(order):
+            output, seen = [], set()
+            for anchor in sorted(order):
+                refs = sorted({anchor, *evidence.support(anchor, order, recipe["core"]["Sisters"])})
+                signature = tuple(refs)
+                if signature in seen or len(refs) <= recipe["coreSupport"]:
+                    continue
+                seen.add(signature)
+                qualified, stable = evidence.qualify(view_row, refs, recipe)
+                if stable and anchor in qualified:
+                    output.append((qualified, refs))
+            return output
+
+        expected = exact_hypotheses(candidates)
+        forward = list(directed._anchor_reference_hypotheses(
+            evidence, view_row, candidates, recipe,
+        ))
+        reverse = list(directed._anchor_reference_hypotheses(
+            evidence, view_row, list(reversed(candidates)), recipe,
+        ))
+        self.assertEqual(forward, expected)
+        self.assertEqual(reverse, expected)
+
+    def test_dense_independent_neighborhood_stress_stays_within_unchanged_cap(self):
+        rng = np.random.default_rng(20261115)
+        residual = rng.normal(size=(321, 127))
+        residual /= np.linalg.norm(residual, axis=1)[:, None]
+        vectors = {
+            f"photo:{index:04d}": np.concatenate(([np.sqrt(.40)], np.sqrt(.60) * residual[index]))
+            for index in range(len(residual))
+        }
+        evidence = MatrixEvidence(vectors)
+        self.assertTrue(evidence.globally_independent)
+        candidates = sorted(vectors)
+        view_row = {"category": "Sisters"}
+        recipe = directed.recipe_named("directed-corrective-starting-045")
+
+        def legacy_bounded_producer():
+            floor = recipe["core"]["Sisters"]
+            operations = len(candidates) ** 2
+            seen = set()
+            for anchor in candidates:
+                refs = sorted({anchor, *evidence.support(anchor, candidates, floor)})
+                signature = tuple(refs)
+                if signature in seen or len(refs) <= recipe["coreSupport"]:
+                    continue
+                seen.add(signature)
+                operations += len(refs) ** 2
+                if operations > directed.MAX_CLUSTER_OPERATIONS:
+                    raise ValueError("directed reference-neighbourhood qualification cap exceeded")
+                evidence.qualify(view_row, refs, recipe)
+
+        original_qualify = evidence.qualify
+        evidence.qualify = lambda _view, refs, _recipe: (list(refs), True)
+        try:
+            with self.assertRaisesRegex(ValueError, "qualification cap"):
+                legacy_bounded_producer()
+        finally:
+            evidence.qualify = original_qualify
+
+        stats = {}
+        hypotheses = list(directed._anchor_reference_hypotheses(
+            evidence, view_row, candidates, recipe, stats=stats,
+        ))
+        self.assertEqual(stats["mode"], "independent-reference-mask")
+        self.assertGreater(stats["uniqueNeighborhoods"], 20)
+        self.assertGreater(stats["legacyQuadraticOperations"], directed.MAX_CLUSTER_OPERATIONS)
+        self.assertLessEqual(stats["operations"], directed.MAX_CLUSTER_OPERATIONS)
+        self.assertEqual(len(hypotheses), stats["uniqueNeighborhoods"])
+        self.assertTrue(all(qualified == cohort for qualified, cohort in hypotheses))
 
     def test_reconciliation_and_rival_scores_are_order_invariant(self):
         evidence = self.reconciliable()
@@ -1537,6 +2111,18 @@ class DirectedReformationTests(unittest.TestCase):
         self.assertNotEqual(self.row(directed.run_variant(no_support, self.recipe()))["shadowAction"],
                             "strong-wrong-identity-correction")
 
+    def test_source_score_above_evidence_floor_cannot_trigger_release_or_new_owner_evaluation(self):
+        evidence = self.build(
+            category="Sisters", person="sister-a", own=.369, core=True, cast_score=.369,
+            targets=[{"id": "model-view", "folder": "Models/B", "category": "Models",
+                      "personId": "model-b", "score": .85}],
+        )
+        row = self.row(directed.run_variant(evidence, self.recipe()))
+        self.assertFalse(row["sourceIncompatibility"]["qualified"])
+        self.assertEqual(row["shadowAction"], "retain-in-place")
+        self.assertNotIn("sourceIncompatibleCohortEvidence", row)
+        self.assertIsNone(row["candidateDestination"])
+
     def test_strong_release_requires_stricter_signed_margin(self):
         evidence = self.build(
             category="Sisters", person="sister-a", own=.7, core=True, cast_score=.2,
@@ -1547,6 +2133,114 @@ class DirectedReformationTests(unittest.TestCase):
         self.assertTrue(row["sourceIncompatibility"]["qualified"])
         self.assertIsNone(row["correctionAssociation"])
         self.assertNotEqual(row["shadowAction"], "strong-wrong-identity-correction")
+
+    def test_corrective_release_uses_qualified_category_floor_and_margin(self):
+        recipe = directed.recipe_named("directed-corrective-starting-050")
+        self.assertEqual(recipe["strongRelease"], {
+            "sourceMaximum": .30, "destinationGate": "qualified-category",
+        })
+        evidence = self.build(
+            category="Models", person="model-a", own=.2,
+            targets=[
+                {"id": "model-b", "folder": "Models/B", "category": "Models",
+                 "personId": "model-b", "score": .45},
+                {"id": "model-c", "folder": "Models/C", "category": "Models",
+                 "personId": "model-c", "score": .34},
+            ],
+        )
+        row = self.row(directed.run_variant(evidence, recipe))
+        correction = row["correctionAssociation"]
+        self.assertEqual(row["shadowAction"], "strong-wrong-identity-correction")
+        self.assertEqual(correction["folder"], "Models/B")
+        self.assertGreaterEqual(
+            len(row["sourceIncompatibility"]["independentSourceReferenceIds"]), 2,
+        )
+        self.assertLess(correction["score"], .60)
+        self.assertLess(correction["signedDistinctRivalMargin"], .30)
+        self.assertGreaterEqual(
+            correction["score"], recipe["admission"]["Models"],
+        )
+        self.assertGreaterEqual(
+            correction["signedDistinctRivalMargin"], recipe["sameIdentityMargin"]["Models"],
+        )
+        self.assertGreaterEqual(len(correction["independentSupportPhotoIds"]), recipe["joinSupport"])
+
+    def test_corrective_release_rejects_ambiguous_two_support_locked_and_negative_targets(self):
+        recipe = directed.recipe_named("directed-corrective-starting-050")
+        target = {"id": "model-b", "folder": "Models/B", "category": "Models",
+                  "personId": "model-b", "score": .45}
+
+        two_support = self.build(
+            category="Models", person="model-a", own=.2, targets=[target],
+            supports={"candidate": {
+                "model-b-r0": .9, "model-b-r1": .9,
+                "model-b-r2": .1, "model-b-r3": .1,
+            }},
+        )
+        self.assertNotEqual(
+            self.row(directed.run_variant(two_support, recipe))["shadowAction"],
+            "strong-wrong-identity-correction",
+        )
+
+        ambiguous = self.build(
+            category="Models", person="model-a", own=.2,
+            targets=[
+                target,
+                {"id": "model-c", "folder": "Models/C", "category": "Models",
+                 "personId": "model-c", "score": .40},
+            ],
+        )
+        self.assertNotEqual(
+            self.row(directed.run_variant(ambiguous, recipe))["shadowAction"],
+            "strong-wrong-identity-correction",
+        )
+
+        locked = self.build(
+            category="Models", person="model-a", own=.2, blocks=("protected",),
+            targets=[target],
+        )
+        self.assertEqual(
+            self.row(directed.run_variant(locked, recipe))["shadowAction"],
+            "physical-lock-preserved",
+        )
+
+        negative = self.build(
+            category="Models", person="model-a", own=.2, targets=[target],
+            labels=[{"photoIds": ["candidate", "model-b-r0"], "label": "different"}],
+        )
+        self.assertNotEqual(
+            self.row(directed.run_variant(negative, recipe))["shadowAction"],
+            "strong-wrong-identity-correction",
+        )
+
+    def test_corrective_release_never_uses_missing_source_score_alone(self):
+        recipe = directed.recipe_named("directed-corrective-starting-050")
+        evidence = self.build(
+            category="Models", person="model-a", own=None,
+            targets=[{"id": "model-b", "folder": "Models/B", "category": "Models",
+                      "personId": "model-b", "score": .45}],
+        )
+        row = self.row(directed.run_variant(evidence, recipe))
+        self.assertIsNone(row["sourceIncompatibility"]["frozenSourceScore"])
+        self.assertFalse(row["sourceIncompatibility"]["qualified"])
+        self.assertNotEqual(row["shadowAction"], "strong-wrong-identity-correction")
+
+    def test_corrective_release_accepts_exact_different_source_evidence(self):
+        recipe = directed.recipe_named("directed-corrective-starting-050")
+        evidence = self.build(
+            category="Models", person="model-a", own=.7,
+            targets=[
+                {"id": "model-b", "folder": "Models/B", "category": "Models",
+                 "personId": "model-b", "score": .85},
+                {"id": "model-c", "folder": "Models/C", "category": "Models",
+                 "personId": "model-c", "score": .34},
+            ],
+            labels=[{"photoIds": ["candidate", "src0"], "label": "different"}],
+        )
+        row = self.row(directed.run_variant(evidence, recipe))
+        self.assertEqual(row["sourceIncompatibility"]["basis"], "exact human different-pair")
+        self.assertEqual(row["shadowAction"], "strong-wrong-identity-correction")
+        self.assertEqual(row["correctionAssociation"]["folder"], "Models/B")
 
     def test_exact_different_and_uncertain_pair_veto_association(self):
         for label in ("different", "uncertain"):
@@ -1608,7 +2302,10 @@ class DirectedReformationTests(unittest.TestCase):
         self.assertFalse(later["stagedReferenceCandidates"])
         self.assertEqual(result["summary"]["referenceBoundaries"], 3)
         self.assertEqual(result["recoveryBoundaries"][-1]["addedPhotoIds"], [])
-        snapshots = {stage["id"]: stage for stage in result["boundarySnapshots"]}
+        snapshots = {
+            stage["id"]: directed.unpack_boundary_snapshot(stage)
+            for stage in result["boundarySnapshots"]
+        }
         self.assertNotIn("candidate", snapshots["membership"]["referenceInventory"]["model-view"])
         self.assertIn("candidate", snapshots["growth-1"]["referenceInventory"]["model-view"])
         self.assertNotEqual(snapshots["membership"]["referenceInventory"],
@@ -1677,6 +2374,15 @@ class DirectedReformationTests(unittest.TestCase):
         self.assertEqual(directed._semantic(first), directed._semantic(reversed_result))
         self.assertEqual({row["photoId"] for row in first["rows"]}, set(evidence.source))
         self.assertTrue(all(row["clusterIds"] for row in first["rows"]))
+        corrective = directed.recipe_named("directed-corrective-starting-050")
+        corrected = directed.run_variant(evidence, corrective)
+        corrected_repeat = directed.run_variant(evidence, corrective)
+        corrected_reverse = copy.deepcopy(evidence)
+        corrected_reverse.views.reverse()
+        corrected_reverse.source = dict(reversed(list(corrected_reverse.source.items())))
+        corrected_reversed_result = directed.run_variant(corrected_reverse, corrective)
+        self.assertEqual(directed._semantic(corrected), directed._semantic(corrected_repeat))
+        self.assertEqual(directed._semantic(corrected), directed._semantic(corrected_reversed_result))
 
     def test_report_compaction_preserves_rivals_support_and_conflicts(self):
         evidence = self.build(

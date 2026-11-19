@@ -73,6 +73,16 @@ def is_sandbox_working_path(path):
     )
 
 
+def is_normal_flow_proof_path(path):
+    path = pathlib.Path(path).expanduser().resolve(strict=False)
+    if (
+        path.parent.name.casefold() != "_sandbox-state"
+        or not path.name.casefold().startswith("normal-flow-proof-")
+    ):
+        return False
+    return is_sandbox_working_path(path.parent.parent)
+
+
 def _require_inside_working(working_root, target, label):
     working_root = pathlib.Path(working_root).expanduser().resolve(strict=True)
     target = pathlib.Path(target).expanduser().resolve(strict=False)
@@ -306,7 +316,10 @@ def _configured_storage_paths(cfg, root):
     }
 
 
-def _full_reset_analysis(working_root, production_root=None, cfg=None, layout=None, *, include_artists=False):
+def _full_reset_analysis(
+    working_root, production_root=None, cfg=None, layout=None, *,
+    include_artists=False, discard_working_history=False,
+):
     """Build the verified copy plan used by preview and full reset apply."""
     layout = validate_sandbox(working_root) if layout is None else layout
     working = layout["working_root"]
@@ -363,7 +376,7 @@ def _full_reset_analysis(working_root, production_root=None, cfg=None, layout=No
     active_production = {}
 
     for relative, entry in working_files.items():
-        if pathlib.PurePosixPath(relative).parts[0] in active_roots:
+        if not discard_working_history and pathlib.PurePosixPath(relative).parts[0] in active_roots:
             path = working / pathlib.Path(relative)
             active_working[relative] = {
                 "bytes": entry["bytes"],
@@ -381,7 +394,7 @@ def _full_reset_analysis(working_root, production_root=None, cfg=None, layout=No
         ".avif", ".bmp", ".gif", ".jpeg", ".jpg", ".png", ".tif", ".tiff", ".webp"
     }
     carry_forward = []
-    processed_sources = _processed_copy_sources(working)
+    processed_sources = {} if discard_working_history else _processed_copy_sources(working)
     for relative, entry in sorted(active_working.items(), key=lambda item: item[0].casefold()):
         production_at_path = active_production.get(relative)
         if production_at_path and (
@@ -424,6 +437,8 @@ def _full_reset_analysis(working_root, production_root=None, cfg=None, layout=No
 
     history_destinations = {}
     for relative, entry in sorted(working_files.items()):
+        if discard_working_history:
+            break
         parts = pathlib.PurePosixPath(relative).parts
         if len(parts) == 3 and parts[0] == "_sandbox-state" and parts[-1] in {
             "run.json", "catalog.json", "policy.json",
@@ -529,8 +544,14 @@ def _full_reset_analysis(working_root, production_root=None, cfg=None, layout=No
         "workingBeforeReset": {
             "fileCount": working_count,
             "totalBytes": working_bytes,
-            "activeFileCount": len(active_working),
-            "activeBytes": sum(entry["bytes"] for entry in active_working.values()),
+            "activeFileCount": sum(
+                pathlib.PurePosixPath(relative).parts[0] in active_roots
+                for relative in working_files
+            ),
+            "activeBytes": sum(
+                entry["bytes"] for relative, entry in working_files.items()
+                if pathlib.PurePosixPath(relative).parts[0] in active_roots
+            ),
         },
         "workingActiveFiles": carry_forward,
         "carryForwardCounts": dict(sorted(counts.items())),
@@ -538,6 +559,7 @@ def _full_reset_analysis(working_root, production_root=None, cfg=None, layout=No
             status: sum(e["bytes"] for e in carry_forward if e["status"] == status)
             for status in counts
         }).items())),
+        "discardWorkingHistory": discard_working_history,
     }
     return result, {
         "layout": layout,
@@ -750,6 +772,7 @@ def full_reset_apply(
     storage_receipt=None,
     *,
     include_artists=False,
+    discard_working_history=False,
 ):
     """Replace only sandbox Working with the verified current Production baseline."""
     cfg = cw.load_cfg() if cfg is None else cfg
@@ -767,6 +790,8 @@ def full_reset_apply(
                 / "full-reset-receipt.json"
             )
             receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+            if receipt.get("discardWorkingHistory", False) != discard_working_history:
+                raise ValueError("reset recovery mode differs from the committed receipt")
             return {
                 "previewOnly": False,
                 "applied": True,
@@ -780,13 +805,21 @@ def full_reset_apply(
     _require_empty_reset_temporary_root(temporary_root)
 
     result, plan = _full_reset_analysis(
-        working_root, production_root, cfg=cfg, layout=layout, include_artists=include_artists
+        working_root, production_root, cfg=cfg, layout=layout,
+        include_artists=include_artists, discard_working_history=discard_working_history,
     )
     if not result["resetReady"]:
         blockers = ", ".join(result["resetBlockers"])
         raise ValueError(f"full sandbox reset is blocked: {blockers}")
     if plan["temporary_root"] != temporary_root:
         raise ValueError("full reset staging root changed during validation")
+    if discard_working_history:
+        expected_source = {
+            relative: (entry["bytes"], entry["sha256"])
+            for relative, entry in plan["production_files"].items()
+        }
+        if layout["manifest_files"] != expected_source:
+            raise ValueError("strict reset requires Source to match current managed Production")
 
     storage_roots = _configured_storage_paths(cfg, working)
     temporary_relative = temporary_root.relative_to(working)
@@ -822,7 +855,8 @@ def full_reset_apply(
                 plan["production_files"].items(),
                 key=lambda item: item[0].casefold(),
             ):
-                source = plan["production"] / pathlib.Path(*_safe_source_path(relative))
+                baseline_root = layout["source_root"] if discard_working_history else plan["production"]
+                source = baseline_root / pathlib.Path(*_safe_source_path(relative))
                 destination = staged / pathlib.Path(*_safe_source_path(relative))
                 _copy_verified_file(
                     source, destination, entry["bytes"], entry["sha256"]
@@ -874,6 +908,7 @@ def full_reset_apply(
                     entry["bytes"] for entry in plan["production_files"].values()
                 ),
                 "carryForwardCounts": result["carryForwardCounts"],
+                "discardWorkingHistory": discard_working_history,
                 "configurationReceipt": storage_receipt,
             }
             receipt_metadata = _write_json_file(receipt_path, receipt)

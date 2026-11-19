@@ -16,7 +16,12 @@ echo   Z  Routine commit checks (use bin\check.cmd --deep for explicit test hook
 echo   0  Deep quality checks (explicit unit and mutation hooks; slower)
 echo   9  Refresh FireRed for a hero
 echo   A  Animate a hero (video prompts, workflows, deploy)
-echo   L  Photo library: sort new photos in Various, remove duplicates, rebuild all scaled images
+echo   L  Normal photo intake: bounded FULL/LEAN/FAST pipeline verified; current-library, fresh-baseline and human review remain gated
+echo   LM Preview full-rebase manifest (source checks only; no reset, matching, or library writes)
+echo   SB Preview clean Sandbox baseline (Production to Source to Working; no changes)
+echo   SR Preview SIMPLE whole-library rebase (can prepare/measure the full library)
+echo   RR Preview saved SIMPLE recap/audit (reports only; no matching or moves)
+echo   EX Experimental likeness operation (explicit operation; directed rebase also requires a recipe)
 echo   R  Photo review gallery (read-only audit; history-only repair flags in Help)
 echo   G  Preview gallery upkeep (rename, padded/head/chest; no matching or writes)
 echo   GR Preview reports-only gallery refresh (no photo upkeep)
@@ -57,10 +62,15 @@ echo   Q  Quit
 set "CH="
 set /p "CH=Choice: "
 if /i "%CH%"=="Q" exit /b 0
+if /i "%CH%"=="RR" goto simplerecap
 if /i "%CH%"=="H" call "%~dp0help.cmd" & pause & goto menu
 if /i "%CH%"=="S" call "%~dp0style-audit.cmd" & pause & goto menu
 if /i "%CH%"=="K" call "%~dp0backdrop.cmd" --repo --workspaces --check & pause & goto menu
-if /i "%CH%"=="L" call "%~dp0library.cmd" & pause & goto menu
+if /i "%CH%"=="L" goto normalintake
+if /i "%CH%"=="LM" goto rebasemanifest
+if /i "%CH%"=="SB" goto sandboxbaseline
+if /i "%CH%"=="SR" goto simplerebase
+if /i "%CH%"=="EX" goto likenessexperiments
 if /i "%CH%"=="R" call "%~dp0people-gallery-review.cmd" & pause & goto menu
 if /i "%CH%"=="G" call "%~dp0people-gallery.cmd" --dry-run & pause & goto menu
 if /i "%CH%"=="GR" call "%~dp0people-gallery.cmd" --reports-only --dry-run & pause & goto menu
@@ -155,6 +165,60 @@ if errorlevel 1 (
 set "APPLY="
 set /p "APPLY=Publish comparison page? (y/n): "
 if /i "%APPLY%"=="y" call "%~dp0render-reference.cmd" compare "%BATCH%" --root "%ROOT%" --apply
+pause
+goto menu
+:likenessexperiments
+set "ARGS="
+set /p "ARGS=Experimental arguments (e.g. legacy-reconcile --root WORKING --out REPORT.json or directed-rebase --root WORKING --run RUN --baseline working --regroup --directed --directed-recipe RECIPE --dry-run): "
+call "%~dp0likeness-experiments.cmd" %ARGS%
+pause
+goto menu
+:normalintake
+set "PROFILE=lean"
+set "SELECT="
+set /p "PROFILE=Profile (full/lean/fast; Enter for lean): "
+if "%PROFILE%"=="" set "PROFILE=lean"
+set /p "SELECT=Various arrival scope (enter --photo-id ID for each; blank previews all pending): "
+call "%~dp0library-preview.cmd" --profile "%PROFILE%" %SELECT%
+if errorlevel 1 (
+  pause
+  goto menu
+)
+set "APPLY="
+set /p "APPLY=Apply this preview? (y/n): "
+if /i "%APPLY%"=="y" call "%~dp0library.cmd" --profile "%PROFILE%" --apply %SELECT%
+pause
+goto menu
+:sandboxbaseline
+call "%~dp0sandbox-baseline.cmd" --root "B:\Sovereign Territories Sandbox\Working" --dry-run
+pause
+goto menu
+:simplerecap
+set "RECEIPT="
+set /p "RECEIPT=Saved SIMPLE receipt JSON absolute path (blank cancels): "
+if "%RECEIPT%"=="" goto menu
+call "%~dp0rebase-recap.cmd" "%RECEIPT%" --dry-run
+if errorlevel 1 (
+  pause
+  goto menu
+)
+set "APPLY="
+set /p "APPLY=Write recap/audit reports only? (y/n): "
+if /i "%APPLY%"=="y" call "%~dp0rebase-recap.cmd" "%RECEIPT%" --apply
+pause
+goto menu
+:simplerebase
+set "SIMPLERUN="
+set /p "SIMPLERUN=New SIMPLE run-id (preview may prepare all photos; blank cancels): "
+if "%SIMPLERUN%"=="" goto menu
+call "%~dp0normal-rebase.cmd" --root "B:\Sovereign Territories Sandbox\Working" --profile lean --run-id "%SIMPLERUN%" --dry-run
+pause
+goto menu
+:rebasemanifest
+set "MANIFESTRUN="
+set /p "MANIFESTRUN=New manifest report run-id (letters/numbers/dot/dash/underscore): "
+if "%MANIFESTRUN%"=="" goto menu
+call "%~dp0rebase-manifest.cmd" --run-id "%MANIFESTRUN%" --dry-run
 pause
 goto menu
 :preparation

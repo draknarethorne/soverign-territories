@@ -6,7 +6,7 @@ import unittest
 
 import numpy as np
 
-from tools.art.likeness_library.diagnostics import collect_diagnostics, write_report
+from tools.art.likeness_utils.diagnostics import collect_diagnostics, write_report
 
 
 class Photo:

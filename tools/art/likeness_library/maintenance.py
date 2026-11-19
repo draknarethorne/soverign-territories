@@ -6,12 +6,15 @@ import uuid
 
 from . import domains, metadata, rejections, retained_preparation
 from .identity_maintenance import category_destination_available, relocated_path
-from .sandbox import is_sandbox_working_path
+from .sandbox import is_normal_flow_proof_path, is_sandbox_working_path
 from tools.workflows import comfy_workflows as cw
 
 
-def require_authorization(root, policy, sandbox_override=False):
-    if sandbox_override and not is_sandbox_working_path(root):
+def require_authorization(root, policy, sandbox_override=False, *, allow_isolated_proof=False):
+    allowed_sandbox = is_sandbox_working_path(root) or (
+        allow_isolated_proof and is_normal_flow_proof_path(root)
+    )
+    if sandbox_override and not allowed_sandbox:
         raise ValueError("draft-policy override is restricted to sandbox Working")
     if policy["status"] != "approved" and not sandbox_override:
         raise ValueError(
@@ -48,18 +51,24 @@ def proposed_moves(report, photos, root):
         photo = rows[0]
         source = photo.path.resolve()
         destination = root / folder / bucket / photo.name
-        if source == destination:
+        if source == destination and not (row.get("castAdmission") or row.get("normalAdmission")):
             continue
         moves.append({
             "photoId": row["photoId"], "source": source.relative_to(root).as_posix(),
             "destination": destination.relative_to(root).as_posix(),
             "sha256": metadata.content_sha256(source), "reason": row["reason"],
+            **{key: row[key] for key in (
+                "castAdmission", "referenceVersion", "referenceEligible", "supportPhotoIds",
+                "normalAdmission",
+                "routingEvidence", "destinationType",
+            ) if key in row},
+            **({"preparationOnly": True, "membershipOnly": True} if source == destination else {}),
         })
     validate_moves(root, moves)
     return moves
 
 
-def validate_moves(root, moves, identity_actions=()):
+def validate_moves(root, moves, identity_actions=(), *, exact_alias_targets=None):
     root = pathlib.Path(root).resolve()
     sources, destinations = set(), set()
     for row in moves:
@@ -108,8 +117,18 @@ def validate_moves(root, moves, identity_actions=()):
             source_parts[:2] != destination_parts[:2]
         ):
             raise ValueError("reconciliation cannot move photos between artist sources or into the general library")
-        if destination.exists():
-            raise ValueError(f"reconciliation destination already exists: {destination}")
+        if destination.exists() and not (
+            source == destination and row.get("membershipOnly") and row.get("preparationOnly")
+        ):
+            alias = (exact_alias_targets or {}).get(row["destination"])
+            if not (
+                alias
+                and alias["source"] == row["source"]
+                and alias["sha256"] == row["sha256"]
+                and metadata.photo_id_from_name(destination.name) == row.get("photoId")
+                and metadata.content_sha256(destination) == row["sha256"]
+            ):
+                raise ValueError(f"reconciliation destination already exists: {destination}")
         if metadata.content_sha256(source) != row["sha256"]:
             raise ValueError(f"reconciliation source changed: {source}")
 
@@ -167,10 +186,14 @@ def _validate_permissions(root, moves, policy, cfg, identity_actions=()):
             continue
         source = pathlib.PurePosixPath(row["source"]).parts
         destination = pathlib.PurePosixPath(row["destination"]).parts
-        for parts in (source, destination):
+        for receiving, parts in ((False, source), (True, destination)):
             rules = policy["categoryPolicies"].get(parts[0], {})
             folder = "/".join(parts[:-2])
-            if parts[-2] == "gallery" and (
+            cast_receiving = (
+                receiving and parts[0] in ("Sisters", "Angels")
+                and rules.get("galleryAdmissionEnabled") and row.get("castAdmission")
+            )
+            if parts[-2] == "gallery" and not cast_receiving and (
                 rules.get("identityProtectedByDefault") or folder in protected_folders
             ):
                 raise ValueError(f"protected Gallery cannot change membership: {folder}")
@@ -179,8 +202,17 @@ def _validate_permissions(root, moves, policy, cfg, identity_actions=()):
             and not policy["categoryPolicies"][source[0]]["automaticSplitEnabled"]
         ):
             raise ValueError(f"automatic Gallery removal is disabled: {row['source']}")
-        if destination[-2] == "gallery" and not policy["categoryPolicies"][destination[0]]["automaticPhotoRoutingEnabled"]:
+        if destination[-2] == "gallery" and destination[0] != "Various" and not (
+            policy["categoryPolicies"][destination[0]]["automaticPhotoRoutingEnabled"]
+            or destination[0] in ("Sisters", "Angels")
+            and policy["categoryPolicies"][destination[0]].get("galleryAdmissionEnabled")
+            and row.get("castAdmission")
+        ):
             raise ValueError(f"automatic Gallery admission is disabled: {row['destination']}")
+        if row.get("castAdmission"):
+            from .normal_admission import validate_move
+
+            validate_move(row, policy)
         if destination[-2] == "review" and destination[0] != "Various" and not policy["categoryPolicies"][destination[0]]["reviewAdmissionEnabled"]:
             raise ValueError(f"Review admission is disabled: {row['destination']}")
     identity_folders = [
@@ -298,6 +330,34 @@ def _updated_catalog(catalog, moves, policy, identity_actions=()):
             "contentSha256": row["sha256"],
             "protected": photo_record.get("protected", False),
         })
+        if row.get("castAdmission") or row.get("normalAdmission"):
+            old = photo_record.get("membership", {})
+            old_group = updated.get("photoGroups", {}).get(old.get("groupId"))
+            if old_group:
+                old_group["memberPhotoIds"] = [
+                    pid for pid in old_group["memberPhotoIds"] if pid != row["photoId"]
+                ]
+                old_group["referencePhotoIds"] = [
+                    pid for pid in old_group["referencePhotoIds"] if pid != row["photoId"]
+                ]
+            folder = "/".join(parts[:-2])
+            person = people.get(folder)
+            admission = row.get("castAdmission")
+            tentative = parts[-2] != "gallery" or bool(admission and admission["mode"] == "optimistic-gallery")
+            if tentative and photo_record["protected"]:
+                raise ValueError("protected membership cannot be replaced by an unconfirmed assignment")
+            photo_record["membership"] = {
+                "personId": person["id"] if person else None, "groupId": None,
+                "status": "tentative" if tentative else "supported",
+                "coreUse": bool(not tentative and row.get("referenceEligible")),
+                "reason": row["reason"],
+                "referenceVersion": row["referenceVersion"],
+                "assignmentDisposition": "provisional" if tentative else "supported",
+                "sourcePersonIds": sorted(set(old.get("sourcePersonIds", ())) | (
+                    {old["personId"]} if old.get("personId") else set()
+                )),
+                **({"assignmentEvidence": {"castAdmission": admission}} if admission else {}),
+            }
     metadata.validate_catalog(updated)
     return updated
 
@@ -361,8 +421,10 @@ def _metadata_catalog(root, catalog, updated, metadata_actions):
 
 
 def apply_moves(root, moves, policy, cfg, *, sandbox_override=False, backup_fn=None,
-                identity_actions=(), metadata_actions=()):
-    require_authorization(root, policy, sandbox_override)
+                identity_actions=(), metadata_actions=(), allow_isolated_proof=False):
+    require_authorization(
+        root, policy, sandbox_override, allow_isolated_proof=allow_isolated_proof,
+    )
     root = pathlib.Path(root).resolve()
     if is_sandbox_working_path(root) and not (root / ".likeness-library.json").is_file():
         raise ValueError("sandbox catalogue is not initialized; install a clean rebase before maintenance")

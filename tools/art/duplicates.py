@@ -127,21 +127,19 @@ def prefer_incoming(ids, work, apply):
     """Keep the newest incoming same-ID photo; set older incoming copies aside."""
     remaining, replaced = [], []
     for key, entries in ids:
-        incoming = [e for e in entries if e[1].lower() == "various" and e[3] == "gallery"]
+        selection = select_incoming_version(entries)
+        incoming = selection["incoming"]
         existing = [e for e in entries if e not in incoming]
 
+        if selection["status"] == "ambiguous-incoming-time-tie":
+            print(
+                f"  same id {key}: incoming files tie for newest modification time; "
+                "ambiguous, nothing moved"
+            )
+            remaining.append((key, entries))
+            continue
         if len(incoming) > 1:
-            newest_time = max(e[0].stat().st_mtime_ns for e in incoming)
-            newest = [e for e in incoming if e[0].stat().st_mtime_ns == newest_time]
-            if len(newest) != 1:
-                print(
-                    f"  same id {key}: incoming files tie for newest modification time; "
-                    "ambiguous, nothing moved"
-                )
-                remaining.append((key, entries))
-                continue
-
-            fresh = newest[0]
+            fresh = selection["selected"]
             duplicates_dir = fresh[2] / "duplicates"
             for older in incoming:
                 if older is fresh:
@@ -185,6 +183,28 @@ def prefer_incoming(ids, work, apply):
             )
         replaced.append(key)
     return remaining, replaced
+
+
+def select_incoming_version(entries):
+    """Select the established Various/gallery incoming version without moving files.
+
+    More than one incoming copy is resolved only by a unique newest modification
+    time, matching ``prefer_incoming``. Ties and absence remain explicit.
+    """
+    incoming = [entry for entry in entries if entry[1].lower() == "various" and entry[3] == "gallery"]
+    if not incoming:
+        return {"status": "no-incoming", "incoming": [], "selected": None}
+    if len(incoming) == 1:
+        return {"status": "selected-incoming", "incoming": incoming, "selected": incoming[0]}
+    newest_time = max(entry[0].stat().st_mtime_ns for entry in incoming)
+    newest = [entry for entry in incoming if entry[0].stat().st_mtime_ns == newest_time]
+    if len(newest) != 1:
+        return {
+            "status": "ambiguous-incoming-time-tie",
+            "incoming": incoming,
+            "selected": None,
+        }
+    return {"status": "selected-incoming", "incoming": incoming, "selected": newest[0]}
 
 
 def run(cfg, work, folders, apply, prefer_incoming_copies=False):

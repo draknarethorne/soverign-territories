@@ -271,6 +271,59 @@ function mockSession() {
         self.assertIn("Primary photos · supported · core use True", page)
         self.assertNotIn("unassigned · supported", page)
 
+    def test_gallery_marks_provisional_cast_admissions_and_shows_rival_scores(self):
+        catalog = {
+            "photos": {
+                "photo:optimistic": {"membership": {
+                    "personId": "person_a", "groupId": None, "status": "tentative",
+                    "coreUse": False, "reason": "high rival",
+                    "assignmentDisposition": "provisional",
+                    "assignmentEvidence": {"castAdmission": {
+                        "mode": "optimistic-gallery", "winner": "Angels/Primary",
+                        "score": 0.74, "margin": 0.08,
+                        "alternatives": [{"folder": "Angels/Rival & One", "score": 0.66}],
+                        "closePairs": [],
+                    }},
+                }},
+                "photo:ambiguous": {"membership": {
+                    "personId": "person_a", "groupId": None, "status": "tentative",
+                    "coreUse": False, "reason": "close cast tie",
+                    "assignmentDisposition": "provisional",
+                    "assignmentEvidence": {"castAdmission": {
+                        "mode": "ambiguous-review", "winner": "Sisters/Primary",
+                        "score": 0.51, "margin": 0.02,
+                        "alternatives": [{"folder": "Angels/Rival", "score": 0.49}],
+                        "closePairs": [],
+                    }},
+                }},
+            },
+            "photoGroups": {},
+        }
+        folder = self.root / "Angels" / "Primary"
+        row = {
+            "status": "Angels", "folder": "Primary", "key": "Angels/Primary",
+            "photos": 2, "review": 0, "chosen": False, "score": None, "tags": {},
+            "gallery_path": folder / "gallery", "z_path": None,
+            "gallery_photos": [
+                {"name": photo_id + ".jpg", "path": folder / "gallery" / (photo_id + ".jpg"),
+                 "thumb": b"thumb", "appearance": gallery.group_views.describe(catalog, "photo:" + photo_id)}
+                for photo_id in ("optimistic", "ambiguous")
+            ],
+        }
+
+        page = gallery.render_html([row], "now", {"Angels": 1})
+
+        self.assertIn('class="assignment-optimistic"', page)
+        self.assertIn('class="assignment-ambiguous"', page)
+        self.assertIn("High rival / unconfirmed", page)
+        self.assertIn("Tentative / ambiguous review", page)
+        self.assertIn("not confirmed, not core-authoritative, and not protected", page)
+        self.assertIn("Rival alternatives:", page)
+        self.assertIn("Rival &amp; One", page)
+        self.assertIn("0.66", page)
+        self.assertIn("0.08", page)
+        self.assertIn("lead 0.02", page)
+
     def test_overview_names_above_and_below_captionless_photo_grid(self):
         for category in ("Sisters", "Angels", "Models", "Prospects"):
             for profile in ("fast", "lean", "full"):

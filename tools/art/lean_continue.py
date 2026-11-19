@@ -193,7 +193,12 @@ def verified_undone_quality(working, current, directory, source_plan=None):
 def command(args):
     regroup = args.regroup
     dominant_provisional = bool(getattr(args, "dominant_provisional", False))
+    capture_regroup_call = bool(getattr(args, "capture_regroup_call", False))
     undone_quality_run = getattr(args, "undone_quality_run", None)
+    if capture_regroup_call and (
+        not any((args.apply, args.check, args.install)) or args.dry_run or not regroup or not args.directed
+    ):
+        raise ValueError("--capture-regroup-call requires a matching --apply/--check/--install --regroup --directed run")
     if dominant_provisional and not args.directed:
         raise ValueError("dominant provisional assignment requires explicit directed mode")
     if args.directed and not regroup:
@@ -217,6 +222,8 @@ def command(args):
     }
     if dominant_provisional:
         grouping["dominantProvisional"] = True
+    if capture_regroup_call:
+        grouping["captureRegroupCall"] = True
     if undone_quality_run:
         grouping["undoneQualityRun"] = str(pathlib.Path(undone_quality_run).resolve())
     working = pathlib.Path(args.root)
@@ -351,7 +358,7 @@ def command(args):
         matching_inputs={row["source"]: row["sha256"] for row in original["photos"]},
         workflow_reset={"mode": "all"},
         regroup=regroup, review_source=review_source, directed_recipe=recipe,
-        dominant_provisional=dominant_provisional,
+        dominant_provisional=dominant_provisional, capture_regroup_call=capture_regroup_call,
     )
     plan.update(
         recoveryMode="disposable", reusedPreparationFrom=str(source), rollbackCreated=False,
@@ -376,6 +383,8 @@ def main(argv=None):
     parser.add_argument("--review-source")
     parser.add_argument("--dominant-provisional", action="store_true",
                         help="opt in to existing dominant-face guard for provisional intake only, never references")
+    parser.add_argument("--capture-regroup-call", action="store_true",
+                        help="on --apply --regroup --directed, save exact regroup inputs/output; repeat on check/install")
     parser.add_argument("--undone-quality-run",
                         help="explicit applied run with exactly verified undone quality disposition")
     mode = parser.add_mutually_exclusive_group()

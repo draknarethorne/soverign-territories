@@ -1,6 +1,7 @@
 """Clean rebase must flatten old groups, isolate references, and stage reversibly."""
 import contextlib
 import copy
+import gzip
 import hashlib
 import io
 import json
@@ -688,7 +689,41 @@ class CleanRebaseTests(unittest.TestCase):
                 },
                 seed_catalog=empty, regroup=True, cast_seeds="core", review_source=self.source,
                 directed_recipe="directed-core-continuity",
+                capture_regroup_call=True,
             )
+        capture_path = self.run / "regroup-call-input.json.gz"
+        capture = json.loads(gzip.decompress(capture_path.read_bytes()).decode("utf-8"))
+        self.assertEqual(capture["format"], "group-lifecycle-regroup-call-v1")
+        self.assertEqual(capture["inputs"]["directedRecipe"], "directed-core-continuity")
+        self.assertEqual(
+            {row["photoId"] for row in capture["inputs"]["rows"]},
+            {row["photoId"] for row in rows},
+        )
+        self.assertEqual(set(capture["inputs"]["measured"]), set(measured))
+        self.assertEqual(capture["inputs"]["pairs"], [pair])
+        self.assertEqual(capture["inputs"]["referenceExclusions"], [])
+        self.assertEqual(capture["outputs"]["report"]["recipe"], "directed-core-continuity")
+        self.assertIn("people", capture["outputs"]["catalog"])
+        self.assertEqual(
+            capture["nameFactoryReplay"]["mode"],
+            "strict ordered transcript; replay seed and sorted taken names exactly",
+        )
+        self.assertEqual(
+            plan["regroupCallCapture"]["sha256"], metadata.content_sha256(capture_path),
+        )
+        from tools.art.likeness_library.directed_reformation import lifecycle_stage
+        publication = next(
+            lifecycle_stage(stage) for stage in plan["groupLifecycle"]["stages"]
+            if stage["id"] == "publication"
+        )
+        self.assertEqual(
+            {row["photoId"]: row["destination"] for row in publication["rows"]},
+            {row["photoId"]: row["destination"] for row in plan["photos"]},
+        )
+        canonical_inputs = json.dumps(
+            capture["inputs"], sort_keys=True, separators=(",", ":"), ensure_ascii=False,
+        ).encode("utf-8")
+        self.assertEqual(capture["inputSHA256"], hashlib.sha256(canonical_inputs).hexdigest())
         saved = json.loads((self.run / "catalog.json").read_text(encoding="utf-8"))
         self.assertEqual(len(saved["people"]), 8)
         self.assertTrue(saved["photoGroups"])

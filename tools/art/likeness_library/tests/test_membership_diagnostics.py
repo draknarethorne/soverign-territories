@@ -50,7 +50,7 @@ class MembershipDiagnosticsTests(unittest.TestCase):
 
     def test_saved_angel_override_and_prospect_floor_do_not_change_evidence(self):
         row = self.row(self.build())
-        self.assertEqual([c["joinFloor"] for c in row["categoryComparisons"]], [.5, .45, .5, .4])
+        self.assertEqual([c["joinFloor"] for c in row["categoryComparisons"]], [.5, .45, .4, .35])
         self.assertTrue(all(c["sameActiveOwnScore"] == row["activeOwnScore"] for c in row["categoryComparisons"]))
 
     def test_signed_negative_lead_fails_separation(self):

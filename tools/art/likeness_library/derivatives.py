@@ -272,8 +272,9 @@ def thumbnail(source, framing, box=None, size=(320, 400), *, px=None, faces=None
     diagnostic = None
     from . import fast_preparation
 
-    fast = fast_preparation.deferred(source)
+    fast = None
     try:
+        fast = fast_preparation.deferred(source)
         if fast:
             with Image.open(source) as original:
                 image = ImageOps.exif_transpose(original).convert("RGB")
@@ -285,7 +286,8 @@ def thumbnail(source, framing, box=None, size=(320, 400), *, px=None, faces=None
             with Image.open(target) as image:
                 image = image.convert("RGB").resize(size, Image.Resampling.LANCZOS)
     except (OSError, ValueError, KeyError) as exc:
-        reason = None if fast else expected_unavailability(source, framing, box, px, faces)
+        # A refused lineage probe must not become an intentional framing exclusion.
+        reason = expected_unavailability(source, framing, box, px, faces) if fast is False else None
         target = pathlib.Path(source).parent.parent / relative_target(source, framing)
         try:
             entry = load(pathlib.Path(source).parent.parent)["entries"].get(

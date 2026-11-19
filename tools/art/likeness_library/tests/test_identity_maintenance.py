@@ -486,6 +486,24 @@ class IdentityMaintenanceTests(unittest.TestCase):
         self.assertTrue(incoming.path.is_file())
         self.assertEqual(metadata.load_catalog(self.root / ".likeness-library.json"), self.catalog)
 
+    def test_experiment_dispatcher_exposes_legacy_reconcile_explicitly(self):
+        from tools.art.likeness_experiments import __main__ as experiment_entrypoint
+
+        cache = self.root / "cache.json"
+        report = self.root / "report.json"
+        with mock.patch.object(likeness, "cmd_reconcile", return_value=17) as legacy_command:
+            result = experiment_entrypoint.main([
+                "legacy-reconcile", "--root", str(self.root), "--cache", str(cache),
+                "--out", str(report),
+            ])
+
+        self.assertEqual(result, 17)
+        legacy_command.assert_called_once()
+        args = legacy_command.call_args.args[0]
+        self.assertEqual(args.root, str(self.root))
+        self.assertEqual(args.cache, str(cache))
+        self.assertEqual(args.out, str(report))
+
     def test_complete_outlier_split_and_demotion_is_stable_without_a_rebase(self):
         self.folder = "Prospects/Test Person"
         self.catalog["people"][self.person_id]["folder"] = self.folder

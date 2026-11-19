@@ -32,7 +32,7 @@ def _core(rows, minimum):
     return audit["core_vector"], set(audit["core_indices"])
 
 
-def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluster_fn):
+def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluster_fn, *, admission_context=None):
     """Keep grouping, matching, classification and proposed action states separate."""
     held, assignments, clusters = [], [], []
     routing = policy["photoRouting"]
@@ -63,14 +63,48 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
                 "bestMatch": ranked[0][1] if ranked else None,
                 "bestScore": round(ranked[0][0], 4) if ranked else None,
                 "excludedIdentityIds": row.get("rejectedPersonIds", []),
+                **({"routingEvidence": {
+                    "winner": ranked[0][1], "score": ranked[0][0],
+                    "margin": ranked[0][0] - ranked[1][0] if len(ranked) > 1 else 2.,
+                }} if ranked else {}),
                 "reason": reason, **extra,
             }
             for row in rows
         ]
 
     for row in candidates:
+        if admission_context is not None:
+            from .normal_admission import cast_route
+
+            if not row.get("qualityEligible", False):
+                held.extend(evidence(
+                    [row], [], "single-face candidate quality is unavailable or ineligible",
+                    preserveStaged=True,
+                ))
+                continue
+            cast_result = None if admission_context.get("skipCast") else cast_route(row, cores, policy, admission_context)
+            if cast_result is not None:
+                collection, decision = cast_result
+                (assignments if collection == "assignments" else held).append(decision)
+                continue
+            if admission_context.get("castOnly"):
+                held.extend(evidence(
+                    [row], [], "deferred to lower-category assessment",
+                    preserveStaged=True, lowerDeferred=True,
+                ))
+                continue
+        route_cores = cores
+        if admission_context is not None:
+            route_cores = {folder: core for folder, core in cores.items() if folder not in cast}
+            if row.get("rebaseCandidate") and row["sourceBucket"] == "Gallery":
+                order = {category: index for index, category in enumerate(policy["categoryOrder"])}
+                source_rank = order[row["sourceFolder"].split("/", 1)[0]]
+                route_cores = {
+                    folder: core for folder, core in route_cores.items()
+                    if order[folder.split("/", 1)[0]] < source_rank
+                }
         ranked = _rank(
-            row["vector"], cores, row["side"],
+            row["vector"], route_cores, row["side"],
             excluded=excluded_folders([row], cores) | (
                 {row["sourceFolder"]} if row.get("detachedOutlier") else set()
             ),
@@ -82,20 +116,35 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
             ))
             continue
         if not ranked:
-            unresolved.append(row)
+            if row.get("rebaseCandidate") and row["sourceBucket"] == "Gallery":
+                held.extend(evidence([row], [], "no qualified higher identity; current Gallery owner retained",
+                                     preserveStaged=True))
+            elif admission_context is not None and row["sourceBucket"] == "Review":
+                held.extend(evidence([row], [], "unmatched Review remains non-recruiting with its current owner",
+                                     preserveStaged=True))
+            else:
+                unresolved.append(row)
             continue
         score, folder = ranked[0]
         core = cores[folder]
         rules = categories[core.get("category", folder.split("/", 1)[0])]
         lead = score - ranked[1][0] if len(ranked) > 1 else 2.
         if folder in cast or score < routing["reviewMinimum"]:
-            unresolved.append(row)
+            if row.get("rebaseCandidate") and row["sourceBucket"] == "Gallery":
+                held.extend(evidence([row], ranked, "higher match is below entry floor; current Gallery owner retained",
+                                     preserveStaged=True))
+            elif admission_context is not None and row["sourceBucket"] == "Review":
+                held.extend(evidence([row], ranked, "unmatched Review remains non-recruiting with its current owner",
+                                     preserveStaged=True))
+            else:
+                unresolved.append(row)
         elif core.get("identityProtected"):
             held.extend(evidence(
                 [row], ranked, "protected Gallery; candidate may enter Review only",
                 reviewDestination=(
                     f"{folder}/review" if rules["reviewAdmissionEnabled"]
-                    and lead >= rules["photoRouteMargin"] else None
+                    and score >= rules.get("reviewRouteMinimum", routing["reviewMinimum"])
+                    and lead >= rules.get("reviewRouteMargin", rules["photoRouteMargin"]) else None
                 ),
             ))
         elif evaluate_photo_route(
@@ -107,14 +156,26 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
                 destination=folder, destinationType="existing", score=round(score, 4),
             ))
         else:
+            review_destination = (
+                f"{folder}/review" if rules["reviewAdmissionEnabled"]
+                and score >= rules.get("reviewRouteMinimum", routing["reviewMinimum"])
+                and lead >= rules.get("reviewRouteMargin", rules["photoRouteMargin"]) else None
+            )
             held.extend(evidence(
                 [row], ranked, "existing identity match needs review",
-                reviewDestination=(
-                    f"{folder}/review" if rules["reviewAdmissionEnabled"]
-                    and lead >= rules["photoRouteMargin"] else None
+                reviewDestination=review_destination,
+                preserveStaged=bool(
+                    not review_destination and row.get("rebaseCandidate") and row["sourceBucket"] == "Gallery"
                 ),
             ))
 
+    if admission_context is not None and admission_context.get("deferGrouping"):
+        for row in unresolved:
+            held.extend(evidence(
+                [row], [], "unresolved arrival awaits the one qualified reference boundary",
+                preserveStaged=True,
+            ))
+        unresolved = []
     by_side = {}
     for row in unresolved:
         by_side.setdefault(row["side"], []).append(row)

@@ -28,6 +28,7 @@ from likeness_library.policy import (
     render_score_legend,
 )  # noqa: E402
 from likeness_library import verification_reads  # noqa: E402
+from likeness_library.engine import alignment_evidence_path  # noqa: E402
 
 PAGE_SIZE = 100
 SECTIONS = CATEGORY_ORDER
@@ -48,6 +49,8 @@ CSS = """
 article{background:var(--st-card);border:1px solid var(--st-line);border-radius:8px;padding:8px;min-width:0;box-shadow:var(--st-shadow)}
 article.primary{border:3px solid #8b6d32}
 article.review-photo{border-left:5px solid #b47d25}
+article.optimistic-membership{border:4px solid #65416f}
+article.ambiguous-review{outline:2px dashed #9a6a22;outline-offset:2px}
 .photo-location-group{margin:12px 0 20px}.photo-location-group h3{font-size:1rem;margin:0 0 10px}
 .destination-controls{display:grid;gap:6px;margin-top:6px}.destination-controls[hidden]{display:none}
 .destination-controls label{display:block}.destination-controls select{max-width:100%}
@@ -61,6 +64,11 @@ article a{color:#28527a}.name{font-weight:600;overflow-wrap:anywhere;margin:7px 
 .detail-list{margin:4px 0;padding-left:22px}.detail-list li{margin:5px 0}
 .detail-list .score-badge{margin-left:4px}.face-link{display:inline-block;text-decoration:none}.face-link:hover{text-decoration:underline}
 .badge-review-photo{background:#fff0d9;color:#704a12}
+.badge-optimistic-membership{background:#49314f;color:#fff;font-weight:700}
+.badge-ambiguous-review{background:#5b431e;color:#fff;font-weight:700}
+.assignment-evidence{margin:7px 0;padding:6px 8px;border-left:4px solid #65416f;background:#f1eaf2}
+.assignment-evidence.ambiguous-review{border-left-style:dashed;border-left-color:#9a6a22;background:#f7f0e2}
+.assignment-evidence ul{margin:4px 0;padding-left:22px}.assignment-evidence li{margin:3px 0}
 #more{display:block;margin:18px auto;padding:8px 18px;font:inherit}
 .stage{display:block;margin-top:8px;font-size:.9em}.stage select{display:block;width:100%;font:inherit;padding:5px}
 .actions{display:flex;gap:10px;align-items:center;margin:14px 0}.actions button{font:inherit;padding:8px}
@@ -208,6 +216,36 @@ function categoryBadge(text) {
   badge.className="badge category-"+String(text||"").toLowerCase();
   badge.textContent=text; return badge;
 }
+function assignmentSummary(r) {
+  const membership=r.appearance?.membership;
+  const admission=membership?.assignmentEvidence?.castAdmission;
+  const mode=admission?.mode;
+  if(mode!=="optimistic-gallery"&&mode!=="ambiguous-review")return null;
+  const score=value=>value===null||value===undefined||!Number.isFinite(Number(value))?
+    "unavailable":Number(value).toFixed(2);
+  const optimistic=mode==="optimistic-gallery";
+  return {
+    mode,
+    articleClass:optimistic?"optimistic-membership":"ambiguous-review",
+    badgeClass:optimistic?"badge-optimistic-membership":"badge-ambiguous-review",
+    label:optimistic?"High rival / unconfirmed":"Tentative / ambiguous review",
+    winner:String(admission.winner||""),
+    score:score(admission.score),
+    margin:score(admission.margin),
+    alternatives:(Array.isArray(admission.alternatives)?admission.alternatives:[])
+      .filter(candidate=>candidate&&typeof candidate==="object")
+      .map(candidate=>({folder:String(candidate.folder||""),score:score(candidate.score)})),
+    closePairs:(Array.isArray(admission.closePairs)?admission.closePairs:[])
+      .filter(pair=>pair&&typeof pair==="object")
+      .map(pair=>({
+        folders:Array.isArray(pair.folders)?pair.folders.map(String):[],
+        coreSimilarity:score(pair.coreSimilarity)
+      })),
+    explanation:optimistic?
+      "Provisional Gallery assignment only: not confirmed, not core-authoritative, and not protected. Explicit confirmation is required before core/reference use or protection.":
+      "Tentative Review placement: not confirmed and never a core/reference vote; the best-cast candidate and alternatives remain provisional."
+  };
+}
 function personReviewLink(key, label) {
   const link=document.createElement("a");
   const query=new URLSearchParams({person:key,bucket:"Gallery",sort:"identity"});
@@ -220,6 +258,8 @@ function card(r, readOnly=false) {
   if(readOnly)article.className="reference";
   else if(r.primaryReference)article.className="primary";
   if(!readOnly&&r.bucket==="Review")article.classList.add("review-photo");
+  const assignment=readOnly?null:assignmentSummary(r);
+  if(assignment)article.classList.add(assignment.articleClass);
   const link=document.createElement("a"); link.href=r.href; link.target="_blank"; link.rel="noopener noreferrer";
   const image=document.createElement("img");
   image.src=framing.value==="head"?r.thumbnailHead:r.thumbnail;
@@ -287,6 +327,65 @@ function card(r, readOnly=false) {
         " · group reason: "+(g.reason||"")+" · source identities: "+(g.sourcePersonIds||[]).join(", ")+
         " · lineage: "+(g.history||[]).map(h=>[h.timestamp,h.runId,h.reason].filter(Boolean).join(" / ")).join("; ");
       article.append(detail);
+      if(assignment) {
+        const panel=document.createElement("div");
+        panel.className="detail assignment-evidence"+
+          (assignment.mode==="ambiguous-review"?" ambiguous-review":"");
+        const badge=document.createElement("span");
+        badge.className="badge "+assignment.badgeClass;
+        badge.textContent=assignment.label;panel.append(badge);
+        const candidate=document.createElement("div");candidate.className="detail";
+        candidate.append(document.createTextNode("Best cast candidate: "));
+        if(assignment.winner)
+          candidate.append(personReviewLink(assignment.winner,assignment.winner));
+        else candidate.append(document.createTextNode("unavailable"));
+        candidate.append(document.createTextNode(
+          " · score "+assignment.score+" · lead "+assignment.margin
+        ));
+        panel.append(candidate);
+        if(assignment.alternatives.length) {
+          const label=document.createElement("div");label.className="detail";
+          label.textContent="Rival alternatives:";panel.append(label);
+          const alternatives=document.createElement("ul");
+          for(const alternative of assignment.alternatives) {
+            const line=document.createElement("li");
+            if(alternative.folder)
+              line.append(personReviewLink(alternative.folder,alternative.folder));
+            else line.append(document.createTextNode("identity unavailable"));
+            line.append(document.createTextNode(" · score "+alternative.score));
+            alternatives.append(line);
+          }
+          panel.append(alternatives);
+        }
+        for(const pair of assignment.closePairs) {
+          const detail=document.createElement("div");detail.className="detail";
+          detail.textContent="Close cast pair: "+pair.folders.join(" ↔ ")+
+            " · core similarity "+pair.coreSimilarity;
+          panel.append(detail);
+        }
+        const explanation=document.createElement("div");explanation.className="detail";
+        explanation.textContent=assignment.explanation;panel.append(explanation);
+        article.append(panel);
+      }
+      const sourceRefs=m.assignmentEvidence&&m.assignmentEvidence.sourceReferenceEvidence;
+      if(sourceRefs){
+        const refs=document.createElement("div");refs.className="detail source-reference-evidence";
+        const score=value=>value===null||value===undefined?"unavailable":Number(value).toFixed(3);
+        refs.textContent="Frozen source-reference provenance: "+score(sourceRefs.frozenOwnScore)+
+          " · candidates/selected/qualified: "+sourceRefs.candidateReferenceCount+"/"+
+          sourceRefs.startingSelectedReferenceCount+"/"+sourceRefs.qualifiedReferenceCount+
+          " · starting cutoff "+score(sourceRefs.startingSelectionMinimum)+
+          " · core minimum "+score(sourceRefs.referenceCoreMinimum)+
+          " · independent pair support "+sourceRefs.actualIndependentPairSupport+"/"+
+          sourceRefs.requiredIndependentPairSupport+" · "+(sourceRefs.qualified?"qualified":"not qualified")+
+          " · "+(sourceRefs.reason||"");
+        if(sourceRefs.blockers&&sourceRefs.blockers.length)
+          refs.textContent+=" · blockers: "+sourceRefs.blockers.join(", ");
+        if(sourceRefs.qualityAndInputReasons&&sourceRefs.qualityAndInputReasons.length)
+          refs.textContent+=" · quality/input: "+sourceRefs.qualityAndInputReasons.join(", ");
+        if(sourceRefs.scoreBasis)refs.title="Score basis: "+sourceRefs.scoreBasis;
+        article.append(refs);
+      }
       if(/^group_[0-9a-f]{32}$/.test(m.groupId||"")){
         const link=document.createElement("a");
         link.href="photo-groups/"+m.groupId+"/index.html";
@@ -809,7 +908,12 @@ def _load_photo(path, key, cache, embed, st, space):
     added = False
     if sha not in cache.emb:
         try:
-            cache.emb[sha] = embed(path) or {"faces": -1}
+            data = embed(path) or {"faces": -1}
+            if data.get("normalDeferredMeasurement"):
+                photo = likeness.Photo(path, group, folder, sha, data)
+                photo.measurementDeferred = True
+                return photo, False
+            cache.emb[sha] = data
         except Exception as error:  # noqa: BLE001 - one unreadable image must not stop the gallery
             print(f"  cannot read {path.name}: {error}")
             cache.emb[sha] = {"faces": -1}
@@ -887,6 +991,8 @@ def score_context(photo, *, bucket, core_size, core_mode, core_member, sufficien
             "Score method: compare with the active Gallery core; Review photos are excluded from the core."
         ),
     ]
+    if getattr(photo, "measurementDeferred", False):
+        details.insert(0, "Measurement unavailable: outside the selected intake scope; no face inference was run.")
     if bucket == "Gallery" and category_policy:
         details.append(
             f"Identity core includes scores at or above "
@@ -1496,17 +1602,18 @@ def alignment_evidence(photo, work, out):
     evidence_root = likeness_root / domain / "face-evidence"
     target = evidence_root / artifact
     try:
+        artifact_path = alignment_evidence_path(target)
         evidence_root.resolve().relative_to(library_root)
         if (
             any(likeness.cw.is_reparse_point(path) for path in (
                 likeness_root,
                 likeness_root / domain,
                 evidence_root,
-                target,
+                artifact_path,
             ))
             or target.resolve().parent != evidence_root.resolve()
-            or not target.is_file()
-            or hashlib.sha256(target.read_bytes()).hexdigest() != data["artifactSha256"]
+            or not artifact_path.is_file()
+            or hashlib.sha256(artifact_path.read_bytes()).hexdigest() != data["artifactSha256"]
         ):
             result["state"] = "invalid"
             return result
@@ -1537,7 +1644,13 @@ def write_thumbnails(items, out, work=None):
         photo = item["_photo"]
         from . import fast_preparation
 
-        if fast_preparation.deferred(photo.path):
+        diagnostics = []
+        try:
+            is_fast = fast_preparation.deferred(photo.path)
+        except ValueError as exc:
+            diagnostics.append(f"{photo.path}: {exc}")
+            is_fast = False
+        if is_fast:
             href = photo.path.resolve().as_uri()
             public = {key: value for key, value in item.items() if key != "_photo"}
             public.update(
@@ -1551,7 +1664,6 @@ def write_thumbnails(items, out, work=None):
             continue
         stem = re.sub(r"[^A-Za-z0-9_.-]+", "_", photo.path.stem).strip("._") or "photo"
         targets = {}
-        diagnostics = []
         unavailable = []
         provenance = {}
         for framing in ("chest", "head", "face"):
@@ -1726,12 +1838,12 @@ def render_html(
 """
 
 
-def main(argv=None, *, context=None, provenance=None):
+def main(argv=None, *, context=None, provenance=None, embed=None):
     with domains.activate("general", read_only=True):
-        return _main(argv, context=context, provenance=provenance)
+        return _main(argv, context=context, provenance=provenance, embed=embed)
 
 
-def _main(argv=None, *, context=None, provenance=None):
+def _main(argv=None, *, context=None, provenance=None, embed=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--history-only", action="store_true", help="refresh only checked intake history; preview unless --apply")
     history_mode = parser.add_mutually_exclusive_group()
@@ -1778,7 +1890,7 @@ def _main(argv=None, *, context=None, provenance=None):
     catalog = metadata.load_catalog(metadata.path_for_root(work))
     items, warnings = collect_items(
         cfg, st, work, cache, space, catalog,
-        include_artists=args.artists, keep=args.keep, policy=policy
+        include_artists=args.artists, keep=args.keep, policy=policy, embed=embed,
     )
     out.mkdir(parents=True, exist_ok=True)
     if provenance is None:

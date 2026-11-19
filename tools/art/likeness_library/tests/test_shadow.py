@@ -13,6 +13,7 @@ from tools.art import likeness_shadow
 from tools.art.likeness_library import shadow
 
 ROOT = pathlib.Path(__file__).resolve().parents[4]
+STABLE_HELPERS = ROOT / "tools" / "art" / "likeness_library"
 
 
 def photo(pid, folder, **extra):
@@ -82,7 +83,7 @@ class ReceiptTests(unittest.TestCase):
             "status": "applied", "castSeedPolicy": "core", "policy": {},
             "workflowSelection": {"policy": {"mode": "all"}},
             "implementationHashes": {
-                name: shadow.digest(pathlib.Path(shadow.__file__).parent / name)
+                name: shadow.digest(STABLE_HELPERS / name)
                 for name in shadow.REPLAY_MODULES if name != "scoring.py"
             }, "centeringMean": mean,
             "photos": [photo("a", "Angels/angelica", preparedSHA256="content", castSeedCore=True)],

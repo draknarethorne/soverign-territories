@@ -22,6 +22,21 @@
     "protection"
   ],
   "properties": {
+    "castAdmission": {
+      "type": "object", "additionalProperties": false,
+      "required": ["reviewMinimum", "minimumIndependentReferences", "approvedClosePairs"],
+      "properties": {
+        "reviewMinimum": {"type": "number", "minimum": 0, "maximum": 1},
+        "minimumIndependentReferences": {"type": "integer", "minimum": 2},
+        "approvedClosePairs": {
+          "type": "array", "uniqueItems": true,
+          "items": {
+            "type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true,
+            "items": {"type": "string", "pattern": "^(Sisters|Angels)/[^/\\\\:]+$"}
+          }
+        }
+      }
+    },
     "groupCastReviewEnabled": {
       "type": "boolean",
       "default": true,
@@ -381,6 +396,8 @@
         "galleryAdmissionMinimumSimilarity": {"type": "number", "minimum": 0, "maximum": 1},
         "unmatchedOutlierSplitEnabled": {"type": "boolean"},
         "photoRouteMargin": {"type": "number", "minimum": 0, "maximum": 2},
+        "reviewRouteMinimum": {"$ref": "#/definitions/score"},
+        "reviewRouteMargin": {"type": "number", "minimum": 0, "maximum": 2},
         "reviewAdmissionEnabled": {"type": "boolean"},
         "mergeMinimum": {"$ref": "#/definitions/score"},
         "identityProtectedByDefault": {

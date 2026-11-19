@@ -67,11 +67,84 @@
         "assignmentEvidence": {
           "type": "object", "additionalProperties": false,
           "properties": {
+            "castAdmission": {
+              "type": "object", "additionalProperties": false,
+              "required": ["mode", "winner", "score", "margin", "alternatives", "closePairs"],
+              "properties": {
+                "mode": {"enum": ["optimistic-gallery", "ambiguous-review", "named-review", "supported-gallery"]},
+                "winner": {"type": "string", "pattern": "^(Sisters|Angels)/[^/]+$"},
+                "score": {"type": "number", "minimum": -1, "maximum": 1},
+                "margin": {"type": "number", "minimum": -2, "maximum": 2},
+                "alternatives": {
+                  "type": "array", "items": {
+                    "type": "object", "additionalProperties": false, "required": ["folder", "score"],
+                    "properties": {
+                      "folder": {"type": "string", "minLength": 1},
+                      "score": {"type": "number", "minimum": -1, "maximum": 1}
+                    }
+                  }
+                },
+                "closePairs": {
+                  "type": "array", "items": {
+                    "type": "object", "additionalProperties": false, "required": ["folders", "coreSimilarity"],
+                    "properties": {
+                      "folders": {"type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "items": {"type": "string"}},
+                      "coreSimilarity": {"type": "number", "minimum": -1, "maximum": 1}
+                    }
+                  }
+                }
+              }
+            },
             "score": {"type": ["number", "null"], "minimum": -1, "maximum": 1},
             "margin": {"type": ["number", "null"], "minimum": -2, "maximum": 2},
             "supportPhotoIds": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/definitions/photoId"}},
             "blockers": {"type": "array", "items": {"type": "string"}},
             "qualityReason": {"type": ["string", "null"]},
+            "candidateMemberPhotoIds": {
+              "type": "array", "uniqueItems": true,
+              "items": {"$ref": "#/definitions/photoId"}
+            },
+            "sourceIncompatibility": {
+              "type": "object", "additionalProperties": false,
+              "required": [
+                "qualified", "basis", "exactDifferentWitnesses",
+                "frozenSourceScore", "independentSourceReferenceIds"
+              ],
+              "properties": {
+                "qualified": {"type": "boolean"},
+                "basis": {"type": ["string", "null"]},
+                "exactDifferentWitnesses": {
+                  "type": "array", "uniqueItems": true,
+                  "items": {"$ref": "#/definitions/photoId"}
+                },
+                "frozenSourceScore": {"type": ["number", "null"], "minimum": -1, "maximum": 1},
+                "independentSourceReferenceIds": {
+                  "type": "array", "uniqueItems": true,
+                  "items": {"$ref": "#/definitions/photoId"}
+                }
+              }
+            },
+            "sourceReferenceEvidence": {
+              "type": ["object", "null"], "additionalProperties": false,
+              "properties": {
+                "sourceFolder": {"type": ["string", "null"]},
+                "sourceAppearanceId": {"type": ["string", "null"]},
+                "candidateReferenceCount": {"type": "integer", "minimum": 0},
+                "startingSelectedReferenceCount": {"type": "integer", "minimum": 0},
+                "qualifiedReferenceCount": {"type": "integer", "minimum": 0},
+                "frozenOwnScore": {"type": ["number", "null"], "minimum": -1, "maximum": 1},
+                "startingSelectionMinimum": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+                "referenceCoreMinimum": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+                "requiredIndependentPairSupport": {"type": ["integer", "null"], "minimum": 0},
+                "actualIndependentPairSupport": {"type": ["integer", "null"], "minimum": 0},
+                "eligibleMeasurement": {"type": ["boolean", "null"]},
+                "qualityAndInputReasons": {"type": "array", "items": {"type": "string"}},
+                "blockers": {"type": "array", "items": {"type": "string"}},
+                "qualified": {"type": "boolean"},
+                "reason": {"type": ["string", "null"]},
+                "scoreBasis": {"type": ["string", "null"]}
+              }
+            },
             "dominantFace": {
               "type": "object", "additionalProperties": false,
               "required": ["faces", "secondaryFaceRatio", "exclusiveMaximum", "measurementBasis"],

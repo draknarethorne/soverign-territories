@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Tests for the local, read-only likeness review gallery."""
 import pathlib
+import contextlib
 import copy
 import shutil
 import subprocess
@@ -8,6 +9,7 @@ import tempfile
 import unittest
 import json
 import hashlib
+import os
 from types import SimpleNamespace
 from unittest import mock
 
@@ -124,6 +126,46 @@ class ReviewGalleryTests(unittest.TestCase):
             self.assertEqual(evidence["sourceSha256"], hashlib.sha256(source.read_bytes()).hexdigest())
             self.assertEqual(evidence["alignmentSha256"], hashlib.sha256(target.read_bytes()).hexdigest())
             self.assertFalse(embedder.needs_alignment_evidence(result, source))
+
+    @unittest.skipUnless(os.name == "nt", "Windows MAX_PATH regression")
+    def test_long_alignment_path_persists_reuses_and_verifies_without_shortening_ids(self):
+        with tempfile.TemporaryDirectory() as directory, contextlib.ExitStack() as cleanup:
+            root = pathlib.Path(directory) / ("library-" + "x" * 90)
+            root.mkdir()
+            source = root / "source.jpg"
+            source.write_bytes(b"source image")
+            embedder = engine.Embedder(root / "model-cache")
+            embedder.configure_evidence(root / "_likeness" / "general" / "face-evidence", root)
+            embedder.model_provenance = {
+                "detector": {"name": "YuNet"},
+                "recognizer": {"name": "SFace"},
+                "opencv": "test",
+                "alignment": "FaceRecognizerSF.alignCrop",
+            }
+            embedder.model_id = hashlib.sha256(json.dumps(
+                embedder.model_provenance, sort_keys=True, separators=(",", ":"),
+            ).encode("utf-8")).hexdigest()
+            artifact = f"{hashlib.sha256(source.read_bytes()).hexdigest()}-{embedder.model_id}.png"
+            target = embedder.evidence_root / artifact
+            self.assertGreaterEqual(len(str(target)), 260)
+            cleanup.callback(pathlib.Path("\\\\?\\" + str(target)).unlink, missing_ok=True)
+            cv2 = SimpleNamespace(
+                imencode=lambda _extension, _image: (True, np.frombuffer(b"png", dtype=np.uint8)),
+            )
+            with mock.patch.dict("sys.modules", {"cv2": cv2}):
+                evidence = embedder._save_alignment(source, np.ones((3, 3, 3), dtype=np.uint8))
+                self.assertEqual(embedder._save_alignment(source, np.ones((3, 3, 3)))["artifact"], artifact)
+            self.assertEqual(evidence["artifact"], artifact)
+            data = {"faces": 1, "alignmentEvidence": evidence}
+            self.assertFalse(embedder.needs_alignment_evidence(data, source))
+            photo = likeness.Photo(source, "Prospects", "Example", "cache-key", data)
+            out = root / "_reports" / "library"
+            result = review_gallery.alignment_evidence(photo, root, out)
+            self.assertEqual(result["state"], "verified")
+            self.assertNotIn("%3F", result["href"])
+            pathlib.Path("\\\\?\\" + str(target)).write_bytes(b"tampered")
+            self.assertTrue(embedder.needs_alignment_evidence(data, source))
+            self.assertEqual(review_gallery.alignment_evidence(photo, root, out)["state"], "invalid")
 
     def test_read_only_embedding_does_not_persist_exact_crop(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -908,6 +950,84 @@ console.log(JSON.stringify(cases.map(([record, query])=>matchesQuery(record,quer
         self.assertIn('list.className="detail-list"', page)
         self.assertNotIn('r.scoreContext.coreMember?" · in core"', page)
         self.assertIn("Scoring & action details", page)
+
+    def test_generated_review_data_drives_tentative_cast_admission_details(self):
+        items = []
+        for photo_id, mode, score, margin, alternative_folder, alternative_score in (
+            ("optimistic", "optimistic-gallery", 0.74, 0.08, "Angels/Rival & One", 0.66),
+            ("ambiguous", "ambiguous-review", 0.51, 0.02, "Sisters/Other", 0.49),
+        ):
+            items.append({
+                "folder": "Sisters/Primary",
+                "group": "Sisters",
+                "bucket": "Review" if mode == "ambiguous-review" else "Gallery",
+                "name": photo_id + ".jpg",
+                "score": score,
+                "state": "Review" if mode == "ambiguous-review" else "Core member",
+                "comparison": "provisional core",
+                "reason": "selected cast candidate",
+                "best_other": "",
+                "thumbnail": f"people_gallery_review_files/{photo_id}.jpg",
+                "href": "file:///C:/library/" + photo_id + ".jpg",
+                "appearance": {"membership": {
+                    "status": "tentative", "coreUse": False, "reason": "provisional",
+                    "assignmentDisposition": "provisional",
+                    "assignmentEvidence": {"castAdmission": {
+                        "mode": mode, "winner": "Sisters/Primary",
+                        "score": score, "margin": margin,
+                        "alternatives": [{"folder": alternative_folder, "score": alternative_score}],
+                        "closePairs": [],
+                    }},
+                }},
+            })
+
+        page = review_gallery.render_html(items, "now")
+        payload = page.split('<script id="review-data" type="application/json">', 1)[1]
+        generated_items = json.loads(payload.split("</script>", 1)[0])
+        self.assertEqual(
+            [item["appearance"]["membership"]["assignmentEvidence"]["castAdmission"]["mode"]
+             for item in generated_items],
+            ["optimistic-gallery", "ambiguous-review"],
+        )
+
+        node = shutil.which("node")
+        if not node:
+            self.skipTest("Node.js is required to exercise generated assignment rendering data")
+        script = review_gallery.SCRIPT
+        start = script.index("function assignmentSummary(")
+        end = script.index("\n}", start) + 2
+        summary_function = script[start:end]
+        program = summary_function + """
+const items=JSON.parse(require("fs").readFileSync(0,"utf8"));
+console.log(JSON.stringify(items.map(item=>assignmentSummary(item))));
+"""
+        result = subprocess.run(
+            [node, "-e", program], input=json.dumps(generated_items),
+            capture_output=True, text=True, check=True,
+        )
+        summaries = json.loads(result.stdout)
+        self.assertEqual([summary["label"] for summary in summaries], [
+            "High rival / unconfirmed", "Tentative / ambiguous review",
+        ])
+        self.assertEqual([summary["articleClass"] for summary in summaries], [
+            "optimistic-membership", "ambiguous-review",
+        ])
+        self.assertEqual([summary["badgeClass"] for summary in summaries], [
+            "badge-optimistic-membership", "badge-ambiguous-review",
+        ])
+        self.assertEqual([summary["score"] for summary in summaries], ["0.74", "0.51"])
+        self.assertEqual([summary["margin"] for summary in summaries], ["0.08", "0.02"])
+        self.assertEqual([summary["winner"] for summary in summaries], [
+            "Sisters/Primary", "Sisters/Primary",
+        ])
+        self.assertEqual([summary["alternatives"][0]["score"] for summary in summaries], [
+            "0.66", "0.49",
+        ])
+        self.assertEqual([summary["alternatives"][0]["folder"] for summary in summaries], [
+            "Angels/Rival & One", "Sisters/Other",
+        ])
+        self.assertIn("not core-authoritative, and not protected", summaries[0]["explanation"])
+        self.assertIn("never a core/reference vote", summaries[1]["explanation"])
 
     def test_review_category_hierarchy_is_shared_by_sections_and_rankings(self):
         self.assertEqual(

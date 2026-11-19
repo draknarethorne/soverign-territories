@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Tests for frozen-core, deterministic Review and pool reconciliation."""
 import contextlib
+import copy
 import io
 import json
 import pathlib
@@ -17,6 +18,7 @@ sys.path.insert(0, str(ROOT))
 
 from tools.art.likeness_library.reconciliation import (  # noqa: E402
     frozen_identity_cores,
+    fragment_proposals,
     plan_reconciliation,
 )
 from tools.art import likeness  # noqa: E402
@@ -37,6 +39,449 @@ def candidate(photo_id, vector, *, folder="Various", bucket="Pool", side="Prospe
 def stable_name(seed, taken):
     name = f"New-{seed[:8]}"
     return f"Other-{seed[:8]}" if name.casefold() in taken else name
+
+
+class NormalAdmissionTests(unittest.TestCase):
+    def setUp(self):
+        from tools.art.likeness_library import normal_admission
+        from tools.art.likeness_library.policy import load_policy, effective_settings
+
+        self.admission = normal_admission
+        self.policy = load_policy()
+        self.settings = effective_settings({}, self.policy)
+        self.axes = np.eye(7)
+        self.cores, self.references = {}, {}
+        self.identity("Sisters/Drakness", self.axes[0], self.axes[3])
+        self.api = SimpleNamespace(plan_reconciliation=plan_reconciliation, invent_name=stable_name)
+
+    def identity(self, folder, center, axis):
+        rows = [
+            {"photoId": f"{folder}:{index}", "sha256": f"{folder}:{index}",
+             "vector": .8 * center + sign * .6 * axis, "qualityEligible": True}
+            for index, sign in enumerate((1, -1))
+        ]
+        self.references[folder] = rows
+        self.cores[folder] = {
+            "vector": center.copy(), "side": "Prospects", "category": folder.split("/")[0],
+            "corePhotoIds": [row["photoId"] for row in rows], "personIds": [folder],
+            "identityProtected": folder.startswith(("Sisters/", "Angels/")),
+            "photoScores": {}, "mode": "fixture",
+        }
+
+    def photo(self, vector, photo_id="photo:image_123", **kwargs):
+        return candidate(
+            photo_id, vector, qualityEligible=True, sha256=f"bytes:{photo_id}", **kwargs,
+        )
+
+    def route(self, rows, **kwargs):
+        ctx = self.admission.context(self.cores, self.references, self.policy, **kwargs)
+        return plan_reconciliation(
+            rows, self.cores, policy=self.policy, name_factory=stable_name, admission_context=ctx,
+        )
+
+    def paired(self):
+        self.identity("Angels/Nyxene", .995 * self.axes[0] + np.sqrt(1 - .995 ** 2) * self.axes[1], self.axes[4])
+
+    def test_exact_gallery_floor_ignores_higher_lower_rival_without_a_per_reference_floor(self):
+        vector = .5 * self.axes[0] + np.sqrt(.75) * self.axes[2]
+        self.identity("Models/Fragment", vector, self.axes[4])
+        row = self.photo(vector, folder="Models/Fragment", bucket="Gallery", rebaseCandidate=True)
+        report = self.route([row])
+        result = report["assignments"][0]
+        self.assertEqual(result["destination"], "Sisters/Drakness")
+        self.assertAlmostEqual(result["castAdmission"]["score"], .5)
+        self.assertAlmostEqual(result["lowerCategoryEvidence"][0]["score"], 1.)
+        self.assertEqual(result["independentSupportCount"], 2)
+        self.assertTrue(all(float(vector @ ref["vector"]) < .5 for ref in self.references["Sisters/Drakness"]))
+
+    def test_approved_pair_is_optimistic_but_every_blocking_rival_must_be_approved(self):
+        self.paired()
+        result = self.route([self.photo(self.axes[0])])["assignments"][0]
+        self.assertEqual(result["castAdmission"]["mode"], "optimistic-gallery")
+        self.assertFalse(result["referenceEligible"])
+        self.identity("Angels/Unrelated", .999 * self.axes[0] + np.sqrt(1 - .999 ** 2) * self.axes[2], self.axes[5])
+        report = self.route([self.photo(self.axes[0])])
+        self.assertEqual(report["assignments"], [])
+        self.assertEqual(report["held"][0]["castAdmission"]["mode"], "ambiguous-review")
+        self.assertEqual(report["held"][0]["reviewDestination"], "Sisters/Drakness/review")
+        self.assertEqual(len(report["held"][0]["castAdmission"]["alternatives"]), 2)
+        self.assertEqual(report["clusters"], [])
+
+    def test_review_floor_and_below_floor_lower_routing(self):
+        self.identity("Models/Existing", self.axes[2], self.axes[4])
+        for score in (.35, .349):
+            with self.subTest(score=score):
+                vector = score * self.axes[0] + np.sqrt(1 - score ** 2) * self.axes[2]
+                report = self.route([self.photo(vector)])
+                if score == .35:
+                    self.assertEqual(report["held"][0]["reviewDestination"], "Sisters/Drakness/review")
+                    self.assertFalse(report["held"][0]["referenceEligible"])
+                else:
+                    self.assertEqual(report["assignments"][0]["destination"], "Models/Existing")
+
+    def test_correlated_duplicate_and_self_references_do_not_supply_two_votes(self):
+        refs = self.references["Sisters/Drakness"]
+        for mutate in (
+            lambda: refs[1].update(sha256=refs[0]["sha256"]),
+            lambda: refs[1].update(vector=refs[0]["vector"]),
+            lambda: refs[1].update(photoId="photo:image_123"),
+        ):
+            saved = copy.deepcopy(refs)
+            mutate()
+            report = self.route([self.photo(self.axes[0])])
+            self.assertEqual(report["assignments"], [])
+            self.assertLess(report["held"][0]["independentSupportCount"], 2)
+            refs[:] = saved
+
+    def test_exact_tie_is_disclosed_and_deterministic(self):
+        self.identity("Angels/Nyxene", self.axes[0], self.axes[4])
+        first = self.route([self.photo(self.axes[0])])["assignments"][0]
+        self.cores = dict(reversed(list(self.cores.items())))
+        second = self.route([self.photo(self.axes[0])])["assignments"][0]
+        self.assertEqual(first, second)
+        self.assertEqual(first["destination"], "Angels/Nyxene")
+        self.assertIn("storage-only", first["reason"])
+
+    def test_source_quality_negative_evidence_and_receiving_locks(self):
+        for kwargs in ({"protected": True}, {"workflowSelected": True}, {"rejectedPersonIds": ["Sisters/Drakness"]}):
+            with self.subTest(kwargs=kwargs):
+                report = self.route([self.photo(
+                    self.axes[0], folder="Models/Fragment", bucket="Gallery", rebaseCandidate=True, **kwargs,
+                )])
+                self.assertEqual(report["assignments"], [])
+                self.assertEqual(report["clusters"], [])
+        invalid = self.photo(self.axes[0])
+        invalid["qualityEligible"] = False
+        self.assertTrue(self.route([invalid])["held"][0]["preserveStaged"])
+        locked = self.route([self.photo(self.axes[0])], locked=True)
+        self.assertTrue(locked["held"][0]["preserveStaged"])
+        self.assertEqual(locked["held"][0]["bestMatch"], "Sisters/Drakness")
+
+    def test_unmatched_existing_gallery_is_retained_and_never_forms_a_fragment(self):
+        report = self.route([self.photo(
+            self.axes[6], folder="Models/Fragment", bucket="Gallery", rebaseCandidate=True,
+        )])
+        self.assertEqual(report["assignments"], [])
+        self.assertEqual(report["clusters"], [])
+        self.assertTrue(report["held"][0]["preserveStaged"])
+        review = self.route([self.photo(self.axes[6], folder="Sisters/Drakness", bucket="Review")])
+        self.assertEqual(review["assignments"], [])
+        self.assertEqual(review["clusters"], [])
+        self.assertTrue(review["held"][0]["preserveStaged"])
+
+    def test_one_boundary_allows_existing_or_various_seed_to_recover_other_member(self):
+        for arrival_seed in (False, True):
+            with self.subTest(arrival_seed=arrival_seed):
+                seed = self.photo(.8 * self.axes[0] + .6 * self.axes[1], "photo:image_124")
+                recovered = self.photo(.48 * self.axes[0] + np.sqrt(1 - .48 ** 2) * self.axes[1])
+                existing = recovered if arrival_seed else seed
+                existing.update(sourceFolder="Models/Fragment", sourceBucket="Gallery", rebaseCandidate=True)
+                report = self.admission.two_round_plan(
+                    self.api, [recovered, seed], self.cores, self.references,
+                    self.settings, self.policy, set(),
+                )
+                self.assertEqual({row["photoId"] for row in report["assignments"]}, {seed["photoId"], recovered["photoId"]})
+                self.assertEqual(report["referenceRefreshCount"], 1)
+                self.assertEqual(len(report["matchingRounds"]), 2)
+                boundary = report["referenceSnapshots"]["2"]["photoIds"]["Sisters/Drakness"]
+                self.assertIn(seed["photoId"], boundary)
+                self.assertNotIn(recovered["photoId"], boundary)
+                self.assertNotIn(seed["photoId"], self.cores["Sisters/Drakness"]["corePhotoIds"])
+                json.dumps(report, allow_nan=False)
+
+    def test_review_cannot_bootstrap_other_review_and_old_source_votes_retire(self):
+        rows = [
+            self.photo(.48 * self.axes[0] + np.sqrt(1 - .48 ** 2) * self.axes[1], f"photo:image_{number}",
+                       folder="Models/Fragment", bucket="Gallery", rebaseCandidate=True)
+            for number in (123, 124)
+        ]
+        self.identity("Models/Fragment", rows[0]["vector"], self.axes[4])
+        self.references["Models/Fragment"] = [
+            {**row, "sha256": row["sha256"]} for row in rows
+        ]
+        self.cores["Models/Fragment"]["corePhotoIds"] = [row["photoId"] for row in rows]
+        report = self.admission.two_round_plan(
+            self.api, rows, self.cores, self.references, self.settings, self.policy, set(),
+        )
+        self.assertEqual(report["assignments"], [])
+        self.assertEqual(len(report["held"]), 2)
+        self.assertNotIn("Models/Fragment", report["referenceSnapshots"]["2"]["photoIds"])
+        self.assertEqual(
+            report["referenceSnapshots"]["1"]["photoIds"]["Sisters/Drakness"],
+            report["referenceSnapshots"]["2"]["photoIds"]["Sisters/Drakness"],
+        )
+        self.assertTrue(report["passCapReached"])
+
+    def test_optimistic_gallery_is_not_reconsidered_or_promoted_at_the_boundary(self):
+        self.paired()
+        photo = self.photo(self.axes[0])
+        report = self.admission.two_round_plan(
+            self.api, [photo], self.cores, self.references, self.settings, self.policy, set(),
+        )
+        self.assertEqual(report["matchingRounds"][1]["candidateCount"], 0)
+        row = report["assignments"][0]
+        self.assertEqual(row["castAdmission"]["mode"], "optimistic-gallery")
+        self.assertFalse(row["referenceEligible"])
+        self.assertTrue(all(
+            photo["photoId"] not in ids for ids in report["referenceSnapshots"]["2"]["photoIds"].values()
+        ))
+
+    def test_optimistic_membership_detaches_old_reference_and_stays_unprotected_next_run(self):
+        from tools.art.likeness_library import audit, maintenance, metadata, protection
+
+        self.paired()
+        decision = self.route([self.photo(self.axes[0])])["assignments"][0]
+        person_id, source_id = metadata.new_person_id(), metadata.new_person_id()
+        group_id = "group_" + "a" * 32
+        photo_id = decision["photoId"]
+        catalog = {
+            "schemaVersion": 1, "people": {
+                pid: {"id": pid, "folder": folder, "displayName": folder.split("/")[1],
+                      "folderHistory": [], "identityAnchors": [], "protected": False}
+                for pid, folder in ((person_id, decision["destination"]), (source_id, "Models/Fragment"))
+            },
+            "photos": {photo_id: {"contentSha256": "a" * 64, "protected": False, "membership": {
+                "personId": source_id, "groupId": group_id, "status": "supported", "coreUse": True,
+                "reason": "old source reference", "referenceVersion": "a" * 64,
+            }}},
+            "photoGroups": {group_id: {
+                "id": group_id, "personId": source_id, "name": "Original group", "status": "supported",
+                "memberPhotoIds": [photo_id], "referencePhotoIds": [photo_id],
+                "sourcePersonIds": [source_id], "history": [], "reason": "source history",
+            }}, "actions": [],
+        }
+        move = {
+            **decision, "source": "Models/Fragment/gallery/fragment_image_123.jpg",
+            "destination": decision["destination"] + "/gallery/drakness_image_123.jpg", "sha256": "a" * 64,
+        }
+        updated = maintenance._updated_catalog(catalog, [move], self.policy)
+        member = updated["photos"][photo_id]["membership"]
+        self.assertEqual((member["personId"], member["status"], member["coreUse"]), (person_id, "tentative", False))
+        self.assertFalse(updated["photos"][photo_id]["protected"])
+        self.assertEqual(updated["photoGroups"][group_id]["memberPhotoIds"], [])
+        self.assertEqual(updated["photoGroups"][group_id]["referencePhotoIds"], [])
+        self.assertIn(photo_id, audit.membership_excluded(updated, [photo_id]))
+        for field in ("protected", "coreUse", "anchor"):
+            broken = copy.deepcopy(updated)
+            if field == "protected":
+                broken["photos"][photo_id]["protected"] = True
+            elif field == "coreUse":
+                broken["photos"][photo_id]["membership"]["coreUse"] = True
+            else:
+                broken["people"][person_id]["identityAnchors"] = [photo_id]
+            with self.subTest(field=field), self.assertRaisesRegex(ValueError, "unconfirmed Gallery"):
+                metadata.validate_catalog(broken)
+        scratch = ROOT / "tmp" / "normal-flow-restoration"
+        scratch.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=scratch) as temporary:
+            root = pathlib.Path(temporary)
+            native = root / pathlib.PurePosixPath(move["destination"])
+            native.parent.mkdir(parents=True)
+            native.write_bytes(b"same unconfirmed pixels")
+            updated["photos"][photo_id]["contentSha256"] = metadata.content_sha256(native)
+            photo = SimpleNamespace(
+                path=native, name=native.name, key=decision["destination"],
+                vec=self.axes[0], sha=metadata.content_sha256(native), faces=1, f2=0.,
+                usable=lambda _minimum: True,
+            )
+            space = SimpleNamespace(photos=[photo], st=self.settings)
+            actions, evidence = protection.plan_protection(space, {}, updated, self.policy, root=root)
+        self.assertEqual(actions, [])
+        self.assertTrue(any("unconfirmed assignment-only" in row["reason"] for row in evidence))
+        self.assertTrue(catalog["photos"][photo_id]["membership"]["coreUse"])
+
+    def test_cast_receiving_permission_does_not_unlock_outgoing_cast_gallery(self):
+        from tools.art.likeness_library import maintenance, metadata, normal_finish
+
+        self.paired()
+        decision = self.route([self.photo(self.axes[0])])["assignments"][0]
+        scratch = ROOT / "tmp" / "normal-flow-restoration"
+        scratch.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=scratch) as temporary:
+            root = pathlib.Path(temporary)
+            source = root / "Models" / "Fragment" / "gallery" / "fragment_image_123.jpg"
+            source.parent.mkdir(parents=True)
+            source.write_bytes(b"eligible original")
+            move = {**decision, "source": source.relative_to(root).as_posix(),
+                    "destination": decision["destination"] + "/gallery/drakness_image_123.jpg",
+                    "sha256": metadata.content_sha256(source)}
+            catalog = maintenance._updated_catalog(
+                {"schemaVersion": 1, "people": {}, "photos": {}, "actions": []}, [move], self.policy,
+            )
+            metadata.save_catalog(catalog, root / ".likeness-library.json")
+            maintenance._validate_permissions(root, [move], self.policy, {})
+            with mock.patch.object(normal_finish, "cores", return_value=({}, [])):
+                checked, evidence = normal_finish.check_batch(
+                    None, SimpleNamespace(photos=[]), catalog, self.policy, [move],
+                )
+            self.assertEqual(checked, [move])
+            self.assertEqual(evidence["corrections"], [])
+            outgoing = {**move, "source": "Angels/Other/gallery/other_image_123.jpg"}
+            with self.assertRaisesRegex(ValueError, "protected Gallery"):
+                maintenance._validate_permissions(root, [outgoing], self.policy, {})
+            disabled = copy.deepcopy(self.policy)
+            disabled["categoryPolicies"]["Sisters"]["galleryAdmissionEnabled"] = False
+            with self.assertRaises(ValueError):
+                maintenance._validate_permissions(root, [move], disabled, {})
+
+
+class FragmentProposalTests(unittest.TestCase):
+    def setUp(self):
+        from tools.art.likeness_library.policy import load_policy
+
+        self.policy = load_policy()
+        self.cores, self.references = {}, {}
+        self.basis = np.eye(7)
+        self.add_identity("Sisters/Canonical", self.basis[0], self.basis[2])
+        self.add_identity("Models/Fragment", self.basis[0], self.basis[1])
+
+    def add_identity(self, folder, center, axis):
+        members = [
+            {"photoId": f"{folder}:{index}", "sha256": f"{folder}:hash:{index}",
+             "vector": .8 * center + sign * .6 * axis, "qualityEligible": True}
+            for index, sign in enumerate((1, -1))
+        ]
+        self.references[folder] = members
+        self.cores[folder] = {
+            "vector": center.copy(), "side": "Prospects", "category": folder.split("/")[0],
+            "corePhotoIds": [row["photoId"] for row in members], "personIds": [folder],
+            "identityProtected": False,
+        }
+
+    def result(self, **kwargs):
+        return fragment_proposals(self.cores, self.references, self.policy, **kwargs)
+
+    def test_supported_direct_fragment_is_evidence_only_and_order_independent(self):
+        before = copy.deepcopy((self.cores, self.references))
+        report = self.result()
+        self.assertEqual(len(report["candidateLinks"]), 1)
+        link = report["candidateLinks"][0]
+        self.assertEqual((link["sourceFolder"], link["targetFolder"]),
+                         ("Models/Fragment", "Sisters/Canonical"))
+        self.assertEqual(link["identityMinimum"], .65)
+        self.assertEqual(link["minimumIndependentReferences"], 2)
+        self.assertTrue(all(row["qualified"] and row["independentSupportCount"] == 2
+                            for row in link["members"]))
+        self.assertEqual(report["activation"], "diagnostic-only")
+        reverse = fragment_proposals(
+            dict(reversed(list(self.cores.items()))),
+            {key: list(reversed(rows)) for key, rows in self.references.items()}, self.policy,
+        )
+        self.assertEqual(report, reverse)
+        json.dumps(report, allow_nan=False)
+        for folder in self.cores:
+            np.testing.assert_array_equal(self.cores[folder]["vector"], before[0][folder]["vector"])
+            self.assertEqual(self.cores[folder]["corePhotoIds"], before[0][folder]["corePhotoIds"])
+            self.assertEqual(len(self.references[folder]), len(before[1][folder]))
+
+    def test_core_average_cannot_carry_an_unsupported_member(self):
+        bad = {
+            "photoId": "outlier", "sha256": "outlier-bytes", "qualityEligible": True,
+            "vector": .1 * self.basis[0] + np.sqrt(.99) * self.basis[4],
+        }
+        source = "Models/Fragment"
+        self.references[source].append(bad)
+        self.cores[source]["corePhotoIds"].append(bad["photoId"])
+        total = sum(row["vector"] for row in self.references[source])
+        self.cores[source]["vector"] = total / np.linalg.norm(total)
+        report = self.result()
+        self.assertEqual(report["candidateLinks"], [])
+        row = report["comparisons"][0]
+        self.assertGreater(row["score"], row["identityMinimum"])
+        self.assertIn("not every source core member", row["reason"])
+        self.assertEqual([member["photoId"] for member in row["members"] if not member["qualified"]],
+                         ["outlier"])
+
+    def test_entry_level_resemblance_is_not_identity_equivalence(self):
+        center = .6 * self.basis[0] + .8 * self.basis[3]
+        self.add_identity("Models/Fragment", center, self.basis[1])
+        report = self.result()
+        self.assertEqual(report["candidateLinks"], [])
+        self.assertIn("identity-merge threshold", report["comparisons"][0]["reason"])
+
+    def test_content_correlation_and_ambiguity_do_not_supply_independent_support(self):
+        for folder in ("Models/Fragment", "Sisters/Canonical"):
+            for correlated in (False, True):
+                with self.subTest(folder=folder, correlated=correlated):
+                    references = copy.deepcopy(self.references)
+                    if correlated:
+                        references[folder][1]["vector"] = references[folder][0]["vector"].copy()
+                    else:
+                        references[folder][1]["sha256"] = references[folder][0]["sha256"]
+                    report = fragment_proposals(self.cores, references, self.policy)
+                    self.assertEqual(report["candidateLinks"], [])
+                    self.assertIn("insufficient independent", report["comparisons"][0]["reason"])
+        references = copy.deepcopy(self.references)
+        references["Models/Fragment"][0]["sha256"] = references["Sisters/Canonical"][0]["sha256"]
+        report = fragment_proposals(self.cores, references, self.policy)
+        self.assertEqual(report["candidateLinks"], [])
+        self.assertIn("shared source/target content", report["comparisons"][0]["reason"])
+        cores, references = copy.deepcopy((self.cores, self.references))
+        shared_id = references["Models/Fragment"][0]["photoId"]
+        references["Sisters/Canonical"][0]["photoId"] = shared_id
+        cores["Sisters/Canonical"]["corePhotoIds"][0] = shared_id
+        report = fragment_proposals(cores, references, self.policy)
+        self.assertEqual(report["candidateLinks"], [])
+        self.assertIn("ambiguous reference photo ID", report["comparisons"][0]["reason"])
+
+    def test_locks_negative_evidence_and_incomplete_references_hold(self):
+        source, target = "Models/Fragment", "Sisters/Canonical"
+        report = self.result(blocked_ids=[self.references[source][0]["photoId"]])
+        self.assertIn("protected", report["comparisons"][0]["reason"])
+        for mutate in ("source-protected", "different", "source-rejects", "target-rejects",
+                       "stale", "quality", "missing"):
+            with self.subTest(mutate=mutate):
+                cores, references, policy = copy.deepcopy((self.cores, self.references, self.policy))
+                if mutate == "source-protected":
+                    cores[source]["identityProtected"] = True
+                elif mutate == "different":
+                    policy["runtimeSettings"]["different"].append([source, target])
+                elif mutate == "source-rejects":
+                    references[source][0]["rejectedPersonIds"] = [target]
+                elif mutate == "target-rejects":
+                    references[target][0]["rejectedPersonIds"] = [source]
+                elif mutate == "stale":
+                    references[target][0]["rejectionMetadataStale"] = True
+                elif mutate == "quality":
+                    references[source][0]["qualityEligible"] = False
+                else:
+                    references[target].pop()
+                report = fragment_proposals(cores, references, policy)
+                self.assertEqual(report["candidateLinks"], [])
+                self.assertEqual(report["comparisons"][0]["decision"], "hold")
+
+    def test_multiple_canonical_hypotheses_stay_ambiguous(self):
+        self.add_identity("Angels/Other", self.basis[0], self.basis[3])
+        report = self.result()
+        self.assertEqual(report["candidateLinks"], [])
+        rows = [row for row in report["comparisons"] if row["sourceFolder"] == "Models/Fragment"]
+        self.assertEqual(len(rows), 2)
+        self.assertTrue(all("multiple higher" in row["reason"] for row in rows))
+
+    def test_direct_chain_never_invents_a_transitive_identity_link(self):
+        middle = .8 * self.basis[0] + .6 * self.basis[3]
+        lower = .8 * middle + .6 * self.basis[4]
+        self.add_identity("Models/Fragment", middle, self.basis[1])
+        self.add_identity("Prospects/Lower", lower, self.basis[5])
+        report = self.result()
+        pairs = {(row["sourceFolder"], row["targetFolder"]) for row in report["candidateLinks"]}
+        self.assertIn(("Models/Fragment", "Sisters/Canonical"), pairs)
+        self.assertIn(("Prospects/Lower", "Models/Fragment"), pairs)
+        self.assertNotIn(("Prospects/Lower", "Sisters/Canonical"), pairs)
+        self.assertFalse(any(row["sourceFolder"].startswith("Sisters/") for row in report["comparisons"]))
+
+    def test_invalid_frozen_vectors_fail_explicitly(self):
+        self.references["Models/Fragment"][0]["vector"] = np.array([np.nan] * 7)
+        with self.assertRaisesRegex(ValueError, "invalid fragment reference"):
+            self.result()
+
+    def test_zero_centered_core_is_a_visible_hold_not_an_equivalence(self):
+        self.cores["Models/Fragment"]["vector"] = np.zeros(7)
+        for row in self.references["Models/Fragment"]:
+            row["vector"] = np.zeros(7)
+        report = self.result()
+        self.assertEqual(report["candidateLinks"], [])
+        self.assertIn("zero-norm frozen core", report["comparisons"][0]["reason"])
 
 
 class ReconciliationTests(unittest.TestCase):
