@@ -1,10 +1,319 @@
 # Project Status
 
-**Updated:** 2026-11-14 · This is the one working document: where the project is, what has
+**Updated:** 2026-11-19 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
 ## Current checkpoint
+
+**Nov19 installed SIMPLE result.** LEAN run13 applied successfully on existing
+Sandbox Working without reset or repeated preparation. The
+[installed closeout](plans/2026-11-16-simple-review-and-tuning.md#nov19-installed-run13-closeout)
+records apply/check/repeat exit0 and actual Gallery/Overview/Review, retained
+detail/history and applied recap/audit browser evidence. No writer remains.
+There are 733 publication rows (686 changed paths, 47 same-path updates),
+including 123 cast Gallery and 271 cast Review admissions, with no existing
+cast Gallery departures. Drakness receives 13 Gallery/10 Review; Nyxene one
+Review. The 5,454 source rows conserve 5,450 current destinations, three exact
+coalescences and one superseded native version.
+
+The initial installed check exposed recap output ownership, not failed native
+publication. Applied reports now have a separate `rebase-recap/applied/`
+directory; exact sealed preview bytes were restored from verified backup.
+The receipt/journal were never edited; strict check and repeat pass.
+All 87 affected report/rebase tests pass, following the earlier 140-test
+staging proof, 1,048 library tests, 290 remaining tests and 53/53 mutations.
+Original failures and run09/baseline02/preparation evidence remain preserved.
+
+Of the original 2,221 Various rows, 218 entered named identities; 2,003 remain
+in Various, including preserved/non-voting versions, not 2,003 newly unmatched
+people. RA2d owns human identity/crop review and subsequent residual-core/
+ambiguous-version analysis. T29/T30 retain measured performance work; no
+whole-run speedup is claimed. Production remains read-only.
+Final routine/data/new-document lint passes. Repository changes are grouped
+as coupled runtime/policy/tooling, the preserved workspace setting and
+documentation. Record remote-head verification with run evidence; do not
+infer remote CI or human acceptance from local success.
+Dated fixture/no-run statements below are historical, not another resume.
+
+**Earlier Nov18 fixture checkpoint (superseded by installed run13).** The
+[implementation closeout](plans/2026-11-16-simple-review-and-tuning.md#implemented-foundation-fixture-proof-not-a-library-run)
+records **296 passing focused tests**, including upward lower-core recovery,
+one qualified reference boundary/two rounds, retained-native publication/
+exact recovery, persistent non-core/protection guards and both viewers.
+Synthetic Gallery browser evidence shows the warning; Review rendered-page
+evidence passes, with a screenshot-scroll timeout explicitly retained.
+
+Cast receiving ignores lower-category rival scores, not other cast rivals.
+The [approved close-pair exception](plans/2026-11-16-simple-review-and-tuning.md#nov18-optimistic-gallery-exception-for-approved-close-pairs)
+starts with Drakness/Nyxene: otherwise qualified admissions can enter Gallery
+unconfirmed/non-core/unprotected when every blocking cast rival is approved.
+Weak likeness or unrelated ambiguity remains non-recruiting Review.
+No automatic pair-distance cutoff, extra whole-fragment admission veto,
+experimental reactivation or outgoing cast-Gallery reassignment.
+
+Repository policy defaults are now **draft updated settings**. Working,
+Production, source photos and historical receipts remain unchanged.
+Daily intake retains selected-arrival scope. Receiving-only
+`--lock-cast-admission` is preview/apply/check-bound.
+RA2j's next gate is cached real-case evidence before authorized whole-library
+preview/apply and installed viewer acceptance; RA2d retains identity/crop
+acceptance. No library preview/apply/reset, commit or push was started.
+Various before/after accounting remains next-run acceptance; deeper residual/
+unusable-core analysis follows it. Suspected processing defects remain open,
+not dismissed by a pool badge. Queue focus is unchanged.
+
+**Nov17 timed viewer baseline complete.** Generation/repeat/independent
+check and recap preview/apply/check exited0; actual representative browsers
+pass. No writer remains. All5,454native paths/bytes, catalogue/cache/policy
+and09receipt stayed unchanged. Generation1h45m47s /repeat1h29m10s remain
+slow, not a claimed whole-apply speedup. Old normal versus full maintained
+context changes displayed core/rival/score diagnostics; repeat is stable.
+Future policy comparisons must use the same coordinator or prove context
+parity. No rebase, inference, placement, threshold or Production changes.
+The [focused contract](plans/2026-11-16-simple-review-and-tuning.md#selected-timed-viewer-baseline-before-configuration-changes)
+and [timed evidence](recap/2026-11-16-simple-rebase-recap.md#nov-17-timed-reports-only-baseline)
+own bindings, differences, browser proof and remaining performance/human gates.
+
+**Nov 16 focused continuation:** [SIMPLE review, tuning and plan housekeeping](plans/2026-11-16-simple-review-and-tuning.md)
+is the concise next-session contract under spine RA2j/RA2d/RA2o.
+**Nov17 completed baseline:** run09 apply/check/repeat exited0; no writer
+remains. Saved-receipt movement recap and placement/reference audit are
+installed and browser-verified, without another intake or placement change.
+Canonical readers and shared viewer proof/provenance are reconnected with
+independent seals. The
+[timed evidence](recap/2026-11-16-simple-rebase-recap.md#nov-17-completion-and-report-reconnection)
+owns counts, receipt hash, tests, browser observations and bounded real-data
+measurements; no whole-run speedup is claimed.
+The [latest feedback and ordered follow-ons](plans/2026-11-16-simple-review-and-tuning.md#nov-17-selected-recap-audit-and-performance-reconnection)
+separate this baseline from cast-admission configuration, later
+Prospects/Potentials tuning and future rebuilding/refinement application.
+Thresholds, protection, policy and Production are unchanged.
+Broader installed-viewer/human acceptance, whole-operation performance
+measurement and conditional commit/push remain open. No reset/republication
+is needed; old machine checks retain their original code bindings.
+
+**Historical run08/09 startup (superseded by completion above):** run08 rolled back after a held same-ID alias's correct crop
+refusal incorrectly aborted Review. The diagnostic-only viewer fix passes
+140affected tests and an actual-byte proof; strict preparation/crop guards
+and policy remain unchanged. New `simple-rebase-20261117-09` started at
+05:36:43Z/23:36CST under attached `run09-controller`, controller32004/
+preview child50016. It reuses preparation and requires source/move/protection
+parity before apply/check/repeat. Freeze runtime/policy/inputs and reuse that
+job; final installed/browser acceptance and conditional commit/push remain
+open. The [timed recap](recap/2026-11-16-simple-rebase-recap.md#apply08-review-rollback-and-repair)
+owns failure evidence, timing and proof hashes.
+
+Earlier run07/08 history follows:
+Apply07 stopped before publication at15:08CST, native exit1 after11785.94s,
+on the repository-catalogue/Working relative-path boundary. Fifteen failure-
+evidence files are byte/hash-preserved; no run07 publication occurred.
+The fallback-catalogue repair now passes71targeted tests. Run08 restarted
+at17:04CST with verified completed-preparation reuse and a source/move/
+protection parity gate before apply, followed by check/repeat. Reuse attached
+`run08-controller`; freeze runtime/policy/inputs and monitor failures through
+actual installed/browser acceptance. Oldstage is preserved, not certified
+for resume; new staging may take hours. Final viewers are not yet ready.
+Next is the installed/browser gate, then bounded performance recovery
+alongside human placement review, selected category tuning and later plan
+housekeeping. The user
+selects an ordered threshold hierarchy for review, not exact new values.
+Production remains read-only. Commit/push is conditional on successful
+review readiness and is not authorized by this failed run or docs lint.
+The focused contract now records SIMPLE's performance carry-forward gaps:
+forced serial preparation and incomplete cross-viewer proof/index sharing,
+not loss of all shared optimizations or proof of a delivered threaded viewer.
+Keep current runtime frozen; execute the selected measured, behavior-preserving follow-up
+after acceptance, with an explicit practical-value/complexity check.
+
+**Overnight SIMPLE execution authorized:** the user delegates clear prior
+documented choices, permits discarding all old Working history and requests
+full fresh intake through files/manifests and actual GUI verification.
+[RA2j authorization and coverage](plans/2026-11-12-member-refinement-scope-test.md#overnight-clean-simple-execution-and-viewer-acceptance)
+keep Production read-only and human identity/crop acceptance separate.
+Normal restoration/organization are verified. Guarded
+[Production -> Source -> clean Working](art/likeness.md#clean-production-source-refresh-and-working-reset)
+now passes45baseline/reset/quality tests and final real read-only preview.
+Baseline`simple-clean-20261116-01` preview/apply/separate check all exit0;
+its process has exited and transaction/old Source staging are gone.
+Old Working history was removed. Source was intact but stale; selected
+baseline is11,048managed physical files/5,496,847,211bytes, not unique photos.
+Old Working was86,965files/35,521,139,053bytes; no old experimental overlay
+or history is selected. Two small predecessor receipts are hash-preserved
+outside Working under Sandbox `_baseline-state/evidence`.
+Fresh primary input has5,469physical copies/3,465distinct byte hashes,
+not independent votes or confirmed people. Stable SIMPLE composition is
+frozen after219parent shared-consumer tests and50latest composer/import/
+engine tests pass, including no-download model loading on preview/apply.
+Fresh LEAN `simple-rebase-20261116-01` completed3298preparation rows, then
+preview exited1 after15,708.5907544seconds:
+`category has no likeness policy: Various`. No assignments applied; former
+processes exited. Original code/config/log/manifest evidence is hash-preserved
+in the sibling failure-01 report directory. Both repaired code slices are
+frozen; parent236consolidated tests pass and read-only incoming review finds
+no significant issues. Preview02 exited0 in690.709seconds, but actual audit
+finds all1158candidate vectors invalid: zero assignments/clusters, so apply
+is blocked. Complete preview/producer evidence is preserved before diagnosis.
+User now requests all remaining steps and a
+[final timed step/viewer recap](recap/2026-11-16-simple-rebase-recap.md).
+Candidate centering bug is fixed in composer c1bed6c9...,100targeted tests
+pass; three actual samples have finite128-element vectors. **User resumed
+after reboot Nov16at09:22CST**, using ignored `tmp/rebase_simple_finish.md`.
+Entry code/preparation/baseline/proof bindings match; no task writer at entry.
+Post-fix238consumer tests pass;93targeted tests pass after repairing Windows
+long-path aligned-evidence persistence/verification. Actual FULL/LEAN/FAST
+cycles and genuine external-ID distinct-byte update pass/check/exact undo.
+Incoming Various prepared-claim live proof remains explicitly open.
+Preview03 has815assignments and cast continuity but is withheld for
+destination-ID collisions. Canonical source-ID/collision repair passes147tests.
+Preview05 passes matching/cast/ID audit, but15existing exact-alias targets
+would block ordinary publication. Explicit hash-bound alias coalescence and
+two-path recovery now pass142consumer tests. Preview06 exits0 and its actual
+outcome/alias audit passes. Apply06 fails safely before staging/publication
+because2Drakness Gallery->Review moves violate protected policy. Policy stays
+unchanged: recommendation-only protected/unsplittable audits and preview
+permission preflight pass70tests. Preview07 and actual audit pass;
+same-run07 Sandbox apply later fails before publication after staging.
+Preserved evidence and the focused contract above own the next repair;
+actual receipt/check/files/browsers remain before acceptance.
+Legacy generation hash stays unknown; current validator is separate.
+No repeated four-hour preparation, relaxed policy, receipt rewrite or reset.
+Corrected preview/apply/check/GUI and live daily-ID/version proof remain open.
+New incoming-ID/version rules remain tracked; old mixedr04rows are not the
+new input population.
+
+### Earlier normal restoration and manifest diagnostics
+
+**Nov 15 normal intake restoration selected:** user clarifies that normal
+Various imports and rebase are different scopes. Restore the good-enough
+FULL/LEAN/FAST normal flow, with exclusive experiments under a separate
+package/entrypoint composing stable pieces. Spine RA2j owns the
+[replacement build and bounded proof contract](plans/2026-11-12-member-refinement-scope-test.md#nov-15-selected-normal-flow-and-experimental-composition-contract).
+No fourth matching engine, global normal-import regrouping or further
+directed retry. First acceptance is a reversible <=16-photo Sandbox
+mini-library. Bounded machine restoration now passes: selected preparation,
+shared matching, scoped audit/rivals/family, prepared-update recovery and
+actual viewers. Parent verifies172affected tests,22bound hashes, live29
+launcher check and loaded Gallery/Overview/Review images. Human identity/crop
+approval and full-library compatibility are separate gates. The
+[owning checkpoint](plans/2026-11-12-member-refinement-scope-test.md#current-checkpoint-corrective-implementation-and-original-input-recovery)
+records frozen revisions, the repaired staging-catalogue incident and verified
+empty-template attribution; original newline bytes were not captured.
+Supporting utilities are moved and independently checked; no eligible
+dormant payload was found. Legacy auto-merge controller is isolated in
+experiments; final53focused tests and live29check pass with unchanged normal
+bindings. Stable whole-library composition remains gated on the proposed
+source/reference/candidate manifest; legacy multi-pass rebase is not selected.
+User selects the
+[proposed full-rebase manifest](plans/2026-11-12-member-refinement-scope-test.md#nov-15-approved-full-rebase-manifest-scope):
+Production originals plus verified unique Sandbox arrivals, qualified frozen
+cores and non-core Gallery/Review/Various candidates, names/locks preserved.
+First manifest preview exposed a cache-boundary bug: duplicate imported
+contexts selected global legacy evidence rather than the absent normal
+Working cache. Parent verifies19focused/32quality tests and18bindings for
+cache/report-stage corrections. Source-ID/version reconciliation remains
+open: one JPEG/PNG pair has verified lineage, and raw Facebook names recover
+stable keys through existing normalization. Those proposal boundaries are
+corrected:22parent tests and a read-only8,759-row preview pass with zero scan
+issues,24missing IDs and317verified versions. Exact identical Production
+copies still block source qualification; proposal-only canonical/alias
+handling is under repair, with all bytes/decisions preserved. See the
+[diagnosis](plans/2026-11-12-member-refinement-scope-test.md#nov-15-full-manifest-cache-boundary-diagnosis).
+That correction passes25parent tests/help/bindings; read-onlyr03completes
+exit0with8,759rows/zero issues,1,634Production aliases,2,182cross-root
+aliases,719verified versions and1,319unresolved rows. No cores qualify.
+One copied-anchor/owner-provenance false conflict is under repair; other
+source conflicts remain open. No report apply, inference or current writer.
+Anchor correction passes26parent focused/32quality tests. Proposed
+report-onlyr04build and supported`--check` complete exit0,8,759rows retained;
+no source/cache/Gallery changes or inference. User then corrects version
+precedence: new same-ID incoming original wins, or its verified matching
+Sandbox prepared version; preserve older versions and explicit decisions.
+The named-Production-first choice is superseded before implementation.
+Retained worker implements/tests the
+[approved proposal-only version boundary](plans/2026-11-12-member-refinement-scope-test.md#nov-15-incoming-replacement-and-matching-prepared-version-precedence).
+User also requests the established incoming-ID generation for originals
+without valid IDs, preserving existing IDs and pre-processing source identity.
+No new scan/apply/inference/cleanup or final-ID approval.
+Next is corrected source/writer preflight and manifest verification for actual-ID review;
+no immediate reset/publication or new numerical policy is approved.
+After those gates, user permits a
+[checked clean Sandbox restart/fresh stable rebase](plans/2026-11-12-member-refinement-scope-test.md#nov-15-clean-sandbox-restart-after-core-restoration)
+to retire obsolete experimental outputs. Source/decision coverage and
+writer checks precede any cleanup; no current-area wipe is underway.
+Current Working read-only preview refuses3,268missing current measurements;
+no bulk inference or metadata promotion is selected. Current installed
+Gallery/Production stay unchanged; live29is only the copied-photo mini proof.
+
+### Earlier pause and corrective cycle
+
+**Nov 15 paused for basics review:** user asks to explain the existing
+process thoroughly and consider separating source preparation/944framing
+from likeness before further work. No active job; r03failed at average-link
+cap before result/capture/install, evidence preserved. No further repair/
+retry/pixel processing is selected pending agreement. The
+[primary feedback/command findings](plans/2026-11-12-member-refinement-scope-test.md#nov-15-basic-steps-and-image-only-separation-feedback)
+own exact requests, existing capability boundaries and proposed simplification.
+Both feedback originals remain in place; Production untouched.
+
+### Prior corrective cycle, superseded as immediate execution authority
+
+**Nov 14 corrective cycle approved and implementation active:** user accepts
+the [six-part repair contract](plans/2026-11-12-member-refinement-scope-test.md#nov-14-approved-corrective-rebase-contract)
+under spine RA2j. Worker `corrective-runtime-repair`
+(`4cf732a7-b6ea-420a-afb2-a579adfb513a`) owns bounded runtime/tests; the old
+worker is unavailable. Parent owns full-population comparisons and actual
+preview/check/install/quality/report/browser acceptance and publication.
+No current library writer. Iteration10 quality undo preview/apply/check
+exits0:3,290active/0quarantined, exact original content digest and scoped
+backup verified. Matching artifacts remain unchanged comparison evidence.
+The corrective destination coupling is now fixed/tested; historical recipes
+remain unchanged. Frozen runtime fingerprint
+`5666498219736e8c4bc540e773137125bdc97ac6dcfa5d34cf7dcad6f5b17a9b`.
+All three inventory previews pass. Original3290full matching preview045
+completed exit2 at reference-neighbourhood qualification cap, before
+run.json/capture or installation. Seven failure files/8,894,857bytes are
+hash-verified/preserved in its `failure-evidence-qualifier01`; no live writer.
+Exact bounded repair now passes82directed/4focused tests:952,574operations
+under unchanged2,000,000cap for the saved failing pool, no gate/witness change.
+Frozen fingerprint `8d7946dd48722c24528aff54e14b2c8ed39d85da904bd1139d619ae54d624467`;
+all13hashes matched at launch. Original-source045-r02preview/shell2426
+exited2 at64MiB immutable-boundary evidence limit; no result/capture/install.
+The [primary checkpoint](plans/2026-11-12-member-refinement-scope-test.md#current-checkpoint-corrective-implementation-and-original-input-recovery)
+owns the now-tested lossless representation repair and retained worker's
+one supervised045-r03execution assignment. Runtime refrozen; parent owns
+acceptance; startup log is confirmed and completion evidence pending. No install. Full
+comparisons/parity are not complete.
+No new extraction, blind threshold relaxation, Production or unrelated
+GUI/role work. Material policy conflicts still stop the affected slice.
+
+### Prior diagnosis and installed baseline
+
+**Nov 14 starting-core intent clarified:** the user's earlier0.60example
+only selected strong starting photos from existing Sisters/Angels; it was
+not intended to tighten unrelated grouping/admission/reference-growth/
+correction gates. The main reassessment contract now states that scope.
+This does not silently choose0.60instead of the later0.80preservation guidance.
+RA2j/RA2d retain comparison and gate selection; runtime/library unchanged.
+
+**Nov 14 human-review concern traced, read-only:** cached vectors/centering
+match the saved clean preparation; reference qualification and downstream
+gates explain the score changes.387cast Gallery photos have no qualified
+core score;88display below0.30.18low-score photos meet source incompatibility
+but none has a destination>=0.60. Existing source-owned members cannot enter
+new independent-owner creation. Tentative cast assignment still inherits
+the four-support cast/protection gate;150provisional photos belong to
+2-4member cohorts unable to supply four other reference witnesses.
+The [score/gate trace](plans/2026-11-12-member-refinement-scope-test.md#nov-14-score-weak-member-release-and-provisional-fragmentation-trace)
+owns exact evidence, feedback and recommended bounded adaptations.
+No runtime/threshold/library change or new run follows from this diagnosis.
+Historical check confirms ordinary cast core0.30, clean-rebase seed0.40,
+then directed qualification0.60plus four pair supporters; the preserved
+0.60discussion was an illustrative continuity/correction example, not
+explicit selection of that combined rule. Earlier average-linkage0.25
+grouping differs from current complete-link0.45owner formation. The
+[historical discussion record](plans/2026-11-12-member-refinement-scope-test.md#nov-14-historical-gate-check-and-discussion-boundary)
+owns evidence and pending gate decisions. Discussion precedes further changes.
 
 **Dominant-provisional10 installed and verified:** original3,290content tuples and
 1,034qualified/exported reference tuples match exactly.20additional intake
@@ -832,9 +1141,11 @@ The [execution spine](plans/2026-11-05-priority-reset.md#execution-spine)
 now owns the ordered LEAN -> trusted cast -> selections -> source fidelity
 -> generic Females -> character art milestones. Selected task IDs have
 actual source/destination transfer records; domain plans retain technical
-contracts and deferred work, not parallel active queues. One plan is active,
-21 holding, one proposed. Working instructions and generated queue follow
-that agreement; no whole plan is falsely completed or archived.
+contracts and deferred work, not parallel active queues. At that rollout,
+one plan was active, 21 holding and one proposed; these are historical
+counts, not the [current inventory](plans/README.md#plans).
+Working instructions and generated queue follow that agreement; no whole
+plan is falsely completed or archived.
 
 Documentation/working-agreement rollout and the requested Copilot
 efficiency assessment are pushed through `035221410`.

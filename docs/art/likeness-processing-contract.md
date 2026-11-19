@@ -9,6 +9,18 @@ additional shipped CLI contracts. Production remains unapproved.
 
 ## Latest precedence and ownership
 
+- Nov 15 clean-test scope is Production -> freshly verified Sandbox `Source`
+  -> clean Sandbox `Working`. Current experimental Working is not an input
+  overlay, reference population or source of automatic membership decisions.
+  Necessary unique originals/manual decisions and compact recovery evidence
+  must be accounted for separately before removing obsolete generated
+  contents; preservation does not admit them into the test. Production stays
+  read-only. Source is immutable for a run and must identify the exact current
+  Production snapshot, not an old snapshot merely validated successfully.
+  Incoming replacement/version/ID rules remain normal intake requirements;
+  they do not justify merging damaged Working output into a fresh rebase.
+  The [clean-start procedure and implementation boundary](likeness.md#clean-production-source-refresh-and-working-reset)
+  distinguish the required sequence from legacy reset/rebase commands.
 - Nov 8 approves individual association rather than whole-group cast Review
   ownership. Candidate groups remain provisional non-cast identities even
   when their normalized centroid resembles a cast; that resemblance remains

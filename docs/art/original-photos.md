@@ -9,15 +9,58 @@ deletion or folder moves, when a photo has catalogue decisions or retained sets.
 | Need | Entry point | Current boundary |
 | --- | --- | --- |
 | Inspect crop/erase candidates without changing sources | `bin\prepare-images.cmd` | Sandbox sidecars; v20 recommended sequence, no identity assignment |
-| Prepare immutable sandbox inputs, optionally stop, then match/install | `bin\sandbox-rebase.cmd` | Implemented retained-cast flow; real acceptance still pending |
-| Run the whole fresh sandbox rebase with live progress, timings and space | `bin\rebase-flow.cmd` | Preview/apply/check; optional inventories, required matching plan, install and checks; full backup/undo by default or explicit disposable sandbox/LEAN; resumes failed steps and preserves attempt logs/timings |
+| Start the selected clean Production rehearsal | `bin\sandbox-baseline.cmd --root WORKING --dry-run` | Guarded Production -> verified/refreshed Source -> clean Working, with explicit no-history reset. Preview, run-ID apply and baseline check; whole-library SIMPLE composition has separate acceptance |
+| Reassess the verified clean whole-library baseline | `bin\normal-rebase.cmd --root WORKING --profile lean --run-id RUN --dry-run` | Stable SIMPLE preparation/manifest preview, same-run apply and output check; no experimental merges/appearances. Reuse an active job and its preparation, not another reset |
+| Prepare immutable inputs through the legacy retained-cast flow | `bin\sandbox-rebase.cmd` | Existing historical flow, not the selected SIMPLE clean-start sequence |
+| Observe/resume a legacy sandbox rebase | `bin\rebase-flow.cmd` | Existing timing/recovery orchestration; not proof of strict Source refresh or the stable SIMPLE composition |
 | Maintain names/derivatives and refresh galleries without matching | `bin\people-gallery.cmd` | Preview/check/apply with backup and action-undo guards |
 | Rebuild only People viewers after exact recovery | `bin\people-gallery.cmd --reports-only` | Preview/check/apply; existing photos and maintained derivatives are not renamed, pruned or regenerated |
 | Change one photo or a recorded name deliberately | `bin\likeness-actions.cmd` | Validate/preview first; supported actions use backed-up transactions |
-| Ordinary incremental ingest | `bin\library.cmd` | Production writes paused by draft policy; upstream prepared-source cutover remains incomplete |
+| Ordinary incremental ingest | `bin\library.cmd` | FULL/LEAN/FAST with original-byte ID establishment, guarded genuine incoming replacements and recoverable prepared-claimant retirement. Updated ID/version behavior is fixture-tested; live proof/human review remain separate, and Production writes stay paused by draft policy |
+| Diagnose a combined Production/Working source inventory | `bin\rebase-manifest.cmd --run-id RUN --dry-run` | Existing hash-bound proposal diagnostic; combined rows are not the selected clean rebase input population. Does not refresh Source, reset, match or install |
 
-The [likeness guide](likeness.md#clean-sandbox-rebuild-versus-category-reclassification)
-owns the exact clean-start stop/resume/install sequence. The
+The [clean-start procedure](likeness.md#clean-production-source-refresh-and-working-reset)
+owns the selected Production -> verified Source -> clean Working boundary.
+Old Working may be discarded after exact preservation/disposition checks;
+its experimental photos, catalogue and prepared outputs are not automatically
+included in the new test. Reuse Source only after proving it matches the
+selected Production baseline; refresh it through verified staging otherwise.
+Normal incoming-ID/replacement behavior remains a separate flow and live
+acceptance gate; it does not make old experimental Working authoritative.
+
+`rebase-manifest.cmd --apply` writes only a new JSON/CSV review proposal under
+Sandbox Working `_reports\library\rebase-manifests\RUN`; it does not approve
+the proposed IDs or execute a rebase. Review the report and source/decision
+coverage before any later source, writer, or reset gate. The separately
+authorized `--measure-missing` pass uses existing local models in read-only mode
+and writes source-bound measurement evidence beside that proposal without
+changing the library cache or persisting alignment images. Cache evidence comes
+only from `tools.art.likeness.Cache` at Working's general-domain path (normally
+`Working\_likeness\general\cache.json`); an absent cache means no cached
+measurements, with no global-cache fallback. Working-catalogue anchors and
+action history are shown with their provenance and content bindings; affected
+rows remain held for review, and experimental membership flags are never seed
+authority. Recoverable per-image I/O/OpenCV/alignment failures remain in the
+measurement evidence; they mark the report and receipt incomplete, return a
+nonzero exit, and skip core qualification. Unexpected errors remain explicit.
+`--check` verifies report bindings and rehashes the original source bytes. The
+ordinary `library.cmd` incremental flow remains unchanged and bounded.
+The proposal records each original filename and the existing
+`originals.standard_name` normalization used to derive a supported stable photo
+ID; a valid embedded ID is retained, unsupported custom names remain unresolved,
+and no source is renamed. A Sandbox photo with different current bytes is
+classified as a retained/prepared version only when shared retained-preparation
+verification links its current hash and photo ID to the unique Production
+source hash. Its manifest, original, selected version and artifact bindings are
+shown in the proposal; missing, ambiguous, stale or mismatched lineage remains
+held and cannot become a new arrival or identity vote.
+
+The [likeness guide](likeness.md#clean-production-source-refresh-and-working-reset)
+owns the selected clean-start sequence; its
+[SIMPLE runner procedure](likeness.md#stable-whole-library-simple-preview-apply-and-check)
+owns prepared preview, same-run apply, check and recovery.
+The [legacy stop/resume/install sequence](likeness.md#clean-sandbox-rebuild-versus-category-reclassification)
+does not authorize the next SIMPLE trial. The
 [long-run instructions](likeness.md#running-and-observing-a-long-rebase)
 explain output capture, progress versus completion, checkpoint recovery and
 the receipt checks needed before matching. The
@@ -1447,7 +1490,7 @@ required. Threshold changes belong in the versioned policy, not `--min`.
 | 2 `duplicates` | the same picture twice (any folder, any name) | the extra copy: `_archive\<folder>\gallery_duplicates` |
 | 3 `likeness crop` | legacy face-guided app-bar/other-subject/background crop for unprepared photos; verified prepared natives skip it; it cannot guarantee limbs are kept | the uncropped photo: `_archive\<folder>\gallery_uncropped` (`likeness crop --undo` puts the last batch back) |
 | 3 `likeness junk` | a photo that cannot feed a Prime (no usable face, a second person that cannot be cut away, bars over her head) goes to `_junk`. A prospect's or hero's photo that only needs clean-up goes to her `review` folder instead | `_junk\<side>`, her `review` |
-| 4 `likeness reconcile` | shared incoming/Review proposal with frozen cores, tier permissions, preserved small groups and explicit holds; approved apply revalidates after a verified backup | `_reports\runs\reconcile_*.json`, full snapshot; `likeness reconcile --undo JOURNAL --apply` |
+| Optional `likeness-experiments legacy-reconcile` (`likeness reconcile` compatibility) | experimental incoming/Review proposal with frozen cores, tier permissions, preserved small groups and explicit holds; not part of normal intake; approved apply revalidates after a verified backup | `_reports\runs\reconcile_*.json`, full snapshot; `likeness reconcile --undo JOURNAL --apply` |
 | 3 `likeness-artists crop`, `junk` | the same legacy crop and later Junk backstop, separately scoped to Artists; upstream preparation cutover remains pending | artist-local crop/move logs and retained uncropped originals |
 | 5 `likeness-artists group --singles` | the artists' own galleries are emptied the same way, never across artists: into one of that artist's people, or a folder of their own. Only photos with no usable face, a second person or the app's bars stay | `likeness-artists undo` |
 | 6 `likeness retire-empty` | prospect folders with no original photos in either `gallery` or `review` are moved intact to `_retired`; folders with review photos and the `Various` pool are left alone | `_retired` |

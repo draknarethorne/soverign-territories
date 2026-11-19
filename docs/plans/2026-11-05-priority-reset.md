@@ -2,7 +2,27 @@
 
 **Status:** active (execution spine: FAST likeness, LEAN/FULL acceptance, then character art)
 
-**Queue focus:** RA2j, RA2l, RA2m, RA2b, RA2d, RA2, E19, T29, T30
+**Queue focus:** RA2d, RA2j, T29, T30, RA2o
+
+**Nov19 installed closeout:** RA2j's bounded SIMPLE foundation is installed
+on existing Sandbox Working, LEAN `simple-rebase-20261118-13`.
+The [verified closeout](2026-11-16-simple-review-and-tuning.md#nov19-installed-run13-closeout)
+records apply/check/repeat exit0, actual movement conservation and installed
+Gallery/Overview/Review, retained-history/detail and applied recap/audit proof.
+No writer remains. There are 123 cast Gallery/271 cast Review admissions,
+no existing cast Gallery departures, and 733 publication rows (686 changed
+paths/47 same-path updates). Keep run09/baseline02/preparation/failure evidence
+intact; no reset, new intake, experiments or Production write.
+The [daily recap](../recap/2026-11-18-simple-foundation.md) records the measured
+debugging chain, 53/53 mutations, 1,048 library/290 remaining tests and the
+140-test staging/87-test report fixes. The first installed check caught
+report ownership, repaired only by separate applied outputs and restoration
+of three exact sealed preview files; native/receipt/journal bindings remain
+unchanged. Grouped commits/push follow final hygiene and documentation.
+Next is RA2d human identity/crop review and the explicitly deferred Various/
+core diagnosis, not another automatic run. Broader RA2j named-folder and
+T29/T30 performance obligations remain owned below; this does not activate
+historical experiments or complete their acceptance.
 
 ## Execution spine
 
@@ -13,7 +33,52 @@ checklist. This replaces the earlier navigation-only consolidation.
 Read this section and the current milestone before choosing work; dated
 Q&A and inventories below are context, not competing schedules.
 
+**Nov 16 focused continuation:** the
+[SIMPLE review, tuning and housekeeping contract](2026-11-16-simple-review-and-tuning.md)
+selects three concrete activities without reviving experimental controllers.
+RA2j's catalogue-boundary repair passes71targeted tests. Run08 later failed
+during Review and rolled back. The
+[held-alias viewer repair](../recap/2026-11-16-simple-rebase-recap.md#apply08-review-rollback-and-repair)
+passes140affected tests and real-byte proof without relaxing crop guards.
+**Nov17 closeout:** run09 `simple-rebase-20261117-09` apply/check/repeat
+exited0 under the proved naming-only exception; no writer remains.
+Saved-run recap/audit and bounded canonical-reader/shared-proof/provenance
+reconnection are delivered, with actual report browser verification and
+small-sample measurements in the
+[timed evidence](../recap/2026-11-16-simple-rebase-recap.md#nov-17-completion-and-report-reconnection).
+Do not rerun preparation/publication or rewrite old receipt bindings.
+RA2j retains broader installed-viewer acceptance and named-folder follow-on;
+T29/T30 retain whole-operation generation/no-op/resource comparisons.
+**Selected Nov17at15:33CST, now verified:** the
+[timed reports-only baseline](2026-11-16-simple-review-and-tuning.md#selected-timed-viewer-baseline-before-configuration-changes)
+on unchanged Working completed cache-only guard tests, preview, timed
+generation/repeat, independent check and refreshed recap/audit/browser
+acceptance. Run `simple-viewer-baseline-20261117-02` is complete;
+no reset, matching, preparation, placement, policy or Production changes.
+The [timed closeout](../recap/2026-11-16-simple-rebase-recap.md#nov-17-timed-reports-only-baseline)
+records slow generation/repeat and old-versus-maintained report-context
+differences. Repeat is stable; future policy comparisons must use the same
+maintained coordinator or prove context parity, not mix the two snapshots.
+RA2j/T29 retain context parity and further measured optimization residuals.
+RA2d owns the user's review and
+selected rule tuning; RA2o owns bounded plan housekeeping once the contract
+and run handoff are stable. Exact values are not approved, and commit/push
+remains conditional on successful review readiness. Earlier unselected
+spine tasks remain deferred, not completed or deleted.
+
 ### Nov 9 likeness reassessment increments
+
+**Nov18 next-step selection:** RA2d's incoming configuration comparison now
+includes the [full hierarchy entry review](2026-11-16-simple-review-and-tuning.md#nov-18-full-hierarchy-entry-review-before-final-tuning)
+before final tuning; earlier cast-only/defer-Models sequencing is superseded.
+Do not make a new baseline, performance
+project or Various-core investigation its prerequisite. The
+[Various retention and sequencing contract](2026-11-16-simple-review-and-tuning.md#nov-18-sequencing-various-retention-analysis-after-the-next-run)
+requires before/after tracking of the anonymous Various cohort in next-run
+acceptance, then deferred diagnosis of those still unassigned. The user's
+suspected missed matches/processing issue is unresolved, not dismissed by
+an expected absent pool core or accepted as a proved defect. Numerical/
+protection/apply gates remain unchanged; named Various intake stays separate.
 
 **Nov 11 evening GUI continuation:** no further Q&A is required before
 implementing a fictional narrative relationship editor. The user selects
@@ -503,6 +568,92 @@ unresolved human identity acceptance remains open.
   character answers and reference LOO remain fixtures/training diagnostics,
   not held-out accuracy. Keep secondary-cue cost/availability and unresolved
   lookalikes visible; do not assume face-only summaries will suffice.
+  **Nov18 current pre-run gate:** finalize the
+  [foundational SIMPLE corrective contract](2026-11-16-simple-review-and-tuning.md#next-simple-run-foundational-corrective-contract),
+  which consolidates the dated gate/upward-recovery discussion and preserved
+  raw sources below it. Upward recovery is the existing rebase outcome, not
+  optional work after a threshold-only run. Implement the selected member
+  gates, concrete canonical competition, bounded reference refresh/
+  reconsideration, full entry matrix and support separate from protection.
+  Eligible lower Gallery/core members must participate; real different
+  identities remain rivals. Preserve strong cast continuity, unresolved
+  owners, true locks/history and daily intake's bounded source scope.
+  RA2j then implements only the selected shared normal-path mechanisms,
+  proves the listed recovery/negative/reference/lock fixtures, and produces
+  cached real-case preview evidence before any expensive run authorization.
+  No new model, whole experimental lifecycle, unlimited passes, blanket
+  merge or manual sorting of every fragment.
+  **Nov18 implementation start:** the user authorizes foundational code
+  changes; proposed entry matrix, two rounds/one reference refresh and
+  two-reference cast entry are selected targets, not installed behavior.
+  The [first diagnostic slice](2026-11-16-simple-review-and-tuning.md#first-implemented-slice-diagnostic-fragment-qualification)
+  is implemented: conservative direct fragment proposals in SIMPLE receipt
+  evidence, no rival suppression or moves. All 90 selected regressions and an
+  isolated empty launcher preview pass.
+  **Nov18 15:19 clarification resolved:** the user accepts per-photo Gallery
+  admission when the selected gates pass, without an extra 0.65 whole-group,
+  source-support-count or all-core-members-pass veto. The diagnostic remains
+  evidence only, not a routing prerequisite. Selected ordering:
+  existing recovery first, Various on the same initial reference snapshot
+  next; independently admitted, reference-eligible photos from both sources
+  may join the one boundary and support round two. Keep genuine rivals,
+  residual members, locks and one final publication. No circular/Review
+  recruitment. RA2j may continue implementation without another approval
+  of the stricter diagnostic; fixture/cached proof still precedes a run.
+  **Nov18 rival-bypass question:** cleanup remains primary, not deferred to
+  experiments. The [rival-handling invariant](2026-11-16-simple-review-and-tuning.md#nov18-rival-bypass-question-remove-artificial-competition-retain-real-ambiguity)
+  requires provisional independently supported same-canonical claims before
+  the final distinct-identity margin, not a raw folder-margin prerequisite
+  that leaves fragments mutually blocked. Recommend retaining real margins;
+  blanket bypass is not selected/authorized. RA2j proves mutual-fragment
+  recovery, genuine cast near-tie holds and mixed-source residuals before
+  claiming this works or authorizing a run.
+  **Nov18 15:42 selection supersedes that narrower rival recommendation:**
+  use [cast-only receiving competition and provisional ambiguity Review](2026-11-16-simple-review-and-tuning.md#nov18-selected-cast-priority-and-provisional-ambiguity-review).
+  Lower-category scores cannot veto Sister/Angel entry, without first proving
+  lower identity equivalence. Retain cast-versus-cast Gallery0.10lead.
+  Eligible cast near-ties go into the best cast identity's provisional Review
+  at0.35floor even below the earlier0.05Review lead, with alternatives and
+  no reference/recruitment authority under either owner. Do not form another
+  fragment. Preserve locks/negative evidence, one placement and receipt
+  bindings; preferred-tier extension to Models is future selection.
+  RA2j proves these explicit tier/ambiguity/source-vote cases before a run.
+  **Nov18 16:23 selection and implementation closeout:** the
+  [approved Drakness/Nyxene optimistic exception](2026-11-16-simple-review-and-tuning.md#nov18-optimistic-gallery-exception-for-approved-close-pairs)
+  permits otherwise qualifying Gallery entry only when every blocking cast
+  rival is an approved pair. Persist unconfirmed/non-core/unprotected status
+  and visible rival warning; weak/unrelated ambiguity remains Review.
+  Shared normal routing, eligible lower Gallery/core recovery, one qualified
+  boundary/two rounds, directional receiving locks, retained-native transfer
+  and membership safeguards are now implemented. **293 focused tests pass**;
+  synthetic Gallery/browser and Review/rendered-page evidence is recorded in
+  the [fixture closeout](2026-11-16-simple-review-and-tuning.md#implemented-foundation-fixture-proof-not-a-library-run).
+  Repository defaults are updated as draft, not installed or human-accepted.
+  Cached real-case evidence remains the next RA2j gate, followed by separately
+  authorized preview/apply and actual viewer acceptance. Preserve baseline
+  receipts; no library writer, Production mutation, commit or push.
+  Keep Various before/after tracking in next-run acceptance and deeper
+  residual core-label diagnosis afterward; missing pool core alone proves
+  neither skipped scoring nor valid holds. No reset/run/apply selected.
+  **Post-SIMPLE review selected, after RA2j installed/browser checks:** compare
+  the [latest protected-member/workflow-selection intent](2026-11-12-member-refinement-scope-test.md#nov-16-post-apply-protected-member-and-workflow-selection-review)
+  with earlier agreed rules and actual guards. Low-scoring existing Sister/
+  Angel photos should be eligible for qualified regrouping even when workflow-
+  selected; distinguish genuine locks/core-reference eligibility from workflow
+  selection, with safe reference/name updates. Current run07 does not provide
+  rival reassignment of existing Gallery members. Reuse its cases/evidence;
+  no policy/runtime change during apply and no blanket policy acceptance from
+  successful installation. User approval precedes any selected rule change.
+  Include [incoming Angel/Sister admission and cast-like-group disposition](2026-11-12-member-refinement-scope-test.md#nov-16-incoming-angelsister-admission-gates):
+  separate protection against removal from permission to receive qualified
+  incoming photos. Reuse run07's strong recorded group matches; group scores
+  alone do not approve individual admission or a threshold change.
+  **Nov 16 focused review contract:** the
+  [new concise plan](2026-11-16-simple-review-and-tuning.md#2-human-review-then-bounded-tuning)
+  carries the category hierarchy, Potential fragmentation/creation question,
+  incoming-versus-outgoing permissions and named review cases forward from
+  the older scope-test record. Exact thresholds and individual outcomes
+  remain human-gated; the rest of the experimental backlog stays deferred.
   **Nov 10 general review:** the
   [24 returned answers and mixed-reference clarification](2026-11-09-likeness-process-reassessment.md#nov-10-completed-general-review-and-mixed-reference-clarification)
   validate as 22 support / two reject. Support does not certify all target
@@ -530,6 +681,21 @@ unresolved human identity acceptance remains open.
   identity gates. Consume these as development fixtures, not independent
   accuracy or integration approval; next is evaluation/rule disposition
   and lifecycle acceptance, not another confirmation packet for these splits.
+- [ ] **P1 ai** RA2o Reconciling current plans after the focused SIMPLE
+  review/tuning contract is formalized and the run evidence/handoff is stable.
+  Source: the [Nov 16 three-activity request](2026-11-16-simple-review-and-tuning.md#primary-user-source).
+  Preserve RA2j publication and RA2d human/rule ownership; this is document
+  housekeeping, not activation of experiments or a new numerical policy.
+  Classify delivered/verified, unverified, selected, holding/experimental
+  and superseded scope, preserving task IDs, raw sources and residual owners.
+  Archive only wholly completed/superseded plans after explicit dispositions,
+  with physical moves, indexes, incoming links and generated queue repaired
+  together. Do not bulk-clear feedback, tmp notes, plans or recovery evidence.
+  **Entry/exit:** follow the
+  [bounded housekeeping contract](2026-11-16-simple-review-and-tuning.md#3-documentation-housekeeping-and-next-session-publication);
+  current navigation repairs are not completion of the wider pass.
+  Conditional commit/push requires successful review readiness and the
+  applicable validation; failed apply07 does not satisfy that gate.
 - [x] **P1 ai** RA2n Auditing every reassessment Q&A/phase obligation against
   the maintained execution path and saved clean rehearsal, including
   Draknora target selection, reference/core/placement separation, new
@@ -553,8 +719,221 @@ unresolved human identity acceptance remains open.
   remain reusable. No runtime/policy/library changes or install performed.
   Ordered repair exits transfer to reopened RA2j below; broader deferred
   readiness/secondary cues/daily lifecycle/GUI/roles are not activated.
-- [ ] **P1 ai** RA2j Integrating the agreed directed rules into the maintained
-  `group_lifecycle` rebase path, not another shadow-only engine.
+- [ ] **P1 ai** RA2j Restoring the normal FULL/LEAN/FAST intake flow and
+  separating exclusive experimental execution.
+  **Nov19 bounded SIMPLE delivery:** run13 apply/check/repeat and installed
+  movement/viewer proof pass the
+  [shared closeout](2026-11-16-simple-review-and-tuning.md#nov19-installed-run13-closeout).
+  No writer remains. Do not rerun publication for another task's evidence.
+  Named-folder/dormant-code obligations below and RA2d human acceptance
+  remain explicit; this parent task is not wholly complete.
+  **Nov17 feedback implementation selection:** run09 apply/check/repeat have
+  exited0 and no writer remains. The user now selects recap/audit restoration
+  and bounded T29/T30 performance reconnection before policy experiments.
+  Follow the [selected coverage and run separation](2026-11-16-simple-review-and-tuning.md#nov-17-selected-recap-audit-and-performance-reconnection).
+  **Bounded delivery:** saved-run report preview/apply/check and actual recap/
+  audit browser navigation/filter/image checks pass; canonical readers and
+  shared verification/provenance are reconnected with output-parity,
+  failure/tamper and independent-seal tests. Full task remains open for its
+  explicitly retained installed-viewer, named-folder and human gates.
+  Preserve run09 receipts and placements; do not rerun intake to obtain a
+  recap. Parent owns saved-run adapter/audit/navigation and acceptance; one
+  bounded companion owns reader/proof/provenance reuse with focused tests.
+  No concurrent library writers, automatic audit moves, threshold changes,
+  appearance regrouping or whole-library performance benchmark.
+  **Nov17 retry disposition:** consume the focused contract's proved09
+  naming-only exception and continue the saved preview unchanged. Empty
+  rollback-directory tracking is retained as a bounded recovery follow-up,
+  not permission to delete user/source folders or restart the whole flow.
+  **Nov 16 performance carry-forward:** the
+  [SIMPLE integration inventory](2026-11-16-simple-review-and-tuning.md#simple-performance-carry-forward-retained-pieces-versus-missing-integration)
+  identifies forced serial preparation and missing cross-viewer proof/index
+  sharing while distinguishing retained optimizations from worker prototypes.
+  Nov17's explicit feedback selection delivered the bounded SIMPLE viewer/
+  read-reuse slice without another run; remaining acceptance is still open,
+  not permission to activate the whole historical package.
+  Preserve normal outcomes and integrity/recovery gates. Apply the focused
+  contract's practical-value/complexity check before expanding that slice.
+  **Nov 16 named incoming follow-on:** after current retry machine/browser
+  acceptance and the selected bounded performance slice, deliver the
+  [selected named-folder identity contract](2026-11-16-simple-review-and-tuning.md#selected-contract-named-incoming-folders-establish-protected-identities).
+  Preserve supplied names/group membership as protected identities with
+  independently qualified reference cores and ordinary category placement.
+  This bounded discovery/registration extension does not alter the live retry,
+  choose new thresholds or activate another experimental matcher.
+  **Nov 15 replacement build scope:** the
+  [selected normal-flow contract](2026-11-12-member-refinement-scope-test.md#nov-15-selected-normal-flow-and-experimental-composition-contract)
+  supersedes further directed cap repairs as immediate execution. Reuse
+  existing stable pieces; ordinary small imports do not reset/reprocess the
+  library or run global merges/appearances. Experiments compose those pieces
+  behind their own package/entrypoint, with explicit targeted extra steps.
+  First exit is focused tests and a recoverable <=16-photo mini-library proof
+  under Sandbox Working; current installed Gallery/Production remain
+  untouched. No models/downloads/full rebase selected. Parent owns acceptance
+  and one runtime worker owns code/launchers/tests. Earlier directed
+  obligations/results below remain deferred experimental evidence, not
+  implemented merely by this transfer. RA2d retains numerical/human gates.
+  **Bounded machine exit verified:** selected normal pipeline, prepared-owner
+  history/recovery and actual viewers pass the
+  [final mini-proof closeout](2026-11-12-member-refinement-scope-test.md#current-checkpoint-corrective-implementation-and-original-input-recovery).
+  Parent verifies172affected tests,22bound hashes, live29check and7/7/13
+  loaded Gallery/Overview/Review images. Runtime is frozen; next selected
+  slice is utilities/dormant organization below, not another directed retry.
+  Human/full-library gates and the checked fresh baseline remain open;
+  RA2j is not wholly complete.
+  **Dormant-code follow-on, not an interruption:** after active paths and
+  normal proof stabilize, parent audits genuinely unused/superseded code
+  for `tools/art/likeness_archive` under the
+  [preservation/reference contract](2026-11-12-member-refinement-scope-test.md#nov-15-dormant-code-archive-without-interrupting-restoration).
+  Supported experiments stay experimental, not archived; required recovery/
+  receipt readers stay active. Preserve history/dirty content, repair
+  references/inventory and recheck affected profiles. No deletion or photo
+  source/feedback pruning.
+  **Active supporting utilities:** classify standalone established
+  diagnostics/inspection/maintenance into `tools/art/likeness_utils` under
+  the [four-role organization contract](2026-11-12-member-refinement-scope-test.md#nov-15-active-support-utilities-and-complete-work-boundary).
+  Core primitives remain shared; unproven diagnostics remain experimental.
+  This follow-on does not pause profile restoration. Final checks cover
+  both utility and dormant moves plus normal/experimental entrypoints;
+  all selected deliverables remain open until verified.
+  **Organization exit verified:** utilities relocated, legacy reconciliation
+  controller isolated in experiments, no eligible dormant payload.
+  Parent verifies final53focused tests,23normal/controller hashes and live29
+  check. Next selected implementation is stable whole-library composition
+  from accepted normal primitives; legacy repeated refinement/admission
+  cannot be used as the fresh acceptance path. No new numerical policy.
+  **Current clean-restart entry gate:** the
+  [latest Production/Source/Working clarification](2026-11-12-member-refinement-scope-test.md#clean-rebase-clarification-production-source-and-disposable-working)
+  supersedes the merged old-Working manifest as baseline authority.
+  Verify/reuse Source if it matches selected current Production; refresh it
+  otherwise, then rebuild clean Working with no experimental carry-forward.
+  User permits discarding contaminated test outputs, even rebuilding more
+  Sandbox state if necessary, after exact source/recovery/writer checks.
+  The [runbook](../art/likeness.md#clean-production-source-refresh-and-working-reset)
+  distinguishes this from existing `sandbox-reset --full`, which does not
+  refresh Source and does preserve unique Working photos.
+  Guarded strict Source/reset and stable whole-library composition remain
+  implementation gates; no reset has occurred. Daily incoming-ID/version
+  requirements remain tracked here separately, not silently canceled.
+  Paused worker withdrew only unfinished manifest-ID changes; retained
+  incoming-selector extraction passes40combined manifest/duplicate tests.
+  **Overnight execution now authorized:** the user delegates clear documented
+  decisions and permits discarding all old Working history, including a
+  complete fresh intake/rebase through the morning. The
+  [exact scope and viewer acceptance](2026-11-12-member-refinement-scope-test.md#overnight-clean-simple-execution-and-viewer-acceptance)
+  also requires actual files/manifests and Gallery/Overview/Review proof,
+  repairing stable viewer assumptions about missing experimental artifacts.
+  Parent owns guarded baseline/reset and runtime/browser checks; retained
+  worker owns stable composition code/tests only. Baseline guard now passes
+  45baseline/reset/quality tests. Final real preview, apply and standalone
+  check now exit0for`simple-clean-20261116-01`: fresh Source11,048managed
+  files/5,496,847,211bytes,5,469primary physical image copies/3,465distinct
+  primary byte hashes. Old Working history removed; no reset retry needed.
+  Stable composer is frozen after219parent shared-consumer tests and50
+  latest composer/import/engine tests pass, including local-only loading.
+  Fresh LEAN `simple-rebase-20261116-01` completed3298preparation rows, then
+  preview exited1 on `category has no likeness policy: Various`, after
+  15,708.5907544seconds. No assignments applied; former processes exited.
+  Original producer/config/log/manifest evidence is hash-preserved in the
+  sibling failure-01 report directory. Composer/reuse/provenance and daily
+  incoming-ID/version slices are implemented/frozen; parent236consolidated
+  tests pass and read-only incoming review finds no significant issues.
+  Preview02 reused exact selected preparation and exited0 in690.709seconds,
+  but actual audit finds all1158candidate vectors invalid and zero
+  assignments/clusters. No apply; complete producer/preview evidence is
+  preserved before narrow actual-vector diagnosis. Candidate centering bug
+  now fixed in composer c1bed6c9...,100focused tests pass, three actual
+  prepared samples have finite128-element vectors. User subsequently requests
+  safe reboot pause; ignored `tmp/rebase_simple_finish.md` owns exact resume
+  details. Both workers idle, no task jobs; no preview03 or apply started.
+  At pause, daily proof was initialized only under Working `_sandbox-state`.
+  **User resumed Nov16at09:22CST:** entry code/preparation/baseline/proof
+  bindings match; no task writer at entry. Post-fix consumer tests and existing
+  daily proof resume first. Parent238consumer tests and93after aligned-evidence
+  Windows path repair pass. Actual FULL/LEAN/FAST cycles and genuine external-ID
+  distinct-byte update pass/check/undo; incoming Various prepared-claim live
+  proof remains an explicit RA2j residual, not silently closed. Preview03 has
+  real assignments and cast continuity but is withheld for destination-ID
+  collisions. Canonical source-ID/collision repair passes147tests; preview05
+  passed matching/cast/ID audit but ordinary publication would reject15existing
+  exact-alias targets. Evidence preserved; explicit source/target/full-hash
+  coalescence and two-path recovery pass142consumer tests. Preview06 exits0;
+  actual matching/cast/conservation/alias audit passes. Same-run06 Sandbox
+  apply subsequently fails safely before staging/journal/publication:
+  2Drakness Gallery->Review removals violate protected policy. No relaxation;
+  planner now retains protected/unsplittable Gallery with recommendation-only
+  evidence and preflights publication permissions.70regressions pass.
+  Preview07 and actual outcome/permission/alias audit pass. Same-run07 Sandbox
+  apply has stopped, native exit1 at21:08:05Z after11785.94s. Staging completed
+  its catalogue but publication failed when the repository catalogue fallback
+  was made relative to Working; no publication journal or applied receipt.
+  Fifteen source/metrics/producer files are byte/hash-preserved; repository
+  catalogue binding is unchanged. The
+  [focused next-entry contract](2026-11-16-simple-review-and-tuning.md#current-blocker-failed-publication-not-a-finished-installation)
+  owns reproduction/repair and supported reuse gates. No task writer remains.
+  Do not reset, hand-publish or pretend final viewers are available.
+  Separate installed check/repeat/files/browser acceptance remains open.
+  Legacy generation hash remains explicitly unknown, not the current hash.
+  No four-hour intake repeat, policy relaxation, duplicate writer or reset.
+  See the same coverage record for exact manifest/receipt/code hashes,
+  baseline producer preservation and deliberate old-report dispositions.
+  No Production writes, duplicate writers, new thresholds, experimental
+  extras or fabricated human identity/crop acceptance.
+  **Earlier manifest entry decision (superseded baseline):** user must approve the frozen reference
+  versus existing Gallery/Review/Various candidate scope before the
+  content-bound full-rebase manifest. The composition worker stopped safely
+  without a wrapper, inventory, inference or reset; prior tests do not choose
+  this identity-outcome policy. Keep RA2j open at this explicit gate.
+  **Manifest scope now selected:** user chooses
+  [the proposed full-manifest build](2026-11-12-member-refinement-scope-test.md#nov-15-approved-full-rebase-manifest-scope).
+  Verify sources/writers and produce hash-bound qualified reference/
+  non-core Gallery/Review/Various roles for review, preserving names/locks.
+  Actual IDs still require acceptance before reset/publication; no new gates.
+  **First manifest preview not accepted:** parent reproduces a duplicate
+  domain-context import selecting the global legacy cache instead of the
+  absent normal Working cache. Parent verifies19focused/32quality tests
+  for cache/report-stage repairs and18implementation bindings.
+  One same-ID JPEG/PNG pair has verified lineage, and raw Facebook names
+  recover existing stable keys through normal naming. Retained worker
+  fixes these proposal boundaries; parent22tests and corrected read-only
+  preview pass with8,759rows/zero scan issues,24missing IDs and317verified
+  versions. Exact same-ID/byte Production copies still falsely block
+  lineage; proposal-only canonical/alias handling is under repair using
+  existing duplicate policy. Full conservation/role approval remains open.
+  No report apply or inference. See the
+  [diagnosis and remaining source/ID gates](2026-11-12-member-refinement-scope-test.md#nov-15-full-manifest-cache-boundary-diagnosis).
+  **Exact-alias follow-up:**25parent tests/help/bindings pass; corrected
+  read-onlyr03preview completes exit0:8,759rows/zero issues,1,634Production
+  aliases,2,182cross-root aliases,719versions,1,319unresolved rows. No cores.
+  Parent identifies copied anchor patterns being mistaken for multiple
+  intended owners; that provenance fix is under repair. No report apply/
+  inference; other conflicts and source/role acceptance remain open.
+  **Proposed report build:** anchor provenance now passes26parent focused/
+  32quality tests. Report-onlyr04`--apply` completes exit0in135.14seconds;
+  supported`--check` exits0in16.133seconds,8,759rows retained. No inference.
+  **Version-policy decision:** user supersedes the briefly selected
+  named-Production-first rule before implementation. New incoming same-ID
+  bytes win; a verified Sandbox prepared version of that selected incoming
+  source is also eligible, not a derivative of an older source. Preserve all
+  previous versions/decisions; do not infer chronology or override locks.
+  The paused proposal-only boundary is preserved under the
+  [exact decision/coverage record](2026-11-12-member-refinement-scope-test.md#nov-15-incoming-replacement-and-matching-prepared-version-precedence).
+  User also selects restoring established stable-ID generation for ID-less
+  incoming originals, before processing, without replacing valid IDs or
+  inventing identities from prepared derivative bytes.
+  Version precedence/ID restoration is not implemented by the tested
+  selector extraction. No inference/cleanup or final-ID approval.
+  **Fresh Sandbox acceptance permitted after these gates:** the user allows
+  removal of obsolete experimental outputs and a clean stable rebase under
+  the [source/writer/checked-reset contract](2026-11-12-member-refinement-scope-test.md#nov-15-clean-sandbox-restart-after-core-restoration).
+  Parent must first prove unique raw inputs/approved decisions are preserved
+  and writers stopped, and verify the rebase composition uses the accepted
+  single-check flow rather than legacy repeated refinement/admission.
+  No current-area wipe during implementation, broad/
+  root recursive deletion, source pruning, external cleanup or experimental
+  extras. Validate fresh outputs in actual Working with local models only;
+  visual identity acceptance remains human-gated.
+  **Historical directed scope and evidence (not current scheduling):**
   **Nov 13 16:49-clarification continuation:** user explicitly requests
   continued automated repairs/audits, including appearance/family outcomes,
   and authorizes incremental verified commit/push. Various is transient
@@ -582,6 +961,53 @@ unresolved human identity acceptance remains open.
   are in the
   [pinned resume](../recap/2026-11-11-1141-recap.md#current-resume-nov-13-full-reassessment-audit).
   No RA2j/human acceptance closure or Production publication inferred.
+  **Nov 14 human-review diagnosis:** the
+  [score/gate trace](2026-11-12-member-refinement-scope-test.md#nov-14-score-weak-member-release-and-provisional-fragmentation-trace)
+  records unchanged cached measurements, cast reference starvation,
+  display-versus-frozen scoring, source-owned residual-creation exclusion
+  and tentative cast/protection support coupling. RA2j owns proposed
+  repairs; RA2d owns changed gate acceptance. This read-only trace selects
+  no new install, score-threshold change or automatic release policy.
+  **Nov 14 corrective-cycle approval supersedes the read-only stop:** user
+  accepts the six-part repair contract in the
+  [owning source/evidence plan](2026-11-12-member-refinement-scope-test.md#nov-14-approved-corrective-rebase-contract).
+  RA2j now executes separated starting-cast/reference qualification,
+  tentative cast assignment, source-incompatible coherent regrouping,
+  new-identity clustering and reader provenance fixes, with focused tests
+  and same-input numerical comparisons. Then select justified variants and
+  run a new original-preparation Sandbox preview/check/install/quality/
+  reports/browser cycle. Material policy conflicts still stop that slice;
+  no Production or new model/extraction scope. Preserve iteration10 and
+  exact guarded recovery. No closure from reducing provisional counts alone.
+  Guarded iteration10 quality undo preview/apply/check now exits0,
+  restoring3,290active/0quarantined with exact tuple digest; matching artifacts
+  remain the old comparison baseline. First implementation handoff still
+  inherited absolute destination0.60/margin0.30correction gates; that gap is
+  now fixed/tested and runtime frozen. All three inventories pass; first
+  original3290full045matching preview completed exit2 at bounded reference
+  qualification cap before run.json/capture/install. Seven failure files/
+  8,894,857bytes hash-preserved in its `failure-evidence-qualifier01`;
+  original active population unchanged. Exact producer/tests reopened for
+  redundant-work repair, no cap/gate weakening. Exact repair now passes82
+  directed/4focused tests;952,574operations below unchanged2,000,000cap.
+  Runtime/all13hashes matched at original-source045-r02launch. Shell2426
+  exited2at64MiB immutable-boundary size before output/capture/install.
+  [Primary checkpoint](2026-11-12-member-refinement-scope-test.md#current-checkpoint-corrective-implementation-and-original-input-recovery)
+  owns preservedr02evidence and now-tested lossless representation repair.
+  Runtime refrozen; retained worker is assigned one supervised045-r03preview
+  through exit/parent notification, parent owns acceptance. Confirm actual
+  launch/result before050/060; no install. Cap/gates/witnesses stay intact.
+  **Nov 15 feedback pause supersedes further continuation:** r03completed
+  exit2at average-link cap; sevenfiles/8,900,977bytes hash-preserved, no
+  result/capture/install. User requests thorough basic-step explanation and
+  image-only/in-place/944separation feasibility before proceeding. No job or
+  cap repair/retry/pixel processing selected. RA2j owns read-only explanation
+  and [primary exact sources/coverage](2026-11-12-member-refinement-scope-test.md#nov-15-basic-steps-and-image-only-separation-feedback);
+  RA2d agreement gates revised scope. Appearance/family/iterative layers may
+  be proposed for deferral, not silently removed; new-person formation and
+  recovery/identity evidence remain basic requirements.
+  Original full-population runtime repeat/reverse remains an exit gate,
+  not established by the passed synthetic/shadow tests.
   Continue to preserve
   default historical/non-opt-in behavior; expose an explicitly selected
   experimental directed Sandbox mode and bind it to previews/resumes.
@@ -1230,11 +1656,21 @@ distinct N7 human review remains in M2. No source raw words are moved/deleted.
   engine, replay or fabricated same-person decision.
   [Full contract](2026-10-28-storage-operations-and-retention.md#milestone-transfer-record).
 
-**Performance gate:** after the run settles, T29 precedes changes; T30's
-known-findings/ownership work guides T20/T21/T22/L18, without delaying a
-confirmed bounded fix for another whole audit. Reuse paired evidence; no
-full intake per task. Runtime implementation still requires the live-run
-freeze to end. Preserve exact outputs, diagnostics and error semantics.
+**Performance gate, Nov17 selection:** current RA2j installed/browser
+acceptance first, then T29/T30's bounded SIMPLE viewer/read-reuse work is
+the next AI implementation priority, ahead of another expensive replay or
+optional tuning/housekeeping. Human RA2d review can proceed independently.
+The [recovered evidence](2026-10-28-intake-performance.md#nov-17-recovered-timing-evidence-and-simple-reuse-boundary)
+confirms preserved historical logs and an isolated qualified/canonical
+verification-session split; whole-phase cost attribution remains open.
+T29 measures representative generation and unchanged/no-op cases before
+changes. T30 first restores compatible operation-local reader/proof/index
+sharing using existing helpers; prove caller visibility and reduced repeated
+reads without weakening seals, mutation guards or held-alias diagnostics.
+Stop with paired cost/output evidence and explicit fixed/no-gain/deferred
+dispositions. No full intake per task, new worker framework or wholesale
+T20/T21/T22/L18 activation. Runtime implementation requires the live-run
+freeze to end; preserve exact outputs, diagnostics and recovery semantics.
 
 - [ ] **P1 ai** T29 Freeze same-machine representative generation/no-op,
   warm/cache phase baselines before runtime/path changes, with input/config/

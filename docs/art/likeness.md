@@ -11,6 +11,239 @@ The tools can preview and, with explicit `--apply`, perform selected file
 operations. Similarity is evidence for review, not proof of identity. The
 people gallery and review gallery are local HTML reports; neither moves files.
 
+Review keeps held photos with stale or conflicting retained-preparation
+claims visible with diagnostic placeholder thumbnails and their original
+file links. It does not treat them as FAST inputs, use another photo's
+prepared pixels, or describe the refusal as an intentional framing exclusion.
+The preparation/crop guard still refuses processing those claims; a viewer
+diagnostic is not approval to repair or reassign the photo.
+
+## Normal selected-photo intake
+
+`bin\library.cmd` provides the selected normal FULL/LEAN/FAST pipeline,
+including frozen audit/family metadata, recoverable publication and
+Gallery/Overview/Review viewers. The bounded three-profile mini-library proof
+is complete; full-current-library compatibility, fresh-baseline and human
+identity/crop acceptance remain gated. It is not the whole-library rebase and
+does not invoke likeness experiments. Without
+`--photo-id` it previews pending originals in `Various\gallery`;
+repeat `--photo-id` to select a smaller batch. Plain filenames receive IDs
+from the original bytes through the existing content-name convention; valid
+embedded IDs remain unchanged. Full original hashes guard short-ID collisions.
+Preview reports normalization without renaming primary inputs; apply journals
+it with publication, including held arrivals. Invalid or ambiguous prepared
+lineage is explicit, not silently omitted. The launcher previews by default; only add
+`--apply` after reviewing the assignments and holds:
+
+```cmd
+bin\library-preview.cmd --profile lean --photo-id photo:ONE --photo-id photo:TWO
+bin\library.cmd --profile lean --photo-id photo:ONE --photo-id photo:TWO --apply --run-id arrivals-001
+bin\library-check.cmd --run-id arrivals-001
+bin\library.cmd --undo --run-id arrivals-001
+bin\library.cmd --undo --run-id arrivals-001 --apply
+```
+
+Independent selected framing is supported without reassignment:
+
+```cmd
+bin\originals.cmd --root "ABSOLUTE-LIBRARY-ROOT" --photo-id photo:ONE --no-repoint --dry-run
+bin\originals.cmd --root "ABSOLUTE-LIBRARY-ROOT" --photo-id photo:ONE --no-repoint --apply
+bin\originals.cmd --root "ABSOLUTE-LIBRARY-ROOT" --photo-id photo:ONE --no-repoint --check
+```
+
+This explicit framing scope does not rename native inputs, migrate layouts,
+prune other images' products, perform native cleanup, reassign identities, or
+retarget workflow inputs. It can generate explicitly requested products for
+FAST inputs without relabeling those native pixels as clean. Missing/duplicate
+selected IDs and rendering failures are surfaced; preview uses local
+read-only face inference without model downloads or cache persistence.
+
+FULL, LEAN and FAST use the same matcher, policy thresholds, complete
+eligible identity inventory and cast-priority receiving rules. Every mode limits candidates to the
+selected/pending `Various\gallery` arrivals and reuses unchanged cached identity
+evidence; missing or stale identity evidence stops the plan rather than
+truncating rivals or starting a library-wide inference run. FULL stores the
+complete identity-core score evidence with its plan. LEAN stores the compact
+plan. On apply, both prepare only the selected inputs with the accepted native
+recipe, match the actual recommended native bytes, retain original/evidence
+products, and generate supported 944 framings. Unsafe/unavailable head framing
+is explicitly recorded, not invented or counted as clean. Preparation runs
+serially with offline pinned-model loading: no model download is allowed.
+Native preparation and framing remain independently available through
+`prepare-images.cmd` and `originals.cmd`. FAST uses original-byte matching and explicitly defers image
+editing and 944 products; it does not certify that source pixels are clean.
+The profile never relaxes a threshold, changes reference eligibility, or
+changes identity/name/lineage records.
+
+An unambiguous genuine incoming original whose ID is already in an identity
+gallery is recognized automatically as an owner-preserving replacement.
+Content-derived `pic_<8 hex>` IDs remain bound to the full original SHA-256:
+different original bytes are refused as a short-ID collision, even for a
+pixel-identical re-encoding. A platform/source ID such as `image_<id>` is
+the mutable-version case; collision checks are not bypassed by explicit update.
+Original-only unique-newest selection never lets an older-source prepared
+native win merely because its processed mtime is newer. A prepared claimant
+requires verified lineage and recoverable retirement with its retained set.
+Tied original versions, invalid lineage, true locks, workflow selections and
+unsafe content-bound decisions hold automatic updates explicitly.
+`--update-photo-id ID` retains its existing deliberate-update checks.
+Replacement retains the current owner/name/ID/lineage, refuses true photo locks, validates
+the old content binding, and backs up both old native and incoming original
+plus metadata before replacing anything. It never silently promotes
+membership/reference flags. Prepared replacements retain exact previous native
+generations and immutable preparation manifests/artifacts. A content-bound
+`.normal-history.json` index retires old active claims; separate historical
+HTML resolves older LEAN native aliases to the exact previous generation.
+Old manifests, recipe details and receipts are not rewritten. Invalid history
+stops replacement rather than reviving a reference. A stale, incomplete, or experimental
+membership record is reported and preserved, not silently restored or promoted.
+Review those diagnostics against the read-only library before any separate,
+explicit metadata decision. No routine profile rewrites unrelated images.
+
+Applied file moves create a verified **scoped** backup of only the selected
+originals, any retained-preparation files transferred with them, and the
+catalogue; they do not snapshot the whole library or shared ComfyUI inputs.
+The move journal, catalogue seal, and exact undo machinery remain bound to that
+batch. `--check --run-id` verifies the applied receipt without rescoring. If an
+apply fails, retain its receipt and journal and use their status and hashes to
+choose recovery; do not start a second run with the same run ID.
+Repeat apply rejects a different explicit selection/profile or changed
+policy, configuration, or bound shared implementation. Persistent inference
+requires authorization before any evidence write. Current cached unusable or
+zero-face measurements remain unavailable evidence, not missing-inference
+requests. Old hash-bound receipts are preserved, never rewritten to bless a
+changed implementation.
+Native publication journals support `--recover --run-id ID` (preview) and
+`--recover --run-id ID --apply` for interrupted publication even when no final
+receipt exists. Recovery verifies snapshot hashes and refuses unexpected
+newer content. Injected publication-copy failure is fixture-tested to restore
+old native, incoming original and exact catalogue bytes.
+Publication staging writes an explicit local `.likeness-library.json`;
+the existing-catalogue reader's global fallback is never a staging destination.
+Publication snapshots an existing local catalogue as an overwritten staged
+target, or installs a new local catalogue when absent. The global fallback
+is read-only input, never a root-relative transaction source. Exact undo
+restores the prior local catalogue bytes or its prior absence.
+Short content-derived batch folder names keep SHA-named preparation files
+within Windows path limits; human run IDs stay in receipts. Legacy normal
+journals remain recoverable by their original paths and exact run IDs.
+
+Normal publication validates bound normal admissions against their receiving
+gates rather than undoing them with legacy initial-core reclassification.
+Legacy/unmodified owner-audit rows retain the frozen low-member check;
+explicit updates retain their owner. Complete eligible rivals remain
+available for evidence, while Review and tentative members cannot recruit.
+Final family actions cannot rename existing
+owners or alter unrelated people. Gallery, Overview, Review and native-history
+HTML are published inside the recovery transaction; a viewer failure rolls
+back sources, metadata and prior viewer files together. Unmeasured arrivals
+outside an explicit selection remain unmeasured in Review, without inference
+or fake cached measurements. FAST labels native editing/944 outputs deferred.
+
+Dry-run matches current raw input evidence. FULL/LEAN preparation and
+native-content rescoring happen on apply, so a raw preview cannot promise the
+same routing after preparation. Inspect the actual receipt and recipe report.
+Draft policy requires sandbox authorization for publication. Receiving
+permissions and thresholds come from policy, not from that override.
+
+### SIMPLE foundational recovery
+
+`bin\normal-rebase.cmd` applies the normal matcher to a whole explicitly
+selected sandbox Working root. Unlike ordinary intake, it reconsiders
+eligible existing Models/Prospects/Potentials Gallery/core members for
+upward entry. Existing recovery is assessed before Various, with a single
+independently qualified reference boundary and a second matching round.
+Publication happens once. Unresolved existing Gallery owners are retained;
+Review cannot form or recruit another fragment.
+
+The draft [policy](../../data/art/likeness-engine-policy.json) owns the
+receiving floors and approved close pairs. Cast admission compares against
+other Angels/Sisters; lower scores remain audit evidence, not vetoes.
+Gallery support counts independent retained references separately from
+candidate-to-core similarity; it is not a per-reference Gallery-score floor.
+Otherwise qualifying approved close-pair conflicts can enter optimistic
+Gallery with a **High rival / unconfirmed** warning and rival scores.
+These members remain non-core/unprotected, excluded from anchors, reference
+growth and automatic protection until separate confirmation. Pair core
+similarity is diagnostic only. Weak matches and unapproved ambiguity stay
+in provisional Review with alternatives, not another recruiting identity.
+
+Receiving is open by default. `--lock-cast-admission` locks incoming
+Angels/Sisters Gallery/Review only, keeps cast rivals visible and must match
+preview/apply/check. Outgoing cast Gallery and genuine source locks remain
+closed. Verified retained natives reuse their checked preparation/immutable
+history; a membership-only update cannot retire unchanged native lineage.
+Receipts bind code, policy, source bytes, reference snapshots and this lock.
+The [implementation/acceptance ledger](../plans/2026-11-16-simple-review-and-tuning.md#implemented-foundation-fixture-proof-not-a-library-run)
+distinguishes fixture/browser proof from installed and human acceptance.
+
+### Code ownership and evidence
+
+Native-transaction stage: `normal_products.py` composes the accepted preparation
+and retained-evidence helpers; `normal_transaction.py` seals and publishes only
+the selected files and supports exact recovery. Real six-copy mini-library
+receipts `native-full-006`, `native-lean-007`, `native-fast-007` and
+`same-photo-009` passed apply/check/repeat/recovery. FULL and LEAN published
+the same changed native hash for one input; FAST retained raw hashes and
+deferred products. The same-photo proof preserved Angelica's owner/name and
+restored both old native and incoming original. These receipts are
+revision-bound, not proof of final audit/family/viewer completion or prepared
+history replacement. Preparation comparison HTML exists in their frozen
+input report bundles. A later ten-copy isolated integration produced actual
+Gallery/Overview/Review with exact undo; it remains historical integration
+evidence, not final acceptance. Earlier native-stage checks did not assert
+installed local-catalogue presence and cannot prove transaction isolation.
+
+Final bounded machine acceptance uses ten copied inputs at
+`Working\_sandbox-state\normal-flow-proof-20261115-r02`. Frozen runs
+`final-full-025`, `final-lean-025` and `final-fast-025` passed
+preview/apply/check/repeat/undo; all ten source hashes and catalogue bytes
+restored exactly. A qualified known-name match reached Angelica Vale's Review
+under the unchanged draft routing policy; the unrelated owner stayed unchanged.
+`prepared-failure-027` restored a real replaced prepared native after an injected
+post-native copy failure. `prepared-update-028` passed apply/check/repeat/undo,
+preserving six previous manifest/artifact bindings. The final
+`prepared-update-view-029` remains applied for viewer inspection; prior receipts
+remain generation-bound, not rewritten. Native Gallery/Overview loaded seven
+images, Review loaded thirteen displayed/supporting images, and historical
+LEAN aliases loaded the exact previous native. These are workflow/browser
+checks, not human identity or crop-quality approval.
+
+`normal_finish.py` owns the scoped frozen check, complete rivals, final family
+metadata and viewer composition. `normal_history.py` owns immutable generations
+and content-bound retirement, including historical LEAN alias views.
+`normal_transaction.py` owns native/metadata/viewer rollback together.
+
+SIMPLE rebase previews now include `plan.fragmentQualification`: conservative
+direct lower-to-higher identity hypotheses from frozen references, with
+independent witness IDs and explicit holds. Its activation is
+`diagnostic-only`. The proposal requires the stricter existing identity-merge
+threshold and individual source-core member support; it does not suppress
+rivals, authorize whole-group moves or grow reference cores. Its holds are
+not photo-admission vetoes: the selected per-member Gallery gates do not
+require this stronger whole-fragment diagnostic to pass. Selected
+upward-recovery/default/run-lock/reference-boundary behavior is implemented
+and fixture-tested as recorded in the
+[current foundational contract](../plans/2026-11-16-simple-review-and-tuning.md#next-simple-run-foundational-corrective-contract).
+Old receipts retain their original code/policy bindings.
+
+| Area | Owned path | Evidence label and boundary |
+| --- | --- | --- |
+| Normal pipeline and shared matching | `tools\art\likeness_library\normal_import.py`, `normal_products.py`, `normal_finish.py`, `normal_history.py`, `normal_transaction.py`; shared reconciliation/engine/maintenance | Fixture-tested selection, complete rivals, shared policy, cache/authorization guards, immutable history and rollback. Final 172-test selected suite passed. Operationally verified final three-profile and prepared-owner cycles above; browser-loaded sources/thumbs/history links. No full-library or human identity acceptance. |
+| Independent selected framing | `tools\art\originals.py` via `originals.cmd --photo-id ... --no-repoint` | Fixture-tested selection, ambiguous/missing-source guards, no unrelated pruning/rename and surfaced render failures. One real copied arrival produced full/head 944x1104 products; preview/apply/check/repeat passed while source/catalogue bytes remained unchanged. This is explicit framing, not normal-profile preparation or identity acceptance. |
+| Existing cache, core, policy, and recovery helpers | `tools\art\likeness_library\` stable modules | Historically tested by their existing focused test suite; tests must still be run for the current change before claiming this revision is accepted. |
+| Rebase orchestration | `tools\art\rebase_flow.py`, `tools\art\likeness_library\clean_rebase.py` | A deliberate whole-library reassessment path, not normal intake. Rebase checks and receipts do not certify a normal-flow batch. |
+| Optional trial algorithms, compositions, reports, and adapters | `tools\art\likeness_experiments\` | Experimental, even when a fixture or saved-receipt test passes. Explicit compatibility launchers/wrappers route here; normal intake must not import these modules. |
+| Active standalone diagnostics/utilities | `tools\art\likeness_utils\diagnostics.py`, `family_preview.py` | The explicit `likeness diagnostics` and `family-preview` report commands use these modules; both are outside normal intake and import stable core helpers only. `audit.py` stays core because planner/reconciliation and Gallery readers share it; `review_gallery.py` stays core because active Gallery/maintenance consumers share it. Directory role does not certify diagnostics or family suggestions as identity truth. |
+| Shared transaction and retained-receipt services | `tools\art\likeness_library\actions.py`, `storage_retention.py` | `actions.py` supplies the guarded apply/undo engine used by quality-disposition receipts and recovery. `storage_retention.py` registers run receipts from preparation and rebase flows. Both also retain explicit compatibility CLIs; shared transaction, recovery, and receipt services stay in core. |
+| Legacy reconciliation experiment | `tools\art\likeness_experiments\reconcile_command.py` | `likeness-experiments legacy-reconcile` is the explicit entrypoint. `likeness reconcile` remains a lazy compatibility alias; the controller composes merge/category transitions, protection, and family augmentation and is not imported by normal intake. |
+| Current-Sandbox compatibility | Frozen-code read-only preview; one explicit arrival | Latest default-cache preview stopped safely: 3,268 unchanged identity photos lacked current cached vectors (Angels 465, Potentials 933, Prospects 1,012, Sisters 858). Existing membership/protection/rejection provenance remains preserved. Earlier 1,525-photo diagnostics are historical, not the current count. Current Working needs content-bound accepted measurements or the separately approved fresh-baseline preflight; no migration, current catalogue/Gallery mutation or full inference campaign occurred. |
+
+Promotion from `likeness_experiments` is an explicit module/import/test change
+after review of the relevant evidence. Folder placement alone does not mean
+that a module or workflow has been tested or accepted. Avoid scanning
+`_archive` directories for active code.
+
 **Review navigation:** Overview intentionally shows up to nine photos per
 person (plus a pinned workflow selection where applicable); use Photo review
 for the full Gallery and Review cohorts. The who-went-where report is under
@@ -20,6 +253,10 @@ a report/retained-reader fix, preview `bin\people-gallery.cmd --reports-only
 --dry-run` with explicit sandbox root/cache/output/policy, then use `--apply`
 and `--check`. This refreshes reports without matching, photo moves, new
 intake, derivative maintenance or backups; reload the browser afterward.
+The shared refresh is cache-only: missing face measurements remain
+unavailable instead of constructing a model or persisting new measurements.
+Generation, unchanged generation repeat and independent `--check` are
+separate baseline measurements; this is not a complete intake/rebase timing.
 
 Overview repeats each person's linked name above and below the photo grid.
 Individual thumbnails have no visible filename or appearance captions;
@@ -106,6 +343,71 @@ reviewed with the source-core candidates before matching:
 | directed-lower-category-admission | .60/.60/.50/.45/.40 | .50/.45/.35/.30/.25 | existing ordered-middle recipe | .30/.60/.30 |
 | directed-stricter-retention | .60/.60/.50/.45/.40 | .50/.45/.40/.35/.35 | .35/.30/.25/.20/.20 | .30/.60/.30 |
 | directed-stronger-release | .60/.60/.50/.45/.40 | .50/.45/.40/.35/.35 | existing ordered-middle recipe | .25/.65/.35 |
+
+The bounded corrective comparison adds three opt-in recipes:
+
+| Recipe | Starting Sisters/Angels selection minimum | Reference core floor / support | Admission / join / tentative support | Strong source correction | Cohort |
+| --- | --- | --- | --- | --- | --- |
+| directed-corrective-starting-045 | .45 | .40/.35/.30/.25/.25; 3 independent witnesses | .50/.45/.40/.35/.35; 4 join, 2 tentative cast | source ≤.30 + 2 independent refs; destination uses qualified category admission/margin | constrained average-link ≥.25; 2 neighbors/member |
+| directed-corrective-starting-050 | .50 | .40/.35/.30/.25/.25; 3 independent witnesses | .50/.45/.40/.35/.35; 4 join, 2 tentative cast | source ≤.30 + 2 independent refs; destination uses qualified category admission/margin | constrained average-link ≥.25; 2 neighbors/member |
+| directed-corrective-starting-060 | .60 | .40/.35/.30/.25/.25; 3 independent witnesses | .50/.45/.40/.35/.35; 4 join, 2 tentative cast | source ≤.30 + 2 independent refs; destination uses qualified category admission/margin | constrained average-link ≥.25; 2 neighbors/member |
+
+The starting cutoff selects a content-bound subset of eligible references in
+each original Sisters/Angels view; it does not apply the same floor to every
+member or replace the separate qualification gate. Core qualification uses
+the previously tested `ordered-three-core-support` value (three independent
+other witnesses), rather than the historical directed core's four. Strong
+continuity still uses a separate `.80` own-score minimum and is not the seed
+exclusion cutoff. Candidate inventory, selected references, score basis,
+exclusions, and qualified-reference counts remain explicit. Admission floors
+and category distinct-rival margins remain the ordered-middle values
+(.12/.10/.08/.06/.06); retention remains .25/.22/.18/.15/.15. Measured source
+incompatibility uses a frozen own score ≤.30 plus two independent source
+references, or an exact human `different` pair. Exact `different` and
+`uncertain` conflicts, configured identity negatives, placement locks, and
+distinct authored cast slots remain hard blockers where applicable; they are
+not numeric similarity floors. A two-witness cast association may grant a quality- and
+margin-gated tentative Gallery placement when the full independent-member
+reference gate is not met, but it never grants core/reference authority.
+Likewise, source-incompatible weak members may be evaluated with a coherent
+cohort for a provisional non-core owner; low score alone does not release a
+source member, and a provisional owner is not a confirmed identity. Cohort
+formation requires independent nonconflicting neighbors and retains explicit
+negative-identity and authored-cast-slot barriers rather than using
+unconstrained connectivity. Readers retain frozen-source/current scores,
+candidate and qualified reference inventories, exact blockers, and
+assignment-versus-reference provenance. These recipes are comparison
+candidates only: they do not change defaults or independently certify visual
+identity accuracy.
+
+Corrective strong-source release has no absolute destination `.60` or margin
+`.30` gate: the destination must be an individually qualified option, meet its
+normal category admission floor and distinct-rival margin, and retain a
+qualified stable reference view plus the full four-witness join. This cannot
+promote a tentative two-support assignment. The historical
+`directed-core-continuity` recipe continues to require its original absolute
+`.60/.30` destination gates.
+
+For exact runtime parity, a supported LEAN continuation may opt into
+`--capture-regroup-call` on `--apply --regroup --directed`; repeat the flag on
+`--check` and `--install` so the saved continuation mode remains bound. It writes
+`regroup-call-input.json.gz` beside that run's `run.json`; `run.json` binds the
+capture file and input digest. Format `group-lifecycle-regroup-call-v1`
+records the exact pre-call rows, measured `Photo` properties (including raw
+and centered vectors), catalogue, policy, selected IDs, fixed timestamp,
+human pairs, reference exclusions, recipe and dominant-provisional flag. It
+also records the first call's rows, catalogue and report. Name generation is
+captured as an ordered transcript of each seed, sorted `taken` names, and
+returned name. For both replay calls, return the recorded name only when the
+seed and sorted `taken` set match the next transcript entry; fail if a call
+differs or entries remain. Deep-copy the captured initial catalogue for each
+execution, use the same fixed timestamp and all other inputs, reverse only the
+input row order for the third call, and compare canonical outputs and catalogues.
+Rehydrate each measured entry with `engine.Photo` from its saved path, group,
+folder, hash, and raw-measurement fields, then restore its saved centered
+`vec`; no source image reads are needed.
+This is evidence capture for the existing runtime call, not a second matcher or
+a full-population acceptance claim.
 
 These are selectable experiments, not routine policy. A read-only
 pre-intake candidate review can enumerate current Sandbox Working
@@ -701,6 +1003,11 @@ preparation set is published, the current gallery photo is the verified
 selected native image; the existing Preparation detail remains the source for
 recipe and variant history.
 
+On Windows, aligned-evidence persistence and verification use extended
+filesystem paths, so nested Sandbox paths do not require enabling long paths
+in the OS. Full source/model hashes and artifact names remain unchanged;
+report links keep ordinary relative URLs, not filesystem-only prefixes.
+
 Older cache entries are re-embedded when a normal likeness command encounters
 missing or invalid alignment evidence, updating the vector and crop together.
 The read-only Review gallery may recompute a missing crop in memory to report
@@ -767,9 +1074,12 @@ calibration and real incremental-batch acceptance remain open.
 The sandbox clean installer can add cast Review photos, never cast Gallery
 members. Production requires an approved policy and separate acceptance.
 
-### Established-identity maintenance
+### Legacy reconciliation experiment (explicit only)
 
-`likeness reconcile` plans incoming/Review routing and qualified Gallery
+`likeness-experiments legacy-reconcile` runs the explicit legacy controller;
+`likeness reconcile` remains its compatibility alias. This experimental
+composition is not a normal intake stage and is not imported by default. It
+plans incoming/Review routing and qualified Gallery
 outliers together, then proposes disjoint reciprocal identity merges and
 category transitions from final planned usable membership. A folder cannot
 participate in a merge chain in the same pass. Category transitions preserve
@@ -903,10 +1213,10 @@ Calibration includes folders with at least two usable photos; the folder
 verdict uses at least three, matching `likeness folder`. The two evidence sets
 are kept separate, even where both contain a photo's leave-one-out score.
 Similarity never proves identity and these reports do not move photos.
-The bundle is runnable now. Earlier sandbox trials linked separately generated
-diagnostics, but the prepared clean-start runner does not automatically execute
-the full bundle or publish its timing. Run `diagnostics` explicitly against the
-saved sandbox root/cache/policy; automated bundling remains plan work.
+The bundle is runnable now. It is a standalone support report, not a required
+normal-import stage or identity proof. Run `diagnostics` explicitly against the
+intended sandbox root/cache/policy; report writing and any permitted cache
+population are separate from source and identity changes.
 
 ### `likeness family-preview`: direct references and naming collisions
 
@@ -1007,6 +1317,13 @@ Production `_junk` and `_retired` contents are. Production, the immutable
 Source snapshot, and sibling `ST-v9` are outside the target. An apply can still
 be blocked by Windows handles or permissions; close report viewers before
 retrying rather than bypassing the transaction guard.
+
+**Clean-test limitation:** this implemented full reset copies current
+Production directly into Working, leaves the older Source snapshot unchanged,
+and carries unique Working photos forward. It is not the selected
+[Production -> Source -> clean Working procedure](#clean-production-source-refresh-and-working-reset).
+Do not use it to claim that Source has been refreshed or experimental Working
+inputs have been excluded.
 
 A visible Explorer tab is not sufficient evidence that the path is unlocked:
 hidden tabs can retain directory handles. In the Oct 29 rehearsal, Microsoft's
@@ -1129,7 +1446,239 @@ and mutation invalidation tests; it is not bundled speculatively. Moving
 away retained input evidence, derivative caps, FAST/detector shortcuts and
 intake instrumentation remain deferred, not pickup prerequisites.
 
+### Clean Production Source refresh and Working reset
+
+The selected clean test uses this source chain:
+
+```text
+B:\Sovereign Territories                         read-only Production
+    -> B:\Sovereign Territories Sandbox\Source   verified run baseline
+    -> B:\Sovereign Territories Sandbox\Working  disposable execution/output
+```
+
+Old Working is contaminated test output, not a second source library.
+Do not add its photos, prepared versions, catalogue memberships, cores or
+caches to this rebase's active population. Normal incoming replacement/ID
+handling is a separate flow; it does not make old experimental Working
+authoritative for a clean test.
+
+| Step | Required action | Exit evidence |
+| --- | --- | --- |
+| 1. Freeze the boundary | Stop or wait for exact root-specific library writers; resolve the Production, Source, Working and recovery paths. Preview managed categories and excluded operational storage. Artists remain outside this test unless separately selected. | No competing writers; explicit paths, exclusions and Production inventory. |
+| 2. Account for old test state | Identify genuinely unique originals, explicit manual decisions and necessary recovery receipts before deleting obsolete outputs. Preserve only necessary material in a separately verified non-active recovery location outside the cleanup boundary; do not copy all Working into repository scratch or carry it into the test. | Exact preservation/disposition list and verified bytes/hashes. Old reports/caches/experimental outputs may be removed when verified disposable. |
+| 3. Establish Source | Compare the existing Source and its manifest with the selected current Production scope. Reuse it only if it represents that exact baseline; otherwise stage a fresh Production copy and matching `source-manifest.json`, verify every listed file and publish the pair coherently. Freeze Source for the run. | Production origin, relative paths, lengths, SHA-256 values, source/manifest identity, scope exclusions and successful verification. |
+| 4. Start clean Working | Preview the exact obsolete Working contents to remove, then replace managed contents from verified Source with checked staging/recovery. Keep the Working/Sandbox root directories; never use a broad root-recursive deletion. Do not retain old generated reports, caches, `_processing`, run staging or experimental catalogue state as active inputs. | Working baseline matches Source for the selected scope, with no undocumented carry-forward. Production and Source are unchanged. |
+| 5. Prepare and run SIMPLE | Run the approved FULL/LEAN/FAST preparation and stable rebase composition on that fresh baseline. Record the profile, source/code/policy identities and real prepared-pixel measurements. Do not substitute legacy repeated refinement or experimental merges/appearances. | One input population from Source, one frozen consistency/refinement step, final rivals/family results and recoverable output publication. |
+| 6. Verify before acceptance | Check input conservation, stable IDs/names/manual decisions, prepared/history bindings and actual Gallery/Overview/Review pages. | Explicit command exits/counts and loaded-page proof; human identity/image-quality acceptance remains distinct. |
+
+Photo-source counts must come from the selected Source inventory. A combined
+Production/old-Working diagnostic count is not the rebase input count; physical
+copies, distinct byte versions and unique photo IDs must be reported separately.
+An older Source snapshot may be internally valid yet differ from current
+Production. Its age or existence alone does not establish suitability.
+
+The user explicitly authorizes unattended clean Sandbox execution, including
+discarding all old Working history and repeating intake from original inputs.
+No old Working history is required in the new library. Production remains
+read-only, and human identity/image-quality acceptance is not delegated.
+
+The guarded baseline launcher implements steps 3-4:
+
+```cmd
+bin\sandbox-baseline.cmd --root "B:\Sovereign Territories Sandbox\Working" --dry-run
+bin\sandbox-baseline.cmd --root "B:\Sovereign Territories Sandbox\Working" --run-id simple-clean-001 --apply
+bin\sandbox-baseline.cmd --root "B:\Sovereign Territories Sandbox\Working" --run-id simple-clean-001 --check
+```
+
+Preview first and inspect `resetReady`, the exact replaced Working entries,
+Source refresh/counts/exclusions and empty carry-forward. Apply stages and
+verifies Production bytes, refreshes Source and its manifest together, then
+uses the existing reset journal to build Working from verified Source with
+explicit no-history mode. Its fixed OS-locked transaction and compact receipt
+live outside Working under Sandbox `_baseline-state`; this is durable
+baseline recovery evidence, not another active source library. It retains
+neither old Working catalogue/history nor unique experimental photos. It
+requires an existing valid Sandbox layout; it is not an arbitrary-directory
+initialization/deletion command. Interrupted source publication rolls back;
+an interrupted Working reset resumes the existing journal. Repeat apply with
+the same run ID verifies the completed baseline rather than resetting twice.
+Use a new run ID for a deliberately new baseline.
+
+`--check` verifies the untouched baseline before intake, not a fully processed
+library afterward. End-to-end SIMPLE output has its own check. Preserve each
+baseline receipt's original implementation binding; a later helper change
+does not authorize rewriting that receipt or resetting an installed baseline
+solely to make its code hash current.
+
+### Stable whole-library SIMPLE preview, apply and check
+
+Use `bin\normal-rebase.cmd` for step 5, not the legacy repeated-refinement
+controller. It is an explicit whole-library operation; ordinary daily arrivals
+continue through bounded `bin\library.cmd`. Consult the current pinned handoff
+first and reuse its running job instead of starting another writer.
+
+From the repository root, after the baseline gate and with no other writer:
+
+```cmd
+set "W=B:\Sovereign Territories Sandbox\Working"
+set "RUN=simple-rebase-001"
+set "POLICY=%CD%\data\art\likeness-engine-policy.json"
+bin\normal-rebase.cmd --root "%W%" --cache "%W%\_likeness\general\cache.json" --policy "%POLICY%" --profile lean --run-id "%RUN%" --dry-run
+```
+
+Preview performs real preparation and measurement and writes root-local
+sidecars, but does not publish assignments. FULL/LEAN prepare eligible named
+references and candidates before freezing cores; FAST uses raw pixels and
+explicitly defers editing, so it is not a substitute for fresh prepared-pixel
+acceptance. Required model weights must already exist locally. Missing weights
+fail explicitly; neither preview nor apply may download replacements.
+
+For FULL/LEAN, a newly prepared same-path Review admission still publishes
+the selected native and fresh preparation/history evidence; unchanged
+ownership does not make it metadata-only. FAST and verified unprepared
+retained-native admissions keep their membership-only behavior.
+Retained manifest/detail transfers write the exact sealed UTF-8 bytes;
+platform newline conversion must not invalidate their content checksums.
+
+Inspect `_reports\runs\normal-rebase-RUN-preview.json` and its bound manifest:
+every physical input needs a disposition, duplicate-content aliases cannot
+cast extra votes, known names/true decisions must be preserved, and holds
+must remain explicit. Review actual qualified cores, preparation coverage,
+rivals and planned outputs. Keep Source, Working inputs, implementation,
+configuration and policy frozen between preview and apply.
+
+Once those gates pass, use the same run/profile/cache/policy:
+
+```cmd
+bin\normal-rebase.cmd --root "%W%" --cache "%W%\_likeness\general\cache.json" --policy "%POLICY%" --profile lean --run-id "%RUN%" --apply --sandbox-apply-draft
+bin\normal-rebase.cmd --root "%W%" --run-id "%RUN%" --check
+```
+
+The draft-policy override is scoped to the authorized Sandbox, not Production.
+Apply verifies preview/input/code bindings and reuses the complete preparation
+manifest rather than preparing the whole library twice. If a custom preview
+receipt was selected, pass its exact path with `--preview-receipt`. Applied
+receipt is `_reports\runs\normal-rebase-RUN.json`; actual viewers are under
+`_reports\library`. Open Gallery, Overview and Review and verify loaded images,
+counts and native/detail/history/source links; file existence alone is not
+GUI acceptance. Human identity and crop-quality approval remain separate.
+
+`--repeat` checks an applied run without repeating mutations. For a genuine
+partial publication, preserve the failure evidence first, inspect supported
+`--recover`, and use `--recover-apply` only for its exact bound recovery.
+Do not overwrite receipts, bypass changed-code bindings, reset Source or rerun
+intake merely to repair a viewer/check failure. Real installed/viewer acceptance
+remains open until the selected run supplies that evidence; legacy reset and
+repeated-refinement commands below are not SIMPLE.
+
+#### Saved SIMPLE movement recap and placement audit
+
+Normal preview/applied receipts now publish report-only recap/audit pages
+under `_reports\library\rebase-recap` for previews and its `applied`
+subdirectory for applied receipts. Each directory has its own index:
+post-transaction reporting must not overwrite preview artifacts sealed by
+publication. Do not regenerate sealed historical previews in place; use
+`--out` to select a separate report path if new rendering is needed.
+To reconnect an older saved run
+without preparing, matching or moving anything:
+
+```cmd
+set "RECEIPT=%W%\_reports\runs\normal-rebase-RUN.json"
+bin\rebase-recap.cmd "%RECEIPT%" --dry-run
+bin\rebase-recap.cmd "%RECEIPT%" --apply
+bin\rebase-recap.cmd "%RECEIPT%" --check
+bin\rebase-recap.cmd "%RECEIPT%" --compare "OTHER-SAVED-RECEIPT.json" --apply
+```
+
+Default is preview; menu option `RR` also previews before offering report
+publication. `--compare` requires identical frozen source paths/hashes.
+The directory index links each run's recap and audit. Checks bind receipt/
+Review bytes, report producers, exact recap/audit outputs and this run's
+index navigation. Missing/stale saved evidence stays explicit.
+Each recap conserves physical source rows, distinguishing exact-alias
+coalescences, strictly bound incoming native replacements and distinct
+current destinations. Superseded native versions remain visible as history,
+not extra current members or borrowers of the replacement's Review evidence.
+Review links open separate
+tabs; section anchors remain local and per-photo audit links reveal hidden
+nonfinding rows. Reports use existing cached thumbnails only.
+
+Audit findings combine recorded consistency evidence with a path/native-
+hash-bound **saved** Review snapshot; they are not fresh inference, an
+exhaustive final-refinement pass or authorization to move members. Group/
+core similarities are not individual admission scores. Missing Review IDs
+are disclosed and paired only by exact path/native hash; conflicting IDs
+refuse pairing. Current-photo links do not certify freshly rehashed bytes.
+An applied receipt survives later report failure: use this report-only
+repair path, never repeat publication or reset the library.
+
+If preparation completed but the whole preview failed, use a new run ID and
+explicitly select the old preparation output and its preserved manifest hash:
+
+```cmd
+set "PREP=%W%\_reports\runs\normal-rebase-PRIOR-preview\preparation\inputs\_reports\preparation\selected"
+set "PREP_SHA=EXACT-PRESERVED-MANIFEST-SHA256"
+bin\normal-rebase.cmd --root "%W%" --cache "%W%\_likeness\general\cache.json" --policy "%POLICY%" --profile lean --run-id "%RUN%" --reuse-preparation "%PREP%" --reuse-preparation-sha256 "%PREP_SHA%" --dry-run
+```
+
+Reuse verifies containment, profile, recipe, configuration, every original
+source/hash and every required artifact in the complete parent preparation.
+If corrected source-ID classification selects fewer inputs, explicit external
+reuse may select a byte-verified subset. A newly selected physical alias may
+reuse a prepared source only with the same full original SHA-256 and one
+unambiguous selected-native hash. The receipt separately binds selected inputs,
+unused verified inputs and source aliases; the parent manifest and historical
+rows are not rewritten. Normal same-run reuse remains exact by default.
+Apply revalidates the new preview and these bindings; reuse never approves an
+old failed preview.
+
+A clean rebase may select a pool original whose byte-identical same-ID alias
+already occupies the planned identity destination. The preview explicitly
+records these `exactAliasTargets`. Only that source/target/full-hash binding
+permits replacement; other existing destinations still fail closed. Apply
+rechecks both files and retains both pre-publication paths in its transaction
+backup. This coalesces a physical alias, not a logical photo or a different
+version. Source conservation reports the coalesced target count separately.
+
+A Various original whose full source SHA-256 matches the verified retained
+original of the one catalogue-bound prepared Gallery native is not a new
+incoming version merely because preparation changed its current pixels.
+Preserve that original as an explicit non-voting version and keep the
+prepared native as the canonical input. Do not prepare it again, replace
+its sound owner or count it as another independent reference. These
+preserved physical originals are not newly unmatched logical identities.
+A genuine different incoming version still requires accepted version
+selection and exact old/new source, destination and hash bindings; it is
+not authorized by the exact-byte-alias collision exception.
+
+Ordinary selected intake makes this distinction before incoming version
+selection and preparation too. Such originals stay preserved even beside a
+genuinely newer arrival; transaction and receipt checks bind their bytes and
+the verified current-owner/retained lineage rather than routing or archiving
+them as new photos.
+
+The single low-member audit distinguishes a Review recommendation from
+permission to remove an existing Gallery member. Protected identities and
+categories with automatic splitting disabled keep those photos in Gallery;
+the receipt records recommendation-only evidence. Unprotected, permitted
+corrections still route to Review. Preview checks publication permissions
+before approving its plan; apply checks them again without relaxing policy.
+
+New generation records exclusive `preparation-origin.start.json` before
+preparation and a matching completion seal afterward; changed producer code
+or an incomplete/mismatched pair fails closed. Older preparation may have
+sealed input/output/recipe/configuration without recording its generator-code
+hash. Selected legacy reuse reports that generation hash as unknown and keeps
+the current validation-code hash separate. This provenance exception is
+visible; it never waives source/artifact checks or human image-quality review.
+
 ### Fresh sandbox from production: step by step
+
+**Legacy procedure, not the selected SIMPLE clean test.** These existing
+commands are retained to explain historical runs and recovery. Their
+Production-to-Working reset with unique-photo carry-forward does not establish
+the freshly verified Source/no-old-Working boundary above. Do not execute this
+table as the next clean acceptance run.
 
 The FULL-recovery procedure for a new end-to-end rehearsal. For an explicitly
 disposable sandbox LEAN run, the timed launcher's `--recovery-mode disposable`
@@ -1435,8 +1984,8 @@ fresh CLI validation for actual staged decisions; previews do not authorize appl
 
 #### Automatic protection and original names
 
-Draft policy `draft-2026-10-25.1` adds automatic protection to ordinary
-`likeness reconcile` previews and its existing explicit apply/undo transaction.
+Draft policy `draft-2026-10-25.1` adds automatic protection to explicit
+legacy-reconcile previews and its existing apply/undo transaction.
 It does not enable production use of a draft policy. Run `bin\likeness.cmd policy`
 to inspect the effective settings; existing sandbox root/cache and draft-apply
 guards still apply.

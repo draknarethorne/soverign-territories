@@ -198,8 +198,9 @@ The post-apply check also excludes staged mixed-pool photos using the same
 source filter as the ordinary engine. Full labelled calibration, global
 convergence and the separate
 200+ incremental batch remain unaccepted. The old no-policy API adapter is
-now isolated in `legacy_reconciliation.py`; command orchestration is extracted
-to `reconcile_command.py` and established actions to `identity_maintenance.py`.
+now isolated in `legacy_reconciliation.py`; experimental command orchestration
+lives in `likeness_experiments/reconcile_command.py`, while established actions
+remain in `identity_maintenance.py`.
 The broader CLI/library extraction is still open.
 
 The GUI now offers an explicit chosen-identity Review move with closest

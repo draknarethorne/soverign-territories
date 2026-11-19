@@ -2,6 +2,15 @@
 
 **Status:** holding
 
+**Nov 15 current delivery boundary:** the user selects restoration of normal
+FULL/LEAN/FAST imports and separate experimental composition under spine
+RA2j. The [replacement build contract](2026-11-12-member-refinement-scope-test.md#nov-15-selected-normal-flow-and-experimental-composition-contract)
+owns exact clarifications and the bounded first proof. The goals below
+remain long-term reassessment contracts, not permission to run rebase,
+auto-merge groups or form appearances during routine small intake.
+Normal and rebase scopes share proven primitives; unproven additions remain
+behind their own execution path until explicitly accepted.
+
 ## End goals and operating principles - Nov 13 agreement
 
 **Agreed Nov 13 after follow-up Q&A.** This is the front-door summary of the
@@ -66,6 +75,49 @@ The Nov 13 audit remains evidence that the current proposal is incomplete.
    Production remains separately gated.
 
 ### Strong Gallery members: agreed starting-backbone intent
+
+**Earlier Nov 15 execution pause, superseded by normal-flow build selection:** the user's
+[basic-step/image-only feedback](2026-11-12-member-refinement-scope-test.md#nov-15-basic-steps-and-image-only-separation-feedback)
+requires thorough step review and agreement before further repairs/runs.
+This supersedes the following continuation approval as immediate scheduling
+authority, not its historical goals. No new numeric rule, in-place image
+processing or944regeneration is selected merely by discussing simplification.
+
+The [Nov 14 corrective-cycle approval](2026-11-12-member-refinement-scope-test.md#nov-14-approved-corrective-rebase-contract)
+now selects bounded implementation and same-input comparisons of these
+separate operations, followed by verified Sandbox execution under spine
+RA2j. Earlier discussion-only stops below are historical; no candidate
+numeric cutoff is selected merely by listing it.
+
+**Nov 14 scope clarification:** the earlier 0.60 example concerned which
+photos already in existing Sisters/Angels establish their starting identity
+backbones. It did not select stricter admission, other-category clustering,
+tentative assignment, reference growth or correction gates, nor a repeated
+four-pair 0.60 requalification requirement. Baseline selection must not
+implicitly propagate its threshold into those separate operations.
+This clarifies scope, not a newly selected numeric replacement for the
+Nov 13 0.80 preservation guidance below. The exact starting metric/cutoff
+and controlled comparison remain discussion items before runtime changes.
+The user permits considering 0.60, 0.50 or 0.45 for that starting-cast
+selection if a higher cutoff starves valid identities of useful references.
+These are comparison candidates, not three installed policies or a change
+to other gates. Choosing a lower starting cutoff does not itself repair
+the unintended downstream 0.60/four-pair qualification coupling.
+The [primary source record](2026-11-12-member-refinement-scope-test.md#nov-14-starting-cast-core-scope-clarification)
+preserves the latest words and RA2j/RA2d ownership.
+
+**Operational purpose clarified:** prevent weak existing cast members from
+recruiting photos that do not match the main character core. The user was
+trying to weed out existing orange/red members from that starting recruitment
+evidence, not demand unusually strict formation of every new identity.
+Under current display bands orange/red means below 0.30; that is explanatory,
+not automatic approval of every photo above 0.30 as a reference. Establish
+the pre-rebase own-core score/reference binding before applying exclusions;
+a score against an already-starved final core must not redefine the starting
+evidence retrospectively. Exclusion from reference influence is not eviction:
+those members remain available for reassessment, qualified correction and
+coherent grouping under their distinct gates. Starting cast selection must
+not silently impose its cutoff/support requirements on new-owner clustering.
 
 The user clarifies **0.80 or higher against its own identity** as the
 initial Angels/Sisters reference-backbone selection at the start of rebase,

@@ -1,21 +1,992 @@
 # 2026-11-12: test the scope of existing-member refinement
 
-**Status:** holding (agreed goals and selected maintained repair through
-spine RA2j; historical shadow evidence retained; bounded Sandbox installation
-authorized and installed; transient-intake completion repair selected)
+**Status:** holding (normal FULL/LEAN/FAST restoration and experimental
+separation selected through spine RA2j; prior directed delivery/failures
+remain evidence, not the current execution target)
 
 **Owner:** this note records refinement theory, exact feedback/Q&A, audit and
 dated execution evidence. The main reassessment plan owns agreed goals and
 the iteration checklist. The execution spine remains the sole active plan;
 RA2j owns selected repairs, RA2b broader lifecycle and RA2d rule acceptance.
 
-**Resume gate:** finish selected maintained-path repairs, re-audit actual
-outcomes against the complete contract and A01-A17, then resolve measured
-policy/design conflicts before independently checked Sandbox publication and
-actual viewer verification under RA2l/RA2m. No new reset/intake/extraction.
-Numerical acceptance remains RA2d; Production remains untouched.
+**Focused continuation:** new work starts with
+[SIMPLE review, tuning and housekeeping](2026-11-16-simple-review-and-tuning.md),
+selected through spine RA2j/RA2d/RA2o. This older record retains its raw
+sources and unique evidence; it does not reactivate experimental obligations.
 
-## Current checkpoint: iteration10 installed and quality disposition verified
+**Resume gate:** restore bounded normal import first using the selected
+contract below, isolate experimental execution, then verify profiles and a
+reversible small Sandbox proof. No full rebase/reset, Production mutation or
+model downloads. Earlier directed numerical/visual acceptance remains
+deferred under RA2d; neither relocation nor normal-flow tests close A01-A17.
+The later [clean Sandbox restart permission](#nov-15-clean-sandbox-restart-after-core-restoration)
+adds a checked fresh rebase after restoration/organization/source gates;
+it does not authorize wiping the current area during implementation.
+
+## Current checkpoint: corrective implementation and original-input recovery
+
+**Current clean-rebase boundary:** the latest
+[Production/Source/Working clarification](#clean-rebase-clarification-production-source-and-disposable-working)
+supersedes the merged Production-plus-old-Working manifest as the next input
+gate. Verify/reuse Source only if it represents the selected current
+Production baseline; otherwise refresh it, then rebuild clean Working.
+Old Working is disposable contaminated test output, not an active overlay.
+Normal restoration/organization remain verified; stable whole-library
+composition is fixture-verified. Guarded Source refresh/strict reset
+passes real preview/apply/separate check. Fresh LEAN preparation completed;
+the initial Various-policy preview failure is preserved. Narrow repairs now
+pass consolidated tests. No assignments have been applied yet. Preview02's
+vector audit and preview03's destination-collision audit blocked publication.
+Their producer fixes are tested; policy-corrected preview07/audit pass.
+Apply07 has since stopped before publication with the repository-catalogue
+relative-path failure. No task writer, publication journal or applied receipt
+remains; failure evidence is preserved. The focused continuation owns the
+next repair/readiness gate and subsequent human review, not another reset.
+**User resumed after reboot on Nov 16 at 09:22 CST.**
+The restart handoff is repository `tmp/rebase_simple_finish.md`; its code,
+preparation, baseline and daily-proof pause bindings match. Post-fix consumer
+tests and the initialized daily-import proof resume before full-root preview03.
+The previously paused worker
+withdrew its unfinished manifest-ID patch; the small behavior-preserving
+incoming selector extraction remains, with40combined manifest/duplicate
+tests passing. Daily incoming-ID/version rules remain required, not delivered
+by that extraction. See the [runbook boundary](../art/likeness.md#clean-production-source-refresh-and-working-reset).
+
+**Overnight continuation selected:** subsequent
+[unattended execution and viewer authorization](#overnight-clean-simple-execution-and-viewer-acceptance)
+allows resolving clear documented choices without asking again, discarding
+all prior Working history, and rerunning full intake through SIMPLE outputs.
+Guarded baseline implementation passes45baseline/reset/quality tests and
+real preview/apply/check. Pre-run composition passes parent219shared consumer
+tests and50latest composer/import/engine tests. Actual preparation completed;
+preview failure selected a narrow producer repair and verified preparation
+reuse, not a baseline reset or repeated four-hour intake.
+
+### Nov 16: all-steps authorization and pre-publication vector audit
+
+User source, preserved verbatim:
+
+```text
+Well let's go ahead with all the steps and I want a final recap of each step, what it did, what viewers are available and how long steps took from the timings.
+```
+
+- User authorizes the remaining audited Sandbox apply, output checks and
+  actual viewers, with a final step-by-step timing/viewer recap. Production
+  remains read-only. This is not permission to publish a demonstrably broken
+  identity result, fabricate quality approval or rewrite earlier receipts.
+- Preview02 actually exited0 in690.709seconds, ending11:37:47Z. Its source
+  conservation is5469physical rows:3298canonical inputs,404exact aliases
+  and1767source holds (including1600same-content/different-ID nonvoters).
+  There are87frozen cores, but **all1158candidates** are held for
+  `missing or invalid face vector`; assignments/clusters are both empty.
+  The3298moves are native refresh/normalization plus4non-core Review routes,
+  not successful reassignment/group formation. Publication is blocked.
+- Exact old preview, original composer3b08502c... and importE397..., plus
+  log/start/process/finish metrics are preserved byte/hash-verified in
+  Working `_reports/runs/normal-rebase-simple-rebase-20261116-02-failure-01`.
+  Seven files; evidence SHA256:
+  `251ba0fd8bfeea8637616b28a880930838e244934da98a8a03b5fe27bb7fe4f9`.
+  Root writer is absent. Retained composer worker traces actual vectors and
+  at most3selected samples before a narrow regression/fix and new preview.
+  No threshold/face guard relaxation or four-hour preparation repeat.
+- Bounded companion: normal-import worker verifies actual launcher
+  normalization/replacement/check/undo with at most3copied source photos
+  in new `Working/normal-flow-proof-20261116-incoming-01` only. Explicit
+  cache/policy/offline models; no full-root inputs/cache or Production writes.
+  Its output is fixture-scoped live proof, never real-person identity truth.
+  Finish this small proof before another heavy full-root writer.
+- Recorded preparation wall time is14871.122134seconds (manifest statistics),
+  within15708.5907544seconds for failed preview01 as a whole; do not add them
+  as separate sequential costs. One worker,3298rows,16725image files/
+  10804009018payload bytes. Outcomes:3258compared,37compared-overlay,
+  3junk-candidate. Baseline receipt has no recorded duration; final recap
+  must say not captured, not infer elapsed time from file timestamps.
+
+### Nov 16: post-reboot continuation
+
+User source, preserved verbatim:
+
+```text
+Let's pickup where we left off and read the C:\Soverign-Territories\soverign-territories\tmp\rebase_simple_finish.md
+```
+
+The branch, HEAD and149-entry worktree match the handoff; composer/import/
+products/preparation-code hashes, selected preparation and baseline bindings
+also match. No task writer was found at entry. Parent directly verifies the
+existing daily-proof pause receipt SHA256:
+`e3303d5941683003dcaafb66071cab7358d4ce836f527c817720315fdfc0e60a`.
+A helper's missing-path claim was false; its unnecessary recursive read-only
+search was stopped by exact shell ID. No proof reset or evidence overwrite.
+The former worker context did not survive reboot; a bounded replacement
+resumes only the existing daily proof. Parent runs post-fix consumers before
+new preview03. The companion must finish before the heavy full-root job.
+Source, prepared outputs, numerical policy and Production remain unchanged.
+
+Post-reboot consumer consolidation passes238tests:656.473seconds in unittest,
+718.447seconds command wall time. The actual one-photo daily FULL preview
+passes with1assignment/0holds and correct generated ID in253.5731533seconds.
+Apply stops before publication/journal on a260-character aligned-evidence
+target (`os.replace`, WinError3; Windows long paths disabled). Originals and
+empty catalogue remain hash-identical. The proof's
+`_proof-evidence/incoming-blocker-20261116.json` preserves the failure,
+preparation inventory and limits; SHA256:
+`810d2eb15d1c7d693751d59541d5eaaae1eb21fc16731a88c99c941dcade396b`.
+Apply timing was not captured because the shell wrapper stopped on stderr.
+
+A focused Windows regression reproduces the same failure before repair.
+Engine persistence/cache verification and Review verification now use
+extended filesystem paths for exact aligned artifacts, retaining complete
+source/model hashes, reparse checks and ordinary report URLs. No OS setting,
+model, policy or numerical behavior changes. The test verifies long-path
+atomic persistence, reuse, cache/Review verification and tamper refusal.
+All93affected engine/Review/composer/import tests pass in17.029seconds.
+Engine SHA256:
+`012729b33bc2c09ff8792a0a9225f2bae42f9e8df49d38daa408b5ba744ddf66`;
+Review SHA256:
+`68f1fbc3a752b26a4c152e6a0f28d06b449a6862a3607a5a0bf1654df511aaec`.
+The companion resumes with new run `incoming-full-02`, preserving failed01.
+Actual full-root preview03/apply remain unstarted pending this proof.
+
+The follow-up actual FULL02/LEAN03/FAST04 CLI cycles now pass preview/apply/
+check/undo, with apply times18.0665665/16.2555031/3.6868566seconds.
+The260-character artifact persisted; final undo restores the initial arrival
+and empty catalogue exactly. Applied receipts, history bindings, previous
+natives and the failed preparation remain preserved. Receipt:
+proof `_proof-evidence/incoming-complete-20261116.json`, SHA256
+`05cfd382ecc22e211d69532c95c79009fec8e04fae95057e186db9e4b4c04491`.
+The re-arrivals reused the same original bytes, so this does not prove
+distinct-byte versions or incoming Various prepared-claim transfer.
+The bounded companion continues with a lossless PNG re-encoding of the
+same original and its established ID, explicitly a mechanical version
+fixture, not a different photograph relabeled as the same person or an
+image-quality improvement claim. No new Source photos, forged lineage,
+runtime edits or numerical changes are authorized by that proof setup.
+
+The same-photo lossless PNG attempt stops explicitly at the existing
+`photo:pic_` full-original-SHA collision guard (preview1.0023743seconds,
+exit1). FULL05 base apply/check/undo pass; initial arrival/catalogue restore
+exactly, and the fixture is preserved. Receipt:
+`_proof-evidence/incoming-lossless-followup-20261116.json`, SHA256
+`bfeea346fb172638a2f9cfa93b4ca4412be9e8e8ba22f6dc8a214f42d191ce6f`.
+Do not relax that guard for a test: content-derived IDs are byte-bound.
+One final bounded attempt instead uses the original's actual source/platform
+image ID from its verified filename, not a fabricated ID or another photo.
+Mutable content-ID version semantics are not approved by this follow-up.
+
+That external-ID scenario passes: actual source basename normalized to
+`photo:image_7513774464536687450`; FULL base and distinct-byte PNG update
+pass preview/apply/check/history/exact undo. Apply times14.7867091and
+16.0655355seconds. Owner/name/person/photo IDs and non-content catalogue
+fields remain unchanged; previous native/manifests verify. Initial arrival/
+catalogue restored; no companion writer remains. Receipt:
+`_proof-evidence/incoming-external-complete-20261116.json`, SHA256
+`45f143f6e2b4ad203a2c9f8755f70a5d746901ab711491942c50ce256692f29f`.
+Incoming Various prepared-claim transfer remains fixture-tested, not live
+proven: do not forge a claimant to close it. RA2j retains that explicit
+residual separately from the demonstrated daily profiles/external-ID update.
+
+Whole-root corrected LEAN preview03 starts15:55:21.8313187Z, shell3777,
+Python24800/parentcmd5348, with exact preparation809eb...reuse and composer
+c1bed6c9/engine012729b3...bindings. One startup snapshot confirms148.8125CPU
+seconds and1,085,654,785read bytes, zero write bytes; code/input/config freeze
+applies. Scratch log/start/finish metrics use `simple-rebase-preview-03*`
+under repository `tmp/normal-flow-restoration`. No apply yet: actual candidate
+outcomes, cast/name/lock continuity and conservation must pass first.
+
+### Nov 16: preview03 outcome audit and canonical source-ID repair
+
+Preview03 exits0 in773.5151686seconds, with815assignments,127clusters,
+343candidate holds and complete1158candidate coverage. Only1candidate has
+invalid-vector evidence;342need existing-identity review. All5469sources are
+classified/hash-bound. No frozen-core or locked-photo owner changes occur.
+Only2Drakness non-core Gallery photos move to that same identity's Review;
+all other Angel/Sister physical counts remain unchanged.
+
+Apply is nevertheless blocked: multiple raw Facebook filenames were assigned
+content-derived IDs during inventory but reverted to platform image IDs when
+building destination filenames, colliding with existing native refreshes.
+Preview SHA256:
+`0a41e6c2087350f584b67682066118b72ef611dded9d97182b63ed87ffe76847`.
+The complete preview, producers and metrics are preserved under Working
+`_reports/runs/normal-rebase-simple-rebase-20261116-03-audit-blocker-01`;
+9files verify in preservation-evidence SHA256
+`a970c5505203d940b672fcdc2f4290dd96c1f481240e911186e2c1c69f8f6c43`.
+Two tests verify separately in immutable supplement SHA256
+`f5a28267e165146111f915cbd78324d4fbcb65144c398a85d9613238274bf541`,
+correcting the helper's wrong test-path lookup.
+
+The composer now shares normal import's arrival-name rules before source
+classification. Planned destination names must retain that ID, and duplicate
+case-insensitive destinations fail explicitly. No threshold/identity policy
+changes. Corrected read-only classification gives3108active/1799aliases/
+562holds, changing2694raw-name IDs. Two selected physical aliases were not
+in the old preparation, but their exact bytes were already prepared.
+
+Explicit external reuse now verifies the complete parent preparation and all
+its current original bytes, then binds the selected subset and exact-byte
+aliases separately. Conflicting selected-native hashes refuse alias reuse.
+Historical generation/source rows/manifests remain unchanged; retained
+publication keeps the true prepared-source row. Default normal reuse stays
+exact. All147composer/import/manifest/engine/retained/duplicate tests pass in
+86.688seconds, including canonical IDs, collision refusal, unused-source
+tamper detection, subset and alias bindings.
+
+Frozen composer SHA256:
+`914057fe81a7f60d6f3918c32d8f6717902bc5040ecc87677202defcc217d0c5`;
+products SHA256:
+`06313f56bb635ed844bdd4f1f53bfa9d94e62d9f5d3bd1ea66f018be0e18cd1f`.
+Preview04 was interrupted after3.706seconds (exit0xC000013A; literal `^C`),
+not a demonstrated producer failure; its metrics remain unchanged.
+Supported preview05 now runs from16:44:29Z, Python27688/parentcmd40544,
+attached shell `simple-preview-05`. Startup CPU129.234375seconds and
+877730742read bytes confirm activity. No duplicate writer, apply, reset,
+new models or repeated four-hour preparation. Freeze code/config/inputs;
+actual outcome/cast/conservation/zero-collision audit remains the apply gate.
+
+### Nov 16: preview05 exact-alias publication gate
+
+Preview05 exits0 in724.3379597seconds. Actual source conservation is5469
+classified/hash-bound rows with zero unclassified. The1063candidates have
+exact, nonduplicated coverage:798assignments and265holds, including264
+existing-identity reviews and1invalid vector;135clusters are not extra photos.
+There are68cores/1993frozen references and52audit-only Gallery members.
+Source holds remain358ambiguous-owner rows,203different-ID nonvoters and
+1nonselected version. Preparation reuse verifies3298parent rows and selects
+3108, with190unused verified inputs and2exact-byte physical aliases.
+
+The3108moves have zero duplicate destinations or stable-ID mismatches.
+The9normalization moves are already included; a helper incorrectly added
+them twice and its projected counts were rejected. Direct parent audit
+confirms zero named Gallery owner changes, zero frozen/locked owner or bucket
+changes, unchanged Angels463/Sisters803physical totals, and2Drakness photos
+routed to the same identity's Review. A third low-member correction routes
+Lucia Reyes to her own Review.
+
+Apply is withheld for15existing targets: each is an exact-byte same-ID alias
+of its selected Various source, but ordinary move validation rejects existing
+paths. Immutable preview/producers/tests/alias bindings are preserved under
+Working `_reports/runs/normal-rebase-simple-rebase-20261116-05-audit-blocker-01`;
+evidence SHA256:
+`3ae60b32e71891ee0bc4f1b65eb45d5a5d4879771b36359e0492d43c42381a90`.
+The repaired composer records `exactAliasTargets`; only the verified
+source/target/full-hash binding permits coalescing that physical alias.
+Other existing paths remain refused. Both original paths enter transaction
+backup, and the focused regression proves publication plus exact two-path
+recovery. No thresholds, owner policy or historical preparation changed.
+
+The corrected142composer/import/maintenance/retained/gallery tests pass in
+168.449seconds; an earlier runner's2nonexistent module names were corrected.
+New preview06 starts17:07:45.2118814Z, attached shell3886,
+Python25544/parentcmd29684. Composer SHA256:
+`15b1a0a2430516be8f973d680198d1de43ba70d29f901c7efac94850ab42b2b3`;
+maintenance SHA256:
+`4e4459fbc14988030a53fa4fde65092343756ee4fa4b51d2618719e1c2e5a222`.
+Readiness CPU/I/O confirms activity. Freeze runtime/config/inputs; audit
+actual outcomes and alias coalescence before same-run apply/check/viewers.
+No full-root publication, reset or repeated preparation had occurred then.
+
+Preview06 subsequently exits0 in715.2525481seconds with the same matching
+and cast result. Preview SHA256:
+`d40b7ef387a2d1d3b9565ec648a3bc811b0da46bdd119446002e451dfdd30077`.
+Parent's durable `normal-rebase-simple-rebase-20261116-06-preview-audit.json`
+verifies all15alias source/target byte hashes and binding/current producers.
+Projected physical primary rows are5454:15exact physical copies coalesce,
+not15logical photos lost. Angels463/Sisters803 remain unchanged.
+Before apply, B: has429859274752free bytes. Same-run06 authorized apply starts
+17:20:25Z, attached shell3900, Python49232/parentcmd30868; CPU/I/O confirms
+readiness. Freeze runtime/config/inputs until completion, then inspect actual
+receipt/journal and separate check/repeat before browser acceptance.
+
+### Nov 16: protected Gallery publication permission correction
+
+Apply06 fails nativeexit1 after761.7043268seconds, before staging, journal or
+library publication: protected Sisters/Drakness Gallery cannot lose the
+2low-member photos to Review. No originals/catalogue changed; aligned-evidence
+sidecars were produced. This is not a partial-publication recovery case.
+Original preview/producers/log/timings are byte/hash-preserved under Working
+`_reports/runs/normal-rebase-simple-rebase-20261116-06-permission-failure-01`;
+evidence SHA256:
+`ebb7db03e0218cbf7127a28d09e3fac3e35a3380912ea103f41282542467d912`.
+
+The earlier audit correctly found no owner/core change but missed that the
+existing policy also forbids protected Gallery bucket removal. Policy stays
+unchanged: the planner now records recommendation-only Review evidence for
+protected identities and categories with automatic splitting disabled.
+Those audit photos retain Gallery; permitted unprotected corrections still
+execute. Preview now preflights publication permissions, and apply repeats
+that validation. In-place native preparation is not a membership move.
+A diagnostic mistakenly included all1237in-place permission rejections;
+the actual relocation blockers were exactly2, not1237. No pool-policy fix
+or broad permission bypass was needed.
+
+All70composer/import/maintenance tests pass in12.293seconds, including
+protected/default, protected/person, disabled-split and permitted-split
+low-member cases. Preview07 starts17:39:35.7514224Z, attached shell3908,
+Python30032/parentcmd35456, with verified existing preparation. Composer SHA:
+`609515d23b575c67ea4c41c1d770b3a4375d27655a33918fe46aa9ef9c8bf98f`;
+finisher SHA:
+`3530a5dd7377e43265456d2b61031db1a94aa0fdf82f0b30405564455b413952`.
+CPU/I/O confirms readiness. Freeze code/config/inputs until completion.
+Actual outcome/permission/alias audit precedes same-run apply/check/viewers.
+Preview07 subsequently exits0 in682.7456842seconds; durable preview-audit
+verifies unchanged source/policy hashes, all permissions, both15alias paths,
+complete1063candidate coverage, zero destination/ID/owner/core/lock changes.
+The2Drakness photos now remain Gallery with recommendations only; Lucia's
+permitted Review correction remains. Preview SHA256:
+`2531fc8a6ca9398f70654ab85072bf1ca638912f92c76eeb7d131da124f320a6`.
+Same-run07 apply starts17:51:39.2895427Z, shell3912,
+Python43788/parentcmd32864; readiness CPU/I/O confirms activity. Its helper's
+start metadata mistakenly drops leading25from that hash; runtime does not use
+this logging field. Preserve it and record a provenance correction, not a
+rewritten historical start record. Freeze until actual receipt/check/viewers.
+Publication staging is first observed18:07:30Z; approximate native-file
+counts progress149at18:09:46Z to219/3108at18:12:57Z. These are not verified
+completed rows or installed files. No publication journal yet; CPU/I/O
+advances. The initial20-40minute remaining estimate is not supported by this
+early staging pace; preserve timings rather than promise completion or alter
+runtime mid-run. Await existing shell3912's notification.
+
+### Nov 16: safe reboot pause
+
+User source, preserved verbatim:
+
+```text
+Whan you reach a stopping point - let's pause, commit where we are and what is left to tmp/rebase_simple_finish.md as well as your memory so I can reboot my machine to apply patches and then we can resume again.
+```
+
+The requested handoff is written to ignored `tmp/rebase_simple_finish.md`,
+including exact roots, producer hashes, receipts, timings, actual proof state,
+remaining gates and the supported new-preview03 command. A clarification
+about Git intent was unavailable; no sweeping commit/push of the149-entry
+dirty worktree was made. Files/session context are preserved, not represented
+as permanent long-term task-status memory.
+
+Actual vector root cause is fixed: candidate `Photo` objects were recreated
+after `Space` assigned centered vectors, leaving `vec=None`. Reuse the
+already-centered candidates and measurements, preserving original-byte
+decisions. Three actual prepared samples have finite128-element SFace vectors.
+Worker100targeted tests/compile/help/diff pass. Final composer SHA256:
+`c1bed6c996a51b75b0c27f8ff4f21b94c90476bb05747809fd550f77294d6892`.
+Parent independently verifies it, focused test, unchanged import/products
+and Source manifest hashes. Receipt r08 is preserved; preview03 remains
+pending parent consolidation/execution, not accepted from fixtures.
+
+Daily proof only initialized under the valid Working `_sandbox-state` root;
+no preview/inference/apply/check/undo/publication/cache ran. Initialization
+exit0,0.0950181seconds; pause receipt and inputs are hash-verified. Resume
+the initialized proof, do not overwrite it or assume it needs recovery.
+
+Both workers are idle. Parent process snapshot at14:50:32.9069339Z finds
+zero task jobs; an erroneous read-only helper search was subsequently
+stopped by exact shell ID. No whole-root apply/partial publication exists,
+no preparation reset is needed, and no new work starts before user resume.
+
+### Nov 16: repaired preview with completed preparation reuse
+
+Historical preview02 startup and fixture evidence; the audit above overrides
+its running-process state and does not accept exit0as successful matching.
+
+- Both code slices are implemented and frozen. Parent consolidates236tests
+  across composer/import/engine/manifest/duplicates/maintenance/retained/
+  People/Review: shell3596exit0,151.056seconds. Worker120additional focused
+  import/originals/duplicates/retained tests pass; read-only incoming-version
+  correctness review finds no significant issues. These are fixture/consumer
+  results, not actual daily-import or final GUI acceptance.
+- `simple-rebase-20261116-02` preview started
+  `2026-11-16T11:26:16.3024916Z`: attached shell3607/controller7392/
+  Python37132/cmd50568. Explicitly reuses the completed selected manifest
+  `809ebd683dea804774c04ee30d082e2948c50bbf3556d18cd6585a219a9a79dd`,
+  verifying source/profile/recipe/config/artifact bindings, not rerunning
+  preparation. One startup snapshot confirms157.921875CPU seconds and
+  4,860,912,495read/0write transfer bytes; initial empty log is not a hang.
+  Scratch log/start metrics are `simple-rebase-preview-02.log` and
+  `simple-rebase-preview-02-process.json` under `tmp/normal-flow-restoration`.
+  Wait for its completion; no duplicate writer, code/input change or reset.
+- Frozen composer:
+  `3b08502cc82d159d61138a29f40751b928c822468e5609521189d77f7c383dc5`;
+  normal import:
+  `e3972584c4d20cafa79595cfd13f76612ca2b1ab29cfe435c925f9b53630d5df`.
+  `ra2j-simple-rebase-provenance-r07.json` records the pool-role fix,
+  strict reuse and separate generation/validation provenance. Legacy
+  generation hash stays explicitly unknown. Future generation has start/
+  completion seals; incomplete/mismatched seals fail closed.
+- Daily import now establishes missing IDs from original bytes, retains valid
+  IDs and guards short-ID collisions with full hashes. Genuine-original
+  unique-newest selection excludes prepared mtime; ambiguous/invalid lineage
+  remains explicit. Verified prepared claimants and retained sets retire in
+  the same recoverable publication, redirecting current normal-history
+  bindings without rewriting historical manifests. True locks, workflow
+  selections and unsafe content-bound decisions hold automatic updates;
+  existing explicit-update checks remain. Live daily-import proof is still
+  required after the full-root writer reaches a safe boundary.
+- Actual preparation-native browser link loads476x557pixels. The large
+  comparison page exposes15,280lazy images but its integrated snapshot is
+  unavailable; this is not claimed as full comparison or Gallery/Overview/
+  Review browser acceptance. Final actual viewers remain a separate gate.
+
+### Nov 16: preparation complete; Various-policy preview failure
+
+- Shell3523 exited1 at `2026-11-16T10:54:36.2274440Z`, after
+  15,708.5907544seconds. All3298selected preparation report rows completed
+  with one worker; comparison report published. These are preparation rows,
+  not the5469physical input copies or3465distinct input byte hashes.
+- Subsequent error at logline6599:
+  `normal rebase stopped safely: category has no likeness policy: Various`.
+  Whole-preview receipt is absent; no assignments were published. Former
+  Python29200/controller47808 are inactive. Source/Production remain unchanged.
+- Nine original code/config/log/manifest files are preserved with verified
+  byte lengths and SHA256 under Working
+  `_reports/runs/normal-rebase-simple-rebase-20261116-01-failure-01`.
+  `preservation-evidence.json` SHA256:
+  `08e8f908713bc76cd0a87fba64cf492169d909c240556e6b3d4a340166e1cc09`.
+  The complete selected `manifest.json` and original composer94264c9c...
+  are preserved; prepared images remain in their original run location.
+  No full-library copy, reset, receipt rewrite or retry occurred.
+- Retained composition worker owns only the failing composer and focused
+  tests: trace the Various pool/candidate policy lookup, reproduce it,
+  preserve intended identity policies, and validate reuse of the completed
+  preparation through its actual producer/config/profile/source bindings.
+  Do not add a Various identity policy, relax thresholds or repeat intake
+  just because the whole-preview receipt was never produced.
+- Independent selected daily incoming-ID/version worker owns normal import
+  and focused tests before the new current-code-bound preview. Preserve
+  valid IDs; establish missing IDs from original bytes; prefer genuine
+  incoming replacements with verified lineage/recovery and true-decision
+  safety. Parent collates both repairs and consumer tests before any writer.
+  Existing prepared outputs are reusable only after exact validation;
+  actual output/GUI and human acceptance remain open.
+- **Preparation provenance exception:** the old selected manifest binds
+  recipe/configuration/profile, source hashes and output artifacts, but no
+  historical `image_preparation.py` producer hash was recorded. The missing
+  whole-preview receipt does not supply it either. Under delegated disposable
+  Sandbox authority, selected reuse may verify those complete bindings and
+  explicitly retain the unknown historical-code provenance; it must not
+  label a current validation-code hash as the old generation hash. No source,
+  artifact, recipe or configuration guard is waived. The narrow follow-up
+  distinguishes generation from validation hashes and seals future generation
+  code before preparation. Human image-quality acceptance remains open.
+
+### Nov 16: fresh SIMPLE preparation preview started
+
+Historical startup evidence; the completed preparation and failure above
+supersede its running-process state.
+
+- Run `simple-rebase-20261116-01`, profile `lean`, `--dry-run`, started
+  `2026-11-16T06:32:48.0184813Z` in actual Sandbox Working. Explicit cache is
+  Working `_likeness/general/cache.json`; policy is the tracked
+  `data/art/likeness-engine-policy.json`. Preparation/measurement and preview
+  sidecars are allowed; assignment publication awaits the real preview gates.
+- Attached shell3523, controllerPID47808, PythonPID29200, parent cmdPID21124.
+  One startup snapshot confirms a live15-thread Python process with
+  2,770,532,549read/484,447,558write transfer bytes. Log is initially empty;
+  that is not evidence of a hang. No duplicate writer/waiter was started.
+  Scratch log/start metrics:
+  `tmp/normal-flow-restoration/simple-rebase-preview-01.log` and
+  `simple-rebase-preview-01-process.json`. Wait for completion notification;
+  then inspect receipt coverage, preparation, names/locks and holds before
+  same-run apply. Human identity/crop acceptance remains separate.
+- Frozen composer SHA256:
+  `94264c9ca3b63bdf2382412c68560805082f071d6ff2cb3211dcb315d8412fda`;
+  shared normal products:
+  `15fb2d5d27fccfafeafbfa9d202ead496db3c92da144dcfc3bd3dba4ab767875`.
+  Worker correction `ra2j-simple-rebase-composer-correction-r04.json`
+  records90focused passes; parent independently reruns50composer/import/
+  engine tests, all pass. Models load local-only for preview and apply:
+  missing weights fail explicitly without download. Apply still persists
+  measurement evidence after successful local loading. No experiments added.
+- Separate baseline path-preflight correction rejects a Sandbox nested
+  anywhere inside Production before creating state. Combined baseline/reset/
+  quality suite now passes45tests. Current baseline helper SHA256:
+  `98e8bb38b0b39ec2608f59f3971d91c25cf80f8b19c2befa304afa7d18e580dd`.
+  The already installed baseline remains bound to its preserved original
+  producer `fb8813a16aff3a51c778143f656916fdc64c470b249c676208a9854ca3b59257`
+  under `_baseline-state/evidence/simple-clean-20261116-01/implementation/`.
+  Parent independently rechecks original producer, immutable receipt,
+  unchanged shared reset module and Source manifest hashes. No baseline
+  receipt was rewritten or Source/Working reset repeated; current helper
+  code-binding is not substituted into historical installation evidence.
+
+### Earlier bounded restoration and manifest diagnostics
+
+**Nov 15 normal-flow restoration selected:** the user explicitly separates
+ordinary Various imports from rebase and selects FULL/LEAN/FAST normal
+profiles with a separate experimental execution path. RA2j now owns
+[this replacement build contract](#nov-15-selected-normal-flow-and-experimental-composition-contract),
+not another directed cap repair. Code/launcher implementation is selected;
+first runtime acceptance is an isolated, bounded mini-library under Sandbox
+Working, not mutation of the current installed Gallery. Current originals,
+matching artifacts and failure/recovery receipts remain preserved.
+Runtime worker `normal-flow-restoration`
+(`54a43006-8c3d-47e7-a3c5-ad2cadcfb1ba`) now owns code/launchers/tests and
+art runbooks. Parent owns plans, acceptance and pinned handoff. Known prior
+writer PIDs13400/48608 are absent; no directed retry is launched. This is
+At that entry gate, implementation was in progress, not yet a passed
+normal-flow or installed result; the final closeout below supersedes it.
+
+**Final bounded restoration accepted at machine scope:** selected native
+preparation, shared matching, frozen selected-only consistency check, final
+rivals/family metadata, recoverable viewers and prepared-owner history
+replacement are implemented. Frozen normal-import SHA256:
+`69f8429f05938e7d021b62825245f4c24b8254c279e44725e1b21d8ce935000b`.
+Parent verifies all22bound implementation hashes and172affected tests
+(109normal/originals/maintenance/retained plus63viewer tests), all exit0.
+Worker reports routine/isolated quick exits0,19/19mutation cases. Ten copied
+inputs in `normal-flow-proof-20261115-r02`,16copies including the prototype,
+exercise all three final25profile preview/apply/check/repeat/undo cycles,
+known-name Review routing under unchanged draft policy, coherent unknown
+cohort, unrelated-owner preservation and a true-photo-lock hold.
+
+Prepared failure27recovers actual previous native; update28passes exact undo;
+update-view29remains applied solely in the mini-library for inspection.
+Parent launcher check confirms live29applied/content-bound. Parent opens
+actual Gallery/Overview/Review:7/7/13displayed images load, none fail.
+Historical recipe navigation resolves exact previous
+`native-7db417c5e356d9fa.png` with an explicit historical banner. Displayed
+support images are not extra source photos. This closes bounded machine
+runtime/proof, not human identity/crop quality, current-library compatibility,
+full rebase, utility/archive organization or Production acceptance.
+
+**Staging incident disposition:** an earlier staging catalogue write fell
+through the global read fallback and contaminated the tracked empty template.
+Explicit local staging destinations and a sentinel regression fix the cause.
+Preserved contamination SHA256:
+`6f19ce7bdf5572a1b862a0c512f2057950133c2acd3da0a6d005a52f02461ccc`.
+Parent reads the exact initial Git outputs at17:08/17:12UTC: the global
+catalogue was not dirty (the schema was). All ten preserved photo IDs match
+the copied-input baseline; the three people are the two fixture owners and
+the historical `final-full-012` Hollis cluster. Current global template and
+HEAD contents both hash
+`0949a2b944664048b67cc29351d34690c9859c38049bbb4527a2fe1c7ffaf7da`.
+No pre-staging working-tree byte snapshot or intermediate version series
+exists; exact original newline bytes remain unproven. Content attribution is
+reconciled without inferring lost user metadata or rewriting historical runs.
+
+**Organization checkpoint:** `diagnostics` and `family_preview` are physically
+under `likeness_utils`, with dispatch/tests/inventory/runbooks repaired.
+Parent verifies15utility tests,32quality tests, unchanged22normal bindings,
+CLI help and live29check. No eligible dormant module was identified in the
+audited active module/dispatcher/test/launcher scope; active recovery and
+experimental paths are not archive payload. Parent identifies one remaining
+placement gap: the standalone legacy reconciliation controller includes
+auto-merges/category/protection/family actions and has no shared core consumer.
+That controller is now in experiments with explicit `legacy-reconcile`
+entrypoint and lazy `likeness reconcile` compatibility; stable shared helpers
+stay core. Parent's final53focused tests pass, all23normal/controller hash
+checks match, and live29remains applied/content-bound. Controller function
+ASTs preserve behavior; relocation does not certify auto-merging. Both
+implementation workers are idle/frozen; no archive payload was invented.
+
+The broader library attempt did not complete, and its retained output has no
+specific failure traceback; the earlier WinError5attribution is unverified.
+Parent's isolated40-test person-rename run passes. Do not manufacture a
+cause, fix unrelated fixtures or claim the incomplete broad run passed.
+
+**Next entry gate:** verify the proposed source/reference/candidate manifest,
+then implement and verify stable whole-library composition before any reset.
+The existing non-regroup clean-rebase still invokes repeated refinement/
+admission and early family stages; omitting directed/regroup flags alone
+does not establish the requested SIMPLE sequence. The separately authorized
+fresh-baseline source/writer/reset preflight must verify that execution gate
+as well as source coverage. RA2j selects this necessary composition adapter
+using accepted preparation/matching/frozen-check/final-family/viewer/recovery
+primitives, with separate explicit rebase scope and FULL/LEAN/FAST profiles.
+Do not duplicate the matcher, introduce numerical policy or silently
+reinterpret cast-reference/identity/name decisions. A material baseline
+decision must stop for explicit approval. Current Working read-only preview refuses
+3,268missing current identity measurements; do not truncate rivals, migrate
+provenance or run bulk inference to evade it. Runtime worker is idle/frozen.
+No cleanup/reset/commit/Production mutation. Feedback originals remain safe.
+
+**Composition baseline decision gate:** the new composition worker stopped
+without runtime edits, source inventory, inference or library mutation.
+An approved source/hash manifest must distinguish frozen reference photos
+from movable existing Gallery/Review/Various candidates and preserve names,
+true locks and explicit decisions. The normal-only contract does not select
+that whole-library universe. Worker reports102focused fixture tests and
+32quality tests passing; these do not resolve the missing decision or prove
+a fresh rebase. Receipt: `tmp/normal-flow-restoration/ra2j-rebase-composition-blocker.json`.
+User now selects [the full-manifest scope](#nov-15-approved-full-rebase-manifest-scope).
+Next is source/writer preflight and proposed manifest construction for review,
+then approval of its actual reference/candidate IDs before reset/publication.
+Do not fall back to legacy multi-pass flow.
+
+### Nov 15 full-manifest cache-boundary diagnosis
+
+The builder's first dry-run handoff reports8,759hashed physical files,
+278candidates,386aliases and8,095holds. These are provisional diagnostics,
+not an approved reference/candidate population; raw/prepared versions and
+stable-ID provenance still require reconciliation. No report apply,
+population inference, cleanup, reset or publication occurred. Preserve
+`tmp/normal-flow-restoration/ra2j-full-manifest-build.json` unchanged.
+
+Parent read-only reproduction explains the measurement discrepancy:
+`tools.art.likeness_library.domains` and the API's
+`likeness_library.domains` are distinct module/context instances. Setting
+the former did not scope `api.cache_path`; the builder read the global
+legacy cache instead of normal Working's `_likeness/general/cache.json`.
+The normal-domain cache is absent, so the earlier3,268missing-current-
+measurement refusal is not disproved by1,743raw-content matches in another
+cache. All4,267global records survive the runtime Cache filters; filter
+rejection is not this discrepancy's cause. Its SHA-256 remains
+`7d260118b9a1556023e801857713bb4ee08f0ad29675d31fc7c556d5f25660d7`.
+
+Parent independently verifies16focused tests, launcher help and three
+builder/original/correction hashes. The API context/cache boundary and
+accepted-evidence filtering are repaired; the erroneous human
+acknowledgement flag is removed. Preserve the new non-overwriting
+`tmp/normal-flow-restoration/ra2j-full-manifest-build-cache-correction-final.json`
+(SHA-256`18f154bfb96b472b8076ee5d0ae26cb96d8355672f80198c9d3be4601a7a1cbf`).
+Report-stage defects are repaired: public rows resolve their bound
+source paths, known image failures produce incomplete evidence/exit2 and
+programming errors propagate with context cleanup. Parent independently
+verifies19focused tests,32quality tests, launcher help,18implementation
+bindings and all prior receipt hashes. Preserve
+`tmp/normal-flow-restoration/ra2j-manifest-report-stage-correction.json`
+(SHA-256`6220d283d6580c538ba96849827c3dbcafb7bc64852378bb73682d8d1f32cbfa`).
+These are fixture/code checks, not a real population measurement. Do not
+acknowledge away an implementation error, silently migrate legacy evidence,
+or treat the first preview's role/coverage counts as current acceptance.
+Actual source-ID/version conservation and human role approval remain open.
+
+**Bounded source-version evidence:** parent verifies one real same-ID pair:
+Production `Angels/angelica/gallery/angelica_image_7508202904299473073.jpg`
+has SHA-256`6b91103fab2f94381020024a1c04ba76559158169422b0c121f2bf33d34b86b5`;
+Working's corresponding PNG has
+SHA-256`e31cfc0135b80a9efb6161ac7e264c61bf83421b20ef92ae078cc7f54ff72335`.
+Shared `retained_preparation.verify_link` succeeds and binds the PNG to the
+Production-matching retained original at
+`_processing/Angels/angelica/2cb4a65fb76158fc04559147a45bbccd/original.jpg`.
+Thus byte inequality alone is not a source-ID conflict or unique arrival:
+the manifest must distinguish verified prepared generations from genuinely
+unresolved same-ID contents, preserving both provenance and recovery bytes.
+This proves one case, not all2,067reported conflicts. Working catalogue
+SHA-256 remains`818a5a30c5e7259cbe0d1b641793fe76e0fcff807de19ffc20592801389d57fc`.
+No whole-library rescan, report apply, cache write or cleanup occurred.
+
+**Bounded raw-name evidence:** three direct Production Various files have
+Facebook download names that `metadata.photo_id_from_name` cannot yet parse.
+Existing `originals.standard_name` preserves their source numbers and yields
+valid `photo:image_...` keys without hashing or a new naming rule. For example,
+`facebook_1792529292252_7518412780610529536.jpg` maps to
+`various_image_7518412780610529536.jpg` and
+`photo:image_7518412780610529536`. The retained worker now implements/tests
+proposal-only key normalization and verified prepared-version classification,
+using existing naming/lineage helpers. Original names/bytes remain unchanged;
+unsupported names and ambiguous/unverified contents remain explicit holds.
+Do not reinterpret the first preview's2,718missing IDs or2,067conflicts as
+thousands of independently proven source problems. Full conservation and
+duplicate-owner dispositions remain parent gates.
+
+**Corrected source-boundary preview, parent observed:**22focused tests,
+launcher help and direct builder/helper bindings pass. The supported
+`rebase-manifest.cmd --run-id ra2j-source-boundary-preview-r02 --dry-run`
+exits0after about91seconds, with no report directory or general cache
+created. Root-specific writer preflight found no competing library writers.
+The UTF-16log is
+`tmp/normal-flow-restoration/ra2j-source-boundary-preview-r02.log`.
+All8,759physical rows remain conserved:5,469Production/3,290Sandbox,
+zero scan issues. Correct-cache coverage confirms3,268current identity
+rows missing,8,759total missing rows/4,407distinct raw contents. No face
+inference occurred. Provisional roles:842candidates,960aliases,6,957holds;
+24missing IDs,317verified retained versions,2unique Sandbox arrivals.
+There are no qualified cores. These counts are not human acceptance.
+
+**Remaining exact-duplicate proposal defect:** normalization exposes
+multiple Production copies with identical stable ID and bytes. Parent
+hashes the Angelica JPEG above and
+`Various/gallery/facebook_1790095068049_7508202904299473073.jpg`:
+both174,295bytes and SHA-256`6b91103fab2f94381020024a1c04ba76559158169422b0c121f2bf33d34b86b5`.
+Existing `duplicates.keeper` proposes the Angels copy. Current classifier
+holds both as duplicate IDs and then cannot verify the Sandbox prepared
+version against their shared raw source. Retained worker now implements
+proposal-only canonical representation for exact-ID/exact-byte aliases
+using that existing policy, preserving all paths/decisions and one identity
+vote; differing IDs/bytes or conflicting selected/lock decisions stay holds.
+The same slice excludes duplicate physical votes from qualification and
+makes scope-integrity completeness account for actual unresolved states.
+No actual duplicate move, deletion, ownership change or report apply.
+
+**Exact-alias implementation exit:** parent independently verifies25focused
+tests, launcher help and exact builder/helper bindings. The correction
+receipt is `tmp/normal-flow-restoration/ra2j-manifest-exact-alias-correction.json`;
+prior source-boundary receipt is unchanged. Frozen builder:
+`2b15a68461a4a8b08d18208c0924c5b5cdc493e01f6b99b3e9484d2e3d4dbb8a`.
+Parent runs the supported read-only
+`rebase-manifest.cmd --run-id ra2j-exact-alias-preview-r03 --dry-run`
+after a fresh no-writer check. Attached shell`manifest-preview-r03` completes
+exit0; log:
+`tmp/normal-flow-restoration/ra2j-exact-alias-preview-r03.log`.
+All8,759rows are retained with zero scan issues. Provisional roles:
+1,014candidates,2,182cross-root aliases,1,634Production exact aliases,
+3,929holds. Integrity includes719verified retained versions and1,319
+unresolved rows:6ambiguous exact-alias decisions,15different-ID/content
+collisions,537Production content collisions,365Production ID/version
+collisions,2Sandbox content collisions,24missing IDs and370unverified
+same-ID versions. No cores qualify; measurements remain missing.
+No report directory or general cache was created; no inference/cleanup.
+
+Parent finds one remaining producer-coupled false conflict: `_decision_maps`
+copies an anchor pattern by photo ID to every alias; the alias conflict
+checker incorrectly treats each alias folder as an intended anchor owner.
+The known Angels/Various pair therefore appears to have multiple anchor
+owners. Retained worker repairs explicit anchor-owner provenance and adds
+an integrated decision-map/classifier regression; genuine competing owners
+must remain blocked. This does not resolve other conflicts or authorize
+another population run. Source/role acceptance and stable composition/reset
+remain open; no current library writer.
+
+**Anchor provenance verified / review-report build:** parent independently
+verifies26focused tests,32quality tests, launcher help and builder/test/
+preserved-receipt hashes. The integrated fixture preserves a single intended
+anchor owner across aliases while real competing owners still block.
+Correction receipt:
+`tmp/normal-flow-restoration/ra2j-manifest-anchor-provenance-correction.json`
+(SHA-256`291b2b28d4769550874505607e709a0f54f4474280090bf2a2939245ad888189`).
+Frozen builder:
+`1b82d2264169c26e24bdce1116803f9c9f54644ee84b407a003597fc7f48567d`.
+Under the approved proposed-manifest build, parent starts
+`rebase-manifest.cmd --run-id ra2j-reviewed-source-proposal-r04 --apply`
+after writer/hash/destination checks. This writes only a new JSON/CSV/receipt
+review report, not Gallery/source/cache changes or face inference.
+Attached shell`3301` is running after120seconds; log:
+`tmp/normal-flow-restoration/ra2j-reviewed-source-proposal-r04-apply.log`.
+Keep bound code/source files frozen; await completion, then run supported
+`--check` without duplicate apply. The run ID's word "reviewed" denotes
+code review only, not human acceptance of final source IDs/roles. Remaining
+conflict review, stable rebase composition and cleanup are still gated.
+
+### Earlier restoration handoffs
+
+**First runtime handoff is partial, reopened after parent review:** exclusive
+experimental implementations are separated and scoped routing/recovery tests
+pass. The worker receipt reports library-scope, routine and isolated quick
+validation exits0; FULL/FAST operational evidence is preview-only.
+LEAN `proof-lean-003` on five actual source copies/one existing identity
+passes apply/check/repeat/undo, restoring selected sources/catalogue exactly.
+Final verification used cached measurements; no HTML viewer was generated.
+Current Working read-only preview exits1before matching because1,525identity
+vectors are unavailable and membership provenance is unverified.
+
+This is not the requested end-to-end flow: FULL/LEAN currently differ only
+in saved score evidence, not native preparation/products; independent strict
+framing, explicit same-photo updates, final audit/family/GUI and all-profile
+apply proofs remain open. Parent also found repeat-run scope/profile binding,
+unusable cached evidence classification, incoming filename/default-batch
+handling and early inference authorization gaps. The same worker is resumed
+for runtime closure; utilities/archive/fresh reset remain gated.
+Receipt: `tmp/normal-flow-restoration/completion-receipt.json`.
+No current Gallery/Production change or reset occurred.
+
+**Corrective routing/framing handoff remains partial:** the same worker
+reports fixed requested-scope/profile/policy/config binding, current unusable
+cache classification, pending stable-ID Various discovery and authorization
+before persistent inference. Unsupported incoming filenames now fail with an
+actionable diagnostic instead of disappearing from selection. Independent
+selected framing preserves native bytes, catalogue and unrelated photos.
+Parent independently reran the selected originals/normal-import/maintenance
+suite:58tests, exit0, with normal-import SHA256
+`142f6f976b5ac6d0b2ec7261da8843033e26683c296ea8e5390d19b1e58e8a69`
+matching the updated receipt. Worker-reported mini routing run
+`correctness-004` rejects changed scope/profile, passes matching repeat/check
+and recovery, ending undone. Independent framing preview/apply/check/repeat
+also passes in the same five-copy mini-library; these operational results
+are worker evidence, not parent browser or full-flow acceptance.
+
+Integrated FULL/LEAN native preparation/products, explicit recoverable
+same-photo replacement, frozen/final audit and family metadata, HTML
+publication, expanded known/unrelated/unknown/unavailable cases and all-profile
+workflow recovery proofs remain open under RA2j. Continue the retained worker
+on those stages; utility/archive cleanup and fresh Sandbox restart stay gated.
+
+**Native transaction stage delivered, still not full-flow acceptance:**
+FULL/LEAN now invoke selected native preparation and stage retained evidence
+and framing; FAST defers editing/framing. Worker reports six copied inputs,
+all-profile apply/check/repeat/undo and raw-owner same-photo replacement,
+with all journals undone and exact catalogue restoration. These runs bind
+normal-import `ffd0a9648046ec00050413090282da339038e8efb4714e1df35e382af67765b7`;
+they are not operational acceptance of subsequent code revisions. Parent
+independently verifies60selected originals/normal-import/maintenance tests,
+exit0, and current normal-import hash
+`53b500b7fea0ebccaa978204c868952115d78b12bcf315abaf1aaa822a758a49`.
+Injected publication failure restores arrival, previous owner and catalogue.
+An unsafe head crop remains explicitly unavailable, not a relaxed guard.
+
+Existing prepared-owner updates still stop before mutation: safe immutable
+retained-history/LEAN-alias transition is unfinished. Scoped frozen/final
+audits and rivals, final family metadata, complete viewers and expanded
+known-name/unrelated-owner/unavailable acceptance remain open. Preparation
+HTML is not Gallery/Overview/Review acceptance. Continue the same worker;
+freeze and operationally prove the final implementation before downstream
+organization/reset gates.
+
+### Superseded pause and diagnosis
+
+**Nov 15 feedback pause supersedes autonomous continuation:** the user asks
+to explain existing steps thoroughly, return to basics and consider separate
+in-place source preparation and944regeneration before proceeding. No
+average-link repair/retry/new matching/pixel publication is selected while
+that review remains open. Worker is idle/frozen; no image job is running.
+r03completed exit2 at `directed average-link operation cap exceeded; report is incomplete`.
+Seven files/8,900,977bytes are preserved non-overwriting/equal-SHA256 in
+`directed-corrective-starting045-20261115-r03\failure-evidence-average01`.
+No run.json/capture/install. Earlier qualification/storage fixes passed
+their own gates; this is not complete assignment or design acceptance.
+The [new exact feedback and coverage](#nov-15-basic-steps-and-image-only-separation-feedback)
+owns this pause/analysis. The two originals remain in feedback for discussion.
+
+**Read-only command findings:** source preparation and derivative framing
+are already distinct conceptual stages in the image runbook.
+`prepare-images` makes sidecar comparisons without moving/replacing native
+photos. `people-gallery` maintains derivatives/viewers without matching,
+but also normalizes files and has backup/action-recovery gates.
+`originals --force` rebuilds configured-size Gallery products independently
+of matching; `--no-repoint` suppresses workflow changes and `--no-headshots`
+omits head generation. It still normalizes filenames, migrates/prunes
+derivatives and uses configured roots; it is not a strict frame-only mode.
+Its Gallery scanner does not regenerate Review images. No verified command
+currently establishes the entire requested native-cleanup/unchanged-path/
+only-modified-original-backup contract. That gap is feasibility/contract
+discussion, not permission to implement/run a new mode.
+
+Native pixel edits change measured content and require valid refreshed
+measurements/new source bindings before further matching. Derivative-only
+rebuilds leave native pixels unchanged and must not reassign identities.
+A simpler matching baseline must retain new-person formation and weak-member
+assessment; postponing appearance labels/surname associations must not mean
+leaving usable intake permanently unassigned. No numeric gates are newly
+selected by these findings.
+
+### Earlier corrective execution checkpoints
+
+**Boundary representation repaired; r03execution assigned, not accepted:**
+each boundary is interned before the next is retained; aggregate interned
+bytes and per-boundary expansion retain64MiB guards. Rehydration validates
+hashes/size/version/metadata/indexes; consumers and publication rebinding
+use validated expansion. Scale fixture10x3,290rows:
+86,666,959raw bytes ->15,671,909interned bytes, exact roundtrip. Tests
+pass123directed/recap plus clean-rebase capture/publication integration.
+No schema change. Actual failed snapshot size cannot be measured from r02
+because no run.json/capture exists; fixture bytes are not actual-run bytes.
+New frozen fingerprint
+`0d0ffe8824d05d4b1fd48c59464b79bb8f776a8b82648cb21add52e6411e6b79`.
+
+Parent owns acceptance/recipe/installation/disposition/browser/publication.
+For this one retry the retained worker is explicitly assigned to execute
+and supervise `directed-corrective-starting045-20261115-r03` until exit and
+notify the parent, rather than hand back a live child shell without a
+completion owner. It performs exact hash/writer/new-run/log preflight and
+the supported original-source --apply preview with all bindings; no
+runtime edits/new extraction/install/next recipe. Log:
+`tmp\corrective-reformation-implementation\preview-045-r03.log`.
+Startup is confirmed from the actual log: both recovery snapshots verified
+and cached-only saved-preparation verification started. Result/PID/capture
+still require completion evidence; no outcome or full repeat/reverse claim.
+
+**Preserved r02size failure: previous blocker, not live state:**
+Shell2426completed exit2 with
+`ERROR: directed immutable boundary evidence exceeds 64 MiB; comparison incomplete`.
+Cached measurement progress, ordinary21cast-core/2,230candidate preparation
+and preliminary refinement/naming ran; these are not final directed
+outcomes. `run.json` and capture are absent; no install. Seven files/
+8,897,282bytes are preserved non-overwriting/equal-SHA256 at r02's
+`failure-evidence-boundary01`, alongside the untouched r01evidence.
+Only lossless immutable-boundary representation/consumers/schema/tests are
+reopened. Measure repeated evidence/bytes and reuse validated interning,
+preserving all views/witnesses/precision/negative context, old bindings and
+64MiB bounds; no limit inflation/truncation. Parent retries original source
+under045-r03only after tested measured repair/new fingerprint. No writer.
+
+**Qualified-work repair and r02launch: prior checkpoint:** the failure
+was redundant quadratic qualification work, not a changed gate or cap.
+The saved Drakniss pool has321candidates/313unique neighborhoods; legacy
+estimate8,074,789operations versus952,574under the unchanged2,000,000cap,
+311hypotheses in2.748s. Exact independent-content/pairwise-independent
+pools use the proof-preserving bitmask path; constrained pools retain prior
+logic. Caller does not requalify the same anchor result. Tests pass82directed/
+4focused. New frozen fingerprint
+`8d7946dd48722c24528aff54e14b2c8ed39d85da904bd1139d619ae54d624467`;
+all13recorded hashes independently match before launch.
+Retry `directed-corrective-starting045-20261115-r02` ran on attached
+shell2426, log `tmp\corrective-reformation-implementation\preview-045-r02.log`,
+original source and all dominant/quality/capture bindings. It has now exited
+as recorded above; do not relaunch it or proceed050/060yet. No install.
+Actual outcome/full repeat/reverse remains unverified.
+
+**Preserved first full-population failure, superseded as live state:**
+`directed-corrective-starting045-20261115` / shell
+`corrective-preview-045` completed exit2:
+`ERROR: directed reference-neighbourhood qualification cap exceeded`.
+All3290cached measurement progress was recorded; `run.json` and the call
+capture are absent, so no outcome/parity or installation claim is possible.
+Seven source/implementation/failure files (8,894,857bytes) are preserved
+non-overwriting with equal SHA256 at that run's
+`failure-evidence-qualifier01`. Originals remain. No live writer.
+Only the exact qualification producer/tests are unfrozen for bounded
+redundant-work repair; no gate weakening, cap inflation, witness truncation
+or owner omission. After measured stress regression and a new fingerprint,
+retry original inputs under a new045-r02run, not the partial run. Then050/
+060and actual captured repeat/reverse still remain. Production untouched.
+
+**Last frozen corrective implementation, not accepted full-population output:**
+fingerprint
+`5666498219736e8c4bc540e773137125bdc97ac6dcfa5d34cf7dcad6f5b17a9b`,
+all13listed file hashes independently matched before launch. The
+destination0.60/margin0.30coupling is removed from corrective recipes:
+normal individually qualified category admission/margin plus four target
+supporters govern correction; frozen source<=0.30/two source witnesses or
+exact different evidence, hard locks and negatives still govern release.
+Historical recipes remain unchanged. Final tests pass80directed,
+20continuation and actual capture integration; earlier40recap/51metadata/
+reader and19isolated checks passed. Final unskipped `bin\check.cmd` exits0,
+including EOF, data and markdown hooks; the earlier permission failure is
+historical, not silently bypassed.
+
+All three inventory previews exit0 for starting045/050/060. Full3290
+matching preview `directed-corrective-starting045-20261115` used
+shell `corrective-preview-045`, log
+`tmp\corrective-reformation-implementation\preview-045.log`. Both verified
+recovery snapshots and cached-only preparation verification are observed.
+No install/new extraction or Production scope occurred. The failed job
+above has exited; do not launch050/060until the demonstrated repair passes.
+No outcome/candidate selection or actual repeat/reverse result is claimed.
+
+**Command correction:** `--source-run` takes the plain
+`directed-rehearsal-20261112` name, not its absolute directory.
+`--capture-regroup-call` is apply/check/install-only, not inventory dry-run.
+The failed argument attempts are preserved; corrected inventories pass.
+For every actual preview/check/install, repeat regroup/directed/recipe,
+dominant-provisional, exact undone-quality-run and capture bindings.
+Actual call capture will bind measured inputs, fixed timestamp, original
+catalogue and name-factory transcript for repeat/reverse execution without
+source-image reads or inventing new names.
+
+**Original-input recovery verified:** iteration10 guarded quality undo
+preview/apply/check exits0, verified seven-file5,248,896byte scoped backup.
+Current receipt is `undone`;3,290active/0quarantined preserve exact tuple
+digest `a2f34d5b589f904b1db89fd4e4ad415c70c898c27cc10e0bd8586496fe9eaf34`.
+Installed iteration10 matching artifacts remain comparison evidence, not a
+new recipe's output. No new matching/installation has begun. Parent found
+the absolute destination0.60/margin0.30correction coupling still present
+in the first corrective handoff and returned that tightly coupled gap to
+the implementation worker before freeze. Normal destination-category
+admission/margin evidence must govern the corrected comparative route;
+legacy absolute gates remain historical. Source proof, qualified destination,
+hard locks, negatives and no tentative-reference promotion remain required.
+No all-population repeat/order claim follows from synthetic/shadow tests.
+
+**Nov 14 corrective implementation handoff (not new installed acceptance):**
+the [approved corrective contract](#nov-14-approved-corrective-rebase-contract)
+is selected under RA2j. Worker reports three opt-in starting selectors,
+tentative-placement/regrouping/reference separation and recap provenance;
+historical defaults remain unchanged. Focused tests pass76directed,
+40recap and19metadata; isolated quick validation passes19/19.
+Initial runtime fingerprint is
+`334593f02f488565b8fa9fa84ad8344f96908731997bcd1dcfc5b95e17127b03`.
+Parent is checking the complete parameter/provenance/order-parity handoff
+before freezing comparisons. No candidate has been selected or installed.
+Routine checks passed only with the EOF hook skipped after an untouched
+read-only art JSON blocked that hook; this is not an unqualified routine
+pass and must remain explicit at publication.
 
 `directed-intake-dominant-20261114` preview/check/install/applied-check and
 guarded quality preview/apply/check all exit0. All3,290content tuples remain:
@@ -63,6 +1034,102 @@ with one reference ledger, then guarded publication/disposition and reports.
 It does not mean the underlying face evidence now resolves all plausible
 same-person fragments. Do not silently relax reference gates or call
 provisional folder creation identity accuracy. Production remains untouched.
+
+### Nov 14 score, weak-member release and provisional fragmentation trace
+
+**Owner/authority:** RA2j owns this read-only diagnosis and proposed repair;
+RA2d owns behavioral/numerical gate selection. No new run, extraction,
+threshold mutation or installed move is selected by this investigation.
+The user's cursory examples are concerns, not independent identity labels.
+
+**Verified measurement continuity:** the saved clean preparation and
+iteration10 caches have equal centering means. Joined by
+`alignmentEvidence.sourceSha256`, all3,288common measured-source vectors
+are byte-value identical. Opaque cache keys differ by run and cannot be
+used as the comparison join. This establishes cached measurement continuity,
+not equivalence to every older Production score/reference population.
+
+**Actual displayed cast population:**1,323Gallery photos,387unscored and
+88below0.30. All387unscored photos occupy the11cast galleries with zero
+qualified exported references, including all61Angelica photos. All are
+marked membership-excluded. A single-face Draknava example has a frozen
+source score0.550913but no final core/score; this is missing qualified
+reference authority, not a manufactured zero or necessarily unusable face.
+
+**Reference/scoring paths differ:** directed matching qualifies category
+core floors S/A/M/P/Potential0.60/0.60/0.50/0.45/0.40 with four independent
+pair witnesses per reference and an independent centroid floor. Display
+auditing filters to exported-authorized members, then applies the ordinary
+category core audit (cast0.40); core members use leave-one-out, other photos
+use the full display core. Thus the display score is neither the frozen
+source score nor an admission/correction verdict. Its explanatory0.40
+core prose does not explain the preceding0.60directed qualification.
+
+**Weak-member gate trace:** retention floors are Sisters0.25/Angels0.22
+with two independent supporters, not the yellow0.30display boundary.
+Failure marks uncertainty; default action is retain-in-place. Exceptional
+correction additionally needs frozen source score<=0.30with two independent
+source witnesses (or exact human different evidence), a normally qualified
+destination scoring>=0.60, signed distinct-rival margin>=0.30and no locks.
+Among the88display-low cast photos,18have qualifying source incompatibility:
+none has any rival>=0.60and none is placement-locked. Therefore zero
+corrections follows from absent qualifying targets, not protection alone.
+The independent new-identity creation path additionally requires no source
+person ID. Existing weak cast members do not enter that path; they receive
+source/tentative groups with physical home retained. This is the missing
+operational distinction behind expecting release-and-new-cluster behavior.
+
+**Concrete score shifts:** two actual single-face Draknara samples have
+display/frozen/current-own values0.063225/0.368895/0.067912and
+0.076247/0.326698/0.073455. Neither frozen score meets source<=0.30.
+A three-face Drakness sample displays-0.085815but directed scores/rivals
+are unavailable under strict single-face qualification. Reader measurement
+availability must not be mistaken for matching eligibility.
+
+**Provisional gates:**656photos occupy345provisional containers, not656
+certified people. Of these photos,467have no recorded relevant rival;
+the rival collector omits sufficiently below-floor candidates, so this
+does not mean no identity was evaluated.189have a recorded top rival;
+38top scores meet that rival's admission floor. Blockers overlap:181top
+rows lack four member supporters,151are below admission,93lack an original
+boundary supporter,32fail cast frozen-score/margin and5fail cast frozen
+independent support. The63reference-insufficient candidate cohorts comprise
+150photos, all with only2-4independent members (45pairs,13triples,5quadruples).
+They cannot supply four other independent supporters per member.
+
+**Remaining assignment/reference coupling:** tentative parent assignment
+can waive only `insufficient-independent-member-support`, requires two
+supporters and normal score/margin gates, but retains the cast-admission
+blocker. Cast admission borrows the automatic-protection minimum of four
+independent references. Francesca Vale's incoming photo scores0.551781
+against Drakness (frozen0.554269, margin0.225457) with two independent
+supporters; it fails both the four-member join gate and four-support cast
+gate, so even tentative cast placement is refused. Another provisional
+photo scores0.541228against Draknora, margin0.384960, two supporters and
+the same blockers. These are demonstrated gate couplings, not visual
+assertions that the assignments should be accepted.
+
+**Cohort formation:** new independent and provisional containers use
+hardcoded0.45complete-link pair cohesion (every pair must pass); the
+recipe's0.25residual similarity instead partitions named groups after
+owner/container selection. Changing0.25alone will not reduce the number of
+provisional owners. Complete-link does not permit weak bridge chains.
+
+**Recommended next bounded decisions, not installed changes:** expose
+score/reference/quality provenance in the reader; assess cast core starvation
+and recovered-view coverage against the agreed backbone intent; separate
+tentative cast assignment from protection/reference authority with explicit
+gates; distinguish source-incompatible coherent regrouping from fully
+qualified destination correction. Evaluate these against saved inputs before
+another full install. Keep hard locks, negatives, original independent
+evidence and no-reference provisional semantics. Do not lower every threshold
+or force all low-score photos out.
+
+Exact source:
+
+```text
+I feel like something has changed in the core similarity scoring or how thngs are working and I'll really need to look at things as having 656 potentials isn't as likely as I'd expect.  I also am seeing some photos in galleries that say "Core similarity: not scored" ... and in some galleries the similarity score is low (like below 0.30) and they are still assigned to an Angel or Sister - I thought we allowed them to be released if they were low and likely should have clustered.  So - there seems to be something that isn't quite right - but I don't understand.  Can you trace through what is happening.  I'm being a bit vague in my analysis - since it's just cursory and at this point you have the most insight into figuring out why and being able to double check the gates, logic and scores as well as summarize why it went the way it did.  Not just the numbers, but what gates or values are driving those few things.
+```
 
 ## Earlier shadow implementation checkpoint: historical, not installation acceptance
 
@@ -2084,3 +3151,976 @@ When you get to a point where you believe the audit passes and we have addressed
 I don't want a bunch of photos to remain in Various - at a minimum they should establish new Potentials, put into junk if unusable or assigned to someone and possibly in review if low scores.  So, just want to make sure that we get the requirements right and if we need to fix them in the plan that's fine as well.  The goal is Various is empty when we're done with the full and complete run as that's just the Intake and things left there should ONLY be a condition where the other requirements cannot truly be met.  If that also means we need to adjust the gates to allow for these assignments you can look at whether we need additional values defined in the gates for entry.  I also don't want a ton of things in Review as well.  The idea is things are automatically assigned somewhere and low scores would show as a non-core or even a tentative type assignment and should not attract other photos into the core.  Does that make sense as well?  I just way you at one point you noticed some photos remain in Various.  That is a key requirement as that is just the Intake folder and not a permanent gallery - so it's truly exceptional to leave things there to wait for another photo to pair with in a future run.  But I understand it can happen with the system we have.   Just want to make sure the audit is looking at just how many are there and what the tentative assignments currently are and whether or not we should be adjusting, adding or updating gates for assignment based on just how many are potentially "left behind" in the process.
 ````
 <!-- markdownlint-enable MD013 -->
+
+### Nov 14 historical gate check and discussion boundary
+
+**Owner:** RA2j read-only historical audit; RA2d retains gate selection.
+No new run or behavioral change is selected. The latest concern is covered
+by explanation of reference inventories, historical core provenance,
+tentative-assignment discussion, release-policy comparison and a proposed
+same-input old/new comparison rather than another full install.
+
+Historical Git/policy/source evidence:
+
+- Oct21commit `7c0f01acf` and Nov9commit `4c91a4356` both have ordinary
+  Sister/Angel `identityCoreMinimumSimilarity=0.30`. The current standard
+  policy JSON retains those values. This is separate from the clean-rebase
+  policy adapter, which sets cast seeding/core-audit minimum0.40.
+- The earlier ordered-middle experiment uses Sister/Angel core0.40/0.35,
+  with four supporters. The current directed recipe overrides this with
+  core0.60/0.60; both the cast-core0.60and correction-destination0.60first
+  appear in committed Git history in `ecf8b3369`, published Nov13. That large
+  first publication does not establish the exact earlier edit time.
+- Answer6's source says preserve the assigned cast core at "0.60 and higher
+  (or something like that)". Its contemporaneous interpretation explicitly
+  marks the number and metric as unapproved. Answer7's low-source0.30/
+  high-target0.60example and answer13's bounded recipe comparison likewise
+  remain experimental. Nov13clarification separately identifies0.80+
+  as initial preservation, not the entrance/reassignment rule.
+- Applying0.60to each of four independent pair witnesses, plus an independent
+  centroid floor, is materially stricter than preserving strong existing
+  photos scored against an identity core. No explicit selection of that
+  combined qualification rule was found in the inspected source answers.
+  This is a possible intent-to-policy mistranslation, not settled policy
+  merely because later general execution was authorized.
+- Before the directed bundle, candidate grouping used average-linkage
+  cross-group similarity at0.25and provisional centroid/outlier assessment.
+  Directed independent/provisional owner creation uses every-pair
+  complete-link0.45plus separate reference qualification. These are real
+  algorithm/gate differences, not simply extra explanations around an
+  unchanged grouping process.
+- Earlier final-membership refinement used destination category gates,
+  own/runner-up leads and independent destination support, without the
+  literal source<=0.30/destination>=0.60/margin>=0.30triple. The directed
+  correction path adds that triple and source-owned members cannot create
+  new independent owners when no qualified target exists.
+
+Discussion proposal, not installed policy: restore a clear separation between
+starting-reference continuity, supported/non-core assignment, independent
+reference qualification and exceptional corrections. Test historical core
+construction and clustering against current machinery on the same prepared
+population, retaining negative evidence, hard locks, source lineage and
+no-reference tentative states. Numeric gates and whether source-incompatible
+cohorts may form new owners require agreement before implementation.
+Do not silently restore average-linkage merges or assume all historical
+placements were correct. Earlier integrity tests do not settle visual
+clustering or reference coverage.
+
+Exact latest user source:
+
+```text
+1. I don't understand what this means.  2.  Can you check in the past at what the cast reference score was - I think that must have gotten changed incorrectly or mis-interpreted what we wanted for a score of 0.60 and what it meant in discussions.  3. We need to discuss this.  4. I thought we already discussed this and address the proper gates to allow them to be released if they scored with evidence to another identity and were very low scoring where they were.  5. Prior to these larger series of updates and a much simpler process - things were working better in terms of clustering and releasing.  All these updates were to make it better, but I'm not seeing the results I would expect.
+```
+
+### Nov 14 starting cast-core scope clarification
+
+**Decision:** the earlier0.60discussion concerns selecting strong photos
+already in existing Sisters/Angels to establish their initial identity cores.
+It does not tighten other groupings or admission/assignment/reference-growth/
+release gates. It does not select four independent pair witnesses at0.60
+for repeated core reconstruction. The user is clarifying intent, not claiming
+that this stricter process improved the outcome or choosing a replacement
+for the later0.80preservation guidance.
+
+**Coverage/owner:** the main reassessment contract owns the baseline-versus-
+downstream scope rule. RA2j owns the historical/same-input comparison and
+any approved implementation repair; RA2d owns numeric gate acceptance.
+No new run, baseline-threshold selection or library change is authorized
+by this clarification alone. Existing quality, independent-evidence,
+negative and hard-lock safeguards remain separate.
+
+Exact user source:
+
+```text
+I think that maybe I did not understand the questions properly when answering - when I was saying 0.60 for the core-cast it was about what photos in existing sisters or angels to retain for the core identity.  It should not impact other groupings and gates.  It was merely for what to establish as the identities for those existing characters.  It was an attempt to improve things - but maybe it has opposite effect.  So it was not intended to have a larger impact on the gates.
+```
+
+**Starting-cutoff flexibility:** the user permits considering0.60/0.50/0.45
+for initial existing-cast reference selection, based on identity coverage
+and measured outcomes. This is not selection of a replacement number,
+permission to weaken unrelated gates or evidence that any variant is accepted.
+RA2j/RA2d retain comparison/acceptance. Separate starting selection from
+the unintended downstream0.60/four-pair coupling before attributing
+improvement or failure to the starting cutoff alone.
+
+Exact follow-up:
+
+```text
+Now if that 0.60 also causes more issues - it could be 0.50 or 0.45 ...
+```
+
+**Recruitment-contamination purpose:** the user identifies the goal as
+excluding low-scoring existing Sister/Angel members, especially orange/red
+members, from attracting photos unlike the main character core. The0.60
+example was a possible starting-photo selector, not a change to new-identity
+formation. Current orange/red display bands are below0.30; selecting a
+reference still requires a bound, appropriate own-core measurement and
+separate quality/independence evidence. A display band alone does not
+certify every higher-scoring photo or justify eviction of every lower one.
+The starting reference set should remain useful for legitimate recruitment,
+while excluded photos retain their reassessment/grouping/correction paths.
+RA2j owns coupling repair/comparison; RA2d retains exact gate selection.
+No runtime/library mutation follows from recording the purpose.
+
+Exact latest clarification:
+
+```text
+Those are all pretty consistent within the current groups and it would still attract members - but the formation of groups should have still been with some of the other rules for formation of new identities and clustering.  Basically, there are some photos in the angels and sisters that are low scores and before starting a full rebase I was trying to exclude those from attracting other photos that did not match the main core - but maybe it's my lack of understanding on how it all works that cause me to just randomly pick 0.60 as a number.  It was basically to weed out anything that was already existing that was scoring in the organge or red range that was in a sister or angel - but the rules around formation of new groups should not have gotten so strict that we ended up with so many potentials.
+```
+
+### Nov 14 approved corrective rebase contract
+
+**Execution owner:** spine RA2j. The user approves implementation, same-input
+comparisons and a verified new full Sandbox cycle, including the other
+discussed defects rather than only changing a seed number. This supersedes
+the preceding read-only discussion stop for this bounded package.
+
+1. Starting cast references exclude weak orange/red recruitment evidence
+   and preserve useful main-character backbones. Compare0.45/0.50/0.60
+   starting-selection candidates only, with explicit original own-score
+   and independent/content/quality bindings.
+2. Reference qualification no longer inherits the unintended system-wide
+  0.60/four-pair rule. Preserve independent evidence, negatives, self/
+   duplicate exclusions and no tentative-reference promotion.
+3. Separate tentative cast placement from protection/core qualification.
+   Test two independent supporters for tentative assignment, with normal
+   score, distinct-rival, quality and negative/placement gates; never voting.
+4. Repair evidence-backed weak-member correction and allow coherent
+   source-incompatible cohorts to be evaluated for new identities.
+   A low/unavailable source score alone is not an eviction.
+5. Compare earlier grouping behavior with current restrictive formation
+   while retaining safeguards against wrong-person bridge merging.
+   No quota on identity count or fabricated confirmed containers.
+6. Explain score/reference provenance and audit replacement lineage,
+   cast gains/losses, appearances, family outcomes, Various/Review exceptions,
+   exact reference authority and full-population repeat/order stability.
+
+Implement/test before actual comparisons, then select only evidence-justified
+numeric variants. Material policy conflicts still require a decision;
+unresolved visual identity accuracy remains human acceptance, not invented
+labels. Parent owns comparison/actual acceptance/publication; the
+implementation worker owns bounded runtime/tests and supported commands.
+Do not add unrelated deferred GUI/role automation to this package.
+The previous worker is unavailable; new worker
+`4cf732a7-b6ea-420a-afb2-a579adfb513a` owns this bounded repair. Parent owns
+the remaining actual cycle, not a second implementation reviewer.
+
+**Run boundary:** original3,290prepared population
+`directed-rehearsal-20261112`, no new extraction/intake. Preserve iteration10
+as comparison evidence. At approval, quality disposition was applied
+(`batch_04a088ae80314c24af16a156f973c779`,3,288active+2quarantined).
+Before new original-source actual matching, use supported guarded quality
+undo/check and bind the exact undone receipt; no catalogue restoration by
+hand. A fresh continuation name owns the full preview/check/install/applied
+check/quality/report/browser sequence. Production remains read-only.
+
+Exact chat:
+
+```text
+Knowing all that - how can we work on fixing that and do another full rebase.
+```
+
+```text
+Along with allowing for the other items we discussed to be fixed as well.
+```
+
+Exact approval form response:
+
+```text
+repairAuthority=Proceed with this repair contract, comparisons, and verified full Sandbox cycle
+```
+
+### Nov 15 basic steps and image-only separation feedback
+
+**Primary source/coverage owner:** this plan; spine RA2j owns the pause and
+read-only explanation, RA2d owns agreement on changed execution/gate scope.
+Image-preparation and upkeep contracts remain holding references, not
+silently activated implementation lanes. No feedback original is filed yet.
+
+| Source | Request coverage | Disposition |
+| --- | --- | --- |
+| `feedback/explain_existing_steps.md` | Thoroughly explain actual stages, step back from accumulating fixes, consider deferring layers, agree basics before more work | Pause code/runs; read-only explanation and proposed minimal baseline for user discussion |
+| `feedback/image_processing_inplace.md` | Check source processing outside matching, same locations/selective backups, all944regeneration, potentially two independent steps | Existing preparation/framing commands inspected; full strict in-place publication contract not verified/implemented, changes require agreement |
+
+The ordinary cast baseline/refinement/family pass precedes the directed
+override in the current continuation. This is more than one simple
+assignment pass; baseline dependencies must be explained rather than
+deleted speculatively. r03's cap is in directed grouping, not pixel
+processing. There is no completed result for visual acceptance.
+
+Proposed discussion baseline: establish image quality separately, regenerate
+selected derivatives independently, then measure accepted native pixels;
+freeze trustworthy references, perform one accountable owner/new-person
+assignment pass and review. Appearance subdivision, family surname links
+and iterative recruiting/refinement are candidates to defer, not approved
+removals. Creating distinct real-life family-member identities remains
+part of basic owner/new-person assignment, not the deferred surname layer.
+
+Exact `feedback/explain_existing_steps.md`:
+
+```text
+The system is doing what it does - but not what I wanted.  So either we messed up because the previous assessment work was too complicated and with all the troubles we're having, it seems clear that we need to circle back and review the existing steps and to explain them thoroughly before proceeding further.  We've done this a few times - but I think we're tangling things up as we continue to reassess and fix things.
+
+I'm thinking maybe we need to step back and skip some of the steps in the process and build those back again later on after things are working.
+
+I'd like to focus on just the basics first, making sure we understand each step clearly and can execute it correctly before adding any additional complexity.
+
+There are a few key things I want to clarify and make sure we understand before moving forward.
+```
+
+Exact `feedback/image_processing_inplace.md`:
+
+```text
+I am thinking about whether or not to split out and make sure the image processing could be performed outside likeness and keep the images in their existing locations and just backup any originals that will be modified and then regenerate the 944x1104 versions of all the files (just to true things up from that perspective).  Is that a capability that exists and feasible within the current commands?
+
+I'm also thinking about whether it could also be 2 steps as well - in case we want to just perform the 944x1104 regeneration separately from any other image processing steps.
+
+Basically - with all the problems we are having, I am thinking that is a useful step.
+```
+
+### Nov 15 proposed standard pipeline - discussion only
+
+**Owner:** RA2d for agreement; RA2j remains paused for runtime work.
+The conditional chat proposal below is not permission to launch, retire
+code, change numeric gates, move library files or discard evidence.
+It retains final family naming rather than deferring it as suggested in
+the preceding initial simplification discussion.
+
+| Proposed stage | Reuse/consolidation | Pieces to set aside from this execution path |
+| --- | --- | --- |
+| Clean accepted native images; independently regenerate944products | Existing preparation/framing primitives, originals/lineage and content bindings; strict in-place publisher remains unverified | Matching as a prerequisite for image upkeep; automatic repeated native preparation during matching |
+| Standard casting and new-person clustering with name continuity | Engine measurements, reconciliation/core builder, stable identity IDs, original-name routing and collision-safe name generator | Directed recipe sweep and member-first appearance lifecycle as mandatory grouping engines; total identity/reference reset |
+| Identity-to-identity rival comparisons | Shared cross-reference rankings from this stage's qualified cores, visible in GUI | Separate competing reference interpretations in GUI and decision reports |
+| One low-member audit/refinement stage | Audit comparisons and one shared keep/flag/move decision function; explicit source/destination proof, negatives and hard locks | Separate provisional refinement, late cast admission/post-admission loops, repeated directed reference withdrawal/growth and overlapping release rules |
+| Final group scores and family naming | Refresh final references after corrections; one family policy, original-name history and fixed cast continuity | Preliminary family naming before final membership, automatic family patches inside reconciliation and a second competing association policy |
+
+Read-only code findings: `clean_rebase.create_plan` skips its initial
+`plan_reconciliation` when `regroup=True`, but still calls ordinary
+`refinement.refine`, admission audit and preliminary name/family work before
+`group_lifecycle.regroup`. The latter also has a non-directed appearance/
+withdrawal/growth implementation; dropping `--directed` is not this proposed
+simple pipeline. `reconcile_command.run` covers Review, Various and qualified
+unprotected Gallery outliers, then also composes identity actions, automatic
+protection and `identity_families` patches. `refinement.membership_decision`
+holds protected source identities and normally routes qualifying cast
+destinations to Review. These scopes/gates must be reconciled explicitly;
+neither older command is certified as a drop-in replacement.
+
+Retain quality/freshness checks, independent evidence/no self-votes,
+negative labels, true placement locks, supported versus non-reference
+membership, explicit intake exceptions, conservation, preview/check/recovery
+and honest score provenance. Existing experimental catalogue flags influence
+core readers: any transition needs a content-bound migration, not just flag
+removal or silent restoration of disqualified references.
+
+Recommended discussion interpretation of "single step": one frozen audit
+decision batch, followed by final score/verification refresh; no photo moved
+in that batch becomes evidence for another move in the same batch. This is
+not an agreed iteration policy. Family naming is presentation of distinct
+identities, never same-person or biological-kinship proof. No numeric changes
+are selected. Failed runs, originals, receipts and historical group/name
+lineage remain preserved; disconnecting runtime paths does not authorize
+deletion or wholesale reversion of shared fixes.
+
+Exact chat proposal:
+
+```text
+So - if I wanted to go with a much simpler approach - like focus on the basics of the image processing to get clean images to start with.  Then we would be able to run a standard casting and groupings (retaining names of existing identities) which could move images based on that evidence (which could manufacture new identity names if there wasn't an anchor or existing name).  Do the identity to identity comparisons against rivals so we understand the relationships between the identities (which is displayed in the GUI).  Then do the audit and refinement as a single step with one set of checks for low scoring images were pulled into the identity and determine if we need to flag images or actually just move them out.  Finally check the final results of the group to group scores for the family naming.  If we would do that - what of the existing pieces would be setaside and moved out of the way?
+```
+
+### Nov 15 SIMPLE build direction and LEAN split clarification
+
+**Source/decision owner:** this plan; RA2j receives the selected build scope
+through the spine before implementation, RA2d retains behavioral acceptance.
+The user selects building the SIMPLE flow and separating experimental code,
+then asks whether LEAN can be that flow. This is not another directed retry.
+The concrete split/defaults remain under discussion; no code, library files
+or saved receipts have been moved or rewritten by this clarification.
+
+Recommended architecture: SIMPLE is the stable sequence, LEAN its normal
+compact preparation/evidence profile, not a third competing matching engine.
+Use one stable runner for ordinary intake and explicit full reassessment;
+both use the same decision machinery with different candidate/mutation scopes.
+Small intake must still compare with the whole eligible identity universe,
+not truncate rivals to the new batch. It must not require reset or full
+library pixel preparation. Derivative regeneration remains independently
+available. Preserve recovery separately from storage/profile choices.
+
+Current meanings verified read-only:
+
+- `rebase_flow.steps` orchestrates reset/preparation/matching/install/checks;
+  `--baseline working` skips reset. Its LEAN continuation route skips reset,
+  intake and backup and has no transaction rollback. That disposable
+  continuation is not the recovery contract for routine small intake.
+- `fast_preparation` retains original bytes and explicitly defers editing
+  and944products; it does not certify clean native images. FAST reuse ideas
+  can avoid unnecessary work, but must not skip requested cleanup silently.
+- `clean_preparation` selects standard versus FAST processing independently
+  of lean/full storage and binds saved input/recipe/configuration hashes.
+- `rebase_flow.main` imports directed recipe names during parser creation;
+  ordinary and experimental orchestration still share entrypoints.
+  `library_sync` is a separate legacy routine with repeated originals/
+  duplicate passes, not the proposed five-stage sequence.
+
+Proposed separation: main LEAN orchestration plus proven `likeness_library`
+primitives; `tools/art/likeness_experiments` for directed reformation,
+appearance/growth/reference trials and their exclusive adapters/viewers;
+one explicit experimental launcher. Dependency direction must be experiments
+to stable helpers, never stable execution importing experiments. Main
+defaults must not select recipes/experimental flags. Move only exclusive
+experimental code; retain useful shared provenance/safety fixes. Promotion
+requires focused regressions, small end-to-end outcome evidence and explicit
+acceptance, not merely moving code back or changing an import.
+
+The first delivery gate is a reversible small intake run with original-name
+continuity, supported new-person grouping, low-member flag/correction,
+final rivals/family outputs and honest unresolved counts. Production remains
+outside current execution authority. Full-population rebase and visual
+identity acceptance are separate gates; preserved failed runs are historical
+evidence, not stable-flow acceptance.
+
+Exact build request:
+
+```text
+I'd like to build the SIMPLE version of the workflow and to take highly experimental aspects out of the flow and it should leverage some of what is in LEAN and FAST - but honestly, I don't know what is what anymore with all our experiments and the code feels mangled and needs to be re-organized and experimental aspects moved into tools/art/likeness_experiments and maybe we need to separate our the likeness flow into the main likeness flow and likeness_experiments flow so that we don't co-mingle and bring experiments into the main flow until they are proven.  So that would be separate entrypoints into the code and keep it more organized.  That might help me understand how that would work for building out some of the things I do want to do long term and getting back to having a SIMPLE flow that works end-to-end.  The re-assessment plan seemed feasible, but is failing and it's leaving me in a spot where I can't even run in a new small set of images and organize them any more.
+```
+
+Exact follow-up clarification:
+
+```text
+Maybe LEAN can be that flow ... I guess that's what I want to know how to split things out in the code and flows
+```
+
+### Nov 15 normal import versus rebase scope clarification
+
+**Selected delivery priority:** restore the normal small-intake flow first,
+with FULL, LEAN and FAST profiles; SIMPLE describes the stable sequence,
+not a fourth profile. Rebase is a different, explicitly selected operation.
+This supersedes treating rebase or saved-input continuation as the required
+entrypoint for ordinary import. RA2j owns the build transfer; no runtime
+mutation or code relocation has yet occurred.
+
+| Axis | Required separation |
+| --- | --- |
+| Normal import scope | New Various inputs and explicit same-photo updates; reuse current eligible identity evidence, assess arrivals, form new identities, refresh affected scores/reports; no reset or bulk native reprocessing |
+| Rebase scope | Deliberate whole-library reassessment of existing assignments/fragmentation; separate entrypoint/receipt, same proven matching primitives, not invoked by normal intake |
+| FULL profile | Full preparation/evidence/products for the selected inputs, not implicit whole-library reprocessing |
+| LEAN profile | Same accepted preparation/matching policy with compact evidence, exact-byte reuse and limited required products |
+| FAST profile | Original-byte/reuse processing with editing and944products explicitly deferred; no claim that unassessed pixels are clean, no experimental matching substitution |
+| Experimental flow | Exclusive package/entrypoint for unproven directed/appearance/reference-growth trials; no import into stable execution, explicit promotion gates |
+
+Recovery remains required for normal mutations in every profile; the old
+disposable LEAN continuation's no-rollback contract is not inherited.
+Profiles must not silently select different reference/admission thresholds.
+Normal intake still compares against the whole eligible identity universe.
+Refreshing affected cores/rivals is not permission to move unrelated
+existing photos, globally regroup identities or rename unrelated families.
+Existing-assignment correction requires explicit rebase/correction scope.
+Independent framing maintenance may cover an explicitly requested broader
+image scope without triggering matching or native cleanup.
+
+Proposed entrypoint arrangement: the normal library launcher selects
+FULL/LEAN/FAST, a separate stable rebase launcher selects wider assessment,
+and an explicit experiments launcher selects experimental code. All stable
+operations share the proven measurements, identity/name continuity,
+comparison/audit/naming and recovery helpers. Concrete defaults and the
+legacy-entrypoint migration must be documented/tested before activation;
+neither current LEAN nor the legacy library routine is already certified
+as this restored normal flow.
+
+Exact clarification:
+
+```text
+Also the rebase is different from the normal flows where I just want to import new images in Various and perform the flow without re-processing everything.  So we'd been focused on rebase thinking it would clean-up some existing incorrent or low scoring assignments and fragmented identities - but it's not working as planned.  So, getting back to a simple, basic series of FULL, LEAN and FAST flows is probably what I am really asking for.
+```
+
+### Nov 15 selected normal-flow and experimental-composition contract
+
+**Executable owner:** spine RA2j. This replaces directed repair as the
+immediate build target; RA2d retains numeric/human acceptance, RA2b wider
+lifecycle residuals. Restore the good-enough normal path by reusing existing
+pieces, not by adding a fourth competing engine.
+
+1. Normal import is new Various inputs/explicit same-photo updates with
+   existing identity/name continuity and supported new-person clustering.
+   Reuse unchanged measurements/preparation; do not reset or reprocess the
+   whole library. Compare arrivals against all eligible current identities.
+2. FULL/LEAN/FAST choose preparation/evidence/product work for the selected
+   inputs, not different hidden matching policies or different reassessment
+   scope. FULL is not rebase. LEAN does not imply disposable recovery;
+   normal mutation has preview, explicit apply, independent check and
+   recoverable originals/metadata in every profile.
+3. Native preparation and944framing remain independent operations.
+   Publishing changed native pixels needs exact original preservation and
+   fresh content-bound measurements. FAST may defer editing/products but
+   must label unassessed images honestly; no synthetic clean-image claim.
+4. Keep one ordinary assignment/new-person path, rival comparison, shared
+   low-member audit/check and final family naming from final references.
+   Normal mutation does not quietly move unrelated existing Gallery members,
+   bulk-merge established identities, form appearances or run reference
+   growth/withdrawal trials. Low/missing score alone is not eviction.
+5. Move exclusive experimental code/adapters into
+   `tools/art/likeness_experiments` with a separate entrypoint. Experiments
+   compose stable FULL/LEAN/FAST pieces and explicitly add selected targeted
+   steps (auto-merge, appearances, etc.). Stable execution must not import
+   experiments, inherit trial defaults or activate them through hidden flags.
+   Preserve proven shared safety/provenance helpers and historical receipts.
+6. First exit: launcher preview, focused profile/isolation/mutation-scope
+   regressions, then a bounded reversible mini-library proof under
+   `B:\Sovereign Territories Sandbox\Working\_sandbox-state` using at most
+   16 explicitly selected source copies. Sources/current Gallery stay
+   read-only; no whole-Sandbox copy, model downloads, full rebase or Production
+   writes. Verify names/new groups, honest scores/intake exceptions,
+   affected-only processing, check/repeat/recovery and loaded report images.
+   Fixture/cache-only success is not fresh-inference or visual accuracy
+   acceptance; record any unverified boundary explicitly.
+
+Implementation ownership: one runtime worker owns code, launchers, focused
+tests and art runbooks; parent owns spine/source preservation, independent
+acceptance and pinned handoff. No parallel library writer. Promotion from
+experiments requires explicit acceptance and evidence; successful package
+relocation is not policy/identity acceptance.
+
+Exact final clarification:
+
+```text
+and separating the new experimental aspects into a separate execution path which used the existing pieces of the FAST, LEAN and FULL flow - but adds in new steps to provide more of those experiments in attempting to address specific and targeted scenarios where we do auto-merge groups, create the appearance groups, etc... but those are so experimental that we have broken the good-enough flow we had to start with.
+```
+
+### Nov 15 physical accepted/experimental code boundary
+
+**Owner:** RA2j; clarification of the selected build, not a new lane.
+The user explicitly requests physical code organization and accepts import
+changes when an experiment is accepted. Separate entrypoint flags alone
+do not satisfy this requirement.
+
+- Retain genuinely shared accepted helpers in the normal library code.
+  Move exclusive experimental algorithms, trial orchestration and their
+  adapters/report builders into `tools/art/likeness_experiments`.
+- Split mixed modules where necessary, preserving shared functionality
+  instead of moving the entire dependency tree or creating a duplicate
+  matcher. Dependency direction is experiments to stable helpers; main
+  execution/help/parser must not load experiments.
+- Existing experimental launchers may become explicit compatibility routes,
+  not hidden backdoors into normal flow. Preserve saved evidence and content/
+  implementation guards; do not rewrite old receipts to bless relocation.
+- The runbook must map code ownership and evidence honestly: historical
+  baseline, fixture-tested, operationally verified or experimental. Calling
+  a folder accepted/proven does not certify every contained module.
+- Promotion is an explicit code/import/test change after targeted and
+  end-to-end evidence and approval, not silently activating an experimental
+  recipe in ordinary FULL/LEAN/FAST defaults.
+
+The runtime worker received this requirement as a same-task clarification.
+Physical relocation, tests and main-path isolation remain unverified until
+its implementation receipt and independent acceptance are inspected.
+
+Exact clarification:
+
+```text
+Can we also re-organize the code for what is likeness_experiments vs. what is accepted and proven code?  I understand that might mean import changes when accepting and experiment, but would help me understand at a code level what is experimental vs. proven and runs properly.
+```
+
+### Nov 15 dormant-code archive without interrupting restoration
+
+**Owner:** RA2j; parent owns the follow-on dormant audit/archive after the
+runtime worker stabilizes the active import graph. Normal FULL/LEAN/FAST
+restoration, experiment separation and their end-to-end proof remain first.
+This request does not replace or pause those deliverables.
+
+Following the supporting-utility clarification below, use four explicit
+roles: accepted/shared core code, active supporting utilities in
+`tools/art/likeness_utils`, active experimental code in
+`tools/art/likeness_experiments`, and genuinely dormant/superseded code in
+`tools/art/likeness_archive`. Optional or rarely used experiments are not
+dormant merely because the normal flow does not execute them.
+
+Before archiving, check normal/experimental entrypoints, static and dynamic
+dispatch/import references, supported launchers, tests, documentation and
+saved-receipt/recovery readers. Record the reason/replacement and remaining
+dependencies; keep uncertain candidates in place. Never archive a required
+codec, compatibility adapter or supported command to make the tree smaller.
+Tracked moves preserve history via `git mv`; preserve dirty source content,
+refuse overwrites, repair incoming links/imports and active test inventory,
+and recheck affected profiles/isolation after moving. Archive means retained
+history, not deletion or a promise that old code is supported execution.
+This authorizes scoped code archival, not photo-source pruning, feedback
+filing, broad historical-folder scans or library/recovery evidence cleanup.
+
+The worker received this as a same-task follow-up and may record candidates
+while mapping dependencies; speculative archival must not delay its normal
+flow deliverable. Parent follow-on tasks depend on runtime stabilization
+and the normal proof. No dormant code has been declared or moved by this
+source-record update.
+
+Exact request:
+
+```text
+We should also look for code that is dormant and no longer being used and organize that into likeness_archive so that it's also clear what code is being fully utilized and what was something we set aside and no longer use as well.  Then we can ensure the FULL, LEAN and FAST modes are working again in the simpler flow we agree upon.  Complete all the other work as well - don't let this distract or interrupt the rest of the work.
+```
+
+### Nov 15 active support utilities and complete-work boundary
+
+**Owner:** RA2j; parent owns follow-on supporting-tool classification/moves
+after the main runtime graph stabilizes. The runtime worker received the
+clarification without a restart or interruption of the normal-flow proof.
+The final organization gate consumes both utility and dormant-code moves;
+it does not replace profile restoration, experimental isolation or acceptance.
+
+| Role | Location / boundary |
+| --- | --- |
+| Core normal execution | `tools/art/likeness_library`: accepted measurement/cache, reference/assignment/grouping, naming, checks and recovery primitives actually required by FULL/LEAN/FAST |
+| Active support tools | `tools/art/likeness_utils`: standalone established diagnostics, inspection/audit and maintenance controllers not required by the main flow |
+| Active experiments | `tools/art/likeness_experiments`: unproven algorithms, targeted trials and experiment-specific adapters/reports |
+| Dormant history | `tools/art/likeness_archive`: verified superseded/unused code, preserved and outside active execution |
+
+Classify by responsibility and verified callers, not filename. A core
+scoring/check/recovery helper stays core even when a utility also calls it;
+move the standalone controller, not duplicate the shared engine. Diagnostic
+code testing an unproven algorithm remains experimental, not automatically
+an accepted utility merely because it is read-only. General art tooling
+outside likeness is not implicitly in relocation scope.
+
+Repair actual import/entrypoint/root-path/documentation references and
+active test discovery; avoid circular dependencies. Keep proof status
+separate from directory role. After both follow-on moves, combine affected
+profile, normal/experimental/utility-entrypoint and inventory/isolation
+checks rather than repeat full acceptance per folder.
+No completed-organization claim while a current-request task remains open.
+
+Exact request:
+
+```text
+Also, anything that is active that might be utilities, diagnostics or things we can use to as supporting activities and not part of the main flow we should organize in likeness_utils instead of the main library.  Just trying to clean-up our code a bit as the likeness_library grew out of control with all the various attempts, triage and flow changes we've made over past few weeks.  Again, keep going and don't lost track of what you were doing.
+```
+
+### Nov 15 clean Sandbox restart after core restoration
+
+**Owner:** RA2j; parent owns the later fresh-run gate. The user allows a
+clean Sandbox Working restart to remove obsolete experimental reports/runs,
+free space and validate the restored core on a fresh rebase. This adds
+fresh acceptance after normal-profile/organization checks, not another
+directed repair or immediate wipe during a writer/mini-proof.
+
+1. Verify restored normal profiles and the separated execution paths first.
+   Verify the whole-library composition uses the accepted single-check
+   sequence too: absence of directed/regroup flags does not certify a legacy
+   multi-pass rebase as SIMPLE. Reuse stable primitives with explicit rebase
+   scope; do not introduce new numerical gates or reinterpret existing names.
+   Then establish the approved fresh source/identity baseline and intake
+   inventory. Unique raw input photos and approved decisions must remain
+   recoverable; old experimental outputs are not automatically source-free.
+   Existing real source folders and Production remain outside cleanup scope.
+2. Check writers/active receipts, exact allowed paths, source/hash coverage
+   and minimal audit/recovery evidence disposition before removing artifacts.
+   The earlier requirement to keep entire failed experiments is superseded
+   for verified disposable old runs; retain necessary source/recovery and
+   compact decision evidence rather than all generated payloads.
+3. Use supported checked reset/cleanup of explicitly resolved disposable
+   contents. Keep the Working root; never recursively delete a broad/root
+   directory, use wildcard deletion, overwrite competing copies or prune
+   unique originals. Do not extend cleanup to repository tmp, external
+   backups or other library roots merely because configuration points there.
+4. Start the new stable rebase in actual Sandbox Working, not a whole
+   Sandbox copy in repository tmp. No automatic experimental extra steps.
+   Verify fresh input conservation, assignment/name continuity/new clusters,
+   own/rival/flag/correction/family outputs and actual loaded Gallery pages.
+   Fresh measurements may use existing local models; no model downloads
+   are newly selected. Human identity accuracy remains separately gated.
+
+Old experimental catalogue migration need not block this fresh-baseline
+route: the current-root preview may report honest incompatibility instead
+of automatically rewriting old evidence. Preserve current sources and
+receipts until the preflight proves the replacement/recovery scope.
+The runtime worker has been told not to reset current Working mid-build.
+
+Exact permission:
+
+```text
+When doing a re-run we can totally wipe the sandbox working area to remove all previous reports, etc... free up all that space and start over to validate the core library is working from a brand new rebase into the sandbox working area and getting rid of all the previous experimental runs.
+```
+
+### Nov 15 approved full-rebase manifest scope
+
+**Owner:** RA2j. The user selects building a proposed full-rebase manifest
+for review, rather than reducing acceptance to new arrivals only.
+
+- Source baseline: Production originals plus verified unique Sandbox arrivals.
+  Prove source/hash and explicit name/lock/decision coverage before processing;
+  do not treat old experimental placement or membership flags as approval.
+- Propose independently qualified frozen reference cores using accepted
+  policies, with no new threshold. List non-core Gallery photos, Review and
+  Various as reassessment candidates, retaining names and true photo locks.
+  Unavailable/uncertain evidence must remain explicit. Low score alone is not
+  eviction; no experimental established-group merges or recruitment loops.
+- Produce a hash-bound, reviewable source/reference/candidate manifest.
+  Show each photo's proposed role and evidence; user review still approves
+  the actual IDs. This decision does not authorize immediate deletion,
+  matching publication or silent reference promotion.
+- Initial source/writer inventory and new isolated manifest evidence are
+  selected. Preserve sources/current Gallery/metadata, work only in a new
+  non-overwriting Sandbox report/run area, and use existing local models only
+  if fresh evidence is needed. Preview counts/space/model availability first.
+  No new model downloads or whole-Sandbox copy in repository tmp.
+
+Proposal presented:
+
+```text
+The normal flow and code separation are verified. The fresh rebase needs one decision before any cleanup: which existing photos may be reassessed?
+
+I recommend building a reviewable manifest from Production originals plus verified unique Sandbox arrivals: freeze independently qualified reference cores, reassess non-core Gallery photos plus Review/Various, preserve names and true locks, and flag uncertain photos rather than evicting them on low scores alone. No new thresholds or experimental merges.
+```
+
+Exact user selection:
+
+```text
+full_manifest
+```
+
+### Nov 15 incoming replacement and matching prepared-version precedence
+
+**Owner:** spine RA2j. The user asks how to reach a fresh rebase and,
+after representative source-conflict examples, corrects the initially
+selected named-Production-first baseline. That earlier choice is superseded;
+the worker confirms it made no edits for that policy.
+
+The final selected rule is `incoming_then_matching_prepared`:
+
+- A genuine new incoming original with the same stable photo ID and different
+  bytes replaces the prior image version; this is not a new identity vote or
+  an instruction to reassign its owner.
+- Sandbox processed versions are eligible too, but only a verified prepared
+  version of the selected replacement source may take precedence as input
+  pixels. A derivative made from an older original must not beat a newer
+  incoming original merely because its generated file has a later timestamp.
+- Preserve and disclose all earlier raw/native versions, stable IDs, names,
+  explicit decisions and recovery bindings. No source deletion, silent
+  duplicate voting, new matching threshold or experimental merge.
+- Reuse existing incoming-update/retained-lineage mechanisms. Do not equate
+  all Production Various copies with new arrivals, infer provenance from
+  extensions, or manufacture chronology. Tied competing incoming versions,
+  unknown provenance and conflicting explicit locks/owners remain holds.
+- This selects version precedence only. Different-ID/content collisions,
+  existing-owner custom filenames and final reference/candidate roles are not automatically
+  approved, and all1,310unresolved physical records must not simply be
+  excluded from the rebase as if they were bad photos.
+
+**Observed report state:** r04proposal build finished exit0in135.14seconds;
+supported`--check` finished exit0in16.133seconds. It retains8,759rows.
+Manifest SHA-256:
+`a8bd758f6742614e29c3efe7c20e0ffc962d42234249a3f4dbd49e81bf11b677`;
+receipt SHA-256:
+`2ee4df6e4297dd660f854978f06edb240c724b4ece705d05a8d2488277bd5e1f`.
+The report remains an immutable pre-policy proposal, not final-role approval.
+It has1,310unresolved rows,722verified retained versions,1,637Production
+exact aliases and2,182cross-root aliases. No inference/reset occurred.
+
+Retained worker now implements/tests only the approved version-policy
+proposal boundary. No new population scan, report apply, face inference,
+library/cache mutation or cleanup is selected for that worker. The user
+subsequently also approves restoring existing incoming-ID establishment:
+ID-less incoming originals must reuse the established originals/content-ID
+mechanism, retaining valid IDs and original-name/source evidence. Establish
+identity from original bytes before processing; a verified prepared derivative
+must not acquire an unrelated ID from its changed pixels. Short-ID/full-content
+collisions stay explicit rather than merging different images. This does not
+silently reclassify every custom-named existing identity photo as incoming.
+The retained worker was assigned these directly coupled proposal changes;
+the later [clean-baseline clarification](#clean-rebase-clarification-production-source-and-disposable-working)
+paused that work before version-policy implementation. Parent
+verification, source conservation, stable composition and final-ID/role
+review were the entry gates at that earlier merged-manifest checkpoint,
+not authority to include damaged Working in the now-selected clean test.
+
+#### Exact user source and selections
+
+```text
+What do you need from me?  I would like to get to a point where we can re-run the rebase and see where we stand?
+```
+
+The user first selected `explain_exceptions`, then
+`named_production_baseline`. The following direct correction supersedes the
+latter:
+
+```text
+Hold on - if it has the same id, but differing incoming bytes - we need to use the new incoming one as that is better.
+```
+
+The user selected `include_sandbox_versions` to the question:
+
+```text
+One distinction matters: should “new incoming” mean a newly supplied original in Various, excluding PNGs or other derivatives generated by previous Sandbox processing? That prevents an experimental processed output from being mistaken for a better incoming original.
+```
+
+The final question and exact selection were:
+
+```text
+Example: an older photo was processed in Sandbox, then you supplied a replacement original with the same ID. Which should the rebase use? I recommend the new incoming original, or a verified Sandbox version produced from that replacement—not a processed version of the older original. Every prior version remains recoverable.
+```
+
+```text
+incoming_then_matching_prepared
+```
+
+Additional exact user instruction:
+
+```text
+We should also establish I'd for incoming images that do not have a valid id - that was also logic that existed previously.
+```
+
+### Clean-rebase clarification: Production, Source and disposable Working
+
+**Owner/coverage:** spine RA2j retains the clean restart, stable composition,
+input conservation and viewer proof. This clarification replaces the earlier
+merged-input manifest as the immediate baseline gate; it does not cancel
+normal incoming replacement/ID restoration or activate experimental matching.
+The [processing contract](../art/likeness-processing-contract.md#latest-precedence-and-ownership)
+owns source authority; the
+[runbook](../art/likeness.md#clean-production-source-refresh-and-working-reset)
+owns the procedure and explicit missing commands.
+
+- Use actual read-only Production to establish the selected Source snapshot,
+  then rebuild clean Working from that Source. Reuse an existing matching
+  snapshot; refresh if it differs. Do not retain old Working memberships,
+  cache, prepared outputs or supposed unique arrivals as automatic inputs.
+- The user permits discarding contaminated Sandbox outputs, and rebuilding
+  more of the Sandbox if necessary. This is not a request to preserve every
+  obsolete report/backup or copy the whole Sandbox elsewhere. Account for
+  necessary unique originals, explicit manual decisions and compact recovery
+  evidence separately before exact, checked cleanup. No broad root-recursive
+  deletion, Production mutation or unrelated-source pruning.
+- The old8,759rows are5,469Production plus3,290Working physical records,
+  not8,759unique test photos. r04remains historical diagnostic evidence;
+  its1,310unresolved mixed-source rows are not a reason to require merging
+  damaged Working before a Production-derived Source can be built.
+  Real Production duplicates/versions still require honest preparation and
+  input-role treatment; snapshotting bytes is not accepting an identity vote.
+- Existing `sandbox-reset --full` validates Source, copies current Production
+  directly to Working, and carries unique Working photos forward. It does
+  **not** refresh Source or implement the selected no-carry-forward clean test.
+  Snapshot creation found in replay/experiment helpers is not a supported
+  Production snapshot-refresh entrypoint. Implement/test the guarded strict
+  composition before reset; do not relabel legacy repeated refinement as SIMPLE.
+- Existing Source's manifest header identifies Production and an Oct21
+  snapshot with8,845physical files/5,570,978,132bytes, not a count of unique
+  photos. Header inspection alone proves neither current integrity nor
+  equivalence to current Production. Read-only preflight must settle that.
+
+**Paused patch disposition:** worker
+`8d5ae958-2827-49dc-8fb5-255a7461d044` withdrew only its unfinished
+manifest-ID proposal patch. Builder returns to
+`1b82d2264169c26e24bdce1116803f9c9f54644ee84b407a003597fc7f48567d`.
+The tested read-only `duplicates.select_incoming_version` extraction remains;
+combined26manifest/14duplicate tests pass, exact-file diff check passes.
+Receipt:
+`tmp/normal-flow-restoration/ra2j-manifest-pause-stabilization-receipt.json`.
+Oldr04artifacts are unchanged; their saved dependency binding predates the
+helper extraction and must not be rewritten to bless current code.
+No version-policy or incoming-ID restoration is claimed complete.
+
+**Next implementation/acceptance gate:** finish source/writer preflight;
+provide fixture-tested Source verification/refresh and strict Working
+rebuild, then stable whole-library composition from accepted normal
+primitives. Preview exact preservation/cleanup and input counts before an
+actual reset/run. No further user policy question is identified here.
+
+**Read-only preflight completed:** the supported
+`likeness.cmd --root "B:\Sovereign Territories Sandbox\Working" sandbox-reset --full`
+preview exits0with`previewOnly: true`, legacy`resetReady: true` and no legacy
+blockers. Source verifies8,845files/5,570,978,132bytes in32.089seconds; its
+manifest SHA-256 is
+`f8c424b6a0a09948c3587fdf3545c026058ee4727540d60688f41dd2b6178de2`.
+It is **intact but not current**: the managed Production comparison reports
+3,059added paths,3removed paths and0changed paths, with Artists excluded.
+Those are physical files, not counts of new/unique photos. Current managed
+Production has11,048files/5,496,847,211bytes; all Working contents total
+86,965files/35,521,139,053bytes. The preview reports701same-content other-path
+files,985processed copies of Production originals,12,770regenerable files,
+356metadata and65rebase-history bundle items; it reports no unique-active-photo
+carry-forward class. This is not a full retained-history disposal audit or a
+strict no-carry-forward reset authorization. Initial writer inspection found
+no genuine root-specific writer. Preview process has exited; no waiter/reset
+or inference remains running.
+
+Evidence: `tmp/normal-flow-restoration/clean-production-source-preflight-02.log`
+(UTF-16LE JSON). Attempt01stopped at argument parsing because the execution
+helper appended a period; it did not inspect/reset sources. The corrected
+supported command produced the successful evidence above.
+`bin\todo.cmd`, actual markdownlint and exact-document diff check pass.
+Source freshness and exact cleanup are now implementation/disposition gates,
+not another user policy question.
+
+#### Exact user source
+
+```text
+Also - why are there 8,000+ images ... I thought that the Sandbox Source only had 3000 something images in total
+```
+
+```text
+Well, the working should be wiped during a clean rebase for the testing as the working is not in good shape.  So the process to do the rebase should be documented on how it pulls from the actual production and created the sanbox source to start from when removing working and starting clean
+```
+
+```text
+If it's cleaner to delete things to keep it simple - that is ok.  The Sandbox is still just a sandbox and I think the sandbox source should be fine - but I am also ok if we must reset the entire sandbox to ensure we're doing things right. But the working is contaminated with all the experiments
+```
+
+### Overnight clean SIMPLE execution and viewer acceptance
+
+**Owner:** spine RA2j; normal incoming ID/version requirements stay coupled
+to normal/shared source preparation, not the superseded mixed-Working manifest.
+The user delegates clear unresolved choices to documented prior decisions and
+authorizes unattended execution through the morning. This extends the earlier
+documentation-only stop: implement/test missing guards, then perform a clean
+Sandbox reset and full fresh intake/rebase with local models. Production
+remains read-only; do not lower gates, fabricate identity certainty or
+silently promote experimental algorithms.
+
+- No old Working history needs retention in Working. Discard its contaminated
+  generated catalogue, caches, histories, reports and outputs using exact
+  checked child/staging cleanup after baseline verification. A compact
+  current-run recovery receipt outside Working is not a request to preserve
+  all obsolete runs or copy the whole Sandbox.
+- Reuse a suitable verified Source or refresh from current Production as
+  demonstrated necessary by the completed read-only preflight. Re-run intake
+  from original selected inputs, then stable casting/grouping, name
+  continuity, rivals, one shared low-noncore audit/refinement and final family
+  output. Ordinary incremental FULL/LEAN/FAST remains distinct.
+- Verify actual files, source/processing/output manifests, receipts, hashes
+  and conservation counts as well as output HTML. Open real Gallery,
+  Overview and Review, exercise representative native/detail/reference
+  links and check loaded images. Repair tightly coupled viewer assumptions
+  about experimental artifacts; absence of unselected appearance/directed
+  evidence is not a broken stable result. Required missing/stale/corrupt
+  output must remain explicit, never filled with fake experimental data.
+- Resolve technical gaps and clearly documented choices autonomously.
+  Leave unresolved human identity/crop judgments and any genuinely new
+  policy decision explicit in the morning handoff rather than manufacturing
+  acceptance. Preserve failure evidence, repair the demonstrated producer
+  and resume through supported commands, without duplicate writers.
+
+Parent owns guarded Source/reset code and actual runtime/browser acceptance.
+The retained stable-composition worker owns its isolated code/launcher/tests
+and is not authorized to start a second real writer.
+
+**Baseline implementation checkpoint:** `sandbox-baseline.cmd` now provides
+preview/apply/check around opt-in no-history reset. Existing full reset's
+default behavior is unchanged. Nine new baseline tests plus existing reset
+and quality gates pass44tests total, covering refresh, no old photo/history/
+temporary carry-forward, stale-Source refusal, source-copy/publication and
+Working failures/retry, completed-receipt cleanup recovery and binding checks.
+The initial read-only preview ran under attached shell3352; the final real
+preview and completed apply/check below supersede that pending checkpoint.
+
+**Clean baseline installed and independently checked:** final preview exits0
+with expected counts, actual apply`simple-clean-20261116-01`/shell3367exits0,
+and separate supported`--check` exits0. No old Working history is carried.
+Source and baseline Working verify11,048managed files/5,496,847,211bytes;
+Working additionally has its one current reset receipt. Controller
+transaction/old Source staging are gone; Production stays read-only.
+New Source manifest SHA-256:
+`9517d8660c1987892b71c9df695079740abe249df1ee071c956d0e029c28b69d`.
+Receipt:
+`B:\Sovereign Territories Sandbox\_baseline-state\receipts\simple-clean-20261116-01.json`,
+SHA-256`f71cffeb43adbfe46f4ccea2091caabbfdca0ba24a5edc0131747c16e0b81b84`.
+Frozen baseline implementations: `sandbox_baseline.py`
+`fb8813a16aff3a51c778143f656916fdc64c470b249c676208a9854ca3b59257`;
+`sandbox.py`
+`6ffb2e7f300428c488b1057f6ef84bbdf4d1d91d4f92d13b55207941fb836b71`.
+Logs: `tmp/normal-flow-restoration/simple-baseline-preview-final.log`,
+`simple-baseline-apply-01.log` and`simple-baseline-check-01.log`.
+Startup PID31540activity was verified; that baseline process has exited.
+Exact launcher wall time was not separately captured; do not infer it from
+source file timestamps.
+
+**Photo-count clarification:** old Source's8,845file rows contained2,700
+primary Gallery/Review images (including279Artists) and6,145other files.
+Fresh Source's11,048rows contain5,469primary physical copies totalling
+840,455,912bytes, with3,465distinct primary SHA-256values;5,579support
+files total4,656,391,299bytes. Primary counts: Angels463, Sisters803,
+Prospects867, Potentials288, Various3,048. These are not5,469independent
+identity votes or3,465confirmed people; logical stable-ID/version/alias
+qualification still belongs to the SIMPLE composer. The user's roughly
+3,000-photo expectation must not be confused with the combined old
+8,759-record diagnostic or file totals that include derivatives.
+Only old Source manifest andr04receipt were preserved/hash-verified outside
+Working under`_baseline-state/evidence/simple-clean-20261116-01`;
+obsolete Working reports/catalogue/cache/history were deliberately removed.
+This explicitly supersedes earlier promises to keep the entire r04directory.
+
+#### Exact user source
+
+```text
+I need to step away, so you can go ahead and make decisions for me about unresolved issues if there is a clear decisions on how to proceed - as there may have been decisions made already in the past that are written and since we're building this new SIMPLE version we already know the decision based on previous plans and answers documented.  But I don't need to keep any history in the sandbox working - in fact, it's probably cleaner if we do that reset on it.  If that means we re-run the intake process fully as well - then we do that from complete start to finish so we know exactly how it works end-to-end and we can address issues and gaps when I return in the morning.  So keep on going and we'll see how things show up in the morning.
+```
+
+```text
+If there are issues with any viewers that were created and expected some experimental content we'll also have to address those and ensure the GUI is working as expected.  That's something I forgot to discuss with you before.  But you can verify and check the outputs in the GUI's as well as all the outputs, manifests, actual files, etc...
+```
+
+### Nov 16: post-apply protected-member and workflow-selection review
+
+**Coverage/owner:** transfer the bounded review to execution-spine RA2d after
+RA2j's current apply/installed/browser checks. This is not permission to
+change the running job, enable a new rule or claim current policy accepted.
+Current run07 audits existing low Gallery members but does not reassign them
+to rival owners. Protected/default or disabled-split Gallery recommendations
+remain advisory; workflow selection also currently guards movement.
+
+The user wants low-scoring existing Sister/Angel photos eligible for
+reassessment and qualified regrouping, including workflow-selected photos.
+Review the earlier whole-process agreement against actual guards, explicitly
+separating identity protection, frozen/core reference eligibility, ordinary
+workflow selection, configured anchors and genuine photo locks. Workflow
+selection must not silently become permanent placement immunity. Establish
+what evidence permits a rival reassignment versus Review/retention, and how
+selected workflow references/names remain valid after an approved move.
+Do not invent a universal admission threshold or bypass real locks.
+
+Reuse run07's source-bound cases and recommendation evidence. RA2d owns the
+comparison and user policy acceptance; any later implementation must have
+an explicit selected contract and tests before another apply. Successful
+installation of this baseline does not close that intended-behavior review.
+
+Exact user source:
+
+```text
+I'll want to review things at the end - like the protected policy and ensure that we do allow for the low-scoring existing Sister and Angels to be re-grouped.  That was one thing that will help if that's part of the process - even if it's a workflow selected photo.  That was something that was working at one point in our work - prior to all the experiments and the complete re-write.  Can you tell me if that is part of this or something we'll deal with post this apply?
+```
+
+### Nov 16: incoming Angel/Sister admission gates
+
+**Coverage/owner:** the same post-apply RA2d review also owns incoming
+admission, separately from removal of existing Gallery members. Reconcile
+the earlier whole-process agreement with the normal planner, protected-
+Gallery publication checks and disabled cast-group Review branch.
+[Run07's bound policy and strong group-match evidence](../recap/2026-11-16-simple-rebase-recap.md#incoming-angelsister-admission-hard-blocks-not-just-thresholds)
+demonstrate that no automatic cast placement does not mean no strong cast
+match. Preserve the distinction between group resemblance and individual
+admission, including rival margins, quality and genuine rejection/lock
+evidence. The user can review individual cases later. This does not select
+new thresholds, authorize a policy change or interrupt the running apply.
+
+Exact user source:
+
+```text
+What gates prevented some from landing in Sisters or Angels?  There are definitely some in Various that should have landed.  I can review the ones later - but was there some lock that prevented or what threshhold would have done that?
+```
+
+### Nov 16: incoming threshold hierarchy for the next review
+
+**Coverage/owner:** RA2d's existing incoming-admission review above also
+compares category photo-route minima and rival margins from the canonical
+[policy](../../data/art/likeness-engine-policy.json). The user questions
+whether Angels should be stricter than Sisters, equal to Sisters or ordered
+differently. This is a review question, not approval of any changed number.
+Compare admission thresholds and cross-category rival margins separately
+from core construction, new-group classification and incoming/outgoing
+permissions. Models' larger rival margin matters even when its absolute
+minimum equals Sisters'. Changing an Angel/Sister score alone does not
+remove the hard admission blocks. No runtime or policy change is selected.
+
+Exact user source:
+
+```text
+Let me ask another question - what are the minimum gallery entries for Models and Prospects for new incoming images?  I see that Sisters is 0.50 and Angels is 0.55 which I think seems either opposite or Angels is too high and should be same as Sisters.  But I want to konw the other levels in the category hierarchy so we can plan for that in next set of activities.
+```

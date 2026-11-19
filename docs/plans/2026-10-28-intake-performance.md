@@ -2,8 +2,88 @@
 
 **Status:** holding (performance contracts/evidence; selected core execution transferred)
 
-**Resume gate:** the reset spine selects a measured extra or new-PC tuning;
-the current core package is executed from the spine after the live-run freeze.
+**Resume gate:** the reset spine's Nov17 selection delivered the bounded
+SIMPLE canonical-reader/shared-proof/provenance reconnection after the
+writer completed. The [timed reports-only baseline](../recap/2026-11-16-simple-rebase-recap.md#nov-17-timed-reports-only-baseline)
+now records actual generation, unchanged generation repeat and independent
+check with native/input conservation and representative browser acceptance.
+The repeat is stable; old normal-generated report context is not equivalent
+to the full maintained refresh. Further cost attribution, context parity,
+resource coverage and broader viewer/human acceptance remain open.
+Other core work, measured extras and new-PC tuning retain their own gates.
+
+**Nov 16 SIMPLE applicability:** the
+[focused carry-forward inventory](2026-11-16-simple-review-and-tuning.md#simple-performance-carry-forward-retained-pieces-versus-missing-integration)
+distinguishes retained shared implementations, normal-coordinator integration
+gaps and earlier worker prototypes. It selects no live-run runtime change or
+whole-backlog reactivation. Use current acceptance evidence, then select the
+smallest measured SIMPLE slice through RA2j and the existing spine owners.
+Historical delivered evidence below does not prove every new caller uses it.
+
+## Nov 17: recovered timing evidence and SIMPLE reuse boundary
+
+The earlier performance work was not erased by the SIMPLE restoration.
+These existing UTF-16LE logs were reopened read-only; a naive UTF-8 reader's
+interleaved NULs are an encoding problem, not lost measurements. Original
+logs remain unchanged under `tmp/session-logs`; do not treat them as
+disposable cleanup output.
+
+| Surviving source | Observed result | Interpretation |
+| --- | --- | --- |
+| `nov6-shared-reports.log` | Refresh exit0, 2,103.6686918s; 3,290 Review photos, 250 Overview people, 100,663 hash reuses; independent content seal retained | Delivered shared-report operation, about35m04s. It still reports some unverified older staged histories; exit0 is not zero diagnostics |
+| `nov6-final-reports.log` | Final Gallery check verified in20.08s; 3,545 content reads and independent seals, each1,846,752,181bytes | Separate check, not an entire refresh or intake. This observed check is distinct from the earlier20.14s measurement recorded below |
+| `nov6-noop-maintenance-baseline.log` | Exit0, 696.7533091s; 30,780 content reads and independent seals | An unchanged maintenance baseline still had material verification cost |
+| `nov6-external-inventory-full-check.log` | Exit0, 587.721s, 11,786 independently sealed paths | Full external-inventory measurement; paired owner-level gains remain documented below, not a whole-install speedup |
+| `nov6-manifest-digest-paired.log` | One pair8.358s baseline /8.432s reuse, identical ordered digest | One extra manifest read removed; no measured wall-time gain |
+| `nov6-prepared-eviction-paired.log` | One pair5.732s eviction /2.651s unsafe reuse, same57answers | Hypothesis only. Not a delivered optimization or permission to bypass invalidation |
+
+These are different populations, operations and cache/storage conditions
+from current fresh publication. Do not promise that run09 should therefore
+finish in35minutes, or reuse historical viewers as current acceptance.
+The [timed SIMPLE recap](../recap/2026-11-16-simple-rebase-recap.md#nov-17-live-review-progress)
+owns the live-run observation.
+
+### Confirmed module/session split; cost attribution still open
+
+A tiny isolated read-only probe imported the actual `normal_rebase`
+composition and its qualified `tools.art.likeness_library.review_gallery`.
+Review's top-level `verification_reads` is the canonical
+`likeness_library.verification_reads`. However, `write_thumbnails` imports
+`.fast_preparation`, whose `deferred` calls the qualified
+`.retained_preparation.verify_link`. That retained reader loads a second
+verification module from the **same file**, with a different `_ACTIVE`
+ContextVar. It cannot see Review's active session.
+
+Within one Review-owned session, two canonical retained-reader requests for
+the same8,798-byte code file caused **one content read and one cache reuse**.
+Two qualified retained-reader requests caused **two uncached digest calls**,
+with identical hashes. The canonical session still independently sealed
+the file once at exit. No images, models, library inputs or live process
+were accessed by this probe.
+
+This proves a reuse boundary defect, not its aggregate wall-time share.
+T29 first measures a representative real SIMPLE viewer case; T30 repairs
+the smallest established duplicate-read/provenance integration gap and
+verifies that actual callers share the intended operation scope. Do not
+only add an outer session while leaving a second module's readers outside
+it. Preserve standalone revalidation, independent seals, source/path/owner
+guards, held-alias diagnostics, pixels, placements and recovery semantics.
+No live runtime change or new worker framework is selected.
+
+### Nov 17 bounded reconnection delivered
+
+The normal coordinator now uses canonical readers, one root-bound
+verification session and one provenance index across Overview/Review,
+retaining cache-only scoring and the independent final seal. Focused tests
+cover real nested-reader scope, output parity, post-write mutation refusal,
+writer failure propagation and diagnostic-only held aliases.
+The [single timing/evidence home](../recap/2026-11-16-simple-rebase-recap.md#nov-17-completion-and-report-reconnection)
+records synthetic2→1 indexes /14→7 digest calls (no timing gain), and a
+four-request real Lucia Reyes pair with identical evidence and lower
+instrumented digest bytes. Additional manifest seals increase digest-call
+count in that real pair; do not describe it as fewer total file reads or
+whole-run speedup. Old run09 receipts remain unchanged and did not use this
+fix. Broader T29/T30, worker and derivative contracts are not closed.
 
 ## Nov 6 bounded implementation and paired evidence
 
