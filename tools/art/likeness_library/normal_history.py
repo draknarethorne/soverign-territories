@@ -48,14 +48,14 @@ def retired(root, directory):
     return result
 
 
-def stage(root, stage_root, moves):
+def stage(root, stage_root, moves, *, vacated=()):
     from . import retained_preparation as retained
 
     root, stage_root = pathlib.Path(root).resolve(), pathlib.Path(stage_root).resolve()
     indexes = {}
     for move in moves:
         target = safe(root, move["destination"])
-        previous = target if target.is_file() else safe(root, move["source"])
+        previous = target if move["destination"] not in vacated and target.is_file() else safe(root, move["source"])
         current = previous.relative_to(root).as_posix()
         claimed = retained.claims_photo(root, previous)
         if not claimed and previous == safe(root, move["source"]):
@@ -71,7 +71,9 @@ def stage(root, stage_root, moves):
                 "formatVersion": 1, "entries": {},
             }
         index = indexes[directory]
-        key = next((key for key, value in index["entries"].items() if value.get("current") == current), current)
+        key = next((key for key, value in index["entries"].items() if value.get("current") == current), None)
+        if key is None:
+            key = current if current not in index["entries"] else current + "#" + metadata.content_sha256(previous)
         entry = index["entries"].setdefault(key, {
             "generations": [], "retiredManifests": {},
         })

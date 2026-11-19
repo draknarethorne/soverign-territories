@@ -90,6 +90,39 @@ class NormalRecapTests(unittest.TestCase):
         with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
             return rebase_recap.main([str(self.report), *args])
 
+    def test_archived_copies_are_accounted_for_without_borrowing_keeper_scores(self):
+        destination = "_duplicates/run1/0123456789abcdef01234567/" + self.target
+        plan = self.receipt["plan"]
+        plan.pop("exactAliasTargets")
+        for row in plan["sourceRows"]:
+            if row["source"] == self.b:
+                row["collisionRule"] = "exact-byte keeper"
+            if row["source"] == self.target:
+                row.update(sourceStatus="duplicate-archive", reason="exact-byte copy")
+        plan["duplicateArchives"] = {self.target: {
+            "source": self.target, "destination": destination, "sha256": self.h2,
+            "photoId": "photo:image_2", "reason": "exact-byte copy", "selectedSource": self.b,
+        }}
+        self.receipt["publishedNative"].append({"native": destination, "sha256": self.h2})
+        self.save()
+        data = normal_recap.collect(self.report)
+        archived = next(row for row in data["rows"] if row["duplicateArchive"])
+        self.assertEqual(archived["destination"], destination)
+        self.assertIsNone(archived["score"])
+        self.assertNotIn("_duplicates", data["newIdentities"])
+        self.assertEqual(data["snapshotMatched"], 3)
+        page = normal_recap.render(data, self.library / "recap.html")
+        self.assertIn('id="collisions"', page)
+        self.assertIn("exact-byte keeper", page)
+        self.assertIn(destination, page)
+        self.assertIn('href="#collisions"', page)
+        self.assertIn("1 duplicate archive(s)", page)
+        self.assertIn("duplicate archives only; no identity rename", page)
+        self.receipt["publishedNative"][-1]["sha256"] = self.h3
+        self.save()
+        with self.assertRaisesRegex(ValueError, "unbound duplicate archive"):
+            normal_recap.collect(self.report)
+
     def test_applied_report_preserves_transaction_bound_preview_reports(self):
         self.receipt["status"] = "preview"
         self.receipt["kind"] = "normal-rebase-preview"

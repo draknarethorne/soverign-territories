@@ -346,6 +346,8 @@ def _detail_link(anchor, label):
 def _person_link(person, data, out_dir, *, bucket=None):
     person = str(person or "")
     label = html.escape(person or "not recorded")
+    if person == "_duplicates" and data.get("duplicateArchives"):
+        return _detail_link("collisions", person)
     if data.get("historical"):
         return label
     valid = data.setdefault("_person_path_validity", {})
@@ -452,6 +454,8 @@ def _destination_links(row, data, out_dir):
         target = _working_target(row["destination"], data)
         if target is None or not target.is_file():
             return '<span class=muted>Current destination unavailable; saved movement evidence retained.</span>'
+        if row.get("duplicateArchive"):
+            return _safe_link(target, "Archived photo (not rehashed)", out_dir, new_tab=True)
         link = _safe_link(target, "Current photo (not rehashed)", out_dir, new_tab=True)
         if data.get("auditPageName"):
             href = data["auditPageName"] + "#photo-" + hashlib.sha256(row["destination"].encode("utf-8")).hexdigest()
@@ -881,6 +885,11 @@ def _comparison_section(data, others, out_dir):
 
 
 def _continuity_state(old_person, rows):
+    archival = any(row.get("duplicateArchive") for row in rows)
+    if archival:
+        rows = [row for row in rows if not row.get("duplicateArchive")]
+        if not rows:
+            return "duplicate archives only; no identity rename"
     destinations = {row["newPerson"] for row in rows}
     old_sources_by_target = collections.defaultdict(set)
     for row in rows:
@@ -899,6 +908,8 @@ def _continuity_state(old_person, rows):
             states.append("emptied")
     if not states:
         states.append("name retained")
+    if archival:
+        states.append("duplicate copies archived")
     return "; ".join(states)
 
 
@@ -907,6 +918,8 @@ def _continuity_section(data, out_dir):
     old_counts = collections.Counter(row["oldPerson"] for row in rows)
     final_gallery = collections.Counter(row["newPerson"] for row in rows if row["newBucket"] == "gallery")
     final_review = collections.Counter(row["newPerson"] for row in rows if row["newBucket"] == "review")
+    archive_count = sum(bool(row.get("duplicateArchive")) for row in rows)
+    archive_note = f" + {archive_count} duplicate archive(s)" if archive_count else ""
     outgoing = collections.defaultdict(list)
     for row in rows:
         outgoing[row["oldPerson"]].append(row)
@@ -927,7 +940,7 @@ def _continuity_section(data, out_dir):
     parts = [
         "<h2 id=continuity>Identity membership and name continuity</h2>",
         f"<p>{len(rows)} source photo rows → {sum(final_gallery.values())} final Gallery + "
-        f"{sum(final_review.values())} final Review = {len(rows)} accounted destinations. Counts are row counts, "
+        f"{sum(final_review.values())} final Review{archive_note} = {len(rows)} accounted destinations. Counts are row counts, "
         "not verified identities. Saved reason text is evidence, not a continuity verdict.</p>",
         "<table><tr><th>Old identity</th><th>Old rows</th><th>Retained in Gallery</th><th>Arrivals</th>"
         "<th>Departures</th><th>Final Gallery</th><th>Final Review</th><th>Observed name flow</th></tr>",

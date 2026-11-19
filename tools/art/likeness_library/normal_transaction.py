@@ -31,7 +31,7 @@ def _replace(source, destination, checksum):
     destination.parent.mkdir(parents=True, exist_ok=True)
     staged = destination.with_name(f".{destination.name}.{uuid.uuid4().hex}.normal-swap")
     try:
-        shutil.copyfile(source, staged)
+        shutil.copy2(source, staged)
         if metadata.content_sha256(staged) != checksum:
             raise OSError(f"normal transaction copy changed: {source}")
         os.replace(staged, destination)
@@ -83,6 +83,9 @@ def _restore(root, data):
             backup / pathlib.PurePosixPath(entry["backup"]),
             safe(root, relative), entry["sha256"],
         )
+        if relative in data.get("beforeModifiedNs", {}):
+            target = safe(root, relative)
+            os.utime(target, ns=(target.stat().st_atime_ns, data["beforeModifiedNs"][relative]))
     for relative, expected in data["after"].items():
         if relative not in before_relative:
             target = safe(root, relative)
@@ -106,6 +109,7 @@ def recover(root, journal, *, apply=False):
 
 
 def publish(root, stage, source_relatives, *, journal, bindings, profile, run_id, expected_sources=None,
+            expected_modified_ns=None,
             preserved_sources=None, finalizer=None, report_directories=()):
     from tools.art import library_backup
 
@@ -116,6 +120,8 @@ def publish(root, stage, source_relatives, *, journal, bindings, profile, run_id
         path.relative_to(stage).as_posix(): metadata.content_sha256(path)
         for path in stage.rglob("*") if path.is_file()
     }
+    if any(safe(root, relative).exists() for relative in targets if relative.startswith("_duplicates/")):
+        raise ValueError("normal duplicate archive target already exists")
     report_roots = [safe(root, relative) for relative in report_directories]
     report_before = {
         path.relative_to(root).as_posix()
@@ -126,6 +132,12 @@ def publish(root, stage, source_relatives, *, journal, bindings, profile, run_id
         relative for relative in targets if safe(root, relative).exists()
     }
     before = [(f"file-{index:04d}", safe(root, relative)) for index, relative in enumerate(sorted(before_paths))]
+    def check_modified():
+        for relative, modified_ns in (expected_modified_ns or {}).items():
+            if safe(root, relative).stat().st_mtime_ns != modified_ns:
+                raise ValueError(f"normal collision date changed before publication: {relative}")
+
+    check_modified()
     for relative, checksum in {**(expected_sources or {}), **(preserved_sources or {})}.items():
         if metadata.content_sha256(safe(root, relative)) != checksum:
             raise ValueError(f"normal frozen source changed before snapshot: {relative}")
@@ -135,11 +147,14 @@ def publish(root, stage, source_relatives, *, journal, bindings, profile, run_id
     for source, checksum in frozen_sources.items():
         if metadata.content_sha256(pathlib.Path(source)) != checksum:
             raise ValueError(f"normal source changed after snapshot: {source}")
+    check_modified()
     data = {
         "schemaVersion": 1, "kind": "normal-publication", "status": "publishing",
         "root": str(root), "runId": run_id, "profile": profile, "bindings": bindings,
         "backup": str(backup), "after": {**targets, **(preserved_sources or {})},
         "removed": sorted(set(source_relatives) - set(targets)),
+        **({"beforeModifiedNs": {relative: expected_modified_ns[relative] for relative in before_paths
+                                if relative in expected_modified_ns}} if expected_modified_ns else {}),
     }
     write(journal, data)
     try:

@@ -22,7 +22,7 @@ def require_authorization(root, policy, sandbox_override=False, *, allow_isolate
         )
 
 
-def proposed_moves(report, photos, root):
+def proposed_moves(report, photos, root, *, duplicate_archives=None):
     """Resolve unique measured sources; a hold is not a new named identity."""
     root = pathlib.Path(root).resolve()
     by_id = {}
@@ -64,11 +64,11 @@ def proposed_moves(report, photos, root):
             ) if key in row},
             **({"preparationOnly": True, "membershipOnly": True} if source == destination else {}),
         })
-    validate_moves(root, moves)
+    validate_moves(root, moves, duplicate_archives=duplicate_archives)
     return moves
 
 
-def validate_moves(root, moves, identity_actions=(), *, exact_alias_targets=None):
+def validate_moves(root, moves, identity_actions=(), *, exact_alias_targets=None, duplicate_archives=None):
     root = pathlib.Path(root).resolve()
     sources, destinations = set(), set()
     for row in moves:
@@ -121,7 +121,14 @@ def validate_moves(root, moves, identity_actions=(), *, exact_alias_targets=None
             source == destination and row.get("membershipOnly") and row.get("preparationOnly")
         ):
             alias = (exact_alias_targets or {}).get(row["destination"])
-            if not (
+            archive = (duplicate_archives or {}).get(row["destination"])
+            vacated = (
+                archive and archive["source"] == row["destination"]
+                and archive["selectedSource"] == row["source"]
+                and archive["photoId"] == row["photoId"]
+                and metadata.content_sha256(destination) == archive["sha256"]
+            )
+            if not vacated and not (
                 alias
                 and alias["source"] == row["source"]
                 and alias["sha256"] == row["sha256"]
@@ -330,7 +337,7 @@ def _updated_catalog(catalog, moves, policy, identity_actions=()):
             "contentSha256": row["sha256"],
             "protected": photo_record.get("protected", False),
         })
-        if row.get("castAdmission") or row.get("normalAdmission"):
+        if row.get("castAdmission") or row.get("normalAdmission") or row.get("collisionRebind"):
             old = photo_record.get("membership", {})
             old_group = updated.get("photoGroups", {}).get(old.get("groupId"))
             if old_group:
@@ -340,6 +347,9 @@ def _updated_catalog(catalog, moves, policy, identity_actions=()):
                 old_group["referencePhotoIds"] = [
                     pid for pid in old_group["referencePhotoIds"] if pid != row["photoId"]
                 ]
+            if not (row.get("castAdmission") or row.get("normalAdmission")):
+                photo_record.pop("membership", None)
+                continue
             folder = "/".join(parts[:-2])
             person = people.get(folder)
             admission = row.get("castAdmission")

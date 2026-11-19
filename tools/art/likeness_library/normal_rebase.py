@@ -364,7 +364,7 @@ def _validate_move_destinations(moves):
         destinations[key] = move["source"]
 
 
-def _exact_alias_targets(rows, moves, *, updates=None):
+def _exact_alias_targets(rows, moves, *, updates=None, archives=None):
     by_source = {row["source"].casefold(): row for row in rows}
     aliases = {}
     for move in moves:
@@ -386,6 +386,13 @@ def _exact_alias_targets(rows, moves, *, updates=None):
                 raise ValueError(f"planned destination is not its bound incoming replacement: {move['destination']}")
             continue
         if not target or target["source"].casefold() == move["source"].casefold():
+            continue
+        archive = (archives or {}).get(target["source"])
+        if archive and (
+            target["source"] == move["destination"]
+            and archive["selectedSource"] == move["source"]
+            and archive["photoId"] == move["photoId"]
+        ):
             continue
         if not (
             target.get("sourceStatus") == "exact-byte-alias"
@@ -580,7 +587,136 @@ def _decision_ids(cfg, metadata_module):
     }
 
 
-def _classify_sources(root, rows, cfg, catalog, api):
+def _resolve_collision(root, entries, record, anchor_owners, chosen, workflow_selected, protected_folders):
+    from tools.art import duplicates
+
+    def pick(rows):
+        ranked = duplicates.keeper([
+            (root / row["source"], row["group"], root / row["owner"], row["bucket"])
+            for row in rows
+        ], chosen)
+        return next(row for row in rows if root / row["source"] == ranked[0])
+
+    def hold(reason):
+        for row in entries:
+            row.update(sourceStatus="held", versionConflict=True, reason=reason)
+        return None
+
+    selected = [row for row in entries if pathlib.Path(row["originalName"]).stem.casefold() in chosen]
+    bound = [row for row in entries if row["sourceHash"] == record.get("contentSha256")]
+    protected = [row for row in entries if row["bucket"] == "gallery" and row["owner"] in protected_folders]
+    if not protected and (len(selected) > 1 or len(anchor_owners) > 1):
+        return hold("conflicting selected references or anchors")
+    required = protected or list(entries)
+    if anchor_owners:
+        anchored = [row for row in required if row["owner"] in anchor_owners and row["bucket"] == "gallery"]
+        required = anchored or (required if protected else [])
+    if selected:
+        selected_required = [row for row in required if row in selected]
+        required = selected_required or (required if protected else [])
+    elif workflow_selected and not protected:
+        return hold("workflow-selected copy could not be resolved by its filename")
+    if record.get("protected"):
+        bound_required = [row for row in required if row in bound]
+        required = bound_required or (required if protected else [])
+        if not protected and len({row["owner"] for row in required}) > 1:
+            return hold("catalogue-bound ownership is ambiguous")
+    if not required:
+        return hold("selected reference or confirmed ownership conflicts with the available copies")
+
+    prepared = [row for row in entries if row.get("retainedManifest")]
+    raw_aliases = {
+        row["source"]: natives for row in entries if not row.get("retainedManifest")
+        and (natives := [
+            native for native in prepared if native.get("retainedSourceHash") == row["sourceHash"]
+            and native["sourceHash"] != row["sourceHash"]
+        ])
+    }
+    versions = [row for row in entries if row["source"] not in raw_aliases]
+    if not protected and any(len({native["sourceHash"] for native in natives}) > 1 for natives in raw_aliases.values()):
+        return hold("retained original identifies more than one prepared version")
+    for row in entries:
+        row["collisionModifiedNs"] = (root / row["source"]).stat().st_mtime_ns
+    hashes = {row["sourceHash"] for row in versions}
+    rule = "exact-byte keeper"
+    if protected:
+        eligible = [row for row in required if row in versions] or required
+        preferred = [row for row in eligible if row in bound] or eligible
+        keeper = pick([row for row in preferred if row.get("retainedManifest")] or preferred)
+        rule = "protected Gallery keeper; conflicting copies archived without changing keeper's owner"
+    elif len(hashes) > 1 and len({row["sourceHash"] for row in required}) == 1 and (
+        anchor_owners or selected or record.get("protected")
+    ):
+        hashes = {required[0]["sourceHash"]}
+        rule = "kept the uniquely selected, anchored, or protected version"
+    elif len(hashes) > 1:
+        if all(row["idBasis"] == "raw-content-sha1-8" for row in versions):
+            return hold("short content-derived ID collision across different full SHA-256 values")
+        recent = max(row["collisionModifiedNs"] for row in versions)
+        newest = [row for row in versions if row["collisionModifiedNs"] == recent]
+        hashes = {row["sourceHash"] for row in newest}
+        if len(hashes) > 1:
+            eligible_ties = [row for row in newest if row in required]
+            bound_ties = [row for row in eligible_ties if row in bound]
+            if eligible_ties:
+                hashes = {pick(bound_ties or eligible_ties)["sourceHash"]}
+            rule = "newest modification time tied; kept catalogue-bound or stable keeper preference"
+        else:
+            rule = "unique newest version by filesystem modification time"
+    elif raw_aliases:
+        rule = "verified prepared native instead of its retained raw original"
+    if not protected:
+        eligible = [row for row in required if row in versions and row["sourceHash"] in hashes]
+        if not eligible:
+            return hold("newest or prepared version conflicts with the selected or anchored copy")
+        keeper = pick([row for row in eligible if row.get("retainedManifest")] or eligible)
+    keeper.update(sourceStatus="canonical", collisionRule=rule)
+    for row in entries:
+        if row is keeper:
+            continue
+        reason = (
+            "exact-byte copy" if row["sourceHash"] == keeper["sourceHash"] else
+            "verified retained raw original" if row["source"] in raw_aliases else
+            "non-keeper same-ID version"
+        )
+        row.update(sourceStatus="duplicate-archive", selectedSource=keeper["source"], reason=reason)
+    return keeper
+
+
+def _duplicate_archives(root, rows, run_id):
+    archives = {}
+    for row in rows:
+        if row.get("sourceStatus") != "duplicate-archive":
+            continue
+        token = hashlib.sha256(row["source"].casefold().encode("utf-8")).hexdigest()[:24]
+        source = pathlib.PurePosixPath(row["source"])
+        destination = pathlib.PurePosixPath("_duplicates", run_id, token, source).as_posix()
+        if normal_transaction.safe(root, destination).exists():
+            raise ValueError(f"duplicate archive destination already exists: {destination}")
+        archives[row["source"]] = {
+            "source": row["source"], "destination": destination, "photoId": row["photoId"],
+            "sha256": row["sourceHash"], "reason": row["reason"], "selectedSource": row["selectedSource"],
+        }
+    if len({row["destination"].casefold() for row in archives.values()}) != len(archives):
+        raise ValueError("duplicate archive destinations collide")
+    return archives
+
+
+def _unresolved_duplicate_ids(rows, archives):
+    remaining = collections.Counter(
+        row["photoId"] for row in rows
+        if row.get("photoId") and row["group"] in IDENTITY_ROOTS | {"Various"}
+        and row["source"] not in archives
+    )
+    return sorted(pid for pid, count in remaining.items() if count > 1)
+
+
+def _require_resolved_duplicate_ids(ids):
+    if ids:
+        raise ValueError(f"{len(ids)} unresolved same-ID collision(s) block apply; see ID collisions in recap")
+
+
+def _classify_sources(root, rows, cfg, catalog, api, *, archive_collisions=False):
     """Choose one physical input per ID; preserve every alias/version in evidence."""
     from tools.art import duplicates
 
@@ -595,6 +731,9 @@ def _classify_sources(root, rows, cfg, catalog, api):
     for row in rows:
         if row.get("photoId"):
             by_id[row["photoId"]].append(row)
+    protected_folders = {
+        row["owner"] for row in rows if row["group"] in ("Sisters", "Angels")
+    } | {person["folder"] for person in catalog["people"].values() if person.get("protected")}
     active, held, updates, aliases = [], [
         row for row in rows
         if row.get("sourceStatus") == "held" and not row.get("photoId")
@@ -659,6 +798,8 @@ def _classify_sources(root, rows, cfg, catalog, api):
         if any(row.get("sourceStatus") == "held" for row in entries):
             for row in entries:
                 row["sourceStatus"] = "held"
+                if archive_collisions and len(entries) > 1:
+                    row["versionConflict"] = True
                 row.setdefault(
                     "reason",
                     "another same-ID source has invalid retained lineage or no safe ID filename",
@@ -666,6 +807,16 @@ def _classify_sources(root, rows, cfg, catalog, api):
                 held.append(row)
             continue
         record = catalog.get("photos", {}).get(photo_id, {})
+        if archive_collisions and len(entries) > 1:
+            keeper = _resolve_collision(
+                root, entries, record, anchors.get(photo_id, set()), chosen,
+                photo_id in workflow_ids, protected_folders,
+            )
+            if keeper:
+                active.append(keeper)
+            else:
+                held.extend(entries)
+            continue
         retained_current = [
             row for row in entries
             if row["group"] in IDENTITY_ROOTS and row["bucket"] == "gallery"
@@ -1035,8 +1186,20 @@ def _plan(
             anchor_photos.append(photo)
     decision_catalog = metadata.with_configured_anchors(catalog, cfg, anchor_photos)
     active, held, aliases, updates, workflow_ids = _classify_sources(
-        root, rows, cfg, decision_catalog, api,
+        root, rows, cfg, decision_catalog, api, archive_collisions=admission_enabled,
     )
+    archives = _duplicate_archives(root, rows, run_id) if admission_enabled else {}
+    unresolved_ids = _unresolved_duplicate_ids(rows, archives) if admission_enabled else []
+    if for_apply:
+        _require_resolved_duplicate_ids(unresolved_ids)
+    collision_dates = {
+        row["source"]: row["collisionModifiedNs"] for row in rows if "collisionModifiedNs" in row
+    }
+    if reuse_plan is not None and (
+        archives != reuse_plan.get("duplicateArchives", {})
+        or collision_dates != reuse_plan.get("collisionModifiedNs", {})
+    ):
+        raise ValueError("duplicate decisions or source modification times changed since preview")
     for row in list(active):
         if not admission_enabled and row.get("retainedManifest") and (
             row["group"] == "Various" or row["bucket"] == "review"
@@ -1307,10 +1470,17 @@ def _plan(
                 for photo_id, row in sorted(updates.items())
             },
             "exactAliases": aliases,
+            "duplicateArchives": archives,
+            "unresolvedDuplicateIds": unresolved_ids,
+            "collisionModifiedNs": collision_dates,
             "sourceHolds": held,
             "inputPolicy": {
                 "idless": "tools.art.originals.content_id(raw bytes) plus standard_name; no source rename during preview",
-                "sameIdVersions": "unique newest Various/gallery original only when one catalogue-bound current Gallery owner exists",
+                "sameIdVersions": (
+                    "archive redundant copies and route one keeper normally; choose the unique newest "
+                    "different-byte version unless protected or lineage-conflicted"
+                    if admission_enabled else "legacy Various/gallery incoming version selection"
+                ),
                 "exactDuplicates": "tools.art.duplicates.keeper; one canonical ID+SHA input",
                 "differentIdsSameBytes": (
                     "use duplicates.keeper for one same-owner content vote while preserving all IDs; "
@@ -1414,7 +1584,9 @@ def _plan(
                 "sha256": row["sourceHash"],
                 "reason": "accepted unique-newest same-ID incoming update; current owner/name retained",
             })
-        moves = maintenance.proposed_moves(report, photos_for_moves, root)
+        moves = maintenance.proposed_moves(
+            report, photos_for_moves, root, **({"duplicate_archives": archives} if archives else {}),
+        )
         moves = [move for move in moves if move["photoId"] not in updates]
         for move in moves:
             source_row = candidate_sources.get(move["source"])
@@ -1570,6 +1742,7 @@ def _plan(
                 1 for row in rows if row.get("sourceStatus") == "unclassified"
             ),
             "exactAliases": len(aliases),
+            "duplicateArchives": len(archives),
             "sameContentNonVotingDuplicates": len(same_content_nonvoters),
             "crossIdOwnerConflicts": len(cross_id_owner_conflicts),
             "uniqueLogicalPhotoIds": report["uniqueLogicalPhotoIdCount"],
@@ -1583,8 +1756,30 @@ def _plan(
                 row.get("rebaseRole", row.get("sourceStatus", "unclassified")) for row in active
             ).items())),
         }
+        for row in active:
+            if not row.get("collisionRule"):
+                continue
+            record = catalog["photos"].get(row["photoId"], {})
+            membership = record.get("membership", {})
+            person = catalog["people"].get(membership.get("personId"), {})
+            changed_binding = bool(record) and (
+                record.get("contentSha256") != row["sourceHash"]
+                or (person and person["folder"] != row["owner"])
+            )
+            if not changed_binding:
+                continue
+            move = next((move for move in report["moves"] if move["source"] == row["source"]), None)
+            if move is None:
+                move = {
+                    "photoId": row["photoId"], "source": row["source"], "destination": row["source"],
+                    "sha256": row["sourceHash"], "reason": "bind catalogue to the selected same-ID keeper",
+                    "preparationOnly": True, "membershipOnly": True,
+                }
+                report["moves"].append(move)
+                stage_photos.append(raw_photos[row["source"]])
+            move["collisionRebind"] = True
         _validate_move_destinations(report["moves"])
-        report["exactAliasTargets"] = _exact_alias_targets(rows, report["moves"], updates=updates)
+        report["exactAliasTargets"] = _exact_alias_targets(rows, report["moves"], updates=updates, archives=archives)
         report["sourceConservation"]["coalescedExactAliasTargets"] = len(report["exactAliasTargets"])
         permission_moves = [
             move for move in report["moves"]
@@ -1699,6 +1894,7 @@ def _preview_for_apply(root, path, run_id, profile, bindings, cfg=None):
     plan = data.get("plan")
     if not isinstance(plan, dict):
         raise ValueError("preview receipt has no bound plan")
+    _require_resolved_duplicate_ids(plan.get("unresolvedDuplicateIds", []))
     if plan.get("preparationRoot"):
         if plan.get("preparationReuse"):
             reuse = plan["preparationReuse"]
@@ -1851,6 +2047,7 @@ def main(argv=None):
             relocations = [row for row in ordinary if not row.get("preparationOnly")]
             maintenance.validate_moves(
                 root, relocations, exact_alias_targets=report["exactAliasTargets"],
+                duplicate_archives=report.get("duplicateArchives", {}),
             )
             maintenance._validate_permissions(root, relocations, policy, cfg)
             for row in ordinary:
@@ -1869,11 +2066,15 @@ def main(argv=None):
                     raise ValueError(f"frozen source changed before publication: {source}")
             if metadata.load_catalog(metadata.path_for_root(root)) != catalog:
                 raise ValueError("catalogue changed before publication")
+            for source, modified_ns in report.get("collisionModifiedNs", {}).items():
+                if normal_transaction.safe(root, source).stat().st_mtime_ns != modified_ns:
+                    raise ValueError(f"collision modification time changed before publication: {source}")
             stage_root = run / "publication"
             journal_path = run / "publication-journal.json"
             published, updated, removed = normal_products.stage(
                 root, stage_root, moves, prepared, profile=args.profile,
                 photos=photos, cfg=cfg, catalog=catalog, policy=policy,
+                archives=report.get("duplicateArchives", {}),
             )
             projected = normal_finish.projected(api, root, stage_root, space, cache, moves)
             report["finalComparisonAndFamily"] = normal_finish.family_and_final(
@@ -1891,10 +2092,11 @@ def main(argv=None):
 
             journal = normal_transaction.publish(
                 root, stage_root,
-                sorted(move_sources | set(removed)),
+                sorted(move_sources | set(removed) | set(report.get("duplicateArchives", {}))),
                 journal=journal_path,
                 bindings=report["bindings"], profile=args.profile, run_id=run_id,
                 expected_sources={**report["sourceHashes"], **removed},
+                expected_modified_ns=report.get("collisionModifiedNs", {}),
                 finalizer=publish_viewers,
                 report_directories=[
                     reports_relative + "/library",
@@ -1929,7 +2131,8 @@ def main(argv=None):
             normal_import._write_receipt(receipt_path, receipt)
             saved_status = "applied"
             normal_recap.publish(receipt_path, apply=True)
-            print(f"normal rebase applied: {len(moves)} move(s), {len(rows)} source row(s)")
+            print(f"normal rebase applied: {len(moves)} move(s), {len(report.get('duplicateArchives', {}))} "
+                  f"duplicate archive(s), {len(rows)} source row(s)")
             print(f"receipt: {receipt_path}")
             return 0
         if receipt_path.exists():
@@ -1954,6 +2157,8 @@ def main(argv=None):
         print(
             f"Normal rebase preview ({args.profile.upper()}): {report['sourceRowCount']} source row(s), "
             f"{report['coreCount']} frozen identity core(s), {len(report['moves'])} proposed move(s), "
+            f"{len(report.get('duplicateArchives', {}))} proposed duplicate archive(s), "
+            f"{len(report.get('unresolvedDuplicateIds', []))} apply-blocking collision(s), "
             f"{report['heldCount']} held source/candidate row(s)."
         )
         print(f"receipt: {receipt_path}")

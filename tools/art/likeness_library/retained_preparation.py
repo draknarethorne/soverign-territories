@@ -107,6 +107,12 @@ def _storage_prefix(root, name, cfg=None):
 def _domain(relative, root=None, cfg=None):
     parts = pathlib.PurePosixPath(relative).parts
     categories = {"Angels", "Sisters", "Models", "Prospects", "Potentials", "Artists", "Various"}
+    if (
+        len(parts) >= 6 and parts[0] == "_duplicates"
+        and re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}", parts[1])
+        and re.fullmatch(r"[0-9a-f]{24}", parts[2])
+    ):
+        parts = parts[3:]
     # Configured operational roots cannot overlap a native photo category.
     if not parts or parts[0] not in categories:
         config = cfg if cfg is not None else cw.load_cfg()

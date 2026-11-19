@@ -302,6 +302,34 @@ class NormalRebaseTests(unittest.TestCase):
             1,
         )
 
+    def test_stricter_starting_cores_exclude_borderline_members_without_changing_cast_permissions(self):
+        from tools.art.likeness_library.reconciliation import frozen_identity_cores
+
+        policy = normal_rebase.load_policy()
+        api = self.stub_api([])
+        for tier, borderline, old_floor in (("Angels", .34, .30), ("Prospects", .175, .15)):
+            with self.subTest(tier=tier):
+                settings = {"minFace": 1, "multiFace": .2}
+                paths = [self.photo(f"{tier}/Owner/gallery/owner_image_{i}.jpg", bytes([i])) for i in range(1, 7)]
+                vectors = [[1., 0.]] * 5 + [[borderline, (1. - borderline ** 2) ** .5]]
+                photos = [
+                    api.Photo(path, tier, "Owner", metadata.content_sha256(path), {"faces": 1, "px": 100, "v": v})
+                    for path, v in zip(paths, vectors)
+                ]
+                space = api.Space(photos, settings)
+                catalogue = self.empty_catalog()
+                old_rules = {"categoryPolicies": {tier: {**policy["categoryPolicies"][tier],
+                                                        "identityCoreMinimumSimilarity": old_floor}}}
+                for rules, stays in ((old_rules, True), (policy, False)):
+                    cores, _, _ = frozen_identity_cores(
+                        space, catalogue, photo_id_fn=metadata.photo_id_from_name,
+                        content_sha256_fn=metadata.content_sha256, policy=rules, require_single_face=True,
+                    )
+                    self.assertEqual("photo:image_6" in cores[f"{tier}/Owner"]["corePhotoIds"], stays)
+                self.assertTrue(paths[-1].exists())
+        self.assertFalse(policy["categoryPolicies"]["Angels"]["automaticSplitEnabled"])
+        self.assertFalse(policy["categoryPolicies"]["Sisters"]["automaticSplitEnabled"])
+
     def test_preview_and_apply_fail_closed_when_local_face_models_are_missing(self):
         from tools.art import likeness as api
         from likeness_library.engine import Embedder
@@ -829,6 +857,178 @@ class NormalRebaseTests(unittest.TestCase):
                 self.assertEqual(aliases, [])
                 self.assertEqual(updates, {})
                 self.assertEqual(incoming.read_bytes(), b"retained original")
+
+    def test_prepared_greta_style_alias_in_another_owner_is_archived_before_scoring(self):
+        current = self.photo("Models/Greta/gallery/greta_image_777.jpg", b"prepared")
+        raw = self.photo("Potentials/Florence/gallery/florence_image_777.jpg", b"raw")
+        os.utime(raw, ns=(1_800_000_000_000_000_000,) * 2)
+        rows = self.source_rows()
+        current_row = next(row for row in rows if row["group"] == "Models")
+        current_row.update(retainedManifest="verified-fixture", retainedSourceHash=metadata.content_sha256(raw))
+        active, held, _aliases, updates, _workflow = normal_rebase._classify_sources(
+            self.root, rows, {}, self.empty_catalog(), None, archive_collisions=True,
+        )
+        self.assertEqual([row["source"] for row in active], [current.relative_to(self.root).as_posix()])
+        self.assertEqual((held, updates), ([], {}))
+        archives = normal_rebase._duplicate_archives(self.root, rows, "fixture")
+        self.assertEqual(archives[raw.relative_to(self.root).as_posix()]["reason"], "verified retained raw original")
+        self.assertTrue(raw.exists())
+
+    def test_newest_generic_edit_routes_to_vacated_path_and_archive_undo_preserves_dates(self):
+        from tools.art.likeness_library import maintenance, normal_transaction
+        from tools.workflows import comfy_workflows as cw
+
+        old = self.photo("Models/Owner/gallery/owner_image_777.jpg", b"old owner")
+        copy = self.photo("Prospects/Other/gallery/other_image_777.jpg", b"old owner")
+        edit = self.photo("Various/gallery/image_777.jpg", b"new edit")
+        for i, path in enumerate((old, copy, edit)):
+            os.utime(path, ns=(1_700_000_000_000_000_000 + i * 1_000_000_000,) * 2)
+        def relative(path):
+            return path.relative_to(self.root).as_posix()
+        rows = self.source_rows()
+        catalog = self.empty_catalog()
+        active, held, _aliases, updates, _workflow = normal_rebase._classify_sources(
+            self.root, rows, {}, catalog, None, archive_collisions=True,
+        )
+        self.assertEqual((held, updates), ([], {}))
+        self.assertEqual([row["source"] for row in active], [relative(edit)])
+        archives = normal_rebase._duplicate_archives(self.root, rows, "fixture")
+        self.assertEqual(set(archives), {relative(old), relative(copy)})
+        self.assertEqual(len({row["destination"] for row in archives.values()}), 2)
+        move = {
+            "photoId": "photo:image_777", "source": relative(edit),
+            "destination": relative(old), "sha256": metadata.content_sha256(edit),
+        }
+        with self.assertRaisesRegex(ValueError, "destination already exists"):
+            maintenance.validate_moves(self.root, [move])
+        maintenance.validate_moves(self.root, [move], duplicate_archives=archives)
+        stage = self.root / "_reports" / "fixture" / "publication"
+        published, _, removed = normal_products.stage(
+            self.root, stage, [move], None, profile="fast", photos=[], cfg={}, catalog=catalog,
+            policy=normal_rebase.load_policy(), archives=archives,
+        )
+        self.assertEqual(sum(bool(row.get("duplicateArchive")) for row in published), 2)
+        journal = stage.parent / "journal.json"
+        sources = {row["source"]: row["sourceHash"] for row in rows}
+        dates = {row["source"]: row["collisionModifiedNs"] for row in rows}
+        os.utime(edit, ns=(dates[relative(edit)] + 2_000_000_000,) * 2)
+        with self.assertRaisesRegex(ValueError, "collision date changed"):
+            normal_transaction.publish(
+                self.root, stage, sorted(set(sources) | set(removed)), journal=journal,
+                bindings={}, profile="fast", run_id="fixture", expected_sources={**sources, **removed},
+                expected_modified_ns=dates,
+            )
+        os.utime(edit, ns=(dates[relative(edit)],) * 2)
+        normal_transaction.publish(
+            self.root, stage, sorted(set(sources) | set(removed)), journal=journal,
+            bindings={}, profile="fast", run_id="fixture", expected_sources={**sources, **removed},
+            expected_modified_ns=dates,
+        )
+        self.assertEqual(old.read_bytes(), b"new edit")
+        self.assertFalse(edit.exists())
+        self.assertFalse(copy.exists())
+        for row in archives.values():
+            saved = self.root / row["destination"]
+            self.assertEqual(saved.read_bytes(), b"old owner")
+            self.assertEqual(saved.stat().st_mtime_ns, dates[row["source"]])
+        self.assertEqual([group for group, *_ in cw.photo_folders({}, self.root) if group == "_duplicates"], [])
+        normal_transaction.recover(self.root, journal, apply=True)
+        for source, digest in sources.items():
+            self.assertEqual(metadata.content_sha256(self.root / source), digest)
+            self.assertEqual((self.root / source).stat().st_mtime_ns, dates[source])
+        self.assertTrue(all(not (self.root / row["destination"]).exists() for row in archives.values()))
+
+    def test_time_tie_is_resolved_and_a_new_edit_does_not_displace_protected_gallery(self):
+        old = self.photo("Angels/Ava/gallery/ava_image_777.jpg", b"cast original")
+        edit = self.photo("Various/gallery/image_777.jpg", b"edited bytes")
+        lower = self.photo("Models/Other/gallery/other_image_888.jpg", b"lower original")
+        new_lower = self.photo("Various/gallery/image_888.jpg", b"other edit")
+        base = 1_700_000_000_000_000_000
+        for path in (old, lower, new_lower):
+            os.utime(path, ns=(base, base))
+        os.utime(edit, ns=(base + 1_000_000_000,) * 2)
+        rows = self.source_rows()
+        active, held, *_ = normal_rebase._classify_sources(
+            self.root, rows, {}, self.empty_catalog(), None, archive_collisions=True,
+        )
+        self.assertEqual(held, [])
+        self.assertEqual({row["source"] for row in active}, {
+            old.relative_to(self.root).as_posix(), lower.relative_to(self.root).as_posix(),
+        })
+        self.assertIn("tied", active[1]["collisionRule"])
+        self.assertEqual(len(normal_rebase._duplicate_archives(self.root, rows, "fixture")), 2)
+
+    def test_two_protected_owners_keep_the_bound_photo_and_archive_the_other(self):
+        old = self.photo("Angels/Ava/gallery/ava_image_777.jpg", b"cast original")
+        winner = self.photo("Sisters/Bea/gallery/bea_image_777.jpg", b"different cast original")
+        catalog = self.empty_catalog()
+        catalog["photos"]["photo:image_777"] = {
+            "contentSha256": metadata.content_sha256(winner), "protected": False,
+        }
+        rows = self.source_rows()
+        active, held, *_ = normal_rebase._classify_sources(
+            self.root, rows, {}, catalog, None, archive_collisions=True,
+        )
+        self.assertEqual([row["source"] for row in active], [winner.relative_to(self.root).as_posix()])
+        self.assertEqual(held, [])
+        self.assertIn("protected Gallery keeper", active[0]["collisionRule"])
+        archives = normal_rebase._duplicate_archives(self.root, rows, "fixture")
+        self.assertEqual(set(archives), {old.relative_to(self.root).as_posix()})
+        self.assertEqual(normal_rebase._unresolved_duplicate_ids(rows, archives), [])
+
+    def test_archived_prepared_loser_keeps_verified_lineage_when_winner_reuses_path(self):
+        from tools.art.likeness_library import normal_history, normal_transaction, retained_preparation
+
+        old = self.photo("Models/Owner/gallery/owner_image_777.jpg", b"prepared")
+        edit = self.photo("Various/gallery/image_777.jpg", b"edited bytes")
+        os.utime(old, ns=(1_700_000_000_000_000_000,) * 2)
+        os.utime(edit, ns=(1_700_000_001_000_000_000,) * 2)
+        old_relative = old.relative_to(self.root).as_posix()
+        edit_relative = edit.relative_to(self.root).as_posix()
+        original = self.photo("recipe/original.jpg", b"original")
+        native = self.photo("recipe/native.png", b"prepared")
+        detail = self.photo("recipe/detail.html", b"<html><body></body></html>")
+        thumb = self.photo("recipe/thumb.jpg", b"thumbnail")
+        retained_preparation.stage_photo(
+            self.root, old_relative, native.parent, {
+                "source": old_relative, "photoId": "photo:image_777",
+                "sourceSha256": metadata.content_sha256(original), "retained": original.name,
+                "detail": detail.name, "detailSha256": metadata.content_sha256(detail),
+                "sourceScope": {"matchingDomain": "general"},
+                "processing": {"final": "composition"},
+                "variants": {"composition": {
+                    "path": native.name, "sha256": metadata.content_sha256(native),
+                    "thumbnail": thumb.name, "thumbnailSha256": metadata.content_sha256(thumb),
+                }},
+            }, recipe={"id": "test"}, storage_mode="lean",
+        )
+        self.assertIsNotNone(retained_preparation.verify_link(self.root, old))
+        rows = self.source_rows()
+        catalog = self.empty_catalog()
+        normal_rebase._classify_sources(self.root, rows, {}, catalog, None, archive_collisions=True)
+        archives = normal_rebase._duplicate_archives(self.root, rows, "fixture")
+        stage = self.root / "_reports" / "fixture" / "publication"
+        _published, _, removed = normal_products.stage(
+            self.root, stage, [{
+                "photoId": "photo:image_777", "source": edit_relative,
+                "destination": old_relative, "sha256": metadata.content_sha256(edit),
+            }], None, profile="fast", photos=[], cfg={}, catalog=catalog,
+            policy=normal_rebase.load_policy(), archives=archives,
+        )
+        journal = stage.parent / "journal.json"
+        normal_transaction.publish(
+            self.root, stage, [old_relative, edit_relative, *removed], journal=journal,
+            bindings={}, profile="fast", run_id="fixture",
+        )
+        archived = self.root / archives[old_relative]["destination"]
+        link = retained_preparation.verify_link(self.root, archived, "photo:image_777")
+        self.assertIsNotNone(link)
+        self.assertEqual(link["sourceSha256"], metadata.content_sha256(original))
+        self.assertIsNone(retained_preparation.verify_link(self.root, old))
+        self.assertIn(archived.as_uri(), normal_history.render(self.root))
+        normal_transaction.recover(self.root, journal, apply=True)
+        self.assertIsNotNone(retained_preparation.verify_link(self.root, old))
+        self.assertFalse(archived.exists())
 
     def test_bound_incoming_replacement_is_not_an_exact_alias(self):
         current = self.photo("Angels/angelica/gallery/angelica_image_777.jpg", b"old native")

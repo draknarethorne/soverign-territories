@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "draft-2026-11-18-cast-priority",
+  "version": "draft-2026-11-19-core-collision",
   "status": "draft",
   "groupCastReviewEnabled": false,
   "castAdmission": {
@@ -109,7 +109,7 @@
       "automaticMergeEnabled": false,
       "automaticSplitEnabled": false,
       "automaticPhotoRoutingEnabled": false,
-      "identityCoreMinimumSimilarity": 0.3,
+      "identityCoreMinimumSimilarity": 0.38,
       "reviewSuggestionBelowSimilarity": 0.15,
       "splitCandidateBelowSimilarity": 0.15,
       "minimumUsablePhotosForOutlierActions": 4
@@ -124,7 +124,7 @@
       "automaticMergeEnabled": false,
       "automaticSplitEnabled": false,
       "automaticPhotoRoutingEnabled": false,
-      "identityCoreMinimumSimilarity": 0.3,
+      "identityCoreMinimumSimilarity": 0.38,
       "reviewSuggestionBelowSimilarity": 0.15,
       "splitCandidateBelowSimilarity": 0.15,
       "minimumUsablePhotosForOutlierActions": 4
@@ -141,7 +141,7 @@
       "automaticMergeEnabled": true,
       "automaticSplitEnabled": true,
       "automaticPhotoRoutingEnabled": true,
-      "identityCoreMinimumSimilarity": 0.3,
+      "identityCoreMinimumSimilarity": 0.38,
       "reviewSuggestionBelowSimilarity": 0.3,
       "splitCandidateBelowSimilarity": 0.15,
       "minimumUsablePhotosForOutlierActions": 5
@@ -158,7 +158,7 @@
       "automaticMergeEnabled": true,
       "automaticSplitEnabled": true,
       "automaticPhotoRoutingEnabled": true,
-      "identityCoreMinimumSimilarity": 0.15,
+      "identityCoreMinimumSimilarity": 0.2,
       "reviewSuggestionBelowSimilarity": 0.3,
       "splitCandidateBelowSimilarity": 0.15,
       "minimumUsablePhotosForOutlierActions": 4
@@ -175,7 +175,7 @@
       "automaticMergeEnabled": true,
       "automaticSplitEnabled": true,
       "automaticPhotoRoutingEnabled": true,
-      "identityCoreMinimumSimilarity": 0.15,
+      "identityCoreMinimumSimilarity": 0.2,
       "reviewSuggestionBelowSimilarity": 0.3,
       "splitCandidateBelowSimilarity": 0.15,
       "minimumUsablePhotosForOutlierActions": 4

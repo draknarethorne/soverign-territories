@@ -80,6 +80,9 @@ def collect(receipt_path):
         raise ValueError("duplicate published native path")
     assignments = {item["photoId"]: item for item in plan.get("assignments", [])}
     assignments.update({item["photoId"]: item for item in plan.get("held", [])})
+    archives = plan.get("duplicateArchives", {})
+    source_rows = {row["source"]: row for row in sources}
+    collision_groups = collections.defaultdict(list)
     rows = []
     seen = set()
     for source in sources:
@@ -90,9 +93,23 @@ def collect(receipt_path):
         seen.add(relative)
         _digest_value(source["sourceHash"])
         move = by_source.get(relative)
+        archive = archives.get(relative)
+        if archive:
+            keeper = source_rows.get(archive["selectedSource"], {})
+            if (
+                move or archive["source"] != relative or archive["photoId"] != source["photoId"]
+                or archive["sha256"] != source["sourceHash"]
+                or keeper.get("photoId") != archive["photoId"] or not keeper.get("collisionRule")
+                or source.get("sourceStatus") != "duplicate-archive"
+                or _relative(archive["destination"]).parts[0] != "_duplicates"
+                or (receipt["status"] == "applied" and native.get(archive["destination"]) != archive["sha256"])
+            ):
+                raise ValueError(f"unbound duplicate archive evidence: {relative}")
+        if archive or source.get("collisionRule") or source.get("versionConflict"):
+            collision_groups[source["photoId"]].append((source, archive))
         if move and (move["photoId"] != source["photoId"] or move["sha256"] != source["sourceHash"]):
             raise ValueError(f"move does not bind its source: {relative}")
-        destination = move["destination"] if move else relative
+        destination = archive["destination"] if archive else move["destination"] if move else relative
         _relative(destination)
         if receipt["status"] == "applied" and move and destination not in native:
             raise ValueError(f"published native evidence missing: {destination}")
@@ -100,7 +117,9 @@ def collect(receipt_path):
             _digest_value(native[destination])
         old, old_bucket = rebase_recap.person_and_bucket(relative)
         new, new_bucket = rebase_recap.person_and_bucket(destination)
-        assignment = assignments.get(source["photoId"], {})
+        if archive:
+            new, new_bucket = "_duplicates", "archive"
+        assignment = {} if archive else assignments.get(source["photoId"], {})
         row = dict.fromkeys((
             "preview", "detail", "score", "bestMatch", "bestScore", "nearestCast",
             "nearestCastScore", "secondCast", "secondCastScore", "castMargin",
@@ -111,16 +130,18 @@ def collect(receipt_path):
             source=relative, destination=destination, photoId=source["photoId"],
             sha256=source["sourceHash"], preparedSHA256=native.get(destination, source["sourceHash"]),
             originalFolder=old, oldPerson=old, newPerson=new, oldBucket=old_bucket, newBucket=new_bucket,
-            reason=move["reason"] if move else source.get("reason", "existing owner retained"),
-            kind=rebase_recap.change_kind({"source": relative, "destination": destination}),
-            placementKind=rebase_recap._placement_kind(relative, destination, old, new, old_bucket, new_bucket),
+            reason=(archive or move or source).get("reason", "existing owner retained"),
+            kind="duplicate-archive" if archive else rebase_recap.change_kind({"source": relative, "destination": destination}),
+            placementKind="Duplicate archive (non-voting)" if archive else
+            rebase_recap._placement_kind(relative, destination, old, new, old_bucket, new_bucket),
+            duplicateArchive=bool(archive),
             renamed=pathlib.PurePosixPath(relative).stem != pathlib.PurePosixPath(destination).stem,
             converted=pathlib.PurePosixPath(relative).suffix.lower() != pathlib.PurePosixPath(destination).suffix.lower(),
             topCast=[], bestScore=assignment.get("score", assignment.get("bestScore")),
             bestMatch=assignment.get("bestMatch"), clusterId=assignment.get("clusterId"),
         )
         rows.append(row)
-    if set(by_source) - seen or seen != set(hashes):
+    if (set(by_source) | set(archives)) - seen or seen != set(hashes):
         raise ValueError("saved moves/source hashes are outside the complete source census")
     destinations = collections.Counter(row["destination"] for row in rows)
     aliases = plan.get("exactAliasTargets", {})
@@ -136,7 +157,6 @@ def collect(receipt_path):
         if ({row["source"] for row in matching} != {target, alias["source"]}
                 or any(row["sha256"] != alias["sha256"] for row in matching)):
             raise ValueError(f"invalid exact-alias coalescence: {target}")
-    source_rows = {row["source"]: row for row in sources}
     for photo_id, update in updates.items():
         target, incoming = update["previousSource"], update["source"]
         matching = {row["source"]: row for row in rows if row["destination"] == target}
@@ -156,7 +176,7 @@ def collect(receipt_path):
             reason="previous native superseded by selected incoming version: " + incoming,
         )
     old_people = {row["oldPerson"] for row in rows}
-    new_people = {row["newPerson"] for row in rows}
+    new_people = {row["newPerson"] for row in rows if not row["duplicateArchive"]}
     data = {
         "normalReport": True, "run": str(receipt_path), "runId": receipt["runId"],
         "workingRoot": str(root), "libraryRoot": str(library), "status": receipt["status"], "rows": rows,
@@ -167,6 +187,9 @@ def collect(receipt_path):
         "emptiedIdentities": sorted(old_people - new_people), "expectations": {},
         "physicalSources": len(rows), "physicalDestinations": len(destinations),
         "coalescedAliases": len(aliases), "supersededVersions": len(updates),
+        "duplicateArchives": len(archives),
+        "unresolvedDuplicateIds": plan.get("unresolvedDuplicateIds", []),
+        "collisionGroups": {pid: group for pid, group in collision_groups.items() if len(group) > 1},
         "recordedAudit": plan.get("frozenConsistencyCheck", {}),
         "groupRivals": plan.get("finalComparisonAndFamily", {}).get("finalRivals", {}),
         "auditRecords": [], "snapshotDiagnostics": [], "snapshotMatched": 0, "snapshotIdUnavailable": 0,
@@ -204,7 +227,7 @@ def _attach_review(data):
         by_path[path] = record
     rows_by_destination = collections.defaultdict(list)
     for row in data["rows"]:
-        if not row.get("supersededVersion"):
+        if not (row.get("supersededVersion") or row["duplicateArchive"]):
             rows_by_destination[row["destination"]].append(row)
     for destination, rows in rows_by_destination.items():
         record = by_path.get(destination)
@@ -313,12 +336,14 @@ def render(data, out, *, audit=False, others=()):
         f'<a href="{html.escape(audit_name)}">Placement audit</a> · '
         f'<a href="{html.escape(section_prefix)}#flows">Where photos went</a> · '
         f'<a href="{html.escape(section_prefix)}#continuity">Identity continuity</a> · '
+        f'<a href="{html.escape(section_prefix)}#collisions">ID collisions</a> · '
         '<a href="#audit">Audit evidence</a> · '
         f'<a href="{html.escape(section_prefix)}#all">Every source row</a></nav>',
         f'<p><b>{data["physicalSources"]} physical source rows → {data["physicalDestinations"]} distinct '
         f'destinations + {data["coalescedAliases"]} explicitly coalesced exact-alias targets '
         f'+ {data["supersededVersions"]} superseded native versions.</b> '
-        "Continuity tables count source rows, not extra current photos or votes for aliases/previous versions.</p>",
+        f'Non-voting archive destinations: {data["duplicateArchives"]}. '
+        "Continuity tables count source rows, not extra current photos or votes.</p>",
     ]
     if audit:
         body.append(_audit(data, out))
@@ -326,6 +351,7 @@ def render(data, out, *, audit=False, others=()):
         body += [
             rebase_recap._flow_section(data, out.parent),
             rebase_recap._continuity_section(data, out.parent),
+            _collision_section(data, out.parent),
             _group_relationships(data, out.parent),
             "<section>" + _audit_summary(data) + "</section>",
             rebase_recap._comparison_section(data, list(others), out.parent) if others else "",
@@ -353,6 +379,37 @@ def _audit_summary(data):
             f'{sum(bool(item["flags"]) for item in data["auditRecords"])} diagnostic finding rows. '
             f'<a href="{html.escape(data.get("auditPageName", data["runId"] + "-audit.html"))}">Open placement/reference audit</a>. '
             "Findings are not approved moves; missing scores/protection evidence are not inferred.</p>")
+
+
+def _collision_section(data, out_dir):
+    root = pathlib.Path(data["workingRoot"])
+    parts = ['<h2 id="collisions">Photo ID collisions</h2>',
+             '<p>Resolved before any core or matching vote. Modified time is the saved filesystem value in '
+             'nanoseconds since Unix epoch. Archives are not active memberships.</p>',
+             '<table><tr><th>Photo ID</th><th>Source / SHA-256 / modified time</th>'
+             '<th>Disposition / archive</th></tr>']
+    if data["unresolvedDuplicateIds"]:
+        parts.insert(2, f'<p><strong>{len(data["unresolvedDuplicateIds"])} unresolved IDs block apply.</strong></p>')
+    for pid, group in sorted(data["collisionGroups"].items()):
+        for source, archive in group:
+            outcome = html.escape(
+                source.get("reason", "Held") if source.get("sourceStatus") == "held"
+                else source.get("collisionRule", source.get("reason", "Kept")),
+            )
+            if archive:
+                relative = archive["destination"]
+                outcome += "<br>Keeper: " + html.escape(archive["selectedSource"]) + "<br>"
+                if data["status"] == "applied":
+                    href = rebase_recap._href(_under(root, root / _relative(relative)), out_dir)
+                    outcome += f'<a href="{html.escape(href, quote=True)}">{html.escape(relative)}</a>'
+                else:
+                    outcome += "Proposed: " + html.escape(relative)
+            parts.append(
+                f'<tr><td>{html.escape(pid)}</td><td>{html.escape(source["source"])}<br>'
+                f'{source["sourceHash"]}<br>{source.get("collisionModifiedNs", "Not used")}</td>'
+                f'<td>{outcome}</td></tr>'
+            )
+    return "".join(parts + ["</table>"])
 
 
 def _group_relationships(data, out_dir):

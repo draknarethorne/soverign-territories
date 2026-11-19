@@ -106,8 +106,9 @@ def reuse_prepared(root, output, paths, profile, expected_manifest_sha256, *, al
     return output, data, native
 
 
-def stage(root, stage_root, moves, prepared, *, profile, photos, cfg, catalog, policy):
+def stage(root, stage_root, moves, prepared, *, profile, photos, cfg, catalog, policy, archives=None):
     from . import maintenance, derivatives, normal_history
+    from .normal_transaction import safe
 
     stage_root = pathlib.Path(stage_root)
     if stage_root.exists():
@@ -121,6 +122,58 @@ def stage(root, stage_root, moves, prepared, *, profile, photos, cfg, catalog, p
     measured = {metadata.photo_id_from_name(photo.name): photo for photo in photos}
     updated_moves = []
     removed = {}
+
+    def stage_retained(move):
+        transfer = retained_preparation.plan_transfer(
+            root, move["source"], move["destination"], generation=stage_root.parent.name,
+        )
+        if not transfer:
+            return False
+        retained_preparation.validate_transfers(root, [transfer])
+        for artifact in transfer["files"]:
+            destination = safe(stage_root, artifact["destination"])
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(safe(root, artifact["source"]), destination)
+            if metadata.content_sha256(destination) != artifact["sha256"]:
+                raise ValueError(f"retained preparation artifact changed during staging: {artifact['source']}")
+        safe(stage_root, transfer["files"][-1]["destination"]).write_bytes(transfer["manifestAfter"].encode("utf-8"))
+        safe(stage_root, transfer["detailDestination"]).write_bytes(transfer["detailAfter"].encode("utf-8"))
+        return True
+
+    def retire_derivatives(move):
+        source = safe(root, move["source"])
+        owner = source.parent.parent
+        staged_owner = stage_root / owner.relative_to(root)
+        data = derivatives.load(staged_owner if derivatives.manifest_path(staged_owner).exists() else owner)
+        changed = False
+        for key, entry in list(data["entries"].items()):
+            if entry["source"] != source.relative_to(owner).as_posix():
+                continue
+            asset = owner / pathlib.PurePosixPath(key)
+            if not asset.is_file() or metadata.content_sha256(asset) != entry["sha256"]:
+                raise ValueError(f"selected old derivative is edited/missing; retirement refused: {asset}")
+            removed[asset.relative_to(root).as_posix()] = entry["sha256"]
+            del data["entries"][key]
+            changed = True
+        if changed:
+            derivatives.save(staged_owner, data)
+
+    archived = list((archives or {}).values())
+    for row in archived:
+        target = safe(stage_root, row["destination"])
+        source = safe(root, row["source"])
+        if safe(root, row["destination"]).exists() or target.exists():
+            raise ValueError(f"duplicate archive destination already exists: {row['destination']}")
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, target)
+        if metadata.content_sha256(target) != row["sha256"]:
+            raise ValueError(f"duplicate archive source changed during staging: {row['source']}")
+        stage_retained(row)
+        retire_derivatives(row)
+        published.append({
+            "photoId": row["photoId"], "native": row["destination"], "sha256": row["sha256"],
+            "framing": {}, "duplicateArchive": True,
+        })
     for move in moves:
         framing = {"full": "deferred", "head": "deferred"} if profile == "fast" else {
             "full": "unavailable: no usable measured face",
@@ -141,24 +194,8 @@ def stage(root, stage_root, moves, prepared, *, profile, photos, cfg, catalog, p
                 recipe={**evidence["recipe"], "normalPublicationGeneration": stage_root.parent.name},
                 storage_mode="full" if profile == "full" else "lean",
             )
-        else:
-            transfer = retained_preparation.plan_transfer(
-                root, move["source"], move["destination"], generation=stage_root.parent.name,
-            )
-            if transfer:
-                retained_preparation.validate_transfers(root, [transfer])
-                for artifact in transfer["files"]:
-                    target_artifact = stage_root / pathlib.PurePosixPath(artifact["destination"])
-                    target_artifact.parent.mkdir(parents=True, exist_ok=True)
-                    shutil.copy2(pathlib.Path(root) / pathlib.PurePosixPath(artifact["source"]), target_artifact)
-                (stage_root / pathlib.PurePosixPath(transfer["files"][-1]["destination"])).write_bytes(
-                    transfer["manifestAfter"].encode("utf-8"),
-                )
-                (stage_root / pathlib.PurePosixPath(transfer["detailDestination"])).write_bytes(
-                    transfer["detailAfter"].encode("utf-8"),
-                )
-            elif profile != "fast":
-                raise ValueError(f"selected native has neither new preparation nor verified retained lineage: {move['source']}")
+        elif not stage_retained(move) and profile != "fast":
+            raise ValueError(f"selected native has neither new preparation nor verified retained lineage: {move['source']}")
         old_folder = (pathlib.Path(root) / move["destination"]).parent.parent
         if not derivatives.manifest_path(target.parent.parent).exists():
             prior = derivatives.load(old_folder)
@@ -199,26 +236,15 @@ def stage(root, stage_root, moves, prepared, *, profile, photos, cfg, catalog, p
             "framing": framing,
         })
     updated = maintenance._updated_catalog(catalog, updated_moves, policy)
-    normal_history.stage(root, stage_root, [move for move in updated_moves if not move.get("membershipOnly")])
+    normal_history.stage(
+        root, stage_root, archived + [move for move in updated_moves if not move.get("membershipOnly")],
+        **({"vacated": archives} if archives else {}),
+    )
     for move in moves:
         source = pathlib.Path(root) / pathlib.PurePosixPath(move["source"])
         destination = pathlib.Path(root) / pathlib.PurePosixPath(move["destination"])
         if source == destination:
             continue
-        staged_owner = stage_root / source.parent.parent.relative_to(root)
-        data = derivatives.load(staged_owner if derivatives.manifest_path(staged_owner).exists() else source.parent.parent)
-        changed = False
-        for key, entry in list(data["entries"].items()):
-            if entry["source"] != source.relative_to(source.parent.parent).as_posix():
-                continue
-            asset = source.parent.parent / pathlib.PurePosixPath(key)
-            if not asset.is_file() or metadata.content_sha256(asset) != entry["sha256"]:
-                raise ValueError(f"selected old derivative is edited/missing; retirement refused: {asset}")
-            relative = asset.relative_to(root).as_posix()
-            removed[relative] = entry["sha256"]
-            del data["entries"][key]
-            changed = True
-        if changed:
-            derivatives.save(stage_root / source.parent.parent.relative_to(root), data)
+        retire_derivatives(move)
     metadata.save_catalog(updated, stage_root / ".likeness-library.json")
     return published, updated, removed
