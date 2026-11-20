@@ -107,6 +107,11 @@ destinations and recap accounting. Fixture transaction/check/recovery and
 retained lineage pass. No new Sandbox or Production run was performed;
 the run15 receipt and installed viewers are unchanged.
 
+The [retained-original check](../plans/2026-11-16-simple-review-and-tuning.md#nov-20-review-and-various-dispositions)
+also identified all 80 known retained-original duplicates without image
+processing or library writes. The affected rebase and recap suites passed
+59 tests, including bound preview, apply, check, repeat and recovery.
+
 The two additional Draknara examples were not late-created rival cases:
 both favored an existing Potential in the final display. One Potential
 already scored higher in the actual admission round, where cast Review

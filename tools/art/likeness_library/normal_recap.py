@@ -101,18 +101,31 @@ def collect(receipt_path):
         if archive:
             keeper = source_rows.get(archive["selectedSource"], {})
             cross_id = "selectedPhotoId" in archive
+            proof = archive.get("retainedOriginalProof")
+            if proof:
+                bytes_match = (
+                    source.get("retainedOriginalProof") == proof
+                    and keeper.get("retainedContentKeeper") is True
+                    and keeper.get("retainedOriginal") == _relative(proof["path"]).as_posix()
+                    and keeper.get("retainedManifest") == _relative(proof["manifest"]).as_posix()
+                    and keeper.get("retainedSourceHash") == archive["sha256"]
+                    and keeper.get("retainedCurrentHash") == keeper.get("sourceHash") == proof["keeperNativeSha256"]
+                    and hashes.get(keeper.get("source")) == proof["keeperNativeSha256"] != archive["sha256"]
+                    and keeper.get("source") not in junk
+                )
+            else:
+                bytes_match = keeper.get("sourceHash") == archive["sha256"] and keeper.get("contentVoteCanonical") is True
             keeper_matches = (
                 source.get("crossIdExactArchive") is True
                 and source["group"] == "Various"
                 and keeper.get("photoId") == archive["selectedPhotoId"] != archive["photoId"]
-                and keeper.get("sourceHash") == archive["sha256"]
-                and keeper.get("contentVoteCanonical") is True
+                and bytes_match
                 and keeper["source"] not in archives
             ) if cross_id else (keeper.get("photoId") == archive["photoId"] and keeper.get("collisionRule"))
             if (
                 move or archive["source"] != relative or archive["photoId"] != source["photoId"]
                 or archive["sha256"] != source["sourceHash"]
-                or not keeper_matches
+                or not keeper_matches or (proof and not cross_id)
                 or source.get("sourceStatus") != "duplicate-archive"
                 or _relative(archive["destination"]).parts[0] != "_duplicates"
                 or (receipt["status"] == "applied" and native.get(archive["destination"]) != archive["sha256"])
@@ -449,16 +462,18 @@ def _content_archive_section(data, out_dir):
     root = pathlib.Path(data["workingRoot"])
     parts = ['<h2 id="content-archives">Identical bytes under different photo IDs</h2>',
              '<p>The redundant Various file is archived; the IDs are not merged.</p>',
-             '<table><tr><th>Archived copy / SHA-256</th><th>Keeper at inventory</th></tr>']
+             '<table><tr><th>Archived copy / SHA-256</th><th>Keeper at inventory</th><th>Exact match basis</th></tr>']
     for row in sorted(data["contentArchives"], key=lambda item: item["source"]):
         destination = html.escape(row["destination"])
         if data["status"] == "applied":
             href = rebase_recap._href(_under(root, root / _relative(row["destination"])), out_dir)
             destination = f'<a href="{html.escape(href, quote=True)}">{destination}</a>'
+        proof = row.get("retainedOriginalProof")
+        basis = f'Verified retained original<br>{html.escape(proof["path"])}' if proof else "Current keeper bytes"
         parts.append(
             f'<tr><td>{html.escape(row["photoId"])}<br>{html.escape(row["source"])}<br>'
             f'{destination}<br>{row["sha256"]}</td><td>{html.escape(row["selectedPhotoId"])}<br>'
-            f'{html.escape(row["selectedSource"])}</td></tr>'
+            f'{html.escape(row["selectedSource"])}</td><td>{basis}</td></tr>'
         )
     return "".join(parts + ["</table>"])
 

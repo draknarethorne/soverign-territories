@@ -190,12 +190,20 @@ The bounded implementation makes untouched Review eligible for the same
 grouping batch as Various and transactionally archives safe exact copies
 and confirmed no-face input with separate recap accounting. It does not
 change the cast-first Review rule or regrant authority to a depleted core.
-On the installed run15 bytes, only 104 of the original 184 Various copies
-still match the current keeper byte-for-byte. A read-only hash and lineage
-check proved the other 80 match their keeper's retained original exactly.
-The new automatic archive rule compares current source bytes; those 80
-need either the matching raw baseline or an original-lineage-bound
-disposition, not a plain rerun over installed run15. No files were moved.
+On the installed run15 bytes, 104 of the original 184 Various copies still
+match the current keeper byte-for-byte. The other 80 match their keeper's
+retained original exactly. The approved follow-up recognizes an exact match
+to the verified original of one unambiguous keeper during SIMPLE inventory,
+before preparation. Only an unbound `Various/gallery` copy under a different
+ID is archived. The receipt and recap distinguish the retained-original
+proof from a current-file match, and apply revalidates the proof. Neither
+the keeper nor an intentional edit is replaced by this rule.
+
+Read-only classification of installed run15 proposed all 80 retained-original
+copies and 91 current-byte copies, with the original keeper IDs for all 171
+and no additional archive proposals. The 13 other historical current-byte
+pairs were not proposed by the installed-baseline classifier; do not infer
+that a replay will archive all 184. No library files were moved.
 
 An isolated FAST fixture passed hash-bound preview, apply, check, repeat
 and recovery, with separate duplicate and junk rows and an unchanged
@@ -2238,6 +2246,14 @@ We should allow review folders to group normally as a brand new photo.  If it's 
 
 ```text
 Identical bytes under a different ID should have been moved to _duplicates and not left in Various.  How can things lose their core - that seems like a major issue - does it not?  The one without a usable face should be _junk.  I thought we had rules to cover all these items and not to leave things in the Various folder.
+```
+
+```text
+Do we need a rule to catch those 80 and move them into dups?
+```
+
+```text
+Yes, let's do that we just need to keep fine tuning things
 ```
 
 <!-- markdownlint-enable MD013 -->

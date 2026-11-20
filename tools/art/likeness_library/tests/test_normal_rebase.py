@@ -130,6 +130,68 @@ class NormalRebaseTests(unittest.TestCase):
     def empty_catalog(self):
         return {"schemaVersion": 1, "people": {}, "photos": {}, "actions": []}
 
+    def retain_original(self, keeper, data):
+        from tools.art.likeness_library import retained_preparation
+
+        relative = keeper.relative_to(self.root).as_posix()
+        photo_id = metadata.photo_id_from_name(keeper.name)
+        original = self.photo(f"recipe/{photo_id.removeprefix('photo:')}/original.jpg", data)
+        native = original.with_name("native.jpg")
+        native.write_bytes(keeper.read_bytes())
+        detail = original.with_name("detail.html")
+        detail.write_bytes(b"<html><body></body></html>")
+        thumbnail = original.with_name("thumbnail.jpg")
+        thumbnail.write_bytes(b"thumbnail")
+        retained_preparation.stage_photo(
+            self.root, relative, original.parent, {
+                "source": relative, "photoId": photo_id,
+                "sourceSha256": metadata.content_sha256(original), "retained": original.name,
+                "detail": detail.name, "detailSha256": metadata.content_sha256(detail),
+                "sourceScope": {"matchingDomain": "general"},
+                "processing": {"final": "composition"},
+                "variants": {"composition": {
+                    "path": native.name, "sha256": metadata.content_sha256(native),
+                    "thumbnail": thumbnail.name, "thumbnailSha256": metadata.content_sha256(thumbnail),
+                }},
+            }, recipe={"id": "test"}, storage_mode="lean",
+        )
+        return retained_preparation.verify_link(self.root, keeper, photo_id)
+
+    def test_retained_original_duplicate_respects_distinct_ids_and_provenance(self):
+        keeper = self.photo("Angels/Ava/review/ava_image_901.jpg", b"prepared")
+        proof = self.retain_original(keeper, b"raw")
+        alias = self.photo("Various/gallery/image_902.jpg", b"raw")
+        other_copy = self.photo("Various/gallery/image_903.jpg", b"raw")
+        edit = self.photo("Various/gallery/image_904.jpg", b"hand edit")
+        catalog = self.empty_catalog()
+        catalog["photos"]["photo:image_901"] = {
+            "contentSha256": metadata.content_sha256(keeper), "protected": True,
+        }
+
+        def archives():
+            rows = self.source_rows()
+            normal_rebase._classify_sources(self.root, rows, {}, catalog, None, archive_collisions=True)
+            return {self.root / path: entry for path, entry in normal_rebase._duplicate_archives(
+                self.root, rows, "f",
+            ).items() if entry.get("retainedOriginalProof")}
+
+        selected = archives()
+        self.assertEqual(set(selected), {alias, other_copy})
+        self.assertEqual(selected[alias]["retainedOriginalProof"]["path"], proof["original"])
+        self.assertIn(proof["manifest"], normal_rebase._retained_duplicate_sources(self.root, selected))
+        self.assertTrue(edit.is_file())
+        catalog["actions"].append({"actor": "user", "photoIds": ["photo:image_902"]})
+        self.assertEqual(set(archives()), {other_copy})
+        catalog["actions"].clear()
+        conflicting_keeper = self.photo("Sisters/Other/gallery/other_image_905.jpg", b"other prepared")
+        self.retain_original(conflicting_keeper, b"raw")
+        self.assertEqual(archives(), {})
+        conflicting_keeper.unlink()
+        (self.root / proof["original"]).write_bytes(b"corrupted retained original")
+        self.assertEqual(archives(), {})
+        with self.assertRaisesRegex(ValueError, "retained original changed"):
+            normal_rebase._retained_duplicate_sources(self.root, selected)
+
     def test_inventory_bounds_retained_manifest_reads_and_seals_content(self):
         from tools.art.likeness_library import retained_preparation
 
@@ -1263,7 +1325,8 @@ class NormalRebaseTests(unittest.TestCase):
         self.addCleanup(proof.cleanup)
         self.root = (pathlib.Path(proof.name) / "Sovereign Territories Sandbox" / "Working"
                      / "_sandbox-state" / "normal-flow-proof-p")
-        keeper = self.photo("Prospects/Owner/gallery/owner_image_921.jpg", b"shared")
+        keeper = self.photo("Prospects/Owner/gallery/owner_image_921.jpg", b"prepared keeper")
+        evidence = self.retain_original(keeper, b"shared")
         copy = self.photo("Various/gallery/image_922.jpg", b"shared")
         unusable = self.photo("Various/gallery/image_923.jpg", b"no face")
         metadata.save_catalog(self.empty_catalog(), self.root / ".likeness-library.json")
@@ -1297,6 +1360,7 @@ class NormalRebaseTests(unittest.TestCase):
             archive, = plan["duplicateArchives"].values()
             junk, = plan["junkDispositions"].values()
             self.assertEqual(archive["selectedSource"], keeper.relative_to(self.root).as_posix())
+            self.assertEqual(archive["retainedOriginalProof"]["path"], evidence["original"])
             self.assertEqual(junk["destination"], "_junk/Various/gallery/image_923.jpg")
             self.assertTrue(all(path.is_file() for path in (keeper, copy, unusable)))
             self.assertEqual(normal_rebase.main([*args, "--apply", "--sandbox-apply-draft"]), 0, errors.getvalue())
@@ -1306,7 +1370,16 @@ class NormalRebaseTests(unittest.TestCase):
             recap = normal_rebase.normal_recap.collect(applied)
             self.assertEqual(recap["physicalSources"], 3)
             self.assertEqual(recap["physicalDestinations"], 3)
-            self.assertTrue(keeper.is_file())
+            page = normal_rebase.normal_recap.render(recap, self.root / "recap.html")
+            self.assertIn("Verified retained original", page)
+            saved = json.loads(applied.read_bytes())
+            entry, = saved["plan"]["duplicateArchives"].values()
+            entry["retainedOriginalProof"]["path"] = "_processing/unrelated.jpg"
+            tampered = applied.with_name("tampered.json")
+            tampered.write_text(json.dumps(saved), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "unbound duplicate archive evidence"):
+                normal_rebase.normal_recap.collect(tampered)
+            self.assertEqual(keeper.read_bytes(), b"prepared keeper")
             self.assertFalse(copy.exists())
             self.assertFalse(unusable.exists())
             self.assertEqual((self.root / archive["destination"]).read_bytes(), b"shared")

@@ -1634,9 +1634,11 @@ remain respected. This does not change cast admission priority or allow
 automatic departures from an existing Angel or Sister Gallery.
 
 SIMPLE reports two recoverable dispositions separately: safe distinct-ID
-Various copies whose current bytes match a keeper go to `_duplicates`;
-unbound Various inputs with a decoded zero-face result go to
-`_junk/<original-path>`. The duplicate recap names both IDs and paths.
+Various copies whose bytes match a keeper go to `_duplicates`; unbound
+Various inputs with a decoded zero-face result go to `_junk/<original-path>`.
+For `Various/gallery`, an exact match to a single keeper's verified retained
+original also qualifies. The duplicate recap names both IDs and paths, and
+distinguishes current keeper bytes from a verified retained original.
 A failed measurement or ambiguous face quality is not a confirmed no-face
 result. Same-ID, same-byte discard remains a separate opt-in preflight.
 These changes do not expand daily intake scope.

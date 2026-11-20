@@ -701,10 +701,34 @@ def _duplicate_archives(root, rows, run_id):
             "source": row["source"], "destination": destination, "photoId": row["photoId"],
             "sha256": row["sourceHash"], "reason": row["reason"], "selectedSource": row["selectedSource"],
             **({"selectedPhotoId": row["contentVoteCanonicalId"]} if row.get("crossIdExactArchive") else {}),
+            **({"retainedOriginalProof": row["retainedOriginalProof"]} if row.get("retainedOriginalProof") else {}),
         }
     if len({row["destination"].casefold() for row in archives.values()}) != len(archives):
         raise ValueError("duplicate archive destinations collide")
     return archives
+
+
+def _retained_duplicate_sources(root, archives):
+    from . import retained_preparation
+
+    checksums = {}
+    verified = {}
+    for row in archives.values():
+        proof = row.get("retainedOriginalProof")
+        if not proof:
+            continue
+        keeper, photo_id = row["selectedSource"], row["selectedPhotoId"]
+        key = (keeper, photo_id)
+        if key not in verified:
+            verified[key] = retained_preparation.verify_link(root, keeper, photo_id)
+        link = verified[key]
+        if not link or (
+            link["original"], link["manifest"], link["currentSha256"], link["sourceSha256"]
+        ) != (proof["path"], proof["manifest"], proof["keeperNativeSha256"], row["sha256"]):
+            raise ValueError(f"duplicate keeper's retained original changed before publication: {keeper}")
+        checksums[proof["path"]] = row["sha256"]
+        checksums[proof["manifest"]] = verification_reads.sha256(normal_transaction.safe(root, proof["manifest"]))
+    return checksums
 
 
 def _no_face_dispositions(root, active, raw_data, catalog, workflow_ids, prefix):
@@ -721,7 +745,7 @@ def _no_face_dispositions(root, active, raw_data, catalog, workflow_ids, prefix)
         record = catalog.get("photos", {}).get(row["photoId"], {})
         if (
             row["group"] != "Various" or row["sourceStatus"] != "eligible"
-            or row["photoId"] in guarded_ids or row.get("collisionRule")
+            or row["photoId"] in guarded_ids or row.get("collisionRule") or row.get("retainedContentKeeper")
             or bool(set(record) - {"contentSha256", "protected"})
             or record.get("protected") or record.get("contentSha256", row["sourceHash"]) != row["sourceHash"]
         ):
@@ -758,6 +782,51 @@ def _unresolved_duplicate_ids(rows, archives):
 def _require_resolved_duplicate_ids(ids):
     if ids:
         raise ValueError(f"{len(ids)} unresolved same-ID collision(s) block apply; see ID collisions in recap")
+
+
+def _archive_retained_original_copies(rows, active, guarded_ids, chosen):
+    """Use verified inventory lineage, never a basename or a historical ID alone."""
+    by_native, by_original = collections.defaultdict(list), collections.defaultdict(list)
+    for row in rows:
+        if row["group"] not in IDENTITY_ROOTS | {"Various"}:
+            continue
+        by_native[row["sourceHash"]].append(row)
+        if row.get("retainedManifest") and row.get("retainedOriginal"):
+            by_original[row["retainedSourceHash"]].append(row)
+    active_sources = {row["source"] for row in active}
+    for digest, keepers in by_original.items():
+        if len(keepers) != 1 or not by_native.get(digest):
+            continue
+        keeper = keepers[0]
+        native_hash = keeper["sourceHash"]
+        copies = by_native[digest]
+        if (
+            keeper["source"] not in active_sources or keeper["sourceStatus"] != "eligible"
+            or native_hash == digest or native_hash != keeper["retainedCurrentHash"]
+            or any(row["photoId"] != keeper["photoId"] for row in by_native[native_hash])
+            or any(row["group"] in IDENTITY_ROOTS or row.get("retainedManifest") for row in copies)
+        ):
+            continue
+        for row in copies:
+            if (
+                row["source"] not in active_sources or row["bucket"] != "gallery"
+                or row["sourceStatus"] != "eligible" or row.get("collisionRule")
+                or row["photoId"] == keeper["photoId"] or row["photoId"] in guarded_ids
+                or pathlib.Path(row["originalName"]).stem.casefold() in chosen
+            ):
+                continue
+            keeper["retainedContentKeeper"] = True
+            row.update(
+                sourceStatus="duplicate-archive", crossIdExactArchive=True,
+                selectedSource=keeper["source"], contentVoteCanonicalSource=keeper["source"],
+                contentVoteCanonicalId=keeper["photoId"], contentVoteStatus="nonvoting-duplicate-content",
+                reason="identical bytes to the verified retained original under a different stable ID",
+                retainedOriginalProof={
+                    "path": keeper["retainedOriginal"], "manifest": keeper["retainedManifest"],
+                    "keeperNativeSha256": native_hash,
+                },
+            )
+    active[:] = [row for row in active if row["sourceStatus"] != "duplicate-archive"]
 
 
 def _classify_sources(root, rows, cfg, catalog, api, *, archive_collisions=False):
@@ -1018,6 +1087,15 @@ def _classify_sources(root, rows, cfg, catalog, api, *, archive_collisions=False
             })
             held.append(row)
 
+    user_ids = {
+        photo_id for action in catalog.get("actions", ())
+        if action.get("actor") == "user" for photo_id in action.get("photoIds", ())
+    }
+    if archive_collisions:
+        _archive_retained_original_copies(
+            rows, active, user_ids | workflow_ids | set(anchors) | set(catalog.get("photos", {})), chosen,
+        )
+
     by_digest = collections.defaultdict(list)
     for row in active:
         by_digest[row["sourceHash"]].append(row)
@@ -1105,6 +1183,7 @@ def _classify_sources(root, rows, cfg, catalog, api, *, archive_collisions=False
                 archive_collisions and row["group"] == "Various"
                 and not row.get("collisionRule") and row["photoId"] not in anchors
                 and row["photoId"] not in catalog.get("photos", {})
+                and row["photoId"] not in user_ids
                 and not any(row is bound for bound in forced)
             )
             row.update({
@@ -1562,7 +1641,8 @@ def _plan(
                 "exactDuplicates": "tools.art.duplicates.keeper; one canonical ID+SHA input",
                 "differentIdsSameBytes": (
                     "use duplicates.keeper for one same-owner content vote while preserving all IDs; "
-                    "archive eligible redundant Various copies; conflicting named owners/decisions "
+                    "archive eligible redundant Various copies, including exact matches to a unique "
+                    "verified retained original; conflicting named owners/decisions "
                     "are held without cross-ID identity merge"
                 ),
                 "oldWorking": "no external overlay; verified retained sources inside the selected root remain eligible",
@@ -2170,13 +2250,16 @@ def main(argv=None):
                 report["viewerPaths"] = _validate_stable_viewers(paths)
                 return report["viewerPaths"]
 
+            archives = report.get("duplicateArchives", {})
+            with verification_reads.session(root):
+                retained_sources = _retained_duplicate_sources(root, archives)
             journal = normal_transaction.publish(
                 root, stage_root,
                 sorted(move_sources | set(removed) | set(report.get("duplicateArchives", {}))
                        | set(report.get("junkDispositions", {}))),
                 journal=journal_path,
                 bindings=report["bindings"], profile=args.profile, run_id=run_id,
-                expected_sources={**report["sourceHashes"], **removed},
+                expected_sources={**report["sourceHashes"], **removed, **retained_sources},
                 expected_modified_ns=report.get("collisionModifiedNs", {}),
                 finalizer=publish_viewers,
                 report_directories=[

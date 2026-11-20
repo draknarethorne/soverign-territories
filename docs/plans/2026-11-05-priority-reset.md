@@ -750,7 +750,9 @@ unresolved human identity acceptance remains open.
   **Nov20 review feedback:** the [run15 disposition follow-up](2026-11-16-simple-review-and-tuning.md#nov-20-review-and-various-dispositions)
   owns untouched Review regrouping, verified Various duplicate archiving
   and confirmed no-face recovery; isolated preview/apply/check/repeat/recovery
-  passed. Preserve installed run15. RA2d owns the next read-only comparison:
+  passed. The retained-original extension identified all 80 known matches
+  read-only in installed run15. Preserve that install. RA2d owns the next
+  read-only comparison:
   requalify surviving lower cores and compare cast Review with stronger
   rivals before selecting a fresh preview.
   **Nov19 bounded SIMPLE delivery:** run13 apply/check/repeat and installed
