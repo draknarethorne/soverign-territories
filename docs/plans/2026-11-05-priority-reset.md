@@ -27,8 +27,11 @@ records preview/apply/check/repeat exit 0, all 180 edited inputs verified,
 3,490 conserved IDs, and browser-checked installed viewers. Cast gained 97
 Gallery and 285 Review placements with no existing cast Gallery departures.
 No writer remains. The next gate is RA2d human review of installed placement
-and crop quality, not another run. Queue focus is unchanged for the separate
-RA2j inventory, T29/T30 performance and RA2o residuals.
+and crop quality, not another run on this PC. For T29/T30, the
+[new-PC handoff](../recap/2026-11-11-1141-recap.md#new-pc-simple-rehearsal)
+gates a fresh LEAN rehearsal on verified, cleaned raw inputs; run15 timing
+is historical, not a paired benchmark. Keep the Queue focus unchanged for
+RA2d review, RA2j inventory, T29/T30 performance and RA2o residuals.
 
 **Nov19 installed closeout:** RA2j's bounded SIMPLE foundation is installed
 on existing Sandbox Working, LEAN `simple-rebase-20261118-13`.
@@ -755,6 +758,9 @@ unresolved human identity acceptance remains open.
   read-only comparison:
   requalify surviving lower cores and compare cast Review with stronger
   rivals before selecting a fresh preview.
+  The deferred [post-run audit](2026-11-16-simple-review-and-tuning.md#later-audit-leftover-intake-and-stronger-rivals)
+  keeps leftover Various explanations under RA2j and possible misplacements
+  under RA2d, without changing SIMPLE routing or Queue focus.
   **Nov19 bounded SIMPLE delivery:** run13 apply/check/repeat and installed
   movement/viewer proof pass the
   [shared closeout](2026-11-16-simple-review-and-tuning.md#nov19-installed-run13-closeout).

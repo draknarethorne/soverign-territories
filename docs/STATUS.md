@@ -39,6 +39,9 @@ duplicates and confirmed no-face junk. Isolated transaction checks pass;
 run15 remains unchanged. Lower-core
 retirement and provisional cast-Review priority are separately visible
 policy questions, not resolved by moving Review back into the candidate pool.
+The [new-PC handoff](recap/2026-11-11-1141-recap.md#new-pc-simple-rehearsal)
+recommends a fresh LEAN preview on verified raw inputs, while preserving
+run15 here. No new run has started.
 
 **Nov19 installed SIMPLE result.** LEAN run13 applied successfully on existing
 Sandbox Working without reset or repeated preparation. The

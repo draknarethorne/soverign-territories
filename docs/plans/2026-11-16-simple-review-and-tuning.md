@@ -211,6 +211,25 @@ sealed preview. Retained preparation transfers and recovers with junk.
 The historical run15 recap reader still accounts for all 3,490 sources
 and Review snapshot rows. This is not a new installed/browser verification.
 
+#### Later audit: leftover intake and stronger rivals
+
+Keep SIMPLE as the placement flow. Reuse useful experimental checks later
+as a read-only audit of a completed run, using its saved evidence first:
+
+- **Various leftovers (RA2j):** account for every photo still in Various
+  Gallery or Review. Show the recorded reason it stayed, such as a quality
+  hold, an ambiguous match, or a duplicate that could not be archived. Flag
+  missing reasons as audit gaps rather than treating them as normal holds.
+- **Possible misplacements (RA2d):** show the current owner and bucket,
+  the stronger rival and the score gap when comparable. Distinguish a rival
+  that was already stronger at routing from one that only became stronger
+  or available afterward. Include any rule or lock that explains the
+  original decision. A higher score is a review flag, not proof of identity.
+
+The audit should not move photos, relax Gallery protections, or put
+experimental routing back into SIMPLE. This is deferred audit scope under
+the existing owners, not a new run or a change to the queue.
+
 ## Next SIMPLE run: foundational corrective contract
 
 **Current pre-run contract.** This section consolidates the Nov18 discussion;
@@ -2254,6 +2273,17 @@ Do we need a rule to catch those 80 and move them into dups?
 
 ```text
 Yes, let's do that we just need to keep fine tuning things
+```
+
+```text
+Each run is getting a bit better than the last run ... I'm glad we stopped the experiments and went back to the basics and doing the SIMPLE flow ... I was too far off course with all the experiments at the time.  They will be useful later - like ensuring there is an audit to catch things like we're finding and flagging if something is left in Various and why, checking for images with higher rivals somewhere other than where they are at - mis-placed images.
+```
+
+The [new-PC handoff](../recap/2026-11-11-1141-recap.md#new-pc-simple-rehearsal)
+records the replay recommendation and how to make a comparable timing run.
+
+```text
+Can we write up a hand-off for a new session, on my new machine to pick-up where we are at now and to run the next commands to re-run the rebase again and test out a few things - like checking on performance to compare against our runs and how long things take?  Or should we spend time to re-run on this machine before we do that?  I guess that's my question ... I suppose we could re-run things on both in parallel as well.  What do you think?
 ```
 
 <!-- markdownlint-enable MD013 -->
