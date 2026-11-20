@@ -139,14 +139,17 @@ native remains subject to retained-lineage rules. This preflight does not
 silently delete on intake or rebase and is separate from the approved 180
 raw-baseline edits.
 
-**Cleaned-baseline execution:** User authorizes any run/re-run needed for
-review and bound Sandbox apply, then grouped commit/push when verification
-is solid; human identity/crop acceptance follows. Fresh LEAN
-`simple-rebase-20261119-15` started at 17:07 CT on cleaned Working, no
-reset or Production operation. Verify selected preparations include all
-180 approved edits, no existing cast Gallery departure, source accounting,
-and zero unresolved duplicate IDs before applying the exact preview.
-Do not invoke run14 or copy the uncleaned Source back over Working.
+**Cleaned-baseline execution:** The user authorized run/re-run and bound
+Sandbox publication for review, then commit/push at a verified checkpoint.
+Fresh LEAN `simple-rebase-20261119-15` passed preview, apply, check and repeat
+on cleaned Working with no reset or Production rebase. The
+[installed run15 evidence](../recap/2026-11-18-simple-foundation.md#nov-20-installed-cleaned-baseline-run15)
+verifies all 180 replacement inputs, complete source accounting, no
+unresolved IDs and no existing cast Gallery departures. Actual viewers
+were browser checked. RA2d can now review identity placement and crop
+quality in the installed result; no rerun is needed. Broader RA2j inventory
+and T29/T30 performance work remain open. Do not invoke run14 or copy the
+uncleaned Source back over Working.
 
 ## Next SIMPLE run: foundational corrective contract
 

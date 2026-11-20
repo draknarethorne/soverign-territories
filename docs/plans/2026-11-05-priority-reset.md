@@ -16,11 +16,19 @@ preview exited 0. The user then authorized the separate
 [raw-baseline cleanup](2026-11-16-simple-review-and-tuning.md#nov-19-post-run13-tuning):
 Sandbox Working and Production passed apply/check, with 1,799 exact incoming
 copies removed and 180 approved versions installed per root. Frozen Source
-remains unchanged. The prior preview is historical. LEAN
-`simple-rebase-20261119-15` previews cleaned Working without reset. The user
-authorizes bound Sandbox publication after verification; no run15
-placements have been published. The opt-in, hash-bound preflight is now
-available before daily intake or SIMPLE without automatic deletion.
+remains unchanged. The prior preview is historical. The opt-in, hash-bound
+preflight is available before daily intake or SIMPLE without automatic
+deletion.
+
+**Nov20 installed closeout:** LEAN `simple-rebase-20261119-15` is installed
+on cleaned Sandbox Working without reset. Its
+[run15 evidence](../recap/2026-11-18-simple-foundation.md#nov-20-installed-cleaned-baseline-run15)
+records preview/apply/check/repeat exit 0, all 180 edited inputs verified,
+3,490 conserved IDs, and browser-checked installed viewers. Cast gained 97
+Gallery and 285 Review placements with no existing cast Gallery departures.
+No writer remains. The next gate is RA2d human review of installed placement
+and crop quality, not another run. Queue focus is unchanged for the separate
+RA2j inventory, T29/T30 performance and RA2o residuals.
 
 **Nov19 installed closeout:** RA2j's bounded SIMPLE foundation is installed
 on existing Sandbox Working, LEAN `simple-rebase-20261118-13`.

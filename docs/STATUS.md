@@ -1,6 +1,6 @@
 # Project Status
 
-**Updated:** 2026-11-19 · This is the one working document: where the project is, what has
+**Updated:** 2026-11-20 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
@@ -11,20 +11,27 @@ stages stricter starting cores and resolves duplicate IDs before matching.
 Keep cast Review at 0.35 and outbound cast placement locked. Replay from the
 frozen Production-derived Source, not run13's inputs or results. Baseline
 `simple-clean-20261119-14` is restored and verified; old Working and run13
-are preserved. Fresh LEAN `simple-rebase-20261119-14` preview exited 0 and
-is ready for review: 1,979 archive proposals, 1,185 path changes and no
-apply-blocking collision. No replay placements or archives have been
-applied by SIMPLE.
+are preserved. The historical LEAN `simple-rebase-20261119-14` preview
+exited 0 with 1,979 archive proposals, 1,185 path changes and no
+apply-blocking collision. It was never applied.
 
 The separately authorized [raw-baseline cleanup](art/likeness.md#clean-exact-various-copies-and-replace-approved-originals-before-a-rebase)
 verified Sandbox Working and Production: 1,799 exact Various copies removed
 and 180 approved edits installed per root with displaced originals retained.
 The frozen Source was not changed. The run14 preview is now historical.
-A read-only census verified all 180 replacements are eligible for fresh
-preparation. Both live Various galleries contain
-1,069 photos and have zero candidates under the shared exact-only preflight.
-New LEAN `simple-rebase-20261119-15` is previewing cleaned Sandbox Working.
-Run14 cannot be applied to these changed inputs.
+Both Various Galleries contained 1,069 photos immediately after cleanup
+with zero candidates under the shared exact-only preflight.
+
+**Nov20 installed SIMPLE result.** LEAN `simple-rebase-20261119-15` passed
+apply/check/repeat on cleaned Sandbox Working, with all 180 edited inputs
+verified and no reset or Production rebase. The
+[installed evidence](recap/2026-11-18-simple-foundation.md#nov-20-installed-cleaned-baseline-run15)
+records 1,108 path changes, 2,177 same-path operations, 97 cast Gallery and
+285 cast Review admissions, no cast Gallery departures, and no unresolved
+ID collisions. All 3,490 sources have distinct destinations. Gallery,
+Overview, Review and the applied recap/audit were verified in the browser.
+No writer remains. Human placement and crop review is next under RA2d;
+no rerun is needed to start it.
 
 **Nov19 installed SIMPLE result.** LEAN run13 applied successfully on existing
 Sandbox Working without reset or repeated preparation. The

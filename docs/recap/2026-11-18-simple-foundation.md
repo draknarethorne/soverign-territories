@@ -39,7 +39,62 @@ contains 3,048. Run14 cannot be applied to the changed inputs. The read-only
 post-cleanup census confirms all 180 edits are eligible for fresh LEAN
 preparation. The user authorized bound Sandbox apply after verification.
 Fresh LEAN run15 started at 17:07 CT against cleaned Working without reset;
-the [pinned recap](2026-11-11-1141-recap.md) owns live continuation.
+the installed result is below.
+
+### Nov 20 installed cleaned-baseline run15
+
+LEAN `simple-rebase-20261119-15` ran on cleaned Sandbox Working only, with
+runtime commit `a361f2d9b`. Preview finished at 21:47 CT on Nov 19 (4h39m;
+selected preparation measured 15,926.180s). Apply ran 21:48:29–02:22:05 CT
+(4h33m36s), check ended at 02:24:34 and repeat at 02:27:13 on Nov 20.
+All four commands exited 0 with no execution retry or remaining writer.
+Apply reused the sealed preparation; no reset, intake or Production rebase.
+
+- All 180 approved replacement input paths and raw hashes matched the
+  sealed manifest. The 3,285 prepared inputs were 463 Angels, 803 Sisters,
+  867 Prospects, 267 Potentials and 885 Various. No Models folder was
+  present. The other 205 physical rows were preserved without extra votes:
+  different photo IDs with identical content, not redundant same-ID copies.
+- The applied receipt matches the preview move list: 1,108 changed paths
+  and 2,177 same-path operations. All 3,490 source IDs conserve to 3,490
+  distinct destinations, with no unresolved ID, new duplicate archive,
+  coalesced alias or superseded version. Run14 remains a historical
+  collision preview, not an installed test of those archive moves.
+- Cast gained 97 Gallery and 285 Review placements. No existing Angel
+  or Sister Gallery photo left its Gallery. Remiah gained 1 Gallery and
+  4 Review, Drakness 13 Gallery and 11 Review, Nyxene 2 Review.
+  Remiah's two queried originals stayed in their named Gallery.
+  Of 1,069 Various arrivals, 643 went to named identities; 322 remained in
+  Various Gallery and 104 went to Various Review.
+- Browser proof covered Native Gallery, identity Overview and Photo Review
+  thumbnails, a current Remiah native, retained intake detail and the
+  native-generations page, and the separate installed movement recap and
+  audit. The installed audit matched all 3,490 destinations to the Review
+  snapshot by path and recorded hash with zero stale/unavailable snapshot
+  diagnostics. Of the 3,285 prepared photos, all have padding; 140 head
+  and 3 chest framings are intentionally unavailable under size/face gates.
+  The recap's decorative banner URL still does not resolve, as in run13;
+  thumbnails and evidence links work. No sealed report was edited.
+
+From `_reports/library/`, open `gallery.html`, `people_gallery.html`,
+`people_gallery_review.html` and
+`rebase-recap/applied/simple-rebase-20261119-15.html` (the sibling `-audit`
+page is linked there). The run's receipt, preview, publication journal
+and `preview.log`/`apply.log`/`check.log`/`repeat.log` remain under
+`_reports/runs/`. The preview receipt SHA-256 is
+`7d9b509a66118e3f44e578cd5bf68bc40d5ddbaee42f287f5f3b694096cf0d6d`;
+the preparation manifest is
+`b0f716b5290ce7dde7d2791b407288fa464a185c7293c8f72de239c1ee2bfebf`;
+the applied receipt is
+`0dfb2049fa8f1ff2a4ec13077830d6015e776753477ff51d8c4f7c0fa76659bd`.
+Preview HTML and its index retained their original hashes.
+Shared viewer verification read and sealed 30,692 files
+(15,467,765,954 bytes per pass) in 3,329.07s; the recap took 7.939s.
+B: free space was about 318.3 GB before preview and 264.0 GB after repeat.
+Exact-copy cleanup removed redundant work but did not make whole-library
+preparation or publication fast. Performance remains T29/T30, and RA2d
+owns identity placement and crop acceptance. No further run is needed to
+review these results.
 
 ## Delivered and verified before the real run
 

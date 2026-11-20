@@ -9,7 +9,7 @@ and preserves chronological access to manually archived records.
 
 | State | Recap | Why it remains active |
 | --- | --- | --- |
-| **Pinned — resume** | [2026-11-11-1141](2026-11-11-1141-recap.md) | [Frozen replay follow-up](../plans/2026-11-16-simple-review-and-tuning.md#nov-19-post-run13-tuning): raw cleanup checked, run13 and frozen Source preserved. Run14 is historical; run15 previews cleaned Working. |
+| **Pinned — resume** | [2026-11-11-1141](2026-11-11-1141-recap.md) | [Installed run15](2026-11-18-simple-foundation.md#nov-20-installed-cleaned-baseline-run15): cleaned Working ready for human review. Run14 is historical; run13 and frozen Source are preserved. |
 | Today's evidence — installed | [Nov 18-19 SIMPLE foundation](2026-11-18-simple-foundation.md) | Actual execution, Various before/after, browser proof, measured timing and report-only repair; full mutations 53/53, library 1,048, remaining 290 and affected staging/report tests pass. Human acceptance and performance residuals remain explicit. |
 | Requested recap — current evidence | [Nov 16 SIMPLE execution](2026-11-16-simple-rebase-recap.md) | Successful run09 timings and immutable receipt, earlier failures, actual new report browser checks and bounded performance measurements; remaining acceptance explicitly separated. |
 | Previous resume | [2026-11-04-1130](2026-11-04-1130-recap.md) | Retains the installed preview11 evidence and earlier performance/human-review history. Recent experimental grouping and FAST profile work is summarised in the current pin; this older entry is not current acceptance of a new-rule rebase. |

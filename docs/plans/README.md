@@ -24,7 +24,7 @@ Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (gen
 
 | Window | Single authoritative execution home | Boundary |
 | --- | --- | --- |
-| Now | [M1 / current Queue focus](2026-11-05-priority-reset.md#execution-spine) | [Frozen replay follow-up](2026-11-16-simple-review-and-tuning.md#nov-19-post-run13-tuning): raw cleanup verified, run13 and frozen Source preserved. RA2j owns the next cleaned-baseline preview and the daily exact-copy follow-up; RA2d retains human acceptance and deferred diagnosis. T29/T30 retain performance. |
+| Now | [M1 / current Queue focus](2026-11-05-priority-reset.md#execution-spine) | [Installed run15](../recap/2026-11-18-simple-foundation.md#nov-20-installed-cleaned-baseline-run15): cleaned Working is ready for human review under RA2d. RA2j retains inventory follow-up; T29/T30 retain performance. Run13 and frozen Source are preserved. |
 | Next | [M2-M6](2026-11-05-priority-reset.md#execution-spine) | Trusted cast -> selections -> source fidelity -> generic female pilot -> character art/video; advance only at entry gates |
 | Companion | Spelling/new-PC track selected in the spine | Settled processing/evidence and paired baseline before rename; no competing full milestone |
 | Holding | Remaining open domain tasks in the [inventory](#plans) | Deferred, not completed; select/transfer only needed tasks at a milestone gate |
