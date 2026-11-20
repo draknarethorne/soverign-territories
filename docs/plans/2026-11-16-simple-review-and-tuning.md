@@ -151,6 +151,58 @@ quality in the installed result; no rerun is needed. Broader RA2j inventory
 and T29/T30 performance work remain open. Do not invoke run14 or copy the
 uncleaned Source back over Working.
 
+### Nov 20 Review and Various dispositions
+
+The user clarified that untouched Review is a candidate source, not a
+membership lock. In a future SIMPLE rebase, let it qualify for the same
+grouping as a new arrival. Do not use the old Review placement as
+reference evidence. Preserve explicit photo decisions, negative evidence,
+anchors and workflow locks. Review does not reopen cast Gallery departures.
+
+Run15 intake left 184 unambiguous distinct-ID byte copies in Various while
+excluding their extra votes. Archive the redundant Various copy, preserve
+its ID and bytes, and disclose both IDs and paths in the recap. This is
+separate from the same-ID exact-copy discard preflight. Conflicting named
+owners and explicit decisions still require guarded handling.
+
+One Various candidate had measured zero faces and no usable vector. Its
+desired destination is recoverable `_junk`, not a silent Various hold.
+Do not treat a read/model/cache failure, multi-face ambiguity or a failed
+single-face quality gate as a verified no-face result.
+
+Run15 suspended all lower-core authority within a matching round as soon
+as any frozen member was routed away. In round one, 52 of 71 suspended
+cores still had frozen members left; 19 lost all. Round two suspended 20
+partial and 17 fully vacated cores. This did not delete an identity.
+RA2d retains the residual-core decision: remove departing votes, measure
+surviving support, and distinguish an unsupported residual from a
+partially depleted core that still qualifies. Avoid forcing new fragments
+or changing the approved cast Gallery rules. Two additional Draknara
+Review cases had a stronger displayed lower contender in final Review;
+one also had a stronger lower contender at decision time. They are
+separate from the 25 late-created rival cases. Similarity alone does not
+authorize a move or a global cast-priority change.
+
+RA2j owns implementation and fixture/recap checks in the existing spine.
+RA2d owns policy and human acceptance. Preserve run15, Production and
+Source; use a read-only comparison before selecting any new replay.
+The bounded implementation makes untouched Review eligible for the same
+grouping batch as Various and transactionally archives safe exact copies
+and confirmed no-face input with separate recap accounting. It does not
+change the cast-first Review rule or regrant authority to a depleted core.
+On the installed run15 bytes, only 104 of the original 184 Various copies
+still match the current keeper byte-for-byte. A read-only hash and lineage
+check proved the other 80 match their keeper's retained original exactly.
+The new automatic archive rule compares current source bytes; those 80
+need either the matching raw baseline or an original-lineage-bound
+disposition, not a plain rerun over installed run15. No files were moved.
+
+An isolated FAST fixture passed hash-bound preview, apply, check, repeat
+and recovery, with separate duplicate and junk rows and an unchanged
+sealed preview. Retained preparation transfers and recovers with junk.
+The historical run15 recap reader still accounts for all 3,490 sources
+and Review snapshot rows. This is not a new installed/browser verification.
+
 ## Next SIMPLE run: foundational corrective contract
 
 **Current pre-run contract.** This section consolidates the Nov18 discussion;
@@ -2173,6 +2225,19 @@ So, even on a rebase with items in Various/gallery that are exact copies, we can
 
 ```text
 You are free to run and actually apply all changes if we need to run or re-run anything to get me to the point I can do the review of the outcome of all our updates.  Thanks again, commit and push when done and at a solid point - even if waiting for my review.
+```
+
+### Nov 20 Review and Various dispositions - verbatim excerpts
+
+The image-specific identifiers remain in the local conversation and run
+receipts; they are not duplicated in this tracked excerpt.
+
+```text
+We should allow review folders to group normally as a brand new photo.  If it's there and I haven't done anything with it - we don't need to lock it there in a fugure run.
+```
+
+```text
+Identical bytes under a different ID should have been moved to _duplicates and not left in Various.  How can things lose their core - that seems like a major issue - does it not?  The one without a usable face should be _junk.  I thought we had rules to cover all these items and not to leave things in the Various folder.
 ```
 
 <!-- markdownlint-enable MD013 -->

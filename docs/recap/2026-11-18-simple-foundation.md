@@ -96,6 +96,25 @@ preparation or publication fast. Performance remains T29/T30, and RA2d
 owns identity placement and crop acceptance. No further run is needed to
 review these results.
 
+### Nov 20 disposition feedback after run15
+
+The [owning follow-up](../plans/2026-11-16-simple-review-and-tuning.md#nov-20-review-and-various-dispositions)
+separates three code changes from the remaining policy questions. Untouched
+Review joins ordinary candidate grouping; explicit placement and photo/
+workflow decisions remain guarded. Distinct-ID exact Various copies and
+confirmed zero-face Various originals now have separate, recoverable
+destinations and recap accounting. Fixture transaction/check/recovery and
+retained lineage pass. No new Sandbox or Production run was performed;
+the run15 receipt and installed viewers are unchanged.
+
+The two additional Draknara examples were not late-created rival cases:
+both favored an existing Potential in the final display. One Potential
+already scored higher in the actual admission round, where cast Review
+priority took precedence. Do not equate opening Review regrouping with
+changing cast priority. Lower-core retirement suspended some cores even
+when eligible members stayed; investigate survivor support before deciding
+which of the 106 holds should route differently.
+
 ## Delivered and verified before the real run
 
 - Implemented the selected cast-priority/upward-recovery foundation and

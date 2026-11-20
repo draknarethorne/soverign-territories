@@ -683,23 +683,67 @@ def _resolve_collision(root, entries, record, anchor_owners, chosen, workflow_se
     return keeper
 
 
+def _disposition_destination(root, prefix, run_id, source):
+    token = hashlib.sha256(source.casefold().encode("utf-8")).hexdigest()[:24]
+    destination = pathlib.PurePosixPath(prefix, run_id, token, source).as_posix()
+    if normal_transaction.safe(root, destination).exists():
+        raise ValueError(f"disposition destination already exists: {destination}")
+    return destination
+
+
 def _duplicate_archives(root, rows, run_id):
     archives = {}
     for row in rows:
         if row.get("sourceStatus") != "duplicate-archive":
             continue
-        token = hashlib.sha256(row["source"].casefold().encode("utf-8")).hexdigest()[:24]
-        source = pathlib.PurePosixPath(row["source"])
-        destination = pathlib.PurePosixPath("_duplicates", run_id, token, source).as_posix()
-        if normal_transaction.safe(root, destination).exists():
-            raise ValueError(f"duplicate archive destination already exists: {destination}")
+        destination = _disposition_destination(root, "_duplicates", run_id, row["source"])
         archives[row["source"]] = {
             "source": row["source"], "destination": destination, "photoId": row["photoId"],
             "sha256": row["sourceHash"], "reason": row["reason"], "selectedSource": row["selectedSource"],
+            **({"selectedPhotoId": row["contentVoteCanonicalId"]} if row.get("crossIdExactArchive") else {}),
         }
     if len({row["destination"].casefold() for row in archives.values()}) != len(archives):
         raise ValueError("duplicate archive destinations collide")
     return archives
+
+
+def _no_face_dispositions(root, active, raw_data, catalog, workflow_ids, prefix):
+    guarded_ids = set(workflow_ids) | {
+        photo_id for person in catalog.get("people", {}).values()
+        for photo_id in person.get("identityAnchors", ())
+    } | {
+        photo_id for action in catalog.get("actions", ())
+        if action.get("actor") == "user"
+        for photo_id in action.get("photoIds", ())
+    }
+    results = {}
+    for row in active:
+        record = catalog.get("photos", {}).get(row["photoId"], {})
+        if (
+            row["group"] != "Various" or row["sourceStatus"] != "eligible"
+            or row["photoId"] in guarded_ids or row.get("collisionRule")
+            or bool(set(record) - {"contentSha256", "protected"})
+            or record.get("protected") or record.get("contentSha256", row["sourceHash"]) != row["sourceHash"]
+        ):
+            continue
+        _digest, measurement = raw_data[row["source"]]
+        if (
+            type(measurement.get("faces")) is not int or measurement["faces"] != 0
+            or not normal_import._current_measurement(measurement) or measurement.get("v")
+        ):
+            continue
+        source = row["source"]
+        destination = pathlib.PurePosixPath(prefix, source).as_posix()
+        if normal_transaction.safe(root, destination).exists():
+            raise ValueError(f"junk disposition destination already exists: {destination}")
+        reason = "selected native decoded and measured with zero detected faces; recoverable junk"
+        results[source] = {
+            "photoId": row["photoId"], "source": source, "sha256": row["sourceHash"],
+            "destination": destination,
+            "faces": 0, "reason": reason,
+        }
+        row.update(sourceStatus="confirmed-no-face-junk", rebaseRole="recoverable-junk", reason=reason)
+    return results
 
 
 def _unresolved_duplicate_ids(rows, archives):
@@ -1057,8 +1101,14 @@ def _classify_sources(root, rows, cfg, catalog, api, *, archive_collisions=False
             if row is keeper_row:
                 row["contentVoteCanonical"] = True
                 continue
+            archive_pool_copy = (
+                archive_collisions and row["group"] == "Various"
+                and not row.get("collisionRule") and row["photoId"] not in anchors
+                and row["photoId"] not in catalog.get("photos", {})
+                and not any(row is bound for bound in forced)
+            )
             row.update({
-                "sourceStatus": "same-content-nonvoting",
+                "sourceStatus": "duplicate-archive" if archive_pool_copy else "same-content-nonvoting",
                 "reason": (
                     "identical bytes under a different stable ID; preserved without ID/owner merge, "
                     "and excluded from independent voting by tools.art.duplicates.keeper"
@@ -1067,7 +1117,10 @@ def _classify_sources(root, rows, cfg, catalog, api, *, archive_collisions=False
                 "contentVoteCanonicalId": keeper_row["photoId"],
                 "contentVoteStatus": "nonvoting-duplicate-content",
             })
-            held.append(row)
+            if archive_pool_copy:
+                row.update(selectedSource=keeper_row["source"], crossIdExactArchive=True)
+            else:
+                held.append(row)
             active.remove(row)
             updates.pop(row["photoId"], None)
             for alias in aliases:
@@ -1137,6 +1190,18 @@ def _as_photo(api, row, measured_path, data, digest):
     )
     photo.name = row["standardName"]
     return photo
+
+
+def _explicit_review_placements(catalog):
+    actions = catalog.get("actions", ())
+    undone = {action["undoes"] for action in actions if action.get("type") == "action-undone" and "undoes" in action}
+    return {
+        (photo_id, action.get("destination"))
+        for action in actions
+        if action.get("type") in {"sent-to-review", "match-accepted"}
+        and action.get("actor") == "user" and action.get("id") not in undone
+        for photo_id in action.get("photoIds", ())
+    }
 
 
 def _plan(
@@ -1282,14 +1347,20 @@ def _plan(
             digest, data = _infer(api, cache, embedder, measured_path, persist_evidence=for_apply)
             raw_photos[row["source"]] = _as_photo(api, row, source, data, digest)
             raw_data[row["source"]] = (digest, data)
-        usable_raw = [
-            photo.raw for photo in raw_photos.values()
-            if photo.usable(settings["minFace"])
-        ]
+        junk_prefix = cw.storage_root(cfg, "junk", root=root).relative_to(root).as_posix()
+        junk = _no_face_dispositions(
+            root, active, raw_data, decision_catalog, workflow_ids, junk_prefix,
+        ) if admission_enabled else {}
+        if junk:
+            active = [row for row in active if row["source"] not in junk]
+        if reuse_plan is not None and junk != reuse_plan.get("junkDispositions", {}):
+            raise ValueError("confirmed no-face dispositions changed since preview")
+        usable_raw = [raw_photos[row["source"]].raw for row in active
+                      if raw_photos[row["source"]].usable(settings["minFace"])]
         mean = np.mean(usable_raw, axis=0) if usable_raw else None
         cache.centering_mean = mean.tolist() if mean is not None else None
         cache.centering_domain = "general"
-        raw_space = api.Space(list(raw_photos.values()), settings, mean=mean)
+        raw_space = api.Space([raw_photos[row["source"]] for row in active], settings, mean=mean)
         reference_photos = [
             raw_photos[row["source"]]
             for row in active
@@ -1377,10 +1448,13 @@ def _plan(
         protected_folders = {
             person["folder"] for person in decision_catalog["people"].values() if person.get("protected")
         }
+        explicit_reviews = _explicit_review_placements(catalog)
         for photo in planning_photos:
             photo_id = metadata.photo_id_from_name(photo.name)
             row = candidates_by_id[photo_id]
             record = decision_catalog.get("photos", {}).get(photo_id, {})
+            review = admission_enabled and row["bucket"] == "review"
+            explicit_review = review and (photo_id, row["source"]) in explicit_reviews
             candidates.append({
                 "photoId": photo_id,
                 "sourceFolder": row["owner"],
@@ -1399,6 +1473,8 @@ def _plan(
                 ),
                 "identityProtected": row["bucket"] == "gallery" and row["owner"] in protected_folders,
                 "rebaseCandidate": admission_enabled,
+                "explicitReviewPlacement": explicit_review,
+                "regroupReview": review and not explicit_review,
                 "detachedOutlier": row["group"] in IDENTITY_ROOTS and row["bucket"] == "gallery",
                 **rejections.photo_state(catalog, photo),
             })
@@ -1471,6 +1547,8 @@ def _plan(
             },
             "exactAliases": aliases,
             "duplicateArchives": archives,
+            "junkDispositions": junk,
+            "junkStorage": junk_prefix,
             "unresolvedDuplicateIds": unresolved_ids,
             "collisionModifiedNs": collision_dates,
             "sourceHolds": held,
@@ -1484,7 +1562,8 @@ def _plan(
                 "exactDuplicates": "tools.art.duplicates.keeper; one canonical ID+SHA input",
                 "differentIdsSameBytes": (
                     "use duplicates.keeper for one same-owner content vote while preserving all IDs; "
-                    "conflicting named owners/decisions are held without cross-ID identity merge"
+                    "archive eligible redundant Various copies; conflicting named owners/decisions "
+                    "are held without cross-ID identity merge"
                 ),
                 "oldWorking": "no external overlay; verified retained sources inside the selected root remain eligible",
             },
@@ -1743,6 +1822,7 @@ def _plan(
             ),
             "exactAliases": len(aliases),
             "duplicateArchives": len(archives),
+            "junkDispositions": len(junk),
             "sameContentNonVotingDuplicates": len(same_content_nonvoters),
             "crossIdOwnerConflicts": len(cross_id_owner_conflicts),
             "uniqueLogicalPhotoIds": report["uniqueLogicalPhotoIdCount"],
@@ -2074,7 +2154,7 @@ def main(argv=None):
             published, updated, removed = normal_products.stage(
                 root, stage_root, moves, prepared, profile=args.profile,
                 photos=photos, cfg=cfg, catalog=catalog, policy=policy,
-                archives=report.get("duplicateArchives", {}),
+                archives=report.get("duplicateArchives", {}), junk=report.get("junkDispositions", {}),
             )
             projected = normal_finish.projected(api, root, stage_root, space, cache, moves)
             report["finalComparisonAndFamily"] = normal_finish.family_and_final(
@@ -2092,7 +2172,8 @@ def main(argv=None):
 
             journal = normal_transaction.publish(
                 root, stage_root,
-                sorted(move_sources | set(removed) | set(report.get("duplicateArchives", {}))),
+                sorted(move_sources | set(removed) | set(report.get("duplicateArchives", {}))
+                       | set(report.get("junkDispositions", {}))),
                 journal=journal_path,
                 bindings=report["bindings"], profile=args.profile, run_id=run_id,
                 expected_sources={**report["sourceHashes"], **removed},
@@ -2132,7 +2213,8 @@ def main(argv=None):
             saved_status = "applied"
             normal_recap.publish(receipt_path, apply=True)
             print(f"normal rebase applied: {len(moves)} move(s), {len(report.get('duplicateArchives', {}))} "
-                  f"duplicate archive(s), {len(rows)} source row(s)")
+                  f"duplicate archive(s), {len(report.get('junkDispositions', {}))} junk disposition(s), "
+                  f"{len(rows)} source row(s)")
             print(f"receipt: {receipt_path}")
             return 0
         if receipt_path.exists():
@@ -2158,6 +2240,7 @@ def main(argv=None):
             f"Normal rebase preview ({args.profile.upper()}): {report['sourceRowCount']} source row(s), "
             f"{report['coreCount']} frozen identity core(s), {len(report['moves'])} proposed move(s), "
             f"{len(report.get('duplicateArchives', {}))} proposed duplicate archive(s), "
+            f"{len(report.get('junkDispositions', {}))} proposed junk disposition(s), "
             f"{len(report.get('unresolvedDuplicateIds', []))} apply-blocking collision(s), "
             f"{report['heldCount']} held source/candidate row(s)."
         )

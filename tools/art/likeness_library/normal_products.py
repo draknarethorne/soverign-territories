@@ -106,7 +106,7 @@ def reuse_prepared(root, output, paths, profile, expected_manifest_sha256, *, al
     return output, data, native
 
 
-def stage(root, stage_root, moves, prepared, *, profile, photos, cfg, catalog, policy, archives=None):
+def stage(root, stage_root, moves, prepared, *, profile, photos, cfg, catalog, policy, archives=None, junk=None):
     from . import maintenance, derivatives, normal_history
     from .normal_transaction import safe
 
@@ -159,20 +159,21 @@ def stage(root, stage_root, moves, prepared, *, profile, photos, cfg, catalog, p
             derivatives.save(staged_owner, data)
 
     archived = list((archives or {}).values())
-    for row in archived:
+    disposed = archived + list((junk or {}).values())
+    for row in disposed:
         target = safe(stage_root, row["destination"])
         source = safe(root, row["source"])
         if safe(root, row["destination"]).exists() or target.exists():
-            raise ValueError(f"duplicate archive destination already exists: {row['destination']}")
+            raise ValueError(f"disposition destination already exists: {row['destination']}")
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, target)
         if metadata.content_sha256(target) != row["sha256"]:
-            raise ValueError(f"duplicate archive source changed during staging: {row['source']}")
+            raise ValueError(f"disposition source changed during staging: {row['source']}")
         stage_retained(row)
         retire_derivatives(row)
         published.append({
             "photoId": row["photoId"], "native": row["destination"], "sha256": row["sha256"],
-            "framing": {}, "duplicateArchive": True,
+            "framing": {}, **({"junkDisposition": True} if row["source"] in (junk or {}) else {"duplicateArchive": True}),
         })
     for move in moves:
         framing = {"full": "deferred", "head": "deferred"} if profile == "fast" else {
@@ -237,7 +238,7 @@ def stage(root, stage_root, moves, prepared, *, profile, photos, cfg, catalog, p
         })
     updated = maintenance._updated_catalog(catalog, updated_moves, policy)
     normal_history.stage(
-        root, stage_root, archived + [move for move in updated_moves if not move.get("membershipOnly")],
+        root, stage_root, disposed + [move for move in updated_moves if not move.get("membershipOnly")],
         **({"vacated": archives} if archives else {}),
     )
     for move in moves:

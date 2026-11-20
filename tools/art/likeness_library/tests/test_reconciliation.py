@@ -169,6 +169,33 @@ class NormalAdmissionTests(unittest.TestCase):
         self.assertEqual(review["clusters"], [])
         self.assertTrue(review["held"][0]["preserveStaged"])
 
+    def test_untouched_review_groups_with_new_arrivals_without_voting_for_old_owner(self):
+        reviewed = self.photo(
+            self.axes[6], folder="Sisters/Drakness", bucket="Review", regroupReview=True,
+        )
+        arrivals = [
+            self.photo(self.axes[6], f"photo:image_{number}") for number in (124, 125)
+        ]
+        result = self.admission.two_round_plan(
+            self.api, [reviewed, *arrivals], self.cores, self.references,
+            self.settings, self.policy, set(),
+        )
+        self.assertEqual(len(result["clusters"]), 1)
+        self.assertEqual(
+            set(result["clusters"][0]["photoIds"]),
+            {row["photoId"] for row in [reviewed, *arrivals]},
+        )
+        self.assertNotIn(
+            reviewed["photoId"], result["referenceSnapshots"]["2"]["photoIds"]["Sisters/Drakness"],
+        )
+
+    def test_explicit_review_placement_is_not_reassigned_even_to_strong_cast_gallery(self):
+        row = self.photo(
+            self.axes[0], folder="Sisters/Other", bucket="Review", explicitReviewPlacement=True,
+        )
+        self.assertEqual(self.route([row])["assignments"], [])
+        self.assertTrue(self.route([row])["held"][0]["preserveStaged"])
+
     def test_one_boundary_allows_existing_or_various_seed_to_recover_other_member(self):
         for arrival_seed in (False, True):
             with self.subTest(arrival_seed=arrival_seed):

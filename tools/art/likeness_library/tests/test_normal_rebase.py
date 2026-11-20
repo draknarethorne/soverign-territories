@@ -938,6 +938,93 @@ class NormalRebaseTests(unittest.TestCase):
             self.assertEqual((self.root / source).stat().st_mtime_ns, dates[source])
         self.assertTrue(all(not (self.root / row["destination"]).exists() for row in archives.values()))
 
+    def test_pool_duplicates_and_measured_no_face_publish_as_distinct_recoverable_dispositions(self):
+        from tools.art.likeness_library import normal_transaction, retained_preparation
+
+        keeper = self.photo("Angels/Ava/gallery/ava_image_901.jpg", b"existing cast original")
+        copy = self.photo("Various/gallery/image_902.jpg", keeper.read_bytes())
+        no_face = self.photo("Various/gallery/image_903.jpg", b"decoded without a face")
+        unknown = self.photo("Various/gallery/image_904.jpg", b"read or cache failure")
+        workflow = self.photo("Various/review/image_905.jpg", b"workflow-selected no face")
+        relative = lambda path: path.relative_to(self.root).as_posix()
+        retained = self.photo("fixture-recipe/original.jpg", no_face.read_bytes())
+        detail = self.photo("fixture-recipe/detail.html", b"<html><body></body></html>")
+        thumb = self.photo("fixture-recipe/thumb.jpg", b"thumbnail")
+        retained_preparation.stage_photo(
+            self.root, relative(no_face), retained.parent, {
+                "source": relative(no_face), "photoId": "photo:image_903",
+                "sourceSha256": metadata.content_sha256(retained), "retained": retained.name,
+                "detail": detail.name, "detailSha256": metadata.content_sha256(detail),
+                "sourceScope": {"matchingDomain": "general"},
+                "processing": {"final": "control"},
+                "variants": {"control": {
+                    "path": retained.name, "sha256": metadata.content_sha256(retained),
+                    "thumbnail": thumb.name, "thumbnailSha256": metadata.content_sha256(thumb),
+                }},
+            }, recipe={"id": "test"}, storage_mode="lean",
+        )
+        catalog = self.empty_catalog()
+        catalog["photos"]["photo:image_903"] = {"contentSha256": metadata.content_sha256(no_face), "protected": False}
+        rows = self.source_rows()
+        active, _held, _aliases, _updates, _workflow_ids = normal_rebase._classify_sources(
+            self.root, rows, {}, catalog, None, archive_collisions=True,
+        )
+        for row in active:
+            row.setdefault("sourceStatus", "eligible")
+        archives = normal_rebase._duplicate_archives(self.root, rows, "fixture")
+        self.assertEqual(list(archives), [relative(copy)])
+        self.assertEqual(archives[relative(copy)]["selectedPhotoId"], "photo:image_901")
+        measurement = {
+            relative(path): ("unused", data) for path, data in (
+                (no_face, {"faces": 0, "t": 0.5}), (unknown, {"faces": 0}),
+                (workflow, {"faces": 0, "t": 0.5}),
+            )
+        }
+        junk = normal_rebase._no_face_dispositions(
+            self.root, active, measurement, catalog, {"photo:image_905"}, "_junk",
+        )
+        self.assertEqual(list(junk), [relative(no_face)])
+        self.assertTrue(all(path.is_file() for path in (keeper, copy, no_face, unknown, workflow)))
+        stage = self.root / "_reports" / "fixture" / "publication"
+        published, _, removed = normal_products.stage(
+            self.root, stage, [], None, profile="fast", photos=[], cfg={}, catalog=catalog,
+            policy=normal_rebase.load_policy(), archives=archives, junk=junk,
+        )
+        journal = stage.parent / "journal.json"
+        normal_transaction.publish(
+            self.root, stage, sorted(set(archives) | set(junk) | set(removed)), journal=journal,
+            bindings={}, profile="fast", run_id="fixture",
+            expected_sources={row["source"]: row["sourceHash"] for row in rows},
+        )
+        normal_transaction.verify(self.root, journal)
+        self.assertEqual(sum(bool(row.get("duplicateArchive")) for row in published), 1)
+        self.assertEqual(sum(bool(row.get("junkDisposition")) for row in published), 1)
+        for path, record, prefix in ((copy, archives[relative(copy)], "_duplicates"), (no_face, junk[relative(no_face)], "_junk")):
+            self.assertFalse(path.exists())
+            archived = self.root / record["destination"]
+            self.assertTrue(archived.is_relative_to(self.root / prefix))
+            self.assertEqual(metadata.content_sha256(archived), record["sha256"])
+        self.assertTrue(all(path.is_file() for path in (keeper, unknown, workflow)))
+        self.assertIsNotNone(retained_preparation.verify_link(self.root, self.root / junk[relative(no_face)]["destination"]))
+        normal_transaction.recover(self.root, journal, apply=True)
+        self.assertTrue(all(path.is_file() for path in (keeper, copy, no_face, unknown, workflow)))
+        self.assertIsNotNone(retained_preparation.verify_link(self.root, no_face))
+        for disposition in (archives[relative(copy)], junk[relative(no_face)]):
+            self.assertFalse((self.root / disposition["destination"]).exists())
+
+    def test_explicit_review_action_is_bound_to_its_path_and_respects_undo(self):
+        action = {"id": "set-review", "actor": "user", "type": "sent-to-review",
+                  "destination": "Sisters/Owner/review/owner_image_901.jpg", "photoIds": ["photo:image_901"]}
+        self.assertEqual(
+            normal_rebase._explicit_review_placements({"actions": [action]}),
+            {("photo:image_901", action["destination"])},
+        )
+        self.assertEqual(
+            normal_rebase._explicit_review_placements(
+                {"actions": [action, {"type": "action-undone", "undoes": action["id"]}]},
+            ), set(),
+        )
+
     def test_time_tie_is_resolved_and_a_new_edit_does_not_displace_protected_gallery(self):
         old = self.photo("Angels/Ava/gallery/ava_image_777.jpg", b"cast original")
         edit = self.photo("Various/gallery/image_777.jpg", b"edited bytes")
@@ -1168,6 +1255,65 @@ class NormalRebaseTests(unittest.TestCase):
             normal_rebase._preview_for_apply(
                 self.root, receipt_path, "fixture", "fast", {"policy": "fixture"},
             )
+
+    def test_preview_apply_and_recovery_bind_pool_dispositions(self):
+        from tools.art import likeness
+
+        proof = tempfile.TemporaryDirectory(dir=ROOT / "tmp", prefix="p")
+        self.addCleanup(proof.cleanup)
+        self.root = (pathlib.Path(proof.name) / "Sovereign Territories Sandbox" / "Working"
+                     / "_sandbox-state" / "normal-flow-proof-p")
+        keeper = self.photo("Prospects/Owner/gallery/owner_image_921.jpg", b"shared")
+        copy = self.photo("Various/gallery/image_922.jpg", b"shared")
+        unusable = self.photo("Various/gallery/image_923.jpg", b"no face")
+        metadata.save_catalog(self.empty_catalog(), self.root / ".likeness-library.json")
+        run = self.root / "_reports" / "runs" / "normal-rebase-p"
+        preview = run.with_name(run.name + "-preview.json")
+        applied = run.with_suffix(".json")
+        args = ["--root", str(self.root), "--cache", str(self.root / "fixture-cache.json"),
+                "--profile", "fast", "--run-id", "p"]
+
+        def measure(_api, _cache, _embedder, path, **_kwargs):
+            return hashlib.sha1(path.read_bytes()).hexdigest(), {"faces": 0, "t": 0.5}
+
+        def viewers(*_args, **_kwargs):
+            report_dir = self.root / "_reports" / "library"
+            report_dir.mkdir(parents=True, exist_ok=True)
+            for name in normal_rebase.REQUIRED_VIEWERS:
+                (report_dir / name).write_text("<html>fixture</html>", encoding="utf-8")
+            return [str(report_dir / name) for name in normal_rebase.REQUIRED_VIEWERS]
+
+        with (
+            mock.patch.object(likeness, "configuration", return_value={}),
+            mock.patch.object(likeness, "Embedder"),
+            mock.patch.object(normal_rebase, "_infer", side_effect=measure),
+            mock.patch.object(normal_rebase.normal_finish, "viewers", side_effect=viewers),
+            contextlib.redirect_stdout(io.StringIO()),
+            contextlib.redirect_stderr(io.StringIO()) as errors,
+        ):
+            self.assertEqual(normal_rebase.main([*args, "--dry-run"]), 0, errors.getvalue())
+            preview_bytes = preview.read_bytes()
+            plan = json.loads(preview_bytes)["plan"]
+            archive, = plan["duplicateArchives"].values()
+            junk, = plan["junkDispositions"].values()
+            self.assertEqual(archive["selectedSource"], keeper.relative_to(self.root).as_posix())
+            self.assertEqual(junk["destination"], "_junk/Various/gallery/image_923.jpg")
+            self.assertTrue(all(path.is_file() for path in (keeper, copy, unusable)))
+            self.assertEqual(normal_rebase.main([*args, "--apply", "--sandbox-apply-draft"]), 0, errors.getvalue())
+            self.assertEqual(normal_rebase.main([*args, "--check"]), 0, errors.getvalue())
+            self.assertEqual(normal_rebase.main([*args, "--repeat"]), 0, errors.getvalue())
+            self.assertEqual(preview.read_bytes(), preview_bytes)
+            recap = normal_rebase.normal_recap.collect(applied)
+            self.assertEqual(recap["physicalSources"], 3)
+            self.assertEqual(recap["physicalDestinations"], 3)
+            self.assertTrue(keeper.is_file())
+            self.assertFalse(copy.exists())
+            self.assertFalse(unusable.exists())
+            self.assertEqual((self.root / archive["destination"]).read_bytes(), b"shared")
+            self.assertEqual((self.root / junk["destination"]).read_bytes(), b"no face")
+            self.assertEqual(normal_rebase.main([*args, "--recover-apply"]), 0, errors.getvalue())
+            self.assertEqual(copy.read_bytes(), b"shared")
+            self.assertEqual(unusable.read_bytes(), b"no face")
 
     def test_apply_accepts_new_preview_bound_to_external_verified_preparation(self):
         receipt_path = self.root / "preview-with-reused-preparation.json"

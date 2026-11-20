@@ -379,6 +379,13 @@ def plan_reconciliation(
                 })
             continue
         candidate = dict(rows[0])
+        if admission_context is not None and candidate.get("explicitReviewPlacement"):
+            held.append({
+                "photoId": photo_id, "sourceFolder": candidate["sourceFolder"],
+                "sourceBucket": candidate["sourceBucket"], "preserveStaged": True,
+                "reason": "explicit Review placement; remains staged",
+            })
+            continue
         if candidate.get("rejectionMetadataStale"):
             held.append({
                 "photoId": photo_id, "sourceFolder": candidate.get("sourceFolder"),

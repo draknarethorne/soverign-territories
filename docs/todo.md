@@ -17,7 +17,7 @@
 
 **P1 (blocks other work, or cheap and valuable)**
 
-- [ ] RA2j Restoring the normal FULL/LEAN/FAST intake flow and separating exclusive experimental execution. **Nov19 bounded SIMPLE delivery:** run13 apply/check/repeat and installed movement/viewer proof pass the [shared ... ([priority reset](plans/2026-11-05-priority-reset.md))
+- [ ] RA2j Restoring the normal FULL/LEAN/FAST intake flow and separating exclusive experimental execution. **Nov20 review feedback:** the [run15 disposition ... ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] T29 Freeze same-machine representative generation/no-op, warm/cache phase baselines before runtime/path changes, with input/config/ code/resource IDs, timings, read/byte counts and output contracts. [Full benchmark ... ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] T30 Remove established repeated work across phase and standalone/continuous boundaries; publish per-hotspot ownership, cost, cache dependencies/invalidation, tests and fixed/deferred/no-gain status. Coordinator decisions, ... ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] RA2o Reconciling current plans after the focused SIMPLE review/tuning contract is formalized and the run evidence/handoff is stable. Source: the [Nov 16 three-activity ... ([priority reset](plans/2026-11-05-priority-reset.md))

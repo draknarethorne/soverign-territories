@@ -119,7 +119,7 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
             if row.get("rebaseCandidate") and row["sourceBucket"] == "Gallery":
                 held.extend(evidence([row], [], "no qualified higher identity; current Gallery owner retained",
                                      preserveStaged=True))
-            elif admission_context is not None and row["sourceBucket"] == "Review":
+            elif admission_context is not None and row["sourceBucket"] == "Review" and not row.get("regroupReview"):
                 held.extend(evidence([row], [], "unmatched Review remains non-recruiting with its current owner",
                                      preserveStaged=True))
             else:
@@ -133,7 +133,7 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
             if row.get("rebaseCandidate") and row["sourceBucket"] == "Gallery":
                 held.extend(evidence([row], ranked, "higher match is below entry floor; current Gallery owner retained",
                                      preserveStaged=True))
-            elif admission_context is not None and row["sourceBucket"] == "Review":
+            elif admission_context is not None and row["sourceBucket"] == "Review" and not row.get("regroupReview"):
                 held.extend(evidence([row], ranked, "unmatched Review remains non-recruiting with its current owner",
                                      preserveStaged=True))
             else:

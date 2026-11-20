@@ -33,6 +33,13 @@ Overview, Review and the applied recap/audit were verified in the browser.
 No writer remains. Human placement and crop review is next under RA2d;
 no rerun is needed to start it.
 
+The [Review feedback follow-up](plans/2026-11-16-simple-review-and-tuning.md#nov-20-review-and-various-dispositions)
+implements ordinary grouping for untouched Review, recoverable distinct-ID
+duplicates and confirmed no-face junk. Isolated transaction checks pass;
+run15 remains unchanged. Lower-core
+retirement and provisional cast-Review priority are separately visible
+policy questions, not resolved by moving Review back into the candidate pool.
+
 **Nov19 installed SIMPLE result.** LEAN run13 applied successfully on existing
 Sandbox Working without reset or repeated preparation. The
 [installed closeout](plans/2026-11-16-simple-review-and-tuning.md#nov19-installed-run13-closeout)

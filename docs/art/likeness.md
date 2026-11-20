@@ -1627,6 +1627,20 @@ not every physical file. Archived duplicates, non-voting holds, and Artists
 are outside this pass, and verified retained preparations can be reused.
 Assessment can keep the original bytes if no edit passes the recipe.
 
+SIMPLE treats untouched Review as eligible for ordinary candidate grouping
+alongside new arrivals, not as a lock or as a vote for the previous owner.
+Explicit Review placements, photo and workflow locks, and rejected matches
+remain respected. This does not change cast admission priority or allow
+automatic departures from an existing Angel or Sister Gallery.
+
+SIMPLE reports two recoverable dispositions separately: safe distinct-ID
+Various copies whose current bytes match a keeper go to `_duplicates`;
+unbound Various inputs with a decoded zero-face result go to
+`_junk/<original-path>`. The duplicate recap names both IDs and paths.
+A failed measurement or ambiguous face quality is not a confirmed no-face
+result. Same-ID, same-byte discard remains a separate opt-in preflight.
+These changes do not expand daily intake scope.
+
 For FULL/LEAN, a newly prepared same-path Review admission still publishes
 the selected native and fresh preparation/history evidence; unchanged
 ownership does not make it metadata-only. FAST and verified unprepared

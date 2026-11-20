@@ -195,6 +195,9 @@ def two_round_plan(api, candidates, cores, references, settings, policy, names_t
             )
         }
 
+    def pool_candidate(row):
+        return row["sourceFolder"] == "Various" or row.get("regroupReview")
+
     pending = list(candidates)
     for round_index in (1, 2):
         ctx = context(current, current_rows, policy, locked=locked)
@@ -204,8 +207,8 @@ def two_round_plan(api, candidates, cores, references, settings, policy, names_t
             "photoIds": {folder: list(core["corePhotoIds"]) for folder, core in sorted(current.items())},
         }
         round_rows, retired_ids, retired_folders = [], set(), set()
-        existing = [row for row in pending if row["sourceFolder"] != "Various"]
-        arrivals = [row for row in pending if row["sourceFolder"] == "Various"]
+        existing = [row for row in pending if not pool_candidate(row)]
+        arrivals = [row for row in pending if pool_candidate(row)]
         deferred = []
         for batch in (existing, arrivals):
             report = route(batch, current, {**ctx, "castOnly": True})
@@ -214,8 +217,8 @@ def two_round_plan(api, candidates, cores, references, settings, policy, names_t
             round_rows.extend(terminal)
             retired_ids.update(leaving(terminal))
         for batch in (
-            [row for row in deferred if row["sourceFolder"] != "Various"],
-            [row for row in deferred if row["sourceFolder"] == "Various"],
+            [row for row in deferred if not pool_candidate(row)],
+            [row for row in deferred if pool_candidate(row)],
         ):
             retired_folders.update(
                 folder for folder, core in current.items()

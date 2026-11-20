@@ -347,7 +347,7 @@ def _person_link(person, data, out_dir, *, bucket=None):
     person = str(person or "")
     label = html.escape(person or "not recorded")
     if person == "_duplicates" and data.get("duplicateArchives"):
-        return _detail_link("collisions", person)
+        return _detail_link("content-archives" if data.get("contentArchives") else "collisions", person)
     if data.get("historical"):
         return label
     valid = data.setdefault("_person_path_validity", {})
@@ -920,6 +920,9 @@ def _continuity_section(data, out_dir):
     final_review = collections.Counter(row["newPerson"] for row in rows if row["newBucket"] == "review")
     archive_count = sum(bool(row.get("duplicateArchive")) for row in rows)
     archive_note = f" + {archive_count} duplicate archive(s)" if archive_count else ""
+    junk_count = sum(bool(row.get("junkDisposition")) for row in rows)
+    if junk_count:
+        archive_note += f" + {junk_count} recoverable junk disposition(s)"
     outgoing = collections.defaultdict(list)
     for row in rows:
         outgoing[row["oldPerson"]].append(row)

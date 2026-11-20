@@ -123,6 +123,47 @@ class NormalRecapTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unbound duplicate archive"):
             normal_recap.collect(self.report)
 
+    def test_content_duplicate_and_junk_destinations_have_distinct_verified_recap_rows(self):
+        plan = self.receipt["plan"]
+        extra, junk_path = "Various/gallery/image_4.jpg", "_junk/" + self.held
+        archived_path = "_duplicates/run1/" + extra
+        keeper, _incoming, _target, junked = plan["sourceRows"]
+        keeper["contentVoteCanonical"] = True
+        junked.update(group="Various", sourceStatus="confirmed-no-face-junk")
+        plan["sourceRows"].append({
+            "source": extra, "sourceHash": self.h1, "photoId": "photo:image_4", "group": "Various",
+            "sourceStatus": "duplicate-archive", "crossIdExactArchive": True,
+        })
+        plan["sourceHashes"][extra] = self.receipt["sourceHashes"][extra] = self.h1
+        plan["duplicateArchives"] = {extra: {
+            "source": extra, "destination": archived_path, "sha256": self.h1,
+            "photoId": "photo:image_4", "reason": "exact-byte copy under another ID",
+            "selectedSource": self.a, "selectedPhotoId": "photo:image_1",
+        }}
+        plan["junkStorage"] = "_junk"
+        plan["junkDispositions"] = {self.held: {
+            "source": self.held, "destination": junk_path, "sha256": self.h3,
+            "photoId": "photo:image_3", "faces": 0, "reason": "confirmed no detected face",
+        }}
+        self.receipt["publishedNative"] += [
+            {"native": archived_path, "sha256": self.h1}, {"native": junk_path, "sha256": self.h3},
+        ]
+        self.records.pop()
+        self.save()
+        data = normal_recap.collect(self.report)
+        self.assertEqual(data["collisionGroups"], {})
+        self.assertEqual(data["snapshotMatched"], 2)
+        self.assertEqual(data["snapshotDiagnostics"], [])
+        self.assertNotIn("_junk", data["newIdentities"])
+        page = normal_recap.render(data, self.library / "recap.html")
+        for expected in ("Identical bytes under different photo IDs", archived_path, junk_path,
+                         "1 duplicate archive(s) + 1 recoverable junk disposition(s)"):
+            self.assertIn(expected, page)
+        plan["duplicateArchives"][extra]["selectedPhotoId"] = "photo:image_5"
+        self.save()
+        with self.assertRaisesRegex(ValueError, "unbound duplicate archive evidence"):
+            normal_recap.collect(self.report)
+
     def test_applied_report_preserves_transaction_bound_preview_reports(self):
         self.receipt["status"] = "preview"
         self.receipt["kind"] = "normal-rebase-preview"

@@ -81,8 +81,11 @@ def collect(receipt_path):
     assignments = {item["photoId"]: item for item in plan.get("assignments", [])}
     assignments.update({item["photoId"]: item for item in plan.get("held", [])})
     archives = plan.get("duplicateArchives", {})
+    junk = plan.get("junkDispositions", {})
+    junk_prefix = _relative(plan["junkStorage"]) if junk else None
     source_rows = {row["source"]: row for row in sources}
     collision_groups = collections.defaultdict(list)
+    content_archives = []
     rows = []
     seen = set()
     for source in sources:
@@ -94,22 +97,43 @@ def collect(receipt_path):
         _digest_value(source["sourceHash"])
         move = by_source.get(relative)
         archive = archives.get(relative)
+        discarded = junk.get(relative)
         if archive:
             keeper = source_rows.get(archive["selectedSource"], {})
+            cross_id = "selectedPhotoId" in archive
+            keeper_matches = (
+                source.get("crossIdExactArchive") is True
+                and source["group"] == "Various"
+                and keeper.get("photoId") == archive["selectedPhotoId"] != archive["photoId"]
+                and keeper.get("sourceHash") == archive["sha256"]
+                and keeper.get("contentVoteCanonical") is True
+                and keeper["source"] not in archives
+            ) if cross_id else (keeper.get("photoId") == archive["photoId"] and keeper.get("collisionRule"))
             if (
                 move or archive["source"] != relative or archive["photoId"] != source["photoId"]
                 or archive["sha256"] != source["sourceHash"]
-                or keeper.get("photoId") != archive["photoId"] or not keeper.get("collisionRule")
+                or not keeper_matches
                 or source.get("sourceStatus") != "duplicate-archive"
                 or _relative(archive["destination"]).parts[0] != "_duplicates"
                 or (receipt["status"] == "applied" and native.get(archive["destination"]) != archive["sha256"])
             ):
                 raise ValueError(f"unbound duplicate archive evidence: {relative}")
-        if archive or source.get("collisionRule") or source.get("versionConflict"):
+            if cross_id:
+                content_archives.append(archive)
+        if (archive and "selectedPhotoId" not in archive) or source.get("collisionRule") or source.get("versionConflict"):
             collision_groups[source["photoId"]].append((source, archive))
+        if discarded and (
+            archive or move or discarded["source"] != relative or discarded["photoId"] != source["photoId"]
+            or discarded["sha256"] != source["sourceHash"] or source["group"] != "Various"
+            or source["sourceStatus"] != "confirmed-no-face-junk" or discarded["faces"] != 0
+            or _relative(discarded["destination"]) != junk_prefix / _relative(relative)
+            or (receipt["status"] == "applied" and native.get(discarded["destination"]) != discarded["sha256"])
+        ):
+            raise ValueError(f"unbound no-face junk evidence: {relative}")
         if move and (move["photoId"] != source["photoId"] or move["sha256"] != source["sourceHash"]):
             raise ValueError(f"move does not bind its source: {relative}")
-        destination = archive["destination"] if archive else move["destination"] if move else relative
+        disposition = archive or discarded
+        destination = (disposition or move)["destination"] if disposition or move else relative
         _relative(destination)
         if receipt["status"] == "applied" and move and destination not in native:
             raise ValueError(f"published native evidence missing: {destination}")
@@ -119,7 +143,9 @@ def collect(receipt_path):
         new, new_bucket = rebase_recap.person_and_bucket(destination)
         if archive:
             new, new_bucket = "_duplicates", "archive"
-        assignment = {} if archive else assignments.get(source["photoId"], {})
+        if discarded:
+            new, new_bucket = plan["junkStorage"], "junk"
+        assignment = {} if disposition else assignments.get(source["photoId"], {})
         row = dict.fromkeys((
             "preview", "detail", "score", "bestMatch", "bestScore", "nearestCast",
             "nearestCastScore", "secondCast", "secondCastScore", "castMargin",
@@ -130,18 +156,21 @@ def collect(receipt_path):
             source=relative, destination=destination, photoId=source["photoId"],
             sha256=source["sourceHash"], preparedSHA256=native.get(destination, source["sourceHash"]),
             originalFolder=old, oldPerson=old, newPerson=new, oldBucket=old_bucket, newBucket=new_bucket,
-            reason=(archive or move or source).get("reason", "existing owner retained"),
-            kind="duplicate-archive" if archive else rebase_recap.change_kind({"source": relative, "destination": destination}),
+            reason=(disposition or move or source).get("reason", "existing owner retained"),
+            kind=("duplicate-archive" if archive else "junk-disposition" if discarded else
+                  rebase_recap.change_kind({"source": relative, "destination": destination})),
             placementKind="Duplicate archive (non-voting)" if archive else
+            "Recoverable junk (no detected face)" if discarded else
             rebase_recap._placement_kind(relative, destination, old, new, old_bucket, new_bucket),
             duplicateArchive=bool(archive),
+            junkDisposition=bool(discarded),
             renamed=pathlib.PurePosixPath(relative).stem != pathlib.PurePosixPath(destination).stem,
             converted=pathlib.PurePosixPath(relative).suffix.lower() != pathlib.PurePosixPath(destination).suffix.lower(),
             topCast=[], bestScore=assignment.get("score", assignment.get("bestScore")),
             bestMatch=assignment.get("bestMatch"), clusterId=assignment.get("clusterId"),
         )
         rows.append(row)
-    if (set(by_source) | set(archives)) - seen or seen != set(hashes):
+    if (set(by_source) | set(archives) | set(junk)) - seen or seen != set(hashes):
         raise ValueError("saved moves/source hashes are outside the complete source census")
     destinations = collections.Counter(row["destination"] for row in rows)
     aliases = plan.get("exactAliasTargets", {})
@@ -176,7 +205,7 @@ def collect(receipt_path):
             reason="previous native superseded by selected incoming version: " + incoming,
         )
     old_people = {row["oldPerson"] for row in rows}
-    new_people = {row["newPerson"] for row in rows if not row["duplicateArchive"]}
+    new_people = {row["newPerson"] for row in rows if not (row["duplicateArchive"] or row["junkDisposition"])}
     data = {
         "normalReport": True, "run": str(receipt_path), "runId": receipt["runId"],
         "workingRoot": str(root), "libraryRoot": str(library), "status": receipt["status"], "rows": rows,
@@ -188,6 +217,7 @@ def collect(receipt_path):
         "physicalSources": len(rows), "physicalDestinations": len(destinations),
         "coalescedAliases": len(aliases), "supersededVersions": len(updates),
         "duplicateArchives": len(archives),
+        "contentArchives": content_archives,
         "unresolvedDuplicateIds": plan.get("unresolvedDuplicateIds", []),
         "collisionGroups": {pid: group for pid, group in collision_groups.items() if len(group) > 1},
         "recordedAudit": plan.get("frozenConsistencyCheck", {}),
@@ -227,7 +257,7 @@ def _attach_review(data):
         by_path[path] = record
     rows_by_destination = collections.defaultdict(list)
     for row in data["rows"]:
-        if not (row.get("supersededVersion") or row["duplicateArchive"]):
+        if not (row.get("supersededVersion") or row["duplicateArchive"] or row.get("junkDisposition")):
             rows_by_destination[row["destination"]].append(row)
     for destination, rows in rows_by_destination.items():
         record = by_path.get(destination)
@@ -352,6 +382,7 @@ def render(data, out, *, audit=False, others=()):
             rebase_recap._flow_section(data, out.parent),
             rebase_recap._continuity_section(data, out.parent),
             _collision_section(data, out.parent),
+            _content_archive_section(data, out.parent),
             _group_relationships(data, out.parent),
             "<section>" + _audit_summary(data) + "</section>",
             rebase_recap._comparison_section(data, list(others), out.parent) if others else "",
@@ -409,6 +440,26 @@ def _collision_section(data, out_dir):
                 f'{source["sourceHash"]}<br>{source.get("collisionModifiedNs", "Not used")}</td>'
                 f'<td>{outcome}</td></tr>'
             )
+    return "".join(parts + ["</table>"])
+
+
+def _content_archive_section(data, out_dir):
+    if not data["contentArchives"]:
+        return ""
+    root = pathlib.Path(data["workingRoot"])
+    parts = ['<h2 id="content-archives">Identical bytes under different photo IDs</h2>',
+             '<p>The redundant Various file is archived; the IDs are not merged.</p>',
+             '<table><tr><th>Archived copy / SHA-256</th><th>Keeper at inventory</th></tr>']
+    for row in sorted(data["contentArchives"], key=lambda item: item["source"]):
+        destination = html.escape(row["destination"])
+        if data["status"] == "applied":
+            href = rebase_recap._href(_under(root, root / _relative(row["destination"])), out_dir)
+            destination = f'<a href="{html.escape(href, quote=True)}">{destination}</a>'
+        parts.append(
+            f'<tr><td>{html.escape(row["photoId"])}<br>{html.escape(row["source"])}<br>'
+            f'{destination}<br>{row["sha256"]}</td><td>{html.escape(row["selectedPhotoId"])}<br>'
+            f'{html.escape(row["selectedSource"])}</td></tr>'
+        )
     return "".join(parts + ["</table>"])
 
 
