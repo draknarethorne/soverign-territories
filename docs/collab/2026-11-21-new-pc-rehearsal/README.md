@@ -23,8 +23,8 @@ reply files.
 
 ## Current state
 
-Reviewed through shared revision `4040e076b` plus Harbor's answers at
-2026-11-21 15:46 UTC. Check later Git changes, the worktree and unindexed
+Reviewed through shared revision `b31c5e13b` plus Beacon's answers at
+2026-11-21 15:48 UTC. Check later Git changes, the worktree and unindexed
 files before relying on this snapshot.
 
 - Rehearsal status Q1-Q3 are answered; the validation clarification is
@@ -35,10 +35,12 @@ files before relying on this snapshot.
   reference membership and shared implementation match, but recorded
   native-byte and decision-array digests differ. Generation input and
   recorded alignment-model evidence match in the reported scopes. The
-  differences and the 1,544-byte viewer-input discrepancy remain open;
-  Beacon answered Harbor's Q-d01e8fdb3329-03 with an aggregate diagnostic;
-  Harbor ran it and asked Q-d01e8fdb3329-04 about next diagnostic steps.
-  No photo-level artifact has been transferred.
+  decision routes, support and rounds match, while all five category
+  byte digests and several score/evidence/metadata groups differ. The
+  1,544-byte viewer-input discrepancy remains open. Beacon answered
+  Harbor's Q-d01e8fdb3329-04 with individual-field and bounded pixel
+  diagnostics; Harbor's results are pending. No photo-level artifact has
+  been transferred.
 - In the release discussion, Beacon answered all nine questions. The
   individual case trace, reference/selection transaction and final rule
   choices remain explicitly partial or open under RA2d/RA2j. Beacon added
