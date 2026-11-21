@@ -2,6 +2,7 @@
 import json
 import pathlib
 import re
+import subprocess
 import unittest
 
 from tools.validators.quality_selection import QUALITY_GUARDED_SKILLS
@@ -57,6 +58,22 @@ def uncovered_tests(root, launcher):
 
 
 class QualityGateTests(unittest.TestCase):
+    def test_handoff_payload_ignore_boundaries(self):
+        examples = (
+            (pathlib.Path("docs", "handoffs", "example", "payload", "plan.json"), True),
+            (pathlib.Path("docs", "handoffs", "example", "payload", "nested", "plan.json"), True),
+            (pathlib.Path("docs", "handoffs", "example", "README.md"), False),
+            (pathlib.Path("docs", "handoffs", "example", "plan.json"), False),
+            (pathlib.Path("docs", "handoffs", "example", "nested", "payload", "plan.json"), False),
+        )
+        for path, ignored in examples:
+            with self.subTest(path=path):
+                result = subprocess.run(
+                    ["git", "check-ignore", "--no-index", "--quiet", "--", str(path)],
+                    cwd=ROOT, capture_output=True, text=True, check=False,
+                )
+                self.assertEqual(result.returncode, 0 if ignored else 1, result.stderr)
+
     def test_collaboration_skills_have_valid_metadata_and_resolving_local_links(self):
         entry = (ROOT / ".github" / "copilot-instructions.md").read_text(encoding="utf-8")
         for name in QUALITY_GUARDED_SKILLS:

@@ -22,8 +22,10 @@ For cross-cutting working agreements, use the
 separates project/design records, art reports, superseded plans, recaps and
 incorporated feedback. Archives are history, not another active queue.
 
-For questions and handoffs between sessions or machines, use the
-[collaboration guide](collab/README.md); messages do not authorize actions.
+For questions between sessions or machines, use the
+[collaboration guide](collab/README.md). For a continuation and its required
+artifacts, use the [handoff guide](handoffs/README.md). Neither authorizes
+actions or automatically transfers private files.
 
 The [Nov 5 Copilot collaboration review](audits/2026-11-05-copilot-efficiency/README.md)
 records measured session/tool/context overhead, billing limitations and

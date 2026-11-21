@@ -58,11 +58,16 @@ Unity, PvP, alliances, territory maps, AFK systems and Nakama are future scope.
 ## On-demand procedures
 
 - [AI collaboration](skills/ai-collaboration/SKILL.md) — cross-session and
-  cross-machine questions, answers and artifact handoffs.
+  cross-machine questions and answers.
 - [Decision guidance](skills/decision-guidance/SKILL.md) — risk and escalation.
-- [Milestone handoff](skills/milestone-handoff/SKILL.md) — plans and closeout.
+- [Milestone handoff](skills/milestone-handoff/SKILL.md) — agent/session
+  handoff packages, plans and closeout.
 - [Feedback filing](skills/feedback-filing/SKILL.md) — coverage and safe filing.
 - [Long-run acceptance](skills/long-run-acceptance/SKILL.md) — monitoring and recovery.
+- [Photo library](skills/photo-library/SKILL.md) — scoped intake and upkeep.
+- [Likeness rebase](skills/likeness-rebase/SKILL.md) — baseline and SIMPLE gates.
+- [Workflow generation](skills/workflow-generation/SKILL.md) — prompts and deployment.
+- [ComfyUI rendering](skills/comfyui-rendering/SKILL.md) — batch/queue evidence and operator guidance.
 - [Domain analysis](skills/domain-analysis/SKILL.md) — design and balance.
 - [Implementation workflows](skills/implementation-workflows/SKILL.md) — code,
   Unity and explicitly authorized backend tasks.

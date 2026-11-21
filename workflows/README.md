@@ -21,9 +21,11 @@ workflows/
 The options were simplified at the same time and the old switches are gone:
 `deploy --include curated,shots,tests,staged,finals` and `--mode patch|new|existing|overwrite` replace the old `--curated --shots --tests --staged` and `--patch-only --new-only --existing --overwrite`; `pull --only shots|templates|finals` replaces `--shots` and `--templates`; `inputs status|pull|reset|fix|set HERO` replaces `inputs status|--pull|--reset|--fix|--set`. `status` also lists candidates and finals.
 
-Run the scripts from a terminal or double-click `bin\menu.cmd` (`bin\help.cmd` lists everything). Add `--dry-run` as the last
-argument to preview. STAGE is optional: `poses`, `head`, `scene`, `hair`, `motion`, `armor`, `clothing`, `video`, or `studio` for
-every studio stage.
+Run the scripts from a terminal or double-click `bin\menu.cmd` (`bin\help.cmd` lists everything). For the workflow/deployment
+steps, add `--dry-run` as the last argument to preview. **Exception:** `refresh.cmd`, `refresh-group.cmd`,
+`refresh-firered.cmd` and `animate.cmd` regenerate their prompts even with `--dry-run`; do not use them when no writes are
+allowed. STAGE is optional: `poses`, `head`, `scene`, `hair`, `motion`, `armor`, `clothing`, `video`, or `studio` for every
+studio stage.
 
 | I want to | Run |
 | --- | --- |

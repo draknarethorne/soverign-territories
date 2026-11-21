@@ -59,6 +59,9 @@ workflows/**/X_*.json
 # Temporary files
 tmp/
 
+# Private handoff payloads are copied separately; Git shares only reviewed metadata.
+/docs/handoffs/*/payload/
+
 # Local likeness caches and aligned face evidence
 _likeness/
 

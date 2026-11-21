@@ -120,6 +120,10 @@ revision is not proof of receipt or reading. Live jobs and their bound inputs
 stay under their existing run procedures; this directory does not authorize
 restarts, new writers, Production changes or promotion.
 
+For a complete agent/session continuation and its required files, use the
+[handoff guide](../handoffs/README.md). Keep related questions and answers
+here, with links to the handoff; an ignored payload is not transferred by Git.
+
 ## Open thread
 
 - [New-PC rehearsal and other-machine handoff](2026-11-21-new-pc-rehearsal/README.md)

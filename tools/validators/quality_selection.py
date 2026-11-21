@@ -15,6 +15,7 @@ INTAKE = {
 }
 QUALITY_GUARDED_SKILLS = (
     "ai-collaboration", "decision-guidance", "milestone-handoff", "feedback-filing", "long-run-acceptance",
+    "photo-library", "likeness-rebase", "workflow-generation", "comfyui-rendering",
     "domain-analysis", "implementation-workflows", "data-batch", "visual-review",
 )
 CUSTOMIZATION_PROSE = {

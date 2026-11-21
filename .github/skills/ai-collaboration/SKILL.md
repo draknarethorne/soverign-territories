@@ -31,7 +31,9 @@ interrupt a live run.
 4. Describe artifact transfers with a safe location or tracked path, hash,
    intended recipient and confirmation of receipt. Never assume that a
    referenced file was transferred; do not commit sensitive or private
-   library data without an appropriate reviewed storage decision.
+   library data without an appropriate reviewed storage decision. For an
+   agent or session handoff and its payload, use the
+   [milestone-handoff](../milestone-handoff/SKILL.md) procedure.
 5. After validation, routinely commit and push only completed collaboration
    responses and directly related protocol/skill changes, as the user
    authorized for this workflow, unless a current instruction says otherwise.

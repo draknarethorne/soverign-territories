@@ -1,6 +1,6 @@
 ---
 name: milestone-handoff
-description: "Resume, hand off, transfer or close a Sovereign Territories milestone. Use when preparing a session handoff, choosing next work, reconciling task ownership or advancing Queue focus. Preserve run evidence and human gates; do not activate holding backlog."
+description: "Use when preparing or resuming an agent, session, machine or milestone handoff; choosing next work; reconciling task ownership; or advancing Queue focus. Preserve required artifacts, run evidence and human gates without activating holding backlog."
 ---
 
 # Milestone handoff
@@ -32,13 +32,29 @@ description: "Resume, hand off, transfer or close a Sovereign Territories milest
   Distinguish implemented, fixture-tested, installed-verified and human-accepted.
   Put residuals under explicit owners; holding is not completion.
 
+## Package an agent handoff
+
+Follow the [handoff guide](../../../docs/handoffs/README.md) for a unique
+topic folder, compact continuation, and any required private payload.
+Verify the actual current baseline and all required artifact bytes, not just
+historical instructions. Record a recipient, exact hashes, transfer status
+and acknowledgments; a Git-ignored payload is neither synchronized nor
+delivered by committing its handoff. Preserve source evidence and never
+publish private data or invent a transfer channel.
+
+Use [AI collaboration](../ai-collaboration/SKILL.md) for questions and
+responses with another agent; keep answers in their existing discussion.
+A communication-only handoff does not itself transfer plan ownership,
+advance Queue focus, authorize a run or require a new milestone closeout.
+
 ## Leave one concise continuation
 
-Update the spine's closeout and Queue focus together, then regenerate with
-`cmd /c bin\todo.cmd`; never edit generated tasks. Update the existing pinned
-handoff and its index if needed, not another competing dashboard. Preserve
-historical/raw words; follow the [archive guide](../../../docs/guidelines/ARCHIVE-GUIDE.md)
-for any authorized move.
+For a milestone transfer or closeout, update the spine's closeout and Queue
+focus together, then regenerate with `cmd /c bin\todo.cmd`; never edit
+generated tasks. Update the existing pinned recap and its index if needed,
+not another competing dashboard. Preserve historical/raw words; follow the
+[archive guide](../../../docs/guidelines/ARCHIVE-GUIDE.md) for any authorized
+move.
 
 The handoff must state:
 

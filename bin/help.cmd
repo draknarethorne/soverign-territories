@@ -10,6 +10,7 @@ echo    validate.cmd --quick  isolated mutation smoke suite ONLY; all test launc
 echo    validate.cmd --isolated [--quick]  mutation validation on ONE disposable data/tools copy; private recovery journal, live repository read-only
 echo  HERO is a hero name such as Draknara. STAGE is optional: poses, head, scene, hair, motion, armor, clothing, video, or "studio" for every studio stage.
 echo  A set is deployed to its HOME workspace (see workspaces.cmd). The scripts that change files do it for real; the underlying tool previews unless you give it --apply, so add --dry-run as the last argument to preview a script.
+echo  Exception: refresh, refresh-group, refresh-firered and animate still regenerate prompts with --dry-run; only their workflow/deploy steps preview.
 echo.
 echo  THE USUAL LOOP
 echo    refresh.cmd HERO [STAGE]        prompts, workflows and deploy for one hero (to her home workspace^(s^))
