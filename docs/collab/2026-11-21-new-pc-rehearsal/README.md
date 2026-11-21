@@ -23,8 +23,8 @@ reply files.
 
 ## Current state
 
-Reviewed through shared revision `bb08b2f40` plus Harbor's answer at
-2026-11-21 16:04 UTC. Check later Git changes, the worktree and unindexed
+Reviewed through shared revision `ebe0ec684` plus Beacon's acknowledgment
+at 2026-11-21 16:04 UTC. Check later Git changes, the worktree and unindexed
 files before relying on this snapshot.
 
 - Rehearsal status Q1-Q3 are answered; the validation clarification is
@@ -58,5 +58,5 @@ files before relying on this snapshot.
   agrees with. No threshold, new run or library mutation is selected by
   those answers.
 
-Publishing a revision does not prove that Beacon has received or read it.
+Publishing a revision does not prove that Harbor has received or read it.
 These discussions are active and are not archive candidates.
