@@ -28,8 +28,8 @@ Use this checklist before tagging project milestones or major documentation base
 - [ ] `CONTRIBUTING.md` reflects current workflow.
 - [ ] `SECURITY.md` is present and accurate.
 - [ ] `.github/CODEOWNERS` is current.
-- [ ] `docs/QUALITY-GATES.md` is current.
-- [ ] `docs/CHANGE-MANAGEMENT.md` is current.
+- [ ] `docs/guidelines/QUALITY-GATES.md` is current.
+- [ ] `docs/guidelines/CHANGE-MANAGEMENT.md` is current.
 
 ## 5) Repository presentation
 

@@ -709,7 +709,7 @@ def _duplicate_archives(root, rows, run_id):
 
 
 def _retained_duplicate_sources(root, archives):
-    from . import retained_preparation
+    from tools.art.likeness_library import retained_preparation
 
     checksums = {}
     verified = {}

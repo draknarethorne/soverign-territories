@@ -5,6 +5,7 @@ import io
 import json
 import os
 import pathlib
+import runpy
 import subprocess
 import tempfile
 import unittest
@@ -156,6 +157,10 @@ class NormalRebaseTests(unittest.TestCase):
             }, recipe={"id": "test"}, storage_mode="lean",
         )
         return retained_preparation.verify_link(self.root, keeper, photo_id)
+
+    def test_retained_duplicate_sources_in_direct_script_context(self):
+        script = runpy.run_path(str(ROOT / "tools" / "art" / "likeness_library" / "normal_rebase.py"))
+        self.assertEqual(script["_retained_duplicate_sources"](self.root, {}), {})
 
     def test_retained_original_duplicate_respects_distinct_ids_and_provenance(self):
         keeper = self.photo("Angels/Ava/review/ava_image_901.jpg", b"prepared")

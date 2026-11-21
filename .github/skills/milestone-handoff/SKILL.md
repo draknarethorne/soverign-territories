@@ -26,7 +26,7 @@ description: "Resume, hand off, transfer or close a Sovereign Territories milest
 - Respect current scope, roots, live-process freeze and publication permission.
   Read-only analysis does not authorize intake, runtime edits or Production.
 - Reuse existing verified results across acceptance owners. Consult the
-  [quality contract](../../../docs/QUALITY-GATES.md) and
+  [quality contract](../../../docs/guidelines/QUALITY-GATES.md) and
   [launcher catalogue](../../../bin/help.cmd) before inventing commands.
 - Close a task only when its exact output/threshold/shape is verified.
   Distinguish implemented, fixture-tested, installed-verified and human-accepted.
@@ -37,7 +37,7 @@ description: "Resume, hand off, transfer or close a Sovereign Territories milest
 Update the spine's closeout and Queue focus together, then regenerate with
 `cmd /c bin\todo.cmd`; never edit generated tasks. Update the existing pinned
 handoff and its index if needed, not another competing dashboard. Preserve
-historical/raw words; follow the [archive guide](../../../docs/archive-guide.md)
+historical/raw words; follow the [archive guide](../../../docs/guidelines/ARCHIVE-GUIDE.md)
 for any authorized move.
 
 The handoff must state:

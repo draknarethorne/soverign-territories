@@ -18,9 +18,15 @@ class QualitySelectionTests(unittest.TestCase):
         paths = [
             ".github/copilot-instructions.md",
             ".github/agents/AGENT-SELECTION-GUIDE.md",
+            ".github/skills/ai-collaboration/SKILL.md",
+            ".github/skills/decision-guidance/SKILL.md",
             ".github/skills/milestone-handoff/SKILL.md",
             ".github/skills/feedback-filing/SKILL.md",
             ".github/skills/long-run-acceptance/SKILL.md",
+            ".github/skills/domain-analysis/SKILL.md",
+            ".github/skills/implementation-workflows/SKILL.md",
+            ".github/skills/data-batch/SKILL.md",
+            ".github/skills/visual-review/SKILL.md",
         ]
         for path in paths:
             with self.subTest(path=path):
@@ -38,6 +44,7 @@ class QualitySelectionTests(unittest.TestCase):
             ".github/skills/milestone-handoff/hooks.json",
             ".github/skills/unknown/SKILL.md",
             ".github/skills/milestone-handoff/extra.md",
+            ".github/skills/domain-analysis/references/design-review.md",
             ".github/skills/milestone-handoff/../other/SKILL.md",
             ".github/hooks/check.json",
             ".github/workflows/quality.yml",

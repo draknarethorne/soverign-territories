@@ -431,7 +431,7 @@ and actionable coverage. Only then may that specific feedback file be removed.
 When the user requests archival, move that exact note into `feedback/_archive/`
 instead of deleting it; do not overwrite an existing archived copy.
 Choose its topic folder and update the local index and tracked coverage ledger
-in the same change, following the [physical filing model](../archive-guide.md#physical-layout-and-ongoing-filing).
+in the same change, following the [physical filing model](../guidelines/ARCHIVE-GUIDE.md#physical-layout-and-ongoing-filing).
 The same physical-folder plus index rule applies to documentation archives.
 The current intake directory is root `feedback/`, not `docs/feedback/`.
 Re-read it immediately before removal so edits made during the work are not lost.

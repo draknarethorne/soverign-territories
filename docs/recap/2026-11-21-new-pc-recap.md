@@ -9,10 +9,10 @@ active at 08:01 Central on Nov 21; this machine cannot verify its state.
 
 1. Set up Python 3.14.10, the processing virtual environment, Node,
    pre-commit, PSScriptAnalyzer and local face/intake model weights.
-   Earlier full validation passed; setup and documentation edits remain in
-   the local worktree, not automatically in this recap's commit.
+   Earlier full validation passed; at the time of writing, setup and
+   documentation edits were local, not in this recap's original commit.
 2. Developed project-local decision guidance and a bounded on-demand skill/
-   agent simplification. Their worktree changes are not all committed;
+   agent simplification. At the time of writing, those changes were local;
    fresh-session discovery and actual token savings were not measured.
 3. Pulled the other machine's branch changes through commit `4439368f2`,
    preserving local work and reconciling overlapping documentation. The
@@ -21,6 +21,15 @@ active at 08:01 Central on Nov 21; this machine cannot verify its state.
    Drakness workflow JSONs to each of the Drakness and Drakn Sisters
    workspaces. This deployed existing files; it did not regenerate workflows
    or render images.
+5. Before committing, full validation exposed workflow tests inheriting
+   those real root overrides rather than their throwaway paths. Isolated the
+   test module's root environment, added a hostile-override regression, and
+   reran all 80 workflow tests successfully with the machine overrides set.
+   The test fixture workspace names did not exist in the real installs root.
+   The full regression run then found an unchanged baseline test expecting
+   an Angels core threshold of 0.30 while the checked-in policy is 0.38.
+   It also fails in isolation; its test, policy and implementation were not
+   changed here. The other 1,075 library tests passed or were skipped.
 
 ## Clean Sandbox rehearsal
 
@@ -43,8 +52,8 @@ apply exited 1 after **56m10s**, before the publication transaction:
 the direct-script launcher encountered a package-relative import error.
 The failed log and staged publication files were preserved. A narrow local
 import fix reproduced and resolved the error; 89 affected rebase/recap tests
-and routine checks passed. **The code fix remains uncommitted local work**;
-this recap alone does not transfer it to the other machine.
+and routine checks passed. The code fix was uncommitted when this recap was
+written; check the shared revision to confirm whether it has been transferred.
 
 Because the fix changed the implementation binding, new preview
 `simple-newpc-lean-20261121-03` reused the origin-sealed preparation under

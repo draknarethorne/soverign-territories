@@ -28,6 +28,14 @@ SUBPATH = "ComfyUI/user/default/workflows"
 MASTER = {"nodes": [], "id": "master"}
 
 
+def setUpModule():
+    environment = mock.patch.dict(os.environ)
+    environment.start()
+    unittest.addModuleCleanup(environment.stop)
+    for name in cw.CONFIG_ROOT_OVERRIDES:
+        os.environ.pop(name, None)
+
+
 class World:
     """Heroes Alice (set-a: homes A-Home and Alice-Own), Bob (set-b: B-Home), Cleo (set-orphan: no home), Dana (set-planned: Planned workspace, status planned)
     and Eve (set-ghost: Ghost, active but not installed). Series accepts set-a on request, Brand accepts any set, Guest accepts nothing."""
@@ -128,6 +136,22 @@ class World:
 
 
 class StorageRootTests(unittest.TestCase):
+    def test_workflow_fixtures_ignore_machine_root_overrides(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            installs = root / "machine-installs"
+            for name in ("A-Home", "Alice-Own"):
+                (installs / name / SUBPATH).mkdir(parents=True)
+            env = os.environ.copy()
+            env.update({name: str(root / name) for name in cw.CONFIG_ROOT_OVERRIDES})
+            env["SOVEREIGN_TERRITORIES_INSTALLS_ROOT"] = str(installs)
+            result = subprocess.run(
+                [sys.executable, __file__, "RoutingTests.test_default_deploy_goes_to_every_home_only"],
+                env=env, capture_output=True, text=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertEqual(list(installs.rglob("*.json")), [])
+
     def test_storage_output_paths_are_relative_to_configured_root_and_refuse_escape(self):
         with tempfile.TemporaryDirectory() as directory:
             root = pathlib.Path(directory)

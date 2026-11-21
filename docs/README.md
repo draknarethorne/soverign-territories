@@ -16,9 +16,14 @@ For ongoing library work, start with the
 [focused queue](todo.md). The design reading order below is not today's
 operational task order.
 
-For historical material, use the [archive guide](archive-guide.md): it
+For cross-cutting working agreements, use the
+[guidelines index](guidelines/README.md). For historical material, use the
+[archive guide](guidelines/ARCHIVE-GUIDE.md): it
 separates project/design records, art reports, superseded plans, recaps and
 incorporated feedback. Archives are history, not another active queue.
+
+For questions and handoffs between sessions or machines, use the
+[collaboration guide](collab/README.md); messages do not authorize actions.
 
 The [Nov 5 Copilot collaboration review](audits/2026-11-05-copilot-efficiency/README.md)
 records measured session/tool/context overhead, billing limitations and
@@ -54,6 +59,7 @@ it is not another working agreement or permission to change models.
 | How to create art and video | `art/tutorial-art.md`, `art/tutorial-video.md` | Step-by-step for writing and tuning the art and animation JSON, by hand or with an AI assistant. |
 | Original photos | `art/original-photos.md` | Flow chooser, runtime requirements, retained originals/variants, maintained full/head/chest outputs and recovery. Prepared sandbox integration exists; direct legacy originals/incremental production cutover remains gated. |
 | Library/art execution order | [Reset spine](plans/2026-11-05-priority-reset.md#execution-spine) and [planning agreement](plans/README.md#the-pattern) | One active milestone queue; domain contracts/deferred tasks stay holding. Proposals and historical schedules do not authorize mutation or Production. |
+| Assistant decision boundaries | [Decision policy](guidelines/ASSISTANT-DECISION-POLICY.md) and [structured matrix](guidelines/config/assistant-decision-policy.yaml) | Repository-scoped tiered authority for autonomous work; subordinate to the active plan, project instructions, user approvals and canonical domain contracts. |
 | Prime flows | `art/prime-flows.md` | Existing normal-photo Prime tests, Qwen/FireRed differences, input storage and face lock. Frame variants are retired. New manual migration is not yet implemented. |
 | Likeness target contract | [art/likeness-processing-contract.md](art/likeness-processing-contract.md) | One engine; distinct grouping/matching/classification/authorization; protection; source/reset boundaries; approved decisions and unresolved calibration/naming questions. |
 | Likeness reassessment delivery | [Main Q&A/requirements](plans/2026-11-09-likeness-process-reassessment.md) and [numbered phase map](plans/likeness_process/README.md) | Main document preserves decisions/raw sources; phase sheets trace implementation, evidence and missing behavior; reset spine alone owns current execution. Frozen diagnostics are not a completed regrouping rebase. |
@@ -121,9 +127,9 @@ When a game rule changes, follow: design rule → schema → validator/tooling �
 
 ## Governance and audit trail
 
-- [Quality gates](QUALITY-GATES.md)
-- [Change management](CHANGE-MANAGEMENT.md)
-- [Release checklist](RELEASE-CHECKLIST.md)
+- [Quality gates](guidelines/QUALITY-GATES.md)
+- [Change management](guidelines/CHANGE-MANAGEMENT.md)
+- [Release checklist](guidelines/RELEASE-CHECKLIST.md)
 - [Documentation audit, Oct 12, 2026](audits/2026-10-12-docs-audit.md) (conflicts, stale statements, what was fixed)
 - [Art-document reconciliation, Oct 25, 2026](plans/2026-10-12-tooling-debt.md#oct-25-full-art-document-reconciliation) (full-read coverage, current authority and dispositions)
 - [Archive index](_archive/README.md)
@@ -133,7 +139,7 @@ When a game rule changes, follow: design rule → schema → validator/tooling �
 Every archive folder in the repo is named `_archive` (`docs/_archive`, `data/_archive`, `prompts/_archive`, ...).
 It preserves history, not disposable trash; archival alone authorizes no purge.
 For documentation and raw feedback, both physical folders and their indexes
-follow the [archive filing model](archive-guide.md#physical-layout-and-ongoing-filing).
+follow the [archive filing model](guidelines/ARCHIVE-GUIDE.md#physical-layout-and-ongoing-filing).
 Rules:
 
 - Nothing under an `_archive` folder is current, and it is **not** read as documentation or data unless explicitly

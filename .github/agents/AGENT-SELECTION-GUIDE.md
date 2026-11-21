@@ -24,7 +24,7 @@ Their role descriptions do not override scope, approval or safety gates.
 - **Feedback and filing:** preserve chat/raw sources word for word with
   per-request coverage in the primary plan. Verify preservation/coverage and
   reread each source before individual filing. Follow
-  [the archive guide](../../docs/archive-guide.md) for matching physical
+  [the archive guide](../../docs/guidelines/ARCHIVE-GUIDE.md) for matching physical
   groups, indexes and references; archival does not close implementation.
 - **Bounded execution:** one primary milestone, with only the independent
   companion analysis/quality slices selected by the spine. Domain
@@ -38,7 +38,7 @@ Their role descriptions do not override scope, approval or safety gates.
   name. Use Windows paths for tool access and preserve unrelated dirty work.
 - **Validation:** preview supported [launchers](../../bin/help.cmd), run
   the smallest relevant checks and follow
-  [quality gates](../../docs/QUALITY-GATES.md). Distinguish actual test/build/
+  [quality gates](../../docs/guidelines/QUALITY-GATES.md). Distinguish actual test/build/
   browser results from instructions for a human to run later. Keep scratch
   under the repository's verified ignored temporary area.
 - **Publication:** no automatic commit/push for large changes, passing tests

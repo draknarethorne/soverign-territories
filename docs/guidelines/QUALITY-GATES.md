@@ -49,11 +49,12 @@ PowerShell policy in Phase 1:
 - The broader image/launcher regressions remain available through
   `bin\validate.cmd`; `bin\validate.cmd --isolated --quick` is the bounded
   validator smoke suite. Neither is automatically run by commit/push.
-- Known collaboration prose has an exact selection allowlist: Copilot
-  instructions, the shared agent guide and the three repository collaboration
+- Known customization prose has an exact selection allowlist: Copilot
+  instructions, the shared agent guide and the nine repository
   `SKILL.md` entry files. These select quality guards plus routine lint, not
   art regressions or mutations. Skill metadata/link/wiring checks live in
-  `test_quality_gates.py`. Scripts, hooks, extra resources, agent definitions
+  `test_quality_gates.py`, including each skill's local reference links.
+  Scripts, hooks, extra resources, agent definitions
   and unknown infrastructure remain conservative; mixed changes retain
   their own coverage. Editing the selector itself still triggers full
   selection, not its prose exemption.
@@ -98,7 +99,7 @@ on every routine image-schema edit and again on push.
   Even schema/shared/unknown paths and new branches cannot expand routine
   CI into slow regressions. Explicit dispatch selects all regressions and
   exhaustive isolated mutations
-- the shared [selector](../tools/validators/quality_selection.py) prints
+- the shared [selector](../../tools/validators/quality_selection.py) prints
   reasons and exact commands, then reports elapsed time/exit per subprocess.
   Local explicitly requested change selection uses these dependency rules:
   documentation-only changes need no unit/mutation suite. Reference/workflow
@@ -124,7 +125,7 @@ on every routine image-schema edit and again on push.
   that inventory contract. Library test discovery includes reset, audit and
   diagnostics without duplicating them in a separate CI hook pass
 - local validation and newly configured CI coverage are distinct: see the
-  [runtime guide](art/original-photos.md#python-runtime-and-dependencies) for
+  [runtime guide](../art/original-photos.md#python-runtime-and-dependencies) for
   measured versions and local interpreter limitations
 
 The first PR-wide run measured exhaustive mutations at 298-358 seconds on
@@ -153,6 +154,10 @@ environment; the launchers do not install a global Python monkeypatch.
 Generated untracked trees can trigger editor/Git scans, but are not
 automatically tracked or committed. Do not mask misplaced output with a
 blanket root `tmp*` ignore rule.
+
+Workflow fixture tests remove machine root overrides for the test module and
+restore the environment afterward. Tests of overrides set them explicitly, so
+configured real ComfyUI workspaces are not used as throwaway fixtures.
 
 ### Retired: legacy schema workflow
 

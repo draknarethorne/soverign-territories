@@ -51,15 +51,48 @@ pending review; creating a skill does not itself file that source.
   stays protected; an applied install with a failed check uses preserved
   evidence and supported check-only recovery. These are reviewed procedure
   expectations, not executed mutation tests or measured model behavior.
-- No reduction in actual billed credits, model calls or always-on context
-  is claimed. The entry point grows slightly to enable routing. The
-  demonstrated improvement is narrower **test selection** for known prose;
-  actual future skill discovery, quality and accepted-task overhead need
-  a fresh-session trial before shortening existing safeguards.
+- At PR6 closeout, no reduction in actual billed credits, model calls or
+  always-on context was claimed; the entry point had grown slightly to enable
+  routing. The demonstrated improvement then was narrower **test selection**
+  for known prose. The Nov19 refactor below reduces instruction-file bytes,
+  but actual loaded-context, skill-discovery and accepted-task overhead still
+  need a fresh-session trial.
 
 The user can adjust this repository-local rollout after returning. Until
 then, use the procedures for matching work but never let them widen scope,
 turn an unknown into a pass or replace a required human judgment.
+
+## Adopted Nov 19 under RA2o
+
+The user selected a bounded repository-local customization refactor:
+
+- Reduced always-on Copilot instructions to current authority, universal
+  boundaries, launcher/quality requirements and links to matching procedures.
+- Preserved all seven agent identities and their exact frontmatter, including
+  pinned models and tool exposure. Replaced repeated role procedures with
+  short role contracts and links to on-demand workflows.
+- Added four skills with task-specific references for design/balance,
+  implementation (code/Unity/Nakama), card/art data batches and visual review.
+  Existing decision, handoff, feedback-filing and long-run skills remain.
+- Expanded guarded quality selection to eight skill entry files and test
+  coverage of their local references. Agent definitions, reference files,
+  scripts/hooks, mixed and unknown paths remain conservative.
+- Kept execution ownership under RA2o. No broad plan reconciliation, new
+  agent roster, model/tool changes, D4 checker, hooks, runtime changes or
+  publication were selected.
+
+Measured file-size comparison: Copilot instructions fell from 11,863 to
+4,365 bytes (63.2%); the seven agent files from 21,749 to 7,174 bytes
+(67.0%). This is not a token/cost measurement. Focused quality checks pass
+(11 gate, 19 selector, 3 isolation tests), as do routine hygiene/data checks.
+Full change-based validation passes 1,051 regression tests (5 skipped) and
+53/53 isolated mutations.
+
+This changes where procedural text loads; it does not prove that Copilot
+discovers each skill in the current host, reduces accepted-task context/calls,
+or lowers token/credit use. Those claims remain gated on a fresh-session,
+equal-quality trial using the measures above. The broader contradictory/
+outdated-document review and D4 checker remain open.
 
 ## Ranked changes
 
@@ -70,10 +103,10 @@ turn an unknown into a pass or replace a required human judgment.
 | Adopted PR6 | On-demand milestone handoff/transfer skill | Consistent gates, concise resume context and existing-check orchestration | File contracts validated; fresh-session behavior trial remains |
 | Adopted PR6 | On-demand feedback incorporation/filing skill | Fewer repeated preservation instructions and improvised file moves | Exact words/coverage, individual non-overwriting filing; no bulk clearing; future filing behavior still needs observation |
 | Adopted PR6 | On-demand long-run acceptance/recovery skill around rebase-flow | Event-driven monitoring, consistent error diagnosis and final viewer proof | Hash-bound implementation and profile/receipt safety preserved; future invocation behavior still needs observation |
-| Next | Reduce always-on entry-point procedures, keep invariants and links | Smaller recurring context and less duplicated rule interpretation | Medium: controlled fresh-session task tests; retain source/protection/approval rules even when skills do not load |
+| Adopted RA2o | Reduce always-on entry-point procedures and move task workflows to on-demand skills | Avoid loading detailed procedures for unrelated prompts | Medium: controlled fresh-session task tests; retain source/protection/approval rules and do not claim savings before measurement |
 | Next | Separate current handoff from lengthy dated narrative after milestone | Fewer whole-file reads and summary reconstruction | Medium: preserve exact raw sources, links and unresolved task ownership; do not manufacture another current dashboard |
 | Next | Read-only usage-summary launcher | Reusable evidence without half-GB log dumps or repeated analysis | Medium: streaming, schema handling, deduplication, privacy and billing caveats; do not export prompts or aggregate unrelated users |
-| Adopted PR6 | Narrow quality-selector recognition of known customization Markdown | Avoid inappropriate full-regression proposals for prose-only updates | Explicit five-file allowlist with positive/negative tests; workflow YAML/scripts/hooks/agent definitions/unknown infrastructure remain conservative |
+| Adopted PR6/PR7/RA2o | Narrow quality-selector recognition of known customization Markdown | Avoid inappropriate full-regression proposals for prose-only updates | Exact allowlist of the instructions, shared guide and eight skill entry files with positive/negative tests; workflow YAML/scripts/hooks/agent definitions/references/unknown infrastructure remain conservative |
 | Later | Trial role-appropriate model choices with user consent | Potential lower cost per accepted task | Unknown until equal-quality comparison; no model ranking from this heterogeneous session and no silent substitution |
 | Later | Tool exposure and custom-agent catalogue alignment | Potentially less context/selection friction | Test current host/harness behavior first; preserve required debugging/visual tools and future-role scopes |
 

@@ -2,7 +2,29 @@
 
 **Status:** active (execution spine: FAST likeness, LEAN/FULL acceptance, then character art)
 
-**Queue focus:** RA2d, RA2j, T29, T30, RA2o
+**Queue focus:** RA2j, T29, T30, RA2d, RA2o
+
+**Nov21 new-PC SIMPLE:** cleaned raw inputs matched all 3,490 run15 paths and
+hashes. Fresh LEAN preview `simple-newpc-lean-20261120-02` passed in
+1h47m47s. Its apply failed before publication on a direct-script import;
+the failure and staging are preserved. After a focused fix and 89 passing
+rebase/recap tests, `simple-newpc-lean-20261121-03` reused the sealed
+preparation and reproduced the preview decisions. Sandbox apply passed in
+1h15m29s, check in 30.9s and repeat in 29.6s. The applied recap conserves
+3,490 destinations, including 184 recoverable distinct-ID duplicates and one
+zero-face junk disposition, with no cast Gallery departures or stale
+snapshot diagnostics. An isolated local browser loaded representative
+Gallery, Overview, Review and recap thumbnails, a current native, intake
+detail and native-history page. Human placement/crop acceptance remains open.
+Production, frozen Source and copied run15 remain preserved.
+
+T29/T30 retain tuning: three separate 24-image installed-input sidecar trials
+passed checks with matching compared image hashes and outcomes: 1 worker
+43.7s, 2 workers 28.7s, 3 workers 24.5s. This small, sequential sample is
+not a full-rebase benchmark; SIMPLE remains explicitly serial. Compare
+run15's 4h39m preview and 4h33m36s apply only as historical context:
+code revision, cache state and machines differ. Logs, timings and trial
+outputs remain under the Sandbox baseline evidence and preparation reports.
 
 **Nov19 follow-up:** RA2j owns the
 [core and duplicate-readiness slice](2026-11-16-simple-review-and-tuning.md#nov-19-post-run13-tuning).
@@ -20,14 +42,14 @@ remains unchanged. The prior preview is historical. The opt-in, hash-bound
 preflight is available before daily intake or SIMPLE without automatic
 deletion.
 
-**Nov20 installed closeout:** LEAN `simple-rebase-20261119-15` is installed
+**Nov20 other-machine closeout:** LEAN `simple-rebase-20261119-15` is installed
 on cleaned Sandbox Working without reset. Its
 [run15 evidence](../recap/2026-11-18-simple-foundation.md#nov-20-installed-cleaned-baseline-run15)
 records preview/apply/check/repeat exit 0, all 180 edited inputs verified,
 3,490 conserved IDs, and browser-checked installed viewers. Cast gained 97
 Gallery and 285 Review placements with no existing cast Gallery departures.
-No writer remains. The next gate is RA2d human review of installed placement
-and crop quality, not another run on this PC. For T29/T30, the
+No writer remained at that checkpoint. The next gate for run15 is RA2d human
+review of installed placement and crop quality on the other machine. For T29/T30, the
 [new-PC handoff](../recap/2026-11-11-1141-recap.md#new-pc-simple-rehearsal)
 gates a fresh LEAN rehearsal on verified, cleaned raw inputs; run15 timing
 is historical, not a paired benchmark. Keep the Queue focus unchanged for
@@ -48,10 +70,48 @@ debugging chain, 53/53 mutations, 1,048 library/290 remaining tests and the
 report ownership, repaired only by separate applied outputs and restoration
 of three exact sealed preview files; native/receipt/journal bindings remain
 unchanged. Grouped commits/push follow final hygiene and documentation.
-Next is RA2d human identity/crop review and the explicitly deferred Various/
-core diagnosis, not another automatic run. Broader RA2j named-folder and
-T29/T30 performance obligations remain owned below; this does not activate
+This is reference evidence for the fresh comparison below, not another
+human-review-first continuation of run13. Broader RA2j named-folder and
+T29/T30 performance obligations remain owned; this does not activate
 historical experiments or complete their acceptance.
+
+**Nov19 new-machine comparison direction:** the user selects this machine for
+a fresh, performance-and-results comparison against a clean run on the old
+machine before resuming the more complex assignment-rule work. The present
+focus is automated processing and daily incoming-image runs. Manual Sandbox
+assignments, rejections or approvals are test actions only, not decisions
+selected for Production now; the user may explicitly choose to promote
+Sandbox work later. No old Sandbox memberships, cache or prepared outputs are
+inputs to this fresh run. Do not delete old evidence as a consequence of this
+test selection. Production remains read-only. Match the old run's code
+revision, Production snapshot, policy/configuration, profile and model
+versions before comparing results; record machine/runtime differences and do
+not claim equivalence if those bindings differ. Resume order is RA2j clean
+Production-derived Source/Working and full-run/daily-ingest evidence, then
+T29/T30 paired performance/output comparison, then RA2d's more complex rule
+evaluation. This supersedes the earlier human-review-first resume direction,
+not RA2d's later ownership or any eventual human acceptance gate. The
+synced branch includes same-ID collision handling and the separately gated
+Various cleanup. The earlier preview stopped on two byte-identical
+`Various/gallery` files sharing `photo:image_7513772466838834360` and a tied
+timestamp. Do not treat the other machine's cleanup or run15 as verified on
+this machine. More upstream changes are pending; hold the local
+comparison and preserve sources until the final revision and baseline agree.
+
+Coverage — existing RA2j owns the guarded clean baseline and run; T29/T30 own
+paired performance and output evidence; RA2d remains deferred until that
+comparison is complete. No parallel plan or Production write is authorized.
+The exact user direction is:
+
+```text
+There is nothing I am doing in the Sandbox that I expect to keep and bring back to production at this point.  So, I'm not doing any manual assignments, rejections or approving anything there - other than just testing.  Mostly I am revisiting all the rules and gates for automatic assignments and such.  So, my plan is to use this machine to first test the performance and results to compare to a clean run on my old machine.  Then we'll pickup on the more complex pieces.
+```
+
+Clarification and future-promotion boundary:
+
+```text
+It is entirely possible that some point down the road after we continue to do more work, I would want to snap the Sandbox work back into Production.  But right now, my focus is just on getting all the automated processing working right in the Sandbox and not trying to manually adjust things that I want to bring back to Production.  If I do manual work, it's just to test how it works and the net results of the additional daily runs for bringing in new images.
+```
 
 ## Execution spine
 
@@ -97,17 +157,14 @@ spine tasks remain deferred, not completed or deleted.
 
 ### Nov 9 likeness reassessment increments
 
-**Nov18 next-step selection:** RA2d's incoming configuration comparison now
-includes the [full hierarchy entry review](2026-11-16-simple-review-and-tuning.md#nov-18-full-hierarchy-entry-review-before-final-tuning)
-before final tuning; earlier cast-only/defer-Models sequencing is superseded.
-Do not make a new baseline, performance
-project or Various-core investigation its prerequisite. The
-[Various retention and sequencing contract](2026-11-16-simple-review-and-tuning.md#nov-18-sequencing-various-retention-analysis-after-the-next-run)
-requires before/after tracking of the anonymous Various cohort in next-run
-acceptance, then deferred diagnosis of those still unassigned. The user's
-suspected missed matches/processing issue is unresolved, not dismissed by
-an expected absent pool core or accepted as a proved defect. Numerical/
-protection/apply gates remain unchanged; named Various intake stays separate.
+**Superseded Nov18 next-step selection:** RA2d's incoming configuration
+comparison and full hierarchy entry review remain owned by RA2d but are
+deferred until the Nov19 clean-run and performance/results comparison above.
+The [full hierarchy entry review](2026-11-16-simple-review-and-tuning.md#nov-18-full-hierarchy-entry-review-before-final-tuning)
+and [Various retention/sequencing contract](2026-11-16-simple-review-and-tuning.md#nov-18-sequencing-various-retention-analysis-after-the-next-run)
+remain the later rule-review contracts, not prerequisites for this machine
+comparison. Numerical/protection/apply gates remain unchanged; named Various
+intake stays separate.
 
 **Nov 11 evening GUI continuation:** no further Q&A is required before
 implementing a fictional narrative relationship editor. The user selects
@@ -855,9 +912,29 @@ unresolved human identity acceptance remains open.
   Guarded strict Source/reset and stable whole-library composition remain
   implementation gates; no reset has occurred. Daily incoming-ID/version
   requirements remain tracked here separately, not silently canceled.
+  **Nov19 test-only clarification:** no manual Sandbox assignment, rejection
+  or approval is selected for Production now; manual actions are testing only.
+  Future explicit promotion of Sandbox work remains possible. No old Working
+  memberships, cache or prepared outputs are inputs to this fresh run, and
+  their exclusion does not authorize deleting old evidence. No user identity
+  decisions are an acceptance prerequisite for the automated comparison.
+  Capture the old-machine run's exact commit, Production snapshot,
+  policy/configuration, profile and model versions and match them here before
+  claiming comparable results; report machine-specific runtime differences
+  separately.
+  **Entry blocker on this branch:** `library-check` currently stops because
+  two byte-identical `Various/gallery` sources for
+  `photo:image_7513772466838834360` have tied timestamps. The duplicate-
+  version resolution change from the other machine is not present here; bring
+  it over and test it before a clean-run preview. Do not remove either active
+  source to bypass the guard.
   Paused worker withdrew only unfinished manifest-ID changes; retained
   incoming-selector extraction passes40combined manifest/duplicate tests.
-  **Overnight execution now authorized:** the user delegates clear documented
+  **Historical Nov19 supersession:** the earlier permission to discard all
+  old Working history is not current cleanup authorization. Keep old evidence
+  intact unless the user later selects an exact disposition; it remains
+  excluded from this fresh run's inputs.
+  **Overnight execution now authorized (historical):** the user delegates clear documented
   decisions and permits discarding all old Working history, including a
   complete fresh intake/rebase through the morning. The
   [exact scope and viewer acceptance](2026-11-12-member-refinement-scope-test.md#overnight-clean-simple-execution-and-viewer-acceptance)
@@ -1505,6 +1582,38 @@ always-on instruction rewrite.
   token/cost improvement remain unmeasured, explicitly under D23. Detailed
   decisions/limits live in the
   [adoption record](../audits/2026-11-05-copilot-efficiency/proposal.md#adopted-nov-5-under-pr6).
+
+- [x] **P2 ai** PR7 Establish repository-scoped tiered decision guidance for
+  autonomous architecture, coding, documentation and operational work while
+  executing approved plans. Use an on-demand skill, canonical Markdown policy
+  and structured YAML matrix; link the skill from project instructions and
+  the policy from the documentation map. Preserve existing approval,
+  Production, publication, data-retention, planning and quality gates; no
+  hooks, model/tool changes, runtime mutations or new authority.
+  **User-selected default:** proceed on bounded reversible work; record minor
+  scope-preserving assumptions; ask on material choices; never infer
+  destructive, Production, shared-workspace, publication, commit/push or
+  external permission. Add the new skill to the exact quality-selection
+  allowlist and retain conservative fallbacks for its resources and unknown
+  paths.
+  **Exit:** valid skill metadata and local links; policy/YAML consistency;
+  passing focused quality tests and routine checks; documented boundary and
+  escalation behavior. Keep the existing execution spine as the only plan.
+  **Result:** added the repository-local
+  [decision-guidance skill](../../.github/skills/decision-guidance/SKILL.md),
+  [human policy](../guidelines/ASSISTANT-DECISION-POLICY.md) and
+  [structured matrix](../guidelines/config/assistant-decision-policy.yaml); wired discovery from
+  project instructions and the documentation map. Four-skill quality
+  selection and metadata/link tests pass (10 quality-gate, 19 selector, 3
+  isolation tests); routine YAML, Markdown, PowerShell and data checks pass.
+  Change-based full validation passes: 1,051 regression tests (5 skipped)
+  and 53/53 isolated mutations. No hooks, model/tool changes, runtime
+  mutations or new authority.
+  Source:
+
+  ```text
+  I'm also thinking while we're waiting we need a skill and supporting .md and .yaml files to support the autopilot/autonomous decision making you can do while executing the plans.  I want to get that setup so you can have proper guidance on how I want decisions to be made when we're doing work.  It's not just about the image and likeness processing, it's a larger set of architectural, coding, documentation and other guidlines we need to capture so that if you run into an issue while working on large implementations you can make decisions that align to my goals, standards, criteria and ensure proper times when conservate vs. more aggressive decisions are made.
+  ```
 
 ### M1 execution and transfer ledger
 

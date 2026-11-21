@@ -13,11 +13,14 @@ INTAKE = {
     "test_image_preparation", "test_overlays", "test_intake_sequence",
     "test_eraser_benchmark", "test_overlay_reference_review",
 }
-COLLABORATION_SKILLS = ("milestone-handoff", "feedback-filing", "long-run-acceptance")
+QUALITY_GUARDED_SKILLS = (
+    "ai-collaboration", "decision-guidance", "milestone-handoff", "feedback-filing", "long-run-acceptance",
+    "domain-analysis", "implementation-workflows", "data-batch", "visual-review",
+)
 CUSTOMIZATION_PROSE = {
     ".github/copilot-instructions.md",
     ".github/agents/AGENT-SELECTION-GUIDE.md",
-    *(f".github/skills/{name}/SKILL.md" for name in COLLABORATION_SKILLS),
+    *(f".github/skills/{name}/SKILL.md" for name in QUALITY_GUARDED_SKILLS),
 }
 
 

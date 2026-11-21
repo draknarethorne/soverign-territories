@@ -1811,6 +1811,67 @@ readiness evidence and resume state are stable. Keep review/tuning outcomes
 attached as they arrive. Full housekeeping is a later bounded pass, not an
 excuse to restart old experiments or block failure preservation.
 
+**Nov19 guideline-structure selection:** Copilot skills remain in
+`.github/skills/` for host discovery. Their canonical supporting guidance and
+cross-cutting agreements belong under `docs/guidelines/`; structured YAML
+belongs in `docs/guidelines/config/`. Move the assistant decision policy,
+archive guide, change-management guide, quality gates and release checklist
+there, using uppercase kebab-case Markdown names and lowercase kebab-case
+YAML. Keep the documentation map, status/todo, game bible, planning agreement,
+domain contracts and agent/skill entry points in their existing homes. This
+is a navigation/layout change, not a rewrite of the governed rules. Preserve
+source content and update all incoming links and generated readers.
+
+User source:
+
+```text
+I want the skills in the right place for Copilot, but the supporting docs can be in docs/guidelines and move existing files that align to that there and the .yaml could go to docs/guidelines/config so they aren't directly in the .md files directory (if that makes sense), custom_layout=Answered in previous response.  But validate this and let me know the consequences.
+```
+
+**Nov19 bounded layout result:** moved the archive, change-management,
+quality-gates and release-checklist guides into `docs/guidelines/`, with
+uppercase kebab-case Markdown names. The assistant policy is there too; its
+lowercase YAML matrix is in `docs/guidelines/config/`. Copilot skills remain
+in `.github/skills/`. Updated the documentation map, project entry point,
+agent/skill links, contributor/root README links, plan/recap references and
+the todo generator; regenerated `docs/todo.md`. The 13 todo-report tests,
+data-scope tests and routine checks pass. PR7's preceding selector-change
+validation passed with 1,051 regression tests (5 skipped) and 53/53 isolated
+mutations.
+Of 883 local links scanned across changed Markdown, one target is an
+unrelated pre-existing missing ignored report in the pinned recap; all
+reorganization targets resolve. This closes only the selected layout slice,
+not RA2o's broader contradictory/outdated-plan review.
+
+**Nov19 scoped Copilot-customization follow-up (RA2o):** selected to reduce
+always-on and per-specialist context without dropping procedures, role
+boundaries or frontmatter/model/tool settings. Retain all seven agent roles;
+move their task-specific methods into four on-demand skills with narrowly
+selected references, while keeping only universal authority and safety rules
+in project instructions. Extend quality guards to those skill entries and
+their local references. Limit plan changes to this RA2o record and the
+efficiency audit's adoption record. Do not include agent roster/model/tool
+changes, D4's checker, broad documentation reconciliation or a token-savings
+claim. Fresh-session, equal-quality behavior and actual context/call savings
+remain a separate acceptance trial.
+
+**Nov19 result and validation:** retained seven roles and frontmatters; added
+four on-demand skill families and extended guarded metadata/reference/routing
+tests. Copilot instructions are 4,365 bytes versus 11,863 before this
+refactor (63.2% fewer bytes); the seven agent files total 7,174 versus 21,749
+(67.0% fewer). These are file-size comparisons, not measured prompt-token or
+cost savings. Final focused quality validation passed (11 gate, 19 selector,
+3 isolation tests); routine hygiene/data checks passed. Full change-based
+validation passed 1,051 regression tests (5 skipped) and 53/53 isolated
+mutations. Fresh-session discovery/behavior and accepted-task cost remain
+unverified.
+
+User source:
+
+```text
+Once you move and get the existing things setup.  We can then address adding new skills, updating copilot instructions, agents and simplifying how we work as per some of my analysis.  That will help with my large token usage ... which might mean simplifying my agent .md files and leveraing skills for many more things and not sending all that documentation in on a prompt where it's not needing that skill for the prompt and can load them on-demand when necessary.  That's the huge improvement I need.   So - simplifying the C:\Sovereign-Territories\.github\agents and leveraging more skills as well as simplifying the copilot instructions but not losing anything.  Hopefully this is just focused on skills and selective documentation and doesn't require a huge update across existing plans - if some of that happens, I want to know the blast-radius of those updates.
+```
+
 Classify each affected current plan/task as implemented-and-verified,
 implemented-but-unverified, selected-pending, holding/experimental, or
 superseded with an explicit destination. Preserve existing task IDs, raw
@@ -1819,7 +1880,7 @@ execution spine; do not copy all historical experiments into this contract.
 
 For each proposed archive, first dispose of every residual request and
 record its owner. Only wholly completed/superseded plans can move, using
-`git mv` and the [archive guide](../archive-guide.md), with incoming links,
+`git mv` and the [archive guide](../guidelines/ARCHIVE-GUIDE.md), with incoming links,
 physical indexes and generated readers repaired together. Do not bulk-delete
 plans, feedback, legacy tmp notes, live photo sources or run evidence.
 Current navigation/status repairs are not completion of this wider cleanup.

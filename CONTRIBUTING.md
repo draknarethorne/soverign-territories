@@ -35,7 +35,7 @@ PowerShell contributors also need PSScriptAnalyzer:
 
 ## Quality contract
 
-Quality policy is documented in `docs/QUALITY-GATES.md`.
+Quality policy is documented in `docs/guidelines/QUALITY-GATES.md`.
 
 Run routine local checks (no unit or mutation suites):
 
@@ -68,7 +68,7 @@ Replace `HEAD` with the branch-point SHA to include committed branch changes.
 Test launchers route inherited temporary files under ignored repository `tmp`;
 prefer them to bare test commands. `--quick` is now just isolated mutation
 smoke coverage, not an implicit full regression run. See the
-[quality contract](docs/QUALITY-GATES.md) for dependency/fallback rules.
+[quality contract](docs/guidelines/QUALITY-GATES.md) for dependency/fallback rules.
 
 CI runs on main pushes and main-targeting PRs, not duplicate feature pushes.
 Dispatch requests full deep coverage; enable its `compatibility` option for

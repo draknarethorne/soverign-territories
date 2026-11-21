@@ -1,0 +1,92 @@
+version: 1
+scope: sovereign-territories
+default_authority: tiered
+
+precedence:
+  - current user request and explicit approvals
+  - active execution spine scope, gates, and stop conditions
+  - project instructions and canonical domain contracts
+  - this policy and its on-demand skill
+
+tiers:
+  proceed:
+    impact: low
+    reversible: true
+    requirements:
+      - explicitly in scope
+      - consistent with established patterns and contracts
+      - acceptance can be checked with available evidence
+    examples:
+      - focused bug fix with a regression test
+      - documentation correction with verified links
+      - supported preview or read-only diagnosis
+  proceed_with_recorded_assumption:
+    impact: low_to_moderate
+    reversible: true
+    requirements:
+      - unresolved detail does not change policy, behavior, protected data, external state, or scope
+      - narrowest option preserves alternatives
+      - assumption is recorded and result is verified
+  ask_before_acting:
+    impact: material
+    triggers:
+      - materially different architecture or public/runtime behavior
+      - changed product, data, quality, or operational policy
+      - scope expansion or competing priority
+      - human identity, visual, or other reserved acceptance
+      - multiple reasonable choices with meaningful trade-offs
+  never_infer_permission:
+    actions:
+      - destructive or irreversible changes
+      - Production or shared-workspace writes
+      - publication, commit, or push
+      - external side effects
+      - source pruning or promotion of Sandbox results
+    rule: require explicit authorization for the exact action and scope
+
+decision_dimensions:
+  - scope_fit
+  - impact
+  - blast_radius
+  - reversibility
+  - data_and_recovery_risk
+  - external_effects
+  - evidence_confidence
+  - human_acceptance_required
+
+defaults:
+  uncertainty: preserve_state_and_options
+  accepted_scope: implement_the_smallest_complete_solution
+  failed_check: report_and_escalate_without_silent_fallback
+  unselected_plan_work: remain_holding
+  publication: separate_from_implementation_and_testing
+
+domains:
+  architecture:
+    prefer: existing_boundaries_and_small_cohesive_changes
+    ask_before: new_subsystems_dependencies_persistent_formats_or_migrations
+  code:
+    require: focused_tests_error_visibility_and_behavior_preservation
+    avoid: unrelated_refactors_suppressed_errors_and_unnecessary_abstractions
+  documentation:
+    require: one_canonical_home_links_and_collision_reconciliation
+    preserve: exact_user_sources_and_explicit_task_ownership
+    generated_files: use_the_supported_generator
+  data_and_operations:
+    require: preview_or_read_only_check_before_mutation
+    preserve: originals_receipts_backups_and_recovery_evidence
+    respect: owning_contracts_for_production_sandbox_workspaces_and_live_processes
+  verification:
+    require: supported_launchers_and_evidence_matching_the_claim
+    distinguish:
+      - implemented
+      - fixture_tested
+      - installed_verified
+      - human_accepted
+
+escalate_when:
+  - authority_conflicts
+  - material_decision_is_unresolved
+  - state_differs_from_expected
+  - acceptance_fails
+  - safe_recovery_is_not_supported

@@ -9,7 +9,7 @@ description: "Monitor, report progress on, resume and verify authorized long-run
 
 Read the current spine/closeout through the [planning agreement](../../../docs/plans/README.md),
 then the affected [likeness runbook](../../../docs/art/likeness.md) and
-[quality gates](../../../docs/QUALITY-GATES.md).
+[quality gates](../../../docs/guidelines/QUALITY-GATES.md).
 
 Record one objective/task, explicit roots/run/profile, implementation/config/
 input IDs, allowed fixes/restarts and commit/push authority. Keep human

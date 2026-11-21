@@ -355,7 +355,7 @@ Ordinary tracked Git status took 0.18 seconds during that wait.
 Decision: retain routine hygiene/data checks, move unit and mutation hooks
 to explicit `manual` execution, and keep both stages in CI. No success cache,
 silent skip-on-error, weakening of data validity, or permanent bypass.
-The [quality contract](../QUALITY-GATES.md) owns commands and exact policy.
+The [quality contract](../guidelines/QUALITY-GATES.md) owns commands and exact policy.
 Targeted development testing remains required. Main/PR CI coverage does not
 mean a feature-branch push automatically ran CI.
 
@@ -440,7 +440,7 @@ Production acceptance is claimed by CI wiring.
 D21 supersedes D19's unconditional full branch-CI execution, not its complete
 offline inventory or D18's fast routine commit checks. Local changed-work
 selection and CI use the same selector; the
-[quality contract](../QUALITY-GATES.md) owns commands and routing policy.
+[quality contract](../guidelines/QUALITY-GATES.md) owns commands and routing policy.
 Full acceptance remains explicit, on main/manual CI, and for schema,
 validator or unknown infrastructure dependencies. Shared art/library changes
 include workflow consumers because report assets and temporary storage are
@@ -678,7 +678,7 @@ records are physically grouped to match their indexes: project topics, art
 library operations, completed versus superseded plan topics, and recap months.
 Historical prose/fenced source is preserved; references are rebased, and
 the todo generator now discovers nested plan archives. The canonical
-[ongoing filing model](../archive-guide.md#physical-layout-and-ongoing-filing)
+[ongoing filing model](../guidelines/ARCHIVE-GUIDE.md#physical-layout-and-ongoing-filing)
 requires folder, index, references and generated consumers to change together.
 This closes the requested organization correction, not D4's general automated
 day-close audit or D13's broader content review. Active plans remain in place.

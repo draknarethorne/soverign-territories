@@ -36,7 +36,7 @@ description: "Incorporate chat or raw feedback into Sovereign Territories plans 
 
 ## File individually only when ready
 
-Follow the [physical filing rules](../../../docs/archive-guide.md).
+Follow the [physical filing rules](../../../docs/guidelines/ARCHIVE-GUIDE.md).
 Unresolved, uncovered or explicitly review-pending notes stay in place.
 Neither feedback nor tmp must be empty.
 
@@ -50,7 +50,7 @@ report the actual state; never delete a competing copy to force success.
 Tracked historical moves use `git mv` and preserve prose/raw blocks. Update
 physical folders, archive/index/source ledger, incoming links and affected
 generated readers together. Regenerate `cmd /c bin\todo.cmd` after plan
-changes; follow the [quality contract](../../../docs/QUALITY-GATES.md).
+changes; follow the [quality contract](../../../docs/guidelines/QUALITY-GATES.md).
 
 Report incorporated/filed/retained separately, exact task owners, checks
 performed and remaining questions. Filing closes source intake only, not

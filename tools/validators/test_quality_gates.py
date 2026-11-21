@@ -4,7 +4,7 @@ import pathlib
 import re
 import unittest
 
-from tools.validators.quality_selection import COLLABORATION_SKILLS
+from tools.validators.quality_selection import QUALITY_GUARDED_SKILLS
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DISCOVERED_TEST_DIRS = {
@@ -59,22 +59,48 @@ def uncovered_tests(root, launcher):
 class QualityGateTests(unittest.TestCase):
     def test_collaboration_skills_have_valid_metadata_and_resolving_local_links(self):
         entry = (ROOT / ".github" / "copilot-instructions.md").read_text(encoding="utf-8")
-        for name in COLLABORATION_SKILLS:
+        for name in QUALITY_GUARDED_SKILLS:
             with self.subTest(skill=name):
                 path = ROOT / ".github" / "skills" / name / "SKILL.md"
                 text = path.read_text(encoding="utf-8")
-                actual, description, body = skill_metadata(text)
+                actual, description, _body = skill_metadata(text)
                 self.assertEqual(actual, name)
                 self.assertIn("Use ", description)
                 self.assertLess(len(text.encode("utf-8")), 12000)
                 self.assertIn(f"skills/{name}/SKILL.md", entry)
-                links = re.findall(r"\[[^\]\n]+\]\(([^)\n]+)\)", body)
-                self.assertTrue(links)
-                for link in links:
-                    self.assertNotIn("://", link, "Skills must not depend on external procedures")
-                    target = (path.parent / link).resolve()
-                    target.relative_to(ROOT)
-                    self.assertTrue(target.is_file(), link)
+                sources = [path, *sorted((path.parent / "references").glob("*.md"))]
+                for source in sources:
+                    source_text = source.read_text(encoding="utf-8")
+                    links = re.findall(r"\[[^\]\n]+\]\(([^)\n]+)\)", source_text)
+                    if source == path:
+                        self.assertTrue(links)
+                    for link in links:
+                        self.assertNotIn("://", link, "Skills must not depend on external procedures")
+                        target = (source.parent / link).resolve()
+                        target.relative_to(ROOT)
+                        self.assertTrue(target.exists(), link)
+
+    def test_specialist_agents_route_to_their_on_demand_workflows(self):
+        routes = {
+            "domain-analysis": (
+                "Sovereign-Beast-Mode.agent.md",
+                "Sovereign-Balance-Master.agent.md",
+            ),
+            "implementation-workflows": (
+                "Sovereign-Code-Mode.agent.md",
+                "Sovereign-Unity-Builder.agent.md",
+                "Sovereign-Network-Ninja.agent.md",
+            ),
+            "data-batch": ("Sovereign-Data-Factory.agent.md",),
+            "visual-review": ("Sovereign-Visual-Analyst.agent.md",),
+        }
+        for skill, agents in routes.items():
+            for agent in agents:
+                with self.subTest(skill=skill, agent=agent):
+                    body = (
+                        ROOT / ".github" / "agents" / agent
+                    ).read_text(encoding="utf-8")
+                    self.assertIn(f"../skills/{skill}/SKILL.md", body)
 
     def test_skill_contract_rejects_malformed_or_executable_frontmatter(self):
         good = '---\nname: example\ndescription: "Use for handoff."\n---\n# Procedure\n'

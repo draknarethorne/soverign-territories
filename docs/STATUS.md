@@ -1,10 +1,17 @@
 # Project Status
 
-**Updated:** 2026-11-20 · This is the one working document: where the project is, what has
+**Updated:** 2026-11-21 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
 ## Current checkpoint
+
+**Nov21 new-PC SIMPLE:** the cleaned raw inputs matched all 3,490 run15 paths
+and hashes. Fresh LEAN preview completed in 1h47m47s; after an apply-only
+direct-script import fix and a new preview using sealed preparation, Sandbox
+apply/check/repeat passed. The [execution spine](plans/2026-11-05-priority-reset.md)
+records timing, the preserved failed apply, tuning samples, browser evidence and
+remaining human gates. Production, frozen Source and copied run15 were preserved.
 
 Post-run13: the [next-preview contract](plans/2026-11-16-simple-review-and-tuning.md#nov-19-post-run13-tuning)
 stages stricter starting cores and resolves duplicate IDs before matching.
@@ -22,7 +29,7 @@ The frozen Source was not changed. The run14 preview is now historical.
 Both Various Galleries contained 1,069 photos immediately after cleanup
 with zero candidates under the shared exact-only preflight.
 
-**Nov20 installed SIMPLE result.** LEAN `simple-rebase-20261119-15` passed
+**Nov20 other-machine installed SIMPLE result.** LEAN `simple-rebase-20261119-15` passed
 apply/check/repeat on cleaned Sandbox Working, with all 180 edited inputs
 verified and no reset or Production rebase. The
 [installed evidence](recap/2026-11-18-simple-foundation.md#nov-20-installed-cleaned-baseline-run15)
@@ -40,8 +47,9 @@ run15 remains unchanged. Lower-core
 retirement and provisional cast-Review priority are separately visible
 policy questions, not resolved by moving Review back into the candidate pool.
 The [new-PC handoff](recap/2026-11-11-1141-recap.md#new-pc-simple-rehearsal)
-recommends a fresh LEAN preview on verified raw inputs, while preserving
-run15 here. No new run has started.
+recommends a fresh LEAN preview on verified raw inputs on the new PC, while
+preserving run15 on the other machine. The Nov21 checkpoint above records the
+subsequent new-PC execution.
 
 **Nov19 installed SIMPLE result.** LEAN run13 applied successfully on existing
 Sandbox Working without reset or repeated preparation. The
@@ -72,6 +80,30 @@ as coupled runtime/policy/tooling, the preserved workspace setting and
 documentation. Record remote-head verification with run evidence; do not
 infer remote CI or human acceptance from local success.
 Dated fixture/no-run statements below are historical, not another resume.
+
+**Nov19 collaboration decision policy:** the user selects repository-scoped,
+tiered autonomy: proceed on bounded reversible work, record minor
+scope-preserving assumptions, ask on material choices, and never infer
+permission for destructive, Production, shared-workspace, publication,
+commit/push or external actions. The
+[decision policy](guidelines/ASSISTANT-DECISION-POLICY.md) and
+[structured matrix](guidelines/config/assistant-decision-policy.yaml) are discoverable through the
+project skill and entry point. This adds guidance, not authority or an
+additional execution plan; PR7 records its scope and checks in the spine.
+
+**Nov19 clarified next test:** this machine is to run a fresh, clean
+Production-derived Sandbox baseline and daily incoming-image processing, then
+compare outputs and performance with a clean old-machine run before returning
+to the more complex assignment rules. Sandbox assignments/rejections/
+approvals, if used, are test actions only; no manual result is selected for
+Production now, though future explicit promotion remains possible. Old
+Working memberships/cache/prepared outputs are not inputs to this fresh run,
+but their exclusion does not authorize deleting old evidence. Production stays
+read-only. Compare only after matching commit, Production snapshot,
+policy/configuration, profile and model versions; report runtime differences.
+The other-machine duplicate-version fix must arrive and pass tests first:
+the current read-only Production check stops at two byte-identical Various
+sources with a tied timestamp. See the [execution spine](plans/2026-11-05-priority-reset.md#nov19-new-machine-comparison-direction).
 
 **Earlier Nov18 fixture checkpoint (superseded by installed run13).** The
 [implementation closeout](plans/2026-11-16-simple-review-and-tuning.md#implemented-foundation-fixture-proof-not-a-library-run)
@@ -2226,7 +2258,7 @@ under ignored repository `tmp`; the retained fixture's explicit root scratch
 bug is fixed. No Git history rewrite, merge, cache/session deletion or
 Production operation is part of this fix.
 See the
-[quality contract](QUALITY-GATES.md) and tooling D18.
+[quality contract](guidelines/QUALITY-GATES.md) and tooling D18.
 
 **Oct 29, overlay-first checkpoint (v22):** the prior preparation recipe
 checked overlay/border proposals before person segmentation. A paired 128-image worker profile
@@ -2298,7 +2330,7 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 | Sister variants | Every sister has a **Signature Shiny** (`<slug>-scene-signature-shiny`: the Signature card with a prismatic `overrides.palette` and a glitter-sheen effects line), a **Battle** scene (war gear piece plus homeland battlefield), a **Bond** scene (first meeting with her Elder Dragon) and a **Dawn Rising** video card. First new culture pack: `themes/danish` (Snow Queen inspired) with `draknira-scene-danish`. Prompts and workflows built; none rendered yet. |
 | Vision roster | 30 cards (10 Drakn sisters, 10 bound heroes, 10 Elder Dragons) plus 10 pets, all with art identities; prompts generated. |
 | Gameplay cards | `data/cards/sovereign-dawn/`: 219 cards, ids `SD-001`..`SD-219`. `SD-041`+ is legacy content (Fire/Water/Earth + Neutral). |
-| Validation | Routine commits check schemas/card-art links, not mutations or unit suites; push does not repeat hooks. Local/CI dependency-selected suites and explicit isolated full validation follow [QUALITY-GATES.md](QUALITY-GATES.md). Mutations operate on a disposable copy, not live data. |
+| Validation | Routine commits check schemas/card-art links, not mutations or unit suites; push does not repeat hooks. Local/CI dependency-selected suites and explicit isolated full validation follow [QUALITY-GATES.md](guidelines/QUALITY-GATES.md). Mutations operate on a disposable copy, not live data. |
 | Starter decks, packs, manifests | **Broken** (see Data debt). |
 | Unity client, backend | Not started. |
 

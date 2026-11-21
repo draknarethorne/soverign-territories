@@ -1,0 +1,15 @@
+---
+name: implementation-workflows
+description: "Use when implementing approved Sovereign Territories code, debugging C# or algorithms, integrating Unity scenes and UI, or handling an explicitly authorized later-phase Nakama backend task."
+---
+
+# Implementation workflows
+
+Load only the applicable workflow:
+
+- [Code implementation](./references/code-implementation.md)
+- [Unity integration](./references/unity-integration.md)
+- [Nakama backend work](./references/nakama-backend.md)
+
+Verify actual project, toolchain and task authority first. A workflow does
+not authorize a new game rule, engine project, backend or deployment.

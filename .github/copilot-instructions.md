@@ -1,125 +1,77 @@
 # Sovereign Territories - Copilot Instructions
 
-Card-driven tactical strategy game (Unity/C#, planned). Tagline: "Build the Deck. Conquer the Campaign. Level Your Heroes."
-The first release is **Sovereign Dawn** (cards `SD-001`..`SD-219`): a local-first PvE vertical slice. PvP, alliances,
-territory maps, AFK economy and backend (Nakama) are later-phase vision, not current scope.
+Local-first PvE card strategy game; the first release is Sovereign Dawn.
+Unity, PvP, alliances, territory maps, AFK systems and Nakama are future scope.
 
-## Start here
+## Project authority
 
-- [docs/STATUS.md](../docs/STATUS.md) - current state, decisions, open questions, next work. Read before design or data work.
-- [docs/README.md](../docs/README.md) - which document owns which topic.
-- [docs/plans/README.md](../docs/plans/README.md) - canonical milestone planning agreement and domain inventory. Follow its linked execution spine before domain history; read affected contracts and gates.
-- [docs/todo.md](../docs/todo.md) - generated current milestone window from the spine's `Queue focus`, with linked deferred work. Check it before suggesting "what next"; never edit generated tasks by hand.
-- [docs/recap/README.md](../docs/recap/README.md) - pinned current resume and feedback handoffs, not simply the newest dated reflection.
-- [docs/archive-guide.md](../docs/archive-guide.md) - physical topic/status/month filing and matching indexes; archive does not mean implemented or disposable.
-- [docs/QUALITY-GATES.md](../docs/QUALITY-GATES.md) - routine versus explicit targeted/deep validation; use supported launchers.
-- [data/art/README.md](../data/art/README.md) - the art/prompt pipeline.
+- Start with [current status](../docs/STATUS.md), the
+  [documentation map](../docs/README.md), the
+  [planning agreement](../docs/plans/README.md) and its linked execution
+  spine. Check [the generated queue](../docs/todo.md) before proposing next
+  work; never edit it directly.
+- Read only the active plan, canonical contract and evidence needed for the
+  task. MVP/design rules and runtime schemas outrank the game bible's vision.
+- Keep each fact in its canonical home. Plans select work; they do not replace
+  design/data contracts. Follow [guidelines](../docs/guidelines/README.md)
+  for cross-cutting policy and quality gates.
 
-Rules live in `docs/mvp/`, `docs/design/` (combat, deck, tutorial) and win over `docs/game-bible.md`, which is vision.
-If a number or rule here disagrees with those docs, the docs win.
+## Working boundaries
 
-## Repo map
+- Use the matching on-demand procedure; load no unrelated skills. If a
+  needed skill was not discovered, read its entry file and linked reference.
+  Skills guide execution but do not grant authority.
+- Preserve unrelated dirty work and existing evidence. Do not mutate
+  Production, prune source images, start blanket intake, install dependencies,
+  publish externally, or commit/push without explicit authorization.
+- Analysis is not permission for runtime or policy changes, new intake or
+  competing heavy I/O. Follow the active execution lane and reuse verified
+  evidence. Agent roles do not widen authority; follow the
+  [shared agent contract](agents/AGENT-SELECTION-GUIDE.md#shared-working-contract).
+- Ignore `_archive` for ordinary work. Never create art assets; describe
+  needs or use the approved prompt pipeline.
+- Ask before material design/policy changes. Follow the repository's
+  [decision policy](../docs/guidelines/ASSISTANT-DECISION-POLICY.md).
+- Use absolute paths with file tools; read before editing. Put scratch under
+  verified ignored `tmp\`; use another explicitly designated, verified-ignored
+  path only. `reports\` is for generated review output, not scratch. New
+  scripts/tests must follow the same scratch rule. Preserve legacy feedback
+  there and durable receipts in their documented locations. Do not create
+  root `files\` or `session files\`.
 
-| Path | Contents |
-| --- | --- |
-| `data/cards/sovereign-dawn/` | Gameplay cards (the primary record of every card) |
-| `data/schemas/` | Runtime JSON schemas; `codex-schema.json` is the card schema (`card-schema.json` is deprecated) |
-| `data/art/` | Art identities, components, templates, art schemas (`data/art/_schema/`) |
-| `data/decks`, `data/products`, `data/manifests` | Starter decks, packs, manifests (currently out of sync; see STATUS.md) |
-| `prompts/` | Regenerate generated ComfyUI outputs; `prompts/_edit/` holds preserved manual migration sources, not disposable generated files |
-| `workflows/` | ComfyUI workflow JSON |
-| `tools/generators/gen_prompt.py` | Prompt generator |
-| `data/animation/` | Video cards, motions, transitions and looks; `tools/generators/gen_animation.py` turns cards into video prompts |
-| `tools/workflows/comfy_workflows.py`, `workflows/` | Builds ComfyUI workflows from prompts and syncs them to workspaces; `workflows/_templates` (ST0-ST6) are the only masters, `workflows/_curated` holds hand-tuned ones |
-| `bin/*.cmd` | Quick launchers for the above; `bin/help.cmd` lists them |
-| `docs/art/tutorial-art.md`, `tutorial-video.md` | How to create art and video JSON, by hand or with an AI |
-| `tools/validators/` | `validate_data.py` and its mutation self-test |
-| `docs/specs/` | Narrative notes for schemas (not the contracts) |
-| `src/` | Reserved for Unity; not created yet |
+## Execution and quality
 
-## Data rules
+- Use supported `bin\*.cmd` launchers; inspect [bin help](../bin/help.cmd)
+  before inventing commands or routines. Repeated workflows need a tested,
+  repeat-safe, documented launcher listed in help/menu with a preview and
+  read-only check. For photo-library work, follow the
+  [original photos runbook](../docs/art/original-photos.md).
+  Follow [quality gates](../docs/guidelines/QUALITY-GATES.md) and run
+  targeted tests; do not commit failing changes.
+- For game data, follow the order: approved rule, schema, validator/tooling,
+  implementation, tests. Data/art changes require `cmd /c bin\check.cmd`;
+  schema/validator changes also require isolated validation.
+- Before end-of-day commit/push, use the checklist in
+  [the planning agreement](../docs/plans/README.md). A passing check alone
+  does not authorize publication.
 
-- A card is defined once in `data/cards/**`; art is linked by `cardId` (card `art.artIdentity` <-> art `cardId`).
-  Gameplay and art data never define the same attribute.
-- `cardId` is the stable machine id; `collectionNumber` (`SD-###`) is the human number. Products reference ids or pools,
-  never copies of card definitions.
-- 10 elements (Darkness, Fire, Grass, Ice, Water, Light, Earth, Lightning, Wind, Poison, plus Neutral), released in stages:
-  the MVP is Darkness and Light only; the next cycle is Fire, Grass, Water and Earth (decided Oct 9, 2026).
-  8 rarity tiers: Basic 0, Common 1, Uncommon 2, Rare 4, Epic 8, Legendary 16, Mythic 32, Transcendent 64 budget points.
-- Order of change: design rule -> schema -> validator/tooling -> implementation -> tests.
-- After data or art changes run `cmd /c bin\check.cmd` for routine hygiene/data validity.
-  For schema/validator changes also run `cmd /c bin\validate.cmd --isolated --quick`; expand when the change requires it.
-  Run relevant targeted tests separately; routine hooks/CI are not full regression acceptance. Commands and scope live in the quality contract.
+## On-demand procedures
 
-## C# conventions (when Unity work starts)
+- [AI collaboration](skills/ai-collaboration/SKILL.md) — cross-session and
+  cross-machine questions, answers and artifact handoffs.
+- [Decision guidance](skills/decision-guidance/SKILL.md) — risk and escalation.
+- [Milestone handoff](skills/milestone-handoff/SKILL.md) — plans and closeout.
+- [Feedback filing](skills/feedback-filing/SKILL.md) — coverage and safe filing.
+- [Long-run acceptance](skills/long-run-acceptance/SKILL.md) — monitoring and recovery.
+- [Domain analysis](skills/domain-analysis/SKILL.md) — design and balance.
+- [Implementation workflows](skills/implementation-workflows/SKILL.md) — code,
+  Unity and explicitly authorized backend tasks.
+- [Data batch](skills/data-batch/SKILL.md) — approved structured data changes.
+- [Visual review](skills/visual-review/SKILL.md) — supplied visual evidence.
 
-- PascalCase for types/methods, camelCase for fields/locals; namespaces `SovereignTerritories.<Area>`.
-- ScriptableObjects for data, no heavy logic in `Update()`, `async/await` for I/O.
-- Game rules come from `docs/design/combat-calculation-spec.md` and `deck-progression-rules.md`, not from the game bible.
-
-## Working style
-
-- **On-demand procedures:** use [milestone-handoff](skills/milestone-handoff/SKILL.md)
-  for resume/transfer/closeout, [feedback-filing](skills/feedback-filing/SKILL.md)
-  for source coverage and safe filing, and [long-run-acceptance](skills/long-run-acceptance/SKILL.md)
-  for authorized job monitoring/recovery/viewer proof. If the host does not discover
-  a skill, read its file directly; skill availability never waives the invariants below.
-- Be concise; use tables and bullets for complex topics; no emojis unless the user uses them.
-- Use absolute paths with file tools. Read a file before editing it.
-- Documentation: one home per fact. Follow the archive guide: tracked history uses `git mv` into the appropriate
-  topic/status/month group; update actual folders, indexes, incoming links and generated readers together.
-  Preserve historical prose and fenced raw sources; fix link destinations for moves. Ignored feedback moves require
-  non-overwriting byte/hash verification. Filing a source does not close its implementation tasks.
-- **Ignore every `_archive` folder** for ordinary work unless the user explicitly requests historical material or
-  scoped archive maintenance. Navigation indexes may link to history as history, never current authority.
-  Folders like `data/art/_templates`, `_sets`, `_schema` are active, not archives.
-- Do not make major design decisions without user approval, and do not commit code that fails the validators.
-- **Plans:** follow [the milestone agreement](../docs/plans/README.md#the-pattern):
-  one active execution spine, ordered entry/exit gates and explicit `Queue focus`.
-  Domain contracts/backlogs stay `holding`; consulting them does not activate their tasks.
-  Transfer selected executable tasks into the spine before work, preserving IDs,
-  complete contracts, decisions, dependencies and raw sources; replace source checkboxes
-  with destination records, never tick a transfer as implemented. Advance through an
-  evidence/exception closeout and update focus, not by stacking new scheduling paragraphs.
-  Every open step has a priority/owner tag (`- [ ] **P1 you** T3 ...`); regenerate
-  `bin\todo.cmd`. Keep technical rules in their canonical homes and dated evidence in recaps.
-  Accept feedback in `feedback/<topic>.md` or chat; preserve exact words and coverage
-  in one primary plan before individually filing verified originals by topic.
-  Never bulk-clear `feedback/` or legacy raw notes in `tmp/`. Archive only wholly
-  completed/superseded plans after explicit residual-task dispositions and link/index repair.
-- **Execution lanes:** the spine selects one primary milestone and any bounded companion
-  lane/stop condition. Analysis is not permission for runtime mutation, new intake,
-  policy changes or competing heavy I/O. Reuse one run's evidence across acceptance
-  tasks; merge/split only with explicit source/destination ownership records.
-- **Specialized agents:** follow the [shared agent contract](agents/AGENT-SELECTION-GUIDE.md#shared-working-contract).
-  Verify actual project/tool/model availability before use; a role cannot authorize future-phase Unity/Nakama work,
-  change the source of truth, silently substitute a model, or bypass validation/publication approval.
-- **The day's hygiene (before a commit and push at the end of a working day):** feedback files, chat requests and legacy tmp notes are accounted for
-  in owning plans; unresolved/unincorporated notes stay safely in place (neither directory must be empty); every plan has a status and tagged boxes; finished plans are
-  archived; `bin\todo.cmd` was run; STATUS.md has the day's decisions; a recap is written in `docs/recap/`; validators, tests and
-  markdownlint pass. The checklist is in `docs/plans/README.md`.
-- **Large days:** split the work into steps and say what you are doing and why; run long jobs so that they can be checked (a log, a count,
-  a preview first) and verify each step before building on it; have helpers (background agents) read, audit or summarise in parallel
-  while you work, and give them a bounded read-only task; never leave half-finished state (write files whole, swap them in, keep originals);
-  when a process seems stuck check whether it is suspended before assuming a bug. Reflect at the end of the day (see the recap).
-- Do not create art assets; describe them for the artist or generate prompts through the pipeline.
-- **Scratch output:** write disposable logs, session files, test output and intermediate artifacts under the repository's
-  git-ignored `tmp\` (for example `tmp\session-logs\<date>\`), using an explicitly resolved absolute path when invoking
-  tools or helpers. Never create repository-root `files\` or `session files\` directories; do not confuse those names
-  with an external session folder. Scripts, tests and launchers must follow the same rule for default scratch paths.
-  Another output area is allowed only when it is explicitly designated and verified git-ignored before writing
-  (`git check-ignore`); existing ignored `reports\` is for generated review reports, not a new scratch convention.
-  Keep durable library receipts/recovery evidence in their documented library locations, not disposable `tmp\`.
-  Never treat legacy raw feedback in `tmp\` as disposable; its preservation rules above still apply.
-
-## Commands: run the bin launchers, and make new ones
-
-- Run the `bin\*.cmd` launchers (`cmd /c bin\name.cmd ...`) instead of calling `python tools\...` by hand, so that you and the user run the same
-  commands with the same defaults and the launchers stay tested. `bin\help.cmd` lists them. Changing a launcher or the tool behind it: run the
-  launcher itself (its preview first), then the tests.
-- Before writing a script, a new subcommand or a long shell sequence, read `bin\help.cmd` and `bin\`: the thing may exist (for example
-  `sync-inputs.cmd` copies workflow input images; a duplicate `inputs sync` was written and removed on Oct 12).
-- A routine that needs several commands or arguments the user would have to remember becomes a launcher: a thin `.cmd` that calls one Python tool,
-  previews with `--dry-run`, has a read-only `--check`, repeats safely, and is listed in `bin\help.cmd` and `bin\menu.cmd`, documented, and tested.
-- Photo library routine: drop new photos into `Various\gallery`, run `bin\library.cmd` (originals, duplicates, crop, likeness, scaled copies, headshots,
-  frames, inputs); `--retry-junk` sends `_junk` back through it, `likeness pullback` re-sorts prospects. The runbook is `docs/art/original-photos.md`. `bin\library-check.cmd` says whether anything is waiting; `bin\library-preview.cmd` previews every step.
+For long jobs, use the matching workflow, verify checkpoints and check
+suspension before calling a process stuck. For large changes, batch work,
+verify each phase and preserve originals; use bounded read-only helpers only
+when useful. Use tables/bullets when useful; keep answers concise and use no
+emojis unless the user does. Do not claim unexecuted tests, editor checks,
+measured performance, skill behavior or cost/token savings.

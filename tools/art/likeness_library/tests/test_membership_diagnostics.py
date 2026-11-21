@@ -2,6 +2,7 @@ import copy
 import json
 import pathlib
 import tempfile
+import types
 import unittest
 from unittest import mock
 
@@ -150,10 +151,12 @@ class MembershipDiagnosticsTests(unittest.TestCase):
                                       "alignmentEvidence": {"sourceSha256": "face"}}}}
             model = mock.Mock()
             model.encode_image.return_value = torch.tensor([[1., 0.]])
-            with mock.patch("open_clip.create_model_and_transforms", return_value=(
-                model, None, lambda crop: torch.zeros(3, 224, 224),
-            )):
+            factory = mock.Mock(return_value=(model, None, lambda crop: torch.zeros(3, 224, 224)))
+            open_clip = types.SimpleNamespace(create_model_and_transforms=factory)
+            with mock.patch.dict("sys.modules", {"open_clip": open_clip}), \
+                    mock.patch("importlib.metadata.version", return_value="fixture"):
                 cold, stats = cli.descriptors(["p0"], run, face_cache, checkpoint, root)
+                factory.assert_called_once_with("ViT-B-32", pretrained=str(checkpoint), device="cpu")
                 self.assertEqual(stats["extractions"], 2)
                 restored = json.loads(json.dumps(cold))
                 warm, stats = cli.descriptors(["p0"], run, face_cache, checkpoint, root, restored)

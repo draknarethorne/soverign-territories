@@ -76,10 +76,14 @@ bin\status.cmd --hero Drakness          # what is where
 The repository holds code, data and docs. The photo library, ComfyUI and model
 caches live outside it. Set up a new Windows machine in this order:
 
-1. **Tools.** Install git (with Git Credential Manager), the GitHub CLI `gh`
-   (`gh auth login`), regular 64-bit **CPython 3.14** (`py -3.14`), Node.js LTS
-   (markdownlint runs through it), PowerShell 5.1+ (Windows built-in) and VS Code
-   with GitHub Copilot. ComfyUI Desktop is needed only for art/video rendering.
+1. **Tools.** Install Git (with Git Credential Manager), regular 64-bit
+   **CPython 3.14**, Node.js LTS, Windows PowerShell 5.1+ and VS Code with
+   GitHub Copilot. Install the GitHub CLI `gh` and authenticate it only if you
+   need GitHub operations. Node.js is needed for JavaScript execution tests;
+   pre-commit provides its own Node runtime for markdownlint. ComfyUI Desktop
+   is needed only for art/video rendering. If CPython 3.14 is missing from the
+   Python install manager, run `py install 3.14`, then verify with
+   `py -3.14 --version`.
 2. **Clone and branch.**
 
    ```bat
@@ -91,8 +95,10 @@ caches live outside it. Set up a new Windows machine in this order:
    Check [docs/recap/README.md](docs/recap/README.md) for the active branch and
    resume handoff before switching.
 3. **Python environment.** In a new venv, install the pinned dependencies and
-   the hooks. The full notes, including the warning never to install into
-   ComfyUI's embedded Python, are in the
+   hooks. Use the repository venv's interpreter explicitly so setup does not
+   depend on whichever Python is first on `PATH`. Install PSScriptAnalyzer for
+   the PowerShell quality check. The full notes, including the warning never
+   to install into ComfyUI's embedded Python, are in the
    [runtime guide](docs/art/original-photos.md#python-runtime-and-dependencies).
 
    ```bat
@@ -100,12 +106,23 @@ caches live outside it. Set up a new Windows machine in this order:
    call .venv-processing\Scripts\activate.bat
    python -m pip install -r requirements-intake.txt
    python -m pip install pre-commit==4.6.1
-   python -m pre_commit install
+   python -m pre_commit install --install-hooks
+   ```
+
+   Keep this environment activated when running repository launchers. In
+   PowerShell, use `.\.venv-processing\Scripts\Activate.ps1`. Install the
+   NuGet provider and analyzer used by the PowerShell quality check:
+
+   ```powershell
+   Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Scope CurrentUser -Force
+   Install-Module -Name PSScriptAnalyzer -RequiredVersion 1.25.0 -Scope CurrentUser
    ```
 
    Use `requirements.txt` instead for validators/galleries only (no intake). The
-   intake models (Mask R-CNN, LaMa) download once, with pinned hashes, into
-   `%LOCALAPPDATA%\sovereign-territories`.
+   intake models (Mask R-CNN, LaMa) are separate from the Python packages and
+   download on first use, with pinned hashes, into
+   `%LOCALAPPDATA%\sovereign-territories`. Restart terminals after installing
+   tools that add commands to `PATH`.
 4. **Machine paths.** [workflows/workspaces.json](workflows/workspaces.json)
    records this project's library and ComfyUI roots (the `B:` drive layout:
    `B:\Sovereign Territories`, `B:\Sovereign Territories Sandbox\Working`,
@@ -123,7 +140,10 @@ caches live outside it. Set up a new Windows machine in this order:
 
    Overrides are recorded in every run's configuration receipt. Changing them
    between steps of one sandbox run makes its verification refuse to continue,
-   so finish or restart a run on the machine that started it.
+   so finish or restart a run on the machine that started it. The checked-in
+   `B:` paths are defaults, not proof those libraries exist on a new machine;
+   do not run library operations until the actual data roots have been
+   transferred, verified and configured.
 5. **Data that git does not carry.** Copy these yourself. Each is git-ignored
    or outside the repository:
    - the Production library and, if you continue a sandbox run, the whole
@@ -131,11 +151,13 @@ caches live outside it. Set up a new Windows machine in this order:
    - `feedback\` (raw user notes; never bulk-clear it) and any legacy notes in
      `tmp\` (scratch otherwise);
    - ComfyUI installs, models and the `ComfyUI-Inputs`/`Outputs` folders.
-6. **Verify.** `bin\check.cmd` (pre-commit hooks, markdownlint, data
-   validation) and `bin\validate.cmd --quick` (isolated mutation smoke checks,
-   not the image unit suite). `bin\help.cmd`
-   lists every launcher; `bin\library-check.cmd` confirms the library paths
-   resolve.
+6. **Verify.** Run `cmd /c bin\check.cmd` for routine hooks, markdownlint and
+   data validation, then `cmd /c bin\validate.cmd --full` for the offline
+   regression suites and full isolated mutation validation. `--quick` runs
+   only the bounded mutation smoke checks, not the unit suite. JavaScript
+   tests require Node.js; without it, some tests are skipped. `bin\help.cmd`
+   lists every launcher. After transferring and configuring the photo
+   libraries, `cmd /c bin\library-check.cmd` checks their readiness.
 
 ### How the work is organised
 
@@ -152,7 +174,7 @@ caches live outside it. Set up a new Windows machine in this order:
   and is quoted word for word in its owning plan.
 - **Handoffs.** [docs/recap/](docs/recap/README.md) pins the current resume
   recap; read it first on a new machine.
-- **Quality.** [docs/QUALITY-GATES.md](docs/QUALITY-GATES.md) defines routine
+- **Quality.** [docs/guidelines/QUALITY-GATES.md](docs/guidelines/QUALITY-GATES.md) defines routine
   versus targeted/deep validation. Scratch output goes under the git-ignored
   `tmp\`.
 - **AI agents.** [.github/copilot-instructions.md](.github/copilot-instructions.md)
@@ -177,7 +199,7 @@ caches live outside it. Set up a new Windows machine in this order:
 
 ## Quality and contributions
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/QUALITY-GATES.md](docs/QUALITY-GATES.md)
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/guidelines/QUALITY-GATES.md](docs/guidelines/QUALITY-GATES.md)
 for the repository quality contract. The project is not currently accepting broad external
 implementation work while the MVP source-of-truth and data subset are reconciled.
 
