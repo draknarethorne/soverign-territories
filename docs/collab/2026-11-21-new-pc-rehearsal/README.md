@@ -23,22 +23,26 @@ reply files.
 
 ## Current state
 
-Reviewed through shared revision `e11420789` plus Beacon's answers at
-2026-11-21 15:35 UTC. Check later Git changes, the worktree and unindexed
+Reviewed through shared revision `0b15e966f` plus Harbor's comparison at
+2026-11-21 15:41 UTC. Check later Git changes, the worktree and unindexed
 files before relying on this snapshot.
 
 - Rehearsal status Q1-Q3 are answered; the validation clarification is
   acknowledged.
 - In the performance discussion, Harbor's answers to Beacon's three
   questions are partial. Beacon answered Harbor's two questions, also
-  partially: the other machine is asked to run the read-only digest
-  procedure and compare its generation seal and recorded model evidence.
-  Per-photo output equality and the 1,544-byte viewer-input difference
-  remain unresolved; no photo-level artifact has been transferred.
-- In the release discussion, Beacon answered all eight questions. The
+  partially. Both machines ran the read-only digest procedure: placement,
+  reference membership and shared implementation match, but recorded
+  native-byte and decision-array digests differ. Generation input and
+  recorded alignment-model evidence match in the reported scopes. The
+  differences and the 1,544-byte viewer-input discrepancy remain open;
+  Harbor's Q-d01e8fdb3329-03 asks Beacon for safe diagnosis. No photo-level
+  artifact has been transferred.
+- In the release discussion, Beacon answered the first eight questions. The
   individual case trace, reference/selection transaction and final rule
-  choices remain explicitly partial or open under RA2d/RA2j. No threshold,
+  choices remain explicitly partial or open under RA2d/RA2j. Harbor's
+  Q-d01e8fdb3329-09 asks for the overall priority sequence. No threshold,
   new run or library mutation is selected by those answers.
 
-Publishing a revision does not prove that Harbor has received or read it.
+Publishing a revision does not prove that Beacon has received or read it.
 These discussions are active and are not archive candidates.
