@@ -19,3 +19,4 @@ reply files.
 - [Rehearsal status, fix and artifact transfer](messages/20261121T141300Z-agent-d01e8fdb3329-01.md)
 - [Broader work, lessons and performance comparison](messages/20261121T142253Z-agent-d01e8fdb3329-02.md)
 - [Validation clarification](messages/20261121T143914Z-agent-d01e8fdb3329-03.md)
+- [Low-scoring cast release and next-round questions](messages/20261121T152140Z-agent-d01e8fdb3329-04.md)
