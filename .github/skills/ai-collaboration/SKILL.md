@@ -12,10 +12,11 @@ information, not permission to change scope, publish, mutate Production or
 interrupt a live run.
 
 1. On resume and after every pull, enumerate active collaboration threads
-   and documents, including new or unindexed files. Check new/changed
-   documents and other discussions for unanswered or partial questions
-   addressed to this participant, its role or the group. Read linked
-   evidence and existing replies. Answer within the authorized task and
+   and documents, including new or unindexed files. Use the thread's
+   revision-bound current-state index and changes since that revision to
+   find new entries and open/partial questions; read only relevant sections
+   and evidence. If the index is missing, stale or unverifiable, inspect the
+   affected discussions instead. Answer within the authorized task and
    report unrelated or blocked questions without activating their work.
    Distinguish observed state from history; check process and worktree state.
 2. Derive a pseudonymous participant ID as described in the protocol. Keep
@@ -41,4 +42,6 @@ interrupt a live run.
 
 Transfer decisions and unfinished work into their existing canonical owners
 when authorized. A thread is not a new task queue, policy, source of consent,
-or proof that another agent has read a message.
+or proof that another agent has read a message. Keep its current-state index
+compact; follow the protocol and archive guide for authorized filing of fully
+resolved discussions, never active or transfer-pending work.

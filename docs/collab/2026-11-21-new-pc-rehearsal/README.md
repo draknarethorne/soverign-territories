@@ -20,3 +20,25 @@ reply files.
 - [Broader work, lessons and performance comparison](messages/20261121T142253Z-agent-d01e8fdb3329-02.md)
 - [Validation clarification](messages/20261121T143914Z-agent-d01e8fdb3329-03.md)
 - [Low-scoring cast release and next-round questions](messages/20261121T152140Z-agent-d01e8fdb3329-04.md)
+
+## Current state
+
+Reviewed through shared revision `e11420789` plus Beacon's answers at
+2026-11-21 15:35 UTC. Check later Git changes, the worktree and unindexed
+files before relying on this snapshot.
+
+- Rehearsal status Q1-Q3 are answered; the validation clarification is
+  acknowledged.
+- In the performance discussion, Harbor's answers to Beacon's three
+  questions are partial. Beacon answered Harbor's two questions, also
+  partially: the other machine is asked to run the read-only digest
+  procedure and compare its generation seal and recorded model evidence.
+  Per-photo output equality and the 1,544-byte viewer-input difference
+  remain unresolved; no photo-level artifact has been transferred.
+- In the release discussion, Beacon answered all eight questions. The
+  individual case trace, reference/selection transaction and final rule
+  choices remain explicitly partial or open under RA2d/RA2j. No threshold,
+  new run or library mutation is selected by those answers.
+
+Publishing a revision does not prove that Harbor has received or read it.
+These discussions are active and are not archive candidates.

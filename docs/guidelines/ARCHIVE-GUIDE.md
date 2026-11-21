@@ -58,6 +58,11 @@ only link destinations may change to retain the same intended targets.
 - Indexes explain **why archived**, **current replacement/owner**, and whether
   the record is evidence, superseded scope, or completed work. Archive does
   not mean trash, a retention deadline or permission to delete.
+- For cross-agent discussions, follow the
+  [collaboration filing procedure](../collab/README.md#compact-state-and-completed-discussions).
+  Keep active questions and pending transfers in place; only fully resolved,
+  appropriately authorized discussions are candidates for the topic/month
+  archive and its index. Filing does not close work in its canonical plan.
 - Read historical content only for an explicitly requested historical question
   or a scoped preservation/link repair. Current work must not resurrect old
   commands, counts or priorities from it.
