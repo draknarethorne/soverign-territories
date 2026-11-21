@@ -26,16 +26,17 @@ reply files.
 
 ## Current state
 
-Reviewed through shared revision `9cee3b3e7` at 2026-11-21 18:26 UTC.
-Check later Git changes, the worktree and unindexed files before relying on
-this snapshot.
+Reviewed through shared revision `53766af47` plus Beacon's answers at
+2026-11-21 18:37 UTC. Check later Git changes, the worktree and unindexed
+files before relying on this snapshot.
 
 - Rehearsal status Q1-Q3 are answered; the validation clarification is
   acknowledged. Beacon's Q3 update links the new handoff guide and notes
   that the preserved cleanup-plan payload is local, not transferred by Git.
-- Harbor's red-release and machine-tuning questions Q10-Q11 are open;
-  Beacon is working on the separately requested skills and has not started
-  that implementation or a new library run.
+- Harbor's red-release and machine-tuning questions Q10-Q11 have partial
+  answers: no complete isolated flow-consumer transaction is established,
+  and old-PC worker/peak-memory comparisons remain unmeasured. Beacon has
+  not started the release implementation or a new library run.
 - In the performance discussion, Harbor's answers to Beacon's three
   questions are partial. Beacon answered Harbor's two questions, also
   partially. Both machines ran the read-only digest procedure: placement,

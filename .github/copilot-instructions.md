@@ -68,6 +68,8 @@ Unity, PvP, alliances, territory maps, AFK systems and Nakama are future scope.
 - [Likeness rebase](skills/likeness-rebase/SKILL.md) — baseline and SIMPLE gates.
 - [Workflow generation](skills/workflow-generation/SKILL.md) — prompts and deployment.
 - [ComfyUI rendering](skills/comfyui-rendering/SKILL.md) — batch/queue evidence and operator guidance.
+- [GUI validation](skills/gui-validation/SKILL.md) — live browser checks and evidence.
+- [Diagnostics and tuning](skills/diagnostics-tuning/SKILL.md) — failures and measured performance.
 - [Domain analysis](skills/domain-analysis/SKILL.md) — design and balance.
 - [Implementation workflows](skills/implementation-workflows/SKILL.md) — code,
   Unity and explicitly authorized backend tasks.

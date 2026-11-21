@@ -8,3 +8,6 @@ description: "Use when inspecting supplied Sovereign Territories image assets, r
 Use the [visual evidence reference](./references/visual-evidence.md) to
 confirm available evidence, inspect only supplied/relevant assets, separate
 observation from measurement, and keep the review read-only.
+For live controls, links and browser acceptance use
+[GUI validation](../gui-validation/SKILL.md); a screenshot is not an
+interactive check.

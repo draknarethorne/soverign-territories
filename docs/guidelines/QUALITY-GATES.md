@@ -50,7 +50,7 @@ PowerShell policy in Phase 1:
   `bin\validate.cmd`; `bin\validate.cmd --isolated --quick` is the bounded
   validator smoke suite. Neither is automatically run by commit/push.
 - Known customization prose has an exact selection allowlist: Copilot
-  instructions, the shared agent guide and the thirteen repository
+  instructions, the shared agent guide and the fifteen repository
   `SKILL.md` entry files. These select quality guards plus routine lint, not
   art regressions or mutations. Skill metadata/link/wiring checks live in
   `test_quality_gates.py`, including each skill's local reference links.

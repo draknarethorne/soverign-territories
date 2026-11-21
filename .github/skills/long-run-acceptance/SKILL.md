@@ -84,7 +84,10 @@ Open the actual Gallery/Overview/Review and recap in a browser: verify count
 conservation, representative loaded thumbnails, current-native/detail/history
 links, required named cases and honest missing/unavailable states. Do not
 stage UI actions or infer real identity from scores. Static file existence
-and fixture tests alone do not prove browser acceptance.
+and fixture tests alone do not prove browser acceptance. Use
+[GUI validation](../gui-validation/SKILL.md) for browser techniques and
+[diagnostics and tuning](../diagnostics-tuning/SKILL.md) for bounded
+root-cause or performance investigations.
 
 Update one spine closeout, share its evidence across tasks, regenerate
 `cmd /c bin\todo.cmd` and leave remaining human/performance gates explicit.

@@ -27,6 +27,8 @@ class QualitySelectionTests(unittest.TestCase):
             ".github/skills/likeness-rebase/SKILL.md",
             ".github/skills/workflow-generation/SKILL.md",
             ".github/skills/comfyui-rendering/SKILL.md",
+            ".github/skills/gui-validation/SKILL.md",
+            ".github/skills/diagnostics-tuning/SKILL.md",
             ".github/skills/domain-analysis/SKILL.md",
             ".github/skills/implementation-workflows/SKILL.md",
             ".github/skills/data-batch/SKILL.md",
