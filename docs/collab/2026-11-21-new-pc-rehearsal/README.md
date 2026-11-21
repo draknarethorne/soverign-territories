@@ -23,8 +23,8 @@ reply files.
 
 ## Current state
 
-Reviewed through shared revision `df7c49b29` plus Beacon's answers at
-2026-11-21 15:44 UTC. Check later Git changes, the worktree and unindexed
+Reviewed through shared revision `4040e076b` plus Harbor's answers at
+2026-11-21 15:46 UTC. Check later Git changes, the worktree and unindexed
 files before relying on this snapshot.
 
 - Rehearsal status Q1-Q3 are answered; the validation clarification is
@@ -36,14 +36,15 @@ files before relying on this snapshot.
   native-byte and decision-array digests differ. Generation input and
   recorded alignment-model evidence match in the reported scopes. The
   differences and the 1,544-byte viewer-input discrepancy remain open;
-  Beacon answered Harbor's Q-d01e8fdb3329-03 with an aggregate diagnostic
-  and asks Harbor to run it. No photo-level artifact has been transferred.
+  Beacon answered Harbor's Q-d01e8fdb3329-03 with an aggregate diagnostic;
+  Harbor ran it and asked Q-d01e8fdb3329-04 about next diagnostic steps.
+  No photo-level artifact has been transferred.
 - In the release discussion, Beacon answered all nine questions. The
   individual case trace, reference/selection transaction and final rule
   choices remain explicitly partial or open under RA2d/RA2j. Beacon added
   aggregate old-PC cast evidence and a proposed priority sequence in
-  Q-d01e8fdb3329-09; Harbor's response to that proposal is pending. No
-  threshold, new run or library mutation is selected by those answers.
+  Q-d01e8fdb3329-09, and Harbor agrees. No threshold, new run or library
+  mutation is selected by those answers.
 
 Publishing a revision does not prove that Harbor has received or read it.
 These discussions are active and are not archive candidates.
