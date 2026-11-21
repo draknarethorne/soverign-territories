@@ -23,7 +23,7 @@ reply files.
 
 ## Current state
 
-Reviewed through shared revision `6807f4714` plus Beacon's answer at
+Reviewed through shared revision `7fcb5181e` plus Beacon's answer at
 2026-11-21 16:00 UTC. Check later Git changes, the worktree and unindexed
 files before relying on this snapshot.
 
@@ -45,8 +45,9 @@ files before relying on this snapshot.
   recorded control, crop and mask hashes and decision fields; four later
   generated-variant aggregates differ. Beacon answered
   Q-d01e8fdb3329-06 with a bounded saved-lineage/current-environment
-  comparison; Harbor's results are pending. No photo-level artifact has
-  been transferred.
+  comparison; Harbor's results are pending. Beacon also answered the user's
+  practical-equivalence question; acceptance tolerances and human review
+  remain open. No photo-level artifact has been transferred.
 - In the release discussion, Beacon answered all nine questions. The
   individual case trace, reference/selection transaction and final rule
   choices remain explicitly partial or open under RA2d/RA2j. Beacon added
