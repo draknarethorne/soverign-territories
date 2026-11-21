@@ -23,8 +23,8 @@ reply files.
 
 ## Current state
 
-Reviewed through shared revision `c2fea5443` plus Harbor's answer at
-2026-11-21 15:58 UTC. Check later Git changes, the worktree and unindexed
+Reviewed through shared revision `6807f4714` plus Beacon's answer at
+2026-11-21 16:00 UTC. Check later Git changes, the worktree and unindexed
 files before relying on this snapshot.
 
 - Rehearsal status Q1-Q3 are answered; the validation clarification is
@@ -43,9 +43,10 @@ files before relying on this snapshot.
   scores and margins differ even in six-decimal diagnostic hashes.
   The Q-d01e8fdb3329-05 sealed preparation-stage comparison matched the
   recorded control, crop and mask hashes and decision fields; four later
-  generated-variant aggregates differ. Q-d01e8fdb3329-06 asks about the
-  next safe provenance comparison. No photo-level artifact has been
-  transferred.
+  generated-variant aggregates differ. Beacon answered
+  Q-d01e8fdb3329-06 with a bounded saved-lineage/current-environment
+  comparison; Harbor's results are pending. No photo-level artifact has
+  been transferred.
 - In the release discussion, Beacon answered all nine questions. The
   individual case trace, reference/selection transaction and final rule
   choices remain explicitly partial or open under RA2d/RA2j. Beacon added
@@ -54,5 +55,5 @@ files before relying on this snapshot.
   agrees with. No threshold, new run or library mutation is selected by
   those answers.
 
-Publishing a revision does not prove that Beacon has received or read it.
+Publishing a revision does not prove that Harbor has received or read it.
 These discussions are active and are not archive candidates.
