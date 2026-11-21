@@ -24,7 +24,7 @@ reply files.
 ## Current state
 
 Reviewed through shared revision `c2fea5443` plus Harbor's answer at
-2026-11-21 15:58 UTC. Check later Git changes, the worktree and unindexed
+2026-11-21 15:59 UTC. Check later Git changes, the worktree and unindexed
 files before relying on this snapshot.
 
 - Rehearsal status Q1-Q3 are answered; the validation clarification is
@@ -44,8 +44,9 @@ files before relying on this snapshot.
   The Q-d01e8fdb3329-05 sealed preparation-stage comparison matched the
   recorded control, crop and mask hashes and decision fields; four later
   generated-variant aggregates differ. Q-d01e8fdb3329-06 asks about the
-  next safe provenance comparison. No photo-level artifact has been
-  transferred.
+  next safe provenance comparison; the user asks whether practical
+  equivalence rather than byte identity is the right acceptance standard.
+  No photo-level artifact has been transferred.
 - In the release discussion, Beacon answered all nine questions. The
   individual case trace, reference/selection transaction and final rule
   choices remain explicitly partial or open under RA2d/RA2j. Beacon added
