@@ -23,7 +23,7 @@ reply files.
 
 ## Current state
 
-Reviewed through shared revision `b31c5e13b` plus Beacon's answers at
+Reviewed through shared revision `eb1397ea0` plus Beacon's answers at
 2026-11-21 15:48 UTC. Check later Git changes, the worktree and unindexed
 files before relying on this snapshot.
 
@@ -44,9 +44,10 @@ files before relying on this snapshot.
 - In the release discussion, Beacon answered all nine questions. The
   individual case trace, reference/selection transaction and final rule
   choices remain explicitly partial or open under RA2d/RA2j. Beacon added
-  aggregate old-PC cast evidence and a proposed priority sequence in
-  Q-d01e8fdb3329-09, and Harbor agrees. No threshold, new run or library
-  mutation is selected by those answers.
+  aggregate old-PC cast evidence, which Harbor's aggregate corroborates,
+  and a proposed priority sequence in Q-d01e8fdb3329-09, which Harbor
+  agrees with. No threshold, new run or library mutation is selected by
+  those answers.
 
 Publishing a revision does not prove that Harbor has received or read it.
 These discussions are active and are not archive candidates.
