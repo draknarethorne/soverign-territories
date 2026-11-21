@@ -1,10 +1,19 @@
 # Project Status
 
-**Updated:** 2026-11-20 · This is the one working document: where the project is, what has
+**Updated:** 2026-11-21 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
 ## Current checkpoint
+
+**Nov21 old-PC SIMPLE rehearsal:** the [installed result and recovery](recap/2026-11-11-1141-recap.md#nov21-old-pc-simple-rehearsal)
+passed apply/check/repeat with 3,490 sources accounted for, 184 recoverable
+duplicate archives, one confirmed no-face junk disposition and no existing
+cast Gallery departures. Representative installed viewers and report links
+were browser-checked. Human identity/crop acceptance and performance
+comparison remain open; the other machine's status is not inferred. No
+writer remains. Run15, the failed stage, frozen Source and Production are
+preserved. The following dated statements are historical.
 
 Post-run13: the [next-preview contract](plans/2026-11-16-simple-review-and-tuning.md#nov-19-post-run13-tuning)
 stages stricter starting cores and resolves duplicate IDs before matching.
