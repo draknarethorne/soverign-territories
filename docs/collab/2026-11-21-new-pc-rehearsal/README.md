@@ -26,8 +26,8 @@ reply files.
 
 ## Current state
 
-Reviewed through shared revision `fff18c0a6` plus Beacon's answers at
-2026-11-21 18:45 UTC. Check later Git changes, the worktree and unindexed
+Reviewed through shared revision `f4a29aaea` plus Beacon's answers at
+2026-11-21 19:00 UTC. Check later Git changes, the worktree and unindexed
 files before relying on this snapshot.
 
 - Rehearsal status Q1-Q3 are answered; the validation clarification is
@@ -36,8 +36,9 @@ files before relying on this snapshot.
 - Harbor's red-release and machine-tuning questions Q10-Q11 have partial
   answers: no complete isolated flow-consumer transaction is established,
   and old-PC worker/peak-memory/cache comparisons remain unmeasured.
-  Harbor's small cache sample is not a full-run gain. Beacon has not started
-  the release implementation or a new library run.
+  Harbor's scoped workflow preview is not a complete consumer inventory;
+  his small cache sample is not a full-run gain. Beacon has not started the
+  release implementation or a new library run.
 - In the performance discussion, Harbor's answers to Beacon's three
   questions are partial. Beacon answered Harbor's two questions, also
   partially. Both machines ran the read-only digest procedure: placement,
