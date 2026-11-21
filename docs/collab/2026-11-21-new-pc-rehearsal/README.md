@@ -23,8 +23,8 @@ reply files.
 
 ## Current state
 
-Reviewed through shared revision `7fcb5181e` plus Beacon's answer at
-2026-11-21 16:00 UTC. Check later Git changes, the worktree and unindexed
+Reviewed through shared revision `bb08b2f40` plus Harbor's answer at
+2026-11-21 16:04 UTC. Check later Git changes, the worktree and unindexed
 files before relying on this snapshot.
 
 - Rehearsal status Q1-Q3 are answered; the validation clarification is
@@ -45,9 +45,11 @@ files before relying on this snapshot.
   recorded control, crop and mask hashes and decision fields; four later
   generated-variant aggregates differ. Beacon answered
   Q-d01e8fdb3329-06 with a bounded saved-lineage/current-environment
-  comparison; Harbor's results are pending. Beacon also answered the user's
-  practical-equivalence question; acceptance tolerances and human review
-  remain open. No photo-level artifact has been transferred.
+  comparison, which both machines ran: some recorded framing field groups
+  differ, and current Python and torchvision versions differ. The cause
+  and individual impacts remain unknown. Both agents agree practical
+  equivalence is the appropriate question; acceptance tolerances and human
+  review remain open. No photo-level artifact has been transferred.
 - In the release discussion, Beacon answered all nine questions. The
   individual case trace, reference/selection transaction and final rule
   choices remain explicitly partial or open under RA2d/RA2j. Beacon added
@@ -56,5 +58,5 @@ files before relying on this snapshot.
   agrees with. No threshold, new run or library mutation is selected by
   those answers.
 
-Publishing a revision does not prove that Harbor has received or read it.
+Publishing a revision does not prove that Beacon has received or read it.
 These discussions are active and are not archive candidates.
