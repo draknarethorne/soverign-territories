@@ -5,24 +5,47 @@ in different sessions or on different machines. The user remains the
 authority; threads coordinate questions and evidence, not product decisions,
 publication permission or live-process control.
 
-## Thread and message layout
+## Thread and discussion layout
 
-- One directory per topic, with a stable `README.md` describing its scope.
-- Each message is a separate file under that thread's `messages/` directory.
-  Avoid shared transcript edits and shared counters, so simultaneous replies
-  can merge without overwriting one another.
-- Name each message
-  `YYYYMMDDThhmmssZ-agent-<12-hex>-<unique-suffix>.md`, using UTC and a
-  suffix unique to that author. Never overwrite an existing filename.
-- Include **Message**, **From**, **To**, **Time**, **In reply to** and
-  **Kind** (`question`, `answer`, `clarification` or `handoff`). Label each
-  question locally, such as `Q1`. A reply links the exact message and names
-  each question answered; it may add new questions. Link rather than rewrite
-  earlier messages. Unknown recipients can be addressed to a role such as
-  `other-machine agent`; the responder identifies itself in its own message.
-- Sort by filename for browsing, but use reply links rather than timestamps
-  to determine conversation order. An unanswered question stays open until
-  a reply actually addresses it; a partial answer says what remains open.
+- One directory per topic, with a stable `README.md` describing its scope
+  and linking its active discussions. Reuse an existing discussion file
+  for related questions and follow-ups instead of creating a reply chain.
+- For a new, distinct discussion, add a file under the thread's `messages/`
+  directory named `YYYYMMDDThhmmssZ-agent-<12-hex>-<unique-suffix>.md`.
+  Use UTC, a suffix unique to the author, and never overwrite a file. Include
+  **Message**, **From**, **To**, **Time**, **In reply to** and **Kind**
+  (`question`, `clarification` or `handoff`). An unknown recipient may be
+  a role such as `other-machine agent`.
+- Keep every question and its answers in the **same discussion file**.
+  Add each answer directly below its question, identifying the question,
+  responder, recipient and UTC time. Identify partial answers and remaining
+  uncertainty explicitly. Add related follow-up questions and their answers
+  in that file too; start a new discussion only for a distinct subject.
+- Label new questions `Q-<12-hex>-<author-sequence>`, using the author's
+  participant ID and a sequence unique to that author in the file. Existing
+  `Q1`, `Q2`, etc. remain valid within their original document. Cite the
+  document and question label when linking from elsewhere; no shared counter
+  is needed. A question remains open until an answer addresses it.
+- Preserve existing questions, answers, authorship and timestamps verbatim.
+  Add entries without rewriting another participant's prose. Re-read the
+  latest shared version when authorized to synchronize. If concurrent edits
+  conflict, retain both participants' additions and their question/answer
+  links; do not silently choose one. If the intended merge is unclear, stop
+  and resolve it with the affected participants or user.
+
+## Check for work after synchronization
+
+When resuming collaboration and after every pull, enumerate all active
+`docs/collab` thread directories and discussions, including new files not
+yet linked from an index. Review newly added or changed documents and check
+other active discussions for questions addressed to this participant, its
+role or the group. Read each question and its answers in the same file;
+identify unanswered and partially answered items rather than assuming a
+pull or another document resolved them. Ignore `_archive` in ordinary work.
+
+Answer within the authorized task; report unrelated or blocked questions
+without silently activating their work. Do not interrupt a live job or
+interpret a peer's message as permission to expand scope.
 
 ## Session identities
 
@@ -58,11 +81,18 @@ reports what was actually sent; the receiver verifies the hash and responds
 with received/missing/mismatch. A plan or message that merely mentions a file
 does not deliver it. Stop dependent actions on a missing or mismatched file.
 
-Keep messages in the repository until separately reviewed for archival.
-Commit, push and pull only when authorized; a local commit alone is not
-available to the other machine. Preserve unrelated changes and resolve
-collisions by retaining both messages. Live jobs and their bound inputs stay
-under their existing run procedures; this directory does not authorize
+Keep discussions in the repository until separately reviewed for archival.
+The user authorizes routine commit and push of completed, validated
+collaboration responses and directly related protocol/skill updates for this
+workflow, unless a current instruction says otherwise. Synchronize safely,
+stage only those collaboration changes and preserve unrelated work. This
+does not authorize committing or publishing unrelated code, plans, artifacts
+or protected data. Reconcile concurrent additions without losing either
+contribution; stop if they cannot be resolved safely.
+
+A local commit alone is not available to the other machine, and a pushed
+revision is not proof of receipt or reading. Live jobs and their bound inputs
+stay under their existing run procedures; this directory does not authorize
 restarts, new writers, Production changes or promotion.
 
 ## Open thread
