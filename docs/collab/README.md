@@ -37,15 +37,40 @@ publication permission or live-process control.
 
 When resuming collaboration and after every pull, enumerate all active
 `docs/collab` thread directories and discussions, including new files not
-yet linked from an index. Review newly added or changed documents and check
-other active discussions for questions addressed to this participant, its
-role or the group. Read each question and its answers in the same file;
-identify unanswered and partially answered items rather than assuming a
-pull or another document resolved them. Ignore `_archive` in ordinary work.
+yet linked from an index. Use each thread's compact current-state index
+and the Git changes since its cited revision to find new or changed entries
+and unanswered or partially answered questions for this participant, its
+role or the group. Read the relevant questions and answers in the same file,
+not the entire history by default. Check actual files against the index:
+an unindexed file, missing or unverifiable revision, conflicting edits, or
+stale state requires inspecting the affected discussion before relying on
+the summary. A pull or another document does not itself resolve a question.
+Ignore `_archive` in ordinary work.
 
 Answer within the authorized task; report unrelated or blocked questions
 without silently activating their work. Do not interrupt a live job or
 interpret a peer's message as permission to expand scope.
+
+### Compact state and completed discussions
+
+Each active thread's `README.md` can keep a short navigation snapshot:
+the reviewed revision and time, active discussion links, open/partial
+question IDs with intended recipients, and any unconfirmed delivery or
+transfer. Refresh it when the state materially changes, not for every
+individual message. It is an index, not a second plan, proof of receipt
+or substitute for the underlying question, answer or canonical task owner.
+Preserve concurrent edits and never silently mark an item resolved.
+
+Do not archive an active, partially answered or transfer-pending discussion.
+When a discussion is fully resolved and its unfinished work has explicit
+canonical owners, archive only with appropriate authorization and after
+checking both participants' contributions and references. Follow the
+[archive guide](../guidelines/ARCHIVE-GUIDE.md): use `git mv`, preserve prose
+and evidence, repair incoming and internal links, and update the thread and
+archive indexes together. A future collaboration archive belongs under
+`docs/collab/_archive/<topic>/<YYYY-MM>/`, with a root index explaining why
+each record was filed and its current owners; create it only when needed.
+Archiving is not deletion, approval or closure of separately owned work.
 
 ## Session identities
 
