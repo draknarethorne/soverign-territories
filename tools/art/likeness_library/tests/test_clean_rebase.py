@@ -1916,9 +1916,10 @@ class CleanRebaseTests(unittest.TestCase):
         api = SimpleNamespace(cw=SimpleNamespace(
             photo_key=lambda name: pathlib.Path(name).stem,
         ))
+        policy = load_policy()
         retained, released, evidence = clean_rebase._cast_seed_outcomes(
             entries, {folder: core}, catalog,
-            {pathlib.Path(names["workflow"]).stem}, load_policy(), api, "core", 60,
+            {pathlib.Path(names["workflow"]).stem}, policy, api, "core", 60,
         )
         self.assertEqual(len(retained), 4)
         self.assertEqual(set(released), {f"{folder}/gallery/{names['low']}"})
@@ -1926,7 +1927,10 @@ class CleanRebaseTests(unittest.TestCase):
         self.assertFalse(low["retainedCast"])
         self.assertTrue(low["releasedCast"])
         self.assertEqual(low["castSeedScore"], .1)
-        self.assertEqual(low["castSeedThreshold"], .3)
+        self.assertEqual(
+            low["castSeedThreshold"],
+            policy["categoryPolicies"]["Angels"]["identityCoreMinimumSimilarity"],
+        )
         self.assertTrue(any(row["castSeedAnchor"] for row in retained))
         self.assertTrue(any(row["castSeedProtectedPhoto"] for row in retained))
         self.assertTrue(any(row["castSeedWorkflowSelected"] for row in retained))

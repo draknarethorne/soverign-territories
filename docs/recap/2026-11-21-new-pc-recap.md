@@ -28,8 +28,11 @@ active at 08:01 Central on Nov 21; this machine cannot verify its state.
    The test fixture workspace names did not exist in the real installs root.
    The full regression run then found an unchanged baseline test expecting
    an Angels core threshold of 0.30 while the checked-in policy is 0.38.
-   It also fails in isolation; its test, policy and implementation were not
-   changed here. The other 1,075 library tests passed or were skipped.
+   It also failed in isolation. A follow-up corrected the test to check the
+   configured policy threshold; runtime code and policy were not changed.
+   The rerun of `bin\validate.cmd` exited 0, including 1,076 library tests;
+   machine-root overrides were removed only from that test process. The
+   earlier isolated mutation pass was 53/53.
 
 ## Clean Sandbox rehearsal
 
