@@ -184,6 +184,8 @@ class NormalRebaseTests(unittest.TestCase):
         self.assertEqual(set(selected), {alias, other_copy})
         self.assertEqual(selected[alias]["retainedOriginalProof"]["path"], proof["original"])
         self.assertIn(proof["manifest"], normal_rebase._retained_duplicate_sources(self.root, selected))
+        script = runpy.run_path(str(ROOT / "tools" / "art" / "likeness_library" / "normal_rebase.py"))
+        self.assertIn(proof["manifest"], script["_retained_duplicate_sources"](self.root, selected))
         self.assertTrue(edit.is_file())
         catalog["actions"].append({"actor": "user", "photoIds": ["photo:image_902"]})
         self.assertEqual(set(archives()), {other_copy})

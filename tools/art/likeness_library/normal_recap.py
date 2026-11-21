@@ -411,7 +411,10 @@ const f=document.getElementById('flagged');if(target.matches('tr[data-finding]')
 target.scrollIntoView({block:'start'})}window.addEventListener('hashchange',reveal);reveal();"""
     page = ("<!doctype html><html><head><meta charset=utf-8><title>SIMPLE run recap and audit</title>"
             f"<style>{gallery_chrome.CSS}{rebase_recap.STYLE}</style></head><body>"
-            + gallery_chrome.masthead(tagline="SIMPLE saved-run evidence", prefix="../../")
+            + gallery_chrome.masthead(
+                tagline="SIMPLE saved-run evidence",
+                prefix=gallery_chrome.reports_prefix(out.parent, pathlib.Path(data["libraryRoot"]).parent),
+            )
             + '<main class="recap-content"><section>' + "</section><section>".join(body)
             + f"</section></main><script>{script}</script></body></html>")
     return re.sub(r'(<a href="#[^"]+") target="_blank" rel="noopener noreferrer"', r"\1", page)

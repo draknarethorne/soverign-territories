@@ -170,6 +170,9 @@ class NormalRecapTests(unittest.TestCase):
         self.save()
         self.assertEqual(self.run_report("--apply"), 0)
         folder = self.library / "rebase-recap"
+        preview = (folder / "run1.html").read_text(encoding="utf-8")
+        self.assertIn('href="../../library/people_gallery.html"', preview)
+        self.assertIn("../../_assets/gallery-banner.jpg", preview)
         before = {path: path.read_bytes() for path in folder.iterdir() if path.is_file()}
         journal = self.report.parent / "publication-journal.json"
         journal.write_text(json.dumps({
@@ -184,7 +187,9 @@ class NormalRecapTests(unittest.TestCase):
         self.assertEqual(self.run_report("--apply"), 0)
         normal_transaction.verify(self.root, journal)
         self.assertEqual({path: path.read_bytes() for path in before}, before)
-        self.assertTrue((folder / "applied" / "run1.html").is_file())
+        applied = (folder / "applied" / "run1.html").read_text(encoding="utf-8")
+        self.assertIn('href="../../../library/people_gallery.html"', applied)
+        self.assertIn("../../../_assets/gallery-banner.jpg", applied)
         self.assertEqual(self.run_report("--check"), 0)
 
     def test_preview_apply_check_conserve_aliases_and_use_existing_navigation_without_hashing_photos(self):

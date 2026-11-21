@@ -9,9 +9,9 @@ and preserves chronological access to manually archived records.
 
 | State | Recap | Why it remains active |
 | --- | --- | --- |
-| **Pinned — resume** | [New-PC SIMPLE rehearsal](2026-11-11-1141-recap.md#new-pc-simple-rehearsal) | Baseline gates, commands and Nov 21 result; Production remains read-only. [Installed run15](2026-11-18-simple-foundation.md#nov-20-installed-cleaned-baseline-run15) remains available for human review on the other machine. |
+| **Pinned — resume** | [Old-PC SIMPLE](2026-11-11-1141-recap.md#nov21-old-pc-simple-rehearsal) and [new-PC SIMPLE](2026-11-11-1141-recap.md#new-pc-simple-rehearsal) | Independent installed results, recovery and timings; human review remains open. Run15, run13 and frozen Source are preserved. |
 | Daily reflection | [Nov 20-21 new-PC recap](2026-11-21-new-pc-recap.md) | Machine setup, synchronization, Sandbox rehearsal, recovery, tuning and remaining gates. |
-| Installed evidence | [Nov 18-19 SIMPLE foundation](2026-11-18-simple-foundation.md) | Run13 and run15 execution, Various before/after, browser checks, timings and test evidence. Human acceptance and performance residuals remain explicit. |
+| Today's evidence — installed | [Nov 18-19 SIMPLE foundation](2026-11-18-simple-foundation.md) | Actual execution, Various before/after, browser proof, measured timing and report-only repair; full mutations 53/53, library 1,048, remaining 290 and affected staging/report tests pass. Human acceptance and performance residuals remain explicit. |
 | Requested recap — current evidence | [Nov 16 SIMPLE execution](2026-11-16-simple-rebase-recap.md) | Successful run09 timings and immutable receipt, earlier failures, actual new report browser checks and bounded performance measurements; remaining acceptance explicitly separated. |
 | Previous resume | [2026-11-04-1130](2026-11-04-1130-recap.md) | Retains the installed preview11 evidence and earlier performance/human-review history. Recent experimental grouping and FAST profile work is summarised in the current pin; this older entry is not current acceptance of a new-rule rebase. |
 | Previous resume | [2026-11-04-1030](2026-11-04-1030-recap.md) | Score-band family naming built (yellow-band links, own-surname cast roots with Angelica Vale, exclusive surnames). Its no-intake resume is superseded by the fresh LEAN re-run. |

@@ -13,6 +13,15 @@ apply/check/repeat passed. The [execution spine](plans/2026-11-05-priority-reset
 records timing, the preserved failed apply, tuning samples, browser evidence and
 remaining human gates. Production, frozen Source and copied run15 were preserved.
 
+**Nov21 old-PC SIMPLE rehearsal:** the [installed result and recovery](recap/2026-11-11-1141-recap.md#nov21-old-pc-simple-rehearsal)
+passed apply/check/repeat with 3,490 sources accounted for, 184 recoverable
+duplicate archives, one confirmed no-face junk disposition and no existing
+cast Gallery departures. Representative installed viewers and report links
+were browser-checked. Human identity/crop acceptance and performance
+comparison remain open. No old-PC writer remained at that closeout. Run15,
+the failed stage, frozen Source and Production were preserved. The following
+dated statements are historical.
+
 Post-run13: the [next-preview contract](plans/2026-11-16-simple-review-and-tuning.md#nov-19-post-run13-tuning)
 stages stricter starting cores and resolves duplicate IDs before matching.
 Keep cast Review at 0.35 and outbound cast placement locked. Replay from the

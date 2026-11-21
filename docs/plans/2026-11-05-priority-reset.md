@@ -26,6 +26,17 @@ run15's 4h39m preview and 4h33m36s apply only as historical context:
 code revision, cache state and machines differ. Logs, timings and trial
 outputs remain under the Sandbox baseline evidence and preparation reports.
 
+**Nov21 old-PC closeout:** the [installed SIMPLE rehearsal](../recap/2026-11-11-1141-recap.md#nov21-old-pc-simple-rehearsal)
+passed apply, check and repeat after a failed pre-publication attempt and a
+new validated preview. All 3,490 sources are accounted for; 184 duplicate
+copies and one confirmed no-face photo have recoverable dispositions.
+No existing cast Gallery photo departed. The applied recap and representative
+Gallery/Overview/Review/detail links were browser-checked; human identity
+and crop review remains RA2d. RA2j retains inventory and named-folder
+follow-up; T29/T30 retain comparable multi-machine performance analysis.
+No old-PC writer remained at that closeout. Preserve the failed stage and
+run15; do not reset or republish for review. Queue focus remains unchanged.
+
 **Nov19 follow-up:** RA2j owns the
 [core and duplicate-readiness slice](2026-11-16-simple-review-and-tuning.md#nov-19-post-run13-tuning).
 RA2d owns human review and the deferred misplacement case; no new Review
@@ -51,7 +62,7 @@ Gallery and 285 Review placements with no existing cast Gallery departures.
 No writer remained at that checkpoint. The next gate for run15 is RA2d human
 review of installed placement and crop quality on the other machine. For T29/T30, the
 [new-PC handoff](../recap/2026-11-11-1141-recap.md#new-pc-simple-rehearsal)
-gates a fresh LEAN rehearsal on verified, cleaned raw inputs; run15 timing
+records the subsequent fresh LEAN rehearsal on verified, cleaned raw inputs; run15 timing
 is historical, not a paired benchmark. Keep the Queue focus unchanged for
 RA2d review, RA2j inventory, T29/T30 performance and RA2o residuals.
 
