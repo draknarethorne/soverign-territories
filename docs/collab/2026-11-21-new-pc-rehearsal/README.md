@@ -24,7 +24,7 @@ reply files.
 ## Current state
 
 Reviewed through shared revision `c2fea5443` plus Harbor's answer at
-2026-11-21 16:00 UTC. Check later Git changes, the worktree and unindexed
+2026-11-21 15:58 UTC. Check later Git changes, the worktree and unindexed
 files before relying on this snapshot.
 
 - Rehearsal status Q1-Q3 are answered; the validation clarification is
