@@ -16,6 +16,9 @@
 
 1. Trace existing code/callers and prior helpers before adding logic.
    State the observable requirement and affected input/output surfaces.
+   Improve tightly coupled organization as you work; use
+   [code refactoring](../../code-refactoring/SKILL.md) for safe extraction
+   and recording debt that cannot yet be resolved.
 2. Reproduce the defect or add a focused failing test when practical.
    Include boundaries, invalid input, deterministic outcomes and state
    recovery appropriate to the change.

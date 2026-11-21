@@ -35,7 +35,7 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-10-11-tidy-junk-organise.md](plans/2026-10-11-tidy-junk-organise.md) | holding | 2 |
 | [2026-10-12-artists-reset-and-auto-crop.md](plans/2026-10-12-artists-reset-and-auto-crop.md) | holding | 2 |
 | [2026-10-12-roadmap-and-mvp-data.md](plans/2026-10-12-roadmap-and-mvp-data.md) | holding | 13 |
-| [2026-10-12-tooling-debt.md](plans/2026-10-12-tooling-debt.md) | holding | 10 |
+| [2026-10-12-tooling-debt.md](plans/2026-10-12-tooling-debt.md) | holding | 11 |
 | [2026-10-20-art-tools-structure.md](plans/2026-10-20-art-tools-structure.md) | holding | 10 |
 | [2026-10-22-face-analysis-evaluation.md](plans/2026-10-22-face-analysis-evaluation.md) | holding | 4 |
 | [2026-10-22-gallery-review-layout.md](plans/2026-10-22-gallery-review-layout.md) | holding | 13 |
@@ -117,7 +117,7 @@ Use the [archive guide](guidelines/ARCHIVE-GUIDE.md) for topic navigation. `drop
 
 | Hero | Photo | Prime | Bare | Golden pose | Heels | Other finals | Candidates |
 | --- | --- | --- | --- | --- | --- | ---: | ---: |
-| Female | 75007327845399~ | Q c33 | - | - | - | - | 33 |
+| Female | 75007327845399~ | Q c33 | F c1 | - | - | - | 34 |
 | Male | alpha_male_pho~ | - | - | n/a | n/a | - | - |
 
 ### Drakn sisters (10)

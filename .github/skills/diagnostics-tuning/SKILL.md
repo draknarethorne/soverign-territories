@@ -28,7 +28,8 @@ suspension state before calling it stuck; never stop processes by name.
 For an authorized fix, follow the existing implementation workflow and add a
 focused regression that would fail without the change. Verify the supported
 launcher and affected consumers; do not bypass guards or relax thresholds to
-make a test pass. Use [long-run acceptance](../long-run-acceptance/SKILL.md)
+make a test pass. Use [test engineering](../test-engineering/SKILL.md) for
+test selection and [long-run acceptance](../long-run-acceptance/SKILL.md)
 for live Sandbox process monitoring, recovery and browser acceptance.
 
 ## Measure before tuning

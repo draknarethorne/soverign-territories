@@ -37,6 +37,23 @@ Found while building and running the artists reset, the crop and the routine, wr
 
 ## Steps
 
+- [ ] **P2 ai** D24 Review the broader active codebase in bounded,
+  revision-identified slices for correctness, maintainability, duplication,
+  oversized modules and missing tests. Inventory active code, supported
+  launchers and relevant tests first; track actual review coverage and prioritize
+  evidence-backed findings with existing owners, risks and next steps.
+  Propose cohesive, behavior-preserving extractions and add focused tests
+  before moving code. Reuse the [structure plan](2026-10-20-art-tools-structure.md)
+  E4/D1/E2 owners for its art pipeline and D13 below for the remaining
+  documentation review; do not duplicate or mark them complete. Size alone
+  is a review signal, not proof of a defect. This is holding work, not a
+  new execution lane or permission to interrupt frozen runs.
+  **Nov 21 starting inventory, not a review:** at `aaeef4f75`, representative
+  active Python files include `clean_rebase.py` (4,819 lines), `likeness.py`
+  (3,647) and `comfy_workflows.py` (3,338). These counts identify candidates
+  for responsibility/caller analysis; they do not prove defects or select
+  an extraction.
+
 - [ ] **P2 either** D23 Review/select bounded implementation from the
   [Copilot efficiency proposal](../audits/2026-11-05-copilot-efficiency/proposal.md).
   Reuse D4's mechanical guard owner, package on-demand handoff/feedback/
@@ -734,5 +751,22 @@ User words (chat, Oct 30), word for word:
 <!-- markdownlint-disable MD013 -->
 ```text
 Do the recommended things and I'll plan to reboot and get back to the key priority as long as we have plans to circle back on documentation as well
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 21: ongoing code quality and broader review
+
+D24 owns the wider code review, coverage map and prioritized findings;
+structure E4/D1/E2 retains art-pipeline review and extraction; D13 retains
+the remaining documentation review. The requested on-demand skills cover
+code review, safe on-touch cleanup/refactoring, documentation and testing;
+their implementation and validation are separate from completing D24.
+Current Queue focus is unchanged.
+
+User words (chat, Nov 21), word for word:
+
+<!-- markdownlint-disable MD013 -->
+```text
+Since you're working on skills we need to write some for code cleanup, code refactoring, documentation and testing aspects as well.  Ideally as we're working on code we're organizing things a bit better and dealing with tech debt, logging it and just cleaning things up. If files are large, they need to be broken down and organized in directory structure properly.  We did some if it with likeness, but the broader code-base needs a code review (skill as well) so we can iterate on the code and improve it - not just write new code piled on top of existing code and bloat a single .py file.  Hope that also aligns with work you can do.
 ```
 <!-- markdownlint-enable MD013 -->
