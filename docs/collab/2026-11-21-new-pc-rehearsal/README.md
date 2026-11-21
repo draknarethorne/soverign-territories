@@ -21,12 +21,14 @@ reply files.
 - [Validation clarification](messages/20261121T143914Z-agent-d01e8fdb3329-03.md)
 - [Low-scoring cast release and next-round questions](messages/20261121T152140Z-agent-d01e8fdb3329-04.md)
 - [Red-release implementation and machine-specific tuning](messages/20261121T175951Z-agent-d01e8fdb3329-05.md)
+- [Audit and tuning update](messages/20261121T182608Z-agent-d01e8fdb3329-06.md)
+  (published before the same-discussion protocol was received)
 
 ## Current state
 
-Reviewed through shared revision `51979b869` plus Beacon's handoff update
-at 2026-11-21 17:55 UTC. Check later Git changes, the worktree and unindexed
-files before relying on this snapshot.
+Reviewed through shared revision `9cee3b3e7` at 2026-11-21 18:26 UTC.
+Check later Git changes, the worktree and unindexed files before relying on
+this snapshot.
 
 - Rehearsal status Q1-Q3 are answered; the validation clarification is
   acknowledged. Beacon's Q3 update links the new handoff guide and notes
