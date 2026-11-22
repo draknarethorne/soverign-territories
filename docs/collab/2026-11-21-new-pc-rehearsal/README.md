@@ -29,7 +29,7 @@ reply files.
 
 ## Current state
 
-Reviewed through shared revision `8101eb077` at 2026-11-23 05:24 UTC.
+Reviewed through shared revision `06bde2091` at 2026-11-22 23:33 UTC.
 
 - Rehearsal status Q1-Q3 are answered; the validation clarification is
   acknowledged. Beacon's Q3 update links the new handoff guide and notes
@@ -38,8 +38,9 @@ Reviewed through shared revision `8101eb077` at 2026-11-23 05:24 UTC.
   answers: no complete isolated flow-consumer transaction is established,
   and old-PC worker/peak-memory/cache comparisons remain unmeasured.
   Harbor's scoped workflow preview is not a complete consumer inventory;
-  his small cache sample is not a full-run gain. Beacon has not started the
-  release implementation or a new library run.
+  his small cache sample is not a full-run gain. The subsequent selected
+  Sandbox release/rebase implementation and run evidence are now published
+  in the branch; the old-PC performance comparison remains unmeasured.
 - Q12 to Beacon is partially answered: 12 local ID-less configured
   selections were absent from the checked input and same-named library
   folders, while 26 workspace JSON files referenced those names. Equivalence
@@ -82,20 +83,21 @@ Reviewed through shared revision `8101eb077` at 2026-11-23 05:24 UTC.
   choices remain explicitly partial or open under RA2d/RA2j. Beacon added
   aggregate old-PC cast evidence, which Harbor's aggregate corroborates,
   and a proposed priority sequence in Q-d01e8fdb3329-09, which Harbor
-  agrees with. No threshold, new run or library mutation is selected by
-  those answers.
-- Harbor's Nov 22 handoff reports two checked new-PC Sandbox releases:
-  88 initially unavailable and 28 later unavailable members, with 3,305
-  photos conserved in the final checked Review and no red/orange or
-  unavailable scores among named-person photos. The 28 later members were
-  held unassigned because six rival identities lacked eligible cores; their
-  scores cover available rivals only. Three quality-failed members remain
-  low-confidence holds, three workflow selections remain unreplaced, and
-  human identity/crop review is open. This is Harbor-reported evidence only:
-  reports/source material were not transferred, so Beacon has not
-  independently verified it. No Production or shared workflow changed.
-  Harbor confirms Q14 remains open; no old-PC comparison or private transfer
-  is implied.
+  agrees with. Those earlier answers did not select a run; subsequent user
+  direction and the focused plan now govern the run below.
+- The published status, plan and recap record Sandbox-only unscored releases
+  of 88 and 28 members, with 3,305 photos conserved and six rival identities
+  lacking eligible cores for the later 28. They also record the fresh
+  post-intake rebase `fresh-post-intake-20261122-04` (250 initial releases,
+  applied and checked) and four later corrected-rebase previews that stopped
+  before publication with 14 quality holds and 11 retired-core holds.
+  Clarified a-i follow-up rules are an implementation contract, not yet
+  implemented in the corrected rebase. Raw run reports were not included in
+  the branch; these results have not been independently re-read here.
+  Human identity/crop acceptance, three workflow replacements and complete
+  consumer coverage remain open. Production and shared workflows were not
+  changed. Q14 remains open; no old-PC comparison or private transfer is
+  implied.
 
 Publishing a revision does not prove that Harbor has received or read it.
 These discussions are active and are not archive candidates.
