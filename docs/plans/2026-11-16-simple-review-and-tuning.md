@@ -69,7 +69,7 @@ below are the implementation contract.
 | f | Accept dominant main face (others <50%); match only, no reference vote | RA2j; confirmed |
 | g | Retirement inside rebase and intake transactions plus launcher | RA2j; confirmed |
 | h | Commit, merge Beacon's updates and push | done |
-| i | Cast seed: top 9 plus ?0.60; release the rest for rescoring | RA2j/RA2d; confirmed |
+| i | Cast seed: top 9 plus ≥0.60; release the rest for rescoring | RA2j/RA2d; confirmed |
 
 Evidence gathered: score bands are green ≥0.55, yellow ≥0.30, orange ≥0.15
 and red <0.15, so a new-identity orange pair is only 0.15–0.30 similar.
@@ -104,7 +104,7 @@ Confirmed rules (implementation contract; not yet implemented):
   yellow but not green becomes a Potential.
 - **(c, e) Single-photo Potentials:** create one only when the photo's best
   score against every existing identity is below yellow; otherwise send it to
-  that rival's Review. Label it "single photo ? not yet scoreable". It can
+  that rival's Review. Label it "single photo – not yet scoreable". It can
   gain photos or merge later.
 - **(d) Settle passes:** within the same rebase, before publication, rebuild
   references from new members, rescore, release red/orange members and
@@ -137,7 +137,19 @@ Confirmed rules (implementation contract; not yet implemented):
   highest-scoring replacement; configuration is not changed automatically.
 
 The user's clarifying answers are recorded verbatim under
-[the a?i clarifications](#post-fresh-rebase-clarifications---verbatim-form-answers).
+[the a–i clarifications](#post-fresh-rebase-clarifications---verbatim-form-answers).
+
+**Implementation order (selected Nov 22, RA2j):** the user approved starting
+all of the work, then running a fresh Sandbox rebase to see where photos
+land. Accepted risk: releasing lookalikes may create fragments, but the user
+prefers to remove manual misplacements, such as Angelica's lookalikes, soon.
+Order: (a) duplicate archiving, (b) band-aligned formation, (c) single-photo
+gate and (f) dominant-face matching. Then (i) cast seeding, (d) settle passes
+with intake small-Potential release, and (g) wired retirement and launcher.
+Finally, documentation, a new frozen-Source baseline replay with cleanup and
+sealed-preparation reuse, and a bound preview, apply, checks and recap. Each
+slice needs focused tests before the next slice starts. Production is not
+authorized.
 
 **Open after this run (RA2j/RA2d):** under the final cores, named Galleries
 still show 4 red, 43 orange and 46 unscored photos: 28 are one-photo new
