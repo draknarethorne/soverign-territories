@@ -55,20 +55,21 @@ releases use the Review fallback above; exact-content aliases stage
 distinct retained sets; admission moves must carry a reference version
 (checked at preview). The affected suites passed 370 tests.
 
-**Post-fresh-rebase feedback, pending clarification (RA2j/RA2d):** the user's
+**Post-fresh-rebase feedback, clarified (RA2j/RA2d):** the user's
 items (a)-(i) are preserved [verbatim](#post-fresh-rebase-feedback-a-i---verbatim-chat).
-No code changes until the listed clarifications are answered.
+All items were clarified with the user one at a time; the confirmed rules
+below are the implementation contract.
 
 | Item | Request | Owner / state |
 | --- | --- | --- |
-| a | Archive the 18 held exact-content copies as duplicates | RA2j; clarify keeper rule |
-| b | Release orange members of new identities | RA2j/RA2d; clarify gate |
-| c, e | Single-photo identities only when distinct; prefer to a mismatched pair | RA2d; decision |
-| d | 22 low existing members: release or rescore | RA2j; clarify iteration |
-| f | Score the main face, ignore background faces when framing is reliable | RA2d investigation, then RA2j |
-| g | Supported, wired emptied-folder retirement | RA2j; implement after (a)-(e) |
-| h | Commit current work and pull Beacon's updates | authorized; executed separately |
-| i | Cast clean-rebase seed: keep top 9, release below 0.60 | RA2d/RA2j; clarify scope |
+| a | Archive every identical copy as a duplicate | RA2j; confirmed |
+| b | New identities use score bands: Potentials yellow, Prospects green | RA2j; confirmed |
+| c, e | Single-photo Potential only below yellow vs all; labelled | RA2j/RA2d; confirmed |
+| d | Up to 3 settle passes; intake releases small Potentials (configurable) | RA2j; confirmed |
+| f | Accept dominant main face (others <50%); match only, no reference vote | RA2j; confirmed |
+| g | Retirement inside rebase and intake transactions plus launcher | RA2j; confirmed |
+| h | Commit, merge Beacon's updates and push | done |
+| i | Cast seed: top 9 plus ?0.60; release the rest for rescoring | RA2j/RA2d; confirmed |
 
 Evidence gathered: score bands are green ≥0.55, yellow ≥0.30, orange ≥0.15
 and red <0.15, so a new-identity orange pair is only 0.15–0.30 similar.
@@ -90,19 +91,53 @@ duplicate or two equal faces). None lacked a face or was under 60 px. Allowing
 a clear dominant face would change the quality policy, so it needs the
 user's decision, framing checks and a no-reference-vote rule.
 
-Proposed defaults awaiting the user's confirmation (not implemented):
-(a) keep the canonical voting copy and archive the other byte-identical
-copies recoverably, like the 184 duplicates; (b) form a new identity only
-when every member scores at least 0.30 against the others; (c, e) allow a
-one-photo Potential only when no existing identity scores at least 0.30,
-otherwise send it to Various Review; (d) within one rebase, rescore and
-release red/orange/unscored members after matching, up to three passes;
-(f) accept a clear main face (at least 60 px, other faces under 30% of its
-area, reliable head and chest crops) for matching but not as a reference
-vote; (g) retire emptied folders inside the rebase transaction and show it
-in the recap; (i) seed each Sisters/Angels identity from its top nine
-photos by own score, keeping anchors and protected or workflow photos, then
-release and rescore members below 0.60.
+Confirmed rules (implementation contract; not yet implemented):
+
+- **(a) Identical copies:** archive every byte-identical copy recoverably,
+  including released copies, and list each in the recap's duplicates
+  section. One keeper remains wherever matching places it. Correction: there
+  are 21 such copies, not 18; nine were released, 12 stayed (11 unscored).
+- **(b) New identities:** formation uses the score-band configuration, not a
+  separate value, so ranges cannot overlap. New Potentials require every
+  member to be yellow or better; new Prospects (five or more photos) require
+  green. Applies to intake and rebase. Assumption to confirm: a five-plus
+  group that is yellow but not green becomes a Potential.
+- **(c, e) Single-photo Potentials:** create one only when the photo's best
+  score against every existing identity is below yellow; otherwise send it to
+  that rival's Review. Label it "single photo ? not yet scoreable". It can
+  gain photos or merge later.
+- **(d) Settle passes:** within the same rebase, before publication, rebuild
+  references from new members, rescore, release red/orange members and
+  rematch them under (b)/(c), up to three passes. Report remaining flags as
+  "did not settle" and recap each pass with its timing and counts. An
+  identity reduced to one photo follows (c). Normal intake also releases
+  small Potentials for rescoring so photos can move upward; the size limit is
+  configurable (default 1, possibly 2 later) and its performance impact must
+  be measured.
+- **(f) Dominant face:** accept a photo for matching when the main face is at
+  least 60 px, every other face is under 50% of its area, and head and chest
+  crops build. Such photos may join a Gallery but never count in the
+  identity reference set. Re-detect near-equal second boxes: overlapping
+  boxes count as one face, while separate ones stay held. The recap lists the
+  remaining Various reasons.
+- **(g) Retirement:** retire emptied identity folders inside the rebase and
+  intake transactions (journalled and recoverable) and add an "Emptied
+  identities retired" recap section. Add `bin\retire-empty.cmd`
+  preview/apply/check for manual catch-up. An emptied Sisters/Angels folder
+  stops the run with a report. Pruning stays manual.
+- **(h) Done:** the work was committed, Beacon's updates merged and the
+  branch pushed.
+- **(i) Cast seed (Sisters/Angels only):** at the start of a clean rebase,
+  seed references from each identity's top 9 by own score plus every member
+  at or above 0.60. Release the rest (about 596 in this run) and rescore them
+  against the seed. Returns use the normal cast entry rules (Gallery 0.50
+  with a 0.10 margin, Review from 0.35), to test which genuine 0.5x photos
+  return. Add a per-identity "seed release" recap table with before and
+  after scores. A workflow photo that does not return gets a proposed
+  highest-scoring replacement; configuration is not changed automatically.
+
+The user's clarifying answers are recorded verbatim under
+[the a?i clarifications](#post-fresh-rebase-clarifications---verbatim-form-answers).
 
 **Open after this run (RA2j/RA2d):** under the final cores, named Galleries
 still show 4 red, 43 orange and 46 unscored photos: 28 are one-photo new
@@ -3332,4 +3367,17 @@ When you're done - can you recap all the steps that happened and in sequence alo
 Here's some feedback a) 18 identicals should get put to duplicates instead of being left in place.  b) I'm not sure what to do about an orange rating for new identities - that seems like it's a signal that those aren't really the same person and we'd want them released.  c) I don't know if we can handle having single photo identities unless we know for certain they are not another person and eventually they could intake additional photos.  d) 22 in existing identities?  Is that just items that should have been released or score low now after the addition of new photos and also a signal that we should release them?  e) As in previous item, if we know that single photo identities are something we can support and won't really cause issues - that might be better as a potential instead of a two image potential where the photos do not match.    f) With the face detector, does it know the main face or not?  I realize that some of the photos have people far in the background and are not the main person we'd be scoring.  There's other's where it's picking up a face from a face on a t-shirt.  Other's from a picture in the background.  Other's not quite sure on those like `various_image_7515814053462233073.jpg` where I don't see any extra faces anywhere.  I guess the way I look at items is that if the main face can be scored and we can ignore the other faces and it can produce a reliable head and chest versions later on, then I'm ok with allowing those through.  I'd want to know if there are other reasons for images left in Various after we'd support that.  g) I think we need to get the retirement aspect wired up and working as well.  h) We can commit what we have since this works and pull down other updates from Beacon as well.  Lots to do, but we're getting so very close now.  i) I'm also seeing some images in Angelica - that I put there in the first place and score high, but from a closer look, those are not her `angelica_image_7518042092123535238.jpg`, `angelica_image_7518040873536555024.jpg`, and `angelica_image_7518041173453051122.jpg` are 3 examples.  I think there are actually more as well `angelica_image_7519426801110504591.jpg` and `angelica_image_7518040070849053515.jpg` - basically anything under 0.60 seems like it could be released to see if they return or end up somewhere else.  Maybe the logic around a clean-rebase is to keep the top 9 photos (no matter what their score is) and then release anything under 0.60 to allowed to be rescored with the core of the top 9 photos in Sisters and Angels.  This is a ton of feedback, so keep the quote and re-read it a few times to make sure you get all the items and come back to me with clarifications ahead of coding.  We'll need to adjust plans and docs based on this.
 ```
 
+
+### Post-fresh-rebase clarifications - verbatim form answers
+
+```text
+(a) rule=archive-all, include_released=true, notes=As long as they are duplicates, we archive them properly and note that on the rebase recap in the duplicates section, then we're good.
+(b) notes=I agree with the proposed rule to line things up and really we should just have one set of rules like that - meaning that forming new groups should use the same config value as the ranges for scoring.  So we don't have other overlaps like thatl, rule=For the Prospects - how about they use the Green and Potentials Yellow.  I'll continue to monitor potentials to see if we even need that green after the fact as well., scope=everywhere
+(c/e) label=true, notes=If we do end up with single photo potentials - I assume they can get other photos to join in the future or they could merge into another during an intake or rebase ... Ideally, on an intake, we'd think about releasing all those back on a normal basis unless there is a different way to handle them so they don't pull images down to them, but things always move upwards if they would eventually match an existing identity after more intake.  , rule=below-yellow
+(d) intake_singletons=include, notes=As long as it isn't a huge impact on performance overall to release those.  I might even consider releasing 2 photo potentials as well - but we'll monitor, so it need to be configurable and some sort of logic that makes sense to that., passes=settle-3
+(f) notes=I would allow it to join, but exclude from the identity reference.  That makes sense to me.  That way we don't dilute the actual identity., overlap_check=true, ratio=I think we can allow up to 50% as long as we exclude that from the identity when it joins a gallery., vote=match-only
+(g) cast_stop=true, intake=true, launcher=true, notes=, where=in-rebase
+(i) notes=Many of the photos lower score are actually Angelica as well - but I was thinking those would score higher if we did not get the look-alikes back in.  That's what I was trying to test by releasing them to see if we can rebuild automatically.  The ones I have selected as workflow that are lower would likely land somewhere else so we'd just need to re-assign a new workflow photo if it did not return.  , readmit=I picked the 0.60 as a conservative number expecting some of the 0.5x's to return since they are.  I wanted to see if they ALL did return or not - since the reason some of the photos score high is there are many in Angelica that aren't her and if we take just the top-9 plus 0.60 and higher in all the galleries, that should help me see how that works out.  , scope=cast-only, seed_size=I wanted 9 since that's what we show on the main page and most of those are the right ones.  , threshold=060, workflow=release-with-replacement
+(i confirmation) i_correct=true, push=true
+```
 <!-- markdownlint-enable MD013 -->

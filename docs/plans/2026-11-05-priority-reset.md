@@ -9,7 +9,10 @@ released 250 red/orange/unscored initial Gallery photos before core
 formation, applied in 1h20m37s and passed its check; 89 emptied Potentials
 folders were retired recoverably and refreshed viewers passed their check.
 Residual red/orange/unscored photos under the final cores and the 70
-quality-held releases need user decisions under RA2j/RA2d. See the
+quality-held releases led to user feedback (a)–(i), now clarified into a
+confirmed implementation contract under RA2j/RA2d: duplicate archiving,
+band-aligned identity formation, single-photo rules, settle passes,
+dominant-face matching, wired retirement and cast top-9 seeding. See the
 [focused contract](2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning).
 
 **Nov 22 fresh-replay direction:** the user now directs RA2j to start from a
