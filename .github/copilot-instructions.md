@@ -48,6 +48,10 @@ Unity, PvP, alliances, territory maps, AFK systems and Nakama are future scope.
   [original photos runbook](../docs/art/original-photos.md).
   Follow [quality gates](../docs/guidelines/QUALITY-GATES.md) and run
   targeted tests; do not commit failing changes.
+- During approved code work, improve tightly coupled organization and avoid
+  adding unrelated responsibilities to large modules. Extract a cohesive,
+  tested slice when safe and in scope; otherwise record the actionable debt
+  under its existing owner without silently expanding the active queue.
 - For game data, follow the order: approved rule, schema, validator/tooling,
   implementation, tests. Data/art changes require `cmd /c bin\check.cmd`;
   schema/validator changes also require isolated validation.
@@ -70,6 +74,10 @@ Unity, PvP, alliances, territory maps, AFK systems and Nakama are future scope.
 - [ComfyUI rendering](skills/comfyui-rendering/SKILL.md) — batch/queue evidence and operator guidance.
 - [GUI validation](skills/gui-validation/SKILL.md) — live browser checks and evidence.
 - [Diagnostics and tuning](skills/diagnostics-tuning/SKILL.md) — failures and measured performance.
+- [Code review](skills/code-review/SKILL.md) — bounded reviews and debt discovery.
+- [Code refactoring](skills/code-refactoring/SKILL.md) — on-touch cleanup and module extraction.
+- [Documentation maintenance](skills/documentation-maintenance/SKILL.md) — canonical docs and debt records.
+- [Test engineering](skills/test-engineering/SKILL.md) — focused tests and acceptance evidence.
 - [Domain analysis](skills/domain-analysis/SKILL.md) — design and balance.
 - [Implementation workflows](skills/implementation-workflows/SKILL.md) — code,
   Unity and explicitly authorized backend tasks.
