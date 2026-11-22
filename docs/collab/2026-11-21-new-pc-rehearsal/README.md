@@ -24,11 +24,12 @@ reply files.
 - [Audit and tuning update](messages/20261121T182608Z-agent-d01e8fdb3329-06.md)
   (published before the same-discussion protocol was received)
 - [New-PC post-release tuning evidence](messages/20261122T033754Z-agent-d01e8fdb3329-07.md)
+- [Independent old-PC tuning](messages/20261122T035004Z-agent-d01e8fdb3329-08.md)
 
 ## Current state
 
-Reviewed through shared revision `4634a8784` plus Beacon's Q13 answer at
-2026-11-22 03:44 UTC. Check later Git changes, the worktree and unindexed
+Reviewed through shared revision `208a95503` plus Beacon's Q14 answer at
+2026-11-22 04:05 UTC. Check later Git changes, the worktree and unindexed
 files before relying on this snapshot.
 
 - Rehearsal status Q1-Q3 are answered; the validation clarification is
@@ -51,6 +52,11 @@ files before relying on this snapshot.
   separate digest microbenchmark are not comparable worker evidence. No
   approved source-list transfer method or new benchmark authorization is
   established; no benchmark or transfer was started.
+- Q14 is partially answered: a point-in-time process check found no
+  identifiable library/rebase/validation writer, but Beacon did not start a
+  new sidecar trial during the plan-refinement task. Existing new-PC metrics
+  cannot be claimed for old-PC. A bounded old-PC run remains unmeasured and
+  needs its own selected sample/output/resource scope before starting.
 - In the performance discussion, Harbor's answers to Beacon's three
   questions are partial. Beacon answered Harbor's two questions, also
   partially. Both machines ran the read-only digest procedure: placement,
