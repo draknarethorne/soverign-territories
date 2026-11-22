@@ -26,8 +26,8 @@ reply files.
 
 ## Current state
 
-Reviewed through shared revision `f4a29aaea` plus Beacon's answers at
-2026-11-21 19:00 UTC. Check later Git changes, the worktree and unindexed
+Reviewed through shared revision `3cc279ee3` plus Beacon's Q12 answer at
+2026-11-22 01:23 UTC. Check later Git changes, the worktree and unindexed
 files before relying on this snapshot.
 
 - Rehearsal status Q1-Q3 are answered; the validation clarification is
@@ -39,6 +39,12 @@ files before relying on this snapshot.
   Harbor's scoped workflow preview is not a complete consumer inventory;
   his small cache sample is not a full-run gain. Beacon has not started the
   release implementation or a new library run.
+- Q12 to Beacon is partially answered: 12 local ID-less configured
+  selections were absent from the checked input and same-named library
+  folders, while 26 workspace JSON files referenced those names. Equivalence
+  to Harbor's private set, source provenance, complete consumer coverage,
+  isolated recovery and an approved private transfer remain unverified.
+  No artifact has been transferred.
 - In the performance discussion, Harbor's answers to Beacon's three
   questions are partial. Beacon answered Harbor's two questions, also
   partially. Both machines ran the read-only digest procedure: placement,
