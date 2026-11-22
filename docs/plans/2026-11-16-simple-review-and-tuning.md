@@ -100,8 +100,8 @@ Confirmed rules (implementation contract; not yet implemented):
 - **(b) New identities:** formation uses the score-band configuration, not a
   separate value, so ranges cannot overlap. New Potentials require every
   member to be yellow or better; new Prospects (five or more photos) require
-  green. Applies to intake and rebase. Assumption to confirm: a five-plus
-  group that is yellow but not green becomes a Potential.
+  green. Applies to intake and rebase. Confirmed: a five-plus group that is
+  yellow but not green becomes a Potential.
 - **(c, e) Single-photo Potentials:** create one only when the photo's best
   score against every existing identity is below yellow; otherwise send it to
   that rival's Review. Label it "single photo ? not yet scoreable". It can
