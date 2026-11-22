@@ -174,6 +174,17 @@ preview/apply/check. Outgoing cast Gallery and genuine source locks remain
 closed. Verified retained natives reuse their checked preparation/immutable
 history; a membership-only update cannot retire unchanged native lineage.
 Receipts bind code, policy, source bytes, reference snapshots and this lock.
+For new FULL/LEAN preparation, `--preparation-workers 1`, `2` or `3` selects
+the number of workers for that preview; the default remains `1`. Repeat
+the same value on apply so the request matches the preview. The origin seal
+records the worker count. For two or three workers, preparation refuses
+to start if available memory is unknown or below 3.5 GiB per worker; this
+is a preflight estimate, not a hard runtime memory limit. This option is not
+a cache size, does not alter
+matching, and a non-default value is not accepted with `--reuse-preparation`,
+FAST or check/recovery. Choose it separately on each machine only after its bounded
+measurements, resource and parity checks. Small sidecar trials do not certify
+a whole rebase.
 The [implementation/acceptance ledger](../plans/2026-11-16-simple-review-and-tuning.md#implemented-foundation-fixture-proof-not-a-library-run)
 distinguishes fixture/browser proof from installed and human acceptance.
 
@@ -325,6 +336,38 @@ assessment only when distinctness and independently supported resemblance
 coexist; no family fact, default story role, or live GUI action is inferred.
 The report's reviewed positive fixtures are development controls, not blind
 accuracy. Independent rule selection and acceptance remain separate gates.
+
+## Sandbox score-band release experiment
+
+`bin\sandbox-red-release.cmd` is an isolated Sandbox experiment, not normal
+intake or a workflow replacement. Its current Review mode selects the
+requested `--release-band` values using the saved policy, verifies the
+Review and cached scores, and defaults to a read-only census. The supported
+arguments are listed in `bin\help.cmd`. A routed preview additionally binds
+the original receipt and audit, previous release and current Review; apply
+requires the exact `--expected-plan-sha256` from that preview. Use repeated
+`--continuation-run` arguments in chronological order for later releases:
+the verifier checks each journal and its historical state against subsequent
+recovery snapshots, and binds their hashes to the new preview.
+`--include-unscored` also selects unavailable own-core scores. The preview
+binds independently measured candidates and rival assessments; former
+non-voters and quality-ineligible photos are held unassigned. If any
+identity lacks an eligible rival core, the release holds every candidate
+unassigned and labels rival scores as covering available cores only. Other
+frozen-core diagnostics still block the release. Supplemental read-only
+measurements are not persisted to the cache.
+
+The report records former owners, destinations, scores and workflow flags.
+Apply journals the Sandbox file changes, but does not update workflows or
+prove consumer coverage; an affected selection may still need replacement.
+Use the run's `--check` and recovery preview before considering recovery;
+`--recover-apply` changes the Sandbox and remains an explicit operation.
+Check for later edits and dependent releases before recovering an earlier run.
+A separate reports-only viewer refresh is outside the release journal and
+becomes stale after recovery; preserve shared report outputs before refresh,
+then verify the refreshed reports and actual browser separately. Human
+identity acceptance and shared-workspace or Production changes remain
+separate gates.
 
 ## Maintained directed Sandbox reformation
 
@@ -1681,7 +1724,90 @@ intake merely to repair a viewer/check failure. Real installed/viewer acceptance
 remains open until the selected run supplies that evidence; legacy reset and
 repeated-refinement commands below are not SIMPLE.
 
+For an authorized Sandbox replay of prior journalled releases, add
+`--release-receipt`, `--release-audit`, `--release-review` and one
+`--release-run` per release in chronological order to both preview and apply.
+Add `--reconsider-holds` to both preview and apply when the authorized rebase
+must reassess prior Review holds and non-voting duplicate candidates. This
+Sandbox-only option records prior explicit Review placements rather than
+deleting user-action history. Explicitly accepted matches and current quality,
+rejection, protection and independent-reference checks still apply.
+The receipt, audit, checked final Review and complete release chain must verify
+against the current Working state. Released photos enter ordinary matching
+before identity formation; exact-content duplicates do not cast extra votes.
+The source bindings, decisions and release lineage are bound to the preview.
+These options are not valid for check or recovery and do not authorize
+Production changes or workflow replacement.
+
+For an authorized fresh post-intake Sandbox baseline, use
+`--fresh-source-release` on both preview and apply instead of the historical
+release-lineage options. It assesses initial named Gallery members against
+independent own-identity evidence, selects red, orange and unscored members,
+and retires selected source authority before freezing cores and matching.
+It also enables hold reconsideration. Evidence and selections are bound to
+the preview; duplicate content, including byte-identical prepared natives,
+gets one reference vote. A descriptive filename binds only through its
+inventory-verified standard name. A released photo without an unambiguous
+placement goes to its highest-scoring eligible rival's Review. If the photo
+fails the single-face quality gate or has no eligible rival, it goes to
+Various Review. Review adds no reference vote. Stale rejection evidence or
+an explicit user Review placement still stops the run. Admission moves
+without a reference version fail at preview. First verified on the Sandbox
+as `fresh-post-intake-20261122-04`.
+
 #### Saved SIMPLE movement recap and placement audit
+
+For an applied receipt followed by Sandbox releases, use the separate
+per-source movement history. Supply the original bound audit, the final
+reports-only Review directory and **every** release ID in chronological order:
+
+```cmd
+bin\movement-history.cmd --root "%W%" --receipt "%RECEIPT%" --audit "%AUDIT%" --current-review "%FINAL_REVIEW%" --report-id HISTORY_ID --release FIRST --release NEXT --dry-run
+bin\movement-history.cmd --root "%W%" --receipt "%RECEIPT%" --audit "%AUDIT%" --current-review "%FINAL_REVIEW%" --report-id HISTORY_ID --release FIRST --release NEXT --apply
+bin\movement-history.cmd --root "%W%" --receipt "%RECEIPT%" --audit "%AUDIT%" --current-review "%FINAL_REVIEW%" --report-id HISTORY_ID --release FIRST --release NEXT --check
+```
+
+Repeat `--release` for each release; the example is not the current run list.
+Preview and check are read-only. Apply creates only a new
+`_reports\library\movement-history\HISTORY_ID` report; an identical repeat is
+safe, and different or incomplete existing evidence is refused. It verifies
+the original receipt/audit, release journals and historical snapshots, and
+the final Review census; missing, ambiguous, incomplete or changed lineage
+stops the report. It does not repair or bypass a failed chain. Every physical
+source row is shown; archive, alias and superseded rows are not presented as
+additional current photos. Images are linked only at their exact recorded
+paths when their bytes match; missing or changed historical images are
+explicit, not replaced by a current image. Image states are as of report
+generation and browser loading is a separate check. This is not human identity
+acceptance or permission to move photos.
+The history records what happened, not the intended routing: released photos
+are to be reconsidered as normal candidates at the start of a rebase, and
+recorded Review holds do not establish intended placements. A missing
+continuation binding is accepted only when a later verified continuation
+explicitly binds the entire preceding journal sequence.
+
+To attempt to extend this history after a corrected rebase is applied, add
+`--corrected-receipt "APPLIED-RECEIPT.json"` to each command. The required
+cohort is derived from distinct verified released photo IDs; optionally add
+`--expected-cohort COUNT` to reject a different count. The current historical
+preview observed 219 distinct released photos; this is not a generic default.
+The corrected receipt and
+journal must pass their existing applied check, and every cohort photo must
+match exactly by last released path, photo ID and source hash, with a bound
+publication and recovery snapshot. Unmatched non-cohort source rows remain
+visible without an inferred placement. Ambiguous IDs or changed cohort bytes
+stop the report. The original full release-chain checks remain mandatory:
+for paths the verified successor overwrote or removed, they use its
+hash-bound recovery snapshot; untouched paths are checked live. Missing,
+ambiguous, unrelated or changed successor evidence stops verification.
+For a checked, explicit retirement following that rebase, also supply
+`--retirement-journal WORKING_RELATIVE_PATH --retirement-digest PREVIEW_SHA256`
+to each command. The bound retirement journal, folder inventory and predecessor
+are verified; this does not authorize or perform retirement. Other subsequent
+transactions remain unsupported. Retirement-aware history is fixture-tested,
+not yet verified against an installed corrected rebase. Existing reports retain
+their original producer hashes; after implementation changes use a new report
+ID rather than overwriting old evidence.
 
 Normal preview/applied receipts now publish report-only recap/audit pages
 under `_reports\library\rebase-recap` for previews and its `applied`
@@ -1689,6 +1815,12 @@ subdirectory for applied receipts. Each directory has its own index:
 post-transaction reporting must not overwrite preview artifacts sealed by
 publication. Do not regenerate sealed historical previews in place; use
 `--out` to select a separate report path if new rendering is needed.
+The movement recap lists ordered phases and their purposes, recorded counts
+and measured elapsed seconds. Reused preparation reports only current reuse
+verification time, not its historical preparation time. Publication timing
+ends after the transaction, viewers and cache save; receipt and recap writing
+are excluded. Preview publication remains apply-only. Older receipts without
+timings display them as unavailable rather than estimating them.
 To reconnect an older saved run
 without preparing, matching or moving anything:
 

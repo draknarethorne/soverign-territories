@@ -16,6 +16,12 @@ input IDs, allowed fixes/restarts and commit/push authority. Keep human
 identity/quality approval and Production/shared-workspace publication separate.
 Read [launcher help](../../../bin/help.cmd); reuse supported commands.
 
+When the user authorizes a Sandbox apply, proceed with a bounded test and
+verify the actual result afterward; unavailable Production or other-machine
+evidence need not block an isolated Sandbox experiment. State what is not
+covered, preserve source images and receipts, and do not claim a shared
+workflow was updated or promote results to Production.
+
 Before launching anything, identify the existing process tree, flow receipt,
 step log and completion waiter from current evidence. Reuse an existing job;
 do not start duplicate writers or waiters. Inspect small receipts/log tails

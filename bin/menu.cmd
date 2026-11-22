@@ -22,6 +22,8 @@ echo   SB Preview clean Sandbox baseline (Production to Source to Working; no ch
 echo   VC Scan for exact Various arrivals or preview a reviewed cleanup plan (no changes)
 echo   SR Preview SIMPLE whole-library rebase (can prepare/measure the full library)
 echo   RR Preview saved SIMPLE recap/audit (reports only; no matching or moves)
+echo   MH Sandbox movement history: see Help for ordered-release command (reports only)
+echo   RD Check red-release snapshot evidence (read only; no release)
 echo   EX Experimental likeness operation (explicit operation; directed rebase also requires a recipe)
 echo   R  Photo review gallery (read-only audit; history-only repair flags in Help)
 echo   G  Preview gallery upkeep (rename, padded/head/chest; no matching or writes)
@@ -64,6 +66,12 @@ set "CH="
 set /p "CH=Choice: "
 if /i "%CH%"=="Q" exit /b 0
 if /i "%CH%"=="RR" goto simplerecap
+if /i "%CH%"=="MH" (
+  echo Use movement-history.cmd in Help; supply all release IDs in order.
+  pause
+  goto menu
+)
+if /i "%CH%"=="RD" goto reddiagnostic
 if /i "%CH%"=="H" call "%~dp0help.cmd" & pause & goto menu
 if /i "%CH%"=="S" call "%~dp0style-audit.cmd" & pause & goto menu
 if /i "%CH%"=="K" call "%~dp0backdrop.cmd" --repo --workspaces --check & pause & goto menu
@@ -231,6 +239,22 @@ set "SIMPLERUN="
 set /p "SIMPLERUN=New SIMPLE run-id (preview may prepare all photos; blank cancels): "
 if "%SIMPLERUN%"=="" goto menu
 call "%~dp0normal-rebase.cmd" --root "B:\Sovereign Territories Sandbox\Working" --profile lean --run-id "%SIMPLERUN%" --dry-run
+pause
+goto menu
+:reddiagnostic
+set "RDROOT="
+set "RDRECEIPT="
+set "RDREPORT="
+set "RDCACHE="
+set /p "RDROOT=Absolute Sandbox Working root (blank cancels): "
+if "%RDROOT%"=="" goto menu
+set /p "RDRECEIPT=Applied SIMPLE receipt path (blank cancels): "
+if "%RDRECEIPT%"=="" goto menu
+set /p "RDREPORT=Checked snapshot HTML path (blank cancels): "
+if "%RDREPORT%"=="" goto menu
+set /p "RDCACHE=Saved general-domain cache path (blank cancels): "
+if "%RDCACHE%"=="" goto menu
+call "%~dp0red-release-diagnostic.cmd" --root "%RDROOT%" --receipt "%RDRECEIPT%" --report "%RDREPORT%" --cache "%RDCACHE%" --check
 pause
 goto menu
 :rebasemanifest

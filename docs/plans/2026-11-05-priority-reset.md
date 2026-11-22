@@ -2,7 +2,152 @@
 
 **Status:** active (execution spine: FAST likeness, LEAN/FULL acceptance, then character art)
 
-**Queue focus:** RA2j, T29, T30, RA2d, RA2o
+**Queue focus:** RA2d, RA2j, RA2o, T29, T30
+
+**Fresh post-intake rebase applied (Sandbox):** `fresh-post-intake-20261122-04`
+released 250 red/orange/unscored initial Gallery photos before core
+formation, applied in 1h20m37s and passed its check; 89 emptied Potentials
+folders were retired recoverably and refreshed viewers passed their check.
+Residual red/orange/unscored photos under the final cores and the 70
+quality-held releases need user decisions under RA2j/RA2d. See the
+[focused contract](2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning).
+
+**Nov 22 fresh-replay direction:** the user now directs RA2j to start from a
+verified post-intake, pre-rebase state rather than a prior rebase result, with
+release and hold reassessment at the start. Preserve the current Sandbox and
+its receipts until the exact recovery boundary is verified; do not rerun intake
+unnecessarily. The final recap needs an ordered step summary and detail with
+purposes, measured timings and counts. See the
+[focused contract](2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning).
+
+**Nov21 orange/red implementation priority:** the user selected red and
+then all orange core-similarity member releases across identity groupings,
+with Sisters and Angels first. The scoped Sandbox runs may override member
+protections including workflow selection, with a higher-scoring replacement
+for a released workflow photo. RA2d owns rule/evidence and human acceptance;
+RA2j owns selected implementation, reference/selection transactions and
+movement audit; RA2o reconciles affected plans. The user also selects
+per-machine T29/T30 tuning, coordinated without competing with live jobs.
+The
+[focused contract and exact user source](2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning)
+record remaining decisions and the distinction between planning, preview,
+apply and Production permission. Implementation is selected; installed
+results are described in the continuation below. This selection supersedes
+earlier priority/blanket-protection statements only in the specified
+Sandbox release scope.
+
+**Later unscored selection:** the user also directs release of unscored
+photos from their current identities and wants everything scored. RA2j owns
+the checked Sandbox release and RA2d owns unavailable-measurement
+investigation; do not fabricate scores or retain an unscored identity member
+as an implicit successful outcome. See the
+[focused contract](2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning).
+
+**Latest integrated-rebase gate:** four Sandbox previews stopped before
+publication; expanded-hold preview `corrected-release-rebase-20261122-04`
+verified 20,774 source files and identified 14 single-face quality holds and 11
+independently scored retired-lower-core holds in the 219-photo release cohort.
+No corrected rebase was applied. Hold reassessment is fixture-tested but not
+installed; the user also directs reconsideration of pre-existing holds beyond
+the release cohort. RA2j retains the truthful routing, recovery, retirement and
+movement-report work; RA2d retains quality and human acceptance. Preserve the
+sealed preparation and prior release evidence described in the
+[focused contract](2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning).
+No writer remains; do not reset or rerun intake.
+
+**Latest Sandbox unscored closeout:** checked runs
+`unscored-release-20261121-02` and `unscored-continuation-20261121-01`
+moved 88 and 28 unscored members respectively. Both publication checks and
+recovery previews passed. The first run held 19 former non-voters and three
+quality failures without making them references. The continuation held all
+28 in Various Review because six identities had no eligible rival core;
+its scores cover available rivals only. A fresh reports-only refresh and
+independent check conserved 3,305 photos and found zero named-person
+red/orange or unavailable scores. The release reports retain the scores and
+destinations; unassigned holds do not have an own-identity score. Browser
+inspection loaded representative Review, Overview and release-report
+images. Human identity/crop acceptance, three workflow replacements and
+consumer coverage remain open. No reset or intake is required.
+
+**Earlier RA2j continuation:** Sandbox-only experiment
+`red-release-sandbox-20261121-01` moved seven photos: one to Yvette Orr
+Review and six to Various Review. Publication check and recovery preview
+passed again after a separate reports-only refresh. The refreshed Review
+contains 3,305 photos, zero red named-category scores, 102 orange Gallery
+and seven orange Review scores; 88 named Gallery scores are unavailable.
+Artist coverage is separate. The viewer's own Overview/Photo review tabs
+stay in the refreshed directory; its masthead People link opens the older
+canonical overview instead. Use the direct refreshed pages in the
+[new-PC recap](../recap/2026-11-21-new-pc-recap.md#sandbox-red-release-and-refreshed-viewers).
+The later viewer refresh is outside the release journal and would become
+stale after release recovery. No relevant local writer was found. Do not
+reset or repeat intake.
+
+This partial experiment did not replace the workflow selection or verify all
+consumers; it does not complete the integrated release. The user subsequently
+selected all orange and red bands for a further Sandbox release. RA2j retains isolated workflow
+replacement, consumer coverage, recovery and a score-policy-bound configurable
+release selector. RA2d retains human identity/crop decisions;
+T29/T30 retain comparable per-machine tuning. Production and shared workflows
+remain unchanged.
+
+**Later applied continuation:** `orange-red-release-20261121-01` selected
+all 109 orange/red members of the checked post-red Review, then published
+109 orange moves: 22 named Gallery, 24 named Review and 63 Various Review.
+No red remained in that input. Publication check and recovery preview passed;
+3,196 unaffected Review natives are bound. Ten former matcher cores became
+empty; identity metadata is retained. Two orange workflow photos and the
+earlier red workflow photo remain unreplaced; consumer coverage is unverified. A separate reports-only
+refresh to `orange-red-post-20261121-01` completed and passed the
+reports-only check. Browser inspection confirmed Overview/Review and
+loaded thumbnails, but the masthead People link points to the older canonical
+Overview. Its checked census found four further orange/red members and 88
+unscored named-person members. `orange-red-continuation-20261121-01` moved
+those four orange photos (two named Galleries, two Various Review), with publication check
+and recovery preview passed; its exact preview hash was
+`ecbdeb5c0c55bced688b134602712f9d2399177d8ed1469c744f4fc94d716e9c`.
+The `orange-red-post-continuation-20261121-01` refresh completed with
+30,686 inputs and an independent final seal, then passed its reports-only
+check. Its checked census found zero red/orange named-person candidates and
+88 unavailable scores. Browser checks opened Overview and Review, showed
+loaded thumbnails and followed one retained detail to its current-native
+link; the four-photo release report loaded all four destinations. Earlier
+viewers are stale; refreshes are outside release recovery journals.
+The masthead People link still points to an older canonical Overview.
+Workflow replacement, unidentified consumers, unscored review, performance
+tuning and human acceptance remain open under RA2j/RA2d and T29/T30. The
+separate Artist root is absent. No writer remains for these runs.
+New-PC isolated 48-photo LEAN worker trials and their independent checks
+are recorded under [T29/T30 evidence](2026-10-28-intake-performance.md#nov-21-per-machine-tuning).
+Three workers were fastest in that sample but used more memory; this does not
+select a whole-library default or establish old-PC performance.
+Beacon's partial old-PC answer at `d56c35022` reports no controlled worker
+comparison or approved private input transfer. `208a95503` follows up on an
+independent local-input comparison. Beacon's `e702edc5e` partial response
+reports no old-PC worker benchmark and no independently authorized sample,
+output location or resource bound for a new old-PC trial; Q14 remains open.
+The dirty main worktree remains
+unreconciled with those remote revisions.
+
+**Earlier RA2j foundation:** routed catalogue staging, LEAN retained lineage and a
+combined photo/configuration/workflow/input recovery are fixture-tested, not
+installed. The saved-evidence diagnostic still blocks all seven reds: workflow
+isolation and complete consumer/input coverage are unresolved. A separate v16
+audit passed preview/apply/check; expanded local discovery reports seven
+unavailable workflow roots and zero unidentified input files in 108 scoped
+lookups. Alternate configuration inspection is read-only and does not prove
+isolation. Next integrate the bound preview, isolation and transaction, then
+validate recovery before Sandbox apply. No photo writer is running and no
+reset or new intake is needed.
+Publication now refuses an existing/racing journal and exclusively creates
+the initial journal; an interrupted initial write preserves its partial
+journal and backup for inspection rather than proving automatic recovery.
+New journals also bind the recovery snapshot manifest; changed manifests are
+refused before restoration. Older journals lack that binding. The affected
+transaction, routing, recap and rebase suites passed 206 tests.
+An optional all-Review hypothetical also checks destination cores: the one
+proposed identity Review arrival scores yellow, while six unassigned holds
+have no identity score. This does not resolve any apply gate.
 
 **Nov21 new-PC SIMPLE:** cleaned raw inputs matched all 3,490 run15 paths and
 hashes. Fresh LEAN preview `simple-newpc-lean-20261120-02` passed in
@@ -21,7 +166,10 @@ Production, frozen Source and copied run15 remain preserved.
 T29/T30 retain tuning: three separate 24-image installed-input sidecar trials
 passed checks with matching compared image hashes and outcomes: 1 worker
 43.7s, 2 workers 28.7s, 3 workers 24.5s. This small, sequential sample is
-not a full-rebase benchmark; SIMPLE remains explicitly serial. Compare
+not a full-rebase benchmark; SIMPLE defaults to one worker, with an opt-in
+bounded worker control and subsequent measurements in the
+[performance plan](2026-10-28-intake-performance.md#nov-21-per-machine-tuning).
+Compare
 run15's 4h39m preview and 4h33m36s apply only as historical context:
 code revision, cache state and machines differ. Logs, timings and trial
 outputs remain under the Sandbox baseline evidence and preparation reports.
@@ -665,6 +813,13 @@ unresolved human identity acceptance remains open.
   character answers and reference LOO remain fixtures/training diagnostics,
   not held-out accuracy. Keep secondary-cue cost/availability and unresolved
   lookalikes visible; do not assume face-only summaries will suffice.
+  **Nov21 selected red scope:** review the
+  [bound red census and release contract](2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning),
+  including the user's explicit scoped override, workflow replacement,
+  remaining decisions, human review and later orange/named-case follow-up.
+  Exact cross-machine placements already match; per-photo score impact is
+  not yet measured. Do not make a further parity investigation a blanket
+  prerequisite for planning the red release.
   **Nov18 current pre-run gate:** finalize the
   [foundational SIMPLE corrective contract](2026-11-16-simple-review-and-tuning.md#next-simple-run-foundational-corrective-contract),
   which consolidates the dated gate/upward-recovery discussion and preserved
@@ -780,6 +935,10 @@ unresolved human identity acceptance remains open.
   and lifecycle acceptance, not another confirmation packet for these splits.
 - [ ] **P1 ai** RA2o Reconciling current plans after the focused SIMPLE
   review/tuning contract is formalized and the run evidence/handoff is stable.
+  **Nov21:** reconcile the affected current and historical protection and
+  release guidance with the scoped
+  [red-member direction](2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning);
+  preserve other unfinished scopes and dated evidence.
   Source: the [Nov 16 three-activity request](2026-11-16-simple-review-and-tuning.md#primary-user-source).
   Preserve RA2j publication and RA2d human/rule ownership; this is document
   housekeeping, not activation of experiments or a new numerical policy.
@@ -818,6 +977,18 @@ unresolved human identity acceptance remains open.
   readiness/secondary cues/daily lifecycle/GUI/roles are not activated.
 - [ ] **P1 ai** RA2j Restoring the normal FULL/LEAN/FAST intake flow and
   separating exclusive experimental execution.
+  **Integrated completion follow-up:** the
+  [selected contract](2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning)
+  also owns release into normal candidate scoring and identity formation at
+  the start of the same rebase, recoverable retirement of emptied identities,
+  and a complete previewing movement history through the final state. The
+  existing separate Sandbox release runs are not that integrated delivery.
+  **Nov21 selected implementation slice:** establish the
+  [red release, reference retirement, workflow replacement and final audit](2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning)
+  transaction and focused test/preview gates under RA2d's rule ownership.
+  The user's scoped protection override is not a request to weaken source,
+  integrity or recovery safeguards. Implementation is selected, not a
+  permission to run or apply.
   **Nov20 review feedback:** the [run15 disposition follow-up](2026-11-16-simple-review-and-tuning.md#nov-20-review-and-various-dispositions)
   owns untouched Review regrouping, verified Various duplicate archiving
   and confirmed no-face recovery; isolated preview/apply/check/repeat/recovery
@@ -1832,15 +2003,26 @@ dispositions. No full intake per task, new worker framework or wholesale
 T20/T21/T22/L18 activation. Runtime implementation requires the live-run
 freeze to end; preserve exact outputs, diagnostics and recovery semantics.
 
+**Nov21 per-machine selection:** apply the
+[machine-specific tuning contract](2026-10-28-intake-performance.md#nov-21-per-machine-tuning)
+to each machine separately, including worker/native threads, bounded memory
+reuse and measured parity. Local and remote workloads must not compete with
+active writers. This extends T29/T30 rather than making either machine's
+settings universal or authorizing a new full-library replay.
+
 - [ ] **P1 ai** T29 Freeze same-machine representative generation/no-op,
   warm/cache phase baselines before runtime/path changes, with input/config/
   code/resource IDs, timings, read/byte counts and output contracts.
+  **Nov21:** maintain separate new-PC and old-PC resource and benchmark
+  evidence for worker/cache experiments and comparable cross-machine runs.
   [Full benchmark contract](2026-10-28-intake-performance.md#milestone-transfer-record).
 - [ ] **P1 ai** T30 Remove established repeated work across phase and
   standalone/continuous boundaries; publish per-hotspot ownership, cost,
   cache dependencies/invalidation, tests and fixed/deferred/no-gain status.
   Coordinator decisions, disjoint workers, bounded memory and explicit
   pause/edit/failure handling are required; not a new generic framework.
+  **Nov21:** evaluate measured per-machine worker/cache choices independently;
+  do not propagate defaults or sacrifice output/safety checks for speed.
   [Full execution design](2026-10-28-intake-performance.md#milestone-transfer-record).
 - [ ] **P1 ai** T20 Reuse verified external/retained/derivative inventory
   within valid operation scope; prove path/hash/owner/mutation guards and

@@ -379,7 +379,11 @@ def plan_reconciliation(
                 })
             continue
         candidate = dict(rows[0])
-        if admission_context is not None and candidate.get("explicitReviewPlacement"):
+        red_release = bool(
+            admission_context is not None and admission_context.get("redRelease")
+            and candidate.get("redRelease")
+        )
+        if admission_context is not None and candidate.get("explicitReviewPlacement") and not red_release:
             held.append({
                 "photoId": photo_id, "sourceFolder": candidate["sourceFolder"],
                 "sourceBucket": candidate["sourceBucket"], "preserveStaged": True,
@@ -394,7 +398,7 @@ def plan_reconciliation(
                 "preserveStaged": True,
             })
             continue
-        if candidate.get("identityProtected"):
+        if candidate.get("identityProtected") and not red_release:
             held.append({
                 "photoId": photo_id,
                 "sourceFolder": candidate.get("sourceFolder"),
@@ -402,7 +406,7 @@ def plan_reconciliation(
                 "reason": "protected identity; photo remains in its current identity",
             })
             continue
-        if candidate.get("workflowSelected") or candidate.get("protected"):
+        if candidate.get("workflowSelected") or (candidate.get("protected") and not red_release):
             held.append({
                 "photoId": photo_id,
                 "sourceFolder": candidate.get("sourceFolder"),
@@ -422,7 +426,9 @@ def plan_reconciliation(
             and candidate.get("sourceBucket") == "Gallery"
             and candidate.get("sourceFolder", "").split("/", 1)[0] in ("Models", "Prospects", "Potentials")
         )
-        if candidate.get("sourceBucket") not in {"Pool", "Review"} and not gallery_outlier and not rebase_member:
+        if (candidate.get("sourceBucket") not in {"Pool", "Review"}
+                and not gallery_outlier and not rebase_member
+                and not (red_release and candidate.get("sourceBucket") == "Gallery")):
             raise ValueError(f"{photo_id}: sourceBucket must be Pool, Review or a validated Gallery outlier")
         if candidate.get("side") not in {"Prospects", "Artists"}:
             raise ValueError(f"{photo_id}: side must be Prospects or Artists")

@@ -43,9 +43,18 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
     }
     unresolved = []
 
+    def excluded(rows, candidates_cores):
+        folders = excluded_folders(rows, candidates_cores)
+        if admission_context is not None and admission_context.get("redRelease"):
+            folders.update(
+                row["sourceFolder"] for row in rows
+                if row.get("redRelease") and row.get("detachedOutlier")
+            )
+        return folders
+
     def classify(group):
         ranked = _rank(
-            group["vector"], cast, group["side"], excluded_folders(group["rows"], cast),
+            group["vector"], cast, group["side"], excluded(group["rows"], cast),
         )
         return classify_category(
             len(group["rows"]), ranked[0][0] if ranked else None, policy,
@@ -96,7 +105,8 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
         route_cores = cores
         if admission_context is not None:
             route_cores = {folder: core for folder, core in cores.items() if folder not in cast}
-            if row.get("rebaseCandidate") and row["sourceBucket"] == "Gallery":
+            if (row.get("rebaseCandidate") and row["sourceBucket"] == "Gallery"
+                    and not (admission_context.get("redRelease") and row.get("redRelease"))):
                 order = {category: index for index, category in enumerate(policy["categoryOrder"])}
                 source_rank = order[row["sourceFolder"].split("/", 1)[0]]
                 route_cores = {
@@ -105,7 +115,7 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
                 }
         ranked = _rank(
             row["vector"], route_cores, row["side"],
-            excluded=excluded_folders([row], cores) | (
+            excluded=excluded([row], cores) | (
                 {row["sourceFolder"]} if row.get("detachedOutlier") else set()
             ),
         )
@@ -116,10 +126,13 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
             ))
             continue
         if not ranked:
-            if row.get("rebaseCandidate") and row["sourceBucket"] == "Gallery":
+            if (row.get("rebaseCandidate") and row["sourceBucket"] == "Gallery"
+                    and not (admission_context and admission_context.get("redRelease") and row.get("redRelease"))):
                 held.extend(evidence([row], [], "no qualified higher identity; current Gallery owner retained",
                                      preserveStaged=True))
-            elif admission_context is not None and row["sourceBucket"] == "Review" and not row.get("regroupReview"):
+            elif (admission_context is not None and row["sourceBucket"] == "Review"
+                    and not row.get("regroupReview")
+                    and not (admission_context.get("redRelease") and row.get("redRelease"))):
                 held.extend(evidence([row], [], "unmatched Review remains non-recruiting with its current owner",
                                      preserveStaged=True))
             else:
@@ -130,10 +143,13 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
         rules = categories[core.get("category", folder.split("/", 1)[0])]
         lead = score - ranked[1][0] if len(ranked) > 1 else 2.
         if folder in cast or score < routing["reviewMinimum"]:
-            if row.get("rebaseCandidate") and row["sourceBucket"] == "Gallery":
+            if (row.get("rebaseCandidate") and row["sourceBucket"] == "Gallery"
+                    and not (admission_context and admission_context.get("redRelease") and row.get("redRelease"))):
                 held.extend(evidence([row], ranked, "higher match is below entry floor; current Gallery owner retained",
                                      preserveStaged=True))
-            elif admission_context is not None and row["sourceBucket"] == "Review" and not row.get("regroupReview"):
+            elif (admission_context is not None and row["sourceBucket"] == "Review"
+                    and not row.get("regroupReview")
+                    and not (admission_context.get("redRelease") and row.get("redRelease"))):
                 held.extend(evidence([row], ranked, "unmatched Review remains non-recruiting with its current owner",
                                      preserveStaged=True))
             else:
@@ -210,7 +226,7 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
         target = ranked[0][1] if ranked else None
         rules = categories[groups[target]["category"]] if target is not None else None
         existing = _rank(
-            group["vector"], cores, group["side"], excluded_folders(group["rows"], cores),
+            group["vector"], cores, group["side"], excluded(group["rows"], cores),
         )
         competitors = ([ranked[1][0]] if len(ranked) > 1 else []) + (
             [existing[0][0]] if existing else []
@@ -238,7 +254,7 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
             continue
         rows = group["rows"] + group.get("attached", [])
         vector = group["vector"]
-        cast_ranked = _rank(vector, cast, group["side"], excluded_folders(rows, cast))
+        cast_ranked = _rank(vector, cast, group["side"], excluded(rows, cast))
         score = cast_ranked[0][0] if cast_ranked else None
         classification = classify({**group, "rows": rows})
         if classification["category"] in (None, "Review"):

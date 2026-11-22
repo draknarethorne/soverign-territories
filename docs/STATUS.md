@@ -6,6 +6,40 @@ been decided, what is open, and what is next. Rules live in the canonical docs l
 
 ## Current checkpoint
 
+**Nov21 orange/red Sandbox release:** the user selects release of orange and
+red core-similarity members across identity groupings, beginning with
+Sisters and Angels. The scoped run may override member protections and
+workflow selection, with a higher-scoring replacement and traceable
+destinations. [The focused plan](plans/2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning)
+owns selection, unresolved transactions and audit. Sandbox-only experiment
+`red-release-sandbox-20261121-01` moved seven red photos and passed its
+publication check and recovery preview. The later
+`orange-red-release-20261121-01` moved all 109 orange candidates from the
+checked post-red Review; publication check and recovery preview passed.
+The first refresh passed its reports-only check and browser inspection;
+its census identified four further orange/red candidates and 88 unscored
+named-person photos. `orange-red-continuation-20261121-01` moved those four
+orange photos (two named Galleries, two Various Review); publication check
+and recovery preview passed. The final refresh and reports-only check passed;
+its checked Review has no red/orange candidates among scored named-person
+photos and 88 unscored at that checkpoint. The user subsequently directed
+release of unscored photos. Two checked Sandbox releases moved 88 and 28
+unscored members; the latter are all unassigned holds because six identities
+had no eligible rival core. The final checked Review has zero orange/red or
+unavailable scores among named-person photos. Independent rival scores are
+recorded in the release reports; they are not own-identity scores, and three
+quality-failed photos remain low-confidence holds. See the
+[focused plan](plans/2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning)
+for non-voting and duplicate safeguards. Browser checks opened both viewers
+and a retained detail; human identity/crop acceptance remains open. Three workflow-selected
+releases (one red and two orange) remain unreplaced; the red photo was moved
+again in the unscored continuation. Workflow replacement and
+consumer coverage remain open. No
+separate Artist root is present in this Sandbox. Shared workflows and
+Production were not changed. The two original
+saved runs have identical source-keyed placements; per-photo score impact
+and human identity/crop acceptance remain open.
+
 **Nov21 new-PC SIMPLE:** the cleaned raw inputs matched all 3,490 run15 paths
 and hashes. Fresh LEAN preview completed in 1h47m47s; after an apply-only
 direct-script import fix and a new preview using sealed preparation, Sandbox

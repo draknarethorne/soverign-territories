@@ -7,6 +7,7 @@ import json
 import pathlib
 import re
 import sys
+import time
 
 import numpy as np
 ROOT = pathlib.Path(__file__).resolve().parents[3]
@@ -37,6 +38,252 @@ def _file_sha256(path):
 def _naming_digest(photo_id):
     value = photo_id.split(":", 1)[-1]
     return value[4:] if value.startswith("pic_") else value
+
+
+def _released_photo_bindings(reports, inventory):
+    """Conserve already-verified chronological release reports against a frozen inventory.
+
+    This is a pure consistency check, not report, journal, or inventory verification.
+    Reports contain ``moves``; inventory rows use the normal source/sourceHash fields.
+    """
+    def relative(value):
+        if (
+            not isinstance(value, str) or not value or value.startswith("/")
+            or "\\" in value or ":" in value
+            or any(part in ("", ".", "..") for part in value.split("/"))
+        ):
+            raise ValueError("release lineage has an invalid relative path")
+        return value
+
+    def digest(value):
+        if not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{64}", value):
+            raise ValueError("release lineage has an invalid SHA-256")
+        return value
+
+    if not isinstance(reports, list) or not reports:
+        raise ValueError("release lineage reports are missing")
+    current = {}
+    for report in reports:
+        if not isinstance(report, dict) or not isinstance(report.get("moves"), list):
+            raise ValueError("release lineage report moves are missing")
+        batch, ids, sources, destinations = [], set(), set(), set()
+        occupied = {path.casefold(): photo_id for photo_id, (path, _) in current.items()}
+        for move in report["moves"]:
+            if not isinstance(move, dict):
+                raise ValueError("release lineage move is invalid")
+            photo_id = move.get("photoId")
+            if not isinstance(photo_id, str) or not photo_id or photo_id != photo_id.strip():
+                raise ValueError("release lineage move lacks a stable photo ID")
+            source = relative(move.get("source"))
+            destination = relative(move.get("destination"))
+            checksum = digest(move.get("sha256"))
+            source_key, destination_key = source.casefold(), destination.casefold()
+            if photo_id in ids or source_key in sources or destination_key in destinations:
+                raise ValueError("release lineage has ambiguous moves in one report")
+            if photo_id in current and current[photo_id] != (source, checksum):
+                raise ValueError(f"{photo_id}: discontinuous release lineage")
+            if source_key in occupied and occupied[source_key] != photo_id:
+                raise ValueError(f"{photo_id}: ambiguous release source ownership")
+            ids.add(photo_id)
+            sources.add(source_key)
+            destinations.add(destination_key)
+            batch.append((photo_id, destination, checksum))
+        stationary = {key: photo_id for key, photo_id in occupied.items() if photo_id not in ids}
+        if destinations.intersection(stationary):
+            raise ValueError("release lineage has an ambiguous occupied destination")
+        for photo_id, destination, checksum in batch:
+            current[photo_id] = (destination, checksum)
+    if not current:
+        raise ValueError("release lineage has no move records")
+    if not isinstance(inventory, list):
+        raise ValueError("release inventory is missing")
+    by_id, by_path = collections.defaultdict(list), collections.defaultdict(list)
+    for row in inventory:
+        if not isinstance(row, dict):
+            raise ValueError("release inventory row is invalid")
+        source = relative(row.get("source"))
+        checksum = digest(row.get("sourceHash"))
+        photo_id = row.get("photoId")
+        if photo_id is not None and (not isinstance(photo_id, str) or not photo_id):
+            raise ValueError("release inventory photo ID is invalid")
+        by_id[photo_id].append((source, checksum))
+        by_path[source.casefold()].append(photo_id)
+    result = []
+    for photo_id, (path, checksum) in sorted(current.items()):
+        entries = by_id.get(photo_id, [])
+        if len(entries) > 1 or len(by_path.get(path.casefold(), [])) > 1:
+            raise ValueError(f"{photo_id}: ambiguous release inventory")
+        if entries != [(path, checksum)] or by_path.get(path.casefold()) != [photo_id]:
+            raise ValueError(f"{photo_id}: missing or stale release inventory")
+        result.append({"photoId": photo_id, "currentPath": path, "sha256": checksum})
+    return result
+
+
+def _released_candidate_roles(bindings, active, held):
+    """Classify every bound release without granting duplicate-content votes."""
+    expected = {row["photoId"]: (row["currentPath"], row["sha256"]) for row in bindings}
+    if len(expected) != len(bindings):
+        raise ValueError("ambiguous released candidate bindings")
+    roles = {}
+    for rows, active_source in ((active, True), (held, False)):
+        for row in rows:
+            photo_id = row.get("photoId")
+            if photo_id not in expected:
+                continue
+            if photo_id in roles or (row.get("source"), row.get("sourceHash")) != expected[photo_id]:
+                raise ValueError(f"{photo_id}: ambiguous or changed released source")
+            if active_source and row.get("sourceStatus") == "eligible":
+                roles[photo_id] = "candidate"
+            elif not active_source and row.get("sourceStatus") == "same-content-nonvoting":
+                roles[photo_id] = "nonvoting-candidate"
+            else:
+                raise ValueError(f"{photo_id}: released source requires unresolved disposition")
+    if set(roles) != set(expected):
+        raise ValueError("released candidates are missing from classified sources")
+    return roles
+
+
+def _fresh_gallery_assessment(root, rows, active, held, photos, native_paths, catalog, settings, policy):
+    """Build the selector's complete pre-retirement Gallery evidence from classified sources."""
+    from tools.art.likeness_library import audit
+
+    gallery = [row for row in rows if row["group"] in IDENTITY_ROOTS and row["bucket"] == "gallery"]
+    classified = {row["source"]: row for row in active + held}
+    id_counts = collections.Counter(row.get("photoId") for row in rows if row.get("photoId"))
+    people = collections.defaultdict(list)
+    for person_id, person in catalog.get("people", {}).items():
+        people[person["folder"]].append((person_id, person))
+    protected, stale, ambiguous = audit.catalog_photo_flags(
+        [(row.get("photoId"), row["sourceHash"]) for row in rows], catalog,
+    )
+    protected_excluded = audit.core_excluded_protection(catalog, protected)
+    excluded = audit.membership_excluded(catalog, [row.get("photoId") for row in gallery if row.get("photoId")])
+    inputs = []
+    for row in gallery:
+        source, photo_id = row["source"], row.get("photoId")
+        if source not in classified or classified[source] is not row or source not in photos:
+            raise ValueError(f"{source}: initial Gallery source was not classified and measured")
+        if row.get("sourceStatus") not in ("eligible", "same-content-nonvoting"):
+            raise ValueError(f"{source}: initial Gallery source requires unresolved disposition: {row.get('sourceStatus')}")
+        owner_records = people.get(row["owner"], [])
+        person_id, person = owner_records[0] if len(owner_records) == 1 else (None, None)
+        owner_ids = sorted(rejections.identity_ids(catalog, person_id)) if person_id else []
+        record = catalog.get("photos", {}).get(photo_id, {})
+        state = rejections.candidate_state(catalog, photo_id, row["sourceHash"])
+        parent = record.get("membership", {}).get("personId")
+        parent_owner = catalog.get("people", {}).get(parent, {}).get("folder") if parent else row["owner"]
+        identity_ambiguous = (
+            len(owner_records) > 1 or bool(person and person.get("mergedInto"))
+            or parent_owner != row["owner"]
+        )
+        source_ambiguous = photo_id in stale or photo_id in ambiguous or id_counts[photo_id] != 1
+        photo = photos[source]
+        vector = photo.vec
+        if vector is not None:
+            vector = np.asarray(vector, dtype=float)
+            if vector.ndim != 1 or not vector.size or not np.isfinite(vector).all():
+                raise ValueError(f"{source}: invalid centered measurement")
+            if not np.linalg.norm(vector):
+                vector = None
+        quality = bool(
+            photo.usable(settings["minFace"]) and photo.faces == 1
+            and getattr(photo, "f2", 0.) <= settings["multiFace"] and vector is not None
+        )
+        anchor = bool(person and photo_id in person.get("identityAnchors", ()))
+        rejected = list(record.get("rejectedPersonIds", []))
+        stale_rejection = bool(state.get("rejectionMetadataStale"))
+        eligible = bool(
+            row["sourceStatus"] == "eligible" and quality and not source_ambiguous
+            and not identity_ambiguous and not stale_rejection and not set(rejected).intersection(owner_ids)
+            and photo_id not in excluded and (photo_id not in protected_excluded or anchor)
+            and not (person and person.get("identityStatus") == "provisional")
+        )
+        measured_path = native_paths.get(source, root / pathlib.PurePosixPath(source))
+        inputs.append({
+            "photoId": photo_id, "owner": row["owner"], "currentPath": source,
+            "sha256": row["sourceHash"], "measurementSha256": metadata.content_sha256(measured_path),
+            "vector": vector, "qualityEligible": quality, "referenceEligible": eligible,
+            "identityAnchor": anchor, "identityAmbiguous": identity_ambiguous,
+            "sourceAmbiguous": source_ambiguous, "rejectionMetadataStale": stale_rejection,
+            "ownerPersonIds": owner_ids, "rejectedPersonIds": rejected,
+            "sourceStatus": row["sourceStatus"], "standardName": row.get("standardName"),
+        })
+    duplicate_votes = _single_vote_per_content(inputs)
+    result = normal_admission.fresh_baseline_release_candidates(inputs, policy)
+    result["duplicateContentVotes"] = duplicate_votes
+    if result["blockedBindings"]:
+        raise ValueError("fresh source release has ambiguous, stale or unbindable Gallery selections: "
+                         + ", ".join(item["currentPath"] for item in result["blockedBindings"]))
+    return result
+
+
+def _single_vote_per_content(inputs):
+    """Leave one reference vote per source or prepared-measurement content; others stay scored non-voters."""
+    parent = {}
+
+    def find(index):
+        while parent.setdefault(index, index) != index:
+            parent[index] = parent[parent[index]]
+            index = parent[index]
+        return index
+
+    eligible = [index for index, row in enumerate(inputs) if row["referenceEligible"]]
+    first = {}
+    for index in eligible:
+        for key in ("sha256", "measurementSha256"):
+            seen = first.setdefault((key, inputs[index][key]), index)
+            parent[find(index)] = find(seen)
+    groups = collections.defaultdict(list)
+    for index in eligible:
+        groups[find(index)].append(index)
+    records = []
+    for members in groups.values():
+        if len(members) < 2:
+            continue
+        members.sort(key=lambda index: (inputs[index]["currentPath"].casefold(), inputs[index]["currentPath"]))
+        for index in members[1:]:
+            inputs[index]["referenceEligible"] = False
+        records.append({
+            "keeper": inputs[members[0]]["photoId"],
+            "nonVoting": [inputs[index]["photoId"] for index in members[1:]],
+            "paths": [inputs[index]["currentPath"] for index in members],
+        })
+    return sorted(records, key=lambda row: row["paths"][0].casefold())
+
+
+def _fresh_measurement_proof(root, measured_rows, raw_data, native_paths, embedder, mean):
+    """Bind the entire centering population and vectors to one current local model."""
+    import cv2
+
+    model, model_id = embedder._model_identity(cv2)
+    measurements = []
+    for row in sorted(measured_rows, key=lambda item: item["source"]):
+        source = row["source"]
+        path = native_paths.get(source, root / pathlib.PurePosixPath(source))
+        native_hash = metadata.content_sha256(path)
+        digest, data = raw_data[source]
+        if not isinstance(data, dict):
+            raise ValueError(f"{source}: fresh assessment measurement unavailable")
+        evidence = data.get("alignmentEvidence") or {}
+        if data.get("v") and (
+            evidence.get("state") not in ("persisted", "read-only-not-persisted")
+            or evidence.get("sourceSha256") != native_hash
+            or evidence.get("modelId") != model_id or evidence.get("model") != model
+        ):
+            raise ValueError(f"{source}: fresh assessment measurement lacks current source/model provenance")
+        measurements.append({
+            "source": source, "sourceSHA256": row["sourceHash"], "measurementSHA256": native_hash,
+            "cacheKey": digest, "vector": data.get("v"), "faces": data.get("faces"),
+            "facePixels": data.get("px"), "secondaryFaceRatio": data.get("f2"),
+        })
+    centered = np.asarray(mean, dtype=float)
+    if centered.ndim != 1 or not centered.size or not np.isfinite(centered).all():
+        raise ValueError("fresh assessment centering mean is unavailable or invalid")
+    return {
+        "modelId": model_id, "model": model, "centeringMean": centered.tolist(),
+        "measurementCount": len(measurements),
+        "measurementsSHA256": _preparation_fingerprint(measurements),
+    }
 
 
 def _fragment_evidence(reference_space, cores, catalog, policy, blocked_ids):
@@ -101,10 +348,11 @@ def _preparation_origin_paths(output):
     return run / "preparation-origin.start.json", run / "preparation-origin.complete.json"
 
 
-def _write_preparation_origin_start(root, cfg, run, profile, source_paths):
+def _write_preparation_origin_start(root, cfg, run, profile, source_paths, *, workers=1):
     from tools.art import image_preparation
     from tools.workflows import comfy_workflows as cw
 
+    normal_products.validate_workers(workers)
     root = pathlib.Path(root).resolve()
     run = pathlib.Path(run).resolve()
     if root not in run.parents:
@@ -131,6 +379,7 @@ def _write_preparation_origin_start(root, cfg, run, profile, source_paths):
         "root": str(root),
         "preparationRoot": str(output),
         "profile": profile,
+        "workers": workers,
         "generationProducerSHA256": producer,
         "recipeSHA256": _preparation_fingerprint(image_preparation.RECIPE),
         "configurationReceiptSHA256": _preparation_fingerprint(configuration),
@@ -185,6 +434,7 @@ def _write_preparation_origin_complete(root, cfg, profile, source_paths, prepare
         "root": str(root),
         "preparationRoot": str(output),
         "profile": profile,
+        "workers": start_record["workers"],
         "generationProducerSHA256": start_record["generationProducerSHA256"],
         "producerAfterGenerationSHA256": producer_after,
         "producerUnchangedDuringGeneration": True,
@@ -232,6 +482,11 @@ def _read_preparation_origin(output, data, root, profile, input_rows, manifest_h
         or any(complete.get(key) != value for key, value in expected.items())
         or complete.get("manifestSHA256") != manifest_hash
         or complete.get("generationProducerSHA256") != start.get("generationProducerSHA256")
+        or complete.get("workers") != start.get("workers")
+        or ("workers" in start and (
+            isinstance(start["workers"], bool) or not isinstance(start["workers"], int)
+            or not 1 <= start["workers"] <= 3
+        ))
         or complete.get("producerAfterGenerationSHA256") != start.get("generationProducerSHA256")
         or complete.get("producerUnchangedDuringGeneration") is not True
         or complete.get("startRecordSHA256") != metadata.content_sha256(start_path)
@@ -334,12 +589,13 @@ def _validate_preparation_reuse(root, cfg, profile, prepared, source_paths):
     }
 
 
-def _prepare_with_origin(root, cfg, run, profile, source_paths):
+def _prepare_with_origin(root, cfg, run, profile, source_paths, *, workers=1):
+    normal_products.require_worker_memory(workers)
     start_record, _start_path, start_hash = _write_preparation_origin_start(
-        root, cfg, run, profile, source_paths,
+        root, cfg, run, profile, source_paths, workers=workers,
     )
     prepared = normal_products.prepare(
-        root, pathlib.Path(run) / "preparation", source_paths, profile,
+        root, pathlib.Path(run) / "preparation", source_paths, profile, workers=workers,
     )
     generation_seal = _write_preparation_origin_complete(
         root, cfg, profile, source_paths, prepared, start_record, start_hash,
@@ -1271,13 +1527,13 @@ def _as_photo(api, row, measured_path, data, digest):
     return photo
 
 
-def _explicit_review_placements(catalog):
+def _explicit_review_placements(catalog, *, action_types=("sent-to-review", "match-accepted")):
     actions = catalog.get("actions", ())
     undone = {action["undoes"] for action in actions if action.get("type") == "action-undone" and "undoes" in action}
     return {
         (photo_id, action.get("destination"))
         for action in actions
-        if action.get("type") in {"sent-to-review", "match-accepted"}
+        if action.get("type") in action_types
         and action.get("actor") == "user" and action.get("id") not in undone
         for photo_id in action.get("photoIds", ())
     }
@@ -1286,15 +1542,55 @@ def _explicit_review_placements(catalog):
 def _plan(
     root, profile, run_id, *, api, cache_path=None, policy_path=None,
     for_apply=False, reuse_plan=None, reuse_preparation=None,
-    reuse_preparation_sha256=None, lock_cast_admission=False,
+    reuse_preparation_sha256=None, lock_cast_admission=False, preparation_workers=1,
+    released_bindings=None, reconsider_holds=False, fresh_source_release=False,
 ):
     from tools.workflows import comfy_workflows as cw
 
     root = pathlib.Path(root).resolve()
     cfg = api.configuration()
     policy = load_policy(policy_path)
+    if type(fresh_source_release) is not bool:
+        raise ValueError("fresh source release must be explicit")
+    if fresh_source_release:
+        if not is_sandbox_working_path(root):
+            raise ValueError("fresh source release requires Sandbox Working")
+        if released_bindings is not None:
+            raise ValueError("fresh source release cannot replay release lineage")
+        if "castAdmission" not in policy:
+            raise ValueError("fresh source release requires normal two-round admission")
+        if for_apply and reuse_plan is None:
+            raise ValueError("fresh source release apply requires its bound preview plan")
+        reconsider_holds = True
+    if reuse_plan is not None and bool(reuse_plan.get("freshSourceRelease")) != fresh_source_release:
+        raise ValueError("fresh source release selection differs from preview")
+    if released_bindings is not None:
+        if not isinstance(released_bindings, list) or not released_bindings:
+            raise ValueError("released cohort requires nonempty verified bindings")
+        if any(
+            not isinstance(row, dict) or set(row) != {"photoId", "currentPath", "sha256"}
+            or not isinstance(row["photoId"], str) or not row["photoId"]
+            or not isinstance(row["currentPath"], str) or not row["currentPath"]
+            or not isinstance(row["sha256"], str) or not re.fullmatch(r"[0-9a-f]{64}", row["sha256"])
+            for row in released_bindings
+        ):
+            raise ValueError("released cohort has malformed verified bindings")
+        if "castAdmission" not in policy:
+            raise ValueError("released cohort requires normal two-round admission")
+        if for_apply and reuse_plan is None:
+            raise ValueError("released cohort apply requires its bound preview plan")
+        released_bindings = sorted(released_bindings, key=lambda row: row["photoId"])
+    if reuse_plan is not None and not fresh_source_release and reuse_plan.get("releasedPhotoBindings") != released_bindings:
+        raise ValueError("released cohort bindings differ from preview")
     if reuse_plan is not None and bool(reuse_plan.get("lockCastAdmission")) != lock_cast_admission:
         raise ValueError("cast receiving lock differs from preview")
+    if reuse_plan is not None and bool(reuse_plan.get("reconsiderHolds")) != reconsider_holds:
+        raise ValueError("existing hold reassessment differs from preview")
+    if reconsider_holds and for_apply and reuse_plan is None:
+        raise ValueError("existing hold reassessment requires its bound preview plan")
+    normal_products.validate_workers(preparation_workers)
+    if reuse_plan is not None and reuse_plan.get("preparationWorkersRequested", 1) != preparation_workers:
+        raise ValueError("selected preparation worker request differs from preview")
     admission_enabled = "castAdmission" in policy
     settings = effective_settings(cfg, policy)
     settings["poolHome"] = "Various"
@@ -1307,8 +1603,24 @@ def _plan(
         library_root=root,
     )
     catalog = metadata.load_catalog(metadata.path_for_root(root))
+    phase_started = time.perf_counter()
     with verification_reads.session(root, label="SIMPLE source inventory"):
         rows, folders, prefixes = _hash_sources(root, cfg, api)
+    inventory_seconds = time.perf_counter() - phase_started
+    phase_started = time.perf_counter()
+    if released_bindings is not None:
+        for binding in released_bindings:
+            by_id = [row for row in rows if row.get("photoId") == binding["photoId"]]
+            by_path = [
+                row for row in rows
+                if row["source"].casefold() == binding["currentPath"].casefold()
+            ]
+            if (
+                len(by_id) != 1 or len(by_path) != 1 or by_id[0] is not by_path[0]
+                or (by_id[0]["source"], by_id[0]["sourceHash"])
+                != (binding["currentPath"], binding["sha256"])
+            ):
+                raise ValueError(f"{binding['photoId']}: released binding is stale or ambiguous in frozen inventory")
     if reuse_plan is not None:
         current_hashes = {row["source"]: row["sourceHash"] for row in rows}
         if current_hashes != reuse_plan.get("sourceHashes"):
@@ -1332,6 +1644,28 @@ def _plan(
     active, held, aliases, updates, workflow_ids = _classify_sources(
         root, rows, cfg, decision_catalog, api, archive_collisions=admission_enabled,
     )
+    release_roles = {}
+    retirement = None
+    if released_bindings is not None:
+        release_roles = _released_candidate_roles(released_bindings, active, held)
+        retirement = normal_admission.retire_released_catalog(decision_catalog, released_bindings)
+        decision_catalog = retirement["catalog"]
+    release_ids = set(release_roles)
+    released_nonvoting = [row for row in held if release_roles.get(row.get("photoId")) == "nonvoting-candidate"]
+    reconsidered_nonvoting = [
+        row for row in held
+        if reconsider_holds and admission_enabled and row.get("sourceStatus") == "same-content-nonvoting"
+        and row not in released_nonvoting and (
+            row["group"] == "Various" or row["bucket"] == "review"
+            or fresh_source_release and row["group"] in IDENTITY_ROOTS and row["bucket"] == "gallery"
+        )
+    ]
+    nonvoting = released_nonvoting + reconsidered_nonvoting
+    for row in released_nonvoting:
+        row["rebaseRole"] = "released-nonvoting-candidate"
+    for row in reconsidered_nonvoting:
+        row["rebaseRole"] = "reconsidered-nonvoting-hold"
+    nonvoting_hashes = {row["sourceHash"] for row in released_nonvoting}
     archives = _duplicate_archives(root, rows, run_id) if admission_enabled else {}
     unresolved_ids = _unresolved_duplicate_ids(rows, archives) if admission_enabled else []
     if for_apply:
@@ -1363,20 +1697,23 @@ def _plan(
     run_suffix = f"normal-rebase-{run_id}" if for_apply else f"normal-rebase-{run_id}-preview"
     run = cw.storage_root(cfg, "reports", root=root) / "runs" / run_suffix
     raw_photos, raw_data = {}, {}
+    measured_rows = active + nonvoting
     prepare_paths = [
         root / pathlib.PurePosixPath(row["source"])
-        for row in active if not row.get("retainedManifest")
+        for row in measured_rows if not row.get("retainedManifest")
     ]
     prepared = None
     preparation_reuse = None
     preparation_generation = None
     native_paths = {
         row["source"]: root / pathlib.PurePosixPath(row["source"])
-        for row in active if row.get("retainedManifest")
+        for row in measured_rows if row.get("retainedManifest")
     }
+    normalization_seconds = time.perf_counter() - phase_started
     read_token = api.domains.CURRENT.set("general")
     read_only_token = api.domains.READ_ONLY.set(True)
     try:
+        phase_started = time.perf_counter()
         if profile in ("full", "lean") and prepare_paths:
             if reuse_plan is not None:
                 preparation_root = reuse_plan.get("preparationRoot")
@@ -1409,7 +1746,7 @@ def _plan(
                 preparation_generation = preparation_reuse.get("generationSeal")
             else:
                 prepared, preparation_generation = _prepare_with_origin(
-                    root, cfg, run, profile, prepare_paths,
+                    root, cfg, run, profile, prepare_paths, workers=preparation_workers,
                 )
             native_paths.update(prepared[2])
         elif (
@@ -1418,9 +1755,11 @@ def _plan(
         ):
             raise ValueError("preview preparation scope differs from current selected source set")
 
+        preparation_seconds = time.perf_counter() - phase_started
+        phase_started = time.perf_counter()
         # FULL/LEAN measure the selected native output for references and candidates
         # alike. FAST measures unchanged source pixels.
-        for row in active:
+        for row in measured_rows:
             source = root / pathlib.PurePosixPath(row["source"])
             measured_path = native_paths.get(row["source"], source)
             digest, data = _infer(api, cache, embedder, measured_path, persist_evidence=for_apply)
@@ -1428,7 +1767,8 @@ def _plan(
             raw_data[row["source"]] = (digest, data)
         junk_prefix = cw.storage_root(cfg, "junk", root=root).relative_to(root).as_posix()
         junk = _no_face_dispositions(
-            root, active, raw_data, decision_catalog, workflow_ids, junk_prefix,
+            root, [row for row in active if row["photoId"] not in release_ids],
+            raw_data, decision_catalog, workflow_ids, junk_prefix,
         ) if admission_enabled else {}
         if junk:
             active = [row for row in active if row["source"] not in junk]
@@ -1440,12 +1780,61 @@ def _plan(
         cache.centering_mean = mean.tolist() if mean is not None else None
         cache.centering_domain = "general"
         raw_space = api.Space([raw_photos[row["source"]] for row in active], settings, mean=mean)
+        nonvoting_candidates = []
+        if nonvoting:
+            api.Space([raw_photos[row["source"]] for row in nonvoting], settings, mean=mean)
+        fresh_assessment = None
+        fresh_measurement_proof = None
+        fresh_selection_seconds = 0.
+        fresh_measurement_seconds = None
+        if fresh_source_release:
+            selection_started = time.perf_counter()
+            fresh_measurement_seconds = selection_started - phase_started
+            fresh_measurement_proof = _fresh_measurement_proof(
+                root, measured_rows, raw_data, native_paths, embedder, raw_space.mean,
+            )
+            if reuse_plan is not None and reuse_plan.get("freshMeasurementProof") != fresh_measurement_proof:
+                raise ValueError("fresh source measurement proof differs from preview")
+            fresh_assessment = _fresh_gallery_assessment(
+                root, rows, active, held, raw_photos, native_paths, decision_catalog, settings, policy,
+            )
+            if reuse_plan is not None and reuse_plan.get("freshSourceAssessment") != fresh_assessment:
+                raise ValueError("fresh source assessment differs from preview")
+            selected = sorted(fresh_assessment["bindings"], key=lambda row: row["photoId"])
+            released_bindings = selected or None
+            if reuse_plan is not None and reuse_plan.get("releasedPhotoBindings") != released_bindings:
+                raise ValueError("fresh source release bindings differ from preview")
+            if released_bindings is not None:
+                release_roles = _released_candidate_roles(released_bindings, active, held)
+                standard_names = {
+                    row["photoId"]: row["standardName"] for row in rows
+                    if row.get("photoId") in {item["photoId"] for item in released_bindings}
+                    and row.get("standardName")
+                }
+                retirement = normal_admission.retire_released_catalog(
+                    decision_catalog, released_bindings, standard_names,
+                )
+                decision_catalog = retirement["catalog"]
+            release_ids = set(release_roles)
+            released_nonvoting = [
+                row for row in held if release_roles.get(row.get("photoId")) == "nonvoting-candidate"
+            ]
+            reconsidered_nonvoting = [
+                row for row in reconsidered_nonvoting if row not in released_nonvoting
+            ]
+            nonvoting = released_nonvoting + reconsidered_nonvoting
+            for row in released_nonvoting:
+                row["rebaseRole"] = "released-nonvoting-candidate"
+            nonvoting_hashes = {row["sourceHash"] for row in released_nonvoting}
+            fresh_selection_seconds = time.perf_counter() - selection_started
         reference_photos = [
             raw_photos[row["source"]]
             for row in active
             if row["group"] in IDENTITY_ROOTS
             and row["bucket"] == "gallery"
             and row["sourceStatus"] != "incoming-update"
+            and row["photoId"] not in release_ids
+            and row["sourceHash"] not in nonvoting_hashes
         ]
         reference_space = api.Space(reference_photos, settings, mean=mean)
         all_cores, locked_ids, core_diagnostics = reconciliation.frozen_identity_cores(
@@ -1481,6 +1870,10 @@ def _plan(
         update_ids = set(updates)
         for row in active:
             photo_id = row["photoId"]
+            if release_roles.get(photo_id) == "candidate":
+                row["rebaseRole"] = "released-intake-candidate"
+                candidate_paths.append(root / pathlib.PurePosixPath(row["source"]))
+                continue
             if row["sourceStatus"] == "incoming-update":
                 row["rebaseRole"] = "selected-incoming-version-update"
                 continue
@@ -1528,16 +1921,21 @@ def _plan(
             person["folder"] for person in decision_catalog["people"].values() if person.get("protected")
         }
         explicit_reviews = _explicit_review_placements(catalog)
+        accepted_reviews = _explicit_review_placements(catalog, action_types=("match-accepted",))
         for photo in planning_photos:
             photo_id = metadata.photo_id_from_name(photo.name)
             row = candidates_by_id[photo_id]
             record = decision_catalog.get("photos", {}).get(photo_id, {})
             review = admission_enabled and row["bucket"] == "review"
-            explicit_review = review and (photo_id, row["source"]) in explicit_reviews
+            prior_explicit_review = review and (photo_id, row["source"]) in explicit_reviews
+            explicit_review = prior_explicit_review and (
+                not reconsider_holds or (photo_id, row["source"]) in accepted_reviews
+            )
             candidates.append({
                 "photoId": photo_id,
                 "sourceFolder": row["owner"],
                 "sourceBucket": (
+                    "Pool" if photo_id in release_ids else
                     "Pool" if row["group"] == "Various" and row["bucket"] == "gallery"
                     else row["bucket"].title()
                 ),
@@ -1553,21 +1951,344 @@ def _plan(
                 "identityProtected": row["bucket"] == "gallery" and row["owner"] in protected_folders,
                 "rebaseCandidate": admission_enabled,
                 "explicitReviewPlacement": explicit_review,
-                "regroupReview": review and not explicit_review,
-                "detachedOutlier": row["group"] in IDENTITY_ROOTS and row["bucket"] == "gallery",
+                "priorExplicitReviewPlacement": prior_explicit_review,
+                "regroupReview": photo_id in release_ids or (review and not explicit_review),
+                "detachedOutlier": photo_id not in release_ids and row["group"] in IDENTITY_ROOTS and row["bucket"] == "gallery",
+                **({"releaseStandardName": row["standardName"]}
+                   if photo_id in release_ids and row.get("standardName") else {}),
                 **rejections.photo_state(catalog, photo),
             })
+        measurement_seconds = time.perf_counter() - phase_started - fresh_selection_seconds
+        fresh_core_seconds = (
+            measurement_seconds - fresh_measurement_seconds if fresh_source_release else None
+        )
+        phase_started = time.perf_counter()
         if admission_enabled:
+            reference_rows = normal_admission.reference_rows(reference_space, cores, decision_catalog)
+            # The verified cohort explicitly releases source-side protections.
+            # Keep their actual values in candidates/evidence; receiving-identity,
+            # explicit Review, rejection and quality safeguards remain unchanged.
+            scoring_candidates = [
+                {**candidate, "protected": False, "workflowSelected": False, "identityProtected": False}
+                if candidate["photoId"] in release_ids else candidate
+                for candidate in candidates
+            ]
             report = normal_admission.two_round_plan(
-                api, candidates, cores,
-                normal_admission.reference_rows(reference_space, cores, decision_catalog),
+                api, scoring_candidates, cores,
+                reference_rows,
                 settings, policy, all_names, locked=lock_cast_admission,
+                **({"released_bindings": [
+                    binding for binding in released_bindings
+                    if release_roles[binding["photoId"]] == "candidate"
+                ]} if released_bindings is not None else {}),
             )
         else:
             report = normal_import._route_plan(
                 api, candidates, cores, settings, policy, all_names,
             )
+        if released_nonvoting:
+            snapshot = report.get("referenceSnapshots", {}).get("2")
+            if not snapshot or not isinstance(snapshot.get("photoIds"), dict):
+                raise ValueError("released non-voting scoring lacks the final voting reference snapshot")
+            candidate_by_id = {row["photoId"]: row for row in candidates}
+            # A canonical keeper may earn its single vote; each non-voter is
+            # scored with its own content retired, so it never scores itself.
+            report["releasedNonVotingKeeperReferences"] = sorted(
+                photo_id for photo_ids in snapshot["photoIds"].values()
+                for photo_id in photo_ids
+                if photo_id in candidate_by_id and candidate_by_id[photo_id]["sha256"] in nonvoting_hashes
+            )
+            existing_refs = {
+                row["photoId"]: row for refs in reference_rows.values() for row in refs
+            }
+            final_refs = {}
+            snapshot_content = set()
+            for folder, photo_ids in snapshot["photoIds"].items():
+                if folder not in cores or len(photo_ids) != len(set(photo_ids)):
+                    raise ValueError("released non-voting final reference snapshot is ambiguous")
+                final_refs[folder] = []
+                for photo_id in photo_ids:
+                    ref = existing_refs.get(photo_id)
+                    candidate = candidate_by_id.get(photo_id)
+                    if ref is None and candidate is not None:
+                        ref = {
+                            "photoId": photo_id, "sha256": candidate["sha256"],
+                            "vector": candidate["vector"],
+                            "qualityEligible": candidate["qualityEligible"],
+                            **{key: candidate[key] for key in ("rejectionMetadataStale", "rejectedPersonIds")
+                               if key in candidate},
+                        }
+                    if ref is None:
+                        raise ValueError(f"{photo_id}: final voting reference cannot be reconstructed")
+                    if ref["sha256"] in snapshot_content:
+                        raise ValueError("final voting references give duplicate content more than one vote")
+                    snapshot_content.add(ref["sha256"])
+                    final_refs[folder].append(ref)
+            final_cores, final_refs = normal_admission.refresh_references(cores, final_refs)
+            final_version = normal_admission.context(
+                final_cores, final_refs, policy, locked=lock_cast_admission,
+            )["referenceVersion"]
+            if final_version != snapshot.get("referenceVersion"):
+                raise ValueError("released non-voting final voting references differ from the recorded snapshot")
+            canonical_sources = []
+            seen_canonical = set()
+            for row in released_nonvoting:
+                matches = [
+                    source for source in rows
+                    if source.get("photoId") == row.get("contentVoteCanonicalId")
+                    and source.get("source") == row.get("contentVoteCanonicalSource")
+                    and source.get("sourceHash") == row["sourceHash"]
+                ]
+                if len(matches) != 1:
+                    raise ValueError(f"{row['photoId']}: non-voting canonical inventory is missing or ambiguous")
+                if matches[0]["photoId"] not in seen_canonical:
+                    canonical_sources.append(matches[0])
+                    seen_canonical.add(matches[0]["photoId"])
+                photo = raw_photos[row["source"]]
+                record = decision_catalog.get("photos", {}).get(row["photoId"], {})
+                review = row["bucket"] == "review"
+                nonvoting_candidates.append({
+                    **row, "sha256": row["sourceHash"], "sourceFolder": row["owner"],
+                    "sourceBucket": (
+                        "Pool" if row["group"] == "Various" and row["bucket"] == "gallery"
+                        else row["bucket"].title()
+                    ),
+                    "side": "Prospects", "vector": photo.vec,
+                    "measurementSha256": metadata.content_sha256(
+                        native_paths.get(row["source"], root / pathlib.PurePosixPath(row["source"]))
+                    ),
+                    "protected": bool(row["photoId"] in locked_ids or record.get("protected")),
+                    "workflowSelected": row["photoId"] in workflow_ids,
+                    "identityProtected": row["bucket"] == "gallery" and row["owner"] in protected_folders,
+                    "explicitReviewPlacement": (
+                        review and (row["photoId"], row["source"]) in explicit_reviews
+                        and (not reconsider_holds or (row["photoId"], row["source"]) in accepted_reviews)
+                    ),
+                    "priorExplicitReviewPlacement": (
+                        review and (row["photoId"], row["source"]) in explicit_reviews
+                    ),
+                    "qualityEligible": (
+                        photo.usable(settings["minFace"]) and photo.faces == 1
+                        and getattr(photo, "f2", 0.) <= settings["multiFace"]
+                    ),
+                    **rejections.photo_state(catalog, photo),
+                })
+            nonvoting_report = normal_admission.score_nonvoting_duplicates(
+                api, [
+                    {**candidate, "protected": False, "workflowSelected": False, "identityProtected": False}
+                    for candidate in nonvoting_candidates
+                ], final_cores, final_refs, settings, policy,
+                canonical_sources, locked=lock_cast_admission,
+            )
+            canonical_ids = {row["contentVoteCanonicalId"] for row in released_nonvoting}
+            voting_candidates = [
+                {
+                    **candidate,
+                    "source": candidates_by_id[candidate["photoId"]]["source"],
+                    "measurementSha256": (
+                        metadata.content_sha256(
+                            native_paths.get(
+                                candidates_by_id[candidate["photoId"]]["source"],
+                                root / pathlib.PurePosixPath(candidates_by_id[candidate["photoId"]]["source"]),
+                            )
+                        ) if candidate["photoId"] in canonical_ids else None
+                    ),
+                }
+                for candidate in scoring_candidates
+            ]
+            nonvoting_report = normal_admission.follow_nonvoting_provisional(
+                nonvoting_report, [
+                    {**candidate, "protected": False, "workflowSelected": False, "identityProtected": False}
+                    for candidate in nonvoting_candidates
+                ], voting_candidates, report["assignments"] + report["held"], report["clusters"],
+                locked=lock_cast_admission,
+            )
+            nonvoting_by_id = {row["photoId"]: row for row in nonvoting_candidates}
+            for result in nonvoting_report["results"]:
+                decision = result["decision"]
+                if decision.get("preserveStaged") or not (
+                    decision.get("destination") or decision.get("reviewDestination")
+                ):
+                    candidate = nonvoting_by_id[result["photoId"]]
+                    if candidate.get("rejectionMetadataStale") or candidate.get("explicitReviewPlacement"):
+                        raise ValueError(
+                            f"{result['photoId']}: released non-voting candidate has no safe independent "
+                            "placement; resolve its canonical, quality, rejection or Review evidence"
+                        )
+                    decision = result["decision"] = normal_admission.unresolved_release_review(
+                        decision, result.get("comparisons") or [], locked=lock_cast_admission,
+                    )
+                decision["normalAdmission"] = True
+                decision.setdefault("referenceVersion", final_version)
+                (report["assignments"] if decision.get("destination") else report["held"]).append(decision)
+                row = next(item for item in released_nonvoting if item["photoId"] == result["photoId"])
+                candidate_sources[row["source"]] = row
+                planned_measurements[row["source"]] = raw_data[row["source"]]
+                move_photos.append(raw_photos[row["source"]])
+            report["releasedNonVotingEvidence"] = nonvoting_report["results"]
+        if reconsidered_nonvoting:
+            canonical_sources = []
+            seen_canonical = set()
+            ordinary_candidates = []
+            for row in reconsidered_nonvoting:
+                matches = [
+                    source for source in rows
+                    if source.get("photoId") == row.get("contentVoteCanonicalId")
+                    and source.get("source") == row.get("contentVoteCanonicalSource")
+                    and source.get("sourceHash") == row["sourceHash"]
+                ]
+                if len(matches) != 1:
+                    raise ValueError(f"{row['photoId']}: non-voting canonical inventory is missing or ambiguous")
+                if matches[0]["photoId"] not in seen_canonical:
+                    canonical_sources.append(matches[0])
+                    seen_canonical.add(matches[0]["photoId"])
+                photo = raw_photos[row["source"]]
+                record = decision_catalog.get("photos", {}).get(row["photoId"], {})
+                review = row["bucket"] == "review"
+                placement = (row["photoId"], row["source"])
+                ordinary_candidates.append({
+                    **row, "sha256": row["sourceHash"], "sourceFolder": row["owner"],
+                    "sourceBucket": (
+                        "Pool" if row["group"] == "Various" and row["bucket"] == "gallery"
+                        else row["bucket"].title()
+                    ),
+                    "side": "Prospects", "vector": photo.vec,
+                    "measurementSha256": metadata.content_sha256(
+                        native_paths.get(row["source"], root / pathlib.PurePosixPath(row["source"]))
+                    ),
+                    "protected": bool(row["photoId"] in locked_ids or record.get("protected")),
+                    "workflowSelected": row["photoId"] in workflow_ids,
+                    "identityProtected": row["bucket"] == "gallery" and row["owner"] in protected_folders,
+                    "explicitReviewPlacement": review and placement in accepted_reviews,
+                    "priorExplicitReviewPlacement": review and placement in explicit_reviews,
+                    "qualityEligible": (
+                        photo.usable(settings["minFace"]) and photo.faces == 1
+                        and getattr(photo, "f2", 0.) <= settings["multiFace"]
+                    ),
+                    **rejections.photo_state(catalog, photo),
+                })
+            canonical_ids = {row["contentVoteCanonicalId"] for row in reconsidered_nonvoting}
+            voting_candidates = [
+                {
+                    **candidate,
+                    "source": candidates_by_id[candidate["photoId"]]["source"],
+                    "measurementSha256": (
+                        metadata.content_sha256(
+                            native_paths.get(
+                                candidates_by_id[candidate["photoId"]]["source"],
+                                root / pathlib.PurePosixPath(candidates_by_id[candidate["photoId"]]["source"]),
+                            )
+                        ) if candidate["photoId"] in canonical_ids else None
+                    ),
+                }
+                for candidate in scoring_candidates
+            ]
+            reconsidered = normal_admission.reconsider_nonvoting_holds(
+                api, ordinary_candidates, cores, reference_rows, settings, policy,
+                canonical_sources, voting_candidates, report, locked=lock_cast_admission,
+                **({"include_named_gallery": True} if fresh_source_release else {}),
+            )
+            for result in reconsidered["results"]:
+                decision = result["decision"]
+                decision["normalAdmission"] = True
+                decision.setdefault("referenceVersion", reconsidered["finalReferenceVersion"])
+                (report["assignments"] if decision.get("destination") else report["held"]).append(decision)
+                if decision.get("destination") or decision.get("reviewDestination"):
+                    row = next(item for item in reconsidered_nonvoting if item["photoId"] == result["photoId"])
+                    candidate_sources[row["source"]] = row
+                    planned_measurements[row["source"]] = raw_data[row["source"]]
+                    move_photos.append(raw_photos[row["source"]])
+            nonvoting_candidates.extend(ordinary_candidates)
+            report["reconsideredNonVotingEvidence"] = reconsidered
+        if released_bindings is not None:
+            decisions = report["assignments"] + report["held"]
+            measured_candidates = {row["photoId"]: row for row in candidates}
+            measured_candidates.update({row["photoId"]: row for row in (
+                nonvoting_candidates if nonvoting else []
+            )})
+            blocked = []
+            for photo_id in sorted(release_ids):
+                matches = [row for row in decisions if row["photoId"] == photo_id]
+                candidate = measured_candidates.get(photo_id, {})
+                if (len(matches) == 1 and matches[0].get("preserveStaged")
+                        and candidate.get("qualityEligible") is False
+                        and not candidate.get("rejectionMetadataStale")
+                        and not candidate.get("explicitReviewPlacement")):
+                    # No trustworthy score exists; hold it as unassigned rather than keep
+                    # the released photo in its former identity or invent a rival.
+                    matches[0].update(normal_admission.unresolved_release_review(matches[0], []))
+                    matches[0]["reason"] += "; released photo failed the single-face quality gate"
+                    matches[0].setdefault(
+                        "referenceVersion",
+                        report.get("referenceSnapshots", {}).get("2", {}).get("referenceVersion"),
+                    )
+                    matches[0]["normalAdmission"] = True
+                if len(matches) != 1 or matches[0].get("preserveStaged"):
+                    reasons = [row.get("reason", "no reason recorded") for row in matches]
+                    blocked.append(f"{photo_id}: {len(matches)} decision(s): {', '.join(reasons)}")
+            if blocked:
+                raise ValueError(
+                    "released candidates missing, ambiguous or protected/held: " + "; ".join(blocked)
+                )
+            evidence = []
+            for photo_id in release_ids:
+                matches = [row for row in decisions if row["photoId"] == photo_id]
+                decision = matches[0]
+                decision.setdefault("referenceEligible", False)
+                candidate = measured_candidates[photo_id]
+                binding = next(row for row in released_bindings if row["photoId"] == photo_id)
+                evidence.append({
+                    **binding, "role": release_roles[photo_id],
+                    "actualSourceFolder": candidate["sourceFolder"],
+                    "actualSourceBucket": pathlib.PurePosixPath(binding["currentPath"]).parent.name,
+                    "matchingBucket": "Pool",
+                    "protected": candidate["protected"],
+                    "workflowSelected": candidate["workflowSelected"],
+                    "identityProtected": candidate["identityProtected"],
+                    "explicitReviewPlacement": candidate["explicitReviewPlacement"],
+                    "priorExplicitReviewPlacement": candidate["priorExplicitReviewPlacement"],
+                    "qualityEligible": candidate["qualityEligible"],
+                    "sourceProtectionOverride": True,
+                    **{key: candidate[key] for key in ("rejectionMetadataStale", "rejectedPersonIds")
+                       if key in candidate},
+                    "decision": dict(decision),
+                })
+            report["releasedPhotoBindings"] = released_bindings
+            report["releasedDecisionEvidence"] = sorted(evidence, key=lambda row: row["photoId"])
+            report["releasedSourceRetirement"] = {
+                "retiredAnchors": retirement["retiredAnchors"],
+                "retiredGroups": retirement["retiredGroups"],
+            }
+        admission_seconds = time.perf_counter() - phase_started
+        phase_started = time.perf_counter()
         report["lockCastAdmission"] = lock_cast_admission
+        report["reconsiderHolds"] = reconsider_holds
+        if fresh_source_release:
+            report["freshSourceRelease"] = True
+            report["freshSourceAssessment"] = fresh_assessment
+            report["freshMeasurementProof"] = fresh_measurement_proof
+            report["freshGalleryCount"] = len(fresh_assessment["assessment"])
+            report["freshSelectedCount"] = len(fresh_assessment["bindings"])
+            report["freshBlockedCount"] = len(fresh_assessment["blockedBindings"])
+            report["freshUnavailableCount"] = sum(
+                row["score"] is None for row in fresh_assessment["assessment"]
+            )
+            report["freshNonVotingCount"] = sum(
+                row["sourceStatus"] == "same-content-nonvoting" for row in fresh_assessment["assessment"]
+            )
+        prior_review_candidates = [
+            {"photoId": candidate["photoId"], "source": candidates_by_id[candidate["photoId"]]["source"]}
+            for candidate in candidates if candidate["priorExplicitReviewPlacement"]
+        ]
+        if nonvoting:
+            prior_review_candidates.extend(
+                {"photoId": candidate["photoId"], "source": candidate["source"]}
+                for candidate in nonvoting_candidates if candidate["priorExplicitReviewPlacement"]
+            )
+        report["priorExplicitReviewPlacements"] = sorted(
+            prior_review_candidates, key=lambda row: (row["photoId"], row["source"]),
+        )
+        report["preparationWorkersRequested"] = preparation_workers
         primary_rows = [
             row for row in rows if row["group"] in IDENTITY_ROOTS | {"Various"}
         ]
@@ -1613,7 +2334,7 @@ def _plan(
             "exactAliasCount": len(aliases),
             "sameContentNonVotingDuplicateCount": len(same_content_nonvoters),
             "crossIdOwnerConflictCount": len(cross_id_owner_conflicts),
-            "heldSourceCount": len(held),
+            "heldSourceCount": len(held) - len(nonvoting),
             "incomingUpdates": {
                 photo_id: {
                     "source": row["source"], "owner": row["updateOwner"],
@@ -1630,7 +2351,7 @@ def _plan(
             "junkStorage": junk_prefix,
             "unresolvedDuplicateIds": unresolved_ids,
             "collisionModifiedNs": collision_dates,
-            "sourceHolds": held,
+            "sourceHolds": [row for row in held if row not in nonvoting],
             "inputPolicy": {
                 "idless": "tools.art.originals.content_id(raw bytes) plus standard_name; no source rename during preview",
                 "sameIdVersions": (
@@ -1674,17 +2395,29 @@ def _plan(
                 "missingOptionalHistory": "publish a truthful intake_runs.html page; do not fabricate experimental output",
             },
             "phaseLog": [
-                {"phase": "source-inventory-and-sha256", "status": "complete"},
-                {"phase": "stable-id-normalization-and-version-selection", "status": "complete"},
-                {"phase": "accepted-profile-preparation", "status": "complete" if prepared else "deferred"},
-                {"phase": "source-bound-measurement-and-frozen-cores", "status": "complete"},
-                {"phase": "bounded-two-round-admission" if admission_enabled else "single-candidate-plan", "status": "complete"},
+                {"phase": "source-inventory-and-sha256", "status": "complete", "durationSeconds": inventory_seconds},
+                {"phase": "stable-id-normalization-and-version-selection", "status": "complete", "durationSeconds": normalization_seconds},
+                {"phase": "accepted-profile-preparation", "status": "complete" if prepared else "deferred",
+                 **({"durationSeconds": preparation_seconds,
+                     "timingScope": "current reuse verification" if (reuse_plan is not None or reuse_preparation is not None)
+                     else "current preparation and verification"} if prepared else {})},
+                {"phase": "source-bound-measurement-and-frozen-cores", "status": "complete", "durationSeconds": measurement_seconds},
+                {"phase": "bounded-two-round-admission" if admission_enabled else "single-candidate-plan", "status": "complete", "durationSeconds": admission_seconds},
                 {"phase": "bound-admission-and-retained-member-check" if admission_enabled else "single-frozen-low-member-audit", "status": "complete"},
                 {"phase": "final-rival-family-viewer-publication", "status": "apply-only"},
             ],
         })
+        if fresh_source_release:
+            report["phaseLog"][3:4] = [
+                {"phase": "fresh-source-measurement", "status": "complete",
+                 "durationSeconds": fresh_measurement_seconds},
+                {"phase": "fresh-source-release-selection", "status": "complete",
+                 "durationSeconds": fresh_selection_seconds},
+                {"phase": "fresh-post-release-frozen-cores", "status": "complete",
+                 "durationSeconds": fresh_core_seconds},
+            ]
         report["assignedCount"] = len(report["assignments"])
-        report["heldCount"] = len(report["held"]) + len(held)
+        report["heldCount"] = len(report["held"]) + len(held) - len(nonvoting)
         report["canonicalSourceHashes"] = {
             row["source"]: row["sourceHash"] for row in active
         }
@@ -1695,19 +2428,22 @@ def _plan(
         )
         prepared_sources = set(prepared[2]) if prepared else set()
         report["preparationScope"] = (
-            "all eligible non-retained active Gallery/Review originals; references and candidates are both "
-            "measured from the selected prepared native"
+            ("all eligible non-retained active and selected non-voting Gallery/Review originals; "
+             if nonvoting else "all eligible non-retained active Gallery/Review originals; ")
+            + "references and candidates are both measured from the selected prepared native"
             if profile in ("full", "lean") else
-            "all eligible active Gallery/Review originals are measured from unchanged raw bytes"
+            ("all eligible active and selected non-voting Gallery/Review originals are measured from unchanged raw bytes"
+             if nonvoting else "all eligible active Gallery/Review originals are measured from unchanged raw bytes")
         )
         report["preparationInputCount"] = len(prepared_sources)
         report["preparedReferenceCount"] = sum(
             1 for row in active
             if row["source"] in prepared_sources
             and row["group"] in IDENTITY_ROOTS and row["bucket"] == "gallery"
+            and row["photoId"] not in release_ids and row["sourceHash"] not in nonvoting_hashes
         )
         report["preparedCandidateCount"] = sum(
-            1 for row in active
+            1 for row in measured_rows
             if row["source"] in prepared_sources
             and row["source"] in candidate_sources
         )
@@ -1844,6 +2580,13 @@ def _plan(
             row for row in report["moves"]
             if not row.get("auditOnly") or row["destination"].endswith("/review/" + pathlib.PurePosixPath(row["destination"]).name)
         ]
+        unversioned = sorted(
+            row["photoId"] for row in report["moves"]
+            if (row.get("castAdmission") or row.get("normalAdmission")) and not row.get("referenceVersion")
+        )
+        if unversioned:
+            # Publication records the reference version on every admitted membership.
+            raise ValueError("admission moves lack a reference version: " + ", ".join(unversioned))
         if profile in ("full", "lean") and prepared:
             for move in report["moves"]:
                 if move.get("membershipOnly") and move["source"] in prepared[2]:
@@ -1885,7 +2628,7 @@ def _plan(
                     stage_photos.append(raw_photos[row["source"]])
                     staged_ids.add(row["photoId"])
             report["moves"].sort(key=lambda row: (row["photoId"], row["source"], row["destination"]))
-        report["candidateCount"] = len(candidates)
+        report["candidateCount"] = len(candidates) + len(nonvoting)
         report["normalizationMoves"] = normalization_moves
         report["sourceConservation"] = {
             "physicalRows": len(rows),
@@ -1913,7 +2656,7 @@ def _plan(
                 "FULL/LEAN inputs are also copied into preparation evidence, while FAST output keeps raw bytes"
             ),
             "logicalInputRoles": dict(sorted(collections.Counter(
-                row.get("rebaseRole", row.get("sourceStatus", "unclassified")) for row in active
+                row.get("rebaseRole", row.get("sourceStatus", "unclassified")) for row in active + nonvoting
             ).items())),
         }
         for row in active:
@@ -1938,6 +2681,48 @@ def _plan(
                 report["moves"].append(move)
                 stage_photos.append(raw_photos[row["source"]])
             move["collisionRebind"] = True
+        if released_bindings is not None:
+            for binding in released_bindings:
+                matches = [
+                    move for move in report["moves"]
+                    if move["photoId"] == binding["photoId"]
+                    and move["source"] == binding["currentPath"]
+                    and move["sha256"] == binding["sha256"]
+                ]
+                if len(matches) != 1 or not matches[0].get("normalAdmission"):
+                    raise ValueError(
+                        f"{binding['photoId']}: released decision lacks one bound normal-admission move; "
+                        "held or same-path selections require explicit publication evidence"
+                    )
+                matches[0]["releasedPhotoId"] = binding["photoId"]
+            report["releasedPlanFingerprint"] = _preparation_fingerprint({
+                "bindings": released_bindings,
+                "decisionEvidence": report["releasedDecisionEvidence"],
+                "nonVotingEvidence": report.get("releasedNonVotingEvidence", []),
+                "reconsideredNonVotingEvidence": report.get("reconsideredNonVotingEvidence"),
+                "reconsiderHolds": report["reconsiderHolds"],
+                "priorExplicitReviewPlacements": report["priorExplicitReviewPlacements"],
+                "retirement": report["releasedSourceRetirement"],
+                **({"freshSourceAssessment": fresh_assessment} if fresh_source_release else {}),
+                **({"freshMeasurementProof": fresh_measurement_proof} if fresh_source_release else {}),
+                "referenceSnapshots": report.get("referenceSnapshots"),
+                "clusters": report["clusters"],
+                "moves": report["moves"],
+            })
+            if reuse_plan is not None and report["releasedPlanFingerprint"] != reuse_plan.get("releasedPlanFingerprint"):
+                raise ValueError("released cohort decisions or publication plan differ from preview")
+        if reconsider_holds:
+            report["reconsiderHoldsFingerprint"] = _preparation_fingerprint({
+                "priorExplicitReviewPlacements": report["priorExplicitReviewPlacements"],
+                "nonVotingEvidence": report.get("reconsideredNonVotingEvidence"),
+                "assignments": report["assignments"],
+                "held": report["held"],
+                "referenceSnapshots": report.get("referenceSnapshots"),
+                "clusters": report["clusters"],
+                "moves": report["moves"],
+            })
+            if reuse_plan is not None and report["reconsiderHoldsFingerprint"] != reuse_plan.get("reconsiderHoldsFingerprint"):
+                raise ValueError("existing hold reassessment decisions differ from preview")
         _validate_move_destinations(report["moves"])
         report["exactAliasTargets"] = _exact_alias_targets(rows, report["moves"], updates=updates, archives=archives)
         report["sourceConservation"]["coalescedExactAliasTargets"] = len(report["exactAliasTargets"])
@@ -1946,15 +2731,21 @@ def _plan(
             if not move.get("preparationOnly") and move["photoId"] not in updates
         ]
         if permission_moves:
-            maintenance._validate_permissions(root, permission_moves, policy, cfg)
+            maintenance._validate_permissions(
+                root, permission_moves, policy, cfg,
+                **({"released_bindings": released_bindings} if released_bindings is not None else {}),
+            )
         report["publicationPermissionsVerified"] = True
         publication_space = api.Space(
             [
                 raw_photos[row["source"]]
-                for row in active if row.get("sourceStatus") != "held"
+                for row in active + nonvoting if row.get("sourceStatus") != "held"
             ],
             settings, mean=mean,
         )
+        next(row for row in report["phaseLog"] if row["phase"] in (
+            "bound-admission-and-retained-member-check", "single-frozen-low-member-audit",
+        ))["durationSeconds"] = time.perf_counter() - phase_started
         return report, stage_photos, publication_space, catalog, cfg, policy, cache, prepared, run, rows
     finally:
         api.domains.READ_ONLY.reset(read_only_token)
@@ -1988,9 +2779,22 @@ def _parser():
         help="expected SHA-256 of the reused preparation manifest.json",
     )
     parser.add_argument("--profile", choices=("full", "lean", "fast"), default="lean")
+    parser.add_argument(
+        "--preparation-workers", type=int, choices=(1, 2, 3), default=1,
+        help="selected FULL/LEAN preparation workers (default 1); repeat on apply",
+    )
     parser.add_argument("--run-id", help="stable receipt/run directory identifier")
     parser.add_argument("--receipt", help="receipt path; defaults to the configured reports root under runs/")
     parser.add_argument("--preview-receipt", help="custom preview receipt path to reuse during --apply")
+    parser.add_argument("--release-receipt", help="original applied rebase receipt for a verified release cohort")
+    parser.add_argument("--release-audit", help="hash-bound original release audit snapshot")
+    parser.add_argument("--release-review", help="checked final Review directory following the releases")
+    parser.add_argument("--release-run", action="append", default=[],
+                        help="release run ID in chronological order; repeat for each release")
+    parser.add_argument(
+        "--fresh-source-release", action="store_true",
+        help="Sandbox-only initial Gallery release assessment before identity formation; repeat on apply",
+    )
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--dry-run", action="store_true", help="preview only (the default)")
     mode.add_argument("--apply", action="store_true", help="publish the complete proposal with scoped recovery")
@@ -2002,6 +2806,10 @@ def _parser():
     parser.add_argument(
         "--lock-cast-admission", action="store_true",
         help="receiving-only lock for Sisters/Angels; keep cast rivals visible (repeat on apply/check)",
+    )
+    parser.add_argument(
+        "--reconsider-holds", action="store_true",
+        help="reconsider prior Review placements in Sandbox Working (repeat on apply)",
     )
     return parser
 
@@ -2088,6 +2896,38 @@ def _preview_for_apply(root, path, run_id, profile, bindings, cfg=None):
     return plan
 
 
+def _verified_released_lineage(root, cfg, receipt, audit, review, runs):
+    from tools.art.likeness_library import movement_history, sandbox_red_release
+    from tools.workflows import comfy_workflows as cw
+
+    if not is_sandbox_working_path(root):
+        raise ValueError("released cohort rebase requires Sandbox Working")
+    reports = cw.storage_root(cfg, "reports", root=root).relative_to(root).as_posix()
+    _, records, hashes, successor, inputs = movement_history.collect(
+        root, receipt, audit, review, runs, reports,
+    )
+    if successor is not None:
+        raise ValueError("released cohort must start from the current verified release state")
+    bindings = sorted(
+        ({"photoId": row["photoId"], "currentPath": final, "sha256": row["preparedSHA256"]}
+         for row, history, final, active in records if active and history),
+        key=lambda row: row["photoId"],
+    )
+    if not bindings or len({row["photoId"] for row in bindings}) != len(bindings):
+        raise ValueError("released cohort is empty or ambiguous")
+    evidence = {
+        "receipt": str(pathlib.Path(receipt).absolute()),
+        "audit": str(pathlib.Path(audit).absolute()),
+        "review": str(pathlib.Path(review).absolute()),
+        "runs": list(runs), "journalSHA256": hashes, "inputs": inputs,
+        "producers": {
+            module.__name__: metadata.content_sha256(pathlib.Path(module.__file__))
+            for module in (movement_history, sandbox_red_release, normal_recap)
+        },
+    }
+    return bindings, evidence
+
+
 def main(argv=None):
     parser = _parser()
     args = parser.parse_args(argv)
@@ -2102,6 +2942,8 @@ def main(argv=None):
             parser.error("--reuse-preparation requires a 64-digit --reuse-preparation-sha256")
         if args.profile == "fast":
             parser.error("--reuse-preparation requires the FULL or LEAN profile")
+        if args.preparation_workers != 1:
+            parser.error("--preparation-workers applies to new preparation, not --reuse-preparation")
         if args.apply or args.check or args.repeat or args.recover or args.recover_apply:
             parser.error("--reuse-preparation is supported only when creating a new preview")
         args.reuse_preparation_sha256 = args.reuse_preparation_sha256.lower()
@@ -2117,8 +2959,28 @@ def main(argv=None):
         parser.error("--apply requires the exact --run-id used for preview")
     if args.preview_receipt and not args.apply:
         parser.error("--preview-receipt is only valid with --apply")
+    release_options = (args.release_receipt, args.release_audit, args.release_review, args.release_run)
+    if any(release_options) and not all(release_options):
+        parser.error("--release-receipt, --release-audit, --release-review and --release-run are required together")
+    if any(release_options) and (args.check or args.repeat or args.recover or args.recover_apply):
+        parser.error("release lineage options are only valid for a preview or apply")
+    if any(release_options) and not is_sandbox_working_path(root):
+        parser.error("release lineage requires Sandbox Working")
+    if args.fresh_source_release and any(release_options):
+        parser.error("--fresh-source-release cannot be combined with release lineage")
+    if args.fresh_source_release and not is_sandbox_working_path(root):
+        parser.error("--fresh-source-release requires Sandbox Working")
+    if args.fresh_source_release and (args.check or args.repeat or args.recover or args.recover_apply):
+        parser.error("--fresh-source-release is only valid for a preview or apply")
+    if args.reconsider_holds and not is_sandbox_working_path(root):
+        parser.error("--reconsider-holds requires Sandbox Working")
+    if args.reconsider_holds and (args.check or args.repeat or args.recover or args.recover_apply):
+        parser.error("--reconsider-holds is only valid for a preview or apply")
     if (args.check or args.repeat or args.recover or args.recover_apply) and not args.run_id:
         parser.error("--check/--repeat/--recover require the exact --run-id")
+    if args.preparation_workers != 1 and (args.profile == "fast" or args.check or args.repeat
+                                          or args.recover or args.recover_apply):
+        parser.error("--preparation-workers is only valid for a FULL/LEAN preview or apply")
     try:
         receipt_path = _receipt_path(
             root, run_id, cfg, args.receipt,
@@ -2193,14 +3055,30 @@ def main(argv=None):
             print(f"normal rebase stopped safely: {exc}", file=sys.stderr)
             return 1
     try:
+        release_bindings, release_evidence = (None, None)
+        if all(release_options):
+            release_bindings, release_evidence = _verified_released_lineage(
+                root, cfg, args.release_receipt, args.release_audit, args.release_review, args.release_run,
+            )
+        if preview_plan is not None and preview_plan.get("releaseLineage") != release_evidence:
+            raise ValueError("released lineage differs from preview")
         report, photos, space, catalog, cfg, policy, cache, prepared, run, rows = _plan(
             root, args.profile, run_id, api=api, cache_path=args.cache, policy_path=args.policy,
             for_apply=args.apply, reuse_plan=preview_plan,
             reuse_preparation=args.reuse_preparation,
             reuse_preparation_sha256=args.reuse_preparation_sha256,
             lock_cast_admission=args.lock_cast_admission,
+            preparation_workers=args.preparation_workers,
+            released_bindings=release_bindings,
+            reconsider_holds=args.reconsider_holds,
+            fresh_source_release=args.fresh_source_release,
         )
+        if args.fresh_source_release:
+            release_bindings = report.get("releasedPhotoBindings")
+        if release_evidence is not None:
+            report["releaseLineage"] = release_evidence
         if args.apply:
+            publication_started = time.perf_counter()
             moves = report["moves"]
             move_sources = {row["source"] for row in moves}
             ordinary = [row for row in moves if row.get("photoId") not in report["incomingUpdates"]]
@@ -2209,7 +3087,10 @@ def main(argv=None):
                 root, relocations, exact_alias_targets=report["exactAliasTargets"],
                 duplicate_archives=report.get("duplicateArchives", {}),
             )
-            maintenance._validate_permissions(root, relocations, policy, cfg)
+            maintenance._validate_permissions(
+                root, relocations, policy, cfg,
+                **({"released_bindings": release_bindings} if release_bindings is not None else {}),
+            )
             for row in ordinary:
                 if not row.get("preparationOnly"):
                     continue
@@ -2231,10 +3112,18 @@ def main(argv=None):
                     raise ValueError(f"collision modification time changed before publication: {source}")
             stage_root = run / "publication"
             journal_path = run / "publication-journal.json"
+            stage_catalog = (
+                normal_admission.retire_released_catalog(catalog, release_bindings, {
+                    move["photoId"]: pathlib.PurePosixPath(move["destination"]).name
+                    for move in moves if move.get("photoId") in {row["photoId"] for row in release_bindings}
+                })["catalog"]
+                if release_bindings is not None else catalog
+            )
             published, updated, removed = normal_products.stage(
                 root, stage_root, moves, prepared, profile=args.profile,
-                photos=photos, cfg=cfg, catalog=catalog, policy=policy,
+                photos=photos, cfg=cfg, catalog=stage_catalog, policy=policy,
                 archives=report.get("duplicateArchives", {}), junk=report.get("junkDispositions", {}),
+                **({"released_source_catalog": catalog} if release_bindings is not None else {}),
             )
             projected = normal_finish.projected(api, root, stage_root, space, cache, moves)
             report["finalComparisonAndFamily"] = normal_finish.family_and_final(
@@ -2271,6 +3160,11 @@ def main(argv=None):
             for row in published:
                 normal_import._refresh_content_digest(cache, root / pathlib.PurePosixPath(row["native"]))
             cache.save()
+            if report.get("phaseLog"):
+                report["phaseLog"][-1].update(
+                    status="complete", durationSeconds=time.perf_counter() - publication_started,
+                    timingScope="current validation, staging, transaction, viewers and cache save; excludes receipt and recap",
+                )
             receipt = {
                 "kind": "normal-rebase-receipt",
                 "schemaVersion": 1,

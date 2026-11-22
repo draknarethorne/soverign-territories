@@ -15,7 +15,7 @@ from unittest import mock
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import comfy_workflows as cw  # noqa: E402
-from test_comfy_workflows import World  # noqa: E402
+from test_comfy_workflows import World, setUpModule  # noqa: E402,F401
 
 PRIME = {"nodes": [{"type": "SaveImage", "widgets_values": ["set-a/Alice/1_Alpha/1_Prime/Alice_Qwen_Alpha_1_Prime"]}], "id": "master"}
 BARE = {"nodes": [{"type": "SaveImage", "widgets_values": ["set-a/Alice/1_Alpha/2_Bare/Alice_Qwen_Alpha_2_Bare_Figure"]}], "id": "master"}

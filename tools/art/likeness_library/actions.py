@@ -175,12 +175,130 @@ def _workflow_photo_plan(action, source, root, cfg):
     }
 
 
+def selected_photo_bindings(cfg):
+    """Describe configured base and flow selections, including unidentifiable filenames."""
+    bindings = []
+    for hero, name in cfg.get("photos", {}).items():
+        bindings.append({"hero": hero, "flow": None, "filename": name,
+                         "photoId": metadata.photo_id_from_name(name)})
+    for flow_name, flow in cfg.get("flows", {}).items():
+        for hero, name in flow.get("photos", {}).items():
+            bindings.append({"hero": hero, "flow": flow_name, "filename": name,
+                             "photoId": metadata.photo_id_from_name(name)})
+    return bindings
+
+
 def selected_photo_ids(cfg):
     """Return source IDs currently selected by a base or flow-specific workspace."""
-    names = list(cfg.get("photos", {}).values())
-    for flow in cfg.get("flows", {}).values():
-        names.extend(flow.get("photos", {}).values())
-    return {photo_id for name in names if (photo_id := metadata.photo_id_from_name(name))}
+    return {item["photoId"] for item in selected_photo_bindings(cfg) if item["photoId"]}
+
+
+def workflow_photo_references(workflow, tokens):
+    """Find matching strings anywhere in a parsed workflow, without changing it."""
+    if not isinstance(workflow, dict):
+        raise ValueError("workflow must be a JSON object")
+    if isinstance(tokens, (str, bytes)):
+        raise ValueError("workflow reference search requires an iterable of string tokens")
+    try:
+        tokens = tuple(tokens)
+    except TypeError as exc:
+        raise ValueError("workflow reference search requires an iterable of string tokens") from exc
+    if not tokens or any(not isinstance(token, str) or not token for token in tokens):
+        raise ValueError("workflow reference search requires nonempty string tokens")
+    needles = [token.casefold() for token in tokens]
+    matches = []
+
+    def visit(value, pointer):
+        if isinstance(value, str):
+            if any(needle in value.casefold() for needle in needles):
+                matches.append({"pointer": pointer, "value": value})
+        elif isinstance(value, list):
+            for index, item in enumerate(value):
+                visit(item, f"{pointer}/{index}")
+        elif isinstance(value, dict):
+            for key, item in value.items():
+                if not isinstance(key, str):
+                    raise ValueError("workflow JSON object keys must be strings")
+                escaped = key.replace("~", "~0").replace("/", "~1")
+                child = f"{pointer}/{escaped}"
+                if any(needle in key.casefold() for needle in needles):
+                    matches.append({"pointer": child, "value": key, "objectKey": True})
+                visit(item, child)
+    visit(workflow, "")
+    return matches
+
+
+def plan_workflow_photo_retarget(workflow, before, after):
+    """Plan exact LoadImage changes, refusing other references to the old photo."""
+    for name in (before, after):
+        if (not isinstance(name, str) or not name or "/" in name or "\\" in name
+                or ":" in name or not metadata.photo_id_from_name(name)):
+            raise ValueError("workflow retarget requires identifiable simple filenames")
+    old_id = metadata.photo_id_from_name(before)
+    if old_id == metadata.photo_id_from_name(after):
+        raise ValueError("workflow retarget requires distinct photos")
+    references = workflow_photo_references(workflow, [before, old_id.split(":", 1)[1]])
+    planned = copy.deepcopy(workflow)
+    changed = set()
+
+    def visit(value, pointer):
+        if isinstance(value, dict):
+            if value.get("type") == "LoadImage" or value.get("class_type") == "LoadImage":
+                slots = []
+                values = value.get("widgets_values")
+                if isinstance(values, list) and values and isinstance(values[0], str):
+                    slots.append((values, 0, f"{pointer}/widgets_values/0"))
+                for field in ("widgets_values_named", "inputs"):
+                    mapping = value.get(field)
+                    if isinstance(mapping, dict) and isinstance(mapping.get("image"), str):
+                        slots.append((mapping, "image", f"{pointer}/{field}/image"))
+                if any(container[key].casefold() == before.casefold() for container, key, _ in slots):
+                    if any(container[key].casefold() != before.casefold() for container, key, _ in slots):
+                        raise ValueError("LoadImage contains conflicting photo bindings")
+                    for container, key, location in slots:
+                        container[key] = after
+                        changed.add(location)
+            for key, item in value.items():
+                escaped = key.replace("~", "~0").replace("/", "~1")
+                visit(item, f"{pointer}/{escaped}")
+        elif isinstance(value, list):
+            for index, item in enumerate(value):
+                visit(item, f"{pointer}/{index}")
+
+    visit(planned, "")
+    if not changed:
+        raise ValueError("workflow contains no matching LoadImage binding")
+    if any(item.get("objectKey") or item["pointer"] not in changed
+           or item["value"].casefold() != before.casefold() for item in references):
+        raise ValueError("workflow contains an unclassified or ambiguous old-photo reference")
+    return planned, sorted(changed)
+
+
+def workflow_replacement_bindings(cfg, photo_id, hero, replacement_name):
+    """Plan configured selection changes only; do not modify workflows or configuration."""
+    if (not isinstance(hero, str) or not hero or not isinstance(replacement_name, str)
+            or not replacement_name or "/" in replacement_name or "\\" in replacement_name
+            or ":" in replacement_name):
+        raise ValueError("workflow replacement requires an owner and a simple image filename")
+    replacement_id = metadata.photo_id_from_name(replacement_name)
+    if not photo_id or not replacement_id or replacement_id == photo_id:
+        raise ValueError("workflow replacement requires distinct, identifiable photo IDs")
+    bindings = selected_photo_bindings(cfg)
+    if any(item["photoId"] is None and item["hero"].casefold() == hero.casefold() for item in bindings):
+        raise ValueError("workflow owner has an unidentified configured selection")
+    matches = [item for item in bindings if item["photoId"] == photo_id]
+    if not matches:
+        raise ValueError("photo is not selected in current workflow configuration")
+    if any(item["hero"].casefold() != hero.casefold() for item in matches):
+        raise ValueError("workflow selection is shared with another owner")
+    scopes = [(item["hero"].casefold(), item["flow"].casefold() if item["flow"] is not None else None)
+              for item in matches]
+    if len(scopes) != len(set(scopes)):
+        raise ValueError("workflow selection has ambiguous duplicate bindings")
+    return [
+        {"hero": item["hero"], "flow": item["flow"], "before": item["filename"], "after": replacement_name}
+        for item in matches
+    ]
 
 
 def _require_configured_work_root(root, cfg):

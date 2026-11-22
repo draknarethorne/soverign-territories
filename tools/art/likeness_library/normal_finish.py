@@ -63,7 +63,7 @@ def check_batch(api, space, catalog, policy, moves, *, update_ids=()):
             evidence.append({
                 "photoId": move["photoId"], "folder": folder,
                 "decision": "retain-bound-normal-admission",
-                "referenceVersion": move["referenceVersion"],
+                "referenceVersion": move.get("referenceVersion"),
                 "scope": "validate final matching-round admission, not legacy initial-core reclassification",
             })
             checked.append(row)

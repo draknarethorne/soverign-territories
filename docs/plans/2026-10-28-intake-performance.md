@@ -12,6 +12,158 @@ to the full maintained refresh. Further cost attribution, context parity,
 resource coverage and broader viewer/human acceptance remain open.
 Other core work, measured extras and new-PC tuning retain their own gates.
 
+## Nov 21: per-machine tuning
+
+The user wants both machines tuned independently for their actual resources,
+including worker/thread counts, bounded in-memory reuse and other measured
+opportunities, while retaining reliable future cross-machine comparisons.
+The [exact request](#nov-21-per-machine-tuning-and-skills---verbatim-chat)
+is preserved below. T29/T30 remain the executable owners in the spine; this
+holding plan is their evidence and method, not another queue.
+
+1. Inventory each machine separately: processor/logical cores, available and
+   total memory, storage, accelerator/runtime availability, Python/native
+   versions and current load. Check live writers before any resource-heavy
+   probe; do not assume one machine's capabilities or idle state for the
+   other.
+2. Reuse each machine's saved run evidence, then establish representative
+   same-input serial and warm/no-op baselines with code, configuration,
+   recipe, cache state and input IDs. Measure phase elapsed time, memory
+   peak, CPU/I/O and worker/thread settings where available. Prior 24-image
+   new-PC trials are a starting observation, not an optimal setting or
+   whole-run speedup.
+3. Compare a bounded range of worker/native-thread settings and in-operation
+   cache strategies **on each machine**, varying one factor at a time and
+   repeating representative cases. Stop before oversubscription, memory
+   pressure or competing writers; do not flush OS caches or change system
+   settings just to manufacture a benchmark. Prefer existing launchers and
+   disjoint-output/isolated fixtures. Record workload, repetitions, timing,
+   memory and failures, including no-gain or worse results.
+4. Bind any chosen local settings to the machine and run evidence; retain a
+   safe serial baseline. Cross-machine comparisons use the same validated
+   input/policy/implementation and disclose each machine's settings.
+   Compare placements, decisions, safety diagnostics and image outputs;
+   investigate meaningful differences rather than assuming byte identity or
+   treating different results as equivalent. Preserve standalone independent
+   checks, dependency-aware cache invalidation and recovery.
+5. Promote a worker/cache optimization only after focused parity, failure,
+   ownership and memory-bound tests and representative measurements. Never
+   infer permission for Production mutation or a full-library replay from a
+   benchmark. Record each machine's selected settings and measured impact;
+   neither machine inherits the other's default merely for symmetry.
+
+Existing long-run acceptance, original-photo and launcher procedures cover
+current operation. Consider a focused tuning skill only after this repeatable
+workflow and its evidence demonstrate a real reusable gap; do not create a
+skill as a substitute for tuning or duplicate the current runbook.
+
+**New-PC inventory, Nov 21:** an AMD Ryzen 9 9900X reports 12 physical and
+24 logical cores, 33,491,177,472 bytes of RAM, and an NVIDIA GeForce RTX
+5080 alongside AMD integrated graphics. The processing interpreter reports
+Python 3.14.10. At this observation roughly 16.6 million KiB of physical
+memory was free; C and B were NTFS volumes with roughly 496 and 1,321 GB
+free respectively. These are point-in-time observations, not memory-peak or
+CPU utilization measurements. No worker/cache setting was selected from
+this inventory. The previously recorded 24-image trials remain preliminary.
+
+**New-PC repeat, Nov 21:** three additional sequential LEAN sidecar runs used
+the same 24 ordered installed inputs, with 1/2/3 workers in that run order
+of 2, 3, then 1. Apply elapsed times were 50.07s, 31.93s and 26.99s for
+1, 2 and 3 workers respectively; each independent `--check` passed. Across
+both sets of trials, the recipe and all per-photo manifest evidence matched
+the serial baseline after excluding elapsed-time fields and detail-page
+hashes (the detail pages include timings). This includes recorded source
+and output hashes, not a fresh cross-machine or whole-rebase comparison.
+CPU/I/O utilization, cache effects and broader workload parity were not
+measured; no SIMPLE default changed. An opt-in
+`--preparation-workers 1|2|3` is now available for new SIMPLE FULL/LEAN
+preparation, with preview/apply request matching and origin-seal recording;
+it does not itself select an optimal setting or change the serial default.
+Reports are retained under
+Sandbox Working `_reports/preparation/newpc-tune-20261121-repeat-workers1`,
+`newpc-tune-20261121-repeat-workers2` and
+`newpc-tune-20261121-repeat-workers3`.
+
+**New-PC sampled memory, Nov 21:** after the worker offline-propagation fix,
+two more 24-input sidecar trials sampled their process trees approximately
+once per second. One worker took 49.99s and sampled peaks of 1,820,618,752
+working-set bytes and 2,974,494,720 private bytes; three took 26.78s and
+sampled 4,949,512,192 and 8,870,535,168 bytes respectively. Sampling can
+miss short peaks and summed working sets may include shared pages. The
+three-worker process exited 0; the serial monitor did not capture its exit
+code, although its report completed and its independent check passed.
+Both checks passed and both manifests match the original serial stable
+photo evidence as above. The new SIMPLE preflight conservatively requires
+3.5 GiB available per parallel worker, with unknown/insufficient memory
+rejected; this is not a hard cap or proof of a safe whole-library peak.
+Memory-trial reports are retained as
+`newpc-tune-20261121-memory-workers1` and
+`newpc-tune-20261121-memory-workers3` in the same preparation directory.
+An isolated four-input proof also ran the actual SIMPLE preparation adapter
+with one and three workers, using offline models; its verified recipe and
+stable per-photo evidence matched. Its temporary outputs were removed.
+This is not a full rebase or a representative memory ceiling.
+
+**New-PC post-release 48-photo trials, Nov 21:** seven isolated LEAN sidecar
+runs used the same ordered 48 current Sandbox inputs, including one reported
+Junk candidate, in worker order 3, 1, 2, 3, 2, 1, 3. The pinned person and
+fill model files were present and hash-verified before the runs. All applies
+exited zero and all seven independent `--check` calls verified the retained
+inputs, outputs and current sources. The input-path/hash list SHA-256 was
+`d0f167602a8625d691ea492644411308a2500e0e5496e545a9ad584f978f5535`;
+the canonical recipe SHA-256 was
+`d8015c4bba6e95f2fa883beffd6800f2987faca71b475fe931af5a99ce3a274b`.
+The preparation module SHA-256 was
+`c84379d866a7c1ae2c4e1d644b8a7eea71542d362cbfa28c7da78a1cbfe41cbb`.
+Every manifest matched the serial run except measured timing, generated
+detail/report hashes, worker count and run-output configuration bindings.
+This includes all recorded source/output hashes and processing decisions.
+
+| Workers | End-to-end apply seconds | Sampled peak working/private bytes |
+| --- | --- | --- |
+| 1 | 80.65, 79.04 | 2,047,393,792 / 3,178,749,952 |
+| 2 | 53.13, 52.68 | 3,888,332,800 / 6,940,147,712 |
+| 3 | 48.27, 44.58, 45.10 | 5,328,773,120 / 9,452,290,048 |
+
+Memory peaks are maxima across the successfully sampled trials for each
+setting, sampled approximately every two seconds across the parent/child
+process tree. Samples can miss peaks; summed working sets may share pages.
+The first three-worker sampler failed on integer conversion, so its memory
+was not measured; two later three-worker runs supplied the figures above.
+One repeated run per setting had sampled maximum live-tree CPU of 460.28,
+723.13 and 615.36 seconds respectively, and sampled maximum read bytes of
+1,722,208,504, 1,998,526,969 and 2,215,310,740. These are sampled
+live-process counters, not complete CPU/I/O totals or proven physical disk
+traffic. OS caches were not controlled. Reports are retained under
+`_reports/preparation/newpc-tune-20261121-postrelease-48-w1`,
+`-w2`, `-w3`, `-w3-repeat`, `-w2-repeat`, `-w1-repeat`, and `-w3-cpu`.
+The three-worker trial is fastest for this workload but needs materially
+more memory; it is an opt-in candidate, not an automatically selected
+whole-library default or evidence for the other machine. T29/T30 remain open
+for broader workload, cache, failure and independently measured old-PC
+comparisons.
+
+**Old-PC follow-up, Nov 21:** Beacon's partial response at `d56c35022`
+confirms there is no controlled old-PC 1/2/3-worker or peak-memory
+comparison and no approved private same-input transfer method. The
+historical full-run timings and different digest/cache microbenchmark do
+not establish worker parity. `208a95503` asks Beacon to consider an
+independent bounded local-input comparison if the old-PC lane is idle; that
+would not be a cross-machine same-input comparison.
+
+**New-PC bounded read reuse, Nov 21:** with no matching rebase or
+preparation writer observed, one read-only probe selected the first
+24 distinct saved Review-core paths in the v9 red-audit manifest
+(40,722,788 bytes) and requested each SHA-256 four times. In
+direct/session/session/direct order, elapsed times were 0.111/0.066/
+0.065/0.106 seconds. Direct reads made 96 content reads; each
+operation-local session made 24 content reads, 72 cache reuses and 24
+independent final seal reads. All digests agreed. Python-traced allocation
+peaks were approximately 2.24/2.27/2.26/2.24 MB respectively, not
+process-memory peaks. OS cache state was uncontrolled; this isolated
+existing-cache probe does not establish a whole-run gain, justify a new
+cache, or replace mutation/invalidation tests.
+
 **Nov 16 SIMPLE applicability:** the
 [focused carry-forward inventory](2026-11-16-simple-review-and-tuning.md#simple-performance-carry-forward-retained-pieces-versus-missing-integration)
 distinguishes retained shared implementations, normal-coordinator integration
@@ -2147,5 +2299,13 @@ implementation and continuous versus standalone regression contracts.
 <!-- markdownlint-disable MD013 -->
 ````text
 A correctness check is only really needed when the next step is unsure about the previous results - but if we know it's correct in the non-stop flow, then you can skip excessive re-checks, use common cache and not rebuild.  We built this all incrementally and in phases and hence the fragmented approach - which works in that model, but running it non-stop on the full rebase has show those end-to-end design flaws that came naturally in how it is built.
+````
+<!-- markdownlint-enable MD013 -->
+
+### Nov 21 per-machine tuning and skills - verbatim chat
+
+<!-- markdownlint-disable MD013 -->
+````text
+You should also include performance tuning on a per-machine basis so we can increase workers or even memory cache and any other optimizations on this and the other machine separately.  Both of these are important so your runs are optimal and so are any on the other machine when doing cross-machine comparisons in the future.  If that also means creating skills for that, we can do that as well.  Really - any skills that we need along the way we should create to reduce our instructions that aren't important to send in context every time.  I don't want you to get distracted by skills, but they also improve things as we go - like having skills for how to run things for the various automation we have.  So think about that and let's do that work and then move into implementation unless you have questions for Beacon or me about the plans.
 ````
 <!-- markdownlint-enable MD013 -->

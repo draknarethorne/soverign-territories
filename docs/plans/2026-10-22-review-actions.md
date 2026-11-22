@@ -2,6 +2,12 @@
 
 **Status:** holding (Oct 30 scheduling; tested transactions retained, broader scenario acceptance open)
 
+**Nov 21 scoped precedence:** a red workflow-selected member can be released
+under the user's [future cleanup direction](2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning),
+with a valid higher-scoring replacement and a recoverable selection update.
+The older general workflow constraint remains outside that scope; this does
+not authorize unrelated action UAT or settle an active undo.
+
 **Stream placement:** only actions needed for M3 accepted selections may be
 selected/transferred through the
 [execution spine](2026-11-05-priority-reset.md#execution-spine).

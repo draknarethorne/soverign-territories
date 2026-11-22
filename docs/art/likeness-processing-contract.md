@@ -9,6 +9,18 @@ additional shipped CLI contracts. Production remains unapproved.
 
 ## Latest precedence and ownership
 
+- Nov 21 selects **Sandbox orange/red and unscored member cleanup** across
+  identity groupings, prioritizing Sisters and Angels. The user permits
+  protected, anchored or workflow-selected low-scoring members to be
+  released, with a higher-scoring replacement for a released workflow photo.
+  The user also directs that unscored photos not remain in their current
+  identity and wants everything scored. These scoped decisions do not alter
+  ordinary flows or authorize Production changes. Preserve originals,
+  explicit history and identity continuity; never invent a score where
+  independent evidence is unavailable. The
+  [focused plan](../plans/2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning)
+  owns the exact instructions, applied Sandbox evidence and remaining
+  replacement, scoring, destination and recovery gates.
 - Nov 15 clean-test scope is Production -> freshly verified Sandbox `Source`
   -> clean Sandbox `Working`. Current experimental Working is not an input
   overlay, reference population or source of automatic membership decisions.

@@ -294,6 +294,119 @@ class LikenessActionTests(unittest.TestCase):
         )
         self.assertTrue(any("selected by an active workspace workflow" in error for error in errors))
 
+    def test_selected_photo_bindings_keep_base_and_flow_consumers_and_unknown_names(self):
+        cfg = {
+            "photos": {"Ava": "ava_image_123_944x1104.png", "Other": "custom.png"},
+            "flows": {
+                "portrait": {"photos": {"Ava": "ava_image_123_944x1104.png"}},
+                "alternate": {"photos": {"Ava": "ava_image_456_944x1104.png"}},
+            },
+        }
+        bindings = actions.selected_photo_bindings(cfg)
+        self.assertEqual(
+            [(item["hero"], item["flow"], item["photoId"]) for item in bindings],
+            [("Ava", None, "photo:image_123"), ("Other", None, None),
+             ("Ava", "portrait", "photo:image_123"), ("Ava", "alternate", "photo:image_456")],
+        )
+        self.assertEqual(actions.selected_photo_ids(cfg), {"photo:image_123", "photo:image_456"})
+
+    def test_workflow_photo_references_find_nested_and_unclassified_string_consumers(self):
+        workflow = {
+            "nodes": [
+                {"type": "LoadImage", "widgets_values": ["unrelated.png"]},
+                {"type": "LoadImage", "widgets_values": ["folder/AVA_IMAGE_123_944x1104.png"]},
+            ],
+            "definitions": {"subgraphs": [{"nodes": [
+                {"type": "LoadImage", "widgets_values_named": {"image": "ava_image_123_512x512.png"}},
+            ]}]},
+            "custom/key": "manual reference to image_123",
+            "IMAGE_123_input": True,
+        }
+        before = copy.deepcopy(workflow)
+        matches = actions.workflow_photo_references(workflow, ["image_123"])
+        self.assertEqual([item["pointer"] for item in matches], [
+            "/nodes/1/widgets_values/0",
+            "/definitions/subgraphs/0/nodes/0/widgets_values_named/image",
+            "/custom~1key",
+            "/IMAGE_123_input",
+        ])
+        self.assertTrue(matches[-1]["objectKey"])
+        self.assertEqual(workflow, before)
+        self.assertEqual(actions.workflow_photo_references(workflow, iter(["image_123"])), matches)
+        with self.assertRaisesRegex(ValueError, "nonempty"):
+            actions.workflow_photo_references(workflow, [""])
+        with self.assertRaisesRegex(ValueError, "iterable"):
+            actions.workflow_photo_references(workflow, "image_123")
+
+    def test_workflow_retarget_plans_all_nested_load_images_without_mutation(self):
+        old, new = "ava_image_123_944x1104.png", "ava_image_789_944x1104.png"
+        workflow = {
+            "nodes": [{"type": "LoadImage", "widgets_values": [old],
+                       "widgets_values_named": {"image": old}}],
+            "definitions": {"subgraphs": [{"nodes": [
+                {"class_type": "LoadImage", "inputs": {"image": old}},
+            ]}]},
+        }
+        before = copy.deepcopy(workflow)
+        planned, changed = actions.plan_workflow_photo_retarget(workflow, old, new)
+        self.assertEqual(changed, [
+            "/definitions/subgraphs/0/nodes/0/inputs/image",
+            "/nodes/0/widgets_values/0",
+            "/nodes/0/widgets_values_named/image",
+        ])
+        self.assertEqual(planned["nodes"][0]["widgets_values"][0], new)
+        self.assertEqual(planned["nodes"][0]["widgets_values_named"]["image"], new)
+        self.assertEqual(planned["definitions"]["subgraphs"][0]["nodes"][0]["inputs"]["image"], new)
+        self.assertEqual(workflow, before)
+
+    def test_workflow_retarget_refuses_conflicts_and_unclassified_old_references(self):
+        old, new = "ava_image_123_944x1104.png", "ava_image_789_944x1104.png"
+        node = {"type": "LoadImage", "widgets_values": [old], "widgets_values_named": {"image": old}}
+        workflow = {"nodes": [node]}
+        for field in ("conflicting", "unclassified"):
+            altered = copy.deepcopy(workflow)
+            if field == "conflicting":
+                altered["nodes"][0]["widgets_values_named"]["image"] = new
+            else:
+                altered["notes"] = "Review image_123 before changing this workflow"
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                actions.plan_workflow_photo_retarget(altered, old, new)
+        with self.assertRaisesRegex(ValueError, "no matching"):
+            actions.plan_workflow_photo_retarget({"nodes": []}, old, new)
+
+    def test_workflow_replacement_bindings_cover_base_and_flow_without_mutation(self):
+        cfg = {
+            "photos": {"Ava": "ava_image_123_944x1104.png"},
+            "flows": {
+                "portrait": {"photos": {"Ava": "ava_image_123_944x1104.png"}},
+                "alternate": {"photos": {"Ava": "ava_image_456_944x1104.png"}},
+            },
+        }
+        before = copy.deepcopy(cfg)
+        planned = actions.workflow_replacement_bindings(cfg, "photo:image_123", "Ava", "ava_image_789_944x1104.png")
+        self.assertEqual([(item["hero"], item["flow"]) for item in planned], [("Ava", None), ("Ava", "portrait")])
+        self.assertTrue(all(item["after"] == "ava_image_789_944x1104.png" for item in planned))
+        self.assertEqual(cfg, before)
+
+    def test_workflow_replacement_refuses_ambiguous_or_invalid_selection(self):
+        cfg = {"photos": {"Ava": "ava_image_123_944x1104.png"}, "flows": {}}
+        for changed, expected in (
+            ({"photos": {"Ava": "ava_image_123_944x1104.png", "Other": "other_image_123_944x1104.png"}},
+             "shared with another owner"),
+            ({"flows": {"portrait": {"photos": {"Ava": "custom.png"}}}}, "unidentified configured selection"),
+        ):
+            with self.subTest(expected=expected), self.assertRaisesRegex(ValueError, expected):
+                actions.workflow_replacement_bindings({**cfg, **changed}, "photo:image_123", "Ava",
+                                                      "ava_image_789_944x1104.png")
+        for name in ("ava_image_123_944x1104.png", "custom.png", "../ava_image_789.png"):
+            with self.subTest(name=name), self.assertRaises(ValueError):
+                actions.workflow_replacement_bindings(cfg, "photo:image_123", "Ava", name)
+        with self.assertRaisesRegex(ValueError, "not selected"):
+            actions.workflow_replacement_bindings(cfg, "photo:image_456", "Ava", "ava_image_789_944x1104.png")
+        ambiguous = {"photos": {"Ava": "ava_image_123.png", "ava": "ava_image_123.png"}, "flows": {}}
+        with self.assertRaisesRegex(ValueError, "ambiguous duplicate"):
+            actions.workflow_replacement_bindings(ambiguous, "photo:image_123", "Ava", "ava_image_789.png")
+
     def test_explicit_other_identity_move_uses_review_and_validates_protection(self):
         target = self.root / "Angels" / "Angelica"
         target.mkdir(parents=True)

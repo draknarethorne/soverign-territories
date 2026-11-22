@@ -812,12 +812,20 @@ def _receipt_path(root, run_id, cfg):
     return cw.storage_root(cfg, "reports", root=root) / "runs" / f"normal-import-{run_id}.json"
 
 
-def _write_receipt(path, value):
+def _write_receipt(path, value, *, exclusive=False):
     import os
     import tempfile
+    from tools.art.likeness_library import report_assets
 
     path = pathlib.Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
+    if exclusive:
+        with path.open("x", encoding="utf-8", newline="\n") as stream:
+            json.dump(value, stream, indent=2, ensure_ascii=False)
+            stream.write("\n")
+            stream.flush()
+            os.fsync(stream.fileno())
+        return
     staged = None
     try:
         with tempfile.NamedTemporaryFile(
@@ -829,7 +837,7 @@ def _write_receipt(path, value):
             stream.write("\n")
             stream.flush()
             os.fsync(stream.fileno())
-        os.replace(staged, path)
+        report_assets.replace_file(staged, path)
     finally:
         if staged is not None and staged.exists():
             staged.unlink()

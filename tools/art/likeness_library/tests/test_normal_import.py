@@ -25,6 +25,67 @@ class NormalImportTests(unittest.TestCase):
         self.scratch = ROOT / "tmp" / "normal-flow-restoration"
         self.scratch.mkdir(parents=True, exist_ok=True)
 
+    def test_receipt_replacement_retries_transient_lock_and_surfaces_persistent_lock(self):
+        from tools.art.likeness_library import report_assets
+
+        with tempfile.TemporaryDirectory(dir=self.scratch) as temporary:
+            path = pathlib.Path(temporary) / "journal.json"
+            path.write_text('{"status": "before"}', encoding="utf-8")
+            replace = os.replace
+            attempts = []
+
+            def locked_once(source, target):
+                attempts.append(source)
+                if len(attempts) == 1:
+                    raise PermissionError("locked")
+                return replace(source, target)
+
+            with mock.patch.object(report_assets.os, "replace", side_effect=locked_once) as attempted, \
+                    mock.patch.object(report_assets.time, "sleep"):
+                normal_import._write_receipt(path, {"status": "after"})
+            self.assertEqual(attempted.call_count, 2)
+            self.assertEqual(json.loads(path.read_text(encoding="utf-8")), {"status": "after"})
+            with mock.patch.object(report_assets.os, "replace", side_effect=PermissionError("locked")), \
+                    mock.patch.object(report_assets.time, "sleep"):
+                with self.assertRaises(PermissionError):
+                    normal_import._write_receipt(path, {"status": "failed"})
+            self.assertEqual(json.loads(path.read_text(encoding="utf-8")), {"status": "after"})
+            self.assertEqual(list(path.parent.glob("*.tmp")), [])
+
+    def test_unprepared_nonvoting_release_stages_native_only_with_bound_hold(self):
+        from PIL import Image
+        from tools.art.likeness_library import normal_admission, normal_products
+
+        with tempfile.TemporaryDirectory(dir=self.scratch) as temporary:
+            root = pathlib.Path(temporary)
+            source = root / "Potentials" / "Former" / "gallery" / "former_image_123.jpg"
+            source.parent.mkdir(parents=True)
+            Image.new("RGB", (120, 120), "white").save(source)
+            digest = metadata.content_sha256(source)
+            move = {
+                "photoId": "photo:image_123", "source": source.relative_to(root).as_posix(),
+                "destination": "Various/review/former_image_123.jpg", "sha256": digest,
+                "unpreparedNonVoting": True,
+            }
+            catalog = {"schemaVersion": 1, "people": {}, "photos": {}, "actions": []}
+            photo = SimpleNamespace(name=source.name, box=None, px=0, faces=0)
+            routing = {"nonVotingIds": [move["photoId"]]}
+            with mock.patch.object(normal_admission, "red_release_routed_catalog",
+                                   return_value={"catalog": catalog}):
+                normal_products.stage(
+                    root, root / "stage", [move], None, profile="lean", photos=[photo],
+                    cfg={}, catalog=catalog, policy={}, red_snapshot_candidates=[{}], red_routing_plan=routing,
+                )
+                target = root / "stage" / pathlib.PurePosixPath(move["destination"])
+                self.assertEqual(metadata.content_sha256(target), digest)
+                self.assertEqual(metadata.content_sha256(source), digest)
+                with self.assertRaisesRegex(ValueError, "neither new preparation nor verified retained lineage"):
+                    normal_products.stage(
+                        root, root / "refused", [move], None, profile="lean", photos=[photo],
+                        cfg={}, catalog=catalog, policy={}, red_snapshot_candidates=[{}],
+                        red_routing_plan={"nonVotingIds": []},
+                    )
+
     def test_prepared_history_staging_resolves_lean_alias_without_rewriting_old_detail(self):
         from tools.art.likeness_library import normal_history, retained_preparation, metadata
 
@@ -257,12 +318,12 @@ class NormalImportTests(unittest.TestCase):
             original_replace = normal_transaction._replace
             calls = 0
 
-            def fail_second_copy(*args):
+            def fail_second_copy(*args, **kwargs):
                 nonlocal calls
                 calls += 1
                 if calls == 2:
                     raise OSError("injected publication failure")
-                return original_replace(*args)
+                return original_replace(*args, **kwargs)
 
             failed_journal = stage.parent / "failed-journal.json"
             with (
@@ -278,6 +339,51 @@ class NormalImportTests(unittest.TestCase):
             self.assertEqual(arrival.read_bytes(), b"new raw")
             self.assertEqual(catalogue.read_bytes(), b'{"prior":true}\n')
 
+    def test_recovery_preserves_file_appearing_at_removed_source(self):
+        from tools.art.likeness_library import normal_transaction
+
+        for scenario in ("different", "same", "interrupted-created", "interrupted-absent"):
+            with self.subTest(scenario=scenario), tempfile.TemporaryDirectory(dir=self.scratch) as temporary:
+                root = pathlib.Path(temporary).resolve()
+                source = root / "source.jpg"
+                source.write_bytes(b"original")
+                stage = root / "_reports" / "run" / "publication"
+                stage.mkdir(parents=True)
+                (stage / "hold.jpg").write_bytes(b"original")
+                journal = stage.parent / "journal.json"
+                normal_transaction.publish(
+                    root, stage, [source.name], journal=journal, bindings={}, profile="lean",
+                    run_id="recovery-race", exclusive_targets=["hold.jpg"],
+                )
+                real_replace = normal_transaction._replace
+
+                def race_restore(saved, target, checksum, token=None, *, exclusive=False):
+                    if target == source:
+                        if scenario in ("different", "same"):
+                            source.write_bytes(b"competing file" if scenario == "different" else b"original")
+                        elif scenario == "interrupted-absent":
+                            raise KeyboardInterrupt("before restoration")
+                    real_replace(saved, target, checksum, token, exclusive=exclusive)
+                    if target == source and scenario == "interrupted-created":
+                        raise KeyboardInterrupt("after restoration")
+
+                error = FileExistsError if scenario in ("different", "same") else KeyboardInterrupt
+                with mock.patch.object(normal_transaction, "_replace", side_effect=race_restore):
+                    with self.assertRaises(error):
+                        normal_transaction.recover(root, journal, apply=True)
+                self.assertEqual((root / "hold.jpg").read_bytes(), b"original")
+                if scenario == "interrupted-absent":
+                    normal_transaction.recover(root, journal, apply=True)
+                    self.assertEqual(source.read_bytes(), b"original")
+                    self.assertFalse((root / "hold.jpg").exists())
+                else:
+                    content = b"competing file" if scenario == "different" else b"original"
+                    self.assertEqual(source.read_bytes(), content)
+                    for apply in (False, True):
+                        with self.assertRaisesRegex(ValueError, "ambiguous restored target"):
+                            normal_transaction.recover(root, journal, apply=apply)
+                        self.assertEqual(source.read_bytes(), content)
+
     def test_repeat_apply_rejects_different_scope_profile_and_bindings(self):
         receipt = {
             "profile": "lean", "selectedPhotoIds": ["photo:one"],
@@ -292,6 +398,567 @@ class NormalImportTests(unittest.TestCase):
         ):
             with self.subTest(message=message), self.assertRaisesRegex(ValueError, message):
                 normal_import._validate_requested_receipt(receipt, changed_args, bindings)
+
+    def test_recovery_refuses_changed_snapshot_manifest(self):
+        from tools.art.likeness_library import normal_transaction
+
+        with tempfile.TemporaryDirectory(dir=self.scratch) as temporary:
+            root = pathlib.Path(temporary).resolve()
+            source = root / "source.jpg"
+            source.write_bytes(b"original")
+            other = root / "other.jpg"
+            other.write_bytes(b"original")
+            stage = root / "_reports" / "run" / "publication"
+            stage.mkdir(parents=True)
+            (stage / "hold.jpg").write_bytes(b"original")
+            journal = stage.parent / "journal.json"
+            normal_transaction.publish(
+                root, stage, [source.name], journal=journal, bindings={}, profile="lean",
+                run_id="manifest-binding", exclusive_targets=["hold.jpg"],
+            )
+            data = json.loads(journal.read_text(encoding="utf-8"))
+            manifest_path = pathlib.Path(data["backup"]) / "manifest.json"
+            original_manifest = manifest_path.read_bytes()
+            manifest = json.loads(original_manifest)
+            manifest["entries"][0]["source"] = str(other)
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            for apply in (False, True):
+                with self.assertRaisesRegex(ValueError, "snapshot manifest changed"):
+                    normal_transaction.recover(root, journal, apply=apply)
+                self.assertFalse(source.exists())
+                self.assertEqual(other.read_bytes(), b"original")
+                self.assertEqual((root / "hold.jpg").read_bytes(), b"original")
+            manifest_path.write_bytes(original_manifest)
+            normal_transaction.recover(root, journal, apply=True)
+            self.assertEqual(source.read_bytes(), b"original")
+            self.assertFalse((root / "hold.jpg").exists())
+
+    def test_exclusive_publication_preserves_a_racing_destination(self):
+        from tools.art.likeness_library import normal_transaction
+
+        with tempfile.TemporaryDirectory(dir=self.scratch) as temporary:
+            root = pathlib.Path(temporary).resolve()
+            source = root / "source.jpg"
+            source.write_bytes(b"source")
+            stage = root / "_reports" / "run" / "publication"
+            stage.mkdir(parents=True)
+            (stage / "hold.jpg").write_bytes(b"same bytes")
+            destination = root / "hold.jpg"
+            journal = stage.parent / "journal.json"
+            real_write = normal_transaction.write
+
+            destination.write_bytes(b"existing")
+            with self.assertRaisesRegex(ValueError, "exclusive publication target already exists"):
+                normal_transaction.publish(
+                    root, stage, [source.name], journal=journal, bindings={}, profile="lean",
+                    run_id="exclusive-existing", exclusive_targets=["hold.jpg"],
+                )
+            self.assertEqual(destination.read_bytes(), b"existing")
+            destination.unlink()
+            with self.assertRaisesRegex(ValueError, "must be staged files"):
+                normal_transaction.publish(
+                    root, stage, [source.name], journal=journal, bindings={}, profile="lean",
+                    run_id="exclusive-invalid", exclusive_targets=["other.jpg"],
+                )
+
+            def race(path, data, *, exclusive=False):
+                real_write(path, data, exclusive=exclusive)
+                if data.get("pendingExclusive") == "hold.jpg" and not destination.exists():
+                    destination.write_bytes(b"same bytes")
+
+            with mock.patch.object(normal_transaction, "write", side_effect=race):
+                with self.assertRaisesRegex(OSError, "rollback-failed"):
+                    normal_transaction.publish(
+                        root, stage, [source.name], journal=journal, bindings={}, profile="lean",
+                        run_id="exclusive-race", exclusive_targets=["hold.jpg"],
+                    )
+            self.assertEqual(source.read_bytes(), b"source")
+            self.assertEqual(destination.read_bytes(), b"same bytes")
+            for apply in (False, True):
+                with self.assertRaisesRegex(ValueError, "ambiguous exclusive target"):
+                    normal_transaction.recover(root, journal, apply=apply)
+                self.assertEqual(destination.read_bytes(), b"same bytes")
+            destination.unlink()
+            normal_transaction.recover(root, journal, apply=True)
+            self.assertEqual(source.read_bytes(), b"source")
+            self.assertFalse(destination.exists())
+
+    def test_interrupted_exclusive_publication_requires_inspection(self):
+        from tools.art.likeness_library import normal_transaction
+
+        with tempfile.TemporaryDirectory(dir=self.scratch) as temporary:
+            root = pathlib.Path(temporary).resolve()
+            source = root / "source.jpg"
+            source.write_bytes(b"source")
+            stage = root / "_reports" / "run" / "publication"
+            stage.mkdir(parents=True)
+            (stage / "hold.jpg").write_bytes(b"staged")
+            destination = root / "hold.jpg"
+            journal = stage.parent / "journal.json"
+            real_replace = normal_transaction._replace
+
+            def interrupt(*args, **kwargs):
+                real_replace(*args, **kwargs)
+                raise KeyboardInterrupt("injected crash after exclusive creation")
+
+            with mock.patch.object(normal_transaction, "_replace", side_effect=interrupt):
+                with self.assertRaises(KeyboardInterrupt):
+                    normal_transaction.publish(
+                        root, stage, [source.name], journal=journal, bindings={}, profile="lean",
+                        run_id="exclusive-interruption", exclusive_targets=["hold.jpg"],
+                    )
+            self.assertEqual(destination.read_bytes(), b"staged")
+            with self.assertRaisesRegex(ValueError, "ambiguous exclusive target"):
+                normal_transaction.recover(root, journal, apply=True)
+            self.assertEqual(destination.read_bytes(), b"staged")
+            destination.unlink()
+            normal_transaction.recover(root, journal, apply=True)
+            self.assertEqual(source.read_bytes(), b"source")
+
+    def test_interrupted_finalizer_preserves_unrecorded_report_outputs(self):
+        from tools.art.likeness_library import normal_transaction
+
+        with tempfile.TemporaryDirectory(dir=self.scratch) as temporary:
+            root = pathlib.Path(temporary).resolve()
+            source = root / "source.jpg"
+            source.write_bytes(b"source")
+            stage = root / "_reports" / "run" / "publication"
+            stage.mkdir(parents=True)
+            (stage / "published.jpg").write_bytes(b"published")
+            report = root / "_reports" / "library" / "viewer.html"
+            report.parent.mkdir(parents=True)
+            report.write_bytes(b"prior viewer")
+            journal = stage.parent / "journal.json"
+            real_write = normal_transaction.write
+
+            def finish():
+                report.write_bytes(b"new viewer")
+                return [str(report)]
+
+            def interrupt(path, data, *, exclusive=False):
+                if data.get("viewerPaths") and "pendingFinalizer" not in data:
+                    raise KeyboardInterrupt("injected crash before finalizer journal update")
+                real_write(path, data, exclusive=exclusive)
+
+            with mock.patch.object(normal_transaction, "write", side_effect=interrupt):
+                with self.assertRaises(KeyboardInterrupt):
+                    normal_transaction.publish(
+                        root, stage, [source.name], journal=journal, bindings={}, profile="lean",
+                        run_id="viewer-interruption", finalizer=finish,
+                        report_directories=("_reports/library",),
+                    )
+            self.assertEqual(report.read_bytes(), b"new viewer")
+            self.assertEqual(json.loads(journal.read_text(encoding="utf-8"))["pendingFinalizer"],
+                             ["_reports/library"])
+            for apply in (False, True):
+                with self.assertRaisesRegex(ValueError, "interrupted viewer finalization"):
+                    normal_transaction.recover(root, journal, apply=apply)
+                self.assertEqual(report.read_bytes(), b"new viewer")
+
+    def test_external_transaction_rolls_back_and_recovers_exact_bytes(self):
+        from tools.art.likeness_library import normal_transaction
+
+        for scenario in (
+            "success", "failure", "external-race", "external-interrupted", "external-uncreated",
+            "recovery-race", "delete-interrupted", "partial", "newer",
+            "removed-reappeared",
+            "library-swap", "external-swap",
+            "interrupted-recovery", "legacy-journal",
+        ):
+            with self.subTest(scenario=scenario), tempfile.TemporaryDirectory(dir=self.scratch) as temporary:
+                base = pathlib.Path(temporary).resolve()
+                root, external = base / "library", base / "workflow"
+                stage = root / "_reports" / "run" / "publication"
+                staged_external = stage.parent / "external"
+                stage.mkdir(parents=True)
+                staged_external.mkdir()
+                external.mkdir()
+                source, destination = root / "original.png", root / "moved.png"
+                source.write_bytes(b"native original")
+                (stage / destination.name).write_bytes(b"native moved")
+                old, new = external / "workflow.json", external / "input.png"
+                removed = external / "old-input.png"
+                old.write_bytes(b"original workflow")
+                removed.write_bytes(b"original input")
+                staged_old, staged_new = staged_external / "workflow.json", staged_external / "input.png"
+                staged_old.write_bytes(b"updated workflow")
+                staged_new.write_bytes(b"new input")
+                updates = [
+                    {"target": old, "staged": staged_old, "beforeSha256": metadata.content_sha256(old)},
+                    {"target": removed, "delete": True, "beforeSha256": metadata.content_sha256(removed)},
+                    {"target": new, "staged": staged_new, "beforeSha256": None},
+                ]
+                journal = stage.parent / "journal.json"
+                kwargs = dict(
+                    journal=journal, bindings={}, profile="lean", run_id=scenario,
+                    external_updates=updates, allowed_external_roots=[external],
+                )
+                if scenario == "failure":
+                    real_replace = normal_transaction._replace
+
+                    def fail_new(source_path, target_path, checksum, token=None, *, exclusive=False):
+                        if target_path == new:
+                            raise OSError("injected external failure")
+                        return real_replace(source_path, target_path, checksum, token, exclusive=exclusive)
+
+                    with mock.patch.object(normal_transaction, "_replace", side_effect=fail_new):
+                        with self.assertRaisesRegex(OSError, "rolled-back"):
+                            normal_transaction.publish(root, stage, [source.name], **kwargs)
+                elif scenario == "external-race":
+                    real_replace = normal_transaction._replace
+
+                    def race_new(source_path, target_path, checksum, token=None, *, exclusive=False):
+                        if target_path == new:
+                            new.write_bytes(b"competing input")
+                        return real_replace(source_path, target_path, checksum, token, exclusive=exclusive)
+
+                    with mock.patch.object(normal_transaction, "_replace", side_effect=race_new):
+                        with self.assertRaisesRegex(OSError, "rollback-failed"):
+                            normal_transaction.publish(root, stage, [source.name], **kwargs)
+                    self.assertEqual(new.read_bytes(), b"competing input")
+                    for apply in (False, True):
+                        with self.assertRaisesRegex(ValueError, "ambiguous external target"):
+                            normal_transaction.recover(root, journal, apply=apply, allowed_external_roots=[external])
+                    self.assertEqual(new.read_bytes(), b"competing input")
+                    continue
+                elif scenario in ("external-interrupted", "external-uncreated"):
+                    real_replace = normal_transaction._replace
+
+                    def interrupt_new(source_path, target_path, checksum, token=None, *, exclusive=False):
+                        if target_path == new and scenario == "external-uncreated":
+                            raise KeyboardInterrupt("injected crash before external creation")
+                        real_replace(source_path, target_path, checksum, token, exclusive=exclusive)
+                        if target_path == new:
+                            raise KeyboardInterrupt("injected crash after external creation")
+
+                    with mock.patch.object(normal_transaction, "_replace", side_effect=interrupt_new):
+                        with self.assertRaises(KeyboardInterrupt):
+                            normal_transaction.publish(root, stage, [source.name], **kwargs)
+                    self.assertEqual(json.loads(journal.read_text(encoding="utf-8"))["pendingExternalExclusive"],
+                                     str(new))
+                    if scenario == "external-interrupted":
+                        self.assertEqual(new.read_bytes(), b"new input")
+                        with self.assertRaisesRegex(ValueError, "ambiguous external target"):
+                            normal_transaction.recover(root, journal, apply=True, allowed_external_roots=[external])
+                        self.assertEqual(new.read_bytes(), b"new input")
+                        continue
+                    self.assertFalse(new.exists())
+                    normal_transaction.recover(root, journal, apply=True, allowed_external_roots=[external])
+                elif scenario == "delete-interrupted":
+                    real_unlink = pathlib.Path.unlink
+
+                    def interrupt_deletion(path, *args, **kwargs):
+                        real_unlink(path, *args, **kwargs)
+                        if path == removed:
+                            raise KeyboardInterrupt("injected crash after external deletion")
+
+                    with mock.patch.object(pathlib.Path, "unlink", interrupt_deletion):
+                        with self.assertRaises(KeyboardInterrupt):
+                            normal_transaction.publish(root, stage, [source.name], **kwargs)
+                    self.assertFalse(removed.exists())
+                    self.assertEqual(json.loads(journal.read_text(encoding="utf-8"))["status"], "publishing")
+                    normal_transaction.recover(root, journal, apply=False, allowed_external_roots=[external])
+                    normal_transaction.recover(root, journal, apply=True, allowed_external_roots=[external])
+                else:
+                    normal_transaction.publish(root, stage, [source.name], **kwargs)
+                    with self.assertRaisesRegex(ValueError, "approved roots"):
+                        normal_transaction.verify(root, journal)
+                    normal_transaction.verify(root, journal, allowed_external_roots=[external])
+                    self.assertEqual(old.read_bytes(), b"updated workflow")
+                    self.assertEqual(new.read_bytes(), b"new input")
+                    self.assertFalse(removed.exists())
+                    if scenario == "removed-reappeared":
+                        removed.write_bytes(b"newer input")
+                        with self.assertRaisesRegex(ValueError, "removed file reappeared"):
+                            normal_transaction.verify(root, journal, allowed_external_roots=[external])
+                        with self.assertRaisesRegex(ValueError, "removed file reappeared"):
+                            normal_transaction.recover(root, journal, apply=True, allowed_external_roots=[external])
+                        self.assertEqual(removed.read_bytes(), b"newer input")
+                        continue
+                    if scenario == "recovery-race":
+                        real_replace = normal_transaction._replace
+
+                        def race_restore(source_path, target_path, checksum, token=None, *, exclusive=False):
+                            if target_path == removed:
+                                removed.write_bytes(b"competing input")
+                            return real_replace(source_path, target_path, checksum, token, exclusive=exclusive)
+
+                        with mock.patch.object(normal_transaction, "_replace", side_effect=race_restore):
+                            with self.assertRaises(FileExistsError):
+                                normal_transaction.recover(
+                                    root, journal, apply=True, allowed_external_roots=[external],
+                                )
+                        self.assertEqual(removed.read_bytes(), b"competing input")
+                        with self.assertRaisesRegex(ValueError, "ambiguous restored target"):
+                            normal_transaction.recover(root, journal, apply=True, allowed_external_roots=[external])
+                        self.assertEqual(removed.read_bytes(), b"competing input")
+                        continue
+                    if scenario == "legacy-journal":
+                        data = json.loads(journal.read_text(encoding="utf-8"))
+                        del data["swapToken"]
+                        journal.write_text(json.dumps(data), encoding="utf-8")
+                    if scenario in ("partial", "newer"):
+                        data = json.loads(journal.read_text(encoding="utf-8"))
+                        data["status"] = "publishing"
+                        journal.write_text(json.dumps(data), encoding="utf-8")
+                        old.write_bytes(b"original workflow" if scenario == "partial" else b"newer edits")
+                    if scenario in ("library-swap", "external-swap"):
+                        data = json.loads(journal.read_text(encoding="utf-8"))
+                        data["status"] = "publishing"
+                        journal.write_text(json.dumps(data), encoding="utf-8")
+                        target = destination if scenario == "library-swap" else old
+                        swap = normal_transaction._swap_path(target, data["swapToken"])
+                        swap.write_bytes(b"interrupted partial copy")
+                        for apply in (False, True):
+                            with self.assertRaisesRegex(ValueError, "interrupted swap"):
+                                normal_transaction.recover(
+                                    root, journal, apply=apply, allowed_external_roots=[external],
+                                )
+                        self.assertEqual(swap.read_bytes(), b"interrupted partial copy")
+                        self.assertEqual(destination.read_bytes(), b"native moved")
+                        self.assertEqual(old.read_bytes(), b"updated workflow")
+                        continue
+                    if scenario == "newer":
+                        for apply in (False, True):
+                            with self.assertRaisesRegex(ValueError, "unexpected newer content"):
+                                normal_transaction.recover(
+                                    root, journal, apply=apply, allowed_external_roots=[external],
+                                )
+                        self.assertEqual(old.read_bytes(), b"newer edits")
+                        self.assertEqual(destination.read_bytes(), b"native moved")
+                        continue
+                    normal_transaction.recover(root, journal, apply=False, allowed_external_roots=[external])
+                    self.assertEqual(destination.read_bytes(), b"native moved")
+                    if scenario == "interrupted-recovery":
+                        real_replace = normal_transaction._replace
+                        calls = 0
+
+                        def interrupt_recovery(*args, **kwargs):
+                            nonlocal calls
+                            calls += 1
+                            if calls == 2:
+                                raise OSError("injected recovery interruption")
+                            return real_replace(*args, **kwargs)
+
+                        with mock.patch.object(normal_transaction, "_replace", side_effect=interrupt_recovery):
+                            with self.assertRaisesRegex(OSError, "injected recovery interruption"):
+                                normal_transaction.recover(
+                                    root, journal, apply=True, allowed_external_roots=[external],
+                                )
+                        self.assertEqual(json.loads(journal.read_text(encoding="utf-8"))["status"], "recovering")
+                    normal_transaction.recover(root, journal, apply=True, allowed_external_roots=[external])
+                self.assertEqual(source.read_bytes(), b"native original")
+                self.assertFalse(destination.exists())
+                self.assertEqual(old.read_bytes(), b"original workflow")
+                self.assertFalse(new.exists())
+                self.assertEqual(removed.read_bytes(), b"original input")
+
+    def test_transaction_swap_collision_preserves_existing_file(self):
+        from tools.art.likeness_library import normal_transaction
+
+        with tempfile.TemporaryDirectory(dir=self.scratch) as temporary:
+            root = pathlib.Path(temporary)
+            source, target = root / "source", root / "target"
+            source.write_bytes(b"source")
+            swap = normal_transaction._swap_path(target, "a" * 32)
+            swap.write_bytes(b"existing")
+            with self.assertRaises(FileExistsError):
+                normal_transaction._replace(source, target, metadata.content_sha256(source), "a" * 32)
+            self.assertEqual(swap.read_bytes(), b"existing")
+
+    def test_publication_preserves_existing_or_racing_journal(self):
+        from tools.art.likeness_library import normal_transaction
+
+        for racing in (False, True):
+            with self.subTest(racing=racing), tempfile.TemporaryDirectory(dir=self.scratch) as temporary:
+                root = pathlib.Path(temporary).resolve()
+                stage = root / "_reports" / "run" / "publication"
+                stage.mkdir(parents=True)
+                source, target = root / "source.png", root / "target.png"
+                source.write_bytes(b"source")
+                (stage / target.name).write_bytes(b"planned")
+                journal = stage.parent / "journal.json"
+                existing = b"existing recovery evidence"
+                if not racing:
+                    journal.write_bytes(existing)
+                real_write = normal_transaction.write
+
+                def competing_write(path, data, *, exclusive=False):
+                    if exclusive:
+                        journal.write_bytes(existing)
+                    real_write(path, data, exclusive=exclusive)
+
+                with mock.patch.object(normal_transaction, "write", side_effect=competing_write):
+                    with self.assertRaises((ValueError, FileExistsError)):
+                        normal_transaction.publish(
+                            root, stage, [source.name], journal=journal, bindings={}, profile="lean",
+                            run_id="journal-race",
+                        )
+                self.assertEqual(journal.read_bytes(), existing)
+                self.assertEqual(source.read_bytes(), b"source")
+                self.assertFalse(target.exists())
+
+    def test_interrupted_initial_journal_preserves_source_and_partial_evidence(self):
+        from tools.art.likeness_library import normal_transaction
+
+        with tempfile.TemporaryDirectory(dir=self.scratch) as temporary:
+            root = pathlib.Path(temporary).resolve()
+            stage = root / "_reports" / "run" / "publication"
+            stage.mkdir(parents=True)
+            source, target = root / "source.png", root / "target.png"
+            source.write_bytes(b"source")
+            (stage / target.name).write_bytes(b"planned")
+            journal = stage.parent / "journal.json"
+
+            def interrupted_write(path, data, *, exclusive=False):
+                self.assertTrue(exclusive)
+                pathlib.Path(path).write_bytes(b'{"kind":')
+                raise OSError("interrupted journal write")
+
+            with mock.patch.object(normal_transaction, "write", side_effect=interrupted_write):
+                with self.assertRaisesRegex(OSError, "interrupted journal write"):
+                    normal_transaction.publish(
+                        root, stage, [source.name], journal=journal, bindings={}, profile="lean",
+                        run_id="journal-interrupted",
+                    )
+            self.assertEqual(journal.read_bytes(), b'{"kind":')
+            self.assertEqual(source.read_bytes(), b"source")
+            self.assertFalse(target.exists())
+            with self.assertRaisesRegex(ValueError, "journal is incomplete or invalid"):
+                normal_transaction.recover(root, journal, apply=True)
+            self.assertEqual(journal.read_bytes(), b'{"kind":')
+            with self.assertRaisesRegex(ValueError, "journal already exists"):
+                normal_transaction.publish(
+                    root, stage, [source.name], journal=journal, bindings={}, profile="lean",
+                    run_id="journal-retry",
+                )
+
+    def test_publication_refuses_journal_inside_report_outputs(self):
+        from tools.art.likeness_library import normal_transaction
+
+        with tempfile.TemporaryDirectory(dir=self.scratch) as temporary:
+            root = pathlib.Path(temporary).resolve()
+            stage = root / "_reports" / "run" / "publication"
+            stage.mkdir(parents=True)
+            source = root / "source.png"
+            source.write_bytes(b"source")
+            (stage / "target.png").write_bytes(b"planned")
+            journal = root / "_reports" / "library" / "journal.json"
+            with self.assertRaisesRegex(ValueError, "journal overlaps"):
+                normal_transaction.publish(
+                    root, stage, [source.name], journal=journal, bindings={}, profile="lean",
+                    run_id="overlapping-journal", report_directories=["_reports/library"],
+                )
+            self.assertEqual(source.read_bytes(), b"source")
+            self.assertFalse(journal.exists())
+            self.assertFalse((root / "target.png").exists())
+
+    def test_recovery_refuses_file_changed_during_other_file_restoration(self):
+        from tools.art.likeness_library import normal_transaction
+
+        with tempfile.TemporaryDirectory(dir=self.scratch) as temporary:
+            root = pathlib.Path(temporary).resolve()
+            stage = root / "_reports" / "run" / "publication"
+            stage.mkdir(parents=True)
+            first, second = root / "a.png", root / "b.png"
+            first.write_bytes(b"first before")
+            second.write_bytes(b"second before")
+            (stage / first.name).write_bytes(b"first after")
+            (stage / second.name).write_bytes(b"second after")
+            journal = stage.parent / "journal.json"
+            normal_transaction.publish(root, stage, [], journal=journal, bindings={}, profile="lean",
+                                       run_id="recovery-race")
+            real_replace = normal_transaction._replace
+
+            def change_second(source, destination, *args, **kwargs):
+                real_replace(source, destination, *args, **kwargs)
+                if destination == first:
+                    second.write_bytes(b"newer content")
+
+            with mock.patch.object(normal_transaction, "_replace", side_effect=change_second):
+                with self.assertRaisesRegex(ValueError, "changed content during restoration"):
+                    normal_transaction.recover(root, journal, apply=True)
+            self.assertEqual(first.read_bytes(), b"first before")
+            self.assertEqual(second.read_bytes(), b"newer content")
+            self.assertEqual(json.loads(journal.read_text(encoding="utf-8"))["status"], "recovering")
+
+    def test_publication_refuses_target_changed_after_snapshot(self):
+        from tools.art.likeness_library import normal_transaction
+
+        for existed in (False, True):
+            with self.subTest(existed=existed), tempfile.TemporaryDirectory(dir=self.scratch) as temporary:
+                root = pathlib.Path(temporary).resolve()
+                stage = root / "_reports" / "run" / "publication"
+                stage.mkdir(parents=True)
+                source, target = root / "source.png", root / "target.png"
+                source.write_bytes(b"source")
+                if existed:
+                    target.write_bytes(b"before")
+                (stage / target.name).write_bytes(b"planned")
+                journal = stage.parent / "journal.json"
+                real_write = normal_transaction.write
+                injected = False
+
+                def change_target(path, data, *, exclusive=False):
+                    nonlocal injected
+                    real_write(path, data, exclusive=exclusive)
+                    if not injected and data["status"] == "publishing":
+                        target.write_bytes(b"newer")
+                        injected = True
+
+                with mock.patch.object(normal_transaction, "write", side_effect=change_target):
+                    with self.assertRaisesRegex(OSError, "rollback-failed"):
+                        normal_transaction.publish(
+                            root, stage, [source.name], journal=journal, bindings={}, profile="lean",
+                            run_id="target-race",
+                        )
+                self.assertEqual(target.read_bytes(), b"newer")
+                self.assertEqual(source.read_bytes(), b"source")
+                self.assertIn("normal target changed during publication",
+                              json.loads(journal.read_text(encoding="utf-8"))["error"])
+            self.assertFalse(target.exists())
+
+    def test_external_transaction_refuses_stale_or_unapproved_targets_before_publication(self):
+        from tools.art.likeness_library import normal_transaction
+
+        with tempfile.TemporaryDirectory(dir=self.scratch) as temporary:
+            base = pathlib.Path(temporary).resolve()
+            root, external = base / "library", base / "workflow"
+            stage = root / "_reports" / "run" / "publication"
+            staged_external = stage.parent / "external"
+            stage.mkdir(parents=True)
+            staged_external.mkdir()
+            external.mkdir()
+            source, target = root / "original.png", external / "workflow.json"
+            source.write_bytes(b"native original")
+            target.write_bytes(b"current workflow")
+            staged = staged_external / "workflow.json"
+            staged.write_bytes(b"updated workflow")
+            update = {"target": target, "staged": staged, "beforeSha256": "stale"}
+            kwargs = dict(
+                journal=stage.parent / "journal.json", bindings={}, profile="lean", run_id="stale",
+                external_updates=[update], allowed_external_roots=[external],
+            )
+            with self.assertRaisesRegex(ValueError, "differs from preview"):
+                normal_transaction.publish(root, stage, [source.name], **kwargs)
+            update["beforeSha256"] = metadata.content_sha256(target)
+            kwargs["allowed_external_roots"] = [base / "other"]
+            with self.assertRaisesRegex(ValueError, "outside approved roots"):
+                normal_transaction.publish(root, stage, [source.name], **kwargs)
+            kwargs["allowed_external_roots"] = [external]
+            from tools.art import library_backup
+            create_backup = library_backup.create_backup
+
+            def change_before_snapshot(*args, **backup_kwargs):
+                target.write_bytes(b"edited while snapshot started")
+                return create_backup(*args, **backup_kwargs)
+
+            with mock.patch.object(library_backup, "create_backup", side_effect=change_before_snapshot):
+                with self.assertRaisesRegex(ValueError, "snapshot differs from preview"):
+                    normal_transaction.publish(root, stage, [source.name], **kwargs)
+            self.assertEqual(source.read_bytes(), b"native original")
+            self.assertEqual(target.read_bytes(), b"edited while snapshot started")
+            self.assertFalse(kwargs["journal"].exists())
 
     def test_current_zero_face_evidence_is_not_missing_inference(self):
         self.assertTrue(normal_import._current_measurement({"faces": 0, "t": 0.1}))

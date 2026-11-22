@@ -39,12 +39,30 @@ echo                                    refresh verified Production Source then 
 echo                                    --frozen-source-sha256 HASH --run-id ID replays existing sealed Source, preserves old Working, and never refreshes Source
 echo    normal-rebase.cmd --root ABS_SANDBOX_WORKING --profile lean --run-id ID [--dry-run ^| --apply ^| --check]
 echo                                    SIMPLE whole-library composition, distinct from incremental library.cmd; preview can prepare/measure all selected inputs, without publishing assignments
+echo                                    --preparation-workers 1^|2^|3 opts into that many FULL/LEAN preparation workers; default 1, repeat on apply; validate per machine first
 echo                                    --repeat verifies applied receipt; --recover previews exact recovery, --recover-apply restores; draft apply requires --sandbox-apply-draft in Sandbox only
 echo                                    --measure-missing is post-apply local-model report-only; general-domain cache only, no fallback/cache/source/alignment writes or downloads
 echo                                    recoverable image errors produce an incomplete receipt and nonzero exit; core qualification is skipped
 echo                                    stable IDs disclose original + existing standard_name normalization; verified retained versions preserve lineage and are not extra voters
 echo                                    --check rehashes source bytes and report bindings; actual reference/candidate IDs require human review
 echo                                    --lock-cast-admission locks Sisters/Angels receiving only; repeat on preview/apply/check; cast rivals stay visible
+echo                                    Sandbox release replay: supply --release-receipt FILE --release-audit FILE --release-review DIR and chronological --release-run ID for every release on preview AND apply
+echo                                    verified released photos enter matching before identity formation; apply remains bound to the exact preview and lineage
+echo                                    --reconsider-holds re-evaluates prior Review holds in Sandbox; repeat on preview/apply, accepted matches, history and safeguards remain
+echo                                    --fresh-source-release selects red/orange/unscored initial Gallery members before core formation and reconsiders holds; repeat on preview/apply; Sandbox only, not with release replay
+echo    red-release-diagnostic.cmd --root WORKING --receipt RECEIPT --report SNAPSHOT.html --cache CACHE [--check] [--inspect-consumers] [--simulate-routes [--simulate-core-refresh [--simulate-destination-scores]]]
+echo                                    read-only diagnostic; consumer scan includes discovered local installs; hypothetical routing never resolves gaps or applies a release
+echo                                    --workflow-configuration FILE must match the report-bound selection configuration; saved-run centering retains its original configuration
+echo    sandbox-red-release.cmd --root WORKING --run-id ID --receipt RECEIPT --report SNAPSHOT.html --cache CACHE [--dry-run ^| --apply]
+echo                                    Sandbox-only experiment; records moves and proposed replacements but never modifies shared workflows or Production
+echo    sandbox-red-release.cmd --root WORKING --run-id ID --current-review DIR --cache CACHE --release-band red --release-band orange --dry-run
+echo                                    read-only current Review census; verifies saved policy, sources and scores; does not route or release photos
+echo    sandbox-red-release.cmd --root WORKING --run-id ID --current-review DIR --cache CACHE --release-band red --release-band orange --receipt RECEIPT --report AUDIT.html --prior-run ID --dry-run
+echo                                    current Sandbox routed preview; --apply additionally requires --expected-plan-sha256 from this exact preview
+echo                                    --include-unscored also selects unavailable own-core scores and reports independently scored rivals
+echo                                    repeat --continuation-run ID in chronological order for later journalled releases
+echo                                    does not update workflows; exposes selected photos, empty former cores and unresolved consumer coverage
+echo    sandbox-red-release.cmd --root WORKING --run-id ID [--check ^| --recover ^| --recover-apply]  verify or recover its journalled Sandbox experiment
 echo    library-legacy.cmd              former whole-library originals/duplicates/crop/reconcile routine; not the normal default
 echo    likeness-experiments.cmd legacy-reconcile [--root WORKING --cache FILE --out FILE]
 echo                                    explicit legacy merge/category/protection experiment; preview by default; no normal-intake import
@@ -178,7 +196,11 @@ echo                                    --resume-install --check verifies comple
 echo                                    --preserve-legacy-derivatives explicitly journals unowned cast collisions byte-for-byte for undo; edited owned derivatives still refuse
 echo                                    no matcher-only legacy preview can be installed
 echo    rebase-recap.cmd "RUN-DIR" [--dry-run ^| --check] [--out FILE] [--expectations FILE]  per-run HTML of every move, rename, Review hold, cast gain/loss, new identity, other-run differences
-echo    rebase-recap.cmd "SIMPLE-RECEIPT.json" [--dry-run ^| --apply ^| --check] [--compare OTHER.json]  fast saved-run recap and placement/reference audit; no scoring, image hashing, or membership changes
+echo    rebase-recap.cmd "SIMPLE-RECEIPT.json" [--dry-run ^| --apply ^| --check] [--compare OTHER.json] [--bind-red-natives]  saved-run audit; optionally hash and bind red/native core evidence; no scoring or membership changes
+echo    movement-history.cmd --root WORKING --receipt RECEIPT --audit AUDIT.html --current-review DIR --report-id ID --release FIRST [--release NEXT ...] [--corrected-receipt RECEIPT] [--expected-cohort COUNT] [--dry-run ^| --apply ^| --check]  ordered Sandbox history; report only
+echo                                    optional --retirement-journal WORKING_RELATIVE --retirement-digest PREVIEW_SHA256 verifies a bound retirement after the corrected rebase; fixture-tested, not installed-verified
+echo                                    --inspect-workflow-selections binds current base/flow configuration only, not live workspace consumers; repeat flag on --check
+echo                                    --workflow-configuration FILE inspects an alternate configuration with that flag; this does not isolate or modify workflows
 echo                                    automatic after every sandbox-rebase preview/replan/apply/check/undo; Working\_reports\library\rebase-recap\RUN.html + index.html
 echo                                    "Looks like" picks and expected placements: SANDBOX\rebase-expectations.json beside Working ^(kept by resets^), scored on every run
 echo    storage-retention.cmd --root "SANDBOX\Working" preview       read-only inventory; unknown, incomplete, latest accepted and report-linked runs stay

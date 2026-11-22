@@ -32,6 +32,13 @@ permission, replace the active plan, or override domain-specific rules.
    Separate implementation, tests, installation, human acceptance and
    publication; retain unresolved decisions with an owner.
 
+For an explicitly authorized Sandbox apply, favor bounded experimentation
+and post-apply verification rather than treating missing Production or
+other-machine evidence as a blanket veto of Sandbox-only work. Identify the
+root, recovery profile and limitations; preserve source images and receipts.
+Do not represent a Sandbox-only result as a completed shared-workflow change,
+human acceptance or permission to modify Production.
+
 When blocked, preserve state, explain the evidence and stop only the affected
 action. Continue independent authorized work without widening scope. Do not
 duplicate a fact already owned by a canonical domain document.

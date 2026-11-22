@@ -156,7 +156,12 @@ def _backup(root, cfg):
     )
 
 
-def _validate_permissions(root, moves, policy, cfg, identity_actions=()):
+def _validate_permissions(root, moves, policy, cfg, identity_actions=(), *, released_bindings=()):
+    release = {row["photoId"]: (row["currentPath"], row["sha256"]) for row in released_bindings}
+    if len(release) != len(released_bindings):
+        raise ValueError("ambiguous released permission bindings")
+    if release and not is_sandbox_working_path(root):
+        raise ValueError("released permission override requires Sandbox Working")
     catalog = metadata.load_catalog(metadata.path_for_root(root))
     protected_ids = {
         photo_id for photo_id, record in catalog["photos"].items() if record["protected"]
@@ -175,7 +180,10 @@ def _validate_permissions(root, moves, policy, cfg, identity_actions=()):
         person["folder"] for person in catalog["people"].values() if person.get("protected")
     }
     for row in moves:
-        if row.get("photoId") in protected_ids:
+        override = row.get("photoId") in release
+        if override and (row.get("source"), row.get("sha256")) != release[row["photoId"]]:
+            raise ValueError(f"{row['photoId']}: released permission binding changed")
+        if row.get("photoId") in protected_ids and not override:
             raise ValueError(f"protected or workflow-selected photo cannot move: {row['photoId']}")
         if row.get("photoId") and rejections.candidate_state(
             catalog, row["photoId"], row["sha256"],
@@ -200,13 +208,13 @@ def _validate_permissions(root, moves, policy, cfg, identity_actions=()):
                 receiving and parts[0] in ("Sisters", "Angels")
                 and rules.get("galleryAdmissionEnabled") and row.get("castAdmission")
             )
-            if parts[-2] == "gallery" and not cast_receiving and (
+            if parts[-2] == "gallery" and not cast_receiving and not (override and not receiving) and (
                 rules.get("identityProtectedByDefault") or folder in protected_folders
             ):
                 raise ValueError(f"protected Gallery cannot change membership: {folder}")
         if (
             source[-2] == "gallery" and source[0] != "Various"
-            and not policy["categoryPolicies"][source[0]]["automaticSplitEnabled"]
+            and not policy["categoryPolicies"][source[0]]["automaticSplitEnabled"] and not override
         ):
             raise ValueError(f"automatic Gallery removal is disabled: {row['source']}")
         if destination[-2] == "gallery" and destination[0] != "Various" and not (

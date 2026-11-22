@@ -1543,6 +1543,10 @@ def slow_fake_render(root, stage, source):
     return {"source": source.name, "pid": os.getpid()}
 
 
+def offline_fake_render(root, stage, source):
+    return {"offline": preparation.models.NO_DOWNLOAD.get()}
+
+
 class ParallelPreparationTests(unittest.TestCase):
     def test_parallel_rows_keep_input_order_and_render_duplicates_in_one_task(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -1556,6 +1560,16 @@ class ParallelPreparationTests(unittest.TestCase):
         self.assertEqual([index for index, _ in rows], [0, 1, 2, 3, 4])
         self.assertEqual([row["source"] for _, row in rows], [p.name for p in sources])
         self.assertEqual(rows[0][1]["pid"], rows[2][1]["pid"])
+
+    def test_parallel_workers_inherit_offline_model_policy(self):
+        with tempfile.TemporaryDirectory(dir=ROOT / "tmp") as temporary:
+            root = pathlib.Path(temporary)
+            sources = [root / "first.jpg", root / "second.jpg"]
+            for index, path in enumerate(sources):
+                path.write_bytes(bytes([index]))
+            with preparation.models.offline():
+                rows = list(preparation.rendered_rows(root, root, sources, 2, render=offline_fake_render))
+        self.assertTrue(all(row["offline"] for _, row in rows))
 
     def test_worker_count_honours_override_and_free_memory(self):
         with mock.patch.dict("os.environ", {"ST_INTAKE_WORKERS": "5"}):

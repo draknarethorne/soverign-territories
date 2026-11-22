@@ -1140,8 +1140,9 @@ def default_workers():
     return max(1, min(MAX_WORKERS, cores, int(free // WORKER_MEMORY_GB) if free is not None else 1))
 
 
-def _start_worker(threads):
+def _start_worker(threads, no_download):
     os.environ["ST_INTAKE_THREADS"] = str(threads)
+    models.NO_DOWNLOAD.set(no_download)
     cv2.setNumThreads(threads)
 
 
@@ -1168,7 +1169,7 @@ def rendered_rows(root, stage, selected, workers, render=None):
     following = 0
     with concurrent.futures.ProcessPoolExecutor(
             max_workers=workers, mp_context=multiprocessing.get_context("spawn"),
-            initializer=_start_worker, initargs=(threads,)) as pool:
+            initializer=_start_worker, initargs=(threads, models.NO_DOWNLOAD.get())) as pool:
         futures = {pool.submit(_render_worker, render, root, stage, [selected[i] for i in group]): group
                    for group in groups.values()}
         for future in concurrent.futures.as_completed(futures):
@@ -1472,7 +1473,7 @@ def checkpointed_rows(root, recovery, stage, selected, input_rows, binding, base
     threads = max(1, (os.cpu_count() or 2) // workers)
     with concurrent.futures.ProcessPoolExecutor(
             max_workers=workers, mp_context=multiprocessing.get_context("spawn"),
-            initializer=_start_worker, initargs=(threads,)) as pool:
+            initializer=_start_worker, initargs=(threads, models.NO_DOWNLOAD.get())) as pool:
         futures = {
             pool.submit(
                 checkpoint_render_worker,

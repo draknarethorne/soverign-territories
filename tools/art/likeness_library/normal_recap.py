@@ -4,6 +4,7 @@ import collections
 import hashlib
 import html
 import json
+import math
 import pathlib
 import re
 import sys
@@ -12,9 +13,9 @@ import urllib.parse
 
 if not __package__:
     sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[3]))
-    from tools.art.likeness_library import gallery_chrome, rebase_recap
+    from tools.art.likeness_library import gallery_chrome, policy, rebase_recap
 else:
-    from . import gallery_chrome, rebase_recap
+    from . import gallery_chrome, policy, rebase_recap
 
 
 def _sha(payload):
@@ -49,9 +50,11 @@ def _script(page, identifier):
     return json.loads(match[1]) if match else None
 
 
-def collect(receipt_path):
+def collect(receipt_path, *, read_bytes=None):
     receipt_path = pathlib.Path(receipt_path).absolute()
-    payload = receipt_path.read_bytes()
+    payload = receipt_path.read_bytes() if read_bytes is None else read_bytes(receipt_path)
+    if payload is None:
+        raise ValueError(f"saved receipt unavailable: {receipt_path}")
     receipt = json.loads(payload)
     if receipt.get("kind") not in {"normal-rebase-receipt", "normal-rebase-preview"}:
         raise ValueError("expected a saved normal-rebase receipt or preview")
@@ -234,33 +237,54 @@ def collect(receipt_path):
         "unresolvedDuplicateIds": plan.get("unresolvedDuplicateIds", []),
         "collisionGroups": {pid: group for pid, group in collision_groups.items() if len(group) > 1},
         "recordedAudit": plan.get("frozenConsistencyCheck", {}),
+        "phaseLog": plan.get("phaseLog", []),
+        "phaseCounts": {key: plan[key] for key in (
+            "sourceRowCount", "canonicalInputCount", "exactAliasCount", "heldSourceCount",
+            "preparationInputCount", "preparedReferenceCount", "preparedCandidateCount",
+            "coreCount", "candidateCount", "assignedCount", "heldCount",
+            "freshGalleryCount", "freshSelectedCount", "freshBlockedCount",
+            "freshUnavailableCount", "freshNonVotingCount",
+        ) if key in plan},
+        "phaseMoves": len(moves), "phaseArchives": len(archives), "phaseJunk": len(junk),
+        "phaseViewers": len(viewers) if receipt["status"] == "applied" else None,
+        "preparationReusedFromPreview": plan.get("preparationReusedFromPreview"),
+        "referenceSnapshots": plan.get("referenceSnapshots", {}),
         "groupRivals": plan.get("finalComparisonAndFamily", {}).get("finalRivals", {}),
         "auditRecords": [], "snapshotDiagnostics": [], "snapshotMatched": 0, "snapshotIdUnavailable": 0,
+        "redScoreCutoff": None, "redScoreCount": None, "unscoredCount": 0,
         "inputs": {str(receipt_path): _sha(payload)},
         "inputBytes": len(payload),
     }
     if receipt["status"] == "applied":
-        _attach_review(data)
+        _attach_review(data, read_bytes=read_bytes)
     else:
         data["snapshotDiagnostics"].append("Preview only: current Review is not final-placement evidence.")
     return data
 
 
-def _attach_review(data):
+def _attach_review(data, *, read_bytes=None):
     root = pathlib.Path(data["workingRoot"])
     review = _under(root, pathlib.Path(data["libraryRoot"]) / "people_gallery_review.html")
-    if not review.is_file():
+    payload = (review.read_bytes() if review.is_file() else None) if read_bytes is None else read_bytes(review)
+    if payload is None:
         data["snapshotDiagnostics"].append("Review snapshot unavailable; only saved receipt audit is shown.")
         return
-    payload = review.read_bytes()
     data["inputs"][str(review)] = _sha(payload)
     data["inputBytes"] += len(payload)
-    records = _script(payload.decode("utf-8"), "review-data")
+    page = payload.decode("utf-8")
+    records = _script(page, "review-data")
     if records is None:
         data["snapshotDiagnostics"].append("Review snapshot has no recorded photo data; no scores inferred.")
         return
     if not isinstance(records, list):
         raise ValueError("Review snapshot photo data must be an array")
+    snapshot_policy = _script(page, "likeness-policy-data")
+    if snapshot_policy is not None:
+        if not isinstance(snapshot_policy, dict) or "scoreBands" not in snapshot_policy:
+            raise ValueError("Review snapshot policy must contain scoreBands")
+        policy.validate_score_bands(snapshot_policy["scoreBands"])
+        data["redScoreCutoff"] = snapshot_policy["scoreBands"]["red"]["maximumExclusive"]
+        data["redScoreCount"] = 0
     by_path = {}
     for record in records:
         path = (pathlib.PurePosixPath(record["folder"]) / record["bucket"].lower() / record["name"]).as_posix()
@@ -287,6 +311,7 @@ def _attach_review(data):
                 row["preview"] = str(_under(root, review.parent / pathlib.Path(*_relative(thumb).parts)))
         rivals = record.get("closestMatches") or []
         score = record.get("score")
+        red = score is not None and snapshot_policy is not None and policy.score_band(score, snapshot_policy) == "red"
         higher = score is not None and any(item.get("score") is not None and item["score"] > score for item in rivals)
         context = record.get("scoreContext") or {}
         flags = []
@@ -298,22 +323,165 @@ def _attach_review(data):
             flags.append("protected/reference photo with higher rival")
         if score is None:
             flags.append("own score unavailable")
+            data["unscoredCount"] += 1
+        if red:
+            flags.append("red own-core similarity")
+            data["redScoreCount"] += 1
         if record.get("derivativeDiagnostics"):
             flags.append("image/lineage diagnostic")
         data["auditRecords"].append({
             "row": rows[0], "record": record, "flags": flags, "score": score, "rivals": rivals,
         })
+    _attach_workflow_replacement_candidates(data)
+
+
+def _attach_workflow_replacement_candidates(data):
+    gallery_by_owner = collections.defaultdict(list)
+    if data["redScoreCutoff"] is not None:
+        for item in data["auditRecords"]:
+            if (item["row"]["newBucket"] == "gallery" and item["score"] is not None
+                    and item["score"] >= data["redScoreCutoff"]):
+                gallery_by_owner[item["row"]["newPerson"]].append(item)
+    selected_ids = {
+        binding["photoId"] for binding in data.get("workflowConfig", {}).get("bindings", [])
+        if binding["photoId"]
+    }
+    for item in data["auditRecords"]:
+        item["workflowReplacementCandidates"] = []
+        if ("red own-core similarity" not in item["flags"]
+                or not (item["record"].get("workflowSelected") or item["record"].get("photoId") in selected_ids)):
+            continue
+        candidates = [
+            other for other in gallery_by_owner[item["row"]["newPerson"]]
+            if other["score"] > item["score"]
+            and other["row"]["photoId"] != item["row"]["photoId"]
+            and other["record"]["contentSha256"] != item["record"]["contentSha256"]
+        ]
+        item["workflowReplacementCandidates"] = sorted(
+            candidates, key=lambda other: (-other["score"], other["row"]["destination"]),
+        )
+
+
+def _bind_red_native_evidence(data):
+    if data["status"] != "applied" or data["redScoreCutoff"] is None or data["snapshotDiagnostics"]:
+        raise ValueError("red native binding requires an applied receipt and complete, scored Review evidence")
+    root = pathlib.Path(data["workingRoot"])
+    reds = [item for item in data["auditRecords"] if "red own-core similarity" in item["flags"]]
+    bound = {}
+    paths_by_id = {}
+    for red in reds:
+        core = [
+            item for item in data["auditRecords"]
+            if item["row"]["newPerson"] == red["row"]["newPerson"]
+            and (item["record"].get("scoreContext") or {}).get("coreMember") is True
+        ]
+        core_size = (red["record"].get("scoreContext") or {}).get("coreSize")
+        if type(core_size) is not int or core_size < 1 or len(core) != core_size:
+            raise ValueError(f"incomplete Review core for red photo: {red['row']['destination']}")
+        for item in [red, *core, *red["workflowReplacementCandidates"]]:
+            row, record = item["row"], item["record"]
+            if not record.get("photoId") or record["photoId"] != row["photoId"]:
+                raise ValueError(f"unbound Review photo ID: {row['destination']}")
+            path = _under(root, root.joinpath(*_relative(row["destination"]).parts))
+            if record["photoId"] in paths_by_id and paths_by_id[record["photoId"]] != path:
+                raise ValueError(f"ambiguous Review photo ID: {record['photoId']}")
+            paths_by_id[record["photoId"]] = path
+            if str(path) in bound:
+                if bound[str(path)] != row["preparedSHA256"]:
+                    raise ValueError(f"conflicting Review native hashes: {row['destination']}")
+                continue
+            digest = _sha(path.read_bytes())
+            if digest != row["preparedSHA256"]:
+                raise ValueError(f"current native differs from Review evidence: {row['destination']}")
+            bound[str(path)] = digest
+    data["inputs"].update(bound)
+    data["inputBytes"] += sum(pathlib.Path(path).stat().st_size for path in bound)
+    data["redNativeBindings"] = len(bound)
+
+
+def _attach_workflow_selection_bindings(data, *, configuration_path=None):
+    from tools.art.likeness_library import actions
+
+    config_path = pathlib.Path(
+        actions.cw.CFG_PATH if configuration_path is None else configuration_path
+    ).absolute()
+    schema_path = pathlib.Path(actions.cw.CFG_SCHEMA_PATH).absolute()
+    config_payload = config_path.read_bytes()
+    schema_payload = schema_path.read_bytes()
+    cfg = actions.cw.validate_config(json.loads(config_payload))
+    bindings = actions.selected_photo_bindings(cfg)
+    data["inputs"].update({
+        str(config_path): _sha(config_payload),
+        str(schema_path): _sha(schema_payload),
+    })
+    data["inputBytes"] += len(config_payload) + len(schema_payload)
+    data["workflowConfig"] = {
+        "path": str(config_path),
+        "rootMatches": pathlib.Path(actions.cw.work_root(cfg)).resolve() == pathlib.Path(data["workingRoot"]).resolve(),
+        "unidentified": sum(item["photoId"] is None for item in bindings),
+        "bindings": bindings,
+    }
+    _attach_workflow_replacement_candidates(data)
+
+
+def _red_candidate_evidence(data):
+    results = []
+    for item in data["auditRecords"]:
+        if "red own-core similarity" not in item["flags"]:
+            continue
+        row, record = item["row"], item["record"]
+        members = [
+            {"photoId": other["record"]["photoId"], "path": other["row"]["destination"],
+             "sha256": other["row"]["preparedSHA256"]}
+            for other in data["auditRecords"]
+            if other["row"]["newPerson"] == row["newPerson"]
+            and (other["record"].get("scoreContext") or {}).get("coreMember") is True
+        ]
+        result = {
+            "photoId": record["photoId"], "currentPath": row["destination"],
+            "owner": row["newPerson"], "bucket": row["newBucket"],
+            "nativeSha256": row["preparedSHA256"], "score": item["score"],
+            "redMaximumExclusive": data["redScoreCutoff"],
+            "scoreContext": record.get("scoreContext"), "comparison": record.get("comparison"),
+            "reviewCore": sorted(members, key=lambda member: member["path"]),
+            "identityProtected": record.get("identityProtected"),
+            "photoProtectionInfo": record.get("photoProtectionInfo"),
+            "identityAnchor": record.get("identityAnchor"),
+            "workflowSelected": record.get("workflowSelected"),
+            "workflowReplacementCandidates": [
+                {"photoId": other["record"]["photoId"],
+                 "currentPath": other["row"]["destination"],
+                 "nativeSha256": other["row"]["preparedSHA256"],
+                 "score": other["score"],
+                 "scoreContext": other["record"].get("scoreContext")}
+                for other in item["workflowReplacementCandidates"]
+            ],
+        }
+        if "workflowConfig" in data:
+            result["configuredSelections"] = [
+                binding for binding in data["workflowConfig"]["bindings"]
+                if binding["photoId"] == record["photoId"]
+            ]
+        results.append(result)
+    return sorted(results, key=lambda item: item["currentPath"])
 
 
 def _audit(data, out):
     saved = data["recordedAudit"]
+    display_core = collections.defaultdict(list)
+    for item in data["auditRecords"]:
+        if (item["record"].get("scoreContext") or {}).get("coreMember") is True:
+            display_core[item["row"]["newPerson"]].append(item)
     parts = [
         '<h2 id="audit">Placement and reference audit</h2>',
         "<p>This is saved evaluator evidence plus a hash-bound snapshot of the existing Review report. "
-        "No inference, fresh policy evaluation or automatic move was performed. Snapshot scores are not "
+        "No inference, routing-policy evaluation or automatic move was performed. Snapshot scores are not "
         "the initial frozen-audit scores; higher similarity alone does not pass admission/protection gates.</p>",
+        "<p>This snapshot covers the general People Review, not the separate Artist domain. "
+        "It is not a complete census of every identity domain.</p>",
         f'<p>Review evidence matched {data["snapshotMatched"]} of {data["physicalDestinations"]} '
-        "distinct saved destinations by path and recorded native hash. Native/image bytes were not rehashed.</p>",
+        "distinct saved destinations by path and recorded native hash. "
+        "Snapshot matching alone does not rehash native/image bytes.</p>",
         f'<p>{data["snapshotIdUnavailable"]} matched Review records omit a stable photo ID; those are paired '
         "by exact physical path and recorded hash only. Their saved protection/workflow flags are not "
         "a fresh completeness audit of workflow references.</p>",
@@ -323,6 +491,29 @@ def _audit(data, out):
         f'protected recommendations: {len(saved.get("recommendations", []))}. '
         + html.escape(saved.get("scope", "Saved evaluator scope unavailable.")) + "</p>",
     ]
+    if "redNativeBindings" in data:
+        parts.append(
+            f'<p>At report verification, {data["redNativeBindings"]} red, matched Review-core and '
+            "workflow-candidate native files matched their recorded hashes and are bound as report inputs. "
+            "Core counts alone do not prove complete reference membership or workflow eligibility.</p>"
+        )
+    if "workflowConfig" in data:
+        info = data["workflowConfig"]
+        parts.append(
+            "<p>Workspace configuration selections were inspected from "
+            + html.escape(info["path"])
+            + ", not the actual workflow files or workspace consumers. Configured production root "
+            + ("matches" if info["rootMatches"] else "does not match")
+            + f' this receipt root; {info["unidentified"]} selection(s) have no identifiable photo ID. '
+            "Unidentified selections could refer to a red photo. This is not authority to change either root.</p>"
+        )
+    if data["redScoreCutoff"] is None:
+        parts.append(f'<p>Among matched Review records: red score band unavailable; '
+                     f'{data["unscoredCount"]} unscored. No red classification was inferred.</p>')
+    else:
+        parts.append(f'<p>Among matched Review records: {data["redScoreCount"]} red own-core score(s) '
+                     f'(unrounded score below {data["redScoreCutoff"]}); '
+                     f'{data["unscoredCount"]} unscored. These are findings, not release proposals.</p>')
     for key in ("corrections", "recommendations"):
         parts.append(f"<h3>Recorded {key}</h3><ul>")
         for item in saved.get(key, []):
@@ -343,18 +534,95 @@ def _audit(data, out):
             rebase_recap._person_link(value["folder"], data, out.parent) + ": "
             + rebase_recap._score_text(value.get("score")) for value in item["rivals"]
         ) or "not recorded"
+        replacements = item["workflowReplacementCandidates"]
+        replacement_text = ""
+        release_evidence = ""
+        if "red own-core similarity" in item["flags"]:
+            release_evidence = (
+                "<br>Receipt source: " + html.escape(row["source"])
+                + "<br>Saved destination: " + html.escape(row["destination"])
+                + "<br>Recorded native SHA-256: " + html.escape(row["preparedSHA256"])
+                + "<br>This saved audit does not propose or apply a release destination."
+            )
+            snapshots = data["referenceSnapshots"]
+            if not isinstance(snapshots, dict):
+                raise ValueError("saved planning reference snapshots must be an object")
+            reference_details = []
+            for round_name, snapshot in sorted(snapshots.items()):
+                if not isinstance(snapshot, dict) or not isinstance(snapshot.get("photoIds"), dict):
+                    raise ValueError("saved planning reference snapshot must contain photoIds")
+                if any(not isinstance(ids, list) for ids in snapshot["photoIds"].values()):
+                    raise ValueError("saved planning reference photoIds must be arrays")
+                photo_id = record.get("photoId")
+                owners = [folder for folder, ids in snapshot["photoIds"].items() if photo_id in ids]
+                membership = ", ".join(sorted(owners)) if owners else "not listed"
+                if photo_id is None:
+                    membership = "photo ID unavailable"
+                reference_details.append(
+                    f'Round {round_name} ({snapshot.get("referenceVersion", "version unavailable")}): {membership}'
+                )
+            release_evidence += (
+                "<br>Saved planning reference membership (not the displayed Review core): "
+                + html.escape("; ".join(reference_details) or "unavailable")
+            )
+            core = display_core[row["newPerson"]]
+            core_size = (record.get("scoreContext") or {}).get("coreSize")
+            expected = str(core_size) if type(core_size) is int and core_size >= 0 else "unavailable"
+            core_entries = "".join(
+                "<li>" + html.escape(member["row"]["destination"]) + " / "
+                + html.escape(str(member["record"].get("photoId") or "photo ID unavailable"))
+                + " / recorded SHA-256: " + html.escape(member["row"]["preparedSHA256"]) + "</li>"
+                for member in sorted(core, key=lambda member: member["row"]["destination"])
+            )
+            release_evidence += (
+                "<details><summary>Saved Review core: "
+                + str(len(core)) + " matched of " + expected
+                + " reported; counts do not prove completeness</summary>"
+                + ("<p>Snapshot entries; current bytes are bound, but reference eligibility was not verified.</p>"
+                   if "redNativeBindings" in data else
+                   "<p>Snapshot entries only; current bytes and reference eligibility were not verified.</p>")
+                + "<ul>" + core_entries + "</ul></details>"
+            )
+            if "workflowConfig" in data:
+                configured = [
+                    binding for binding in data["workflowConfig"]["bindings"]
+                    if binding["photoId"] and binding["photoId"] == record.get("photoId")
+                ]
+                selections = "; ".join(
+                    ("base" if binding["flow"] is None else "flow " + str(binding["flow"]))
+                    + " / " + str(binding["hero"]) + " / " + str(binding["filename"])
+                    for binding in configured
+                ) or "none identified (unidentified selections may still match)"
+                release_evidence += "<br>Current configured selections: " + html.escape(selections)
+        current_selected = any(
+            binding["photoId"] and binding["photoId"] == record.get("photoId")
+            for binding in data.get("workflowConfig", {}).get("bindings", [])
+        )
+        if "red own-core similarity" in item["flags"] and (record.get("workflowSelected") or current_selected):
+            examples = "; ".join(
+                html.escape(candidate["row"]["destination"]) + " (" + str(candidate["score"]) + ")"
+                for candidate in replacements[:3]
+            ) or "none in matched snapshot"
+            replacement_text = (
+                f"<br>Higher non-red same-owner Gallery candidates: {len(replacements)}; "
+                f"{examples}. Snapshot evidence only; workflow eligibility not verified."
+            )
         parts.append(
             f'<tr id="photo-{_sha(row["destination"].encode("utf-8"))}" data-finding="{int(bool(item["flags"]))}"><td>'
             + rebase_recap._person_link(row["newPerson"], data, out.parent, bucket=row["newBucket"])
             + "<br>" + _photo_link(row, data, out.parent) + "<br>" + html.escape(row["photoId"] or row["destination"])
-            + "</td><td>" + rebase_recap._score_text(item["score"]) + "<br>"
+            + "</td><td>" + rebase_recap._score_text(item["score"])
+            + (f'<br>Unrounded: {html.escape(str(item["score"]))}' if item["score"] is not None else "")
+            + "<br>"
             + html.escape(str(record.get("comparison", "not recorded"))) + "</td><td>" + rivals
             + "</td><td>" + html.escape(
-                f'Identity protected: {record.get("identityProtected")}; anchor: {record.get("identityAnchor")}; '
+                f'Identity protected: {record.get("identityProtected")}; '
+                f'photo protection: {record.get("photoProtectionInfo", "not recorded")}; '
+                f'anchor: {record.get("identityAnchor")}; '
                 f'workflow selected: {record.get("workflowSelected")}; '
                 f'core: {(record.get("scoreContext") or {}).get("coreMember", "not recorded")}'
             ) + "</td><td>" + html.escape("; ".join(item["flags"]) or "no selected diagnostic flags")
-            + "<br>" + html.escape(record.get("reason", "")) + "</td></tr>"
+            + "<br>" + html.escape(record.get("reason", "")) + release_evidence + replacement_text + "</td></tr>"
         )
     return "".join(parts) + "</table>"
 
@@ -364,6 +632,96 @@ def _photo_link(row, data, out_dir):
     query = urllib.parse.urlencode({"person": row["newPerson"], "bucket": row["newBucket"].title()})
     href = rebase_recap._href(review, out_dir) + "?" + query
     return f'<a href="{html.escape(href, quote=True)}" target="_blank" rel="noopener noreferrer">Review identity</a>'
+
+
+_PHASE_DETAILS = {
+    "source-inventory-and-sha256": ("Inventory and bind source bytes.", ("sourceRowCount",)),
+    "stable-id-normalization-and-version-selection": (
+        "Classify stable IDs, versions, aliases and source holds.",
+        ("canonicalInputCount", "exactAliasCount", "heldSourceCount")),
+    "accepted-profile-preparation": (
+        "Prepare selected natives or verify reused preparation.",
+        ("preparationInputCount", "preparedReferenceCount", "preparedCandidateCount")),
+    "source-bound-measurement-and-frozen-cores": (
+        "Measure selected sources and freeze identity cores.", ("coreCount",)),
+    "fresh-source-measurement": (
+        "Measure initial classified sources and establish their centering population.", ()),
+    "fresh-source-release-selection": (
+        "Verify measurement provenance, assess initial Gallery own-core release and retire selected membership.",
+        ("freshGalleryCount", "freshSelectedCount", "freshBlockedCount",
+         "freshUnavailableCount", "freshNonVotingCount")),
+    "fresh-post-release-frozen-cores": (
+        "Freeze remaining cores and prepare candidates after source retirement.", ("coreCount",)),
+    "bounded-two-round-admission": (
+        "Route candidates through bounded admission.", ("candidateCount", "assignedCount", "heldCount")),
+    "single-candidate-plan": (
+        "Route candidates using the single candidate plan.", ("candidateCount", "assignedCount", "heldCount")),
+    "bound-admission-and-retained-member-check": (
+        "Bind proposed moves and audit retained members.", ()),
+    "single-frozen-low-member-audit": (
+        "Bind proposed moves and audit low members against frozen cores.", ()),
+    "final-rival-family-viewer-publication": (
+        "Validate and stage publication, compare families, publish viewers and save cache.", ()),
+}
+
+
+def _phase_sections(data):
+    phases = data.get("phaseLog")
+    if not isinstance(phases, list) or not phases:
+        return ('<h2 id="steps">Ordered processing summary</h2>'
+                '<p>Phase records and timings unavailable in this receipt.</p>')
+    summary, details = [], []
+    counts = data.get("phaseCounts", {})
+    for number, phase in enumerate(phases, 1):
+        if not isinstance(phase, dict):
+            summary.append("<li>Invalid phase record; timing unavailable.</li>")
+            details.append(f"<li>Step {number}: invalid phase record.</li>")
+            continue
+        name = str(phase.get("phase", "unknown"))
+        status = str(phase.get("status", "unknown"))
+        duration = phase.get("durationSeconds")
+        if (status == "complete" and isinstance(duration, (int, float))
+                and not isinstance(duration, bool) and math.isfinite(duration) and duration >= 0):
+            timing = f"{duration:.3f} seconds measured"
+        else:
+            timing = "duration unavailable"
+        title = html.escape(name)
+        purpose, keys = _PHASE_DETAILS.get(name, ("Purpose not recorded.", ()))
+        if name == "fresh-source-release-selection":
+            values = [f"{key}: {counts.get(key) if counts.get(key) is not None else 'unavailable'}"
+                      for key in keys]
+        else:
+            values = [f"{key}: {counts[key]}" for key in keys if key in counts]
+        if name in ("bound-admission-and-retained-member-check", "single-frozen-low-member-audit"):
+            values.append(f'proposed moves: {data["phaseMoves"]}')
+            audit = data.get("recordedAudit", {})
+            if "passCount" in audit:
+                values.append(f'audit passes: {audit["passCount"]}')
+        if name == "final-rival-family-viewer-publication":
+            label = "published moves" if status == "complete" and data["status"] == "applied" else "proposed moves"
+            values.extend((f'{label}: {data["phaseMoves"]}', f'archive dispositions: {data["phaseArchives"]}',
+                           f'junk dispositions: {data["phaseJunk"]}'))
+            if data.get("phaseViewers") is not None:
+                values.append(f'viewers recorded: {data["phaseViewers"]}')
+        summary_counts = "; " + html.escape("; ".join(values)) if values else ""
+        summary.append(
+            f'<li><a href="#step-{number}">{title}</a> — {html.escape(status)}; '
+            f'{timing}{summary_counts}.</li>'
+        )
+        scope = phase.get("timingScope")
+        extra = f" Timing scope: {scope}." if isinstance(scope, str) and scope else ""
+        if name == "accepted-profile-preparation" and data.get("preparationReusedFromPreview"):
+            extra += " Historical preparation was reused; its duration is not measured by this run."
+        if (name == "final-rival-family-viewer-publication"
+                and status == "apply-only" and data["status"] == "applied"):
+            extra += " The applied receipt records publication; this phase did not record its completion timing."
+        details.append(
+            f'<li id="step-{number}"><b>{title}</b> — {html.escape(purpose)} '
+            f'Status: {html.escape(status)}; {timing}.{html.escape(extra)} '
+            f'{html.escape("; ".join(values) if values else "No step counts recorded.")}</li>'
+        )
+    return ('<h2 id="steps">Ordered processing summary</h2><ol>' + "".join(summary)
+            + '</ol><h2>Processing step details</h2><ol>' + "".join(details) + "</ol>")
 
 
 def render(data, out, *, audit=False, others=()):
@@ -377,6 +735,7 @@ def render(data, out, *, audit=False, others=()):
         '<nav><a href="index.html">All saved recaps</a> · '
         f'<a href="{html.escape(recap_name)}">Movement recap</a> · '
         f'<a href="{html.escape(audit_name)}">Placement audit</a> · '
+        f'<a href="{html.escape(section_prefix)}#steps">Processing steps</a> · '
         f'<a href="{html.escape(section_prefix)}#flows">Where photos went</a> · '
         f'<a href="{html.escape(section_prefix)}#continuity">Identity continuity</a> · '
         f'<a href="{html.escape(section_prefix)}#collisions">ID collisions</a> · '
@@ -392,6 +751,7 @@ def render(data, out, *, audit=False, others=()):
         body.append(_audit(data, out))
     else:
         body += [
+            _phase_sections(data),
             rebase_recap._flow_section(data, out.parent),
             rebase_recap._continuity_section(data, out.parent),
             _collision_section(data, out.parent),
@@ -494,9 +854,16 @@ def _group_relationships(data, out_dir):
     return "".join(parts) + "</table>"
 
 
-def publish(receipt, *, out=None, compare=(), check=False, apply=False):
+def publish(receipt, *, out=None, compare=(), check=False, apply=False, bind_red_natives=False,
+            inspect_workflow_selections=False, workflow_configuration_path=None):
     started = time.perf_counter()
+    if workflow_configuration_path is not None and not inspect_workflow_selections:
+        raise ValueError("a workflow configuration path requires workflow selection inspection")
     data = collect(receipt)
+    if inspect_workflow_selections:
+        _attach_workflow_selection_bindings(data, configuration_path=workflow_configuration_path)
+    if bind_red_natives:
+        _bind_red_native_evidence(data)
     root = pathlib.Path(data["workingRoot"])
     name = data["runId"]
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,79}", name):
@@ -514,7 +881,16 @@ def publish(receipt, *, out=None, compare=(), check=False, apply=False):
         data["inputs"].update(other["inputs"])
         data["inputBytes"] += other["inputBytes"]
     outputs = {out: render(data, out, others=others), audit: render(data, audit, audit=True)}
-    producers = [pathlib.Path(__file__), pathlib.Path(rebase_recap.__file__), pathlib.Path(gallery_chrome.__file__)]
+    producers = [pathlib.Path(__file__), pathlib.Path(rebase_recap.__file__),
+                 pathlib.Path(gallery_chrome.__file__), pathlib.Path(policy.__file__)]
+    if inspect_workflow_selections:
+        from tools.art.likeness_library import actions
+
+        for module in (actions, actions.metadata, actions.cw):
+            source = module.__file__
+            if source is None:
+                raise ValueError(f"workflow audit producer has no source path: {module.__name__}")
+            producers.append(pathlib.Path(source))
     manifest = {
         "kind": "normal-recap-report", "runId": name, "status": data["status"],
         "receipt": str(pathlib.Path(receipt).absolute()), "inputs": data["inputs"],
@@ -526,6 +902,15 @@ def publish(receipt, *, out=None, compare=(), check=False, apply=False):
         "snapshotIdUnavailable": data["snapshotIdUnavailable"],
         "snapshotDiagnostics": data["snapshotDiagnostics"],
     }
+    if bind_red_natives:
+        manifest["redNativeBindings"] = data["redNativeBindings"]
+        manifest["redCandidates"] = _red_candidate_evidence(data)
+    if inspect_workflow_selections:
+        manifest["workflowSelectionScope"] = {
+            "productionRootMatches": data["workflowConfig"]["rootMatches"],
+            "unidentifiedSelections": data["workflowConfig"]["unidentified"],
+            "workspaceFilesInspected": False,
+        }
     state = out.with_suffix(".report.json")
     for path in (*outputs, state, out.parent / "index.html"):
         _under(root, path)
@@ -570,13 +955,22 @@ def main(argv=None):
     parser.add_argument("receipt", help="saved normal-rebase applied/preview JSON; never runs matching")
     parser.add_argument("--out", help="recap HTML inside the saved receipt's library root")
     parser.add_argument("--compare", action="append", default=[], help="same-source SIMPLE receipt to compare")
+    parser.add_argument("--bind-red-natives", action="store_true",
+                        help="rehash and bind red photos, matched Review cores and workflow candidates")
+    parser.add_argument("--inspect-workflow-selections", action="store_true",
+                        help="report current base/flow configuration selections; does not inspect workflow files")
+    parser.add_argument("--workflow-configuration",
+                        help="inspect and bind this configuration instead of the default; requires selection inspection")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--dry-run", action="store_true", help="preview counts only (default)")
     mode.add_argument("--apply", action="store_true", help="write only recap/audit reports and their bindings")
     mode.add_argument("--check", action="store_true", help="read-only exact report/input/producer check")
     args = parser.parse_args(argv)
     try:
-        publish(args.receipt, out=args.out, compare=args.compare, check=args.check, apply=args.apply)
+        publish(args.receipt, out=args.out, compare=args.compare, check=args.check, apply=args.apply,
+                bind_red_natives=args.bind_red_natives,
+                inspect_workflow_selections=args.inspect_workflow_selections,
+                workflow_configuration_path=args.workflow_configuration)
     except (OSError, ValueError, KeyError, TypeError) as exc:
         print(f"SIMPLE recap stopped safely: {exc}", file=sys.stderr)
         return 1

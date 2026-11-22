@@ -358,6 +358,7 @@ class Photo:
         self.box = (data or {}).get("box")
         self.px = (data or {}).get("px", 0)
         self.alignment_evidence = (data or {}).get("alignmentEvidence")
+        self.measurementDeferred = bool((data or {}).get("normalDeferredMeasurement"))
         self.name = path.name
         self.vec = None
 

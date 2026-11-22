@@ -24,6 +24,18 @@ from tools.art.likeness_library import review_gallery
 
 
 class ReviewGalleryTests(unittest.TestCase):
+    def test_deferred_gallery_measurement_is_explained(self):
+        photo = likeness.Photo(
+            pathlib.Path("deferred.jpg"), "Potentials", "Example", "digest",
+            {"faces": -1, "normalDeferredMeasurement": True},
+        )
+        context = review_gallery.score_context(
+            photo, bucket="Gallery", core_size=0, core_mode="none", core_member=False,
+            sufficient=False, min_face=60, group="Potentials", keep=.5, odd=.3,
+        )
+        self.assertTrue(photo.measurementDeferred)
+        self.assertTrue(any("Measurement unavailable:" in detail for detail in context["details"]))
+
     def test_many_diagnostics_are_collapsed_counted_and_preserved(self):
         warnings = [f"Catalogue folder not found: Old {i} → Folder {i}" for i in range(210)]
         warnings += ["Other <important> diagnostic"]
@@ -628,7 +640,10 @@ class ReviewGalleryTests(unittest.TestCase):
     def test_new_arrival_does_not_influence_regrouped_review_cores(self):
         self._check_review_collection(new_arrival=True)
 
-    def _check_review_collection(self, *, new_arrival):
+    def test_collection_labels_deferred_gallery_measurement(self):
+        self._check_review_collection(new_arrival=False, deferred=True)
+
+    def _check_review_collection(self, *, new_arrival, deferred=False):
         with tempfile.TemporaryDirectory() as tmp:
             folder = pathlib.Path(tmp) / "Prospects" / "Sophie"
             gallery_dir, review_dir = folder / "gallery", folder / "review"
@@ -650,6 +665,14 @@ class ReviewGalleryTests(unittest.TestCase):
             ]
             for item in active:
                 item.vec = likeness.nz(item.raw)
+            if deferred:
+                path = gallery_dir / "sophie_image_555555.jpg"
+                path.write_bytes(b"deferred photo")
+                gallery_paths.append(path)
+                active.append(likeness.Photo(
+                    path, "Prospects", "Sophie", path.name,
+                    {"faces": -1, "normalDeferredMeasurement": True},
+                ))
 
             class Cache:
                 def __init__(self):
@@ -708,6 +731,12 @@ class ReviewGalleryTests(unittest.TestCase):
                     "protected": False,
                     "membership": {"groupId": group_id, "status": "supported", "coreUse": True},
                 }
+            if deferred:
+                data["photos"]["photo:image_555555"] = {
+                    "contentSha256": hashlib.sha256(gallery_paths[3].read_bytes()).hexdigest(),
+                    "protected": False,
+                    "membership": {"groupId": group_id, "status": "supported", "coreUse": True},
+                }
             original_data = json.loads(json.dumps(data))
             embedding = lambda _path: {"faces": 1, "px": 100, "v": [-1.0, 0.0]}
             with mock.patch.object(
@@ -736,6 +765,12 @@ class ReviewGalleryTests(unittest.TestCase):
             selected_item = next(item for item in items if item["name"] == gallery_paths[0].name)
             anchor_item = next(item for item in items if item["name"] == gallery_paths[1].name)
             arrival_item = next(item for item in items if item["name"] == gallery_paths[2].name)
+            if deferred:
+                deferred_item = next(item for item in items if item["name"] == gallery_paths[3].name)
+                self.assertIsNone(deferred_item["score"])
+                self.assertEqual(deferred_item["reason"], "Face measurement deferred; no inference was run")
+                self.assertTrue(any("Measurement unavailable:" in detail
+                                    for detail in deferred_item["scoreDetails"]))
             self.assertEqual(len(audit.call_args_list), 2)
             for call in audit.call_args_list:
                 self.assertEqual("photo:image_333333" in call.kwargs["excluded_ids"], new_arrival)
@@ -769,7 +804,9 @@ class ReviewGalleryTests(unittest.TestCase):
             self.assertFalse(anchor_item["primaryReference"])
             self.assertFalse(review_item["identityAnchor"])
             self.assertEqual(data, original_data)
-            self.assertTrue(all(path.read_bytes() == b"test photo" for path in gallery_paths + [review_path]))
+            self.assertTrue(all(path.read_bytes() == b"test photo" for path in gallery_paths[:3] + [review_path]))
+            if deferred:
+                self.assertEqual(gallery_paths[3].read_bytes(), b"deferred photo")
             self.assertTrue(review_item["stageable"])
             self.assertEqual(
                 [action for action, _label in review_item["stageOptions"]],

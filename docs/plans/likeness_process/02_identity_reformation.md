@@ -2,6 +2,13 @@
 
 **Status:** holding (selected runtime repair owned by spine RA2j; complete regrouping unaccepted)
 
+**Nov 21 scoped precedence:** the selected
+[red-member cleanup](../2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning)
+permits protected or workflow-selected red members to leave their old
+identity in that future run. Earlier generic physical-protection and
+weak-member descriptions below remain historical/default context outside
+that scope; the wider experimental lifecycle is not reactivated.
+
 **Resume gate:** follow the [agreed goals and iteration checklist](../2026-11-09-likeness-process-reassessment.md#iteration-acceptance-checklist)
 and spine RA2j's Nov 13 maintained-path repair, followed by full contract/
 outcome re-audit. The [Nov 13 audit](../2026-11-12-member-refinement-scope-test.md#nov-13-full-reassessment-audit)

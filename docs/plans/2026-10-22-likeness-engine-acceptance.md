@@ -2,6 +2,12 @@
 
 **Status:** holding (engine contracts/calibration backlog; current acceptance transferred)
 
+**Nov 21 scoped precedence:** the user permits qualifying red members to
+leave despite membership protections in the planned
+[red-member cleanup](2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning).
+This supersedes blanket retention only for that scope, not the independent
+quality, reference, recovery or Production gates below.
+
 ## Milestone transfer record
 
 Nov 5 16:45: E18/E19 execution transfers with the same IDs to the

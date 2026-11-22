@@ -3,9 +3,9 @@
 **Status:** holding (focused contract selected through execution-spine RA2j,
 T29/T30, RA2d and RA2o; not another active queue)
 
-**Purpose:** finish a reviewable SIMPLE baseline, prioritize bounded
-performance recovery while the user reviews concrete placements, select
-bounded corrections, then reconcile the older plans.
+**Purpose:** use the reviewable SIMPLE baseline for the user's scoped
+red-member release and independently measured per-machine performance,
+while reconciling older plans without losing their obligations.
 Do not resume experiments merely because they appear in historical plans.
 
 **Execution owner:** [the sole spine](2026-11-05-priority-reset.md).
@@ -14,7 +14,901 @@ acceptance; T29/T30 own the selected performance follow-up; RA2o owns the
 subsequent documentation housekeeping. Open checkboxes stay in that spine.
 The completed run's evidence stays immutable. The Nov17 selection below
 permits bounded code/report work while broader viewer/human acceptance stays
-open. The Nov18 17:21 authorization below now selects a real sandbox run.
+open. The Nov18 17:21 authorization below applies to its historical sandbox
+run, not a new red-member run.
+
+## Nov 21: red-member release planning
+
+**Nov 22 fresh post-intake rebase applied (Sandbox):** after VS Code was
+restarted, the same journalled baseline transaction resumed and passed its
+check (11,048 files; old tree preserved as
+`Working-before-post-intake-fresh-20261122-01`). The reviewed cleanup
+(1,795 exact copies, 180 replacements) and the four-copy exact-only cleanup
+passed preview/apply/check with zero remaining exact copies; all 3,490
+pre-rebase paths and SHA-256 values matched the original receipt. Only the
+origin-sealed 3,285-image preparation, its two origin seals, the face cache
+and face evidence were copied into the new Working; the reused manifest
+matched `3545dd20…cf0dc`.
+
+Run `fresh-post-intake-20261122-04` (`--fresh-source-release`) applied in
+1h20m37s and passed `--check`. Earlier IDs `-01` to `-03` stopped safely
+before publication and remain as evidence. The fresh selection assessed
+2,412 initial named-Gallery photos and released 250 (5 red, 97 orange,
+148 unscored) before core formation. Outcomes: 100 named Gallery, 62 named
+Review, 18 new-identity clusters and 70 Various Review. Those 70 failed the
+existing single-face quality gate, so no trustworthy score exists. Nine
+unresolved releases went to their highest-scoring rival's Review, following
+the user's earlier direction; Review is not membership and adds no vote.
+Eighty-nine emptied Potentials folders, including Afton Lockwood, were
+retired recoverably under `_retired` (journal
+`_reports\runs\empty-retirement-fresh-post-intake-20261122-04.json`);
+retirement check and successor verification passed. Reports-only viewers
+were refreshed into
+`_reports\library\fresh-post-intake-20261122-04-final` and passed their
+check. Browser checks loaded sampled recap, Gallery and Review thumbnails
+and found no Afton Lockwood entry. The final Review conserves 3,305 photos.
+
+Implementation fixes found by the real run: one reference vote per prepared
+measurement; inventory-verified standard names bind descriptive filenames;
+released non-voters score with their own content retired; unresolved
+releases use the Review fallback above; exact-content aliases stage
+distinct retained sets; admission moves must carry a reference version
+(checked at preview). The affected suites passed 370 tests.
+
+**Post-fresh-rebase feedback, pending clarification (RA2j/RA2d):** the user's
+items (a)-(i) are preserved [verbatim](#post-fresh-rebase-feedback-a-i---verbatim-chat).
+No code changes until the listed clarifications are answered.
+
+| Item | Request | Owner / state |
+| --- | --- | --- |
+| a | Archive the 18 held exact-content copies as duplicates | RA2j; clarify keeper rule |
+| b | Release orange members of new identities | RA2j/RA2d; clarify gate |
+| c, e | Single-photo identities only when distinct; prefer to a mismatched pair | RA2d; decision |
+| d | 22 low existing members: release or rescore | RA2j; clarify iteration |
+| f | Score the main face, ignore background faces when framing is reliable | RA2d investigation, then RA2j |
+| g | Supported, wired emptied-folder retirement | RA2j; implement after (a)-(e) |
+| h | Commit current work and pull Beacon's updates | authorized; executed separately |
+| i | Cast clean-rebase seed: keep top 9, release below 0.60 | RA2d/RA2j; clarify scope |
+
+Evidence gathered: score bands are green ≥0.55, yellow ≥0.30, orange ≥0.15
+and red <0.15, so a new-identity orange pair is only 0.15–0.30 similar.
+Angelica has 65 Gallery photos with 54 below 0.60. Across all Sisters and
+Angels Galleries, 621 of 1,266 scored members are below 0.60. The five named
+Angelica examples score 0.53–0.58 as core members. The named
+`various_image_7515814053462233073.jpg` passed face quality (one face). It is
+an orange Harlow Chase release whose best rival was Petra Wilde (0.32); it
+joined a tentative cluster that did not become an identity, so it was held in
+Various Review. The face detector was not the cause.
+
+Face handling (item f): the engine already embeds the **largest** detected
+face (`engine.py`), recording the face count and second-face area ratio
+`f2`. Admission and reference quality require exactly one detected face
+*and* `f2 ≤ 0.30`. Of the 70 released photos held for quality, 63 have a
+clear main face whose extra faces are all under 30% of its area. Five have a
+second face at 30–90%, and two have an equal-sized second box (overlapping
+duplicate or two equal faces). None lacked a face or was under 60 px. Allowing
+a clear dominant face would change the quality policy, so it needs the
+user's decision, framing checks and a no-reference-vote rule.
+
+**Open after this run (RA2j/RA2d):** under the final cores, named Galleries
+still show 4 red, 43 orange and 46 unscored photos: 28 are one-photo new
+identities (no leave-one-out score exists), 18 stayed held exact-content
+non-voters, 29 are orange members of new two-photo clusters and 22 are in
+existing identities. A single start-of-run release does not converge to zero;
+whether to iterate release, require larger new clusters or accept
+singletons is a user decision. The 70 quality-held photos need the
+detector-quality investigation recorded below. Human identity/crop
+acceptance, a launcher for emptied-folder retirement and Production remain
+open.
+
+**Nov 22 fresh post-intake replay and recap:** the user directs the completed
+rebase to start from a verified state after intake processing, not from an
+earlier rebase result. RA2j must establish and preserve that exact starting
+boundary before changing Sandbox Working; the five later release journals are
+historical evidence, not the new starting gallery. Release and hold reassessment
+belong at the beginning of the fresh rebase. Reuse prepared inputs only when
+their origin and input set verify; do not rerun intake unnecessarily. The final
+rebase recap must show an ordered top-level summary followed by step-by-step
+details, purpose, measured timings and counts. Mark unavailable measurements
+explicitly and distinguish historical preparation times from the fresh run.
+This Sandbox rehearsal does not authorize Production changes.
+See the [verbatim request](#fresh-post-intake-rebase-and-recap---verbatim-chat).
+
+The original applied rebase receipt preserves 3,490 pre-rebase source rows.
+Its scoped backup records matching hashes for 3,469; the other 21 match the
+frozen Source manifest. The earlier run14 preview reproduces the exact reviewed
+cleanup plan SHA-256, and all 3,929 named/incoming plan bindings match that
+frozen manifest. The temporary regenerated plan is ignored and not a Git
+artifact. All 21 original same-content non-voter holds are Potentials Gallery
+photos; each has identical raw content in the sealed 3,285-image preparation,
+so existing content-bound alias reuse can avoid repeating intake if each native
+artifact verifies. A fresh whole-library release selection against the original
+owners is now integrated as Sandbox-only `--fresh-source-release`: it records
+the initial assessment, retires selected source authority before core
+formation, and reconsiders holds without duplicate votes. Replaying the 219
+post-rebase historical releases is not equivalent. It was applied as
+`fresh-post-intake-20261122-04`; see the Nov 22 applied entry above.
+
+**Nov 22 hold reassessment:** the user also directs a fresh rebase to
+reconsider all pre-existing holds, not only the 219 historically released
+photos. The checked prior Review shows 413 Various photos marked Hold
+(276 in Review and 137 in Gallery). Ordinary Various and Review candidates
+are already remeasured, but explicitly placed Review photos and exact-content
+non-voters require special handling. Reconsider old placements without erasing
+their history or treating duplicate content as independent votes. Rejected
+identities, source ambiguity and fresh quality failures remain evidence-based
+safeguards; a newly unresolved result is not proof that the old hold was kept.
+RA2j owns the implementation, complete source-conservation check and integrated
+Sandbox run; it is not complete until the applied results and viewers are checked.
+Sandbox `--reconsider-holds` now re-evaluates prior sent-to-Review decisions
+and eligible exact-content non-voters without adding votes; explicitly accepted
+matches, rejection history and real protections remain. The option and its
+decisions are bound between preview and apply. These are fixture-tested, not
+installed outcomes.
+See the [verbatim request](#reconsider-pre-existing-holds---verbatim-chat).
+
+**Nov 22 integrated preview gate:** four Sandbox previews stopped before
+publication. The second reused the first attempt's sealed 20-image
+preparation and the existing face cache, and found 15 single-face quality
+holds and 18 retired-lower-core holds. A subsequent, release-bound residual
+assessment excludes retiring and released IDs and content, never grows
+references or forms clusters, and routes only when the existing admission
+gates pass. Preview `corrected-release-rebase-20261122-03` then left 14
+single-face quality holds and 11 retired-core holds; the latter have explicit
+independent residual scores but no unambiguous placement. Expanded-hold preview
+`corrected-release-rebase-20261122-04` reused the sealed preparation, verified
+20,774 source files and stopped on the same 14 quality and 11 residual holds.
+It did not produce an accepted preview or publish membership. The 290-test
+rebase/reconciliation/import/movement-history/retirement suite and
+`bin\check.cmd` passed before this preview. These are separate
+problems; do not invent scores or restore a retired
+core to force publication. The 219-photo rebase, empty-folder retirement,
+final movement report and installed viewer checks remain open. No source
+membership was published by these attempts. The first preparation is under
+`Working\_reports\runs\normal-rebase-corrected-release-rebase-20261122-01-preview`;
+its selected manifest SHA-256 is
+`e352220aaf0fc7f15d5779d6570528ffe7739136c6d8cc053cdb9dd7c083bc4c`.
+The later run IDs are `corrected-release-rebase-20261122-02`, `-03` and `-04`;
+none has a successful preview receipt. Preserve the attempts and prior journals.
+The next entry gate is an evidence-backed treatment of quality-ineligible and
+retired-core holds, without relaxing the quality policy or claiming unavailable
+scores, followed by a new bound preview, apply and checks.
+
+All 15 quality-held photos from preview `-02` have a displayed best-rival value in the prior
+Review, but that is a historical comparison, not proof of an eligible
+single-face measurement or a current post-retirement routing score. Cached
+measurements show multiple detected faces for most; the existing
+dominant-face exception is limited to opt-in directed provisional intake and
+does not authorize normal cast or identity admission. The 18 retired-core
+holds reproduce the existing guard in an isolated regression; preview `-03`
+assessed them against verified residual cores, without resolving all placements.
+
+**Nov 22 bounded face diagnosis:** all 14 quality-blocked current files have
+cached face vectors, but each reports two or more detected faces, so none
+qualifies for the current single-face admission gate. Local read-only detection
+at maximum image dimensions 640, 960, 1200 and 1600 pixels produced different
+counts. The two `drakness` close-up shots visually show one face, while the
+1600-pixel detector reports three overlapping detections on each; at 640 pixels
+it reports one. Conversely, the Afton Voss example has a real background face,
+and the Harlow Chase example contains several people. A lower-resolution count
+can miss smaller faces and is not proof of single-face quality. Do not select
+an arbitrary scale, infer a person from a filename or use these observations to
+relax the admission guard. The two close-ups justify a focused detector-quality
+investigation; the remaining cases still need honest multi-face handling.
+
+The historical-only movement report
+`Working\_reports\library\movement-history\historical-releases-20261122-01\index.html`
+was generated and independently checked against all five release journals.
+It covers 3,490 physical source rows and 219 distinct released photos; the
+corrected rebase is explicitly absent. A browser check counted 3,490 rows,
+219 marked releases, two Afton source rows and three loaded released-photo
+thumbnails. This report does
+not replace the requested final corrected movement history.
+
+**Integrated completion and retirement follow-up:** the user directs that
+photos selected for release enter the rebase as ordinary candidates **at its
+start**, before identity formation and matching, rather than being swept to
+Various after the rebase. RA2j owns the integrated selection and rebase:
+exclude selected photos from their old identity's reference authority and
+score and route them through the same candidate and identity-formation process
+as other inputs. Preserve explicit unavailable measurements and quality
+diagnostics; do not invent scores or identities. The user also expects one
+image-previewing, per-photo history from original location through every
+subsequent destination. The five prior releases are historical experiments,
+not the requested integrated result: their 236 move records represent 219
+distinct photos, of which 174 ultimately went to Various Review and 45 to
+named identities. A subsequent rebase must reconsider them, not assume their
+current holds are accepted final placements. All 219 current native files
+were checked against their latest release hashes. Read-only normal source
+classification identifies 216 eligible inputs and three identical-content
+non-voters; the latter also need routing decisions without adding independent
+identity votes. The user authorizes backing
+up as far as necessary, running and applying the corrected Sandbox rebase
+without pausing for preview approval, and presenting the resulting full
+rebase recap and gallery pages. Preserve prior evidence and keep Production
+and shared workflows untouched.
+Retire identities emptied by processing while preserving their whole folders,
+derivatives and history, with recovery and final viewer checks. The existing
+`retire-empty` preview found 116 Potential folders in this Sandbox, including
+Afton Lockwood; its direct folder moves are not the integrated, receipt-bound
+recovery path and were not applied. The existing original rebase recap and
+five release reports do not constitute a single final movement history.
+Of the 116 candidates, 93 have original rebase source rows and 23 do not;
+do not treat the latter as proven emptied by this run. Some candidates'
+derivatives are bound by existing release journals, so retirement must
+participate in successor-lineage verification rather than invalidate the
+prior checks.
+See the [verbatim feedback](#integrated-rebase-and-retirement---verbatim-chat).
+
+**Current direction; implementation selected.** The user prioritizes releasing red
+core-similarity photos from any identity grouping, starting with Sisters and
+Angels, before performance tuning or orange-band review. For this future
+scoped run, the user explicitly permits overriding protections, including a
+workflow-selected red photo, and wants a higher-scoring photo of that
+identity selected instead. Track where every released photo goes and its
+resulting identity. The
+[exact request](#nov-21-red-member-release-planning---verbatim-chat) is
+preserved below. This supersedes older blanket cast-departure and
+protection vetoes **for qualifying red members in this scoped run only**;
+those passages still describe the installed SIMPLE behavior and remain
+the default outside the new scope. On Nov 21 the user asks us to proceed
+from planning into implementation. A later Nov 21 instruction authorizes
+working through a validated Sandbox red-release apply and end-to-end review,
+including restarting from image intake if necessary. Reuse valid evidence
+where possible; this does not authorize discarding source photos, bypassing
+transaction integrity, an unnecessary reset, or altering Production.
+
+**Sandbox testing clarification:** the user confirms that applying in the
+Sandbox and verifying afterward is acceptable, and asks for more assertive
+Sandbox experimentation. A bounded Sandbox-only partial release need not
+wait for other-machine workflow evidence if it preserves sources and its
+actual recovery evidence and does not change shared workflows or Production.
+Report any unfinished workflow replacement and consumer coverage explicitly;
+the partial experiment is not the completed integrated release or human
+acceptance. The original source request is preserved below.
+
+**Orange and red release selection:** the user now directs release of all
+orange and red scores in the Sandbox, rather than waiting to choose an
+orange cutoff. Use the checked Review policy's unrounded bands: currently
+scores below 0.30; 0.30 itself is yellow and excluded. Include Gallery and
+Review members of named people identities, preserve unavailable scores
+separately, and retain destination, reference and recovery evidence. The
+separate Artist domain still needs its own verified evidence. The scoped
+Sandbox authority and shared-workflow/Production boundaries above remain.
+The [exact current instruction](#nov-21-orange-and-red-release-selection---verbatim-chat)
+is preserved below.
+
+**Unscored release selection:** the user also directs that unscored photos
+not remain in their current identity and that everything be scored. RA2j
+owns a checked Sandbox release and traceable destinations; RA2d owns
+investigation of unavailable measurements and scoring evidence. A missing
+independent comparison or usable face vector must not be represented as a
+valid similarity score. Where reliable scoring is not possible, retain an
+explicit unassigned hold and its reason while investigating the underlying
+measurement; do not silently keep the photo in its prior identity or invent
+a score. The existing 88 unavailable records are a starting census, not
+proof that the final residual cohort is complete. The
+[exact instruction](#nov-21-unscored-release-selection---verbatim-chat)
+is preserved below.
+
+The checked post-continuation Review classifies those 88 as 72 `Small core`
+and 16 `Unscored`, all Potential Gallery photos and none marked as workflow
+selected. A core member with only itself as a comparison is intentionally
+not assigned a leave-one-out score; `Unscored` records lack a usable face
+vector. These require distinct investigation and must not be collapsed into
+a numerical score or presumed to have the same remedy.
+In a read-only cache cross-check, all 72 singleton-core photos had a
+content-provenance-bound cached vector: 69 measurements reported one face,
+two reported two and one reported three. This alone does not establish
+eligibility. All 16 `Unscored` native hashes matched the Review, but none
+had an entry keyed by its native SHA-1 in the run's general cache or a
+provenance-bound entry for its native SHA-256.
+In a subsequent read-only, single-threaded local-model probe, all 16
+produced one-face vectors from SHA-256-verified native bytes; the model ID
+matched the saved cache. No measurements or alignment images were persisted.
+The checked report-only refresh deliberately defers cache misses; its shared
+library reader previously constructed a `Photo` without retaining the
+`normalDeferredMeasurement` marker. These cache misses were not confirmed
+no-face images.
+At that checkpoint the new vectors still required a bound release/scoring path.
+Earlier receipt-bound investigation identifies these 16 as non-voting;
+remeasurement is for their reassessment and must not add them as reference
+votes or change the sealed centering population. The 88 selected hashes are
+unique within that cohort; three singleton-core hashes also occur elsewhere
+in the Review, requiring explicit duplicate/reference handling.
+The shared `Photo` now carries the deferred-measurement marker into Review,
+which distinguishes "inference was not run" from a measured lack of a usable
+vector. Focused constructor and collection tests pass. Existing reports
+remain unchanged until a separately checked refresh; this diagnostic fix does
+not itself measure, score or release the 88 photos.
+An internal opt-in snapshot-selection foundation includes unscored records
+without assigning a band or manufacturing a score; it binds their native
+paths and keeps them in the unavailable count. Score reproduction covers
+only records with actual saved own-core scores. A read-only selection against
+the saved final Review returned 88 unscored and zero scored red/orange
+candidates; selection alone did not independently verify the live journal.
+An internal read-only candidate measurement helper now verifies source
+hashes, saved-cache model provenance and local-model identity, and does not
+persist supplemental measurements or add reference votes. In a bounded
+88-photo probe it used 72 cached vectors and remeasured 16; 85 passed the
+existing face-quality gate and three did not. Focused refusal and
+reconciliation tests passed. This measures vectors, not identity scores or
+destination eligibility; the three quality failures need explicit holds.
+A read-only diagnostic verified the saved Review page hash and conserved
+3,305 photos through the existing release lineage, then rebuilt the frozen
+Gallery inventory and hypothetically retired all 88 IDs and content hashes.
+It found 19 receipt-bound non-voters among the candidates, 14 candidates
+whose former owner had no frozen core, 66 emptied candidate-owner cores and
+121 surviving independent rival cores; no other owner's core was emptied.
+At that checkpoint the reports-only check refused the saved Review as stale after
+implementation changes. This diagnostic is not a bound release preview:
+refresh and independently check a new Review before an apply, and do not
+silently convert the 19 former non-voters into references.
+The opt-in Sandbox route now scores independent rivals and forces
+non-voting or face-quality-ineligible candidates into unassigned holds.
+A read-only diagnostic found 88 candidate scores and proposed 88 moves,
+including 19 receipt-bound unprepared non-voters; that diagnostic did not
+move files.
+
+The later bound Sandbox apply `unscored-release-20261121-02` moved all 88:
+four to named Galleries, nine to named Review and 75 to Various Review.
+The 19 receipt-bound non-voters and three quality failures were unassigned
+holds; rival scores for quality failures are not reliable identity proof.
+The first attempt was rolled back after a Windows journal replacement error;
+all 374 snapshot files and 1,209 targets were checked against pre-apply
+state. The retry used the existing bounded lock-retry mechanism, a new run
+and a new preview hash. Publication and recovery checks passed.
+
+A checked refresh exposed 28 further unavailable named-person scores.
+`unscored-continuation-20261121-01` released all 28 to Various Review.
+Six identities lacked eligible rival cores, so these holds carry scores
+against available rivals only and do not claim a complete rival ranking.
+Publication and recovery checks passed. The final checked refresh conserved
+3,305 photos and found zero red/orange or unavailable named-person scores.
+Both release reports record source, destination and rival assessment;
+Various holds have no own-identity score. Read-only supplemental vectors
+were not persisted as cache measurements. The earlier red workflow photo
+was moved again in this continuation: follow the newer report for its
+current location. Human acceptance, three distinct workflow replacements,
+consumer coverage and the separate Artist domain remain open.
+
+**Earlier orange follow-up:** the user suspects some orange members, especially
+those below a Review-entry threshold, also do not belong and wants release
+and displayed scoring ranges adjustable and consistent. This is a question
+for evidence and tuning, not approval of a new cutoff. The hash-verified
+pre-release Review contains 102 orange Gallery photos and seven orange
+Review photos across people identities. Review entry and displayed own-core
+scores have different bases; compare their rules before treating their
+thresholds as interchangeable. Preserve unavailable scores separately.
+RA2d owns the threshold decision and human review; RA2j owns any subsequently
+selected configurable, score-bound release implementation and audit.
+
+**Earlier red Sandbox experiment:** `red-release-sandbox-20261121-01` released
+the seven saved red photos, one to Yvette Orr Review and six to Various
+Review. The publication check and recovery preview passed again after the
+reports-only viewer refresh. The refreshed 3,305-photo Review has zero red
+scores in the named people categories, 102 orange Gallery and seven orange
+Review photos, with 88 unscored named Gallery photos. This does not cover the
+separate Artist domain or prove identity correctness. The refreshed Yvette
+Review arrival scored approximately 0.380199; this is not identity approval.
+See the [new-PC recap](../recap/2026-11-21-new-pc-recap.md#sandbox-red-release-and-refreshed-viewers)
+for actual viewer paths and recovery caveats. Shared workflows were not
+updated, and the isolated replacement/consumer transaction remains open.
+No orange photo was released by that earlier experiment.
+
+**Earlier implementation dependency:** the red-only diagnostic derives
+candidate evidence by joining an applied SIMPLE receipt's destinations to
+that run's Review snapshot and insists on red scores. It cannot safely be
+treated as an adjustable post-release selector merely by changing a cutoff:
+the seven subsequent moves and the separately refreshed Review need a checked,
+conserved current-membership lineage before further candidates can be bound.
+RA2j must compose and verify the original receipt, release journal and current
+Review, then propagate a selected policy-bound range through candidate,
+reference-retirement, routing, workflow and recovery validation. Include
+Gallery and Review, excluded/unavailable scores, exact threshold boundaries,
+policy drift and repeat/recovery tests. The default remains red-only outside
+the user's explicit Sandbox orange-and-red selection.
+
+**Orange/red current-cohort census:** the new read-only
+`sandbox-red-release.cmd --current-review DIR --cache CACHE --release-band red --release-band orange --dry-run`
+checks the current report seal, policy, source bytes and reproduced saved
+scores. On `red-release-post-20261121-01` it found 109 candidates:
+102 Gallery and seven Review, with 88 unscored named-person records outside
+the selection. Two candidates are marked workflow-selected in the saved
+Review. All 109 scores reproduced from the bound cache, with maximum
+absolute difference `1.1102230246251565e-16`; 1,504 candidate/core natives
+were bound. Review SHA-256
+`cb262bf328c098822079fbee46537d6628451d71744be8285550b39fa2a0de98`.
+That census was not a routing plan, a workflow replacement or an apply.
+Band-aware catalogue and routing foundations are fixture-tested, but the
+current-report evidence has since been connected to the preview-bound
+Sandbox-only transaction described below.
+Among 39 identities with selected Gallery members, ten would have no Gallery
+photos left if the entire saved cohort moved; none would have exactly one.
+This is a location census, not proof of their final matcher cores. The
+current planner refuses any retired reference set that loses a core.
+RA2j must explicitly handle and report empty former identities without
+silently weakening core/consumer safeguards or discarding identity metadata.
+
+**Orange/red Sandbox apply:** a bound preview and
+`orange-red-release-20261121-01` apply completed. It moved the 109 saved
+orange candidates: 22 to named Gallery, 24 to named Review and 63 to
+Various Review. The publication check and recovery preview passed, and the
+report binds 3,196 unaffected natives. Ten emptied former matcher cores are
+recorded; identity metadata is retained. Two orange workflow-selected photos
+and the earlier red workflow photo moved without changing shared consumers or applying a replacement. Workflow
+isolation, complete consumer coverage and human acceptance remain open. A
+separate post-release viewer refresh passed its reports-only check; its
+verified census found four further candidates and 88 unscored named-person
+photos, all in Potential Galleries: 72 marked Small core and 16 Unscored.
+Those are not orange/red classifications. Overview and Review opened with loaded thumbnails; the masthead
+People link still targets the older canonical Overview. The chained journal
+verifier and recovery snapshots bound a continuation preview.
+`orange-red-continuation-20261121-01` applied those four orange moves: two to named
+Galleries and two to Various Review. Its independent publication check and
+recovery preview passed. `orange-red-post-continuation-20261121-01` then
+completed with 30,686 content reads and an independent seal; the reports-only
+check passed. Its checked Review has zero orange/red named-person candidates
+and 88 unavailable scores. Browser checks opened Overview, Review and one
+retained detail; the four-photo report loaded all four images. Earlier
+viewers are stale. The masthead People link still targets the older canonical
+Overview. Workflow consumer isolation/replacements, unscored cases, human
+identity/crop acceptance and tuning remain open.
+
+**Post-release workflow evidence:** each of the three released selections
+still matches one configured base/flow binding and its moved native and
+padded derivative hashes verify in the Sandbox. Each former owner has a
+higher-scoring current Gallery candidate: the highest saved scores are
+0.770619, 0.743408 and 0.593723, versus prior release scores 0.148894,
+0.246808 and 0.226184. The three current scores reproduce from the saved
+cache within `2.23e-16`; each candidate passed the cached face-quality gate,
+has a verified padded derivative and no recorded person rejection. These are
+point-in-time proposals only, not a fully bound eligibility decision, a
+consumer inventory or a selection update. Unknown, unavailable or manual
+workflow consumers and crash-safe isolation still block the transaction.
+A subsequent read-only recursive JSON token scan for all three selected IDs
+covered 5,921 distinct files / 236,094,056 bytes in reachable repository and
+discovered workspace scopes. Each ID had seven references across four
+repository files; seven workspace roots were unavailable. The scan does not
+prove that other formats, ID-less selections or unavailable consumers are
+unrelated and makes no changes.
+
+The final post-unscored Review still shows the same highest-scoring
+non-excluded, non-stale Gallery candidates for the three former Sisters:
+Draknava `photo:image_7500608347555238074` at `0.770619`, Draknira
+`photo:image_7500653433765869209` at `0.743408`, and Drakneta
+`photo:image_7502010229316302440` at `0.593723`. Their saved Review rows
+show usable one-face core members and no derivative diagnostics. This
+recheck does not verify every consumer, perform a complete replacement
+eligibility transaction or change a workflow; isolation remains open.
+
+**What red means in the saved Review:** the current configured core-similarity
+red band is a finite score **below 0.15**; orange begins at 0.15. Compare the
+unrounded score, not the two-decimal label. This is the photo's own
+core-similarity badge, not a red face-size, quality, core-mode or unscored
+badge. Core-member scores can be leave-one-out while non-core scores use the
+full display core; carry the score basis, source bytes and exact reference
+version. A missing, stale or invalid score is not zero or red. Use the
+bound policy and Review snapshot, not an assumed permanent numeric value.
+The installed planner's audit-only selection is not the same as this red
+band and currently does not release cast Gallery members.
+
+**Saved evidence, not a preview:** the hash-bound new-PC Review snapshot
+matched 3,305 physical destinations. It contains seven red own-core scores:
+one Angel, three Sisters, two Prospects and one Potential, all in Gallery.
+One of the Sisters is workflow-selected. Another 329 records are unscored
+(88 Potentials and 241 Various), not red. These are snapshot counts, not
+validated release proposals or a promise that a later score census will
+match. That workflow-selected red has at least one higher-scoring non-red
+Gallery photo in the same folder; workflow eligibility and replacement
+transaction are not verified. The paired saved receipts place all 3,490
+sources identically and match tested decision routes and reference
+membership; differing scores cannot be measured per photo without a safe
+paired comparison. Do not delay this plan merely to investigate byte-level
+parity.
+
+**Implementation progress:** the saved-run audit now classifies matched
+Review own scores against the score bands embedded in that snapshot,
+displays the unrounded score, and distinguishes unavailable bands and
+unscored records. The applied new-PC receipt produces the same seven red
+and 329 unscored counts in 3,305 matched records. For a workflow-selected red,
+the audit lists higher-scoring non-red Gallery candidates in the same owner,
+excluding the same ID and recorded bytes. Its one matched workflow-selected
+red has at least one such candidate; this is not workflow eligibility proof.
+The default match compares saved path, recorded native hash and ID when
+available without rehashing. The opt-in `--bind-red-natives` rehashes and
+binds matched red photos, their Review cores and workflow candidates into the
+report inputs; `--check` must use the same flag and refuses changed bytes,
+missing IDs or incomplete matched cores. It does not authorize a release.
+No integrated release, reference retirement or workflow transaction is
+installed; the fixture-only foundations are described below.
+The separate generated report under Sandbox Working
+`_reports/library/red-snapshot-audit-20261121-v10/snapshot-audit.html` passed
+its input/producer/output check. A local browser loaded it and displayed
+seven red rows with saved planning-reference membership, photo-protection
+provenance, expandable matched Review-core records and one
+workflow-replacement-candidate row. It explicitly excludes the separate
+Artist domain, so it is not an all-domain census. This validates
+the report, not release routing or identity correctness.
+The later workflow-helper edit changed an audited producer, so v10 is
+historical and its producer check is stale. The distinct v11 report passed
+preview/apply/check and structured-evidence verification; v11 has not been
+independently browser-inspected. A later structured-evidence change made v11
+stale too. The separate v12 report passed preview/apply/check; its structured
+manifest contains seven red records, 39 same-owner replacement candidates and
+336 bound native files. The v12 page loaded in a local browser with the red
+count and unverified-eligibility warning visible. Candidate evidence is not
+proof of workflow eligibility or a transaction. The current v13 report
+supersedes v12's now-stale producer binding: preview/apply/check passed,
+the same structured counts were verified, and its page loaded with the red
+count and eligibility warning. A subsequent action-helper edit made its
+producer binding stale; preserve v13 and regenerate after implementation
+settles. Separate v14 passed preview/apply/check with seven red candidates,
+39 workflow candidates and 336 native bindings; it has not been browser
+inspected. Current configured selections are considered before binding
+candidates even if the saved Review selection flag differs.
+The opt-in bound check matched the recorded native hashes for all seven red
+photos, their 317 matched Review core rows and 39 workflow-candidate rows
+(336 distinct files; 228,748,441 bytes).
+Each red photo's matched core-row count equaled its saved core size. This
+is not a release-preview binding, workflow eligibility check or proof of
+scoring correctness; revalidate before a release.
+Opt-in `--inspect-workflow-selections` also binds the current configuration
+and shows base and flow selections for each red photo. The configured
+production root differs from this Sandbox receipt root; one red photo
+matches one base selection, while 12 configured selections have no
+identifiable photo ID and could still refer to a red photo. This does not
+inspect actual workflow files or prove all consumers have been found. Both
+opt-in flags must be repeated for `--check`.
+An additional read-only preview of the existing retarget routine found the
+selected old filename in three recognized repository workflows and none in
+the five ready workspaces; two configured workspaces were inactive. This
+only covers its first top-level LoadImage and recognized generated files,
+not hand-made, inactive or otherwise undiscovered consumers. No workspace,
+workflow, input or configuration was changed.
+A subsequent bounded read-only JSON-string scan covered 5,417 distinct
+repository files and 504 files in ready workspaces (236,094,056 bytes). It
+searched the selected filename and photo-ID token recursively, including
+hand-made and nested JSON, and found seven occurrences in four repository
+files and none in ready workspaces. Three repository files were recognized
+workflows with the old name in their first LoadImage; the fourth was the
+workspace configuration. Inactive workspaces and archive folders were not
+scanned; token matching is not proof of active consumers or eligibility.
+The scanner is fixture-tested but not integrated into a transaction.
+An additional read-only check ran the existing base-selection path resolver
+against all 39 higher-scoring same-owner candidates for the selected red:
+each found the configured old Gallery original and both old/new scaled
+files in Sandbox. A separate bounded verification checked the maintained
+padded derivative lineage for all 39 candidates and completed an independent
+content seal. These point-in-time checks do not bind a replacement to a
+future transaction, validate full eligibility, or inspect or change
+workspace consumers.
+The bound report manifest includes structured red candidates and their
+matched Review-core paths, hashes and score context. It remains saved-report
+evidence, not a release manifest or authorization.
+The separate Artist browser is a read-only preparation-only domain without
+the people matcher, so the existing People Review cannot classify its
+photos as red; resolving that scope must not silently enable Artist matching.
+The existing workflow-action validator forbids a selection and move for the
+same photo in one manifest, and requires the configured library root for a
+workflow action; selected-ID discovery also includes flow-specific inputs.
+Those guards do not establish a safe Sandbox replacement-and-release
+transaction. Harbor asked Beacon for existing transaction evidence in the
+[workflow coordination question](../collab/2026-11-21-new-pc-rehearsal/messages/20261121T175951Z-agent-d01e8fdb3329-05.md).
+The admission code now has a fixture-tested reference rebuild that can
+remove specified IDs and drops empty or zero-vector cores. Its cast routing
+also excludes a detached outlier's former owner when explicitly marked for red
+release, matching the existing lower-category safeguard without changing the
+ordinary route. Neither change selects red candidates or enables
+the release path; actual source removal, reference retirement and recovery
+still need an integrated contract.
+The rebuild helper can also exclude specified content hashes across cores,
+so byte-identical aliases cannot supply a retired photo's reference vote.
+That option is fixture-tested but is not yet invoked by a red-release path.
+An internal, fixture-tested **planning-only** red route now validates saved
+score bands, retires candidate IDs and identical-content reference votes
+before matching, preserves negative evidence, and reports unassigned holds.
+It refuses unusable cores and blocks workflow-selected photos. Ordinary
+routing keeps its existing protection rules. This helper assumes its caller
+has independently verified candidate and selection evidence; by itself it
+cannot publish or recover moves and defers forming new groups. The
+same-run former-owner exclusion remains a test-only conservative
+assumption, not an enabled rule or an installation decision.
+An internal fixture-only adapter now rechecks a saved audit's inputs, policy,
+native hashes and current configuration before passing its candidates to
+that planner. It refuses a mismatched library/configuration root and
+unidentified selections; the actual v14 report correctly stops on the root
+mismatch. The planner additionally checks complete, finite, self-consistent
+frozen cores and candidate conservation. An unmatched red now proposes an
+explicit `Various/review` hold through the existing move resolver, while a
+workflow-selected red remains blocked. These are non-executable planning
+foundations. A separate cache-only proof rechecked v14 and reproduced all
+seven saved red own-core scores from the root-local general-domain cache,
+with maximum absolute difference `4.17e-17` and one recorded model identity.
+Its numerical tolerance is `1e-8`; this is an arithmetic reproduction check,
+not a cross-machine identity tolerance. The fixture-only planner adapter also
+binds each supplied candidate/reference vector and quality value to the
+root-local cache and native bytes, then reseals its inputs. This checks only
+the supplied reference inventory; it does not prove that every rival was
+included or that the centering population was complete. That proof did not
+check current model binaries. Complete workflow coverage, metadata/anchor
+updates and the combined transaction remain open; the proof itself is not
+an executable release preview.
+The checked diagnostic now composes saved-score, non-voting, complete Gallery
+and centering checks in one read-only call. On v14 it rechecked 2,650 Gallery
+natives, 22 non-voting bindings and 3,284 active/3,282 usable centering
+inputs. All seven reds are blocked, not routed, because the configured root
+is Production and 12 selections lack IDs. Those unidentified selections are
+legacy male-photo names; the names alone do not prove their input contents.
+The diagnostic does not authorize or execute release.
+Its read-only retirement simulation found that none of the seven reds'
+IDs or native hashes appears in a saved Review core, so no saved Review
+core is affected by removing those fixed-core votes; zero scores were
+therefore checked for newly red status. Removing a non-core photo can still
+change a rebuilt core. This is not a census after the separate
+routing-reference rebuild or after assignment; those remain required.
+The supported `bin\red-release-diagnostic.cmd` launcher and menu choice `RD`
+recheck the supplied root, receipt, snapshot and cache; default and `--check`
+are read-only. Optional `--inspect-consumers` scans reachable repository and
+configured workspace JSON with bounded reads, including nested references and
+duplicate basenames. On this machine it scanned 5,921 files and found seven
+matching references; five configured workflow roots were unavailable. It also
+checks configured unidentified selection filenames against exact saved red
+native and selected-red derivative bytes in the shared and workspace input
+locations. The current scan found no such input files at 96 scoped locations;
+this is not evidence that the selections are safe or that differently encoded
+images do not match. Consumer coverage remains unproven. The first read-only scan was stopped after
+excessive memory use; its bounded-read allocation was fixed and the retry
+passed. Three unavailable roots belong to configured active installs and
+two to inactive installs. Exact read-only retarget planning found four
+recognized files, with no blocked references among them; this is not a
+workflow update or complete coverage. No library, workflow or input was
+changed.
+An opt-in `--simulate-routes` reruns checked routing with all seven red
+IDs/content retired, assuming workflow gaps are resolved. It reports one
+provisional identity Review and six Various Review holds for the saved
+new-PC evidence. This hypothetical does not resolve consumer coverage,
+authorize a preview/apply, or replace human identity review.
+With `--simulate-routes --simulate-core-refresh`, the same checked snapshot
+also rebuilds affected saved-policy Review cores for that all-Review
+hypothetical. It binds the affected Gallery/Review inventories, native
+bytes, cache, catalogue and original scores, and refuses surviving Gallery
+aliases. For the six affected identities it reproduced and checked 409
+remaining scores, found zero newly red and reported one unavailable score.
+This is not a post-apply census: it supports only complete all-Review
+routes with the currently supported provisional, usable, unprotected
+Gallery evidence. It does not rescore the moved photos at their proposed
+destinations and does not authorize or change a release. The additional
+`--simulate-destination-scores` option also binds and rebuilds hypothetical
+destination Review cores. On the same snapshot it checked seven identities:
+409 unmoved scores, zero newly red and two unavailable. The proposed
+Yvette Orr Review arrival scored approximately 0.380199 (yellow); six
+Various holds have no identity score. This is hypothetical, not a release
+preview, post-apply score or human identity assessment.
+The in-memory configuration plan now includes the exact proposed base and
+flow selection changes and refuses missing or conflicting bindings. A
+fixture-only routed staging path also prepares catalogue membership for a
+qualified existing destination, preserves photo protection and unrelated
+members, retires old anchors/groups, and refuses rejected destinations.
+When a protected red would otherwise receive an unconfirmed optimistic
+Gallery placement, the fixture planner preserves protection and holds it in
+the qualified identity's Review (or Various Review if receiving is disabled);
+it does not make that photo a reference.
+FAST transaction recovery and LEAN retained-lineage/derivative staging are
+fixture-tested; this is not a bound preview, installed workflow or release.
+One combined FAST fixture now stages and recovers a routed photo, catalogue,
+configuration, workflow and old/new input files. External input removal and
+exclusive creation have interruption/collision fixtures; an ambiguous created
+target is preserved for inspection. The publication transaction also refuses
+targets changed after its snapshot; this check does not eliminate all
+concurrent-change races. Recovery now journals and exclusively creates
+previously absent library and external files; an interrupted or competing
+restoration is preserved for inspection, including identical-byte collisions.
+This fixture-tested safeguard does not eliminate races on existing targets.
+Hard-link support at actual Sandbox and
+workspace destinations, full crash recovery and complete consumer coverage
+remain unproven, and no shared workflow update is authorized by these tests.
+An additional read-only Gallery inventory rebuild enumerates the configured
+people identity roots, binds the local catalogue and native bytes, and refuses
+duplicate voting content or missing/invalid measurements. An earlier diagnostic
+of 2,650 Gallery files mistakenly inferred measurements for 16 photos that the
+applied receipt classified as non-voting. Its reported core/reference counts
+and red-routing outcomes are invalid and must not be used. The checked v14
+report and receipt bind 21 unchanged non-voting Potentials Gallery files,
+including the 16 missing measurements. After excluding them, the rebuild
+stopped on two Sisters/Draknisa Gallery files with identical current prepared
+bytes, although their original source hashes differed and both were eligible
+in the saved run. Neither is a configured selected photo, explicitly protected,
+or a catalogue anchor. An opt-in, fixture-tested inventory helper now applies
+the existing same-owner keeper rule to otherwise unambiguous duplicate bytes,
+while retaining both files. It refuses cross-owner duplicates, selected or
+anchored photos, unresolved owner selections, and conflicting/stale metadata.
+On the current Sandbox it yielded 197 cores and 2,411 references from 2,650 Gallery files,
+with 22 excluded votes, no supplemental inference and no core diagnostics.
+An in-memory diagnostic held six reds in unassigned Review and blocked the
+workflow-selected red; none was assigned. This is not a bound release preview:
+the post-preparation duplicate vote is not yet integrated or authorized by a
+checked transaction, and the configured root and unidentified selections
+still prevent the checked snapshot handoff.
+A separate read-only reconstruction checked the saved preparation manifest
+hash and each eligible source's selected prepared bytes and cached measurement.
+The receipt's 3,284 eligible sources and one excluded no-face junk source
+exactly matched the 3,285 preparation records. Of the eligible sources, 3,282
+met the current 60-pixel minimum; their reconstructed mean differed from the
+saved cache mean by at most `3.47e-16`. The manifest and cache remained
+unchanged. A fixture-tested helper now repeats this proof against the checked
+report, receipt, current matching configuration/policy, preparation manifest,
+selected bytes and content-bound cache. It supports this receipt's dispositions
+and refuses unsupported aliases or populations. This remains point-in-time
+evidence, not an integrated release binding.
+A separate fixture-tested proposal reproduced all 39 same-owner replacement
+scores against the saved Review core and checked candidate/core native bytes,
+metadata and maintained derivatives. It selected a replacement with saved score
+`0.770618881684735` for the workflow-selected red scored
+`0.14889387096680404`. This is a read-only proposal, not a workflow change or
+proof of consumer coverage. Sandbox workflow isolation, consumer coverage and
+the combined transaction remain open; no photo or workflow was changed.
+The recap audit can now bind an explicitly selected alternate workflow
+configuration without changing the default. The read-only red diagnostic can
+consume the same report-bound alternate configuration while retaining the
+original saved-run configuration for centering. This is inspection only: it
+does not establish an isolated workspace or consumer coverage. The recap
+producer changed, so the v14 report's producer binding is stale; retain it
+and regenerate a separate checked report before using it as current evidence.
+Separate v15 was then previewed, written and checked, with 3,305 matching
+Review destinations and no stale snapshot diagnostics. The read-only
+diagnostic still blocks all seven releases; its consumer scan found five
+unavailable workflow roots and no available unidentified input files. This
+does not validate an alternate workspace or apply a release. The v15 audit
+opened in the browser and displayed seven reds, 329 unscored and the
+unidentified-selection warning; this is not post-release acceptance.
+The audit wording was then corrected to distinguish the user's release
+authorization from a proposed or applied destination. This made v15's
+producer binding stale; separate v16 passed preview/apply/check and opened
+in the browser with the same seven-red and 329-unscored counts.
+The scan now also discovers local ComfyUI installations absent from the
+configuration; on this machine it reports two additional unavailable roots.
+An unconfigured installation is not assumed to be safe merely because it
+has not been registered in the configuration. It also checks unconfigured
+local input directories for unidentified selected filenames: the expanded
+scan found zero available files in 108 scoped lookups, not proof that the
+selections are safe or absent on the other machine.
+An opt-in unassigned-hold staging foundation now binds each move to its saved
+red evidence, removes the departing photo from its former anchor and group
+references, and retains its photo-protection setting and unrelated catalogue
+state. Fixture coverage includes changed bytes, non-red refusal, LEAN retained
+lineage and derivatives, publication, and source/catalogue recovery. A
+read-only check found a verified retained-preparation transfer for each of the
+seven saved red photos; no transfer was performed. It handles only `Various/review` holds;
+staging refuses an already occupied hold destination, including identical
+bytes. The transaction now supports opt-in exclusive creation of staged
+destinations using same-directory hard links, failing rather than overwriting
+an appearing file. A journaled pending creation makes recovery refuse an
+ambiguous target after a simulated interruption or collision; inspection is
+required before recovery. This has fixture coverage only: the integrated
+release must opt in and the actual Sandbox filesystem has not been tested.
+The Sandbox volume reports NTFS; this alone does not prove hard-link creation
+at the destination. A read-only check found all seven saved red hold paths
+absent at that moment; this is not an apply binding. The focused routing, rebase, transaction and audit
+regressions passed 183 tests, and `bin\check.cmd` passed.
+The foundation is not wired to an installed release command, workflow replacement or
+viewer/audit finalization, and it has not been applied to the Sandbox.
+The action module can also propose base and flow configuration replacements
+without writing, and refuses unidentified same-owner selections or IDs shared
+with another owner. This fixture-tested helper does not establish replacement
+eligibility, inspect workflow consumers or execute/recover a transaction.
+The normal publication journal now has a fixture-tested opt-in foundation
+for explicitly approved external targets: it snapshots existing bytes,
+binds staged and before hashes, and requires approved roots for verification
+and recovery. Fixtures cover publication, partial state, failure rollback,
+new files, stale targets and newer external edits, including recovery preview.
+New journals identify publication swaps; recovery preserves and refuses an
+interrupted swap for inspection, and a recorded `recovering` state permits
+retry after an interruption between restored files. Fixtures cover these
+cases and collision preservation. A journaled pending-finalizer marker also
+prevents automatic recovery when viewer output may not have been recorded;
+a simulated interruption preserves those reports for inspection. Older
+journals lack the new bindings. Partial swaps and interrupted finalizers
+still require manual disposition, and receipt interruption is not
+exhaustively proven. This is not a complete hard-crash recovery solution.
+New publications now refuse an existing journal and exclusively create the
+initial journal before mutating files. Fixture tests cover an existing or
+racing journal and a failed initial write. An interrupted initial write may
+leave a partial journal and a backup for manual inspection; it is not an
+automatic recovery guarantee. Recovery rechecks existing library files
+immediately before restoring them and preserves a file changed while another
+file was restored. The remaining check-to-replace race is not eliminated.
+New publication journals also bind the exact recovery snapshot manifest;
+recovery refuses a changed manifest before altering any files. A fixture
+reproduced an unchecked changed-source entry and verified refusal and recovery
+after restoring the original manifest. Older journals lack this binding.
+The transaction, routing, recap and rebase regression suites passed 206
+tests after this change; it is not complete crash or concurrent-writer proof.
+It is not connected to red release, does not discover consumers or establish
+Sandbox isolation, and does not authorize changes to workflows or Production.
+Beacon confirmed the existing actions cannot provide the combined transaction:
+flow overrides, nested/manual consumers, duplicate basenames and pre-existing
+input bytes need explicit coverage, and unknown consumers must hold the
+affected release. Old-PC same-input worker and memory comparisons remain
+unmeasured; see the [coordination answers](../collab/2026-11-21-new-pc-rehearsal/messages/20261121T175951Z-agent-d01e8fdb3329-05.md).
+The user was unavailable to resolve same-run return. Keep the proposed hold
+as a conservative design assumption, not an enabled policy, until the
+remaining routing and transaction boundaries are confirmed.
+
+### Work sequence and acceptance
+
+1. **RA2d, rule and case evidence:** bind a private, read-only census to the
+   installed Review, policy, source IDs/hashes and reference context; include
+   all identity categories and both Gallery and Review, account separately
+   for unavailable scores, and identify actual protection/anchor/workflow
+   flags without treating them as blanket vetoes. Check category/domain
+   boundaries, including the separately maintained Artist domain, before
+   asserting complete coverage. Preserve the current snapshot and receipts.
+   Bind the candidate set before changing references; explicitly count newly
+   red scores after any reference refresh, so moving the boundary cannot
+   silently erase a candidate or conceal residual cleanup.
+2. **RA2d/RA2j, select and implement the release contract:** release every
+   qualifying red member from its prior identity for reassessment, even if
+   protected, anchored or workflow-selected under this scoped decision.
+   Removing a member is not a permanent identity rejection and does not
+   authorize automatic assignment to an unqualified rival. Compare eligible
+   destinations with distinct rival and independent evidence; preserve the
+   original photo and former owner. Provide a recoverable, explicit
+   unassigned/held outcome when no destination qualifies instead of requiring
+   an existing rival or leaving the photo silently as a red member.
+   Proposed conservative safeguard: do not automatically return a red
+   member to its former identity in the same pass without a separately
+   explained and reviewed exception; confirm this boundary before enabling
+   routing. Keep conflicting explicit negative evidence visible.
+3. **RA2j, references and workflow:** remove released members from the
+   former reference set before later scoring; avoid self/duplicate support,
+   report remaining support and hold dependent actions if a core becomes
+   unusable. For a released workflow selection, identify a valid non-red,
+   higher-scoring photo of the same identity and atomically update the
+   selection and affected metadata/history with the release. Verify actual
+   workflow consumers and provide exact recovery. If no suitable
+   replacement or a selection binding is ambiguous, report and stop that
+   transaction for user disposition; never silently use the rejected image,
+   select an unrelated identity or leave a broken binding. The exact
+   eligibility and tie-breaking of replacement candidates remain open.
+4. **RA2j, focused proof before any run:** test values just below, exactly
+   at and above the red boundary; unavailable/stale evidence; ordinary,
+   protected, anchored and workflow-selected members; replacement present,
+   missing and failed update; reference retirement and insufficient cores;
+   qualified rival, new group and no-match hold; explicit negative
+   evidence; source conservation, duplicate handling, rollback/recovery,
+   repeat stability and unaffected orange/non-red photos. Use source-bound
+   saved cases plus independent controls. Familiar named cases are
+   development examples, not measured identity accuracy. The user's later
+   Nov 21 instruction authorizes Sandbox apply after a valid bound preview
+   and these safety checks; it does not authorize Production changes.
+5. **RA2j/RA2d, final audit and user review:** report every red candidate,
+   previous owner/bucket, score/band and reference basis, override reason,
+   proposed/final destination or honest hold, destination/rivals and
+   rationale, changed references, workflow old/new selection, missing
+   evidence and recovery/transaction status. Summarize counts by identity
+   category and verify input conservation, safety and repeat. Keep
+   photo-level reports private; the user reviews identity, crop and
+   representative moves before acceptance. Include stronger-rival and
+   Various-leftover explanations under their existing owners rather than
+   treating the read-only audit as a movement command.
+6. **RA2d follow-up:** after the red phase, review orange examples and
+   whether band ranges should change. Investigate the Hadley and Jacinta
+   near-Angelica cases using actual routing/rival evidence and separately
+   reviewed ComfyUI render fidelity; similarity or a name is not proof of
+   identity. Do not change ranges or launch render jobs from this plan.
+   **T29/T30** retains
+   [per-machine performance work](2026-10-28-intake-performance.md#nov-21-per-machine-tuning)
+   without competing with live jobs; **RA2o** reconciles affected documents,
+   without archiving unique history.
+
+**Decision points:** decide the same-run return exception and what to do if a
+workflow has no eligible replacement; validate the real selection transaction,
+scope for separately maintained domains, and any placement/score tolerance.
+The user's selection to override protection for red is already made for this
+run; do not ask for it again or quietly restore a generic protection veto.
+The specific Sandbox run above was applied under the later authorization.
+Its partial result does not authorize an orange cutoff or Production action.
 
 ## Nov 19 post-run13 tuning
 
@@ -153,6 +1047,10 @@ uncleaned Source back over Working.
 
 ### Nov 20 Review and Various dispositions
 
+The Nov 21 red-member direction above supersedes this section's blanket
+cast-departure prohibition for qualifying red members in that future scope.
+The installed Nov 20/21 run and the other disposition decisions are unchanged.
+
 The user clarified that untouched Review is a candidate source, not a
 membership lock. In a future SIMPLE rebase, let it qualify for the same
 grouping as a new arrival. Do not use the old Review placement as
@@ -232,7 +1130,8 @@ the existing owners, not a new run or a change to the queue.
 
 ## Next SIMPLE run: foundational corrective contract
 
-**Current pre-run contract.** This section consolidates the Nov18 discussion;
+**Nov18 pre-run contract; red-member scope superseded Nov21.** This section
+consolidates the Nov18 discussion;
 dated selections/corrections below retain their history and evidence, not
 competing instructions. RA2d owns outstanding rule/evidence acceptance;
 RA2j owns selected implementation/tests/preview through the existing spine.
@@ -2345,6 +3244,78 @@ records the replay recommendation and how to make a comparable timing run.
 
 ```text
 Can we write up a hand-off for a new session, on my new machine to pick-up where we are at now and to run the next commands to re-run the rebase again and test out a few things - like checking on performance to compare against our runs and how long things take?  Or should we spend time to re-run on this machine before we do that?  I guess that's my question ... I suppose we could re-run things on both in parallel as well.  What do you think?
+```
+
+### Nov 21 red-member release planning - verbatim chat
+
+```text
+I guess the question is whether or not there are significant different in "who went where" during the process.  If things are close enough and the scores aren't significantly different for the likeness and rivals, then I think we're good.  Is there something simple to do with that - if not, then moving onto the prioirity of releasing the sisters and angels that score low with the rules is fine.  I would say that for this run we can override any protections and even a workflow photo that is scored low can be released and we'd simply just pick the higher scoring sister or angel picture to replace it.  I'd want to know where the other photo went and that identity - but that's a step to clean things up.  Then we can further investigate some differences in why some several items I have around the Hadley's and Jacinta and others that are close to Angelica, but stay out.  Which is fine if they don't actually render as Angelica in Comfy UI.  Ultimately that's what I want out of Sisters and Angels is a tighter group of core photos and red scoring photos released.  Basically anything in the Red scoring range is definitely not right for the identity based on my reviews - so that goes for any grouping.  Once we get the reds ironed out, I can review the orange range and see what I think.  Possible we adjust those ranges based on this progress.  So you can get to work on a plan for that - meaning, review existing docs/plans and if you have questions for either me or the other agent we can tackle those as you have them.  But first, re-review all the docs/plans around this aspect and other rules in place to ensure we're moving ahead.  Some older plans may be out of date as the feedback at that time was based on many issues resolved already so we'd want to update those with what we agree upon as we do this work.  So, you have freedom to proceed with review of plans after you write up a recap for this following the standard recap process.  I'm going to ask the other agent to do some work on a couple skills around handoffs and how that works, but for now your focus is on the next step of releasing the low scoring (red) images from any identity.  If you feel we also need to work on the audit at the end so we can recap the results when done, that's also a fair piece to include.
+```
+
+### Nov 21 integrated Sandbox apply - verbatim chat
+
+```text
+I'd like to continue to move forward unless you have questions I need to answer so that we get things fully integrated and can do the apply with the optimizations and validate them end-to-end, even if we need to start all the way back over at image intake and make sure that works properly and scales well on this machine.  If we do it in increments, that's fine - but the goal is to get the release working and applied and see the final results.  So I can do the review and then we can address questions I have after I do the final review.
+```
+
+### Nov 21 Sandbox testing clarification - verbatim chat
+
+```text
+Did you commit and ask them - but you can apply - I am ok with that as well.  We'll focus on you moving ahead since the sandbox is for testing - we should update skills to reflect this distinction that it's ok to be more aggressive at applying the items to the sandbox and verifying after.  Production galleries different story.
+```
+
+### Nov 21 orange-release follow-up - verbatim chat
+
+```text
+I would think there are more than that red ones to release - maybe we also need to look at the lower orange ratings to see how many are released as well.  I will have to fine tune things, but want to make sure that we're able to adjust the ranges for releasing as well as scoring so they align - so it's consistent as it actually feels like the ones in the 20's and maybe below the lower review entry don't belong - basically if we don't admit for a review it probably doesn't belong and was historically put there.  So maybe the bar is actually orange and red scoring.
+```
+
+### Nov 21 orange and red release selection - verbatim chat
+
+```text
+Let's move forward with releasing all Orange and Red as planned for what we'll do
+```
+
+### Nov 21 unscored release selection - verbatim chat
+
+```text
+Anything unscored also needs to be released - if we have bugs or issues from past runs - just watching what you're providing feedback - so I hope this doesn't confuse.  Everything needs to be scored and not kept where it is and not scored.
+```
+
+### Integrated rebase and retirement - verbatim chat
+
+```text
+We should _retire folders that get emptied in the process.  Also, is there a who-went where report that show all those moves and previews the images while telling you the entire set of moves?  And did you have to run things twice or what exactly happened as I wanted the release to happen in the same run as the rebase itself, not two separate steps.
+```
+
+### Pre-rebase release correction - verbatim chat
+
+```text
+So everything released ended up in Various Review - that's not right ... we need to ensure that a "released" photo is scored just like any other image going into the rebase, which means we need to release items at the start of a rebase and when we create identities and matching.
+```
+
+### Corrected Sandbox rebase authorization - verbatim chat
+
+```text
+When you do the run, back up as far as is needed in the process and re-run it all the way and apply it - don't wait for me to approve a preview.  Just go ahead and do the run so I can see the full rebase recap report and the gallery pages.  I'm specifically intereted to see where they do all go after that works properly.
+```
+
+### Reconsider pre-existing holds - verbatim chat
+
+```text
+When doing a rebase, we should also remove all pre-existing holds and re-do the entire process as well.  Some holds might be incorrect - I assume that's what you're working on resolving now.
+```
+
+### Fresh post-intake rebase and recap - verbatim chat
+
+```text
+When you're done - can you recap all the steps that happened and in sequence along with the timings.  At one point the performance data was logged so I can see each step, what it's purpose is and how long it took, summary counts and such of what each step did.  Basically I want to understand each of the steps and how it's working in sequence with all our latest changes, just to ensure that we're doing things optimally.  Thanks and keep on going to get the full rebase re-applied fresh and not starting off a previous re-base attempt.  You can start after the intake processing and then move ahead - that way I konw how the release processing will work when we circle back and run it directly in production.  Hope that all makes sense in what I want in the rebase recap output - so I can see all those steps, summary of them at the top and then all the details in each step in ordre below.
+```
+
+### Post-fresh-rebase feedback (a-i) - verbatim chat
+
+```text
+Here's some feedback a) 18 identicals should get put to duplicates instead of being left in place.  b) I'm not sure what to do about an orange rating for new identities - that seems like it's a signal that those aren't really the same person and we'd want them released.  c) I don't know if we can handle having single photo identities unless we know for certain they are not another person and eventually they could intake additional photos.  d) 22 in existing identities?  Is that just items that should have been released or score low now after the addition of new photos and also a signal that we should release them?  e) As in previous item, if we know that single photo identities are something we can support and won't really cause issues - that might be better as a potential instead of a two image potential where the photos do not match.    f) With the face detector, does it know the main face or not?  I realize that some of the photos have people far in the background and are not the main person we'd be scoring.  There's other's where it's picking up a face from a face on a t-shirt.  Other's from a picture in the background.  Other's not quite sure on those like `various_image_7515814053462233073.jpg` where I don't see any extra faces anywhere.  I guess the way I look at items is that if the main face can be scored and we can ignore the other faces and it can produce a reliable head and chest versions later on, then I'm ok with allowing those through.  I'd want to know if there are other reasons for images left in Various after we'd support that.  g) I think we need to get the retirement aspect wired up and working as well.  h) We can commit what we have since this works and pull down other updates from Beacon as well.  Lots to do, but we're getting so very close now.  i) I'm also seeing some images in Angelica - that I put there in the first place and score high, but from a closer look, those are not her `angelica_image_7518042092123535238.jpg`, `angelica_image_7518040873536555024.jpg`, and `angelica_image_7518041173453051122.jpg` are 3 examples.  I think there are actually more as well `angelica_image_7519426801110504591.jpg` and `angelica_image_7518040070849053515.jpg` - basically anything under 0.60 seems like it could be released to see if they return or end up somewhere else.  Maybe the logic around a clean-rebase is to keep the top 9 photos (no matter what their score is) and then release anything under 0.60 to allowed to be rescored with the core of the top 9 photos in Sisters and Angels.  This is a ton of feedback, so keep the quote and re-read it a few times to make sure you get all the items and come back to me with clarifications ahead of coding.  We'll need to adjust plans and docs based on this.
 ```
 
 <!-- markdownlint-enable MD013 -->

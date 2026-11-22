@@ -2,6 +2,12 @@
 
 **Status:** holding (cast contracts and deferred rollout; current acceptance transferred)
 
+**Nov 21 scoped precedence:** the user's
+[red-member release direction](2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning)
+overrides the older mandatory-retention rules below for qualifying red
+members in that future run, including workflow-selected or anchored photos.
+The historical experiments and other cast/Production obligations remain.
+
 ## Milestone transfer record
 
 Nov 5 16:45: C12, C13 and C7 execution transfers with the same IDs to the

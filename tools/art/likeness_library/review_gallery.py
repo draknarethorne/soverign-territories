@@ -1316,6 +1316,8 @@ def collect_items(
                 state, reason = "Identity anchor", "User-selected trusted likeness anchor"
             elif photo_id in protected_ids:
                 state, reason = "Protected only", "Kept in the gallery but excluded from the identity core"
+            elif getattr(photo, "measurementDeferred", False):
+                state, reason = "Unscored", "Face measurement deferred; no inference was run"
             elif not photo.usable(st["minFace"]):
                 state, reason = "Unscored", "No usable face vector"
             elif consistency["decision"] == "split-review":

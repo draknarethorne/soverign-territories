@@ -14,6 +14,15 @@ RA2j owns selected repairs, RA2b broader lifecycle and RA2d rule acceptance.
 selected through spine RA2j/RA2d/RA2o. This older record retains its raw
 sources and unique evidence; it does not reactivate experimental obligations.
 
+**Nov 21 precedence:** the user now selects release of red-scoring members
+across identity groupings and permits overriding protections, including a
+workflow selection, for that scoped run. The
+[focused red-member plan](2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning)
+supersedes this record's earlier blanket instruction not to bypass genuine
+membership locks for qualifying red members only. Historical gate traces,
+unresolved safety transactions and all other independent obligations remain;
+no older run is retroactively changed or accepted.
+
 **Resume gate:** restore bounded normal import first using the selected
 contract below, isolate experimental execution, then verify profiles and a
 reversible small Sandbox proof. No full rebase/reset, Production mutation or

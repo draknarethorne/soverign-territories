@@ -145,11 +145,19 @@ class StorageRootTests(unittest.TestCase):
             env = os.environ.copy()
             env.update({name: str(root / name) for name in cw.CONFIG_ROOT_OVERRIDES})
             env["SOVEREIGN_TERRITORIES_INSTALLS_ROOT"] = str(installs)
-            result = subprocess.run(
-                [sys.executable, __file__, "RoutingTests.test_default_deploy_goes_to_every_home_only"],
-                env=env, capture_output=True, text=True,
+            scripts = (
+                (__file__, "RoutingTests.test_default_deploy_goes_to_every_home_only"),
+                (str(pathlib.Path(__file__).with_name("test_finals_commands.py")),
+                 "FinalsTests.test_loose_save_is_filed_by_its_name_and_the_tree_is_mirrored"),
+                (str(pathlib.Path(__file__).with_name("test_cli_surface.py")),
+                 "PreviewByDefaultTests.test_pull_and_deploy_preview_unless_apply"),
             )
-            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            for script, test in scripts:
+                with self.subTest(script=script):
+                    result = subprocess.run(
+                        [sys.executable, script, test], env=env, capture_output=True, text=True,
+                    )
+                    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             self.assertEqual(list(installs.rglob("*.json")), [])
 
     def test_storage_output_paths_are_relative_to_configured_root_and_refuse_escape(self):

@@ -9,6 +9,13 @@ automation and supersedes earlier audit-only lower-tier restrictions.
 
 ## Current precedence over historical proposals
 
+- The Nov 21 user-selected red-member cleanup permits overriding membership
+  protections, including workflow selection, for qualifying red members in
+  that future scoped run. It does not erase source/history, dispense with a
+  safe workflow replacement transaction, or change ordinary processing.
+  See the [focused plan](../plans/2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning);
+  the later Nov 21 request authorizes a validated Sandbox apply, not
+  Production changes; the release is not yet implemented.
 - The versioned manifest uses the unified `actions` array. Earlier separate
   person-action delivery sketches are not a second payload contract.
 - The tracked production catalogue and isolated sandbox-local catalogue

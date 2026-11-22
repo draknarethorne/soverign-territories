@@ -19,6 +19,21 @@ def _number(value, label, minimum=-1.0, maximum=1.0):
     return float(value)
 
 
+def validate_score_bands(bands):
+    """Validate the display bands without requiring a current full policy."""
+    if not isinstance(bands, dict) or set(bands) != {"green", "yellow", "orange", "red"}:
+        raise ValueError("scoreBands must define green, yellow, orange, and red")
+    if not all(isinstance(value, dict) for value in bands.values()):
+        raise ValueError("scoreBands entries must be objects")
+    green = _number(bands["green"].get("minimum"), "green minimum")
+    yellow = _number(bands["yellow"].get("minimum"), "yellow minimum")
+    orange = _number(bands["orange"].get("minimum"), "orange minimum")
+    if not green > yellow > orange:
+        raise ValueError("score band minima must descend from green to orange")
+    if _number(bands["red"].get("maximumExclusive"), "red maximum") != orange:
+        raise ValueError("red maximum must equal the orange minimum")
+
+
 def validate_policy(policy):
     """Reject incomplete or internally inconsistent policy before any run uses it."""
     if not isinstance(policy, dict):
@@ -233,16 +248,7 @@ def validate_policy(policy):
     ):
         raise ValueError("Sisters Gallery admission minimum must not be lower than Angels")
 
-    bands = policy["scoreBands"]
-    if set(bands) != {"green", "yellow", "orange", "red"}:
-        raise ValueError("scoreBands must define green, yellow, orange, and red")
-    green = _number(bands["green"].get("minimum"), "green minimum")
-    yellow = _number(bands["yellow"].get("minimum"), "yellow minimum")
-    orange = _number(bands["orange"].get("minimum"), "orange minimum")
-    if not green > yellow > orange:
-        raise ValueError("score band minima must descend from green to orange")
-    if _number(bands["red"].get("maximumExclusive"), "red maximum") != orange:
-        raise ValueError("red maximum must equal the orange minimum")
+    validate_score_bands(policy["scoreBands"])
 
     cast_review = _number(policy["castReviewMinimum"], "cast review minimum")
     high_cast = _number(policy["highCastSimilarityMinimum"], "high cast review minimum")
