@@ -90,6 +90,20 @@ duplicate or two equal faces). None lacked a face or was under 60 px. Allowing
 a clear dominant face would change the quality policy, so it needs the
 user's decision, framing checks and a no-reference-vote rule.
 
+Proposed defaults awaiting the user's confirmation (not implemented):
+(a) keep the canonical voting copy and archive the other byte-identical
+copies recoverably, like the 184 duplicates; (b) form a new identity only
+when every member scores at least 0.30 against the others; (c, e) allow a
+one-photo Potential only when no existing identity scores at least 0.30,
+otherwise send it to Various Review; (d) within one rebase, rescore and
+release red/orange/unscored members after matching, up to three passes;
+(f) accept a clear main face (at least 60 px, other faces under 30% of its
+area, reliable head and chest crops) for matching but not as a reference
+vote; (g) retire emptied folders inside the rebase transaction and show it
+in the recap; (i) seed each Sisters/Angels identity from its top nine
+photos by own score, keeping anchors and protected or workflow photos, then
+release and rescore members below 0.60.
+
 **Open after this run (RA2j/RA2d):** under the final cores, named Galleries
 still show 4 red, 43 orange and 46 unscored photos: 28 are one-photo new
 identities (no leave-one-out score exists), 18 stayed held exact-content
