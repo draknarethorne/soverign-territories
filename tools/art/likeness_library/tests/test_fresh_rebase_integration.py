@@ -187,7 +187,26 @@ class FreshRebaseIntegrationTests(unittest.TestCase):
         self.assertIsNone(decision["unresolvedReleaseReview"]["score"])
         self.assertIn("single-face quality gate", decision["reason"])
 
-    def test_conflicting_lineage_and_non_sandbox_refuse_before_measurement(self):
+    def test_match_only_release_without_existing_match_goes_to_review(self):
+        self.vectors["outlier"] = [0., 0., 1.]
+        real_infer = self.infer
+
+        def dominant(*args, **kwargs):
+            checksum, data = real_infer(*args, **kwargs)
+            if pathlib.Path(args[3]).read_bytes() == b"outlier":
+                data = {**data, "faces": 2, "f2": .2, "box": [.3, .3, .3, .3], "px": 1000}
+            return checksum, data
+
+        with mock.patch.object(normal_rebase, "_infer", side_effect=dominant), \
+                mock.patch.object(normal_rebase.face_quality, "derivative_framing", return_value=None):
+            report = self.plan()
+        outlier = metadata.photo_id_from_name(self.paths[2].name)
+        decision = next(row["decision"] for row in report["releasedDecisionEvidence"] if row["photoId"] == outlier)
+        self.assertFalse(decision.get("preserveStaged", False))
+        self.assertIsNone(decision.get("destination"))
+        self.assertTrue(decision["reviewDestination"].endswith("/review"))
+        self.assertFalse(decision.get("referenceEligible", False))
+        self.assertIn("match-only dominant-face", decision["reason"])
         with self.assertRaisesRegex(ValueError, "cannot replay release lineage"):
             self.plan(released_bindings=[{"photoId": "x"}])
         with mock.patch.object(normal_rebase, "is_sandbox_working_path", return_value=False):

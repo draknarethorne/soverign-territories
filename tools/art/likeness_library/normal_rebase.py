@@ -2597,14 +2597,33 @@ def _plan(
             for photo_id in sorted(release_ids):
                 matches = [row for row in decisions if row["photoId"] == photo_id]
                 candidate = measured_candidates.get(photo_id, {})
+                match_only_unplaced = (
+                    candidate.get("qualityEligible") is True
+                    and candidate.get("referenceQualityEligible") is False
+                )
                 if (len(matches) == 1 and matches[0].get("preserveStaged")
-                        and candidate.get("qualityEligible") is False
+                        and (candidate.get("qualityEligible") is False or match_only_unplaced)
                         and not candidate.get("rejectionMetadataStale")
                         and not candidate.get("explicitReviewPlacement")):
                     # No trustworthy score exists; hold it as unassigned rather than keep
                     # the released photo in its former identity or invent a rival.
-                    matches[0].update(normal_admission.unresolved_release_review(matches[0], []))
-                    matches[0]["reason"] += "; released photo failed the single-face quality gate"
+                    # A match-only photo cannot found an identity; it may go to a
+                    # yellow-or-better rival's Review, never Gallery.
+                    rival = matches[0].get("bestMatch")
+                    rival_score = matches[0].get("bestScore")
+                    yellow = policy["scoreBands"]["yellow"]["minimum"]
+                    rivals = ([{"folder": rival, "score": float(rival_score)}]
+                              if match_only_unplaced and rival and isinstance(rival_score, (int, float))
+                              and rival_score >= yellow
+                              else [])
+                    matches[0].update(normal_admission.unresolved_release_review(
+                        matches[0], rivals, locked=lock_cast_admission,
+                    ))
+                    matches[0]["reason"] += (
+                        "; released match-only dominant-face photo has no existing Gallery match"
+                        if match_only_unplaced else
+                        "; released photo failed the single-face quality gate"
+                    )
                     matches[0].setdefault(
                         "referenceVersion",
                         report.get("referenceSnapshots", {}).get("2", {}).get("referenceVersion"),
