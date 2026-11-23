@@ -2028,6 +2028,47 @@ hash. Selected legacy reuse reports that generation hash as unknown and keeps
 the current validation-code hash separate. This provenance exception is
 visible; it never waives source/artifact checks or human image-quality review.
 
+### Identity-universe sandboxes
+
+`bin\universe-sandbox.cmd` builds a small, disposable Sandbox Working for one
+named identity's "universe" (contract:
+[identity-universe plan](../plans/2026-11-22-identity-universe-sandbox.md)).
+The new Working is
+`B:\Sovereign Territories Universes\<ID>\Sovereign Territories Sandbox\Working`.
+It must be outside the main Sandbox and Production, and the existing
+Sandbox-only tools accept it. Preview is the default. `--apply` builds the
+Working in a sibling staging folder and renames it into place. `--check`
+rehashes every recorded copy.
+
+- **blank / named:** `--seed CATEGORY/Name` plus repeatable `--include`.
+  Names resolve case-insensitively, and by name alone when the category
+  differs. Photos come from the seed's pre-rebase owner and its current
+  Gallery/Review placement. Identities join at `--expand-band` (default
+  yellow) when their centroid or any member scores at that band against the
+  seed centroid or seed photos. Only distinct photos are compared; an identity
+  that contributed a photo now in the seed is listed as
+  `shares-N-seed-photo(s)`. Hop 2 uses `--hop2-band` (default green). Every
+  photo goes to `Various/gallery` under its original name. Its bytes are
+  verified against the pre-rebase SHA-256 and kept a second time in
+  `Universe-Source`. The sealed LEAN preparation is copied at the same
+  path relative to Working, so `normal-rebase.cmd --reuse-preparation` can
+  verify it in place. The universe's origin seal records the main-Sandbox
+  path. Every artifact and frozen input is still rehashed. *named* adds empty
+  `Various/<Seed>/gallery` folders for a hand-picked core.
+- **empty:** `--mode empty [--source-folder DIR]` creates the layout with no
+  catalogue, cache or history. With a source folder, it copies every top-level
+  image in DIR, read-only, into `Various/gallery` with names and modified times
+  preserved, verifying each copy by SHA-256. Then run a SIMPLE rebase from
+  scratch with a Working-local `--cache` and no `--reuse-preparation`. The
+  preview warns about a workflow-selected photo that arrives under a name
+  without its stable ID. The SIMPLE rebase refuses to rename such a photo
+  (`protected or workflow-selected photo cannot move`), so hold it out of
+  `Various\gallery` first. The tool reports this but never renames or skips
+  the photo.
+
+The manifest and the thumbnail membership report (by original and current
+owner) are in `Working\_reports\library\universe\`.
+
 ### Fresh sandbox from production: step by step
 
 **Legacy procedure, not the selected SIMPLE clean test.** These existing

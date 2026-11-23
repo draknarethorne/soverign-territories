@@ -37,6 +37,13 @@ echo    rebase-manifest.cmd --run-id ID [--dry-run ^| --apply ^| --check]  Produ
 echo    sandbox-baseline.cmd --root ABS_SANDBOX_WORKING [--dry-run ^| --run-id ID --apply ^| --run-id ID --check]
 echo                                    refresh verified Production Source then reset disposable Working with NO old history/carry-forward; preview first, Production read-only
 echo                                    --frozen-source-sha256 HASH --run-id ID replays existing sealed Source, preserves old Working, and never refreshes Source
+echo    universe-sandbox.cmd --name ID --seed CATEGORY/Name [--include CATEGORY/Name ...] [--mode blank ^| named] [--dry-run ^| --apply ^| --check]
+echo                                    copies a verified identity universe (pre-rebase originals, sealed LEAN preparation, cache) into a NEW
+echo                                    B:\Sovereign Territories Universes\ID\Sovereign Territories Sandbox\Working; main Sandbox and Production read-only
+echo                                    --expand-band yellow^|green^|orange (default yellow) --hop2-band (default green) --hops 0^|1^|2 (default 1) --max-photos N
+echo    universe-sandbox.cmd --name ID --mode empty [--source-folder DIR] [--dry-run ^| --apply ^| --check]
+echo                                    empty ready-to-intake universe; DIR top-level images copied read-only into Various\gallery, SHA-256 verified
+echo                                    then normal-rebase.cmd --root UNIVERSE_WORKING --cache UNIVERSE_WORKING\_likeness\general\cache.json --profile lean
 echo    normal-rebase.cmd --root ABS_SANDBOX_WORKING --profile lean --run-id ID [--dry-run ^| --apply ^| --check]
 echo                                    SIMPLE whole-library composition, distinct from incremental library.cmd; preview can prepare/measure all selected inputs, without publishing assignments
 echo                                    --preparation-workers 1^|2^|3 opts into that many FULL/LEAN preparation workers; default 1, repeat on apply; validate per machine first

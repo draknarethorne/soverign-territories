@@ -7,21 +7,18 @@
 
 ## Open work, by priority
 
-### Either of us (3)
+### Either of us (2)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] RA2d Establish leakage-safe evaluation groups and agree numeric recovery/false-merge/reference-contamination/churn bounds before choosing or enabling a new member rule. Owns this evaluation/acceptance portion transferred from ... ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] IU4 Hand-picked Angelica core: tooling prepares `Various/Angelica/gallery` staging and candidates; the user selects; then run and compare per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md). ([priority reset](plans/2026-11-05-priority-reset.md))
-- [ ] IU6 Empty universe sandbox (`--mode empty`, ready for intake); the user supplies the 345-original set, then intake/rebase runs from scratch per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md). ([priority reset](plans/2026-11-05-priority-reset.md))
 
-### For the assistant, when you say go (8)
+### For the assistant, when you say go (6)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] RA2j Restoring the normal FULL/LEAN/FAST intake flow and separating exclusive experimental execution. **Integrated completion follow-up:** the [selected ... ([priority reset](plans/2026-11-05-priority-reset.md))
-- [ ] IU1 Building the reusable identity-universe sandbox tool (`bin\universe-sandbox.cmd`) under the [identity-universe contract](2026-11-22-identity-universe-sandbox.md); separate disposable universe roots only, Production and ... ([priority reset](plans/2026-11-05-priority-reset.md))
-- [ ] IU2 Running the blank-slate Angelica universe (SIMPLE preview/apply/check, GUI reports and recap) per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md). ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] IU3 Running at least two gate variations on the Angelica universe and comparing outcomes per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md). ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] IU5 Writing the universe findings and proposed configuration changes for user review before the next full rebase per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md). ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] RA2o Reconciling current plans after the focused SIMPLE review/tuning contract is formalized and the run evidence/handoff is stable. **Nov21:** reconcile the affected current and historical protection and release guidance with ... ([priority reset](plans/2026-11-05-priority-reset.md))

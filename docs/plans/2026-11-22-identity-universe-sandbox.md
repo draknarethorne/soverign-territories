@@ -133,6 +133,55 @@ These are executed through spine tasks IU1–IU5 and listed here as the contract
 - The findings report links every claim to run evidence; recommendations are
   proposals until the user accepts them.
 
+## Nov 22–23 results (IU1, IU2, IU6 done; IU3–IU5 open)
+
+**IU1** `bin\universe-sandbox.cmd` (`universe_sandbox.py`) supports blank,
+named and empty modes, `--source-folder`, a separate `--hop2-band`, a
+membership report and `--check`. A copied sealed preparation can be reused in
+another Sandbox Working at the same relative path; apply checks it against
+the originally recorded path. 1,372 likeness tests and `bin\check.cmd` passed.
+
+**IU2 automatic Angelica universe** (`angelica-20261122`): all 11 listed
+names resolved. 67 identities (12 named plus 55 at hop 1) and 1,200 photos
+were included, 105 near-misses listed and 35 exact copies excluded. The
+blank SIMPLE run `universe-blank-01` reused the preparation (preview 65 s,
+apply 28 min, mostly report publication) and formed **163 Potentials, no
+Prospects**: 43 single-photo, 76 of 2–4 photos, 21 of 5–9, 11 of 10–19 and
+12 of 20 or more. Angelica's 61 original members split across 28 Potentials
+(largest share 14). No Angelica core formed.
+
+**IU6 Most Wanted** (`most-wanted-20261122`): all 345 originals from
+`B:\Most Wanted` were copied byte-verified (275 distinct; 69 duplicates
+archived). The fresh LEAN run `most-wanted-blank-01` (preview 19 min, apply
+8 min) formed 121 identities (119 Potentials, 2 Prospects; largest 10).
+Angelica's 59 originals split across 35 Potentials. One photo was held out
+because it is the Angelica workflow photo, which the rebase refuses to
+rename; it is preserved under `Held-Out\` with a README.
+
+**Comparison:** 273 of the 275 distinct Most Wanted photos exist in the
+library. Their original owners were Various 117, Angelica 59, Draknoxa 19,
+Jacinta Alden 13, and about 30 others in ones to sixes. The automatic
+universe contains 199 of the 273. The 74 missing ones all score below yellow
+against the Angelica seed (22 orange, 52 red); in the main Sandbox, 13 of
+them sit in Draknoxa and 7 in Cleo Reyes. The automatic universe also adds
+1,001 photos not in Most Wanted (Drakniss 322, Ione Brantley 160, Harlow
+Chase 100, haniya 94, Ravaelle 79, ...), so yellow against any single seed
+photo is far too broad. The small clusters are stable across both runs; for
+example, Lena Lockwood's 6 all land together in the other run's Paige Pryce.
+
+**Early findings for IU5:**
+
+- With no history, the confirmed formation gates (Potential needs every
+  member yellow, Prospect needs every member green) shatter one person into
+  many small Potentials. Even groups of 20+ stayed Potentials because not
+  every member reached green against the group. The model consistently finds
+  the same small sub-clusters, such as expression, angle or lighting sets,
+  but the all-members gate never joins them.
+- Universe expansion needs a tighter rule, for example a green threshold
+  against the seed centroid or at least N seed photos matching at yellow.
+- Workflow-selected photos block blank runs; a sandbox-only exemption is a
+  user decision.
+
 ## Open decisions for the user
 
 - The default expansion band (yellow) and hop depth, after seeing the IU2

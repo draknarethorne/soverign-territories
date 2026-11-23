@@ -2823,6 +2823,37 @@ class NormalRebaseTests(unittest.TestCase):
                 self.root, receipt_path, "new-run", "lean", {"policy": "current"},
             )
 
+    def test_apply_accepts_relocated_preparation_generation_seal_at_its_original_path(self):
+        receipt_path = self.root / "preview-with-relocated-preparation.json"
+        tail = ("_reports", "runs", "normal-rebase-prior-preview", "preparation", "inputs",
+                "_reports", "preparation", "selected")
+        preparation_root = self.root.joinpath(*tail)
+        original = pathlib.Path(self.temp.name) / "main" / "Working"
+        relocation = {"originalRoot": str(original),
+                      "originalPreparationRoot": str(original.joinpath(*tail)),
+                      "originalMirror": str(original.joinpath(*tail[:5]))}
+        generation = {"preparationRoot": str(original.joinpath(*tail)), "manifestSHA256": "a" * 64,
+                      "profile": "lean", "producerUnchangedDuringGeneration": True}
+        plan = {
+            "preparationRoot": str(preparation_root), "preparationManifestSHA256": "a" * 64,
+            "preparationReuse": {"kind": "verified-existing-selected-preparation", "path": str(preparation_root),
+                                 "manifestSHA256": "a" * 64, "profile": "lean", "relocatedFrom": relocation},
+            "preparationGeneration": generation,
+        }
+        preview = {
+            "kind": "normal-rebase-preview", "schemaVersion": 1, "status": "preview",
+            "root": str(self.root), "runId": "new-run", "profile": "lean",
+            "implementationSHA256": metadata.content_sha256(pathlib.Path(normal_rebase.__file__)),
+            "bindings": {"policy": "current"}, "plan": plan,
+        }
+        receipt_path.write_text(json.dumps(preview), encoding="utf-8")
+        self.assertEqual(normal_rebase._preview_for_apply(
+            self.root, receipt_path, "new-run", "lean", {"policy": "current"}), plan)
+        del plan["preparationReuse"]["relocatedFrom"]
+        receipt_path.write_text(json.dumps(preview), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "generation seal is incomplete"):
+            normal_rebase._preview_for_apply(self.root, receipt_path, "new-run", "lean", {"policy": "current"})
+
     def test_apply_preparation_reuse_verifies_exact_source_set_and_profile(self):
         source = self.photo("Prospects/Owner/gallery/owner_image_130.jpg", b"raw source")
         output = (
@@ -3622,6 +3653,131 @@ class SettlePassTests(unittest.TestCase):
         reduction = result["passes"][0]["singlePhotoReductions"][0]
         self.assertEqual(reduction["outcome"], "Models/Rival/review")
         self.assertGreaterEqual(reduction["singlePhotoGate"]["bestRivalScore"], .30)
+
+
+class RelocatedPreparationTests(unittest.TestCase):
+    """A sealed preparation copied byte-for-byte into another Sandbox Working."""
+
+    RUN = ("_reports", "runs", "normal-rebase-sealed-preview")
+
+    def setUp(self):
+        scratch = ROOT / "tmp" / "normal-flow-restoration"
+        scratch.mkdir(parents=True, exist_ok=True)
+        temp = tempfile.TemporaryDirectory(dir=scratch)
+        self.addCleanup(temp.cleanup)
+        base = pathlib.Path(temp.name).resolve()
+        self.original = base / "main" / "Sovereign Territories Sandbox" / "Working"
+        self.copy = base / "universe" / "Sovereign Territories Sandbox" / "Working"
+        self.original.mkdir(parents=True)
+        self.copy.mkdir(parents=True)
+
+    @staticmethod
+    def output_for(root):
+        return root.joinpath(*RelocatedPreparationTests.RUN, "preparation", "inputs",
+                             "_reports", "preparation", "selected")
+
+    def seal(self):
+        """Seal a fixture preparation in the original Working and copy it unchanged."""
+        import shutil
+
+        from tools.art import image_preparation
+        from tools.workflows import comfy_workflows as cw
+
+        cfg = cw.load_cfg()
+        source = self.original / "Angels" / "Owner" / "gallery" / "owner_image_907.jpg"
+        source.parent.mkdir(parents=True)
+        source.write_bytes(b"sealed original bytes")
+        run = self.original.joinpath(*self.RUN)
+        start, _start_path, start_hash = normal_rebase._write_preparation_origin_start(
+            self.original, cfg, run, "lean", [source],
+        )
+        output = self.output_for(self.original)
+        output.mkdir(parents=True)
+        (output / "manifest.json").write_text("sealed relocation manifest", encoding="utf-8")
+        mirror = output.parents[2]
+        relative = source.relative_to(self.original).as_posix()
+        mirrored = mirror / pathlib.PurePosixPath(relative)
+        mirrored.parent.mkdir(parents=True)
+        mirrored.write_bytes(source.read_bytes())
+        data = {
+            "recipe": image_preparation.RECIPE, "storageMode": "lean",
+            "configurationReceipt": cw.storage_configuration_receipt(cfg, mirror, {
+                "runOutput": output, "temporaryRoot": cw.storage_root(cfg, "temporary", root=mirror),
+            }),
+            "photos": [{"source": relative, "sourceSha256": metadata.content_sha256(source)}],
+        }
+        normal_rebase._write_preparation_origin_complete(
+            self.original, cfg, "lean", [source], (output, data, {}), start, start_hash,
+        )
+        shutil.copytree(run, self.copy.joinpath(*self.RUN))
+        arrival = self.copy / "Various" / "gallery" / "owner_image_907.jpg"
+        arrival.parent.mkdir(parents=True)
+        arrival.write_bytes(source.read_bytes())
+        return cfg, data, relative, arrival
+
+    def test_relocated_origin_binds_only_the_exact_sealed_relative_path(self):
+        _cfg, _data, _relative, _arrival = self.seal()
+        manifest_hash = metadata.content_sha256(self.output_for(self.copy) / "manifest.json")
+        self.assertIsNone(normal_products.relocated_origin(
+            self.original, self.output_for(self.original), manifest_hash))
+        relocation = normal_products.relocated_origin(self.copy, self.output_for(self.copy), manifest_hash)
+        self.assertEqual(relocation, {
+            "originalRoot": str(self.original),
+            "originalPreparationRoot": str(self.output_for(self.original)),
+            "originalMirror": str(self.output_for(self.original).parents[2]),
+        })
+        with self.assertRaisesRegex(ValueError, "does not bind this manifest"):
+            normal_products.relocated_origin(self.copy, self.output_for(self.copy), "0" * 64)
+        moved = self.copy / "_reports" / "runs" / "elsewhere"
+        moved.mkdir(parents=True)
+        nested = moved / "normal-rebase-sealed-preview"
+        import shutil
+        shutil.copytree(self.copy.joinpath(*self.RUN), nested)
+        nested_output = nested.joinpath("preparation", "inputs", "_reports", "preparation", "selected")
+        with self.assertRaisesRegex(ValueError, "keep its sealed path"):
+            normal_products.relocated_origin(self.copy, nested_output, manifest_hash)
+        outside = self.copy.parents[1] / "Not A Sandbox" / "Working"
+        shutil.copytree(self.copy.joinpath(*self.RUN), outside.joinpath(*self.RUN))
+        with self.assertRaisesRegex(ValueError, "restricted to Sandbox Working"):
+            normal_products.relocated_origin(outside, self.output_for(outside), manifest_hash)
+
+    def test_relocated_reuse_verifies_with_recorded_mirror_and_binds_by_content(self):
+        cfg, data, relative, arrival = self.seal()
+        output = self.output_for(self.copy)
+        manifest_hash = metadata.content_sha256(output / "manifest.json")
+        native = output / "native.jpg"
+        native.write_bytes(b"prepared native")
+        fake_module = SimpleNamespace(verify=mock.Mock(return_value=data))
+        with mock.patch.dict("sys.modules", {"image_preparation": fake_module}), \
+                mock.patch("tools.art.likeness_library.clean_preparation.selected_path", return_value=native):
+            with self.assertRaisesRegex(ValueError, "exact current selected source set"):
+                normal_products.reuse_prepared(self.copy, output, [arrival], "lean", manifest_hash)
+            prepared = normal_products.reuse_prepared(
+                self.copy, output, [arrival], "lean", manifest_hash, allow_subset=True,
+            )
+        fake_module.verify.assert_called_with(
+            output.parents[2], output, recorded_root=str(self.output_for(self.original).parents[2]),
+        )
+        self.assertEqual(fake_module.verify.call_args_list[0], mock.call(output.parents[2], output))
+        arrival_relative = arrival.relative_to(self.copy).as_posix()
+        self.assertEqual(prepared[2], {arrival_relative: native})
+        self.assertEqual(prepared[1]["reuseSourceAliases"], {
+            arrival_relative: {"preparedSource": relative, "sourceSha256": metadata.content_sha256(arrival)},
+        })
+        binding = normal_rebase._validate_preparation_reuse(self.copy, cfg, "lean", prepared, [arrival])
+        self.assertEqual(binding["generationProvenance"], "origin-sealed")
+        self.assertEqual(binding["relocatedFrom"], prepared[1]["reuseRelocation"])
+        self.assertEqual(binding["path"], str(output))
+
+        forged = {**prepared[1], "reuseRelocation": {**prepared[1]["reuseRelocation"], "originalRoot": "C:\\Other"}}
+        with self.assertRaisesRegex(ValueError, "relocation differs from its origin seal"):
+            normal_rebase._validate_preparation_reuse(self.copy, cfg, "lean", (output, forged, prepared[2]), [arrival])
+        unrelated = self.copy / "Various" / "gallery" / "other_image_1.jpg"
+        unrelated.write_bytes(b"not sealed")
+        with mock.patch.dict("sys.modules", {"image_preparation": fake_module}), \
+                mock.patch("tools.art.likeness_library.clean_preparation.selected_path", return_value=native), \
+                self.assertRaisesRegex(ValueError, "does not cover"):
+            normal_products.reuse_prepared(self.copy, output, [unrelated], "lean", manifest_hash, allow_subset=True)
 
 
 if __name__ == "__main__":

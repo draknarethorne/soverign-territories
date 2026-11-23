@@ -63,6 +63,54 @@ def prepare(root, run, paths, profile, *, workers=1):
     return output, data, native
 
 
+def relocated_origin(root, output, expected_manifest_sha256):
+    """Original seal paths of a byte-identical sealed preparation copied to another Sandbox Working.
+
+    Returns None unless the run's complete origin seal records a different
+    preparation path. A relocation is accepted only in Sandbox Working, for the
+    exact sealed manifest, and only at the same path relative to its Working.
+    """
+    from .sandbox import is_sandbox_working_path
+
+    root = pathlib.Path(root).resolve()
+    output = pathlib.Path(output).resolve()
+    if len(output.parents) < 5 or root not in output.parents[4].parents:
+        return None
+    complete_path = output.parents[4] / "preparation-origin.complete.json"
+    if not complete_path.is_file():
+        return None
+    try:
+        complete = json.loads(complete_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        raise ValueError(f"cannot read preparation origin seal: {exc}") from exc
+    recorded_output = complete.get("preparationRoot")
+    if recorded_output == str(output):
+        return None
+    if not is_sandbox_working_path(root):
+        raise ValueError("relocated sealed preparation is restricted to Sandbox Working")
+    if not isinstance(recorded_output, str) or not isinstance(complete.get("root"), str):
+        raise ValueError("relocated preparation origin seal is incomplete")
+    original_root = pathlib.PureWindowsPath(complete["root"])
+    original_output = pathlib.PureWindowsPath(recorded_output)
+    if (
+        complete.get("manifestSHA256") != expected_manifest_sha256
+        or not original_root.is_absolute() or ".." in original_root.parts
+        or ".." in original_output.parts
+    ):
+        raise ValueError("relocated preparation origin seal does not bind this manifest")
+    try:
+        original_relative = original_output.relative_to(original_root)
+    except ValueError as exc:
+        raise ValueError("relocated preparation origin seal escapes its recorded Working") from exc
+    if original_relative.as_posix() != output.relative_to(root).as_posix():
+        raise ValueError("relocated preparation must keep its sealed path relative to Working")
+    return {
+        "originalRoot": str(original_root),
+        "originalPreparationRoot": str(original_output),
+        "originalMirror": str(original_output.parents[2]),
+    }
+
+
 def reuse_prepared(root, output, paths, profile, expected_manifest_sha256, *, allow_subset=False):
     import image_preparation
 
@@ -77,7 +125,13 @@ def reuse_prepared(root, output, paths, profile, expected_manifest_sha256, *, al
     if len(output.parents) < 3:
         raise ValueError("preview preparation path is incomplete")
     mirror = output.parents[2]
-    data = image_preparation.verify(mirror, output)
+    relocation = relocated_origin(root, output, expected_manifest_sha256) if allow_subset else None
+    if relocation is None:
+        data = image_preparation.verify(mirror, output)
+    else:
+        # Every artifact and frozen mirror input is still rehashed; only the
+        # recorded mirror path differs because the sealed tree was copied.
+        data = image_preparation.verify(mirror, output, recorded_root=relocation["originalMirror"])
     expected_mode = "full" if profile == "full" else "lean"
     if data.get("storageMode", "full") != expected_mode:
         raise ValueError("preview preparation profile differs from the requested apply")
@@ -92,7 +146,9 @@ def reuse_prepared(root, output, paths, profile, expected_manifest_sha256, *, al
     selected_sources = {source: source for source in expected}
     aliases = {}
     if allow_subset:
-        for source, checksum in actual.items():
+        # A relocated copy's sources are its verified frozen mirror inputs; the
+        # selected library binds to them only by identical content below.
+        for source, checksum in (() if relocation is not None else actual.items()):
             path = root / pathlib.PurePosixPath(source)
             if (
                 path.resolve() != path or root not in path.parents
@@ -125,6 +181,8 @@ def reuse_prepared(root, output, paths, profile, expected_manifest_sha256, *, al
     }
     if allow_subset:
         data = {**data, "reuseSourceAliases": aliases}
+    if relocation is not None:
+        data = {**data, "reuseRelocation": relocation}
     return output, data, native
 
 

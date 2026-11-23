@@ -579,7 +579,7 @@ def _write_preparation_origin_complete(root, cfg, profile, source_paths, prepare
     return record
 
 
-def _read_preparation_origin(output, data, root, profile, input_rows, manifest_hash):
+def _read_preparation_origin(output, data, root, profile, input_rows, manifest_hash, *, recorded_output=None):
     from tools.art import image_preparation
 
     start_path, complete_path = _preparation_origin_paths(output)
@@ -595,7 +595,7 @@ def _read_preparation_origin(output, data, root, profile, input_rows, manifest_h
         raise ValueError(f"cannot read preparation origin seal: {exc}") from exc
     expected = {
         "root": str(pathlib.Path(root).resolve()),
-        "preparationRoot": str(pathlib.Path(output).resolve()),
+        "preparationRoot": str(pathlib.Path(output if recorded_output is None else recorded_output).resolve()),
         "profile": profile,
         "recipeSHA256": _preparation_fingerprint(data["recipe"]),
         "configurationReceiptSHA256": _preparation_fingerprint(data["configurationReceipt"]),
@@ -652,12 +652,20 @@ def _validate_preparation_reuse(root, cfg, profile, prepared, source_paths):
     expected_mode = "full" if profile == "full" else "lean"
     if data.get("storageMode", "full") != expected_mode:
         raise ValueError("reused preparation profile differs from the current rebase")
-    mirror = output.parents[2]
+    relocation = data.get("reuseRelocation")
+    if relocation is not None:
+        if relocation != normal_products.relocated_origin(
+            root, output, metadata.content_sha256(output / "manifest.json"),
+        ):
+            raise ValueError("reused preparation relocation differs from its origin seal")
+    recorded_output = pathlib.Path(relocation["originalPreparationRoot"]) if relocation else output
+    recorded_root = pathlib.Path(relocation["originalRoot"]) if relocation else root
+    mirror = recorded_output.parents[2]
     expected_configuration = cw.storage_configuration_receipt(
         cfg,
         mirror,
         {
-            "runOutput": output,
+            "runOutput": recorded_output,
             "temporaryRoot": cw.storage_root(cfg, "temporary", root=mirror),
         },
     )
@@ -686,7 +694,8 @@ def _validate_preparation_reuse(root, cfg, profile, prepared, source_paths):
         raise ValueError("reused preparation source bindings differ from the selected inputs")
     manifest_hash = metadata.content_sha256(output / "manifest.json")
     generation_seal = _read_preparation_origin(
-        output, data, root, profile, input_rows, manifest_hash,
+        output, data, recorded_root, profile, input_rows, manifest_hash,
+        recorded_output=recorded_output,
     )
     validation_producer = metadata.content_sha256(pathlib.Path(image_preparation.__file__))
     return {
@@ -715,6 +724,7 @@ def _validate_preparation_reuse(root, cfg, profile, prepared, source_paths):
         "selectedInputSetSHA256": _preparation_fingerprint(expected_inputs),
         "unusedVerifiedInputCount": len(input_rows) - len(set(mapped_inputs)),
         "selectedSourceAliases": aliases,
+        **({"relocatedFrom": relocation} if relocation else {}),
     }
 
 
@@ -3356,8 +3366,11 @@ def _preview_for_apply(root, path, run_id, profile, bindings, cfg=None):
                 raise ValueError("preview's reused preparation binding is incomplete")
         if plan.get("preparationGeneration"):
             generation = plan["preparationGeneration"]
+            # A relocated sealed copy keeps its origin seal, which names the original path.
+            relocated = (plan.get("preparationReuse") or {}).get("relocatedFrom")
+            sealed_root = relocated["originalPreparationRoot"] if relocated else plan["preparationRoot"]
             if (
-                pathlib.Path(plan["preparationRoot"]).resolve()
+                pathlib.Path(sealed_root).resolve()
                 != pathlib.Path(generation.get("preparationRoot", "")).resolve()
                 or plan.get("preparationManifestSHA256") != generation.get("manifestSHA256")
                 or generation.get("profile") != profile
