@@ -6,6 +6,16 @@ been decided, what is open, and what is next. Rules live in the canonical docs l
 
 ## Current checkpoint
 
+**Nov23 machine split:** Harbor leads likeness, Gallery, studio, named-intake
+and image processing on the new machine; Beacon provides old-machine help
+only on Harbor's direct request. The
+[library planning handoff](handoffs/2026-11-23-library-studio-planning/README.md)
+preserves open decisions and existing owners. Beacon's separate, read-only
+WF1 companion plans static and dynamic ComfyUI workflows; refined edit
+sources and later template/deployment gates remain open. See the
+[workflow plan](plans/2026-10-22-manual-prompts-to-art-library.md#nov-23-beacon-workflow-planning-companion)
+and [execution spine](plans/2026-11-05-priority-reset.md#execution-spine).
+
 **Nov22–23 new-PC Sandbox work:** the other-machine plan and recap report
 that `feedback-rebase-20261122-02` applied the a-i feedback and passed its
 check; human review remains open. After review, the user disabled cast

@@ -27,11 +27,15 @@ reply files.
 - [Independent old-PC tuning](messages/20261122T035004Z-agent-d01e8fdb3329-08.md)
 - [New-PC Sandbox release result](messages/20261122T053248Z-agent-d01e8fdb3329-09.md)
 - [Old-machine Production backup comparison](messages/20261123T183500Z-agent-69b7d56fd547-01.md)
+- [Library and workflow ownership handoff](messages/20261123T194548Z-agent-69b7d56fd547-02.md)
 
 ## Current state
 
-Reviewed through shared revision `68c704f5e` at 2026-11-23 18:35 UTC.
+Reviewed through shared revision `e89985762` at 2026-11-23 19:45 UTC.
 
+- Q-69b7d56fd547-02 in the ownership discussion requests Harbor's
+  acknowledgment of the library/studio/Gallery handoff and coordination of
+  shared workflow interfaces. Publication does not prove receipt.
 - Q-69b7d56fd547-01 in the backup-comparison discussion is open to Harbor.
   The user reports a copy on the new machine; exact content and recovery
   have not been independently compared. No deletion is authorized by the

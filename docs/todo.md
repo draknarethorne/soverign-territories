@@ -15,7 +15,7 @@
 - [ ] IU4 Hand-picked Angelica core: tooling prepares `Various/Angelica/gallery` staging and candidates; the user selects; then run and compare per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md). ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] IU10 Reviewing grouping rules from universe evidence; the user decides per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-universe-testing-feedback). ([priority reset](plans/2026-11-05-priority-reset.md))
 
-### For the assistant, when you say go (9)
+### For the assistant, when you say go (10)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -27,6 +27,7 @@
 - [ ] RA2o Reconciling current plans after the focused SIMPLE review/tuning contract is formalized and the run evidence/handoff is stable. **Nov21:** reconcile the affected current and historical protection and release guidance with ... ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] T29 Freeze same-machine representative generation/no-op, warm/cache phase baselines before runtime/path changes, with input/config/ code/resource IDs, timings, read/byte counts and output contracts. **Nov21:** maintain ... ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] T30 Remove established repeated work across phase and standalone/continuous boundaries; publish per-hotspot ownership, cost, cache dependencies/invalidation, tests and fixed/deferred/no-gain status. Coordinator decisions, ... ([priority reset](plans/2026-11-05-priority-reset.md))
+- [ ] WF1 Prepare a read-only ComfyUI workflow integration plan for Beacon: map existing static stage templates and supported source-bound on-demand jobs, identify gaps and user decisions for custom prompts and eventual `zz_shots` ... ([priority reset](plans/2026-11-05-priority-reset.md))
 
 **P2 (normal)**
 
@@ -127,7 +128,7 @@ Use the [archive guide](guidelines/ARCHIVE-GUIDE.md) for topic navigation. `drop
 
 | Hero | Photo | Prime | Bare | Golden pose | Heels | Other finals | Candidates |
 | --- | --- | --- | --- | --- | --- | ---: | ---: |
-| Female | 75007327845399~ | Q c33 | - | - | - | - | 33 |
+| Female | 75007327845399~ | Q c33 | F c1 | - | - | - | 34 |
 | Male | alpha_male_pho~ | - | - | n/a | n/a | - | - |
 
 ### Drakn sisters (10)

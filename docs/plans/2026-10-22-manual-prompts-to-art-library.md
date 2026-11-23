@@ -12,6 +12,46 @@ source-faithful `0_Edit`/`1_Prime` work with rendering R44. P14-P17 fidelity,
 token reconciliation and set relocation remain prerequisites for that work,
 not the current sandbox publication. Manual source drafts stay untouched.
 
+## Nov 23 Beacon workflow planning companion
+
+The user assigns Harbor the likeness, Gallery, studio, intake and image
+processing continuation, including unresolved library-planning questions.
+Beacon focuses on ComfyUI workflow generation/integration and assists
+Harbor's library work only when he directly requests a bounded task. The
+[handoff](../handoffs/2026-11-23-library-studio-planning/README.md)
+retains the library owners and exceptions. This is a division of work,
+not acceptance of pending results or permission to change shared workspaces.
+
+The user wants to return to source-faithful `0_Edit`, `1_Prime` and
+`2_Bare` workflows, but is still sorting newer refined edit prompts.
+P14/P15/P16 continue to own fidelity, mapping and tested implementation;
+do not treat the older 31-file inventory as the finalized new source set.
+Wait for the user to identify the refined sources, then bind their actual
+bytes and review supported wording/order before changing templates.
+
+The requested direction includes static workflows for established card-art
+categories such as Angels, Sisters, Bound and Dragons, alongside dynamic
+on-demand generation for Models, Prospects and Potentials without a
+pre-generated workflow per person. Apex may use both static and dynamic
+workflows; Forge and Lab may retain some early-stage static workflows and
+also use dynamic jobs for selected images. Exact stage coverage, tier
+mapping, input and prompt selection, persistence and UI/CLI/API behavior
+remain decisions, not delivered capability. Custom prompts and an eventual
+replacement for manual `zz_shots` are in scope for planning; preserve all
+existing manual/curated shots until a separately reviewed migration.
+
+[WF1 in the spine](2026-11-05-priority-reset.md#execution-spine) selects
+only a source-grounded current-versus-target map and handoff interfaces.
+Reuse P17/P19/P20 for workspace mapping and P21 for section order;
+[rendering R16/R44](2026-10-25-reference-rendering.md#oct-27-category-aligned-workflows-and-source-faithful-recipes)
+owns source-bound job/route and stage lineage. The existing bounded
+reference-job transport is prior art, not proof of a general dynamic
+workflow system. Harbor owns the Gallery/library selection and generated-
+result side; agree the boundary, IDs, accepted inputs, receipt/lineage and
+failure behavior before either side implements shared integration.
+No generation, rendering, deployment, Gallery mutation or template rewrite
+is authorized by this planning lane.
+
 **Nov 5 sequencing clarification:** Production cutover is not an additional
 prerequisite. After trusted cast review/selections and explicit resumption,
 use verified sandbox inputs with recorded source bindings for supported
@@ -670,5 +710,20 @@ Also - to be clear, the bare examples are there to address the issues we did hav
 One lesson learned is that certain items need to be ordered in the manner that I have the manual prompts setup vs. our older templates in how things were working.  That might also apply to ALL our templates in terms of the priority of how the pose, background, camera and other details are provided.
 
 Hope this helps and please make sure to ask me questions where we have conflicts in older docs, existing generation flows, _sets or whatever questions you do have.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 23 machine split and workflow direction - verbatim chat
+
+Coverage: machine ownership and deferred library decisions -> the
+[Harbor handoff](../handoffs/2026-11-23-library-studio-planning/README.md);
+Beacon's bounded workflow-planning lane -> spine WF1 and the Nov 23
+companion section above. Implementation remains in its existing owners.
+
+<!-- markdownlint-disable MD013 -->
+````text
+In terms of Likeness work - a) that's all going to happen with Harbor now as we did the hand-off for that and we'll just run things on this machine if Harbor requests it directly and we'll address the grouping in the 275 photos on his machine and he may ask you to validate some things.    b) Harbor will also work on the named folders implementation and all the things related to the plans we drafted.  c) Plans - we should resolve any open issues or questions or document that Harbor will need to address them when he started up that work.  d) I am trying to reduce the dual-work between machines until Harbor requests something specific and spend our time here fleshing out plans and other work we need to do.  So given that - what do we need to do here.
+
+Let's try to close out the planning work and we can defer many questions to Harbor to clarify during the next phase of planning as long as we're giving him a direct and explicit hand-off on the planning, even for studio and gallery work.  Ideally - at this point we can transition anything related to likeness, gallery, studio, intake and processing the images to Harbor.  What I'd like to focus on here is the actual work for the generation of workflows and getting back to fixing the 1_Prime and 2_Bare existing templates based on my 0_Edit work I did start ... but I have even more refined edit prompts that I need to sort out first.  But the integration into ComfyUI and how that all works, my art templates and how we can generate images for the Models, Prospects and Potentials without having pre-generate workflows for each and every one is something I want to think about here.  Does that make sense in the split between the two machines and their purpose now.  So you - Beacon - are my beacon of hope in terms of the integration to ComfyUI workflows and assuming we get the likeness/gallery work all sorted out you can pickup on those aspects of generating workflows statically for high level card art categories (Angels/Sisters/Bound/Dragons, etc...) and dynamically for lower level card art (Models/Prospects/Potentials)  Basically the work might align to how we planned studios where the Apex is both static and dynamic workflows, Forge and Lab maybe have some static for 0_Edit, 1_Prime, 2_Bare but not higher level art defined as well as dynamic based on whatever image I want to fire.  I'll also want to support custom prompts and eventually eliminate the zz_shots and incorporate that into a better approach.  There's a lot of changes I think I'll need in terms of workflow generation both static and dynamic that we can focus on here.
 ````
 <!-- markdownlint-enable MD013 -->

@@ -16,6 +16,14 @@ N15 installed-family/history acceptance is merged into the spine's LY4;
 no extra reset/intake or snapshot retirement follows from that transfer.
 Earlier scheduling is dated context, overridden by the spine.
 
+**Nov 23 handoff:** Harbor leads the remaining likeness, named-intake,
+studio, Gallery and image-processing planning/implementation on the new
+machine. The [explicit continuation](../handoffs/2026-11-23-library-studio-planning/README.md)
+retains LY16-LY21 and the open questions below; neither a handoff nor
+deferring a question marks an answer or task complete. Beacon's separate
+workflow-planning lane coordinates the studio/Gallery interface with Harbor
+without implementing those library slices in parallel.
+
 ## Nov 21: multiple studios and transition proposal
 
 **Status: discussion proposal, not an approved architecture or active

@@ -91,6 +91,7 @@ read a pushed revision.
 
 | Handoff | State |
 | --- | --- |
+| [Library, studio and Gallery planning](2026-11-23-library-studio-planning/README.md) | Harbor continuation; acknowledgment and unresolved decisions remain open. |
 | [Cleaned SIMPLE rehearsal](2026-11-21-cleaned-simple-rehearsal/README.md) | Historical cleanup-plan evidence; both rehearsals completed, no new replay authorized. |
 
 Keep an active or transfer-pending handoff in place. Archiving or deletion

@@ -24,9 +24,9 @@ Where to look: **what needs you, by priority, is [../todo.md](../todo.md)** (gen
 
 | Window | Single authoritative execution home | Boundary |
 | --- | --- | --- |
-| Now | [M1 / current Queue focus](2026-11-05-priority-reset.md#execution-spine) | Complete the user's [scoped orange/red and unscored release](2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning), workflow and review gates under RA2d/RA2j; T29/T30 own [per-machine performance](2026-10-28-intake-performance.md#nov-21-per-machine-tuning). RA2o reconciles guidance; installed rehearsals await human review. Preserve run15, run13 and frozen Source. |
+| Now | [M1 / current Queue focus](2026-11-05-priority-reset.md#execution-spine) | Harbor leads likeness, Gallery, studio, intake and processing through existing owners; Beacon assists those only when directly requested. Human acceptance and recovery gates remain open. Preserve run15, run13 and frozen Source. |
 | Next | [M2-M6](2026-11-05-priority-reset.md#execution-spine) | Trusted cast -> selections -> source fidelity -> generic female pilot -> character art/video; advance only at entry gates |
-| Companion | Spelling/new-PC track selected in the spine | Settled processing/evidence and paired baseline before rename; no competing full milestone |
+| Companion | [WF1 workflow planning](2026-11-05-priority-reset.md#execution-spine); spelling/new-PC track | Beacon maps static/dynamic ComfyUI workflows without template or workspace writes; refined edit sources and implementation gates remain open. Spelling still waits for settled processing/evidence and paired baseline. |
 | Holding | Remaining open domain tasks in the [inventory](#plans) | Deferred, not completed; select/transfer only needed tasks at a milestone gate |
 
 The spine is the **only active plan** in the reset stream. Domain plans use

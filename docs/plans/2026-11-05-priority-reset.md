@@ -2,7 +2,7 @@
 
 **Status:** active (execution spine: FAST likeness, LEAN/FULL acceptance, then character art)
 
-**Queue focus:** RA2d, RA2j, IU3, IU4, IU5, IU7, IU10, IU12, IU11, RA2o, T29, T30
+**Queue focus:** RA2d, RA2j, IU3, IU4, IU5, IU7, IU10, IU12, IU11, RA2o, T29, T30, WF1
 
 **Feedback rebase applied (Sandbox):** `feedback-rebase-20261122-02`
 applied rules (a)–(i): duplicates archived, band-aligned formation,
@@ -294,6 +294,36 @@ deferred work; their old task entries are transfer records, not another
 checklist. This replaces the earlier navigation-only consolidation.
 Read this section and the current milestone before choosing work; dated
 Q&A and inventories below are context, not competing schedules.
+
+**Nov 23 machine split:** Harbor leads the likeness, Gallery, studio,
+named-intake and image-processing work on the new machine, including the
+open questions and existing spine/domain task IDs. Beacon does not run or
+implement those slices on this machine unless Harbor directly requests a
+specific validation or other bounded help. The
+[library planning handoff](../handoffs/2026-11-23-library-studio-planning/README.md)
+preserves its open decisions, dependencies and machine-specific evidence;
+it is not their completion or authorization to mutate Production. Harbor
+remains responsible for selecting holding tasks through this spine.
+
+Beacon's bounded companion is **workflow planning**, not a second library
+milestone: prepare the static/dynamic ComfyUI direction against existing
+workflow and rendering contracts while Harbor's library work continues.
+Stop before prompt migration, template edits, generation, deployment or
+rendering until the relevant sources, task transfer and separate gates are
+selected. Coordinate shared workflow selections, source identity and Gallery
+result/lineage interfaces with Harbor instead of building competing owners.
+
+- [ ] **P1 ai** WF1 Prepare a read-only ComfyUI workflow integration plan for
+  Beacon: map existing static stage templates and supported source-bound
+  on-demand jobs, identify gaps and user decisions for custom prompts and
+  eventual `zz_shots` replacement, and specify the interface with Harbor's
+  library/studio work. Reuse manual P14-P21 and rendering R16/R44; do not
+  duplicate or mark them delivered. The user's newer edit prompts are not
+  yet selected: preserve existing manual sources and wait for their reviewed
+  location/content before source-fidelity implementation. **Exit:** a
+  source-grounded current-versus-target map, ordered next slices, explicit
+  unresolved decisions and deployment/rendering gates in the existing
+  [manual workflow plan](2026-10-22-manual-prompts-to-art-library.md#nov-23-beacon-workflow-planning-companion).
 
 **Nov 16 focused continuation:** the
 [SIMPLE review, tuning and housekeeping contract](2026-11-16-simple-review-and-tuning.md)
@@ -1759,7 +1789,7 @@ Production/shared-workspace publication implied by restart permission.
 | M4 | Restore current manual-source fidelity using verified sandbox inputs | Manual P14-P16/P21 and PR4 reconciliation, supported clauses/exclusions and human approval; no assumption an earlier pilot was faithful |
 | M5 | Establish generic Sovereign Females after fidelity approval | Manual P17/P19/P20 scoped female pilot, routing R44, checked links/inputs and visual acceptance; preserve cast/manual/curated sets, Males/Deluxe deferred |
 | M6 | Deliver character art after pilot acceptance | Cast workflow/lower-stage outfit/weapon coverage, representative different approaches through animation/video; full-roster final videos are not the first exit gate |
-| M7 | Reassess retained backlog after useful art | Deliberately choose automation, named Various, FULL/new-PC, Artists, classification, tooling or game data; no automatic activation of every holding plan |
+| M7 | Reassess retained backlog after useful art | Deliberately choose automation, remaining named Various backlog beyond selected IU12, FULL/new-PC, Artists, classification, tooling or game data; no automatic activation of every holding plan |
 
 **Companion track: spelling and machine setup.** SP1 choices are recorded;
 SP2-SP6 start only after settled processing/evidence and the same-machine
