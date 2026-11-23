@@ -643,6 +643,49 @@ class ReviewGalleryTests(unittest.TestCase):
     def test_collection_labels_deferred_gallery_measurement(self):
         self._check_review_collection(new_arrival=False, deferred=True)
 
+    def test_single_photo_identity_is_labelled_not_yet_scoreable(self):
+        # Items (c, e): a one-photo Potential has no leave-one-out score yet.
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = pathlib.Path(tmp) / "Potentials" / "Solo"
+            gallery_dir = folder / "gallery"
+            gallery_dir.mkdir(parents=True)
+            path = gallery_dir / "solo_image_777777.jpg"
+            path.write_bytes(b"single photo")
+            photo = likeness.Photo(path, "Potentials", "Solo", path.name, {"faces": 1, "px": 100, "v": [1., 0.]})
+            photo.vec = likeness.nz(photo.raw)
+
+            class Cache:
+                emb = {}
+
+                def sha(self, _path):
+                    return "single-content"
+
+                def save(self):
+                    return None
+
+            space = SimpleNamespace(photos=[photo], mean=np.zeros(2), ranking=lambda *_a, **_k: [])
+            with mock.patch.object(likeness, "library_people", return_value=[("Potentials/Solo", folder)]), \
+                    mock.patch.object(likeness, "status_of", return_value="Potentials"), \
+                    mock.patch.object(likeness, "cleanup_hold", return_value=set()), \
+                    mock.patch.object(review_gallery, "closest_other", return_value=None), \
+                    mock.patch.object(review_gallery.originals, "images",
+                                      side_effect=lambda directory: [path] if directory == gallery_dir else []):
+                items, _warnings = review_gallery.collect_items(
+                    {}, {"minFace": 60, "odd": .15, "mixed": []}, pathlib.Path(tmp), Cache(), space,
+                    {"schemaVersion": 1, "people": {}, "photos": {}, "actions": []},
+                    embed=lambda _path: {"faces": 1, "px": 100, "v": [1., 0.]},
+                )
+            item = next(item for item in items if item["bucket"] == "Gallery")
+            self.assertIsNone(item["score"])
+            self.assertEqual(item["state"], "Single photo")
+            self.assertIn("single photo – not yet scoreable", item["reason"])
+            self.assertTrue(item["scoreContext"]["singlePhoto"])
+            self.assertIn("single photo – not yet scoreable", item["scoreDetails"][0])
+            page = review_gallery.render_html(
+                [{key: value for key, value in entry.items() if not key.startswith("_")} for entry in items], "now",
+            )
+            self.assertIn('r.scoreContext?.singlePhoto?"single photo – not yet scoreable":"not scored"', page)
+
     def _check_review_collection(self, *, new_arrival, deferred=False):
         with tempfile.TemporaryDirectory() as tmp:
             folder = pathlib.Path(tmp) / "Prospects" / "Sophie"

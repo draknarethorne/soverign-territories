@@ -14,7 +14,7 @@ from types import SimpleNamespace
 from unittest import mock
 
 from tools.art import originals
-from tools.art.likeness_library import metadata, normal_import, retained_preparation
+from tools.art.likeness_library import face_quality, metadata, normal_import, retained_preparation
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[4]
@@ -1655,6 +1655,46 @@ class NormalImportTests(unittest.TestCase):
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["photoId"], "photo:image_123456")
         self.assertEqual(rows[0]["vector"], [0.1, 0.9])
+
+    def test_candidate_rows_accept_dominant_face_for_matching_only(self):
+        # Item (f): intake matches a dominant main face but never grants it a reference vote.
+        settings = {"minFace": 60, "multiFace": .3, "dominantFaceSecondaryMaximum": .5}
+
+        class Metadata:
+            @staticmethod
+            def photo_id_from_name(name):
+                return "photo:" + pathlib.Path(name).stem.split("_", 1)[1]
+
+            @staticmethod
+            def content_sha256(source):
+                return hashlib.sha256(source.read_bytes()).hexdigest()
+
+        class Rejections:
+            @staticmethod
+            def photo_state(_catalog, _photo):
+                return {"rejectedPersonIds": []}
+
+        with tempfile.TemporaryDirectory() as temporary:
+            photos, paths = [], []
+            for number, faces, ratio in ((1, 1, 0), (2, 2, .4), (3, 2, .6)):
+                path = pathlib.Path(temporary) / f"various_image_{number}.jpg"
+                path.write_bytes(b"fixture %d" % number)
+                paths.append(path)
+                photos.append(SimpleNamespace(
+                    path=path, name=path.name, vec=[1., 0.], faces=faces, f2=ratio, px=200,
+                    box=[.3, .2, .2, .25], usable=lambda minimum: 200 >= minimum,
+                ))
+            rows = normal_import._candidate_rows(
+                paths, photos, {}, set(), set(), Metadata, Rejections, settings=settings,
+                quality=lambda photo, _path: face_quality.assess(photo, settings),
+            )
+        by_id = {row["photoId"]: row for row in rows}
+        self.assertEqual((by_id["photo:image_1"]["qualityEligible"], by_id["photo:image_1"]["referenceQualityEligible"]),
+                         (True, True))
+        self.assertEqual((by_id["photo:image_2"]["qualityEligible"], by_id["photo:image_2"]["referenceQualityEligible"]),
+                         (True, False))
+        self.assertEqual(by_id["photo:image_2"]["faceQuality"]["class"], "dominant-face")
+        self.assertFalse(by_id["photo:image_3"]["qualityEligible"])
 
     def test_batch_backup_is_scoped_to_arrivals_retained_prep_and_catalogue(self):
         root = pathlib.Path("C:/accepted-mini").resolve()

@@ -102,10 +102,11 @@ def validate_policy(policy):
                 raise ValueError("approved close pairs must be unique in both directions")
             seen_pairs.add(key)
     runtime = policy["runtimeSettings"]
-    if set(runtime) != {
+    required_runtime = {
         "mixed", "pool", "minCluster", "odd", "alike", "minFace", "multiFace",
         "singles", "rematch", "rematchCast", "different", "castMerge",
-    }:
+    }
+    if not required_runtime <= set(runtime) <= required_runtime | {"dominantFaceSecondaryMaximum"}:
         raise ValueError("runtimeSettings keys are incomplete or unsupported")
     for key in ("mixed", "pool"):
         if not isinstance(runtime[key], list) or not runtime[key] or any(
@@ -114,6 +115,11 @@ def validate_policy(policy):
             raise ValueError(f"runtimeSettings/{key} must be a non-empty path list")
     for key in ("odd", "alike", "multiFace", "singles", "rematch", "rematchCast", "castMerge"):
         _number(runtime[key], f"runtimeSettings/{key}")
+    if "dominantFaceSecondaryMaximum" in runtime:
+        # Matching-only dominant-face gate; multiFace keeps its reference meaning.
+        dominant = _number(runtime["dominantFaceSecondaryMaximum"], "runtimeSettings/dominantFaceSecondaryMaximum", 0., 1.)
+        if dominant <= 0 or dominant < runtime["multiFace"]:
+            raise ValueError("runtimeSettings/dominantFaceSecondaryMaximum must be positive and at least multiFace")
     if runtime["minCluster"] != 1 or isinstance(runtime["minCluster"], bool):
         raise ValueError("runtimeSettings/minCluster must be 1 to preserve small groups")
     if isinstance(runtime["minFace"], bool) or not isinstance(runtime["minFace"], int) or runtime["minFace"] < 1:
@@ -444,6 +450,20 @@ def effective_settings(cfg, policy=None):
             )
     settings.update(overrides)
     return settings
+
+
+def formation_minimums(policy=None):
+    """Return the score-band minimums that gate new identity formation.
+
+    New identities use the display bands so formation and scoring cannot
+    disagree: every member of a new Potential must reach the yellow minimum
+    against the rest of its group; a new five-plus-photo identity (Prospect or
+    Model) requires green for every member, otherwise it forms as a Potential.
+    ``identityActions.identityClusterMinimumSimilarity`` is retained only for
+    legacy and experimental callers and does not gate SIMPLE formation.
+    """
+    bands = (policy or default_policy())["scoreBands"]
+    return {"potential": bands["yellow"]["minimum"], "established": bands["green"]["minimum"]}
 
 
 def score_band(score, policy=None):

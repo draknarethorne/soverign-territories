@@ -31,6 +31,7 @@ from likeness_library import verification_reads  # noqa: E402
 from likeness_library.engine import alignment_evidence_path  # noqa: E402
 
 PAGE_SIZE = 100
+SINGLE_PHOTO_LABEL = "single photo – not yet scoreable"
 SECTIONS = CATEGORY_ORDER
 GROUP_ORDER = CATEGORY_ORDER
 ACTION_ROOTS = {"Angels", "Sisters", "Models", "Prospects", "Potentials"}
@@ -422,7 +423,8 @@ function card(r, readOnly=false) {
   const score=document.createElement("div"); score.className="detail";
   score.append(document.createTextNode("Core similarity: "));
   const scoreMark=scoreBadge(r.score,"Similarity to this person's core");
-  if(scoreMark)score.append(scoreMark); else score.append(document.createTextNode("not scored"));
+  if(scoreMark)score.append(scoreMark); else score.append(document.createTextNode(
+    r.scoreContext?.singlePhoto?"single photo – not yet scoreable":"not scored"));
   article.append(score);
   if(r.scoreContext) {
     const context=document.createElement("div"); context.className="detail score-context";
@@ -1320,6 +1322,8 @@ def collect_items(
                 state, reason = "Unscored", "Face measurement deferred; no inference was run"
             elif not photo.usable(st["minFace"]):
                 state, reason = "Unscored", "No usable face vector"
+            elif len(usable) == 1 and score is None:
+                state, reason = "Single photo", SINGLE_PHOTO_LABEL + "; it can gain photos or merge later"
             elif consistency["decision"] == "split-review":
                 state, reason = "Split candidate", consistency["reason"]
             elif consistency["decision"] == "review":
@@ -1357,6 +1361,11 @@ def collect_items(
                 odd=st["odd"],
                 category_policy=category_policy,
             )
+            if len(usable) == 1 and score is None and photo.usable(st["minFace"]):
+                context["singlePhoto"] = True
+                context["details"].insert(
+                    0, f"{SINGLE_PHOTO_LABEL}: no other usable photo exists to compute a leave-one-out score.",
+                )
             items.append({
                 "folder": key,
                 "group": likeness.status_of(key),

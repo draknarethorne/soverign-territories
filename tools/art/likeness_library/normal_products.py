@@ -338,6 +338,24 @@ def stage(root, stage_root, moves, prepared, *, profile, photos, cfg, catalog, p
             "framing": framing,
         })
     updated = red_catalog["catalog"] if red_catalog is not None else maintenance._updated_catalog(catalog, updated_moves, policy)
+    archived_retirement = False
+    for row in archived:
+        photo_id = row["photoId"]
+        if row.get("selectedPhotoId") in (None, photo_id):
+            continue
+        # A cross-ID identical copy leaves its owner; only its keeper keeps membership.
+        if any(photo_id in person["identityAnchors"] for person in updated["people"].values()):
+            raise ValueError(f"{photo_id}: anchored identical copy cannot be archived")
+        record = updated["photos"].get(photo_id)
+        if record is not None and record.pop("membership", None) is not None:
+            archived_retirement = True
+        for group in updated.get("photoGroups", {}).values():
+            if photo_id in group["memberPhotoIds"] or photo_id in group["referencePhotoIds"]:
+                group["memberPhotoIds"] = [pid for pid in group["memberPhotoIds"] if pid != photo_id]
+                group["referencePhotoIds"] = [pid for pid in group["referencePhotoIds"] if pid != photo_id]
+                archived_retirement = True
+    if archived_retirement:
+        metadata.validate_catalog(updated)
     if released_lineage is not None:
         for photo_id, previous in released_lineage.items():
             membership = updated["photos"].get(photo_id, {}).get("membership")

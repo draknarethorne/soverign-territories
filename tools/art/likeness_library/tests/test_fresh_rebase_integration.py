@@ -125,10 +125,16 @@ class FreshRebaseIntegrationTests(unittest.TestCase):
             fresh_source_release=True, **kwargs,
         )[0]
 
-    def test_pre_retirement_selection_nonvoters_and_bound_apply(self):
+    def test_pre_retirement_selection_archives_identical_copies_and_bound_apply(self):
         report = self.plan()
         assessment = report["freshSourceAssessment"]["assessment"]
-        self.assertEqual(len(assessment), 7)
+        # Item (a): owner_image_101/104 are byte-identical; one is archived before selection.
+        self.assertEqual(len(assessment), 6)
+        archived = set(report["duplicateArchives"])
+        self.assertEqual(len(archived), 1)
+        self.assertTrue(archived <= {path.relative_to(self.fixture.root).as_posix() for path in (self.paths[0], self.paths[3])})
+        archived_id = next(iter(report["duplicateArchives"].values()))["photoId"]
+        self.assertNotIn(archived_id, {row["photoId"] for row in assessment})
         outlier = metadata.photo_id_from_name(self.paths[2].name)
         self.assertIn(outlier, {row["photoId"] for row in report["releasedPhotoBindings"]})
         selected = next(row for row in assessment if row["photoId"] == outlier)
@@ -136,17 +142,13 @@ class FreshRebaseIntegrationTests(unittest.TestCase):
         self.assertNotIn(outlier, {
             pid for ids in report["referenceSnapshots"]["1"]["photoIds"].values() for pid in ids
         })
-        nonvoters = [row for row in assessment if row["sourceStatus"] == "same-content-nonvoting"]
-        self.assertEqual(len(nonvoters), 1)
-        self.assertIsNotNone(nonvoters[0]["score"])
-        later = report["reconsideredNonVotingEvidence"]["results"][0]
-        self.assertEqual(later["photoId"], nonvoters[0]["photoId"])
-        self.assertFalse(later["decision"]["referenceEligible"])
-        self.assertTrue(later["decision"]["preserveStaged"])
+        self.assertFalse([row for row in assessment if row["sourceStatus"] == "same-content-nonvoting"])
+        self.assertNotIn("reconsideredNonVotingEvidence", report)
+        self.assertNotIn(archived_id, {row["photoId"] for row in report["moves"]})
         self.assertEqual(self.permissions.call_args.kwargs["released_bindings"], report["releasedPhotoBindings"])
         phase = next(row for row in report["phaseLog"] if row["phase"] == "fresh-source-release-selection")
         self.assertGreaterEqual(phase["durationSeconds"], 0)
-        self.assertEqual((report["freshGalleryCount"], report["freshNonVotingCount"]), (7, 1))
+        self.assertEqual((report["freshGalleryCount"], report["freshNonVotingCount"]), (6, 0))
         phases = [item["phase"] for item in report["phaseLog"]]
         self.assertLess(phases.index("fresh-source-measurement"), phases.index("fresh-source-release-selection"))
         self.assertLess(phases.index("fresh-source-release-selection"), phases.index("fresh-post-release-frozen-cores"))
@@ -192,23 +194,22 @@ class FreshRebaseIntegrationTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "requires Sandbox"):
                 self.plan()
 
-    def test_selected_nonvoter_never_votes_and_uses_released_provenance(self):
+    def test_identical_copy_is_archived_before_selection_and_never_votes(self):
         self.paths[6].unlink()
         report = self.plan()
-        selected = next(row for row in report["freshSourceAssessment"]["assessment"]
-                        if row["sourceStatus"] == "same-content-nonvoting")
-        self.assertTrue(selected["selected"])
-        self.assertFalse(selected["referenceEligible"])
-        evidence = report["releasedNonVotingEvidence"][0]
-        self.assertEqual(evidence["photoId"], selected["photoId"])
-        self.assertFalse(evidence["decision"]["referenceEligible"])
-        self.assertNotIn(evidence["photoId"], {
+        self.assertFalse([row for row in report["freshSourceAssessment"]["assessment"]
+                          if row["sourceStatus"] == "same-content-nonvoting"])
+        archive = next(iter(report["duplicateArchives"].values()))
+        self.assertEqual(len(report["duplicateArchives"]), 1)
+        self.assertNotIn("releasedNonVotingEvidence", report)
+        self.assertNotIn(archive["photoId"], {row["photoId"] for row in report["releasedPhotoBindings"]})
+        self.assertNotIn(archive["photoId"], {
             pid for snapshot in report["referenceSnapshots"].values()
             for ids in snapshot["photoIds"].values() for pid in ids
         })
-        self.assertIn(evidence["photoId"], {
-            row["photoId"] for row in report["releasedDecisionEvidence"]
-        })
+        self.assertEqual(archive["selectedPhotoId"], next(
+            row["photoId"] for row in report["sourceRows"] if row["source"] == archive["selectedSource"]
+        ))
 
     def test_stale_catalogue_and_model_provenance_refuse(self):
         catalog = self.fixture.empty_catalog()
@@ -239,6 +240,7 @@ class FreshRebaseIntegrationTests(unittest.TestCase):
                     normal_rebase.main(["--root", str(self.fixture.root), "--fresh-source-release"])
 
     def test_preparation_reuse_requests_nonvoting_gallery_before_selection(self):
+        archived = set(self.plan()["duplicateArchives"])
         with mock.patch.object(
             normal_rebase.normal_products, "reuse_prepared", side_effect=ValueError("captured reuse"),
         ) as reuse:
@@ -248,7 +250,12 @@ class FreshRebaseIntegrationTests(unittest.TestCase):
                     fresh_source_release=True, reuse_preparation="sealed-output",
                     reuse_preparation_sha256="a" * 64,
                 )
-        self.assertEqual(set(reuse.call_args.args[2]), set(self.paths))
+        # Archived identical copies are not prepared; every other Gallery source is.
+        self.assertEqual(
+            set(reuse.call_args.args[2]),
+            {path for path in self.paths if path.relative_to(self.fixture.root).as_posix() not in archived},
+        )
+        self.assertTrue(reuse.call_args.kwargs["allow_subset"])
         self.assertTrue(reuse.call_args.kwargs["allow_subset"])
 
     def test_selected_anchor_retires_before_post_selection_core_freeze(self):

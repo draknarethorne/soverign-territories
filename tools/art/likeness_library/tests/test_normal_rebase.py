@@ -202,6 +202,7 @@ class NormalRebaseTests(unittest.TestCase):
                 self.sha = digest
                 self.name = self.path.name
                 self.faces = (data or {}).get("faces", -1)
+                self.f2 = (data or {}).get("f2", 0)
                 self.px = (data or {}).get("px", 0)
                 self.raw = np.asarray((data or {}).get("v"), dtype=float) if (data or {}).get("v") else None
                 self.vec = None
@@ -677,7 +678,7 @@ class NormalRebaseTests(unittest.TestCase):
                     normal_rebase._plan(
                         self.root, "lean", "release-fixture", api=api, released_bindings=bindings,
                     )
-                self.assertEqual(set(prepare.call_args.args[4]), set(paths))
+                self.assertEqual(set(prepare.call_args.args[4]), set(paths[:4]))
             with mock.patch.object(normal_rebase, "_decision_ids", return_value={bindings[0]["photoId"]}):
                 overridden, *_ = normal_rebase._plan(
                     self.root, "fast", "release-fixture", api=api, released_bindings=bindings,
@@ -701,82 +702,19 @@ class NormalRebaseTests(unittest.TestCase):
                 )
                 self.assertEqual(len(unrelated["clusters"]), 1)
 
-            def with_changed_snapshot(*args, **kwargs):
-                result = real_two_round(*args, **kwargs)
-                result["referenceSnapshots"]["2"]["referenceVersion"] = "0" * 64
-                return result
-
-            with mock.patch.object(normal_rebase.normal_admission, "two_round_plan", side_effect=with_changed_snapshot):
-                with self.assertRaisesRegex(ValueError, "references differ"):
-                    normal_rebase._plan(
-                        self.root, "fast", "release-fixture", api=api, released_bindings=bindings,
-                    )
-            def with_duplicate_reference(*args, **kwargs):
-                result = real_two_round(*args, **kwargs)
-                result["referenceSnapshots"]["2"]["photoIds"]["Prospects/Owner"].append(
-                    metadata.photo_id_from_name(paths[3].name)
-                )
-                return result
-
-            with mock.patch.object(normal_rebase.normal_admission, "two_round_plan", side_effect=with_duplicate_reference):
-                keeper_report = normal_rebase._plan(
+            reconsidered, *_ = normal_rebase._plan(
+                self.root, "fast", "release-fixture", api=api,
+                released_bindings=bindings, reconsider_holds=True,
+            )
+            # The released identical copy is archived before scoring, so it never
+            # becomes a prior explicit Review placement or a non-voting candidate.
+            self.assertEqual(reconsidered["priorExplicitReviewPlacements"], [])
+            self.assertNotIn("reconsideredNonVotingEvidence", reconsidered)
+            with self.assertRaisesRegex(ValueError, "hold reassessment differs"):
+                normal_rebase._plan(
                     self.root, "fast", "release-fixture", api=api, released_bindings=bindings,
-                )[0]
-                self.assertEqual(
-                    keeper_report["releasedNonVotingKeeperReferences"],
-                    [metadata.photo_id_from_name(paths[3].name)],
+                    for_apply=True, reuse_plan=reconsidered,
                 )
-
-            real_nonvoting = normal_rebase.normal_admission.score_nonvoting_duplicates
-
-            def unresolved_nonvoter(*args, **kwargs):
-                result = real_nonvoting(*args, **kwargs)
-                decision = result["results"][0]["decision"]
-                result["results"][0]["decision"] = {
-                    **decision, "destination": None, "reviewDestination": None, "preserveStaged": True,
-                }
-                return result
-
-            with mock.patch.object(normal_rebase.normal_admission, "score_nonvoting_duplicates", side_effect=unresolved_nonvoter):
-                fallback = normal_rebase._plan(
-                    self.root, "fast", "release-fixture", api=api, released_bindings=bindings,
-                )[0]
-            evidence = fallback["releasedNonVotingEvidence"][0]
-            top = evidence["comparisons"][0]["folder"]
-            self.assertEqual(evidence["decision"]["reviewDestination"], f"{top}/review")
-            self.assertFalse(evidence["decision"]["preserveStaged"])
-            self.assertFalse(evidence["decision"]["referenceEligible"])
-            self.assertEqual(evidence["decision"]["unresolvedReleaseReview"]["basis"], "highest-scoring rival")
-            review_path = paths[4].relative_to(self.root).as_posix()
-            with mock.patch.object(
-                normal_rebase, "_explicit_review_placements",
-                side_effect=lambda _catalog, **kwargs: (
-                    set() if kwargs.get("action_types") else {(duplicate_id, review_path)}
-                ),
-            ):
-                with self.assertRaisesRegex(ValueError, "no safe independent placement"):
-                    normal_rebase._plan(
-                        self.root, "fast", "release-fixture", api=api, released_bindings=bindings,
-                    )
-                reconsidered, *_ = normal_rebase._plan(
-                    self.root, "fast", "release-fixture", api=api,
-                    released_bindings=bindings, reconsider_holds=True,
-                )
-                self.assertEqual(
-                    reconsidered["priorExplicitReviewPlacements"],
-                    [{"photoId": duplicate_id, "source": review_path}],
-                )
-                evidence = next(
-                    row for row in reconsidered["releasedDecisionEvidence"] if row["photoId"] == duplicate_id
-                )
-                self.assertTrue(evidence["priorExplicitReviewPlacement"])
-                self.assertFalse(evidence["explicitReviewPlacement"])
-                self.assertFalse(evidence["decision"]["referenceEligible"])
-                with self.assertRaisesRegex(ValueError, "hold reassessment differs"):
-                    normal_rebase._plan(
-                        self.root, "fast", "release-fixture", api=api, released_bindings=bindings,
-                        for_apply=True, reuse_plan=reconsidered,
-                    )
             ordinary_review = self.photo("Various/review/various_image_106.jpg", b"ordinary review")
             ordinary_id = metadata.photo_id_from_name(ordinary_review.name)
             ordinary_path = ordinary_review.relative_to(self.root).as_posix()
@@ -829,11 +767,12 @@ class NormalRebaseTests(unittest.TestCase):
                 self.root, "fast", "release-fixture", api=api,
                 released_bindings=bindings, reconsider_holds=True,
             )
-            ordinary_evidence = next(
-                row for row in reconsidered["reconsideredNonVotingEvidence"]["results"]
-                if row["photoId"] == ordinary_duplicate_id
+            # Every identical copy is archived, including an unreleased Review copy.
+            ordinary_relative = ordinary_duplicate.relative_to(self.root).as_posix()
+            self.assertEqual(
+                reconsidered["duplicateArchives"][ordinary_relative]["photoId"], ordinary_duplicate_id,
             )
-            self.assertFalse(ordinary_evidence["decision"]["referenceEligible"])
+            self.assertNotIn(ordinary_duplicate_id, {row["photoId"] for row in reconsidered["moves"]})
             self.assertNotIn(
                 ordinary_duplicate_id,
                 {photo_id for ids in reconsidered["referenceSnapshots"]["2"]["photoIds"].values()
@@ -851,49 +790,38 @@ class NormalRebaseTests(unittest.TestCase):
                     self.root, "fast", "release-fixture", api=api, released_bindings=bindings,
                     reconsider_holds=True, for_apply=True, reuse_plan=changed,
                 )
-        self.assertTrue(all(set(items) == set(paths[:2]) for items in observed))
+        # The archived released copy's keeper (paths[3]) is an ordinary single vote.
+        self.assertTrue(all(set(items) == {*paths[:2], paths[3]} for items in observed))
         decisions = {row["photoId"]: row for row in report["releasedDecisionEvidence"]}
         voting = decisions[bindings[0]["photoId"]]
         duplicate = decisions[duplicate_id]
         self.assertEqual(voting["decision"]["destination"], "Prospects/Owner")
         self.assertEqual(voting["decision"]["sourceBucket"], "Pool")
         self.assertEqual(voting["actualSourceFolder"], "Prospects/Owner")
-        self.assertEqual(duplicate["decision"]["destination"], "Prospects/Owner")
+        # Item (a): the released identical copy is archived; its keeper stays with matching.
+        archive = report["duplicateArchives"][bindings[1]["currentPath"]]
+        self.assertEqual(duplicate["role"], "archived-duplicate")
+        self.assertEqual(duplicate["decision"]["duplicateArchive"], archive["destination"])
+        self.assertEqual(archive["selectedSource"], paths[3].relative_to(self.root).as_posix())
         self.assertFalse(duplicate["decision"]["referenceEligible"])
-        self.assertEqual(report["releasedNonVotingEvidence"][0]["scoreStatus"], "available")
+        self.assertNotIn("releasedNonVotingEvidence", report)
         self.assertNotIn(duplicate_id, {row["photoId"] for row in report["sourceHolds"]})
-        self.assertEqual(report["candidateCount"], 5)
+        self.assertEqual(report["candidateCount"], 4)
         self.assertEqual(report["releasedPlanFingerprint"], applied["releasedPlanFingerprint"])
         self.assertEqual(
-            sum(metadata.photo_id_from_name(photo.name) == duplicate_id for photo in publication_space.photos), 1,
+            sum(metadata.photo_id_from_name(photo.name) == duplicate_id for photo in publication_space.photos), 0,
         )
-        stage = self.root.parent / "projection-stage"
-        embeddings = {}
-        for move in report["moves"]:
-            path = stage / pathlib.PurePosixPath(move["destination"])
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_bytes(move["photoId"].encode())
-            embeddings[metadata.content_sha256(path)] = {"v": [1., 0.], "faces": 1, "px": 1000}
-        projected = normal_rebase.normal_finish.projected(
-            api, self.root, stage, publication_space,
-            SimpleNamespace(sha=metadata.content_sha256, emb=embeddings), report["moves"],
-        )
-        projected_duplicate = [
-            photo for photo in projected.photos if metadata.photo_id_from_name(photo.name) == duplicate_id
-        ]
-        self.assertEqual(len(projected_duplicate), 1)
-        self.assertEqual(projected_duplicate[0].key, "Prospects/Owner")
         moves = {row["photoId"]: row for row in report["moves"]}
+        self.assertNotIn(duplicate_id, moves)
         self.assertEqual(moves[bindings[0]["photoId"]]["source"], bindings[0]["currentPath"])
         self.assertEqual(moves[bindings[0]["photoId"]]["destination"], bindings[0]["currentPath"])
         self.assertTrue(moves[bindings[0]["photoId"]]["membershipOnly"])
-        for binding in bindings:
-            self.assertEqual(moves[binding["photoId"]]["releasedPhotoId"], binding["photoId"])
-            self.assertTrue(moves[binding["photoId"]]["normalAdmission"])
+        self.assertEqual(moves[bindings[0]["photoId"]]["releasedPhotoId"], bindings[0]["photoId"])
+        self.assertTrue(moves[bindings[0]["photoId"]]["normalAdmission"])
         self.assertEqual(permissions.call_args.kwargs["released_bindings"], bindings)
         self.assertTrue(all(path.exists() for path in paths))
 
-    def test_released_nonvoter_follows_real_voting_provisional_cluster(self):
+    def test_released_identical_copy_is_archived_and_keeper_joins_provisional_cluster(self):
         from tools.art.likeness_library.reconciliation import plan_reconciliation
 
         canonical = self.photo("Various/gallery/various_image_201.jpg", b"duplicate content")
@@ -938,37 +866,24 @@ class NormalRebaseTests(unittest.TestCase):
         cluster = report["clusters"][0]
         self.assertEqual(set(cluster["photoIds"]), {canonical_id, independent_id})
         self.assertNotIn(duplicate_id, cluster["corePhotoIds"])
-        evidence = report["releasedNonVotingEvidence"][0]
-        self.assertEqual(evidence["canonicalPhotoId"], canonical_id)
-        self.assertEqual(evidence["decision"]["destination"], cluster["destination"])
-        self.assertEqual(evidence["decision"]["clusterId"], cluster["clusterId"])
-        self.assertEqual(evidence["provisionalEvidence"]["independentReferencePhotoIds"], [independent_id])
-        self.assertAlmostEqual(evidence["provisionalEvidence"]["score"], 1.)
-        move = next(row for row in report["moves"] if row["photoId"] == duplicate_id)
-        self.assertFalse(move["referenceEligible"])
-        self.assertEqual(move["releasedPhotoId"], duplicate_id)
+        # Item (a): a released byte-identical copy is archived like any duplicate;
+        # only its keeper is placed by matching, and it is never scored separately.
+        duplicate_relative = duplicate.relative_to(self.root).as_posix()
+        archive = report["duplicateArchives"][duplicate_relative]
+        self.assertEqual(archive["selectedPhotoId"], canonical_id)
+        self.assertTrue(archive["destination"].startswith("_duplicates/cluster-fixture/"))
+        self.assertNotIn("releasedNonVotingEvidence", report)
+        evidence = next(row for row in report["releasedDecisionEvidence"] if row["photoId"] == duplicate_id)
+        self.assertEqual(evidence["role"], "archived-duplicate")
+        self.assertEqual(evidence["decision"]["duplicateArchive"], archive["destination"])
+        self.assertEqual(evidence["decision"]["keeperPhotoId"], canonical_id)
+        self.assertFalse(evidence["decision"]["referenceEligible"])
+        self.assertNotIn(duplicate_id, {row["photoId"] for row in report["moves"]})
         self.assertEqual(
-            sum(metadata.photo_id_from_name(photo.name) == duplicate_id for photo in space.photos), 1,
+            sum(metadata.photo_id_from_name(photo.name) == duplicate_id for photo in space.photos), 0,
         )
-        stage = self.root.parent / "cluster-projection"
-        embeddings = {}
-        for item in report["moves"]:
-            destination = stage / pathlib.PurePosixPath(item["destination"])
-            destination.parent.mkdir(parents=True, exist_ok=True)
-            destination.write_bytes((self.root / pathlib.PurePosixPath(item["source"])).read_bytes())
-            embeddings[metadata.content_sha256(destination)] = {"v": [1., 0.], "faces": 1, "px": 1000}
-        projected = normal_rebase.normal_finish.projected(
-            api, self.root, stage, space,
-            SimpleNamespace(sha=metadata.content_sha256, emb=embeddings), report["moves"],
-        )
-        updated = normal_rebase.maintenance._updated_catalog(catalog, report["moves"], policy)
-        self.assertFalse(updated["photos"][duplicate_id]["membership"]["coreUse"])
-        final_cores, _diagnostics = normal_rebase.normal_finish.cores(api, projected, updated, policy)
-        self.assertEqual(
-            sum(metadata.photo_id_from_name(photo.name) == duplicate_id for photo in projected.photos), 1,
-        )
-        self.assertNotIn(duplicate_id, final_cores[cluster["destination"]]["corePhotoIds"])
-        self.assertIn(canonical_id, final_cores[cluster["destination"]]["corePhotoIds"])
+        keeper_move = next(row for row in report["moves"] if row["photoId"] == canonical_id)
+        self.assertTrue(keeper_move["destination"].startswith(cluster["destination"] + "/gallery/"))
         self.assertTrue(all(path.exists() for path in (canonical, independent, duplicate)))
 
     def test_selected_policy_reassesses_lower_core_and_retained_members_without_publishing(self):
@@ -2370,6 +2285,154 @@ class NormalRebaseTests(unittest.TestCase):
         self.assertIsNotNone(retained_preparation.verify_link(self.root, no_face))
         for disposition in (archives[relative(copy)], junk[relative(no_face)]):
             self.assertFalse((self.root / disposition["destination"]).exists())
+
+    def test_every_identical_copy_is_archived_and_its_catalogue_membership_retires(self):
+        from tools.art.likeness_library import normal_transaction
+
+        keeper = self.photo("Potentials/Florence/gallery/florence_image_801.jpg", b"same bytes")
+        named_copy = self.photo("Potentials/Florence/gallery/florence_image_802.jpg", b"same bytes")
+        review_copy = self.photo("Various/review/various_image_803.jpg", b"same bytes")
+        relative = lambda path: path.relative_to(self.root).as_posix()  # noqa: E731
+        owner = "person_" + "f" * 32
+        catalog = self.empty_catalog()
+        catalog["people"][owner] = {
+            "id": owner, "displayName": "Florence", "folder": "Potentials/Florence",
+            "folderHistory": [], "identityAnchors": [],
+        }
+        for path in (keeper, named_copy, review_copy):
+            catalog["photos"][metadata.photo_id_from_name(path.name)] = {
+                "contentSha256": metadata.content_sha256(path), "protected": False,
+                **({"membership": {"personId": owner, "groupId": None, "status": "supported",
+                                   "coreUse": True, "reason": "fixture", "referenceVersion": "1" * 64}}
+                   if path is not review_copy else {}),
+            }
+        catalog["actions"].append({"id": "action_" + "b" * 32, "timestamp": "2026-11-22T00:00:00Z",
+                                   "actor": "user", "type": "sent-to-review",
+                                   "destination": relative(review_copy),
+                                   "photoIds": [metadata.photo_id_from_name(review_copy.name)]})
+        metadata.validate_catalog(catalog)
+        rows = self.source_rows()
+        active, held, *_ = normal_rebase._classify_sources(
+            self.root, rows, {}, catalog, None, archive_collisions=True,
+        )
+        # Item (a): catalogued, user-touched and named-Gallery copies are all archived.
+        self.assertEqual([row["source"] for row in active], [relative(keeper)])
+        self.assertEqual(held, [])
+        archives = normal_rebase._duplicate_archives(self.root, rows, "fixture")
+        self.assertEqual(set(archives), {relative(named_copy), relative(review_copy)})
+        self.assertTrue(all(row["selectedSource"] == relative(keeper) for row in archives.values()))
+        legacy, legacy_held, *_ = normal_rebase._classify_sources(
+            self.root, self.source_rows(), {}, catalog, None, archive_collisions=False,
+        )
+        self.assertEqual(len(legacy_held), 2)
+        stage = self.root / "_reports" / "fixture" / "publication"
+        published, updated, removed = normal_products.stage(
+            self.root, stage, [], None, profile="fast", photos=[], cfg={}, catalog=catalog,
+            policy=normal_rebase.load_policy(), archives=archives,
+        )
+        self.assertEqual(sum(bool(row.get("duplicateArchive")) for row in published), 2)
+        copy_id = metadata.photo_id_from_name(named_copy.name)
+        self.assertNotIn("membership", updated["photos"][copy_id])
+        self.assertIn("membership", updated["photos"][metadata.photo_id_from_name(keeper.name)])
+        journal = stage.parent / "journal.json"
+        normal_transaction.publish(
+            self.root, stage, sorted(set(archives) | set(removed)), journal=journal,
+            bindings={}, profile="fast", run_id="fixture",
+            expected_sources={row["source"]: row["sourceHash"] for row in rows},
+        )
+        self.assertTrue(keeper.is_file())
+        self.assertFalse(named_copy.exists() or review_copy.exists())
+        normal_transaction.recover(self.root, journal, apply=True)
+        self.assertTrue(named_copy.is_file() and review_copy.is_file())
+
+    def test_anchored_or_protected_only_copies_stay_held_non_voters(self):
+        keeper = self.photo("Various/gallery/various_image_811.jpg", b"cast bytes")
+        cast_copy = self.photo("Angels/Ava/gallery/ava_image_812.jpg", b"cast bytes")
+        relative = lambda path: path.relative_to(self.root).as_posix()  # noqa: E731
+        cfg = {"photos": {"Ava": keeper.name}}
+        rows = self.source_rows(cfg)
+        active, held, *_ = normal_rebase._classify_sources(
+            self.root, rows, cfg, self.empty_catalog(), None, archive_collisions=True,
+        )
+        # A chosen Various keeper cannot strip the only copy from a protected cast Gallery.
+        self.assertEqual([row["source"] for row in active], [relative(keeper)])
+        self.assertEqual([row["source"] for row in held], [relative(cast_copy)])
+        self.assertEqual(held[0]["sourceStatus"], "same-content-nonvoting")
+        self.assertEqual(normal_rebase._duplicate_archives(self.root, rows, "fixture"), {})
+        keeper.unlink()
+        cast_copy.unlink()
+        first = self.photo("Potentials/Gwen/gallery/gwen_image_821.jpg", b"anchored bytes")
+        anchored = self.photo("Potentials/Gwen/gallery/gwen_image_822.jpg", b"anchored bytes")
+        person = "person_" + "a" * 32
+        catalog = self.empty_catalog()
+        catalog["people"][person] = {
+            "id": person, "displayName": "Gwen", "folder": "Potentials/Gwen",
+            "folderHistory": [], "identityAnchors": [metadata.photo_id_from_name(anchored.name)],
+        }
+        rows = self.source_rows()
+        active, held, *_ = normal_rebase._classify_sources(
+            self.root, rows, {}, catalog, None, archive_collisions=True,
+        )
+        self.assertEqual([row["source"] for row in active], [relative(first)])
+        self.assertEqual([(row["source"], row["sourceStatus"]) for row in held],
+                         [(relative(anchored), "same-content-nonvoting")])
+        self.assertEqual(normal_rebase._duplicate_archives(self.root, rows, "fixture"), {})
+
+    def test_dominant_face_photo_matches_without_reference_vote_and_ambiguous_face_is_held(self):
+        from tools.art.likeness_library.reconciliation import plan_reconciliation
+
+        paths = [
+            self.photo("Prospects/Owner/gallery/owner_image_301.jpg", b"reference 1"),
+            self.photo("Prospects/Owner/gallery/owner_image_302.jpg", b"reference 2"),
+            self.photo("Various/gallery/various_image_303.jpg", b"dominant"),
+            self.photo("Various/gallery/various_image_304.jpg", b"two people"),
+        ]
+        measurements = {
+            b"reference 1": {"v": [1., .1], "faces": 1, "px": 1000},
+            b"reference 2": {"v": [1., -.1], "faces": 1, "px": 1000},
+            b"dominant": {"v": [1., 0.], "faces": 2, "f2": .4, "px": 900, "box": [.3, .2, .2, .25]},
+            b"two people": {"v": [1., 0.], "faces": 2, "f2": .7, "px": 900, "box": [.3, .2, .2, .25]},
+        }
+        api = self.stub_api([
+            ("Prospects", "Owner", self.root / "Prospects" / "Owner"), ("Various", "Various", self.root / "Various"),
+        ])
+        base_space = api.Space
+
+        class FixtureSpace(base_space):
+            def __init__(self, photos, settings, mean=None):
+                super().__init__(photos, settings, mean=np.zeros(2))
+
+        api.Space = FixtureSpace
+        api.plan_reconciliation = plan_reconciliation
+        api.invent_name = lambda seed, _taken: "Fixture-" + seed[:8]
+        metadata.save_catalog(self.empty_catalog(), self.root / ".likeness-library.json")
+        dominant_id, ambiguous_id = (metadata.photo_id_from_name(path.name) for path in paths[2:])
+        with mock.patch.object(normal_rebase, "_infer", side_effect=lambda _api, _cache, _embed, path, **_kw: (
+                metadata.content_sha256(path), {**measurements[pathlib.Path(path).read_bytes()], "t": "fixture"},
+        )), mock.patch.object(normal_rebase, "_fragment_evidence", return_value={}), \
+                mock.patch.object(normal_rebase, "_bindings", return_value={"fixture": "bound"}), \
+                mock.patch.object(normal_rebase.normal_finish, "check_batch",
+                                  side_effect=lambda _api, _space, _catalog, _policy, moves, **_kw: (
+                                      list(moves), {"passCount": 1, "frozenRivals": {}, "corrections": []},
+                                  )), \
+                mock.patch.object(normal_rebase.maintenance, "_validate_permissions"):
+            report, *_ = normal_rebase._plan(self.root, "fast", "dominant-fixture", api=api)
+        decisions = {row["photoId"]: row for row in report["assignments"] + report["held"]}
+        dominant = decisions[dominant_id]
+        self.assertEqual(dominant["destination"], "Prospects/Owner")
+        self.assertFalse(dominant["referenceEligible"])
+        self.assertEqual(dominant["faceQuality"]["class"], "dominant-face")
+        self.assertNotIn(dominant_id, {
+            pid for snapshot in report["referenceSnapshots"].values()
+            for ids in snapshot["photoIds"].values() for pid in ids
+        })
+        move = next(row for row in report["moves"] if row["photoId"] == dominant_id)
+        self.assertEqual(move["faceQuality"]["class"], "dominant-face")
+        self.assertFalse(move["referenceEligible"])
+        ambiguous = decisions[ambiguous_id]
+        self.assertTrue(ambiguous["preserveStaged"])
+        self.assertIn("second face is at least 50%", ambiguous["reason"])
+        self.assertEqual(ambiguous["faceQuality"]["class"], "multi-face-held")
 
     def test_explicit_review_action_is_bound_to_its_path_and_respects_undo(self):
         action = {"id": "set-review", "actor": "user", "type": "sent-to-review",

@@ -3034,7 +3034,11 @@ class ReconciliationTests(unittest.TestCase):
         result = plan_reconciliation(rows, cores, policy=policy, name_factory=stable_name)
         self.assertEqual(result["assignedCount"], 6)
         self.assertEqual(result["heldCount"], 0)
-        self.assertTrue(result["clusters"][0]["destination"].startswith("Models/"))
+        # Item (b): a five-plus group that is yellow but not green forms as a Potential.
+        self.assertTrue(result["clusters"][0]["destination"].startswith("Potentials/"))
+        self.assertEqual(result["clusters"][0]["formation"]["band"], "yellow")
+        self.assertTrue(all(.30 <= score < .55 for score in result["clusters"][0]["formation"]["memberScores"].values()))
+        self.assertIn("yellow but not green", result["clusters"][0]["reason"])
         self.assertEqual(result["clusters"][0]["photoIds"], sorted(row["photoId"] for row in rows))
         reverse = plan_reconciliation(list(reversed(rows)), cores, policy=policy, name_factory=stable_name)
         self.assertEqual(result["assignments"], reverse["assignments"])
@@ -3447,6 +3451,219 @@ class ReconciliationTests(unittest.TestCase):
             self.assertEqual(report["source"], "likeness-reconcile")
             self.assertIn("No images or catalogue data are changed", output.getvalue())
             self.assertEqual(photo_path.read_bytes(), b"unchanged source")
+
+
+class BandFormationAndSinglePhotoTests(unittest.TestCase):
+    """Items (b), (c, e) and (f): band-aligned formation and match-only quality."""
+
+    def setUp(self):
+        from tools.art.likeness_library import normal_admission
+        from tools.art.likeness_library.policy import effective_settings, load_policy
+
+        self.admission = normal_admission
+        self.policy = load_policy()
+        self.settings = effective_settings({}, self.policy)
+        self.axes = np.eye(8)
+
+    @staticmethod
+    def at(score, first, second):
+        return score * first + np.sqrt(1 - score ** 2) * second
+
+    def plan(self, rows, cores=None, **kwargs):
+        return plan_reconciliation(rows, cores or {}, policy=self.policy, name_factory=stable_name, **kwargs)
+
+    def test_orange_pair_no_longer_forms_a_two_photo_identity(self):
+        rows = [
+            candidate("photo:image_1", self.axes[0]),
+            candidate("photo:image_2", self.at(.27, self.axes[0], self.axes[1])),
+        ]
+        result = self.plan(rows)
+        self.assertEqual(len(result["clusters"]), 2)
+        for cluster in result["clusters"]:
+            self.assertTrue(cluster["singlePhoto"])
+            self.assertEqual(cluster["formation"]["band"], "single-photo")
+            self.assertIn("single photo – not yet scoreable", cluster["reason"])
+            self.assertTrue(cluster["destination"].startswith("Potentials/"))
+        self.assertTrue(all(row["singlePhoto"] for row in result["assignments"]))
+
+    def test_yellow_pair_forms_potential_and_green_five_forms_prospect(self):
+        pair = self.plan([
+            candidate("photo:image_1", self.axes[0]),
+            candidate("photo:image_2", self.at(.4, self.axes[0], self.axes[1])),
+        ])
+        self.assertEqual(len(pair["clusters"]), 1)
+        self.assertEqual(pair["clusters"][0]["formation"]["band"], "yellow")
+        self.assertTrue(pair["clusters"][0]["destination"].startswith("Potentials/"))
+        five = self.plan([
+            candidate(f"photo:image_{10 + index}", self.at(.9, self.axes[0], self.axes[index + 1]))
+            for index in range(5)
+        ])
+        self.assertEqual(len(five["clusters"]), 1)
+        self.assertEqual(five["clusters"][0]["formation"]["band"], "green")
+        self.assertTrue(five["clusters"][0]["destination"].startswith("Prospects/"))
+        self.assertTrue(all(score >= .55 for score in five["clusters"][0]["formation"]["memberScores"].values()))
+
+    def test_band_trim_drops_below_yellow_members(self):
+        from tools.art.likeness_library import planner
+
+        rows = [
+            {"photoId": "a", "vector": self.axes[0]},
+            {"photoId": "b", "vector": self.at(.9, self.axes[0], self.axes[1])},
+            {"photoId": "c", "vector": self.at(.1, self.axes[0], self.axes[2])},
+        ]
+        kept, removed, scores = planner._band_trim(rows, .30)
+        self.assertEqual([row["photoId"] for row in kept], ["a", "b"])
+        self.assertEqual([row["photoId"] for row in removed], ["c"])
+        self.assertTrue(all(value >= .30 for value in scores.values()))
+
+    def test_leftover_reaching_yellow_goes_to_rival_review_not_new_identity(self):
+        cores = {"Angels/Ava": {"vector": self.axes[0], "side": "Prospects", "category": "Angels",
+                                "personIds": ["person_ava"]}}
+        row = candidate("photo:image_1", self.at(.33, self.axes[0], self.axes[1]))
+        result = self.plan([row], cores)
+        self.assertEqual(result["clusters"], [])
+        self.assertEqual(result["held"][0]["reviewDestination"], "Angels/Ava/review")
+        self.assertEqual(result["held"][0]["singlePhotoGate"]["bestRival"], "Angels/Ava")
+        rejected = self.plan([{**row, "rejectedPersonIds": ["person_ava"]}], cores)
+        self.assertEqual(len(rejected["clusters"]), 1)
+        self.assertTrue(rejected["clusters"][0]["singlePhoto"])
+        below = self.plan([candidate("photo:image_1", self.at(.2, self.axes[0], self.axes[1]))], cores)
+        self.assertTrue(below["clusters"][0]["singlePhoto"])
+        self.assertAlmostEqual(below["assignments"][0]["singlePhotoGate"]["bestRivalScore"], .2, places=4)
+
+    def test_cast_lock_excludes_cast_rival_from_single_photo_review(self):
+        refs = [{"photoId": f"ref:{index}", "sha256": f"{index}" * 64,
+                 "vector": .8 * self.axes[0] + sign * .6 * self.axes[3], "qualityEligible": True}
+                for index, sign in enumerate((1, -1))]
+        cores = {"Sisters/Drakness": {
+            "vector": self.axes[0], "side": "Prospects", "category": "Sisters",
+            "corePhotoIds": [row["photoId"] for row in refs], "personIds": ["person_d"],
+            "identityProtected": True,
+        }}
+        row = candidate("photo:image_1", self.at(.33, self.axes[0], self.axes[1]),
+                        qualityEligible=True, sha256="b" * 64)
+        for locked, expected in ((False, "Sisters/Drakness/review"), (True, None)):
+            ctx = self.admission.context(cores, {"Sisters/Drakness": refs}, self.policy, locked=locked)
+            result = self.plan([row], cores, admission_context=ctx)
+            if expected:
+                self.assertEqual(result["held"][0]["reviewDestination"], expected)
+            else:
+                self.assertTrue(result["clusters"][0]["singlePhoto"])
+
+    def test_match_only_photo_matches_existing_but_never_founds_or_votes(self):
+        cores = {"Potentials/Amara": {"vector": self.axes[0], "side": "Prospects", "category": "Potentials"}}
+        quality = {"class": "dominant-face", "matchEligible": True, "referenceEligible": False,
+                   "reason": "dominant main face"}
+        matched = self.plan([candidate("photo:image_1", self.axes[0], referenceQualityEligible=False,
+                                       faceQuality=quality)], cores)
+        self.assertEqual(matched["assignments"][0]["destination"], "Potentials/Amara")
+        self.assertFalse(matched["assignments"][0]["referenceEligible"])
+        self.assertEqual(matched["assignments"][0]["faceQuality"]["class"], "dominant-face")
+        alone = self.plan([candidate("photo:image_2", self.axes[5], referenceQualityEligible=False)], cores)
+        self.assertEqual(alone["clusters"], [])
+        self.assertTrue(alone["held"][0]["preserveStaged"])
+        self.assertIn("cannot found a new identity", alone["held"][0]["reason"])
+
+    def test_match_only_admissions_never_become_reference_votes(self):
+        refs = [{"photoId": f"ref:{index}", "sha256": f"{index}" * 64,
+                 "vector": .8 * self.axes[1] + sign * .6 * self.axes[4], "qualityEligible": True}
+                for index, sign in enumerate((1, -1))]
+        cores = {"Models/Lower": {
+            "vector": self.axes[1], "side": "Prospects", "category": "Models",
+            "corePhotoIds": [row["photoId"] for row in refs], "personIds": ["person_l"],
+            "identityProtected": False,
+        }}
+        api = SimpleNamespace(plan_reconciliation=plan_reconciliation, invent_name=stable_name)
+        for reference_quality, expected in ((True, True), (False, False)):
+            row = candidate("photo:image_9", self.axes[1], qualityEligible=True, sha256="c" * 64,
+                            referenceQualityEligible=reference_quality)
+            report = self.admission.two_round_plan(
+                api, [row], cores, {"Models/Lower": refs}, self.settings, self.policy, set(),
+            )
+            decision = report["assignments"][0]
+            self.assertEqual(decision["destination"], "Models/Lower")
+            self.assertIs(decision["referenceEligible"], expected)
+
+    def test_match_only_cast_gallery_admission_is_not_reference_eligible(self):
+        refs = [{"photoId": f"ref:{index}", "sha256": f"{index}" * 64,
+                 "vector": .8 * self.axes[0] + sign * .6 * self.axes[3], "qualityEligible": True}
+                for index, sign in enumerate((1, -1))]
+        cores = {"Sisters/Drakness": {
+            "vector": self.axes[0], "side": "Prospects", "category": "Sisters",
+            "corePhotoIds": [row["photoId"] for row in refs], "personIds": ["person_d"],
+            "identityProtected": True,
+        }}
+        ctx = self.admission.context(cores, {"Sisters/Drakness": refs}, self.policy)
+        for reference_quality in (True, False):
+            row = candidate("photo:image_8", self.axes[0], qualityEligible=True, sha256="d" * 64,
+                            referenceQualityEligible=reference_quality)
+            kind, decision = self.admission.cast_route(row, cores, self.policy, ctx)
+            self.assertEqual((kind, decision["castAdmission"]["mode"]), ("assignments", "supported-gallery"))
+            self.assertIs(decision["referenceEligible"], reference_quality)
+
+
+class FaceQualityTests(unittest.TestCase):
+    """Item (f): dominant-face matching, overlap re-detection and framing."""
+
+    settings = {"minFace": 60, "multiFace": .3, "dominantFaceSecondaryMaximum": .5}
+
+    @staticmethod
+    def photo(faces, f2, px=200, box=(.3, .2, .2, .25)):
+        return SimpleNamespace(faces=faces, f2=f2, px=px, box=list(box),
+                               usable=lambda minimum: px >= minimum)
+
+    def assess(self, photo, **kwargs):
+        from tools.art.likeness_library import face_quality
+
+        return face_quality.assess(photo, self.settings, path="image.jpg", **kwargs)
+
+    def test_single_dominant_and_held_classes(self):
+        single = self.assess(self.photo(1, 0))
+        self.assertEqual((single["class"], single["matchEligible"], single["referenceEligible"]),
+                         ("single-face", True, True))
+        for ratio in (.1, .3, .49):
+            dominant = self.assess(self.photo(3, ratio))
+            self.assertEqual((dominant["class"], dominant["matchEligible"], dominant["referenceEligible"]),
+                             ("dominant-face", True, False))
+        self.assertEqual(self.assess(self.photo(2, .5))["class"], "multi-face-held")
+        self.assertFalse(self.assess(self.photo(2, .7))["matchEligible"])
+        self.assertEqual(self.assess(self.photo(2, .4, px=40))["class"], "unusable")
+        self.assertIn("framing", self.assess(self.photo(2, .4, box=(0, 0, 0, 0)))["reason"])
+        framing = self.assess(self.photo(2, .4), framing=lambda _path, _photo: "head crop too small")
+        self.assertFalse(framing["matchEligible"])
+        self.assertIn("head crop too small", framing["reason"])
+
+    def test_near_equal_second_box_requires_overlap_redetection(self):
+        main = (100., 100., 80., 100.)
+        overlapping = (104., 102., 78., 98.)
+        separate = (400., 100., 80., 100.)
+        self.assertEqual(self.assess(self.photo(2, .96))["class"], "multi-face-held")
+        merged = self.assess(self.photo(2, .96), redetect=lambda _path: [main, overlapping])
+        self.assertEqual((merged["class"], merged["matchEligible"], merged["referenceEligible"]),
+                         ("overlapping-duplicate-box", True, False))
+        self.assertGreater(merged["secondBoxIoU"], .5)
+        apart = self.assess(self.photo(2, 1.), redetect=lambda _path: [main, separate])
+        self.assertEqual(apart["class"], "multi-face-held")
+        self.assertIn("separate", apart["reason"])
+        disagree = self.assess(self.photo(2, .96), redetect=lambda _path: [main])
+        self.assertIn("does not reproduce", disagree["reason"])
+
+        def broken(_path):
+            raise OSError("unreadable")
+
+        self.assertIn("re-detection failed", self.assess(self.photo(2, .96), redetect=broken)["reason"])
+
+    def test_policy_accepts_optional_dominant_setting(self):
+        from tools.art.likeness_library.policy import load_policy, validate_policy
+
+        policy = load_policy()
+        self.assertEqual(policy["runtimeSettings"]["dominantFaceSecondaryMaximum"], .5)
+        broken = copy.deepcopy(policy)
+        broken["runtimeSettings"]["dominantFaceSecondaryMaximum"] = .2
+        with self.assertRaisesRegex(ValueError, "at least multiFace"):
+            validate_policy(broken)
+        del broken["runtimeSettings"]["dominantFaceSecondaryMaximum"]
+        validate_policy(broken)
 
 
 class FakePhoto:

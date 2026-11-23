@@ -1,5 +1,7 @@
 """Synthetic-only tests for explicit, journalled whole-folder retirement."""
+import contextlib
 import hashlib
+import io
 import json
 import os
 import pathlib
@@ -11,7 +13,7 @@ import unittest
 from unittest import mock
 
 from tools.art.likeness_library import empty_retirement as retirement, normal_transaction
-
+from tools.art.likeness_library import retire_empty_cli as cli
 
 ROOT = pathlib.Path(__file__).resolve().parents[4]
 
@@ -775,6 +777,155 @@ retirement.apply(payload['root'], payload['plan'], payload['digest'],
         journal.write_text(json.dumps(data), encoding="utf-8")
         with self.assertRaisesRegex(ValueError, "preview digest"):
             retirement.recover(self.root, self.journal, digest)
+
+
+@unittest.skipUnless(os.name == "nt", "exclusive Windows directory rename")
+class RetireEmptyCliTests(unittest.TestCase):
+    """Launcher-facing discovery, saved-plan binding and round trip on the same fixture."""
+
+    def setUp(self):
+        EmptyRetirementTests.setUp(self)
+        receipt = self.root / self.source_receipt
+        data = json.loads(receipt.read_bytes())
+        data["journal"] = str(self.root / self.predecessor)
+        receipt.write_text(json.dumps(data), encoding="utf-8")
+        self.plan_path = self.root / "_reports/runs/empty-retirement-cli-preview.json"
+        self.journal_path = self.root / "_reports/runs/empty-retirement-cli.json"
+        self.lines = []
+
+    def run_cli(self, mode, *, receipt=None, folders=()):
+        receipt = self.source_receipt if receipt is None else receipt
+        for attempt in range(5):
+            try:
+                return cli.run(self.root, "cli", mode, cfg=self.cfg, receipt=receipt or None,
+                               folders=folders, out=self.lines.append)
+            except ValueError as exc:
+                if "attributes=268435472/16" not in str(exc) or attempt == 4:
+                    raise
+                time.sleep(0.1)
+
+    def add_cast(self, name, *, image):
+        folder = self.root / "Sisters" / name
+        (folder / "gallery").mkdir(parents=True)
+        if image:
+            (folder / "gallery" / "kept.jpg").write_bytes(b"cast")
+        receipt = self.root / self.source_receipt
+        data = json.loads(receipt.read_bytes())
+        row = {"owner": f"Sisters/{name}", "source": f"Sisters/{name}/gallery/old.jpg", "sourceHash": "3" * 64}
+        data["plan"]["sourceRows"].append(row)
+        data["plan"]["sourceHashes"][row["source"]] = row["sourceHash"]
+        data["sourceHashes"] = data["plan"]["sourceHashes"]
+        receipt.write_text(json.dumps(data), encoding="utf-8")
+
+    def test_discovery_excludes_unrelated_and_non_empty_cast(self):
+        self.add_cast("Kept", image=True)
+        receipt = json.loads((self.root / self.source_receipt).read_bytes())
+        self.assertEqual(cli.discover(self.root, receipt), (self.folders, []))
+        self.assertEqual(cli.predecessor(self.root, receipt), self.predecessor)
+        self.assertEqual(self.run_cli("preview"), 0)
+        saved = json.loads(self.plan_path.read_bytes())
+        self.assertEqual([move["source"] for move in saved["plan"]["moves"]], self.folders)
+        self.assertEqual(retirement._digest(saved["plan"]), saved["digest"])
+        self.assertTrue(all((self.root / folder).is_dir() for folder in self.folders))
+        self.assertFalse(self.journal_path.exists())
+
+    def test_emptied_cast_stops_without_plan(self):
+        self.add_cast("Gone", image=False)
+        with self.assertRaisesRegex(cli.CastEmptied, "Sisters/Gone"):
+            self.run_cli("preview")
+        self.assertFalse(self.plan_path.exists())
+        stderr = io.StringIO()
+        with contextlib.redirect_stderr(stderr):
+            code = cli.main(["--root", str(self.root), "--receipt", self.source_receipt, "--run-id", "cli"],
+                            cfg=self.cfg)
+        self.assertEqual(code, 3)
+        self.assertIn("never retired automatically", stderr.getvalue())
+        self.assertFalse(self.plan_path.exists())
+        self.assertTrue((self.root / "Sisters/Gone").is_dir())
+
+    def test_explicit_folder_subset_and_cast_refused(self):
+        self.assertEqual(self.run_cli("preview", folders=["Potentials/Alpha"]), 0)
+        saved = json.loads(self.plan_path.read_bytes())
+        self.assertEqual([move["source"] for move in saved["plan"]["moves"]], ["Potentials/Alpha"])
+        self.plan_path.unlink()
+        with self.assertRaisesRegex(cli.CastEmptied, "never retired"):
+            self.run_cli("preview", folders=["Sisters/Anyone"])
+        with self.assertRaisesRegex(ValueError, "not an emptied identity"):
+            self.run_cli("preview", folders=["Potentials/Unrelated"])
+        self.assertFalse(self.plan_path.exists())
+
+    def test_apply_check_and_recover_round_trip(self):
+        absolute = str(self.root / self.source_receipt)
+        self.assertEqual(self.run_cli("preview", receipt=absolute), 0)
+        digest = json.loads(self.plan_path.read_bytes())["digest"]
+        self.assertEqual(self.run_cli("apply"), 0)
+        self.assertTrue(self.journal_path.is_file())
+        self.assertEqual(retirement.check(self.root, "_reports/runs/empty-retirement-cli.json", digest)["status"],
+                         "applied")
+        for folder in self.folders:
+            self.assertFalse((self.root / folder).exists())
+            self.assertTrue((self.root / "_retired" / folder / "gallery/z_identity.txt").is_file())
+        self.assertEqual(self.run_cli("check", receipt=""), 0)
+        self.assertEqual(self.run_cli("recover", receipt=""), 0)
+        self.assertIn(f"  {self.folders[0]}: destination", self.lines)
+        self.assertEqual(self.run_cli("recover-apply", receipt=""), 0)
+        self.assertTrue(all((self.root / folder).is_dir() for folder in self.folders))
+        normal_transaction.verify(self.root, self.root / self.predecessor)
+        with self.assertRaisesRegex(ValueError, "already recovered"):
+            self.run_cli("recover", receipt="")
+
+    def test_overwrite_stale_and_edited_plans_refused(self):
+        self.assertEqual(self.run_cli("preview"), 0)
+        original = self.plan_path.read_bytes()
+        with self.assertRaisesRegex(ValueError, "refusing to overwrite"):
+            self.run_cli("preview")
+        self.assertEqual(self.plan_path.read_bytes(), original)
+        saved = json.loads(original)
+        saved["plan"]["moves"] = saved["plan"]["moves"][:1]
+        self.plan_path.write_text(json.dumps(saved), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "invalid or edited"):
+            self.run_cli("apply")
+        self.plan_path.write_bytes(original)
+        other = self.root / "_reports/runs/other.json"
+        other.write_bytes((self.root / self.source_receipt).read_bytes())
+        with self.assertRaisesRegex(ValueError, "another rebase receipt"):
+            self.run_cli("apply", receipt="_reports/runs/other.json")
+        image = self.root / self.folders[0] / "review/new.jpg"
+        image.write_bytes(b"arrived")
+        with self.assertRaisesRegex(ValueError, "stale"):
+            self.run_cli("apply")
+        image.unlink()
+        (self.root / self.folders[1] / "gallery/z_identity.txt").write_bytes(b"changed")
+        with self.assertRaisesRegex(ValueError, "stale"):
+            self.run_cli("apply")
+        self.assertFalse(self.journal_path.exists())
+        self.assertTrue(all((self.root / folder).is_dir() for folder in self.folders))
+        self.journal_path.write_bytes(b"{}")
+        with self.assertRaisesRegex(ValueError, "refusing to overwrite existing journal"):
+            self.run_cli("apply")
+        self.assertEqual(self.journal_path.read_bytes(), b"{}")
+
+    def test_non_sandbox_root_and_unsafe_run_id_refused(self):
+        with self.assertRaisesRegex(ValueError, "Sandbox Working"):
+            cli.run(self.root.parent, "cli", "preview", cfg=self.cfg, receipt=self.source_receipt)
+        with self.assertRaisesRegex(ValueError, "unsafe run ID"):
+            cli.run(self.root, "../x", "preview", cfg=self.cfg, receipt=self.source_receipt)
+        with contextlib.redirect_stderr(io.StringIO()):
+            code = cli.main(["--root", str(self.root.parent), "--run-id", "cli", "--check"], cfg=self.cfg)
+        self.assertEqual(code, 1)
+
+    def test_launcher_help_and_menu(self):
+        launcher = (ROOT / "bin/retire-empty.cmd").read_text(encoding="utf-8")
+        self.assertIn('call "%~dp0_env.cmd"', launcher)
+        self.assertIn(r"tools\art\likeness_library\retire_empty_cli.py %*", launcher)
+        self.assertIn('call "%~dp0_end.cmd" %RC%', launcher)
+        help_text = (ROOT / "bin/help.cmd").read_text(encoding="utf-8")
+        self.assertIn("retire-empty.cmd --root", help_text)
+        self.assertIn("likeness.cmd retire-empty is the legacy direct move", help_text)
+        menu = (ROOT / "bin/menu.cmd").read_text(encoding="utf-8")
+        self.assertEqual(menu.count('if /i "%CH%"=="RE"'), 1)
+        self.assertIn('retire-empty.cmd" --root "B:\\Sovereign Territories Sandbox\\Working" --receipt '
+                      '"%RERECEIPT%" --run-id "%RERUN%" --dry-run', menu)
 
 
 if __name__ == "__main__":

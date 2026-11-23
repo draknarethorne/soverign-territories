@@ -16,6 +16,7 @@
     "alike": 0.3,
     "minFace": 60,
     "multiFace": 0.3,
+    "dominantFaceSecondaryMaximum": 0.5,
     "singles": 0.35,
     "rematch": 0.48,
     "rematchCast": 0.5,
@@ -74,7 +75,7 @@
   },
   "identityActions": {
     "independentEvidenceMaximumSimilarity": 0.95,
-    "identityClusterMinimumSimilarity": 0.25,
+    "identityClusterMinimumSimilarity": 0.3,
     "matchReviewMinimum": 0.3,
     "autoMergeMinimum": 0.55,
     "autoMergeMinimumMargin": 0.1,

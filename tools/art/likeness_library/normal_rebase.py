@@ -15,7 +15,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from tools.art import originals
 from tools.art.likeness_library import (
-    maintenance, metadata, normal_finish, normal_import, normal_products,
+    face_quality, maintenance, metadata, normal_finish, normal_import, normal_products,
     normal_transaction, normal_recap, reconciliation, rejections, normal_admission,
     verification_reads,
 )
@@ -119,23 +119,30 @@ def _released_photo_bindings(reports, inventory):
     return result
 
 
-def _released_candidate_roles(bindings, active, held):
-    """Classify every bound release without granting duplicate-content votes."""
+def _released_candidate_roles(bindings, active, held, archived=()):
+    """Classify every bound release without granting duplicate-content votes.
+
+    A released byte-identical copy is archived like any other duplicate; only
+    its keeper is placed by matching.
+    """
     expected = {row["photoId"]: (row["currentPath"], row["sha256"]) for row in bindings}
     if len(expected) != len(bindings):
         raise ValueError("ambiguous released candidate bindings")
     roles = {}
-    for rows, active_source in ((active, True), (held, False)):
+    for rows, kind in ((active, "active"), (held, "held"), (archived, "archived")):
         for row in rows:
             photo_id = row.get("photoId")
             if photo_id not in expected:
                 continue
             if photo_id in roles or (row.get("source"), row.get("sourceHash")) != expected[photo_id]:
                 raise ValueError(f"{photo_id}: ambiguous or changed released source")
-            if active_source and row.get("sourceStatus") == "eligible":
+            if kind == "active" and row.get("sourceStatus") == "eligible":
                 roles[photo_id] = "candidate"
-            elif not active_source and row.get("sourceStatus") == "same-content-nonvoting":
+            elif kind == "held" and row.get("sourceStatus") == "same-content-nonvoting":
                 roles[photo_id] = "nonvoting-candidate"
+            elif (kind == "archived" and row.get("sourceStatus") == "duplicate-archive"
+                  and row.get("crossIdExactArchive")):
+                roles[photo_id] = "archived-duplicate"
             else:
                 raise ValueError(f"{photo_id}: released source requires unresolved disposition")
     if set(roles) != set(expected):
@@ -161,6 +168,9 @@ def _fresh_gallery_assessment(root, rows, active, held, photos, native_paths, ca
     inputs = []
     for row in gallery:
         source, photo_id = row["source"], row.get("photoId")
+        if row.get("sourceStatus") == "duplicate-archive":
+            # Archived recoverably before core formation; it neither votes nor is released.
+            continue
         if source not in classified or classified[source] is not row or source not in photos:
             raise ValueError(f"{source}: initial Gallery source was not classified and measured")
         if row.get("sourceStatus") not in ("eligible", "same-content-nonvoting"):
@@ -1435,16 +1445,26 @@ def _classify_sources(root, rows, cfg, catalog, api, *, archive_collisions=False
             if row is keeper_row:
                 row["contentVoteCanonical"] = True
                 continue
-            archive_pool_copy = (
-                archive_collisions and row["group"] == "Various"
+            # Every byte-identical copy under another ID is archived recoverably;
+            # the keeper alone is placed by matching. Only an identity anchor on
+            # the copy, a same-ID collision decision, a forced keeper binding or
+            # removal of the only copy from a protected Gallery keeps it held.
+            protected_copy = (
+                row["group"] in IDENTITY_ROOTS and row["bucket"] == "gallery"
+                and row["owner"] in protected_folders and keeper_row["owner"] != row["owner"]
+            )
+            archive_copy = (
+                archive_collisions
                 and not row.get("collisionRule") and row["photoId"] not in anchors
-                and row["photoId"] not in catalog.get("photos", {})
-                and row["photoId"] not in user_ids
                 and not any(row is bound for bound in forced)
+                and not protected_copy
             )
             row.update({
-                "sourceStatus": "duplicate-archive" if archive_pool_copy else "same-content-nonvoting",
+                "sourceStatus": "duplicate-archive" if archive_copy else "same-content-nonvoting",
                 "reason": (
+                    "identical bytes under a different stable ID; recoverable duplicate archive, IDs not merged; "
+                    "the keeper selected by tools.art.duplicates.keeper is placed by matching"
+                    if archive_copy else
                     "identical bytes under a different stable ID; preserved without ID/owner merge, "
                     "and excluded from independent voting by tools.art.duplicates.keeper"
                 ),
@@ -1452,7 +1472,7 @@ def _classify_sources(root, rows, cfg, catalog, api, *, archive_collisions=False
                 "contentVoteCanonicalId": keeper_row["photoId"],
                 "contentVoteStatus": "nonvoting-duplicate-content",
             })
-            if archive_pool_copy:
+            if archive_copy:
                 row.update(selectedSource=keeper_row["source"], crossIdExactArchive=True)
             else:
                 held.append(row)
@@ -1602,6 +1622,14 @@ def _plan(
         cw.storage_root(cfg, "likeness", root=root) / "general" / "face-evidence",
         library_root=root,
     )
+    redetect = face_quality.redetector(embedder)
+
+    def candidate_quality(photo, source):
+        """Bounded framing/re-detection only for multi-face photos; read-only."""
+        measured = native_paths.get(source, root / pathlib.PurePosixPath(source))
+        return face_quality.assess(
+            photo, settings, path=measured, redetect=redetect, framing=face_quality.derivative_framing,
+        )
     catalog = metadata.load_catalog(metadata.path_for_root(root))
     phase_started = time.perf_counter()
     with verification_reads.session(root, label="SIMPLE source inventory"):
@@ -1646,11 +1674,12 @@ def _plan(
     )
     release_roles = {}
     retirement = None
+    archived_rows = [row for row in rows if row.get("sourceStatus") == "duplicate-archive"]
     if released_bindings is not None:
-        release_roles = _released_candidate_roles(released_bindings, active, held)
+        release_roles = _released_candidate_roles(released_bindings, active, held, archived_rows)
         retirement = normal_admission.retire_released_catalog(decision_catalog, released_bindings)
         decision_catalog = retirement["catalog"]
-    release_ids = set(release_roles)
+    release_ids = {photo_id for photo_id, role in release_roles.items() if role != "archived-duplicate"}
     released_nonvoting = [row for row in held if release_roles.get(row.get("photoId")) == "nonvoting-candidate"]
     reconsidered_nonvoting = [
         row for row in held
@@ -1805,7 +1834,7 @@ def _plan(
             if reuse_plan is not None and reuse_plan.get("releasedPhotoBindings") != released_bindings:
                 raise ValueError("fresh source release bindings differ from preview")
             if released_bindings is not None:
-                release_roles = _released_candidate_roles(released_bindings, active, held)
+                release_roles = _released_candidate_roles(released_bindings, active, held, archived_rows)
                 standard_names = {
                     row["photoId"]: row["standardName"] for row in rows
                     if row.get("photoId") in {item["photoId"] for item in released_bindings}
@@ -1815,7 +1844,7 @@ def _plan(
                     decision_catalog, released_bindings, standard_names,
                 )
                 decision_catalog = retirement["catalog"]
-            release_ids = set(release_roles)
+            release_ids = {photo_id for photo_id, role in release_roles.items() if role != "archived-duplicate"}
             released_nonvoting = [
                 row for row in held if release_roles.get(row.get("photoId")) == "nonvoting-candidate"
             ]
@@ -1944,10 +1973,10 @@ def _plan(
                 "workflowSelected": photo_id in workflow_ids,
                 "vector": photo.vec,
                 "sha256": row["sourceHash"],
-                "qualityEligible": (
-                    admission_enabled and photo.usable(settings["minFace"]) and photo.faces == 1
-                    and getattr(photo, "f2", 0.) <= settings["multiFace"]
-                ),
+                # Matching accepts single and dominant main faces (match-only);
+                # reference votes stay limited to single-face quality.
+                **(face_quality.candidate_fields(candidate_quality(photo, row["source"]))
+                   if admission_enabled else {"qualityEligible": False}),
                 "identityProtected": row["bucket"] == "gallery" and row["owner"] in protected_folders,
                 "rebaseCandidate": admission_enabled,
                 "explicitReviewPlacement": explicit_review,
@@ -2252,6 +2281,22 @@ def _plan(
                     **{key: candidate[key] for key in ("rejectionMetadataStale", "rejectedPersonIds")
                        if key in candidate},
                     "decision": dict(decision),
+                })
+            for photo_id, role in sorted(release_roles.items()):
+                if role != "archived-duplicate":
+                    continue
+                binding = next(row for row in released_bindings if row["photoId"] == photo_id)
+                archive = archives.get(binding["currentPath"])
+                if not archive or archive["photoId"] != photo_id or archive["sha256"] != binding["sha256"]:
+                    raise ValueError(f"{photo_id}: released identical copy lacks its bound duplicate archive")
+                evidence.append({
+                    **binding, "role": role,
+                    "decision": {
+                        "photoId": photo_id, "duplicateArchive": archive["destination"],
+                        "keeperPhotoId": archive.get("selectedPhotoId"), "keeperSource": archive["selectedSource"],
+                        "referenceEligible": False,
+                        "reason": "released byte-identical copy archived recoverably; its keeper is placed by matching",
+                    },
                 })
             report["releasedPhotoBindings"] = released_bindings
             report["releasedDecisionEvidence"] = sorted(evidence, key=lambda row: row["photoId"])
@@ -2683,6 +2728,9 @@ def _plan(
             move["collisionRebind"] = True
         if released_bindings is not None:
             for binding in released_bindings:
+                if release_roles.get(binding["photoId"]) == "archived-duplicate":
+                    # Bound above to its duplicate archive; publication archives it.
+                    continue
                 matches = [
                     move for move in report["moves"]
                     if move["photoId"] == binding["photoId"]

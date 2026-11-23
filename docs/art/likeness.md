@@ -1755,6 +1755,41 @@ an explicit user Review placement still stops the run. Admission moves
 without a reference version fail at preview. First verified on the Sandbox
 as `fresh-post-intake-20261122-04`.
 
+#### Recoverable retirement of emptied identity folders
+
+After an applied SIMPLE rebase, `bin\retire-empty.cmd` retires the identity
+folders that rebase emptied, as a journalled and recoverable Sandbox
+transaction. It is the manual catch-up step; the legacy
+`likeness.cmd retire-empty` is a direct move with no journal or recovery.
+
+```cmd
+set "RECEIPT=_reports\runs\normal-rebase-RUN.json"
+bin\retire-empty.cmd --root "%W%" --receipt "%RECEIPT%" --run-id RID
+bin\retire-empty.cmd --root "%W%" --receipt "%RECEIPT%" --run-id RID --apply
+bin\retire-empty.cmd --root "%W%" --run-id RID --check
+bin\retire-empty.cmd --root "%W%" --run-id RID --recover
+bin\retire-empty.cmd --root "%W%" --run-id RID --recover-apply
+```
+
+The preview (default, or `--dry-run`) reads the receipt's source-row owners
+and lists those Angels, Sisters, Models, Prospects or Potentials folders that
+now have no `gallery` or `review` image. It saves the plan and its digest as
+a new `_reports\runs\empty-retirement-RID-preview.json`; nothing moves.
+`--folder CATEGORY/Name` (repeatable) narrows the selection to discovered
+folders. `--apply` publishes exactly that saved plan to the journal
+`_reports\runs\empty-retirement-RID.json`, then checks it. A changed folder,
+receipt or predecessor publication journal makes the plan stale and stops
+before any move; run a new preview with a new run ID. `--check` verifies the
+applied journal. `--recover` previews exact recovery and `--recover-apply`
+moves the intact folders back.
+
+Safety rules: the root must be the Sandbox Working folder; Production is
+refused. An existing plan or journal is never overwritten. An emptied
+Sisters or Angels folder stops the command with a report (exit code 3); cast
+folders are never retired automatically. Stop other library writers first.
+Folders are moved intact under the configured `_retired` storage; pruning
+retired folders stays manual.
+
 #### Saved SIMPLE movement recap and placement audit
 
 For an applied receipt followed by Sandbox releases, use the separate
@@ -2561,7 +2596,7 @@ for review, not an identity claim or photo-move instruction.
 | `pullback NAME... [--small N] [--all]` | Return selected Prospect folders to `Various` for a fresh sort; chosen-photo folders are protected. |
 | `clean [NAMES] [--group ROOT]` | Review person folders against chosen photos/renders; doubtful photos go to Review, clear strangers may be routed elsewhere. |
 | `junk [--keep-multi] [--recheck] [--reset]` | Set aside photos unable to feed a Prime; recheck usable files or return all files through current crop/rules. |
-| `retire-empty` | Preview empty Prospect/Potential folders for intact retirement under `_retired`. |
+| `retire-empty` | Legacy: preview empty Prospect/Potential folders; `--apply` moves them directly under `_retired` with no journal or recovery. After a SIMPLE rebase use `bin\retire-empty.cmd`. |
 | `undo` | Preview reversal of the most recent move batch. |
 
 The routine now calls `reconcile`, not the old `review`/`sort`/`singles`/`rematch`

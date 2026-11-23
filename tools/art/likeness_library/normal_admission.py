@@ -7,6 +7,7 @@ import re
 import numpy as np
 
 from . import metadata, protection, rejections
+from .face_quality import reference_quality
 from .policy import evaluate_photo_route, score_band, validate_score_bands
 from .scoring import nz
 
@@ -314,7 +315,7 @@ def cast_route(candidate, cores, policy, admission):
         "castAdmission": evidence, "referenceVersion": admission["referenceVersion"],
         "independentSupportCount": len(witnesses),
         "supportPhotoIds": [ref["photoId"] for ref in witnesses],
-        "referenceEligible": mode == "supported-gallery" and all(
+        "referenceEligible": mode == "supported-gallery" and reference_quality(candidate) and all(
             ref["photoId"] != candidate["photoId"]
             and ref["sha256"] != candidate.get("sha256")
             and float(candidate["vector"] @ ref["vector"]) <= policy["identityActions"]["independentEvidenceMaximumSimilarity"]
@@ -3181,6 +3182,10 @@ def two_round_plan(api, candidates, cores, references, settings, policy, names_t
                 continue
             candidate = by_id[decision["photoId"]]
             if candidate["sourceFolder"] == target or not candidate.get("qualityEligible"):
+                continue
+            if not reference_quality(candidate):
+                # Match-only (dominant-face) admissions never become reference votes.
+                decision["referenceEligible"] = False
                 continue
             rules = policy["categoryPolicies"][target.split("/", 1)[0]]
             prior = [

@@ -775,6 +775,34 @@ class NormalRecapTests(unittest.TestCase):
         audit = normal_recap.render(data, self.library / "recap-audit.html", audit=True)
         self.assertIn("red score band unavailable", audit)
 
+    def test_single_photo_identity_is_labelled_not_plain_unscored(self):
+        # Items (c, e): a one-photo identity has no leave-one-out score by construction.
+        self.records[0]["score"] = None
+        self.records[0]["scoreContext"]["singlePhoto"] = True
+        self.records[1]["score"] = None
+        self.save()
+        data = normal_recap.collect(self.report)
+        self.assertEqual((data["singlePhotoCount"], data["unscoredCount"]), (1, 1))
+        self.assertIn("single photo – not yet scoreable", data["auditRecords"][0]["flags"])
+        self.assertNotIn("own score unavailable", data["auditRecords"][0]["flags"])
+        audit = normal_recap.render(data, self.library / "recap-audit.html", audit=True)
+        self.assertIn("1 single photo – not yet scoreable", audit)
+
+    def test_recap_lists_dominant_face_evidence_and_remaining_various_reasons(self):
+        plan = self.receipt["plan"]
+        quality = {"class": "dominant-face", "matchEligible": True, "referenceEligible": False,
+                   "reason": "dominant main face; other faces are below 50% of its area; match-only",
+                   "faces": 2, "secondaryRatio": .4, "px": 180, "minFace": 60}
+        photo_id = plan["sourceRows"][0]["photoId"]
+        plan.setdefault("assignments", []).append({"photoId": photo_id, "faceQuality": quality,
+                                                   "reason": "qualified photo match"})
+        self.save()
+        data = normal_recap.collect(self.report)
+        page = normal_recap.render(data, self.library / "recap.html")
+        self.assertIn("Face quality: dominant-face matches and holds", page)
+        self.assertIn("dominant-face · match-only, no reference vote", page)
+        self.assertIn("second/main area 0.4", page)
+
     def test_red_audit_discloses_incomplete_matched_review_core(self):
         bands = policy.load_policy()
         self.records[0]["scoreContext"]["coreSize"] = 2
@@ -1410,13 +1438,42 @@ class NormalRecapTests(unittest.TestCase):
         self.assertEqual(data["snapshotDiagnostics"], [])
         self.assertNotIn("_junk", data["newIdentities"])
         page = normal_recap.render(data, self.library / "recap.html")
-        for expected in ("Identical bytes under different photo IDs", archived_path, junk_path,
-                         "1 duplicate archive(s) + 1 recoverable junk disposition(s)"):
+        keeper_final = next(row["destination"] for row in data["rows"] if row["source"] == self.a)
+        for expected in ("Duplicates: identical bytes under different photo IDs", archived_path, junk_path,
+                         "1 duplicate archive(s) + 1 recoverable junk disposition(s)",
+                         "Keeper final location", keeper_final):
             self.assertIn(expected, page)
         plan["duplicateArchives"][extra]["selectedPhotoId"] = "photo:image_5"
         self.save()
         with self.assertRaisesRegex(ValueError, "unbound duplicate archive evidence"):
             normal_recap.collect(self.report)
+
+    def test_named_gallery_identical_copy_archive_is_listed_with_keeper_link(self):
+        # Item (a): copies outside Various (for example a Potentials Gallery) are archived too.
+        plan = self.receipt["plan"]
+        extra = "Potentials/Florence/gallery/florence_image_4.jpg"
+        archived_path = "_duplicates/run1/token/" + extra
+        keeper = plan["sourceRows"][0]
+        keeper["contentVoteCanonical"] = True
+        plan["sourceRows"].append({
+            "source": extra, "sourceHash": self.h1, "photoId": "photo:image_4", "group": "Potentials",
+            "sourceStatus": "duplicate-archive", "crossIdExactArchive": True,
+        })
+        plan["sourceHashes"][extra] = self.receipt["sourceHashes"][extra] = self.h1
+        plan["duplicateArchives"] = {extra: {
+            "source": extra, "destination": archived_path, "sha256": self.h1,
+            "photoId": "photo:image_4", "reason": "identical bytes under a different stable ID",
+            "selectedSource": self.a, "selectedPhotoId": "photo:image_1",
+        }}
+        self.receipt["publishedNative"].append({"native": archived_path, "sha256": self.h1})
+        self.save()
+        data = normal_recap.collect(self.report)
+        self.assertEqual([row["source"] for row in data["contentArchives"]], [extra])
+        page = normal_recap.render(data, self.library / "recap.html")
+        keeper_final = next(row["destination"] for row in data["rows"] if row["source"] == self.a)
+        self.assertIn("Potentials/Florence", page)
+        self.assertIn(archived_path, page)
+        self.assertIn(">" + keeper_final + "</a>", page)
 
     def test_applied_report_preserves_transaction_bound_preview_reports(self):
         self.receipt["status"] = "preview"

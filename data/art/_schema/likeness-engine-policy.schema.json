@@ -95,6 +95,7 @@
         "alike": {"$ref": "#/definitions/score"},
         "minFace": {"type": "integer", "minimum": 1},
         "multiFace": {"$ref": "#/definitions/score"},
+        "dominantFaceSecondaryMaximum": {"$ref": "#/definitions/score", "description": "Matching-only gate: a photo may be matched when every other detected face is below this fraction of the main face area; such photos never vote as references. multiFace keeps its reference-eligibility meaning."},
         "singles": {"$ref": "#/definitions/score"},
         "rematch": {"$ref": "#/definitions/score"},
         "rematchCast": {"$ref": "#/definitions/score"},
@@ -221,7 +222,8 @@
       ],
       "properties": {
         "identityClusterMinimumSimilarity": {
-          "$ref": "#/definitions/score"
+          "$ref": "#/definitions/score",
+          "description": "Legacy/experimental linkage only. SIMPLE new-identity formation is gated by scoreBands (yellow for Potentials, green for five-plus identities); keep this equal to the yellow minimum."
         },
         "independentEvidenceMaximumSimilarity": {
           "$ref": "#/definitions/score"

@@ -17,6 +17,8 @@ if not __package__:
 else:
     from . import gallery_chrome, policy, rebase_recap
 
+SINGLE_PHOTO_LABEL = "single photo – not yet scoreable"
+
 
 def _sha(payload):
     return hashlib.sha256(payload).hexdigest()
@@ -120,7 +122,6 @@ def collect(receipt_path, *, read_bytes=None):
                 bytes_match = keeper.get("sourceHash") == archive["sha256"] and keeper.get("contentVoteCanonical") is True
             keeper_matches = (
                 source.get("crossIdExactArchive") is True
-                and source["group"] == "Various"
                 and keeper.get("photoId") == archive["selectedPhotoId"] != archive["photoId"]
                 and bytes_match
                 and keeper["source"] not in archives
@@ -184,6 +185,9 @@ def collect(receipt_path, *, read_bytes=None):
             converted=pathlib.PurePosixPath(relative).suffix.lower() != pathlib.PurePosixPath(destination).suffix.lower(),
             topCast=[], bestScore=assignment.get("score", assignment.get("bestScore")),
             bestMatch=assignment.get("bestMatch"), clusterId=assignment.get("clusterId"),
+            faceQuality=assignment.get("faceQuality") or (move or {}).get("faceQuality"),
+            singlePhoto=bool(assignment.get("singlePhoto")),
+            decisionReason=assignment.get("reason"),
         )
         rows.append(row)
     if (set(by_source) | set(archives) | set(junk)) - seen or seen != set(hashes):
@@ -251,7 +255,7 @@ def collect(receipt_path, *, read_bytes=None):
         "referenceSnapshots": plan.get("referenceSnapshots", {}),
         "groupRivals": plan.get("finalComparisonAndFamily", {}).get("finalRivals", {}),
         "auditRecords": [], "snapshotDiagnostics": [], "snapshotMatched": 0, "snapshotIdUnavailable": 0,
-        "redScoreCutoff": None, "redScoreCount": None, "unscoredCount": 0,
+        "redScoreCutoff": None, "redScoreCount": None, "unscoredCount": 0, "singlePhotoCount": 0,
         "inputs": {str(receipt_path): _sha(payload)},
         "inputBytes": len(payload),
     }
@@ -321,7 +325,10 @@ def _attach_review(data, *, read_bytes=None):
             flags.append("workflow reference outside active core")
         if (record.get("identityProtected") or record.get("identityAnchor") or record.get("workflowSelected")) and higher:
             flags.append("protected/reference photo with higher rival")
-        if score is None:
+        if score is None and context.get("singlePhoto"):
+            flags.append(SINGLE_PHOTO_LABEL)
+            data["singlePhotoCount"] = data.get("singlePhotoCount", 0) + 1
+        elif score is None:
             flags.append("own score unavailable")
             data["unscoredCount"] += 1
         if red:
@@ -509,11 +516,11 @@ def _audit(data, out):
         )
     if data["redScoreCutoff"] is None:
         parts.append(f'<p>Among matched Review records: red score band unavailable; '
-                     f'{data["unscoredCount"]} unscored. No red classification was inferred.</p>')
+                     f'{data["unscoredCount"]} unscored; {data.get("singlePhotoCount", 0)} {SINGLE_PHOTO_LABEL}. No red classification was inferred.</p>')
     else:
         parts.append(f'<p>Among matched Review records: {data["redScoreCount"]} red own-core score(s) '
                      f'(unrounded score below {data["redScoreCutoff"]}); '
-                     f'{data["unscoredCount"]} unscored. These are findings, not release proposals.</p>')
+                     f'{data["unscoredCount"]} unscored; {data.get("singlePhotoCount", 0)} {SINGLE_PHOTO_LABEL}. These are findings, not release proposals.</p>')
     for key in ("corrections", "recommendations"):
         parts.append(f"<h3>Recorded {key}</h3><ul>")
         for item in saved.get(key, []):
@@ -756,6 +763,7 @@ def render(data, out, *, audit=False, others=()):
             rebase_recap._continuity_section(data, out.parent),
             _collision_section(data, out.parent),
             _content_archive_section(data, out.parent),
+            _face_quality_section(data),
             _group_relationships(data, out.parent),
             "<section>" + _audit_summary(data) + "</section>",
             rebase_recap._comparison_section(data, list(others), out.parent) if others else "",
@@ -823,22 +831,76 @@ def _content_archive_section(data, out_dir):
     if not data["contentArchives"]:
         return ""
     root = pathlib.Path(data["workingRoot"])
-    parts = ['<h2 id="content-archives">Identical bytes under different photo IDs</h2>',
-             '<p>The redundant Various file is archived; the IDs are not merged.</p>',
-             '<table><tr><th>Archived copy / SHA-256</th><th>Keeper at inventory</th><th>Exact match basis</th></tr>']
+    final = {row["source"]: row for row in data["rows"]}
+    parts = ['<h2 id="content-archives">Duplicates: identical bytes under different photo IDs</h2>',
+             f'<p>{len(data["contentArchives"])} byte-identical copies were archived recoverably, including '
+             'released copies; the IDs are not merged. One keeper stays wherever matching placed it.</p>',
+             '<table><tr><th>Archived copy / SHA-256</th><th>Former owner</th><th>Keeper at inventory</th>'
+             '<th>Keeper final location</th><th>Exact match basis</th></tr>']
     for row in sorted(data["contentArchives"], key=lambda item: item["source"]):
         destination = html.escape(row["destination"])
+        keeper = final.get(row["selectedSource"], {})
+        keeper_final = keeper.get("destination") or row["selectedSource"]
+        keeper_text = html.escape(keeper_final)
         if data["status"] == "applied":
             href = rebase_recap._href(_under(root, root / _relative(row["destination"])), out_dir)
             destination = f'<a href="{html.escape(href, quote=True)}">{destination}</a>'
+            if not keeper.get("duplicateArchive") and not keeper.get("junkDisposition"):
+                keeper_href = rebase_recap._href(_under(root, root / _relative(keeper_final)), out_dir)
+                keeper_text = f'<a href="{html.escape(keeper_href, quote=True)}">{keeper_text}</a>'
+        else:
+            keeper_text = "Proposed: " + keeper_text
+        owner = rebase_recap.person_and_bucket(row["source"])[0]
         proof = row.get("retainedOriginalProof")
         basis = f'Verified retained original<br>{html.escape(proof["path"])}' if proof else "Current keeper bytes"
         parts.append(
             f'<tr><td>{html.escape(row["photoId"])}<br>{html.escape(row["source"])}<br>'
-            f'{destination}<br>{row["sha256"]}</td><td>{html.escape(row["selectedPhotoId"])}<br>'
-            f'{html.escape(row["selectedSource"])}</td><td>{basis}</td></tr>'
+            f'{destination}<br>{row["sha256"]}</td><td>{html.escape(str(owner))}</td>'
+            f'<td>{html.escape(row["selectedPhotoId"])}<br>'
+            f'{html.escape(row["selectedSource"])}</td><td>{keeper_text}</td><td>{basis}</td></tr>'
         )
     return "".join(parts + ["</table>"])
+
+
+def _face_quality_section(data):
+    """Dominant-face (match-only) evidence and the remaining Various reasons."""
+    quality_rows = [row for row in data["rows"] if row.get("faceQuality")]
+    various = collections.Counter(
+        row.get("decisionReason") or row.get("reason") or "existing owner retained"
+        for row in data["rows"]
+        if row.get("newPerson") == "Various"
+        and not (row.get("duplicateArchive") or row.get("junkDisposition") or row.get("supersededVersion"))
+    )
+    if not quality_rows and not various:
+        return ""
+    parts = ['<h2 id="face-quality">Face quality: dominant-face matches and holds</h2>',
+             '<p>Dominant-face photos (other faces below the configured share of the main face) may be '
+             'matched into a Gallery or Review but never vote as identity references. Near-equal second boxes '
+             'are re-detected: overlapping boxes count as one face; separate ones stay held.</p>']
+    if quality_rows:
+        parts.append('<table><tr><th>Photo</th><th>Quality class</th><th>Evidence</th><th>Outcome</th></tr>')
+        for row in sorted(quality_rows, key=lambda item: item["source"]):
+            quality = row["faceQuality"]
+            evidence = (f'faces {quality.get("faces")}; second/main area {quality.get("secondaryRatio")}; '
+                        f'{quality.get("px")} px (min {quality.get("minFace")})')
+            if "secondBoxIoU" in quality:
+                evidence += (f'; re-detected IoU {quality["secondBoxIoU"]}, containment '
+                             f'{quality["secondBoxContainment"]}')
+            parts.append(
+                f'<tr><td>{html.escape(str(row["photoId"]))}<br>{html.escape(row["source"])}</td>'
+                f'<td>{html.escape(str(quality.get("class")))}'
+                f'{" · match-only, no reference vote" if quality.get("matchEligible") else " · held"}</td>'
+                f'<td>{html.escape(evidence)}<br>{html.escape(str(quality.get("reason", "")))}</td>'
+                f'<td>{html.escape(str(row["newPerson"]))} / {html.escape(str(row["newBucket"]))}</td></tr>'
+            )
+        parts.append("</table>")
+    if various:
+        parts.append(f'<h3>Remaining Various reasons</h3><p>{sum(various.values())} source row(s) end in Various.</p>'
+                     '<table><tr><th>Reason</th><th>Rows</th></tr>')
+        for reason, count in sorted(various.items(), key=lambda item: (-item[1], item[0])):
+            parts.append(f'<tr><td>{html.escape(reason)}</td><td>{count}</td></tr>')
+        parts.append("</table>")
+    return "".join(parts)
 
 
 def _group_relationships(data, out_dir):

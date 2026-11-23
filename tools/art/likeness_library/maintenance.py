@@ -60,7 +60,7 @@ def proposed_moves(report, photos, root, *, duplicate_archives=None):
             **{key: row[key] for key in (
                 "castAdmission", "referenceVersion", "referenceEligible", "supportPhotoIds",
                 "normalAdmission",
-                "routingEvidence", "destinationType",
+                "routingEvidence", "destinationType", "faceQuality", "singlePhoto",
             ) if key in row},
             **({"preparationOnly": True, "membershipOnly": True} if source == destination else {}),
         })

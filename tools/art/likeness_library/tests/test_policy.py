@@ -177,9 +177,10 @@ class LikenessPolicyTests(unittest.TestCase):
         )
         self.assertTrue(self.policy["lookalikeGroups"]["automaticAssociationEnabled"])
         self.assertEqual(self.policy["lookalikeGroups"]["minimumIndependentPhotos"], 5)
+        # Legacy linkage key now equals the yellow band; SIMPLE formation reads scoreBands.
         self.assertEqual(
             self.policy["identityActions"]["identityClusterMinimumSimilarity"],
-            0.25,
+            self.policy["scoreBands"]["yellow"]["minimum"],
         )
         result = evaluate_identity_action(
             "merge",

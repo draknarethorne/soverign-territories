@@ -259,7 +259,10 @@ def _membership_details(catalog, photo_id, folder, record, evidence=None):
     }
 
 
-def _candidate_rows(paths, photos, catalog, locked_ids, selected_ids, metadata, rejections, *, settings=None):
+def _candidate_rows(paths, photos, catalog, locked_ids, selected_ids, metadata, rejections, *, settings=None,
+                    quality=None):
+    from . import face_quality
+
     by_path = {photo.path.resolve(): photo for photo in photos}
     rows = []
     missing = []
@@ -272,6 +275,10 @@ def _candidate_rows(paths, photos, catalog, locked_ids, selected_ids, metadata, 
         if not photo_id:
             continue
         record = catalog.get("photos", {}).get(photo_id, {})
+        assessment = (
+            (quality(photo, path) if quality is not None else face_quality.assess(photo, settings))
+            if settings is not None else None
+        )
         rows.append({
             "photoId": photo_id,
             "sourceFolder": "Various",
@@ -281,10 +288,10 @@ def _candidate_rows(paths, photos, catalog, locked_ids, selected_ids, metadata, 
             "workflowSelected": photo_id in selected_ids,
             "vector": photo.vec,
             "sha256": metadata.content_sha256(path),
-            "qualityEligible": (
-                settings is not None and photo.usable(settings["minFace"]) and photo.faces == 1
-                and photo.f2 <= settings["multiFace"]
-            ),
+            # Matching accepts single and dominant main faces; only single-face
+            # quality may later become a reference vote.
+            **(face_quality.candidate_fields(assessment) if assessment is not None
+               else {"qualityEligible": False}),
             **rejections.photo_state(catalog, photo),
         })
     if missing:
@@ -757,9 +764,19 @@ def _plan(api, root, profile, photo_ids, *, cache_path=None, policy_path=None,
         name for _group, name, _folder in api.cw.photo_folders(cfg, root)
     }
     workflow_ids = _workflow_ids(cfg, metadata)
+    from . import face_quality
+
+    redetect = face_quality.redetector(embedder)
+
+    def quality(photo, path):
+        measured = (native_paths or {}).get(path.relative_to(root).as_posix(), path)
+        return face_quality.assess(
+            photo, settings, path=measured, redetect=redetect, framing=face_quality.derivative_framing,
+        )
+
     candidates = _candidate_rows(
         selected_paths, selected_rows, catalog, locked_ids, workflow_ids, metadata, rejections,
-        settings=settings if "castAdmission" in policy else None,
+        settings=settings if "castAdmission" in policy else None, quality=quality,
     )
     from . import normal_admission
 

@@ -22,6 +22,7 @@ echo   SB Preview clean Sandbox baseline (Production to Source to Working; no ch
 echo   VC Scan for exact Various arrivals or preview a reviewed cleanup plan (no changes)
 echo   SR Preview SIMPLE whole-library rebase (can prepare/measure the full library)
 echo   RR Preview saved SIMPLE recap/audit (reports only; no matching or moves)
+echo   RE Preview recoverable retirement of folders emptied by an applied SIMPLE rebase (Sandbox; no moves)
 echo   MH Sandbox movement history: see Help for ordered-release command (reports only)
 echo   RD Check red-release snapshot evidence (read only; no release)
 echo   EX Experimental likeness operation (explicit operation; directed rebase also requires a recipe)
@@ -66,6 +67,7 @@ set "CH="
 set /p "CH=Choice: "
 if /i "%CH%"=="Q" exit /b 0
 if /i "%CH%"=="RR" goto simplerecap
+if /i "%CH%"=="RE" goto retireempty
 if /i "%CH%"=="MH" (
   echo Use movement-history.cmd in Help; supply all release IDs in order.
   pause
@@ -232,6 +234,23 @@ if errorlevel 1 (
 set "APPLY="
 set /p "APPLY=Write recap/audit reports only? (y/n): "
 if /i "%APPLY%"=="y" call "%~dp0rebase-recap.cmd" "%RECEIPT%" --apply
+pause
+goto menu
+:retireempty
+set "RERECEIPT="
+set "RERUN="
+set /p "RERECEIPT=Applied SIMPLE receipt (Working-relative or absolute; blank cancels): "
+if "%RERECEIPT%"=="" goto menu
+set /p "RERUN=New retirement run-id (letters/numbers/dash/underscore; blank cancels): "
+if "%RERUN%"=="" goto menu
+call "%~dp0retire-empty.cmd" --root "B:\Sovereign Territories Sandbox\Working" --receipt "%RERECEIPT%" --run-id "%RERUN%" --dry-run
+if errorlevel 1 (
+  pause
+  goto menu
+)
+set "APPLY="
+set /p "APPLY=Apply this saved retirement preview? (y/n): "
+if /i "%APPLY%"=="y" call "%~dp0retire-empty.cmd" --root "B:\Sovereign Territories Sandbox\Working" --receipt "%RERECEIPT%" --run-id "%RERUN%" --apply
 pause
 goto menu
 :simplerebase
