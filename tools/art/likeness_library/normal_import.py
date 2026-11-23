@@ -338,7 +338,7 @@ def _bindings(api, cfg, policy):
         "normal_products.py", "normal_transaction.py", "retained_preparation.py",
         "normal_admission.py", "planner.py",
         "normal_history.py", "normal_finish.py", "identity_families.py", "identity_names.py",
-        "derivatives.py", "review_gallery.py",
+        "derivatives.py", "review_gallery.py", "empty_retirement.py",
     )
     library = pathlib.Path(policy_module.__file__).parent
     artifacts = {name: library / name for name in shared}
@@ -967,7 +967,7 @@ def _plan(api, root, profile, photo_ids, *, cache_path=None, policy_path=None,
         "scope": (
             "existing Potentials with 1..maximumPhotos Gallery photos are released at the start of intake, "
             "rescored with the incoming batch, and may move upward, merge or stay; emptied folders are "
-            "reported only (retirement is a separate step)"
+            "retired intact inside the same recoverable intake transaction"
         ),
         "releasedPotentials": [
             {"identity": owner, "photoCount": len(paths), "sources": paths}
@@ -1096,7 +1096,10 @@ def _check_receipt(root, receipt, bindings=None):
         if data.get("publication"):
             from tools.art.likeness_library import normal_transaction
 
-            normal_transaction.verify(root, journal_path)
+            journal = normal_transaction.verify(root, journal_path)
+            recorded = [(row["source"], row["destination"]) for row in data.get("retiredIdentityFolders", [])]
+            if recorded != [(row["source"], row["destination"]) for row in journal.get("retiredFolders", [])]:
+                raise ValueError("receipt retired identity folders differ from the publication journal")
             from tools.art.likeness_library import normal_history, retained_preparation
 
             prefix = pathlib.Path(root) / retained_preparation._processing_prefix(root)
@@ -1322,6 +1325,12 @@ def main(argv=None):
                 row for row in report["assignments"] if row.get("photoId") not in denied_ids
             ]
             report["held"].extend(report["policyHolds"])
+        from tools.art.likeness_library import empty_retirement
+
+        report["emptiedIdentityRetirement"] = {
+            "retiredRoot": empty_retirement.retired_root(root, cfg),
+            "folders": empty_retirement.plan_emptied(root, cfg, moves),
+        }
     except (OSError, ValueError) as exc:
         print(f"normal import stopped safely: {exc}", file=sys.stderr)
         return 1
@@ -1364,6 +1373,10 @@ def main(argv=None):
         for row in release["outcomes"]:
             if row["outcome"] != "kept":
                 print(f"  RELEASED POTENTIAL {row['photoId']} {row['identity']} -> {row['final']}")
+    retiring = report["emptiedIdentityRetirement"]["folders"]
+    print(f"emptied identity folders to retire inside apply: {len(retiring)}")
+    for row in retiring:
+        print(f"  RETIRE {row['source']} -> {row['destination']} ({len(row['photos'])} photo(s) leave it)")
     for row in report["assignments"]:
         print(f"  {row['photoId']} -> {row.get('destination') or 'REVIEW'} ({row['reason']})")
     for row in report["held"]:
@@ -1409,6 +1422,10 @@ def main(argv=None):
         moves, report["frozenConsistencyCheck"] = normal_finish.check_batch(
             api, space, catalog, policy, moves, update_ids=report["updateTargets"],
         )
+        from tools.art.likeness_library import empty_retirement
+
+        # Recompute from the final checked moves; the transaction re-verifies emptiness at rename time.
+        report["emptiedIdentityRetirement"]["folders"] = empty_retirement.plan_emptied(root, cfg, moves)
 
         ordinary_moves = [row for row in moves if row["photoId"] not in report["updateTargets"]]
         maintenance.validate_moves(root, ordinary_moves)
@@ -1531,6 +1548,7 @@ def main(argv=None):
                 report_prefix + "/library", report_prefix + "/comparisons/pairings",
                 report_prefix + "/_assets",
             ],
+            retire_folders=report["emptiedIdentityRetirement"]["folders"],
         )
         for row in published:
             path = root / pathlib.PurePosixPath(row["native"])
@@ -1557,6 +1575,7 @@ def main(argv=None):
             "journal": str(journal) if journal else None,
             "publication": True,
             "publishedNative": published,
+            "retiredIdentityFolders": report["emptiedIdentityRetirement"]["folders"],
             "viewerPaths": report["viewerPaths"],
             "preparationReport": str(prepared[0] / "index.html") if prepared else None,
             "pixelTreatment": "editing/framing deferred; raw is not certified clean" if args.profile == "fast" else "accepted selected-input native preparation; originals retained",
@@ -1564,6 +1583,8 @@ def main(argv=None):
         }
         _write_receipt(receipt_path, receipt)
         print(f"normal import applied: {journal or 'no file changes'}")
+        for row in receipt["retiredIdentityFolders"]:
+            print(f"retired emptied identity: {row['source']} -> {row['destination']}")
         print(f"receipt: {receipt_path}")
         return 0
     except (OSError, ValueError) as exc:

@@ -253,6 +253,7 @@ def collect(receipt_path, *, read_bytes=None):
             "settlePassCount", "settleReleasedCount", "settleMovedCount", "settleDidNotSettleCount",
         ) if key in plan},
         "freshCastSeed": plan.get("freshCastSeed"),
+        "retiredIdentityFolders": _retired_identity_folders(receipt, plan),
         "settle": plan.get("settle"),
         "phaseMoves": len(moves), "phaseArchives": len(archives), "phaseJunk": len(junk),
         "phaseViewers": len(viewers) if receipt["status"] == "applied" else None,
@@ -779,6 +780,7 @@ def render(data, out, *, audit=False, others=()):
             rebase_recap._continuity_section(data, out.parent),
             _collision_section(data, out.parent),
             _content_archive_section(data, out.parent),
+            _retirement_section(data, out.parent),
             _cast_seed_section(data, out.parent),
             _settle_section(data, out.parent),
             _face_quality_section(data),
@@ -877,6 +879,54 @@ def _content_archive_section(data, out_dir):
             f'<td>{html.escape(row["selectedPhotoId"])}<br>'
             f'{html.escape(row["selectedSource"])}</td><td>{keeper_text}</td><td>{basis}</td></tr>'
         )
+    return "".join(parts + ["</table>"])
+
+
+def _retired_identity_folders(receipt, plan):
+    """Saved item (g) retirements; an applied receipt must agree with its plan."""
+    planned = (plan.get("emptiedIdentityRetirement") or {}).get("folders")
+    if receipt["status"] == "applied" and "retiredIdentityFolders" in receipt:
+        if receipt["retiredIdentityFolders"] != (planned or []):
+            raise ValueError("receipt and plan disagree on retired identity folders")
+    if planned is None:
+        return None
+    for row in planned:
+        _relative(row["source"])
+        _relative(row["destination"])
+        for photo in row["photos"]:
+            _relative(photo["source"])
+            _relative(photo["destination"])
+    return planned
+
+
+def _retirement_section(data, out_dir):
+    """Item (g): emptied identity folders retired inside this run's transaction."""
+    folders = data.get("retiredIdentityFolders")
+    if folders is None:
+        return ""
+    applied = data["status"] == "applied"
+    root = pathlib.Path(data["workingRoot"])
+    parts = ['<h2 id="retired-identities">Emptied identities retired</h2>',
+             f'<p>{len(folders)} identity folder(s) kept no Gallery or Review original after this run, so '
+             + ("they were moved intact (with any derivative folders) to retired storage inside the same "
+                "recoverable publication transaction; recovery restores them. Nothing was deleted."
+                if applied else
+                "apply will move them intact to retired storage inside the same recoverable transaction.")
+             + " Sisters/Angels folders are never retired automatically.</p>"]
+    if not folders:
+        return "".join(parts)
+    parts.append('<table><tr><th>Identity</th><th>Retired location</th><th>Photos that left it</th></tr>')
+    for row in folders:
+        destination = html.escape(row["destination"])
+        if applied:
+            href = rebase_recap._href(_under(root, root / _relative(row["destination"])), out_dir)
+            destination = f'<a href="{html.escape(href, quote=True)}">{destination}</a>'
+        else:
+            destination = "Proposed: " + destination
+        photos = "<br>".join(
+            f'{html.escape(photo["source"])} → {html.escape(photo["destination"])}' for photo in row["photos"]
+        )
+        parts.append(f'<tr><td>{html.escape(row["source"])}</td><td>{destination}</td><td>{photos}</td></tr>')
     return "".join(parts + ["</table>"])
 
 

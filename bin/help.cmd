@@ -50,9 +50,12 @@ echo                                    Sandbox release replay: supply --release
 echo                                    verified released photos enter matching before identity formation; apply remains bound to the exact preview and lineage
 echo                                    --reconsider-holds re-evaluates prior Review holds in Sandbox; repeat on preview/apply, accepted matches, history and safeguards remain
 echo                                    --fresh-source-release selects red/orange/unscored initial Gallery members before core formation and reconsiders holds; repeat on preview/apply; Sandbox only, not with release replay
+echo                                    emptied identity folders retire AUTOMATICALLY inside the apply transaction ^(same in library.cmd intake^): preview lists them, apply moves them intact to _retired
+echo                                    after the photos move; --check verifies them, --recover-apply restores them; an emptied Sisters/Angels folder stops preview/apply with a report
 echo    retire-empty.cmd --root ABS_SANDBOX_WORKING --receipt APPLIED-SIMPLE-RECEIPT --run-id ID [--dry-run ^| --apply ^| --check ^| --recover ^| --recover-apply] [--folder CATEGORY/Name ...]
-echo                                    recoverable, journalled retirement of identity folders emptied by that rebase; preview saves a new plan+digest, apply needs that exact unstale plan
-echo                                    an emptied Sisters/Angels folder stops with a report ^(never retired here^); existing plan/journal never overwritten; pruning _retired stays manualecho    red-release-diagnostic.cmd --root WORKING --receipt RECEIPT --report SNAPSHOT.html --cache CACHE [--check] [--inspect-consumers] [--simulate-routes [--simulate-core-refresh [--simulate-destination-scores]]]
+echo                                    manual catch-up for folders emptied by an older rebase; recoverable, journalled; preview saves a new plan+digest, apply needs that exact unstale plan
+echo                                    an emptied Sisters/Angels folder stops with a report ^(never retired here^); existing plan/journal never overwritten; pruning _retired stays manual
+echo    red-release-diagnostic.cmd --root WORKING --receipt RECEIPT --report SNAPSHOT.html --cache CACHE [--check] [--inspect-consumers] [--simulate-routes [--simulate-core-refresh [--simulate-destination-scores]]]
 echo                                    read-only diagnostic; consumer scan includes discovered local installs; hypothetical routing never resolves gaps or applies a release
 echo                                    --workflow-configuration FILE must match the report-bound selection configuration; saved-run centering retains its original configuration
 echo    sandbox-red-release.cmd --root WORKING --run-id ID --receipt RECEIPT --report SNAPSHOT.html --cache CACHE [--dry-run ^| --apply]

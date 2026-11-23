@@ -1794,14 +1794,48 @@ Review (single-photo gate). A new group that contains them joins the
 Potential holding most of its released photos instead of forming another
 identity, which merges matching arrivals and other released Potentials into
 it. Otherwise a photo stays where it is. The plan records each outcome, the
-emptied Galleries (retirement is a separate step) and the selection, shared
-routing and resolution timings. Previews remain read-only.
+emptied Galleries and the selection, shared routing and resolution timings.
+Emptied identity folders are retired inside the intake transaction (see
+below). Previews remain read-only.
 
 #### Recoverable retirement of emptied identity folders
 
-After an applied SIMPLE rebase, `bin\retire-empty.cmd` retires the identity
-folders that rebase emptied, as a journalled and recoverable Sandbox
-transaction. It is the manual catch-up step; the legacy
+Retirement is automatic inside SIMPLE rebase (`bin\normal-rebase.cmd`) and
+normal intake (`bin\library.cmd`). The preview lists each Models, Prospects
+or Potentials folder that would keep no `gallery` or `review` original after
+the planned moves. Derivative folders such as `944x1104` do not count and
+move with the folder. The rebase preview binds this list in
+`emptiedIdentityFingerprint`, and apply refuses a different list. Intake has
+no saved preview, so its apply recomputes the list from the final checked
+moves.
+
+Apply moves each listed folder intact to the configured `retired` storage
+(`_retired\<Category>\<Name>`) after the photos move and before the viewers
+are rebuilt. The Gallery, Overview and Review viewers therefore no longer
+list those identities. Each rename is one journalled step in the run's
+existing publication journal (`retiredFolders`), together with the folder's
+exact inventory. This keeps a single recovery point: `--recover-apply` (rebase) or
+`--undo --apply` and `--recover --apply` (intake) move the folder back first,
+then restore the photos. If the folder changed after retirement, recovery
+stops for inspection. An existing retired destination, or an original that
+is still in the folder when the rename runs, stops the run, which then
+rolls back. Nothing is deleted.
+
+The applied receipt records `retiredIdentityFolders`. `--check` (rebase) and
+`library.cmd --check --run-id` (intake) verify that each folder is at its
+retired location and absent from its source. The rebase recap section
+"Emptied identities retired" links each retired folder and lists the photos
+that left it. In both flows, the catalogue keeps the emptied person record
+with no member photos; moved photos record the former person in
+`sourcePersonIds`.
+
+A Sisters or Angels folder is never retired automatically. If a run would
+empty one, the preview and apply stop with a report listing the folder and
+the photos that would leave it.
+
+`bin\retire-empty.cmd` stays available for manual catch-up. Use it to retire
+folders emptied by an applied rebase that ran before this behaviour existed,
+again as a journalled and recoverable Sandbox transaction. The legacy
 `likeness.cmd retire-empty` is a direct move with no journal or recovery.
 
 ```cmd

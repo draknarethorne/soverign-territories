@@ -120,6 +120,86 @@ def _inventory(folder):
     return entries
 
 
+CAST = frozenset(("Sisters", "Angels"))
+
+
+class CastEmptied(ValueError):
+    """A planned run would empty a Sisters/Angels folder; a human must decide."""
+
+
+def _owner(relative):
+    """CATEGORY/Name for a direct Gallery/Review original path, else None."""
+    parts = relative.split("/") if isinstance(relative, str) else []
+    if len(parts) == 4 and parts[0] in CATEGORIES and parts[2].casefold() in ("gallery", "review"):
+        return "/".join(parts[:2])
+    return None
+
+
+def _folder_originals(folder):
+    """Gallery/Review originals, counting nested identities' buckets so they are never retired."""
+    found = []
+    for directory in (folder / "gallery", folder / "review", *folder.glob("*/gallery"), *folder.glob("*/review")):
+        if directory.is_dir():
+            found.extend(child for child in directory.iterdir()
+                         if child.is_file() and child.suffix.casefold() in IMAGES)
+    return found
+
+
+def retired_root(root, cfg):
+    """Working-relative configured ``retired`` storage root."""
+    return cw.storage_root(cfg, "retired", root=pathlib.Path(root)).relative_to(pathlib.Path(root)).as_posix()
+
+
+def plan_emptied(root, cfg, moves, dispositions=()):
+    """Identity folders that keep no Gallery/Review original after the planned moves.
+
+    ``moves`` and ``dispositions`` are rows with Working-relative ``source`` and
+    ``destination``. Derivative folders (for example 944x1104) do not count as
+    originals and move with the retired folder. Returns sorted retirement rows
+    ``{"source", "destination", "photos"}``; raises ``CastEmptied`` (with a
+    per-folder report) when a Sisters/Angels folder would be emptied and refuses
+    an existing retired destination. Read-only.
+    """
+    root = pathlib.Path(root)
+    leaving, arriving = {}, set()
+    for row in [*moves, *dispositions]:
+        source, destination = row["source"], row["destination"]
+        if source == destination:
+            continue
+        owner = _owner(source)
+        if owner:
+            leaving.setdefault(owner, []).append({"source": source, "destination": destination})
+        target = _owner(destination)
+        if target:
+            arriving.add(target.casefold())
+    retired = retired_root(root, cfg)
+    retire, cast = [], []
+    for owner, photos in sorted(leaving.items()):
+        if owner.casefold() in arriving:
+            continue
+        folder = normal_transaction.safe(root, owner)
+        if not folder.is_dir():
+            continue
+        gone = {row["source"].casefold() for row in photos}
+        if any(path.relative_to(root).as_posix().casefold() not in gone for path in _folder_originals(folder)):
+            continue
+        row = {"source": owner, "destination": f"{retired}/{owner}",
+               "photos": sorted(photos, key=lambda item: item["source"])}
+        (cast if owner.split("/", 1)[0] in CAST else retire).append(row)
+    if cast:
+        raise CastEmptied(
+            f"{len(cast)} Sisters/Angels folder(s) would be emptied; cast folders are never retired "
+            "automatically. Inspect these moves and decide manually:\n" + "\n".join(
+                f"  {row['source']}: " + "; ".join(
+                    f"{photo['source']} -> {photo['destination']}" for photo in row["photos"])
+                for row in cast))
+    for row in retire:
+        destination = normal_transaction.safe(root, row["destination"])
+        if destination.exists() or destination.is_symlink():
+            raise ValueError(f"retired destination already exists; refusing to overwrite: {row['destination']}")
+    return retire
+
+
 def _empty(entries):
     for entry in entries:
         parts = entry["path"].split("/")
@@ -213,11 +293,11 @@ def _previous(root, relative, expected=None):
 
 def _previous_check(root, data, mapping):
     for relative, expected in data["after"].items():
-        target = _path(root, mapping.get(relative, relative))
+        target = _path(root, mapping.get(relative, normal_transaction.located(data, relative)))
         if not target.is_file() or metadata.content_sha256(target) != expected:
             raise ValueError(f"predecessor published content changed: {relative}")
     for relative in data["removed"]:
-        if not _absent(_path(root, relative)):
+        if not _absent(_path(root, normal_transaction.located(data, relative))):
             raise ValueError(f"predecessor removed content reappeared: {relative}")
 
 

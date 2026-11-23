@@ -70,6 +70,54 @@ def _replace(source, destination, checksum, token=None, *, exclusive=False):
             staged.unlink()
 
 
+def _present(path):
+    return path.exists() or path.is_symlink()
+
+
+def _retired_states(root, data):
+    """Current location ("source"/"retired") of each journalled emptied-folder retirement.
+
+    A folder recorded as retired, or one whose rename was pending, must be in
+    exactly one location; any other row must still be at its source with the
+    retired destination absent. Ambiguity is refused for inspection.
+    """
+    states = []
+    for index, row in enumerate(data.get("retiredFolders", ())):
+        source, destination = safe(root, row["source"]), safe(root, row["destination"])
+        at_source, at_destination = _present(source), _present(destination)
+        if row.get("state") == "retired" or index in (
+            data.get("pendingFolderRetirement"), data.get("pendingFolderRestore"),
+        ):
+            if at_source == at_destination:
+                raise ValueError(f"ambiguous retired folder locations; preserve and inspect: {row['source']}")
+            states.append("retired" if at_destination else "source")
+        else:
+            if at_destination:
+                raise ValueError(f"unexpected retired folder destination; preserve and inspect: {row['destination']}")
+            states.append("source")
+    return states
+
+
+def located(data, relative, states=None):
+    """Working-relative current path of a journalled file, following retired folders."""
+    rows = data.get("retiredFolders", ())
+    if states is None:
+        states = ["retired" if row.get("state") == "retired" else "source" for row in rows]
+    for row, state in zip(rows, states):
+        prefix = row["source"] + "/"
+        if state == "retired" and relative.casefold().startswith(prefix.casefold()):
+            return row["destination"] + "/" + relative[len(prefix):]
+    return relative
+
+
+def _check_retired_inventory(root, row, location):
+    from .empty_retirement import _inventory
+
+    folder = safe(root, row[location])
+    if not folder.is_dir() or _inventory(folder) != row["entries"]:
+        raise ValueError(f"retired folder content changed; preserve and inspect: {row[location]}")
+
+
 def verify(root, journal, *, applied=True, allowed_external_roots=()):
     if pathlib.Path(root).resolve() not in pathlib.Path(journal).resolve().parents:
         raise ValueError("normal publication journal must stay inside its library")
@@ -81,8 +129,15 @@ def verify(root, journal, *, applied=True, allowed_external_roots=()):
         raise ValueError("normal publication journal is bound to another root or unsupported")
     if applied and data["status"] != "applied":
         raise ValueError(f"normal publication is {data['status']}, not applied")
+    states = _retired_states(pathlib.Path(root).resolve(), data) if applied else None
+    if applied:
+        for row, state in zip(data.get("retiredFolders", ()), states):
+            if row.get("state") != "retired" or state != "retired":
+                raise ValueError(f"emptied identity folder is not at its retired location: {row['source']}")
+            if not safe(root, row["destination"]).is_dir():
+                raise ValueError(f"retired identity folder is missing: {row['destination']}")
     for relative, expected in data["after"].items():
-        path = safe(root, relative)
+        path = safe(root, located(data, relative, states))
         if applied and (not path.is_file() or metadata.content_sha256(path) != expected):
             raise ValueError(f"normal published content changed: {relative}")
     for path, state in data.get("externalAfter", {}).items():
@@ -95,7 +150,7 @@ def verify(root, journal, *, applied=True, allowed_external_roots=()):
                 raise ValueError(f"external published content changed: {target}")
     if applied:
         for relative in data["removed"]:
-            if safe(root, relative).exists():
+            if safe(root, located(data, relative, states)).exists():
                 raise ValueError(f"normal removed source reappeared: {relative}")
     return data
 
@@ -125,6 +180,10 @@ def _restore(root, data, allowed_external_roots=(), *, apply=True, journal=None)
     external = data.get("externalAfter", {})
     if set(external_before) - set(external):
         raise ValueError("normal recovery snapshot contains unexpected external paths")
+    states = _retired_states(root, data)
+    for row, state in zip(data.get("retiredFolders", ()), states):
+        if "entries" in row and row.get("state") != "restored":
+            _check_retired_inventory(root, row, "destination" if state == "retired" else "source")
     token = data.get("swapToken")
     pending = data.get("pendingExclusive")
     if pending is not None:
@@ -145,7 +204,8 @@ def _restore(root, data, allowed_external_roots=(), *, apply=True, journal=None)
         if target.exists() or target.is_symlink():
             raise ValueError(f"normal recovery refuses ambiguous restored target; preserve and inspect: {target}")
     if token is not None:
-        targets = [safe(root, relative) for relative in set(before_relative) | set(data["after"])]
+        targets = [safe(root, located(data, relative, states))
+                   for relative in set(before_relative) | set(data["after"])]
         targets.extend(_external_target(path, allowed_external_roots) for path in external)
         for target in targets:
             staged = _swap_path(target, token)
@@ -153,7 +213,7 @@ def _restore(root, data, allowed_external_roots=(), *, apply=True, journal=None)
                 raise ValueError(f"normal recovery refuses interrupted swap; preserve and inspect: {staged}")
     absent_before_restore = set()
     for relative in set(before_relative) | set(data["after"]):
-        target = safe(root, relative)
+        target = safe(root, located(data, relative, states))
         if target.exists():
             accepted = {data["after"].get(relative)}
             if relative in before_relative:
@@ -183,6 +243,25 @@ def _restore(root, data, allowed_external_roots=(), *, apply=True, journal=None)
         raise ValueError("normal recovery requires a journal for exclusive restoration")
     if pending_restore is not None:
         del data["pendingRestoreExclusive"]
+        write(journal, data)
+    # Return emptied identity folders first (reverse order) so every file
+    # restoration below targets its original, pre-publication path.
+    rows = data.get("retiredFolders", ())
+    for index in reversed(range(len(rows))):
+        row = rows[index]
+        if states[index] == "retired":
+            data["pendingFolderRestore"] = index
+            write(journal, data)
+            source = safe(root, row["source"])
+            if _present(source):
+                raise ValueError(f"normal recovery refuses to overwrite a reappeared folder: {row['source']}")
+            safe(root, row["destination"]).rename(source)
+            _check_retired_inventory(root, row, "source")
+        if "entries" in row and row.get("state") != "restored":
+            row["state"] = "restored"
+        data.pop("pendingFolderRestore", None)
+        if data.get("pendingFolderRetirement") == index:
+            del data["pendingFolderRetirement"]
         write(journal, data)
 
     def restore_file(source, target, checksum, exclusive, binding):
@@ -252,7 +331,16 @@ def recover(root, journal, *, apply=False, allowed_external_roots=()):
 def publish(root, stage, source_relatives, *, journal, bindings, profile, run_id, expected_sources=None,
             expected_modified_ns=None,
             preserved_sources=None, finalizer=None, report_directories=(),
-            external_updates=(), allowed_external_roots=(), exclusive_targets=()):
+            external_updates=(), allowed_external_roots=(), exclusive_targets=(), retire_folders=()):
+    """Publish one staged batch; optionally retire emptied identity folders in the same journal.
+
+    ``retire_folders`` rows (``source``/``destination`` Working-relative
+    folders) are renamed intact after every file publication and removal and
+    before viewer finalization. Each rename is journalled with its exact
+    inventory so recovery restores the folder before restoring files; a
+    remaining Gallery/Review original or an existing destination stops the run.
+    Nothing is deleted.
+    """
     from tools.art import library_backup
 
     root, stage = pathlib.Path(root).resolve(), pathlib.Path(stage).resolve()
@@ -307,6 +395,27 @@ def publish(root, stage, source_relatives, *, journal, bindings, profile, run_id
             or stage == journal or stage in journal.parents
             or any(directory == journal or directory in journal.parents for directory in report_roots)):
         raise ValueError("normal publication journal overlaps transaction inputs or outputs")
+    retirements = []
+    for row in retire_folders:
+        source_relative, destination_relative = row["source"], row["destination"]
+        parts = source_relative.split("/") if isinstance(source_relative, str) else []
+        if len(parts) != 2 or parts[0] not in ("Models", "Prospects", "Potentials"):
+            raise ValueError(f"only emptied non-cast identity folders can be retired: {source_relative}")
+        source, destination = safe(root, source_relative), safe(root, destination_relative)
+        if not source.is_dir() or source.is_symlink():
+            raise ValueError(f"emptied identity folder is missing: {source_relative}")
+        if _present(destination):
+            raise ValueError(f"retired destination already exists; refusing to overwrite: {destination_relative}")
+        claimed = [item[key].casefold() for item in retirements for key in ("source", "destination")]
+        if any(path == mine or path.startswith(mine + "/") or mine.startswith(path + "/")
+               for mine in (source_relative.casefold(), destination_relative.casefold()) for path in claimed):
+            raise ValueError(f"overlapping emptied folder retirements: {source_relative}")
+        if any(path == folder or folder in path.parents
+               for path in (journal, stage, *report_roots) for folder in (source, destination)):
+            raise ValueError(f"emptied folder retirement overlaps publication evidence: {source_relative}")
+        if any(relative.casefold().startswith(destination_relative.casefold() + "/") for relative in targets):
+            raise ValueError(f"staged publication writes into a retired destination: {destination_relative}")
+        retirements.append({"source": source_relative, "destination": destination_relative, "state": "planned"})
     report_before = {
         path.relative_to(root).as_posix()
         for directory in report_roots if directory.exists()
@@ -359,6 +468,7 @@ def publish(root, stage, source_relatives, *, journal, bindings, profile, run_id
         }} if external else {}),
         **({"beforeModifiedNs": {relative: expected_modified_ns[relative] for relative in before_paths
                                 if relative in expected_modified_ns}} if expected_modified_ns else {}),
+        **({"retiredFolders": retirements} if retirements else {}),
     }
     write(journal, data, exclusive=True)
     try:
@@ -396,6 +506,26 @@ def publish(root, stage, source_relatives, *, journal, bindings, profile, run_id
                 write(journal, data)
             else:
                 _replace(state["staged"], target, state["sha256"], data["swapToken"])
+        for index, row in enumerate(data.get("retiredFolders", ())):
+            from .empty_retirement import _empty, _inventory
+
+            source, destination = safe(root, row["source"]), safe(root, row["destination"])
+            entries = _inventory(source)
+            _empty(entries)
+            if _present(destination):
+                raise ValueError(f"retired destination appeared during publication: {row['destination']}")
+            missing = [parent for parent in destination.parents if root in parent.parents and not parent.exists()]
+            for parent in reversed(missing):
+                parent.mkdir()
+                data.setdefault("createdFolderParents", []).append(parent.relative_to(root).as_posix())
+            row["entries"] = entries
+            data["pendingFolderRetirement"] = index
+            write(journal, data)
+            source.rename(destination)
+            _check_retired_inventory(root, row, "destination")
+            row["state"] = "retired"
+            del data["pendingFolderRetirement"]
+            write(journal, data)
         if finalizer is not None:
             data["pendingFinalizer"] = list(report_directories)
             write(journal, data)

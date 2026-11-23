@@ -3000,6 +3000,7 @@ class NormalRebaseTests(unittest.TestCase):
                     "phaseLog": [{"phase": "final-rival-family-viewer-publication", "status": "apply-only"}],
                     "sourceHashes": {relative: move["sha256"]},
                     "incomingUpdates": {}, "exactAliasTargets": {},
+                    "emptiedIdentityRetirement": {"retiredRoot": "_retired", "folders": []},
                     "sourceRows": [{
                         "source": relative, "sourceHash": move["sha256"],
                         "photoId": move["photoId"],
@@ -3259,6 +3260,7 @@ class NormalRebaseTests(unittest.TestCase):
                 "preparationRoot": report["preparationRoot"],
                 "preparationManifestSHA256": report["preparationManifestSHA256"],
                 "preparationGeneration": report["preparationGeneration"],
+                "emptiedIdentityFingerprint": report["emptiedIdentityFingerprint"],
             }
             reuse_binding = {
                 "kind": "verified-existing-selected-preparation",

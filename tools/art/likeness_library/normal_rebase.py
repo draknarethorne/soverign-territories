@@ -15,7 +15,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from tools.art import originals
 from tools.art.likeness_library import (
-    face_quality, maintenance, metadata, normal_finish, normal_import, normal_products,
+    empty_retirement, face_quality, maintenance, metadata, normal_finish, normal_import, normal_products,
     normal_transaction, normal_recap, reconciliation, rejections, normal_admission,
     verification_reads,
 )
@@ -3118,6 +3118,18 @@ def _plan(
             )
             if reuse_plan is not None and reuse_plan.get("freshCastSeed") != report["freshCastSeed"]:
                 raise ValueError("fresh cast seed outcomes differ from preview")
+        # Item (g): identity folders left with no Gallery/Review original are
+        # retired inside the publication transaction; an emptied cast folder stops here.
+        report["emptiedIdentityRetirement"] = {
+            "retiredRoot": empty_retirement.retired_root(root, cfg),
+            "folders": empty_retirement.plan_emptied(
+                root, cfg, [move for move in report["moves"] if not move.get("membershipOnly")],
+                [*report.get("duplicateArchives", {}).values(), *report.get("junkDispositions", {}).values()],
+            ),
+        }
+        report["emptiedIdentityFingerprint"] = _preparation_fingerprint(report["emptiedIdentityRetirement"])
+        if reuse_plan is not None and reuse_plan.get("emptiedIdentityFingerprint") != report["emptiedIdentityFingerprint"]:
+            raise ValueError("emptied identity folders to retire differ from preview")
         if released_bindings is not None:
             for binding in released_bindings:
                 if release_roles.get(binding["photoId"]) == "archived-duplicate":
@@ -3267,8 +3279,17 @@ def _check(root, path, bindings=None):
         raise ValueError("normal rebase implementation changed; preview a new run")
     if bindings is not None and data.get("bindings") != bindings:
         raise ValueError("policy, configuration or shared implementation changed")
-    normal_transaction.verify(root, data["journal"])
+    journal = normal_transaction.verify(root, data["journal"])
+    _check_retired_folders(data.get("retiredIdentityFolders", []), journal)
     return data
+
+
+def _check_retired_folders(recorded, journal):
+    """The receipt's retired identities must be exactly the journal's retired folders."""
+    expected = [(row["source"], row["destination"]) for row in recorded]
+    actual = [(row["source"], row["destination"]) for row in journal.get("retiredFolders", [])]
+    if expected != actual:
+        raise ValueError("receipt retired identity folders differ from the publication journal")
 
 
 def _recovery_receipt(root, path, bindings=None):
@@ -3461,7 +3482,10 @@ def main(argv=None):
                 raise ValueError("cast receiving lock differs from the saved run")
             if args.check or args.repeat:
                 print(f"normal rebase verified: {receipt_path}")
-                print(f"source rows={receipt['plan']['sourceRowCount']}, moves={len(receipt['moves'])}, viewers={len(receipt['viewerPaths'])}")
+                print(f"source rows={receipt['plan']['sourceRowCount']}, moves={len(receipt['moves'])}, viewers={len(receipt['viewerPaths'])}, "
+                      f"retired identity folders={len(receipt.get('retiredIdentityFolders', []))}")
+                for row in receipt.get("retiredIdentityFolders", []):
+                    print(f"  retired {row['source']} -> {row['destination']} (verified present; source absent)")
                 return 0
             normal_transaction.recover(
                 root, receipt["journal"], apply=args.recover_apply,
@@ -3597,6 +3621,7 @@ def main(argv=None):
                     reports_relative + "/comparisons/pairings",
                     reports_relative + "/_assets",
                 ],
+                retire_folders=report["emptiedIdentityRetirement"]["folders"],
             )
             for row in published:
                 normal_import._refresh_content_digest(cache, root / pathlib.PurePosixPath(row["native"]))
@@ -3623,16 +3648,17 @@ def main(argv=None):
                 "journal": str(journal),
                 "publication": True,
                 "publishedNative": published,
+                "retiredIdentityFolders": report["emptiedIdentityRetirement"]["folders"],
                 "viewerPaths": report["viewerPaths"],
                 "preparationReport": str(prepared[0] / "index.html") if prepared else None,
-                "recovery": "normal_transaction journal and scoped backup",
+                "recovery": "normal_transaction journal and scoped backup (includes retired identity folders)",
             }
             normal_import._write_receipt(receipt_path, receipt)
             saved_status = "applied"
             normal_recap.publish(receipt_path, apply=True)
             print(f"normal rebase applied: {len(moves)} move(s), {len(report.get('duplicateArchives', {}))} "
                   f"duplicate archive(s), {len(report.get('junkDispositions', {}))} junk disposition(s), "
-                  f"{len(rows)} source row(s)")
+                  f"{len(rows)} source row(s), {len(receipt['retiredIdentityFolders'])} emptied identity folder(s) retired")
             print(f"receipt: {receipt_path}")
             return 0
         if receipt_path.exists():
@@ -3663,6 +3689,10 @@ def main(argv=None):
             f"{report['heldCount']} held source/candidate row(s)."
         )
         print(f"receipt: {receipt_path}")
+        retiring = report.get("emptiedIdentityRetirement", {}).get("folders", [])
+        print(f"emptied identity folders to retire inside apply: {len(retiring)}")
+        for row in retiring:
+            print(f"  RETIRE {row['source']} -> {row['destination']} ({len(row['photos'])} photo(s) leave it)")
         print("preview only; recap/audit reports written; no membership, catalogue, cache or source originals were changed")
         return 0
     except (OSError, ValueError, KeyError, TypeError) as exc:
