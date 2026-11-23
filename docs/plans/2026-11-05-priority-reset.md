@@ -2,7 +2,7 @@
 
 **Status:** active (execution spine: FAST likeness, LEAN/FULL acceptance, then character art)
 
-**Queue focus:** RA2d, RA2j, RA2o, T29, T30
+**Queue focus:** RA2d, RA2j, IU1, IU2, IU3, IU4, IU5, RA2o, T29, T30
 
 **Feedback rebase applied (Sandbox):** `feedback-rebase-20261122-02`
 applied rules (a)–(i): duplicates archived, band-aligned formation,
@@ -986,6 +986,18 @@ unresolved human identity acceptance remains open.
   remain reusable. No runtime/policy/library changes or install performed.
   Ordered repair exits transfer to reopened RA2j below; broader deferred
   readiness/secondary cues/daily lifecycle/GUI/roles are not activated.
+- [ ] **P1 ai** IU1 Building the reusable identity-universe sandbox tool
+  (`bin\universe-sandbox.cmd`) under the [identity-universe contract](2026-11-22-identity-universe-sandbox.md); separate disposable
+  universe roots only, Production and main Sandbox read-only.
+- [ ] **P1 ai** IU2 Running the blank-slate Angelica universe (SIMPLE
+  preview/apply/check, GUI reports and recap) per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md).
+- [ ] **P1 ai** IU3 Running at least two gate variations on the Angelica
+  universe and comparing outcomes per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md).
+- [ ] **P1 either** IU4 Hand-picked Angelica core: tooling prepares
+  `Various/Angelica/gallery` staging and candidates; the user selects; then
+  run and compare per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md).
+- [ ] **P1 ai** IU5 Writing the universe findings and proposed configuration
+  changes for user review before the next full rebase per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md).
 - [ ] **P1 ai** RA2j Restoring the normal FULL/LEAN/FAST intake flow and
   separating exclusive experimental execution.
   **Integrated completion follow-up:** the

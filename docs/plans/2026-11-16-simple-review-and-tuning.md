@@ -19,40 +19,10 @@ run, not a new red-member run.
 
 ## Nov 21: red-member release planning
 
-**Nov 22 identity-universe sandbox (selected; RA2d analysis, RA2j tooling):**
-the user's [Angelica universe note](#angelica-universe-sandbox---verbatim-feedback)
-explains that Angelica was promoted from a low-bar Prospect formed from
-incrementally added Various photos. Her Production and Sandbox galleries are
-therefore a contaminated universe, and releasing photos alone cannot fix it.
-The user authorized overnight work on a proposal and experiments.
-
-- [ ] **U1 Universe selector and sandbox builder.** For any named identity,
-  snapshot its related "universe" into a separate, small, disposable
-  Sandbox, under its own `...\Sovereign Territories Sandbox\Working` root
-  outside the main Sandbox. Members come from the seed identity, its
-  pre-rebase source rows and any identity whose photos score at a
-  configurable band (default yellow; orange listed) against the seed, with a
-  bounded second hop. Copy byte-verified pre-rebase originals and reuse the
-  sealed preparation by content hash. Production and the main Sandbox stay
-  read-only. Provide preview/apply/check and a membership report.
-- [ ] **U2 Blank-slate experiment.** Put every universe photo in
-  `Various/gallery` with no catalogue or history, run the SIMPLE rebase and
-  publish all GUI reports and the recap, and see which Prospects/Potentials
-  form without bias.
-- [ ] **U3 Gate variations.** Rerun U2 with alternative formation and entry
-  gates and compare the results.
-- [ ] **U4 Hand-picked core.** The user hand-picks Angelica photos into
-  `Various/Angelica/gallery` (protected named intake) and the rest of the
-  universe goes to `Various/gallery`; then the run is repeated. This requires
-  the user's selection; tooling prepares the staging.
-- [ ] **U5 Report and comparison.** Record findings, recurring patterns,
-  anomalies against the main Sandbox, and the configuration changes to
-  consider before the next full rebase.
-
-The user's original universe list: Angelica, Fia Hadley, Cecily Radcliffe,
-Jacinta Alden, Delia Foster, Petra Cole, Delia Ames, Francesca Rothwell,
-Belen Rathbone, Belen Thorne, Lorelei Fletcher and Elva Olander, plus others
-not yet identified.
+**Nov 22 identity-universe sandbox:** transferred to its own plan,
+[identity-universe sandboxes](2026-11-22-identity-universe-sandbox.md),
+executed through spine tasks IU1–IU5. The user's Angelica universe note is
+preserved verbatim there.
 
 **Nov 22 cast-seed reversal (user decision):** after reviewing the run, the
 user found that the top-9/0.60 cast seed did not achieve its goal. Most
@@ -3489,60 +3459,4 @@ Here's some feedback a) 18 identicals should get put to duplicates instead of be
 ```text
 Ultimately - I don't think that accomplished what I wanted for releasing that many - but the lower scoring ones that did move were fine - but since most ended up either back in the gallery or in the review (which makes more work for me for ones that are Angelica) didn't get what I was hoping.  But I had to see.  So, I think the release rule on Sisters and Angels should be back where it was with the lower scoring and not just the top-9 and 0.60 rule.  I thought maybe rebuilding the core identity just based on the top-9 and that 0.60 rule would keep some of those other ones from scoring high enough to come back vs. forming their own new identity.  There's also still many fragments of Angelica all over the place as well - which I think may just require manual work for me in the long run as I've gone round and round with trying to automate my way out of a messy situation.  Let's reset the config back (if that's what needed) just so we are releasing things that are moving out and finding a new home and not end up filling up the Review like it did.  Once you're done with that.  It also filled up Review for Drakniss as well - so, I am ok having those lower yellows to be retained in the library during a rebase and just recognize it's up to me to Reject photos to force them to find a new home.
 ```
-
-### Angelica universe sandbox - verbatim feedback
-
-Source: `feedback/angelica_sandbox_testing.md` (retained in place until U1-U5 are reviewed).
-
-````text
-It's sort of a mess right now and with the rules the way they are right now - moving things into another model, prospect or potential's gallery won't hold them there and I do want to see them.  I almost feel like that I need a separate Sandbox where I'd just focus on using Angelica and the related high-scoring photos to do some investigation and runs with a much smaller set of photos.  Because, there are some things I don't quite understand - like Fia Hadley photos aren't Angelica - that I know now and several that are in Anglica Review I would have expected to land with Fia - except that Fia has several with smiles that don't bring them together.  So, maybe what I actually need to work on is the work Beacon is laying out around the Various/[person name] processing and if I re-stage the photos with better hand-picked grouping,  instead of trying to release them and hope they land somewhere else, that I could drive that into a new core identity and it could then build better and attract more image?
-
-I guess here's the people that I think are part of the Angelica universe problem to solve.
-
-- Angelica
-- Fia Hadley
-- Cecily Radcliffe
-- Jacinta Alden
-- Delia Foster
-- Petra Cole
-- Delia Ames
-- Delia Foster
-- Francesca Rothwell
-- Belen Rathbone
-- Belen Thorne
-- Lorelei Fletcher
-- Elva Olander
-
-and more I possibly missed.  I know there are a few other key images that are part of Angelica that I am missing and need to identify to properly resolve the Angelica universe problem.
-
-Once I better understand this, it'll probably help with other identities as well and improve the overall accuracy of the system in grouping and identifying related images.
-
-Basically - I am looking for ideas and strategies on how I could create a smaller sandbox of all the images that were originally part of my Angelica universe and then got split out later and some left behind and use that sandbox to better understand the relationships and improve the grouping and identification of related images.
-
-If we can create this sandbox with all the images that are part of this Angelica universe, it would allow us to experiment and analyze the relationships between the images more effectively, and potentially improve the overall grouping and identification process.
-
-Additionally, having a dedicated sandbox would make it easier to test different strategies for grouping and identifying related images without affecting the main dataset, providing a controlled environment for experimentation and refinement.
-
-Ultimately, the goal is to improve the accuracy and reliability of the system in recognizing and grouping images that belong to the same identity, starting with the Angelica universe as a focused case study.
-
-Can you give me ideas on how to handle that - we do have the original set of Angelica from a point in Production - but that was after some of the photos had split out and formed other identities already.  Some valid being separate and some not.  So what is in production is really a contaminated set of the Angelica universe.  Honestly, I didn't bring in Angelica on her own.  I incrementally brought in Various images that started to group and I just assumed it was all working well and then I promoted that Prospect up to Angelica - so it was formed with much lower bars at the time and hence why I didn't realize that some of the images weren't actually Angelica.  I then brought in more Various images and just let them land where they landed vs. forcing them into Angelica - but even if I had done that, I would have continued the contamination. 
-
-So - does this make sense in where we are at, but where I want to get to?  Please offer me up a proposal for creating the smaller sandbox where we can focus on the Angelica universe and moving ahead.  I am open to all options - even just starting out a brand new sandbox with Various and throwing all the images that I think are part of the Angelica universe - not having history, basically brandnew and just focus on seeing what Prospects and Potentials are created if we don't keep anything at all.  Basically, it would be all new names and a fresh start for analyzing the Angelica universe.  Just so I can see how things work without any bias.  We could then alter gates and see how things change in each run - without any existing bias at all.
-
-Another is we create a new Sandbox and I then force certain photos into Angelica/gallery and we use that as the core from my hand-selected ones.  We then process all the other images from her universe and see how that processes.  
-
-What other ideas and what systematic system could be build so we could take any named identity (Angels/Angelica, Sisters/Nyxene, etc...) and then create a new sandbox and automatically pull the related images from the universe that score high enough to be of interests as well as images from other identities that score high enough from those.  So, being able to see the other identities that we need, plus identities related to those identities that might also be in the right scoring range.  It basically looks like any identities that an image scores Green, Yellow and even Orange against are interesting subjects for that Sandbox.
-
-I feel like this is a recurring problem and I just see it with the way things play out with Angelica ... and hence the desire for an automated way to snap a sandbox in that manner, so that we can systematically analyze and refine the grouping and identification of related images for any given identity without the contamination and bias present in the main dataset.
-
-Does this all make sense?  Give my your recommendation based on all this.  
-
-Also, feel free to work on the recommendation while I am away.  I will return in the morning and we can review your proposal, results and any insights you have gathered from the sandbox experiments.  Additionally, if you identify any patterns or recurring issues during the sandbox testing, please include those in your report so we can address them systematically.
-
-Finally, please provide a summary of the key findings and any actionable steps that can be taken to improve the overall accuracy and reliability of the system in grouping and identifying related images, both within the Angelica universe and for other identities in the future.
-
-Lastly, I want all the GUI reports, recap, etc... that would execute in this smaller sandbox.  Basically, it's just a smaller sub-set of the Production sandbox so that things can run faster when we're making adjustments and such.  This will help us quickly iterate on different approaches and validate the effectiveness of our sandbox strategies without the overhead of the full dataset.
-Additionally, please ensure that any insights or anomalies observed in this smaller sandbox are clearly documented and compared against the results from the main Production sandbox to understand the impact of the reduced dataset on the system's performance.
-Furthermore, if any discrepancies or unexpected behaviors are identified, please provide a detailed analysis of the potential causes and suggest possible corrective actions to mitigate these issues in future sandbox experiments.
-````
 <!-- markdownlint-enable MD013 -->
