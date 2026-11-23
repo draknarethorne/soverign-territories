@@ -248,7 +248,10 @@ def collect(receipt_path, *, read_bytes=None):
             "coreCount", "candidateCount", "assignedCount", "heldCount",
             "freshGalleryCount", "freshSelectedCount", "freshBlockedCount",
             "freshUnavailableCount", "freshNonVotingCount",
+            "freshCastSeedIdentityCount", "freshCastSeedKeptCount", "freshCastSeedReleaseCount",
+            "freshCastSeedReturnedCount", "freshCastWorkflowReplacementCount",
         ) if key in plan},
+        "freshCastSeed": plan.get("freshCastSeed"),
         "phaseMoves": len(moves), "phaseArchives": len(archives), "phaseJunk": len(junk),
         "phaseViewers": len(viewers) if receipt["status"] == "applied" else None,
         "preparationReusedFromPreview": plan.get("preparationReusedFromPreview"),
@@ -654,13 +657,17 @@ _PHASE_DETAILS = {
     "fresh-source-measurement": (
         "Measure initial classified sources and establish their centering population.", ()),
     "fresh-source-release-selection": (
-        "Verify measurement provenance, assess initial Gallery own-core release and retire selected membership.",
+        "Verify measurement provenance, assess initial Gallery own-core release (including the "
+        "Sisters/Angels cast seed) and retire selected membership.",
         ("freshGalleryCount", "freshSelectedCount", "freshBlockedCount",
-         "freshUnavailableCount", "freshNonVotingCount")),
+         "freshUnavailableCount", "freshNonVotingCount",
+         "freshCastSeedIdentityCount", "freshCastSeedKeptCount", "freshCastSeedReleaseCount")),
     "fresh-post-release-frozen-cores": (
         "Freeze remaining cores and prepare candidates after source retirement.", ("coreCount",)),
     "bounded-two-round-admission": (
-        "Route candidates through bounded admission.", ("candidateCount", "assignedCount", "heldCount")),
+        "Route candidates through bounded admission.",
+        ("candidateCount", "assignedCount", "heldCount",
+         "freshCastSeedReturnedCount", "freshCastWorkflowReplacementCount")),
     "single-candidate-plan": (
         "Route candidates using the single candidate plan.", ("candidateCount", "assignedCount", "heldCount")),
     "bound-admission-and-retained-member-check": (
@@ -763,6 +770,7 @@ def render(data, out, *, audit=False, others=()):
             rebase_recap._continuity_section(data, out.parent),
             _collision_section(data, out.parent),
             _content_archive_section(data, out.parent),
+            _cast_seed_section(data, out.parent),
             _face_quality_section(data),
             _group_relationships(data, out.parent),
             "<section>" + _audit_summary(data) + "</section>",
@@ -860,6 +868,99 @@ def _content_archive_section(data, out_dir):
             f'{html.escape(row["selectedSource"])}</td><td>{keeper_text}</td><td>{basis}</td></tr>'
         )
     return "".join(parts + ["</table>"])
+
+
+_SEED_OUTCOMES = {
+    "returned-gallery": "Returned to same Gallery",
+    "own-review": "Held in this identity's Review",
+    "elsewhere": "Placed elsewhere",
+    "archived-duplicate": "Archived identical copy",
+}
+
+
+def _cast_seed_section(data, out_dir):
+    """Per cast identity: the kept seed and where each released member landed."""
+    seed = data.get("freshCastSeed")
+    if not isinstance(seed, dict):
+        return ""
+    rows_by_source = {row["source"]: row for row in data["rows"]}
+    parts = [
+        '<h2 id="cast-seed">Cast seed release</h2>',
+        f'<p>Fresh Sandbox rebase, Sisters/Angels only. Each identity kept its top {seed.get("topCount")} '
+        "photos by own score, no matter what their score is (including red or orange), plus every member at "
+        f'or above {html.escape(str(seed.get("releaseBelow")))} as seed references. All other scored members '
+        "were released before cores formed and rescored against the seed through the normal cast entry rules. "
+        "Unscored members cannot be ranked and are released as before. "
+        "Before is the initial own score; after is the recorded score against the seeded identity, "
+        "where the decision recorded one.</p>",
+    ]
+    for identity in seed.get("identities", []):
+        owner = identity["identity"]
+        exempt = identity.get("seedBandExemptCount")
+        parts.append(
+            f'<h3 id="{html.escape(rebase_recap._anchor("cast-seed", owner), quote=True)}">'
+            + rebase_recap._person_link(owner, data, out_dir, bucket="gallery") + "</h3>"
+            f'<p>Members: {identity["memberCount"]}; seed size: {identity["seedSize"]}'
+            + ("" if exempt is None else f" ({exempt} kept despite a red/orange band)")
+            + f'; released: {identity["releasedCount"]} ({identity["seedReleaseCount"]} by the seed rule); '
+            f'returned to Gallery: {identity["returnedCount"]}.</p>'
+        )
+        if not identity["released"]:
+            parts.append("<p class=muted>None released.</p>")
+            continue
+        parts.append('<table><tr><th>Photo</th><th>Release basis</th><th>Before (own)</th>'
+                     '<th>Outcome</th><th>After (vs seed)</th><th>Best recorded match</th></tr>')
+        for item in identity["released"]:
+            row = rows_by_source.get(item["currentPath"])
+            photo = (rebase_recap._thumb(row, data, out_dir) + "<br>"
+                     + rebase_recap._destination_links(row, data, out_dir)) if row else (
+                '<span class=muted>Source row unavailable.</span>')
+            outcome = html.escape(_SEED_OUTCOMES.get(item["outcome"], item["outcome"]))
+            if item["outcome"] != "returned-gallery":
+                outcome += "<br>" + rebase_recap._person_link(
+                    rebase_recap.person_and_bucket(item["finalPath"])[0], data, out_dir,
+                ) + "<br>" + html.escape(item["finalPath"])
+            if item.get("workflowSelected"):
+                outcome += "<br><b>Workflow-selected</b>"
+            best = (rebase_recap._person_link(item["afterBestMatch"], data, out_dir) + ": "
+                    + rebase_recap._score_text(item.get("afterBestScore"))) if item.get("afterBestMatch") else (
+                '<span class=muted>not recorded</span>')
+            parts.append(
+                f'<tr><td>{photo}<br>{html.escape(item["photoId"])}<br>{html.escape(item["currentPath"])}</td>'
+                f'<td>{html.escape(", ".join(item["selectionReasons"]))}'
+                f'{"" if item.get("seedRank") is None else "<br>rank " + str(item["seedRank"])}</td>'
+                f'<td>{rebase_recap._score_text(item["beforeScore"])}</td><td>{outcome}</td>'
+                f'<td>{rebase_recap._score_text(item.get("afterScore"))}</td><td>{best}</td></tr>'
+            )
+        parts.append("</table>")
+    proposals = seed.get("workflowReplacementProposals", [])
+    parts.append('<h3 id="cast-seed-workflow">Workflow replacement proposals</h3>'
+                 "<p>Released workflow-selected photos that did not return to their Gallery. Proposals only; "
+                 "the workflow configuration was not changed.</p>")
+    if not proposals:
+        parts.append("<p class=muted>None.</p>")
+    else:
+        parts.append('<table><tr><th>Identity</th><th>Workflow photo / outcome</th>'
+                     '<th>Proposed replacement</th></tr>')
+        for proposal in proposals:
+            replacement = proposal.get("replacement")
+            if replacement:
+                row = rows_by_source.get(replacement["currentPath"])
+                text = ((rebase_recap._thumb(row, data, out_dir) + "<br>") if row else "") + (
+                    html.escape(replacement["photoId"]) + "<br>" + html.escape(replacement["finalPath"])
+                    + "<br>own score " + rebase_recap._score_text(replacement["ownScore"]))
+            else:
+                text = '<span class=muted>No remaining scored Gallery photo available.</span>'
+            source = rows_by_source.get(proposal["currentPath"])
+            parts.append(
+                "<tr><td>" + rebase_recap._person_link(proposal["identity"], data, out_dir, bucket="gallery")
+                + "</td><td>" + ((rebase_recap._thumb(source, data, out_dir) + "<br>") if source else "")
+                + html.escape(proposal["photoId"]) + "<br>"
+                + html.escape(_SEED_OUTCOMES.get(proposal["outcome"], proposal["outcome"]))
+                + ": " + html.escape(proposal["finalPath"]) + "</td><td>" + text + "</td></tr>"
+            )
+        parts.append("</table>")
+    return "".join(parts)
 
 
 def _face_quality_section(data):

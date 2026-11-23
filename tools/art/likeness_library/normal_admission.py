@@ -8,7 +8,7 @@ import numpy as np
 
 from . import metadata, protection, rejections
 from .face_quality import reference_quality
-from .policy import evaluate_photo_route, score_band, validate_score_bands
+from .policy import cast_seed_settings, evaluate_photo_route, score_band, validate_score_bands
 from .scoring import nz
 
 CAST = frozenset(("Sisters", "Angels"))
@@ -17,6 +17,10 @@ CAST = frozenset(("Sisters", "Angels"))
 def fresh_baseline_release_candidates(rows, policy):
     """Assess a complete frozen named-Gallery inventory before identity formation.
 
+    Selection is red/orange/unscored own scores plus, for Sisters/Angels only,
+    scored members outside the configured cast seed (``castAdmission``
+    ``seedTopCount``/``seedReleaseBelow``); cast seed members are exempt from
+    band release.
     The caller must bind each centered vector to its prepared measurement hash
     and the listed source bytes, establish quality/reference eligibility,
     effective trusted-anchor status and ambiguity from the initial source
@@ -31,6 +35,7 @@ def fresh_baseline_release_candidates(rows, policy):
     if not isinstance(rows, list):
         raise ValueError("fresh baseline Gallery inventory must be an array")
     validate_score_bands(policy["scoreBands"])
+    seed_settings = cast_seed_settings(policy)
     categories = {"Sisters", "Angels", "Models", "Prospects", "Potentials"}
     owners, paths, ids, dimensions = {}, set(), set(), set()
     checked = []
@@ -159,7 +164,13 @@ def fresh_baseline_release_candidates(rows, policy):
             else:
                 reason = "no independent comparison reference"
         evidence["unavailableReason"] = reason
-        evidence["selected"] = evidence["band"] in ("red", "orange") or evidence["score"] is None
+        reasons = []
+        if evidence["score"] is None:
+            reasons.append("unscored")
+        elif evidence["band"] in ("red", "orange"):
+            reasons.append(f'band:{evidence["band"]}')
+        evidence["selectionReasons"] = reasons
+        evidence["castSeed"] = None
         block_reasons = []
         if row["sourceAmbiguous"] or row["identityAmbiguous"]:
             block_reasons.append("source or identity ambiguity")
@@ -173,16 +184,22 @@ def fresh_baseline_release_candidates(rows, policy):
             block_reasons.append("neither source nor standard filename encodes the bound photo ID")
         evidence["bindingBlocked"] = bool(block_reasons)
         evidence["bindingBlockReasons"] = block_reasons
-        assessed.append(evidence)
+        assessed.append((evidence, binding))
+    seed = _apply_cast_seed([evidence for evidence, _binding in assessed], seed_settings)
+    for evidence, binding in assessed:
+        evidence["selected"] = bool(evidence["selectionReasons"])
         if evidence["selected"]:
             (blocked if evidence["bindingBlocked"] else bindings).append(binding)
+    assessed = [evidence for evidence, _binding in assessed]
     return {
         "bindings": bindings, "blockedBindings": blocked, "assessment": assessed,
+        "castSeed": seed,
         "policyEvidence": {
             "version": policy.get("version"),
             "scoreBands": json.loads(json.dumps(policy["scoreBands"])),
             "photoRoutingReviewMinimum": policy.get("photoRouting", {}).get("reviewMinimum"),
             "castReviewMinimum": policy.get("castAdmission", {}).get("reviewMinimum"),
+            "castSeed": dict(seed_settings),
             "categoryReviewThresholds": {
                 category: {
                     key: rules[key] for key in ("reviewRouteMinimum", "reviewSuggestionBelowSimilarity")
@@ -193,6 +210,59 @@ def fresh_baseline_release_candidates(rows, policy):
             },
         },
         "planningOnly": True,
+    }
+
+
+def _apply_cast_seed(assessed, settings):
+    """Select scored Sisters/Angels members outside the seed for release.
+
+    Per cast identity, the seed is the ``topCount`` highest own scores
+    (no matter what the score is) plus every member at or above
+    ``releaseBelow``. Seed members are exempt from all fresh release selection,
+    including red/orange band release, so each identity keeps
+    min(``topCount``, scored members) seeds. Other scored members are released
+    in addition to the existing band selection. Unscored members cannot be
+    ranked and stay released; ineligible/ambiguous rules are unchanged.
+    """
+    top, below = settings["topCount"], settings["releaseBelow"]
+    identities = {}
+    owners = sorted({row["owner"] for row in assessed if row["owner"].split("/", 1)[0] in CAST})
+    for owner in owners:
+        members = [row for row in assessed if row["owner"] == owner]
+        scored = sorted(
+            (row for row in members if row["score"] is not None),
+            key=lambda row: (-row["score"], row["currentPath"].casefold(), row["currentPath"]),
+        )
+        for rank, row in enumerate(scored, 1):
+            by_rank, by_score = rank <= top, row["score"] >= below
+            row["castSeed"] = {
+                "rank": rank, "seedMember": by_rank or by_score,
+                "basis": ("top-count-and-threshold" if by_rank and by_score else
+                          "top-count" if by_rank else "threshold" if by_score else None),
+                "exemptedSelectionReasons": [],
+            }
+            if by_rank or by_score:
+                # Scored rows can only carry band reasons; the seed overrides them.
+                row["castSeed"]["exemptedSelectionReasons"] = list(row["selectionReasons"])
+                row["selectionReasons"].clear()
+            elif not row["selectionReasons"]:
+                row["selectionReasons"].append("cast-seed-release")
+        identities[owner] = {
+            "memberCount": len(members), "scoredCount": len(scored),
+            "seedPhotoIds": [row["photoId"] for row in scored if row["castSeed"]["seedMember"]],
+            "seedBandExemptPhotoIds": [row["photoId"] for row in scored
+                                       if row["castSeed"]["exemptedSelectionReasons"]],
+            "seedReleasedPhotoIds": [row["photoId"] for row in scored
+                                     if "cast-seed-release" in row["selectionReasons"]],
+            "bandReleasedPhotoIds": [row["photoId"] for row in scored
+                                     if any(reason.startswith("band:") for reason in row["selectionReasons"])],
+            "unscoredReleasedPhotoIds": sorted(row["photoId"] for row in members if row["score"] is None),
+        }
+    return {
+        "scope": "Sisters/Angels named Galleries in the fresh Sandbox source release only",
+        "topCount": top, "releaseBelow": below, "identities": identities,
+        "seedKeptCount": sum(len(item["seedPhotoIds"]) for item in identities.values()),
+        "seedReleaseCount": sum(len(item["seedReleasedPhotoIds"]) for item in identities.values()),
     }
 
 

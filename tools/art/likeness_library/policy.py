@@ -19,6 +19,30 @@ def _number(value, label, minimum=-1.0, maximum=1.0):
     return float(value)
 
 
+CAST_SEED_KEYS = frozenset(("seedTopCount", "seedReleaseBelow"))
+CAST_SEED_DEFAULTS = {"seedTopCount": 9, "seedReleaseBelow": 0.60}
+
+
+def cast_seed_settings(policy):
+    """Return the validated Sisters/Angels fresh-rebase seed configuration.
+
+    ``seedTopCount`` members with the highest own scores, plus every member at
+    or above ``seedReleaseBelow``, stay as seed references; other scored cast
+    members are released for rescoring against that seed.
+    """
+    admission = policy.get("castAdmission") if isinstance(policy, dict) else None
+    if not isinstance(admission, dict):
+        raise ValueError("cast seed settings require castAdmission")
+    top = admission.get("seedTopCount", CAST_SEED_DEFAULTS["seedTopCount"])
+    if isinstance(top, bool) or not isinstance(top, int) or top < 1:
+        raise ValueError("castAdmission/seedTopCount must be a positive integer")
+    below = _number(
+        admission.get("seedReleaseBelow", CAST_SEED_DEFAULTS["seedReleaseBelow"]),
+        "castAdmission/seedReleaseBelow", 0, 1,
+    )
+    return {"topCount": top, "releaseBelow": below}
+
+
 def validate_score_bands(bands):
     """Validate the display bands without requiring a current full policy."""
     if not isinstance(bands, dict) or set(bands) != {"green", "yellow", "orange", "red"}:
@@ -76,11 +100,13 @@ def validate_policy(policy):
         raise ValueError("likeness policy status must be draft or approved")
     admission = policy.get("castAdmission")
     if "castAdmission" in policy:
-        if not isinstance(admission, dict) or set(admission) != {
-            "reviewMinimum", "minimumIndependentReferences", "approvedClosePairs",
-        }:
+        required_admission = {"reviewMinimum", "minimumIndependentReferences", "approvedClosePairs"}
+        if not isinstance(admission, dict) or not (
+            required_admission <= set(admission) <= required_admission | CAST_SEED_KEYS
+        ):
             raise ValueError("castAdmission keys are incomplete or unsupported")
         _number(admission["reviewMinimum"], "castAdmission/reviewMinimum", 0, 1)
+        cast_seed_settings(policy)
         minimum = admission["minimumIndependentReferences"]
         if isinstance(minimum, bool) or not isinstance(minimum, int) or minimum < 2:
             raise ValueError("castAdmission requires at least two independent destination references")

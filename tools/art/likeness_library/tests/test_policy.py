@@ -11,6 +11,7 @@ sys.path.insert(0, str(ROOT))
 
 from tools.art.likeness_library.policy import (  # noqa: E402
     DEFAULT_POLICY_PATH,
+    cast_seed_settings,
     classify_category,
     evaluate_identity_action,
     evaluate_photo_consistency,
@@ -70,6 +71,36 @@ class LikenessPolicyTests(unittest.TestCase):
             policy["castAdmission"].update(change)
             with self.subTest(change=change), self.assertRaises(ValueError):
                 validate_policy(policy)
+
+    def test_cast_seed_settings_default_and_reject_invalid_values(self):
+        self.assertEqual(cast_seed_settings(self.policy), {"topCount": 9, "releaseBelow": .60})
+        self.assertEqual((self.policy["castAdmission"]["seedTopCount"],
+                          self.policy["castAdmission"]["seedReleaseBelow"]), (9, .60))
+        legacy = copy.deepcopy(self.policy)
+        for key in ("seedTopCount", "seedReleaseBelow"):
+            del legacy["castAdmission"][key]
+        validate_policy(legacy)
+        self.assertEqual(cast_seed_settings(legacy), {"topCount": 9, "releaseBelow": .60})
+        custom = copy.deepcopy(self.policy)
+        custom["castAdmission"].update(seedTopCount=3, seedReleaseBelow=0)
+        validate_policy(custom)
+        self.assertEqual(cast_seed_settings(custom), {"topCount": 3, "releaseBelow": 0.})
+        for change in (
+            {"seedTopCount": 0}, {"seedTopCount": True}, {"seedTopCount": 1.5}, {"seedTopCount": "9"},
+            {"seedReleaseBelow": 1.01}, {"seedReleaseBelow": -.1}, {"seedReleaseBelow": float("nan")},
+            {"seedReleaseBelow": True}, {"seedRelease": .6},
+        ):
+            policy = copy.deepcopy(self.policy)
+            policy["castAdmission"].update(change)
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                validate_policy(policy)
+        schema_path = ROOT / "data" / "art" / "_schema" / "likeness-engine-policy.schema.json"
+        schema = __import__("json").loads(schema_path.read_text(encoding="utf-8"))
+        for change in ({"seedTopCount": 0}, {"seedReleaseBelow": 2}):
+            policy = copy.deepcopy(self.policy)
+            policy["castAdmission"].update(change)
+            with self.subTest(schema=change):
+                self.assertTrue(list(Draft7Validator(schema).iter_errors(policy)))
 
     def test_score_bands_use_existing_gallery_boundaries(self):
         self.assertEqual(score_band(0.55, self.policy), "green")

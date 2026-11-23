@@ -50,8 +50,9 @@ class FreshBaselineReleaseTests(unittest.TestCase):
         return normal_admission.fresh_baseline_release_candidates(rows, self.policy)
 
     def test_exact_display_band_boundaries_and_no_review_floor_substitution(self):
-        ref = row(1, [1., 0.], reference=True)
-        rows = [ref] + [row(i, angle(s)) for i, s in
+        # Non-cast owner: Sisters/Angels top-count seeds are exempt from band release.
+        ref = row(1, [1., 0.], owner="Models/Example", reference=True)
+        rows = [ref] + [row(i, angle(s), owner="Models/Example") for i, s in
                         ((2, .149), (3, .15), (4, .299), (5, .30), (6, .349))]
         result = self.assess(rows)
         evidence = {item["photoId"]: item for item in result["assessment"]}
@@ -70,7 +71,8 @@ class FreshBaselineReleaseTests(unittest.TestCase):
         self.policy["scoreBands"]["yellow"]["minimum"] = .4
         self.policy["scoreBands"]["orange"]["minimum"] = .2
         self.policy["scoreBands"]["red"]["maximumExclusive"] = .2
-        result = self.assess([row(1, [1., 0.], reference=True), row(2, angle(.3))])
+        result = self.assess([row(1, [1., 0.], owner="Models/Example", reference=True),
+                              row(2, angle(.3), owner="Models/Example")])
         self.assertEqual(result["assessment"][1]["band"], "orange")
         self.assertTrue(result["assessment"][1]["selected"])
 
@@ -163,6 +165,91 @@ class FreshBaselineReleaseTests(unittest.TestCase):
         result = self.assess([{**item, "standardName": standard}])
         self.assertEqual(result["blockedBindings"], [])
         self.assertEqual(result["bindings"][0]["currentPath"], item["currentPath"])
+
+
+class CastSeedSelectionTests(unittest.TestCase):
+    """Item (i): Sisters/Angels keep a seed; other scored members are released."""
+
+    SCORES = {5: .65, 8: .62, 6: .45, 3: .40, 4: .35, 7: .10}
+
+    def setUp(self):
+        self.policy = load_policy()
+
+    def rows(self, owner):
+        # Only the anchors vote, so every other member's own score is exact.
+        anchors = [row(i, [1., 0.], owner=owner, reference=True, identityAnchor=True) for i in (1, 2)]
+        return anchors + [row(i, angle(score), owner=owner) for i, score in self.SCORES.items()]
+
+    def assess(self, rows, top, below):
+        self.policy["castAdmission"].update(seedTopCount=top, seedReleaseBelow=below)
+        return normal_admission.fresh_baseline_release_candidates(rows, self.policy)
+
+    @staticmethod
+    def selected(result):
+        return {item["photoId"].removeprefix("photo:image_") for item in result["bindings"]}
+
+    def test_threshold_members_beyond_top_count_are_kept_and_others_released(self):
+        result = self.assess(self.rows("Sisters/Example"), 2, .60)
+        evidence = {item["photoId"].removeprefix("photo:image_"): item for item in result["assessment"]}
+        self.assertEqual([evidence[i]["score"] for i in ("1", "2")], [1., 1.])
+        self.assertEqual(self.selected(result), {"6", "3", "4", "7"})
+        self.assertEqual(evidence["5"]["castSeed"], {"rank": 3, "seedMember": True, "basis": "threshold",
+                                                     "exemptedSelectionReasons": []})
+        self.assertFalse(evidence["8"]["selected"])
+        self.assertEqual(evidence["6"]["selectionReasons"], ["cast-seed-release"])
+        self.assertEqual(evidence["7"]["selectionReasons"], ["band:red"])
+        seed = result["castSeed"]["identities"]["Sisters/Example"]
+        self.assertEqual(len(seed["seedPhotoIds"]), 4)
+        self.assertEqual(seed["seedBandExemptPhotoIds"], [])
+        self.assertEqual(len(seed["seedReleasedPhotoIds"]), 3)
+        self.assertEqual(seed["bandReleasedPhotoIds"], ["photo:image_7"])
+        self.assertEqual((result["castSeed"]["seedKeptCount"], result["castSeed"]["seedReleaseCount"]), (4, 3))
+        self.assertEqual(result["policyEvidence"]["castSeed"], {"topCount": 2, "releaseBelow": .60})
+
+    def test_top_count_keeps_low_scores_including_red_but_not_unscored(self):
+        result = self.assess(self.rows("Angels/Example"), 5, .60)
+        evidence = {item["photoId"].removeprefix("photo:image_"): item for item in result["assessment"]}
+        # Rank 5 is a 0.45 yellow member: kept by the top count despite the threshold.
+        self.assertEqual(evidence["6"]["castSeed"], {"rank": 5, "seedMember": True, "basis": "top-count",
+                                                     "exemptedSelectionReasons": []})
+        self.assertEqual(self.selected(result), {"3", "4", "7"})
+        # A red member inside the top count is kept "no matter what its score is";
+        # an unscored member cannot be ranked and stays released.
+        rows = self.rows("Angels/Example") + [row(9, None, owner="Angels/Example")]
+        small = self.assess(rows, 8, .60)
+        evidence = {item["photoId"].removeprefix("photo:image_"): item for item in small["assessment"]}
+        self.assertEqual(self.selected(small), {"9"})
+        self.assertEqual(evidence["7"]["band"], "red")
+        self.assertFalse(evidence["7"]["selected"])
+        self.assertEqual(evidence["7"]["selectionReasons"], [])
+        self.assertEqual(evidence["7"]["castSeed"], {"rank": 8, "seedMember": True, "basis": "top-count",
+                                                     "exemptedSelectionReasons": ["band:red"]})
+        self.assertEqual((evidence["9"]["castSeed"], evidence["9"]["selectionReasons"]), (None, ["unscored"]))
+        seed = small["castSeed"]["identities"]["Angels/Example"]
+        self.assertEqual(len(seed["seedPhotoIds"]), 8)
+        self.assertEqual(seed["seedBandExemptPhotoIds"], ["photo:image_7"])
+        self.assertEqual((seed["seedReleasedPhotoIds"], seed["bandReleasedPhotoIds"]), ([], []))
+        self.assertEqual(seed["unscoredReleasedPhotoIds"], ["photo:image_9"])
+        # The identity keeps min(N, scored members) seeds.
+        self.assertEqual(len(self.assess(rows, 20, .99)["castSeed"]["identities"]["Angels/Example"]["seedPhotoIds"]), 8)
+
+    def test_default_seed_and_non_cast_categories_are_unaffected(self):
+        for owner in ("Models/Example", "Prospects/Example", "Potentials/Example"):
+            with self.subTest(owner=owner):
+                result = self.assess(self.rows(owner), 1, .99)
+                self.assertEqual(self.selected(result), {"7"})
+                self.assertTrue(all(item["castSeed"] is None for item in result["assessment"]))
+                self.assertEqual(result["castSeed"]["identities"], {})
+        self.policy = load_policy()
+        result = normal_admission.fresh_baseline_release_candidates(self.rows("Sisters/Example"), self.policy)
+        self.assertEqual((result["castSeed"]["topCount"], result["castSeed"]["releaseBelow"]), (9, .60))
+        # Eight scored members fit in the default top 9, so even the red one is kept.
+        self.assertEqual(self.selected(result), set())
+        rows = self.rows("Sisters/Example")
+        self.assertEqual(self.assess(list(reversed(rows)), 2, .6), self.assess(rows, 2, .6))
+        self.policy["castAdmission"]["seedTopCount"] = 0
+        with self.assertRaisesRegex(ValueError, "seedTopCount"):
+            normal_admission.fresh_baseline_release_candidates(rows, self.policy)
 
 
 class NamedGalleryNonvotingTests(unittest.TestCase):

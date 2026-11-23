@@ -34,6 +34,14 @@
             "type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true,
             "items": {"type": "string", "pattern": "^(Sisters|Angels)/[^/\\\\:]+$"}
           }
+        },
+        "seedTopCount": {
+          "type": "integer", "minimum": 1, "default": 9,
+          "description": "Fresh Sandbox rebase only: Sisters/Angels members with the highest own scores kept as seed references no matter what their score is (exempt from red/orange release)."
+        },
+        "seedReleaseBelow": {
+          "type": "number", "minimum": 0, "maximum": 1, "default": 0.6,
+          "description": "Fresh Sandbox rebase only: Sisters/Angels members outside the top count and below this own score are released and rescored against the seed."
         }
       }
     },

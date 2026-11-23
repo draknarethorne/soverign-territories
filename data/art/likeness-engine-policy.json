@@ -6,7 +6,9 @@
   "castAdmission": {
     "reviewMinimum": 0.35,
     "minimumIndependentReferences": 2,
-    "approvedClosePairs": [["Sisters/Drakness", "Angels/Nyxene"]]
+    "approvedClosePairs": [["Sisters/Drakness", "Angels/Nyxene"]],
+    "seedTopCount": 9,
+    "seedReleaseBelow": 0.60
   },
   "runtimeSettings": {
     "mixed": ["Artists/*", "Various", "Prospects/Various", "Potentials/Various"],

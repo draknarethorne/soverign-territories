@@ -177,6 +177,64 @@ class NormalRecapTests(unittest.TestCase):
         self.assertIn("freshBlockedCount: unavailable", page)
         self.assertIn("fresh-source-release-selection</a> — complete; duration unavailable", page)
 
+    def test_cast_seed_release_section_lists_scores_outcomes_and_workflow_proposals(self):
+        plan = self.receipt["plan"]
+        plan["phaseLog"] = [
+            {"phase": "fresh-source-release-selection", "status": "complete", "durationSeconds": 1.},
+            {"phase": "bounded-two-round-admission", "status": "complete", "durationSeconds": 1.},
+        ]
+        plan.update(freshCastSeedIdentityCount=1, freshCastSeedKeptCount=9, freshCastSeedReleaseCount=1,
+                    freshCastSeedReturnedCount=0, freshCastWorkflowReplacementCount=1)
+        plan["freshCastSeed"] = {
+            "topCount": 9, "releaseBelow": .6, "configurationChanged": False,
+            "summary": {"identityCount": 1, "seedKeptCount": 9, "seedReleaseCount": 1, "seedReturnedCount": 0},
+            "identities": [{
+                "identity": "Angels/Ava", "memberCount": 11, "seedSize": 9, "seedPhotoIds": [],
+                "seedBandExemptCount": 1,
+                "releasedCount": 2, "seedReleaseCount": 1, "returnedCount": 1,
+                "released": [
+                    {"photoId": "photo:image_1", "currentPath": self.a, "sha256": self.h1,
+                     "beforeScore": .5612, "beforeBand": "green", "seedRank": 10,
+                     "selectionReasons": ["cast-seed-release"], "outcome": "elsewhere",
+                     "finalPath": "Sisters/Sia/review/ava_image_1.jpg", "afterScore": .4321,
+                     "afterBestMatch": "Sisters/Sia", "afterBestScore": .5123, "workflowSelected": True},
+                    {"photoId": "photo:image_9", "currentPath": "Angels/Ava/gallery/ava_image_9.jpg",
+                     "sha256": self.h3, "beforeScore": .2, "beforeBand": "orange", "seedRank": 11,
+                     "selectionReasons": ["band:orange"], "outcome": "returned-gallery",
+                     "finalPath": "Angels/Ava/gallery/ava_image_9.jpg", "afterScore": None,
+                     "afterBestMatch": None, "afterBestScore": None, "workflowSelected": False},
+                ],
+            }],
+            "workflowReplacementProposals": [{
+                "identity": "Angels/Ava", "photoId": "photo:image_1", "currentPath": self.a,
+                "outcome": "elsewhere", "finalPath": "Sisters/Sia/review/ava_image_1.jpg",
+                "replacement": {"photoId": "photo:image_2", "currentPath": self.target,
+                                "finalPath": self.target, "ownScore": .8771},
+                "basis": "highest initial own score",
+            }],
+        }
+        self.save()
+        data = normal_recap.collect(self.report)
+        page = normal_recap.render(data, self.library / "recap.html")
+        section = page[page.index('<h2 id="cast-seed">'):]
+        section = section[:section.index("</section>")]
+        self.assertIn("top 9 photos by own score, no matter what their score is (including red or orange)", section)
+        self.assertIn("Unscored members cannot be ranked and are released as before.", section)
+        self.assertIn("Members: 11; seed size: 9 (1 kept despite a red/orange band); released: 2 "
+                      "(1 by the seed rule); returned to Gallery: 1.", section)
+        self.assertIn("cast-seed-release", section)
+        for text in ("0.561", "0.432", "0.512", "Placed elsewhere", "Sisters/Sia/review/ava_image_1.jpg",
+                     "Returned to same Gallery", "Workflow-selected", "photo:image_2", "own score 0.877"):
+            self.assertIn(text, section)
+        self.assertIn("<img", section)
+        self.assertIn("configuration was not changed", section)
+        self.assertIn("freshCastSeedReleaseCount: 1", page)
+        self.assertIn("freshCastWorkflowReplacementCount: 1", page)
+        del plan["freshCastSeed"]
+        self.save()
+        page = normal_recap.render(normal_recap.collect(self.report), self.library / "recap.html")
+        self.assertNotIn('id="cast-seed"', page)
+
     def test_red_diagnostic_cli_is_read_only_in_default_and_check_modes(self):
         from tools.art.likeness_library import red_release_diagnostic
 

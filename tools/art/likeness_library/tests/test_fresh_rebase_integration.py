@@ -258,6 +258,93 @@ class FreshRebaseIntegrationTests(unittest.TestCase):
         self.assertTrue(reuse.call_args.kwargs["allow_subset"])
         self.assertTrue(reuse.call_args.kwargs["allow_subset"])
 
+    def cast_seed_plan(self, *, top=3, below=.60, **kwargs):
+        """Sisters/Seed: three identical-direction seeds and one yellow (0.40) member."""
+        from tools.art.likeness_library.policy import load_policy
+
+        f = self.fixture
+        names = {}
+        for index, payload in enumerate((b"seed one", b"seed two", b"seed three", b"seed low"), 301):
+            names[payload] = f.photo(f"Sisters/Seed/gallery/seed_image_{index}.jpg", payload)
+        self.api.cw.photo_folders(None, None).append(("Sisters", "Seed", f.root / "Sisters" / "Seed"))
+        self.vectors.update({
+            "seed one": [0., 0., 1.], "seed two": [0., .1, np.sqrt(.99)],
+            "seed three": [0., -.1, np.sqrt(.99)], "seed low": [0., -np.sqrt(.84), .4],
+        })
+        policy = load_policy()
+        policy["castAdmission"].update(seedTopCount=top, seedReleaseBelow=below)
+        path = f.root.parent / "seed-policy.json"
+        path.write_text(json.dumps(policy), encoding="utf-8")
+        return names, self.plan(policy_path=path, **kwargs)
+
+    def test_cast_seed_releases_outside_seed_and_binds_outcomes(self):
+        names, report = self.cast_seed_plan()
+        low = metadata.photo_id_from_name(names[b"seed low"].name)
+        seeds = {metadata.photo_id_from_name(names[key].name) for key in (b"seed one", b"seed two", b"seed three")}
+        assessment = {row["photoId"]: row for row in report["freshSourceAssessment"]["assessment"]}
+        self.assertEqual(assessment[low]["band"], "yellow")
+        self.assertEqual(assessment[low]["selectionReasons"], ["cast-seed-release"])
+        self.assertIn(low, {row["photoId"] for row in report["releasedPhotoBindings"]})
+        # Released before the post-release cores formed: it never votes for the seed.
+        self.assertNotIn(low, {
+            pid for snapshot in report["referenceSnapshots"].values()
+            for ids in snapshot["photoIds"].values() for pid in ids
+        })
+        self.assertTrue(seeds <= set(report["referenceSnapshots"]["1"]["photoIds"]["Sisters/Seed"]))
+        # Non-cast identities are unaffected by the cast seed.
+        self.assertTrue(all(row["castSeed"] is None for row in assessment.values()
+                            if not row["owner"].startswith("Sisters/")))
+        seed = report["freshCastSeed"]
+        self.assertEqual((seed["topCount"], seed["releaseBelow"]), (3, .60))
+        identity = next(item for item in seed["identities"] if item["identity"] == "Sisters/Seed")
+        self.assertEqual((identity["seedSize"], identity["releasedCount"], identity["seedReleaseCount"]), (3, 1, 1))
+        released = identity["released"][0]
+        self.assertEqual(released["photoId"], low)
+        self.assertAlmostEqual(released["beforeScore"], .4, places=2)
+        self.assertEqual(released["outcome"], "own-review")
+        self.assertTrue(released["finalPath"].startswith("Sisters/Seed/review/"))
+        self.assertAlmostEqual(released["afterScore"], .4, places=2)
+        self.assertEqual(seed["workflowReplacementProposals"], [])
+        self.assertEqual((report["freshCastSeedReleaseCount"], report["freshCastSeedKeptCount"],
+                          report["freshCastSeedReturnedCount"]), (1, 3, 0))
+        replay = self.plan(for_apply=True, reuse_plan=report,
+                           policy_path=self.fixture.root.parent / "seed-policy.json")
+        self.assertEqual(replay["freshCastSeed"], report["freshCastSeed"])
+        changed = copy.deepcopy(report)
+        changed["freshCastSeed"]["identities"][0]["released"][0]["outcome"] = "returned-gallery"
+        with self.assertRaisesRegex(ValueError, "cast seed outcomes differ"):
+            self.plan(for_apply=True, reuse_plan=changed,
+                      policy_path=self.fixture.root.parent / "seed-policy.json")
+
+    def test_cast_seed_top_count_keeps_low_member_when_large_enough(self):
+        names, report = self.cast_seed_plan(top=4)
+        low = metadata.photo_id_from_name(names[b"seed low"].name)
+        self.assertNotIn(low, {row["photoId"] for row in report["releasedPhotoBindings"]})
+        row = next(row for row in report["freshSourceAssessment"]["assessment"] if row["photoId"] == low)
+        self.assertEqual(row["castSeed"], {"rank": 4, "seedMember": True, "basis": "top-count",
+                                           "exemptedSelectionReasons": []})
+
+    def test_released_workflow_photo_that_does_not_return_gets_replacement_proposal(self):
+        low_name = "seed_image_304.jpg"
+        self.api.configuration = lambda: {"photos": {"hero": low_name}}
+        names, report = self.cast_seed_plan()
+        low = metadata.photo_id_from_name(low_name)
+        decision = next(row for row in report["releasedDecisionEvidence"] if row["photoId"] == low)
+        self.assertTrue(decision["workflowSelected"])
+        self.assertTrue(decision["sourceProtectionOverride"])
+        proposals = report["freshCastSeed"]["workflowReplacementProposals"]
+        self.assertEqual(len(proposals), 1)
+        proposal = proposals[0]
+        self.assertEqual((proposal["identity"], proposal["photoId"], proposal["outcome"]),
+                         ("Sisters/Seed", low, "own-review"))
+        seeds = {metadata.photo_id_from_name(names[key].name): key for key in (b"seed one", b"seed two", b"seed three")}
+        scores = {row["photoId"]: row["score"] for row in report["freshSourceAssessment"]["assessment"]}
+        best = max(seeds, key=lambda pid: (scores[pid], pid))
+        self.assertEqual(proposal["replacement"]["photoId"], best)
+        self.assertEqual(proposal["replacement"]["ownScore"], scores[best])
+        self.assertEqual(report["freshCastWorkflowReplacementCount"], 1)
+        self.assertFalse(report["freshCastSeed"]["configurationChanged"])
+
     def test_selected_anchor_retires_before_post_selection_core_freeze(self):
         catalog = self.fixture.empty_catalog()
         photo_id = metadata.photo_id_from_name(self.paths[2].name)

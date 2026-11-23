@@ -227,6 +227,124 @@ def _fresh_gallery_assessment(root, rows, active, held, photos, native_paths, ca
     return result
 
 
+def _seed_score_against(decision, owner):
+    """Recorded post-release score against the released photo's own seeded identity, if any."""
+    def number(value):
+        return float(value) if isinstance(value, (int, float)) and not isinstance(value, bool) else None
+
+    if decision.get("bestMatch") == owner and number(decision.get("bestScore")) is not None:
+        return number(decision["bestScore"])
+    routing = decision.get("routingEvidence") or {}
+    if routing.get("winner") == owner and number(routing.get("score")) is not None:
+        return number(routing["score"])
+    cast = decision.get("castAdmission") or {}
+    if cast.get("winner") == owner and number(cast.get("score")) is not None:
+        return number(cast["score"])
+    for item in [*(cast.get("alternatives") or []), *(decision.get("lowerCategoryEvidence") or [])]:
+        if isinstance(item, dict) and item.get("folder") == owner and number(item.get("score")) is not None:
+            return number(item["score"])
+    unresolved = decision.get("unresolvedReleaseReview") or {}
+    if unresolved.get("target") == f"{owner}/review" and number(unresolved.get("score")) is not None:
+        return number(unresolved["score"])
+    return None
+
+
+def _fresh_cast_seed_outcomes(assessment, moves, archives, released_evidence, workflow_ids):
+    """Report where each released Sisters/Angels member landed and propose workflow replacements.
+
+    Planning evidence only: workflow configuration is never changed. A released
+    workflow-selected photo that does not return to its identity Gallery gets
+    the highest initial own-scoring other photo of that identity that remains
+    in its Gallery after this plan, excluding other workflow selections.
+    """
+    seed = assessment["castSeed"]
+    final = {(move["photoId"], move["source"]): move["destination"] for move in moves}
+    decisions = {item["photoId"]: item for item in released_evidence}
+
+    def location(row):
+        archive = archives.get(row["currentPath"])
+        if archive and archive.get("photoId") == row["photoId"]:
+            return archive["destination"], "archived-duplicate"
+        return final.get((row["photoId"], row["currentPath"]), row["currentPath"]), None
+
+    identities, proposals, used = [], [], set()
+    for owner, info in sorted(seed["identities"].items()):
+        members = sorted(
+            (row for row in assessment["assessment"] if row["owner"] == owner),
+            key=lambda row: (row["currentPath"].casefold(), row["currentPath"]),
+        )
+        remaining, released = [], []
+        for row in members:
+            destination, special = location(row)
+            path = pathlib.PurePosixPath(destination)
+            folder, bucket = path.parent.parent.as_posix(), path.parent.name
+            if special is None and folder == owner and bucket == "gallery":
+                remaining.append((row, destination))
+            if not row["selected"]:
+                continue
+            outcome = (
+                special or ("returned-gallery" if folder == owner and bucket == "gallery" else
+                            "own-review" if folder == owner and bucket == "review" else "elsewhere")
+            )
+            decision = (decisions.get(row["photoId"]) or {}).get("decision") or {}
+            released.append({
+                "photoId": row["photoId"], "currentPath": row["currentPath"], "sha256": row["sha256"],
+                "beforeScore": row["score"], "beforeBand": row["band"],
+                "seedRank": (row.get("castSeed") or {}).get("rank"),
+                "selectionReasons": list(row["selectionReasons"]),
+                "outcome": outcome, "finalPath": destination,
+                "afterScore": _seed_score_against(decision, owner),
+                "afterBestMatch": decision.get("bestMatch"),
+                "afterBestScore": decision.get("bestScore"),
+                "workflowSelected": row["photoId"] in workflow_ids,
+            })
+        candidates = sorted(
+            (item for item in remaining
+             if item[0]["score"] is not None and item[0]["photoId"] not in workflow_ids),
+            key=lambda item: (-item[0]["score"], item[1].casefold(), item[1]),
+        )
+        for item in released:
+            if not item["workflowSelected"] or item["outcome"] == "returned-gallery":
+                continue
+            choice = next((row for row in candidates if row[0]["photoId"] not in used), None)
+            replacement = None
+            if choice is not None:
+                used.add(choice[0]["photoId"])
+                replacement = {
+                    "photoId": choice[0]["photoId"], "currentPath": choice[0]["currentPath"],
+                    "finalPath": choice[1], "ownScore": choice[0]["score"],
+                }
+            proposals.append({
+                "identity": owner, "photoId": item["photoId"], "currentPath": item["currentPath"],
+                "outcome": item["outcome"], "finalPath": item["finalPath"], "replacement": replacement,
+                "basis": ("highest initial own score among this identity's photos remaining in its Gallery "
+                          "after the plan, excluding workflow selections; configuration is not changed"),
+            })
+        identities.append({
+            "identity": owner, "memberCount": info["memberCount"],
+            "seedSize": len(info["seedPhotoIds"]), "seedPhotoIds": list(info["seedPhotoIds"]),
+            "seedBandExemptCount": len(info["seedBandExemptPhotoIds"]),
+            "releasedCount": len(released),
+            "seedReleaseCount": len(info["seedReleasedPhotoIds"]),
+            "returnedCount": sum(item["outcome"] == "returned-gallery" for item in released),
+            "released": released,
+        })
+    seed_ids = {pid for info in seed["identities"].values() for pid in info["seedReleasedPhotoIds"]}
+    return {
+        "topCount": seed["topCount"], "releaseBelow": seed["releaseBelow"],
+        "identities": identities, "workflowReplacementProposals": proposals,
+        "summary": {
+            "identityCount": len(identities),
+            "seedKeptCount": seed["seedKeptCount"], "seedReleaseCount": seed["seedReleaseCount"],
+            "seedReturnedCount": sum(
+                item["outcome"] == "returned-gallery"
+                for identity in identities for item in identity["released"] if item["photoId"] in seed_ids
+            ),
+        },
+        "configurationChanged": False,
+    }
+
+
 def _single_vote_per_content(inputs):
     """Leave one reference vote per source or prepared-measurement content; others stay scored non-voters."""
     parent = {}
@@ -2726,6 +2844,21 @@ def _plan(
                 report["moves"].append(move)
                 stage_photos.append(raw_photos[row["source"]])
             move["collisionRebind"] = True
+        if fresh_source_release:
+            report["freshCastSeed"] = _fresh_cast_seed_outcomes(
+                fresh_assessment, report["moves"], archives,
+                report.get("releasedDecisionEvidence", []), workflow_ids,
+            )
+            seed_summary = report["freshCastSeed"]["summary"]
+            report["freshCastSeedIdentityCount"] = seed_summary["identityCount"]
+            report["freshCastSeedKeptCount"] = seed_summary["seedKeptCount"]
+            report["freshCastSeedReleaseCount"] = seed_summary["seedReleaseCount"]
+            report["freshCastSeedReturnedCount"] = seed_summary["seedReturnedCount"]
+            report["freshCastWorkflowReplacementCount"] = len(
+                report["freshCastSeed"]["workflowReplacementProposals"]
+            )
+            if reuse_plan is not None and reuse_plan.get("freshCastSeed") != report["freshCastSeed"]:
+                raise ValueError("fresh cast seed outcomes differ from preview")
         if released_bindings is not None:
             for binding in released_bindings:
                 if release_roles.get(binding["photoId"]) == "archived-duplicate":
@@ -2753,6 +2886,7 @@ def _plan(
                 "retirement": report["releasedSourceRetirement"],
                 **({"freshSourceAssessment": fresh_assessment} if fresh_source_release else {}),
                 **({"freshMeasurementProof": fresh_measurement_proof} if fresh_source_release else {}),
+                **({"freshCastSeed": report["freshCastSeed"]} if fresh_source_release else {}),
                 "referenceSnapshots": report.get("referenceSnapshots"),
                 "clusters": report["clusters"],
                 "moves": report["moves"],
