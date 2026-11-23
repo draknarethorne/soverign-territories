@@ -300,8 +300,37 @@ obsolete Working trees set aside by earlier baseline restores
 `Working-before-simple-clean-newpc-20261120-01`, about 208 GB; B: free
 1,055.8 → 1,262.7 GB). Kept: `Working-before-post-intake-fresh-20261122-01`
 (the universe tool's pre-rebase receipt and backup evidence), `Source`,
-`_baseline-state`, `_source-recovery` and both run folders in Working (the
-reusable preparation and the latest applied run).
+`_baseline-state` and both run folders in Working (the reusable preparation
+and the latest applied run). `_source-recovery` (52 GB) was deleted later
+the same day at the user's direction.
+
+**Nov 23 user observations on the named-core run (for the next session):**
+the 13 named folders became ordinary Potentials/Prospects through `seed`,
+not protected seeds. Matching ran two existing-first rounds and reached its
+pass cap; each round retired lower-category cores (round 1: Fia Hadley and
+Olivia Vale; round 2: Fia Hadley and Freya Hadley), so their hand-picked
+members re-matched upward against Prospect cores. Two Fia photos then went
+to Jacinta Alden Review and one each from Freya and Olivia to Angelica Vale
+Review, although the user observed they score higher with Fia. Settle ran 2
+of 3 passes and converged, but it audits only low own-core scores; no
+pass audits Review placements whose rival scores higher. IU12 and IU10 own
+the fix: treat `Various/<Name>` like Angels/Sisters (a protected core that
+is never retired), keep members unless they score low there and high
+elsewhere, move or Review only on a clear rival margin, and re-examine
+Prospect/Potential size gates.
+
+<!-- markdownlint-disable MD013 -->
+```text
+I need to step away, but want to circle back on this tomorrow.  I have a few observations about the way things did group that seem odd to me.  I noticed that the more images I had added manually the better the outcome was and only having the 4 images in Fia didn't attrach some and some actually moved in the process.  In the future plans - what I had recommended was that if I provided a named folder that we'd keep those in the core unless they scored low in that identity (as a potential mistake) and high in another.  What I noticed with the ones that move for Fia, that they score lower where they are than with Fia.  Two went to the Jacinta review instead of with the higher scoring Fia.  Was this because of trying to push photos upwards, but that should only apply if it's clear it needs to move up instead of staying.  I suppose that's possible because the Various/named person wasn't treated as an identity coming in (creating a core for that) and then running all the other Various/gallery images through?  Basically, if I have a Various/named person - that's similar like keeping angels/sisters.  That happened in some other cases as well where I see photos in review that for an identity that have a higher rival score somewhere else, and some by a 0.3 margin.  What this tells me is that some existing logic or gates we need to modify - like the requirements around how many images for Prospects and how many for Potentials and such.  Did the process run the iterations to look for these items and audit them?
+```
+<!-- markdownlint-enable MD013 -->
+
+Pending user answers (asked Nov 23, interrupted): change Angelica's
+workflow selection now to `angelica_shot_20261019152053` (0.784, top
+Sandbox score, in the user's hand-sorted set); and whether only Production
+rebases, or Sandbox too, write IU7 replacements to `workflows/workspaces.json`.
+The user identified the current selection (`image_7513773530805044436`) as
+Petra Cole, a likely future character.
 
 ## Open decisions for the user
 
