@@ -217,6 +217,10 @@ Tasks (executed through spine tasks of the same IDs):
   at yellow plus a per-image score against the seed's top 9 at a stricter
   bar. Measure precision and recall against the Most Wanted set, or abandon
   if unreliable.
+- **IU12 Native named-folder intake:** the SIMPLE rebase should take
+  `Various/<Name>` photos (directly in the folder or in its `gallery`) as
+  named intake without a separate `seed` step, instead of silently ignoring
+  them. Until then, run `seed` first.
 
 ## Nov 23 IU8 cleanup and Most Wanted baseline
 
@@ -236,6 +240,59 @@ left in Various and nothing in Review. Sizes were 45 singles, 42 pairs, 17
 triples, 5 of 4, 8 of 5, 2 of 6, 1 of 7 and 1 of 10. The user expects 7?15
 real people, so the current rules fragment heavily. This is the baseline for
 IU9 and IU10.
+
+## Nov 23 IU9 named-core Most Wanted run
+
+The user re-organized `B:\Most Wanted` into `Originals\` (all 275) and
+`Various\` with 13 hand-named folders (137 photos, files directly in each
+named folder) plus `gallery\` (138 unsorted). The universe tool gained
+`--mode empty --source-various DIR`: `DIR\gallery` becomes `Various/gallery`
+and each `DIR\<Name>` (or `DIR\<Name>\gallery`) becomes
+`Various/<Name>/gallery`, hash- and time-verified; source read-only.
+Universe `most-wanted-seeded-20261123` was built from it; the workflow
+photo (sorted by the user into Petra Cole) was swapped inside the universe
+for its byte-identical copy, as in the baseline.
+
+**Gap found:** the SIMPLE rebase reads only `Various/gallery` and silently
+ignored the named folders (preview `most-wanted-seeded-01`: 138 rows, 0
+cores, not applied). Named folders need `likeness.py --root WORKING
+--no-originals seed --apply` first, which created 8 Prospects and 5
+Potentials. The universe README now lists that step. IU12 owns native
+handling.
+
+Run `most-wanted-seeded-02` (1 preparation worker, current rules):
+preview, apply and check exited 0.
+
+| Measure | Baseline (`most-wanted-baseline-02`) | Named cores (`most-wanted-seeded-02`) |
+| --- | ---: | ---: |
+| Identities | 121 (119 Potentials, 2 Prospects) | 66 (58 Potentials, 8 Prospects) |
+| Single-photo identities | 45 | 36 |
+| Two-photo identities | 42 | 12 |
+| Largest identities | 10, 7, 6, 6 | 47, 30, 25, 15, 13, 10 |
+| Person Review | 0 | 18 |
+| Left in Various (gallery/review) | 6 / 0 | 5 / 4 |
+
+Named cores kept 133 of 137 hand-sorted photos; none were released to
+Various. Four went to another seed's Review: Fia Hadley 2 to Jacinta Alden,
+Freya Hadley 1 and Olivia Vale 1 to Angelica Vale (lookalike candidates for
+the user). Of the 138 unsorted photos, 35 joined named Galleries, 14 went
+to named Reviews, 80 formed 53 new identities and 9 stayed in Various.
+Gains: Nadia Lora +14 (+5 Review), Angelica Vale +6, Cloe Reyes +4, Zara
+Lane +3 (+4 Review), Katia Duvanti +3, Jacinta Alden +2 (+2 Review), Petra
+Cole +1 (+3 Review), Freya Hadley +1, Amara Cross +1; Lorelei Fletcher,
+Amara Berkley, Fia Hadley and Olivia Vale gained none. Unsorted photos that
+match no seed still fragment under the all-member-yellow rule (36 singles),
+which is IU10 evidence. Human review of the routed photos is pending.
+
+**Main Sandbox storage (Nov 23, user-requested prune):** deleted three
+obsolete Working trees set aside by earlier baseline restores
+(`Working-before-post-intake-fresh-20261122-02`,
+`Working-before-simple-clean-20261119-14`,
+`Working-before-simple-clean-newpc-20261120-01`, about 208 GB; B: free
+1,055.8 → 1,262.7 GB). Kept: `Working-before-post-intake-fresh-20261122-01`
+(the universe tool's pre-rebase receipt and backup evidence), `Source`,
+`_baseline-state`, `_source-recovery` and both run folders in Working (the
+reusable preparation and the latest applied run).
 
 ## Open decisions for the user
 

@@ -241,7 +241,7 @@ class FileTests(unittest.TestCase):
         common = ("--name", "mw", "--mode", "empty", "--out-root", str(out_root))
         code, text = self.run_main(*common, "--source-folder", str(source))
         self.assertEqual(code, 0, text)
-        self.assertIn("images to copy into Various/gallery: 2", text)
+        self.assertIn("images to copy: 2", text)
         self.assertFalse(out_root.parent.exists())
         code, text = self.run_main(*common, "--source-folder", str(source), "--apply")
         self.assertEqual(code, 0, text)
@@ -256,6 +256,7 @@ class FileTests(unittest.TestCase):
         self.assertEqual({row["name"] for row in manifest["skipped"]}, {"notes.txt", "nested"})
         self.assertEqual(len(manifest["files"]), 4)
         self.assertTrue((out_root / "README-universe.md").is_file())
+        self.assertNotIn("seed --apply", (out_root / "README-universe.md").read_text("utf-8"))
         self.assertFalse((out_root.parent / "Working.universe-staging").exists())
 
         code, text = self.run_main(*common, "--check")
@@ -281,6 +282,40 @@ class FileTests(unittest.TestCase):
         self.assertEqual(code, 1, text)
         self.assertIn("universe-source:FAILED: 1", text)
 
+    def test_source_various_keeps_named_folders_as_named_intake(self):
+        source = self.base / "Various"
+        (source / "gallery").mkdir(parents=True)
+        (source / "gallery" / "u1.jpg").write_bytes(b"u1")
+        (source / "Ada Vale").mkdir()
+        (source / "Ada Vale" / "a1.jpg").write_bytes(b"a1")
+        (source / "Ada Vale" / "gallery").mkdir()
+        (source / "Ada Vale" / "gallery" / "a2.png").write_bytes(b"a2")
+        (source / "Ada Vale" / "deep").mkdir()
+        (source / "_hold").mkdir()
+        (source / "loose.jpg").write_bytes(b"loose")
+        out_root = self.base / "w" / "Sovereign Territories Sandbox" / "Working"
+        common = ("--name", "mw", "--mode", "empty", "--out-root", str(out_root), "--source-various", str(source))
+        code, text = self.run_main(*common, "--apply")
+        self.assertEqual(code, 0, text)
+        self.assertIn("Various/Ada Vale/gallery: 2", text)
+        self.assertTrue((out_root / "Various" / "gallery" / "u1.jpg").is_file())
+        self.assertEqual(sorted(path.name for path in (out_root / "Various" / "Ada Vale" / "gallery").iterdir()),
+                         ["a1.jpg", "a2.png"])
+        manifest = json.loads((out_root / "_reports" / "library" / "universe" / "universe-manifest.json")
+                              .read_text("utf-8"))
+        self.assertEqual(manifest["foldersCopied"], {"Various/Ada Vale/gallery": 2, "Various/gallery": 1})
+        self.assertEqual({row["name"] for row in manifest["skipped"]}, {"Ada Vale/deep", "_hold", "loose.jpg"})
+        self.assertIn("seed --apply", (out_root / "README-universe.md").read_text("utf-8"))
+        code, text = self.run_main("--name", "mw", "--mode", "empty", "--out-root", str(out_root), "--check")
+        self.assertEqual(code, 0, text)
+        self.assertIn("working-photo:verified: 3", text)
+
+        (source / "Ada Vale" / "gallery" / "a1.jpg").write_bytes(b"clash")
+        code, text = self.run_main("--name", "mw2", "--mode", "empty", "--source-various", str(source),
+                                   "--out-root", str(self.base / "x" / "Sovereign Territories Sandbox" / "Working"))
+        self.assertEqual(code, 1)
+        self.assertIn("same file name at both levels", text)
+
     def test_workflow_selected_arrival_is_reported_not_changed(self):
         folder = self.base / "drop"
         folder.mkdir()
@@ -302,6 +337,10 @@ class FileTests(unittest.TestCase):
             (("--name", "x", "--mode", "empty", "--seed", "A", "--out-root", out_root), "no --seed"),
             (("--name", "x", "--seed", "A", "--source-folder", str(self.base), "--out-root", out_root),
              "requires --mode empty"),
+            (("--name", "x", "--seed", "A", "--source-various", str(self.base), "--out-root", out_root),
+             "requires --mode empty"),
+            (("--name", "x", "--mode", "empty", "--source-folder", str(self.base), "--source-various",
+              str(self.base), "--out-root", out_root), "either"),
             (("--name", "bad name", "--mode", "empty"), "--name must be"),
         ):
             with self.subTest(argv=argv), self.assertRaises(SystemExit):

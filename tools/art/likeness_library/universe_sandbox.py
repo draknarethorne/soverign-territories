@@ -28,6 +28,9 @@ only ``--seed`` photos are the expansion reference.
 ``--mode empty`` with ``--source-folder DIR`` copies every top-level image in
 DIR (read-only) into ``Various/gallery`` with its name and times, verifies
 each copy by SHA-256 and records a manifest; ``--check`` rehashes them.
+``--source-various DIR`` instead reads a hand-sorted Various tree: ``DIR\\gallery``
+becomes ``Various/gallery`` and every other ``DIR\\<Name>`` (or its ``gallery``)
+becomes protected named intake ``Various/<Name>/gallery``.
 """
 import argparse
 import base64
@@ -716,9 +719,19 @@ document.querySelectorAll('img[data-id]').forEach(i=>{{if(T[i.dataset.id])i.src=
 """
 
 
-def empty_readme(out_root, cfg_policy, name):
+def empty_readme(out_root, cfg_policy, name, named_folders=0):
     root = str(out_root)
     cache = str(pathlib.Path(out_root) / "_likeness" / "general" / "cache.json")
+    seed_step = f"""
+   This universe has {named_folders} named folder(s). The SIMPLE rebase reads only
+   `Various\\gallery`, so first turn each named folder into its Prospect or
+   Potential (no face matching; preview, then apply):
+
+```text
+python tools\\art\\likeness.py --root "{root}" --no-originals seed
+python tools\\art\\likeness.py --root "{root}" --no-originals seed --apply
+```
+""" if named_folders else ""
     return f"""# Empty universe Sandbox: {name}
 
 This Working has the Sandbox layout but no photos, catalogue, cache,
@@ -726,7 +739,8 @@ preparation or history.
 
 1. Copy your originals into `Various\\gallery` (unnamed intake), or into
    `Various\\<Name>\\gallery` when every photo in that folder is one person
-   (named, protected intake).
+   (named intake: run `likeness.py seed` before the rebase).
+{seed_step}
 2. Preview, apply and check a SIMPLE rebase (no `--reuse-preparation`; the
    first preview prepares and measures every photo):
 
@@ -923,29 +937,79 @@ def _named_readme(selection, staging_folders):
     return "\n".join(lines) + "\n"
 
 
-def source_folder_plan(folder, out_root, cfg):
-    """Top-level images of a read-only folder; anything else is listed and skipped."""
+def _validated_source(folder, out_root, cfg, option):
     folder = pathlib.Path(folder).expanduser()
     if not folder.is_absolute():
-        raise UniverseError("--source-folder must be absolute")
+        raise UniverseError(f"{option} must be absolute")
     if not folder.is_dir() or sandbox._is_reparse_point(folder):
-        raise UniverseError(f"--source-folder is not a plain folder: {folder}")
+        raise UniverseError(f"{option} is not a plain folder: {folder}")
     folder = folder.resolve()
     if _overlaps(folder, out_root.parent):
-        raise UniverseError("--source-folder must be outside the universe Sandbox")
+        raise UniverseError(f"{option} must be outside the universe Sandbox")
     if _overlaps(folder, pathlib.Path(cw.production_root(cfg))):
-        raise UniverseError("--source-folder must not be in Production (no new intake from Production)")
+        raise UniverseError(f"{option} must not be in Production (no new intake from Production)")
+    return folder
+
+
+def _top_level_images(folder, label, subfolder_reason):
     images, skipped = [], []
     for path in sorted(folder.iterdir(), key=lambda item: item.name.casefold()):
+        name = f"{label}/{path.name}" if label else path.name
         if sandbox._is_reparse_point(path):
-            skipped.append({"name": path.name, "reason": "linked entry"})
+            skipped.append({"name": name, "reason": "linked entry"})
         elif path.is_dir():
-            skipped.append({"name": path.name, "reason": "subfolder (only top-level images are copied)"})
+            skipped.append({"name": name, "reason": subfolder_reason})
         elif path.suffix.casefold() not in IMAGE_EXTENSIONS:
-            skipped.append({"name": path.name, "reason": "not an image"})
+            skipped.append({"name": name, "reason": "not an image"})
         else:
             images.append(path)
-    return folder, images, skipped
+    return images, skipped
+
+
+def source_folder_plan(folder, out_root, cfg):
+    """Top-level images of a read-only folder; anything else is listed and skipped."""
+    folder = _validated_source(folder, out_root, cfg, "--source-folder")
+    images, skipped = _top_level_images(folder, "", "subfolder (only top-level images are copied)")
+    return folder, [(path, f"Various/gallery/{path.name}") for path in images], skipped
+
+
+def source_various_plan(folder, out_root, cfg):
+    """A hand-sorted ``Various`` tree: ``gallery`` stays unnamed; each other subfolder is named intake.
+
+    ``DIR/gallery/*`` -> ``Various/gallery``; ``DIR/<Name>/*`` and ``DIR/<Name>/gallery/*`` ->
+    ``Various/<Name>/gallery``. Top-level files of DIR and deeper folders are skipped and listed.
+    """
+    folder = _validated_source(folder, out_root, cfg, "--source-various")
+    planned, skipped = [], []
+    for entry in sorted(folder.iterdir(), key=lambda item: item.name.casefold()):
+        if sandbox._is_reparse_point(entry):
+            skipped.append({"name": entry.name, "reason": "linked entry"})
+            continue
+        if not entry.is_dir():
+            skipped.append({"name": entry.name, "reason": "top-level file (use gallery or a named folder)"})
+            continue
+        if entry.name.casefold() == "gallery":
+            images, extra = _top_level_images(entry, entry.name, "nested folder inside gallery")
+            planned += [(path, f"Various/gallery/{path.name}") for path in images]
+            skipped += extra
+            continue
+        if entry.name.startswith((".", "_")) or entry.name != entry.name.strip():
+            skipped.append({"name": entry.name, "reason": "not a usable identity folder name"})
+            continue
+        images, extra = _top_level_images(entry, entry.name, "nested folder (only <Name>/gallery is read)")
+        inner = entry / "gallery"
+        if inner.is_dir() and not sandbox._is_reparse_point(inner):
+            extra = [row for row in extra if row["name"] != f"{entry.name}/gallery"]
+            more, deeper = _top_level_images(inner, f"{entry.name}/gallery", "nested folder inside gallery")
+            images += more
+            extra += deeper
+        names = collections.Counter(path.name.casefold() for path in images)
+        clashes = sorted(name for name, count in names.items() if count > 1)
+        if clashes:
+            raise UniverseError(f"{entry.name}: same file name at both levels: {', '.join(clashes[:5])}")
+        planned += [(path, f"Various/{entry.name}/gallery/{path.name}") for path in images]
+        skipped += extra
+    return folder, planned, skipped
 
 
 def workflow_selected_arrivals(images, cfg):
@@ -982,22 +1046,29 @@ def workflow_selected_arrivals(images, cfg):
 def _build_empty(args, cfg, out_root, staging, pristine_root, parameters, *, apply, started):
     parameters = {key: parameters[key] for key in ("name", "mode", "outRoot")}
     parameters["sourceFolder"] = args.source_folder
-    folder, images, skipped = (
-        source_folder_plan(args.source_folder, out_root, cfg) if args.source_folder else (None, [], [])
-    )
+    parameters["sourceVarious"] = args.source_various
+    if args.source_various:
+        folder, images, skipped = source_various_plan(args.source_various, out_root, cfg)
+    elif args.source_folder:
+        folder, images, skipped = source_folder_plan(args.source_folder, out_root, cfg)
+    else:
+        folder, images, skipped = None, [], []
     planned = []
-    for path in images:
+    for path, destination in images:
         stat = path.stat()
-        planned.append({"name": path.name, "source": str(path), "sha256": _sha256(path),
-                        "bytes": stat.st_size, "mtimeNs": stat.st_mtime_ns})
+        planned.append({"name": path.name, "source": str(path), "destination": destination,
+                        "sha256": _sha256(path), "bytes": stat.st_size, "mtimeNs": stat.st_mtime_ns})
     duplicates = sum(count - 1 for count in collections.Counter(row["sha256"] for row in planned).values())
-    selected_arrivals = workflow_selected_arrivals(images, cfg)
+    selected_arrivals = workflow_selected_arrivals([path for path, _ in images], cfg)
+    by_folder = collections.Counter(row["destination"].rsplit("/", 1)[0] for row in planned)
     print(f"empty universe Sandbox preview: {out_root}")
     print("  layout: Various/gallery, reports root with universe manifest; no catalogue, cache, preparation or history")
     if folder is not None:
         print(f"  source folder (read-only): {folder}")
-        print(f"  images to copy into Various/gallery: {len(planned)} "
+        print(f"  images to copy: {len(planned)} "
               f"({sum(row['bytes'] for row in planned) / 1048576:.1f} MiB; byte-identical extra copies: {duplicates})")
+        for name, count in sorted(by_folder.items(), key=lambda item: (item[0] != "Various/gallery", item[0])):
+            print(f"    {name}: {count}")
         print(f"  skipped entries: {len(skipped)}")
         for row in skipped[:20]:
             print(f"    {row['name']}: {row['reason']}")
@@ -1018,7 +1089,7 @@ def _build_empty(args, cfg, out_root, staging, pristine_root, parameters, *, app
         if planned:
             print(f"copying {len(planned)} originals (SHA-256 verified) ...", flush=True)
         for row in planned:
-            relative = pathlib.PurePosixPath("Various/gallery") / row["name"]
+            relative = pathlib.PurePosixPath(row["destination"])
             for target_root, kind, prefix in ((staging, "working-photo", "Working"),
                                               (pristine_root, "universe-source", PRISTINE)):
                 digest, size = _copy_verified(row["source"], target_root.joinpath(*relative.parts), row["sha256"])
@@ -1027,13 +1098,17 @@ def _build_empty(args, cfg, out_root, staging, pristine_root, parameters, *, app
                 files.append({"kind": kind, "path": f"{prefix}/{relative}", "sha256": digest, "bytes": size,
                               "source": row["source"], "mtimeNs": row["mtimeNs"]})
         policy_path = pathlib.Path(args.policy) if args.policy else ROOT / "data" / "art" / "likeness-engine-policy.json"
-        (staging / "README-universe.md").write_text(empty_readme(out_root, policy_path, args.name), encoding="utf-8")
+        named_folders = sum(1 for key in by_folder if key != "Various/gallery")
+        (staging / "README-universe.md").write_text(
+            empty_readme(out_root, policy_path, args.name, named_folders), encoding="utf-8")
         manifest = {
             "kind": MANIFEST_KIND, "schemaVersion": SCHEMA_VERSION, "name": args.name, "mode": "empty",
             "createdAt": datetime.datetime.now().astimezone().isoformat(timespec="seconds"),
             "parameters": parameters,
             "implementationSHA256": metadata.content_sha256(pathlib.Path(__file__)),
             "sourceFolder": None if folder is None else str(folder),
+            "sourceLayout": "various" if args.source_various else "flat",
+            "foldersCopied": dict(sorted(by_folder.items())),
             "skipped": skipped,
             "workflowSelectedArrivals": selected_arrivals,
             "counts": {"photos": len(planned), "byteIdenticalExtraCopies": duplicates, "skipped": len(skipped)},
@@ -1048,7 +1123,7 @@ def _build_empty(args, cfg, out_root, staging, pristine_root, parameters, *, app
               f"{' and ' + str(pristine_root) if pristine_root.exists() else ''}", file=sys.stderr)
         raise
     manifest_path = out_root / universe_relative / "universe-manifest.json"
-    print(f"empty universe applied: {out_root} ({len(planned)} photo(s) in Various/gallery)")
+    print(f"empty universe applied: {out_root} ({len(planned)} photo(s) in {len(by_folder)} Various folder(s))")
     print(f"manifest: {manifest_path} (sha256 {_sha256(manifest_path)})")
     print(f"next steps: {out_root / 'README-universe.md'}")
     print(f"elapsed {time.perf_counter() - started:.1f}s")
@@ -1176,6 +1251,8 @@ def _parser():
     parser.add_argument("--originals", action="append", help="extra original-bytes roots (Source or backup); repeatable")
     parser.add_argument("--source-folder", help="--mode empty: read-only folder whose top-level images are copied "
                                                 "into Various/gallery")
+    parser.add_argument("--source-various", help="--mode empty: read-only hand-sorted Various tree; gallery -> "
+                                                 "Various/gallery, every other <Name> -> Various/<Name>/gallery")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--dry-run", action="store_true", help="preview only (the default)")
     mode.add_argument("--apply", action="store_true", help="build the universe Sandbox")
@@ -1194,6 +1271,10 @@ def main(argv=None):
         parser.error("--mode empty takes no --seed/--include")
     if args.source_folder and args.mode != "empty":
         parser.error("--source-folder requires --mode empty")
+    if args.source_various and args.mode != "empty":
+        parser.error("--source-various requires --mode empty")
+    if args.source_folder and args.source_various:
+        parser.error("use either --source-folder or --source-various")
     if args.max_photos < 1:
         parser.error("--max-photos must be positive")
     if not re.fullmatch(r"[0-9a-f]{64}", args.preparation_sha256.lower()):
