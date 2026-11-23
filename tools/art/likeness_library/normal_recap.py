@@ -250,8 +250,10 @@ def collect(receipt_path, *, read_bytes=None):
             "freshUnavailableCount", "freshNonVotingCount",
             "freshCastSeedIdentityCount", "freshCastSeedKeptCount", "freshCastSeedReleaseCount",
             "freshCastSeedReturnedCount", "freshCastWorkflowReplacementCount",
+            "settlePassCount", "settleReleasedCount", "settleMovedCount", "settleDidNotSettleCount",
         ) if key in plan},
         "freshCastSeed": plan.get("freshCastSeed"),
+        "settle": plan.get("settle"),
         "phaseMoves": len(moves), "phaseArchives": len(archives), "phaseJunk": len(junk),
         "phaseViewers": len(viewers) if receipt["status"] == "applied" else None,
         "preparationReusedFromPreview": plan.get("preparationReusedFromPreview"),
@@ -701,9 +703,16 @@ def _phase_sections(data):
             timing = "duration unavailable"
         title = html.escape(name)
         purpose, keys = _PHASE_DETAILS.get(name, ("Purpose not recorded.", ()))
+        if name.startswith("settle-pass-"):
+            purpose = ("Rebuild each identity from its planned members, rescore them leave-one-out, release "
+                       "red/orange members and rematch them under the normal rules.")
         if name == "fresh-source-release-selection":
             values = [f"{key}: {counts.get(key) if counts.get(key) is not None else 'unavailable'}"
                       for key in keys]
+        elif name.startswith("settle-pass-"):
+            values = [f"{key}: {phase[key]}" for key in (
+                "releasedCount", "movedCount", "remainingFlaggedCount", "newIdentityCount",
+            ) if key in phase]
         else:
             values = [f"{key}: {counts[key]}" for key in keys if key in counts]
         if name in ("bound-admission-and-retained-member-check", "single-frozen-low-member-audit"):
@@ -771,6 +780,7 @@ def render(data, out, *, audit=False, others=()):
             _collision_section(data, out.parent),
             _content_archive_section(data, out.parent),
             _cast_seed_section(data, out.parent),
+            _settle_section(data, out.parent),
             _face_quality_section(data),
             _group_relationships(data, out.parent),
             "<section>" + _audit_summary(data) + "</section>",
@@ -961,6 +971,96 @@ def _cast_seed_section(data, out_dir):
             )
         parts.append("</table>")
     return "".join(parts)
+
+
+def _settle_section(data, out_dir):
+    """Settle passes: per-pass counts and timings, released photos and the did-not-settle list."""
+    settle = data.get("settle")
+    if not isinstance(settle, dict):
+        return ""
+    rows_by_id = {}
+    for row in data["rows"]:
+        rows_by_id.setdefault(row.get("photoId"), row)
+    timings = {
+        phase.get("settlePass"): phase.get("durationSeconds")
+        for phase in data.get("phaseLog", []) if isinstance(phase, dict) and phase.get("settlePass")
+    }
+
+    def photo(photo_id):
+        row = rows_by_id.get(photo_id)
+        thumb = (rebase_recap._thumb(row, data, out_dir) + "<br>") if row else ""
+        return thumb + html.escape(photo_id)
+
+    def timing(pass_index):
+        value = timings.get(pass_index)
+        if isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value) and value >= 0:
+            return f"{value:.3f} s"
+        return "unavailable"
+
+    passes = settle.get("passes", [])
+    parts = [
+        '<h2 id="settle">Settle passes</h2>',
+        f'<p>Before publication, each identity was rebuilt from its final planned members (existing and '
+        f'admitted; match-only dominant-face photos, non-voters and Review placements never vote; one vote '
+        f'per content), every planned Gallery member was rescored leave-one-out, and red/orange members '
+        f'were released and rematched under the normal rules, up to {html.escape(str(settle.get("maximumPasses")))} '
+        f'passes. Cast seeds, protected or explicit placements and existing members this run did not place '
+        f'are never released. {len(passes)} pass(es) ran; '
+        + ("the last pass changed nothing." if settle.get("converged") else
+           "the pass limit was reached while photos were still moving.") + "</p>",
+        '<table><tr><th>Pass</th><th>Time</th><th>Flagged</th><th>Released</th><th>Moved</th>'
+        '<th>Still flagged after</th><th>New identities</th></tr>',
+    ]
+    for item in passes:
+        parts.append(
+            f'<tr><td>{item["pass"]}</td><td>{timing(item["pass"])}</td><td>{item["flaggedCount"]}</td>'
+            f'<td>{item["releasedCount"]}</td><td>{item["movedCount"]}</td>'
+            f'<td>{item["remainingFlaggedCount"]}</td><td>{len(item.get("newIdentities", []))}</td></tr>'
+        )
+    parts.append("</table>")
+    for item in passes:
+        if not item.get("released") and not item.get("singlePhotoReductions"):
+            continue
+        parts.append(f'<h3 id="settle-pass-{item["pass"]}">Pass {item["pass"]}</h3>')
+        if item.get("released"):
+            parts.append('<table><tr><th>Photo</th><th>Released from</th><th>Score</th><th>Outcome</th></tr>')
+            for released in item["released"]:
+                outcome = html.escape(released["outcome"])
+                if not released.get("moved"):
+                    outcome += "<br><span class=muted>returned to the same place</span>"
+                parts.append(
+                    f'<tr><td>{photo(released["photoId"])}</td>'
+                    f'<td>{rebase_recap._person_link(released["identity"], data, out_dir, bucket="gallery")}</td>'
+                    f'<td>{rebase_recap._score_text(released.get("score"))} '
+                    f'{html.escape(str(released.get("band") or ""))}</td><td>{outcome}</td></tr>'
+                )
+            parts.append("</table>")
+        for reduction in item.get("singlePhotoReductions", []):
+            gate = reduction.get("singlePhotoGate") or {}
+            parts.append(
+                f'<p>Reduced to one photo: {html.escape(reduction["identity"])} '
+                f'({html.escape(reduction["photoId"])}) → {html.escape(reduction["outcome"])}; best rival '
+                f'{html.escape(str(gate.get("bestRival")))} {rebase_recap._score_text(gate.get("bestRivalScore"))}.</p>'
+            )
+    unsettled = settle.get("didNotSettle", [])
+    parts.append(f'<h3 id="did-not-settle">Did not settle ({len(unsettled)})</h3>')
+    if not unsettled:
+        parts.append("<p class=muted>None: no planned Gallery member is still red or orange.</p>")
+        return "".join(parts)
+    parts.append("<p>Planned Gallery members still red or orange after the last pass. Reported only; "
+                 "they are not looped further.</p>"
+                 '<table><tr><th>Photo</th><th>Identity</th><th>Score</th><th>Reason</th></tr>')
+    for row in unsettled:
+        released_in = row.get("releasedInPasses") or []
+        reason = html.escape(row["reason"]) + (
+            f'<br><span class=muted>released in pass {", ".join(map(str, released_in))}</span>' if released_in else "")
+        parts.append(
+            f'<tr><td>{photo(row["photoId"])}</td>'
+            f'<td>{rebase_recap._person_link(row["identity"], data, out_dir, bucket="gallery")}</td>'
+            f'<td>{rebase_recap._score_text(row.get("score"))} {html.escape(str(row.get("band") or ""))}</td>'
+            f'<td>{reason}</td></tr>'
+        )
+    return "".join(parts + ["</table>"])
 
 
 def _face_quality_section(data):

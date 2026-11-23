@@ -3448,5 +3448,179 @@ class NormalRebaseTests(unittest.TestCase):
         audit.assert_called_once()
 
 
+class SettlePassTests(unittest.TestCase):
+    """Item (d): bounded settle passes over planned identities (pure planning)."""
+
+    def setUp(self):
+        from tools.art.likeness_library import normal_admission, policy, reconciliation
+
+        self.admission = normal_admission
+        self.policy = policy.load_policy()
+        self.settings = policy.effective_settings({}, self.policy)
+        self.api = SimpleNamespace(
+            plan_reconciliation=reconciliation.plan_reconciliation,
+            invent_name=lambda seed, _taken: "Fixture-" + seed[:8],
+        )
+
+    @staticmethod
+    def unit(*values):
+        vector = np.asarray(values, dtype=float)
+        return vector / np.linalg.norm(vector)
+
+    def entry(self, photo_id, folder, vector, **extra):
+        return {
+            "photoId": photo_id, "sha256": hashlib.sha256(photo_id.encode()).hexdigest(),
+            "vector": self.unit(*vector), "sourceFolder": folder,
+            "sourceLocation": (folder, "gallery"), "voter": True, "scorable": True,
+            "exemptReason": None, "stayExemptReason": None, "seedOf": None,
+            "candidateState": {"rejectedPersonIds": []},
+            "candidate": {"qualityEligible": True, "referenceQualityEligible": True, "rejectedPersonIds": []},
+            **extra,
+        }
+
+    @staticmethod
+    def admitted(photo_id, folder, provisional=None):
+        return {
+            "photoId": photo_id, "sourceFolder": "Various", "sourceBucket": "Pool",
+            "destination": folder, "destinationType": "provisional" if provisional else "existing",
+            "normalAdmission": True, "reason": "fixture admission",
+            **({"clusterId": provisional} if provisional else {}),
+        }
+
+    def settle(self, entries, decisions, clusters=None, *, passes=3):
+        clusters = [] if clusters is None else clusters
+        result, timings = self.admission.settle_passes(
+            self.api, entries, decisions, clusters, {}, self.settings, self.policy, set(),
+            max_passes=passes,
+        )
+        self.assertEqual(len(timings), result["passCount"])
+        self.assertTrue(all(seconds >= 0 for seconds in timings))
+        return result, clusters
+
+    def chain(self):
+        """z (red) holds w up; once z leaves, w drops to orange."""
+        entries = [
+            self.entry("g1", "Models/Gamma", (1, 0, 0)),
+            self.entry("g2", "Models/Gamma", (1, .01, 0)),
+            self.entry("w", "Models/Gamma", (.2, .98, 0)),
+            self.entry("z", "Models/Gamma", (-.3, .954, 0)),
+        ]
+        decisions = {"z": self.admitted("z", "Models/Gamma"), "w": self.admitted("w", "Models/Gamma")}
+        return entries, decisions
+
+    def test_member_orange_after_admission_is_released_and_rematched(self):
+        entries = [
+            self.entry("a1", "Models/Alpha", (1, 0, 0)),
+            self.entry("a2", "Models/Alpha", (1, .05, 0)),
+            self.entry("a3", "Models/Alpha", (1, -.05, 0)),
+            self.entry("b1", "Models/Beta", (0, 1, .05)),
+            self.entry("b2", "Models/Beta", (0, 1, -.05)),
+            self.entry("x", "Various", (.25, .97, 0), sourceLocation=("Various", "gallery")),
+        ]
+        decisions = {"x": self.admitted("x", "Models/Alpha")}
+        result, _clusters = self.settle(entries, decisions)
+        first = result["passes"][0]
+        self.assertEqual((first["flaggedCount"], first["releasedCount"], first["movedCount"]), (1, 1, 1))
+        self.assertEqual(first["released"][0]["band"], "orange")
+        self.assertEqual(first["released"][0]["outcome"], "Models/Beta/gallery")
+        self.assertEqual(decisions["x"]["destination"], "Models/Beta")
+        self.assertEqual(decisions["x"]["settle"]["releasedFrom"], "Models/Alpha")
+        self.assertTrue(decisions["x"]["normalAdmission"])
+        self.assertFalse(decisions["x"]["referenceEligible"])
+        self.assertTrue(decisions["x"]["referenceVersion"])
+        self.assertEqual(result["passCount"], 2)
+        self.assertEqual(result["passes"][1]["releasedCount"], 0)
+        self.assertTrue(result["converged"])
+        self.assertEqual(result["didNotSettle"], [])
+
+    def test_pass_limit_reports_did_not_settle_and_more_passes_settle_it(self):
+        entries, decisions = self.chain()
+        limited, _clusters = self.settle(copy.deepcopy(entries), copy.deepcopy(decisions), passes=1)
+        self.assertEqual(limited["passCount"], 1)
+        self.assertEqual(limited["passes"][0]["released"][0]["photoId"], "z")
+        self.assertEqual(limited["passes"][0]["remainingFlaggedCount"], 1)
+        self.assertFalse(limited["converged"])
+        self.assertEqual([(row["photoId"], row["band"], row["reason"]) for row in limited["didNotSettle"]],
+                         [("w", "orange", "flagged after the final settle pass")])
+        settled, _clusters = self.settle(entries, decisions, passes=3)
+        self.assertEqual([item["releasedCount"] for item in settled["passes"]], [1, 1, 0])
+        self.assertEqual(settled["didNotSettle"], [])
+        # z left as a single-photo Potential (c); once w is released it scores well there and joins it.
+        self.assertEqual(decisions["z"]["destination"], decisions["w"]["destination"])
+        self.assertEqual(decisions["w"]["destinationType"], "provisional")
+        self.assertEqual(settled["passes"][0]["newIdentities"][0]["singlePhoto"], True)
+        self.assertEqual(_clusters[0]["photoIds"], ["w", "z"])
+        self.assertNotIn("singlePhoto", _clusters[0])
+        self.assertNotIn("singlePhoto", decisions["z"])
+
+    def test_disabled_and_deterministic(self):
+        entries, decisions = self.chain()
+        first, _ = self.settle(copy.deepcopy(entries), copy.deepcopy(decisions))
+        second, _ = self.settle(copy.deepcopy(entries), copy.deepcopy(decisions))
+        self.assertEqual(json.dumps(first, sort_keys=True), json.dumps(second, sort_keys=True))
+        reordered = list(reversed(copy.deepcopy(entries)))
+        third, _ = self.settle(reordered, copy.deepcopy(decisions))
+        self.assertEqual(json.dumps(first, sort_keys=True), json.dumps(third, sort_keys=True))
+
+    def test_cast_seed_and_protected_members_are_exempt(self):
+        entries = [
+            self.entry("s1", "Sisters/Cast", (1, 0, 0)),
+            self.entry("s2", "Sisters/Cast", (1, .05, 0)),
+            self.entry("s3", "Sisters/Cast", (1, .05, .05)),
+            self.entry("seed", "Sisters/Cast", (.2, 0, .98), seedOf="Sisters/Cast"),
+            self.entry("kept", "Sisters/Cast", (.2, .98, 0), exemptReason="protected photo"),
+            self.entry("stay", "Sisters/Cast", (.2, -.98, 0), stayExemptReason="existing member outside a release cohort"),
+            self.entry("loose", "Sisters/Cast", (.25, 0, -.97)),
+        ]
+        result, clusters = self.settle(entries, {})
+        released = [item["photoId"] for item in result["passes"][0]["released"]]
+        self.assertEqual(released, ["loose"])
+        reasons = {row["photoId"]: row["reason"] for row in result["didNotSettle"]}
+        self.assertEqual(reasons["seed"], "cast seed member (exempt)")
+        self.assertEqual(reasons["kept"], "protected photo")
+        self.assertEqual(reasons["stay"], "existing member outside a release cohort")
+        # The released cast member matches nothing at yellow: (c) single-photo Potential.
+        self.assertEqual(len(clusters), 1)
+        self.assertTrue(clusters[0]["singlePhoto"])
+        self.assertTrue(clusters[0]["destination"].startswith("Potentials/"))
+        self.assertEqual(clusters[0]["photoIds"], ["loose"])
+
+    def reduced(self, rival):
+        entries = [
+            self.entry("p1", "Various", (1, 0, 0), sourceLocation=("Various", "gallery")),
+            self.entry("p2", "Various", (.2, .98, 0), sourceLocation=("Various", "gallery")),
+            self.entry("p3", "Various", (.2, -.98, 0), sourceLocation=("Various", "gallery")),
+            self.entry("r1", "Models/Rival", rival),
+            self.entry("r2", "Models/Rival", tuple(value + .01 for value in rival)),
+        ]
+        decisions = {pid: self.admitted(pid, "Potentials/Pair", "pair") for pid in ("p1", "p2", "p3")}
+        clusters = [{"clusterId": "pair", "destination": "Potentials/Pair", "destinationType": "provisional",
+                     "photoIds": ["p1", "p2", "p3"], "corePhotoIds": ["p1", "p2", "p3"]}]
+        result, clusters = self.settle(entries, decisions, clusters)
+        return result, decisions, clusters
+
+    def test_identity_reduced_to_one_photo_follows_single_photo_rule(self):
+        result, decisions, clusters = self.reduced((0, 0, 1))
+        self.assertEqual(sorted(item["photoId"] for item in result["passes"][0]["released"]), ["p2", "p3"])
+        pair = next(cluster for cluster in clusters if cluster["destination"] == "Potentials/Pair")
+        self.assertEqual(pair["photoIds"], ["p1"])
+        self.assertTrue(pair["singlePhoto"])
+        self.assertTrue(decisions["p1"]["singlePhoto"])
+        reduction = result["passes"][0]["singlePhotoReductions"][0]
+        self.assertEqual((reduction["photoId"], reduction["outcome"]), ("p1", "single-photo Potential"))
+        # Released members that match nothing at yellow become labelled single-photo Potentials.
+        singles = [cluster for cluster in clusters if cluster["destination"] != "Potentials/Pair"]
+        self.assertEqual(sorted(cluster["photoIds"][0] for cluster in singles), ["p2", "p3"])
+        self.assertTrue(all(cluster["singlePhoto"] for cluster in singles))
+
+        result, decisions, clusters = self.reduced((.5, 0, .866))
+        self.assertEqual(decisions["p1"]["reviewDestination"], "Models/Rival/review")
+        self.assertIsNone(decisions["p1"]["destination"])
+        self.assertNotIn("Potentials/Pair", [cluster["destination"] for cluster in clusters])
+        reduction = result["passes"][0]["singlePhotoReductions"][0]
+        self.assertEqual(reduction["outcome"], "Models/Rival/review")
+        self.assertGreaterEqual(reduction["singlePhotoGate"]["bestRivalScore"], .30)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -19,7 +19,8 @@ from tools.art.likeness_library import (
     normal_transaction, normal_recap, reconciliation, rejections, normal_admission,
     verification_reads,
 )
-from tools.art.likeness_library.policy import effective_settings, load_policy
+from tools.art.likeness_library.policy import effective_settings, load_policy, settle_settings
+from tools.art.likeness_library.scoring import nz
 from tools.art.likeness_library import sandbox
 from tools.art.likeness_library.sandbox import is_normal_flow_proof_path, is_sandbox_working_path
 
@@ -1677,6 +1678,171 @@ def _explicit_review_placements(catalog, *, action_types=("sent-to-review", "mat
     }
 
 
+def _pre_settle_bindings(plan):
+    """The fresh selection bound by a preview, without the members its settle passes released."""
+    settled = {row["photoId"] for row in plan.get("settleReleasedBindings") or []}
+    selected = [row for row in plan.get("releasedPhotoBindings") or [] if row["photoId"] not in settled]
+    return selected or None
+
+
+def _settle_plan(api, report, *, rows, candidates, raw_photos, release_ids, folders, cores, catalog,
+                 rejection_catalog, settings, policy, names_taken, locked, max_passes, fresh_assessment,
+                 candidate_quality=None, locked_ids=(), workflow_ids=(), protected_folders=()):
+    """Run bounded settle passes over the planned decisions.
+
+    Returns ``(evidence, timings, bindings, settle_candidates)``. Every measured
+    planned photo becomes a settle entry. Photos this run placed are
+    releasable unless their candidate evidence carries a protection, explicit
+    Review placement or stale rejection (the bound release cohort's source
+    protections were already overridden). Original named-Gallery members
+    planned at their source location are releasable only in the Sandbox
+    fresh source release, whose user-authorized release already covers every
+    bindable named-Gallery member: a released original that leaves its
+    source becomes an additional release binding (source path and SHA-256)
+    so membership/anchor retirement and the release permission override
+    cover it. Cast top-N seeds stay exempt. In any other rebase originals are
+    scored and reported, never released.
+    """
+    candidate_by_id = {row["photoId"]: row for row in candidates}
+    rows_by_id = {row["photoId"]: row for row in rows}
+    assessed = {row["photoId"]: row for row in (fresh_assessment or {}).get("assessment", [])}
+    seeds = {
+        photo_id: owner
+        for owner, info in ((fresh_assessment or {}).get("castSeed") or {}).get("identities", {}).items()
+        for photo_id in info["seedPhotoIds"]
+    }
+    people = collections.defaultdict(list)
+    for person_id, person in catalog.get("people", {}).items():
+        people[person["folder"]].append((person_id, person))
+    identity_meta = {}
+    for group, name, _path in folders:
+        if group not in IDENTITY_ROOTS:
+            continue
+        folder = f"{group}/{name}"
+        records = people.get(folder, [])
+        person_id, person = records[0] if len(records) == 1 else (None, None)
+        identity_meta[folder] = {
+            "side": "Prospects", "category": group,
+            "personIds": sorted(rejections.identity_ids(catalog, person_id)) if person_id else [],
+            "identityProtected": bool(person and person.get("protected")),
+        }
+        if folder in cores:
+            identity_meta[folder].update(
+                personIds=list(cores[folder].get("personIds", [])),
+                identityProtected=bool(cores[folder].get("identityProtected")),
+            )
+
+    def original(row):
+        return (row["group"] in IDENTITY_ROOTS and row["bucket"] == "gallery"
+                and row["photoId"] not in release_ids)
+
+    def fresh_bindable(row):
+        evidence = assessed.get(row["photoId"])
+        return bool(
+            evidence is not None and not evidence["bindingBlocked"]
+            and evidence["currentPath"] == row["source"] and evidence["sha256"] == row["sourceHash"]
+            and row["sourceStatus"] in ("eligible", "same-content-nonvoting")
+        )
+
+    entries = []
+    for row in sorted(rows, key=lambda item: item["photoId"]):
+        photo = raw_photos.get(row["source"])
+        if photo is None:
+            continue
+        photo_id = row["photoId"]
+        candidate = candidate_by_id.get(photo_id)
+        single = bool(
+            photo.usable(settings["minFace"]) and photo.faces == 1
+            and getattr(photo, "f2", 0.) <= settings["multiFace"]
+        )
+        vector = None
+        if photo.vec is not None:
+            vector = np.asarray(photo.vec, dtype=float)
+            vector = nz(vector) if vector.ndim == 1 and np.isfinite(vector).all() and np.linalg.norm(vector) else None
+        stay = None
+        if original(row):
+            if fresh_assessment is None:
+                stay = "existing member outside a release cohort; settle releases only photos this run placed"
+            elif not fresh_bindable(row):
+                stay = "existing member cannot be bound for release (ambiguous, stale or unbindable source)"
+        exempt = None
+        if candidate is not None and photo_id not in release_ids and not (
+            fresh_assessment is not None and original(row) and stay is None
+        ):
+            exempt = (
+                "stale rejected-identity metadata" if candidate.get("rejectionMetadataStale") else
+                "explicit Review placement" if candidate.get("explicitReviewPlacement") else
+                "protected photo" if candidate.get("protected") else
+                "workflow-selected photo" if candidate.get("workflowSelected") else
+                "member of a protected identity" if candidate.get("identityProtected") else None
+            )
+        state = (
+            {key: candidate[key] for key in ("rejectedPersonIds", "rejectionMetadataStale") if key in candidate}
+            if candidate is not None else rejections.photo_state(rejection_catalog, photo)
+        )
+        entries.append({
+            "photoId": photo_id, "sha256": row["sourceHash"], "vector": vector,
+            "sourceFolder": row["owner"], "sourceLocation": (row["owner"], row["bucket"]),
+            "voter": row["sourceStatus"] == "eligible" and (
+                face_quality.reference_quality(candidate) if candidate is not None else single
+            ),
+            "scorable": bool(candidate.get("qualityEligible")) if candidate is not None else single,
+            "exemptReason": exempt, "stayExemptReason": stay,
+            "seedOf": seeds.get(photo_id), "candidateState": state, "candidate": candidate,
+        })
+    settle_candidates = {}
+
+    def candidate_for(entry):
+        """Candidate evidence for an original fresh member that has no planned decision yet."""
+        row = rows_by_id[entry["photoId"]]
+        photo = raw_photos[row["source"]]
+        record = catalog.get("photos", {}).get(row["photoId"], {})
+        candidate = {
+            "photoId": row["photoId"], "sourceFolder": row["owner"], "sourceBucket": "Pool",
+            "side": "Prospects", "vector": photo.vec, "sha256": row["sourceHash"],
+            "protected": bool(row["photoId"] in locked_ids or record.get("protected")),
+            "workflowSelected": row["photoId"] in workflow_ids,
+            "identityProtected": row["owner"] in protected_folders,
+            "explicitReviewPlacement": False, "priorExplicitReviewPlacement": False,
+            "rebaseCandidate": True, "regroupReview": True, "detachedOutlier": False,
+            **(face_quality.candidate_fields(candidate_quality(photo, row["source"]))
+               if candidate_quality is not None else {"qualityEligible": True}),
+            **rejections.photo_state(rejection_catalog, photo),
+            **({"releaseStandardName": row["standardName"]} if row.get("standardName") else {}),
+        }
+        settle_candidates[row["photoId"]] = candidate
+        return candidate
+
+    unkeyed = [row for row in report["held"] if not row.get("photoId")]
+    decisions = {row["photoId"]: row for row in report["assignments"] + report["held"] if row.get("photoId")}
+    before = {
+        entry["photoId"]: normal_admission.settle_location(entry, decisions.get(entry["photoId"]))
+        for entry in entries
+    }
+    evidence, timings = normal_admission.settle_passes(
+        api, entries, decisions, report["clusters"], identity_meta, settings, policy, names_taken,
+        locked=locked, max_passes=max_passes,
+        candidate_for=candidate_for if fresh_assessment is not None else None,
+    )
+    bindings = []
+    for entry in entries:
+        row = rows_by_id[entry["photoId"]]
+        after = normal_admission.settle_location(entry, decisions.get(entry["photoId"]))
+        if not original(row) or before[entry["photoId"]] != entry["sourceLocation"] or after == before[entry["photoId"]]:
+            continue
+        # An original member that settle moved off its source location.
+        if fresh_assessment is None or entry["stayExemptReason"]:
+            raise ValueError(f'{entry["photoId"]}: settle cannot release an original member outside a fresh release')
+        bindings.append({"photoId": row["photoId"], "currentPath": row["source"], "sha256": row["sourceHash"]})
+    report["assignments"] = sorted(
+        (row for row in decisions.values() if row.get("destination")), key=lambda row: row["photoId"],
+    )
+    report["held"] = sorted(
+        (row for row in decisions.values() if not row.get("destination")), key=lambda row: row["photoId"],
+    ) + unkeyed
+    report["assignedCount"] = len(report["assignments"])
+    return evidence, timings, sorted(bindings, key=lambda row: row["photoId"]), settle_candidates
+
 def _plan(
     root, profile, run_id, *, api, cache_path=None, policy_path=None,
     for_apply=False, reuse_plan=None, reuse_preparation=None,
@@ -1949,7 +2115,7 @@ def _plan(
                 raise ValueError("fresh source assessment differs from preview")
             selected = sorted(fresh_assessment["bindings"], key=lambda row: row["photoId"])
             released_bindings = selected or None
-            if reuse_plan is not None and reuse_plan.get("releasedPhotoBindings") != released_bindings:
+            if reuse_plan is not None and _pre_settle_bindings(reuse_plan) != released_bindings:
                 raise ValueError("fresh source release bindings differ from preview")
             if released_bindings is not None:
                 release_roles = _released_candidate_roles(released_bindings, active, held, archived_rows)
@@ -2347,9 +2513,83 @@ def _plan(
                     move_photos.append(raw_photos[row["source"]])
             nonvoting_candidates.extend(ordinary_candidates)
             report["reconsideredNonVotingEvidence"] = reconsidered
+        settle_limit = settle_settings(policy)["passes"] if admission_enabled else 0
+        settle_seconds, settle_timings, settle_bindings, settle_candidates = 0., [], [], {}
+        if settle_limit:
+            settle_started = time.perf_counter()
+            settle_rows = [
+                row for row in active
+                if row.get("photoId") and row["sourceStatus"] not in ("incoming-update", "held")
+            ] + list(nonvoting)
+            settle_evidence, settle_timings, settle_bindings, settle_candidates = _settle_plan(
+                api, report, rows=settle_rows,
+                candidates=scoring_candidates + [
+                    {**row, "protected": False, "workflowSelected": False, "identityProtected": False}
+                    if row["photoId"] in release_ids else row
+                    for row in nonvoting_candidates
+                ],
+                raw_photos=raw_photos, release_ids=release_ids, folders=folders,
+                cores=all_cores, catalog=decision_catalog, rejection_catalog=catalog,
+                settings=settings, policy=policy, names_taken=all_names,
+                locked=lock_cast_admission, max_passes=settle_limit,
+                fresh_assessment=fresh_assessment if fresh_source_release else None,
+                candidate_quality=candidate_quality, locked_ids=locked_ids, workflow_ids=workflow_ids,
+                protected_folders=protected_folders,
+            )
+            report["settle"] = settle_evidence
+            if settle_bindings:
+                # Fresh release only: originals released by settle join the bound release cohort,
+                # so membership/anchor retirement and the release permission override cover them.
+                settle_roles = _released_candidate_roles(settle_bindings, active, held, archived_rows)
+                release_roles.update(settle_roles)
+                release_ids.update(settle_roles)
+                settled_ids = set(settle_roles)
+                for row in settle_rows:
+                    if row["photoId"] in settled_ids:
+                        row["rebaseRole"] = "settle-released-member"
+                audit_only = [row for row in audit_only if row["photoId"] not in settled_ids]
+                standard_names = {
+                    row["photoId"]: row["standardName"] for row in rows
+                    if row.get("photoId") in settled_ids and row.get("standardName")
+                }
+                settle_retirement = normal_admission.retire_released_catalog(
+                    decision_catalog, settle_bindings, standard_names,
+                )
+                decision_catalog = settle_retirement["catalog"]
+                retirement = {
+                    "catalog": decision_catalog,
+                    "retiredAnchors": (retirement or {}).get("retiredAnchors", [])
+                    + settle_retirement["retiredAnchors"],
+                    "retiredGroups": (retirement or {}).get("retiredGroups", [])
+                    + settle_retirement["retiredGroups"],
+                }
+                released_bindings = sorted(
+                    (released_bindings or []) + settle_bindings, key=lambda row: row["photoId"],
+                )
+            # A settled non-voter that was held in place may now have a placement to publish.
+            placed = {
+                row["photoId"] for row in report["assignments"] + report["held"]
+                if (row.get("destination") or row.get("reviewDestination")) and not row.get("preserveStaged")
+            }
+            for row in settle_rows:
+                if row["photoId"] in placed and row["source"] not in candidate_sources:
+                    candidate_sources[row["source"]] = row
+                    planned_measurements[row["source"]] = raw_data[row["source"]]
+                    move_photos.append(raw_photos[row["source"]])
+            report["settleReleasedBindings"] = settle_bindings
+            report["settleFingerprint"] = _preparation_fingerprint({
+                "settle": settle_evidence, "settleReleasedBindings": settle_bindings,
+                "assignments": report["assignments"], "held": report["held"], "clusters": report["clusters"],
+            })
+            if reuse_plan is not None and reuse_plan.get("settleFingerprint") != report["settleFingerprint"]:
+                raise ValueError("settle pass decisions differ from preview")
+            settle_seconds = time.perf_counter() - settle_started
+        elif reuse_plan is not None and reuse_plan.get("settleFingerprint") is not None:
+            raise ValueError("settle pass decisions differ from preview")
         if released_bindings is not None:
             decisions = report["assignments"] + report["held"]
             measured_candidates = {row["photoId"]: row for row in candidates}
+            measured_candidates.update(settle_candidates)
             measured_candidates.update({row["photoId"]: row for row in (
                 nonvoting_candidates if nonvoting else []
             )})
@@ -2422,7 +2662,7 @@ def _plan(
                 "retiredAnchors": retirement["retiredAnchors"],
                 "retiredGroups": retirement["retiredGroups"],
             }
-        admission_seconds = time.perf_counter() - phase_started
+        admission_seconds = time.perf_counter() - phase_started - settle_seconds
         phase_started = time.perf_counter()
         report["lockCastAdmission"] = lock_cast_admission
         report["reconsiderHolds"] = reconsider_holds
@@ -2579,6 +2819,25 @@ def _plan(
                 {"phase": "fresh-post-release-frozen-cores", "status": "complete",
                  "durationSeconds": fresh_core_seconds},
             ]
+        if report.get("settle"):
+            settle = report["settle"]
+            position = next(
+                index for index, row in enumerate(report["phaseLog"])
+                if row["phase"] == "bounded-two-round-admission"
+            ) + 1
+            report["phaseLog"][position:position] = [
+                {"phase": f"settle-pass-{item['pass']}", "status": "complete", "durationSeconds": seconds,
+                 "settlePass": item["pass"], "releasedCount": item["releasedCount"],
+                 "movedCount": item["movedCount"], "remainingFlaggedCount": item["remainingFlaggedCount"],
+                 "newIdentityCount": len(item["newIdentities"])}
+                for item, seconds in zip(settle["passes"], settle_timings)
+            ]
+            report["settlePassCount"] = settle["passCount"]
+            report["settleReleasedCount"] = sum(item["releasedCount"] for item in settle["passes"])
+            report["settleMovedCount"] = len({
+                photo_id for item in settle["passes"] for photo_id in item["movedPhotoIds"]
+            })
+            report["settleDidNotSettleCount"] = len(settle["didNotSettle"])
         report["assignedCount"] = len(report["assignments"])
         report["heldCount"] = len(report["held"]) + len(held) - len(nonvoting)
         report["canonicalSourceHashes"] = {

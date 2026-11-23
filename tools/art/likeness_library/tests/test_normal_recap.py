@@ -235,6 +235,73 @@ class NormalRecapTests(unittest.TestCase):
         page = normal_recap.render(normal_recap.collect(self.report), self.library / "recap.html")
         self.assertNotIn('id="cast-seed"', page)
 
+    def test_settle_pass_section_lists_passes_timings_and_did_not_settle(self):
+        plan = self.receipt["plan"]
+        plan["phaseLog"] = [
+            {"phase": "bounded-two-round-admission", "status": "complete", "durationSeconds": 1.},
+            {"phase": "settle-pass-1", "status": "complete", "durationSeconds": .25, "settlePass": 1,
+             "releasedCount": 2, "movedCount": 2, "remainingFlaggedCount": 1, "newIdentityCount": 1},
+            {"phase": "settle-pass-2", "status": "complete", "durationSeconds": .5, "settlePass": 2,
+             "releasedCount": 1, "movedCount": 0, "remainingFlaggedCount": 1, "newIdentityCount": 0},
+            {"phase": "bound-admission-and-retained-member-check", "status": "complete", "durationSeconds": 1.},
+        ]
+        plan.update(settlePassCount=2, settleReleasedCount=3, settleMovedCount=2, settleDidNotSettleCount=2)
+        plan["settle"] = {
+            "maximumPasses": 3, "passCount": 2, "converged": True,
+            "passes": [
+                {"pass": 1, "memberCount": 9, "scoredCount": 9, "flaggedCount": 3, "releasedCount": 2,
+                 "movedCount": 2, "remainingFlaggedCount": 1, "movedPhotoIds": ["photo:image_1", "photo:image_9"],
+                 "released": [
+                     {"photoId": "photo:image_1", "identity": "Angels/Ava", "score": .2234, "band": "orange",
+                      "outcome": "Potentials/Fixture-1/gallery", "moved": True},
+                     {"photoId": "photo:image_9", "identity": "Angels/Ava", "score": .1, "band": "red",
+                      "outcome": "Sisters/Sia/review", "moved": True},
+                 ],
+                 "newIdentities": [{"destination": "Potentials/Fixture-1", "photoIds": ["photo:image_1"],
+                                    "singlePhoto": True}],
+                 "singlePhotoReductions": [{
+                     "identity": "Potentials/Pair", "photoId": "photo:image_2", "outcome": "single-photo Potential",
+                     "singlePhotoGate": {"yellowMinimum": .3, "bestRival": "Angels/Ava", "bestRivalScore": .2},
+                 }]},
+                {"pass": 2, "memberCount": 9, "scoredCount": 9, "flaggedCount": 2, "releasedCount": 1,
+                 "movedCount": 0, "remainingFlaggedCount": 1, "movedPhotoIds": [],
+                 "released": [{"photoId": "photo:image_3", "identity": "Models/Mia", "score": .12,
+                               "band": "red", "outcome": "Models/Mia/gallery", "moved": False}],
+                 "newIdentities": [], "singlePhotoReductions": []},
+            ],
+            "didNotSettle": [
+                {"photoId": "photo:image_3", "identity": "Models/Mia", "score": .12, "band": "red",
+                 "reason": "released and rematched but still red/orange", "releasedInPasses": [2]},
+                {"photoId": "photo:image_4", "identity": "Angels/Ava", "score": .2, "band": "orange",
+                 "reason": "cast seed member (exempt)", "releasedInPasses": []},
+            ],
+        }
+        self.save()
+        page = normal_recap.render(normal_recap.collect(self.report), self.library / "recap.html")
+        summary = page[page.index("Ordered processing summary"):page.index("Processing step details")]
+        self.assertLess(summary.index("bounded-two-round-admission"), summary.index("settle-pass-1"))
+        self.assertLess(summary.index("settle-pass-2"), summary.index("bound-admission-and-retained-member-check"))
+        self.assertIn("0.250 seconds measured; releasedCount: 2; movedCount: 2; remainingFlaggedCount: 1", summary)
+        self.assertIn("release red/orange members and rematch them", page)
+        section = page[page.index('<h2 id="settle">'):]
+        section = section[:section.index("</section>")]
+        for text in ("up to 3 passes", "2 pass(es) ran", "the last pass changed nothing", "0.250 s", "0.500 s",
+                     "Potentials/Fixture-1/gallery", "Sisters/Sia/review", "0.223", "orange",
+                     "returned to the same place", "Reduced to one photo: Potentials/Pair",
+                     "single-photo Potential", "Did not settle (2)", "released and rematched but still red/orange",
+                     "released in pass 2", "cast seed member (exempt)", "photo:image_4"):
+            self.assertIn(text, section)
+        self.assertLess(section.index("Settle passes"), section.index("Did not settle"))
+        plan["settle"]["didNotSettle"] = []
+        self.save()
+        page = normal_recap.render(normal_recap.collect(self.report), self.library / "recap.html")
+        self.assertIn("Did not settle (0)", page)
+        self.assertIn("no planned Gallery member is still red or orange", page)
+        del plan["settle"]
+        self.save()
+        page = normal_recap.render(normal_recap.collect(self.report), self.library / "recap.html")
+        self.assertNotIn('id="settle"', page)
+
     def test_red_diagnostic_cli_is_read_only_in_default_and_check_modes(self):
         from tools.art.likeness_library import red_release_diagnostic
 

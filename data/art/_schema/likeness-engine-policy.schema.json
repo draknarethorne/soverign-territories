@@ -265,6 +265,14 @@
         "splitMinimumIndependentPhotos": {
           "type": "integer",
           "minimum": 2
+        },
+        "settlePassMaximum": {
+          "type": "integer", "minimum": 0, "default": 3,
+          "description": "SIMPLE rebase settle passes before publication: rebuild each identity from its final planned members, release red/orange members and rematch them. 0 disables; flags left after the last pass are reported as did-not-settle."
+        },
+        "intakeReleasePotentialMaxPhotos": {
+          "type": "integer", "minimum": 0, "default": 1,
+          "description": "Normal intake releases existing Potentials with at most this many Gallery photos so they are rescored with the incoming batch and can move upward or merge. 0 disables."
         }
       }
     },

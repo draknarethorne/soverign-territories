@@ -13,6 +13,7 @@ import pathlib
 import re
 import shutil
 import sys
+import time
 import uuid
 
 
@@ -374,6 +375,134 @@ def _validate_requested_receipt(data, args, bindings):
         raise ValueError("policy, configuration or shared implementation changed; preview a new run")
 
 
+def _small_potentials(api, cfg, root, catalog, metadata, originals, limit, update_ids, workflow_ids):
+    """Existing Potentials with 1..limit Gallery photos that intake releases for rescoring.
+
+    A Potential is skipped (reported, never released) when it is protected or
+    any Gallery photo lacks a stable ID, is protected, anchored,
+    workflow-selected or an explicit same-photo update target.
+    """
+    protected_folders = {
+        person["folder"] for person in catalog.get("people", {}).values() if person.get("protected")
+    }
+    anchors = {
+        photo_id for person in catalog.get("people", {}).values()
+        for photo_id in person.get("identityAnchors", ())
+    }
+    released, skipped = {}, []
+    for group, name, folder in api.cw.photo_folders(cfg, root):
+        if group != "Potentials":
+            continue
+        paths = sorted(originals.images(pathlib.Path(folder) / "gallery"), key=lambda path: path.name)
+        if not paths or len(paths) > limit:
+            continue
+        owner = f"{group}/{name}"
+        ids = [metadata.photo_id_from_name(path.name) for path in paths]
+        reason = (
+            "protected identity" if owner in protected_folders else
+            "Gallery photo without a stable ID" if not all(ids) else
+            "same-photo update target" if set(ids) & set(update_ids) else
+            "protected or anchored photo" if any(
+                catalog.get("photos", {}).get(photo_id, {}).get("protected") or photo_id in anchors
+                for photo_id in ids
+            ) else
+            "workflow-selected photo" if set(ids) & set(workflow_ids) else None
+        )
+        if reason:
+            skipped.append({"identity": owner, "photoCount": len(paths), "reason": reason})
+            continue
+        released[owner] = [path.relative_to(root).as_posix() for path in paths]
+    return released, skipped
+
+
+def _resolve_released_potentials(report, released):
+    """Keep, move upward or merge released small-Potential photos after routing.
+
+    ``released`` maps photo ID to its owner, source and Gallery size. A new
+    cluster that contains released photos does not create another identity:
+    it joins the origin Potential holding most of its released photos (ties by
+    folder name), so arrivals and other released Potentials merge into it. A
+    released photo whose outcome is its own folder or no placement stays.
+    Gallery assignments to another identity and rival Review (single-photo
+    gate) move it. Returns per-photo outcomes, merges and emptied folders.
+    """
+    decisions = {row["photoId"]: row for row in report["assignments"] + report["held"] if row.get("photoId")}
+    merges = []
+    for cluster in sorted(report["clusters"], key=lambda row: row["destination"]):
+        origins = collections.Counter(
+            released[photo_id]["owner"] for photo_id in cluster["photoIds"] if photo_id in released
+        )
+        if not origins:
+            continue
+        target = sorted(origins.items(), key=lambda item: (-item[1], item[0].casefold(), item[0]))[0][0]
+        for photo_id in cluster["photoIds"]:
+            decision = decisions[photo_id]
+            decision.update(
+                destination=target, destinationType="existing",
+                intakePotentialJoin={"plannedCluster": cluster["destination"], "target": target},
+            )
+            decision.pop("singlePhoto", None)
+            decision["reason"] = (
+                f"joins released small Potential {target} instead of forming {cluster['destination']}; "
+                + decision.get("reason", "")
+            )
+        report["clusters"].remove(cluster)
+        merges.append({
+            "plannedCluster": cluster["destination"], "target": target,
+            "photoIds": sorted(cluster["photoIds"]), "mergedPotentials": sorted(set(origins) - {target}),
+        })
+    outcomes, kept = [], set()
+    for photo_id, info in sorted(released.items()):
+        decision = decisions.get(photo_id) or {}
+        destination, review = decision.get("destination"), decision.get("reviewDestination")
+        if destination and destination != info["owner"]:
+            outcome, final = "moved-gallery", f"{destination}/gallery"
+        elif review and not decision.get("preserveStaged") and review.rsplit("/", 1)[0] != info["owner"]:
+            outcome, final = "moved-review", review
+        else:
+            outcome, final = "kept", f'{info["owner"]}/gallery'
+            kept.add(photo_id)
+        outcomes.append({
+            "photoId": photo_id, "identity": info["owner"], "source": info["source"],
+            "outcome": outcome, "final": final, "bestMatch": decision.get("bestMatch"),
+            "bestScore": decision.get("bestScore"), "reason": decision.get("reason"),
+        })
+    report["assignments"] = [row for row in report["assignments"] if row.get("photoId") not in kept]
+    report["held"] = [row for row in report["held"] if row.get("photoId") not in kept]
+    moved = collections.Counter(row["identity"] for row in outcomes if row["outcome"] != "kept")
+    sizes = {info["owner"]: info["gallerySize"] for info in released.values()}
+    emptied = sorted(owner for owner, count in moved.items() if count == sizes[owner])
+    return outcomes, merges, emptied
+
+
+def _released_move_names(moves, released_ids, api, cfg, root):
+    """Give released small-Potential photos their destination folder's standard filename."""
+    from tools.art import originals
+    from tools.art.likeness_library import metadata
+
+    prefixes = sorted(
+        {originals.prefix_of(name) for group, name, _folder in api.cw.photo_folders(cfg, root)
+         if group in IDENTITY_ROOTS},
+        key=lambda item: (-len(item), item.casefold()),
+    )
+    renamed = []
+    for move in moves:
+        if move["photoId"] in released_ids:
+            destination = pathlib.PurePosixPath(move["destination"])
+            digest = move["photoId"].split(":", 1)[-1]
+            name = originals.standard_name(
+                destination.name, originals.prefix_of(destination.parent.parent.name), known=prefixes,
+                digest=digest[4:] if digest.startswith("pic_") else digest,
+            )
+            if metadata.photo_id_from_name(name) == move["photoId"]:
+                move = {**move, "destination": (destination.parent / name).as_posix(),
+                        "intakeReleasedPotential": True}
+            else:
+                move = {**move, "intakeReleasedPotential": True}
+        renamed.append(move)
+    return renamed
+
+
 def _route_plan(api, candidates, cores, settings, policy, names_taken, *, admission_context=None):
     """Keep the entire eligible core map and the common policy for every profile."""
     return api.plan_reconciliation(
@@ -626,6 +755,18 @@ def _plan(api, root, profile, photo_ids, *, cache_path=None, policy_path=None,
                         "review the exact content binding before explicit replacement"
                     )
             effective_updates.add(photo_id)
+        from tools.art.likeness_library.policy import settle_settings
+
+        release_started = time.perf_counter()
+        release_limit = settle_settings(policy)["potentialMaxPhotos"]
+        released_folders, released_skipped = (
+            _small_potentials(
+                api, cfg, root, catalog, metadata, originals, release_limit, effective_updates,
+                _workflow_ids(cfg, metadata),
+            ) if release_limit and selected_paths else ({}, [])
+        )
+        release_selection_seconds = time.perf_counter() - release_started
+        released_photos = []
         identity_photos = []
         update_targets = {}
         update_target_hashes = {}
@@ -670,6 +811,8 @@ def _plan(api, root, profile, photo_ids, *, cache_path=None, policy_path=None,
                     missing_evidence.append(f"{group}/{name}/gallery/{path.name}")
                     continue
                 identity_photos.append(api.Photo(path, group, name, digest, data))
+                if f"{group}/{name}" in released_folders:
+                    released_photos.append(identity_photos[-1])
         if missing_evidence:
             sample = ", ".join(missing_evidence[:8])
             suffix = f" (+{len(missing_evidence) - 8} more)" if len(missing_evidence) > 8 else ""
@@ -738,7 +881,7 @@ def _plan(api, root, profile, photo_ids, *, cache_path=None, policy_path=None,
     )
     cores = {
         folder: core for folder, core in all_cores.items()
-        if folder.split("/", 1)[0] in IDENTITY_ROOTS
+        if folder.split("/", 1)[0] in IDENTITY_ROOTS and folder not in released_folders
     }
     requested_ids = set(photo_ids or ())
     selected_ids = set(selected_by_id) | {row["photoId"] for row in aliases}
@@ -784,10 +927,31 @@ def _plan(api, root, profile, photo_ids, *, cache_path=None, policy_path=None,
         normal_admission.context(cores, normal_admission.reference_rows(space, cores, catalog), policy)
         if "castAdmission" in policy else None
     )
+    release_routing_started = time.perf_counter()
+    released_rows = []
+    released = {}
+    for photo in released_photos:
+        photo_id = metadata.photo_id_from_name(photo.name)
+        relative = photo.path.relative_to(root).as_posix()
+        owner = f"{photo.group}/{photo.folder}"
+        assessment = quality(photo, photo.path) if "castAdmission" in policy else None
+        released_rows.append({
+            "photoId": photo_id, "sourceFolder": owner, "sourceBucket": "Pool", "side": "Prospects",
+            "protected": False, "workflowSelected": False, "regroupReview": True,
+            "vector": photo.vec, "sha256": metadata.content_sha256(photo.path),
+            **(face_quality.candidate_fields(assessment) if assessment is not None
+               else {"qualityEligible": False}),
+            **rejections.photo_state(catalog, photo),
+        })
+        released[photo_id] = {
+            "owner": owner, "source": relative, "sha256": released_rows[-1]["sha256"],
+            "gallerySize": len(released_folders[owner]),
+        }
     report = _route_plan(
-        api, [row for row in candidates if row["photoId"] not in update_targets],
+        api, [row for row in candidates if row["photoId"] not in update_targets] + released_rows,
         cores, settings, policy, names_taken, admission_context=admission_context,
     )
+    route_seconds = time.perf_counter() - release_routing_started
     if update_targets:
         report["assignments"] = [row for row in report["assignments"] if row["photoId"] not in update_targets]
         report["held"] = [row for row in report["held"] if row["photoId"] not in update_targets]
@@ -795,6 +959,37 @@ def _plan(api, root, profile, photo_ids, *, cache_path=None, policy_path=None,
             "photoId": photo_id, "destination": pathlib.PurePosixPath(relative).parent.parent.as_posix(),
             "sourceBucket": "Pool", "reason": "content-bound same-photo update; existing owner/name/lineage retained",
         } for photo_id, relative in sorted(update_targets.items()))
+    resolve_started = time.perf_counter()
+    outcomes, merges, emptied = _resolve_released_potentials(report, released) if released else ([], [], [])
+    report["intakePotentialRelease"] = {
+        "maximumPhotos": release_limit,
+        "enabled": bool(release_limit),
+        "scope": (
+            "existing Potentials with 1..maximumPhotos Gallery photos are released at the start of intake, "
+            "rescored with the incoming batch, and may move upward, merge or stay; emptied folders are "
+            "reported only (retirement is a separate step)"
+        ),
+        "releasedPotentials": [
+            {"identity": owner, "photoCount": len(paths), "sources": paths}
+            for owner, paths in sorted(released_folders.items())
+        ],
+        "skippedPotentials": released_skipped,
+        "releasedPhotoCount": len(released),
+        "arrivalCandidateCount": len(candidates),
+        "outcomes": outcomes,
+        "movedCount": sum(row["outcome"] != "kept" for row in outcomes),
+        "keptCount": sum(row["outcome"] == "kept" for row in outcomes),
+        "merges": merges,
+        "emptiedGalleries": emptied,
+        "sourceHashes": {photo_id: info["sha256"] for photo_id, info in sorted(released.items())},
+        "timing": {
+            "selectionSeconds": release_selection_seconds,
+            "sharedRoutingSeconds": route_seconds,
+            "resolutionSeconds": time.perf_counter() - resolve_started,
+            "scope": ("selection scans Potentials; routing is shared with the arrivals "
+                      f"({len(candidates)} arrival + {len(released)} released candidates)"),
+        },
+    }
     report.update({
         "kind": "normal-import-plan",
         "schemaVersion": 1,
@@ -1101,7 +1296,14 @@ def main(argv=None):
         ordinary = {**report, "assignments": [
             row for row in report["assignments"] if row["photoId"] not in report["updateTargets"]
         ]}
-        proposed = maintenance.proposed_moves(ordinary, photos, root)
+        released_ids = set(report.get("intakePotentialRelease", {}).get("sourceHashes", {}))
+        released_photos = [
+            photo for photo in space.photos
+            if metadata.photo_id_from_name(photo.name) in released_ids and photo.path.parent.name == "gallery"
+        ] if released_ids else []
+        proposed = _released_move_names(
+            maintenance.proposed_moves(ordinary, photos + released_photos, root), released_ids, api, cfg, root,
+        )
         moves, denied = _policy_permitted_moves(proposed, policy)
         moves.extend({
             "photoId": photo_id,
@@ -1148,6 +1350,20 @@ def main(argv=None):
         f"{len(report['clusters'])} new cluster(s), {len(moves)} permitted move(s)."
     )
     print(f"matching policy: {report['policyVersion']} ({report['policyStatus']}); profile policy: shared")
+    release = report.get("intakePotentialRelease") or {}
+    if release.get("enabled"):
+        timing = release["timing"]
+        print(
+            f"small-Potential release (at most {release['maximumPhotos']} Gallery photo(s)): "
+            f"{len(release['releasedPotentials'])} Potential(s), {release['releasedPhotoCount']} photo(s) rescored; "
+            f"{release['movedCount']} moved, {release['keptCount']} kept, {len(release['merges'])} merge(s); "
+            f"emptied Galleries: {', '.join(release['emptiedGalleries']) or 'none'}; "
+            f"selection {timing['selectionSeconds']:.3f}s, shared routing {timing['sharedRoutingSeconds']:.3f}s, "
+            f"resolution {timing['resolutionSeconds']:.3f}s"
+        )
+        for row in release["outcomes"]:
+            if row["outcome"] != "kept":
+                print(f"  RELEASED POTENTIAL {row['photoId']} {row['identity']} -> {row['final']}")
     for row in report["assignments"]:
         print(f"  {row['photoId']} -> {row.get('destination') or 'REVIEW'} ({row['reason']})")
     for row in report["held"]:
@@ -1220,7 +1436,7 @@ def main(argv=None):
         stage_root = batch_run / "publication"
         published, updated, removed = normal_products.stage(
             root, stage_root, moves, prepared, profile=args.profile,
-            photos=photos, cfg=cfg, catalog=catalog, policy=policy,
+            photos=photos + released_photos, cfg=cfg, catalog=catalog, policy=policy,
         )
         moved_ids = {row["photoId"] for row in moves}
         normalized_ids = {row["photoId"] for row in normalizations if row["photoId"] not in moved_ids}

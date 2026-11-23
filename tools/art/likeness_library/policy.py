@@ -21,6 +21,28 @@ def _number(value, label, minimum=-1.0, maximum=1.0):
 
 CAST_SEED_KEYS = frozenset(("seedTopCount", "seedReleaseBelow"))
 CAST_SEED_DEFAULTS = {"seedTopCount": 9, "seedReleaseBelow": 0.60}
+SETTLE_KEYS = frozenset(("settlePassMaximum", "intakeReleasePotentialMaxPhotos"))
+SETTLE_DEFAULTS = {"settlePassMaximum": 3, "intakeReleasePotentialMaxPhotos": 1}
+
+
+def settle_settings(policy):
+    """Return the validated settle-pass and intake small-Potential release limits.
+
+    ``settlePassMaximum`` bounds the SIMPLE rebase settle passes (0 disables);
+    ``intakeReleasePotentialMaxPhotos`` is the largest existing Potential
+    (Gallery photo count) released for rescoring at the start of normal intake
+    (0 disables).
+    """
+    identity = policy.get("identityActions") if isinstance(policy, dict) else None
+    if not isinstance(identity, dict):
+        raise ValueError("settle settings require identityActions")
+    result = {}
+    for key, label in (("settlePassMaximum", "passes"), ("intakeReleasePotentialMaxPhotos", "potentialMaxPhotos")):
+        value = identity.get(key, SETTLE_DEFAULTS[key])
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            raise ValueError(f"identityActions/{key} must be a non-negative integer")
+        result[label] = value
+    return result
 
 
 def cast_seed_settings(policy):
@@ -338,7 +360,7 @@ def validate_policy(policy):
             raise ValueError(f"categoryAssignmentRules/{index} cast score range is invalid")
 
     identity = policy["identityActions"]
-    if set(identity) - {"independentEvidenceMaximumSimilarity"} != {
+    if set(identity) - {"independentEvidenceMaximumSimilarity"} - SETTLE_KEYS != {
         "matchReviewMinimum",
         "autoMergeMinimum",
         "autoMergeMinimumMargin",
@@ -366,6 +388,7 @@ def validate_policy(policy):
             raise ValueError(f"{key} must be an integer of at least 2")
     if merge_min < review_min or split_max > review_min or alternative_min < review_min:
         raise ValueError("identity action thresholds conflict with the review threshold")
+    settle_settings(policy)
 
     lookalikes = policy["lookalikeGroups"]
     if not {"suggestionMinimumSimilarity", "automaticAssociationEnabled"} <= set(lookalikes) or set(lookalikes) - {

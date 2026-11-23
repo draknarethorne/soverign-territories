@@ -2154,5 +2154,180 @@ class VerifiedRetainedOriginalTests(unittest.TestCase):
             self.assertEqual(owner.read_bytes(), b"native pixels")
 
 
+class SmallPotentialReleaseIntakeTests(unittest.TestCase):
+    """Item (d): intake releases existing small Potentials so their photos can move upward."""
+
+    VECTORS = {
+        b"alpha one": (1., 0., 0.), b"alpha two": (1., .05, 0.), b"alpha three": (1., -.05, 0.),
+        b"lone": (1., 0., -.1), b"pair one": (.9, 0., .436), b"pair two": (.9, .05, .43),
+        b"far": (0., -.6, -.8), b"arrival": (0., 1., 0.),
+    }
+
+    def setUp(self):
+        import numpy as np
+        from tools.art.likeness_library import rejections
+        from tools.art.likeness_library.reconciliation import plan_reconciliation
+
+        scratch = ROOT / "tmp"
+        scratch.mkdir(exist_ok=True)
+        temporary = tempfile.TemporaryDirectory(dir=scratch)
+        self.addCleanup(temporary.cleanup)
+        self.root = pathlib.Path(temporary.name).resolve()
+        self.paths = {}
+        for relative, payload in (
+            ("Models/Alpha/gallery/alpha_image_1.jpg", b"alpha one"),
+            ("Models/Alpha/gallery/alpha_image_2.jpg", b"alpha two"),
+            ("Models/Alpha/gallery/alpha_image_3.jpg", b"alpha three"),
+            ("Potentials/Lone/gallery/lone_image_10.jpg", b"lone"),
+            ("Potentials/Pair/gallery/pair_image_20.jpg", b"pair one"),
+            ("Potentials/Pair/gallery/pair_image_21.jpg", b"pair two"),
+            ("Potentials/Far/gallery/far_image_30.jpg", b"far"),
+            ("Various/gallery/various_image_99.jpg", b"arrival"),
+        ):
+            path = self.root / pathlib.PurePosixPath(relative)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(payload)
+            self.paths[payload] = path
+        metadata.save_catalog(
+            {"schemaVersion": 1, "people": {}, "photos": {}, "actions": []},
+            self.root / ".likeness-library.json",
+        )
+        emb = {
+            hashlib.sha1(payload).hexdigest(): {"v": list(vector), "faces": 1, "f2": 0., "px": 1000,
+                                                "box": [.3, .2, .3, .3], "t": .1}
+            for payload, vector in self.VECTORS.items()
+        }
+
+        class Photo:
+            def __init__(self, path, group, folder, digest, data):
+                self.path, self.group, self.folder, self.sha = pathlib.Path(path), group, folder, digest
+                self.key = group if group == folder else f"{group}/{folder}"
+                self.name = self.path.name
+                self.faces, self.f2 = data.get("faces", -1), data.get("f2", 0.)
+                self.px, self.box = data.get("px", 0), data.get("box")
+                self.raw = np.asarray(data["v"], dtype=float) if data.get("v") else None
+                self.vec = None
+
+            def usable(self, minimum):
+                return self.raw is not None and self.px >= minimum
+
+        class Space:
+            def __init__(self, photos, settings, mean=None):
+                self.photos, self.st, self.mean, self.by_key = list(photos), settings, np.zeros(3), {}
+                for photo in self.photos:
+                    if photo.raw is not None:
+                        photo.vec = photo.raw / np.linalg.norm(photo.raw)
+                    self.by_key.setdefault(photo.key, []).append(photo)
+
+        root = self.root
+        folders = [
+            ("Models", "Alpha", root / "Models" / "Alpha"),
+            ("Potentials", "Lone", root / "Potentials" / "Lone"),
+            ("Potentials", "Pair", root / "Potentials" / "Pair"),
+            ("Potentials", "Far", root / "Potentials" / "Far"),
+            ("Various", "Various", root / "Various"),
+        ]
+        self.api = SimpleNamespace(
+            domains=SimpleNamespace(
+                CURRENT=contextvars.ContextVar("domain", default=None),
+                READ_ONLY=contextvars.ContextVar("readonly", default=False),
+            ),
+            metadata=metadata, rejections=rejections, configuration=lambda: {},
+            cw=SimpleNamespace(
+                photo_folders=lambda *_args: folders,
+                storage_root=lambda *_args, **_kwargs: root / "_reports",
+            ),
+            Cache=lambda _path: SimpleNamespace(stat={}, emb=emb, centering_mean=None),
+            Embedder=lambda: SimpleNamespace(configure_evidence=lambda *_args, **_kwargs: None, det=None),
+            Photo=Photo, Space=Space, plan_reconciliation=plan_reconciliation,
+            invent_name=lambda seed, _taken: "Fixture-" + seed[:8],
+        )
+
+    def plan(self, limit):
+        from tools.art.likeness_library.policy import load_policy
+
+        policy = load_policy()
+        policy["identityActions"]["intakeReleasePotentialMaxPhotos"] = limit
+        path = self.root.parent / f"{self.root.name}-policy-{limit}.json"
+        path.write_text(json.dumps(policy), encoding="utf-8")
+        self.addCleanup(path.unlink)
+        before = {path: path.read_bytes() for path in self.root.rglob("*") if path.is_file()}
+        report, _candidates, photos, space, *_ = normal_import._plan(
+            self.api, self.root, "fast", [], cache_path=self.root / "cache", policy_path=path,
+        )
+        # Previews stay read-only.
+        self.assertEqual({path: path.read_bytes() for path in self.root.rglob("*") if path.is_file()}, before)
+        return report, photos, space
+
+    def outcomes(self, report):
+        return {row["identity"] + ":" + row["photoId"]: row for row in report["intakePotentialRelease"]["outcomes"]}
+
+    def test_singleton_moves_upward_and_limit_one_keeps_two_photo_potential(self):
+        report, photos, space = self.plan(1)
+        release = report["intakePotentialRelease"]
+        self.assertEqual(release["maximumPhotos"], 1)
+        self.assertEqual([row["identity"] for row in release["releasedPotentials"]],
+                         ["Potentials/Far", "Potentials/Lone"])
+        outcomes = self.outcomes(report)
+        lone = outcomes["Potentials/Lone:photo:image_10"]
+        self.assertEqual((lone["outcome"], lone["final"]), ("moved-gallery", "Models/Alpha/gallery"))
+        # Below yellow against every identity: the singleton stays where it is.
+        self.assertEqual(outcomes["Potentials/Far:photo:image_30"]["outcome"], "kept")
+        self.assertEqual(release["emptiedGalleries"], ["Potentials/Lone"])
+        self.assertEqual((release["releasedPhotoCount"], release["movedCount"], release["keptCount"]), (2, 1, 1))
+        # Released Potentials lend no core: only Alpha and the unreleased Pair are compared.
+        self.assertEqual(report["eligibleIdentityCount"], 2)
+        timing = release["timing"]
+        for key in ("selectionSeconds", "sharedRoutingSeconds", "resolutionSeconds"):
+            self.assertGreaterEqual(timing[key], 0)
+        self.assertIn("1 arrival + 2 released candidates", timing["scope"])
+        # The two-photo Potential is untouched at a limit of one.
+        self.assertNotIn("photo:image_20", {row["photoId"] for row in report["assignments"] + report["held"]})
+        self.assertNotIn("photo:image_30", {row["photoId"] for row in report["assignments"] + report["held"]})
+        # Publication moves the released photo with the destination's standard name.
+        from tools.art.likeness_library import maintenance
+
+        released_ids = set(release["sourceHashes"])
+        released_photos = [photo for photo in space.photos
+                           if metadata.photo_id_from_name(photo.name) in released_ids]
+        moves = normal_import._released_move_names(
+            maintenance.proposed_moves(report, photos + released_photos, self.root),
+            released_ids, self.api, {}, self.root,
+        )
+        move = next(row for row in moves if row["photoId"] == "photo:image_10")
+        self.assertEqual((move["source"], move["destination"]),
+                         ("Potentials/Lone/gallery/lone_image_10.jpg", "Models/Alpha/gallery/alpha_image_10.jpg"))
+        self.assertTrue(move["intakeReleasedPotential"])
+        self.assertNotIn("photo:image_30", {row["photoId"] for row in moves})
+
+    def test_limit_two_releases_two_photo_potential_and_zero_disables(self):
+        report, *_ = self.plan(2)
+        release = report["intakePotentialRelease"]
+        self.assertEqual([row["identity"] for row in release["releasedPotentials"]],
+                         ["Potentials/Far", "Potentials/Lone", "Potentials/Pair"])
+        outcomes = self.outcomes(report)
+        for key in ("Potentials/Pair:photo:image_20", "Potentials/Pair:photo:image_21"):
+            self.assertEqual(outcomes[key]["final"], "Models/Alpha/gallery")
+        self.assertEqual(release["emptiedGalleries"], ["Potentials/Lone", "Potentials/Pair"])
+        disabled, *_ = self.plan(0)
+        self.assertFalse(disabled["intakePotentialRelease"]["enabled"])
+        self.assertEqual(disabled["intakePotentialRelease"]["releasedPotentials"], [])
+        self.assertNotIn("photo:image_10", {row["photoId"] for row in disabled["assignments"] + disabled["held"]})
+
+    def test_released_singleton_merges_with_matching_arrival_into_its_own_folder(self):
+        self.paths[b"arrival"].write_bytes(b"near far")
+        self.api.Cache(None).emb[hashlib.sha1(b"near far").hexdigest()] = {
+            "v": [0., -.65, -.76], "faces": 1, "f2": 0., "px": 1000, "box": [.3, .2, .3, .3], "t": .1,
+        }
+        report, *_ = self.plan(1)
+        arrival = next(row for row in report["assignments"] if row["photoId"] == "photo:image_99")
+        self.assertEqual(arrival["destination"], "Potentials/Far")
+        self.assertEqual(arrival["intakePotentialJoin"]["target"], "Potentials/Far")
+        self.assertEqual(report["clusters"], [])
+        self.assertEqual(self.outcomes(report)["Potentials/Far:photo:image_30"]["outcome"], "kept")
+        merge = report["intakePotentialRelease"]["merges"][0]
+        self.assertEqual((merge["target"], merge["photoIds"]), ("Potentials/Far", ["photo:image_30", "photo:image_99"]))
+
+
 if __name__ == "__main__":
     unittest.main()

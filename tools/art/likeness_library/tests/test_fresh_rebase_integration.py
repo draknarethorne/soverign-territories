@@ -345,6 +345,138 @@ class FreshRebaseIntegrationTests(unittest.TestCase):
         self.assertEqual(report["freshCastWorkflowReplacementCount"], 1)
         self.assertFalse(report["freshCastSeed"]["configurationChanged"])
 
+    def settle_plan(self, **kwargs):
+        """Owner gains three admitted arrivals; its yellow edge member then drops to orange."""
+        f = self.fixture
+        self.api.cw.photo_folders(None, None).append(("Various", "Various", f.root / "Various"))
+        names = {b"owner edge": f.photo("Prospects/Owner/gallery/owner_image_106.jpg", b"owner edge")}
+        for index, payload in enumerate((b"arrival one", b"arrival two", b"arrival three"), 401):
+            names[payload] = f.photo(f"Various/gallery/various_image_{index}.jpg", payload)
+        self.vectors.update({
+            "owner edge": [.4, 0., np.sqrt(.84)], "arrival one": [.6, .8, 0.],
+            "arrival two": [.5, np.sqrt(.75), 0.], "arrival three": [.4, np.sqrt(.84), 0.],
+        })
+        return names, self.plan(**kwargs)
+
+    def test_settle_releases_member_that_drops_to_orange_after_admission(self):
+        names, report = self.settle_plan()
+        edge = metadata.photo_id_from_name(names[b"owner edge"].name)
+        initial = next(row for row in report["freshSourceAssessment"]["assessment"] if row["photoId"] == edge)
+        self.assertEqual(initial["band"], "yellow")
+        self.assertFalse(initial["selected"])
+        arrivals = {metadata.photo_id_from_name(names[key].name)
+                    for key in (b"arrival one", b"arrival two", b"arrival three")}
+        admitted = {row["photoId"] for row in report["assignments"] if row["destination"] == "Prospects/Owner"}
+        self.assertTrue(arrivals <= admitted)
+        settle = report["settle"]
+        released = {item["photoId"]: item for item in settle["passes"][0]["released"]}
+        self.assertEqual(released[edge]["band"], "orange")
+        self.assertEqual(released[edge]["identity"], "Prospects/Owner")
+        self.assertTrue(released[edge]["moved"])
+        # Fresh release only: the original member joins the bound release cohort.
+        self.assertIn(edge, {row["photoId"] for row in report["settleReleasedBindings"]})
+        binding = next(row for row in report["releasedPhotoBindings"] if row["photoId"] == edge)
+        self.assertEqual((binding["currentPath"], binding["sha256"]), (
+            names[b"owner edge"].relative_to(self.fixture.root).as_posix(),
+            metadata.content_sha256(names[b"owner edge"]),
+        ))
+        self.assertIn(binding, self.permissions.call_args.kwargs["released_bindings"])
+        evidence = next(row for row in report["releasedDecisionEvidence"] if row["photoId"] == edge)
+        self.assertTrue(evidence["sourceProtectionOverride"])
+        self.assertEqual(evidence["role"], "candidate")
+        move = next(row for row in report["moves"] if row["photoId"] == edge)
+        self.assertEqual(move["source"], names[b"owner edge"].relative_to(self.fixture.root).as_posix())
+        self.assertTrue(move["destination"].startswith("Potentials/"))
+        self.assertTrue(move["normalAdmission"])
+        self.assertEqual(move["releasedPhotoId"], edge)
+        decision = next(row for row in report["assignments"] + report["held"] if row["photoId"] == edge)
+        self.assertEqual(decision["settle"]["releasedFrom"], "Prospects/Owner")
+        # Below yellow against every existing identity: a labelled single-photo Potential (c).
+        self.assertTrue(decision["singlePhoto"])
+        self.assertEqual(decision["singlePhotoGate"]["bestRival"], "Prospects/Owner")
+        self.assertLess(decision["singlePhotoGate"]["bestRivalScore"], .30)
+        self.assertEqual(settle["didNotSettle"], [])
+        phases = [row["phase"] for row in report["phaseLog"]]
+        self.assertEqual(phases.index("settle-pass-1"), phases.index("bounded-two-round-admission") + 1)
+        record = next(row for row in report["phaseLog"] if row["phase"] == "settle-pass-1")
+        self.assertGreaterEqual(record["durationSeconds"], 0)
+        self.assertEqual(record["releasedCount"], settle["passes"][0]["releasedCount"])
+        self.assertEqual(record["movedCount"], settle["passes"][0]["movedCount"])
+        self.assertLessEqual(report["settlePassCount"], 3)
+        # Every source row stays bound, and no photo has more than one planned move.
+        self.assertEqual(len(report["sourceHashes"]), len(report["sourceRows"]))
+        moved = [row["photoId"] for row in report["moves"]]
+        self.assertEqual(len(moved), len(set(moved)))
+        replay = self.plan(for_apply=True, reuse_plan=report)
+        self.assertEqual(replay["settle"], report["settle"])
+        self.assertEqual(replay["settleFingerprint"], report["settleFingerprint"])
+        self.assertEqual(replay["moves"], report["moves"])
+        changed = copy.deepcopy(report)
+        changed["settleFingerprint"] = "0" * 64
+        with self.assertRaisesRegex(ValueError, "settle pass decisions differ from preview"):
+            self.plan(for_apply=True, reuse_plan=changed)
+        # A different pass limit at apply cannot reuse the preview's settled plan.
+        from tools.art.likeness_library.policy import load_policy
+
+        policy = load_policy()
+        policy["identityActions"]["settlePassMaximum"] = 0
+        path = self.fixture.root.parent / "apply-no-settle-policy.json"
+        path.write_text(json.dumps(policy), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "differ from preview"):
+            self.plan(for_apply=True, reuse_plan=report, policy_path=path)
+        # The preview's bound settle release cannot be dropped at apply.
+        changed = copy.deepcopy(report)
+        changed["settleReleasedBindings"] = []
+        with self.assertRaisesRegex(ValueError, "differ from preview"):
+            self.plan(for_apply=True, reuse_plan=changed)
+
+    def test_settle_released_anchor_is_retired_with_its_binding(self):
+        names, _ = self.settle_plan()
+        edge = metadata.photo_id_from_name(names[b"owner edge"].name)
+        catalog = self.fixture.empty_catalog()
+        person_id = "person_" + "b" * 32
+        catalog["people"][person_id] = {
+            "id": person_id, "displayName": "Owner", "folder": "Prospects/Owner",
+            "folderHistory": [], "identityAnchors": [edge],
+        }
+        catalog["photos"][edge] = {"contentSha256": metadata.content_sha256(names[b"owner edge"]), "protected": False}
+        metadata.save_catalog(catalog, self.fixture.root / ".likeness-library.json")
+        report = self.plan()
+        self.assertIn(edge, {row["photoId"] for row in report["settleReleasedBindings"]})
+        self.assertIn({"photoId": edge, "personId": person_id}, report["releasedSourceRetirement"]["retiredAnchors"])
+        # The anchor's own protection did not exempt it: the fresh release override covers it.
+        evidence = next(row for row in report["releasedDecisionEvidence"] if row["photoId"] == edge)
+        self.assertTrue(evidence["protected"])
+        self.assertTrue(evidence["sourceProtectionOverride"])
+
+    def test_original_member_slipping_to_orange_is_only_reported_in_normal_rebase(self):
+        names, _report = self.settle_plan()
+        report = normal_rebase._plan(self.fixture.root, "fast", "normal-fixture", api=self.api)[0]
+        edge = metadata.photo_id_from_name(names[b"owner edge"].name)
+        self.assertNotIn("freshSourceRelease", report)
+        unsettled = {row["photoId"]: row for row in report["settle"]["didNotSettle"]}
+        self.assertEqual(unsettled[edge]["band"], "orange")
+        self.assertEqual(unsettled[edge]["identity"], "Prospects/Owner")
+        self.assertIn("outside a release cohort", unsettled[edge]["reason"])
+        self.assertNotIn(edge, {item["photoId"] for item in report["settle"]["passes"][0]["released"]})
+        self.assertEqual(report["settleReleasedBindings"], [])
+        self.assertNotIn("releasedPhotoBindings", report)
+        self.assertFalse([row for row in report["moves"]
+                          if row["photoId"] == edge and row["source"] != row["destination"]])
+
+    def test_settle_passes_can_be_disabled_by_policy(self):
+        from tools.art.likeness_library.policy import load_policy
+
+        policy = load_policy()
+        policy["identityActions"]["settlePassMaximum"] = 0
+        path = self.fixture.root.parent / "no-settle-policy.json"
+        path.write_text(json.dumps(policy), encoding="utf-8")
+        names, report = self.settle_plan(policy_path=path)
+        self.assertNotIn("settle", report)
+        self.assertNotIn("settle-pass-1", [row["phase"] for row in report["phaseLog"]])
+        edge = metadata.photo_id_from_name(names[b"owner edge"].name)
+        self.assertNotIn(edge, {row["photoId"] for row in report["moves"] if not row.get("preparationOnly")})
+
     def test_selected_anchor_retires_before_post_selection_core_freeze(self):
         catalog = self.fixture.empty_catalog()
         photo_id = metadata.photo_id_from_name(self.paths[2].name)

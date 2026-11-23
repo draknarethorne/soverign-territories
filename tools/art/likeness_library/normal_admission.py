@@ -3336,3 +3336,364 @@ def validate_move(move, policy):
         or move.get("referenceEligible")
     ):
         raise ValueError("invalid provisional cast Review disposition")
+
+
+SETTLE_IDENTITY_CATEGORIES = frozenset(("Sisters", "Angels", "Models", "Prospects", "Potentials"))
+SETTLE_RELEASE_BANDS = ("red", "orange")
+
+
+def settle_location(entry, decision):
+    """Planned (folder, bucket) for one settle entry, mirroring ``maintenance.proposed_moves``."""
+    if decision is None:
+        return entry["sourceLocation"]
+    if decision.get("destination"):
+        return decision["destination"], "gallery"
+    if decision.get("reviewDestination"):
+        folder, bucket = decision["reviewDestination"].rsplit("/", 1)
+        return folder, bucket
+    if decision.get("preserveStaged"):
+        return entry["sourceLocation"]
+    if decision.get("clusterId") and decision.get("sourceBucket") != "Review":
+        return "Various", "review"
+    return entry["sourceLocation"]
+
+
+def _settle_members(entries, decisions):
+    members = {}
+    for entry in entries:
+        folder, bucket = settle_location(entry, decisions.get(entry["photoId"]))
+        if bucket == "gallery" and folder.split("/", 1)[0] in SETTLE_IDENTITY_CATEGORIES:
+            members.setdefault(folder, []).append(entry)
+    return members
+
+
+def _settle_voters(members, decisions, released=()):
+    """One reference vote per content among single-face, voting, non-optimistic members."""
+    voters = {}
+    for folder, rows in sorted(members.items()):
+        seen = {}
+        for entry in sorted(rows, key=lambda row: row["photoId"]):
+            decision = decisions.get(entry["photoId"]) or {}
+            if (not entry["voter"] or entry["photoId"] in released
+                    or (decision.get("castAdmission") or {}).get("mode") == "optimistic-gallery"
+                    or entry["sha256"] in seen):
+                continue
+            seen[entry["sha256"]] = entry
+        voters[folder] = list(seen.values())
+    return voters
+
+
+def _settle_scores(members, voters, policy):
+    """Leave-one-out own score: each member against its identity's other voters (content excluded)."""
+    scores = {}
+    for folder, rows in sorted(members.items()):
+        for entry in rows:
+            score = band = None
+            if entry["scorable"] and entry["vector"] is not None:
+                others = [
+                    row["vector"] for row in voters.get(folder, [])
+                    if row["photoId"] != entry["photoId"] and row["sha256"] != entry["sha256"]
+                ]
+                if others:
+                    center = nz(np.sum(others, axis=0))
+                    if np.linalg.norm(center):
+                        score = float(np.clip(entry["vector"] @ center, -1., 1.))
+                        band = score_band(score, policy)
+            scores[entry["photoId"]] = {"identity": folder, "score": score, "band": band}
+    return scores
+
+
+def _settle_cores(voters, identity_meta):
+    cores, refs = {}, {}
+    for folder, rows in sorted(voters.items()):
+        if not rows:
+            continue
+        vector = nz(np.mean([row["vector"] for row in rows], axis=0))
+        if not np.linalg.norm(vector):
+            continue
+        meta = identity_meta.get(folder) or {
+            "side": "Prospects", "category": folder.split("/", 1)[0],
+            "personIds": [], "identityProtected": False,
+        }
+        cores[folder] = {**meta, "vector": vector, "corePhotoIds": [row["photoId"] for row in rows]}
+        refs[folder] = [
+            {"photoId": row["photoId"], "sha256": row["sha256"], "vector": row["vector"],
+             "qualityEligible": True,
+             **{key: row["candidateState"][key] for key in ("rejectedPersonIds", "rejectionMetadataStale")
+                if key in row.get("candidateState", {})}}
+            for row in rows
+        ]
+    return cores, refs
+
+
+def _settle_rivals(entry, cores, policy, *, locked, exclude=()):
+    blocked = set(rejections.excluded_folders([entry.get("candidateState", {})], cores)) | set(exclude)
+    for pair in policy["runtimeSettings"]["different"]:
+        if entry["sourceFolder"] in pair:
+            blocked.update(folder for folder in pair if folder != entry["sourceFolder"])
+    if locked:
+        blocked.update(folder for folder in cores if folder.split("/", 1)[0] in CAST)
+    return sorted(
+        ({"folder": folder, "score": float(np.clip(entry["vector"] @ core["vector"], -1., 1.))}
+         for folder, core in cores.items() if folder not in blocked and core.get("side") == "Prospects"),
+        key=lambda row: (-row["score"], row["folder"].casefold(), row["folder"]),
+    )
+
+
+def settle_passes(api, entries, decisions, clusters, identity_meta, settings, policy, names_taken, *,
+                  locked=False, max_passes=3, candidate_for=None, clock=None):
+    """Rebuild planned identities, release red/orange members and rematch them, up to ``max_passes``.
+
+    ``entries`` are every measured planned photo: ``photoId``, ``sha256``,
+    centered ``vector``, ``sourceFolder``, ``sourceLocation`` (folder, bucket
+    when no decision moves it), ``voter`` (single-face voting content),
+    ``scorable`` (match quality), ``exemptReason`` (never released),
+    ``stayExemptReason`` (not released while it is planned at its source
+    location, i.e. an original member that stayed in place),
+    ``seedOf`` (cast seed identity), optional ``candidateState`` and the
+    ``candidate`` evidence used to rematch a released photo (or
+    ``candidate_for(entry)``, which builds it lazily).
+    ``decisions`` (photo ID to decision) and ``clusters`` are updated in place.
+    Each pass rescores every planned Gallery member leave-one-out against its
+    identity's other voters (one vote per content; match-only, non-voters,
+    optimistic and Review placements never vote), releases red/orange
+    members except cast seeds and exempt photos, and rematches the released
+    photos together against the identities rebuilt without them through the
+    shared planner (existing Gallery or Review, band-aligned new identities,
+    single-photo gate), falling back to the highest rival's Review or Various
+    Review. Identities reduced to one photo follow the single-photo rule.
+    Passes stop when a pass changes no planned location; flags left after
+    the final pass are reported as did-not-settle. Deterministic; no I/O.
+    """
+    import time
+
+    from .planner import SINGLE_PHOTO_LABEL
+
+    clock = clock or time.perf_counter
+    reduced = set()
+    by_id = {entry["photoId"]: entry for entry in entries}
+    if len(by_id) != len(entries):
+        raise ValueError("settle entries have ambiguous photo IDs")
+    entries = [by_id[photo_id] for photo_id in sorted(by_id)]
+    yellow = policy["scoreBands"]["yellow"]["minimum"]
+    taken = set(names_taken) | {cluster["destination"].split("/", 1)[1] for cluster in clusters if cluster.get("destination")}
+    passes, timings, released_ever = [], [], {}
+    starting_members = {folder: len(rows) for folder, rows in _settle_members(entries, decisions).items()}
+    starting_cluster_members = {
+        cluster["destination"]: sorted(
+            entry["photoId"] for entry in _settle_members(entries, decisions).get(cluster["destination"], [])
+        )
+        for cluster in clusters if cluster.get("destination")
+    }
+
+    def exempt(entry, folder):
+        if entry.get("seedOf") == folder:
+            return "cast seed member (exempt)"
+        if entry.get("exemptReason"):
+            return entry["exemptReason"]
+        if (entry.get("stayExemptReason")
+                and settle_location(entry, decisions.get(entry["photoId"])) == entry["sourceLocation"]):
+            return entry["stayExemptReason"]
+        return None
+
+    def assess():
+        members = _settle_members(entries, decisions)
+        voters = _settle_voters(members, decisions)
+        return members, voters, _settle_scores(members, voters, policy)
+
+    def provisional(folder):
+        return next((cluster for cluster in clusters if cluster.get("destination") == folder), None)
+
+    members, voters, scores = assess()
+    for pass_index in range(1, max_passes + 1):
+        started = clock()
+        before = {entry["photoId"]: settle_location(entry, decisions.get(entry["photoId"])) for entry in entries}
+        flagged = sorted(pid for pid, row in scores.items() if row["band"] in SETTLE_RELEASE_BANDS)
+        release = [pid for pid in flagged if exempt(by_id[pid], scores[pid]["identity"]) is None]
+        release_scores = {pid: dict(scores[pid]) for pid in release}
+        record = {
+            "pass": pass_index, "memberCount": len(scores),
+            "scoredCount": sum(row["score"] is not None for row in scores.values()),
+            "flaggedCount": len(flagged), "releasedCount": len(release),
+            "released": [], "newIdentities": [], "singlePhotoReductions": [],
+        }
+        if release:
+            released = set(release)
+            cores, refs = _settle_cores(_settle_voters(members, decisions, released), identity_meta)
+            ctx = context(cores, refs, policy, locked=locked)
+            candidates = []
+            for pid in release:
+                entry = by_id[pid]
+                base = entry.get("candidate") or (candidate_for(entry) if candidate_for else None)
+                if base is None:
+                    raise ValueError(f"{pid}: settle release lacks its candidate evidence")
+                entry["candidate"] = base
+                candidates.append({
+                    **base, "photoId": pid, "sourceFolder": entry["sourceFolder"], "sourceBucket": "Pool",
+                    "side": "Prospects", "vector": entry["vector"], "sha256": entry["sha256"],
+                    "regroupReview": True, "rebaseCandidate": True, "protected": False,
+                    "workflowSelected": False, "identityProtected": False,
+                    "explicitReviewPlacement": False, "detachedOutlier": False,
+                    **({} if entry["voter"] else {"referenceQualityEligible": False}),
+                })
+            result = api.plan_reconciliation(
+                candidates, cores, assign=settings["assign"], margin=settings["margin"],
+                cluster=policy["identityActions"]["identityClusterMinimumSimilarity"],
+                minimum_cluster=settings["minCluster"], cast_merge=policy["identityActions"]["autoMergeMinimum"],
+                names_taken=sorted(taken), name_factory=api.invent_name, policy=policy,
+                admission_context=ctx,
+            )
+            new_clusters = {cluster["destination"]: cluster for cluster in result.get("clusters", [])}
+            rows = {row["photoId"]: row for row in result["assignments"] + result["held"]}
+            if set(rows) != released:
+                raise ValueError("settle rematch did not conserve its released photos")
+            for pid in release:
+                row, entry = rows[pid], by_id[pid]
+                previous = "/".join(before[pid])
+                decision = {
+                    **row, "normalAdmission": True, "referenceVersion": ctx["referenceVersion"],
+                    "referenceEligible": False,
+                }
+                if row.get("destinationType") == "provisional":
+                    decision["referenceEligible"] = pid in new_clusters[row["destination"]]["corePhotoIds"]
+                if not (decision.get("destination") or decision.get("reviewDestination")) or decision.get("preserveStaged"):
+                    if "castAdmission" in decision:
+                        # Cast evidence that did not place the photo cannot own a fallback Review.
+                        decision["castAdmissionEvidence"] = decision.pop("castAdmission")
+                    decision = unresolved_release_review(
+                        decision, _settle_rivals(entry, cores, policy, locked=locked), locked=locked,
+                    )
+                elif decision.get("destination") and provisional(decision["destination"]) is not None:
+                    # Joining a provisional identity planned in this run, not an existing folder.
+                    decision.update(
+                        destinationType="provisional",
+                        clusterId=provisional(decision["destination"])["clusterId"],
+                    )
+                decision["settle"] = {
+                    "pass": pass_index, "releasedFrom": scores[pid]["identity"],
+                    "releaseScore": scores[pid]["score"], "releaseBand": scores[pid]["band"],
+                    "previousLocation": previous,
+                }
+                decision["reason"] = (
+                    f'settle pass {pass_index}: {scores[pid]["band"]} member of {scores[pid]["identity"]} '
+                    f'released and rematched; ' + decision.get("reason", "")
+                )
+                decisions[pid] = decision
+                released_ever.setdefault(pid, []).append(pass_index)
+            for destination, cluster in sorted(new_clusters.items()):
+                clusters.append({**cluster, "settlePass": pass_index})
+                starting_cluster_members[destination] = sorted(cluster["photoIds"])
+                taken.add(destination.split("/", 1)[1])
+                record["newIdentities"].append({
+                    "destination": destination, "photoIds": list(cluster["photoIds"]),
+                    "singlePhoto": bool(cluster.get("singlePhoto")),
+                })
+        # Identities reduced to one photo follow the single-photo rule.
+        current = _settle_members(entries, decisions)
+        for cluster in [item for item in clusters if item.get("destination")]:
+            ids = sorted(entry["photoId"] for entry in current.get(cluster["destination"], []))
+            if ids == starting_cluster_members.get(cluster["destination"], ids):
+                continue  # membership not changed by settle
+            starting_cluster_members[cluster["destination"]] = ids
+            if not ids:
+                clusters.remove(cluster)
+            else:
+                cluster["photoIds"] = ids
+                cluster["corePhotoIds"] = sorted(set(cluster.get("corePhotoIds", ())) & set(ids)) or ids
+                if len(ids) > 1 and cluster.pop("singlePhoto", None):
+                    # A single-photo Potential that gains photos is no longer labelled single.
+                    cluster.pop("singlePhotoLabel", None)
+                    for photo_id in ids:
+                        (decisions.get(photo_id) or {}).pop("singlePhoto", None)
+        post_cores, post_refs = _settle_cores(_settle_voters(current, decisions), identity_meta)
+        post_version = None
+        for folder, rows in sorted(current.items()):
+            if len(rows) != 1 or folder.split("/", 1)[0] in CAST or folder in reduced:
+                continue
+            cluster = provisional(folder)
+            if cluster is not None and cluster.get("singlePhoto"):
+                continue  # already formed as a single-photo Potential under the gate
+            if cluster is None and starting_members.get(folder, 0) < 2:
+                continue  # an existing identity this settle did not reduce
+            entry = rows[0]
+            if entry["vector"] is None or not entry["scorable"]:
+                continue
+            reduced.add(folder)
+            rivals = _settle_rivals(entry, post_cores, policy, locked=locked, exclude={folder})
+            gate = {
+                "yellowMinimum": yellow, "bestRival": rivals[0]["folder"] if rivals else None,
+                "bestRivalScore": round(rivals[0]["score"], 4) if rivals else None,
+            }
+            outcome = {"identity": folder, "photoId": entry["photoId"], "singlePhotoGate": gate}
+            if rivals and rivals[0]["score"] >= yellow:
+                rival = rivals[0]["folder"]
+                rules = policy["categoryPolicies"][rival.split("/", 1)[0]]
+                if not rules["reviewAdmissionEnabled"] or exempt(entry, folder):
+                    outcome["outcome"] = "kept; rival Review unavailable or photo exempt"
+                else:
+                    if post_version is None:
+                        post_version = context(post_cores, post_refs, policy, locked=locked)["referenceVersion"]
+                    decisions[entry["photoId"]] = {
+                        "photoId": entry["photoId"], "sourceFolder": entry["sourceFolder"],
+                        "sourceBucket": "Pool", "destination": None, "reviewDestination": f"{rival}/review",
+                        "preserveStaged": False, "referenceEligible": False, "normalAdmission": True,
+                        "referenceVersion": post_version,
+                        "bestMatch": rival, "bestScore": round(rivals[0]["score"], 4),
+                        "singlePhotoGate": gate,
+                        "settle": {"pass": pass_index, "releasedFrom": folder, "releaseScore": None,
+                                   "releaseBand": None, "previousLocation": f"{folder}/gallery",
+                                   "singlePhotoReduction": True},
+                        "reason": (f"settle pass {pass_index}: identity reduced to one photo; it reaches yellow "
+                                   f"against {rival}; sent to that rival's Review"),
+                    }
+                    if cluster is not None:
+                        clusters.remove(cluster)
+                    outcome["outcome"] = f"{rival}/review"
+            elif cluster is not None:
+                cluster.update(singlePhoto=True, singlePhotoLabel=SINGLE_PHOTO_LABEL)
+                decision = decisions.get(entry["photoId"])
+                if decision is not None:
+                    decision.update(singlePhoto=True, singlePhotoGate=gate)
+                    decision["reason"] = decision.get("reason", "") + f"; {SINGLE_PHOTO_LABEL} after settle pass {pass_index}"
+                outcome["outcome"] = "single-photo Potential"
+            else:
+                outcome["outcome"] = "kept; every existing rival scores below yellow"
+            record["singlePhotoReductions"].append(outcome)
+        members, voters, scores = assess()
+        after = {entry["photoId"]: settle_location(entry, decisions.get(entry["photoId"])) for entry in entries}
+        moved = sorted(pid for pid in after if after[pid] != before[pid])
+        for pid in release:
+            record["released"].append({
+                "photoId": pid, "identity": release_scores[pid]["identity"],
+                "score": release_scores[pid]["score"], "band": release_scores[pid]["band"],
+                "outcome": "/".join(after[pid]), "moved": after[pid] != before[pid],
+            })
+        record["movedCount"] = len(moved)
+        record["movedPhotoIds"] = moved
+        record["remainingFlaggedCount"] = sum(row["band"] in SETTLE_RELEASE_BANDS for row in scores.values())
+        passes.append(record)
+        timings.append(clock() - started)
+        if not moved:
+            break
+    did_not_settle = []
+    for pid, row in sorted(scores.items()):
+        if row["band"] not in SETTLE_RELEASE_BANDS:
+            continue
+        reason = exempt(by_id[pid], row["identity"])
+        if reason is None:
+            reason = (
+                "released and rematched but still red/orange" if pid in released_ever
+                else "flagged after the final settle pass"
+            )
+        did_not_settle.append({
+            "photoId": pid, "identity": row["identity"], "score": row["score"], "band": row["band"],
+            "reason": reason, "releasedInPasses": released_ever.get(pid, []),
+        })
+    return {
+        "maximumPasses": max_passes, "passCount": len(passes),
+        # Converged: the last pass changed no planned location (or no pass ran).
+        "converged": not passes or not passes[-1]["movedCount"],
+        "passes": passes, "didNotSettle": did_not_settle,
+        "releasedPhotoIds": sorted(released_ever),
+        "finalScores": {pid: dict(row) for pid, row in sorted(scores.items())},
+    }, timings

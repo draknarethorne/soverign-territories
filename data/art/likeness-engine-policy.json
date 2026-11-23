@@ -85,7 +85,9 @@
     "splitReviewMaximum": 0.15,
     "splitMinimumAlternativeSimilarity": 0.3,
     "splitMinimumMargin": 0.1,
-    "splitMinimumIndependentPhotos": 2
+    "splitMinimumIndependentPhotos": 2,
+    "settlePassMaximum": 3,
+    "intakeReleasePotentialMaxPhotos": 1
   },
   "lookalikeGroups": {
     "suggestionMinimumSimilarity": 0.3,

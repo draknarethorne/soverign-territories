@@ -72,6 +72,30 @@ class LikenessPolicyTests(unittest.TestCase):
             with self.subTest(change=change), self.assertRaises(ValueError):
                 validate_policy(policy)
 
+    def test_settle_settings_default_and_reject_invalid_values(self):
+        from tools.art.likeness_library.policy import settle_settings
+
+        self.assertEqual(settle_settings(self.policy), {"passes": 3, "potentialMaxPhotos": 1})
+        legacy = copy.deepcopy(self.policy)
+        for key in ("settlePassMaximum", "intakeReleasePotentialMaxPhotos"):
+            del legacy["identityActions"][key]
+        validate_policy(legacy)
+        self.assertEqual(settle_settings(legacy), {"passes": 3, "potentialMaxPhotos": 1})
+        custom = copy.deepcopy(self.policy)
+        custom["identityActions"].update(settlePassMaximum=0, intakeReleasePotentialMaxPhotos=2)
+        validate_policy(custom)
+        self.assertEqual(settle_settings(custom), {"passes": 0, "potentialMaxPhotos": 2})
+        for key, value in (("settlePassMaximum", -1), ("settlePassMaximum", True),
+                           ("intakeReleasePotentialMaxPhotos", 1.5)):
+            invalid = copy.deepcopy(self.policy)
+            invalid["identityActions"][key] = value
+            with self.assertRaisesRegex(ValueError, key):
+                validate_policy(invalid)
+        unknown = copy.deepcopy(self.policy)
+        unknown["identityActions"]["settlePasses"] = 3
+        with self.assertRaisesRegex(ValueError, "identityActions keys"):
+            validate_policy(unknown)
+
     def test_cast_seed_settings_default_and_reject_invalid_values(self):
         self.assertEqual(cast_seed_settings(self.policy), {"topCount": 9, "releaseBelow": .60})
         self.assertEqual((self.policy["castAdmission"]["seedTopCount"],

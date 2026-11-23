@@ -1755,6 +1755,48 @@ an explicit user Review placement still stops the run. Admission moves
 without a reference version fail at preview. First verified on the Sandbox
 as `fresh-post-intake-20261122-04`.
 
+#### Settle passes and intake small-Potential release
+
+Every SIMPLE rebase with normal two-round admission then runs bounded settle
+passes before publication (`identityActions.settlePassMaximum`, default 3;
+0 disables). Each pass rebuilds every identity from its final planned
+Gallery members, existing and admitted. Match-only dominant-face photos,
+non-voters, optimistic cast placements and Review placements never vote, and
+duplicate content gets one vote. Each planned Gallery member is rescored
+against its identity's other voters (leave-one-out). Red and orange members
+are released and rematched together through the shared planner against the
+identities rebuilt without them: an existing Gallery or Review, a
+band-aligned new identity, the single-photo gate, or else the highest
+rival's Review or Various Review. An identity this run reduced to one photo
+follows the single-photo rule. Passes stop when a pass moves nothing.
+
+Photos the run placed can be released unless a protection, explicit Review
+placement or stale rejection exempts them. Original named-Gallery members
+that stayed in place are releasable only with `--fresh-source-release`, whose
+release already covers every bindable named-Gallery member. Such a member
+joins the bound release cohort with its source path and SHA-256, so its
+membership and anchors are retired and the release permission override
+covers its move. Cast top-N seeds stay exempt. In any other rebase original
+members are scored and reported, never released. Members still red or
+orange after the last pass are listed
+as "did not settle". Each pass records a `settle-pass-N` phase with its
+timing, released, moved and still-flagged counts. The recap adds "Settle
+passes" and "Did not settle" sections. The settle evidence and resulting
+decisions are fingerprinted, and apply refuses a changed outcome.
+
+Normal intake (`bin\library.cmd`) first releases existing Potentials with at
+most `identityActions.intakeReleasePotentialMaxPhotos` Gallery photos
+(default 1; 0 disables). Protected Potentials and those holding a protected,
+anchored, workflow-selected or update-target photo are skipped and reported.
+Released Potentials lend no core. Their photos are rescored with the
+incoming batch and may move to another identity's Gallery or a rival's
+Review (single-photo gate). A new group that contains them joins the
+Potential holding most of its released photos instead of forming another
+identity, which merges matching arrivals and other released Potentials into
+it. Otherwise a photo stays where it is. The plan records each outcome, the
+emptied Galleries (retirement is a separate step) and the selection, shared
+routing and resolution timings. Previews remain read-only.
+
 #### Recoverable retirement of emptied identity folders
 
 After an applied SIMPLE rebase, `bin\retire-empty.cmd` retires the identity
