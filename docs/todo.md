@@ -7,23 +7,29 @@
 
 ## Open work, by priority
 
-### Either of us (3)
+### Either of us (4)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] RA2d Establish leakage-safe evaluation groups and agree numeric recovery/false-merge/reference-contamination/churn bounds before choosing or enabling a new member rule. Owns this evaluation/acceptance portion transferred from ... ([priority reset](plans/2026-11-05-priority-reset.md))
-- [ ] IU4 Hand-picked Angelica core: tooling prepares `Various/Angelica/gallery` staging and candidates; the user selects; then run and compare per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md). ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] IU10 Reviewing grouping rules from universe evidence; the user decides per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-universe-testing-feedback). ([priority reset](plans/2026-11-05-priority-reset.md))
+- [ ] IU4 Hand-picked Angelica core: tooling prepares `Various/Angelica/gallery` staging and candidates; the user selects; then run and compare per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md). ([priority reset](plans/2026-11-05-priority-reset.md))
 
-### For the assistant, when you say go (10)
+**P2 (normal)**
+
+- [ ] IU15 Designing a Sandbox-local workflow selection store (coordinated with Beacon/WF1) per the [named-core fix contract](2026-11-22-identity-universe-sandbox.md#nov-23-named-core-fix-contract). ([priority reset](plans/2026-11-05-priority-reset.md))
+
+### For the assistant, when you say go (12)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] RA2j Restoring the normal FULL/LEAN/FAST intake flow and separating exclusive experimental execution. **Integrated completion follow-up:** the [selected ... ([priority reset](plans/2026-11-05-priority-reset.md))
+- [ ] IU13 Protecting user-named seed identities (core never retired; members leave only when low at home and clearly higher elsewhere) per the [named-core fix ... ([priority reset](plans/2026-11-05-priority-reset.md))
+- [ ] IU14 Auditing Review placements so no photo goes to Review where a rival scores higher by the route margin, per the [named-core fix contract](2026-11-22-identity-universe-sandbox.md#nov-23-named-core-fix-contract). ([priority reset](plans/2026-11-05-priority-reset.md))
+- [ ] IU7 Auto-replacing a moved or renamed workflow photo with the identity's highest-scoring Gallery photo per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-universe-testing-feedback); Nov 23 ... ([priority reset](plans/2026-11-05-priority-reset.md))
+- [ ] IU12 Taking `Various/<Name>` photos as native named intake in the SIMPLE rebase (no separate `seed` step) per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-iu9-named-core-most-wanted-run). ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] T29 Freeze same-machine representative generation/no-op, warm/cache phase baselines before runtime/path changes, with input/config/ code/resource IDs, timings, read/byte counts and output contracts. **Nov21:** maintain ... ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] T30 Remove established repeated work across phase and standalone/continuous boundaries; publish per-hotspot ownership, cost, cache dependencies/invalidation, tests and fixed/deferred/no-gain status. Coordinator decisions, ... ([priority reset](plans/2026-11-05-priority-reset.md))
-- [ ] IU7 Auto-replacing a moved or renamed workflow photo with the identity's highest-scoring Gallery photo per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-universe-testing-feedback). ([priority reset](plans/2026-11-05-priority-reset.md))
-- [ ] IU12 Taking `Various/<Name>` photos as native named intake in the SIMPLE rebase (no separate `seed` step) per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-iu9-named-core-most-wanted-run). ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] RA2o Reconciling current plans after the focused SIMPLE review/tuning contract is formalized and the run evidence/handoff is stable. **Nov21:** reconcile the affected current and historical protection and release guidance with ... ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] IU3 Running at least two gate variations on the Angelica universe and comparing outcomes per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md). ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] IU5 Writing the universe findings and proposed configuration changes for user review before the next full rebase per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md). ([priority reset](plans/2026-11-05-priority-reset.md))
@@ -96,7 +102,7 @@ Use the [archive guide](guidelines/ARCHIVE-GUIDE.md) for topic navigation. `drop
 
 | Hero | Photo | Prime | Bare | Golden pose | Heels | Other finals | Candidates |
 | --- | --- | --- | --- | --- | --- | ---: | ---: |
-| Angelica | angelica_image~ | Q c8 | Q c1 | - | - | - | 9 |
+| Angelica | angelica_shot_~ | Q c8 | Q c1 | - | - | - | 9 |
 | Azaline | azaline_image_~ | Q c3 | - | - | - | - | 3 |
 | Camaris | camaris_image_~ | Q c5 | - | - | - | - | 5 |
 | Gavrielle | gavrielle_imag~ | Q c2 | Q c1 | - | - | - | 3 |

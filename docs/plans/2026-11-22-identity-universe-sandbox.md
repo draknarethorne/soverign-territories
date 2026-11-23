@@ -332,6 +332,60 @@ rebases, or Sandbox too, write IU7 replacements to `workflows/workspaces.json`.
 The user identified the current selection (`image_7513773530805044436`) as
 Petra Cole, a likely future character.
 
+**Answered Nov 23 17:09:** (1) yes: Angelica's selection is now
+`angelica_shot_20261019152053_944x1104.png` via `bin\inputs.cmd set`
+(only that `workspaces.json` line changed; ComfyUI `inputs reset --hero
+Angelica` deployment is left to the workflow side). (2) Sandbox runs must
+not touch Production `workspaces.json`; a separate Sandbox selection store
+is wanted (IU15). (3) Implement the identified fixes below, then rerun;
+gate changes (Prospect vs Potential) come after, unless a fix needs one.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Here's my responses before I do actually leave.  1.  Yes, we can change the workflow for Angelica so that it doesn't cause issues with our runs and it's the best one.  2. Maybe we need a separate place for how we manage the workspaces.json so we don't conflate or confuse things between the Production runs and the Sandbox runs.  When running in a Sandbox we don't actually want to be touching the Production workspace.json as they are just a Sandbox for verification of the code changes prior to running the code against Production.  But if we need to for the short term - we can just update the workspaces.json to make it less of a problem for the Sandbox since I will not run anything in production until the Sandbox work is clean.  3.  Given what you know needs to be done and as long as it's written in the docs/plans - you can work on the defined fixes and we can do another run.  I do also want to adjust the gates around what constitutes a Prospects vs. Potential so that we minimize the fall-out we're seeing.  I can also drop more images in certain Various/named person folders once we see how it runs after this set of changes - so we minimize the amount of things happening at once.  But the few things you identified are what I see myself and need to be fixed/updated so they work as expected.  Then we can start to adjust gates (unless we need to fix a gate to fix the identified issue).
+```
+<!-- markdownlint-enable MD013 -->
+
+### Nov 23 named-core fix contract
+
+The named-core run showed four defects. Root cause: in each matching round
+an existing member whose best *other* match passes the Review gate leaves
+for that identity's Review, and every non-cast folder whose core contains a
+leaving photo is retired (`retiredLowerCores` in `normal_admission.py`);
+its remaining members then re-route without their own core.
+
+- **IU13 Named-seed protection:** a user-named identity (created from
+  `Various/<Name>` by `seed`, or later natively by IU12) is recorded as a
+  named seed. Like Angels/Sisters, its core is never retired by a leaving
+  member. Its members stay unless they score below yellow (0.30) against
+  their own core **and** a rival scores at least the existing review
+  minimum with the existing photo-route margin (0.10) above the own score;
+  only then may they go to that rival's Review. Arrivals still auto-route
+  into its Gallery under the normal category gates (unlike
+  `identityProtected`, which admits Review only). Uses existing bands and
+  margins; no new threshold.
+- **IU14 Review-rival audit:** before publication, a Review placement is
+  rejected when the photo scores higher against another eligible identity,
+  including its source identity, by at least the photo-route margin; it
+  stays with its current owner (or goes to the higher identity's Review if
+  that passes the gate). The receipt and recap list every audited case.
+- **IU7 (revised scope):** workflow-selected photos move like any other
+  photo in every SIMPLE rebase. The receipt and recap record the identity's
+  highest-scoring remaining Gallery photo as the proposed replacement.
+  Sandbox and universe runs never write `workflows/workspaces.json`;
+  Production writing waits for IU15. Universe identical-copy swaps are no
+  longer needed.
+- **IU15 Separate Sandbox workflow selections:** design a Sandbox-local
+  selection store so Sandbox verification never changes Production
+  `workspaces.json`; coordinate the interface with Beacon (WF1,
+  Q-d01e8fdb3329-15) before implementing.
+- **Acceptance:** focused tests for each rule; full likeness suite and
+  `bin\check.cmd`; then rerun `B:\Most Wanted\Various` in a new universe
+  (no swap, `seed`, 4 x 8 workers) and compare with `most-wanted-seeded-02`:
+  Fia/Freya/Olivia members retained, no Review placement with a
+  higher-scoring rival beyond the margin, and the workflow photo moving with
+  a recorded replacement proposal. Gate tuning (IU10) follows separately.
+
 ## Open decisions for the user
 
 - The default expansion band (yellow) and hop depth, after seeing the IU2
