@@ -31,15 +31,16 @@ reply files.
 
 ## Current state
 
-Reviewed through shared revision `e89985762` at 2026-11-23 19:45 UTC.
+Reviewed through shared revision `4e9665756` at 2026-11-23 20:05 UTC.
 
-- Q-69b7d56fd547-02 in the ownership discussion requests Harbor's
-  acknowledgment of the library/studio/Gallery handoff and coordination of
-  shared workflow interfaces. Publication does not prove receipt.
-- Q-69b7d56fd547-01 in the backup-comparison discussion is open to Harbor.
-  The user reports a copy on the new machine; exact content and recovery
-  have not been independently compared. No deletion is authorized by the
-  question or this index.
+- Q-69b7d56fd547-02 is answered: Harbor acknowledged the handoff at
+  `5814fb192` (all nine contract blob hashes match) and listed open
+  interface decisions. Q-d01e8fdb3329-15 in the same discussion is open to
+  Beacon (workflow selection fields and who writes IU7 replacements).
+- Q-69b7d56fd547-01 is answered: both new-machine copies of the snapshot
+  verified (22,373 files, 6,048,648,202 bytes) and all three hashes match.
+  No restore test was run; retiring the old-machine backup remains the
+  user's decision.
 - Since the earlier snapshot, the new-PC plan reports the checked feedback
   rebase, the cast-seed reversal and separate identity-universe trials.
   Their detailed contracts and current focus belong to the execution spine
