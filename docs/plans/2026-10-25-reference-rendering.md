@@ -331,9 +331,15 @@ manual decisions or unrelated server jobs. Production cutover remains separate.
   the live art-piece schema hash is unchanged before/after the test.
 - [ ] **P1 ai** R16 Define and implement the first publishable stage-chain
   contract (`0_Edit` -> `1_Alpha` -> `2_Studies` -> `3_Layers` ->
-  `4_Wardrobes` -> `5_Scene`) with explicit allowed source kinds per stage,
-  stage-to-stage selection rules and deterministic promoted-output paths.
-  Start with Sovereign Females and expand by validated recipe inventory.
+  `4_Wardrobes` -> `5_Scene`) with explicit selected sources, branchable
+  stage-to-stage inputs and deterministic promoted-output paths. The arrows
+  are possible progression, not required steps or creative compatibility
+  gates: let the user try unusual image/pose choices without warnings or
+  blocks, while enforcing technical, source-integrity, safety and
+  authorization requirements. Start with Sovereign Females and expand by
+  validated recipe inventory; the revised phase direction and pending
+  manual-source gate live in the
+  [workflow plan](2026-10-22-manual-prompts-to-art-library.md#source-first-reset-and-priorities).
 
 ### Implemented integration evidence
 

@@ -11,8 +11,12 @@ and image processing on the new machine; Beacon provides old-machine help
 only on Harbor's direct request. The
 [library planning handoff](handoffs/2026-11-23-library-studio-planning/README.md)
 preserves open decisions and existing owners. Beacon's separate, read-only
-WF1 companion plans static and dynamic ComfyUI workflows; refined edit
-sources and later template/deployment gates remain open. See the
+WF1 companion prioritizes a source-first reset of `0_Edit` and `1_Alpha`
+planning before static rollout and later dynamic/custom workflow work.
+The user will provide the latest curated workflows; Drakness is the
+first intended static pilot for user verification after source mapping,
+implementation, validation and a reviewed workspace preview. The revised
+sources are not yet available; those gates remain open. See the
 [workflow plan](plans/2026-10-22-manual-prompts-to-art-library.md#nov-23-beacon-workflow-planning-companion)
 and [execution spine](plans/2026-11-05-priority-reset.md#execution-spine).
 

@@ -11,9 +11,14 @@ test, or a new hero. It assumes nothing. The reference for *why* the folders are
 > manual edit variants and revised Prime/Bare prompts are not migrated, and the stage-input and
 > promoted-output contracts remain open. See [the active plan](../plans/2026-10-22-manual-prompts-to-art-library.md).
 >
-> The agreed progression is image-first and branchable: the user selects a source and a compatible
+> The agreed progression is image-first and branchable: the user selects a source and a
 > stage, then explicitly chooses which results to advance or promote. `0_Edit` is optional, not
-> mandatory intake cleanup or a prerequisite to every Alpha job.
+> mandatory intake cleanup or a prerequisite to every Alpha job. The user wants unusual creative
+> inputs to remain selectable without a compatibility warning or block; technical and source-safety
+> checks still apply. The revised phase goals and source-first reset are planned in the
+> [workflow plan](../plans/2026-10-22-manual-prompts-to-art-library.md#source-first-reset-and-priorities),
+> not yet implemented or visually accepted. The conventional sequence below describes current
+> workflows and will be revisited after the updated manual sources are available.
 >
 > The separate [Sovereign Females rendering pilot](../../workflows/README.md#offline-reference-rendering-foundation)
 > can export Gallery batches and execute isolated manual graph bindings. That live transport proof
@@ -80,7 +85,7 @@ experiments: pasties, contoured, paint) were dropped.
 `Bench/motion` is not a phase: motions and poses are point-in-time tests of a piece, run on whichever phase's image you load, to validate a reusable motion or pose before a scene uses it.
 The rows describe the established character-art flow, not a required chain for every request. The target
 Gallery flow lets the user choose an original, prepared image or explicitly selected result as the next input,
-subject to a declared recipe compatibility contract; it never silently advances the newest output. The full
+without silently advancing the newest output. The target does not block unusual creative choices; the full
 stage-input and promoted-output contract remains open in manual-migration P11 and rendering R16. Until that
 contract is complete, do not assume every stage accepts every prior result. Within a conventional sequence,
 the configured input defaults still connect the Prime/Bare, wardrobe and finish steps; a missing default image
