@@ -1046,9 +1046,10 @@ unresolved human identity acceptance remains open.
   photos await the user's review.
 - [ ] **P1 ai** IU12 Taking `Various/<Name>` photos as native named intake in
   the SIMPLE rebase (no separate `seed` step) per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-iu9-named-core-most-wanted-run).
-- [ ] **P1 ai** IU13 Protecting user-named seed identities (core never
-  retired; members leave only when low at home and clearly higher elsewhere)
-  per the [named-core fix contract](2026-11-22-identity-universe-sandbox.md#nov-23-named-core-fix-contract).
+- [ ] **P1 ai** IU13 Recomputing an identity's core without a departing
+  member instead of switching the whole core off, and moving existing
+  members only when low at home and clearly higher elsewhere (all
+  identities, no exemptions) per the [named-core fix contract](2026-11-22-identity-universe-sandbox.md#nov-23-named-core-fix-contract).
 - [ ] **P1 ai** IU14 Auditing Review placements so no photo goes to Review
   where a rival scores higher by the route margin, per the [named-core fix contract](2026-11-22-identity-universe-sandbox.md#nov-23-named-core-fix-contract).
 - [ ] **P2 either** IU15 Designing a Sandbox-local workflow selection store

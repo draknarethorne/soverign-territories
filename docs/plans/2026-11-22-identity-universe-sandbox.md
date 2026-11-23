@@ -354,16 +354,19 @@ for that identity's Review, and every non-cast folder whose core contains a
 leaving photo is retired (`retiredLowerCores` in `normal_admission.py`);
 its remaining members then re-route without their own core.
 
-- **IU13 Named-seed protection:** a user-named identity (created from
-  `Various/<Name>` by `seed`, or later natively by IU12) is recorded as a
-  named seed. Like Angels/Sisters, its core is never retired by a leaving
-  member. Its members stay unless they score below yellow (0.30) against
-  their own core **and** a rival scores at least the existing review
-  minimum with the existing photo-route margin (0.10) above the own score;
-  only then may they go to that rival's Review. Arrivals still auto-route
-  into its Gallery under the normal category gates (unlike
-  `identityProtected`, which admits Review only). Uses existing bands and
-  margins; no new threshold.
+- **IU13 Recompute instead of switch-off (user-clarified Nov 23):** when a
+  member leaves an identity during matching, recompute that identity's core
+  from its remaining eligible members (the existing core minimum still
+  applies); never withdraw the whole core (`retiredLowerCores`). The
+  remaining members keep attracting photos. No identity, named or not, is
+  exempt from releasing low-scoring or misplaced photos.
+- **IU13a Clear-move rule for existing members:** an existing member looks
+  for another home only when it scores below yellow (0.30) against its own
+  core **and** a rival scores at least the review minimum with the existing
+  photo-route margin (0.10) above its own score. This replaces the current
+  upward check (any rival at 0.30 with a 0.05 lead). Applies to every
+  identity; arrivals keep the normal category gates. Uses existing bands
+  and margins; no new threshold.
 - **IU14 Review-rival audit:** before publication, a Review placement is
   rejected when the photo scores higher against another eligible identity,
   including its source identity, by at least the photo-route margin; it
@@ -385,6 +388,19 @@ its remaining members then re-route without their own core.
   Fia/Freya/Olivia members retained, no Review placement with a
   higher-scoring rival beyond the margin, and the workflow photo moving with
   a recorded replacement proposal. Gate tuning (IU10) follows separately.
+
+User clarification of IU13 (Nov 23, answering which option to take when a
+member leaves):
+
+<!-- markdownlint-disable MD013 -->
+```text
+I would have expected the group to recompute, but there must have been a reason it was switched off - but I don't know why that's working.  But if we do release a photo from an existing identity - the remaining ones can still attrack other images.  I guess I'm a little confused.  We don't want to excempt them from any really low scoring or mis-placed photos and we don't want to exclude them if we do release a photo.   Am I answering the question properly?
+```
+<!-- markdownlint-enable MD013 -->
+
+Beacon's partial answer to Q-d01e8fdb3329-15 (Nov 23 23:04 UTC) recommends
+exposing IU7 replacements as proposals only until the shared selection
+interface is agreed, which matches the revised IU7 scope.
 
 ## Open decisions for the user
 
