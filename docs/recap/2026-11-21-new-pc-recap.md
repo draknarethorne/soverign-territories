@@ -5,6 +5,16 @@ The [planning agreement](../plans/README.md) and execution spine retain
 current ownership. The user reported another machine's process was still
 active at 08:01 Central on Nov 21; this machine cannot verify its state.
 
+## Nov 22: feedback rebase (a)–(i)
+
+Run `feedback-rebase-20261122-02` applied all confirmed feedback rules in the
+Sandbox. Apply took 1h18m59s (publication 76.4 min, including about 18 min of
+viewer input sealing) and the check took 30.7s. Planning steps took about 3
+minutes, including two settle passes under 1s. Outcome and the remaining
+Angelica lookalike decision are recorded in the
+[focused plan](../plans/2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning).
+Recap: `Working\_reports\library\rebase-recap\applied\feedback-rebase-20261122-02.html`.
+
 ## Nov 22: fresh post-intake rebase
 
 The fresh Sandbox rebase `fresh-post-intake-20261122-04` started from the

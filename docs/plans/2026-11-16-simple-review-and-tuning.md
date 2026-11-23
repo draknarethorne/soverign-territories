@@ -19,6 +19,49 @@ run, not a new red-member run.
 
 ## Nov 21: red-member release planning
 
+**Nov 22 feedback rebase applied (Sandbox, awaiting user review):** after a
+second frozen-Source baseline (`post-intake-fresh-20261122-02`, checked),
+both cleanups, a 3,490-path/hash match and sealed-preparation reuse, run
+`feedback-rebase-20261122-02` (`--fresh-source-release`) applied all
+confirmed rules (a)–(i). Apply took 1h18m59s and the check passed in 30.7s.
+
+- **Releases:** 2,391 initial Gallery photos assessed; 802 released,
+  including 561 by cast seeding. 197 cast releases returned to their own
+  Gallery.
+- **Settle passes:** 2 passes; pass 1 released 32 photos and moved 33; nothing
+  was left unsettled.
+- **Duplicates and junk:** 205 archived (184 Various plus 21 identical
+  copies); 1 junk.
+- **Retirement:** 94 emptied Potentials folders retired inside the same
+  transaction; none from cast.
+- **New identities:** 125 formed, including 61 single-photo Potentials that
+  passed the below-yellow rule.
+- **Final Review:** 3,284 photos. Named Galleries have **zero red or orange**
+  photos, 66 labelled single-photo Potentials and 2 unscored members
+  (Brynn Corbett and Keira Montrose: one usable face each, likely one-photo
+  identities after settle). Various has 111 Gallery and 113 Review photos.
+  Named Review has 18 orange and 2 red.
+- **Angelica:** Gallery went from 65 to 33 photos. Her seed is 10 photos;
+  51 were released and 13 returned.
+- **Workflow:** six replacement proposals recorded; no configuration
+  changed.
+- **Checks:** recap, Gallery and Review loaded sampled thumbnails, and Afton
+  Lockwood is absent.
+
+Answer to the user's (i) experiment: the named Angelica lookalikes still
+end up in her Gallery. `7518042092123535238` scored 0.611 initially, so it
+stayed in the seed. `7519426801110504591` arrived from Various at 0.617.
+The other three were released and returned at 0.51–0.53 through the normal
+cast entry (Gallery ≥0.50). The seed and 0.50 entry rules alone don't remove
+these lookalikes; they need either explicit rejection (Review action) or a
+higher cast Gallery entry. Both are user decisions for the next review.
+
+Setup for this run fixed one more safety gap: released dominant-face
+(match-only) photos with no existing match go to a yellow-or-better rival's
+Review or to Various Review, because a match-only photo cannot found an
+identity. Full `bin\validate.cmd` passed after all slices; the likeness
+suite passed 1,356 tests.
+
 **Nov 22 fresh post-intake rebase applied (Sandbox):** after VS Code was
 restarted, the same journalled baseline transaction resumed and passed its
 check (11,048 files; old tree preserved as
@@ -91,7 +134,8 @@ duplicate or two equal faces). None lacked a face or was under 60 px. Allowing
 a clear dominant face would change the quality policy, so it needs the
 user's decision, framing checks and a no-reference-vote rule.
 
-Confirmed rules (implementation contract; not yet implemented):
+Confirmed rules (implemented and applied in Sandbox run
+`feedback-rebase-20261122-02`; see the outcome below):
 
 - **(a) Identical copies:** archive every byte-identical copy recoverably,
   including released copies, and list each in the recap's duplicates

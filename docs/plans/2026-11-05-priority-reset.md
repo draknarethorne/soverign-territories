@@ -4,6 +4,14 @@
 
 **Queue focus:** RA2d, RA2j, RA2o, T29, T30
 
+**Feedback rebase applied (Sandbox):** `feedback-rebase-20261122-02`
+applied rules (a)–(i): duplicates archived, band-aligned formation,
+single-photo gate, settle passes, dominant-face matching, cast top-9 seeding
+and in-transaction retirement. Named Galleries have no red or orange photos.
+User review is pending; the Angelica lookalikes returned through the 0.50 cast
+entry (RA2d decision). See the
+[focused contract](2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning).
+
 **Fresh post-intake rebase applied (Sandbox):** `fresh-post-intake-20261122-04`
 released 250 red/orange/unscored initial Gallery photos before core
 formation, applied in 1h20m37s and passed its check; 89 emptied Potentials
