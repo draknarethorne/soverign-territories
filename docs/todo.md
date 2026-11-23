@@ -53,6 +53,7 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-11-02-sovereign-spelling-rename.md](plans/2026-11-02-sovereign-spelling-rename.md) | holding | 6 |
 | [2026-11-05-priority-reset.md](plans/2026-11-05-priority-reset.md) | active | 17 |
 | [2026-11-09-likeness-process-reassessment.md](plans/2026-11-09-likeness-process-reassessment.md) | holding | 6 |
+| [2026-11-16-simple-review-and-tuning.md](plans/2026-11-16-simple-review-and-tuning.md) | holding | 5 |
 
 </details>
 
