@@ -21,6 +21,16 @@ The [exact request](#nov-21-per-machine-tuning-and-skills---verbatim-chat)
 is preserved below. T29/T30 remain the executable owners in the spine; this
 holding plan is their evidence and method, not another queue.
 
+**Nov 23 follow-up (user-selected, after the Most Wanted baseline):** this
+new PC has an AMD Ryzen 9 9900X (12 cores/24 threads), 31.2 GB RAM and an
+RTX 5080. SIMPLE preparation currently caps `--preparation-workers` at 3 and
+defaults to 1. The `most-wanted-baseline-01` run used 1 worker. After it
+finishes, measure 1, 3 and candidate 4/6/8 workers on the same 275-image
+Most Wanted set, in separate disposable universe roots. Record wall time,
+peak memory and output-hash parity, then propose a per-machine default and
+an extended cap. Raising the cap is a code change with tests; changing the
+default is the user's decision.
+
 1. Inventory each machine separately: processor/logical cores, available and
    total memory, storage, accelerator/runtime availability, Python/native
    versions and current load. Check live writers before any resource-heavy
@@ -2308,4 +2318,12 @@ A correctness check is only really needed when the next step is unsure about the
 ````text
 You should also include performance tuning on a per-machine basis so we can increase workers or even memory cache and any other optimizations on this and the other machine separately.  Both of these are important so your runs are optimal and so are any on the other machine when doing cross-machine comparisons in the future.  If that also means creating skills for that, we can do that as well.  Really - any skills that we need along the way we should create to reduce our instructions that aren't important to send in context every time.  I don't want you to get distracted by skills, but they also improve things as we go - like having skills for how to run things for the various automation we have.  So think about that and let's do that work and then move into implementation unless you have questions for Beacon or me about the plans.
 ````
+<!-- markdownlint-enable MD013 -->
+
+### Nov 23 worker follow-up - verbatim chat
+
+<!-- markdownlint-disable MD013 -->
+```text
+Image prep workers can be increased on this machine - I suspect.  Maybe we also work on that after this run so we can improve timings for that as well.
+```
 <!-- markdownlint-enable MD013 -->
