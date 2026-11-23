@@ -654,6 +654,22 @@ plan-by-plan consolidation was not completed by feedback filing alone;
 the later [milestone rollout](2026-11-05-priority-reset.md#nov-5-1645-milestone-stream-rollout)
 records its actual task transfers, residual dispositions and checks.
 
+### Nov 23 universe feedback filing
+
+Both sources were read in full and compared byte for byte with their
+preserved copies at the end of the
+[identity-universe plan](2026-11-22-identity-universe-sandbox.md), and every
+request was mapped. Each was then moved without overwriting into this
+machine's local `feedback/_archive/identity-and-matching/`, with matching
+SHA-256 values before and after and the source removed. This machine's local
+archive index starts with these two notes; the other machine holds the
+earlier 30.
+
+| Source basename / local archive topic | Primary preserved source and request coverage | Disposition / still open |
+| --- | --- | --- |
+| `angelica_sandbox_testing.md` / identity-and-matching | [Identity-universe plan](2026-11-22-identity-universe-sandbox.md), full source; universe builder, blank, hand-picked and empty modes, GUI/recap, comparisons and findings map to IU1?IU6 | Filed (SHA-256 `15aca756?0feabc`); IU1/IU2/IU6 delivered, IU3?IU5 open |
+| `universe_testing_feedback.md` / identity-and-matching | [Nov 23 coverage table](2026-11-22-identity-universe-sandbox.md#nov-23-universe-testing-feedback), full source; workflow auto-replacement decision, duplicate cleanup, named-core variation, grouping-rule review, tighter selection map to IU7?IU11 | Filed (SHA-256 `08b72c61?1210d0`); all tasks open, IU8 first |
+
 ## Plans
 
 | Plan | Status | What it is |

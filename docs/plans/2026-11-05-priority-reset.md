@@ -2,7 +2,7 @@
 
 **Status:** active (execution spine: FAST likeness, LEAN/FULL acceptance, then character art)
 
-**Queue focus:** RA2d, RA2j, IU3, IU4, IU5, RA2o, T29, T30
+**Queue focus:** RA2d, RA2j, IU8, IU3, IU4, IU5, IU7, IU9, IU10, IU11, RA2o, T29, T30
 
 **Feedback rebase applied (Sandbox):** `feedback-rebase-20261122-02`
 applied rules (a)–(i): duplicates archived, band-aligned formation,
@@ -999,6 +999,16 @@ unresolved human identity acceptance remains open.
 - [x] **P1 either** IU6 Empty universe sandbox (`--mode empty`, ready for
   intake); the user supplies the 345-original set, then intake/rebase runs
   from scratch per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md).
+- [ ] **P1 ai** IU8 Removing exact duplicates recoverably from `B:\Most Wanted`,
+  its universe source and Working (first priority) per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-universe-testing-feedback).
+- [ ] **P1 ai** IU7 Auto-replacing a moved or renamed workflow photo with the
+  identity's highest-scoring Gallery photo per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-universe-testing-feedback).
+- [ ] **P1 either** IU9 Running the user's named-core Most Wanted variation
+  and comparing it with the blank run per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-universe-testing-feedback).
+- [ ] **P1 either** IU10 Reviewing grouping rules from universe evidence; the
+  user decides per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-universe-testing-feedback).
+- [ ] **P2 ai** IU11 Testing tighter universe selection (group yellow plus
+  per-image check against the seed's top 9) per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-universe-testing-feedback).
 - [ ] **P1 ai** IU5 Writing the universe findings and proposed configuration
   changes for user review before the next full rebase per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md).
 - [ ] **P1 ai** RA2j Restoring the normal FULL/LEAN/FAST intake flow and

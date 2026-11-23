@@ -182,6 +182,42 @@ example, Lena Lockwood's 6 all land together in the other run's Paige Pryce.
 - Workflow-selected photos block blank runs; a sandbox-only exemption is a
   user decision.
 
+## Nov 23 universe-testing feedback
+
+The user's [universe-testing note](#universe-testing-feedback---verbatim) adds
+decisions and tasks. Request coverage:
+
+| Request | Disposition / owner |
+| --- | --- |
+| Workflow photo may be renamed or moved; then auto-select the identity's highest-scoring Gallery photo | **Decision recorded (user).** Supersedes the earlier "propose only, never change configuration" rule for this case. Implementation: IU7 |
+| Lessons from automatic and manual universes inform grouping/scoring rules | IU5 findings, then IU10 |
+| Most Wanted: clean up duplicates in `B:\Most Wanted`, the universe source and the universe Working, as **first priority** | IU8 |
+| Most Wanted holds about 10–15 distinct identities (the roster lists 7–10) | Recorded as user knowledge for IU9 and IU10 evaluation |
+| User builds a Most Wanted variation with hand-named "known for sure" folders as seed cores, the rest in `gallery`, and runs it under current rules | IU9 (user staging, then run) |
+| Discuss new grouping rules: the earlier loose rules let rivals into Angelica, while the current strict rules fragment | IU10 (RA2d decision, one question at a time) |
+| Angelica universe: tighten selection, for example traverse at yellow by group, then require a stricter per-image score against Angelica's top 9; other suggestions welcome; abandon if it cannot be made reliable | IU11 experiment |
+
+Tasks (executed through spine tasks of the same IDs):
+
+- **IU7 Workflow auto-replacement:** when a workflow-selected photo is
+  renamed or moved by a rebase, update the workflow selection to the
+  highest-scoring Gallery photo of that identity. Record it in the receipt
+  and recap, keep it recoverable, and remove the blank-run refusal.
+- **IU8 Most Wanted duplicate cleanup:** remove the exact byte duplicates
+  (70 files, 275 distinct) from `B:\Most Wanted`, the universe
+  `Universe-Source` and the universe Working. Moves must be recoverable,
+  hash-verified and logged, never deleted. This is the first priority.
+- **IU9 Named-core Most Wanted variation:** the user creates named folders;
+  the tooling builds and runs a universe from them under the current rules,
+  then compares it with `most-wanted-blank-01`.
+- **IU10 Grouping-rule review:** from IU3, IU5 and IU9 evidence, propose rule
+  changes that neither fragment one person nor absorb rivals; the user
+  decides.
+- **IU11 Tighter universe selection:** for example, group-level traversal
+  at yellow plus a per-image score against the seed's top 9 at a stricter
+  bar. Measure precision and recall against the Most Wanted set, or abandon
+  if unreliable.
+
 ## Open decisions for the user
 
 - The default expansion band (yellow) and hop depth, after seeing the IU2
@@ -196,8 +232,7 @@ example, Lena Lockwood's 6 all land together in the other run's Paige Pryce.
 
 ### Angelica universe sandbox - verbatim feedback
 
-Source: `feedback/angelica_sandbox_testing.md`, retained in place until
-IU1–IU5 are reviewed.
+Source: `feedback/angelica_sandbox_testing.md` (filed to the local feedback archive on Nov 23 after coverage verification).
 
 ````text
 It's sort of a mess right now and with the rules the way they are right now - moving things into another model, prospect or potential's gallery won't hold them there and I do want to see them.  I almost feel like that I need a separate Sandbox where I'd just focus on using Angelica and the related high-scoring photos to do some investigation and runs with a much smaller set of photos.  Because, there are some things I don't quite understand - like Fia Hadley photos aren't Angelica - that I know now and several that are in Anglica Review I would have expected to land with Fia - except that Fia has several with smiles that don't bring them together.  So, maybe what I actually need to work on is the work Beacon is laying out around the Various/[person name] processing and if I re-stage the photos with better hand-picked grouping,  instead of trying to release them and hope they land somewhere else, that I could drive that into a new core identity and it could then build better and attract more image?
@@ -256,6 +291,50 @@ Furthermore, if any discrepancies or unexpected behaviors are identified, please
 ```text
 I actually have one place I could use to start a brand new universe from and it only has 345 images in it - not all are Angelica, so it might actually prove useful for me to just have a brand new sandbox and drop in those 345 images into Various/gallery and let it process them.  That's one additional option we can do - but I also like the automatic snap-back.  But being able to generate certain sandboxes - either completely empty and ready for intake or based on the automation we discussed.   Both could serve a purpose in moving us ahead to get this done.  I like having the universe tool as well as the option I just realized I could do since I have that group of originals all together - along with a few others.
 ```
+
+### Universe-testing feedback - verbatim
+
+Source: `feedback/universe_testing_feedback.md` (filed to the local feedback archive after this incorporation).
+
+````text
+# Universe Testing Feedback
+
+I have serveral items to address accross the universe testing.
+
+## General
+
+- I think that we should allow a workflow photo to be renamed, moved and if that happens we'd just auto-select the higher scoring photo in the gallery for the identity that the workflow is assigned to.
+
+- I also feel like the lessons we're learning in both the automatic and manual processing of these universes should inform how we adjust our grouping and scoring rules moving forward.  
+
+## Most Wanted Universe
+
+### 1. Clean Up
+
+Can we clean-up the duplicates in the B:\Most Wanted, universe source directory and universe working.  I want to do this as first priority and get that done so I can move onto the next couple steps. 
+
+### 2. Distinct Identities in Most Wanted Universe
+
+In this universe there are probably 10-15 distinct identities that we need to account for (at most).  The actual source for those only indicates 7-10, but I think that his roster isn't up to date and may be missing some entries.  
+
+I'm going to work on another variation of the B:\Most Wanted where I will hand create a few of the "I know these for sure" named directories (giving them my own names) and then leave other photos in the B:\Most Wanted\gallery for processing - and then we see how the system behaves.
+
+These will be seed cores for the processing and then I'll see how things work with the current rules in that universe before moving onto the next step.
+
+### 3. New Group Rule Changes
+
+I'd like to discuss how we change the grouping rules - I think this run with only the 300 images proves that we have issues in how we form identities and we need to re-adjust our approach to grouping.  Originally it was much looser, but then I saw that it was doing the opposite and bringing in photos that weren't the same person - which lead to Angelica having the rivals in her gallery instead of their own.
+
+## Angelica Universe
+
+### 1. Tightening the Scoring
+
+How can we tighten the scoring so that we only pull more accurate or suspected results that match angelica.  Could we change to still traverse using the yellow scoring on groups, but then apply stricter comparison on an image by image to Angelica's top-9 to see how they score against each image?  Then choose based on a stricter score there?
+
+Or what can you suggest we can try to improve the accuracy of the Angelica universe source creation?
+
+If we can't do this reliably to trim down the number, then maybe we abandon this - but I feel like it's also a good exercise in understanding how photos relate to each other.
+````
 
 ### Plan file request - verbatim chat
 
