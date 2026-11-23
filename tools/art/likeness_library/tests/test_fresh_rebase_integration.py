@@ -349,8 +349,8 @@ class FreshRebaseIntegrationTests(unittest.TestCase):
         names, report = self.cast_seed_plan()
         low = metadata.photo_id_from_name(low_name)
         decision = next(row for row in report["releasedDecisionEvidence"] if row["photoId"] == low)
-        self.assertTrue(decision["workflowSelected"])
-        self.assertTrue(decision["sourceProtectionOverride"])
+        # IU7: selection is no longer a protection guard; only the proposal records it.
+        self.assertFalse(decision["workflowSelected"])
         proposals = report["freshCastSeed"]["workflowReplacementProposals"]
         self.assertEqual(len(proposals), 1)
         proposal = proposals[0]

@@ -982,6 +982,51 @@ def _decision_ids(cfg, metadata_module):
     }
 
 
+def _identity_home(path):
+    parts = pathlib.PurePosixPath(path).parts
+    if len(parts) >= 4 and parts[0] in IDENTITY_ROOTS:
+        return "/".join(parts[:2]), parts[2]
+    return parts[0] if parts else "", None
+
+
+def _workflow_replacement_proposals(selected_ids, active, moves, raw_photos):
+    """IU7: a moved workflow photo's identity proposes its best-matching remaining Gallery photo.
+
+    Proposal only: configuration (``workflows/workspaces.json``) is never changed.
+    """
+    final = {row["photoId"]: (row["source"], row["source"]) for row in active}
+    for move in moves:
+        source = final.get(move["photoId"], (move["source"],))[0]
+        final[move["photoId"]] = (source, move["destination"])
+    proposals = []
+    for photo_id in sorted(set(selected_ids) & set(final)):
+        source, destination = final[photo_id]
+        before, after = _identity_home(source), _identity_home(destination)
+        if before[1] is None or after == before:
+            continue
+        members = []
+        for other, (other_source, other_destination) in final.items():
+            photo = raw_photos.get(other_source)
+            if (other != photo_id and _identity_home(other_destination) == (before[0], "gallery")
+                    and photo is not None and getattr(photo, "vec", None) is not None):
+                members.append((other, other_destination, np.asarray(photo.vec, dtype=float)))
+        replacement = None
+        if members:
+            centroid = nz(np.mean([vector for _, _, vector in members], axis=0))
+            scored = sorted(
+                ((float(vector @ centroid), other, path) for other, path, vector in members),
+                key=lambda item: (-item[0], item[1]),
+            )
+            score, other, path = scored[0]
+            replacement = {"photoId": other, "finalPath": path, "ownScore": round(score, 4)}
+        proposals.append({
+            "photoId": photo_id, "identity": before[0], "currentPath": source, "finalPath": destination,
+            "replacement": replacement, "configurationChanged": False,
+            "basis": "highest similarity to the identity's remaining Gallery centroid after the plan; proposal only",
+        })
+    return proposals
+
+
 def _resolve_collision(root, entries, record, anchor_owners, chosen, workflow_selected, protected_folders):
     from tools.art import duplicates
 
@@ -1229,7 +1274,11 @@ def _classify_sources(root, rows, cfg, catalog, api, *, archive_collisions=False
     from tools.art import duplicates
 
     chosen = duplicates.chosen_stems(cfg)
-    workflow_ids = _decision_ids(cfg, metadata)
+    # IU7 (Nov 23): workflow-selected photos move like any other photo; the plan
+    # records a replacement proposal instead (see _workflow_replacement_proposals).
+    # Selections still pick the keeper among byte-identical copies.
+    workflow_ids = set()
+    selection_ids = _decision_ids(cfg, metadata)
     anchors = collections.defaultdict(set)
     for person_id, person in catalog.get("people", {}).items():
         for photo_id in person.get("identityAnchors", ()):
@@ -1318,7 +1367,7 @@ def _classify_sources(root, rows, cfg, catalog, api, *, archive_collisions=False
         if archive_collisions and len(entries) > 1:
             keeper = _resolve_collision(
                 root, entries, record, anchors.get(photo_id, set()), chosen,
-                photo_id in workflow_ids, protected_folders,
+                photo_id in selection_ids, protected_folders,
             )
             if keeper:
                 active.append(keeper)
@@ -1488,7 +1537,7 @@ def _classify_sources(root, rows, cfg, catalog, api, *, archive_collisions=False
     }
     if archive_collisions:
         _archive_retained_original_copies(
-            rows, active, user_ids | workflow_ids | set(anchors) | set(catalog.get("photos", {})), chosen,
+            rows, active, user_ids | selection_ids | set(anchors) | set(catalog.get("photos", {})), chosen,
         )
 
     by_digest = collections.defaultdict(list)
@@ -1505,7 +1554,7 @@ def _classify_sources(root, rows, cfg, catalog, api, *, archive_collisions=False
             row for row in same_content
             if pathlib.Path(row["originalName"]).stem.casefold() in chosen
         ]
-        workflow_rows = [row for row in same_content if row["photoId"] in workflow_ids]
+        workflow_rows = [row for row in same_content if row["photoId"] in selection_ids]
         protected_rows = [
             row for row in same_content
             if catalog.get("photos", {}).get(row["photoId"], {}).get("protected")
@@ -3144,7 +3193,7 @@ def _plan(
         if fresh_source_release and fresh_assessment.get("castSeed"):
             report["freshCastSeed"] = _fresh_cast_seed_outcomes(
                 fresh_assessment, report["moves"], archives,
-                report.get("releasedDecisionEvidence", []), workflow_ids,
+                report.get("releasedDecisionEvidence", []), _decision_ids(cfg, metadata),
             )
             seed_summary = report["freshCastSeed"]["summary"]
             report["freshCastSeedIdentityCount"] = seed_summary["identityCount"]
@@ -3156,6 +3205,13 @@ def _plan(
             )
             if reuse_plan is not None and reuse_plan.get("freshCastSeed") != report["freshCastSeed"]:
                 raise ValueError("fresh cast seed outcomes differ from preview")
+        report["workflowReplacementProposals"] = _workflow_replacement_proposals(
+            _decision_ids(cfg, metadata), active,
+            [move for move in report["moves"] if not move.get("membershipOnly")], raw_photos,
+        )
+        if reuse_plan is not None and reuse_plan.get("workflowReplacementProposals", []) != report[
+                "workflowReplacementProposals"]:
+            raise ValueError("workflow replacement proposals differ from preview")
         # Item (g): identity folders left with no Gallery/Review original are
         # retired inside the publication transaction; an emptied cast folder stops here.
         report["emptiedIdentityRetirement"] = {
@@ -3737,6 +3793,11 @@ def main(argv=None):
         print(f"emptied identity folders to retire inside apply: {len(retiring)}")
         for row in retiring:
             print(f"  RETIRE {row['source']} -> {row['destination']} ({len(row['photos'])} photo(s) leave it)")
+        for row in report.get("workflowReplacementProposals", []):
+            replacement = row["replacement"] or {}
+            print(f"  WORKFLOW PHOTO {row['photoId']} leaves {row['identity']} -> {row['finalPath']}; proposed "
+                  f"replacement {replacement.get('photoId', 'none')} (score {replacement.get('ownScore')}); "
+                  "workspaces.json unchanged")
         print("preview only; recap/audit reports written; no membership, catalogue, cache or source originals were changed")
         return 0
     except (OSError, ValueError, KeyError, TypeError) as exc:

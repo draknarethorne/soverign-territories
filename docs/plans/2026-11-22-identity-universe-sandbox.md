@@ -360,18 +360,29 @@ its remaining members then re-route without their own core.
   applies); never withdraw the whole core (`retiredLowerCores`). The
   remaining members keep attracting photos. No identity, named or not, is
   exempt from releasing low-scoring or misplaced photos.
-- **IU13a Clear-move rule for existing members:** an existing member looks
-  for another home only when it scores below yellow (0.30) against its own
-  core **and** a rival scores at least the review minimum with the existing
-  photo-route margin (0.10) above its own score. This replaces the current
-  upward check (any rival at 0.30 with a 0.05 lead). Applies to every
-  identity; arrivals keep the normal category gates. Uses existing bands
-  and margins; no new threshold.
-- **IU14 Review-rival audit:** before publication, a Review placement is
-  rejected when the photo scores higher against another eligible identity,
-  including its source identity, by at least the photo-route margin; it
-  stays with its current owner (or goes to the higher identity's Review if
-  that passes the gate). The receipt and recap list every audited case.
+- **IU13a Beat-home rule for existing members (user-confirmed Nov 23):** an
+  existing member moves upward (to another identity's Gallery or Review)
+  only when the rival passes its normal destination gate **and** beats the
+  member's score against its own (home) core by the photo-route margin
+  (0.10); otherwise it stays. This applies to every destination including
+  Angels/Sisters, superseding the Nov 18 rule for the home score only
+  (other lower-category rivals still never veto cast entry). Low-at-home
+  members without a clear rival still leave through the existing settle
+  release (below yellow, groups of 4+/5+). Arrivals keep the normal gates.
+  The user accepts this for this iteration and will tune from results.
+
+Final release paths after this contract: (1) upward moves use the beat-home
+rule; (2) a departing member triggers core recompute, never a switch-off;
+(3) settle passes release below-yellow members; (4) Angels/Sisters release
+red/orange/unscored members (cast seeding off); (5) intake releases
+one-photo Potentials; (6) workflow-selected photos move like any photo with
+a replacement proposal only; (7) the user's Reject forces a new home.
+- **IU14 Review-rival audit:** the observed cases (Review placements whose
+  rival scored higher, some by 0.3) came from the core switch-off that IU13
+  removes. Measure remaining cases in the post-fix universe runs first;
+  enforce (reject the Review placement and keep the photo with the
+  higher-scoring identity or its Review) only if cases remain. Report them
+  in the run comparison.
 - **IU7 (revised scope):** workflow-selected photos move like any other
   photo in every SIMPLE rebase. The receipt and recap record the identity's
   highest-scoring remaining Gallery photo as the proposed replacement.

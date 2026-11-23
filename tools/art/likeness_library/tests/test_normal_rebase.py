@@ -693,8 +693,8 @@ class NormalRebaseTests(unittest.TestCase):
             overridden_evidence = next(
                 row for row in overridden["releasedDecisionEvidence"] if row["photoId"] == bindings[0]["photoId"]
             )
-            self.assertTrue(overridden_evidence["workflowSelected"])
-            self.assertTrue(overridden_evidence["sourceProtectionOverride"])
+            # IU7: a workflow selection no longer protects or overrides; the photo routes normally.
+            self.assertFalse(overridden_evidence["workflowSelected"])
             self.assertEqual(overridden_evidence["decision"]["destination"], "Prospects/Owner")
             real_two_round = normal_rebase.normal_admission.two_round_plan
 
@@ -2723,6 +2723,30 @@ class NormalRebaseTests(unittest.TestCase):
         self.assertEqual(
             normal_rebase._parser().parse_args(["--preparation-workers", "3"]).preparation_workers, 3,
         )
+
+    def test_moved_workflow_photo_proposes_best_remaining_gallery_photo(self):
+        def photo(*vector):
+            return SimpleNamespace(vec=np.asarray(vector, dtype=float) / np.linalg.norm(vector))
+
+        raw = {
+            "Angels/A/gallery/a_image_1.jpg": photo(1, 0, 0),
+            "Angels/A/gallery/a_image_2.jpg": photo(1, .1, 0),
+            "Angels/A/gallery/a_image_3.jpg": photo(1, .6, 0),
+            "Various/gallery/x_image_4.jpg": photo(0, 1, 0),
+        }
+        active = [{"photoId": f"photo:image_{index}", "source": source}
+                  for index, source in enumerate(raw, start=1)]
+        moves = [{"photoId": "photo:image_1", "source": "Angels/A/gallery/a_image_1.jpg",
+                  "destination": "Potentials/P/review/p_image_1.jpg"}]
+        proposals = normal_rebase._workflow_replacement_proposals(
+            {"photo:image_1", "photo:image_4"}, active, moves, raw,
+        )
+        self.assertEqual(len(proposals), 1)
+        self.assertEqual(proposals[0]["identity"], "Angels/A")
+        self.assertEqual(proposals[0]["replacement"]["photoId"], "photo:image_2")
+        self.assertFalse(proposals[0]["configurationChanged"])
+        renamed = [{**moves[0], "destination": "Angels/A/gallery/a_image_1_new.jpg"}]
+        self.assertEqual(normal_rebase._workflow_replacement_proposals({"photo:image_1"}, active, renamed, raw), [])
 
     def test_unrequested_workers_follow_preview_or_this_machine(self):
         api = self.stub_api([])

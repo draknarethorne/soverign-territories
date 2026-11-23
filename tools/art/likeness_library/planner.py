@@ -158,6 +158,17 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
                 preserveStaged=True,
             ))
             continue
+        if admission_context is not None and ranked:
+            from .normal_admission import beats_home, home_score
+
+            home = home_score(row, cores, admission_context)
+            if not beats_home(ranked[0][0], home, policy):
+                held.extend(evidence(
+                    [row], ranked,
+                    "home identity retained: no other identity beats the home score by the own-core lead",
+                    preserveStaged=True, homeScore=round(home, 4),
+                ))
+                continue
         if not ranked:
             if (row.get("rebaseCandidate") and row["sourceBucket"] == "Gallery"
                     and not (admission_context and admission_context.get("redRelease") and row.get("redRelease"))):

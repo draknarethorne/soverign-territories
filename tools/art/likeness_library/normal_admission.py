@@ -317,6 +317,32 @@ def context(cores, references, policy, *, locked=False):
     }
 
 
+def home_score(candidate, cores, admission):
+    """An existing Gallery member's score against its own core without itself; None otherwise."""
+    source = candidate.get("sourceFolder")
+    if (not candidate.get("rebaseCandidate") or candidate.get("sourceBucket") != "Gallery"
+            or source not in cores):
+        return None
+    rows = [
+        row for row in ((admission or {}).get("references") or {}).get(source, [])
+        if row["photoId"] != candidate["photoId"] and row["sha256"] != candidate.get("sha256")
+    ]
+    if rows:
+        vector = nz(np.mean([row["vector"] for row in rows], axis=0))
+    elif candidate["photoId"] in cores[source].get("corePhotoIds", ()):
+        return None
+    else:
+        vector = cores[source]["vector"]
+    if not np.linalg.norm(vector):
+        return None
+    return float(np.clip(candidate["vector"] @ vector, -1., 1.))
+
+
+def beats_home(score, home, policy):
+    """IU13a: an existing member moves only when the rival beats its home score by the own-core lead."""
+    return home is None or score >= home + policy["photoRouting"]["minimumOwnCoreLead"]
+
+
 def cast_route(candidate, cores, policy, admission):
     """Return one terminal cast decision, or None for ordinary lower routing."""
     if candidate["side"] != "Prospects":
@@ -352,6 +378,9 @@ def cast_route(candidate, cores, policy, admission):
     if not ranked or ranked[0][0] < settings["reviewMinimum"]:
         return None
     score, folder = ranked[0]
+    if not beats_home(score, home_score(candidate, cores, admission), policy):
+        # The home identity keeps the member; ordinary routing applies the same rule.
+        return None
     rules = policy["categoryPolicies"][folder.split("/", 1)[0]]
     lead = score - ranked[1][0] if len(ranked) > 1 else 2.
     floor = rules.get("galleryAdmissionMinimumSimilarity", rules["photoRouteMinimum"])
@@ -3188,7 +3217,7 @@ def two_round_plan(api, candidates, cores, references, settings, policy, names_t
             "referenceVersion": ctx["referenceVersion"],
             "photoIds": {folder: list(core["corePhotoIds"]) for folder, core in sorted(current.items())},
         }
-        round_rows, retired_ids, retired_folders = [], set(), set()
+        round_rows, retired_ids, retired_folders, recomputed_folders = [], set(), set(), set()
         existing = [row for row in pending if not pool_candidate(row)]
         arrivals = [row for row in pending if pool_candidate(row)]
         deferred = []
@@ -3202,19 +3231,37 @@ def two_round_plan(api, candidates, cores, references, settings, policy, names_t
             [row for row in deferred if not pool_candidate(row)],
             [row for row in deferred if pool_candidate(row)],
         ):
-            retired_folders.update(
+            # IU13: a departing member's identity is recomputed from its remaining
+            # members; only an identity left with no members loses its core.
+            affected = {
                 folder for folder, core in current.items()
                 if folder.split("/", 1)[0] not in CAST and retired_ids.intersection(core["corePhotoIds"])
+            }
+            recomputed, recomputed_rows = refresh_references(
+                {folder: current[folder] for folder in affected},
+                {folder: current_rows.get(folder, []) for folder in affected},
+                retire_ids=retired_ids,
             )
-            retained = {folder: core for folder, core in current.items() if folder not in retired_folders}
+            retired_folders.update(affected - set(recomputed))
+            recomputed_folders.update(recomputed)
+            retained = {
+                folder: recomputed.get(folder, core) for folder, core in current.items()
+                if folder not in retired_folders
+            }
+            retained_rows = {
+                folder: recomputed_rows.get(folder, current_rows.get(folder, [])) for folder in retained
+            }
             eligible = []
             for candidate in batch:
+                # Bound releases never vote mid-run: a recomputed former home still
+                # sends them to the final residual assessment, as before IU13.
+                held_folders = retired_folders | (affected if candidate["photoId"] in release else set())
                 retired_score = max((
-                    float(candidate["vector"] @ current[folder]["vector"]) for folder in retired_folders
+                    float(candidate["vector"] @ current[folder]["vector"]) for folder in held_folders
                 ), default=-1.)
                 retained_score = max((
                     float(candidate["vector"] @ core["vector"]) for folder, core in retained.items()
-                    if folder.split("/", 1)[0] not in CAST
+                    if folder.split("/", 1)[0] not in CAST and folder not in held_folders
                 ), default=-1.)
                 if retired_score >= max(retained_score, policy["photoRouting"]["reviewMinimum"]):
                     round_rows.append({
@@ -3224,7 +3271,7 @@ def two_round_plan(api, candidates, cores, references, settings, policy, names_t
                     })
                 else:
                     eligible.append(candidate)
-            report = route(eligible, retained, {**ctx, "skipCast": True})
+            report = route(eligible, retained, {**ctx, "skipCast": True, "references": retained_rows})
             rows = report["assignments"] + report["held"]
             round_rows.extend(rows)
             retired_ids.update(leaving(rows))
@@ -3242,6 +3289,7 @@ def two_round_plan(api, candidates, cores, references, settings, policy, names_t
             "round": round_index, "candidateCount": len(pending),
             "existingFirst": True, "retiredReferenceIds": sorted(retired_ids),
             "retiredLowerCores": sorted(retired_folders),
+            "recomputedCores": sorted(recomputed_folders - retired_folders),
         })
         next_rows = {
             folder: [row for row in rows if row["photoId"] not in retired_ids]
