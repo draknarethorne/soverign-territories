@@ -185,7 +185,8 @@ def fresh_baseline_release_candidates(rows, policy):
         evidence["bindingBlocked"] = bool(block_reasons)
         evidence["bindingBlockReasons"] = block_reasons
         assessed.append((evidence, binding))
-    seed = _apply_cast_seed([evidence for evidence, _binding in assessed], seed_settings)
+    seed = (_apply_cast_seed([evidence for evidence, _binding in assessed], seed_settings)
+            if seed_settings["enabled"] else None)
     for evidence, binding in assessed:
         evidence["selected"] = bool(evidence["selectionReasons"])
         if evidence["selected"]:

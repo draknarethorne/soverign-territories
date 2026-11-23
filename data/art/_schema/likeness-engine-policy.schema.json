@@ -35,6 +35,10 @@
             "items": {"type": "string", "pattern": "^(Sisters|Angels)/[^/\\\\:]+$"}
           }
         },
+        "seedEnabled": {
+          "type": "boolean", "default": false,
+          "description": "Fresh Sandbox rebase only: opt-in Sisters/Angels top-count seeding. Off by default after the Nov 22 trial; cast members then use only red/orange/unscored release."
+        },
         "seedTopCount": {
           "type": "integer", "minimum": 1, "default": 9,
           "description": "Fresh Sandbox rebase only: Sisters/Angels members with the highest own scores kept as seed references no matter what their score is (exempt from red/orange release)."

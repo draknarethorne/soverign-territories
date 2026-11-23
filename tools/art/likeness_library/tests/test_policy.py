@@ -97,19 +97,21 @@ class LikenessPolicyTests(unittest.TestCase):
             validate_policy(unknown)
 
     def test_cast_seed_settings_default_and_reject_invalid_values(self):
-        self.assertEqual(cast_seed_settings(self.policy), {"topCount": 9, "releaseBelow": .60})
-        self.assertEqual((self.policy["castAdmission"]["seedTopCount"],
-                          self.policy["castAdmission"]["seedReleaseBelow"]), (9, .60))
+        defaults = {"enabled": False, "topCount": 9, "releaseBelow": .60}
+        self.assertEqual(cast_seed_settings(self.policy), defaults)
+        self.assertEqual((self.policy["castAdmission"]["seedEnabled"], self.policy["castAdmission"]["seedTopCount"],
+                          self.policy["castAdmission"]["seedReleaseBelow"]), (False, 9, .60))
         legacy = copy.deepcopy(self.policy)
-        for key in ("seedTopCount", "seedReleaseBelow"):
+        for key in ("seedEnabled", "seedTopCount", "seedReleaseBelow"):
             del legacy["castAdmission"][key]
         validate_policy(legacy)
-        self.assertEqual(cast_seed_settings(legacy), {"topCount": 9, "releaseBelow": .60})
+        self.assertEqual(cast_seed_settings(legacy), defaults)
         custom = copy.deepcopy(self.policy)
-        custom["castAdmission"].update(seedTopCount=3, seedReleaseBelow=0)
+        custom["castAdmission"].update(seedEnabled=True, seedTopCount=3, seedReleaseBelow=0)
         validate_policy(custom)
-        self.assertEqual(cast_seed_settings(custom), {"topCount": 3, "releaseBelow": 0.})
+        self.assertEqual(cast_seed_settings(custom), {"enabled": True, "topCount": 3, "releaseBelow": 0.})
         for change in (
+            {"seedEnabled": 1}, {"seedEnabled": "true"},
             {"seedTopCount": 0}, {"seedTopCount": True}, {"seedTopCount": 1.5}, {"seedTopCount": "9"},
             {"seedReleaseBelow": 1.01}, {"seedReleaseBelow": -.1}, {"seedReleaseBelow": float("nan")},
             {"seedReleaseBelow": True}, {"seedRelease": .6},

@@ -19,7 +19,7 @@ def _number(value, label, minimum=-1.0, maximum=1.0):
     return float(value)
 
 
-CAST_SEED_KEYS = frozenset(("seedTopCount", "seedReleaseBelow"))
+CAST_SEED_KEYS = frozenset(("seedEnabled", "seedTopCount", "seedReleaseBelow"))
 CAST_SEED_DEFAULTS = {"seedTopCount": 9, "seedReleaseBelow": 0.60}
 SETTLE_KEYS = frozenset(("settlePassMaximum", "intakeReleasePotentialMaxPhotos"))
 SETTLE_DEFAULTS = {"settlePassMaximum": 3, "intakeReleasePotentialMaxPhotos": 1}
@@ -48,13 +48,18 @@ def settle_settings(policy):
 def cast_seed_settings(policy):
     """Return the validated Sisters/Angels fresh-rebase seed configuration.
 
+    Seeding is opt-in (``seedEnabled``, default false). When enabled,
     ``seedTopCount`` members with the highest own scores, plus every member at
     or above ``seedReleaseBelow``, stay as seed references; other scored cast
-    members are released for rescoring against that seed.
+    members are released for rescoring against that seed. When disabled, cast
+    members use only the ordinary red/orange/unscored release.
     """
     admission = policy.get("castAdmission") if isinstance(policy, dict) else None
     if not isinstance(admission, dict):
         raise ValueError("cast seed settings require castAdmission")
+    enabled = admission.get("seedEnabled", False)
+    if type(enabled) is not bool:
+        raise ValueError("castAdmission/seedEnabled must be true or false")
     top = admission.get("seedTopCount", CAST_SEED_DEFAULTS["seedTopCount"])
     if isinstance(top, bool) or not isinstance(top, int) or top < 1:
         raise ValueError("castAdmission/seedTopCount must be a positive integer")
@@ -62,7 +67,7 @@ def cast_seed_settings(policy):
         admission.get("seedReleaseBelow", CAST_SEED_DEFAULTS["seedReleaseBelow"]),
         "castAdmission/seedReleaseBelow", 0, 1,
     )
-    return {"topCount": top, "releaseBelow": below}
+    return {"enabled": enabled, "topCount": top, "releaseBelow": below}
 
 
 def validate_score_bands(bands):

@@ -3122,7 +3122,7 @@ def _plan(
                 report["moves"].append(move)
                 stage_photos.append(raw_photos[row["source"]])
             move["collisionRebind"] = True
-        if fresh_source_release:
+        if fresh_source_release and fresh_assessment.get("castSeed"):
             report["freshCastSeed"] = _fresh_cast_seed_outcomes(
                 fresh_assessment, report["moves"], archives,
                 report.get("releasedDecisionEvidence", []), workflow_ids,
@@ -3176,7 +3176,7 @@ def _plan(
                 "retirement": report["releasedSourceRetirement"],
                 **({"freshSourceAssessment": fresh_assessment} if fresh_source_release else {}),
                 **({"freshMeasurementProof": fresh_measurement_proof} if fresh_source_release else {}),
-                **({"freshCastSeed": report["freshCastSeed"]} if fresh_source_release else {}),
+                **({"freshCastSeed": report["freshCastSeed"]} if "freshCastSeed" in report else {}),
                 "referenceSnapshots": report.get("referenceSnapshots"),
                 "clusters": report["clusters"],
                 "moves": report["moves"],

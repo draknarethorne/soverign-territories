@@ -1776,7 +1776,10 @@ that stayed in place are releasable only with `--fresh-source-release`, whose
 release already covers every bindable named-Gallery member. Such a member
 joins the bound release cohort with its source path and SHA-256, so its
 membership and anchors are retired and the release permission override
-covers its move. Cast top-N seeds stay exempt. In any other rebase original
+covers its move. When the opt-in cast seed is enabled
+(`castAdmission.seedEnabled`, default false), its top-N seeds stay exempt.
+Settle releases only red and orange members; yellow members stay, and the
+user rejects any that belong elsewhere. In any other rebase original
 members are scored and reported, never released. Members still red or
 orange after the last pass are listed
 as "did not settle". Each pass records a `settle-pass-N` phase with its

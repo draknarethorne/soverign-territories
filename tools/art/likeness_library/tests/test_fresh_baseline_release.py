@@ -181,7 +181,7 @@ class CastSeedSelectionTests(unittest.TestCase):
         return anchors + [row(i, angle(score), owner=owner) for i, score in self.SCORES.items()]
 
     def assess(self, rows, top, below):
-        self.policy["castAdmission"].update(seedTopCount=top, seedReleaseBelow=below)
+        self.policy["castAdmission"].update(seedEnabled=True, seedTopCount=top, seedReleaseBelow=below)
         return normal_admission.fresh_baseline_release_candidates(rows, self.policy)
 
     @staticmethod
@@ -204,7 +204,7 @@ class CastSeedSelectionTests(unittest.TestCase):
         self.assertEqual(len(seed["seedReleasedPhotoIds"]), 3)
         self.assertEqual(seed["bandReleasedPhotoIds"], ["photo:image_7"])
         self.assertEqual((result["castSeed"]["seedKeptCount"], result["castSeed"]["seedReleaseCount"]), (4, 3))
-        self.assertEqual(result["policyEvidence"]["castSeed"], {"topCount": 2, "releaseBelow": .60})
+        self.assertEqual(result["policyEvidence"]["castSeed"], {"enabled": True, "topCount": 2, "releaseBelow": .60})
 
     def test_top_count_keeps_low_scores_including_red_but_not_unscored(self):
         result = self.assess(self.rows("Angels/Example"), 5, .60)
@@ -242,9 +242,10 @@ class CastSeedSelectionTests(unittest.TestCase):
                 self.assertEqual(result["castSeed"]["identities"], {})
         self.policy = load_policy()
         result = normal_admission.fresh_baseline_release_candidates(self.rows("Sisters/Example"), self.policy)
-        self.assertEqual((result["castSeed"]["topCount"], result["castSeed"]["releaseBelow"]), (9, .60))
-        # Eight scored members fit in the default top 9, so even the red one is kept.
-        self.assertEqual(self.selected(result), set())
+        # Seeding is off by default: cast members use only red/orange/unscored release.
+        self.assertIsNone(result["castSeed"])
+        self.assertEqual(self.selected(result), {"7"})
+        self.assertTrue(all(item["castSeed"] is None for item in result["assessment"]))
         rows = self.rows("Sisters/Example")
         self.assertEqual(self.assess(list(reversed(rows)), 2, .6), self.assess(rows, 2, .6))
         self.policy["castAdmission"]["seedTopCount"] = 0

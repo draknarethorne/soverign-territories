@@ -19,6 +19,18 @@ run, not a new red-member run.
 
 ## Nov 21: red-member release planning
 
+**Nov 22 cast-seed reversal (user decision):** after reviewing the run, the
+user found that the top-9/0.60 cast seed did not achieve its goal. Most
+released Angelica and Drakniss photos returned to the Gallery or filled their
+Review, adding manual work, while lookalikes still returned. Cast seeding is
+now **off by default** (`castAdmission.seedEnabled: false`). Sisters/Angels
+again release only red, orange and unscored members, with no top-9
+exemption. The code remains as an opt-in for later trials. Lower-yellow
+members stay during a rebase; the user will reject photos manually so they
+find a new home, and accepts that some Angelica fragments may need manual
+cleanup. All other confirmed rules (a)–(h) remain in effect. See the
+[verbatim reversal](#cast-seed-reversal---verbatim-chat).
+
 **Nov 22 feedback rebase applied (Sandbox, awaiting user review):** after a
 second frozen-Source baseline (`post-intake-fresh-20261122-02`, checked),
 both cleanups, a 3,490-path/hash match and sealed-preparation reuse, run
@@ -3435,5 +3447,11 @@ Here's some feedback a) 18 identicals should get put to duplicates instead of be
 (g) cast_stop=true, intake=true, launcher=true, notes=, where=in-rebase
 (i) notes=Many of the photos lower score are actually Angelica as well - but I was thinking those would score higher if we did not get the look-alikes back in.  That's what I was trying to test by releasing them to see if we can rebuild automatically.  The ones I have selected as workflow that are lower would likely land somewhere else so we'd just need to re-assign a new workflow photo if it did not return.  , readmit=I picked the 0.60 as a conservative number expecting some of the 0.5x's to return since they are.  I wanted to see if they ALL did return or not - since the reason some of the photos score high is there are many in Angelica that aren't her and if we take just the top-9 plus 0.60 and higher in all the galleries, that should help me see how that works out.  , scope=cast-only, seed_size=I wanted 9 since that's what we show on the main page and most of those are the right ones.  , threshold=060, workflow=release-with-replacement
 (i confirmation) i_correct=true, push=true
+```
+
+### Cast seed reversal - verbatim chat
+
+```text
+Ultimately - I don't think that accomplished what I wanted for releasing that many - but the lower scoring ones that did move were fine - but since most ended up either back in the gallery or in the review (which makes more work for me for ones that are Angelica) didn't get what I was hoping.  But I had to see.  So, I think the release rule on Sisters and Angels should be back where it was with the lower scoring and not just the top-9 and 0.60 rule.  I thought maybe rebuilding the core identity just based on the top-9 and that 0.60 rule would keep some of those other ones from scoring high enough to come back vs. forming their own new identity.  There's also still many fragments of Angelica all over the place as well - which I think may just require manual work for me in the long run as I've gone round and round with trying to automate my way out of a messy situation.  Let's reset the config back (if that's what needed) just so we are releasing things that are moving out and finding a new home and not end up filling up the Review like it did.  Once you're done with that.  It also filled up Review for Drakniss as well - so, I am ok having those lower yellows to be retained in the library during a rebase and just recognize it's up to me to Reject photos to force them to find a new home.
 ```
 <!-- markdownlint-enable MD013 -->

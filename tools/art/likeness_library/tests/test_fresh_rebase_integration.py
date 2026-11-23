@@ -291,7 +291,7 @@ class FreshRebaseIntegrationTests(unittest.TestCase):
             "seed three": [0., -.1, np.sqrt(.99)], "seed low": [0., -np.sqrt(.84), .4],
         })
         policy = load_policy()
-        policy["castAdmission"].update(seedTopCount=top, seedReleaseBelow=below)
+        policy["castAdmission"].update(seedEnabled=True, seedTopCount=top, seedReleaseBelow=below)
         path = f.root.parent / "seed-policy.json"
         path.write_text(json.dumps(policy), encoding="utf-8")
         return names, self.plan(policy_path=path, **kwargs)
