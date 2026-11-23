@@ -27,6 +27,9 @@ go.work.sum
 # env file
 .env
 
+# per-machine tuning (see bin\machine-tuning.cmd)
+data/config/machine-tuning.local.json
+
 # local development environments
 .venv/
 .venv-processing/

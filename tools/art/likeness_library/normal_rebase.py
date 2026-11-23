@@ -614,7 +614,7 @@ def _read_preparation_origin(output, data, root, profile, input_rows, manifest_h
         or complete.get("workers") != start.get("workers")
         or ("workers" in start and (
             isinstance(start["workers"], bool) or not isinstance(start["workers"], int)
-            or not 1 <= start["workers"] <= 3
+            or not 1 <= start["workers"] <= normal_products._tuning().max_workers()
         ))
         or complete.get("producerAfterGenerationSHA256") != start.get("generationProducerSHA256")
         or complete.get("producerUnchangedDuringGeneration") is not True
@@ -1856,7 +1856,7 @@ def _settle_plan(api, report, *, rows, candidates, raw_photos, release_ids, fold
 def _plan(
     root, profile, run_id, *, api, cache_path=None, policy_path=None,
     for_apply=False, reuse_plan=None, reuse_preparation=None,
-    reuse_preparation_sha256=None, lock_cast_admission=False, preparation_workers=1,
+    reuse_preparation_sha256=None, lock_cast_admission=False, preparation_workers=None,
     released_bindings=None, reconsider_holds=False, fresh_source_release=False,
 ):
     from tools.workflows import comfy_workflows as cw
@@ -1902,6 +1902,14 @@ def _plan(
         raise ValueError("existing hold reassessment differs from preview")
     if reconsider_holds and for_apply and reuse_plan is None:
         raise ValueError("existing hold reassessment requires its bound preview plan")
+    worker_source = "command line"
+    if preparation_workers is None:
+        if reuse_plan is not None:
+            preparation_workers, worker_source = reuse_plan.get("preparationWorkersRequested", 1), "preview"
+        elif reuse_preparation is not None:
+            preparation_workers, worker_source = 1, "reused preparation"
+        else:
+            preparation_workers, worker_source = normal_products.default_workers()
     normal_products.validate_workers(preparation_workers)
     if reuse_plan is not None and reuse_plan.get("preparationWorkersRequested", 1) != preparation_workers:
         raise ValueError("selected preparation worker request differs from preview")
@@ -2721,6 +2729,7 @@ def _plan(
             prior_review_candidates, key=lambda row: (row["photoId"], row["source"]),
         )
         report["preparationWorkersRequested"] = preparation_workers
+        report["preparationWorkersSource"] = worker_source
         primary_rows = [
             row for row in rows if row["group"] in IDENTITY_ROOTS | {"Various"}
         ]
@@ -3262,8 +3271,9 @@ def _parser():
     )
     parser.add_argument("--profile", choices=("full", "lean", "fast"), default="lean")
     parser.add_argument(
-        "--preparation-workers", type=int, choices=(1, 2, 3), default=1,
-        help="selected FULL/LEAN preparation workers (default 1); repeat on apply",
+        "--preparation-workers", type=int,
+        help="FULL/LEAN preparation workers for a new preview (default: this machine's setting from "
+             "bin\\machine-tuning.cmd show); apply reuses the preview's count",
     )
     parser.add_argument("--run-id", help="stable receipt/run directory identifier")
     parser.add_argument("--receipt", help="receipt path; defaults to the configured reports root under runs/")
@@ -3436,7 +3446,7 @@ def main(argv=None):
             parser.error("--reuse-preparation requires a 64-digit --reuse-preparation-sha256")
         if args.profile == "fast":
             parser.error("--reuse-preparation requires the FULL or LEAN profile")
-        if args.preparation_workers != 1:
+        if args.preparation_workers is not None:
             parser.error("--preparation-workers applies to new preparation, not --reuse-preparation")
         if args.apply or args.check or args.repeat or args.recover or args.recover_apply:
             parser.error("--reuse-preparation is supported only when creating a new preview")
@@ -3472,9 +3482,11 @@ def main(argv=None):
         parser.error("--reconsider-holds is only valid for a preview or apply")
     if (args.check or args.repeat or args.recover or args.recover_apply) and not args.run_id:
         parser.error("--check/--repeat/--recover require the exact --run-id")
-    if args.preparation_workers != 1 and (args.profile == "fast" or args.check or args.repeat
-                                          or args.recover or args.recover_apply):
+    if args.preparation_workers is not None and (args.profile == "fast" or args.check or args.repeat
+                                                 or args.recover or args.recover_apply):
         parser.error("--preparation-workers is only valid for a FULL/LEAN preview or apply")
+    if args.preparation_workers is not None and args.preparation_workers < 1:
+        parser.error("--preparation-workers must be at least 1")
     try:
         receipt_path = _receipt_path(
             root, run_id, cfg, args.receipt,

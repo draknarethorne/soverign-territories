@@ -41,9 +41,13 @@ echo    universe-sandbox.cmd --name ID --seed CATEGORY/Name [--include CATEGORY/
 echo                                    copies a verified identity universe (pre-rebase originals, sealed LEAN preparation, cache) into a NEW
 echo                                    B:\Sovereign Territories Universes\ID\Sovereign Territories Sandbox\Working; main Sandbox and Production read-only
 echo                                    --expand-band yellow^|green^|orange (default yellow) --hop2-band (default green) --hops 0^|1^|2 (default 1) --max-photos N
-echo    universe-sandbox.cmd --name ID --mode empty [--source-folder DIR] [--dry-run ^| --apply ^| --check]
+echo    universe-sandbox.cmd --name ID --mode empty [--source-folder DIR ^| --source-various DIR] [--dry-run ^| --apply ^| --check]
 echo                                    empty ready-to-intake universe; DIR top-level images copied read-only into Various\gallery, SHA-256 verified
+echo                                    --source-various: DIR\gallery to Various\gallery, each DIR\Name to Various\Name\gallery; then likeness.py --root W seed --apply
 echo                                    then normal-rebase.cmd --root UNIVERSE_WORKING --cache UNIVERSE_WORKING\_likeness\general\cache.json --profile lean
+echo    machine-tuning.cmd show ^| set --preparation-workers N [--threads-per-worker N] [--worker-memory-gib G] --evidence TEXT [--apply] ^| clear [--apply]
+echo                                    this machine's parallel workers: command line, ST_INTAKE_WORKERS, git-ignored data\config\machine-tuning.local.json,
+echo                                    else capacity from the shared baseline data\config\machine-tuning.json; never changes another machine
 echo    normal-rebase.cmd --root ABS_SANDBOX_WORKING --profile lean --run-id ID [--dry-run ^| --apply ^| --check]
 echo                                    SIMPLE whole-library composition, distinct from incremental library.cmd; preview can prepare/measure all selected inputs, without publishing assignments
 echo                                    --preparation-workers 1^|2^|3 opts into that many FULL/LEAN preparation workers; default 1, repeat on apply; validate per machine first

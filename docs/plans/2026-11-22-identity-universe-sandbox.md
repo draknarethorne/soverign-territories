@@ -222,6 +222,15 @@ Tasks (executed through spine tasks of the same IDs):
   named intake without a separate `seed` step, instead of silently ignoring
   them. Until then, run `seed` first.
 
+**Nov 23 Q&A decisions (user):** IU7 scope: universes ignore workflow
+protection (identical-copy swaps become unnecessary); automatic workflow
+replacement applies only to real Sandbox/Production runs. The Angelica
+trusted-core universe is approved (pull per photo against a trusted top-9
+core, Draknoxa and Drakniss excluded, suspected-contamination list), IU4/IU11
+owners. Order after the worker trial: Angelica trusted-core universe, IU12,
+IU10, then RA2o documentation cleanup. Exact answers are preserved in the
+[performance plan](2026-10-28-intake-performance.md#nov-23-per-machine-configuration---verbatim-chat-and-qa).
+
 ## Nov 23 IU8 cleanup and Most Wanted baseline
 
 `B:\Most Wanted` now holds 275 distinct images. The 70 exact copies moved

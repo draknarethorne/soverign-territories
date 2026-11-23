@@ -5,12 +5,24 @@ import shutil
 
 from . import metadata, retained_preparation
 
-WORKER_MEMORY_GIB = 3.5
+
+def _tuning():
+    import image_preparation
+
+    return image_preparation.machine_tuning
 
 
 def validate_workers(workers):
-    if isinstance(workers, bool) or not isinstance(workers, int) or not 1 <= workers <= 3:
-        raise ValueError("selected preparation workers must be an integer from 1 to 3")
+    maximum = _tuning().max_workers()
+    if isinstance(workers, bool) or not isinstance(workers, int) or not 1 <= workers <= maximum:
+        raise ValueError(f"selected preparation workers must be an integer from 1 to {maximum}")
+
+
+def default_workers():
+    """``(workers, source)`` from this machine's tuning (local file, else capacity)."""
+    import image_preparation
+
+    return _tuning().preparation_workers(free_gib=image_preparation.available_memory_gb())
 
 
 def require_worker_memory(workers):
@@ -19,7 +31,7 @@ def require_worker_memory(workers):
     validate_workers(workers)
     if workers > 1:
         free = image_preparation.available_memory_gb()
-        required = workers * WORKER_MEMORY_GIB
+        required = workers * _tuning().worker_memory_gib()
         if free is None or free < required:
             raise ValueError(
                 f"{workers} preparation workers require at least {required:g} GiB available memory; "

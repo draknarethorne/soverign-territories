@@ -174,16 +174,24 @@ preview/apply/check. Outgoing cast Gallery and genuine source locks remain
 closed. Verified retained natives reuse their checked preparation/immutable
 history; a membership-only update cannot retire unchanged native lineage.
 Receipts bind code, policy, source bytes, reference snapshots and this lock.
-For new FULL/LEAN preparation, `--preparation-workers 1`, `2` or `3` selects
-the number of workers for that preview; the default remains `1`. Repeat
-the same value on apply so the request matches the preview. The origin seal
-records the worker count. For two or three workers, preparation refuses
-to start if available memory is unknown or below 3.5 GiB per worker; this
+For new FULL/LEAN preparation, the preview uses this machine's worker
+setting unless `--preparation-workers N` is given (1 up to the shared
+baseline maximum, currently 8). `bin\machine-tuning.cmd show` prints the
+resolved value and its source: `ST_INTAKE_WORKERS`, the git-ignored
+`data\config\machine-tuning.local.json` written from measured evidence, or
+capacity (logical cores / 4 and available memory / 3.5 GiB, or the local
+file's measured memory per worker). Threads per worker can change
+reconstructed pixels, so compare runs with the same thread count. Apply reuses
+the preview's recorded count; an explicit apply value must match it. The
+receipt records `preparationWorkersRequested` and its source, and the
+origin seal records the worker count. Above one worker, preparation refuses
+to start if available memory is unknown or below the per-worker preflight
+(3.5 GiB, or the local measurement); this
 is a preflight estimate, not a hard runtime memory limit. This option is not
 a cache size, does not alter
-matching, and a non-default value is not accepted with `--reuse-preparation`,
-FAST or check/recovery. Choose it separately on each machine only after its bounded
-measurements, resource and parity checks. Small sidecar trials do not certify
+matching, and is not accepted with `--reuse-preparation`, FAST or
+check/recovery. Each machine keeps its own local file, chosen only after its
+bounded measurements, resource and parity checks. Small sidecar trials do not certify
 a whole rebase.
 The [implementation/acceptance ledger](../plans/2026-11-16-simple-review-and-tuning.md#implemented-foundation-fixture-proof-not-a-library-run)
 distinguishes fixture/browser proof from installed and human acceptance.

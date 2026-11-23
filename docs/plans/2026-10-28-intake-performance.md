@@ -31,6 +31,49 @@ peak memory and output-hash parity, then propose a per-machine default and
 an extended cap. Raising the cap is a code change with tests; changing the
 default is the user's decision.
 
+**Nov 23 per-machine mechanism (user-approved, implemented):** every
+parallel pool runs through image preparation, so its workers and native
+threads are the per-machine settings. `tools/art/machine_tuning.py` resolves
+them in order: command line, `ST_INTAKE_WORKERS`, the git-ignored
+`data/config/machine-tuning.local.json` (measured choice, written only by
+`bin\machine-tuning.cmd set ... --apply` with an evidence note), then
+capacity from the tracked baseline `data/config/machine-tuning.json`:
+`min(maxWorkers 8, logical cores / 4, available memory / 3.5 GiB)`, at
+least 1. Threads per worker are `logical cores / workers` unless the local
+file sets them. A SIMPLE preview without `--preparation-workers` uses this
+machine's setting and records `preparationWorkersSource`; its apply reuses
+the preview's count. `rebase_flow.py` intake follows the same setting. The
+verified replay keeps its pinned 3 x 4 runtime. Neither machine's local
+file is synced, so Beacon's machine keeps its own capacity default (3 on a
+12-thread host) until it records its own measurement. The trial below sets
+this machine's value.
+
+**Nov 23 new-PC worker trial (275-image Most Wanted, LEAN preview, fresh
+preparation, one run at a time on an otherwise idle machine):**
+
+| Workers x threads | Preparation | Speed-up | Peak Python memory | Bytes vs 1 x 24 |
+| --- | ---: | ---: | ---: | --- |
+| 1 x 24 | 948 s | 1.00 | 3.0 GiB | reference |
+| 3 x 8 | 531 s | 1.79 | 8.1 GiB | identical (3,063 images) |
+| 3 x 6 | 569 s | 1.67 | 7.6 GiB | 41 differ |
+| 4 x 6 | 463 s, repeat 501 s | 2.05 / 1.89 | 9.9-10.0 GiB | 41 differ; repeat identical to itself |
+| 4 x 8 | 498 s | 1.90 | 10.6 GiB | identical |
+
+Findings: threads per worker, not the worker count, changes bytes. With 6
+threads, 41 head-overlay/eraser candidate images differ, including the
+selected native of 14 photos. Placements stayed identical (269 of 269
+assignments equal for 1, 3 and 4 workers). Each added worker costs about
+2.5 GiB; with about 14 GiB typically available, 5+ workers are not safe
+here. The first 4-worker preview exposed a leftover 1-3 limit in the
+origin-seal reader (fixed with a regression test).
+
+**Selected for this PC (git-ignored local file):** 4 workers x 8 threads,
+2.75 GiB measured preflight memory per worker; about 1.9x faster than one
+worker with byte-identical output. Beacon's machine should run its own
+bounded trial before writing its file; keep threads per worker consistent
+when comparing runs, because a different thread count can change
+reconstructed pixels.
+
 1. Inventory each machine separately: processor/logical cores, available and
    total memory, storage, accelerator/runtime availability, Python/native
    versions and current load. Check live writers before any resource-heavy
@@ -2325,5 +2368,15 @@ You should also include performance tuning on a per-machine basis so we can incr
 <!-- markdownlint-disable MD013 -->
 ```text
 Image prep workers can be increased on this machine - I suspect.  Maybe we also work on that after this run so we can improve timings for that as well.
+```
+<!-- markdownlint-enable MD013 -->
+
+### Nov 23 per-machine configuration - verbatim chat and Q&A
+
+<!-- markdownlint-disable MD013 -->
+```text
+I'd also like to get to a workers tuning sooner than later - so we can confirm that this machine can handle more workers and I'd want it setup so each machine has it's own configuration and tuning - I think I asked for that for the other parts of the rebase process as well.  We should confirm how we're setting the performance tuning up for each machines capacity.  Maybe it's not a machine name specific but based on the computer capacity.   What ever is simplest to setup and ensure that if I run on each machine it uses it's own proper tuning and number of workers so we don't change a global config and then cause the Beacon's machine to be setup incorrectly for all performance related tuning/configs.  So, don't forget all the things we're doing and want to complete as I asked for several different things.  So maybe a quick Q&A after you finish what you're doing now.
+
+Q&A answers: tuningMechanism=auto-plus-local (capacity-based default + machine-local ignored file with measured values); tuningScope=All parallel worker activities should be covered based on each machines capacity.  We can have a global config that is a baseline and override based on capacity - if that's simplest.; startTrialNow=true; workflowProtection=universes-ignore; angelicaTrustedCore=true; priorityOrder=Angelica trusted-core universe, IU12 native named intake, IU10 grouping rules, RA2o docs cleanup; sourceRecovery=Delete
 ```
 <!-- markdownlint-enable MD013 -->

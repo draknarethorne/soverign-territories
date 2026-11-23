@@ -26,6 +26,7 @@ sys.path.insert(0, str(ROOT / "tools/workflows"))
 sys.path.insert(0, str(ROOT / "tools/art"))
 import comfy_workflows as cw  # noqa: E402
 import gallery_maintenance as upkeep  # noqa: E402
+import machine_tuning  # noqa: E402
 import originals  # noqa: E402
 import preparation_geometry  # noqa: E402
 import preparation_junk  # noqa: E402
@@ -39,8 +40,8 @@ SCHEMA = ROOT / "data/art/_schema/image-preparation-pilot.schema.json"
 STEPS = pipeline.PREPARED_STEPS
 CURRENT = "preparation-comparison-v23"
 # Measured Oct 28 on a 6-core/12-thread Ryzen 5 5500: 1 worker 7.0 s/image, 2 about 5.0, 3 about 4.5, 4 no faster.
-MAX_WORKERS = 3
-WORKER_MEMORY_GB = 2.5
+# Per-machine limits live in data/art/machine-tuning(.local).json; see machine_tuning.py.
+MAX_WORKERS = machine_tuning.max_workers()
 PARALLEL_MIN_IMAGES = 16
 
 
@@ -1105,39 +1106,13 @@ def run(args):
 
 
 def available_memory_gb():
-    try:
-        import ctypes
-
-        class Status(ctypes.Structure):
-            _fields_ = [("length", ctypes.c_ulong), ("load", ctypes.c_ulong),
-                        ("total", ctypes.c_ulonglong), ("available", ctypes.c_ulonglong),
-                        ("pageTotal", ctypes.c_ulonglong), ("pageAvailable", ctypes.c_ulonglong),
-                        ("virtualTotal", ctypes.c_ulonglong), ("virtualAvailable", ctypes.c_ulonglong),
-                        ("extended", ctypes.c_ulonglong)]
-
-        status = Status(length=ctypes.sizeof(Status))
-        if ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(status)):
-            return status.available / 2 ** 30
-    except (AttributeError, OSError):
-        pass
-    try:
-        return os.sysconf("SC_AVPHYS_PAGES") * os.sysconf("SC_PAGE_SIZE") / 2 ** 30
-    except (AttributeError, ValueError, OSError):
-        return None
+    return machine_tuning.available_memory_gib()
 
 
 def default_workers():
-    """ST_INTAKE_WORKERS overrides; otherwise up to MAX_WORKERS, one per WORKER_MEMORY_GB of free memory
-    (a worker peaks near 1.7 GB), so a run started beside ComfyUI uses fewer."""
-    try:
-        wanted = int(os.environ.get("ST_INTAKE_WORKERS", "0"))
-    except ValueError:
-        wanted = 0
-    if wanted > 0:
-        return wanted
-    free = available_memory_gb()
-    cores = max(1, (os.cpu_count() or 1) // 4)
-    return max(1, min(MAX_WORKERS, cores, int(free // WORKER_MEMORY_GB) if free is not None else 1))
+    """This machine's preparation workers: ST_INTAKE_WORKERS, the machine-local file, else capacity
+    (cores and free memory), so a run started beside ComfyUI uses fewer."""
+    return machine_tuning.preparation_workers(free_gib=available_memory_gb())[0]
 
 
 def _start_worker(threads, no_download):
@@ -1164,7 +1139,7 @@ def rendered_rows(root, stage, selected, workers, render=None):
     groups = {}
     for index, source in enumerate(selected):
         groups.setdefault(sha_file(source), []).append(index)
-    threads = max(1, (os.cpu_count() or 2) // workers)
+    threads = machine_tuning.threads_per_worker(workers)
     done = {}
     following = 0
     with concurrent.futures.ProcessPoolExecutor(
@@ -1470,7 +1445,7 @@ def checkpointed_rows(root, recovery, stage, selected, input_rows, binding, base
     import concurrent.futures
     import multiprocessing
 
-    threads = max(1, (os.cpu_count() or 2) // workers)
+    threads = machine_tuning.threads_per_worker(workers)
     with concurrent.futures.ProcessPoolExecutor(
             max_workers=workers, mp_context=multiprocessing.get_context("spawn"),
             initializer=_start_worker, initargs=(threads, models.NO_DOWNLOAD.get())) as pool:
@@ -1634,7 +1609,8 @@ def main(argv=None):
     parser.add_argument("--limit", type=int, default=28, help="round-robin sample size; 0 = all active sources")
     parser.add_argument("--source-folder", help="one active Gallery/Review folder below Working; no recursion")
     parser.add_argument("--workers", type=int, help="parallel preparation processes (default ST_INTAKE_WORKERS, "
-                        f"else up to {MAX_WORKERS} by free memory); each gets an equal share of the CPU threads")
+                        "then the machine-local tuning file, else this machine's cores and free memory, "
+                        f"up to {MAX_WORKERS}); each gets an equal share of the CPU threads")
     parser.add_argument("--storage-mode", choices=("full", "lean"),
                         help="new v23 runs default to lean; saved/interrupted runs retain their mode. "
                         "full keeps alternate padded diagnostics; neither changes the processing recipe")

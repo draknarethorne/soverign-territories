@@ -614,7 +614,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--root", required=True, help="the sandbox Working folder")
     parser.add_argument("--run", required=True, help="new run name under Working\\_sandbox-state")
-    parser.add_argument("--workers", type=int, default=4)
+    parser.add_argument("--workers", type=int,
+                        help="intake preparation workers (default: this machine's setting, bin\\machine-tuning.cmd show)")
     parser.add_argument("--profile", choices=("fast", "lean", "full"),
                         help="FAST original-byte likeness testing, LEAN balanced, FULL final processing; "
                              "saved flow profile must match on resume; independent of recovery")
@@ -662,6 +663,11 @@ def main(argv=None):
         raise ValueError("--reuse-run must name a different sibling run")
     if args.reuse_run and args.recovery_mode != "disposable":
         raise ValueError("--reuse-run requires --recovery-mode disposable")
+    if args.workers is None:
+        from tools.art import machine_tuning
+
+        args.workers, source = machine_tuning.preparation_workers()
+        print(f"intake workers: {args.workers} ({source}; bin\\machine-tuning.cmd show)")
     flow = steps(working, run, args.workers, args.recovery_mode, args.reuse_run, args.profile,
                  args.regroup, args.baseline, args.review_source, args.directed, args.directed_recipe)
     ids = [step["id"] for step in flow]

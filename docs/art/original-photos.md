@@ -75,11 +75,15 @@ Pillow 12.1.1, OpenCV headless 4.13.0.92, JSON Schema 4.26.0, CPU PyTorch 2.10.0
 and torchvision 0.25.0. The launchers already use this runtime through `python`
 on PATH; they fall back to `py -3` only if `python` is unavailable.
 
-Intake preparation runs in parallel worker processes on the CPU: by default one
-worker per 2.5 GB of free memory, up to 3 (each peaks near 1.7 GB), with the
-cores split between them. Start a big run after closing ComfyUI to get all three,
-or pass `--workers N` / set `ST_INTAKE_WORKERS`. Batches under 16 images stay
-serial. Outputs are byte-identical to a serial run; measurements are in the
+Intake preparation runs in parallel worker processes on the CPU. Each machine
+chooses its own count (`bin\machine-tuning.cmd show`): `--workers N`, then
+`ST_INTAKE_WORKERS`, then the git-ignored `data\config\machine-tuning.local.json`
+recorded from that machine's measurements, else capacity: one worker per 4
+logical cores and per 3.5 GiB of available memory, up to the shared baseline
+maximum. The cores are split between workers. Start a big run after closing
+ComfyUI to get the most workers. Batches under 16 images stay
+serial. The worker count does not change outputs, but threads per worker can
+change reconstructed pixels; measurements are in the
 [intake performance plan](../plans/2026-10-28-intake-performance.md).
 
 Full intake preparation checkpoints each completed image in a same-volume,

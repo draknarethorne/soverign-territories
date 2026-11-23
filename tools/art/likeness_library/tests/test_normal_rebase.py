@@ -16,7 +16,7 @@ from unittest import mock
 import numpy as np
 from PIL import Image
 
-from tools.art import originals
+from tools.art import machine_tuning, originals
 from tools.art.likeness_library import metadata, normal_products, normal_rebase
 
 
@@ -183,6 +183,13 @@ class NormalRebaseTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.root = pathlib.Path(self.temp.name) / "Working"
         self.root.mkdir()
+        # Fixtures must not depend on the host machine's capacity or local tuning file.
+        machine_default = mock.patch.object(normal_products, "default_workers", return_value=(1, "test fixture"))
+        machine_default.start()
+        self.addCleanup(machine_default.stop)
+        no_local_file = mock.patch.object(machine_tuning, "LOCAL", self.root / "no-machine-tuning.local.json")
+        no_local_file.start()
+        self.addCleanup(no_local_file.stop)
 
     def photo(self, relative, data):
         path = self.root / pathlib.PurePosixPath(relative)
@@ -1778,7 +1785,7 @@ class NormalRebaseTests(unittest.TestCase):
         cfg = cw.load_cfg()
         run = self.root / "_reports" / "runs" / "normal-rebase-origin-preview"
         start, start_path, start_hash = normal_rebase._write_preparation_origin_start(
-            self.root, cfg, run, "lean", [source], workers=3,
+            self.root, cfg, run, "lean", [source], workers=6,
         )
         output = run / "preparation" / "inputs" / "_reports" / "preparation" / "selected"
         output.mkdir(parents=True)
@@ -1824,8 +1831,8 @@ class NormalRebaseTests(unittest.TestCase):
             self.root, cfg, "lean", prepared, [source],
         )
         self.assertTrue(start_path.is_file())
-        self.assertEqual(start["workers"], 3)
-        self.assertEqual(complete["workers"], 3)
+        self.assertEqual(start["workers"], 6)
+        self.assertEqual(complete["workers"], 6)
         self.assertEqual(complete["generationProducerSHA256"], start["generationProducerSHA256"])
         self.assertEqual(
             complete["producerAfterGenerationSHA256"],
@@ -2684,6 +2691,7 @@ class NormalRebaseTests(unittest.TestCase):
         native = self.root / "native.jpg"
         preparation = SimpleNamespace(
             models=SimpleNamespace(offline=contextlib.nullcontext),
+            machine_tuning=machine_tuning,
             available_memory_gb=mock.Mock(return_value=12),
             publish=mock.Mock(return_value=0),
             verify=mock.Mock(return_value={"photos": [row]}),
@@ -2711,10 +2719,25 @@ class NormalRebaseTests(unittest.TestCase):
                 self.root, "lean", "fixture", api=api,
                 reuse_plan={"preparationWorkersRequested": 3}, preparation_workers=2,
             )
-        self.assertEqual(normal_rebase._parser().parse_args([]).preparation_workers, 1)
+        self.assertIsNone(normal_rebase._parser().parse_args([]).preparation_workers)
         self.assertEqual(
             normal_rebase._parser().parse_args(["--preparation-workers", "3"]).preparation_workers, 3,
         )
+
+    def test_unrequested_workers_follow_preview_or_this_machine(self):
+        api = self.stub_api([])
+        seen = []
+
+        def stop(*args, **kwargs):
+            seen.append(args[0])
+            raise RuntimeError("stop after worker resolution")
+
+        with mock.patch.object(normal_products, "validate_workers", side_effect=stop), \
+                mock.patch.object(normal_products, "default_workers", return_value=(6, "machine capacity")):
+            for reuse_plan in ({"preparationWorkersRequested": 3}, None):
+                with self.subTest(reuse_plan=reuse_plan), self.assertRaisesRegex(RuntimeError, "stop after"):
+                    normal_rebase._plan(self.root, "lean", "fixture", api=api, reuse_plan=reuse_plan)
+        self.assertEqual(seen, [3, 6])
 
     def test_preview_apply_and_recovery_bind_pool_dispositions(self):
         from tools.art import likeness

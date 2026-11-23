@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "description": "Shared parallelism baseline. Each machine derives its default from its own capacity; measured per-machine choices go in the git-ignored machine-tuning.local.json beside this file (see bin\\machine-tuning.cmd).",
+  "preparation": {
+    "maxWorkers": 8,
+    "logicalCoresPerWorker": 4,
+    "workerMemoryGiB": 3.5
+  }
+}

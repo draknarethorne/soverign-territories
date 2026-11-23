@@ -2,7 +2,7 @@
 
 **Status:** active (execution spine: FAST likeness, LEAN/FULL acceptance, then character art)
 
-**Queue focus:** RA2d, RA2j, IU3, IU4, IU5, IU7, IU10, IU12, IU11, RA2o, T29, T30, WF1
+**Queue focus:** RA2d, RA2j, T29, T30, IU7, IU4, IU11, IU12, IU10, RA2o, IU3, IU5, WF1
 
 **Feedback rebase applied (Sandbox):** `feedback-rebase-20261122-02`
 applied rules (a)–(i): duplicates archived, band-aligned formation,
@@ -2098,6 +2098,10 @@ settings universal or authorizing a new full-library replay.
   pause/edit/failure handling are required; not a new generic framework.
   **Nov21:** evaluate measured per-machine worker/cache choices independently;
   do not propagate defaults or sacrifice output/safety checks for speed.
+  **Nov23:** per-machine worker mechanism implemented (`bin\machine-tuning.cmd`,
+  capacity default plus git-ignored local file) per the
+  [per-machine mechanism](2026-10-28-intake-performance.md#nov-21-per-machine-tuning);
+  this PC's worker trial (1/3/4, then 6/8 if memory allows) sets its value.
   [Full execution design](2026-10-28-intake-performance.md#milestone-transfer-record).
 - [ ] **P1 ai** T20 Reuse verified external/retained/derivative inventory
   within valid operation scope; prove path/hash/owner/mutation guards and

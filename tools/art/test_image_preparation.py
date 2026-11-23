@@ -1572,13 +1572,15 @@ class ParallelPreparationTests(unittest.TestCase):
         self.assertTrue(all(row["offline"] for _, row in rows))
 
     def test_worker_count_honours_override_and_free_memory(self):
-        with mock.patch.dict("os.environ", {"ST_INTAKE_WORKERS": "5"}):
-            self.assertEqual(preparation.default_workers(), 5)
-        with mock.patch.dict("os.environ", {"ST_INTAKE_WORKERS": ""}), mock.patch("os.cpu_count", return_value=12):
-            with mock.patch.object(preparation, "available_memory_gb", return_value=3.0):
-                self.assertEqual(preparation.default_workers(), 1)
-            with mock.patch.object(preparation, "available_memory_gb", return_value=16.0):
-                self.assertEqual(preparation.default_workers(), preparation.MAX_WORKERS)
+        missing = ROOT / "tmp" / "no-machine-tuning.local.json"
+        with mock.patch.object(preparation.machine_tuning, "LOCAL", missing):
+            with mock.patch.dict("os.environ", {"ST_INTAKE_WORKERS": "5"}):
+                self.assertEqual(preparation.default_workers(), 5)
+            with mock.patch.dict("os.environ", {"ST_INTAKE_WORKERS": ""}), mock.patch("os.cpu_count", return_value=12):
+                with mock.patch.object(preparation, "available_memory_gb", return_value=3.0):
+                    self.assertEqual(preparation.default_workers(), 1)
+                with mock.patch.object(preparation, "available_memory_gb", return_value=16.0):
+                    self.assertEqual(preparation.default_workers(), 3)
 
 
 if __name__ == "__main__":
