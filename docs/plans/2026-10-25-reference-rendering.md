@@ -25,6 +25,39 @@ Production path comparison/publication remains priority PR3.
 
 ## Oct 30: generated-image round-trip coverage
 
+**Later studio direction:** the user allows choosing generated images from
+other tiers as workflow inputs even after Gallery pullback, while original
+Gallery-photo inputs are restricted to the workspace's tier. Coordinate
+lineage and access semantics with
+[LY18](2026-11-02-library-layout.md#later-gallery-and-per-workflow-image-lifecycle)
+and P19/P20. The user confirms generated images never enter the likeness
+core and selects a physical Generated folder inside each person's directory,
+shown alongside Gallery and Review. This supersedes the separate synthetic
+store location as a future target, not current installed behavior. Preserve
+the current store until separately authorized migration; design rebase,
+rename, movement and retirement to protect generated files, lineage and
+workflow bindings. On promotion/demotion the user selects moving the Generated
+folder with the person while preserving links and history. After a verified
+same-person identity merge, combine generated images under the survivor,
+preserving each source lineage, valid links, history and collision-safe
+recovery. Retire a person with no Gallery/Review originals even if Generated
+still has images; preserve that folder and its history. Retired generated
+images are history-only, not workflow-selectable; preserve existing binding
+history and define the unavailable state without silently selecting a
+replacement. Reconcile the existing emptied-cast stop. When a source photo
+is reassigned, its generated outputs move with it; generated filenames need
+the source photo ID, also bound in structured
+lineage. If the filename lacks the ID, check the retained receipt and lineage;
+when these cannot reliably identify the source, keep the output in place and
+flag it for user decision. Do not invent an ID or silently move an ambiguous
+file. If an output uses photos of two people and a source photo is reassigned,
+keep the output in place and flag it for the user's decision instead of
+automatically choosing an owner or making copies. Define
+generated-on-generated, multiple-input lineage and legacy cases without
+rewriting historical receipts. Other ownership and pullback semantics remain
+open. This planned selection rule does not make synthetic outputs identity
+evidence or authorize rendering, pullback, migration or workspace writes.
+
 The `generated_images_to_gallery.md` request belongs to existing R8/R21/R24
 (Gallery selection, Outputs browsing and explicit selected pullback to
 `<person>/gallery_generated`), R16 (output-as-next-input and optional compatible
@@ -66,6 +99,9 @@ evidence, not acceptance of an exact manual-prompt migration.
   Obtain category/person from verified request/source identity context,
   not display-name parsing or synthetic resemblance. Freeze that context in
   the receipt, so later recategorization does not rewrite provenance.
+  Bind and include the source photo ID in generated filenames when available;
+  preserve structured lineage and handle ambiguous, multiple or generated
+  inputs explicitly under the later source-photo movement decision above.
   Reuse one path builder across UI/API workflows and outputs; keep internal
   frozen inputs, request/evidence directories and batch ownership separate.
   Handle same-name identities, slug collisions, path safety/length and

@@ -55,11 +55,11 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-10-22-manual-prompts-to-art-library.md](plans/2026-10-22-manual-prompts-to-art-library.md) | holding | 21 |
 | [2026-10-22-review-actions.md](plans/2026-10-22-review-actions.md) | holding | 10 |
 | [2026-10-23-cast-seeded-library-rebase.md](plans/2026-10-23-cast-seeded-library-rebase.md) | holding | 8 |
-| [2026-10-23-image-intake-preparation.md](plans/2026-10-23-image-intake-preparation.md) | holding | 57 |
+| [2026-10-23-image-intake-preparation.md](plans/2026-10-23-image-intake-preparation.md) | holding | 56 |
 | [2026-10-25-reference-rendering.md](plans/2026-10-25-reference-rendering.md) | holding | 27 |
 | [2026-10-28-intake-performance.md](plans/2026-10-28-intake-performance.md) | holding | 14 |
 | [2026-10-28-storage-operations-and-retention.md](plans/2026-10-28-storage-operations-and-retention.md) | holding | 14 |
-| [2026-11-02-library-layout.md](plans/2026-11-02-library-layout.md) | holding | 7 |
+| [2026-11-02-library-layout.md](plans/2026-11-02-library-layout.md) | holding | 13 |
 | [2026-11-02-sovereign-spelling-rename.md](plans/2026-11-02-sovereign-spelling-rename.md) | holding | 6 |
 | [2026-11-05-priority-reset.md](plans/2026-11-05-priority-reset.md) | active | 17 |
 | [2026-11-09-likeness-process-reassessment.md](plans/2026-11-09-likeness-process-reassessment.md) | holding | 6 |

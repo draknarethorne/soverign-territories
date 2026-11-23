@@ -1,10 +1,47 @@
 # Project Status
 
-**Updated:** 2026-11-21 · This is the one working document: where the project is, what has
+**Updated:** 2026-11-23 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
 ## Current checkpoint
+
+**Nov22–23 new-PC Sandbox work:** the other-machine plan and recap report
+that `feedback-rebase-20261122-02` applied the a-i feedback and passed its
+check; human review remains open. After review, the user disabled cast
+top-9 seeding by default. Separate identity-universe experiments and the
+named-core intake gap are recorded in the
+[universe plan](plans/2026-11-22-identity-universe-sandbox.md); the
+[execution spine](plans/2026-11-05-priority-reset.md) owns current work.
+These new-PC artifacts have not been independently re-read on the old PC.
+
+**Nov22 old-PC Sandbox storage:** the user-approved failed publication stage
+for `simple-rebase-oldpc-20261120-01` was retired after image-survivor,
+metadata and dependency checks, reclaiming 15,493,390,371 logical bytes before
+retained evidence costs. The installed successful stage, reused preparation,
+run15, Source, active galleries and backups remain. A separately approved
+historical run07 failed stage was also retired after preserving its metadata,
+catalogue and image survivors, reclaiming another 14,146,804,034 logical
+bytes before evidence costs; run09 remains. See the
+[storage record](plans/2026-10-28-storage-operations-and-retention.md#nov-22-old-pc-failed-stage-retirement);
+this is not the newer Sandbox checkpoint below.
+
+**Nov22 fresh post-intake rebase (Sandbox):** `fresh-post-intake-20261122-04`
+started from a verified post-intake state, released 250 red/orange/unscored
+photos before core formation, applied in 1h20m37s and passed its check.
+Outcomes were 100 named Gallery, 62 named Review, 18 new-identity clusters
+and 70 Various Review quality holds. Eighty-nine emptied Potentials folders
+were retired recoverably and the refreshed viewers passed their check; the
+final Review conserves 3,305 photos. At this checkpoint, the later a-i
+feedback had not yet been implemented. Four subsequent corrected-rebase
+previews stopped before publication; the latest identified 14 quality holds
+and 11 retired-lower-core holds, so no corrected rebase was applied in that
+sequence. The later feedback rebase is recorded above.
+Human identity/crop acceptance and hold resolution remain open. No
+Production or shared workflows changed. The
+[execution spine](plans/2026-11-05-priority-reset.md) owns the next steps;
+the [focused plan](plans/2026-11-16-simple-review-and-tuning.md#nov-21-red-member-release-planning)
+retains detailed run evidence and unresolved gates.
 
 **Nov21 orange/red Sandbox release:** the user selects release of orange and
 red core-similarity members across identity groupings, beginning with

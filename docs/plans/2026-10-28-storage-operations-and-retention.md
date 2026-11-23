@@ -16,6 +16,116 @@ Applicable installed route/viewer/timing evidence comes from reset LY4;
 its disposable profile cannot complete FULL recovery. No backup/pruning
 or second replay is authorized merely to close a historical umbrella task.
 
+## Nov 22 old-PC failed-stage retirement
+
+The user requested Sandbox space cleanup and specifically authorized removal
+of the failed `simple-rebase-oldpc-20261120-01` publication stage only after
+dependency verification. This machine's installed Working is the old-PC
+`simple-rebase-oldpc-20261121-02` rehearsal, not the later new-PC rebase.
+The failed apply stopped before a publication journal; its logs and receipts
+remain. The successful run reuses the failed preview's separate preparation,
+which remains untouched.
+
+The exact failed `publication` directory contained 30,874 files /
+15,493,390,371 logical bytes. All 24,102 image files matched SHA-256-verified
+survivors in the successful run's retained publication tree. Preserve that
+survivor tree while the cleanup evidence depends on it. All 6,772 non-image
+files and their relative paths were retained in a 45,560,638-byte verified
+metadata ZIP. A sealed inventory records every file hash and each image
+survivor. A Working text scan covered 17,145 files, excluding `_archive`,
+without finding direct links to the failed publication directory. The
+separately approved delete rechecked the inventory, archive, survivors and
+links; its independent postcheck verified stage absence, metadata and
+survivors. This retires failed-stage images, not the entire failed run or a
+recoverable exact tree archive.
+
+The durable inventory, ZIP and deletion receipt are under
+`B:\Sovereign Territories Sandbox\_source-recovery\cleanup-oldpc-failed-stage-20261123`.
+The inventory SHA-256 is
+`f8084d6ced48dce856f87430a66c779d2049f072cdcc5fa7724f27daf72b8432`;
+the ZIP SHA-256 is
+`d92417310104af74b9a37f3ceb7ea77659fa8a806faf3a96c868871fbaddb04d`.
+The inventory is 12,843,989 bytes, in addition to the ZIP and small receipts.
+The evidence directory also retains a hash-verified copy of the one-off
+checker at SHA-256
+`9369055c2b193fc9230eaab417e71995de0fc7eadb66af5ab5682fde77bfe3ad`;
+it is not an automatic retention policy.
+No active category, reused preparation, run15, Source, backup or Production
+file was removed. Further run/backup candidates retain their own dependency
+and authorization gates. Other B: free-space changes during this period were
+attributed by the user to their separate unused ComfyUI-model cleanup.
+
+**Verbatim request and clearance:**
+
+<!-- markdownlint-disable MD013 -->
+```text
+Let's pickup the questions later - I realize we need to free up space on B:\ starting with whatever we can free up in the Sandbox
+
+May I investigate retiring that failed stage and permanently remove it only if I can verify that no current review, recovery or other evidence depends on it? I would keep its logs, receipts, preparation and all active photo folders.
+
+verify_then_remove
+
+I manually deleted a bunch of ComfyUI shared models we're not using on this machine anymore - that's why more free space.  So the sandbox grew a lot from several days of runs we can prune away as well.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 historical run07 failed-stage retirement
+
+The user separately approved retiring the earlier run07 failed publication
+stage after learning its historical failure receipt references the staged
+catalogue. The referenced source path records its former Working location,
+before that tree was renamed. The receipt already retains an independent
+exact copy of the catalogue; its source and copy both verified against
+SHA-256 `ef62b1df1b19d496798cd303b367f62e693dc43afab906de70312e7903e36b10`.
+The original failure evidence manifest remains unchanged at SHA-256
+`0ff0221188d31eef43b0adc73aa0f7fcb377012853fb97f51d625d34459a0fe7`.
+
+The run07 `publication` stage under
+`B:\Sovereign Territories Sandbox\Working-before-simple-clean-20261119-14`
+contained 28,155 files / 14,146,804,034 logical bytes. All 21,733 image files
+matched SHA-256-verified survivors in the retained run09 publication tree.
+Keep that run09 tree while the retirement evidence depends on it. The other
+6,422 files and their paths were preserved in a verified 42,551,181-byte
+metadata ZIP. A sealed inventory records every file hash and image survivor.
+Across 88,177 text files in the current Working and preserved non-archive
+trees, the only direct stage reference was the above historical failure
+receipt, accepted as an explicit exception after verifying its retained
+catalogue copy. The delete rechecked the evidence, inventory, archive,
+survivors and references. Independent postcheck verified stage absence,
+the archive, image survivors, historical receipt and copied catalogue.
+This intentionally retires failed-stage images, not the whole run or an
+exact recoverable stage archive.
+
+The inventory, ZIP and deletion receipt are under
+`B:\Sovereign Territories Sandbox\_source-recovery\cleanup-run07-failed-stage-20261123`.
+The inventory SHA-256 is
+`d7d11e364876464b76eb564df43bada22fc190f0dd7f69c06551079834e00508`;
+the ZIP SHA-256 is
+`1b19c29cec17b93f1ee2fb60db90ed505780e8e7f3619c0c02743c96a18dceab`.
+The inventory is 12,413,033 bytes, in addition to the ZIP and small receipts.
+The evidence directory also retains the hash-verified checker and run07
+wrapper at SHA-256
+`9369055c2b193fc9230eaab417e71995de0fc7eadb66af5ab5682fde77bfe3ad`
+and `a1301ca08da627dff727c073227dbae543e44a94b522d98ed3cfb7cd62a65f72`.
+Run09, run13, run15, Source, backups and active galleries remain untouched.
+The earlier instruction to preserve the entire run07 stage is superseded only
+by this explicit, evidence-preserving disposition.
+
+Run08's stage remains held: its journal says `rolled-back`, but its outer
+receipt says `recovery-required` and records 1,681 stage-source checks.
+Do not delete that stage solely because run09 succeeded; first resolve its
+recovery and historical-evidence dependencies.
+
+<!-- markdownlint-disable MD013 -->
+```text
+The next candidate is an older **13.18 GiB failed run07 stage**. All 21,733 images match retained run09 copies. One historical failure receipt points to its staged catalogue, but that catalogue also has a separately preserved, byte-identical copy; the original path was already displaced when Working was renamed.
+
+May I retire this stage too, preserving all its metadata and recording where the catalogue copy lives, without changing the historical receipt?
+
+retire
+```
+<!-- markdownlint-enable MD013 -->
+
 ## Nov 5 16:35 acceptance sharing, not duplicate replay
 
 Use layout LY4's current saved-input continuation for applicable installed
@@ -1941,5 +2051,43 @@ directory analysis and cleanup -> S33.
 <!-- markdownlint-disable MD013 -->
 ````text
 Did you answer the questions about what is gallery_intake in the sandbox?  Is that current functionality or from previous runs?  I'm thinking I want a more complete analysis on what directories should exist under each person's directory as we do this.  It feels like we definitely have some room for understanding and clean-up on that.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 23 old-machine Production cleanup audit
+
+The user proposes retiring old Production backups and runs on this machine as
+Production shifts to the new machine. A read-only inventory of this machine's
+configured Production root found one directory backup:
+`_backup\library-20261020-222038`, 22,374 files and 6,057,760,091 logical
+bytes including its manifest. The supported backup verifier passed for
+22,373 manifest entries / 6,048,648,202 bytes. `_reports` totals 9,661 files /
+411,877,499 logical bytes, mostly current viewers, their assets and historical
+retirement evidence; its `runs` contains logs, not large run trees. No file was
+removed.
+
+The [Nov 2 hash audit](2026-11-02-library-layout.md#_-directories-hash-audit-nov-2-acronis-off)
+reported that this snapshot was the only copy of about 2,100 older files.
+The prior Production retirement ZIP and receipt also remain in `_reports`.
+The user confirms a copy is on the other machine; its exact coverage and bytes
+have not been independently verified from this machine. The local backup
+manifest SHA-256 is
+`b0a847354173ea0e668f0ad4b8fe14daf56c30ce646907ccee2f6c9cd5cfae08`.
+The retained metadata ZIP SHA-256 is
+`54a4e127b52b0dc9a6ed8e98c48737b4cf6aa32f9634f9b563df6e6a0e5f61a2`,
+matching its receipt; the receipt SHA-256 is
+`fddb0ee7b5d518cbbf09f6441d7f94d1d699af7ae35e704aa24d346e677a7c43`.
+Retain the newest/sole directory backup, retirement evidence, current reports
+and active source folders; migration is not itself proof of recoverability.
+Before retirement, identify the exact replacement and verify the snapshot's
+unique payloads, manifests and relevant recovery dependencies under the
+existing backup-retirement contract. No Production cutover or root deletion
+is implied.
+
+<!-- markdownlint-disable MD013 -->
+````text
+I also think we can retire old backups and runs in the Production directory since we're shifting Production over to the new machine.  We'll use this machine now for experimentation and parallel testing in certain cases.  So the clean-up needs to happen for things we no longer need to keep on this machine to conserve and save space on B:
+
+I can confirm it's on the other machine now.
 ````
 <!-- markdownlint-enable MD013 -->

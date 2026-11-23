@@ -16,6 +16,799 @@ N15 installed-family/history acceptance is merged into the spine's LY4;
 no extra reset/intake or snapshot retirement follows from that transfer.
 Earlier scheduling is dated context, overridden by the spine.
 
+## Nov 21: multiple studios and transition proposal
+
+**Status: discussion proposal, not an approved architecture or active
+execution lane.** This section owns the cross-studio layout and transition
+discussion; the exact new request is preserved at the end of this plan.
+Existing rules and the current Queue focus remain in force. No new intake,
+directory creation, move, matching run, policy change, workspace deployment
+or Production write is authorized by this proposal.
+
+### The goal and current starting point
+
+The user wants **female people, male people and creatures/animals as
+top-level separations**, with three tiers for each and separate intake,
+galleries, applicable rules and workspace use. The three tiers are a
+developing concept, not yet three final names or nine approved directories.
+The user's clarification below supersedes the earlier A/B framing. Moving
+between tiers, comparing new images to existing likeness without changing
+those existing identities, and routine processing without a Sandbox are
+important goals.
+
+The current Production-root top-level names were inspected read-only on
+Nov 21: `Angels`, `Sisters`, `Prospects`, `Potentials`, `Artists` and
+`Various` are peers alongside operational folders. This is a directory-name
+observation, not a full inventory or permission to reorganize them. The
+[likeness guide](../art/likeness.md#folders-and-categories) also describes
+Models as a distinct sandbox category. `Various` is a mixed intake/hold
+pool, not a person; `Artists/<Artist>/<Person>` is a separately scoped
+domain. Existing Artist provenance is protected from automatic cross-artist
+and general-library reassignment by the
+[current runbook](../art/original-photos.md#the-library).
+
+Today the selected normal intake described in
+[likeness](../art/likeness.md#normal-selected-photo-intake) selects
+pending/selected `Various\gallery` photos and uses the eligible current
+identity inventory; it is not already a general multi-studio selector.
+Current retained manifests bind photo ID, bytes, owner path and matching
+domain. Cross-domain retained-set transfers and whole-person moves with
+retained sets are held, not a supported studio migration
+([original-photo runbook](../art/original-photos.md#the-library)).
+Existing paths, caches, receipts and recovery journals therefore cannot be
+assumed portable merely because a folder can be renamed.
+
+### Working model: separate concepts, not decisions
+
+| Concept | Proposed meaning | What remains to decide |
+| --- | --- | --- |
+| Studio | A user-facing collection with an intake, galleries and policy context | Names, physical roots, exclusive tier ownership and cross-tier conflict handling |
+| Category | A role/status within a studio, such as Sister, Angel, Prospect or Potential | Which categories exist in each studio and whether they mean card rank, casting readiness or something else |
+| Subject/comparison domain | The explicitly selected compatible population for detecting, grouping and matching | Female/male/creature and creature-kind boundaries, mixed-subject safeguards, and any authorized exceptions |
+| Person/creature identity | A stable identity with names, evidence, history, protections and optional character-slot association | Shared versus studio-local identity IDs and how cross-studio references are resolved |
+| Photo and source | Original bytes, photo ID, provenance, retained processing and membership decisions | Single canonical copy versus separately owned copies, and duplicate/version handling |
+| Intake | A studio's loose pool plus optional named-person submissions | Display name `Intake` versus `Various`, exact folder syntax, and named-folder protection |
+
+These are separable dimensions: a person's studio, category, character role,
+subject type and card use need not all be encoded in one folder name.
+This is a way to discuss the design, not a new schema. In particular,
+changing a category must not silently change a person's identity or the
+meaning of a chosen character slot.
+
+### Requested planning order: named intake, studios, then Gallery/workflows
+
+The user now prioritizes clarifying and accepting named incoming folders under
+`Various` **before** restructuring the studio directories. First resolve the
+named-intake contract for both `Various\<Person name>` and
+`Various\<Person name>\gallery`. The user selected direct-root photos as
+part of the named intake as well as the existing `gallery`/`review` children.
+Keep child Review semantics distinct; acceptance for processing is not
+automatic Gallery membership. Preserve source paths and treat duplicate
+content under either location under the normal duplicate rules. Keep this
+distinct from the unnamed `Various\gallery` pool. Reuse N12/N13, I24 and
+I75; this is a target contract and acceptance priority, not a claim that the
+current scanner supports direct-root photos or permission to run it.
+The [decision source](#nov-22-named-intake-path-decision---verbatim-form-answer)
+is preserved below.
+
+After the named path behavior is defined, proceed with the proposed studio
+organization in the user's intended order: split the female collection into
+three tiers first, then work on males, then creatures. Category rules and
+exact migration remain open. The user selects separate physical
+folders for the three tiers within each subject group, rather than only
+tier-specific views over a shared people library, and names them Apex, Forge
+and Lab. Each tier has its own folder named `Intake`; the existing `Various`
+layout remains in use until a separately authorized migration. Eligible
+incoming photos may still route to an existing person in another tier under
+the selected cross-tier matching rules below.
+The user expects intake to work with the studio organization, but the path
+rules should not wait for the full studio migration.
+
+Per-workflow photo selection and generated-image intake are a later Gallery
+evolution, not a single person-wide photo choice. The intended direction is
+for each workflow to have its own selected source, which may be an accepted
+Gallery image or a ComfyUI-generated image. A selected generated result may
+later be shown alongside a person's Gallery with its generation/source
+lineage. The user says generated images must never enter the likeness core and
+selects an actual Generated directory inside each person's folder, visible
+alongside Gallery and Review. Generation alone does not make an output a
+trusted identity photo or automatically accepted Gallery original. Keep this
+future need visible in the
+intake/studio data contracts, then coordinate its detailed design and
+implementation with manual-prompt P12/P19/P20, rendering R44, intake I21/I23,
+and Gallery L12/L19. Those owners already cover output organization, workflow
+routing, retained versions and Gallery navigation; this plan creates no
+parallel path builder or Gallery implementation.
+
+This sequence is a holding-plan priority, not a transfer into the active
+spine. It does not authorize file intake, directory creation/movement,
+workflow changes, generated-image publication or Production writes.
+
+### Nov 21 clarification: three subject groups, three tiers
+
+The user describes this **direction**, not a finished taxonomy or permission
+to implement it. A simple discussion sketch is:
+
+| Top-level group | 1. Apex | 2. Forge | 3. Lab |
+| --- | --- | --- | --- |
+| Female people | Established/signature characters, e.g. Sisters | People primarily intended for lower-tier cards | Image sets of uncertain card use and free-form experimentation in a separate workspace |
+| Male people | Established/signature characters, e.g. Bound | People primarily intended for lower-tier cards | Separate intake and experimental workspace use |
+| Creatures/animals | Established/signature creatures | Creatures primarily intended for lower-tier cards | Separate intake and experimental workspace use |
+
+These are working descriptions, not a list of existing folders, a claim
+that every subject has the same processing model, or a requirement to
+duplicate source bytes. Each tier will have a separate
+physical folder; exact paths and safe migration are not yet designed. The
+user distinguishes tier 2 as
+primarily intended for lower-tier cards and their `data/art`-supported
+workflows, while tier 3 is for experimenting with image sets whose eventual
+card use is uncertain and more free-form ComfyUI work. This is intent, not a
+claim that every tier-2 person already has card data or that tier-3 images
+can never become cards. The user selects `Apex` for the upper tier, `Forge`
+for the lower-card tier and `Lab` for the experimental tier across female,
+male and creature groups. Category rules, workspace mapping and promotion
+criteria remain open. The
+user wants to promote or demote between tiers; the
+whole-person movement and cast replacement decisions are described below;
+their transaction and other dependency details remain to be specified.
+
+For people in Forge, the user selects Potentials and Prospects rather than
+the cast-oriented Models category. Potentials are newer identities with a
+small photo set; Prospects are more established identities for lower-card
+work, not automatically Apex cast candidates. The current draft's one-to-four
+versus five-or-more usable Gallery photos is a starting point to validate,
+not an implemented Forge policy. Do not infer a tier move from category
+classification. The user selects the same Potentials and Prospects
+organization for Lab identities; in Lab, Prospect means an established
+identity, not that it is planned for a card. Within Forge or Lab, transitions
+between Potentials and Prospects are automatic under the applicable rules as
+qualifying photo counts change; these are not tier moves. Design protection,
+transaction and recovery handling. Creature-specific matching and
+classification details remain open.
+
+For creature studios, the user selects isolating matching by creature kind:
+for example, horses compare with horses, not dragons. Define the kinds,
+their selection, mixed/unknown handling and a suitable matching model
+before implementation; do not infer species from similarity alone.
+The user defers deciding whether creature-kind selection is manual,
+automatic or a combination.
+
+The user selects a separate Artists studio with its own rules rather than
+treating Artist solely as provenance inside the three subject-tier groups.
+Its categories, matching boundaries, relationship to people in other studios
+and migration remain to be designed. The user confirms Artist collections
+are a protected exception to the one-tier-per-person rule: the same person
+may appear in an Artist's collection and a subject tier without moving
+the Artist's photos. Artist-owned photos remain exclusive to the Artist
+studio and are not usable in the person's subject-tier Gallery. The user
+selects keeping Artists matching isolated:
+do not compare its people against subject-tier identities, even for
+advisory suggestions. Existing Artist provenance and protections remain in
+force; this does not authorize moving Artist files or merging identities.
+
+For normal subject-tier intake, the user selects the female, male or
+creature/animal group manually by where photos are placed. Automatic
+subject detection or routing is not selected. A photo containing subjects
+from different groups may be processed when the intended main subject is
+clear, for example a woman holding a dog in female intake. Apply the
+applicable detection, crop and quality safeguards; do not treat incidental
+subjects as identity evidence or silently cross matching domains. Specify
+how to identify the intended subject before implementation. If the software
+cannot reliably determine the intended subject, the user selects its best
+automatic guess with a visible flag. Do not invent a measurement if no usable
+subject is detected, or relax existing quality/core-vote rules; no new detector
+or numeric threshold is selected.
+
+The user selects **one tier at a time per real person**: promotion or
+demotion moves that person's tier instead of leaving them in both. This
+does not decide canonical-original storage or whether a person can serve
+multiple card roles. Promotion or demotion moves the whole identity and all associated
+photos together, including Gallery, Review and Generated, preserving name
+and history. The user selects tier moves only when they initiate or approve
+them, not autonomous movement based on matching scores. The selected
+automatic promotion of their chosen cast replacement is part of that
+user-initiated replacement, not an independent autonomous tier move. Design
+the transaction, fixed-character conflicts, protections, workflow-selection
+effects and recovery before implementation. The user restricts each workspace to original Gallery photos owned by
+its tier: a top-tier person's original cannot be selected for a separate-
+workspace-tier workflow. In contrast, ComfyUI-generated images may be selected
+from other tiers, including after selected outputs are pulled back into a
+person's Gallery. Preserve generated-source lineage and distinguish it from
+originals regardless of Gallery presentation. Generated-image ownership and
+subject boundaries remain open; this does not authorize any workspace change.
+Cross-tier similarity remains advisory, not proof of identity. When photos arriving in the separate-
+workspace tier are confirmed to be a person already in the top tier, the user
+selects adding the incoming photos to that existing person in the top tier,
+rather than moving the person or retaining another tier membership. Comparison
+itself stays read-only; the subsequent addition changes the destination tier
+and needs a safe, traceable transaction. Qualifying incoming photos may enter
+the existing matching core under its normal core-quality rules; the comparison
+alone never changes that core. For a new non-duplicate photo, the user
+accepts all normal automatic matching rules, including the required rival
+margin, as sufficient for this addition without separate human confirmation.
+The naming-only rival-margin exception does not waive photo-admission gates.
+The reverse direction follows the same approach: a top-tier arrival that
+qualifies as a lower-tier person goes to that existing person, without
+automatically promoting them. Define duplicate handling and the exact
+operation/transaction before implementation; this decision does not
+authorize a current library run.
+
+If the person being demoted currently fills a Sister or Angel slot, the user
+requires selecting a replacement before the move. Keep the character's fixed
+name and history; do not silently unassign the slot or choose a replacement.
+If the selected replacement is in a lower tier, automatically promote their
+whole identity to the top tier as part of the replacement. Automatically
+choose suitable photos of the replacement for affected workflow selections;
+keep each workflow's own binding rather than assuming one photo for all.
+If a workflow has no suitable replacement photo, the user selects proceeding
+with that workflow explicitly unavailable and flagged, not retaining the
+demoted person's now-ineligible photo as a usable selection. Preserve prior
+bindings in history and undo. Specify selection criteria, eligibility, conflicts
+with other fixed slots or protections, coherent publication and rollback.
+This selected design does not authorize an actual tier move or workspace write
+now.
+
+The user selects exclusive character use for a person assigned to a Sister
+or Angel: do not also assign that person to generic cards. Preserve their
+single identity and tier. Define how the role restriction interacts with
+generated-image inputs and existing workflow bindings; cross-tier selection
+of a generated image is not, by itself, permission for a generic-card role.
+
+For the third, separate-workspace tier, the user selects automatic identity
+grouping for unnamed photos, as in the main library. Named submissions remain
+supported; comparison against other tiers remains read-only, with qualifying
+incoming-photo additions handled separately as above. This sets intended
+behavior, not exact paths, a creature-matching model, run authorization or
+an implemented capability.
+
+The card documents offer useful **analogy, not an automatic rule**:
+[deck rules](../design/deck-progression-rules.md#rarity-costs) identify
+Transcendent Sisters and Mythic Bound/Elder Dragons, and Rare-Legendary
+starter heroes. The [art direction](../../data/art/README.md#future-direction-organizing-templates-by-raritycard-type-documented-not-built-yet)
+discusses richer signature art, simpler unit art and separate studio tests;
+it explicitly defers a template taxonomy. Card rarity, hero versus unit,
+the art pipeline's “studio” stage and this proposed photo-library studio are
+different concepts. No rarity cutoff or automatic mapping of a photo/person
+to a card tier is established. Angel Primes include both male and female
+characters; do not assume every `Angels` entry belongs in one subject group
+solely from its category name.
+
+**Working recommendation:** present the three subject groups and their
+three tiers simply in the library UI. A possible physical sketch is
+`<library>\Females\<tier>\...`, with corresponding male and creature roots;
+these paths are examples only. Each tier has a separate physical folder;
+canonical storage and shared versus separate records remain open. Enforce
+boundaries beyond folders; avoid building a shared-asset system or nine
+independent engines merely to draw this chart.
+
+### Routine work versus development and rebasing
+
+- **Normal arrivals:** process only the selected arrivals in their chosen
+  subject/tier, retaining source names and provenance. The user wants named
+  sets kept out of unrelated pools and available to their own workspace.
+  Cross-tier comparisons are advisory; for the confirmed same-person case
+  above, the user selects adding incoming photos to the existing person
+  whether the arrival is from a lower or the top tier. Similarity alone is
+  not identity confirmation, and the actual
+  addition remains subject to applicable admission, protection and recovery
+  rules.
+- **Scoped rebase:** if a tier needs reassessment, scope it to that tier
+  rather than automatically reprocessing thousands of photos in all tiers.
+  Design an optional, explicitly scoped read-only comparison against
+  compatible existing reference identities. Preserve their photos, core,
+  membership, names, protections and selected workflow inputs; changing a
+  reference or moving a result requires a separate authorized operation; the
+  confirmed incoming-photo addition above is a distinct selected target
+  behavior, not a side effect of comparison.
+  Report source, target, score, model/reference version, exclusions,
+  conflicts and stale/missing evidence. The exact candidate policy and
+  resulting review action remain user decisions.
+- **Efficiency without silent gaps:** reuse verified, current reference
+  evidence where possible and measure actual work, rather than promising
+  constant-time comparison. If evidence is stale or unavailable, report it
+  and require a scoped refresh or explicit incomplete result; never drop
+  rivals silently. Compare unchanged incoming bytes, intended candidates,
+  result quality, I/O and timing when assessing the approach.
+- **Sandbox role:** the intended steady state is a protected normal library
+  workflow without standing up a Sandbox for every intake or comparison;
+  Sandbox remains for major development changes and separately selected
+  rehearsals. This goal does not lift today's Production cutover gates.
+  Existing `library.cmd` already scopes normal arrivals and reuses valid
+  identity evidence, but its full-library/live acceptance is still gated;
+  it does not establish a three-tier rebase, named-set protection, or
+  cross-studio advisory comparison. No run is authorized here.
+- **Separate ComfyUI workspace:** route explicitly selected source photos
+  owned by that workspace's tier to the intended workflow, without
+  repointing the main studio's character inputs or replacing its workflows.
+  Cross-tier original Gallery-photo selection is not allowed, even though
+  read-only likeness comparison remains possible; generated images may be
+  selected from other tiers, including after Gallery pullback. Photo studios
+  and ComfyUI workspaces are distinct; generated-image ownership and other
+  pullback semantics remain open. Existing
+  [workspace P19/P20](2026-10-22-manual-prompts-to-art-library.md#nov-5-1635-bounded-workspace-decisions-before-implementation)
+  and [reference-rendering R44](2026-10-25-reference-rendering.md) own
+  workspace mapping, source binding and deployment; their remaining gates
+  still apply. The generic Females reference pilot is bounded, not a
+  complete arbitrary-image runner.
+
+### Named-intake clarification: original-name recovery
+
+The user clarifies that a supplied folder name such as `Ela Model` asserts
+the person's **original name**. It is also a way to repair a name lost in
+earlier grouping or discovered later. A submission may contain both new
+photos and exact copies of photos already in a differently named identity.
+The desired outcome is the correct original name and the person's qualifying
+photos/history together, not a new random name that absorbs Ela. Normal
+Models/Prospects/Potentials classification still applies.
+
+Use the existing [N12/N13 naming owner](2026-10-22-identity-family-naming.md#oct-30-named-and-unnamed-various-acceptance-contract):
+a correction can retain an existing stable person ID while changing its
+erroneous effective original name; the user-facing name need not determine
+which internal ID survives. Retain the old name in history and undo, keep
+fixed character slots distinct, and preserve photo IDs, content, retained
+history, explicit rejections, locks and selected workflow inputs. Distinguish
+an intentional named-folder correction from ordinary N14 oldest-original
+merge continuity; do not silently let an older generated name defeat the
+user-supplied original.
+
+For a new named batch whose photos do not form one reliable core, the user
+selects automatically choosing the best-supported group to carry the
+supplied name rather than requiring review or a manually chosen anchor. In a
+comparison between a coherent six-distinct-photo group and a coherent
+two-photo group containing an existing exact duplicate, the user selects the
+larger group for the name. An exact duplicate shows continuity but does not
+by itself override the larger group's support; duplicate copies are not
+independent votes. When an eligible smaller group is much more internally
+consistent than a larger one, the user selects balancing group size and
+matching strength rather than always preferring either. The balance has no
+selected formula; calibrate and test it against representative cases without
+changing normal formation gates. For equally large and similarly consistent
+groups, the user selects the group with an existing exact duplicate as the
+tie-breaker when only one has one. If equally supported groups have no
+distinguishing duplicate, choose one automatically and show the choice. Specify a
+deterministic, repeatable tie-break using stable source-bound evidence and
+record the tie; do not present it as proof of identity. Route the other
+groups' photos normally to an existing or new identity or Review as
+appropriate, following matching, quality, protection and duplicate rules.
+Define coherent-group eligibility, insufficient evidence and acceptance cases
+before implementation. Preserve the submitted-name assertion and photo/source
+history, and make the selection and reasons reviewable. This does not
+authorize an indiscriminate merge of existing identities.
+
+**Nov 21 decision:** a named folder expresses the user's correction intent:
+create an identity with that original name or automatically correct the
+original name of the established matching identity, without asking again in
+a clear case. Preserve its previous names and history. This applies to the
+person behind a Sister/Angel as well; their character names and fixed slots
+remain locked. The user also reports a case where both original and current
+person names were incorrectly altered. The user now selects changing the
+person's current display name to the supplied original name as well in a
+clear named-intake correction, including when a different family name was
+previously assigned. Preserve the previous current/original names and family
+history; do not change a fixed character name or slot.
+
+Use normal evidence and preserve protections; a different recorded name is
+not by itself a reason to ignore the user's explicit correction. A duplicate
+proves photo continuity, not that every member of an old group is the same
+person. When the chosen named group matches two established identities about
+equally, the user selects automatically choosing the best-supported existing
+identity for the name and showing the choice, without merging those people.
+Where both match well but their lead is below the usual rival margin, the user
+allows this automatic **name correction** despite that margin and wants the
+close rival shown. This exception does not bypass photo-admission rules or
+genuine protections, merge identities or change fixed character names.
+Define the competing-match evidence, ties, minimum acceptable match and
+no-evidence case before implementation; retain both candidates and the reason
+for the choice. Record the correction and make it reversible; this is selected
+target behavior, not a claim it is implemented or permission to run.
+
+**Name collisions are different from identity ambiguity:** the user wants
+the asserted name assigned to the identified person even if another identity
+currently has that name. Resolve the name conflict by a name swap or a new
+random name for the other identity; do not merge the people or reject the
+asserted name just because it is occupied. Preserve each identity's ID,
+photos, evidence, prior-name provenance and history; show both changes and
+support all-or-nothing recovery and exact undo. Preserve fixed character
+slots. The user prefers a **swap** over a random name, unless the prior name
+is used with many other names; inspect identity/name history and choose the
+best safe resolution rather than blindly swapping. The user clarifies that
+the current Production snapshot can contain unreliable name history because
+identities changed repeatedly through pre-Sandbox bugs and processing
+issues. Therefore, a long or conflicting name history is not by itself
+evidence that a previous name belongs to the identity that would receive it:
+assess the reliability and continuity of the underlying records, not just
+the number of names. Define the evidence and how original/current fields of
+the displaced person change; no numeric threshold is selected. When the
+person is clearly identified but history cannot support a safe swap, the
+user selects assigning the other identity a new random name automatically,
+not holding solely for unreliable name history. If that other identity's
+recorded original name is also wrong and its real original is unknown, use
+the new random name as both its current display name and recorded original;
+mark it generated, not a verified real name, and retain the incorrect name in
+history. Preserve both identities and fixed character names; never guess a
+swap or merge people. Coordinate the existing confirmed two-person swap A3;
+it is not proof that automatic named-intake collision handling is implemented.
+
+For the future collision decision, review the history of **both** stable
+identities and distinguish supplied, generated, current, original, family
+and fixed character names. Record which previous name is considered for the
+swap, its provenance and prior associations, the evidence supporting the
+choice, and the proposed changes to each identity. A prior name appearing
+in history does not by itself prove it is suitable for the other person.
+Legacy Production history may reflect misnaming and identity churn rather
+than trustworthy continuity; identify which evidence predates the known
+issues and what can still be verified. Do not invent a count or treat
+unreliable history as a basis for an automatic swap.
+
+The acceptance matrix should cover a preferred swap with suitable history,
+the automatic random-name fallback when a swap is unsuitable or history is
+unreliable, and multiple occupants of an asserted name. It must also
+cover a fixed cast character name, repeat intake, interruption and exact
+undo. Near-equal existing matches follow the selected automatic choice above,
+not the earlier blanket ambiguity hold; an occupied name is a separate name
+collision, not an identity ambiguity. Define remaining unsafe or unsupported
+cases and show any unresolved collision rather than silently merging.
+
+The user wants the name to stay with the core and **high-scoring photos
+protected**, while recognizing that a very low-scoring photo may be an
+accidental inclusion. Do not equate every expression/pose variation with a
+wrong person, or make every incoming photo an unquestioned core anchor.
+Preserve the submitted set's source evidence and evaluate individual photos
+against appropriate core/quality evidence. For ordinary named intake or later
+normal processing, the user selects automatic reassignment of a very
+low-scoring submitted photo to a stronger eligible match when normal matching
+and protection rules allow. This is per-photo, not a whole-identity merge;
+retain source/name history and make the move traceable and recoverable.
+Existing explicit protections are not silently bypassed. The low-score
+boundary and protection acquisition remain open. If a very low-scoring
+photo has no eligible rival, the user selects normal unassigned-photo
+routing, including a new identity when eligible, rather than a special
+named-folder-only hold. Apply the relevant quality, routing, formation and
+protection rules; preserve the asserted name and source history even if the
+photo is assigned elsewhere or held. Name intent and a matching score do not
+establish that every member of an existing mixed group is the same person.
+
+For ordinary refinement of an established named identity, the user selects
+a stricter eligibility boundary for its explicitly named non-core photos
+than ordinary below-category-entry refinement: the own-identity score must
+also be orange or red (strictly below 0.30). Both conditions apply, without
+rounding the boundary; an unavailable score is not a low score. This does
+not change initial named-intake eligibility, special rebase release,
+destination gates or genuine protections. The selected no-rival normal
+routing above is a named-photo exception to ordinary refinement's usual
+requirement for a qualifying rival; specify its source/reference handling
+and apply normal safety and recovery gates before implementation.
+
+For later ordinary intake, the user also selects releasing a one-photo named
+Potential for normal rescoring like other one-photo Potentials, despite its
+unavailable own-identity score. Apply the selected small-Potential intake
+policy and normal protection, matching and routing safeguards; preserve the
+asserted name and source history regardless of the resulting placement.
+This does not make an unavailable score low or bypass a genuine lock. Resolve
+identity/name continuity and any emptied-folder retirement through their
+existing contracts, not by silently discarding the name.
+
+An illustrative acceptance case is a uniquely bound existing photo
+duplicated in `Ela Model`, alongside new Ela photos. Show the duplicate,
+existing owner and source-name provenance, eligible per-photo matches,
+automatic correction and any conflicting or low-confidence members. Preserve
+history and use the accepted duplicate/version disposition; do not create an
+extra person just because a filename differs or delete source evidence.
+Exercise same-person continuity without swallowing an entire mixed group,
+and verify repeat intake and exact undo. Comparison across studio tiers stays
+advisory; any cross-tier move or correction has its own authorization.
+
+**Still to decide:** protection evidence and initial named-intake outlier
+eligibility; the evidence for the preferred swap versus fallback and effects
+on the other person's names; competing-identity minimum evidence, ties,
+no-evidence cases and explicit locks. The named refinement cutoff and naming
+margin exception are selected, not implemented.
+
+### Matching, intake and identity safeguards to design
+
+- Select each operation's studio, subject-compatible population, policy and
+  profile explicitly. Do not compare or route female people, male people,
+  Artists or creatures across an unapproved subject/provenance boundary.
+  The intended cross-tier likeness comparison within a compatible subject
+  group is advisory and does not change the referenced studio. When the main
+  subject is unclear, use the best automatic guess and flag it, without
+  relaxing quality or core-vote safeguards or inferring identity, gender or
+  species from similarity alone; preserve Artist provenance. A separately
+  transacted addition of qualifying incoming photos to their existing person
+  in another tier follows the selected rules above.
+- Keep each studio's loose intake distinct from a named-person submission.
+  For a future named intake such as `Various\Ela Model`, record the supplied
+  original-person name and source provenance, retain every submitted photo
+  and show the asserted relationship, potential matches, duplicates and
+  conflicts. A declared name is user intent, not proof that every detected
+  face is the same person.
+- **Important current distinction:** the legacy `seed` path scans
+  `Various\<Name>\gallery` and `review`, matches an existing general person
+  by name or creates a Prospect/Potential, and does not face-match the set.
+  The legacy incremental flow is paused under the draft-policy gate.
+  Prepared sandbox named intake exists, but
+  [N13](2026-10-22-identity-family-naming.md#oct-30-named-and-unnamed-various-acceptance-contract)
+  still owns the full Ela Model/name/duplicate/matching acceptance matrix.
+  Neither fact proves that every submitted photo receives the requested
+  persistent protection or that a direct `Various\<Name>` folder of loose
+  files is accepted. Do not run that 11-photo trial without selection.
+- Apply the user's clarified goal of protecting high-scoring named-intake
+  photos, not a blanket claim that all photos must be locked. Specify
+  protection acquisition, existing explicit overrides, low-score/mixed-face
+  Review, core eligibility, duplicate/version and undo behavior. A protected
+  photo can be retained without being a trusted matching anchor; no score
+  alone should defeat an explicit lock.
+- Define promotion/demotion as the selected **whole identity** move, with
+  all associated photos. Individual photo reassignment remains a distinct
+  operation, not a partial promotion. Preview the source/destination, reason,
+  stable IDs, proposed membership/slot/category changes, name/history and
+  protected or selected-workflow conflicts. Preserve originals, Review states,
+  rejections, anchors, crop lineage, derivatives and prior history.
+  Enforce the selected one-tier-per-person rule; design ownership and
+  transaction details without assuming a physical copy model. Never infer a
+  person is the same solely from a name or resemblance.
+- Benchmark only after the comparison populations and equivalent desired
+  behavior are defined. Smaller eligible populations may reduce matching
+  work, but also change candidate recall; measure both runtime/resource use
+  and missed or incorrect matches on the same bound inputs. No speedup or
+  matching-quality improvement is claimed from folder separation alone.
+
+### Proposed transition gates
+
+1. **Settle named Various intake first.** Coordinate N12/N13 and I24/I75 to
+   specify `Various\<Person name>` and its `gallery`/`review` children,
+   including the selected acceptance of photos at the named-folder root.
+   Also specify duplicates, mixed or ambiguous submissions, original-name
+   correction, protection and exact undo. Keep the existing unnamed
+   `Various\gallery` behavior distinct.
+2. **Agree on the studio/tier model.** Resolve the questions below, including
+   the three female tiers first, then the male and creature categories,
+   comparison domains, exclusive tier ownership, promotion semantics and
+   whether generic and cast roles may coexist. Keep per-workflow image source and future
+   generated-image Gallery lineage as data-model constraints, not this
+   migration's implementation.
+3. **Inventory before designing migration.** Read-only, with exact roots and
+   revision: enumerate active source folders and identities, named/loose
+   intake, IDs and collisions, protections/rejections, character/workflow
+   selections, Artist provenance, retained preparation, caches, reports,
+   links, backups, receipts and old-format readers. Map every source to a
+   proposed destination or explicit hold, including unknown and mixed cases.
+   Never classify live source folders as disposable cleanup.
+4. **Specify and fixture-test contracts.** Coordinate naming N12/N13 and
+   intake I75, actions A1/A2/A6, current processing rules, workspace
+   selection and storage S27 rather than inventing parallel engines.
+   Preserve stable IDs and exact source bytes; make collisions, invalid
+   lineage, unsupported domain transfers and occupied destinations explicit.
+   Prove preview, interruption, recovery, undo and stale/external-edit refusal.
+5. **Rehearse a small, separately authorized Sandbox slice.** Use a
+   source-bound inventory and representative synthetic/approved cases:
+   one named and one loose submission, a duplicate, a mixed/ambiguous folder,
+   a protected item, a cast/generic promotion and demotion, an Artist boundary
+   and a creature/people boundary. Exercise one scoped rebase with
+   advisory comparison to a read-only compatible tier: reference photos,
+   membership, names, protections and workspace bindings remain unchanged,
+   with stale evidence explicitly surfaced. Confirm counts, names, original
+   bytes, links, previews and rollback before any wider processing.
+6. **Compare and review before any cutover.** Measure matching quality and
+   runtime with comparable inputs; inspect actual studio Gallery/Review,
+   intake and history in a browser. Keep human identity/crop acceptance
+   separate from fixtures. A Production transition requires its own approved
+   manifest, independent verified backup/restore, conflict plan, cutover and
+   rollback authority. Preserve the old working library and historical
+   evidence until their dependencies and dispositions are individually
+   verified; no wholesale reset, deletion or shared-workspace retarget follows
+   from accepting a sketch.
+
+### Later Gallery and per-workflow image lifecycle
+
+After named intake and studio/tier boundaries are established, refine the
+Gallery beyond unassigned Intake and existing identity photos. Keep
+per-workflow source assignments separate: one person may have different
+inputs for different workflows, and each binding must identify the exact
+source item and its lineage. Support a reviewed ComfyUI-generated item as a
+possible source without replacing the workflow's binding to a Gallery photo
+or another generated result implicitly.
+
+Generated outputs need an explicit route back to a suitable Gallery or
+review surface, with source workflow, input, recipe/settings, output bytes
+and identity/studio association preserved. The user confirms generated images
+must **never contribute to the likeness core** and selects a physical
+Generated directory under each person's folder, shown by the viewer alongside
+Gallery and Review. This is future target behavior: current pulled renders
+remain in the existing separate synthetic store until an authorized,
+verified migration. On promotion or demotion, the user selects moving the
+Generated folder with the person while retaining valid workflow links and
+history. When two identities are established to be the same person and
+merged, generated images from both go into the surviving person's Generated
+folder, preserving their original lineage and valid workflow links. Handle
+name/content collisions without overwriting outputs or erasing history.
+When an original photo is reassigned to another person, the user wants its
+generated images to move with that photo. Generated-image filenames need to
+include the source photo ID, with the binding also preserved in structured
+lineage and generation history. Odd cases where the source is unclear from
+the name or pullback need a decision. Check retained generation receipts and
+other lineage; if the source remains unreliable, the user selects keeping the
+generated image where it is and flagging it for their decision, not guessing
+a photo or silently moving the output. Define how to handle
+generated-on-generated, multiple-input and legacy outputs without inventing
+an ID or rewriting historical receipts.
+If an output uses photos of two people and a source photo is reassigned, the
+user selects keeping the output in place and flagging it for their decision,
+rather than automatically choosing an owner or copying it. Define multi-input
+lineage and how to represent all source IDs.
+If a person's Gallery and Review originals are empty but Generated still has
+images, the user selects retiring the person while preserving the Generated
+folder and history. Reconcile this with the existing special stop for an
+emptied Sister/Angel; the answer does not explicitly change that cast
+safeguard. Retired generated images are preserved as history, not selectable
+for workflows; define how existing workflow bindings become unavailable
+without losing history or silently choosing a replacement.
+Design rebase, rename and retirement to preserve generated files, lineage and
+existing workflow bindings too; current rebase behavior can rebuild person
+folders. Do not equate generation with
+identity evidence or automatic Gallery-original acceptance; define review, duplicate,
+rejection, retention and recovery behavior first. Coordinate this later work
+with P12 and R44 for generated-output and workflow routing, I21/I23 for
+version lineage, and L12/L19 for Gallery and Intake navigation. In
+particular, the current [R44 output decision](2026-10-25-reference-rendering.md#oct-27-category-aligned-workflows-and-source-faithful-recipes)
+keeps pulled renders in a separate synthetic-results area, outside identity
+folders and likeness intake. The user's integrated-Gallery direction needs
+to reconcile with that boundary: per-person physical Generated storage
+supersedes the separate-store location as the selected future target, not as
+a claim of current implementation. Keep generated files out of original
+Gallery membership and matching cores. Existing owners and any separately
+approved task transfer govern implementation; this future direction does not
+authorize rendering, output import, migration or a Gallery write now.
+
+### Questions for the user
+
+Answer in rounds; none of these are silently settled by this proposal.
+
+1. **Studio shape:** female, male and animal/creature top-level separation
+   with three tiers each is the user's direction. Tier 2 primarily supports
+   planned lower-card work; tier 3 is experimental and more free-form.
+   The tiers use separate physical folders named Apex, Forge and Lab across
+   all three groups. How should views and workspaces map to the folders? The
+   separate-workspace tier groups unnamed photos automatically.
+2. **Presentation:** what should the Sisters/Angels collection be called,
+   and should its Models/Prospects/Potentials belong to that studio even
+   before they are selected for a character? For people in Forge, the user
+   selects Potentials and Prospects; validate their maturity rules without
+   making Forge Prospects automatic Apex cast candidates. Lab uses the same
+   categories without implying intended card use. Within each tier,
+   Potentials/Prospects transitions are automatic under applicable rules.
+3. **Generic people:** one person may occupy only one tier at a time. A
+   person assigned to a Sister or Angel is exclusive to that character, not
+   also used for generic cards. Define other role boundaries and how that
+   restriction interacts with generated inputs.
+   Original Gallery-photo selection is restricted to the workspace's tier;
+   generated inputs may cross tiers even after Gallery pullback. How should
+   the browser show roles and generated-image ownership?
+4. **Matching isolation:** within a subject group, how should advisory
+   comparisons between tiers be selected and shown? Confirmed arrivals in the
+   separate-workspace tier go to the existing top-tier person, and qualifying
+   top-tier arrivals go to their existing lower-tier person, with normal
+   automatic photo matching; define duplicate and transaction handling. The
+   user selects the subject intake
+   manually and allows mixed-group photos when the intended main subject is
+   clear; if it is unclear, use the best automatic guess and flag it. Define
+   subject selection under the existing quality and domain safeguards.
+5. **Artists:** the user selects a separate Artists studio with its own
+   rules and allows the same person in an Artist collection and a subject
+   tier; likeness matching remains isolated from subject tiers and Artist-owned
+   photos are exclusive to the Artist studio. Define categories, internal
+   boundaries and any generated-image interactions without weakening this
+   original-photo separation.
+6. **Creatures:** matching stays within the same creature kind. What
+   categories and kinds are in scope, how are they selected, and which model
+   and rules are suitable? Human face-matching behavior is not automatically
+   suitable.
+7. **Promotion/demotion:** changing the person's tier leaves them in only
+   one tier and moves the whole identity, including Gallery, Review and
+   Generated. A Sister/Angel slot requires a user-selected replacement before
+   demotion; selecting a lower-tier replacement promotes their whole identity.
+   Affected workflows receive automatically selected suitable replacement
+   photos; if none exists, the workflow is flagged unavailable. Tier moves
+   are user-initiated or approved. How are photos selected and how are other
+   roles and workspace restrictions handled?
+8. **Named intake:** the priority is to resolve both the named folder
+   `Various\<Person name>` and the current `Various\<Person name>\gallery`
+   form before studio migration. The user selected accepting direct-root
+   photos as named intake alongside the children. Each future tier has its
+   own `Intake` folder; define safe migration and compatibility with the
+   current `Various` paths without delaying the current named-intake work.
+9. **Protection:** the user selects normal-rule automatic reassignment for a
+   very low-scoring named photo with a stronger eligible match and normal
+   unassigned routing without an eligible rival; named single-photo Potentials
+   are released for normal rescoring during later intake. Established named
+   non-core photos require both below-entry and orange/red own score in
+   ordinary refinement. What protection evidence and initial-intake outlier
+   eligibility apply? For an incoherent new named batch, automatic
+   best-supported-group selection prefers a larger coherent group over a
+   smaller group with an exact duplicate in the stated case, but balances
+   size with matching strength. An existing exact duplicate breaks an
+   equal-size, similarly consistent tie. If no duplicate breaks an otherwise
+   equal tie, choose automatically and show the choice. Other photos route
+   normally; define the balance, coherence and insufficient-evidence handling.
+   Preserve source/name provenance; expression or pose alone is not proof of
+   a mistake.
+10. **Name conflicts:** given that pre-Sandbox Production history may
+    contain repeated bug-driven identity/name changes, what evidence is
+    reliable enough to choose a swap? With a clear identity, use a random
+    name for the other person when a safe swap cannot be determined, and
+    replace its wrong, unknown-real original with that generated name too.
+    How should other field combinations and explicit locks be handled while
+    character names stay fixed?
+11. **Storage and identity:** prefer one canonical original with references,
+    a recoverable physical move, or separate owned copies? How should
+    cross-tier comparisons refer to a person who belongs to only one tier?
+    Workspace original Gallery-photo selections stay within their owning tier;
+    generated inputs may cross tiers even after Gallery pullback.
+12. **Generated images in Gallery:** the user selects a physical per-person
+    Generated directory and viewer section. Generated images must never vote
+    in the likeness core and may feed another workflow across tiers. Their
+    folder moves with the person across tiers, and outputs combine on a
+    verified identity merge. Outputs follow a reassigned source photo; include
+    its photo ID in generated filenames. If retained lineage cannot identify
+    the source reliably, keep the output in place and flag it for user review.
+    For outputs sourced from two people when a photo is reassigned, also keep
+    the output in place and flag it rather than selecting an owner or copying.
+    A generated-only person is retired with outputs/history preserved;
+    retired outputs are history-only, not workflow-selectable. Reconcile the
+    existing cast stop and define handling of existing workflow bindings.
+    Define safe rebase handling, other review, matching, ownership and
+    source-chain rules.
+13. **Transition acceptance:** given the requested order of named intake,
+    female tiers, male tiers, then creatures, what constitutes acceptable
+    quality, speed and recovery before any Production change?
+
+### Deferred owners and request coverage
+
+- [ ] **P2 either** LY19 First specify the incoming named-intake contract for
+  `Various\<Person name>` and its `gallery`/`review` children, including
+  the selected direct-root acceptance. Specify protection/name recovery and
+  exception semantics. Reuse N12/N13 and I24/I75 for Ela Model, combined
+  root/child and duplicate/source-ID acceptance; keep this slice ahead of the
+  studio directory transition.
+- [ ] **P2 you** LY16 After the intake path rules, refine the three subject
+  groups and tiers, names, categories and exclusive-person/membership choices.
+  Follow the requested planning order: female tiers, then male, then creatures.
+- [ ] **P2 either** LY17 Specify studio-scoped intake and matching boundaries,
+  tier-scoped rebase, read-only cross-tier comparison, stale-evidence and
+  unknown/mixed holds, automatic grouping of third-tier unnamed intake,
+  isolation and comparison/quality evaluation. Coordinate the processing
+  contract and performance T29/T30; do not activate them here.
+- [ ] **P2 either** LY18 Define whole-identity promotion/demotion with all
+  photos, and distinguish individual reassignment, slot and membership
+  operations; preserve history, protection and workflow-selection handling.
+  Future source binding is per workflow, not one person-wide photo;
+  coordinate actions A1/A2/A6, P12/P19/P20 and rendering R44. Generated-result
+  return and Gallery lineage remain with I21/I23 and L12/L19.
+- [ ] **P2 ai** LY20 Produce the source-to-destination, reference and
+  recovery inventory and an independently restorable Sandbox-first
+  migration proposal, including independently scoped workspaces. Coordinate
+  storage S27, workspace P19/P20, rendering R44 and existing layout owners.
+- [ ] **P2 either** LY21 Select the pilot and verify the agreed acceptance
+  cases, actual viewers, output/quality and comparable performance before
+  any separately authorized Production transition.
+
+The user's studio examples and naming ambiguity map to LY16; subject
+isolation and processing-time concern to LY17/LY21; promotions and demotions
+to LY18; named intake, original names and image protection to LY19 **first**;
+directory restructure, independent workspaces and non-destructive transition
+to LY20; all execution and acceptance remain separate from this planning
+request. The Nov 21 clarification additionally maps three subject/tier
+groups to LY16; scoped rebase, advisory comparison and ordinary no-Sandbox
+operation to LY17/LY21; and a separate workspace for new images to LY20
+with P19/P20 and R44. The later named-intake clarification maps name
+recovery and duplicate/new-photo handling to N12/N13 and LY19, high-scoring
+photo protection and outlier decisions to N13/LY19, and normal category
+classification to the existing processing contract. The Nov 21 priority
+clarification sequences named-folder behavior before studio reorganization;
+female tiers before male tiers and creature tiers. Future per-workflow source
+binding and generated-image return are coordinated through P12, P19/P20,
+R44, I21/I23 and L12/L19, not a second Gallery or workflow engine.
+
 ## Nov 5 16:35: one run, separate acceptance gates
 
 The current remaining operation is saved-input continuation acceptance,
@@ -1072,4 +1865,975 @@ So, are there any other "low hanging fruit" items from our past iterations that 
 
 Let's proceed with the last few items we need to get done prior to running and then you and I can walk through how I could run commands in a terminal window directly or you can launch them into a terminal so I can see them.  We'll work on that after you get the final set of coding changes done.
 ````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 21 studio request (chat, verbatim)
+
+Coverage: proposed studio model and open questions -> LY16; scoped matching
+and performance -> LY17/LY21; promotion/demotion -> LY18; named intake,
+original name and protection -> LY19 with N12/N13; migration -> LY20.
+This is planning-only, with no change to current Queue focus.
+
+<!-- markdownlint-disable MD013 -->
+````text
+One thing I would like expanded on and fleshed out is actually that I'd like to have multiple Studios where a studio is the collection of the galleries.  Meaning, one studio has Drakn Sisters with categories (Sisters, Angels, Models, Prospects, Potentials).  The other studio would be for Artists (categories to be defined), another for Drakn Bound (Brothers, Demons, ... ) and another for Creatures (which would be for animal type cards) and another for Females (which would be lower level cards of people) another for Males (lower cards as well).  Each one would have their own set of categories, rules and such.  That would likely mean a total restructure of the B:\Sovereign Territories directories so it holds various studios (B:\Sovereign Territories\Drakn Sisters, B:\Sovereign Territories\Drakn Bound, etc...).  Maybe I also need to think about separation from males to females to animals, etc... as well so we don't get the likeness to be criss-crossing males and females.  So I need a plan written up with a proposal for how we'd transition to that state.  It's not immediate, but I have a bunch Female images to bring in that won't be part of the Drakn Sisters and likely I'd move a bunch of Prospects and Potentials to there as a "downgrade" if I don't see them used there and it would then reduce the time it takes to process images.  I'd also want to be able to promote and demote various images.  It might not be Drakn Sisters as that's a mix of Sisters and Angels - so maybe it's more a split of higher level cards and lower level cards with the Females.  I can't think of a good split - but the concept is formation of studios, each with their own Intake (currently called Various) and I'd also like it so that we handle the situation where we have an intake of something like Various/Ela Model and it uses Ela Model as the original name and protects all images for that instead of just Various/Gallery.  That's a lot to digest so we need a plan - series of questions - and work to refine just how we'll handle all my requirements.  Can you start to work on that while the other agent is doing his work?
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 21 subject and tier clarification (chat, verbatim)
+
+Coverage: subject and three-tier direction -> LY16; independent incoming
+comparison, scoped rebase and normal operation -> LY17/LY21; movement
+between tiers -> LY18; named sets and protection -> LY19/N13; separate
+workspace and transition -> LY20/P19/P20/R44. Card-tier references are
+discussion context, not a new game rule.
+
+<!-- markdownlint-disable MD013 -->
+````text
+I haven't reviewed all the questions - but ultimately I want to separate our males and females and animals as a top level.  The idea of studios is that I do want to have a place I can bring in new males and females and if I need to rebase, I don't want to run through all thousands of images again - so maybe what I am looking but I would like them compared against the likeness of existing but don't necessarily to pull or change those, but want to know their similarity against them without having go stand up the sandbox.  I have a bunch of images that will have a name assigned as I do know who those are and don't need them pooled with others - and want to make them available for another ComfyUI workspace without them going into the main studio.  So that's probably more my concerns is that I has a two-tier approach for males, female and animals.  It's more like the top-tier of cards and lower tier cards.  I think we drafted that boundary in the card documentation and maybe that's the split I am looking for in the studios.  But if I have someone in a top-tier studio and want to push them down or vice-versa, that's more like what I want.  Plus I also need a lower tier studio where I can just bring in any images and assign them to a totally separate workspace - so, I guess that's 3 tiers for each female, male and creature/animal.  Does that help - I don't want to overcomplicate, but once we get things working - I hope I don't need the sandbox, except when testing our major changes again.  So the sandbox is for major development changes.  The 3 tiers for the normal art processing.  It splits the things between the genders and animals to keep from criss-crossing.  We can answer named intakes, next.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 21 named-intake clarification (chat, verbatim)
+
+Coverage: supplied original-name recovery, duplicates and history -> N12/N13;
+high-scoring protection and low-scoring exceptions -> N13/LY19; normal
+category rules -> processing contract; cross-studio extension -> LY19.
+Confirmation was resolved by the following response; thresholds and
+outlier handling remain open.
+
+<!-- markdownlint-disable MD013 -->
+````text
+In terms of named intake - if there is a named intake it means that IS the original name of a person and I'd want that to stick with the core and protect all high scoring photos - there's a chance I made a mistake and do have a really low scoring image that obviously doesn't belong, but ideally each one IS that and might contain different facial expressions and such.  The idea is that we try to keep from losing that original name of Ela Model, especially if it resembles an existing randomly genreated name - I'd want those photos pulled into Ela Model instead of the reverse.  How it's categories in Models, Prospects and Potentials would follow the normal rules - but this is a way for me to correct any existing identities that should be named based on a name that was lost in previous runs that where we had group-to-group combining and lost names.  OR I didn't know the name and eventually figured it out and not I might be replaying existing images (that duplicate others already in a gallery) and I am basically performing a renamed as well as potentially adding new images.  What else do I need to answer.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 21 automatic name correction (chat, verbatim)
+
+Coverage: automatic correction/new identity and history -> N12/N13/LY19;
+fixed character names and correction of wrong current/original names -> N12/N13.
+Implementation, acceptance and library publication remain separately gated.
+
+<!-- markdownlint-disable MD013 -->
+````text
+Automatically - if I provide a named folder - that is what I expect to either be a new identity with that name or rename an existing one.  I still want to know the previous history of existing, but they take on that name original name.  In terms of sisters or angels those character names are locked.  There is at least one case where the original name and current name (not character name) of an identity is not right and was altered wrongly in past runs.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 21 name-collision clarification (chat, verbatim)
+
+Coverage: asserted original name and collision resolution -> N12/N13/LY19;
+name swap transaction -> A3; preserve both identities and their history
+-> N12/N13. Which resolution and person-name fields apply remains open.
+
+<!-- markdownlint-disable MD013 -->
+````text
+If there is a conflict and that original name matches another existing identity - we'd name swap or assign a new random name to the other one to the other one.  The point is that I am asserting is that this identity is this person firstname lastname and we need to fix previous issues when mis-merges and mis-names happened.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 21 swap preference (chat, verbatim)
+
+Coverage: prefer a history-aware swap, with random-name fallback -> N12/N13
+and LY19, coordinating A3. The Harbor question is handled in the existing
+collaboration discussion; it does not authorize library or workspace writes.
+
+<!-- markdownlint-disable MD013 -->
+````text
+Well, when it comes to swapping - I would prefer to swap names versus a random new name - unless that previous name is being used with many other names ... so check history of the identity and make the best choice can be th elogic.  Also, sounds like Harbor was looking for some input from your as well?
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 21 legacy name-history clarification (chat, verbatim)
+
+Coverage: history-based name-conflict resolution -> N12/N13 and LY19.
+Legacy name churn is a data-reliability concern, not a numeric fallback
+threshold; do not ask the user to restate this clarification.
+
+<!-- markdownlint-disable MD013 -->
+````text
+What I mean is that sometimes a person may have changed identity many times through our bugs and issues we're working through - prior to be creating a sandbox, so the current production snapshot has issues with what was or is the name of identities.  I think that clarifies, but not ask again.  I may not understand my long rambling earlier myself - lol.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 21 intake, studio order and future Gallery clarification (chat, verbatim)
+
+Coverage: named Various path rules before studio structure -> LY19/N13/I24/I75;
+female, male, creature sequencing -> LY16/LY20; future per-workflow image
+selection and generated-image Gallery lineage -> LY18/P12/P19/P20/R44/I21/I23/L12/L19.
+The sequencing refines holding work and does not change the active Queue focus.
+
+<!-- markdownlint-disable MD013 -->
+````text
+In terms of the library layout plan, I'd first like to handle the incoming Various/(person name) and Various/(person name)/gallery rules ahead of the Studio organization.  That is longer term but is still a priority since I am going to start splitting the females into the 3 tiers and working on the males and then creatures.  Adjusting Intake so it works right and the getting the Studios in place will help. Eventually we'll also get to the Workflow photo assignment and it's not one photo for all workflows, but will be each Workflow can have a photo tied to it - either from the Gallery or from a Comfy UI generated image.  So that's more to feed into the complexity of the Gallery and also Generated images coming back into a gallery.  That's when the real fun starts to build a Gallery with not just Intake but Generated images.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 21 intake, studio order and future Gallery clarification (chat, verbatim)
+
+Coverage: named Various path rules before studio structure -> LY19/N13/I24/I75;
+female, male, creature sequencing -> LY16/LY20; future per-workflow image
+selection and generated-image Gallery lineage -> LY18/P12/P19/P20/R44/I21/I23/L12/L19.
+The sequencing refines holding work and does not change the active Queue focus.
+
+<!-- markdownlint-disable MD013 -->
+````text
+In terms of the library layout plan, I'd first like to handle the incoming Various/(person name) and Various/(person name)/gallery rules ahead of the Studio organization.  That is longer term but is still a priority since I am going to start splitting the females into the 3 tiers and working on the males and then creatures.  Adjusting Intake so it works right and the getting the Studios in place will help. Eventually we'll also get to the Workflow photo assignment and it's not one photo for all workflows, but will be each Workflow can have a photo tied to it - either from the Gallery or from a Comfy UI generated image.  So that's more to feed into the complexity of the Gallery and also Generated images coming back into a gallery.  That's when the real fun starts to build a Gallery with not just Intake but Generated images.
+````
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 named intake path decision - verbatim form answer
+
+Coverage: direct-root and child intake -> LY19/N13/I24; distinct unnamed pool,
+duplicate handling and Review semantics remain part of acceptance. This
+decision does not change the active queue or authorize an intake run.
+
+<!-- markdownlint-disable MD013 -->
+```text
+To restart the named-intake Q&A: should photos placed directly in `Various\<Person name>` count as part of that named identity intake, alongside any `gallery`/`review` children? The current conservative proposal is to accept only child folders and report/hold direct-root photos. The Nov 22 rebase work did not settle this intake-path rule.
+
+accept
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 named intake outlier decision - verbatim form answer
+
+Coverage: normal-rule automatic reassignment of a low-scoring named photo with
+an eligible stronger match -> N13/LY19; numerical boundaries remain open.
+This does not authorize an intake run or extend the separately scoped rebase
+override.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Next, one important conflict: an older plan says every photo in a named folder must stay together, while your later clarification protects high-scoring photos but recognizes a very low-scoring photo might be a mistake. During ordinary named intake or later normal processing, what should happen when a submitted photo scores very low against the named person and has a stronger eligible match elsewhere? A score alone does not prove identity; the separately authorized Sandbox rebase remains a different case.
+
+reassign
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 named intake without eligible rival - verbatim form answer
+
+Coverage: normal unassigned-photo routing for a low-scoring named photo with
+no eligible rival -> N13/LY19, subject to normal quality, formation and
+protection rules; preserve name/source provenance and report the disposition.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Recorded: a very low-scoring named-intake photo can move automatically to a stronger eligible identity under normal matching and protection rules. What should happen if it scores very low against the named person but no other identity qualifies to receive it?
+
+normal-routing
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 named-group duplicate tie-break - verbatim form answer
+
+Coverage: among equally large, similarly consistent groups, select the only
+group with an existing exact duplicate -> N13/LY19; no duplicate is an
+independent vote or proof of the asserted person's identity.
+
+<!-- markdownlint-disable MD013 -->
+```text
+If two coherent groups in a named folder are equally large and similarly consistent, but only one contains an exact duplicate already in an existing identity, should that duplicate break the tie? It establishes continuity with the existing photo, not proof of who the named person is.
+
+duplicate
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 unresolved named-group tie - verbatim form answer
+
+Coverage: choose automatically and show the decision when equally supported
+groups have no distinguishing duplicate -> N13/LY19. Specify a repeatable
+tie-break; preserve the tie and source evidence without claiming identity proof.
+
+<!-- markdownlint-disable MD013 -->
+```text
+If the groups are still tied—same size and similar consistency, with no distinguishing existing duplicate—should the system pick one automatically or ask you which group carries the supplied name?
+
+automatic
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 user-controlled tier moves - verbatim form answer
+
+Coverage: whole-person promotion/demotion requires user initiation or
+approval -> LY16/LY18. Automatic promotion of a user-selected cast replacement
+is part of that initiated operation, not a separately autonomous move.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Should the system ever move a whole person between tiers on its own, or should tier promotion and demotion happen only when you initiate or approve it? This is separate from automatically routing a new photo to a person already in another tier.
+
+manual
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 generated-only identity retirement - verbatim form answer
+
+Coverage: retire a person with no Gallery/Review originals even if Generated
+contains images -> LY18/R44 and RA2j retirement; preserve the Generated
+folder and history. The existing emptied-cast stop is not explicitly changed.
+
+<!-- markdownlint-disable MD013 -->
+```text
+The current rebase plan retires identities when their photo folders are emptied. With the new Generated folder, what should happen if a person has no Gallery or Review originals left but still has generated images?
+
+retire
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 retired generated-image access - verbatim form answer
+
+Coverage: retired generated images remain history-only, not selectable for
+workflows -> LY18/R44. Preserve prior bindings and define their unavailable
+state without silently replacing them.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Should generated images from a retired person remain available to select for workflows, or be preserved only as history?
+
+history_only
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 multi-person generated-image ownership - verbatim form answer
+
+Coverage: when a source photo of a two-person generated image is reassigned,
+keep the output in place and flag it for the user's decision -> LY18/R44.
+Define multi-input lineage without inventing a primary owner.
+
+<!-- markdownlint-disable MD013 -->
+```text
+One lineage edge case: if a generated image uses photos of two different people and one source photo later moves to another identity, which person’s Generated folder should hold that image?
+
+manual
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 Artist-owned photo isolation - verbatim form answer
+
+Coverage: Artist-owned photos stay exclusive to the Artist studio, even when
+the person also appears in a subject tier -> LY16/LY18. Do not infer identity
+merges or permission to move Artist photos across domains.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Artists are isolated from the subject tiers, but the same person can appear in both. Should an Artist-owned photo ever be usable in that person’s subject-tier Gallery, or should Artist photos stay exclusively in the Artist studio?
+
+isolated
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 physical tier folders - verbatim form answer
+
+Coverage: each subject group's tiers use separate physical folders, not only
+views over a shared library -> LY16/LY18. Folder names, exact paths, workspace
+mapping and authorized migration remain open.
+
+<!-- markdownlint-disable MD013 -->
+```text
+The studio plan still leaves one structural choice open: should the three tiers be actual separate folders, or views over one shared people library? Either way, a person belongs to one subject tier and the experimental tier can have its own workspace.
+
+physical
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 reverse cross-tier intake - verbatim form answer
+
+Coverage: qualifying top-tier arrivals go to the existing lower-tier person
+-> LY16/LY17/LY18. Apply normal matching, protection and transaction rules;
+do not promote the person without the user's initiation or approval.
+
+<!-- markdownlint-disable MD013 -->
+```text
+We’ve settled that a matching photo arriving in a lower-tier intake can automatically join an existing top-tier person. What about the reverse: if you drop a photo into top-tier intake and it matches a person already in a lower tier, should the photo automatically join that lower-tier person, or be held for your decision? The person would not be promoted automatically.
+
+route
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 female tier naming - verbatim feedback
+
+Coverage: propose short, creative names not tied to existing cast categories;
+`Lab` is liked for the experimental tier; the user selects `Apex` and `Forge`
+for the upper and lower-card tiers -> LY16. A later answer applies all three
+names to the male and creature tiers too.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Give me a proposal for the 3 names - not specific to Sisters/Angels as I may add more upper tier categories.  But I want them to be short names and still creative.
+
+I like Lab for the bottom but the other two might need some more choices - give 5 choices for each and I'll settle on the names from that
+
+Which names would you choose for the first two?
+
+upper=Apex, lower=Forge
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 tier naming across subject groups - verbatim form answer
+
+Coverage: use Apex, Forge and Lab for female, male and creature groups ->
+LY16; exact directory paths and migration remain to be designed.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Apex and Forge it is, with Lab for the experimental tier. Should those same tier names also be used for males and creatures, or should each subject group have its own names?
+
+same
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 per-tier intake - verbatim form answer
+
+Coverage: each tier has its own intake folder -> LY16/LY19. Subject and
+intake placement choose the starting tier, not permission to move a whole
+person; qualifying arrivals can route across tiers under normal rules.
+
+<!-- markdownlint-disable MD013 -->
+```text
+For each subject group, should Apex, Forge and Lab each have their own intake folder, or should there be one shared intake where you choose the destination tier?
+
+per_tier
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 intake folder name - verbatim form answer
+
+Coverage: name each future tier intake folder `Intake` -> LY16/LY19. Keep
+current `Various` paths until an authorized migration; define compatibility.
+
+<!-- markdownlint-disable MD013 -->
+```text
+What should each tier’s intake folder be called? Today the folder is `Various`; changing the name would be a future, verified migration—not an immediate rename.
+
+Intake
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 Forge categories - verbatim feedback and form answer
+
+Coverage: select Potentials and Prospects for people in Forge, using current
+photo-count groupings as a starting point for validation; omit the cast-oriented
+Models category -> LY16/LY17. This does not select creature rules, authorize
+an automatic tier move, or implement a new policy.
+
+<!-- markdownlint-disable MD013 -->
+```text
+I'm uncertain - do you have a recommendation on what makes sense based on how we have things setup and my goals?
+
+I recommend **two Forge categories: Potentials and Prospects**.
+
+- **Potentials:** newer identities with a small photo set.
+- **Prospects:** established identities with a larger set, intended for lower-card work—not automatically candidates for Apex.
+
+This builds on the current draft’s one-to-four versus five-or-more usable Gallery photos, while keeping tier moves under your control. I would **not automatically add Models**: today that draft category is tied to similarity to existing cast, which doesn’t naturally describe Forge’s purpose. See [likeness.md](C:/Soverign-Territories/soverign-territories/docs/art/likeness.md:1074).
+
+The trade-off: this keeps familiar grouping without forcing cast-oriented categories into Forge, but the exact rules still need validation before implementation. Does that direction fit?
+
+recommended
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 Lab categories - verbatim form answer
+
+Coverage: Lab identities use Potentials and Prospects like Forge -> LY16/LY17,
+without implying a card plan; validate the applicable rules and creature
+handling before implementation.
+
+<!-- markdownlint-disable MD013 -->
+```text
+For Lab, you’ve already chosen automatic grouping into identities. Should those identities also be split into Potentials and Prospects, like Forge, or sit directly under Lab without those extra categories?
+
+same
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 within-tier category transitions - verbatim form answer
+
+Coverage: automatically transition between Potentials and Prospects within
+Forge or Lab under applicable rules -> LY16/LY17. Validate thresholds,
+protections and recoverable movement; whole-person tier moves remain
+user-initiated or approved.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Within Forge or Lab, should a person automatically move between Potentials and Prospects as their qualifying photo count changes, or should you approve those category changes? This stays within the same tier; moving between Apex, Forge and Lab remains user-controlled.
+
+automatic
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 creature-kind matching isolation - verbatim form answer
+
+Coverage: different creature kinds do not compare for likeness -> LY16/LY17.
+Define the taxonomy, selection, uncertain cases and suitable model; this does
+not authorize creature processing.
+
+<!-- markdownlint-disable MD013 -->
+```text
+For the future creature studios, should likeness matching stay within a creature kind—for example, horses with horses and dragons with dragons—or may it compare different kinds within the creature group? This is a planning choice; we have not selected a creature-matching model.
+
+isolated
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 creature-kind selection - verbatim form answer
+
+Coverage: manual versus automatic creature-kind selection is deferred to
+LY16/LY17; do not infer a choice from matching isolation.
+
+<!-- markdownlint-disable MD013 -->
+```text
+How would you prefer to specify a creature’s kind at intake so that matching stays isolated?
+
+later
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 cast-person role exclusivity - verbatim form answer
+
+Coverage: a Sister/Angel's assigned person is exclusive to that character,
+not also used for generic cards -> LY18 and workspace/cast owners. Define
+generated-input and binding interactions without duplicating the identity.
+
+<!-- markdownlint-disable MD013 -->
+```text
+One role question: if a person is assigned to a Sister or Angel in Apex, may that same person also be used for generic cards, or should their use be exclusive to that character? This would not create another identity or change the tier.
+
+exclusive
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 workflow photos on cast replacement - verbatim form answer
+
+Coverage: automatically choose suitable replacement-person photos for
+affected workflow selections -> LY18 and workspace/cast owners. Each workflow
+retains its own binding; the later answer selects explicit unavailability if
+no suitable photo exists. Selection criteria remain open.
+
+<!-- markdownlint-disable MD013 -->
+```text
+When a Sister or Angel gets a replacement person, what should happen to workflow photo selections that pointed to the demoted person? Each workflow can have its own selected photo.
+
+automatic
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 missing cast-replacement workflow photo - verbatim form answer
+
+Coverage: allow the character replacement to proceed while marking an
+affected workflow unavailable if no suitable photo exists -> LY18 and
+workspace/cast owners; retain prior binding history and recovery.
+
+<!-- markdownlint-disable MD013 -->
+```text
+If the replacement person has no suitable photo for one of the affected workflows, should the character replacement wait until that photo is available, or proceed with that workflow marked unavailable?
+
+proceed
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 named-group size and strength - verbatim form answer
+
+Coverage: balance eligible group size and within-group matching strength ->
+N13/LY19. The formula and calibration cases remain to be specified; this does
+not change the normal formation gates or equate matching with identity proof.
+
+<!-- markdownlint-disable MD013 -->
+```text
+One last detail about choosing the named group: if a larger group only just meets the normal coherence rules, but a smaller group matches itself much more strongly—and both are otherwise eligible—which should take the supplied name?
+
+balance
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 competing existing identities - verbatim form answer
+
+Coverage: automatic, shown selection between about-equally plausible existing
+identities for a named group -> N12/N13/LY19. The later answer selects a
+naming-only margin exception; define ties, evidence and safeguards. This does
+not authorize merging the identities.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Next, an ambiguity involving existing identities rather than groups within the incoming folder: if the chosen named group matches two established identities about equally, should intake automatically choose one to receive the supplied name, or hold that identity correction for your review? The two existing people would not be merged.
+
+automatic
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 named identity margin exception - verbatim form answer
+
+Coverage: permit the shown person-name correction when well-matched rivals
+do not meet the normal margin -> N12/N13/LY19. No photo-admission gate,
+identity merge, character name or unrelated protection is overridden.
+
+<!-- markdownlint-disable MD013 -->
+```text
+The automatic choice can conflict with the normal rival-margin rule: two identities may both match well but be too close for an ordinary automatic match. In that case, may intake still apply the supplied person name to the better-supported identity, even though the usual margin is not met? This concerns the name correction only; it would not merge identities or bypass photo-admission rules.
+
+allow
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 pulled-back generated-image access - verbatim form answer
+
+Coverage: a selected generated image stays available across tiers as a
+workflow input after Gallery pullback -> LY18/P19/P20/R44. Preserve synthetic
+lineage; identity-evidence status and ownership remain separate decisions.
+
+<!-- markdownlint-disable MD013 -->
+```text
+If you later pull a generated image back into a person’s Gallery, should other-tier workspaces still be allowed to select it because it is generated, or should the Gallery-photo tier restriction take precedence?
+
+generated
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 generated-image core and view - verbatim answer
+
+Coverage: never add generated images to the likeness core -> LY18/R44 and
+Gallery L12/L19. The next answer selects a physical per-person Generated
+directory; other evidence semantics remain to be decided.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Never - maybe we don't put them direct into the  Gallery but in a Generated directory - I think that was a concept I thought about earlier, but the viewer would show them.  So, sort of like Review, Gallery, Generated.  Maybe that helps simplify things?
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 generated-image physical storage - verbatim form answer
+
+Coverage: select a physical Generated folder inside each person's directory
+-> LY18/R44 and Gallery L12/L19. Preserve the current synthetic store until a
+separately authorized migration and protect generated files through rebases.
+
+<!-- markdownlint-disable MD013 -->
+```text
+The older rendering plan already stores generated files separately because person folders can be rebuilt during a rebase. Would a per-person Generated section in the viewer be enough if its files stay safely in that separate store, or do you want an actual Generated folder inside each person’s directory?
+
+person-folder
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 generated images on tier change - verbatim form answer
+
+Coverage: move the Generated folder with the person during promotion or
+demotion -> LY18/R44, preserving workflow links, lineage, bytes and history.
+Migration and installed behavior remain separately gated.
+
+<!-- markdownlint-disable MD013 -->
+```text
+When a person is promoted or demoted to another tier, should their Generated folder move with the rest of that person’s identity, while keeping existing workflow links and history valid?
+
+move
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 generated images on identity merge - verbatim form answer
+
+Coverage: combine generated images of identities established as the same
+person into the survivor's Generated folder -> LY18/R44, preserving source
+lineage, links, history and collision-safe recovery. This does not authorize
+an identity merge or a workspace write.
+
+<!-- markdownlint-disable MD013 -->
+```text
+If two identities are established to be the same person and are merged, should generated images from both identities be brought together under the surviving person’s Generated folder? Their original generation history and workflow links would be preserved.
+
+combine
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 generated images on source-photo move - verbatim chat
+
+Coverage: move generated outputs with a reassigned source photo; include the
+source photo ID in generated filenames -> LY18/R44, coordinating P12/P19/P20
+and Gallery L12/L19. The later answer selects user review if retained lineage
+cannot identify the source; legacy receipts and workflow links stay recoverable.
+
+<!-- markdownlint-disable MD013 -->
+```text
+We'd want to move them - which means the generated images need the photo id as part of their name for us to know about which image was the source.  But there will be odd cases and would need decision if it's not clear in the name or how we pull them into the Generated folder for the person
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 ambiguous generated-source decision - verbatim form answer
+
+Coverage: check retained lineage; if it cannot reliably identify the source,
+keep the output in place and flag it for user decision -> LY18/R44.
+
+<!-- markdownlint-disable MD013 -->
+```text
+For those odd cases: if the filename lacks a photo ID, we can first check the generation receipt and other retained lineage. If those still cannot establish which source photo was used, should the generated image stay where it is and be flagged for your decision, or should the system make its best guess?
+
+review
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 lower-tier distinction - verbatim answer
+
+Coverage: tier 2 as primarily planned lower-card work, tier 3 as uncertain
+card use and free-form experimentation -> LY16/LY17/LY18 and P19/P20. Later
+answers select physical tier folders and names; categories, exact layout and
+promotion criteria remain open.
+
+<!-- markdownlint-disable MD013 -->
+```text
+It would be more for experimentation of different sets of images that I am not sure I would make into cards or not.  The 2nd tier would be primarily for things I do plan to use for lower tier cards.  It's more that within Comfy whether or not we have the data/art setup for workflows for cards or if it's more free-form and I might be experimenting with all sorts of things in that workspace.
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 Artists studio - verbatim form answer
+
+Coverage: a separate Artists studio with its own rules -> LY16/LY17/LY20;
+existing provenance and protections stay in force while its detailed
+relationship to other studios and migration remain open.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Next big question: where do Artists fit in the new three-tier structure? You originally described an Artists studio, while the newer direction separates subjects into female, male and creature tiers.
+
+separate
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 Artists matching isolation - verbatim form answer
+
+Coverage: do not compare Artist people with subject-tier identities, even
+advisory comparisons -> LY16/LY17. Existing internal Artist provenance and
+matching protections remain unchanged.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Should the Artists studio compare its people against compatible subject-tier identities and show possible matches, while keeping both collections unchanged?
+
+isolated
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 subject intake selection - verbatim form answer
+
+Coverage: the user chooses the female, male or creature/animal intake group
+by placement -> LY16/LY17. Automatic subject detection/routing is not
+selected; mixed/unknown handling remains to be specified.
+
+<!-- markdownlint-disable MD013 -->
+```text
+For new photos, who should choose whether they belong to the female, male or creature/animal group before likeness processing?
+
+manual
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 mixed subject photo - verbatim form answer
+
+Coverage: allow a mixed human/animal photo in the manually chosen intake
+when the intended main subject is clear -> LY16/LY17. Existing quality and
+domain safeguards remain; intended-subject selection needs specification.
+
+<!-- markdownlint-disable MD013 -->
+```text
+For a mixed photo—for example, a woman holding a dog—may it be processed in the female intake when the woman is clearly the intended main subject, or should mixed human/animal photos always be held for review?
+
+main-subject
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 uncertain mixed-photo subject - verbatim form answer
+
+Coverage: use the best automatic subject guess and visibly flag it when the
+intended subject cannot be identified reliably -> LY16/LY17. Existing
+quality/core-vote and subject-domain safeguards remain; do not invent a
+measurement when there is no usable subject.
+
+<!-- markdownlint-disable MD013 -->
+```text
+The current face engine chooses the largest detected face, which may not always be the intended subject. If the software cannot reliably identify the intended subject in a mixed photo, should it hold the photo for you to identify the subject, or use its best automatic guess?
+
+automatic
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 whole-identity tier movement - verbatim form answer
+
+Coverage: promotion or demotion moves the entire person and all Gallery,
+Review and Generated photos -> LY16/LY18. Preserve name/history; fixed
+character, protections, workflow eligibility and recovery remain to design.
+
+<!-- markdownlint-disable MD013 -->
+```text
+When you promote or demote a person between tiers, should their whole identity move together—including Gallery, Review and Generated—or should you be able to choose only certain photos to move? Their name and history would be preserved either way.
+
+whole
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 cast replacement before demotion - verbatim form answer
+
+Coverage: select a replacement for a Sister/Angel slot before demoting its
+person -> LY18 and cast/workflow owners. Preserve fixed character names,
+history, protections and recovery; this does not authorize an actual move.
+
+<!-- markdownlint-disable MD013 -->
+```text
+If you demote someone currently assigned to a Sister or Angel character, what should happen to that character slot? The character name and history remain intact either way.
+
+replace
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 cast replacement promotion - verbatim form answer
+
+Coverage: a user-selected lower-tier Sister/Angel replacement is automatically
+promoted as a whole identity during replacement -> LY18 and cast/workflow
+owners. Preserve both identities, fixed character names, histories and recovery.
+
+<!-- markdownlint-disable MD013 -->
+```text
+If the replacement you choose for a Sister or Angel is currently in a lower tier, should choosing them automatically promote their whole identity into the top tier as part of the replacement?
+
+automatic
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 Artist and subject-tier overlap - verbatim form answer
+
+Coverage: allow the same person in an Artist collection and a subject tier
+as a protected exception -> LY16/LY17/LY20. Existing Artist provenance and
+no-automatic-reassignment safeguards remain in force.
+
+<!-- markdownlint-disable MD013 -->
+```text
+If the same person appears in an Artist’s collection and in a female or male tier, should the Artist collection remain a separate protected exception to the one-tier-per-person rule, or should that person exist in only one studio overall?
+
+separate
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 separate-workspace tier grouping - verbatim form answer
+
+Coverage: automatically group unnamed photos within the separate-workspace
+tier -> LY16/LY17, with subject-domain isolation and advisory cross-tier
+comparison. Physical storage, model selection and implementation remain open.
+
+<!-- markdownlint-disable MD013 -->
+```text
+For the third, separate-workspace tier: when you drop in unnamed photos, should it automatically group them into identities like the main library, or keep them as separate images unless you supply a named folder? Either way, comparisons with other tiers remain advisory and must not change those tiers.
+
+group
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 one tier per person - verbatim form answer
+
+Coverage: each real person is in one tier at a time; promotion/demotion
+changes tier -> LY16/LY18. Physical storage, other roles and workspace access
+remain separate decisions; similarity alone is not identity proof.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Can the same real person appear in more than one tier at the same time—for example, as a Sister in the top tier and also in the separate-workspace tier—or should promoting/demoting them move them out of the previous tier? This is about what you can use, not yet how files are stored.
+
+one
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 confirmed cross-tier incoming photos - verbatim form answer
+
+Coverage: confirmed separate-workspace-tier photos of a top-tier person go to
+that existing person -> LY16/LY17/LY18. Comparison remains read-only; later
+answers select normal core eligibility and automatic matching for new photos.
+Duplicate handling, recovery and workspace use need definition. No present
+run is authorized.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Suppose photos arrive in the separate-workspace tier and are confirmed to be a person already in the top tier. Since each person belongs in only one tier, what should happen? Automatically adding photos to the top-tier identity would be a change to that tier, unlike the read-only comparison we discussed.
+
+add-existing
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 cross-tier incoming core eligibility - verbatim form answer
+
+Coverage: confirmed incoming photos added to an existing top-tier person may
+enter its core under normal core-quality rules -> LY17/LY18. The comparison
+alone is read-only; no existing library mutation is authorized now.
+
+<!-- markdownlint-disable MD013 -->
+```text
+When those confirmed incoming photos are added to the existing top-tier person, may they also become part of that person’s matching core if they pass its normal core-quality rules, or should the existing core remain unchanged?
+
+normal
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 generated-image tier access - verbatim form answer
+
+Coverage: allow cross-tier generated-image selection as workflow input ->
+LY18/P19/P20/R44. Original Gallery-photo inputs remain tier-restricted;
+generated ownership and any subject-domain limits need definition. A later
+answer retains generated access after Gallery pullback.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Should the same tier restriction apply to ComfyUI-generated images when you select one as a workflow input: a workspace can use generated images from its own tier, but not another tier?
+
+allow
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 workspace Gallery-photo boundary - verbatim form answer
+
+Coverage: each workspace selects original Gallery photos only from its own
+tier -> LY16/LY17/LY18 and workspace P19/P20. Later answers permit generated
+images across tiers even after pullback; lineage and ownership remain open.
+
+<!-- markdownlint-disable MD013 -->
+```text
+If a person belongs to the top tier, should you still be able to select one of their Gallery photos for a workflow in the separate-workspace tier? That would not create a second tier membership or automatically change any workflow.
+
+restrict
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 cross-tier automatic photo matching - verbatim form answer
+
+Coverage: normal automatic photo matching, including rival margin, suffices
+to add a non-duplicate arrival to its existing top-tier person -> LY17/LY18.
+The naming-only margin exception does not change this photo gate.
+
+<!-- markdownlint-disable MD013 -->
+```text
+How should a new, non-duplicate photo be confirmed as belonging to an existing person in another tier? If it passes all normal automatic matching rules—including the required rival margin—should that be enough to add it, or do you want to confirm it yourself first?
+
+normal
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 named singleton decision - verbatim form answer
+
+Coverage: later-intake release and normal rescoring of a named single-photo
+Potential -> N13/LY19 and the existing small-Potential settle contract;
+preserve name/source history and normal protections. No run is authorized.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Another plan conflict: normal intake is planned to release one-photo Potentials for rescoring, but a named folder asserts the person's identity. If a named intake has only one usable photo, it cannot yet have an own-identity score. During later ordinary intake, should that named singleton be released for normal rescoring like other singletons, or remain anchored to its supplied name?
+
+release
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 named intake current-name decision - verbatim form answer
+
+Coverage: use the asserted original name as the person's current display name
+in a clear correction -> N12/N13/LY19; preserve prior names, family history
+and fixed cast character names. This is planned behavior, not an intake run.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Next naming conflict: suppose `Ela Model` clearly matches an existing person whose current display name is different—for example, a previously assigned family name. You’ve said to correct the original name and keep any Sister/Angel character name fixed. Should the person's different current display name also change to `Ela Model`?
+
+replace
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 unreliable name-history collision - verbatim form answer
+
+Coverage: automatic random-name fallback for a clear identity when unreliable
+history cannot support a safe swap -> N12/N13/LY19, coordinating A3. This
+does not authorize an identity merge, change to fixed character names or run.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Next conflict: an older plan says to hold a name collision if past name history is unreliable, but you asked for automatic correction and a random-name fallback when a swap is unsuitable. Suppose the person is clearly identified, but another identity already uses the asserted name and the history is too unreliable to choose a safe swap. Should we automatically give the other identity a new random name, or hold the collision for your review? No people would be merged, and fixed character names remain unchanged.
+
+random
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 named refinement boundary - verbatim form answer
+
+Coverage: stricter ordinary-refinement eligibility for explicitly named
+non-core photos in established named identities -> N13/LY19, coordinating RA2d
+and targeted refinement; the next answer selects the exact cutoff.
+
+<!-- markdownlint-disable MD013 -->
+```text
+For ordinary refinement, you previously chose to reconsider non-core photos only when their score is below their identity category’s entry threshold. Should an established named identity use that same eligibility boundary, or should its explicitly named photos have a stricter boundary before they can be reconsidered? Normal destination and protection rules would still apply.
+
+stricter
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 named refinement cutoff - verbatim form answer
+
+Coverage: orange/red own score, strictly below 0.30, in addition to the
+ordinary below-entry test for named non-core refinement -> N13/LY19/RA2d.
+Unavailable scores are not low scores; no runtime or policy is changed here.
+
+<!-- markdownlint-disable MD013 -->
+```text
+What extra cutoff should make an explicitly named non-core photo eligible for ordinary refinement? The existing below-category-entry test, normal protections and destination rules would still apply; this would not change the separate Sandbox rebase release.
+
+orange-red
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 ambiguous named batch - verbatim form answer
+
+Coverage: automatic best-supported group selection for a new incoherent named
+batch -> N13/LY19; support, ties, remaining-photo routing and safeguards need
+specification. No new intake or identity merge is authorized by this decision.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Next edge case: a new named folder contains several photos that don't match one another, and the system cannot reliably tell which person the supplied name belongs to. Should it hold the ambiguous batch for your review, or automatically choose a group to carry the supplied name? This is different from a single low-scoring outlier against an established, reliable core.
+
+automatic
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 competing named groups - verbatim form answer
+
+Coverage: prefer the larger coherent group over a smaller group with an exact
+duplicate in the stated case -> N13/LY19; avoid duplicate votes and preserve
+the evidence and submitted-name provenance.
+
+<!-- markdownlint-disable MD013 -->
+```text
+To define “best-supported,” consider a named folder with two internally consistent groups: six distinct photos in one group, and two in another. One of the two is an exact duplicate of a photo already in an existing identity. Which group should automatically carry the supplied name? A duplicate proves photo continuity, but not which person you intended to name.
+
+largest
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 remaining named-batch photos - verbatim form answer
+
+Coverage: normal routing of photos outside the group carrying the asserted
+name -> N13/LY19; preserve source/name provenance, safeguards and duplicate
+dispositions. The selected named group remains separately identifiable.
+
+<!-- markdownlint-disable MD013 -->
+```text
+In that same mixed named folder, the larger coherent group takes the supplied name. What should happen to the smaller group’s photos?
+
+normal-routing
+```
+<!-- markdownlint-enable MD013 -->
+
+## Nov 22 displaced original-name decision - verbatim form answer
+
+Coverage: a displaced person's wrong original with unknown real original ->
+N12/N13/LY19; use the fallback random name for original and display, retain
+provenance and history, and preserve fixed character names.
+
+<!-- markdownlint-disable MD013 -->
+```text
+For that random-name fallback: suppose the other identity incorrectly records `Ela Model` as its original name, and we don't know its real original name. What should its original-name field become? The old incorrect name would remain in history, and the fixed character name, if any, would stay unchanged.
+
+random
+```
 <!-- markdownlint-enable MD013 -->

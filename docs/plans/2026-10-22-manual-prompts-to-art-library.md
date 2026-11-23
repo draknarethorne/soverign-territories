@@ -74,6 +74,18 @@ check whether it should apply to all templates (P14/P15). The old Prime/Bare
 
 ## Nov 5 16:35: bounded workspace decisions before implementation
 
+**Later studio direction:** the user selects original Gallery-photo workflow
+inputs only from a workspace's own tier but allows generated-image inputs
+from other tiers, including after Gallery pullback, while cross-tier likeness
+comparison stays separate. Coordinate the future tier/workspace mapping with
+[LY16/LY17/LY18](2026-11-02-library-layout.md#nov-21-multiple-studios-and-transition-proposal);
+the user selects physical Generated folders per person, while generated-image
+ownership and other pullback details remain open. This is a future contract,
+not an implemented mapping or permission to change the current pilot or
+workspace. The user selects a Sister/Angel's person as exclusive to that
+character rather than also used for generic cards; coordinate the role
+restriction and generated-input interactions with LY18.
+
 Under delegated safe-planning authority, use the existing generic-first
 direction rather than add another workspace scheme:
 

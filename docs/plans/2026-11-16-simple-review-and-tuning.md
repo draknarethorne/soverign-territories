@@ -174,7 +174,9 @@ Confirmed rules (implemented and applied in Sandbox run
   identity reduced to one photo follows (c). Normal intake also releases
   small Potentials for rescoring so photos can move upward; the size limit is
   configurable (default 1, possibly 2 later) and its performance impact must
-  be measured.
+  be measured. The user confirms this includes a named one-photo Potential;
+  preserve supplied-name/source history and normal protections, and do not
+  treat an unavailable own score as zero.
 - **(f) Dominant face:** accept a photo for matching when the main face is at
   least 60 px, every other face is under 50% of its area, and head and chest
   crops build. Such photos may join a Gallery but never count in the
@@ -185,7 +187,11 @@ Confirmed rules (implemented and applied in Sandbox run
   intake transactions (journalled and recoverable) and add an "Emptied
   identities retired" recap section. Add `bin\retire-empty.cmd`
   preview/apply/check for manual catch-up. An emptied Sisters/Angels folder
-  stops the run with a report. Pruning stays manual.
+  stops the run with a report. The later
+  [generated-only decision](2026-11-02-library-layout.md#nov-22-generated-only-identity-retirement---verbatim-form-answer)
+  retires a person with no Gallery/Review originals even if Generated has
+  files; preserve that folder and its history. Reconcile the existing cast
+  stop and retired-output access before implementation. Pruning stays manual.
 - **(h) Done:** the work was committed, Beacon's updates merged and the
   branch pushed.
 - **(i) Cast seed (Sisters/Angels only):** at the start of a clean rebase,
@@ -2091,6 +2097,10 @@ honor receipt bindings and document what must rerun before starting it.
 The restart reuses the fully verified completed preparation, but preserves
 run07's unsealed stage as evidence and must stage products again under
 run08. This may take hours; do not claim a supported old-stage resume.
+**Later disposition:** the user approved
+[retiring the failed run07 stage](2026-10-28-storage-operations-and-retention.md#nov-22-historical-run07-failed-stage-retirement)
+after verifying its image survivors and preserving all metadata, the failure
+receipt and its independently copied staged catalogue. Run09 remains.
 The controller stops on native failure or changed audited outcomes, preserving
 per-step logs/timings in Working's run08 execution-evidence directory.
 
@@ -2730,6 +2740,37 @@ small-group handling, fragmentation, blocked cast admission or another
 demonstrated error. A high count alone is not a quality verdict.
 
 ### Selected contract: named incoming folders establish protected identities
+
+**Later named-intake clarification:** the user wants the asserted original
+name and high-scoring photos protected, allows that a very low-scoring
+submission may be wrong, and expects a clearly matched existing identity to
+be corrected rather than always creating another. The
+[N13 contract](2026-10-22-identity-family-naming.md#oct-30-named-and-unnamed-various-acceptance-contract)
+and [LY19 discussion](2026-11-02-library-layout.md#named-intake-clarification-original-name-recovery)
+refine the historical blanket membership wording below. The user selects
+automatic reassignment of a very low-scoring submitted photo to a stronger
+eligible match when normal matching and protection rules allow, and normal
+unassigned routing when no rival is eligible. For established named non-core
+members in ordinary refinement, the own score must be both below the
+category entry threshold and orange/red (strictly below 0.30); protection
+evidence and initial-intake outlier eligibility remain open. Named one-photo
+Potentials also follow the selected later-intake release and rescoring rule,
+preserving supplied-name history and normal protections. The user also selects
+direct-root photos alongside the named `gallery`/`review` children; this is
+not yet a delivered scanner capability. For an incoherent new named batch,
+the user selects automatically choosing the best-supported group for the
+supplied name; the larger coherent group wins over a smaller group containing
+an existing exact duplicate in the stated example, but size and matching
+strength are balanced when consistency differs. The balance needs definition
+and evaluation; the other photos route normally. An existing exact duplicate breaks a tie of equally large and
+similarly consistent groups when only one has one; otherwise choose
+automatically and show the choice using a repeatable tie-break. Coherence
+and insufficient-evidence rules still need definition.
+These clarifications do not extend the separately scoped red/orange/unscored
+rebase override to named intake.
+For close matches to two established identities, the user selects automatic,
+shown person-name correction even below the usual rival margin; this is a
+naming-only exception, not an identity merge or photo-admission override.
 
 The user distinguishes **every intentionally named identity folder under
 Various**, such as `Various/Ela Model`, from anonymous `Various/gallery`

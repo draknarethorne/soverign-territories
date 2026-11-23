@@ -338,6 +338,108 @@ family reconciliation as part of this read-only audit.
 
 ## Oct 30: named and unnamed Various acceptance contract
 
+**Nov 21 named-intake clarification:** the supplied name is the user's
+assertion of the person's original name and can correct a name lost through
+prior grouping or learned later, including when incoming photos are
+duplicates of existing members. The intended result is the supplied name
+and qualifying photos/history together, with high-scoring photos protected
+and normal category rules retained. Expression/pose variation alone must
+not mark a photo wrong; a genuinely low-scoring inclusion may be a mistake.
+The complete [request and discussion](2026-11-02-library-layout.md#nov-21-named-intake-clarification-chat-verbatim)
+are preserved in the layout plan.
+
+**Nov 22 mixed new batch:** when a newly supplied named set has multiple
+incoherent groups and no reliable core, the user selects automatically
+choosing the best-supported group for the supplied name. In the stated
+six-versus-two coherent-group example, the larger group wins even though
+the smaller contains an existing exact duplicate; copies are not independent
+votes. Where a smaller eligible group is much more internally consistent,
+balance size and matching strength; the formula is not yet selected. For
+equally large and similarly consistent groups, an existing exact duplicate
+breaks the tie when only one group contains one. Without a
+distinguishing duplicate, choose automatically and show the choice; specify a
+repeatable source-bound tie-break and record the uncertainty. Route the other
+groups' photos normally, subject to matching, quality, protection and
+duplicate rules. Specify and validate the balance, coherence and insufficient
+evidence before implementing; show the decision and preserve each photo's
+submitted-name/source history. This is not permission to merge existing
+identities solely by resemblance.
+
+N12/N13 must reconcile this explicit correction intent with N14's ordinary
+oldest-original merge continuity: a generated older name must not
+automatically defeat the asserted name. **Later Nov 21 decision:** a named
+folder is explicit intent to create a named identity or automatically
+correct the established matching person's original name, without another
+per-correction confirmation in a clear case. Keep previous names/history
+and preserve fixed Sister/Angel character keys, including when correcting
+the person behind a cast slot. The user also reports an identity whose
+original and current person names were both wrongly altered; N12 must support
+correcting both while preserving the character name. **Nov 22 decision:** in a
+clear named-intake correction, use the supplied original name as the person's
+current display name too, including when a different family name was assigned.
+Preserve previous original/current names and family history, and do not change
+the fixed character name or slot.
+
+A score or duplicate alone does not authorize a whole-group merge. When a
+chosen named group matches two established identities about equally, the user
+selects automatically choosing and showing the best-supported identity for
+the name, without merging the people. When both match well but their lead is
+below the usual rival margin, the user permits this name correction and wants
+the close rival shown. This is not a photo-admission exception or permission
+to bypass genuine protections. Define competing-match evidence, minimum
+acceptable match, ties and no-evidence cases before implementation; preserve
+the alternatives and reversible history. A different old name alone does not
+defeat the supplied correction intent.
+**Name collision clarification:** if another identity
+uses the asserted name, the user wants a swap or a new random name for that
+other identity, not loss of the asserted name or a forced merge. Coordinate
+the existing confirmed swap A3; preserve both IDs, photo memberships,
+name provenance and history in an all-or-nothing, reversible operation.
+The user prefers swapping unless the previous name is used with many other
+names; check identity/name history to select the best safe resolution, with
+a random name as fallback. **Clarification:** the current Production
+snapshot can contain unreliable name history because identities changed
+repeatedly through pre-Sandbox bugs and processing issues. Treat this as a
+history-integrity concern, not a count threshold: a long/conflicting alias
+list alone does not establish that a previous name belongs to the other
+identity. Verify continuity and provenance; when the available history
+cannot support a safe swap and the person is clearly identified, the user
+selects automatically assigning the other identity a new random name rather
+than holding solely for unreliable history. Do not guess a swap or merge
+people. If the displaced identity's recorded original is wrong and its real
+original is unknown, use that random name as both current display and
+recorded original; label the original as generated rather than verified,
+and retain the wrong name in history. Exact swap evidence and other
+original/current field combinations remain open. Fixed character keys remain
+unchanged.
+See the
+[verbatim clarification](2026-11-02-library-layout.md#nov-21-swap-preference-chat-verbatim).
+Preserve explicit protections and undo. **Nov 22 outlier decision:** in
+ordinary named intake or later normal processing, a very low-scoring
+submitted photo with a stronger eligible match is reassigned automatically
+when normal matching and protection rules allow. Preserve source/name history
+and recoverability; do not merge whole identities. If there is no eligible
+rival, use normal unassigned-photo routing, including new-identity formation
+where eligible, subject to applicable quality and protection rules. Preserve
+the supplied-name/source provenance and report the outcome. Protection
+evidence and initial-intake outlier eligibility remain open.
+**Named singleton clarification:** a one-photo named Potential is released
+for normal rescoring during later ordinary intake like other singletons; its
+own-identity score is unavailable, not zero. Preserve supplied-name/source
+history and apply normal protections and the selected small-Potential policy;
+do not silently discard the name or bypass genuine locks.
+For ordinary refinement of established named identities, explicitly named
+non-core photos must score both below their category's entry threshold and
+orange/red (strictly below 0.30) to be reconsidered. Unavailable scores are
+not low scores. The selected normal routing without an eligible rival is a
+named-photo exception to ordinary refinement's usual qualifying-rival rule;
+specify source/reference handling with the refinement owner before
+implementation. This does not bypass protections or change destination gates.
+This is selected target behavior and open acceptance scope, not a new active
+queue, permission to run, or an implemented capability. The exact
+[automatic-correction response](2026-11-02-library-layout.md#nov-21-automatic-name-correction-chat-verbatim)
+is preserved in the layout plan.
+
 **Nov 5 feedback reconciliation:** `various_named_person.md` requests a later
 11-photo `Various/Ela Model` trial. N13 is the primary owner; N12 handles
 explicit original-name correction and merge history. Include identical bytes
@@ -351,11 +453,37 @@ when this trial is selected; do not add them to the active run.
 This is planned acceptance, not an already run test or an automatic
 name-overwrite promise.
 
-- [ ] **P2 either** N13 Cover `Various/<supplied person name>` as explicit
-  original-name intent, distinct from unnamed `Various/gallery`. With N12,
-  preview matching/merge/history/name correction and exact de-duplication,
-  preserve fixed cast slots, and compare every photo against normal core/
-  Review thresholds. A folder assertion does not make all its faces identical:
+- [ ] **P2 either** N13 Accept supported photos directly in
+  `Various/<supplied person name>` as named intake alongside its
+  `gallery`/`review` children, distinct from unnamed `Various/gallery`;
+  preserve their source paths and Review semantics. The
+  [path decision](2026-11-02-library-layout.md#nov-22-named-intake-path-decision---verbatim-form-answer)
+  is selected target behavior, not a delivered scanner capability. Test
+  both locations together, duplicate content, repeat intake and unsupported
+  or ambiguous folder roles. This intake-path acceptance precedes the
+  studio-directory transition. With N12, preview matching/merge/history
+  and exact de-duplication; implement the
+  selected automatic name correction for a clearly established identity or
+  the selected close-rival case,
+  updating both original and current person names while preserving previous
+  names, family history and undo without a second confirmation;
+  test the selected naming-only rival-margin exception with both alternatives
+  shown and unchanged photo-admission and protection gates;
+  resolve occupied-name cases through the selected swap/reassignment policy
+  with A3, preserving both identities and exact undo. Exercise suitable
+  swap history, the agreed random-name fallback including a wrong original
+  with unknown real name, missing or contradictory history, multiple
+  occupants, fixed cast names, interruption and repeat;
+  preserve fixed cast slots, assess high-scoring photo protection and
+  expression/pose variation, and compare every photo against normal core/
+  Review thresholds. Verify the selected automatic outlier reassignment and
+  no-eligible-rival normal routing, and blocking by genuine protections,
+  with source/name history and exact undo. Exercise a named singleton in
+  later intake, including unavailable own score, eligible rival/no rival,
+  name continuity and any recoverable retirement. Exercise best-supported
+  group selection for an incoherent new batch, including ties and
+  insufficient evidence under the subsequently selected rules.
+  A folder assertion does not make all its faces identical:
   detect mixed people, ambiguity and conflicts before mutating.
   Test new plus duplicate arrivals, existing cast/core membership, matches
   elsewhere in the library, optional identity retirement after verified merge,
@@ -401,7 +529,9 @@ Work order: intake crop/erase/framing first, original-name correction next,
 then family/current-name presentation and acceptance. Family naming may
 change the current first/last name without overwriting the corrected
 original name. Named-folder corrections and GUI corrections need the same
-explicit intent, conflict preview and reversible transaction; merely
+explicit intent, conflict preview and reversible transaction. The later
+Nov 21 named-folder decision above selects automatic correction in clear
+cases; it does not change confirmation for unrelated GUI actions. Merely
 re-dropping files is not claimed to implement that behavior today.
 
 Later Oct 27 clarification schedules the full sandbox grouping/near-match
@@ -421,6 +551,8 @@ slots to satisfy presentation. N12 remains required before that name cleanup.
   existing stable-ID name transactions, GUI rename/swap and named intake.
   Keep cast keys fixed, distinguish source evidence from generated names,
   replace the effective original name on explicit correction (not alias-only),
+  including the selected automatic named-folder correction, and support
+  correcting an erroneously changed current person name;
   deduplicate equivalent current/original display labels without deleting audit
   history, and test conflicts, repeat intake, mixed identities, later family
   first/last-name changes, rebase and exact undo. Do not promise that re-dropping

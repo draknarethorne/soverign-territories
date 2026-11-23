@@ -1516,6 +1516,13 @@ unverified rename. Gallery layout changes do not run intake.
 
 **Named-folder seeding (delivered, I24 verifies).**
 
+The behavior below describes the delivered legacy route, not the complete
+newer named-intake contract. The user now selects direct-root photos in
+`Various\<Name>` as named intake alongside its `gallery`/`review` children;
+see [LY19](2026-11-02-library-layout.md#requested-planning-order-named-intake-studios-then-galleryworkflows)
+and N13. Direct-root support, duplicate handling, name correction and the
+clarified protection rules still require implementation and acceptance.
+
 - Cause of the regression: the folder scan treats `Various` as a single pool once
   `Various\gallery` exists, so `Various\<Name>\gallery` was never offered to likeness.
 - The fix is a journaled `likeness seed` command, step 0 of `library.cmd`. Each named
@@ -1536,9 +1543,12 @@ unverified rename. Gallery layout changes do not run intake.
 - [x] **P1 ai** I23 Link checked retained all-versions detail from People/Review,
    including post-assignment moves and current/derivative return links. Historical
    comparisons remain distinct; missing or stale evidence is diagnostic.
-- [ ] **P1 you** I24 After the sandbox rebase, drop `Various\<Name>\gallery` folders of
-   known people and run `bin\library.cmd`; confirm they land under that name, and decide
-   whether seeded people should be protected from automatic splits.
+- [ ] **P1 you** I24 When selected after the sandbox rebase, verify named
+   intake for photos directly in `Various\<Name>` and in its
+   `gallery`/`review` children together, including duplicates, source paths,
+   Review semantics, name continuity and the N13 protection/outlier
+   decisions. Do not run `bin\library.cmd` until the implementation and
+   selected acceptance gates permit it.
 - [x] **P2 ai** I25 Tune v14/v15 misses seen in the sample runs: speck-tolerant mask removal for
    screenshots (`123511`), a body-framed crop slightly over 25% loss (facebook), lying/selfie
    poses refused by the frame (`...4360`), protecting feet in seated full-body shots (`...7310`),
@@ -1557,6 +1567,14 @@ the combined `library.cmd` order. There are no special paths per case:
 Various is the single drop point for incoming photos, including
 `Various\<Name>\gallery`.
 
+**Nov 22 scope reconciliation:** the `People`/later-`Animals` root and
+sex-as-catalogue-attribute topology in the proposal below is historical, not
+the current direction. The user's later direction is top-level female, male
+and creature/animal groups with three tiers each; the
+[library-layout plan](2026-11-02-library-layout.md#nov-21-multiple-studios-and-transition-proposal)
+owns the discussion and remaining decisions. No physical migration or schema
+change is approved by that direction.
+
 **Directory reckoning (I26, proposal for the user).** Today's tree mixes three
 things in its roots: where a photo is in the flow (Various, `_junk`), the
 subject's role (Angels, Sisters, Prospects, Potentials) and the source domain
@@ -1572,10 +1590,12 @@ nothing moved until it is approved:
 | Artists | Stays a separate source domain, as now |
 | Per subject | `gallery` (accepted source), `gallery_org` (original), `gallery_intake` (version set), `review`; derived `*_944x1104` folders are regenerable and excluded from backups |
 
-- [ ] **P2 you** I26 Decide the directory reckoning: intake root name, kind roots, role and
-   sex as attributes, and the per-subject folders. Then plan the migration (paths in
-   `workspaces.json`, catalogue, journals, undo, galleries) as its own phase after the
-   sandbox end-to-end run.
+**Transfer record:** I26's remaining topology/tier questions transfer to
+LY16, and its source inventory, consumer mapping and migration/recovery plan
+transfer to LY20 in the library-layout plan. These tasks remain holding;
+named-intake LY19 precedes the studio transition. The proposal above is
+preserved as an earlier alternative, not a second current design or execution
+queue.
 
 **Oct 25, 20:44 clarification:** the
 [reference-rendering plan](2026-10-25-reference-rendering.md#various-subject-profiles-and-future-support)

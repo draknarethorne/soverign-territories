@@ -193,8 +193,11 @@ No existing cast Gallery photo departed. The applied recap and representative
 Gallery/Overview/Review/detail links were browser-checked; human identity
 and crop review remains RA2d. RA2j retains inventory and named-folder
 follow-up; T29/T30 retain comparable multi-machine performance analysis.
-No old-PC writer remained at that closeout. Preserve the failed stage and
-run15; do not reset or republish for review. Queue focus remains unchanged.
+No old-PC writer remained at that closeout. The user later authorized the
+[verified retirement of the failed publication stage](2026-10-28-storage-operations-and-retention.md#nov-22-old-pc-failed-stage-retirement);
+its metadata, logs, receipts and reused preparation remain, as do the
+successful stage's image survivors and run15. Do not reset or republish for
+review. Queue focus remains unchanged.
 
 **Nov19 follow-up:** RA2j owns the
 [core and duplicate-readiness slice](2026-11-16-simple-review-and-tuning.md#nov-19-post-run13-tuning).

@@ -1451,16 +1451,20 @@ bounds. This note selects none of the thresholds or numeric bounds.
 ## Initial questions and their current dispositions
 
 The initial questions are preserved below. Answers 1-13 settle the conceptual
-direction; phase02/04/05/06 own the affected contracts. Eligibility versus
-release thresholds and independent acceptance budgets remain experimental.
+direction; phase02/04/05/06 own the affected contracts. The Nov 22
+clarification resolves the targeted-refinement scope and eligibility trigger;
+exact release thresholds and independent acceptance budgets remain
+experimental.
 
-1. Confirm the two scopes: targeted refinement of low-scoring existing
-   non-core members versus full saved-input rebase/reformation, which may
-   reassess unprotected core members and qualify arrivals.
-2. Which source score makes a non-core member eligible for targeted
-   reassessment: the category entrance minimum, retention floor or another
-   qualified own-identity rule? Keep that eligibility trigger separate from
-   the decision to retain, withdraw core use or physically move.
+1. **Answered Nov 22:** targeted refinement is limited to low-scoring
+   existing non-core members; full saved-input rebase/reformation is a
+   separate scope that may reassess unprotected core members and qualify
+   arrivals under its own gates.
+2. **Answered Nov 22:** use the member's score against its source identity's
+   category-specific entry minimum as the targeted-refinement eligibility
+   trigger. This selects candidates for reassessment; it does not itself
+   withdraw core use or justify a physical move. Compare all relevant rivals,
+   and move only when the destination qualifies under its normal policy.
 3. When reference evidence is insufficient or a rival is only tentative,
    should the photo remain physically with its source identity as non-core,
    move to the tentative parent's Review area with source lineage retained,
@@ -4114,6 +4118,68 @@ Exact user source:
 ```text
 What gates prevented some from landing in Sisters or Angels?  There are definitely some in Various that should have landed.  I can review the ones later - but was there some lock that prevented or what threshhold would have done that?
 ```
+
+### Nov 22: targeted refinement scope clarification
+
+The user distinguishes the narrow existing-member refinement from the broader
+full rebase/reformation. Targeted refinement considers only existing
+non-core members whose source-identity score is below that category's
+configured entry minimum, then checks the relevant rivals. A low source score
+is an eligibility trigger, not evidence that the member is wrong or should be
+removed; a move still requires the rival to satisfy its normal destination
+policy and all existing protection/quality gates. Full reformation remains a
+separate operation with broader, independently gated core and arrival review.
+The user later selected a stricter reconsideration boundary for explicitly
+named non-core photos in established named identities: their own score must
+also be orange/red (strictly below 0.30), without rounding or treating an
+unavailable score as low. For those named outliers, the user also selects
+normal unassigned-photo routing if no rival qualifies, an exception to the
+ordinary qualifying-rival requirement above. Specify source/reference
+handling and preserve applicable protections and recovery before implementation; see
+[named-intake planning](2026-11-02-library-layout.md#named-intake-clarification-original-name-recovery).
+This does not change destination gates or the separate scoped rebase release.
+
+The Nov 11 FAST incident records cast-origin moves from both core and
+above-entry members. The 303 outflows came from the experimental
+[`group_lifecycle.regroup`](../../tools/art/likeness_experiments/group_lifecycle.py#L168)
+path called by
+[`clean_rebase.py`](../../tools/art/likeness_library/clean_rebase.py#L2859)
+in `--regroup` mode, not the final `refinement.py` membership pass; 295 were
+recorded as original cast-core members and 227 had a saved seed score at or
+above the category entry minimum. This full-reformation path has broader
+scope than targeted refinement, but must still require positive member-level
+evidence and normal destination gates. A weak or withdrawn source reference
+alone is not proof that a rival is correct.
+
+The separate non-regroup final-membership path has a confirmed code/intent
+gap. [`clean_rebase.create_plan`](../../tools/art/likeness_library/clean_rebase.py#L2679)
+calls [`refinement.refine_membership`](../../tools/art/likeness_library/refinement.py#L88)
+over the routed population, while
+[`membership_decision`](../../tools/art/likeness_library/refinement.py#L19)
+has no source-side entry-minimum or low-non-core eligibility gate. The
+existing
+[`test_stronger_rival_is_not_skipped_when_own_model_minimum_is_met`](../../tools/art/likeness_library/tests/test_refinement.py#L231)
+comparison expects a move with source `ownScore` 0.6 and rival score 0.8
+when the destination gates pass. Thus the current targeted membership
+refinement can reconsider above-entry members; it does not implement the
+clarified candidate scope. A correction should add the source-side eligibility
+filter without weakening the destination's normal admission, rival, quality
+or protection gates. Separately, the broad `--regroup` path needs its own
+contract reconciliation against the full-reformation Q&A; do not treat a
+low-non-core-only filter in `refine_membership` as a fix for its outflows.
+
+Harbor's later Sandbox release handoff supplies no reports or run source, so
+it does not independently verify which of these paths its results exercised.
+
+This clarification resolves the initial scope/eligibility questions. It does
+not select new numeric thresholds, authorize an implementation or another
+run, or close RA2d's evidence and human-acceptance gates.
+
+Exact user source:
+
+````text
+Well, the purpose of the refinement should be to find low non-core photos in existing identities and determine if those score higher somewhere else and should be moved out. So we should be honoring all the normal policies about an identity. I think that was written up in the docs/plans for this - so let's figure out whether or not we need to re-write the plans or if the code has drifted from the plans. But ulitmately, if this is the refinement step - then it only be re-assessing photos with a score below the threhold for entry into the identity and check on the rivals. That logic was working or close to working at one point - so I'm unclear where we went wrong.
+````
 
 ### Nov 16: incoming threshold hierarchy for the next review
 
