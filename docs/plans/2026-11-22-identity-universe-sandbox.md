@@ -218,6 +218,25 @@ Tasks (executed through spine tasks of the same IDs):
   bar. Measure precision and recall against the Most Wanted set, or abandon
   if unreliable.
 
+## Nov 23 IU8 cleanup and Most Wanted baseline
+
+`B:\Most Wanted` now holds 275 distinct images. The 70 exact copies moved
+recoverably to `B:\Most Wanted-duplicates\` with a hash-verified
+`duplicate-cleanup-log.json`, keeping the oldest copy, or the
+workflow-selected photo where present. Universe `most-wanted-20261123` was
+rebuilt from it.
+
+The first baseline preview stopped safely because the workflow-selected
+Angelica photo cannot move. Inside the universe only, it was swapped for its
+byte-identical duplicate, with the original kept in `Held-Out\` and a
+README. Baseline `most-wanted-baseline-02` used the current rules and one
+preparation worker: preview 15m42s, apply 7m00s, check passed. It formed
+**121 identities (119 Potentials, 2 Prospects)** from 275 photos, with 6
+left in Various and nothing in Review. Sizes were 45 singles, 42 pairs, 17
+triples, 5 of 4, 8 of 5, 2 of 6, 1 of 7 and 1 of 10. The user expects 7?15
+real people, so the current rules fragment heavily. This is the baseline for
+IU9 and IU10.
+
 ## Open decisions for the user
 
 - The default expansion band (yellow) and hop depth, after seeing the IU2
