@@ -2,7 +2,7 @@
 
 **Status:** active (execution spine: FAST likeness, LEAN/FULL acceptance, then character art)
 
-**Queue focus:** RA2d, RA2j, IU1, IU2, IU3, IU4, IU5, RA2o, T29, T30
+**Queue focus:** RA2d, RA2j, IU1, IU2, IU3, IU4, IU5, IU6, RA2o, T29, T30
 
 **Feedback rebase applied (Sandbox):** `feedback-rebase-20261122-02`
 applied rules (a)–(i): duplicates archived, band-aligned formation,
@@ -996,6 +996,9 @@ unresolved human identity acceptance remains open.
 - [ ] **P1 either** IU4 Hand-picked Angelica core: tooling prepares
   `Various/Angelica/gallery` staging and candidates; the user selects; then
   run and compare per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md).
+- [ ] **P1 either** IU6 Empty universe sandbox (`--mode empty`, ready for
+  intake); the user supplies the 345-original set, then intake/rebase runs
+  from scratch per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md).
 - [ ] **P1 ai** IU5 Writing the universe findings and proposed configuration
   changes for user review before the next full rebase per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md).
 - [ ] **P1 ai** RA2j Restoring the normal FULL/LEAN/FAST intake flow and

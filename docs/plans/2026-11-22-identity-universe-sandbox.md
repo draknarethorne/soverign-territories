@@ -71,6 +71,11 @@ proven changes back to the full rebase. Angelica is the first case study.
   - *named:* the same, plus empty `Various/<Seed>/gallery` staging folders for
     the user's hand-picked core (protected named intake under the existing
     named-incoming contract).
+  - *empty:* a brand-new sandbox with the valid layout, configuration and
+    report roots, but no photos, catalogue, cache or history. The user drops
+    originals into `Various/gallery`, or named folders, and the ordinary intake
+    or SIMPLE rebase then prepares and processes them from scratch. Its first
+    use is the user's own set of 345 originals, which includes Angelica photos.
 
 ### Experiments
 
@@ -82,7 +87,11 @@ proven changes back to the full rebase. Angelica is the first case study.
 3. **Hand-picked core:** the user places chosen Angelica photos in
    `Various/Angelica/gallery`. Everything else stays in `Various/gallery`.
    Check whether a clean core attracts the right photos and repels lookalikes.
-4. **Second identity:** repeat for another cast identity (for example
+4. **User-supplied original set:** in an *empty* universe sandbox, the user
+   drops in their 345 originals; intake and rebase process them with no
+   history. This gives a bias-free run on genuine source files alongside the
+   automatic snapshot.
+5. **Second identity:** repeat for another cast identity (for example
    Sisters/Nyxene) once the tool is proven.
 
 ### Systematic outputs
@@ -109,6 +118,9 @@ These are executed through spine tasks IU1–IU5 and listed here as the contract
   universe; compare the runs.
 - **IU4 Hand-picked core:** prepare the named staging and a candidate sheet;
   the user selects; then run and compare.
+- **IU6 Empty universe sandbox:** `--mode empty` creates a ready-to-intake
+  sandbox (layout, configuration, report roots, no photos). The user supplies
+  the 345-original set, and ordinary intake or rebase processes it from scratch.
 - **IU5 Findings report:** patterns, anomalies against the main Sandbox,
   causes and proposed configuration or rule changes for user review before the
   next full rebase.
@@ -189,6 +201,12 @@ Lastly, I want all the GUI reports, recap, etc... that would execute in this sma
 Additionally, please ensure that any insights or anomalies observed in this smaller sandbox are clearly documented and compared against the results from the main Production sandbox to understand the impact of the reduced dataset on the system's performance.
 Furthermore, if any discrepancies or unexpected behaviors are identified, please provide a detailed analysis of the potential causes and suggest possible corrective actions to mitigate these issues in future sandbox experiments.
 ````
+
+### Empty-sandbox option - verbatim chat
+
+```text
+I actually have one place I could use to start a brand new universe from and it only has 345 images in it - not all are Angelica, so it might actually prove useful for me to just have a brand new sandbox and drop in those 345 images into Various/gallery and let it process them.  That's one additional option we can do - but I also like the automatic snap-back.  But being able to generate certain sandboxes - either completely empty and ready for intake or based on the automation we discussed.   Both could serve a purpose in moving us ahead to get this done.  I like having the universe tool as well as the option I just realized I could do since I have that group of originals all together - along with a few others.
+```
 
 ### Plan file request - verbatim chat
 
