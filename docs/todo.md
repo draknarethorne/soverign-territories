@@ -134,7 +134,7 @@ Use the [archive guide](guidelines/ARCHIVE-GUIDE.md) for topic navigation. `drop
 
 | Hero | Photo | Prime | Bare | Golden pose | Heels | Other finals | Candidates |
 | --- | --- | --- | --- | --- | --- | ---: | ---: |
-| Female | 75007327845399~ | Q c33 | F c1 | - | - | - | 34 |
+| Female | 75007327845399~ | Q c33 | - | - | - | - | 33 |
 | Male | alpha_male_pho~ | - | - | n/a | n/a | - | - |
 
 ### Drakn sisters (10)
