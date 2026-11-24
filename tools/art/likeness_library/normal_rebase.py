@@ -3279,7 +3279,7 @@ def _plan(
         ]
         if permission_moves:
             maintenance._validate_permissions(
-                root, permission_moves, policy, cfg,
+                root, permission_moves, policy, cfg, workflow_selections_movable=True,
                 **({"released_bindings": released_bindings} if released_bindings is not None else {}),
             )
         report["publicationPermissionsVerified"] = True
@@ -3653,7 +3653,7 @@ def main(argv=None):
                 duplicate_archives=report.get("duplicateArchives", {}),
             )
             maintenance._validate_permissions(
-                root, relocations, policy, cfg,
+                root, relocations, policy, cfg, workflow_selections_movable=True,
                 **({"released_bindings": release_bindings} if release_bindings is not None else {}),
             )
             for row in ordinary:
