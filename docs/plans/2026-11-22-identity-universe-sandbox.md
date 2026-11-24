@@ -561,6 +561,44 @@ Also, let's work on the near-miss rule and the other recommended changes agan.
   centroid without itself, instead of against every member; test on the
   flat universe first, then rerun all three universes.
 
+**Results (code `cd545562d` + `412c9e5cf`; full likeness suite 1,384 tests
+passed; all previews, applies and checks exited 0):**
+
+| Run | Formation | Identities | Single / pair | Named Review | IU14 audit |
+| --- | --- | ---: | ---: | ---: | ---: |
+| `mw-named-r4-01` | average | 64 | 36 / 9 | 22 (8 tie, 6 near miss) | 1 |
+| `mw-named-c4-01` | centroid | 54 | 29 / 2 | 22 | 2 |
+| `mw-flat-c3-01` | centroid | 94 | 65 / 7 | 0 | 0 |
+| `angelica-green-c3-01` | centroid | 66 | 45 / 8 | 0 | 0 |
+
+- Seed marked all 13 named people in each universe's local catalogue; the
+  git catalogue was unchanged. The first named previews stopped safely
+  because the final admission check did not know the named Gallery bar
+  (fixed in `412c9e5cf`).
+- Named people kept all 137 photos. The named Prospect bar moved photos
+  from Review to Gallery: Nadia Lora +17 Gallery/+9 Review (was +14/+13),
+  Zara +5/+2, Petra +2/+1, Jacinta +2/+2.
+- Remaining audit cases are arrivals routed to Nadia Review before a
+  better new group formed in the same round (Fiorella Lowe 0.51; Petra
+  Moss 0.41 under centroid). A final re-check after formation would catch
+  them (next step).
+- **Answer-key score** (the user's 137 hand-sorted photos, flat input):
+  centroid formation put 70 photos in their person's largest group versus
+  48 for average, but merged lookalikes (Jacinta 10 + Fia 4 + Petra 4 +
+  Zara 2; Nadia 9 + Zara 7). An offline sweep on the saved vectors
+  reproduced both runs; no bar from 0.30 to 0.55 separates Nadia from Zara
+  while keeping recall (centroid 0.40: 57 together, Nadia 7/Zara 6 still
+  mixed; 0.45: 46 together, Fia/Jacinta mixed). The face model cannot
+  separate these lookalikes; named seeds can.
+- Angelica centroid: 59 of her 99 photos in one 118-photo group that also
+  absorbed Jacinta Alden 13, Freya Hadley 6 and Petra Wilde 4; Drakniss
+  formed pure groups (131, 69).
+
+Decision pending (user): adopt centroid formation in the shared policy
+(fewer fragments, more lookalike merging among unnamed people), or keep
+average formation and rely on named seeds. Scratch: `tmp\iu13-runs\`
+(`answer_key.py`, `sweep.py`, `policy-centroid.json`).
+
 <!-- markdownlint-disable MD013 -->
 ```text
 Let's make your recommended changes and re-run all three just to see how things land.  For the most part, I feel like the Angelica photos are actually her in various settings and outfits and side views.  So not sure if splitting her up is a good thing or not as I am sure MANY of the images for Most Wanted are her or someone pretty must like her- lookalike with leeser breasts.  That's been the problem with Angelica and where I pulled all these Most Wanted photos.  I think 3-5 blondes and 3-4 bruntettes are the same but not the same.  Eye colors differ, but the face seems same.  That's been the challenge to sort out.
