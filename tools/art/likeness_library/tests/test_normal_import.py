@@ -2262,6 +2262,26 @@ class SmallPotentialReleaseIntakeTests(unittest.TestCase):
     def outcomes(self, report):
         return {row["identity"] + ":" + row["photoId"]: row for row in report["intakePotentialRelease"]["outcomes"]}
 
+    def test_named_identity_small_potential_is_never_released_at_intake(self):
+        from tools.art import originals
+        from tools.art.likeness_library import metadata
+
+        folders = []
+        for name in ("Named", "Plain"):
+            folder = self.root / "Potentials" / name
+            (folder / "gallery").mkdir(parents=True, exist_ok=True)
+            (folder / "gallery" / f"{name.lower()}_image_9{len(name)}.jpg").write_bytes(name.encode())
+            folders.append(("Potentials", name, folder))
+        api = SimpleNamespace(cw=SimpleNamespace(photo_folders=lambda *_args: folders))
+        catalog = {"people": {"person_named": {"folder": "Potentials/Named", "namedIntake": {
+            "recordedAt": "2026-11-24T09:00:00-06:00", "sourceFolder": "Various/Named"}}}, "photos": {}}
+        released, skipped = normal_import._small_potentials(
+            api, {}, self.root, catalog, metadata, originals, 1, set(), set(),
+        )
+        self.assertEqual(list(released), ["Potentials/Plain"])
+        self.assertEqual(skipped, [{"identity": "Potentials/Named", "photoCount": 1,
+                                    "reason": "user-named identity (IU16)"}])
+
     def test_singleton_moves_upward_and_limit_one_keeps_two_photo_potential(self):
         report, photos, space = self.plan(1)
         release = report["intakePotentialRelease"]

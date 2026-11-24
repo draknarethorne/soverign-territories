@@ -521,6 +521,46 @@ Proposed next round (not yet approved): near-miss only in round 2; change
 3 (named Prospects use the 0.30 Gallery bar); then IU10 centroid
 formation tested in the flat universe.
 
+### Nov 24 named-identity retention and gate round 2 (approved)
+
+The user requires a lasting safeguard: a user-named identity is retained
+across every rebase the way Angels/Sisters are; its photos are not released
+back unless a release is forced by category. More named identities will be
+added over time.
+
+<!-- markdownlint-disable MD013 -->
+```text
+So, during a normal rebase - if we did provide a named identity, we'd want to remember that we should not release all those photos back as well - unless a force is done to release them by category.  So what this would be building for lower level categories a person specific approach to attempting to retain that identity in the same way we are doing for angels/sisters - over time, I willl be bringing in more named person identities - so we'll need to ensure that safeguard is in place now.
+```
+
+```text
+Also, let's work on the near-miss rule and the other recommended changes agan.
+```
+<!-- markdownlint-enable MD013 -->
+
+- **IU16 Named-identity retention:**
+  - **Marker:** `likeness.py seed --apply` marks each named person in the
+    likeness catalogue (`namedIntake` on the person record). This replaces
+    the `_likeness/named-intake.json` register, which a Sandbox rebuild
+    drops. Production writes the git-tracked catalogue, so named people
+    survive Sandbox rebuilds; a Sandbox or universe without a local
+    catalogue first copies the current one locally (as the rebase does)
+    and never writes Production's.
+  - **Retention:** named identities are exempt from the intake release of
+    small Potentials; in a fresh-source release their members are released
+    only when scored red/orange (unscored members stay). Existing rules
+    still apply: recompute (never switch-off), beat-home, settle release of
+    below-yellow members and user Reject.
+  - **Force:** `normal-rebase.cmd --release-named-category CATEGORY`
+    (repeatable; Models, Prospects or Potentials) treats that category's
+    named identities as ordinary for one run; the receipt records it.
+- **Gate round 2:** (1) named near-miss and tie Review apply only in round
+  2, after new groups have formed; (3) arrivals to a named Prospect or Model
+  use the Potential Gallery bar (0.30 with the 0.10 margin); (5) IU10
+  formation: a new group's member must reach yellow against the group's
+  centroid without itself, instead of against every member; test on the
+  flat universe first, then rerun all three universes.
+
 <!-- markdownlint-disable MD013 -->
 ```text
 Let's make your recommended changes and re-run all three just to see how things land.  For the most part, I feel like the Angelica photos are actually her in various settings and outfits and side views.  So not sure if splitting her up is a good thing or not as I am sure MANY of the images for Most Wanted are her or someone pretty must like her- lookalike with leeser breasts.  That's been the problem with Angelica and where I pulled all these Most Wanted photos.  I think 3-5 blondes and 3-4 bruntettes are the same but not the same.  Eye colors differ, but the face seems same.  That's been the challenge to sort out.

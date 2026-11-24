@@ -2714,7 +2714,7 @@ for review, not an identity claim or photo-move instruction.
 
 | Command | Purpose |
 | --- | --- |
-| `seed [--apply]` | Named-folder drop: every photo in `Various\<Name>\gallery` is that person. Moves the folder's photos to the existing person `<Name>`, or creates a new Prospect/Potential; preview by default. `library.cmd` runs it as step 0, before the pool scan. |
+| `seed [--apply]` | Named-folder drop: every photo in `Various\<Name>\gallery` is that person. Moves the folder's photos to the existing person `<Name>`, or creates a new Prospect/Potential; preview by default. Apply marks the person `namedIntake` in the catalogue (a Sandbox/universe writes its local catalogue, never Production's). SIMPLE rebases retain named identities like Angels/Sisters: no intake small-Potential release, only red/orange fresh-release, named near-miss/tie Review and the Potential Gallery bar for arrivals; `normal-rebase.cmd --release-named-category CATEGORY` forces one category back to ordinary handling. `library.cmd` runs it as step 0, before the pool scan. |
 | `sort [--singles] [--assign SCORE] [--plan FILE] [--sheet FILE.png]` | Route `Various` photos to known people or new Prospects/Potentials under current rules. |
 | `reconcile [--out FILE.json] [--policy FILE] [--apply]` | Shared incoming/Review proposal; preview by default. Apply requires an approved policy, verified backup, revalidation and a move/catalogue journal. Sandbox draft experiments require `--sandbox-apply-draft`. |
 | `reconcile --undo JOURNAL.json [--apply]` | Preview or reverse a verified reconciliation journal. Changed photos or later catalogue decisions block automatic undo; retain the full backup. |

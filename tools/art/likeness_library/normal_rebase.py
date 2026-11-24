@@ -151,7 +151,8 @@ def _released_candidate_roles(bindings, active, held, archived=()):
     return roles
 
 
-def _fresh_gallery_assessment(root, rows, active, held, photos, native_paths, catalog, settings, policy):
+def _fresh_gallery_assessment(root, rows, active, held, photos, native_paths, catalog, settings, policy,
+                              named_folders=()):
     """Build the selector's complete pre-retirement Gallery evidence from classified sources."""
     from tools.art.likeness_library import audit
 
@@ -220,7 +221,7 @@ def _fresh_gallery_assessment(root, rows, active, held, photos, native_paths, ca
             "sourceStatus": row["sourceStatus"], "standardName": row.get("standardName"),
         })
     duplicate_votes = _single_vote_per_content(inputs)
-    result = normal_admission.fresh_baseline_release_candidates(inputs, policy)
+    result = normal_admission.fresh_baseline_release_candidates(inputs, policy, named_folders)
     result["duplicateContentVotes"] = duplicate_votes
     if result["blockedBindings"]:
         raise ValueError("fresh source release has ambiguous, stale or unbindable Gallery selections: "
@@ -1938,6 +1939,7 @@ def _plan(
     root, profile, run_id, *, api, cache_path=None, policy_path=None,
     for_apply=False, reuse_plan=None, reuse_preparation=None,
     reuse_preparation_sha256=None, lock_cast_admission=False, preparation_workers=None,
+    release_named_categories=(),
     released_bindings=None, reconsider_holds=False, fresh_source_release=False,
 ):
     from tools.workflows import comfy_workflows as cw
@@ -2014,6 +2016,15 @@ def _plan(
             photo, settings, path=measured, redetect=redetect, framing=face_quality.derivative_framing,
         )
     catalog = metadata.load_catalog(metadata.path_for_root(root))
+    release_named_categories = sorted(set(release_named_categories))
+    if reuse_plan is not None and not release_named_categories:
+        release_named_categories = list(reuse_plan.get("releaseNamedCategories", []))
+    if set(release_named_categories) - set(named_intake.FORCEABLE):
+        raise ValueError("--release-named-category accepts Models, Prospects or Potentials")
+    if reuse_plan is not None and reuse_plan.get("releaseNamedCategories", []) != release_named_categories:
+        raise ValueError("forced named-identity release categories differ from preview")
+    # IU16: user-named identities are retained like Angels/Sisters unless a category is forced.
+    named = named_intake.named_folders(catalog, release_named_categories)
     phase_started = time.perf_counter()
     with verification_reads.session(root, label="SIMPLE source inventory"):
         rows, folders, prefixes = _hash_sources(root, cfg, api)
@@ -2209,6 +2220,7 @@ def _plan(
                 raise ValueError("fresh source measurement proof differs from preview")
             fresh_assessment = _fresh_gallery_assessment(
                 root, rows, active, held, raw_photos, native_paths, decision_catalog, settings, policy,
+                named_folders=named,
             )
             if reuse_plan is not None and reuse_plan.get("freshSourceAssessment") != fresh_assessment:
                 raise ValueError("fresh source assessment differs from preview")
@@ -2385,18 +2397,17 @@ def _plan(
                 if candidate["photoId"] in release_ids else candidate
                 for candidate in candidates
             ]
-            named_registry = named_intake.load(root, cfg)
             report = normal_admission.two_round_plan(
                 api, scoring_candidates, cores,
                 reference_rows,
                 settings, policy, all_names, locked=lock_cast_admission,
-                named_folders=named_intake.named_folders(named_registry, cores),
+                named_folders=named & set(cores),
                 **({"released_bindings": [
                     binding for binding in released_bindings
                     if release_roles[binding["photoId"]] == "candidate"
                 ]} if released_bindings is not None else {}),
             )
-            report["namedIntakeIdentities"] = sorted(named_intake.named_folders(named_registry, cores))
+            report["namedIntakeIdentities"] = sorted(named & set(cores))
         else:
             report = normal_import._route_plan(
                 api, candidates, cores, settings, policy, all_names,
@@ -2814,6 +2825,7 @@ def _plan(
         )
         report["preparationWorkersRequested"] = preparation_workers
         report["preparationWorkersSource"] = worker_source
+        report["releaseNamedCategories"] = release_named_categories
         primary_rows = [
             row for row in rows if row["group"] in IDENTITY_ROOTS | {"Various"}
         ]
@@ -3248,7 +3260,7 @@ def _plan(
                 "workflowReplacementProposals"]:
             raise ValueError("workflow replacement proposals differ from preview")
         report["namedIntakeCohesion"] = _named_cohesion(
-            set(named_intake.load(root, cfg)), active,
+            {pathlib.PurePosixPath(folder).name for folder in named}, active,
             [move for move in report["moves"] if not move.get("membershipOnly")], raw_photos, policy,
         )
         # Item (g): identity folders left with no Gallery/Review original are
@@ -3369,6 +3381,11 @@ def _parser():
         "--preparation-workers", type=int,
         help="FULL/LEAN preparation workers for a new preview (default: this machine's setting from "
              "bin\\machine-tuning.cmd show); apply reuses the preview's count",
+    )
+    parser.add_argument(
+        "--release-named-category", action="append", default=[], choices=("Models", "Prospects", "Potentials"),
+        help="force: treat this category's user-named identities as ordinary for this run (repeatable); "
+             "repeat on apply",
     )
     parser.add_argument("--run-id", help="stable receipt/run directory identifier")
     parser.add_argument("--receipt", help="receipt path; defaults to the configured reports root under runs/")
@@ -3673,6 +3690,7 @@ def main(argv=None):
             reuse_preparation_sha256=args.reuse_preparation_sha256,
             lock_cast_admission=args.lock_cast_admission,
             preparation_workers=args.preparation_workers,
+            release_named_categories=args.release_named_category,
             released_bindings=release_bindings,
             reconsider_holds=args.reconsider_holds,
             fresh_source_release=args.fresh_source_release,

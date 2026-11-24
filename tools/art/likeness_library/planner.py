@@ -188,7 +188,10 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
         lead = score - ranked[1][0] if len(ranked) > 1 else 2.
         named = (admission_context or {}).get("namedFolders") or set()
         arrival = not (row.get("rebaseCandidate") and row["sourceBucket"] == "Gallery")
+        # Named-intake Review rules wait for round 2, after new identities could form.
+        named_review_round = not (admission_context or {}).get("deferGrouping")
         if (folder in named and folder not in cast and arrival and rules["reviewAdmissionEnabled"]
+                and named_review_round
                 and routing.get("namedReviewMinimum") is not None
                 and routing["namedReviewMinimum"] <= score < routing["reviewMinimum"]
                 and lead >= routing["minimumMargin"]):
@@ -219,7 +222,8 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
                 ),
             ))
         elif evaluate_photo_route(
-            core.get("category", folder.split("/", 1)[0]),
+            # Gate round 2, change 3: arrivals to a named Prospect/Model use the Potential Gallery bar.
+            "Potentials" if folder in named and arrival else core.get("category", folder.split("/", 1)[0]),
             score=score, margin=lead, policy=policy, propose=True,
         )["decision"] == "auto-route":
             assignments.extend(evidence(
@@ -234,7 +238,7 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
             )
             extra = {}
             if (review_destination is None and arrival and folder in named and len(ranked) > 1
-                    and ranked[1][1] in named and rules["reviewAdmissionEnabled"]
+                    and named_review_round and ranked[1][1] in named and rules["reviewAdmissionEnabled"]
                     and score >= rules.get("reviewRouteMinimum", routing["reviewMinimum"])):
                 # Named-intake change 2: a tie between two named people goes to the higher one's
                 # Review with the runner-up shown, instead of founding another identity.

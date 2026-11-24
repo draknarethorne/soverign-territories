@@ -200,6 +200,16 @@
       "properties": {
         "id": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"},
         "displayName": {"type": "string", "minLength": 1},
+        "namedIntake": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["recordedAt", "sourceFolder"],
+          "description": "User-named identity (Various/<Name> intake); retained across rebases unless a category release is forced.",
+          "properties": {
+            "recordedAt": {"type": "string", "format": "date-time"},
+            "sourceFolder": {"type": "string", "pattern": "^Various/[^/]+$"}
+          }
+        },
         "names": {
           "type": "object",
           "additionalProperties": false,

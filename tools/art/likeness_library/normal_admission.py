@@ -14,13 +14,20 @@ from .scoring import nz
 CAST = frozenset(("Sisters", "Angels"))
 
 
-def fresh_baseline_release_candidates(rows, policy):
+NAMED_RETAINED_UNSCORED = frozenset((
+    "no independent comparison reference", "independent comparison core unavailable",
+    "source does not meet the existing face-quality gate", "centered measurement unavailable",
+))
+
+
+def fresh_baseline_release_candidates(rows, policy, named_folders=()):
     """Assess a complete frozen named-Gallery inventory before identity formation.
 
     Selection is red/orange/unscored own scores plus, for Sisters/Angels only,
     scored members outside the configured cast seed (``castAdmission``
     ``seedTopCount``/``seedReleaseBelow``); cast seed members are exempt from
-    band release.
+    band release. Unscored members of user-named identities (``named_folders``,
+    IU16) are retained; their red/orange members are still released.
     The caller must bind each centered vector to its prepared measurement hash
     and the listed source bytes, establish quality/reference eligibility,
     effective trusted-anchor status and ambiguity from the initial source
@@ -166,7 +173,12 @@ def fresh_baseline_release_candidates(rows, policy):
         evidence["unavailableReason"] = reason
         reasons = []
         if evidence["score"] is None:
-            reasons.append("unscored")
+            # IU16: a named identity keeps members that are unscored only for lack of evidence;
+            # rejections, stale metadata and ambiguity still release them.
+            if owner in set(named_folders) and reason in NAMED_RETAINED_UNSCORED:
+                evidence["namedRetained"] = True
+            else:
+                reasons.append("unscored")
         elif evidence["band"] in ("red", "orange"):
             reasons.append(f'band:{evidence["band"]}')
         evidence["selectionReasons"] = reasons

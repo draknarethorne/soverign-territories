@@ -2737,14 +2737,30 @@ class NormalRebaseTests(unittest.TestCase):
         self.assertEqual(report[0]["identity"], "Prospects/Fia")
         self.assertEqual([row["photoId"] for row in report[0]["possibleMixups"]], ["photo:image_4"])
         self.assertEqual(normal_rebase._named_cohesion(set(), active, [], raw, normal_rebase.load_policy()), [])
-        cfg = {}
-        named_intake.record(self.root, cfg, [{"source": "Various/Fia", "destination": "Potentials/Fia",
-                                              "photos": [1, 2]}])
-        named_intake.record(self.root, cfg, [{"source": "Various/Fia", "destination": "Prospects/Fia",
-                                              "photos": [3]}])
-        identities = named_intake.load(self.root, cfg)
-        self.assertEqual((identities["Fia"]["photoCount"], identities["Fia"]["folder"]), (3, "Prospects/Fia"))
-        self.assertEqual(named_intake.named_folders(identities, ["Prospects/Fia", "Prospects/Gwen"]), {"Prospects/Fia"})
+
+    def test_named_identities_are_marked_in_a_local_catalogue_and_force_release_by_category(self):
+        from tools.art.likeness_library import named_intake
+
+        sandbox_root = self.root.parent / "u" / "Sovereign Territories Sandbox" / "Working"
+        sandbox_root.mkdir(parents=True)
+        git_before = metadata.CATALOG_PATH.read_bytes()
+        path, marked = named_intake.mark(sandbox_root, [
+            {"source": "Various/Fia Hadley", "destination": "Potentials/Fia Hadley"},
+            {"source": "Various/Ava", "destination": "Angels/Ava"},
+        ])
+        self.assertEqual(path, sandbox_root / ".likeness-library.json")
+        self.assertEqual(marked, ["Potentials/Fia Hadley"])
+        self.assertEqual(metadata.CATALOG_PATH.read_bytes(), git_before)
+        catalog = metadata.load_catalog(path)
+        person = next(p for p in catalog["people"].values() if p["folder"] == "Potentials/Fia Hadley")
+        self.assertEqual(person["namedIntake"]["sourceFolder"], "Various/Fia Hadley")
+        person["folderHistory"].append(person["folder"])
+        person["folder"] = "Prospects/Fia Hadley"
+        self.assertEqual(named_intake.named_folders(catalog), {"Prospects/Fia Hadley"})
+        self.assertEqual(named_intake.named_folders(catalog, ["Prospects"]), set())
+        named_intake.mark(sandbox_root, [{"source": "Various/Fia Hadley", "destination": "Potentials/Fia Hadley"}])
+        again = metadata.load_catalog(path)
+        self.assertEqual(sum(1 for p in again["people"].values() if p.get("namedIntake")), 1)
 
     def test_moved_workflow_photo_proposes_best_remaining_gallery_photo(self):
         def photo(*vector):
@@ -2772,6 +2788,16 @@ class NormalRebaseTests(unittest.TestCase):
 
     def test_unrequested_workers_follow_preview_or_this_machine(self):
         api = self.stub_api([])
+        with self.assertRaisesRegex(ValueError, "release categories differ from preview"):
+            normal_rebase._plan(self.root, "lean", "fixture", api=api, reuse_plan={
+                "releaseNamedCategories": ["Potentials"], "preparationWorkersRequested": 1,
+            }, release_named_categories=["Prospects"])
+        with self.assertRaisesRegex(ValueError, "accepts Models, Prospects or Potentials"):
+            normal_rebase._plan(self.root, "lean", "fixture", api=api, release_named_categories=["Angels"])
+        self.assertEqual(
+            normal_rebase._parser().parse_args(["--release-named-category", "Potentials"]).release_named_category,
+            ["Potentials"],
+        )
         seen = []
 
         def stop(*args, **kwargs):

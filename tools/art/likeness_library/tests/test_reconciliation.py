@@ -2291,6 +2291,41 @@ class NormalAdmissionTests(unittest.TestCase):
         member = route(.27, .1, sourceFolder="Potentials/Gwen", sourceBucket="Gallery", rebaseCandidate=True)
         self.assertEqual(named_reviews(member), [])
 
+    def test_centroid_linkage_joins_a_photo_that_matches_the_group_not_each_member(self):
+        from tools.art.likeness_library import reconciliation
+
+        def unit(*values):
+            vector = np.zeros(8)
+            vector[:len(values)] = values
+            return vector / np.linalg.norm(vector)
+
+        rows = [{"photoId": "photo:image_1", "vector": unit(1)},
+                {"photoId": "photo:image_2", "vector": unit(.4, .917)},
+                {"photoId": "photo:image_3", "vector": unit(.4, 0, .917)}]
+        ids = lambda groups: sorted(sorted(row["photoId"][-1] for row in group) for group in groups)  # noqa: E731
+        self.assertEqual(ids(reconciliation._average_linkage(rows, .30)), [["1", "2"], ["3"]])
+        self.assertEqual(ids(reconciliation._centroid_linkage(rows, .30)), [["1", "2", "3"]])
+        self.assertEqual(ids(reconciliation._centroid_linkage(list(reversed(rows)), .30)), [["1", "2", "3"]])
+        self.assertEqual(ids(reconciliation._centroid_linkage(rows, .45)), [["1"], ["2"], ["3"]])
+
+    def test_named_review_waits_for_round_two_and_named_prospects_use_potential_bar(self):
+        self.identity("Prospects/Nadia", self.axes[5], self.axes[6])
+        self.identity("Prospects/Other", self.axes[3], self.axes[6])
+
+        def route(score, named=True, defer=False):
+            rest = np.sqrt(1 - score ** 2)
+            row = self.photo(score * self.axes[5] + rest * self.axes[4], folder="Various", bucket="Pool")
+            ctx = self.admission.context(self.cores, self.references, self.policy)
+            ctx["namedFolders"] = {"Prospects/Nadia"} if named else set()
+            ctx["deferGrouping"] = defer
+            return plan_reconciliation([row], self.cores, policy=self.policy, name_factory=stable_name,
+                                       admission_context=ctx)
+
+        self.assertEqual(route(.32)["assignments"][0]["destination"], "Prospects/Nadia")
+        self.assertEqual(route(.32, named=False)["assignments"], [])
+        self.assertEqual(route(.27)["held"][0]["namedIntakeReview"], "near-miss")
+        self.assertFalse(any(row.get("namedIntakeReview") for row in route(.27, defer=True)["held"]))
+
     def test_lower_upward_move_needs_to_beat_home_by_own_core_lead(self):
         # IU13a (Nov 23): Fia-like Potential members stay unless a Prospect beats home by 0.10.
         home, rival = self.axes[5], self.axes[3]

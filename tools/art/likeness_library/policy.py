@@ -365,7 +365,7 @@ def validate_policy(policy):
             raise ValueError(f"categoryAssignmentRules/{index} cast score range is invalid")
 
     identity = policy["identityActions"]
-    if set(identity) - {"independentEvidenceMaximumSimilarity"} - SETTLE_KEYS != {
+    if set(identity) - {"independentEvidenceMaximumSimilarity", "formationLinkage"} - SETTLE_KEYS != {
         "matchReviewMinimum",
         "autoMergeMinimum",
         "autoMergeMinimumMargin",
@@ -377,6 +377,8 @@ def validate_policy(policy):
         "identityClusterMinimumSimilarity",
     }:
         raise ValueError("identityActions keys are incomplete or unsupported")
+    if identity.get("formationLinkage", "average") not in ("average", "centroid"):
+        raise ValueError("identityActions/formationLinkage must be average or centroid")
     if "independentEvidenceMaximumSimilarity" in identity:
         _number(identity["independentEvidenceMaximumSimilarity"], "independent evidence maximum similarity")
     merge_min = _number(identity["autoMergeMinimum"], "automatic merge minimum")

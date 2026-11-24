@@ -19,11 +19,12 @@
 
 - [ ] IU15 Designing a Sandbox-local workflow selection store (coordinated with Beacon/WF1) per the [named-core fix contract](2026-11-22-identity-universe-sandbox.md#nov-23-named-core-fix-contract). ([priority reset](plans/2026-11-05-priority-reset.md))
 
-### For the assistant, when you say go (10)
+### For the assistant, when you say go (11)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] RA2j Restoring the normal FULL/LEAN/FAST intake flow and separating exclusive experimental execution. **Integrated completion follow-up:** the [selected ... ([priority reset](plans/2026-11-05-priority-reset.md))
+- [ ] IU16 Retaining user-named identities across rebases (catalogue marker, small-Potential and fresh-release exemptions, forced category release) per the [retention ... ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] IU14 Auditing Review placements so no photo goes to Review where a rival scores higher by the route margin, per the [named-core fix contract](2026-11-22-identity-universe-sandbox.md#nov-23-named-core-fix-contract). ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] IU12 Taking `Various/<Name>` photos as native named intake in the SIMPLE rebase (no separate `seed` step) per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-iu9-named-core-most-wanted-run). ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] T29 Freeze same-machine representative generation/no-op, warm/cache phase baselines before runtime/path changes, with input/config/ code/resource IDs, timings, read/byte counts and output contracts. **Nov21:** maintain ... ([priority reset](plans/2026-11-05-priority-reset.md))

@@ -2,7 +2,7 @@
 
 **Status:** active (execution spine: FAST likeness, LEAN/FULL acceptance, then character art)
 
-**Queue focus:** RA2d, RA2j, IU10, IU14, IU12, T29, T30, IU4, IU11, RA2o, IU15, IU3, IU5, WF1
+**Queue focus:** RA2d, RA2j, IU16, IU10, IU14, IU12, T29, T30, IU4, IU11, RA2o, IU15, IU3, IU5, WF1
 
 **Feedback rebase applied (Sandbox):** `feedback-rebase-20261122-02`
 applied rules (a)–(i): duplicates archived, band-aligned formation,
@@ -1054,6 +1054,9 @@ unresolved human identity acceptance remains open.
   where a rival scores higher by the route margin, per the [named-core fix contract](2026-11-22-identity-universe-sandbox.md#nov-23-named-core-fix-contract).
 - [ ] **P2 either** IU15 Designing a Sandbox-local workflow selection store
   (coordinated with Beacon/WF1) per the [named-core fix contract](2026-11-22-identity-universe-sandbox.md#nov-23-named-core-fix-contract).
+- [ ] **P1 ai** IU16 Retaining user-named identities across rebases (catalogue
+  marker, small-Potential and fresh-release exemptions, forced category
+  release) per the [retention contract](2026-11-22-identity-universe-sandbox.md#nov-24-named-identity-retention-and-gate-round-2-approved).
 - [ ] **P1 either** IU10 Reviewing grouping rules from universe evidence; the
   user decides per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-universe-testing-feedback).
 - [ ] **P2 ai** IU11 Testing tighter universe selection (group yellow plus

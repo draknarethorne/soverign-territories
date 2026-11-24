@@ -281,6 +281,10 @@
         "intakeReleasePotentialMaxPhotos": {
           "type": "integer", "minimum": 0, "default": 1,
           "description": "Normal intake releases existing Potentials with at most this many Gallery photos so they are rescored with the incoming batch and can move upward or merge. 0 disables."
+        },
+        "formationLinkage": {
+          "enum": ["average", "centroid"], "default": "average",
+          "description": "New-identity formation merge rule at the yellow minimum: average pairwise similarity (default) or group-centroid similarity (IU10 trial)."
         }
       }
     },

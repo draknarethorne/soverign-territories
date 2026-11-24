@@ -910,8 +910,8 @@ def cmd_seed(args):
     if n:
         from likeness_library import named_intake
 
-        registry = named_intake.record(work, cfg, plans)
-        print(f"named-intake registry: {registry}")
+        catalogue, marked = named_intake.mark(work, plans)
+        print(f"named identities marked in {catalogue}: {', '.join(marked) or 'none'}")
     print(f"{n} photo(s) moved; `likeness undo` reverses the batch")
     after_moves(args, n > 0)
     return 0
