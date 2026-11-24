@@ -215,6 +215,10 @@
           "type": "number",
           "minimum": 0,
           "maximum": 2
+        },
+        "namedReviewMinimum": {
+          "$ref": "#/definitions/score",
+          "description": "Lower Review floor for an arrival whose best match is a user-named intake identity (with the photo-route margin); Review only, never a reference vote."
         }
       }
     },

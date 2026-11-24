@@ -2265,6 +2265,32 @@ class NormalAdmissionTests(unittest.TestCase):
         self.policy["photoRouting"]["minimumOwnCoreLead"] = -2.
         self.assertEqual(self.route([row])["assignments"][0]["destination"], "Sisters/Drakness")
 
+    def test_named_intake_near_miss_and_tie_go_to_named_review(self):
+        self.identity("Potentials/Fia", self.axes[5], self.axes[6])
+        self.identity("Potentials/Gwen", self.axes[3], self.axes[6])
+
+        def route(score_fia, score_gwen, named=True, **extra):
+            rest = np.sqrt(1 - score_fia ** 2 - score_gwen ** 2)
+            row = self.photo(score_fia * self.axes[5] + score_gwen * self.axes[3] + rest * self.axes[4],
+                             folder="Various", bucket="Pool", **extra)
+            ctx = self.admission.context(self.cores, self.references, self.policy)
+            ctx["namedFolders"] = {"Potentials/Fia", "Potentials/Gwen"} if named else set()
+            return plan_reconciliation([row], self.cores, policy=self.policy, name_factory=stable_name,
+                                       admission_context=ctx)
+
+        def named_reviews(report):
+            return [row for row in report["held"] + report["assignments"] if row.get("namedIntakeReview")]
+
+        held = route(.27, .1)["held"][0]
+        self.assertEqual((held["reviewDestination"], held["namedIntakeReview"]), ("Potentials/Fia/review", "near-miss"))
+        self.assertEqual(named_reviews(route(.27, .1, named=False)), [])
+        self.assertEqual(named_reviews(route(.27, .2)), [])
+        tie = route(.34, .32)["held"][0]
+        self.assertEqual((tie["reviewDestination"], tie["namedIntakeReview"]), ("Potentials/Fia/review", "tie"))
+        self.assertEqual(tie["runnerUp"]["folder"], "Potentials/Gwen")
+        member = route(.27, .1, sourceFolder="Potentials/Gwen", sourceBucket="Gallery", rebaseCandidate=True)
+        self.assertEqual(named_reviews(member), [])
+
     def test_lower_upward_move_needs_to_beat_home_by_own_core_lead(self):
         # IU13a (Nov 23): Fia-like Potential members stay unless a Prospect beats home by 0.10.
         home, rival = self.axes[5], self.axes[3]

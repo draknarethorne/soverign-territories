@@ -2724,6 +2724,28 @@ class NormalRebaseTests(unittest.TestCase):
             normal_rebase._parser().parse_args(["--preparation-workers", "3"]).preparation_workers, 3,
         )
 
+    def test_named_cohesion_flags_red_members_and_registry_round_trips(self):
+        from tools.art.likeness_library import named_intake
+
+        def photo(*vector):
+            return SimpleNamespace(vec=np.asarray(vector, dtype=float) / np.linalg.norm(vector))
+
+        raw = {f"Prospects/Fia/gallery/fia_image_{i}.jpg": photo(*v)
+               for i, v in enumerate(((1, 0, 0), (1, .1, 0), (1, 0, .1), (0, 0, 1)), start=1)}
+        active = [{"photoId": f"photo:image_{i}", "source": s} for i, s in enumerate(raw, start=1)]
+        report = normal_rebase._named_cohesion({"Fia"}, active, [], raw, normal_rebase.load_policy())
+        self.assertEqual(report[0]["identity"], "Prospects/Fia")
+        self.assertEqual([row["photoId"] for row in report[0]["possibleMixups"]], ["photo:image_4"])
+        self.assertEqual(normal_rebase._named_cohesion(set(), active, [], raw, normal_rebase.load_policy()), [])
+        cfg = {}
+        named_intake.record(self.root, cfg, [{"source": "Various/Fia", "destination": "Potentials/Fia",
+                                              "photos": [1, 2]}])
+        named_intake.record(self.root, cfg, [{"source": "Various/Fia", "destination": "Prospects/Fia",
+                                              "photos": [3]}])
+        identities = named_intake.load(self.root, cfg)
+        self.assertEqual((identities["Fia"]["photoCount"], identities["Fia"]["folder"]), (3, "Prospects/Fia"))
+        self.assertEqual(named_intake.named_folders(identities, ["Prospects/Fia", "Prospects/Gwen"]), {"Prospects/Fia"})
+
     def test_moved_workflow_photo_proposes_best_remaining_gallery_photo(self):
         def photo(*vector):
             return SimpleNamespace(vec=np.asarray(vector, dtype=float) / np.linalg.norm(vector))

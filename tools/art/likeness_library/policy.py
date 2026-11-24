@@ -422,7 +422,7 @@ def validate_policy(policy):
         raise ValueError("lookalike minimumIndependentPhotos must be an integer >= 2")
 
     photo_routing = policy["photoRouting"]
-    if set(photo_routing) != {
+    if set(photo_routing) - {"namedReviewMinimum"} != {
         "reviewMinimum",
         "automaticRouteMinimum",
         "minimumMargin",
@@ -435,6 +435,9 @@ def validate_policy(policy):
         raise ValueError("automatic photo routing threshold must be at or above review minimum")
     _number(photo_routing["minimumMargin"], "photo route minimum margin", 0.0, 2.0)
     _number(photo_routing["minimumOwnCoreLead"], "photo route minimum own-core lead", 0.0, 2.0)
+    if "namedReviewMinimum" in photo_routing and _number(
+            photo_routing["namedReviewMinimum"], "named-intake Review minimum") > route_review:
+        raise ValueError("named-intake Review minimum must be at or below the review minimum")
 
     protection = policy["protection"]
     if set(protection) - {"automatic"} != {

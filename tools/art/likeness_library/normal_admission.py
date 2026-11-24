@@ -3170,7 +3170,7 @@ def unresolved_release_review(decision, comparisons, *, locked=False):
 
 
 def two_round_plan(api, candidates, cores, references, settings, policy, names_taken, *,
-                   locked=False, released_bindings=None):
+                   locked=False, released_bindings=None, named_folders=()):
     """Resolve members first; optionally rescore caller-verified released guard holds.
 
     The caller must verify each binding's source bytes and supply only voting
@@ -3212,6 +3212,7 @@ def two_round_plan(api, candidates, cores, references, settings, policy, names_t
     pending = list(candidates)
     for round_index in (1, 2):
         ctx = context(current, current_rows, policy, locked=locked)
+        ctx["namedFolders"] = set(named_folders)
         ctx["deferGrouping"] = round_index == 1
         snapshots[str(round_index)] = {
             "referenceVersion": ctx["referenceVersion"],

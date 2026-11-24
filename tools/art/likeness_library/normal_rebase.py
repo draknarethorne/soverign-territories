@@ -15,8 +15,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from tools.art import originals
 from tools.art.likeness_library import (
-    empty_retirement, face_quality, maintenance, metadata, normal_finish, normal_import, normal_products,
-    normal_transaction, normal_recap, reconciliation, rejections, normal_admission,
+    empty_retirement, face_quality, maintenance, metadata, named_intake, normal_finish, normal_import,
+    normal_products, normal_transaction, normal_recap, reconciliation, rejections, normal_admission,
     verification_reads,
 )
 from tools.art.likeness_library.policy import effective_settings, load_policy, settle_settings
@@ -987,6 +987,38 @@ def _identity_home(path):
     if len(parts) >= 4 and parts[0] in IDENTITY_ROOTS:
         return "/".join(parts[:2]), parts[2]
     return parts[0] if parts else "", None
+
+
+def _named_cohesion(named_names, active, moves, raw_photos, policy):
+    """Change 4 (report only): user-named members scoring red against their own Gallery."""
+    floor = (policy.get("scoreBands") or {}).get("orange", {}).get("minimum")
+    if not named_names or floor is None:
+        return []
+    final = {row["photoId"]: (row["source"], row["source"]) for row in active}
+    for move in moves:
+        final[move["photoId"]] = (final.get(move["photoId"], (move["source"],))[0], move["destination"])
+    members = collections.defaultdict(list)
+    for photo_id, (source, destination) in final.items():
+        owner, bucket = _identity_home(destination)
+        photo = raw_photos.get(source)
+        if (bucket == "gallery" and pathlib.PurePosixPath(owner).name in named_names
+                and photo is not None and getattr(photo, "vec", None) is not None):
+            members[owner].append((photo_id, destination, np.asarray(photo.vec, dtype=float)))
+    report = []
+    for owner, rows in sorted(members.items()):
+        if len(rows) < 3:
+            continue
+        flagged = []
+        for index, (photo_id, path, vector) in enumerate(rows):
+            others = nz(np.mean([row[2] for i, row in enumerate(rows) if i != index], axis=0))
+            score = float(vector @ others)
+            if score < floor:
+                flagged.append({"photoId": photo_id, "path": path, "score": round(score, 4)})
+        report.append({
+            "identity": owner, "galleryCount": len(rows), "flaggedBelow": floor,
+            "possibleMixups": sorted(flagged, key=lambda row: (row["score"], row["photoId"])),
+        })
+    return report
 
 
 def _workflow_replacement_proposals(selected_ids, active, moves, raw_photos):
@@ -2353,15 +2385,18 @@ def _plan(
                 if candidate["photoId"] in release_ids else candidate
                 for candidate in candidates
             ]
+            named_registry = named_intake.load(root, cfg)
             report = normal_admission.two_round_plan(
                 api, scoring_candidates, cores,
                 reference_rows,
                 settings, policy, all_names, locked=lock_cast_admission,
+                named_folders=named_intake.named_folders(named_registry, cores),
                 **({"released_bindings": [
                     binding for binding in released_bindings
                     if release_roles[binding["photoId"]] == "candidate"
                 ]} if released_bindings is not None else {}),
             )
+            report["namedIntakeIdentities"] = sorted(named_intake.named_folders(named_registry, cores))
         else:
             report = normal_import._route_plan(
                 api, candidates, cores, settings, policy, all_names,
@@ -3212,6 +3247,10 @@ def _plan(
         if reuse_plan is not None and reuse_plan.get("workflowReplacementProposals", []) != report[
                 "workflowReplacementProposals"]:
             raise ValueError("workflow replacement proposals differ from preview")
+        report["namedIntakeCohesion"] = _named_cohesion(
+            set(named_intake.load(root, cfg)), active,
+            [move for move in report["moves"] if not move.get("membershipOnly")], raw_photos, policy,
+        )
         # Item (g): identity folders left with no Gallery/Review original are
         # retired inside the publication transaction; an emptied cast folder stops here.
         report["emptiedIdentityRetirement"] = {
@@ -3798,6 +3837,10 @@ def main(argv=None):
             print(f"  WORKFLOW PHOTO {row['photoId']} leaves {row['identity']} -> {row['finalPath']}; proposed "
                   f"replacement {replacement.get('photoId', 'none')} (score {replacement.get('ownScore')}); "
                   "workspaces.json unchanged")
+        for row in report.get("namedIntakeCohesion", []):
+            if row["possibleMixups"]:
+                print(f"  NAMED COHESION {row['identity']}: {len(row['possibleMixups'])} of {row['galleryCount']} "
+                      f"Gallery photo(s) score below {row['flaggedBelow']} against the rest (report only)")
         print("preview only; recap/audit reports written; no membership, catalogue, cache or source originals were changed")
         return 0
     except (OSError, ValueError, KeyError, TypeError) as exc:

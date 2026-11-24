@@ -186,7 +186,18 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
         core = cores[folder]
         rules = categories[core.get("category", folder.split("/", 1)[0])]
         lead = score - ranked[1][0] if len(ranked) > 1 else 2.
-        if folder in cast or score < routing["reviewMinimum"]:
+        named = (admission_context or {}).get("namedFolders") or set()
+        arrival = not (row.get("rebaseCandidate") and row["sourceBucket"] == "Gallery")
+        if (folder in named and folder not in cast and arrival and rules["reviewAdmissionEnabled"]
+                and routing.get("namedReviewMinimum") is not None
+                and routing["namedReviewMinimum"] <= score < routing["reviewMinimum"]
+                and lead >= routing["minimumMargin"]):
+            # Named-intake change 1: a near miss waits in the named person's Review, never voting.
+            held.extend(evidence(
+                [row], ranked, "near miss for a user-named identity; Review only, no reference vote",
+                reviewDestination=f"{folder}/review", namedIntakeReview="near-miss",
+            ))
+        elif folder in cast or score < routing["reviewMinimum"]:
             if (row.get("rebaseCandidate") and row["sourceBucket"] == "Gallery"
                     and not (admission_context and admission_context.get("redRelease") and row.get("redRelease"))):
                 held.extend(evidence([row], ranked, "higher match is below entry floor; current Gallery owner retained",
@@ -221,12 +232,23 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
                 and score >= rules.get("reviewRouteMinimum", routing["reviewMinimum"])
                 and lead >= rules.get("reviewRouteMargin", rules["photoRouteMargin"]) else None
             )
+            extra = {}
+            if (review_destination is None and arrival and folder in named and len(ranked) > 1
+                    and ranked[1][1] in named and rules["reviewAdmissionEnabled"]
+                    and score >= rules.get("reviewRouteMinimum", routing["reviewMinimum"])):
+                # Named-intake change 2: a tie between two named people goes to the higher one's
+                # Review with the runner-up shown, instead of founding another identity.
+                review_destination = f"{folder}/review"
+                extra = {"namedIntakeReview": "tie", "runnerUp": {"folder": ranked[1][1], "score": round(ranked[1][0], 4)}}
             held.extend(evidence(
-                [row], ranked, "existing identity match needs review",
+                [row], ranked,
+                "tie between user-named identities; Review of the higher, runner-up shown" if extra
+                else "existing identity match needs review",
                 reviewDestination=review_destination,
                 preserveStaged=bool(
                     not review_destination and row.get("rebaseCandidate") and row["sourceBucket"] == "Gallery"
                 ),
+                **extra,
             ))
 
     if admission_context is not None and admission_context.get("deferGrouping"):

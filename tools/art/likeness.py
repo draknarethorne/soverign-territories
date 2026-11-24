@@ -907,6 +907,11 @@ def cmd_seed(args):
         print(f"{len(moves)} named-folder photo(s) would move; preview only (add --apply)")
         return 0
     n = execute(moves, work, True, Cache(cache_path(args, work)))
+    if n:
+        from likeness_library import named_intake
+
+        registry = named_intake.record(work, cfg, plans)
+        print(f"named-intake registry: {registry}")
     print(f"{n} photo(s) moved; `likeness undo` reverses the batch")
     after_moves(args, n > 0)
     return 0
