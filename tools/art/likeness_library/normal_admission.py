@@ -172,13 +172,17 @@ def fresh_baseline_release_candidates(rows, policy, named_folders=()):
                 reason = "no independent comparison reference"
         evidence["unavailableReason"] = reason
         reasons = []
+        named_owner = owner in set(named_folders)
         if evidence["score"] is None:
             # IU16: a named identity keeps members that are unscored only for lack of evidence;
             # rejections, stale metadata and ambiguity still release them.
-            if owner in set(named_folders) and reason in NAMED_RETAINED_UNSCORED:
+            if named_owner and reason in NAMED_RETAINED_UNSCORED:
                 evidence["namedRetained"] = True
             else:
                 reasons.append("unscored")
+        elif evidence["band"] == "orange" and named_owner:
+            # IU16 (user, Nov 24): only truly low (red) members leave a user-named identity.
+            evidence["namedRetained"] = True
         elif evidence["band"] in ("red", "orange"):
             reasons.append(f'band:{evidence["band"]}')
         evidence["selectionReasons"] = reasons

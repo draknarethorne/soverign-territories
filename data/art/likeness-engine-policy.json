@@ -89,7 +89,8 @@
     "splitMinimumMargin": 0.1,
     "splitMinimumIndependentPhotos": 2,
     "settlePassMaximum": 3,
-    "intakeReleasePotentialMaxPhotos": 1
+    "intakeReleasePotentialMaxPhotos": 1,
+    "formationLinkage": "centroid"
   },
   "lookalikeGroups": {
     "suggestionMinimumSimilarity": 0.3,

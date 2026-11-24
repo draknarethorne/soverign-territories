@@ -1779,7 +1779,8 @@ def _pre_settle_bindings(plan):
 
 def _settle_plan(api, report, *, rows, candidates, raw_photos, release_ids, folders, cores, catalog,
                  rejection_catalog, settings, policy, names_taken, locked, max_passes, fresh_assessment,
-                 candidate_quality=None, locked_ids=(), workflow_ids=(), protected_folders=()):
+                 candidate_quality=None, locked_ids=(), workflow_ids=(), protected_folders=(),
+                 named_folders=()):
     """Run bounded settle passes over the planned decisions.
 
     Returns ``(evidence, timings, bindings, settle_candidates)``. Every measured
@@ -1857,6 +1858,8 @@ def _settle_plan(api, report, *, rows, candidates, raw_photos, release_ids, fold
                 stay = "existing member outside a release cohort; settle releases only photos this run placed"
             elif not fresh_bindable(row):
                 stay = "existing member cannot be bound for release (ambiguous, stale or unbindable source)"
+            elif row["owner"] in named_folders and (assessed.get(photo_id) or {}).get("band") != "red":
+                stay = "user-named identity member above red; only truly low scores leave a named identity"
         exempt = None
         if candidate is not None and photo_id not in release_ids and not (
             fresh_assessment is not None and original(row) and stay is None
@@ -2647,7 +2650,7 @@ def _plan(
                 locked=lock_cast_admission, max_passes=settle_limit,
                 fresh_assessment=fresh_assessment if fresh_source_release else None,
                 candidate_quality=candidate_quality, locked_ids=locked_ids, workflow_ids=workflow_ids,
-                protected_folders=protected_folders,
+                protected_folders=protected_folders, named_folders=named,
             )
             report["settle"] = settle_evidence
             if settle_bindings:

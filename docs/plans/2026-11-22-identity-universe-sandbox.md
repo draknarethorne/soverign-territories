@@ -599,6 +599,24 @@ Decision pending (user): adopt centroid formation in the shared policy
 average formation and rely on named seeds. Scratch: `tmp\iu13-runs\`
 (`answer_key.py`, `sweep.py`, `policy-centroid.json`).
 
+**Decided Nov 24 (user):** do both: centroid formation is now the shared
+default (`identityActions.formationLinkage: "centroid"`), and named folders
+anchor lookalikes. A named folder's members must survive; only truly low
+scores leave it, and they are not absorbed elsewhere. Implemented: in a
+Sandbox fresh-source release a named member is released only when red
+(below 0.15) or explicitly rejected; orange members and evidence-less
+unscored members stay, and settle passes exempt named members above red.
+Ordinary rebases already never release original members. Next: the user
+reviews the final named + centroid results (`mw-named-c4-01`), then the
+Prospect/Potential category rules are revisited once more (IU10), plus a
+final re-check after formation for the remaining audit cases (IU14).
+
+<!-- markdownlint-disable MD013 -->
+```text
+I agree with the approach in how we can do both.  When I supply a named folder, that does mean I expect those to survive and be retained and only release any that truly score low against that core and not absorb them.  I'd also want to review the final results and see how it all turns out and whether or not having all the potentials is still correct or whether or not we re-look at those rules on the potentials as well as prospects one more time.  But this is a good sign so far.
+```
+<!-- markdownlint-enable MD013 -->
+
 <!-- markdownlint-disable MD013 -->
 ```text
 Let's make your recommended changes and re-run all three just to see how things land.  For the most part, I feel like the Angelica photos are actually her in various settings and outfits and side views.  So not sure if splitting her up is a good thing or not as I am sure MANY of the images for Most Wanted are her or someone pretty must like her- lookalike with leeser breasts.  That's been the problem with Angelica and where I pulled all these Most Wanted photos.  I think 3-5 blondes and 3-4 bruntettes are the same but not the same.  Eye colors differ, but the face seems same.  That's been the challenge to sort out.

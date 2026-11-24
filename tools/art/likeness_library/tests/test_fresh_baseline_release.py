@@ -139,6 +139,10 @@ class FreshBaselineReleaseTests(unittest.TestCase):
         self.assertEqual({item["photoId"] for item in named["bindings"]}, {"photo:image_3", "photo:image_4"})
         self.assertEqual({item["photoId"] for item in plain["bindings"]},
                          {"photo:image_2", "photo:image_3", "photo:image_4", "photo:image_5"})
+        orange = [row(6, angle(.2), owner=owner)]
+        self.assertEqual({item["photoId"] for item in normal_admission.fresh_baseline_release_candidates(
+            rows + orange, self.policy, {owner})["bindings"]}, {"photo:image_3", "photo:image_4"})
+        self.assertIn("photo:image_6", {item["photoId"] for item in self.assess(rows + orange)["bindings"]})
 
     def test_invalid_inputs_fail_closed_and_input_remains_unchanged(self):
         original = [row(1, [1., 0.], reference=True), row(2, [0., 1.])]
