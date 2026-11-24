@@ -413,6 +413,53 @@ Beacon's partial answer to Q-d01e8fdb3329-15 (Nov 23 23:04 UTC) recommends
 exposing IU7 replacements as proposals only until the shared selection
 interface is agreed, which matches the revised IU7 scope.
 
+### Nov 23 post-fix universe runs (IU13, IU13a, IU7)
+
+Code: `a25342dc1` plus `ed73589c1` (SIMPLE rebases move workflow selections
+past the shared permission check). Full likeness suite 1,377 tests passed.
+All runs used LEAN, fresh preparation and 4 x 8 workers. Each preview,
+apply and check exited 0; no identical-copy swap was needed.
+
+| Run | Input | Identities | Single / pair groups | Review | Various | IU14 audit |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| `mw-named-iu13-01` | 13 named folders + 138 unsorted | 65 (8 Prospects) | 35 / 10 | 17 | 2 Gallery, 8 Review | 1 |
+| `most-wanted-seeded-02` (before fixes) | same | 66 (8 Prospects) | 36 / 12 | 18 | 5 Gallery, 4 Review | not measured |
+| `mw-flat-iu13-02` | 275 unsorted | 121 (2 Prospects) | 45 / 42 | 0 | 6 | 0 |
+| `angelica-green-iu13-02` | green band, 1 hop: 449 photos, 13 source identities | 104 (1 Prospect) | 30 / 27 | 0 | 5 | 0 |
+
+- **Named folders:** all 137 hand-sorted photos stayed (133 before). Fia
+  Hadley kept 4 of 4 and gained 1 Gallery and 1 Review photo; no core was
+  switched off or recomputed. Gains: Nadia Lora +14 (+5 Review), Cloe Reyes
+  +4, Zara Lane +3 (+4 Review), Angelica Vale +3 (+2 Review), Katia Duvanti
+  +3, Jacinta Alden +1 (+2 Review), Petra Cole +1 (+2 Review), Freya Hadley
+  +1, Amara Cross +1, Fia Hadley +1 (+1 Review). Angelica's 3 fewer Gallery
+  gains than before are borderline: two now sit in her own Review (0.36,
+  below the Gallery lead) and one was released by settle as orange and
+  went to Aurelia Monroe Review (0.33).
+- **IU14 audit:** one Review photo (`shot_20261023111219`) sits in Jacinta
+  Alden Review at 0.316 while Aurelia Finley, a group formed later in the
+  same run, scores 0.432. Enforcement is not yet needed; it is a
+  formation-order case for IU10.
+- **Flat run:** identical to `most-wanted-baseline-02` (121 identities,
+  same sizes). IU13/IU13a govern existing members only; fragmentation of
+  unsorted photos comes from new-identity formation (every member must
+  score yellow against the group), which IU10 owns.
+- **Angelica universe:** the green band cut the pull from about 1,200 to
+  449 photos but still brought all of Sisters/Drakniss through one shared
+  photo; Drakniss formed five pure groups (68, 18, 16, 13, 12). Angelica's
+  core formed one 45-photo group (34 of her originals plus 11 Various); her
+  99 original photos spread over 12 groups, including a mixed group of 19
+  (8 Angelica, 7 Jacinta Alden, 4 Fia Hadley). Trusted-core mode (IU4/IU11)
+  should exclude whole-identity pulls such as Drakniss.
+- The first flat preview stopped safely on a second workflow-protection
+  check (fixed in `ed73589c1`); the first Angelica preview stopped safely
+  because its reusable preparation predates today's configuration change,
+  so it ran with fresh preparation.
+
+Run logs and the summarizer are scratch in `tmp\iu13-runs\`. Next: user
+review of the three universes, then IU10 formation rules and the
+Prospect/Potential gates.
+
 ## Open decisions for the user
 
 - The default expansion band (yellow) and hop depth, after seeing the IU2

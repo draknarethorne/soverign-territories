@@ -19,14 +19,12 @@
 
 - [ ] IU15 Designing a Sandbox-local workflow selection store (coordinated with Beacon/WF1) per the [named-core fix contract](2026-11-22-identity-universe-sandbox.md#nov-23-named-core-fix-contract). ([priority reset](plans/2026-11-05-priority-reset.md))
 
-### For the assistant, when you say go (12)
+### For the assistant, when you say go (10)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] RA2j Restoring the normal FULL/LEAN/FAST intake flow and separating exclusive experimental execution. **Integrated completion follow-up:** the [selected ... ([priority reset](plans/2026-11-05-priority-reset.md))
-- [ ] IU13 Recomputing an identity's core without a departing member instead of switching the whole core off, and moving existing members only when low at home and clearly higher elsewhere (all identities, no exemptions) per the ... ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] IU14 Auditing Review placements so no photo goes to Review where a rival scores higher by the route margin, per the [named-core fix contract](2026-11-22-identity-universe-sandbox.md#nov-23-named-core-fix-contract). ([priority reset](plans/2026-11-05-priority-reset.md))
-- [ ] IU7 Auto-replacing a moved or renamed workflow photo with the identity's highest-scoring Gallery photo per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-universe-testing-feedback); Nov 23 ... ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] IU12 Taking `Various/<Name>` photos as native named intake in the SIMPLE rebase (no separate `seed` step) per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-iu9-named-core-most-wanted-run). ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] T29 Freeze same-machine representative generation/no-op, warm/cache phase baselines before runtime/path changes, with input/config/ code/resource IDs, timings, read/byte counts and output contracts. **Nov21:** maintain ... ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] T30 Remove established repeated work across phase and standalone/continuous boundaries; publish per-hotspot ownership, cost, cache dependencies/invalidation, tests and fixed/deferred/no-gain status. Coordinator decisions, ... ([priority reset](plans/2026-11-05-priority-reset.md))

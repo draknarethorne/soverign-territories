@@ -2,7 +2,7 @@
 
 **Status:** active (execution spine: FAST likeness, LEAN/FULL acceptance, then character art)
 
-**Queue focus:** RA2d, RA2j, IU13, IU14, IU7, IU12, IU10, T29, T30, IU4, IU11, RA2o, IU15, IU3, IU5, WF1
+**Queue focus:** RA2d, RA2j, IU10, IU14, IU12, T29, T30, IU4, IU11, RA2o, IU15, IU3, IU5, WF1
 
 **Feedback rebase applied (Sandbox):** `feedback-rebase-20261122-02`
 applied rules (a)–(i): duplicates archived, band-aligned formation,
@@ -1036,7 +1036,7 @@ unresolved human identity acceptance remains open.
   its universe source and Working (first priority) per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-universe-testing-feedback).
   Done Nov 23: 70 copies moved to `B:\Most Wanted-duplicates`; baseline
   `most-wanted-baseline-02` applied.
-- [ ] **P1 ai** IU7 Auto-replacing a moved or renamed workflow photo with the
+- [x] **P1 ai** IU7 Auto-replacing a moved or renamed workflow photo with the
   identity's highest-scoring Gallery photo per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-universe-testing-feedback);
   Nov 23 scope: photos move in every SIMPLE rebase, replacement recorded as a
   proposal; Sandbox never writes `workspaces.json` ([revised scope](2026-11-22-identity-universe-sandbox.md#nov-23-named-core-fix-contract)).
@@ -1046,7 +1046,7 @@ unresolved human identity acceptance remains open.
   photos await the user's review.
 - [ ] **P1 ai** IU12 Taking `Various/<Name>` photos as native named intake in
   the SIMPLE rebase (no separate `seed` step) per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-iu9-named-core-most-wanted-run).
-- [ ] **P1 ai** IU13 Recomputing an identity's core without a departing
+- [x] **P1 ai** IU13 Recomputing an identity's core without a departing
   member instead of switching the whole core off, and moving existing
   members only when low at home and clearly higher elsewhere (all
   identities, no exemptions) per the [named-core fix contract](2026-11-22-identity-universe-sandbox.md#nov-23-named-core-fix-contract).
