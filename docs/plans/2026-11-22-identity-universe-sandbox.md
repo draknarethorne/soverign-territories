@@ -460,6 +460,73 @@ Run logs and the summarizer are scratch in `tmp\iu13-runs\`. Next: user
 review of the three universes, then IU10 formation rules and the
 Prospect/Potential gates.
 
+### Nov 23 named-intake gate round (approved changes 1, 2, 4)
+
+Evidence from `mw-named-iu13-01`: of 65 photos left in small groups or
+Various, 13 scored 0.25-0.30 for one named person with a 0.10 lead (11
+Nadia Lora), 7 tied (>= 0.30, lead < 0.10) between two named people
+(mostly Nadia/Zara), and 3 cleared both gates but did not join (to trace).
+Named cohesion varies widely: Angelica Vale median own score 0.27 (8+
+below 0.15), Zara 0.35, Petra 0.32; Fia 0.73, Freya 0.68, Cloe 0.67. A
+face hidden behind a handwritten letter passed the face gate (later
+quality work).
+
+Implemented in `cad12ee46` (full likeness suite 1,379 tests passed):
+
+1. **Named near-miss Review:** an arrival whose best match is a user-named
+   identity, scoring from `photoRouting.namedReviewMinimum` (0.25, new
+   optional policy key) up to the review minimum with the 0.10 margin,
+   goes to that identity's Review. Review never votes.
+2. **Named tie Review:** an arrival at or above the Review floor whose top
+   two matches are both named identities but without the Review lead goes
+   to the higher one's Review with the runner-up recorded.
+4. **Named cohesion report:** the receipt and run output list named Gallery
+   members scoring below orange (0.15) against the rest; report only.
+
+`likeness.py seed --apply` now records named identities in
+`_likeness/named-intake.json` (by display name, so category moves keep
+them); only those identities get rules 1 and 2. Change 3 (named
+Prospects use the 0.30 Gallery bar) and change 5 (centroid formation,
+IU10) wait for these results. The user does not want Angelica split: many
+Most Wanted photos are her or a close lookalike; 3-5 blondes and 3-4
+brunettes are "the same but not the same" (eye colours differ, faces
+match).
+
+**Results (all previews, applies and checks exited 0; fresh preparation,
+4 x 8 workers):**
+
+| Run | Identities | Single / pair | Named Review | Various | IU14 audit |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `mw-named-r2-01` | 62 (8 Prospects) | 35 / 7 | 31 | 2 | 2 |
+| `mw-named-iu13-01` (previous) | 65 | 35 / 10 | 17 | 10 | 1 |
+| `mw-flat-r2-01` | 121 | 45 / 42 | 0 | 6 | 0 |
+| `angelica-green-r2-01` | 104 | 30 / 27 | 0 | 5 | 0 |
+
+- Named run: all 137 hand-sorted photos stayed. The new rules made 15
+  Review placements (8 ties, 7 near misses; Nadia Lora 8). Nadia's Review
+  now holds 13 for the user. Cohesion flags (below 0.15, report only):
+  Angelica 7 of 44, Zara 5 of 30, Lorelei 2 of 7, Katia 1 of 5, Cloe 1 of
+  10.
+- New audit case: a round-1 near miss went to Nadia Review (0.28) before a
+  better new group formed in round 2 (Fiorella Lowe, 0.51). Next: apply the
+  near-miss rule only in round 2.
+- Flat and Angelica runs are unchanged (no named identities); one-photo
+  groups (35 named, 45 flat, 30 Angelica) come from formation (IU10).
+- Traced exceptions from the previous run: a Zara arrival released by
+  settle as orange became a one-photo group; a two-photo group formed
+  before Katia's small core could claim it; a 0.31 Nadia arrival missed
+  the 0.35 Prospect bar (change 3 would place it).
+
+Proposed next round (not yet approved): near-miss only in round 2; change
+3 (named Prospects use the 0.30 Gallery bar); then IU10 centroid
+formation tested in the flat universe.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Let's make your recommended changes and re-run all three just to see how things land.  For the most part, I feel like the Angelica photos are actually her in various settings and outfits and side views.  So not sure if splitting her up is a good thing or not as I am sure MANY of the images for Most Wanted are her or someone pretty must like her- lookalike with leeser breasts.  That's been the problem with Angelica and where I pulled all these Most Wanted photos.  I think 3-5 blondes and 3-4 bruntettes are the same but not the same.  Eye colors differ, but the face seems same.  That's been the challenge to sort out.
+```
+<!-- markdownlint-enable MD013 -->
+
 ## Open decisions for the user
 
 - The default expansion band (yellow) and hop depth, after seeing the IU2
