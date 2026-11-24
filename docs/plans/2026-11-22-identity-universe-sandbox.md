@@ -611,6 +611,40 @@ reviews the final named + centroid results (`mw-named-c4-01`), then the
 Prospect/Potential category rules are revisited once more (IU10), plus a
 final re-check after formation for the remaining audit cases (IU14).
 
+### Nov 24 rival-backed release and 0.25 Potential trial
+
+The user saw red and negative own scores in named Angelica/Zara Galleries:
+ordinary rebases never released original members (settle only releases
+photos the run placed). Clarified intent: named photos that score red or
+orange after processing are released under the normal rules when a rival
+is clearly better; it may regroup and return; avoid churn; keep nothing
+obviously low that has a better home. Measured on `mw-named-c4-01`: 53
+named members are below yellow at home; 9 (3 red, 6 orange) have a rival
+of 2+ photos beating home by 0.10; 44 have no clear rival and stay.
+
+- **IU17 Rival-backed release (implemented):** in every SIMPLE rebase,
+  settle passes may release an original member of a non-cast, unprotected
+  identity (named or not) that is flagged red/orange when an established
+  rival (2+ photos, non-cast) reaches yellow and beats its home score by
+  the own-core lead (0.10). If the rematch does not land at that rival's
+  Gallery or Review, the photo stays home (no churn, no new fragment).
+  Real protections and cast rules are unchanged.
+- **Category-bar settle flagging:** a lower-category member is flagged
+  only below its category's Gallery bar, so a lower Potential bar cannot
+  cause release-and-return churn (no change at today's values).
+- **0.25 Potential bar trial:** the user is seeing many photos at
+  0.25-0.29 that may fit another Potential. Measured on the same run: 17
+  of 35 leftover photos score 0.25-0.30 against an established identity;
+  9 are near ties (lead below 0.08) and 8 have one clear target. Trialled
+  with a variant policy (Potentials Gallery and Review minimum 0.25), not
+  the shared policy.
+
+<!-- markdownlint-disable MD013 -->
+```text
+A quick peek at Angelica shows Core Similarity of red and even minus numbers - that's odd.  Wouldn't those have been handled during the audit and release them?  Seems like they want to land at a rival.  I see some of the same in other folders.  Is there something I answered that might I might have not understood that's driving this?  Same with Zara as well.  What I thought could happen is that if I did put images into a named folder and they scored red and orange after processing we would release them under the normal rules that supported that.  So even a protected identity can release things that truly don't belong.  It may group and then come back if those images do score properly.  I won't want to get into a churn over and over, but we also don't need to have obviously low scoring images being retained if they have a rival they belong to.  I'm also considering of the Potentials bar could even be 0.25 - as while that's in the orange range, I am seeing many images in the 0.25-0.29 range that might actually fit with another potential.  So, let's look at both those items and see what would happen if we can address those.  Because the first item to release images will likely have a significant impact on where images do land.  So the multi-pass processing will help refine the library organically in case I did make mistakes in my own visual formation of the images, even named folders I brought in.
+```
+<!-- markdownlint-enable MD013 -->
+
 <!-- markdownlint-disable MD013 -->
 ```text
 I agree with the approach in how we can do both.  When I supply a named folder, that does mean I expect those to survive and be retained and only release any that truly score low against that core and not absorb them.  I'd also want to review the final results and see how it all turns out and whether or not having all the potentials is still correct or whether or not we re-look at those rules on the potentials as well as prospects one more time.  But this is a good sign so far.

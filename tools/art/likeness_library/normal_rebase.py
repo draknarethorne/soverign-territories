@@ -1853,6 +1853,7 @@ def _settle_plan(api, report, *, rows, candidates, raw_photos, release_ids, fold
             vector = np.asarray(photo.vec, dtype=float)
             vector = nz(vector) if vector.ndim == 1 and np.isfinite(vector).all() and np.linalg.norm(vector) else None
         stay = None
+        rival_release = False
         if original(row):
             if fresh_assessment is None:
                 stay = "existing member outside a release cohort; settle releases only photos this run placed"
@@ -1860,6 +1861,11 @@ def _settle_plan(api, report, *, rows, candidates, raw_photos, release_ids, fold
                 stay = "existing member cannot be bound for release (ambiguous, stale or unbindable source)"
             elif row["owner"] in named_folders and (assessed.get(photo_id) or {}).get("band") != "red":
                 stay = "user-named identity member above red; only truly low scores leave a named identity"
+            # IU17: a low original member of a non-cast identity may still leave for a clearly
+            # better established rival (multi-pass refinement), never to a fragment.
+            rival_release = row["group"] not in ("Sisters", "Angels") and (
+                fresh_assessment is None or fresh_bindable(row)
+            ) and not (candidate or {}).get("protected")
         exempt = None
         if candidate is not None and photo_id not in release_ids and not (
             fresh_assessment is not None and original(row) and stay is None
@@ -1883,6 +1889,7 @@ def _settle_plan(api, report, *, rows, candidates, raw_photos, release_ids, fold
             ),
             "scorable": bool(candidate.get("qualityEligible")) if candidate is not None else single,
             "exemptReason": exempt, "stayExemptReason": stay,
+            "rivalRelease": rival_release and row["owner"] not in protected_folders,
             "seedOf": seeds.get(photo_id), "candidateState": state, "candidate": candidate,
         })
     settle_candidates = {}
@@ -1916,8 +1923,7 @@ def _settle_plan(api, report, *, rows, candidates, raw_photos, release_ids, fold
     }
     evidence, timings = normal_admission.settle_passes(
         api, entries, decisions, report["clusters"], identity_meta, settings, policy, names_taken,
-        locked=locked, max_passes=max_passes,
-        candidate_for=candidate_for if fresh_assessment is not None else None,
+        locked=locked, max_passes=max_passes, candidate_for=candidate_for,
     )
     bindings = []
     for entry in entries:
@@ -1927,6 +1933,12 @@ def _settle_plan(api, report, *, rows, candidates, raw_photos, release_ids, fold
             continue
         # An original member that settle moved off its source location.
         if fresh_assessment is None or entry["stayExemptReason"]:
+            if entry.get("rivalRelease") and (decisions.get(entry["photoId"]) or {}).get("settle"):
+                # IU17: an unprotected original left for a clearly better established rival.
+                if fresh_assessment is not None:
+                    bindings.append({"photoId": row["photoId"], "currentPath": row["source"],
+                                     "sha256": row["sourceHash"]})
+                continue
             raise ValueError(f'{entry["photoId"]}: settle cannot release an original member outside a fresh release')
         bindings.append({"photoId": row["photoId"], "currentPath": row["source"], "sha256": row["sourceHash"]})
     report["assignments"] = sorted(

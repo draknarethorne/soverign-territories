@@ -3681,6 +3681,52 @@ class SettlePassTests(unittest.TestCase):
         self.assertNotIn("singlePhoto", _clusters[0])
         self.assertNotIn("singlePhoto", decisions["z"])
 
+    def test_original_low_member_leaves_only_for_a_clearly_better_established_rival(self):
+        stay = "existing member outside a release cohort; settle releases only photos this run placed"
+
+        def fixture(odd_vector, **extra):
+            return [
+                self.entry("a1", "Prospects/Alpha", (1, 0, 0)),
+                self.entry("a2", "Prospects/Alpha", (1, .05, 0)),
+                self.entry("a3", "Prospects/Alpha", (1, -.05, 0)),
+                self.entry("b1", "Potentials/Beta", (0, 1, .05)),
+                self.entry("b2", "Potentials/Beta", (0, 1, -.05)),
+                self.entry("odd", "Prospects/Alpha", odd_vector, stayExemptReason=stay, rivalRelease=True, **extra),
+            ]
+
+        decisions = {}
+        result, _ = self.settle(fixture((.1, .99, 0)), decisions)
+        self.assertEqual(decisions["odd"]["destination"], "Potentials/Beta")
+        self.assertEqual(decisions["odd"]["settle"]["releasedFrom"], "Prospects/Alpha")
+        # No clearly better rival (low everywhere): the original member stays home.
+        decisions = {}
+        result, _ = self.settle(fixture((.1, .1, .99)), decisions)
+        self.assertNotIn("odd", decisions)
+        self.assertEqual(result["passes"][0]["releasedCount"], 0)
+        # Without IU17 eligibility, or with a real protection, it is never released.
+        for extra in ({"rivalRelease": False}, {"exemptReason": "protected photo"}):
+            decisions = {}
+            entries = fixture((.1, .99, 0))
+            entries[-1].update(extra)
+            self.settle(entries, decisions)
+            self.assertNotIn("odd", decisions)
+
+    def test_member_above_its_category_bar_is_not_released_as_orange(self):
+        policy = copy.deepcopy(self.policy)
+        policy["categoryPolicies"]["Potentials"]["photoRouteMinimum"] = .25
+        entries = [
+            self.entry("p1", "Potentials/Pia", (1, 0, 0)),
+            self.entry("p2", "Potentials/Pia", (1, .05, 0)),
+            self.entry("p3", "Potentials/Pia", (1, -.05, 0)),
+            self.entry("x", "Various", (.27, .963, 0), sourceLocation=("Various", "gallery")),
+        ]
+        decisions = {"x": self.admitted("x", "Potentials/Pia")}
+        result, _timings = self.admission.settle_passes(
+            self.api, entries, decisions, [], {}, self.settings, policy, set(), max_passes=3,
+        )
+        self.assertEqual(result["passes"][0]["releasedCount"], 0)
+        self.assertEqual(decisions["x"]["destination"], "Potentials/Pia")
+
     def test_disabled_and_deterministic(self):
         entries, decisions = self.chain()
         first, _ = self.settle(copy.deepcopy(entries), copy.deepcopy(decisions))

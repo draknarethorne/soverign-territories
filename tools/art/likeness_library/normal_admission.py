@@ -3571,11 +3571,41 @@ def settle_passes(api, entries, decisions, clusters, identity_meta, settings, po
         return next((cluster for cluster in clusters if cluster.get("destination") == folder), None)
 
     members, voters, scores = assess()
+    lead = policy["photoRouting"]["minimumOwnCoreLead"]
+
+    def below_category_bar(pid):
+        # A member admitted on its category's Gallery bar is not released for clearing it.
+        folder = scores[pid]["identity"]
+        rules = policy["categoryPolicies"].get(folder.split("/", 1)[0], {})
+        bar = rules.get("photoRouteMinimum")
+        return folder.split("/", 1)[0] in CAST or bar is None or scores[pid]["score"] is None or scores[pid]["score"] < bar
+
+    def rival_target(pid, cores):
+        """IU17: an original member may leave only for a clearly better established rival."""
+        entry, row = by_id[pid], scores[pid]
+        if (not entry.get("rivalRelease") or entry.get("exemptReason") or entry.get("seedOf")
+                or row["score"] is None or entry["vector"] is None):
+            return None
+        sizes = {folder: len(rows) for folder, rows in members.items()}
+        rivals = [rival for rival in _settle_rivals(entry, cores, policy, locked=locked, exclude={row["identity"]})
+                  if sizes.get(rival["folder"], 0) >= 2 and rival["folder"].split("/", 1)[0] not in CAST]
+        if rivals and rivals[0]["score"] >= yellow and rivals[0]["score"] >= row["score"] + lead:
+            return rivals[0]["folder"]
+        return None
+
     for pass_index in range(1, max_passes + 1):
         started = clock()
         before = {entry["photoId"]: settle_location(entry, decisions.get(entry["photoId"])) for entry in entries}
-        flagged = sorted(pid for pid, row in scores.items() if row["band"] in SETTLE_RELEASE_BANDS)
-        release = [pid for pid in flagged if exempt(by_id[pid], scores[pid]["identity"]) is None]
+        flagged = sorted(pid for pid, row in scores.items()
+                         if row["band"] in SETTLE_RELEASE_BANDS and below_category_bar(pid))
+        pass_cores, _pass_refs = _settle_cores(voters, identity_meta)
+        rival_for = {}
+        for pid in flagged:
+            if exempt(by_id[pid], scores[pid]["identity"]) is not None and by_id[pid].get("rivalRelease"):
+                target = rival_target(pid, pass_cores)
+                if target:
+                    rival_for[pid] = target
+        release = [pid for pid in flagged if exempt(by_id[pid], scores[pid]["identity"]) is None or pid in rival_for]
         release_scores = {pid: dict(scores[pid]) for pid in release}
         record = {
             "pass": pass_index, "memberCount": len(scores),
@@ -3615,6 +3645,13 @@ def settle_passes(api, entries, decisions, clusters, identity_meta, settings, po
                 raise ValueError("settle rematch did not conserve its released photos")
             for pid in release:
                 row, entry = rows[pid], by_id[pid]
+                if pid in rival_for:
+                    landed = row.get("destination") or (row.get("reviewDestination") or "").rsplit("/", 1)[0]
+                    if landed != rival_for[pid]:
+                        # IU17: no churn; an original member stays home unless it lands at its rival.
+                        record.setdefault("rivalReleaseKept", []).append(
+                            {"photoId": pid, "identity": scores[pid]["identity"], "rival": rival_for[pid]})
+                        continue
                 previous = "/".join(before[pid])
                 decision = {
                     **row, "normalAdmission": True, "referenceVersion": ctx["referenceVersion"],
