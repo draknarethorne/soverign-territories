@@ -59,7 +59,7 @@ def proposed_moves(report, photos, root, *, duplicate_archives=None):
             "sha256": metadata.content_sha256(source), "reason": row["reason"],
             **{key: row[key] for key in (
                 "castAdmission", "referenceVersion", "referenceEligible", "supportPhotoIds",
-                "normalAdmission",
+                "normalAdmission", "namedIntakeGate",
                 "routingEvidence", "destinationType", "faceQuality", "singlePhoto",
             ) if key in row},
             **({"preparationOnly": True, "membershipOnly": True} if source == destination else {}),

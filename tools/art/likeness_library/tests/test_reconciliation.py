@@ -2322,9 +2322,23 @@ class NormalAdmissionTests(unittest.TestCase):
                                        admission_context=ctx)
 
         self.assertEqual(route(.32)["assignments"][0]["destination"], "Prospects/Nadia")
+        self.assertTrue(route(.32)["assignments"][0]["namedIntakeGate"])
         self.assertEqual(route(.32, named=False)["assignments"], [])
         self.assertEqual(route(.27)["held"][0]["namedIntakeReview"], "near-miss")
         self.assertFalse(any(row.get("namedIntakeReview") for row in route(.27, defer=True)["held"]))
+
+        from tools.art.likeness_library import normal_finish
+
+        move = {"photoId": "photo:image_123", "normalAdmission": True, "destinationType": "existing",
+                "source": "Various/gallery/x_image_123.jpg", "destination": "Prospects/Nadia/gallery/n_image_123.jpg",
+                "routingEvidence": {"winner": "Prospects/Nadia", "score": .32, "margin": .2}}
+        with mock.patch.object(normal_finish, "cores", return_value=({}, [])):
+            with self.assertRaisesRegex(ValueError, "selected receiving gates"):
+                normal_finish.check_batch(None, SimpleNamespace(photos=[]), {"photos": {}}, self.policy, [move])
+            checked, _ = normal_finish.check_batch(
+                None, SimpleNamespace(photos=[]), {"photos": {}}, self.policy, [{**move, "namedIntakeGate": True}],
+            )
+        self.assertEqual(len(checked), 1)
 
     def test_lower_upward_move_needs_to_beat_home_by_own_core_lead(self):
         # IU13a (Nov 23): Fia-like Potential members stay unless a Prospect beats home by 0.10.

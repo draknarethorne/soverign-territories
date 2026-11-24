@@ -229,6 +229,7 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
             assignments.extend(evidence(
                 [row], ranked, "qualified photo match against frozen identity core",
                 destination=folder, destinationType="existing", score=round(score, 4),
+                **({"namedIntakeGate": True} if folder in named and arrival else {}),
             ))
         else:
             review_destination = (
