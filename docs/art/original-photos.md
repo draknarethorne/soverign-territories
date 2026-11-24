@@ -1489,7 +1489,7 @@ required. Threshold changes belong in the versioned policy, not `--min`.
 
 | Step | What | Where the originals of a change are kept |
 | --- | --- | --- |
-| 0 `likeness seed` | every `Various\<Name>\gallery` (and `review`) folder joins the person called `<Name>` without face matching: an existing person of that name, else a new Prospect (5+ photos) or Potential; an ambiguous name is held; photos rejected for that person stay | `z_<name>.txt` history; `likeness undo` |
+| 0 `likeness seed` | every `Various\<Name>\gallery` (and `review`) folder joins the person called `<Name>`: an existing person of that name, else an identity its faces clearly match (merge rule; that person's name is corrected to `<Name>`, see [likeness](likeness.md)), else a new Prospect (5+ photos) or Potential; an ambiguous name is held; photos rejected for that person stay | `z_<name>.txt` history; `likeness undo` |
 | 1 `originals` | names every original after its folder, makes the scaled copy and headshot | old scaled copies: `_archive\<folder>\gallery_944x1104_org`; old headshots: `_archive\<folder>\headshot_944x1104_org` |
 | 2 `duplicates` | the same picture twice (any folder, any name) | the extra copy: `_archive\<folder>\gallery_duplicates` |
 | 3 `likeness crop` | legacy face-guided app-bar/other-subject/background crop for unprepared photos; verified prepared natives skip it; it cannot guarantee limbs are kept | the uncropped photo: `_archive\<folder>\gallery_uncropped` (`likeness crop --undo` puts the last batch back) |

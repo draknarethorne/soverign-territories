@@ -168,8 +168,13 @@ def validate(document, root, catalog, cfg, *, _participants=()):
         history = "".join(lines[1:] if lines and lines[0].lower().startswith("name:") else lines)
         if history and not history.endswith("\n"):
             history += "\n"
+        correction = action.get("nameCorrection")
+        intake = (
+            f"{datetime.date.today().isoformat()} named intake {action['namedSource']}: supplied name adopted\n"
+            if correction == "named-intake" and action.get("namedSource") else ""
+        )
         new_bytes = (
-            f"name: {name}\n" + history
+            f"name: {name}\n" + history + intake
             + f"{datetime.date.today().isoformat()} "
             + (f"name swap with {_participants[1 - _participants.index(action['personId'])]}: "
                if _participants else "")
@@ -190,7 +195,12 @@ def validate(document, root, catalog, cfg, *, _participants=()):
         return [], [{
             "type": ACTION, "action": action, "personId": action["personId"],
             "source": source, "destination": destination, "rename": state,
-            "names": identity_names.renamed(person, name, source),
+            "names": (
+                identity_names.corrected(
+                    person, name, source, correction,
+                    asserted=name if correction == "named-intake" else recorded_name,
+                ) if correction else identity_names.renamed(person, name, source)
+            ),
         }]
     except (OSError, ValueError) as exc:
         return [f"rename: {exc}"], []
@@ -204,12 +214,21 @@ def catalog_action(catalog, plan, batch):
         person["folderHistory"].append(person["folder"])
         person["folder"] = plan["destination"].parent.name + "/" + plan["destination"].name
         person["displayName"] = plan["action"]["newName"]
+    stamp = datetime.datetime.now().astimezone().isoformat(timespec="seconds")
+    if plan["action"].get("namedSource") and plan["source"].parent.name not in CAST_CATEGORIES:
+        person.setdefault("namedIntake", {"recordedAt": stamp, "sourceFolder": plan["action"]["namedSource"]})
     record = {
         "id": "action_" + uuid.uuid4().hex, "batchId": batch,
-        "timestamp": datetime.datetime.now().astimezone().isoformat(timespec="seconds"),
+        "timestamp": stamp,
         "actor": "user", "type": ACTION, "photoIds": [], "personId": plan["personId"],
         "source": before["folder"], "destination": person["folder"],
-        "reason": "explicit identity rename staged in the Review gallery",
+        "reason": (
+            f"named-intake name correction from {plan['action']['namedSource']}"
+            if plan["action"].get("namedSource") else
+            "generated name for an identity displaced by a named-intake correction"
+            if plan["action"].get("nameCorrection") == "generated" else
+            "explicit identity rename staged in the Review gallery"
+        ),
         "beforeState": {"person": before, "photo": None},
         "afterState": {"person": copy.deepcopy(person), "photo": None},
         "renameState": copy.deepcopy(plan["rename"]),
@@ -219,7 +238,11 @@ def catalog_action(catalog, plan, batch):
         partner = catalog_action(catalog, plan["partner"], batch)
         catalog["actions"].pop()
         record["swapPartner"] = partner
-        record["reason"] = "explicit confirmed two-person name swap; both identities preserved"
+        record["reason"] = (
+            f"named-intake name correction from {plan['action']['namedSource']}; names swapped, both identities preserved"
+            if plan["action"].get("namedSource") else
+            "explicit confirmed two-person name swap; both identities preserved"
+        )
     return record
 
 
@@ -351,6 +374,8 @@ def _validate_swap(document, root, catalog, cfg):
         if action["newName"] != partner["expectedRecordedName"]:
             raise ValueError("swap target name is stale")
         second = {**partner, "type": ACTION, "newName": action["expectedRecordedName"]}
+        if action.get("nameCorrection") == "named-intake":
+            second["nameCorrection"] = "named-intake-swap"
         plans = []
         for row in (clean, second):
             errors, result = validate({**document, "actions": [row]}, root, catalog, cfg,

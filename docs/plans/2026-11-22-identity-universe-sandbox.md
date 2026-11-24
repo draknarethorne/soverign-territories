@@ -657,6 +657,84 @@ Let's make your recommended changes and re-run all three just to see how things 
 ```
 <!-- markdownlint-enable MD013 -->
 
+**Runs (IU17, commit `778acc282`):**
+
+| Universe | Policy | Identities | Singles | Named photos |
+|---|---|---|---|---|
+| `mw-named-c5` | shared (centroid, Potential 0.30) | 57 | - | 7 moved to a better rival, 7 kept by the no-churn rule |
+| `mw-named-p25` | Potential bar 0.25 | 54 | 29 | - |
+| `mw-flat-p25` | Potential bar 0.25 | 94 | - | identical to flat centroid (70 of 137) |
+
+The 0.25 Potential bar gives a small benefit on named intake and none on
+flat intake; it stays a variant until the user reviews `mw-named-c5` and
+the IU10 category rules.
+
+### Nov 24 named folder matching an existing identity (N12/N13)
+
+A named folder whose photos clearly match an existing identity (any
+category, including Sisters and Angels) corrects that identity's person
+name instead of creating a second identity. The contract is the
+[N12/N13 naming contract](2026-10-22-identity-family-naming.md#oct-30-named-and-unnamed-various-acceptance-contract);
+this round implements its clear-match core.
+
+- **Clear match (user choice: merge rule):** the named folder's centroid
+  scores at least `identityActions.autoMergeMinimum` (0.55) against one
+  identity's core and leads the next identity by
+  `autoMergeMinimumMargin` (0.10), with at least
+  `autoMergeMinimumIndependentPhotos` (2) usable named photos. Otherwise
+  the old behaviour applies (a new named Prospect/Potential) and the close
+  rival is shown.
+- **Correction:** the named photos join the matched identity. Its person
+  takes the supplied name as both original and current name
+  (`originalSource: named-intake`); previous names stay in
+  `names.previousNames`, the action record and the `z_` history. A
+  non-cast folder is renamed; a Sister/Angel character folder and slot
+  never change. The identity is marked `namedIntake`.
+- **Name collision:** if another identity holds the supplied name, the
+  names swap through the existing confirmed-swap path when the matched
+  identity's old name is a recorded full person name; otherwise the other
+  identity gets a generated random name labelled `generated`. The
+  displaced identity's original name is replaced only when it was the
+  supplied name; otherwise it is kept.
+- **Holds:** an occupied name held by several identities, a refused rename
+  (for example a non-cast identity holding a workflow-selected photo), or
+  an unregistered match holds the named folder in Various with the reason.
+- **Order and undo:** the named photos first join the matched identity
+  (a `likeness undo` batch); the correction is then re-planned against
+  the current files, must still be the previewed kind, and is applied as an
+  ordinary rename/swap action batch with a scoped catalogue/history backup.
+  Undo newest first: `bin\likeness-actions.cmd undo --root <Working> --apply`,
+  then `likeness undo`. A refused correction leaves the photos in the
+  matched identity under its old name and says so.
+- **Test (user choice: small universe):** a universe with `Sisters/Draknoxa`
+  (person name "Sydney Sky", wrong), `Potentials/Lia Joyce` (the real
+  Sydney Sky) and a sample of other identities plus look-alikes pulled from
+  the main Sandbox; `Various\Sydney Sky` built from Lia Joyce's photos must
+  rename Lia Joyce's identity to Sydney Sky and give Draknoxa's person
+  "Lia Joyce", leaving the Draknoxa slot unchanged.
+
+- [x] **P1 ai** IU18 Named-intake name correction for a clear match, with
+  swap/generated-name collision handling, holds and undo; verify in the
+  small Draknoxa/Sydney Sky universe.
+
+**IU18 result (`named-rename-01`, 18 identities copied from the main
+Sandbox: Draknoxa, Lia Joyce, 5 look-alikes of each, 6 random):**
+`Various/Sydney Sky` (3 of Lia Joyce's 5 Gallery photos) matched
+`Potentials/Lia Joyce` 0.67 against the next identity, `Prospects/Rachel
+Pizzilato`, at 0.57, exactly the 0.10 margin. Lia Joyce became
+`Potentials/Sydney Sky` (5 photos, `named-intake`, previous name kept);
+Draknoxa's person became Lia Joyce (`named-intake-swap`, "Sydney Sky" kept
+in `previousNames`), and the `Sisters/Draknoxa` folder and its 15 photos are
+unchanged. Both undos restored the exact starting state; the universe was
+then re-applied for review. Rachel Pizzilato's close score suggests checking
+whether she is the same person.
+
+<!-- markdownlint-disable MD013 -->
+```text
+There's one additional named person scenario we need to cover. If I bring in a named person and it is actually already assigned to an idenity (any of them, including Sisters and Angels, Models, etc...) what I expect is that it would then rename the existing Sister or Angel and update it's history and adapt the original name (especially if it was randomly generated).  I can test this in a scenario with a few identities that already exist in the full sandbox or we can construct a small universe for the testing.  I just want to make sure logic is in place to handle that potential scenario.  
+```
+<!-- markdownlint-enable MD013 -->
+
 ## Open decisions for the user
 
 - The default expansion band (yellow) and hop depth, after seeing the IU2

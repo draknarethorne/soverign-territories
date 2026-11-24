@@ -217,7 +217,23 @@
           "properties": {
             "originalName": {"type": ["string", "null"], "minLength": 1},
             "currentName": {"type": "string", "minLength": 1},
-            "originalSource": {"enum": ["recorded-history", "rename-history", "catalogue-registration", "unavailable"]}
+            "originalSource": {"enum": ["recorded-history", "rename-history", "catalogue-registration", "unavailable", "named-intake", "named-intake-swap", "generated"]},
+            "previousNames": {
+              "type": "array",
+              "description": "Names replaced by named-intake corrections, oldest first.",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["originalName", "currentName", "originalSource", "replacedAt", "reason"],
+                "properties": {
+                  "originalName": {"type": ["string", "null"]},
+                  "currentName": {"type": "string", "minLength": 1},
+                  "originalSource": {"type": "string", "minLength": 1},
+                  "replacedAt": {"type": "string", "format": "date"},
+                  "reason": {"type": "string", "minLength": 1}
+                }
+              }
+            }
           }
         },
         "family": {

@@ -880,8 +880,135 @@ def cmd_reconcile(args):
     return run(args, sys.modules[__name__])
 
 
+def _named_matches(args, plans):
+    """Merge-rule face match of each new named folder's gallery photos against identity cores."""
+    from likeness_library import named_intake
+
+    _cfg, st, _work, cache, space = build(args)
+    policy = load_policy(getattr(args, "policy", None))
+    centroids = {
+        key: space.centroid(key) for key in space.keys
+        if key.split("/", 1)[0] in named_intake.PERSON_ROOTS and "/" in key
+    }
+    embed = args.embedder or Embedder()
+    found = {}
+    for plan in plans:
+        vectors = []
+        for path, bucket in plan["photos"]:
+            if bucket != "gallery":
+                continue
+            digest = cache.sha(path)
+            if digest not in cache.emb:
+                cache.emb[digest] = embed(path) or {"faces": -1}
+            photo = Photo(path, "Various", plan["name"], digest, cache.emb[digest])
+            if photo.usable(st["minFace"]):
+                vectors.append(nz(photo.raw - space.mean))
+        found[plan["source"]] = named_intake.clear_match(vectors, centroids, policy)
+    cache.save()
+    return found
+
+
+def _named_corrections(args, work, cfg, catalog, plans, held):
+    """Redirect named folders that clearly match an existing identity and plan its person-name correction."""
+    from likeness_library import named_intake
+
+    fresh = [plan for plan in plans if plan["new"]]
+    if not fresh:
+        return
+    found = _named_matches(args, fresh)
+    targets = collections.Counter(
+        found[plan["source"]]["best"][1] for plan in fresh if found[plan["source"]]["decision"] == "match"
+    )
+    for plan in fresh:
+        match = found[plan["source"]]
+        best, rival = match["best"], match["rival"]
+        shown = (f"best {best[1]} {best[0]:.2f}" if best else "no identity cores") + (
+            f", next {rival[1]} {rival[0]:.2f}" if rival else "")
+        if match["decision"] != "match":
+            reason = "fewer than the merge rule's usable photos" if match["decision"] == "too-few" else "no clear match"
+            print(f"  {plan['source']}: {reason} ({shown}); a new identity")
+            continue
+        target = best[1]
+        if targets[target] > 1:
+            correction = {"kind": "hold", "reason": f"several named folders clearly match {target}"}
+        else:
+            correction = named_intake.plan_correction(
+                work, catalog, cfg, target, plan["name"], plan["source"], invent=invent_name,
+            )
+        if correction["kind"] == "hold":
+            plans.remove(plan)
+            held.append({"name": plan["name"], "source": plan["source"],
+                         "photos": len(plan["photos"]), "reason": correction["reason"]})
+            continue
+        category, slot = target.split("/", 1)
+        if correction["documents"] and category not in named_intake.CAST:
+            slot = correction["documents"][-1]["actions"][0]["newName"]
+        plan.update(destination=f"{category}/{slot}", new=False, correction=correction, matched=target)
+        print(f"  {plan['source']} clearly matches {target} ({shown})")
+        if correction["kind"] == "already-named":
+            print(f"       the person is already named {plan['name']}; no name change")
+        else:
+            print(f"       person name {correction['previousName']} -> {plan['name']}"
+                  + (f" (folder {target} -> {plan['destination']})" if plan["destination"] != target else
+                     " (character folder and slot unchanged)"))
+        if correction["kind"] == "swap":
+            print(f"       {correction['displaced']['folder']} held the name; it takes {correction['displacedName']} (name swap)")
+        elif correction["kind"] == "generated":
+            print(f"       {correction['displaced']['folder']} held the name; it gets the generated name "
+                  f"{correction['displacedName']}")
+
+
+def _apply_named_corrections(work, cfg, plans):
+    """After the photos joined the matched identity, apply each correction as rename/swap action batches.
+
+    The correction is re-planned against the current files (the batch binds the identity's tree hash) and
+    must still be the previewed kind. Undo order: ``bin\\likeness-actions.cmd undo --root <Working>``, then ``likeness undo``.
+    """
+    from likeness_library import actions, named_intake
+
+    path = named_intake.catalogue_path(work)
+    pool_folder = pool_home(settings(cfg))
+    failed = set()
+    for plan in plans:
+        previewed = plan.get("correction")
+        if not previewed or not previewed["documents"]:
+            continue
+        catalog = metadata.load_catalog(metadata.path_for_root(work))
+        current = named_intake.plan_correction(
+            work, catalog, cfg, plan["matched"], plan["name"], plan["source"], invent=invent_name,
+        )
+        if current["kind"] != previewed["kind"] or current.get("displacedName") != previewed.get("displacedName"):
+            print(f"  name correction for {plan['source']} changed since the preview "
+                  f"({previewed['kind']} -> {current['kind']}: {current.get('reason', '')}); names unchanged")
+            failed.add(plan["source"])
+            continue
+        applied = []
+        for document in current["documents"]:
+            try:
+                batch, backup = actions.apply_actions(
+                    document, work, metadata.load_catalog(metadata.path_for_root(work)), cfg, pool_folder,
+                    save_fn=lambda data: metadata.save_catalog(data, path), scoped_rename=True,
+                )
+            except (OSError, ValueError, SystemExit) as exc:
+                print(f"  name correction for {plan['source']} stopped: {exc}")
+                if applied:
+                    print(f"  already applied: {', '.join(applied)}; reverse with bin\\likeness-actions.cmd undo --root <Working> <batch> --apply")
+                failed.add(plan["source"])
+                break
+            applied.append(batch)
+            print(f"  name correction batch {batch} for {plan['source']}; verified backup: {backup}")
+    for source in sorted(failed):
+        print(f"  {source}: its photos joined the matched identity under its old name; "
+              "`likeness undo` returns them to Various")
+    return failed
+
+
 def cmd_seed(args):
-    """Various/<Name>/gallery: the user knows every photo is <Name>; move the whole folder to that person (no face matching)."""
+    """Various/<Name>/gallery: the user knows every photo is <Name>; move the whole folder to that person.
+
+    A name match joins that person. Otherwise a folder that clearly matches one existing identity by face (the
+    merge rule) joins it and corrects its person name; anything else becomes a new Prospect/Potential.
+    """
     cfg = configuration()
     work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
     seeds = seeded_folders.seeded_folders(work, originals.images)
@@ -892,6 +1019,8 @@ def cmd_seed(args):
     rejected = lambda path: bool(catalog["photos"].get(metadata.photo_id_from_name(path.name), {}).get("rejectedPersonIds"))
     existing = [f"{group}/{name}" for group, name, _ in cw.photo_folders(cfg, work) if group in seeded_folders.PERSON_ROOTS]
     plans, held = seeded_folders.plan_seeded(seeds, existing, rejected)
+    if not getattr(args, "no_match", False):
+        _named_corrections(args, work, cfg, catalog, plans, held)
     moves = []
     for plan in plans:
         what = "NEW folder" if plan["new"] else "existing person"
@@ -900,21 +1029,23 @@ def cmd_seed(args):
             print(f"       kept in place: {path.name} ({reason})")
         for path, bucket in plan["photos"]:
             photo = types.SimpleNamespace(path=path, name=path.name, key=plan["source"], sha=seeded_folders.sha1(path))
-            moves.append(Move(photo, plan["destination"], f"seeded by name from {plan['source']}", bucket=bucket))
+            moves.append(Move(photo, plan.get("matched", plan["destination"]),
+                              f"seeded by name from {plan['source']}", bucket=bucket))
     for row in held:
         print(f"  HOLD {row['source']} ({row['photos']} photo(s)): {row['reason']}")
     if not args.apply:
         print(f"{len(moves)} named-folder photo(s) would move; preview only (add --apply)")
         return 0
     n = execute(moves, work, True, Cache(cache_path(args, work)))
+    print(f"{n} photo(s) moved; `likeness undo` reverses the batch")
+    failed = _apply_named_corrections(work, cfg, plans) if n else set()
     if n:
         from likeness_library import named_intake
 
-        catalogue, marked = named_intake.mark(work, plans)
+        catalogue, marked = named_intake.mark(work, [plan for plan in plans if plan["source"] not in failed])
         print(f"named identities marked in {catalogue}: {', '.join(marked) or 'none'}")
-    print(f"{n} photo(s) moved; `likeness undo` reverses the batch")
     after_moves(args, n > 0)
-    return 0
+    return 1 if failed else 0
 
 
 def whole_folder(space, cfg, name):
@@ -3449,7 +3580,9 @@ def main(argv=None, embedder=None, *, domain="general"):
     s.add_argument("--plan", help="also write the moves to this JSON file")
     s.add_argument("--singles", action="store_true", help="a photo that matches nobody and has no look-alike in the pool gets a new folder of its own, so the pool ends up holding only photos with no usable face")
     s.add_argument("--assign", type=float, help="score that makes a match for this run (default: settings assign, 0.40); a lower one is a looser second look, best used after `pullback`")
-    add("seed", cmd_seed, apply=True, help="Various/<Name>/gallery: move a folder of one known person to <Name> (existing person, or a new Prospect/Potential)")
+    s = add("seed", cmd_seed, apply=True, help="Various/<Name>/gallery: move a folder of one known person to <Name> (existing person, a clearly matching identity whose person name is corrected, or a new Prospect/Potential)")
+    s.add_argument("--policy", help="versioned likeness policy JSON for the merge-rule match (default: shared policy)")
+    s.add_argument("--no-match", action="store_true", help="skip face matching: an unknown name always becomes a new identity")
     s = add(
         "reconcile", cmd_reconcile, apply=True,
         help="explicit legacy experimental reconciliation compatibility alias",
