@@ -1,0 +1,39 @@
+=== Azaline Rimeward - 0_Edit - Deluxe bedroom: relaxed edge audition ===
+Incoming image: the user-selected source photo or selected generated image.
+Denoise ~0.9.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: Recline comfortably on the bed, supported by one hand with the elbow gently bent. Let one leg hang over the side and rest the other foot on the bed with its knee bent. Rest the free hand on the thigh.
+
+Background: a simple, tidy, photorealistic bedroom with a neatly made bed, plain light-neutral bedding and an uncluttered softly rendered background
+Lighting: Even, soft, neutral frontal studio lighting with a flat, clean key light.
+Professional beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+
+Camera: Pull the camera back to reveal the complete figure and show the feet. Include the surrounding scene and extend it seamlessly as needed. Position the camera above the subject and angle it downward. Frame the surrounding scene as a wide environmental film still.
+
+Edit the incoming image: Remove logos, icons and overlays. Remove props and non-jewelry accessories, including purses, cups, glasses and items held in the hands. Retain existing jewelry. Crop top and bottom borders that are not part of the background; extend the selected background as needed. Create a neutral, full-length pose audition of the same person in the selected setting. Use ordinary relaxed body language and a neutral, non-suggestive pose.
+
+Result:
+Keep one person only, with realistic photographic detail and natural skin texture. Remove visible text, logos, watermarks and interface icons. Preserve visible hands, fingers and feet without duplicating limbs. Any newly visible details are synthesized, not recovered from the original.
+
+Critical details:
+Bust: A full, naturally rounded bust with balanced proportions.
+Body: tall, slim, poised, elegant build with precise posture; slim, straight waist with a flat midriff and faint ab lines; slim, precise arms with long fingers and light tone; slim, gently curved hips; long, slim legs with a clean line and lightly toned calves
+
+Likeness: Preserve the same person's recognizable face, expression, eye color and skin tone, with consistent facial features.
+
+Footwear: high-heeled shoes
+Hair: Keep the incoming hairstyle, hair length, texture and color.
+Preserve the same person's recognizable face, expression, eye color and skin tone, with consistent facial features.
+
+----------------------------------------------------------------
+negative prompt:
+
+grey studio backdrop, busy decor, clutter,
+new or substituted props, cropped body, cropped feet, blurred, cropped subject, dramatic or suggestive posing, sexualized direction or anatomy,
+changed identity, altered facial features, changed eye color, changed skin tone,
+changed hair,
+extra people, extra limbs, extra digits, deformed hands, text, watermark,
+logo.

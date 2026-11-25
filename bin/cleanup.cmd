@@ -1,10 +1,11 @@
 @echo off
 call "%~dp0_env.cmd"
 if "%~1"=="" (
-  echo Usage: cleanup "Workspace" [--apply]    removes what the workspace is not home for ^(a clone's leftovers, finished temporary copies^); preview unless --apply
-  echo   Moves workflows to workflows\.sync\backup, only when the set's home workspace holds an identical copy. zz_ items are never touched.
+  echo Usage: cleanup "Workspace" [filters] [--workspace-backups] [--prefix-map OLD=NEW] [--retire-planned-home] [--apply]
+  echo   Preview unless --apply; keeps zz_ items and normally requires matching home workflows.
+  echo   Explicit --retire-planned-home requires --group, --hero and --workspace-backups.
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% tools\workflows\comfy_workflows.py cleanup -w "%~1" %~2
+%PY% tools\workflows\comfy_workflows.py cleanup -w "%~1" %2 %3 %4 %5 %6 %7 %8 %9
 call "%~dp0_end.cmd" %errorlevel%

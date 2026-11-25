@@ -1,0 +1,9 @@
+{
+  "id": "studio/views/body/relaxed-front-staggered",
+  "kind": "view",
+  "name": "Relaxed front-facing staggered stance",
+  "extends": "data/art/studio/views/body/relaxed-front.json",
+  "compatibleStages": ["edit", "alpha", "pose"],
+  "tags": ["front", "full-body", "standing", "relaxed", "staggered"],
+  "description": "{{BASE}} Place one foot forward."
+}

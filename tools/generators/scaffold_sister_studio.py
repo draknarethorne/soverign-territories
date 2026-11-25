@@ -49,8 +49,10 @@ def norm(p):
 
 
 class Writer:
-    def __init__(self, base, group):
+    def __init__(self, base, group, dry_run=False):
         self.base, self.group, self.made, self.skipped = base, group, 0, 0
+        self.dry_run = dry_run
+        self.planned = set()
         # Hand-made cards use their own file names, so also skip anything whose output file already has a card.
         self.outputs = {json.loads(p.read_text(encoding="utf-8")).get("output") for p in base.rglob("*.json")} if base.exists() else set()
 
@@ -62,8 +64,14 @@ class Writer:
             card["output"] = art_layout.output_for(card, self.group, hero, stem, ROOT, division)
         sub = "/".join(art_layout.card_dirs(card, self.group, ROOT))
         target = self.base / sub / f"{art_id}.json"
-        if target.exists() or card.get("output") in self.outputs:
+        if target.exists() or target in self.planned or card.get("output") in self.outputs:
             self.skipped += 1
+            return
+        if self.dry_run:
+            print(f"would create {target.relative_to(ROOT).as_posix()}")
+            self.planned.add(target)
+            self.outputs.add(card.get("output"))
+            self.made += 1
             return
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(json.dumps(card, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -101,9 +109,9 @@ def main():
         path = norm(path)
         short = pathlib.Path(path).stem
         sex = "male" if "male" in json.loads((ROOT / path).read_text(encoding="utf-8")).get("tags", []) else "female"
-        art_id = f"{slug}-x-pose-{short}"
+        art_id = f"{slug}-layer-{short}"
         wr.write("pose", art_id, {"artId": art_id, "kind": "base-set", "stage": "pose", "heroArt": ident,
-                 "template": template_path(f"pose-{sex}-human.txt"), "output": out("poses", f"{hero}_X_Pose_{camel(short)}"),
+                 "template": template_path(f"pose-{sex}-human.txt"), "output": out("poses", f"{hero}_Layer_{camel(short)}"),
                  "denoise": "~1.0", "components": {"underlayer": path},
                  "notes": "UNDERLAYER TEST. Same original photo as the base A-pose; only the underlayer piece differs."})
     for path in kit.get("clothing", []):

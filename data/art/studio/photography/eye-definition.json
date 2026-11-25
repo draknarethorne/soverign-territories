@@ -1,0 +1,8 @@
+{
+  "id": "studio/photography/eye-definition",
+  "kind": "photography",
+  "name": "Clear symmetrical eyes",
+  "compatibleStages": ["edit", "alpha", "head"],
+  "tags": ["eyes", "detail"],
+  "description": "Both eyes matched and symmetrical, open with crisp catchlights and natural lashes."
+}

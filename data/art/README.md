@@ -50,14 +50,20 @@ mismatches, and ignores duplicate source IDs for identity decisions.
    entirely (its own top-level category) since poses are action, not appearance.
 2. **Assembly** (`_sets/<group>/`) — the testing/working folder where a group's hero definition +
    components + a stage template get pulled together into an actual generated prompt. Each
-   `_sets/` folder is named **identically to the definitions-layer group it mirrors**
+   `_sets/` folder normally matches the definitions-layer group it mirrors
    (`_sets/drakn-sisters/` ↔ `heroes/drakn-sisters/`) — no separate "-set" word needed once it's
    already under `_sets/`. This is deliberately **not** a 1:1 mirror of a game card series — a real
    series (like Sovereign Dawn) can pull from several groups (drakn-sisters today; drakn-bound and
    elder-dragons later), and that series↔group mapping lives on the `data/cards/` side via asset-ID
    references, not via art-side directory nesting. `angel-primes` doesn't correspond to any real
-   card series at all — it's a calibration/testing sandbox for proving prompt changes against
-   arbitrary reference photos before touching real heroes.
+   card series at all. The generic test assemblies are instead in
+   `_sets/sovereign-females/female/` and `_sets/sovereign-males/male/`,
+   with their identities under `heroes/sovereign-females/` and
+   `heroes/sovereign-males/`. Active prompts use `prompts/sovereign-females/Female/`
+   and `prompts/sovereign-males/Male/`. The retained Female reference prompts
+   also use the dedicated Female group; twelve reference-only prompts are not
+   indexed as generic workflow sources. `1_Alpha` remains a pipeline phase,
+   not an extra group division.
 
 Only the **assembly** layer's `tools/generators/gen_prompt.py` output is ever regenerated/committed
 as a finished prompt. Everything in the **definitions** layer is only ever *referenced*.
@@ -84,6 +90,50 @@ piece under the hero's signature folder. Don't decompose further than the reuse 
 
 Every piece has two coordinates: a **kind** (what it is) and a **scope** (how widely it applies). Every scope uses
 the same internal layout, `<kind>/<family>/<piece>.json`, so a piece can move between scopes without changing shape.
+
+Source-relative instructions live in `reference/` by subject (background,
+pose, appearance or wardrobe), not in a particular workflow stage.
+Reusable studio framing, lighting, photographic style and figure pieces live
+in `studio/`; a scene background remains in its realm under `backgrounds/`.
+For example, `reference/background/preserve-scenery.json` keeps the incoming
+scenery independently of `studio/lighting/neutral-frontal.json`. Source-relative
+pieces require a suitable incoming image, and a set must select each piece in
+a slot that its template actually renders. `compatibleStages` describes
+intended applicability, not visual acceptance or automatic template use.
+Existing `edits/policies/` pieces and their consumers remain in place.
+
+`studio/gesture/` holds independently selectable hand gestures. The ordered
+Edit and Alpha reference templates expose an optional `gesture` slot
+immediately after the selected pose, plus its negative slot. A card must select a
+gesture that agrees with its view, expression and prop-removal policy; these
+pieces do not select a whole pose or a manicure.
+
+`studio/figure/` also holds independently selectable generic figure pieces:
+the overall frame and neutral bust detail are separate choices. The ordered
+Edit and Alpha reference templates can select them through `body` and `bust`;
+neither is added to a card implicitly. These pieces do not replace
+hero-specific `art.physique` or `figureProfile`. Other templates must support
+the selected slot before a card can reuse it; matching `compatibleStages`
+alone does not supply a token.
+An identity-derived `keyDetails: ["bust"]` is a different source from a
+selected `components.bust`: the former promotes the shared identity phrase
+into `KEY_BLOCK`, while the latter is an independent piece. Review both
+before combining them; conflicting or unintended repeated instructions are
+not interchangeable. Similarly, a body piece that includes identity-derived
+`FIGURE` may already contain the identity's bust. `FIGURE_FRAME` derives the
+same individual physique and marks without its bust field, so an assembly
+can select a separate figure detail without duplicating identity wording.
+Both tokens honor `figureProfile` and `keyDetails`; neither is selected
+automatically by the ordered templates.
+The ordered Edit and Alpha reference shells split identity key details around
+an explicitly selected `bust`: hair and any preceding details appear before
+it, and eye/skin and following details after it. `KEY_BLOCK` itself remains
+available unchanged for existing consumers. A literal `components.key_block`
+is not split automatically; select `key_after_bust` explicitly when needed.
+Decompose combined manual descriptions into existing figure, pose, camera,
+lighting, appearance and wardrobe roles rather than coupling them in one
+piece. The [anatomy-note inventory](../../docs/art/prompt-migration-omissions.md#anatomy-note-decomposition-inventory)
+tracks the remaining comparison.
 
 | Scope | Folder | Put a piece here when |
 | --- | --- | --- |
@@ -173,6 +223,8 @@ switched on for a period and then removed), and a tool can list "everything in t
 | `cosmetics/makeup` | `makeup` | replaces the default studio face-styling line; optional line in scenes |
 | `races/*/cosmetics/hair`, `themes/*/*/cosmetics/hair` | `component` on a hair card | |
 | `backgrounds/<realm>/` | `background` | realm folder is mandatory (fantasy, modern, studio); dragon lairs live in `backgrounds/fantasy/lairs/` |
+| `reference/<subject>/` | source-relative slots | preservation or adaptation of an incoming image, independently selectable across stages |
+| `studio/framing`, `lighting`, `photography`, `figure` | camera, lighting, photo style, body | independent reusable instructions; a template must expose the selected slot |
 | `heroes/<group>/<slug>/backgrounds/fantasy/<family>/` | `background` | a hero's own signature, throne (glamour), casting and evening settings; one scene = one unique background |
 | `hoards/` | `hoard` | what a dragon has collected (`{{HOARD}}` in the lair template) |
 
@@ -248,16 +300,16 @@ prompts/<group>/<Hero>/<phase>/<family>/<Hero>_<Stage>_<Name>.txt
 ComfyUI output: <group>/<Hero>/<phase>/<family>/<Hero>_<Engine>_<Stage>_<Name>_00001_.png   (workflows in a workspace sit in the same folders)
 ```
 
-The phases (`art_layout.phase_path`, inverse `parse_dirs`), hero first: optional `0_Edit` (`cleanup`, `background`, `enhance`, `full`, `deluxe`), `1_Alpha` (`1_Prime`, `2_Bare`, `2b_Experiments`, `3_Footwear`), `2_Studies` (`head`,
-`hair`, `body`), `3_Layers` (the underlayer types), `4_Wardrobe` (`clothing`, `armor`, `showcase`), `5_Scenes`, `6_Finish` (`polish`, `final`), `7_Video`, and
-`Bench/motion` (a test run on any phase's image, not a phase). Brand and mass card art (`brand/<family>`, `<Category>/card`) have no phases and keep their
+The phases (`art_layout.phase_path`, inverse `parse_dirs`), hero first: optional `0_Edit` (`cleanup`, `background`, `enhance`, `full`, `deluxe`), `1_Alpha` (`1_Prime`, `2_Bare`, `3_Footwear`, `4_Outfits`), `2_Studies` (`head`,
+`hair`, `body`, `motions`), `3_Layers` (the underlayer types), `4_Wardrobe` (`clothing`, `armor`, `showcase`), `5_Scenes`, `6_Finish` (`polish`, `final`) and
+`7_Video`. Motion studies can use a selected image from any phase. Brand and mass card art (`brand/<family>`, `<Category>/card`) have no phases and keep their
 stage folder. A card's `stage` field still names its kind of work (`edit`, `pose`, `scene`, `alpha`); the table below is by stage, with the families each one uses.
 
 | Stage | Families | Notes |
 | --- | --- | --- |
-| edit | `cleanup`, `background`, `enhance`, `full` (family derived from the `edit_task` piece's tags) | Optional task-based source editing; only the generic Female `0c_Cleanup_Basic` pilot is currently migrated. |
+| edit | `cleanup`, `background`, `enhance`, `full` (family derived from the `edit_task` piece's tags) | Optional task-based source editing. Generic Female Cleanup, Background, Enhance and Full include ordered, component-selected adaptations; Deluxe remains a separately gated pilot. Workflow regeneration, rendering and visual acceptance are separate gates. |
 | scene (sisters) | `signature` (signature, shiny, holo, lineup), `glamour` (glamour, test, elegant casting, evening, robe), `story` (dawn, battle, bond), `themes` | A shiny or holo card sits beside its signature card. Other groups keep scenes flat. |
-| alpha (sisters) | the card family is `[]` (`1_Alpha/1_Prime`: `Alpha_1_Prime`, from the original photo, with its variants and tests), `bare` (`2_Bare`: `Alpha_2_Bare_Figure`) with the celestial experiment nested as `bare/celestial` (`2b_Experiments`, `Alpha_2b_Celestial<Name>`), and `footwear` (`3_Footwear`: `Alpha_3_Barefoot`, `Alpha_3_Heels`) | The creation chain of a hero, the only stage that makes her likeness. Bare, Barefoot and Heels are the golden images. |
+| alpha (sisters) | `[]` (`1_Prime`), `bare` and `base` (`2_Bare`), `footwear` (`3_Footwear`), `outfits` (`4_Outfits`, with wardrobe families) | First-shot base variants use the original photo. `Alpha_4_Outfits_Celestial<Name>` edits retain Prime input; generic outfit adaptations use photo input. Legacy Prime outfit prompts and reference bindings remain at their existing paths pending a coordinated transition. |
 | poses | views; underlayer tests by piece type: `base` (neutral skin-tone layer), `backless`, `lingerie`, `athletic`, `one-piece`, `bikini`, `swimwear` | Fed the Bare image, never the photo. The type is read from the underlayer piece's tags. Dragons, bound heroes and the Angel Primes keep their X Pose at the root until they get an Alpha chain. |
 | head | golden head at the root; `views`; `closeups` (framing and expressions) | |
 | clothing | `dresses`, `gowns`, `sets` for library pieces; a sister's own pieces stay in the stage folder | |
@@ -328,16 +380,15 @@ library family instead of repeating one set:
 | 3_Layers | a rotating mix of underlayers (males: only the male swimwear) | the 5 skin-base variants and bikini, lingerie, one-piece, backless and athletic tests |
 | 4_Wardrobe | the kit's clothing and armor | about 17 more outfits and 12 more armors from the library, a studio card per theme, and the showcases (celestial 4, editorial 7, elemental 4, studio 2, photo 13) |
 | 5_Scenes | the signature scene | glamour, enchanted evening (staged too), elegant casting, robe, battle, bond (in her element's lair), the dawn, and six theme packs each as a complete and a staged scene |
-| 6_Finish, Bench, 7_Video | the polish and final skeletons, 10-12 bench motions, signature video | the dawn and a theme video |
+| 2_Studies/motions, 6_Finish, 7_Video | 10-12 motion studies, the polish and final skeletons, signature video | the dawn and a theme video |
 
 That is about 177 cards for a female angel and about 50 for a male (Phase A: every phase that needs no male wardrobe). Only pieces not tagged male reach a female angel, and only pieces tagged male or unisex reach a male one, so
 the male wardrobe, showcases, theme outfits and scenes wait for a male wardrobe pack (the library has only 24 male-tagged pieces and no male theme outfits). A kit may override any rotated pick (`layers`, `clothing_more`,
 `armor_more`, `themes`, `hair`, `motions_more`). `scaffold_angel_set.py --coverage` reports how much of the library the angels exercise (today every swimwear piece, dress, gown, set, hairstyle, studio and modern background and
 all 26 theme packs; weapons 19 of 33, fantasy backgrounds 57 of 104). Scenes use the sisters' folders (`5_Scenes/signature`, `glamour`, `story`, `themes`) and the angels have no card, so no shiny or holo editions. Then
-`gen_prompt.py --group angel-primes`, `comfy_workflows.py make --create --group angel-primes` and `deploy --group angel-primes`. The `alpha` division (`alpha/female`, `alpha/male`; hero names `Female` and `Male`) holds two generic test heroes for trying other photos before assigning one to an angel: the same identity wording as Angelica and Angelo (the photo's own face, hair and eyes),
-no kit and no signature items, only library pieces and a shared `wardrobe/capes/wings/white-angel-wings`, and a short version of the phases (`scaffold_angel_set.py --alpha`, or `bin\scaffold-angels.cmd --alpha`).
+`gen_prompt.py --group angel-primes`, `comfy_workflows.py make --create --group angel-primes` and `deploy --group angel-primes`. The generic test heroes live separately in `_sets/sovereign-females/female` and `_sets/sovereign-males/male`, with matching identities and prompt groups. `bin\scaffold-generic.cmd` previews their baseline cards, `--check` checks for missing cards, and `--apply` adds missing cards without overwriting existing ones. Angel scaffolding is for named angels only; it has no `--alpha` option.
 Angelica and Angelo (`angelica`, `angelo`) are the older pair: their wardrobe, layers and scenes stay hand-picked (no kit), but
-`scaffold_angel_set.py --all` (or `--slug angelica`) gives them the same Phase 1 and Phase 2 as every other angel: the Alpha chain (1_Prime, 2_Bare, and for Angelica 2b_Experiments and 3_Footwear with Barefoot and Heels), the head, view and body studies and the hair
+`scaffold_angel_set.py --all` (or `--slug angelica`) gives them the same Phase 1 and Phase 2 as every other angel: the Alpha chain (1_Prime, 2_Bare, and for Angelica 4_Outfits/celestial and 3_Footwear with Barefoot and Heels), the head, view and body studies and the hair
 studies. Their pastel look is `art.defaultUnderlayer` in the identity, so the Prime A-pose wears it, and the pastel bikini ends in the shared `{{FOOTWEAR}}` slot like every other swimwear piece (barefoot in the A-pose, heels only in the Heels step;
 it used to carry its heels inside the text). The old single `X_Pose` card was retired; the pastel look stays as a layer test (`3_Layers/bikini/angelica-x-pose-angelic-pastel-bikini`).
 
@@ -362,7 +413,7 @@ decide (STATUS C1): how the gameplay card's `portraitAsset` / `fullArtAsset` fie
 ```text
 data/art/
 ├── _templates/                     Stage templates — static scaffolding, {{TOKEN}} placeholders. Layout and rules: _templates/README.md
-│   └── heroes/                     Archetype: humanoid, in stage folders 1_Alpha, 2_Studies, 4_Wardrobe, 5_Scenes, 6_Finish, Bench
+│   └── heroes/                     Archetype: humanoid, in stage folders 1_Alpha, 2_Studies, 4_Wardrobe, 5_Scenes, 6_Finish
 │                                   (pose-female-human.txt, pose-male-human.txt,
 │                                   pose-view-human.txt (turnaround from the A-pose),
 │                                   head-human.txt (any angle/framing/expression), hair-human.txt,
@@ -745,7 +796,7 @@ sex where it differs), so existing cards need no change.
 
 | Slot / token | What it is | Pieces | Default |
 | --- | --- | --- | --- |
-| `background` | Where the subject stands; for studio stages this carries the studio lighting too | `backgrounds/studio/*`, `fantasy/*`, `modern/*` | studio `grey-even` (light neutral grey) for every studio stage; **required** on scenes |
+| `background` | Where the subject stands; studio `grey-even` also includes lighting, while `light-grey-seamless` is backdrop-only | `backgrounds/studio/*`, `fantasy/*`, `modern/*` | studio `grey-even` (light neutral grey) for every studio stage; **required** on scenes |
 | `realm` | World rule + bans (`{{REALM}}`, `{{REALM_NEG}}`) | `realms/*.json` | `fantasy` on scenes |
 | `view` | Camera/subject orientation | `studio/views/body/*`, `studio/views/head/*` | front |
 | `framing` | How tight a head shot is | `studio/framing/*` | `bust-up` |
@@ -825,33 +876,87 @@ and each phrase is traced to the data file it comes from, so the fix goes to the
 
 ### Reference-preserving edit controls
 
-The generic Female `0_Edit` assemblies use explicit incoming-image policies,
-not the hero's fixed body/hair colors. The shared `edit-reference-human.txt`
-template has independent `face_policy`, `hair_policy`, `body_policy`,
-`clothing_policy`, `view`, `framing`, `background` and `edit_task` components.
+The generic Female `0_Edit` assemblies use selected incoming-image policies;
+Enhance can instead select identity hair, eye and skin values. The ordered
+`edit-cleanup-human.txt` shell accepts selected `likeness`, `hair_policy`,
+`body`, optional `wearing` and `legs_feet`, plus `view`, `camera`, `background`,
+`lighting`, `photo_style`, `result` and `edit_task` components. An optional
+`face_policy` can repeat an identity anchor at the end. The older
+`edit-reference-human.txt` remains available for compatibility.
 Each component supplies positive text and its own negative tokens. Component
 tags support classification/search; tags themselves are never prompt text.
 `{{DENOISE}}` exposes the assembly's existing `denoise` metadata to a template.
+The Studies body, hair, head and motion templates and selected Wardrobe and
+Scene templates use `{{DENOISE_HINT}}` instead to preserve their historical
+header ranges by default. A separate assembly
+can opt in to its own range with `"denoise_hint": "{{DENOISE}}"`; the workflow
+generator reads the rendered header. The range must be ordered within 0–1;
+unsupported templates, values or malformed ranges fail generation. This is
+a hint, not a visually validated setting or a change to existing workflows.
+The `wearing` slot selects the same preservation, adaptation or target-outfit
+pieces used elsewhere; Cleanup can deliberately repeat a selected outfit in
+its separate result slot. For a template requiring `WEARING`, a card without
+`wearing` can still supply either legacy `clothing_policy` or `clothing`,
+including its negatives; supplying both legacy slots is an error. Existing
+Alpha underlayer and experimental base slots retain their current routing and
+default semantics pending a reviewed compatibility transition.
 
 The two approved three-quarter views live in `studio/views/body/`:
 `relaxed-three-quarter` (hand on hip) and `grounded-three-quarter` (both feet
 flat, forward foot and bent knee). They support edit, alpha and pose assemblies
 without changing the existing A-pose turnaround pieces. A lifted heel is an
 accepted variation, not a visual rejection gate.
-New clothed three-quarter outfit auditions belong to `1_Alpha/1_Prime` and
-use `prime-outfit-reference-human.txt` with these same independent policies.
+The generic Female Prime and the newer outfit auditions share the ordered
+`alpha-reference-human.txt` template. Prime selects its A-pose, studio
+outfit, barefoot and appearance components explicitly; Edit and outfit
+assemblies can select different pieces or omit optional appearance sections.
+Its old generated output remains unchanged until regeneration.
+Source-outfit A-pose and three-quarter auditions and source-color gown,
+halter and silk adaptations belong to `1_Alpha/4_Outfits` and use
+`alpha-reference-human.txt` with reusable pose, appearance and photography pieces.
+Gown and halter also have source-fabric-and-color alternatives; a separate
+two-piece alternative retains source fabric rather than forcing silk.
+These are selections for outfit transformations, not default instructions
+for edits that leave the outfit alone.
+The two older three-quarter outfit assemblies also live in `4_Outfits`,
+using the ordered Alpha template and new output filenames. Their
+face, physique, hair, outfit and framing policies remain independently
+selected; backdrop and lighting are now separate selections. Their
+older reference-bound prompts remain byte-identical under
+`prompts/sovereign-females/Female`; the reference bindings use those paths
+and prompt cleanup protects them even when no assembly selects them.
 Earlier `0d` studio pilots retain their names only for compatibility; actual
 Deluxe is a bedroom-scene family.
-The four new clothed Deluxe assemblies use `edits/deluxe/bedroom-clothed`,
-`backgrounds/modern/bedroom-soft-neutral` and independent seated, relaxed,
-side-resting or supine-resting views. They preserve the source outfit and
-physique rather than importing explicit directions from manual Bare drafts.
+The four Deluxe assemblies select `edits/deluxe/bedroom-pose`,
+`backgrounds/modern/bedroom-neutral`, separately selected soft lighting and
+independent seated, relaxed,
+side-resting or supine-resting views. They do not select an outfit instruction;
+the seated and relaxed-recline variants select high-heeled shoes. Most Background,
+Enhance and three-quarter pose pilots omit an outfit selection; Background Plus
+and Enhance Plus select a replacement outfit. Cleanup and full-length extension
+can select explicit adaptations. Active assembly and
+piece filenames and IDs describe their purpose without a clothing qualifier;
+generated output filenames retain their legacy names for compatibility.
+These data changes do not replace already-generated prompts or prove that a
+model will retain the source outfit.
+The ordered Cleanup shell also supports the Deluxe and three-quarter pose
+pilots, Background standard, Basic, Enhance
+and Plus; they select a light-grey backdrop, separate lighting, and clear
+jewelry and props. Enhance Basic, Plus and Pose preserve scenery and select
+identity hair, eye and skin values, using source-relative values for generic
+Female. Full preserves source scenery and appearance while extending the
+existing outfit; its source-relative hair, eye and skin components override
+identity tokens in its ordered key block. These are fixture-tested
+adaptations, not exact or visually accepted source migrations. Some source
+instructions and two variants cannot be faithfully carried over; see the
+[workflow plan](../../docs/plans/2026-10-22-manual-prompts-to-art-library.md#supported-edit-family-fixture-results)
+for the exclusions and remaining gates. The older `edits/background/basic`
+piece remains available to its existing consumers.
 Shared preservation pieces now declare `alpha` compatibility in the piece
 schema, allowing Prime reuse without duplicating their instructions.
 
-These initial controls preserve the source physique and clothing. They do
-not implement per-job GUI physique/hair overrides or imply a visual-quality
-approval. See [shared execution recipes](../../workflows/README.md#shared-clothed-edit-recipes)
+These controls do not implement per-job GUI physique/hair overrides or imply
+a visual-quality approval. See [shared execution recipes](../../workflows/README.md#shared-clothed-edit-recipes)
 for the generation commands and runtime graph/settings boundary.
 
 Every studio-backdrop stage uses the **same** studio eyes and makeup, so a full-body shot and the close-up agree.
@@ -864,6 +969,7 @@ Glow is only ever added in `scene` stages.
 | Signature cosmetic colours | `{{LIP}}`, `{{EYESHADOW}}`, `{{BLUSH}}`, `{{NAIL}}` | pose, `FACE_STYLE`, scenes, makeup pieces | `palette.lipColor` / `eyeshadowColor` / `blushColor` / `nailColor`: **required for every female card hero** (schema-enforced), optional for males and test beds. Scenes print a makeup line only when a card picks a `components.makeup` piece. Core makeup pieces use the tokens; culture/event makeup keeps its own look. |
 | Expression | `{{EXPRESSION}}`, `{{EXPRESSION_NEG}}` | pose, head, views | Defaults in `SLOT_DEFAULTS`: pose and head = `studio-soft-smile`, male pose = `studio-confident-soft-smile` (see below). The piece's `negatives` fill `{{EXPRESSION_NEG}}`. Override on a card with `components.expression` (a piece or literal). The pose also resets the source photo's head tilt and body angle. |
 | Figure | `{{FIGURE}}` | pose, Bare | The physique fields in order, nothing added by the generator (see below). `raceAlignment` is a design note and is never rendered. |
+| Figure frame | `{{FIGURE_FRAME}}` | selected character Edit components | The same identity-derived figure, excluding the bust field; a separately selected bust detail can supply that part. |
 | Hairstyle | `{{HAIRSTYLE}}`, `{{HAIRSTYLE_NEG}}` | pose | From the hero's `hairStyleComponent`. `hair/down/center-part-natural.json` takes the hair down, centre-parted, keeping the source's natural texture; its `a_pose_negatives` (ponytail, bun, updo, ...) go into the negative prompt. |
 | Hair, whole block | `{{HAIR_ESTABLISH}}` | pose (female and male) | The hair's style and `breeze` line, plus colour and highlights unless `hair` is a key detail (then they live in the Critical details block). |
 | Critical details | `{{KEY_BLOCK}}` | pose (female default: hair, bust, eyes, skin, legs); any stage via `keyDetails` on the card | A short up-front block built from the identity (`keyDetails`: `hair`, `bust`, `eyes`, `skin`, `legs`). Whatever it carries is left out of the later Figure, Skin, Hair and Eyes lines, so nothing is said twice. Downstream cards list only what a given outfit tends to lose. |

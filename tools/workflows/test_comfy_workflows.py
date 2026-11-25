@@ -51,6 +51,7 @@ class World:
             "workflowsSubpath": SUBPATH,
             "exclude": ["X_*.json"],
             "stageTemplates": "ST?_*.json",
+            "outputNamespaces": {},
             "workspaces": {
                 "A-Home": {"status": "active", "role": "x"},
                 "Alice-Own": {"status": "active", "role": "x"},
@@ -205,12 +206,23 @@ class StorageRootTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "single folder name"):
             cw.validate_config(invalid)
         invalid = copy.deepcopy(config)
+        invalid["homes"][2]["excludeHeroes"] = "Female"
+        with self.assertRaisesRegex(ValueError, "excludeHeroes"):
+            cw.validate_config(invalid)
+        invalid = copy.deepcopy(config)
         invalid["paths"]["outputRoot"] = invalid["paths"]["inputsRoot"]
         with self.assertRaisesRegex(ValueError, "inputsRoot and outputRoot must not overlap"):
             cw.validate_config(invalid)
         invalid = copy.deepcopy(config)
         invalid["sharedOutput"] = invalid["paths"]["productionRoot"]
         with self.assertRaisesRegex(ValueError, "sharedOutput must not overlap productionRoot"):
+            cw.validate_config(invalid)
+        invalid = copy.deepcopy(config)
+        invalid["outputNamespaces"]["angel-primes"] = {"Female": "../outside"}
+        with self.assertRaisesRegex(ValueError, "outputNamespaces"):
+            cw.validate_config(invalid)
+        invalid["outputNamespaces"]["angel-primes"]["Female"] = "missing"
+        with self.assertRaisesRegex(ValueError, "no outputFolders mapping"):
             cw.validate_config(invalid)
 
     def test_environment_root_overrides_and_model_cache_expansion(self):
@@ -515,17 +527,214 @@ class FlowTests(unittest.TestCase):
 
 
 class FirstShotTests(unittest.TestCase):
-    """The first-shot experiments (1_Alpha/1b_Experiments/<family>): P3 bare figure and P2 neutral base layer start from the photo like the Prime, in folders of their own."""
+    """First-shot experiments in 2_Bare still start from the photo like the Prime."""
+
+    def test_generic_male_home_is_planned_not_angel_primes(self):
+        cfg = cw.load_cfg()
+        self.assertEqual(cw.home_workspaces(cfg, "angel-primes", "Male"), [])
+        self.assertEqual(cw.home_workspaces(cfg, "sovereign-males", "Male"), ["Sovereign Males"])
+        ready, reason = cw.workspace_ready(cfg, "Sovereign Males")
+        self.assertFalse(ready)
+        self.assertIn("planned", reason)
+
+    def test_reference_only_prompts_are_not_generic_workflows(self):
+        cfg = cw.load_cfg()
+        with tempfile.TemporaryDirectory(dir=cw.ROOT / "tmp") as tmp:
+            prompts = pathlib.Path(tmp)
+            root = prompts / "sovereign-females" / "Female"
+            for path in cw.reference_prompt_bindings.SHARED_PROMPTS.values():
+                target = root.joinpath(*pathlib.PurePosixPath(path).parts)
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text("fixture", encoding="utf-8")
+            for path in ("0_Edit/cleanup/Female_Edit_Cleanup_Audition.txt",
+                         "1_Alpha/1_Prime/Female_Alpha_1_Prime.txt"):
+                target = root.joinpath(*pathlib.PurePosixPath(path).parts)
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text("fixture", encoding="utf-8")
+            with mock.patch.object(cw, "PROMPTS", prompts):
+                items = cw.prompt_index(cfg)
+            self.assertEqual({item["stem"] for item in items},
+                             {"Female_Edit_Cleanup_Audition", "Female_Alpha_1_Prime"})
+
+    def test_generic_namespace_routes_without_an_alpha_division(self):
+        cfg = cw.load_cfg()
+        with tempfile.TemporaryDirectory(dir=cw.ROOT / "tmp") as tmp:
+            prompts = pathlib.Path(tmp)
+            for parts, hero in (
+                (("sovereign-females", "Female"), "Female"),
+                (("sovereign-males", "Male"), "Male"),
+                (("angel-primes", "female", "Angelica"), "Angelica"),
+            ):
+                folder = prompts.joinpath(*parts) / "0_Edit" / "cleanup"
+                folder.mkdir(parents=True)
+                (folder / f"{hero}_Edit_Cleanup.txt").write_text("fixture", encoding="utf-8")
+            with mock.patch.object(cw, "PROMPTS", prompts):
+                items = cw.prompt_index(cfg)
+                indexed = {item["hero"]: item for item in items}
+                self.assertEqual(len(items), 3)
+                self.assertEqual(cw.hero_homes()["Female"], ("sovereign-females", None))
+        female = indexed["Female"]
+        self.assertEqual(female["group"], "sovereign-females")
+        self.assertEqual(female["prefix"], "sovereign-females/Female/0_Edit/cleanup/Female_Qwen_Edit_Cleanup")
+        self.assertEqual(indexed["Male"]["prefix"], "sovereign-males/Male/0_Edit/cleanup/Male_Qwen_Edit_Cleanup")
+        self.assertEqual(indexed["Angelica"]["prefix"], "angel-primes/female/Angelica/0_Edit/cleanup/Angelica_Qwen_Edit_Cleanup")
+        wf = {"nodes": [{"type": "SaveImage", "widgets_values": [female["prefix"]]}]}
+        with mock.patch.object(cw, "load_cfg", return_value=cfg):
+            self.assertEqual(cw.workspace_subdir("Sovereign Females", wf),
+                             pathlib.Path("Female", "0_Edit", "cleanup"))
+        self.assertEqual(cfg["paths"]["outputFolders"]["sovereign-females"], "Sovereign Females")
+        parsed = {"hero": "Female", "stem": "Female_Qwen_Edit_Cleanup"}
+        with mock.patch.object(cw, "hero_groups", return_value={"Female": "sovereign-females"}):
+            self.assertEqual(cw.final_image_dest(cfg, parsed, wf),
+                             cw.ASSETS / "sovereign-females" / "Female" / "0_Edit" / "cleanup" / "Female_Qwen_Edit_Cleanup.png")
+        with tempfile.TemporaryDirectory(dir=cw.ROOT / "tmp") as tmp:
+            root = pathlib.Path(tmp)
+            image = root / "Sovereign Females" / (female["prefix"] + "_00001_.png")
+            image.parent.mkdir(parents=True)
+            image.write_bytes(b"fixture")
+            with mock.patch.object(cw, "output_root", return_value=root):
+                self.assertEqual(cw.final_image_source(cfg, wf, "00001"), image)
+
+    def test_output_organizer_keeps_legacy_and_sorts_new_namespace(self):
+        import organize_outputs
+
+        cfg = cw.load_cfg()
+        with tempfile.TemporaryDirectory(dir=cw.ROOT / "tmp") as tmp:
+            root = pathlib.Path(tmp)
+            legacy = root / "Angel Primes" / "angel-primes" / "alpha" / "Female" / "0_Edit" / "Female_Qwen_Edit_Cleanup_00001_.png"
+            unscoped = root / "Female" / "0_Edit" / "Female_Qwen_Edit_Cleanup_00003_.png"
+            source = root / "Sovereign Females" / "sovereign-females" / "Female" / "0_Edit" / "Female_Qwen_Edit_Cleanup_00002_.png"
+            for path in (legacy, unscoped, source):
+                path.parent.mkdir(parents=True)
+                path.write_bytes(b"fixture")
+            item = {"stem": "Female_Edit_Cleanup", "prefix": "sovereign-females/Female/0_Edit/cleanup/Female_Qwen_Edit_Cleanup"}
+            args = ["organize_outputs.py", "--hero", "Female", "--output", str(root)]
+            with mock.patch.object(cw, "load_cfg", return_value=cfg), \
+                 mock.patch.object(cw, "hero_groups", return_value={"Female": "sovereign-females"}), \
+                 mock.patch.object(cw, "hero_dir", return_value="Female"), \
+                 mock.patch.object(cw, "output_roots", return_value=[root]), \
+                 mock.patch.object(cw, "prompt_index", side_effect=lambda _cfg, engine: [item] if engine == "qwen" else []), \
+                 mock.patch.object(sys, "argv", args), \
+                 contextlib.redirect_stdout(io.StringIO()):
+                organize_outputs.main()
+                self.assertTrue(source.exists())
+                sys.argv.append("--apply")
+                organize_outputs.main()
+            destination = root / "Sovereign Females" / "sovereign-females" / "Female" / "0_Edit" / "cleanup" / source.name
+            self.assertEqual(destination.read_bytes(), b"fixture")
+            self.assertFalse(source.exists())
+            self.assertEqual(legacy.read_bytes(), b"fixture")
+            self.assertEqual(unscoped.read_bytes(), b"fixture")
+
+    def test_output_organizer_preserves_unmapped_hero_behavior(self):
+        import organize_outputs
+
+        cfg = cw.load_cfg()
+        with tempfile.TemporaryDirectory(dir=cw.ROOT / "tmp") as tmp:
+            root = pathlib.Path(tmp)
+            source = root / "Angelica" / "0_Edit" / "Angelica_Qwen_Edit_Cleanup_00001_.png"
+            source.parent.mkdir(parents=True)
+            source.write_bytes(b"fixture")
+            item = {"stem": "Angelica_Edit_Cleanup", "prefix": "angel-primes/female/Angelica/0_Edit/cleanup/Angelica_Qwen_Edit_Cleanup"}
+            args = ["organize_outputs.py", "--hero", "Angelica", "--output", str(root), "--apply"]
+            with mock.patch.object(cw, "load_cfg", return_value=cfg), \
+                 mock.patch.object(cw, "hero_groups", return_value={"Angelica": "angel-primes"}), \
+                 mock.patch.object(cw, "hero_dir", return_value="female/Angelica"), \
+                 mock.patch.object(cw, "output_roots", return_value=[root]), \
+                 mock.patch.object(cw, "prompt_index", side_effect=lambda _cfg, engine: [item] if engine == "qwen" else []), \
+                 mock.patch.object(sys, "argv", args), \
+                 contextlib.redirect_stdout(io.StringIO()):
+                organize_outputs.main()
+            destination = root / "Angel Primes" / "angel-primes" / "female" / "Angelica" / "0_Edit" / "cleanup" / source.name
+            self.assertEqual(destination.read_bytes(), b"fixture")
+            self.assertFalse(source.exists())
 
     def test_the_experiment_folders_and_the_family_round_trip(self):
         lay = cw.art_layout
-        card = {"stage": "alpha", "artId": "angelica-alpha-1b-bare-base", "components": {}}
+        card = {"stage": "alpha", "artId": "angelica-alpha-bare-base", "components": {}}
+        self.assertEqual(lay.family(card, "angel-primes"), ["base", "bare-base"])
+        card["artId"] = "angelica-alpha-neutral-base"
+        self.assertEqual(lay.family(card, "angel-primes"), ["base", "neutral-base"])
+        card["artId"] = "angelica-alpha-1b-bare-base"
         self.assertEqual(lay.family(card, "angel-primes"), ["base", "bare-base"])
         dirs = lay.dirs_for("alpha", ["base", "bare-base"])
-        self.assertEqual(dirs, ["1_Alpha", "1b_Experiments", "bare-base"])
+        self.assertEqual(dirs, ["1_Alpha", "2_Bare", "bare-base"])
         self.assertEqual(lay.parse_dirs(dirs), ("alpha", ["base", "bare-base"]))
-        self.assertEqual(lay.dirs_for("alpha", ["base", "neutral-base"]), ["1_Alpha", "1b_Experiments", "neutral-base"], "P2 and P3 never share a folder")
+        self.assertEqual(lay.dirs_for("alpha", ["base", "neutral-base"]), ["1_Alpha", "2_Bare", "neutral-base"], "P2 and P3 never share a folder")
+        self.assertEqual(lay.parse_dirs(["1_Alpha", "1b_Experiments", "bare-base"]), ("alpha", ["base", "bare-base"]))
+        self.assertEqual(lay.parse_dirs(["1_Alpha", "2_Bare"]), ("alpha", ["bare"]))
+        self.assertEqual(lay.parse_dirs(["1_Alpha", "2_Bare", "other"]), ("alpha", ["bare", "other"]))
         self.assertEqual(lay.parse_dirs(["1_Alpha", "1_Prime"]), ("alpha", []), "the Prime is untouched")
+
+    def test_motion_studies_round_trip_and_keep_legacy_paths_readable(self):
+        lay = cw.art_layout
+        self.assertEqual(lay.dirs_for("motion", ["standing"]), ["2_Studies", "motions", "standing"])
+        self.assertEqual(lay.parse_dirs(["2_Studies", "motions", "standing"]), ("motion", ["standing"]))
+        self.assertEqual(lay.parse_dirs(["Bench", "motion", "standing"]), ("motion", ["standing"]))
+
+    def test_celestial_edits_keep_prime_input_under_outfits(self):
+        lay = cw.art_layout
+        cfg = cw.load_cfg()
+        card = {"stage": "alpha", "artId": "angelica-alpha-outfit-celestial-core"}
+        family = lay.family(card, "angel-primes")
+        self.assertEqual(family, ["outfits", "celestial"])
+        dirs = lay.dirs_for("alpha", family)
+        self.assertEqual(dirs, ["1_Alpha", "4_Outfits", "celestial"])
+        self.assertEqual(lay.parse_dirs(dirs), ("alpha", family))
+        self.assertEqual(cw.input_role(cfg, "Angelica", "alpha", family, "Angelica_Qwen_Alpha_2b_CelestialCore"), "prime")
+        self.assertEqual(cw.default_input(cfg, "Angelica", "alpha", family, "Angelica_Qwen_Alpha_4_Outfits_CelestialCore"), cfg["inputs"]["Angelica"]["prime"])
+        self.assertEqual(cw.input_role(cfg, "Female", "alpha", family, "Female_Qwen_Alpha_4_Outfits_Covered_Celestial"), "photo")
+
+    def test_outfit_family_routes_prompt_workflow_output_and_photo_input(self):
+        lay = cw.art_layout
+        cfg = cw.load_cfg()
+        for group, division, hero in (
+            ("sovereign-females", None, "Female"),
+            ("drakn-sisters", None, "Drakness"),
+        ):
+            with self.subTest(hero=hero):
+                card = {"stage": "alpha", "artId": f"{hero.lower()}-alpha-outfit-source-apose"}
+                family = lay.family(card, group)
+                self.assertEqual(family, ["outfits"])
+                dirs = lay.dirs_for("alpha", family)
+                self.assertEqual(dirs, ["1_Alpha", "4_Outfits"])
+                self.assertEqual(lay.parse_dirs(dirs), ("alpha", family))
+                output = lay.output_for(card, group, hero, f"{hero}_Alpha_4_Outfits_Source_APose", cw.ROOT, division)
+                self.assertEqual(lay.split_output(output)[3], dirs)
+                self.assertEqual(cw.input_role(cfg, hero, "alpha", family), "photo")
+                self.assertEqual(cw.default_input(cfg, hero, "alpha", family), cfg["photos"][hero])
+
+        with tempfile.TemporaryDirectory(dir=cw.ROOT / "tmp") as tmp:
+            prompts = pathlib.Path(tmp)
+            for sub, stem in (
+                ("1_Prime", "Female_Alpha_1_Prime"),
+                ("1_Prime", "Female_Alpha_1_Prime_Outfit_Relaxed"),
+                ("4_Outfits", "Female_Alpha_4_Outfits_Source_APose"),
+            ):
+                folder = prompts / "sovereign-females" / "Female" / "1_Alpha" / sub
+                folder.mkdir(parents=True, exist_ok=True)
+                (folder / f"{stem}.txt").write_text("fixture", encoding="utf-8")
+            with mock.patch.object(cw, "PROMPTS", prompts):
+                indexed = cw.prompt_index(cfg)
+            items = {item["name"]: item for item in indexed}
+            prime = items["Female_Qwen_Alpha_1_Prime"]
+            outfit = items["Female_Qwen_Alpha_4_Outfits_Source_APose"]
+            self.assertEqual(prime["family"], [])
+            self.assertNotIn("Female_Qwen_Alpha_1_Prime_Outfit_Relaxed", items)
+            self.assertEqual(outfit["family"], ["outfits"])
+            self.assertEqual(outfit["prefix"], "sovereign-females/Female/1_Alpha/4_Outfits/Female_Qwen_Alpha_4_Outfits_Source_APose")
+            self.assertFalse(cw.takes_photo(outfit))
+            self.assertEqual(len(items), len(indexed))
+            wf = {"nodes": [{"type": "SaveImage", "widgets_values": [outfit["prefix"]]}]}
+            with mock.patch.object(cw, "load_cfg", return_value=cfg):
+                subdir = cw.workspace_subdir("Sovereign Females", wf)
+            self.assertEqual(subdir, pathlib.Path("Female", "1_Alpha", "4_Outfits"))
+            wf["nodes"][0]["widgets_values"][0] = (
+                "drakn-sisters/Drakness/1_Alpha/4_Outfits/Drakness_Qwen_Alpha_4_Outfits_Source_APose"
+            )
+            with mock.patch.object(cw, "load_cfg", return_value=cfg):
+                subdir = cw.workspace_subdir("Drakness", wf)
+            self.assertEqual(subdir, pathlib.Path("1_Alpha", "4_Outfits"))
 
     def test_0_edit_card_routes_to_studio_edit_workflow_and_photo_input(self):
         lay = cw.art_layout
@@ -545,10 +754,127 @@ class FirstShotTests(unittest.TestCase):
             {"inputs": {"Female": {}}, "inputRoles": {"edit": "photo"}},
             "Female", "edit", family), "photo")
 
+    def test_footwear_auditions_use_prime_without_changing_legacy_footwear(self):
+        cfg = cw.load_cfg()
+        indexed = {item["name"]: item for item in cw.prompt_index(cfg)}
+        plan = cw.denoise_plan(cfg)
+        for variant in ("Barefoot", "Heels"):
+            name = f"Female_Qwen_Alpha_3_{variant}_Prime_Audition"
+            item = indexed[name]
+            with self.subTest(workflow=name):
+                card_path = cw.ROOT / "data/art/_sets/sovereign-females/female/1_Alpha/3_Footwear" / f"female-alpha-{variant.lower()}-prime-input-audition.json"
+                card = json.loads(card_path.read_text(encoding="utf-8"))
+                self.assertEqual(cw.art_layout.family(card, "sovereign-females"), ["footwear"])
+                self.assertEqual(item["family"], ["footwear"])
+                self.assertEqual(cw.default_input(cfg, item["hero"], item["stage"], item["family"], name),
+                                 cfg["inputs"]["Female"]["prime"])
+                self.assertEqual(plan[name][3:], ("prime", 0.7))
+                self.assertEqual(cw.input_role(cfg, item["hero"], item["stage"], item["family"]), "bare")
+                firered = name.replace("_Qwen_", "_FireRed_")
+                self.assertEqual(cw.input_role(cfg, item["hero"], item["stage"], item["family"], firered), "prime")
+
+    def test_layer_preservation_workflows_use_prime_without_changing_legacy_layers(self):
+        cfg = cw.load_cfg()
+        indexed = {item["name"]: item for item in cw.prompt_index(cfg)}
+        plan = cw.denoise_plan(cfg)
+        for outfit in ("OnePiece", "TwoPiece"):
+            name = f"Female_Qwen_Layer_{outfit}_Preserve_Audition"
+            item = indexed[name]
+            with self.subTest(workflow=name):
+                self.assertEqual(cw.stage_of(name + ".json"), "poses")
+                self.assertEqual(cw.default_input(cfg, item["hero"], item["stage"], item["family"], name),
+                                 cfg["inputs"]["Female"]["prime"])
+                self.assertEqual(plan[name][3:], ("prime", 0.7))
+                self.assertEqual(cw.input_role(cfg, item["hero"], item["stage"], item["family"]), "bare")
+                firered = name.replace("_Qwen_", "_FireRed_")
+                self.assertEqual(cw.input_role(cfg, item["hero"], item["stage"], item["family"], firered), "prime")
+        broken = copy.deepcopy(cfg)
+        broken["inputs"]["Female"].pop("prime")
+        with self.assertRaisesRegex(ValueError, "no prime input is configured"):
+            cw.default_input(broken, "Female", item["stage"], item["family"], name)
+        for invalid_role in ("unknown", "heels"):
+            with self.subTest(invalid_role=invalid_role):
+                broken = copy.deepcopy(cfg)
+                broken["inputRoleOverrides"][name] = invalid_role
+                with self.assertRaisesRegex(ValueError, "inputRoleOverrides"):
+                    cw.validate_config(broken)
+
+    def test_layer_preservation_new_workflow_preview_uses_prime(self):
+        cfg = cw.load_cfg()
+        with tempfile.TemporaryDirectory(dir=cw.ROOT / "tmp") as tmp:
+            output = io.StringIO()
+            with mock.patch.object(cw, "engine_roots", return_value={"qwen": pathlib.Path(tmp)}), \
+                    contextlib.redirect_stdout(output):
+                cw.main(["make", "--hero", "Female", "--create", "--dry-run",
+                         "--match", r"^Female_Layer_(OnePiece|TwoPiece)_Preserve_Audition$"])
+            self.assertEqual(output.getvalue().count(f"(input: {cfg['inputs']['Female']['prime']})"), 2)
+
+    def test_hair_preservation_workflows_use_prime_instead_of_legacy_bare(self):
+        cfg = cw.load_cfg()
+        indexed = {item["name"]: item for item in cw.prompt_index(cfg)}
+        plan = cw.denoise_plan(cfg)
+        for variant in ("Updo_HighBun", "Down_BeachWaves"):
+            name = f"Female_Qwen_Hair_{variant}_Preserve_Audition"
+            item = indexed[name]
+            with self.subTest(workflow=name):
+                self.assertEqual(cw.default_input(cfg, item["hero"], item["stage"], item["family"], name),
+                                 cfg["inputs"]["Female"]["prime"])
+                self.assertEqual(plan[name][3:], ("prime", 0.6))
+                self.assertEqual(cw.input_role(cfg, item["hero"], item["stage"], item["family"]), "bare")
+                self.assertEqual(cw.input_role(cfg, item["hero"], item["stage"], item["family"],
+                                               name.replace("_Qwen_", "_FireRed_")), "prime")
+
+    def test_wardrobe_replacement_workflows_use_photo_instead_of_legacy_bare(self):
+        cfg = cw.load_cfg()
+        indexed = {item["name"]: item for item in cw.prompt_index(cfg)}
+        plan = cw.denoise_plan(cfg)
+        for variant in ("Armor_HalfPlate", "Clothing_LongEveningGown"):
+            name = f"Female_Qwen_{variant}_Replace_Audition"
+            item = indexed[name]
+            with self.subTest(workflow=name):
+                self.assertEqual(cw.default_input(cfg, item["hero"], item["stage"], item["family"], name),
+                                 cfg["photos"]["Female"])
+                self.assertEqual(plan[name][3:], ("photo", 0.7))
+                self.assertEqual(cw.input_role(cfg, item["hero"], item["stage"], item["family"]), "bare")
+                self.assertEqual(cw.input_role(cfg, item["hero"], item["stage"], item["family"],
+                                               name.replace("_Qwen_", "_FireRed_")), "photo")
+
+    def test_scene_replacement_workflows_use_photo_instead_of_legacy_bare(self):
+        cfg = cw.load_cfg()
+        indexed = {item["name"]: item for item in cw.prompt_index(cfg)}
+        plan = cw.denoise_plan(cfg)
+        for variant in ("Glamour", "Signature"):
+            name = f"Female_Qwen_Scene_{variant}_Replace_Audition"
+            item = indexed[name]
+            with self.subTest(workflow=name):
+                self.assertEqual(cw.default_input(cfg, item["hero"], item["stage"], item["family"], name),
+                                 cfg["photos"]["Female"])
+                self.assertEqual(plan[name][3:], ("photo", 0.7))
+                self.assertEqual(cw.input_role(cfg, item["hero"], item["stage"], item["family"]), "bare")
+                self.assertEqual(cw.input_role(cfg, item["hero"], item["stage"], item["family"],
+                                               name.replace("_Qwen_", "_FireRed_")), "photo")
+
+    def test_motion_preservation_workflows_use_prime_instead_of_legacy_apose(self):
+        cfg = cw.load_cfg()
+        indexed = {item["name"]: item for item in cw.prompt_index(cfg)}
+        plan = cw.denoise_plan(cfg)
+        for variant in ("Walking_CatwalkConfident", "Standing_HandOnHipPower", "Dynamic_TwirlSpin"):
+            name = f"Female_Qwen_Motion_{variant}_Preserve_Audition"
+            item = indexed[name]
+            with self.subTest(workflow=name):
+                self.assertEqual(cw.default_input(cfg, item["hero"], item["stage"], item["family"], name),
+                                 cfg["inputs"]["Female"]["prime"])
+                self.assertEqual(plan[name][3:], ("prime", 0.6))
+                self.assertEqual(cw.input_role(cfg, item["hero"], item["stage"], item["family"]), "apose")
+                self.assertEqual(cw.input_role(cfg, item["hero"], item["stage"], item["family"],
+                                               name.replace("_Qwen_", "_FireRed_")), "prime")
+
     def test_only_the_first_shots_take_the_photo(self):
         def item(stem, family=()):
             return {"stage": "alpha", "family": list(family), "stem": stem}
-        for stem, fam in (("Alice_Alpha_1_Prime", ()), ("Alice_Alpha_1b_BareBase", ("base", "bare-base")), ("Alice_Alpha_1b_NeutralBase", ("base", "neutral-base"))):
+        for stem, fam in (("Alice_Alpha_1_Prime", ()), ("Alice_Alpha_1_Prime_Audition", ()),
+                          ("Alice_Alpha_2_BareBase", ("base", "bare-base")), ("Alice_Alpha_2_NeutralBase", ("base", "neutral-base")),
+                          ("Alice_Alpha_1b_BareBase", ("base", "bare-base")), ("Alice_Alpha_1b_NeutralBase", ("base", "neutral-base"))):
             self.assertTrue(cw.takes_photo(item(stem, fam)), stem)
         self.assertFalse(cw.takes_photo(item("Alice_Alpha_2_Bare", ("bare",))))
         self.assertFalse(cw.takes_photo(item("Alice_Alpha_2b_CelestialSuit", ("bare", "celestial"))))
@@ -557,17 +883,19 @@ class FirstShotTests(unittest.TestCase):
     def test_an_alternate_flow_gives_the_experiment_bases_own_variants(self):
         tmp = pathlib.Path(tempfile.mkdtemp())
         self.addCleanup(shutil.rmtree, tmp, True)
-        for sub, stem in (("1_Prime", "Alice_Alpha_1_Prime"), ("1b_Experiments/bare-base", "Alice_Alpha_1b_BareBase"), ("1b_Experiments/neutral-base", "Alice_Alpha_1b_NeutralBase")):
+        for sub, stem in (("1_Prime", "Alice_Alpha_1_Prime"), ("2_Bare/bare-base", "Alice_Alpha_2_BareBase"), ("2_Bare/neutral-base", "Alice_Alpha_2_NeutralBase")):
             d = tmp / "set-a" / "Alice" / "1_Alpha" / sub
             d.mkdir(parents=True)
             (d / f"{stem}.txt").write_text("=== x ===\n\nprompt:\n\nhello\n\n----------\nnegative prompt:\n\nbad\n")
         cfg = {"photos": {"Alice": "a.png"}, "flows": {"alternate": {"photos": {"Alice": "a_alt.png"}}}}
         with mock.patch.object(cw, "PROMPTS", tmp):
             names = {i["name"]: i for i in cw.prompt_index(cfg)}
-        self.assertEqual(sorted(names), ["Alice_Qwen_Alpha_1_Prime", "Alice_Qwen_Alpha_1_Prime_Alternate", "Alice_Qwen_Alpha_1b_BareBase", "Alice_Qwen_Alpha_1b_BareBase_Alternate",
-                                         "Alice_Qwen_Alpha_1b_NeutralBase", "Alice_Qwen_Alpha_1b_NeutralBase_Alternate"])
-        self.assertIn("1_Alpha/1b_Experiments/bare-base/", names["Alice_Qwen_Alpha_1b_BareBase_Alternate"]["prefix"], "output folders keep P2 and P3 apart")
-        self.assertIn("1_Alpha/1b_Experiments/neutral-base/", names["Alice_Qwen_Alpha_1b_NeutralBase"]["prefix"])
+        self.assertEqual(sorted(names), ["Alice_Qwen_Alpha_1_Prime", "Alice_Qwen_Alpha_1_Prime_Alternate", "Alice_Qwen_Alpha_2_BareBase", "Alice_Qwen_Alpha_2_BareBase_Alternate",
+                                         "Alice_Qwen_Alpha_2_NeutralBase", "Alice_Qwen_Alpha_2_NeutralBase_Alternate"])
+        self.assertIn("1_Alpha/2_Bare/bare-base/", names["Alice_Qwen_Alpha_2_BareBase_Alternate"]["prefix"], "output folders keep P2 and P3 apart")
+        self.assertIn("1_Alpha/2_Bare/neutral-base/", names["Alice_Qwen_Alpha_2_NeutralBase"]["prefix"])
+        self.assertEqual(names["Alice_Qwen_Alpha_2_BareBase"]["family"], ["base", "bare-base"])
+        self.assertTrue(cw.takes_photo(names["Alice_Qwen_Alpha_2_BareBase"]))
         self.assertEqual(cw.input_role({"inputs": {"Alice": {}}, "inputRoles": {"alpha/base": "photo", "default": "bare"}}, "Alice", "alpha", ["base", "bare-base"]), "photo")
 
 
@@ -596,6 +924,21 @@ class SeedTests(unittest.TestCase):
 
 
 class RoutingTests(unittest.TestCase):
+    def test_generic_homes_are_separate_from_angel_characters(self):
+        cfg = cw.load_cfg()
+        for stage in ("edit", "alpha", "scene"):
+            with self.subTest(stage=stage):
+                self.assertEqual(cw.home_workspaces(cfg, "angel-primes", "Female", stage),
+                                 [])
+                self.assertEqual(cw.home_workspaces(cfg, "sovereign-females", "Female", stage),
+                                 ["Sovereign Females"])
+                self.assertEqual(cw.home_workspaces(cfg, "angel-primes", "Angelica", stage),
+                                 ["Angel Primes"])
+                self.assertEqual(cw.home_workspaces(cfg, "angel-primes", "Male", stage),
+                                 [])
+                self.assertEqual(cw.home_workspaces(cfg, "sovereign-males", "Male", stage),
+                                 ["Sovereign Males"])
+
     def test_home_and_accepts(self):
         with World() as w:
             self.assertTrue(cw.is_home(w.cfg, "A-Home", "set-a", "Alice"))
@@ -704,6 +1047,18 @@ class RoutingTests(unittest.TestCase):
 
 
 class HandMadeGuardTests(unittest.TestCase):
+    def test_reference_jobs_do_not_shadow_or_get_patched_by_deployment(self):
+        with World() as w:
+            w.cfg["referenceWorkspace"] = "A-Home"
+            w.master("Alice_Qwen_Scene_One.json")
+            hand = {"nodes": [], "id": "reference job"}
+            reference = w.put("A-Home", "Reference/job/Alice_Qwen_Scene_One.json", hand)
+            self.assertNotIn(reference.name, cw.install_files(w.cfg, "A-Home"))
+            _out, code = w.run("deploy", "--hero", "Alice", "-w", "A-Home")
+            self.assertIsNone(code)
+            self.assertEqual(json.loads(reference.read_text()), hand)
+            self.assertTrue((w.dir("A-Home") / reference.name).is_file())
+
     def test_is_hand_made(self):
         with World() as w:
             d = w.dir("A-Home")
@@ -724,6 +1079,97 @@ class HandMadeGuardTests(unittest.TestCase):
             self.assertIn("hand-made", out)
             self.assertEqual(w.names("A-Home"), ["Alice_Qwen_Scene_One.json"], "no second copy is created beside it")
 
+    def test_workspace_deploy_backups_are_incremental_and_separate(self):
+        with World() as w:
+            name = "Alice_Qwen_Scene_One.json"
+            w.master(name)
+            originals = {}
+            for ws in ("A-Home", "Alice-Own"):
+                path = w.put(ws, "scene/" + name, {"nodes": [], "id": ws})
+                originals[ws] = path.read_bytes()
+            out, code = w.run("deploy", "--hero", "Alice", "--mode", "overwrite",
+                              "--workspace-backups", "--preview")
+            self.assertIsNone(code)
+            self.assertIn("workspace backups", out)
+            for ws in originals:
+                root = w.tmp / "installs" / ws / ".sovereign" / "workflow-backups"
+                self.assertFalse(root.exists())
+            _out, code = w.run("deploy", "--hero", "Alice", "--mode", "overwrite",
+                               "--workspace-backups")
+            self.assertIsNone(code)
+            for ws, before in originals.items():
+                root = w.tmp / "installs" / ws / ".sovereign" / "workflow-backups"
+                saved = list(root.rglob(name))
+                self.assertEqual(len(saved), 1)
+                self.assertEqual(saved[0].read_bytes(), before)
+                receipt = json.loads(next(root.rglob("storage-configuration-receipt.json")).read_text())
+                self.assertEqual(receipt["backups"][0]["backupPath"], str(saved[0].resolve()))
+                out, code = w.run("backup-check", ws, next(root.iterdir()).name)
+                self.assertIsNone(code)
+                self.assertIn("verified 1 workspace backup", out)
+            self.assertFalse((w.tmp / "production").exists())
+            w.run("deploy", "--hero", "Alice", "--mode", "overwrite", "--workspace-backups")
+            for ws in originals:
+                root = w.tmp / "installs" / ws / ".sovereign" / "workflow-backups"
+                self.assertEqual(len(list(root.rglob(name))), 1)
+            root = w.tmp / "installs" / "A-Home" / ".sovereign" / "workflow-backups"
+            saved = next(root.rglob(name))
+            receipt_path = next(root.rglob("storage-configuration-receipt.json"))
+            receipt = json.loads(receipt_path.read_text())
+            original_receipt = receipt_path.read_bytes()
+            receipt["backups"][0]["source"] = str(w.tmp / "wrong-source.json")
+            receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
+            run = next(root.iterdir()).name
+            with self.assertRaisesRegex(ValueError, "source does not match"):
+                w.run("backup-check", "A-Home", run)
+            receipt_path.write_bytes(original_receipt)
+            saved.write_bytes(b"tampered")
+            with self.assertRaisesRegex(ValueError, "hash mismatch"):
+                w.run("backup-check", "A-Home", run)
+
+    def test_workspace_backup_receipt_failure_leaves_workflow_untouched(self):
+        with World() as w:
+            name = "Alice_Qwen_Scene_One.json"
+            w.master(name)
+            target = w.put("A-Home", "scene/" + name, {"nodes": [], "id": "original"})
+            before = target.read_bytes()
+            with mock.patch.object(cw, "record_backup_receipt", side_effect=OSError("receipt failed")):
+                with self.assertRaisesRegex(OSError, "receipt failed"):
+                    w.run("deploy", "--hero", "Alice", "-w", "A-Home",
+                          "--mode", "overwrite", "--workspace-backups")
+            self.assertEqual(target.read_bytes(), before)
+
+    def test_workspace_backup_copy_failure_leaves_workflow_untouched(self):
+        with World() as w:
+            name = "Alice_Qwen_Scene_One.json"
+            w.master(name)
+            target = w.put("A-Home", "scene/" + name, {"nodes": [], "id": "original"})
+            before = target.read_bytes()
+            with mock.patch.object(cw.shutil, "copyfileobj", side_effect=OSError("copy failed")):
+                with self.assertRaisesRegex(OSError, "copy failed"):
+                    w.run("deploy", "--hero", "Alice", "-w", "A-Home",
+                          "--mode", "overwrite", "--workspace-backups")
+            self.assertEqual(target.read_bytes(), before)
+            root = w.tmp / "installs" / "A-Home" / ".sovereign" / "workflow-backups"
+            self.assertEqual(list(root.rglob(name)), [])
+
+    def test_workspace_backup_refuses_collisions_and_reparse_points(self):
+        with World() as w:
+            target = w.put("A-Home", "scene/Alice_Qwen_Scene_One.json")
+            root = cw.workspace_backup_root(w.cfg, "A-Home")
+            cw.workspace_backup(w.cfg, "same-run", root, w.dir("A-Home"), target)
+            saved = next(root.rglob(target.name))
+            before = saved.read_bytes()
+            target.write_text('{"nodes": [], "id": "changed"}', encoding="utf-8")
+            with self.assertRaises(FileExistsError):
+                cw.workspace_backup(w.cfg, "same-run", root, w.dir("A-Home"), target)
+            self.assertEqual(saved.read_bytes(), before)
+            actual_reparse = cw.is_reparse_point
+            with mock.patch.object(cw, "is_reparse_point",
+                                   side_effect=lambda path: path == root or actual_reparse(path)):
+                with self.assertRaisesRegex(ValueError, "reparse point"):
+                    cw.workspace_backup_root(w.cfg, "A-Home")
+
     def test_tidy_keeps_generated_name_inside_zz_folder_and_prunes_empty_folders(self):
         with World() as w:
             w.master("Alice_Qwen_Scene_One.json")
@@ -741,6 +1187,46 @@ class HandMadeGuardTests(unittest.TestCase):
             self.assertFalse((w.dir("A-Home") / "old").exists())
             self.assertTrue((w.dir("A-Home") / "zz_Test" / "empty").exists(), "zz_ folders are never pruned")
             self.assertTrue((keep / "readme.txt").exists(), "a folder with any file stays")
+
+    def test_tidy_refuses_to_overwrite_a_duplicate_destination(self):
+        for folder in ("0_old", "z_old"):
+            with self.subTest(folder=folder), World() as w:
+                name = "Alice_Qwen_Motion_Standing_One.json"
+                prefix = "set-a/Alice/2_Studies/motions/standing/Alice_Qwen_Motion_Standing_One"
+                graph = {"nodes": [{"type": "SaveImage", "widgets_values": [prefix]}]}
+                w.master(name, graph)
+                source = w.put("A-Home", f"{folder}/{name}", graph)
+                destination = w.put("A-Home", f"Alice/2_Studies/motions/standing/{name}", {"nodes": [], "id": "keep"})
+                source_bytes, destination_bytes = source.read_bytes(), destination.read_bytes()
+                with self.assertRaisesRegex(ValueError, "refusing to move"):
+                    w.run("tidy", "-w", "A-Home", "--apply")
+                self.assertEqual(source.read_bytes(), source_bytes)
+                self.assertEqual(destination.read_bytes(), destination_bytes)
+
+    def test_tidy_motion_filter_leaves_other_workflows_and_empty_folders(self):
+        with World() as w:
+            motion = "Alice_Qwen_Motion_Standing_One.json"
+            scene = "Alice_Qwen_Scene_One.json"
+            motion_graph = {"nodes": [{"type": "SaveImage", "widgets_values": [
+                "set-a/Alice/2_Studies/motions/standing/Alice_Qwen_Motion_Standing_One"]}]}
+            scene_graph = {"nodes": [{"type": "SaveImage", "widgets_values": [
+                "set-a/Alice/5_Scenes/Alice_Qwen_Scene_One"]}]}
+            w.master(motion, motion_graph)
+            w.master(scene, scene_graph)
+            other_motion = "Bob_Qwen_Motion_Standing_One.json"
+            w.master(other_motion, {"nodes": [{"type": "SaveImage", "widgets_values": [
+                "set-b/Bob/2_Studies/motions/standing/Bob_Qwen_Motion_Standing_One"]}]})
+            old_motion = w.put("A-Home", f"Alice/Bench/motion/standing/{motion}", motion_graph)
+            old_scene = w.put("A-Home", f"old/{scene}", scene_graph)
+            other = w.put("A-Home", f"Bob/Bench/motion/standing/{other_motion}")
+            empty = w.dir("A-Home") / "unrelated-empty"
+            empty.mkdir()
+            w.run("tidy", "-w", "A-Home", "--stage", "motion", "--group", "set-a", "--apply")
+            self.assertFalse(old_motion.exists())
+            self.assertTrue((w.dir("A-Home") / "Alice/2_Studies/motions/standing" / motion).exists())
+            self.assertTrue(old_scene.exists())
+            self.assertTrue(other.exists())
+            self.assertTrue(empty.is_dir())
 
     def test_orphan_cleanup_skips_hand_made_and_prunes(self):
         with World() as w:
@@ -796,6 +1282,104 @@ class SavedShotTests(unittest.TestCase):
 
 
 class CleanupTests(unittest.TestCase):
+    def test_retire_planned_home_backs_up_scoped_generated_files(self):
+        with World() as w:
+            name = "Dana_Qwen_Scene_One.json"
+            w.master(name)
+            source = w.put("Guest", f"alpha/Dana/{name}", {"nodes": [], "id": "edited"})
+            manual = w.put("Guest", f"zz_Shots/{name}")
+            before = source.read_bytes()
+            flags = ("--group", "set-planned", "--hero", "Dana", "--workspace-backups",
+                     "--retire-planned-home")
+            normal, _ = w.run("cleanup", "-w", "Guest", "--group", "set-planned",
+                              "--hero", "Dana", "--workspace-backups", "--dry-run")
+            self.assertIn("not an active workspace", normal)
+            preview, _ = w.run("cleanup", "-w", "Guest", *flags, "--dry-run")
+            self.assertIn("planned homes: Planned", preview)
+            self.assertTrue(source.exists())
+            self.assertFalse(cw.workspace_backup_root(w.cfg, "Guest").exists())
+            w.run("cleanup", "-w", "Guest", *flags, "--apply")
+            self.assertFalse(source.exists())
+            self.assertTrue(manual.exists())
+            run = next(cw.workspace_backup_root(w.cfg, "Guest").iterdir())
+            self.assertEqual((run / "alpha" / "Dana" / name).read_bytes(), before)
+            checked, code = w.run("backup-check", "Guest", run.name)
+            self.assertIsNone(code)
+            self.assertIn("verified 1 workspace backup", checked)
+
+    def test_retire_planned_home_refuses_missing_scope_and_active_homes(self):
+        with World() as w:
+            name = "Eve_Qwen_Scene_One.json"
+            w.master(name)
+            source = w.put("Guest", name)
+            _, code = w.run("cleanup", "-w", "Guest", "--retire-planned-home",
+                            "--workspace-backups", "--apply")
+            self.assertIn("requires --workspace-backups, --group and --hero", code)
+            out, _ = w.run("cleanup", "-w", "Guest", "--group", "set-ghost",
+                           "--hero", "Eve", "--workspace-backups",
+                           "--retire-planned-home", "--apply")
+            self.assertIn("not all destination homes are planned", out)
+            self.assertTrue(source.exists())
+
+    def test_retire_planned_home_keeps_source_when_backup_fails(self):
+        with World() as w:
+            name = "Dana_Qwen_Scene_One.json"
+            w.master(name)
+            source = w.put("Guest", name)
+            with mock.patch.object(cw, "workspace_backup", side_effect=OSError("backup failed")):
+                with self.assertRaisesRegex(OSError, "backup failed"):
+                    w.run("cleanup", "-w", "Guest", "--group", "set-planned",
+                          "--hero", "Dana", "--workspace-backups",
+                          "--retire-planned-home", "--apply")
+            self.assertTrue(source.is_file())
+
+    def test_scoped_prefix_migration_uses_verified_workspace_backups(self):
+        with World() as w:
+            w.cfg["homes"] = [{"groups": ["set-a"], "workspace": "A-Home"}]
+            old = {"nodes": [
+                {"type": "SaveImage", "widgets_values": ["angel-primes/alpha/Female/test"],
+                 "widgets_values_named": {"filename_prefix": "angel-primes/alpha/Female/test"}},
+                {"type": "LoadImage", "widgets_values": ["photo.png"]},
+            ]}
+            new = copy.deepcopy(old)
+            new["nodes"][0]["widgets_values"][0] = "reference/manual/alpha/Female/test"
+            different = copy.deepcopy(new)
+            different["nodes"][1]["widgets_values"][0] = "other.png"
+            for name in ("One", "Two"):
+                w.master(f"Alice_Qwen_Scene_{name}.json", old)
+                w.put("Guest", f"alpha/Female/Alice_Qwen_Scene_{name}.json", old)
+            w.put("A-Home", "alpha/Female/Alice_Qwen_Scene_One.json", new)
+            w.put("A-Home", "alpha/Female/Alice_Qwen_Scene_Two.json", different)
+            flags = ("--group", "set-a", "--hero", "Alice", "--workspace-backups",
+                     "--prefix-map", "angel-primes=reference/manual")
+            before = (w.dir("Guest") / "alpha/Female/Alice_Qwen_Scene_One.json").read_bytes()
+            preview, _ = w.run("cleanup", "-w", "Guest", *flags, "--dry-run")
+            self.assertIn("would remove  Alice_Qwen_Scene_One.json", preview)
+            self.assertIn("differs from the copy", preview)
+            self.assertFalse(cw.workspace_backup_root(w.cfg, "Guest").exists())
+            out, _ = w.run("cleanup", "-w", "Guest", *flags, "--apply")
+            self.assertIn("moved to backup", out)
+            self.assertFalse((w.dir("Guest") / "alpha/Female/Alice_Qwen_Scene_One.json").exists())
+            self.assertTrue((w.dir("Guest") / "alpha/Female/Alice_Qwen_Scene_Two.json").exists())
+            backup = cw.workspace_backup_root(w.cfg, "Guest")
+            run = next(backup.iterdir())
+            self.assertEqual((run / "alpha/Female/Alice_Qwen_Scene_One.json").read_bytes(), before)
+            checked, code = w.run("backup-check", "Guest", run.name)
+            self.assertIsNone(code)
+            self.assertIn("verified 1 workspace backup", checked)
+            self.assertFalse(cw.storage_root(w.cfg, "backup").exists())
+
+    def test_workspace_backup_failure_preserves_cleanup_source(self):
+        with World() as w:
+            w.cfg["homes"] = [{"groups": ["set-a"], "workspace": "A-Home"}]
+            w.master("Alice_Qwen_Scene_One.json")
+            w.put("A-Home", "Alice_Qwen_Scene_One.json")
+            source = w.put("Guest", "Alice_Qwen_Scene_One.json")
+            with mock.patch.object(cw, "workspace_backup", side_effect=OSError("backup failed")):
+                with self.assertRaisesRegex(OSError, "backup failed"):
+                    w.run("cleanup", "-w", "Guest", "--workspace-backups", "--apply")
+            self.assertTrue(source.is_file())
+
     def build(self, w):
         """Guest is home for nothing here; each case below is one reason to remove or keep."""
         for n in ("One", "Two", "Three", "Four", "Five"):
@@ -1093,6 +1677,44 @@ class InputPullTests(unittest.TestCase):
         cfg = {"a": {"x": 1, "y": [1, 2]}, "inputs": {"H": {"prime": "p.png"}}, "list": ["x" * 200, "y" * 200]}
         self.assertEqual(json.loads(cw.dump_cfg(cfg)), cfg)
 
+    def test_role_override_groups_choices_and_survives_reset(self):
+        name = "Alice_Qwen_X_Pose_Layer_OnePiece_Preserve_Audition"
+        legacy = "Alice_Qwen_X_Pose_Layer_Legacy"
+        cfg = {
+            "inputs": {"Alice": {"prime": "alice_prime.png", "bare": "alice_bare.png"}},
+            "inputRoles": {"default": "bare"},
+            "inputRoleOverrides": {name: "prime"},
+        }
+        with tempfile.TemporaryDirectory(dir=cw.ROOT / "tmp") as tmp:
+            root = pathlib.Path(tmp)
+            paths = {}
+            for stem, image in ((name, "alice_prime.png"), (legacy, "alice_bare.png")):
+                path = root / (stem + ".json")
+                cw.write_wf(path, image_wf(image))
+                paths[stem + ".json"] = path
+            repo = {n: ("set-a", "Alice", p) for n, p in paths.items()}
+            index = {n[:-5]: ("Alice", "poses", ["one-piece"]) for n in paths}
+            patches = (
+                mock.patch.object(cw, "input_index", return_value=index),
+                mock.patch.object(cw, "repo_files", return_value=repo),
+                mock.patch.object(cw, "hero_groups", return_value={"Alice": "set-a"}),
+                mock.patch.object(cw, "flow_index", return_value={}),
+                mock.patch.object(cw, "workspace_ready", return_value=(True, "")),
+                mock.patch.object(cw, "install_files", return_value=paths),
+                mock.patch.object(cw, "is_hand_made", return_value=False),
+            )
+            with contextlib.ExitStack() as stack:
+                for patch in patches:
+                    stack.enter_context(patch)
+                choices = cw.input_choices(cfg, ["fixture"])
+                self.assertEqual({c["role"]: c["state"] for c in choices}, {"bare": "same", "prime": "same"})
+                cw.write_wf(paths[name + ".json"], image_wf("wrong.png"))
+                args = types.SimpleNamespace(root=None, hero="Alice", stage=None, match=None, dry_run=False, force=True)
+                with contextlib.redirect_stdout(io.StringIO()):
+                    cw.reset_inputs(cfg, args, workspaces=[])
+                self.assertEqual(cw.input_image(cw.read_wf(paths[name + ".json"])), "alice_prime.png")
+                self.assertEqual(cw.input_image(cw.read_wf(paths[legacy + ".json"])), "alice_bare.png")
+
 
 class PhotoRepointTests(unittest.TestCase):
     """A chosen original photo that was renamed or moved (the originals tool) is found again by its id and re-pointed in workspaces.json, the workflows and the input folders."""
@@ -1285,7 +1907,11 @@ class TemplateRangeTests(unittest.TestCase):
     def high(self, name):
         import re
         path = next(self.tpl.rglob(name))
-        m = re.search(r"Denoise ~(\d(?:\.\d+)?)(?:-(\d(?:\.\d+)?))?", path.read_text(encoding="utf-8").split("\nprompt:", 1)[0])
+        header = path.read_text(encoding="utf-8").split("\nprompt:", 1)[0]
+        if "{{DENOISE_HINT}}" in header:
+            relative = path.relative_to(pathlib.Path(cw.__file__).resolve().parents[2]).as_posix()
+            header = header.replace("{{DENOISE_HINT}}", self.gp.DENOISE_HINT_DEFAULTS[relative])
+        m = re.search(r"Denoise ~(\d(?:\.\d+)?)(?:-(\d(?:\.\d+)?))?", header)
         return float(m.group(2) or m.group(1))
 
     def test_edits_that_change_a_lot_run_high(self):
@@ -1299,6 +1925,8 @@ class TemplateRangeTests(unittest.TestCase):
     def test_every_edit_template_with_a_key_block_slot_switches_it_on(self):
         for p in sorted(self.tpl.rglob("*.txt")):
             text = p.read_text(encoding="utf-8")
+            if "{{DENOISE}}" in text.split("\nprompt:", 1)[0]:
+                continue  # These templates select denoise and key details per card.
             if "{{KEY_BLOCK}}" in text and self.high(p.name) >= 0.7 and p.name not in ("pose-female-human.txt", "pose-male-human.txt"):
                 self.assertTrue(self.gp.TEMPLATE_KEY_DEFAULTS.get(p.name), f"{p.name} runs at a high denoise but states no Critical details")
 

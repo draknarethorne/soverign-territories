@@ -1,0 +1,8 @@
+{
+  "id": "motion/gaze/sidelong",
+  "kind": "gaze",
+  "name": "Sidelong glance",
+  "gaze": "eyes glancing to one side.",
+  "compatibleStages": ["edit", "alpha", "head", "motion", "scene"],
+  "tags": ["gaze", "sidelong", "off-camera"]
+}

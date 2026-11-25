@@ -1,0 +1,11 @@
+{
+  "artId": "female-head-denoise-audition",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/heroes/sovereign-females/female.json",
+  "template": "data/art/_templates/heroes/2_Studies/head-human.txt",
+  "output": "prompts/sovereign-females/Female/2_Studies/head/Female_Head_Denoise_Audition.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Female head, the golden head. Opt-in denoise audition; preserves the existing source and reference workflow. The hint follows this card's unvalidated range. The head audition stays in the root head family.",
+  "denoise_hint": "{{DENOISE}}"
+}

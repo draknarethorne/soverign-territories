@@ -1,0 +1,24 @@
+{
+  "artId": "azaline-edit-pose-relaxed-three-quarter",
+  "kind": "base-set",
+  "stage": "edit",
+  "heroArt": "data/art/heroes/angel-primes/female/azaline.json",
+  "template": "data/art/_templates/heroes/0_Edit/edit-cleanup-human.txt",
+  "output": "prompts/angel-primes/female/Azaline/0_Edit/pose/Azaline_Edit_Pose_Relaxed_Three_Quarter.txt",
+  "denoise": "~0.9-1.0",
+  "edit_name": "Relaxed three-quarter audition",
+  "components": {
+    "edit_task": "data/art/edits/pose/pose-audition.json",
+    "likeness": "data/art/edits/policies/face-preserve.json",
+    "hair_policy": "data/art/edits/policies/hair-preserve.json",
+    "body": "data/art/edits/policies/body-preserve.json",
+    "view": "data/art/studio/views/body/relaxed-three-quarter.json",
+    "camera": "data/art/edits/policies/framing-full-length.json",
+    "background": "data/art/backgrounds/studio/light-grey-seamless.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "result": "data/art/edits/policies/result-reference-audition.json",
+    "result_outfit": "data/art/edits/policies/clothing-preserve-if-present.json"
+  },
+  "notes": "Approved pose, pilot wording. Select an original or a chosen render as input. Output is synthetic and never identity-core evidence. Components are independent assembly controls, not yet per-job GUI controls. Character-named source-preserving audition; visual acceptance remains open."
+}

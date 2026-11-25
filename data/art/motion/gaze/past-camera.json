@@ -1,0 +1,8 @@
+{
+  "id": "motion/gaze/past-camera",
+  "kind": "gaze",
+  "name": "Gaze past the camera",
+  "gaze": "eyes looking past the camera into the distance.",
+  "compatibleStages": ["edit", "alpha", "head", "motion", "scene"],
+  "tags": ["gaze", "distance", "off-camera"]
+}

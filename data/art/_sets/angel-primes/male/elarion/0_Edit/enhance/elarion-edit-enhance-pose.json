@@ -1,0 +1,29 @@
+{
+  "artId": "elarion-edit-enhance-pose",
+  "kind": "base-set",
+  "stage": "edit",
+  "heroArt": "data/art/heroes/angel-primes/male/elarion.json",
+  "template": "data/art/_templates/heroes/0_Edit/edit-cleanup-human.txt",
+  "output": "prompts/angel-primes/male/Elarion/0_Edit/enhance/Elarion_Edit_Enhance_Pose.txt",
+  "denoise": "~1.0",
+  "edit_name": "Enhance Pose",
+  "components": {
+    "view": "data/art/studio/views/body/over-shoulder-glance.json",
+    "background": "data/art/reference/background/preserve-scenery.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "camera": "data/art/studio/framing/pullback-selected-pose-film-still.json",
+    "edit_task": "data/art/edits/enhance/clear-props.json",
+    "result": "data/art/edits/policies/result-clear-props-and-jewelry.json",
+    "body": "{{FIGURE_FRAME}}",
+    "likeness": "data/art/reference/appearance/preserve-face-shape.json",
+    "wearing": "data/art/edits/policies/clothing-continuation-if-present.json",
+    "expression": "data/art/motion/expressions/playful/knowing-smirk.json",
+    "face_policy": "data/art/reference/appearance/preserve-face-makeup.json",
+    "key_block": "Critical details:",
+    "skin_edit": "data/art/reference/appearance/preserve-skin-tone.json",
+    "hair_policy": "data/art/edits/policies/hair-preserve.json",
+    "eye_detail": "data/art/reference/appearance/preserve-eye-color-defined.json"
+  },
+  "notes": "Repository-only male Edit audition adapted from the corresponding source-informed character variant. The male identity frame is selected; other appearance and wardrobe policies follow the selected family. Newly synthesized details are not identity evidence; visual acceptance remains open."
+}

@@ -1,0 +1,9 @@
+{
+  "id": "studio/lighting/soft-neutral-fill",
+  "kind": "lighting",
+  "name": "Soft neutral frontal light with fill",
+  "compatibleStages": ["edit", "alpha", "pose", "head", "hair", "motion", "armor", "clothing", "scene"],
+  "tags": ["lighting", "neutral", "soft", "frontal"],
+  "description": "Soft neutral frontal light with gentle natural fill, no dramatic shadows or colored cast.",
+  "negatives": ["dramatic lighting", "colored lighting"]
+}

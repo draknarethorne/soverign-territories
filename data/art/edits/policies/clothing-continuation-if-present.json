@@ -1,0 +1,9 @@
+{
+  "id": "edit-policy-clothing-continuation-if-present",
+  "kind": "edit",
+  "name": "Continue incoming clothing if present",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["reference", "preserve-source", "extension"],
+  "description": "If clothing is present, preserve its fabric, colors and coverage, continuing it naturally into any newly visible areas.",
+  "negatives": ["changed clothing"]
+}

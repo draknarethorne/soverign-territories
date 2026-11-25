@@ -15,6 +15,9 @@ import urllib.parse
 import urllib.request
 import uuid
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "generators"))
+import reference_prompt_bindings  # noqa: E402
+
 from PIL import Image
 
 if __package__:
@@ -60,21 +63,8 @@ RECIPES = {
     "shared-0d-deluxe-resting": ("0_Edit", "0d_Deluxe", "Angelica_Qwen_Edit_0d_Deluxe_Bare.json"),
     "shared-0c-cleanup-basic": ("0_Edit", "0c_Cleanup", "Angelica_Qwen_Edit_0c_Cleanup_Basic.json"),
 }
-SHARED_PROMPTS = {
-    "shared-0b-background-basic": "0_Edit/background/Female_Edit_Background_Basic.txt",
-    "shared-0d-relaxed-three-quarter": "0_Edit/pose/Female_Edit_Pose_Relaxed_Three_Quarter.txt",
-    "shared-0d-grounded-three-quarter": "0_Edit/pose/Female_Edit_Pose_Grounded_Three_Quarter.txt",
-    "shared-0e-enhance-basic": "0_Edit/enhance/Female_Edit_Enhance_Basic.txt",
-    "shared-0f-full-clothed": "0_Edit/full/Female_Edit_Full_Clothed.txt",
-    "shared-1a-prime-outfit-relaxed": "1_Alpha/1_Prime/Female_Alpha_1_Prime_Outfit_Relaxed.txt",
-    "shared-1a-prime-outfit-grounded": "1_Alpha/1_Prime/Female_Alpha_1_Prime_Outfit_Grounded.txt",
-    "shared-0d-deluxe-seated": "0_Edit/deluxe/Female_Edit_Deluxe_Clothed_Seated.txt",
-    "shared-0d-deluxe-relaxing": "0_Edit/deluxe/Female_Edit_Deluxe_Clothed_Relaxing.txt",
-    "shared-0d-deluxe-side-resting": "0_Edit/deluxe/Female_Edit_Deluxe_Clothed_Side_Resting.txt",
-    "shared-0d-deluxe-resting": "0_Edit/deluxe/Female_Edit_Deluxe_Clothed_Resting.txt",
-    "shared-0c-cleanup-basic": "0_Edit/cleanup/Female_Edit_Cleanup_Basic.txt",
-}
-SHARED_PROMPT_ROOT = base.ROOT / "prompts" / "angel-primes" / "alpha" / "Female"
+SHARED_PROMPTS = reference_prompt_bindings.SHARED_PROMPTS
+SHARED_PROMPT_ROOT = base.ROOT / reference_prompt_bindings.PROMPT_ROOT
 ALLOWED = {
     "LoadImage", "SaveImage", "ModelSamplingAuraFlow", "VAELoader",
     "FluxKontextMultiReferenceLatentMethod", "TextEncodeQwenImageEditPlus",

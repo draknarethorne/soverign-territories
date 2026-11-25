@@ -263,12 +263,14 @@ echo    render-gallery.cmd --root DIR [--dry-run ^| --check ^| --apply]  stage-g
 echo    setup-workspace.cmd "WS" [--apply]   the whole job for one workspace: deploy its sets, tidy, cleanup, status (preview unless --apply)
 echo    status.cmd [filters]            repo against every workspace
 echo    workspaces.cmd                  workspaces, homes, what each accepts and what the repo holds
-echo    publish.cmd HERO "WS" [STAGE]   a TEMPORARY copy in a workspace that accepts the set (Sovereign Territories takes any set: reels, feeds)
-echo    cleanup.cmd "WS" [--apply]      remove what that workspace is not home for (clone leftovers, finished temporary copies)
-echo    tidy.cmd "WS"^|all [--apply]     sort loose workflows into folders, remove empty folders
+echo    publish.cmd HERO "WS" [STAGE] [--workspace-backups] [--dry-run]  deploy with optional per-workspace backups; preview first
+echo    workspace-backup-check.cmd "WS" RUN  verify one workspace-local deploy backup receipt and hashes, read-only
+echo    cleanup.cmd "WS" [filters] [--workspace-backups] [--prefix-map "OLD=NEW"] [--apply]  preview/move matching non-home workflows to backup
+echo    tidy.cmd "WS"^|all [--stage STAGE] [--group GROUP] [--apply]  sort workflows; filtered runs leave empty folders alone
 echo.
 echo  DEPLOY AND PULL, FINER CONTROL
 echo    deploy.cmd HERO [STAGE]         repo to the hero's home workspace(s)
+echo    deploy-group.cmd GROUP [--stage STAGE] [--mode patch] [--workspace-backups] [--dry-run]  deploy a selected set; applies unless previewed
 echo    deploy-group.cmd GROUP          repo to a whole set's home workspace
 echo    make.cmd HERO [STAGE]           create or refresh that hero's workflows from the prompts (repo only)
 echo    update.cmd [filters]            refresh prompt text in every existing repo workflow
@@ -277,6 +279,7 @@ echo    deploy-curated.cmd HERO         copy hand-curated workflows to a workspa
 echo    pull-shots.cmd HERO / deploy-shots.cmd HERO   keep / copy what you saved under zz_Shots  ^(= pull --only shots / deploy --include shots^)
 echo    backdrop.cmd --repo ^| -w "WS" ^| --workspaces [--dry-run ^| --check]   swap the old cream studio-backdrop wording for light grey in hand-made workflows ^(zz_Shots, curated, captured^); backs up first
 echo    finals.cmd ACTION "WS"          candidates and finals: status, sort ^(files them where their name says; never deletes^), promote, pull, deploy, reclassify ^(repo cleanup^)
+echo    cleanup.cmd "WS" --group G --hero H --workspace-backups --retire-planned-home [--apply]  retire generated copies to verified workspace-local backup only when all their homes are planned
 echo    deploy-templates.cmd / pull-templates.cmd     the ST stage templates, to and from Sovereign Territories
 echo    inputs.cmd [status ^| pull -w WS ^| reset --hero H ^| photos ^| set HERO --photo F ...]  which images each hero's workflows read; pull keeps the default images you chose in ComfyUI in workspaces.json (do it before reset); photos re-points a chosen photo that was renamed
 echo    compare-primes.cmd [HERO ...]   Prime renders side by side, Qwen and FireRed, normal and configured alternate flows, with a face score against the photo each started from  ^(docs\art\prime-flows.md^)
@@ -298,7 +301,8 @@ echo.
 echo  ART DATA
 echo    prompts.cmd [filters]           regenerate prompts from data\art (all, or gen_prompt.py filters such as --group G --slug S)
 echo    videoprompts.cmd [card.json]    regenerate video prompts from data\animation cards
-echo    scaffold-angels.cmd [SLUG^|--alpha]  write the standard card set for the angels (--alpha: the two alpha test heroes); --coverage reports library use
+echo    scaffold-angels.cmd [SLUG]  write the standard card set for the named angels; --coverage reports library use
+echo    scaffold-generic.cmd [female^|male^|all] [--check^|--apply]  preview missing generic cards; --check verifies coverage, --apply adds only missing cards
 echo    scaffold-sister.cmd SLUG        write a sister's studio kit cards
 echo    scaffold-characters.cmd         write the character scenes (angels: Lineup, duty, quiet, domain, celebration; sisters: domain, craft, celebration) from scene-recipes.json
 echo    art-refs.cmd where-used^|move^|regroup   find or safely move an art piece and every reference to it

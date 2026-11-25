@@ -1,0 +1,8 @@
+{
+  "id": "motion/gaze/soft-downcast",
+  "kind": "gaze",
+  "name": "Soft downcast gaze",
+  "gaze": "eyes gently lowered.",
+  "compatibleStages": ["edit", "alpha", "head", "motion", "scene"],
+  "tags": ["gaze", "downward", "soft"]
+}

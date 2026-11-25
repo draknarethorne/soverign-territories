@@ -1,0 +1,8 @@
+{
+  "id": "reference/appearance/skin-slightly-warmer-even",
+  "kind": "reference",
+  "name": "Slightly warmer even skin tone",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["reference", "skin", "tone"],
+  "description": "Slightly increase the tan of visible skin consistently across the face and body."
+}

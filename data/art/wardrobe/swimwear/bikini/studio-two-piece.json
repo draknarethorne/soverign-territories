@@ -1,0 +1,9 @@
+{
+  "id": "wardrobe/swimwear/bikini/studio-two-piece",
+  "kind": "wearing",
+  "name": "Studio two-piece swimsuit",
+  "compatibleStages": ["alpha", "pose"],
+  "tags": ["swimwear", "bikini", "studio"],
+  "description": "A {{PRIMARY}} two-piece swimsuit with {{ACCENT_SOFT}} accents; replace the incoming outfit without retaining its garments.",
+  "negatives": ["source outfit remnants", "extra clothing layers"]
+}

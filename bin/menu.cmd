@@ -6,6 +6,7 @@ echo  Sovereign Territories
 echo   1  Refresh a hero (prompts, workflows, deploy to her home workspace)
 echo   2  Refresh a whole set (angel-primes, sovereign-dawn ...)
 echo   3  Set up a workspace (deploy its sets, tidy, cleanup, status)
+echo   SG Preview generic Female/Male scaffolding (no writes)
 echo   4  Publish a temporary copy to another workspace
 echo   5  Clean up a workspace
 echo   6  Status
@@ -66,6 +67,7 @@ echo   Q  Quit
 set "CH="
 set /p "CH=Choice: "
 if /i "%CH%"=="Q" exit /b 0
+if /i "%CH%"=="SG" call "%~dp0scaffold-generic.cmd" & pause & goto menu
 if /i "%CH%"=="RR" goto simplerecap
 if /i "%CH%"=="RE" goto retireempty
 if /i "%CH%"=="MH" (

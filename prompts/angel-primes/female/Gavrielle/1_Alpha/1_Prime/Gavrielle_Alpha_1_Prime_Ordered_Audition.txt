@@ -1,0 +1,52 @@
+=== Gavrielle Skyharrow - 1_Alpha - Character Prime A-pose audition ===
+Incoming image: the user-selected source photo or selected generated image.
+Denoise ~1.0.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: Standing A-pose, upright with feet apart and arms relaxed slightly away from the sides, open hands, level head facing the camera squarely and relaxed square shoulders; replace the incoming pose.
+
+Background: a plain neutral light-grey seamless studio backdrop
+Lighting: Even, soft, neutral frontal studio lighting with a flat, clean key light.
+Professional beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+
+Camera: Pull the camera back to reveal the complete figure and show the feet. Include the surrounding scene and extend it seamlessly as needed. Frame the surrounding scene as a wide environmental film still.
+
+Edit the incoming image: Remove logos, icons and overlays. Remove props and accessories, including purses, cups, glasses and items held in the hands. Remove jewelry. Crop top and bottom borders that are not part of the background; extend the selected background as needed.
+
+Result:
+Hands free of held items; the person is free of purses, accessories and jewelry.
+
+Critical details:
+Hair: Keep the incoming hair color unchanged.
+Bust: A full, naturally rounded bust with balanced proportions.
+Eyes: Keep the incoming eye color.
+Skin: Keep the incoming skin tone and tan.
+Body: tall, willowy, long-limbed build with a dancer's poise; narrow, long waist with a flat, gently toned midriff; long, slender arms with elegant hands; narrow, gently curved feminine hips; extremely long, slender legs
+
+Likeness: Maintain strict fidelity to the reference person's facial features and bone structure.
+
+Wearing: A Sky Silver two-piece swimsuit with white accents; replace the incoming outfit without retaining its garments. Use a subtle polished nickel sheen and fine polished nickel edging.
+Footwear: bare feet planted flat on the floor, slightly apart with the toes pointing forward, natural relaxed toes
+Hair: Wear the hair down, retaining its natural texture and keeping the face clear. Keep the incoming hair length. Let longer hair fall forward over the shoulders, with the ends visible. Sweep the front sections slightly back, leaving the eyes, brows and temples clear.
+Makeup: a fresh, dewy finish - luminous skin, a soft cream blush on the cheeks, groomed natural brows, a touch of mascara and a sheer berry lip balm.
+Eyes: Keep the incoming eye color. Both eyes matched, level and symmetrical, wide open with crisp catchlights and natural lashes.
+Gaze: eyes to camera.
+Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth, the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open, chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely)
+
+----------------------------------------------------------------
+negative prompt:
+
+seated pose, cropped feet,
+colored studio backdrop, busy background,
+new or substituted props, cropped body, blurred,
+changed identity, altered facial features,
+source outfit remnants, extra clothing layers,
+shoes, heels, high heels, sandals, boots, footwear, socks, stockings,
+wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, pout,
+changed hair color,
+changed eye color,
+changed skin tone,
+extra people, extra limbs, extra fingers, deformed hands, text, watermark,
+logo, illustration, painting, drawing, CGI, cartoon.

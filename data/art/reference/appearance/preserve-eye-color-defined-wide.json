@@ -1,0 +1,9 @@
+{
+  "id": "reference/appearance/preserve-eye-color-defined-wide",
+  "kind": "reference",
+  "name": "Preserve source eye color with clear level wide-open eyes",
+  "extends": "data/art/reference/appearance/preserve-eye-color.json",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["reference", "eyes", "detail", "preserve-source"],
+  "description": "{{BASE}} Both eyes matched, level and symmetrical, wide open with crisp catchlights and natural lashes."
+}

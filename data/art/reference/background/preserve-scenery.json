@@ -1,0 +1,9 @@
+{
+  "id": "reference/background/preserve-scenery",
+  "kind": "reference",
+  "name": "Preserve source scenery",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["reference", "background", "preserve-source"],
+  "description": "Keep the original scenery detailed and clear.",
+  "negatives": ["changed background"]
+}

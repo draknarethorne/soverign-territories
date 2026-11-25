@@ -1,0 +1,8 @@
+{
+  "id": "studio/views/body/over-shoulder-glance",
+  "kind": "view",
+  "name": "Over-shoulder glance",
+  "compatibleStages": ["edit", "alpha", "pose"],
+  "tags": ["pose", "glance"],
+  "description": "A sidelong glance over the shoulder, with a poised posture and cinematic eye direction."
+}

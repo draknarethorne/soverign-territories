@@ -1,0 +1,9 @@
+{
+  "id": "studio/views/body/standing-hip-reach",
+  "kind": "view",
+  "name": "Standing hip-shift and forward gesture",
+  "compatibleStages": ["edit", "alpha", "pose"],
+  "tags": ["front", "full-body", "standing", "relaxed"],
+  "description": "Stand mostly toward the camera at a slight angle, shifting one hip to the side with the legs comfortably apart and visible. Raise one heel with the toes touching the floor; rest one hand on the hip and gesture toward the camera with the other. Keep the face visible toward the camera.",
+  "negatives": ["straight-on rigid A-pose", "hidden face", "unbalanced stance"]
+}

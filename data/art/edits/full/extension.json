@@ -1,0 +1,12 @@
+{
+  "id": "edit-full-extension",
+  "kind": "edit",
+  "name": "Full-length extension",
+  "extends": "data/art/edits/policies/clear-props-and-jewelry.json",
+  "compatibleStages": ["edit"],
+  "tags": ["full", "extension"],
+  "sourceVariant": "0f_Full",
+  "status": "pilot",
+  "description": "{{BASE}} Extend the photograph to a full head-to-toe view, continuing the existing pose and outfit naturally. Newly visible regions are synthesized, not a reconstruction of hidden original details.",
+  "negatives": ["changed pose", "disconnected limbs"]
+}

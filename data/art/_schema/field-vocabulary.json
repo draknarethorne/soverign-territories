@@ -1,7 +1,7 @@
 {
   "description": {
     "overridable": false,
-    "owners": ["wardrobe", "backgrounds", "heroes/*/armor,clothing,weapons,effects"],
+    "owners": ["wardrobe", "backgrounds", "reference", "studio", "edits", "heroes/*/armor,clothing,weapons,effects"],
     "notes": "Catch-all single content field for a simple, single-purpose piece (jewelry, footwear, cape, weapon, effect, background)."
   },
   "editorial": {

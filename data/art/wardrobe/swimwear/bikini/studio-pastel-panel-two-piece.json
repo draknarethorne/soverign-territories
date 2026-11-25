@@ -1,0 +1,9 @@
+{
+  "id": "wardrobe/swimwear/bikini/studio-pastel-panel-two-piece",
+  "kind": "wearing",
+  "name": "Pastel-panel studio two-piece swimsuit",
+  "extends": "data/art/wardrobe/swimwear/bikini/studio-two-piece.json",
+  "compatibleStages": ["alpha", "pose"],
+  "tags": ["swimwear", "bikini", "studio"],
+  "description": "A {{PRIMARY}} triangle-cut two-piece swimsuit with iridescent color-blocked panels in soft rose, sky blue, mint and lilac, {{ACCENT_SOFT}} edging, a small {{ACCENT_SOFT}} feather emblem at the center of the top and a small {{ACCENT_SOFT}} ring at each hip; replace the incoming outfit without retaining its garments."
+}

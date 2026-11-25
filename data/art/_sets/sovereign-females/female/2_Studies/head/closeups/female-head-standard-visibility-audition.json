@@ -1,0 +1,12 @@
+{
+  "artId": "female-head-standard-visibility-audition",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/heroes/sovereign-females/female.json",
+  "name": "Head visibility audition",
+  "keyDetails": ["hair"],
+  "template": "data/art/_templates/heroes/2_Studies/head-direction-reference-human.txt",
+  "output": "prompts/sovereign-females/Female/2_Studies/head/closeups/Female_Head_Standard_Visibility_Audition.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Separate front-head audition preserving incoming expression and identity. Not a replacement golden. Denoise remains unvalidated."
+}

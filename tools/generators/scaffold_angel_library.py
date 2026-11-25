@@ -9,7 +9,7 @@ and the library pieces are ROTATED across the twenty angels (by alignment rank) 
   3_Layers     the skin base variants (female) and a rotating mix of bikini, lingerie, one-piece, backless and athletic underlayers
   4_Wardrobe   clothing (dresses, gowns, sets), armor, themed outfits, and the showcases: celestial, editorial, elemental, studio and 13 photo locations (female)
   5_Scenes     signature, glamour (glamour, evening, casting, robe), story (battle, bond, the dawn) and six themes, complete and staged (female)
-  6_Finish     the polish and final skeletons          Bench/motion  a rotating mix of the motion library
+  6_Finish     the polish and final skeletons          2_Studies/motions  a rotating mix of the motion library
 
 Generic families are cloned from a standard sister (Draknava) so the angels follow her; every sister-specific path is replaced or the clone is refused.
 The male angels get everything that needs no male wardrobe (studies, hair, layers, bench motions, finish) until the male wardrobe pack exists: only pieces tagged male or unisex
@@ -345,14 +345,15 @@ class Angel:
         if not self.female:
             return
         for name in ("core", "plate", "plate-fitted", "suit"):
-            self.write("alpha", f"{self.slug}-alpha-2b-celestial-{name}", self.clone(f"1_Alpha/2b_Experiments/celestial/draknava-alpha-2b-celestial-{name}.json"))
+            self.write("alpha", f"{self.slug}-alpha-outfit-celestial-{name}", self.clone(f"1_Alpha/4_Outfits/celestial/draknava-alpha-outfit-celestial-{name}.json"))
 
-    def studies(self):
+    def studies(self, include_studio=True):
         own = json.loads((ROOT / self.ident).read_text(encoding="utf-8")).get("art", {}).get("defaultUnderlayer")
         under = getattr(self, "underlayer", None) or own or (BIKINI if self.female else BRIEF)
         small = getattr(self, "small", False)
-        subprocess.run([sys.executable, str(ROOT / "tools/generators/scaffold_studio_library.py"), "--group", GROUP, "--slug", self.slug, "--hero", self.hero,
-                        "--identity", self.ident, "--division", self.division, "--underlayer", under, *(["--small"] if small else [])], check=True, stdout=subprocess.DEVNULL)
+        if include_studio:
+            subprocess.run([sys.executable, str(ROOT / "tools/generators/scaffold_studio_library.py"), "--group", GROUP, "--slug", self.slug, "--hero", self.hero,
+                            "--identity", self.ident, "--division", self.division, "--underlayer", under, *(["--small"] if small else [])], check=True, stdout=subprocess.DEVNULL)
         hair = self.kit.get("hair") or rot(interleave(lib(HAIR_LIB.removeprefix("data/art/"), self.sex, neutral=True)), self.i, 2 if small else 8)
         for path in hair:
             path = norm(path)
@@ -375,8 +376,8 @@ class Angel:
         for path in picks:
             path = norm(path)
             short = pathlib.Path(path).stem
-            art_id = f"{self.slug}-x-pose-{short}"
-            self.write("pose", art_id, self.card(art_id, "pose", "poses", f"{self.hero}_X_Pose_{camel(short)}", tpl, {"underlayer": path}, denoise="~1.0",
+            art_id = f"{self.slug}-layer-{short}"
+            self.write("pose", art_id, self.card(art_id, "pose", "poses", f"{self.hero}_Layer_{camel(short)}", tpl, {"underlayer": path}, denoise="~1.0",
                        note="UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."))
 
     def wardrobe_card(self, stage, path, art_id, stem, name, subject=None):

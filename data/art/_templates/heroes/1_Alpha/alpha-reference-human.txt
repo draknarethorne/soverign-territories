@@ -1,0 +1,66 @@
+=== {{HERO}} - 1_Alpha - {{EDIT_NAME}} ===
+Incoming image: the user-selected source photo or selected generated image.
+Denoise {{DENOISE}}.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: {{VIEW}}
+?Gesture: {{GESTURE}}
+
+Background: {{BACKGROUND}}
+Lighting: {{LIGHTING}}
+{{PHOTO_STYLE}}
+
+Camera: {{CAMERA}}
+
+Edit the incoming image: {{EDIT_TASK}}
+
+Result:
+{{RESULT}}
+
+?{{ORDERED_KEY_BLOCK}}
+?Bust: {{BUST}}
+?{{KEY_AFTER_BUST}}
+?Body: {{BODY}}
+?Neck and shoulders: {{NECK_SHOULDERS}}
+?Skin: {{SKIN_EDIT}}
+
+Likeness: {{LIKENESS}}
+
+?Wearing: {{WEARING}}
+?Footwear: {{LEGS_FEET}}
+?Hair: {{HAIR_POLICY}}
+?{{MAKEUP_LINE}}
+?Eyes: {{EYE_DETAIL}}
+?Gaze: {{GAZE}}
+?Expression: {{EXPRESSION}}
+
+----------------------------------------------------------------
+negative prompt:
+
+?{{VIEW_NEG}},
+?{{GESTURE_NEG}},
+?{{BACKGROUND_NEG}},
+?{{LIGHTING_NEG}},
+?{{PHOTO_STYLE_NEG}},
+?{{CAMERA_NEG}},
+?{{EDIT_TASK_NEG}},
+?{{RESULT_NEG}},
+?{{BUST_NEG}},
+?{{BODY_NEG}},
+?{{NECK_SHOULDERS_NEG}},
+?{{SKIN_EDIT_NEG}},
+?{{LIKENESS_NEG}},
+?{{WEARING_NEG}},
+?{{LEGS_FEET_NEG}},
+?{{HAIR_POLICY_NEG}},
+?{{MAKEUP_NEG}},
+?{{EYE_DETAIL_NEG}},
+?{{GAZE_NEG}},
+?{{EXPRESSION_NEG}},
+?{{HAIR_NEG}},
+?{{EYE_NEG}},
+?{{SKIN_NEG}},
+extra people, extra limbs, extra fingers, deformed hands, text, watermark,
+logo, illustration, painting, drawing, CGI, cartoon.

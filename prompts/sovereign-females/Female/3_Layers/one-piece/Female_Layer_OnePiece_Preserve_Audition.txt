@@ -1,0 +1,22 @@
+=== Alpha Female - Layers: One-piece preservation audition - Edit (img2img) ===
+Incoming image: a selected reference image of Alpha Female. Change the outfit while preserving the incoming person and pose. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: Preserve the incoming pose and full-figure framing.
+
+Background and lighting: Preserve the incoming setting and lighting.
+
+Edit the incoming image: Replace the incoming outfit with the selected garment.
+
+Wearing: A Soft Pearl White one-piece swimsuit with gold accents; replace the incoming outfit without retaining its garments.
+
+Result: Preserve the person's recognizable face, body proportions, hair, eye and skin colors, expression and makeup. Keep the same pose and framing; do not retain remnants of the previous outfit.
+
+----------------------------------------------------------------
+negative prompt:
+
+source outfit remnants, extra clothing layers,
+changed identity, changed pose, changed hairstyle, extra people, extra limbs,
+deformed hands, text, watermark, logo.

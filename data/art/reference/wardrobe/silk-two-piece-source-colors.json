@@ -1,0 +1,9 @@
+{
+  "id": "reference/wardrobe/silk-two-piece-source-colors",
+  "kind": "reference",
+  "name": "Silk two-piece adapted from source outfit",
+  "compatibleStages": ["alpha"],
+  "tags": ["reference", "outfit", "silk", "two-piece"],
+  "description": "Adapt the incoming outfit into a silk two-piece outfit using its existing colors.",
+  "negatives": ["extra clothing"]
+}

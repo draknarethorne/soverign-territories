@@ -1,0 +1,25 @@
+{
+  "artId": "female-alpha-outfit-grounded",
+  "kind": "base-set",
+  "stage": "alpha",
+  "heroArt": "data/art/heroes/sovereign-females/female.json",
+  "template": "data/art/_templates/heroes/1_Alpha/alpha-reference-human.txt",
+  "output": "prompts/sovereign-females/Female/1_Alpha/4_Outfits/Female_Alpha_4_Outfits_Grounded.txt",
+  "denoise": "~0.9-1.0",
+  "edit_name": "Forward-foot three-quarter outfit audition",
+  "components": {
+    "edit_task": "data/art/edits/pose/pose-audition.json",
+    "likeness": "data/art/edits/policies/face-preserve.json",
+    "hair_policy": "data/art/edits/policies/hair-preserve.json",
+    "expression": "data/art/motion/expressions/studio/preserve-source.json",
+    "body": "data/art/edits/policies/body-preserve.json",
+    "wearing": "data/art/edits/policies/clothing-preserve.json",
+    "view": "data/art/studio/views/body/grounded-three-quarter.json",
+    "camera": "data/art/edits/policies/framing-full-length.json",
+    "background": "data/art/backgrounds/studio/light-grey-seamless.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "result": "data/art/edits/policies/result-reference-audition.json"
+  },
+  "notes": "Outfit audition, not bedroom Deluxe. Grounded is a pose cue, not an exact heel-contact acceptance gate; the user accepts a lifted heel. Original and chosen-render inputs remain distinct."
+}

@@ -1,0 +1,9 @@
+{
+  "id": "reference/wardrobe/gown-replace-source-fabric-and-colors",
+  "kind": "reference",
+  "name": "Replacement gown using source fabric and colors",
+  "compatibleStages": ["alpha"],
+  "tags": ["reference", "outfit", "gown", "fabric", "replacement"],
+  "description": "Replace the incoming outfit with a gown. If an outfit is present, reuse its colors and fabric without retaining its original garment design.",
+  "negatives": ["extra clothing"]
+}

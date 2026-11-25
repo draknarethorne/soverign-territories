@@ -1,0 +1,9 @@
+{
+  "id": "studio/views/body/standing-stepping-hands-on-hips",
+  "kind": "view",
+  "name": "Stepping stance with hands on hips",
+  "compatibleStages": ["edit", "alpha", "pose"],
+  "tags": ["three-quarter", "full-body", "standing"],
+  "description": "Stand at a slight angle toward the camera, with one shoulder gently back and the weight balanced on one leg. Step the other leg forward with its knee bent and foot lifted. Rest both hands on the hips and keep the face visible toward the camera.",
+  "negatives": ["hidden face", "unbalanced stance"]
+}

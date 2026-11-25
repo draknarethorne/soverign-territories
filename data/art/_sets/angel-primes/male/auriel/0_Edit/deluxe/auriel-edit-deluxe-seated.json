@@ -1,0 +1,26 @@
+{
+  "artId": "auriel-edit-deluxe-seated",
+  "kind": "base-set",
+  "stage": "edit",
+  "heroArt": "data/art/heroes/angel-primes/male/auriel.json",
+  "template": "data/art/_templates/heroes/0_Edit/edit-cleanup-human.txt",
+  "output": "prompts/angel-primes/male/Auriel/0_Edit/deluxe/Auriel_Edit_Deluxe_Seated.txt",
+  "denoise": "~1.0",
+  "edit_name": "Deluxe bedroom: seated upright",
+  "components": {
+    "edit_task": "data/art/edits/deluxe/bedroom-pose.json",
+    "face_policy": "data/art/edits/policies/face-preserve.json",
+    "likeness": "data/art/edits/policies/face-preserve.json",
+    "hair_policy": "data/art/edits/policies/hair-preserve.json",
+    "key_block": "Critical details:",
+    "body": "{{FIGURE_FRAME}}",
+    "legs_feet": "data/art/wardrobe/footwear/heels/simple-high-heels.json",
+    "view": "data/art/studio/views/body/deluxe-seated-upright.json",
+    "camera": "data/art/edits/policies/framing-full-length.json",
+    "background": "data/art/backgrounds/modern/bedroom-neutral.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "result": "data/art/edits/policies/result-reference-audition.json"
+  },
+  "notes": "Repository-only male Edit audition adapted from the corresponding source-informed character variant. The male identity frame is selected; other appearance and wardrobe policies follow the selected family. Newly synthesized details are not identity evidence; visual acceptance remains open. This variant selects high-heeled shoes."
+}

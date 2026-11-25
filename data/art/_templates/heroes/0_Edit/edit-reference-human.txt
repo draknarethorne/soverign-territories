@@ -13,7 +13,8 @@ only, with realistic photographic detail and natural skin texture.
 Face: {{FACE_POLICY}}
 Hair: {{HAIR_POLICY}}
 Physique: {{BODY_POLICY}}
-Clothing: {{CLOTHING_POLICY}}
+?Clothing: {{WEARING}}
+?Footwear: {{LEGS_FEET}}
 Pose: {{VIEW}}
 Framing: {{FRAMING}}
 Background and lighting: {{BACKGROUND}}
@@ -26,7 +27,8 @@ clothing or background is synthesized, not recovered from the original.
 negative prompt:
 
 {{EDIT_TASK_NEG}}, {{FACE_POLICY_NEG}}, {{HAIR_POLICY_NEG}},
-{{BODY_POLICY_NEG}}, {{CLOTHING_POLICY_NEG}}, {{VIEW_NEG}},
+{{BODY_POLICY_NEG}}, {{WEARING_NEG}}, {{VIEW_NEG}},
+?{{LEGS_FEET_NEG}},
 {{FRAMING_NEG}}, {{BACKGROUND_NEG}}, extra people, extra limbs, extra fingers,
 distorted hands, text, watermark, logo, plastic skin, illustration, painting,
 drawing, CGI, cartoon.

@@ -1,0 +1,8 @@
+{
+  "id": "edit-policy-result-reference-audition",
+  "kind": "edit",
+  "name": "Photographic reference audition result",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["reference", "result", "photography"],
+  "description": "Keep one person only, with realistic photographic detail and natural skin texture. Remove visible text, logos, watermarks and interface icons. Preserve visible hands, fingers and feet without duplicating limbs. Any newly visible details are synthesized, not recovered from the original."
+}

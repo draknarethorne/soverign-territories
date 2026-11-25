@@ -9,6 +9,14 @@ import re
 
 ENGINES = ("Qwen", "FireRed", "MiniMax")
 COUNTER = re.compile(r"_(\d{3,6})_?$")
+RENAMED_PREFIXES = (
+    ("X_Pose_Layer_", "Layer_"),
+    ("X_Pose_", "Layer_"),
+    ("X_Head", "Head"),
+    ("Alpha_1b_BareBase", "Alpha_2_BareBase"),
+    ("Alpha_1b_NeutralBase", "Alpha_2_NeutralBase"),
+    ("Alpha_2b_Celestial", "Alpha_4_Outfits_Celestial"),
+)
 
 
 def _ratio(a, b):
@@ -52,8 +60,19 @@ def parse_name(name, heroes, stems=(), aliases=None):
     if not hero or not engine:
         return None
     pool = [s for s in stems if s.startswith(f"{hero}_{engine}_")]
-    stem = close(f"{hero}_{engine}_{parts[2]}", pool, 0.85) if pool else None
+    requested = f"{hero}_{engine}_{parts[2]}"
+    stem = requested if requested in pool else None
     file_stem = stem
+    if not stem:
+        for old, new in RENAMED_PREFIXES:
+            if parts[2].startswith(old):
+                renamed = f"{hero}_{engine}_{new}{parts[2][len(old):]}"
+                if renamed in pool:
+                    stem, file_stem = renamed, requested
+                    break
+    if not stem:
+        stem = close(requested, pool, 0.85) if pool else None
+        file_stem = stem
     if not stem:
         old = close(parts[2], list(aliases or {}), 0.9)
         stem = f"{hero}_{engine}_{aliases[old]}" if old and f"{hero}_{engine}_{aliases[old]}" in pool else None

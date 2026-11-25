@@ -1,0 +1,11 @@
+{
+  "id": "hair/down/natural-afro",
+  "kind": "hair",
+  "name": "Natural afro",
+  "a_pose_style": "a natural afro with defined coils and a full rounded silhouette",
+  "breeze": "Still air.",
+  "hair_change": "Hair forms a natural afro with defined coils and a full rounded silhouette.",
+  "extras": [],
+  "compatibleStages": ["pose", "hair"],
+  "tags": ["natural", "coils", "afro"]
+}

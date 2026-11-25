@@ -9,6 +9,8 @@ from unittest import mock
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import backdrop  # noqa: E402
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "generators"))
+import gen_prompt  # noqa: E402
 
 SHOT = ('{"nodes": [{"widgets_values": ["Background: a basic cream-coloured studio backdrop with even, soft, neutral '
         'frontal studio lighting.\\nKeep the pose, the cream studio background and the lighting."]}], "seed": 1234}')
@@ -24,8 +26,8 @@ class RewriteTest(unittest.TestCase):
 
     def test_matches_generated_grey_piece(self):
         old = "a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light"
-        grey = (backdrop.ROOT / "data/art/backgrounds/studio/grey-even.json").read_text(encoding="utf-8")
-        self.assertIn(backdrop.rewrite(old)[0], grey)
+        grey = gen_prompt.load_piece(backdrop.ROOT / "data/art/backgrounds/studio/grey-even.json")
+        self.assertEqual(backdrop.rewrite(old)[0], grey["description"])
 
     def test_other_creams_untouched(self):
         for text in ("soft cream wings", "a soft cream blush", "peaches-and-cream complexion",

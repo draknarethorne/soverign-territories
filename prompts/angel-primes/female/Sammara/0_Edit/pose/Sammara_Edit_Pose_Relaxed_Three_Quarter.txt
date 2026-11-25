@@ -1,0 +1,40 @@
+=== Sammara Nightshade - 0_Edit - Relaxed three-quarter audition ===
+Incoming image: the user-selected source photo or selected generated image.
+Denoise ~0.9-1.0.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: Show a relaxed three-quarter standing pose, body turned about 45 degrees toward the camera, weight on one leg, one hand resting naturally on the hip and the other arm relaxed. Keep the face visible toward the camera.
+
+Background: a plain neutral light-grey seamless studio backdrop
+Lighting: Even, soft, neutral frontal studio lighting with a flat, clean key light.
+Professional beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+
+Camera: Show the complete person from head to both feet with comfortable space around the silhouette. Keep the camera level and proportions natural.
+
+Edit the incoming image: Create a full-length pose audition of the same person. Change the pose and studio presentation only, following the selected pose and framing instructions.
+
+Result:
+Preserve the incoming clothing and accessories, if any, including their fabric, colors and coverage. Continue existing clothing naturally into any newly visible areas; do not select a replacement outfit or add accessories.
+Keep one person only, with realistic photographic detail and natural skin texture. Remove visible text, logos, watermarks and interface icons. Preserve visible hands, fingers and feet without duplicating limbs. Any newly visible details are synthesized, not recovered from the original.
+
+Body: Preserve visible body proportions and muscle definition, keeping the source physique unchanged.
+
+Likeness: Preserve the same person's recognizable face, expression, eye color and skin tone, with consistent facial features.
+
+Hair: Keep the incoming hairstyle, hair length, texture and color.
+
+----------------------------------------------------------------
+negative prompt:
+
+straight-on rigid A-pose, hidden face, unbalanced stance,
+colored studio backdrop, busy background,
+cropped head, cropped hands, cropped feet, foreshortened legs,
+changed identity,
+changed clothing, added accessories,
+reshaped body, changed body proportions, exaggerated anatomy,
+altered facial features, changed eye color, changed skin tone,
+changed hair,
+extra people, extra limbs, extra digits, deformed hands, text, watermark,
+logo.

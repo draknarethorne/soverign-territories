@@ -9,8 +9,10 @@
     "modelCacheRoot": "%LOCALAPPDATA%/sovereign-territories",
     "inputsRoot": "B:/Comfy-Desktop/ComfyUI-Inputs",
     "outputRoot": "B:/Comfy-Desktop/ComfyUI-Outputs",
-    "outputFolders": {"drakn-sisters": "Sovereign Territories", "drakn-bound": "Sovereign Territories", "elder-dragons": "Sovereign Territories", "sovereign-territories": "Sovereign Territories", "angel-primes": "Angel Primes", "sovereign-dawn": "Sovereign Dawn Series"}
+    "outputFolders": {"drakn-sisters": "Sovereign Territories", "drakn-bound": "Sovereign Territories", "elder-dragons": "Sovereign Territories", "sovereign-territories": "Sovereign Territories", "angel-primes": "Angel Primes", "sovereign-females": "Sovereign Females", "sovereign-males": "Sovereign Males", "sovereign-dawn": "Sovereign Dawn Series"}
   },
+  "outputNamespaces": {},
+  "isolatedOutputGroups": ["sovereign-females", "sovereign-males"],
   "storageRoots": {
     "backup": "_backup",
     "generation": "_generation",
@@ -45,6 +47,16 @@
       "status": "active",
       "role": "HOME: the clean test bed, twenty angels (ten female, ten male) on a good-to-evil spectrum, each with a bonded pet. Try new things here first (themes, backgrounds, creatures, clothing, weapons, motions) and pull only what works into the Drakn workspaces. It never produces final artwork. Angelica and Angelo are the older pair."
     },
+    "Sovereign Females": {
+      "output": "Sovereign Females",
+      "status": "active",
+      "role": "HOME: the generic Female workflow set for prospect and potential image preparation. Reference jobs remain independently managed."
+    },
+    "Sovereign Males": {
+      "output": "Sovereign Males",
+      "status": "planned",
+      "role": "HOME (planned): the generic Male workflow set; no workspace installation exists yet."
+    },
     "Drakn Sisters": {
       "output": "Sovereign Territories",
       "status": "active",
@@ -62,7 +74,9 @@
   "homes": [
     {"groups": ["sovereign-territories"], "workspace": "Sovereign Territories"},
     {"groups": ["sovereign-dawn"], "workspace": "Sovereign Dawn Series"},
-    {"groups": ["angel-primes"], "workspace": "Angel Primes"},
+    {"groups": ["angel-primes"], "excludeHeroes": ["Female", "Male"], "workspace": "Angel Primes"},
+    {"groups": ["sovereign-females"], "workspace": "Sovereign Females"},
+    {"groups": ["sovereign-males"], "workspace": "Sovereign Males"},
     {"groups": ["drakn-bound"], "workspace": "Drakn Bound"},
     {"groups": ["elder-dragons"], "workspace": "Elder Dragons"},
     {"groups": ["drakn-sisters"], "workspace": "Drakn Sisters"},
@@ -70,7 +84,35 @@
   ],
   "exclude": ["X_*.json"],
   "stageTemplates": "ST?_*.json",
-  "inputRoles": {"edit": "photo", "alpha/": "photo", "alpha/base": "photo", "alpha/bare": "prime", "alpha/footwear": "bare", "head": "apose", "motion": "apose", "polish": "scene", "final": "polish", "default": "bare"},
+  "inputRoles": {"edit": "photo", "alpha/": "photo", "alpha/base": "photo", "alpha/bare": "prime", "alpha/footwear": "bare", "alpha/outfits": "photo", "head": "apose", "motion": "apose", "polish": "scene", "final": "polish", "default": "bare"},
+  "inputRoleOverrides": {
+    "Female_Qwen_Alpha_3_Barefoot_Prime_Audition": "prime",
+    "Female_Qwen_Alpha_3_Heels_Prime_Audition": "prime",
+    "Female_FireRed_Alpha_3_Barefoot_Prime_Audition": "prime",
+    "Female_FireRed_Alpha_3_Heels_Prime_Audition": "prime",
+    "Female_Qwen_Layer_TwoPiece_Preserve_Audition": "prime",
+    "Female_Qwen_Layer_OnePiece_Preserve_Audition": "prime",
+    "Female_FireRed_Layer_TwoPiece_Preserve_Audition": "prime",
+    "Female_FireRed_Layer_OnePiece_Preserve_Audition": "prime",
+    "Female_Qwen_Hair_Updo_HighBun_Preserve_Audition": "prime",
+    "Female_Qwen_Hair_Down_BeachWaves_Preserve_Audition": "prime",
+    "Female_FireRed_Hair_Updo_HighBun_Preserve_Audition": "prime",
+    "Female_FireRed_Hair_Down_BeachWaves_Preserve_Audition": "prime",
+    "Female_Qwen_Armor_HalfPlate_Replace_Audition": "photo",
+    "Female_Qwen_Clothing_LongEveningGown_Replace_Audition": "photo",
+    "Female_FireRed_Armor_HalfPlate_Replace_Audition": "photo",
+    "Female_FireRed_Clothing_LongEveningGown_Replace_Audition": "photo",
+    "Female_Qwen_Scene_Glamour_Replace_Audition": "photo",
+    "Female_Qwen_Scene_Signature_Replace_Audition": "photo",
+    "Female_FireRed_Scene_Glamour_Replace_Audition": "photo",
+    "Female_FireRed_Scene_Signature_Replace_Audition": "photo",
+    "Female_Qwen_Motion_Walking_CatwalkConfident_Preserve_Audition": "prime",
+    "Female_Qwen_Motion_Standing_HandOnHipPower_Preserve_Audition": "prime",
+    "Female_Qwen_Motion_Dynamic_TwirlSpin_Preserve_Audition": "prime",
+    "Female_FireRed_Motion_Walking_CatwalkConfident_Preserve_Audition": "prime",
+    "Female_FireRed_Motion_Standing_HandOnHipPower_Preserve_Audition": "prime",
+    "Female_FireRed_Motion_Dynamic_TwirlSpin_Preserve_Audition": "prime"
+  },
   "standardSize": [944, 1104],
   "denoise": {"pick": "high", "golden": 0.9},
   "inputs": {

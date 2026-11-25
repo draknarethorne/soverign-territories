@@ -1,0 +1,27 @@
+=== Alpha Female - Motion: Twirl preservation audition - Edit (img2img) ===
+Incoming image: a selected reference image of Alpha Female. Apply the selected motion while preserving the incoming identity, outfit and setting. Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: arms extended slightly for balance, caught mid-spin.
+Body: captured mid-twirl, torso rotating; any loose fabric moves naturally with the spin.
+Head: turned with the spin, following the motion.
+Gaze: bright, joyful, glancing toward the camera.
+Expression: joyful, carefree, laughing smile.
+
+
+Background and lighting: Preserve the incoming setting and lighting.
+
+A candid high-fashion editorial shot, dynamic spinning motion with natural hair and clothing movement.
+Motion-generated breeze, swirling around her.
+
+Edit the incoming image: Apply the selected motion and expression while keeping the existing outfit and hairstyle.
+
+Result: Preserve the person's recognizable face, figure, hair color, eye and skin colors, makeup and outfit. Show the complete figure in the selected motion.
+
+----------------------------------------------------------------
+negative prompt:
+
+changed identity, changed outfit, changed hair color, extra people, extra limbs,
+extra digits, deformed hands, text, watermark, logo.

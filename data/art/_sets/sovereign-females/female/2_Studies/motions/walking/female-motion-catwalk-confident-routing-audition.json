@@ -1,0 +1,11 @@
+{
+  "artId": "female-motion-catwalk-confident-routing-audition",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/sovereign-females/female.json",
+  "template": "data/art/_templates/heroes/2_Studies/motion-human.txt",
+  "output": "prompts/sovereign-females/Female/2_Studies/motions/walking/Female_Motion_Walking_CatwalkConfident_Routing_Audition.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/walking/catwalk-confident.json",
+  "notes": "Non-removing routing audition; prompt and legacy denoise header are unchanged. Visual acceptance remains open."
+}

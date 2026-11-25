@@ -1,0 +1,23 @@
+=== Alpha Female - Hairstyle: High bun preservation audition (group: Hair) - Edit (img2img) ===
+Incoming image: a selected reference image of Alpha Female. Change the hairstyle while preserving the incoming person, outfit, pose and setting. Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: Preserve the incoming pose and framing.
+
+Background and lighting: Preserve the incoming setting and lighting.
+
+Edit the incoming image: Change the hairstyle while keeping the incoming hair color and highlights.
+
+Still air.
+
+Hair is swept up into a sleek high bun at the crown, smooth and polished.
+
+
+Result: Preserve the subject's recognizable face, eye color, skin tone, makeup, figure, expression and outfit. Keep the same pose and framing.
+
+----------------------------------------------------------------
+negative prompt:
+
+changed identity, changed hair color, changed outfit, changed pose, extra people, extra limbs, deformed hands, text, watermark, logo.

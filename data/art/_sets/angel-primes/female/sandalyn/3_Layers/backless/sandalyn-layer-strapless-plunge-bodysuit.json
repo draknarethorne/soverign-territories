@@ -1,0 +1,13 @@
+{
+  "artId": "sandalyn-layer-strapless-plunge-bodysuit",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/female/sandalyn.json",
+  "template": "data/art/_templates/heroes/1_Alpha/pose-female-human.txt",
+  "output": "prompts/angel-primes/female/Sandalyn/3_Layers/backless/Sandalyn_Layer_StraplessPlungeBodysuit.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/backless/strapless-plunge-bodysuit.json"
+  },
+  "notes": "UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."
+}

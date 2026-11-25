@@ -1,0 +1,28 @@
+{
+  "artId": "metrael-edit-enhance-basic",
+  "kind": "base-set",
+  "stage": "edit",
+  "heroArt": "data/art/heroes/angel-primes/male/metrael.json",
+  "template": "data/art/_templates/heroes/0_Edit/edit-cleanup-human.txt",
+  "output": "prompts/angel-primes/male/Metrael/0_Edit/enhance/Metrael_Edit_Enhance_Basic.txt",
+  "denoise": "~1.0",
+  "edit_name": "Character Enhance Basic",
+  "components": {
+    "view": "data/art/reference/pose/preserve-clear-hands.json",
+    "background": "data/art/reference/background/preserve-scenery.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "camera": "data/art/studio/framing/pullback-full-film-still.json",
+    "edit_task": "data/art/edits/enhance/clear-props.json",
+    "result": "data/art/edits/policies/result-clear-props-and-jewelry.json",
+    "body": "{{FIGURE_FRAME}}",
+    "likeness": "data/art/reference/appearance/preserve-features.json",
+    "wearing": "data/art/edits/policies/clothing-continuation-if-present.json",
+    "eye_detail": "data/art/studio/photography/eye-definition-wide-open.json",
+    "face_policy": "data/art/reference/appearance/preserve-face-expression-makeup.json",
+    "key_block": "Critical details:",
+    "skin_edit": "data/art/reference/appearance/preserve-skin-tone.json",
+    "hair_policy": "data/art/edits/policies/hair-preserve.json"
+  },
+  "notes": "Repository-only male Enhance audition. The identity frame is selected; source hair, eye color, skin tone and facial likeness are preserved according to the adaptive identity note. No female figure detail or replacement outfit is selected. Visual acceptance remains open."
+}

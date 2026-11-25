@@ -1,0 +1,28 @@
+{
+  "artId": "angelo-alpha-prime-ordered-audition",
+  "kind": "base-set",
+  "stage": "alpha",
+  "heroArt": "data/art/heroes/angel-primes/male/angelo.json",
+  "template": "data/art/_templates/heroes/1_Alpha/alpha-reference-human.txt",
+  "output": "prompts/angel-primes/male/Angelo/1_Alpha/1_Prime/Angelo_Alpha_1_Prime_Ordered_Audition.txt",
+  "denoise": "~1.0",
+  "edit_name": "Character Prime A-pose audition",
+  "keyDetails": ["hair", "eyes", "skin"],
+  "components": {
+    "view": "data/art/studio/views/body/standing-a-pose.json",
+    "background": "data/art/backgrounds/studio/light-grey-seamless.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "camera": "data/art/studio/framing/pullback-full-environment-film-still.json",
+    "edit_task": "data/art/edits/alpha/clear-props-for-outfit.json",
+    "result": "data/art/edits/policies/result-clear-props-and-jewelry.json",
+    "body": "{{FIGURE_FRAME}}",
+    "likeness": "data/art/reference/appearance/preserve-face-shape.json",
+    "wearing": "data/art/wardrobe/swimwear/trunks/studio-pastel-trunks.json",
+    "hair_policy": "{{HAIRSTYLE}}",
+    "gaze": "data/art/motion/gaze/eyes-to-camera.json",
+    "eye_detail": "data/art/studio/photography/eye-definition-wide.json",
+    "expression": "data/art/motion/expressions/studio/studio-soft-smile.json"
+  },
+  "notes": "Repository-only ordered Prime audition selects Angelo's fixed Prime appearance, individual male frame, identity hairstyle and pastel trunks. It is not a replacement for the existing Prime; visual acceptance remains open."
+}

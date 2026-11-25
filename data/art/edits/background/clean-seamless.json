@@ -1,0 +1,8 @@
+{
+  "id": "edit-background-clean-seamless",
+  "kind": "edit",
+  "name": "Clean subject and replace backdrop",
+  "extends": "data/art/edits/policies/clear-props-and-jewelry.json",
+  "compatibleStages": ["edit"],
+  "tags": ["background"]
+}

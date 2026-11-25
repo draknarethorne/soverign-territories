@@ -1,0 +1,9 @@
+{
+  "id": "studio/views/body/crouched-forward-camera",
+  "kind": "view",
+  "name": "Relaxed forward-facing crouch",
+  "compatibleStages": ["edit", "alpha", "pose"],
+  "tags": ["full-body", "crouching", "relaxed"],
+  "description": "Show a relaxed crouch with the torso facing the camera, turned slightly to one side and leaning forward, with one shoulder lowered. Keep the knees comfortably apart and one heel raised; rest one hand on the knee and the other on the hip. Keep the face visible toward the camera.",
+  "negatives": ["hidden face", "unbalanced stance"]
+}

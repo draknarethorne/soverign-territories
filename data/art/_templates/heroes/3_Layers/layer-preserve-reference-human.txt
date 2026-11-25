@@ -1,0 +1,22 @@
+=== {{HERO}} - Layers: {{NAME}} - Edit (img2img) ===
+Incoming image: a selected reference image of {{HERO}}. Change the outfit while preserving the incoming person and pose. Denoise {{DENOISE}}.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: Preserve the incoming pose and full-figure framing.
+
+Background and lighting: Preserve the incoming setting and lighting.
+
+Edit the incoming image: Replace the incoming outfit with the selected garment.
+
+Wearing: {{UNDERLAYER}}
+
+Result: Preserve the person's recognizable face, body proportions, hair, eye and skin colors, expression and makeup. Keep the same pose and framing; do not retain remnants of the previous outfit.
+
+----------------------------------------------------------------
+negative prompt:
+
+?{{UNDERLAYER_NEG}},
+changed identity, changed pose, changed hairstyle, extra people, extra limbs,
+deformed hands, text, watermark, logo.

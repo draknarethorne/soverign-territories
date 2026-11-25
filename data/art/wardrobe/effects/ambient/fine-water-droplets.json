@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/effects/ambient/fine-water-droplets",
+  "kind": "effects",
+  "name": "Fine water droplets",
+  "description": "Fine water droplets catch the light on visible skin, suggesting a fresh post-rain atmosphere.",
+  "compatibleStages": ["scene", "showcase"],
+  "tags": ["atmosphere", "water", "rain"]
+}

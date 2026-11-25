@@ -1,0 +1,9 @@
+{
+  "id": "edit-policy-clothing-preserve-if-present",
+  "kind": "edit",
+  "name": "Preserve incoming clothing if present",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["reference", "preserve-source"],
+  "description": "Preserve the incoming clothing and accessories, if any, including their fabric, colors and coverage. Continue existing clothing naturally into any newly visible areas; do not select a replacement outfit or add accessories.",
+  "negatives": ["changed clothing", "added accessories"]
+}

@@ -47,10 +47,27 @@ studio stage.
 | Put the ST templates in the templates workspace | `bin\deploy-templates.cmd` |
 | Set a whole workspace up in one go: deploy its sets, tidy, clean leftovers, status (a preview until `--apply`) | `bin\setup-workspace.cmd "Angel Primes"` |
 | Write or extend an angel's card set (and her signature items) | `bin\scaffold-angels.cmd [slug]`, `--coverage` for library use |
+| Preview or add missing generic Female and Male baseline cards | `bin\scaffold-generic.cmd` (preview), `--check`, or `--apply` |
 | Find or safely move an art piece and every reference to it (including `extends`) | `bin\art-refs.cmd where-used PATH` |
 | Find art wording that leans illustrated (realism audit) | `bin\style-audit.cmd` (`--prompts` counts it in the generated prompts) |
 | Turn text pasted into several cards into reusable pieces | `bin\extract-literals.cmd` (preview), add `--apply` |
 | Run every commit hook | `bin\check.cmd` |
+
+For a scoped, verified output-root transition, `cleanup` can compare complete
+graphs with an explicit `--prefix-map "OLD=NEW"` and use
+`--workspace-backups`. This requires `--group` and `--hero`, refuses
+`--loose` and `--orphans`, and leaves nonmatching graphs untouched. Preview
+first; `--apply` copies each source into its workspace-local backup with a
+hash receipt, checks it and the home graph again, then removes the source
+copy. Verify the resulting run with `bin\workspace-backup-check.cmd`.
+
+When explicitly authorized to retire a generic clone before its home is
+installed, `cleanup` also supports `--retire-planned-home` with a specific
+`--group`, `--hero` and `--workspace-backups`. This only selects generated,
+non-manual copies whose configured destination homes are all planned; it
+backs up each original within its source workspace before removing it.
+Preview first and verify the backup receipt. This does not install or activate
+the future home; ordinary cleanup still requires matching installed copies.
 
 ## Workspaces: one home per set
 
@@ -68,11 +85,30 @@ cast identities or source photos. The separately explicit `manual-prefixes`
 command backs up and corrects inherited output prefixes in this clone only.
 The [rendering plan](../docs/plans/2026-10-25-reference-rendering.md) owns the
 remaining capability, workspace/server and Gallery integration gates.
-It remains outside the legacy hero-home workspace registry: generic setup,
-deploy/pull/tidy/cleanup cannot select it by default and explicitly naming it
-is refused as unknown. Use the rendering launchers for job-owned `Reference`
-paths; formal registry integration remains planned, not an `accepts: ["*"]`
-shortcut.
+Sovereign Females is registered as the generic Female home. The reference
+runner still owns its `Reference` paths, which the generic workspace index
+excludes; registering the workspace does not authorize edits to those jobs.
+Generic Female and Male source assemblies, active prompts and repository
+workflows now use their respective `sovereign-females` and `sovereign-males`
+groups without an `alpha` division. New output prefixes likewise use
+`sovereign-females/Female/` and `sovereign-males/Male/`; `1_Alpha` remains
+the actual phase name. Thirteen reference-bound Female prompts were preserved
+at dedicated-group paths; twelve reference-only prompts are excluded from
+generic workflow discovery, while the older Prime remains a workflow. Existing
+images and reference receipts were not moved. Thirty-four captured Female
+candidates were moved byte-for-byte to the dedicated repository group.
+`isolatedOutputGroups` prevents the output organizer from sweeping unscoped
+legacy hero folders into either generic group. Sovereign Males is planned and
+is skipped until installed and explicitly activated. The obsolete 40-file Male
+clone was removed from Sovereign Females after comparison and a verified local
+backup. The Female setup preview also proposes copying 34 historical candidates;
+review that selection separately before applying setup.
+The [migration plan](../docs/plans/2026-10-22-manual-prompts-to-art-library.md#nov-25-generic-namespace-simplification)
+records the workspace relocation and remaining gates.
+The generic Prime audition is a first-shot workflow, not an automatically
+selected final; promote a chosen result explicitly before using it as a
+downstream input. The prompt cleanup command retains registered reference
+prompts and the older generic Prime prompt.
 
 Use [the request schema](../data/schemas/reference-render-request.schema.json).
 Example request (replace the hash with the exact SHA-256 of your selected file):
@@ -197,10 +233,14 @@ is separate. A lifted heel is acceptable for the approved three-quarter
 auditions; exact floor contact is not an acceptance requirement.
 
 The four new Deluxe cards share one neutral photorealistic bedroom and soft,
-even lighting. They retain only the manual series' scene/camera principle,
-not its sexual posing, anatomy instructions or clothing removal. Face,
-hair, physique and the incoming outfit are preserved. These are deliberately
-non-explicit scene auditions, not exact migrations of the manual Bare prompts.
+even lighting. The updated source assemblies omit an outfit instruction;
+seated and relaxed-recline select high-heeled shoes. Face, hair and physique
+preservation remain selected, but outfit retention requires visual review.
+They retain only the manual series' scene/camera principle, not its sexual
+posing, anatomy instructions or clothing removal. These are non-explicit
+scene auditions, not exact migrations of the manual Bare prompts.
+Existing generated prompts, Gallery recipe labels and compiled batches still
+reflect their previous versions until separately regenerated or reconciled.
 Generate with `bin\prompts.cmd --group angel-primes --slug female --stage edit
 --family deluxe`, then preview/apply `bin\make.cmd Female edit`.
 The shared cleanup default likewise freezes its generated prompt; explicit
@@ -475,9 +515,11 @@ There is no catch-all workspace and no fallback: a set with no home stops the co
 | `Sovereign Dawn Series` | the Sovereign Dawn cards (`sovereign-dawn`: units, pets, buildings, equipment, tactics, workers) | the Drakn sets |
 | `Sovereign Territories` | the art and brand set (`sovereign-territories`: title, logo, icons, key art, plates) and the `ST?_` stage templates | **any set**: promotional videos for reels and feeds, a scene kept next to the art, media for posts |
 | `Angel Primes` | the angel test bed (`angel-primes`); it never produces final artwork | |
+| `Sovereign Females` | the generic Female set for prospect and potential image preparation | |
 | `Drakn Bound`, `Elder Dragons` | their own sets; `planned`, so skipped by every command until the install exists and the status is `active` | |
 
-Home rules match on `groups` and/or `heroes`, and `{hero}` stands for the hero's name. A rule may also carry `"class": "studio"` or `"scene"` and then applies only to
+Home rules match on `groups` and/or `heroes`; `excludeHeroes` excludes named
+heroes from a rule, and `{hero}` stands for the hero's name. A rule may also carry `"class": "studio"` or `"scene"` and then applies only to
 stages of that class (the class of each stage folder is defined in `data/art/_schema/stages.json`; anything that is not a scene is studio). `list` shows the home of every hero and what each workspace accepts.
 
 - **Homes and temporary copies.** Every set has a home (the default of every command). Any workspace whose `accepts` list names the set (or `"*"` for any set) may also be given a
@@ -492,7 +534,7 @@ stages of that class (the class of each stage folder is defined in `data/art/_sc
   `--overwrite`), `cleanup`, `cleanup --orphans`, `tidy` or the input and denoise resets. That is what lets you refine a prompt directly in ComfyUI, fix the art JSON afterwards and redeploy without
   losing the hand-tuned version. Bring one into the repo with `pull` (`pull --only shots` for shots); delete one yourself if you want it gone.
 - **`cleanup -w WORKSPACE`** removes the generated workflows that workspace is not home for (a clone's leftovers, or copies you published and are finished with), but only when their home workspace holds an
-  identical copy and the repo has the master; everything goes to `workflows/.sync/backup/` and the empty folders are pruned afterwards (never a top-level `zz_` folder, never a folder with any file in it).
+  identical copy and the repo has the master; moved workflows go to the configured backup storage root and the empty folders are pruned afterwards (never a top-level `zz_` folder, never a folder with any file in it).
   Preview first. `status` shows `published` (a temporary copy of a set whose home is elsewhere) and `unrouted` (the workspace is neither home for it nor accepts it) next to the usual counts.
 
 All workspaces that share an output project folder (see Where files live) write there, and the `SaveImage` prefix (`<set>/<Hero>/<phase>/...`) sorts renders into hero folders whichever workspace ran them.
@@ -544,18 +586,47 @@ A new workflow is saved in the workspace under its output folder, hero first and
 
 | Phase folder | Holds |
 | --- | --- |
-| `1_Alpha` | `1_Prime`, `2_Bare` (Figure), `2b_Experiments/celestial`, `3_Footwear` (Barefoot, Heels): creates her likeness and the three golden images; Prime, Footwear, `2_Studies` and `3_Layers` are optional validation steps (see `docs/art/tutorial-art.md`) |
-| `2_Studies` | `head` (close-ups, views), `hair`, `body` (turnaround views): studies on the goldens |
+| `1_Alpha` | `1_Prime`, `2_Bare` (Figure and first-shot bases), `3_Footwear` (Barefoot, Heels), `4_Outfits` (including `celestial`): creates her likeness and tests reference outfits; Prime, Footwear, `2_Studies` and `3_Layers` are optional validation steps (see `docs/art/tutorial-art.md`) |
+| `2_Studies` | `head` (close-ups, views), `hair`, `body` (turnaround views), `motions` (point-in-time motion tests) |
 | `3_Layers` | the underlayer tests: `base`, `bikini`, `lingerie`, `swimwear`, `athletic`, `one-piece`, `backless` |
 | `4_Wardrobe` | `clothing`, `armor`, `showcase` |
 | `5_Scenes` | `signature`, `glamour`, `story`, `themes` |
 | `6_Finish` | `polish` (Qwen detail pass, input role `scene`), `final` (FireRed look, input role `polish`); upscale is not built yet |
 | `7_Video` | animation of a finished image |
-| `Bench` | `motion`: a point-in-time test run on any phase's image, not a phase |
 
 The card folders, the prompts and the ComfyUI output all use these phase folders (`art_layout.phase_path` maps a stage and family to its phase, `parse_dirs` goes back); the SaveImage prefix is the prompt's folder.
 ComfyUI shows these as folders.
 `tidy` moves loose files into them (and removes folders it empties); curated files go to a `zz_Curated/` folder, test files to `zz_Test/` and shots to `zz_Shots/`, which sort after every stage folder (flat in a single-hero workspace, one folder per hero in a shared one). Staged scenes (`Scene_Staged_*`) are built and kept in the repo but only added to a workspace with `deploy --include staged`, so the lists hold the scenes you are working on.
+
+#### Updating existing motion installations
+
+The repository now places motion workflows and new output prefixes in
+`2_Studies/motions`; existing installations are not changed automatically.
+On Nov 25, the available Sovereign Females, Angel Primes, Drakn Sisters and
+Drakness home workflows were patched and tidied using this procedure. The
+planned Sovereign Males home remains unavailable.
+Review and preserve any manually edited generated workflows before deploying:
+patch mode keeps the selected input but replaces prompt values and may align
+size or seed controls. Use workspace-local backups and verify each receipt.
+For each affected group (`sovereign-females`, `angel-primes`, `drakn-sisters`),
+preview first, then repeat without `--dry-run` only when the changes are wanted:
+
+```text
+cmd /c bin\deploy-group.cmd sovereign-females --stage motion --mode patch --workspace-backups --dry-run
+```
+
+For each group, separately preview for example
+`cmd /c bin\tidy.cmd all --stage motion --group sovereign-females`. After
+reviewing the targets, add `--apply` to move that group's generated workflows
+to their new folders. Filtered tidy leaves empty folders alone and refuses
+destination collisions; it does not patch the workflows' output prefixes.
+Reload the workflow list.
+Manual `zz_` work, existing images and frozen receipts are not migrated.
+Planned or unavailable workspaces are skipped and need the same steps when
+installed. The old Male copies, including six motion graphs, were retired
+from Angel Primes with verified local backups; their Male home is still planned.
+Do not use whole-workspace setup as a substitute without reviewing its other
+actions.
 
 ### Default incoming images
 
@@ -563,6 +634,19 @@ Every generated workflow opens with a default incoming image, chosen by its stag
 `alpha/` (Alpha 1 Prime) loads the original photo (`photos`); `alpha/bare/` (Alpha 2) loads the Prime image (`prime`); `head/` and `motion/` load the hero's
 barefoot golden A-pose (`apose`); everything else (`alpha/footwear/`, `poses/<family>/`, armor, clothing, hair, scenes, showcase) loads her bare-skin image (`bare`). A hero without role inputs keeps the older
 behaviour (the A-pose most of her workflows already read). Images are plain names, so each workspace needs the file in its own input folder.
+
+An optional `inputRoleOverrides` entry maps an exact generated workflow name
+(without `.json`) to a configured role. It applies to creation, input-choice
+tracking and reset, and denoise planning; an overridden role with no configured
+image fails instead of falling back. Supported override roles are `photo`,
+`prime`, `bare`, `apose`, `scene` and `polish`; `heels` is not yet supported
+for overrides. The Female Layers and hairstyle preservation auditions use
+`prime`, as do three Female motion-study auditions; other Layers, hairstyle
+and motion workflows retain their existing defaults.
+Two Female Wardrobe and two Scene replacement auditions instead select the
+configured original photo; existing Wardrobe and Scene workflows keep their
+legacy role.
+This selects a filename, not proof that the image is in a workspace's input folder.
 
 ```bash
 python tools/workflows/comfy_workflows.py inputs reset --hero Drakness --dry-run   # preview: repo and every workspace; copies missing images into each workspace's inputs
@@ -599,11 +683,13 @@ role points at the Alpha 2 Bare image and their golden image is the Bare. The te
 Angelica and Angelo follow the same Phase 1 and Phase 2 as every other angel (Alpha 1 Prime, 2 Bare, 3 Footwear and the 2b experiments for her; Prime and Bare for him; heads, views, body views and hair for both);
 their old single `X_Pose` workflow was retired (its photo went into `photos`, and the file is in `workflows/_archive/legacy-x-pose/`). The workspace is `active`; a clone of another install is cleaned with `cleanup -w "Angel Primes"` (preview first).
 
-**Alpha test sets.** `alpha/Female` and `alpha/Male` in the `Angel Primes` workspace (`prompts/angel-primes/alpha/<Hero>/`, output `Angel Primes/alpha/<Hero>/...`) are two generic test heroes for trying a photo before giving it to an angel, in a short version
-of the phases (the woman has 23 workflows, the man 20): Phase 1 (Prime, Bare, and for her Bare chest, Barefoot and Heels), Phase 2 (head, face close-up, two head views, three body views, two hairstyles), two layer tests, one outfit, one armor, a Glamour
-and a Signature scene with generic white wings, and three motions. Nothing of them touches an angel's folders, images or `photos`. To use one: copy the photo into the `Angel Primes` input folder, open `alpha/Female/1_Alpha/1_Prime/Female_Qwen_Alpha_1_Prime`
-and pick it in the Load Image node, run Phase 1 and 2 and compare with the angel you have. If the photo wins, pick it in that angel's Prime workflow instead and run `inputs pull -w "Angel Primes"` (it then holds the new photo for her, and the test
-set stays free for the next photo). `bin\scaffold-angels.cmd --alpha` rewrites the cards, then `refresh-group angel-primes` (or `setup-workspace "Angel Primes"`) builds and deploys them.
+**Alpha test sets.** Generic Female's configured home is Sovereign Females;
+Male remains in Angel Primes. Their repository prompt paths still live under
+`prompts/angel-primes/alpha/<Hero>/`, and generated output prefixes still
+contain `angel-primes` pending a reviewed transition. Existing workspace
+copies have not been moved or removed. Once Female's revised set is published,
+select the intended photo in its Sovereign Females workflow; verify the actual
+input root before use. Registration alone does not publish revised workflows.
 
 **Standard size (Oct 2026, provisional).** `standardSize` in `workspaces.json` is `[944, 1104]`: every original is scaled to fit and padded (not cropped) to that size
 before the first X Pose, and the X Pose, Bare Skin and Barefoot images are expected at the same size. 944x1104 is one of the Kontext scaler's buckets, so the Qwen
@@ -674,7 +760,7 @@ python tools/workflows/comfy_workflows.py finals record --apply                 
 
 - **A misspelled hero, engine or stage** (`Remaih_Qwn_Alpha_1_Prim_00004_`), the wrong case, a wrong folder or a drop straight into the `zz_Final` root is matched to the closest known workflow and filed (the file name is corrected to the real one). An ambiguous match is refused, never guessed.
 - **A renamed stage** still resolves: `X_Pose` saves are filed as the Prime (`finals.aliases` in `workspaces.json`) and keep their own file name.
-- **Nothing is deleted.** An identical duplicate goes to `workflows/.sync/backup/`; a different file at the same place is reported as a `CONFLICT` and left alone.
+- **Nothing is deleted.** An identical duplicate goes to the configured backup storage root; a different file at the same place is reported as a `CONFLICT` and left alone.
 - **What cannot be placed is left exactly where it is** (never moved to another folder) and is listed as `not placeable`. The same applies in the repo, and to `zz_Curated`, which is not rearranged. A shot you saved into a subfolder of your own stays there; one saved straight into `zz_Shots` is filed by phase, keeping its name.
 - **`finals reclassify`** does the same for what is already in git: numbered saves at the top of a hero's `_shots` folder were candidates and move to `_candidates`, and everything is moved to its proper path. Run it, then `pull` and `setup` a few times, and the repo and the workspaces converge on one structure.
 - **A final keeps its image.** `pull` (or `finals images --apply`) copies the render a final was saved from (`<output project>/<SaveImage prefix>_<counter>_.png`) into `assets/art/<set>/<Hero>/<phase>/<Hero>_<Engine>_<Stage>.png`, the prompt-path convention in [data/art/README.md](../data/art/README.md#where-rendered-images-live-convention) with the engine in the name so a Qwen and a FireRed final stay apart.
@@ -771,7 +857,24 @@ Add `--dry-run` as the last argument to preview. The tool behind them is `tools/
 - **Deploy keeps your tuning.** An existing workflow only gets its positive prompt, negative prompt and filename prefix
   updated; input image, seed and toggles stay. `--overwrite` replaces the whole file. A `legacy` workspace (Drakness, which
   still holds hand-made experiments) always gets whole-file replacement. Hand-made `zz_` items are never touched either way.
-- **Nothing is deleted;** anything changed, moved or cleaned out of a workspace is first copied to `workflows/.sync/backup/`.
+- **Workspace backups:** deploy updates and workspace cleanup use
+  `storageRoots.backup` beneath the configured Production photo-library root
+  (currently `_backup`), with receipts, unless deploy explicitly selects
+  `--workspace-backups`. With that option, deploy saves only files it updates
+  under `<workspace install>/.sovereign/workflow-backups/<run>/`, outside the
+  active workflow tree, with source paths and SHA-256 hashes in a receipt.
+  The run path is printed in the preview and apply; apply has its own run ID.
+  Unchanged overwrite targets are not copied again. No older backups are
+  pruned automatically.
+- Preview the selected workspace backup destination and workflow changes
+  with `bin\publish.cmd HERO "Workspace" --workspace-backups --dry-run`.
+  After an authorized apply that updates files, verify its printed run ID with
+  `bin\workspace-backup-check.cmd "Workspace" RUN`. The check is read-only;
+  it verifies receipt paths and backup hashes, not a restore or visual result.
+  This option covers deploy only: cleanup still moves eligible workflows to
+  the Production backup root and removes empty directories. Preview and
+  review exact changes before applying; publication authorization does not
+  itself authorize writes to the Production photo library.
 - **Input images:** new workflows read the A-pose the hero's other workflows already use (`inputs`). Pin one in
   `workspaces.json` under `inputs` once you choose a golden pose.
 - **Stage templates:** `deploy-templates` puts the `ST?_` templates in the workspace flagged `"templates": true` (Sovereign Territories). They are the only templates: `make --create` clones

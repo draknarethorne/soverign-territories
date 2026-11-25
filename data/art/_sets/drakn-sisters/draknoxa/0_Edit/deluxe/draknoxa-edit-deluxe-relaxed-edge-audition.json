@@ -1,0 +1,27 @@
+{
+  "artId": "draknoxa-edit-deluxe-relaxed-edge-audition",
+  "kind": "base-set",
+  "stage": "edit",
+  "heroArt": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
+  "template": "data/art/_templates/heroes/0_Edit/edit-cleanup-human.txt",
+  "output": "prompts/drakn-sisters/Draknoxa/0_Edit/deluxe/Draknoxa_Edit_Deluxe_Relaxed_Edge_Audition.txt",
+  "denoise": "~0.9",
+  "edit_name": "Deluxe bedroom: relaxed edge audition",
+  "components": {
+    "edit_task": "data/art/edits/deluxe/bedroom-pose.json",
+    "face_policy": "data/art/edits/policies/face-preserve.json",
+    "likeness": "data/art/edits/policies/face-preserve.json",
+    "hair_policy": "data/art/edits/policies/hair-preserve.json",
+    "key_block": "Critical details:",
+    "bust": "data/art/studio/figure/full-bust-natural.json",
+    "body": "{{FIGURE_FRAME}}",
+    "view": "data/art/studio/views/body/deluxe-relaxed-edge.json",
+    "camera": "data/art/studio/framing/pullback-full-environment-high-angle-film-still.json",
+    "background": "data/art/backgrounds/modern/bedroom-neutral.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "result": "data/art/edits/policies/result-reference-audition.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/simple-high-heels.json"
+  },
+  "notes": "Source-inspired high-angle pose audition using the character frame; no outfit is selected. Synthetic output and visual acceptance remain open."
+}

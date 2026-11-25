@@ -1,0 +1,19 @@
+{
+  "artId": "female-clothing-long-evening-gown-denoise-audition",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/sovereign-females/female.json",
+  "template": "data/art/_templates/heroes/4_Wardrobe/clothing-human.txt",
+  "output": "prompts/sovereign-females/Female/4_Wardrobe/clothing/gowns/Female_Clothing_LongEveningGown_Denoise_Audition.txt",
+  "denoise": "~0.5-0.7",
+  "denoise_hint": "{{DENOISE}}",
+  "name": "Long Evening Gown",
+  "aesthetic": "a clean studio presentation of the long evening gown",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/gowns/long-evening-gown.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "notes": "Separate card-range denoise comparison; existing routing and reference workflows are preserved. Visual acceptance remains open."
+}

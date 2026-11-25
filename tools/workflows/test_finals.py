@@ -45,6 +45,29 @@ class ParseTests(unittest.TestCase):
         self.assertEqual((r["stem"], r["file_stem"], r["counter"]), ("Alice_Qwen_Alpha_1_Prime", "Alice_Qwen_X_Pose", "00004"))
         self.assertIsNone(finals.parse_name("Alice_Qwen_X_Pose_00004_.json", ["Alice"], ["Alice_Qwen_Alpha_1_Prime"]))
 
+    def test_phase_renames_keep_saved_names_and_resolve_exactly(self):
+        cases = (
+            ("X_Pose_TriangleBikini", "Layer_TriangleBikini"),
+            ("X_Pose_Layer_OnePiece_Preserve_Audition", "Layer_OnePiece_Preserve_Audition"),
+            ("X_Head", "Head"),
+            ("X_Head_Denoise_Audition", "Head_Denoise_Audition"),
+            ("Alpha_1b_BareBase", "Alpha_2_BareBase"),
+            ("Alpha_2b_CelestialCore", "Alpha_4_Outfits_CelestialCore"),
+        )
+        for old, new in cases:
+            with self.subTest(old=old):
+                result = finals.parse_name(f"Alice_Qwen_{old}_00004_.json", ["Alice"], [f"Alice_Qwen_{new}"])
+                self.assertEqual(result["stem"], f"Alice_Qwen_{new}")
+                self.assertEqual(result["file_stem"], f"Alice_Qwen_{old}")
+                both = finals.parse_name(f"Alice_Qwen_{old}.json", ["Alice"], [f"Alice_Qwen_{old}", f"Alice_Qwen_{new}"])
+                self.assertEqual(both["stem"], f"Alice_Qwen_{old}")
+
+    def test_explicit_migration_precedes_a_similar_old_stage(self):
+        stems = ["Alice_Qwen_Layer_TriangleBikini", "Alice_Qwen_X_Pose_TriangleBikinis"]
+        result = finals.parse_name("Alice_Qwen_X_Pose_TriangleBikini_00004_.json", ["Alice"], stems)
+        self.assertEqual(result["stem"], "Alice_Qwen_Layer_TriangleBikini")
+        self.assertEqual(result["file_stem"], "Alice_Qwen_X_Pose_TriangleBikini")
+
     def test_unknown_things_are_refused(self):
         for name in ("Nobody_Qwen_Alpha_1_Prime_00001_.json", "Remiah_Qwen_Totally_Other_00001_.json", "Remiah.json", "ST1_Qwen_A_Pose.json"):
             self.assertIsNone(finals.parse_name(name, HEROES, STEMS), name)

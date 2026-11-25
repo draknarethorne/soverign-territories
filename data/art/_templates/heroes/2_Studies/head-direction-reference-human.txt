@@ -1,0 +1,24 @@
+=== {{HERO}} - Head View: {{NAME}} (group: X_Head) - Edit (img2img) ===
+Incoming image: an A-pose or hair variant of {{HERO}}. Turn the same subject to the selected head view; keep the incoming identity, hair, expression and outfit. Denoise {{DENOISE}}.
+
+----------------------------------------------------------------
+prompt:
+
+{{VIEW}}
+
+Background: {{BACKGROUND}}.
+
+Photo-realistic beauty portrait, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+{{FRAMING}}.
+
+{{KEEP_LINE}} Preserve the incoming expression and outfit.
+
+?{{KEY_BLOCK}}
+
+Preserve the selected head direction and the subject's recognizable features.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, studio equipment, props, extra hair, changed outfit, changed hairstyle, text, watermark, logo, illustration, painting, drawing, CGI, cartoon.

@@ -1,0 +1,23 @@
+=== {{HERO}} - Hairstyle: {{NAME}} (group: Hair) - Edit (img2img) ===
+Incoming image: a selected reference image of {{HERO}}. Change the hairstyle while preserving the incoming person, outfit, pose and setting. Denoise {{DENOISE}}.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: Preserve the incoming pose and framing.
+
+Background and lighting: Preserve the incoming setting and lighting.
+
+Edit the incoming image: Change the hairstyle while keeping the incoming hair color and highlights.
+
+{{BREEZE}}
+
+{{HAIR_CHANGE}}
+{{EXTRAS}}
+
+Result: Preserve the subject's recognizable face, eye color, skin tone, makeup, figure, expression and outfit. Keep the same pose and framing.
+
+----------------------------------------------------------------
+negative prompt:
+
+changed identity, changed hair color, changed outfit, changed pose, extra people, extra limbs, deformed hands, text, watermark, logo.

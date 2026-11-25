@@ -1,0 +1,8 @@
+{
+  "id": "reference/wardrobe/existing-fitted",
+  "kind": "reference",
+  "name": "Existing fitted outfit",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["reference", "outfit"],
+  "description": "Keep the existing outfit with a fitted silhouette and its existing coverage."
+}

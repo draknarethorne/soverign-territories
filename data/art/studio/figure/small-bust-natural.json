@@ -1,0 +1,8 @@
+{
+  "id": "studio/figure/small-bust-natural",
+  "kind": "figure",
+  "name": "Natural small bust",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["figure", "bust", "natural"],
+  "description": "A small bust with a natural, subtle shape and balanced proportions."
+}

@@ -1,0 +1,8 @@
+{
+  "id": "reference/appearance/skin-finish-subtle-dew",
+  "kind": "reference",
+  "name": "Subtle dewy skin finish",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["skin", "finish", "dewy"],
+  "description": "Keep the selected skin tone and natural texture with a subtle dewy highlight."
+}

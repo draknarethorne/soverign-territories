@@ -1,0 +1,9 @@
+{
+  "id": "studio/views/body/standing-hip-hand-gesture",
+  "kind": "view",
+  "name": "Standing hip-shift with raised hand",
+  "compatibleStages": ["edit", "alpha", "pose"],
+  "tags": ["front", "full-body", "standing", "relaxed"],
+  "description": "Stand mostly toward the camera at a slight angle, with feet comfortably apart, weight on one leg, one hip shifted to the side and one heel slightly raised. Lean gently forward, keeping the elbows away from the body; place one hand on the lower thigh and raise the other near the face. Keep the face visible toward the camera.",
+  "negatives": ["hidden face", "unbalanced stance"]
+}

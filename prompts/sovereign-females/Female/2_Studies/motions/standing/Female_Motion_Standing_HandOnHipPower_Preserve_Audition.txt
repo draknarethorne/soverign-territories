@@ -1,0 +1,27 @@
+=== Alpha Female - Motion: Hand-on-hip preservation audition - Edit (img2img) ===
+Incoming image: a selected reference image of Alpha Female. Apply the selected motion while preserving the incoming identity, outfit and setting. Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: one hand firmly on the hip, elbow out; the other arm relaxed at her side.
+Body: standing tall, weight on one leg, shoulders squared to the camera.
+Head: level, facing the camera directly.
+Gaze: direct, confident eyes to camera.
+Expression: bold, confident, a hint of a smirk.
+
+
+Background and lighting: Preserve the incoming setting and lighting.
+
+A candid high-fashion editorial shot, confident power stance.
+Light breeze.
+
+Edit the incoming image: Apply the selected motion and expression while keeping the existing outfit and hairstyle.
+
+Result: Preserve the person's recognizable face, figure, hair color, eye and skin colors, makeup and outfit. Show the complete figure in the selected motion.
+
+----------------------------------------------------------------
+negative prompt:
+
+changed identity, changed outfit, changed hair color, extra people, extra limbs,
+extra digits, deformed hands, text, watermark, logo.

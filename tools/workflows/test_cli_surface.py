@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Tests for the command-line surface of comfy_workflows.py: every command that changes files previews unless --apply, the readable options (--include, --mode, --only, inputs actions) map onto what the commands read, the old switches are gone,
 and `status` shows candidates and finals. Run: python tools/workflows/test_cli_surface.py"""
+import os
 import pathlib
+import subprocess
 import sys
 import types
 import unittest
@@ -9,7 +11,7 @@ from unittest import mock
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import comfy_workflows as cw  # noqa: E402
-from test_comfy_workflows import World, setUpModule  # noqa: E402,F401
+from test_comfy_workflows import SUBPATH, World, setUpModule  # noqa: E402,F401
 
 PRIME = {"nodes": [{"type": "SaveImage", "widgets_values": ["set-a/Alice/1_Alpha/1_Prime/Alice_Qwen_Alpha_1_Prime"]}], "id": "master"}
 
@@ -22,6 +24,79 @@ def deploy_args(**kw):
 
 
 class PreviewByDefaultTests(unittest.TestCase):
+    def test_publish_launcher_previews_workspace_backup_option(self):
+        with World() as w:
+            target = w.tmp / "installs" / "Sovereign Females" / "ComfyUI" / "user" / "default" / "workflows"
+            target.mkdir(parents=True)
+            env = os.environ.copy()
+            env["SOVEREIGN_TERRITORIES_INSTALLS_ROOT"] = str(w.tmp / "installs")
+            for options in (["--workspace-backups", "--dry-run"],
+                            ["alpha", "--workspace-backups", "--dry-run"],
+                            ["motion", "--mode", "patch", "--workspace-backups", "--dry-run"]):
+                with self.subTest(options=options):
+                    result = subprocess.run(
+                        ["cmd", "/c", "bin\\publish.cmd", "Female", "Sovereign Females", *options],
+                        cwd=cw.ROOT, env=env, capture_output=True, text=True,
+                    )
+                    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                    self.assertIn("workspace backups:", result.stdout)
+                    self.assertIn("(dry run)", result.stdout)
+            self.assertFalse((w.tmp / "installs" / "Sovereign Females" / ".sovereign").exists())
+
+    def test_workspace_backup_check_launcher_verifies_fixture(self):
+        with World() as w:
+            ws = "Sovereign Females"
+            w.cfg["workspaces"][ws] = {"status": "active", "role": "x"}
+            target = w.put(ws, "scene/Alice_Qwen_Scene_One.json")
+            root = cw.workspace_backup_root(w.cfg, ws)
+            run = "20261124-123456-000001"
+            cw.workspace_backup(w.cfg, run, root, w.dir(ws), target)
+            env = os.environ.copy()
+            env["SOVEREIGN_TERRITORIES_INSTALLS_ROOT"] = str(w.tmp / "installs")
+            result = subprocess.run(
+                ["cmd", "/c", "bin\\workspace-backup-check.cmd", ws, run],
+                cwd=cw.ROOT, env=env, capture_output=True, text=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertIn("verified 1 workspace backup", result.stdout)
+
+    def test_group_launcher_previews_scoped_backed_up_patch(self):
+        with World() as w:
+            target = w.tmp / "installs" / "Sovereign Females" / "ComfyUI" / "user" / "default" / "workflows"
+            target.mkdir(parents=True)
+            env = os.environ.copy()
+            env["SOVEREIGN_TERRITORIES_INSTALLS_ROOT"] = str(w.tmp / "installs")
+            result = subprocess.run(
+                ["cmd", "/c", "bin\\deploy-group.cmd", "sovereign-females",
+                 "--stage", "motion", "--mode", "patch", "--match", "Motion",
+                 "--workspace-backups", "--dry-run"],
+                cwd=cw.ROOT, env=env, capture_output=True, text=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertIn("workspace backups:", result.stdout)
+            self.assertIn("(dry run)", result.stdout)
+            self.assertFalse((w.tmp / "installs" / "Sovereign Females" / ".sovereign").exists())
+
+    def test_tidy_launcher_applies_scoped_motion_move(self):
+        with World() as w:
+            ws = w.tmp / "installs" / "Sovereign Females" / SUBPATH
+            name = "Female_Qwen_Motion_Standing_HandOnHipPower.json"
+            source = ws / "Female" / "Bench" / "motion" / "standing" / name
+            source.parent.mkdir(parents=True)
+            source.write_bytes((cw.ROOT / "workflows" / "sovereign-females" / "Female" / name).read_bytes())
+            expected = source.read_bytes()
+            env = os.environ.copy()
+            env["SOVEREIGN_TERRITORIES_INSTALLS_ROOT"] = str(w.tmp / "installs")
+            result = subprocess.run(
+                ["cmd", "/c", "bin\\tidy.cmd", "Sovereign Females", "--stage", "motion",
+                 "--group", "sovereign-females", "--apply"],
+                cwd=cw.ROOT, env=env, capture_output=True, text=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertFalse(source.exists())
+            self.assertEqual((ws / "Female" / "2_Studies" / "motions" / "standing" / name).read_bytes(),
+                             expected)
+
     def test_pull_and_deploy_preview_unless_apply(self):
         with World() as w, mock.patch.object(cw, "CANDIDATES", w.repo / "_candidates"), mock.patch.object(cw, "FINALS", w.repo / "_final"), mock.patch.object(cw, "ROOT", w.tmp):
             w.master("Alice_Qwen_Alpha_1_Prime.json", PRIME)

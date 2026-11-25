@@ -1,0 +1,8 @@
+{
+  "id": "studio/gesture/cheek-touch",
+  "kind": "view",
+  "name": "Light cheek touch",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["gesture", "hands", "face"],
+  "description": "Let the fingertips of one hand lightly brush the cheekbone without obscuring the face."
+}

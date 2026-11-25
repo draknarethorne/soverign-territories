@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/tops/structured-wool-blazer",
+  "kind": "wearing",
+  "name": "Structured wool blazer",
+  "description": "A tailored {{PRIMARY}} wool blazer with structured shoulders and clean architectural lines.",
+  "compatibleStages": ["edit", "alpha", "pose", "clothing", "scene", "showcase"],
+  "tags": ["clothing", "blazer", "wool"]
+}

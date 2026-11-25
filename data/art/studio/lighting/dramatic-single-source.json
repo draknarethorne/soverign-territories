@@ -1,0 +1,8 @@
+{
+  "id": "studio/lighting/dramatic-single-source",
+  "kind": "lighting",
+  "name": "Dramatic single-source lighting",
+  "compatibleStages": ["edit", "alpha", "pose", "head", "hair", "motion", "armor", "clothing", "showcase", "scene", "final"],
+  "tags": ["lighting", "dramatic", "single-source"],
+  "description": "A single light source creates dramatic contrast and deep, directional shadows."
+}

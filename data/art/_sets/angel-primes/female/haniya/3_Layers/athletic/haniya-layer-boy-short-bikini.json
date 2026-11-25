@@ -1,0 +1,13 @@
+{
+  "artId": "haniya-layer-boy-short-bikini",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/female/haniya.json",
+  "template": "data/art/_templates/heroes/1_Alpha/pose-female-human.txt",
+  "output": "prompts/angel-primes/female/Haniya/3_Layers/athletic/Haniya_Layer_BoyShortBikini.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/athletic/boy-short-bikini.json"
+  },
+  "notes": "UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."
+}

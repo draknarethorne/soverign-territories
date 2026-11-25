@@ -1,0 +1,36 @@
+=== {{HERO}} - Wardrobe: {{NAME}} - Edit (img2img) ===
+Incoming image: a selected reference image of {{HERO}}. Create the selected studio wardrobe view while preserving the incoming identity. Denoise {{DENOISE}}.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: {{VIEW}}
+
+Background: Replace the incoming background with {{BACKGROUND}}.
+Lighting: {{LIGHTING}}
+
+Photo-realistic full-body studio shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Edit the incoming image: Replace the previous outfit, accessories and background with the selected wardrobe and studio setting.
+
+Wearing: {{WEARING}}.
+Arms: {{ARMS}}.
+Jewelry: {{JEWELRY}}.
+Legs and feet: {{LEGS_FEET}}.
+
+Overall: {{AESTHETIC}}.
+
+{{KEEP_LINE}}
+
+?{{KEY_BLOCK}}
+
+Result: Preserve the person's recognizable face, figure, hair and colors. Show the selected wardrobe clearly without remnants of the previous outfit or background.
+
+----------------------------------------------------------------
+negative prompt:
+
+?{{VIEW_NEG}},
+?{{BACKGROUND_NEG}},
+?{{LIGHTING_NEG}},
+previous outfit, previous background, changed identity, changed hair color,
+extra people, extra limbs, extra digits, deformed hands, text, watermark, logo.

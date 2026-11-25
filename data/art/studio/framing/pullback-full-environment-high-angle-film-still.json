@@ -1,0 +1,8 @@
+{
+  "id": "studio/framing/pullback-full-environment-high-angle-film-still",
+  "kind": "framing",
+  "name": "High-angle environmental film still",
+  "extends": "data/art/studio/framing/pullback-full-environment-high-angle.json",
+  "tags": ["camera", "framing", "full-body", "environment", "high-angle"],
+  "description": "{{BASE}} Frame the surrounding scene as a wide environmental film still."
+}

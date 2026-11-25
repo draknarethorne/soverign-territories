@@ -1,0 +1,9 @@
+{
+  "id": "studio/views/body/relaxed-front",
+  "kind": "view",
+  "name": "Relaxed front-facing stance",
+  "compatibleStages": ["edit", "alpha", "pose"],
+  "tags": ["front", "full-body", "standing", "relaxed"],
+  "description": "Stand facing the camera with weight resting on one leg and the face visible toward the camera.",
+  "negatives": ["hidden face", "unbalanced stance"]
+}

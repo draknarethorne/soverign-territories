@@ -1,0 +1,8 @@
+{
+  "id": "studio/framing/pullback-full-film-still",
+  "kind": "framing",
+  "name": "Full figure in a wide environmental film still",
+  "extends": "data/art/studio/framing/pullback-full.json",
+  "tags": ["camera", "framing", "full-body", "environment"],
+  "description": "{{BASE}} Frame the surrounding scene as a wide environmental film still."
+}

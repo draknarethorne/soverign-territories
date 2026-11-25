@@ -1,0 +1,9 @@
+{
+  "id": "reference/wardrobe/two-piece-outfit-source-colors",
+  "kind": "reference",
+  "name": "Two-piece outfit adapted from source colors",
+  "compatibleStages": ["alpha"],
+  "tags": ["reference", "outfit", "two-piece"],
+  "description": "Adapt the incoming outfit into a two-piece outfit using its existing colors",
+  "negatives": ["extra clothing"]
+}

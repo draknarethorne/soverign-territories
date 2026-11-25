@@ -6,7 +6,7 @@
   "compatibleStages": ["edit"],
   "sourceVariant": "0c_Cleanup_Basic",
   "status": "pilot",
-  "notes": "Rationalized from prompts/_edit/female/0_edit_0c_cleanup_basic.txt. Keeps the source pose, outfit, appearance and background; only the listed cleanup operations are requested.",
-  "negatives": ["new or substituted props", "changed background", "cropped subject"],
-  "description": "Remove visible logos, interface icons, watermarks and overlays. Remove simple props and carried items such as cups or food. Trim only obvious non-image borders and extend the existing background only where the trim exposes an edge."
+  "notes": "Common non-explicit cleanup operations from the selected 0c Cleanup workflows. Pose, appearance and result are selected separately by the assembly.",
+  "negatives": ["new or substituted props", "cropped body", "cropped feet", "blurred"],
+  "description": "Remove logos, icons and overlays. Remove props and non-jewelry accessories such as purses, cups and glasses, including items held in the hands. Crop top and bottom borders that are not part of the background; extend the existing scenery as needed."
 }

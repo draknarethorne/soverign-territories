@@ -74,9 +74,9 @@ def main():
             pid = f.relative_to(ROOT).as_posix()
             short = f.stem
             folder = {"pose": "poses", "clothing": "clothing", "armor": "armor"}[stage]
-            out_name = {"pose": f"{args.hero}_X_Pose_{camel(short)}", "clothing": f"{args.hero}_Clothing_{camel(short)}",
+            out_name = {"pose": f"{args.hero}_Layer_{camel(short)}", "clothing": f"{args.hero}_Clothing_{camel(short)}",
                         "armor": f"{args.hero}_Armor_{camel(short)}"}[stage]
-            art_id = {"pose": f"{args.slug}-x-pose-{short}", "clothing": f"{args.slug}-clothing-{short}", "armor": f"{args.slug}-armor-{short}"}[stage]
+            art_id = {"pose": f"{args.slug}-layer-{short}", "clothing": f"{args.slug}-clothing-{short}", "armor": f"{args.slug}-armor-{short}"}[stage]
             if stage == "pose":
                 card = {"artId": art_id, "kind": "base-set", "stage": "pose", "components": {"underlayer": pid}}
             else:

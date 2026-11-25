@@ -1,0 +1,10 @@
+{
+  "artId": "male-motion-hand-on-hip-power",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/sovereign-males/male.json",
+  "template": "data/art/_templates/heroes/2_Studies/motion-human.txt",
+  "output": "prompts/sovereign-males/Male/2_Studies/motions/standing/Male_Motion_Standing_HandOnHipPower.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/standing/hand-on-hip-power.json"
+}

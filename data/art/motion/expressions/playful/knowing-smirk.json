@@ -1,0 +1,8 @@
+{
+  "id": "motion/expressions/playful/knowing-smirk",
+  "kind": "expression",
+  "name": "Knowing smirk",
+  "compatibleStages": ["edit", "alpha", "motion", "scene"],
+  "tags": ["expression", "smirk"],
+  "expression": "A subtle knowing smirk, with a slight uptick at one corner of the mouth."
+}

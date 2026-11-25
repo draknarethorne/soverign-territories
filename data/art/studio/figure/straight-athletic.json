@@ -1,0 +1,8 @@
+{
+  "id": "studio/figure/straight-athletic",
+  "kind": "figure",
+  "name": "Straight athletic figure",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["figure", "athletic", "straight"],
+  "description": "A straight athletic frame with a subtle difference between the waist and hips."
+}

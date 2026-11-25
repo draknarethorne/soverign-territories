@@ -1,0 +1,8 @@
+{
+  "id": "motion/expressions/studio/preserve-source",
+  "kind": "expression",
+  "name": "Preserve source expression",
+  "expression": "preserve the incoming facial expression.",
+  "compatibleStages": ["edit", "alpha", "head", "pose", "motion", "scene"],
+  "tags": ["reference", "preserve-source"]
+}

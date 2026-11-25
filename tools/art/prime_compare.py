@@ -8,7 +8,7 @@ The table at the end gives the average per variant over all heroes, which is the
   python tools/art/prime_compare.py                 every hero that has a render
   python tools/art/prime_compare.py Haniya Draknoxa
   python tools/art/prime_compare.py --all-renders   every render of each variant, not only the newest (to see the spread of a seed)
-  python tools/art/prime_compare.py --shots all     also the first-shot experiments: P2 neutral base and P3 bare figure (1b_Experiments)
+  python tools/art/prime_compare.py --shots all     also the first-shot experiments: P2 neutral base and P3 bare figure (2_Bare)
 """
 import argparse
 import pathlib
@@ -23,8 +23,9 @@ import comfy_workflows as cw  # noqa: E402
 import likeness  # noqa: E402
 
 ENGINE_NAMES = (("qwen", "Qwen"), ("firered", "FireRed"))
-# the first shots: the Prime (P1, the swimsuit baseline) and the two experiment bases (1b_Experiments): P2 neutral base layer, P3 bare figure
-SHOTS = {"prime": ("Alpha_1_Prime", ""), "neutral": ("Alpha_1b_NeutralBase", "P2 neutral"), "bare": ("Alpha_1b_BareBase", "P3 bare")}
+# The first shots: Prime (P1) and the two photo-input base variants in 2_Bare.
+SHOTS = {"prime": ("Alpha_1_Prime", ""), "neutral": ("Alpha_2_NeutralBase", "P2 neutral"), "bare": ("Alpha_2_BareBase", "P3 bare")}
+RENDER_ALIASES = {"_Alpha_2_NeutralBase": "_Alpha_1b_NeutralBase", "_Alpha_2_BareBase": "_Alpha_1b_BareBase"}
 
 
 def variants(cfg, hero, shots=("prime",)):
@@ -43,13 +44,18 @@ def variants(cfg, hero, shots=("prime",)):
 
 def renders(cfg, name, every=False):
     """The images a workflow saved (<name>_00001_.png, ...), newest first."""
-    pat = re.compile(rf"^{re.escape(name)}_\d+_?\.png$")
+    names = [name]
+    for current, legacy in RENDER_ALIASES.items():
+        if current in name:
+            names.append(name.replace(current, legacy, 1))
     found = {}
     for root in cw.output_roots(cfg):
         if root.is_dir():
-            for p in root.rglob(f"{name}_*.png"):
-                if pat.match(p.name):
-                    found[p] = p.stat().st_mtime
+            for candidate in names:
+                pat = re.compile(rf"^{re.escape(candidate)}_\d+_?\.png$")
+                for p in root.rglob(f"{candidate}_*.png"):
+                    if pat.match(p.name):
+                        found[p] = p.stat().st_mtime
     ordered = sorted(found, key=lambda p: -found[p])
     return ordered if every else ordered[:1]
 

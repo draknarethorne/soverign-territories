@@ -1,0 +1,27 @@
+=== Alpha Female - Motion: Catwalk preservation audition - Edit (img2img) ===
+Incoming image: a selected reference image of Alpha Female. Apply the selected motion while preserving the incoming identity, outfit and setting. Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: hips and shoulders positioned for the step; arms swinging with the walk; one foot stepping forward more.
+Body: walking towards the camera, body position adjusting with the stride.
+Head: facing forward, matching the walk.
+Gaze: remains focused on camera.
+Expression: alluring, confident smile, lips slightly parted; lips full and expressive.
+
+
+Background and lighting: Preserve the incoming setting and lighting.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language, fluid spontaneous glamour posing, mild-energy fashion photography.
+Breeze flowing any direction.
+
+Edit the incoming image: Apply the selected motion and expression while keeping the existing outfit and hairstyle.
+
+Result: Preserve the person's recognizable face, figure, hair color, eye and skin colors, makeup and outfit. Show the complete figure in the selected motion.
+
+----------------------------------------------------------------
+negative prompt:
+
+changed identity, changed outfit, changed hair color, extra people, extra limbs,
+extra digits, deformed hands, text, watermark, logo.

@@ -1,0 +1,8 @@
+{
+  "id": "reference/appearance/preserve-face-makeup",
+  "kind": "reference",
+  "name": "Preserve face and makeup",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["reference", "face", "preserve-source"],
+  "description": "Keep the original face and makeup."
+}

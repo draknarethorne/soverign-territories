@@ -1,0 +1,8 @@
+{
+  "id": "cosmetics/makeup/natural/soft-natural",
+  "kind": "makeup",
+  "name": "Soft natural makeup",
+  "description": "soft, natural makeup and natural-looking lips",
+  "compatibleStages": ["edit", "alpha", "pose", "head", "hair", "motion", "armor", "clothing", "scene", "showcase"],
+  "tags": ["makeup", "natural"]
+}

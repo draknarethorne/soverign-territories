@@ -1,0 +1,23 @@
+=== Alpha Female - Hairstyle: Beach waves preservation audition (group: Hair) - Edit (img2img) ===
+Incoming image: a selected reference image of Alpha Female. Change the hairstyle while preserving the incoming person, outfit, pose and setting. Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: Preserve the incoming pose and framing.
+
+Background and lighting: Preserve the incoming setting and lighting.
+
+Edit the incoming image: Change the hairstyle while keeping the incoming hair color and highlights.
+
+Light breeze drifting over her shoulders.
+
+Hair falls in soft, tousled beach waves, loosely tumbling past the shoulders with a relaxed, lived-in texture.
+
+
+Result: Preserve the subject's recognizable face, eye color, skin tone, makeup, figure, expression and outfit. Keep the same pose and framing.
+
+----------------------------------------------------------------
+negative prompt:
+
+changed identity, changed hair color, changed outfit, changed pose, extra people, extra limbs, deformed hands, text, watermark, logo.

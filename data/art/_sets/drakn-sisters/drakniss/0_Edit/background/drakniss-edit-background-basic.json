@@ -1,0 +1,29 @@
+{
+  "artId": "drakniss-edit-background-basic",
+  "kind": "base-set",
+  "stage": "edit",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
+  "template": "data/art/_templates/heroes/0_Edit/edit-cleanup-human.txt",
+  "output": "prompts/drakn-sisters/Drakniss/0_Edit/background/Drakniss_Edit_Background_Basic.txt",
+  "denoise": "~0.9",
+  "edit_name": "Character Background Basic",
+  "keyDetails": [
+    "hair",
+    "eyes",
+    "skin"
+  ],
+  "components": {
+    "view": "data/art/reference/pose/preserve-clear-hands.json",
+    "background": "data/art/backgrounds/studio/light-grey-seamless.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "edit_task": "data/art/edits/background/clean-seamless.json",
+    "result": "data/art/edits/policies/result-clear-props-and-jewelry.json",
+    "bust": "data/art/studio/figure/full-bust-natural.json",
+    "body": "{{FIGURE_FRAME}}",
+    "likeness": "data/art/reference/appearance/preserve-face-shape.json",
+    "wearing": "data/art/edits/policies/clothing-only-preserve-if-present.json",
+    "face_policy": "data/art/reference/appearance/preserve-face-expression-makeup.json"
+  },
+  "notes": "Repository-only Sister pilot: hair, eyes, skin and frame come from Drakniss's art identity; a reusable neutral figure detail is selected separately. Preserve incoming clothing if present while clearing props and jewelry. This is a source-inspired adaptation; synthetic output is not identity evidence."
+}

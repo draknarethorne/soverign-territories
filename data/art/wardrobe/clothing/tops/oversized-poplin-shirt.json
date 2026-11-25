@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/tops/oversized-poplin-shirt",
+  "kind": "wearing",
+  "name": "Oversized poplin shirt",
+  "description": "A crisp {{PRIMARY}} poplin button-down shirt with an oversized tailored fit.",
+  "compatibleStages": ["edit", "alpha", "pose", "clothing", "scene", "showcase"],
+  "tags": ["clothing", "shirt", "poplin"]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "reference/wardrobe/gown-source-fabric-and-colors",
+  "kind": "reference",
+  "name": "Gown adapted from source fabric and colors",
+  "includes": [
+    "data/art/reference/wardrobe/gown-source-colors.json",
+    "data/art/reference/wardrobe/preserve-source-fabric.json"
+  ],
+  "compatibleStages": ["alpha"],
+  "tags": ["reference", "outfit", "gown", "fabric"],
+  "negatives": ["extra clothing"]
+}

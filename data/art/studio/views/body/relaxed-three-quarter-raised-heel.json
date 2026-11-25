@@ -1,0 +1,9 @@
+{
+  "id": "studio/views/body/relaxed-three-quarter-raised-heel",
+  "kind": "view",
+  "name": "Relaxed three-quarter stance with raised heel",
+  "extends": "data/art/studio/views/body/relaxed-three-quarter.json",
+  "compatibleStages": ["edit", "alpha", "pose"],
+  "tags": ["three-quarter", "full-body", "standing", "relaxed"],
+  "description": "{{BASE}} Angle the upper torso toward the camera. Rest the other foot on its toes with the heel slightly raised."
+}

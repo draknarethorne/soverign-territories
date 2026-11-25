@@ -1,0 +1,9 @@
+{
+  "id": "studio/views/body/standing-a-pose-empty-hands",
+  "kind": "view",
+  "name": "Standing A-pose with empty hands",
+  "extends": "data/art/studio/views/body/standing-a-pose.json",
+  "compatibleStages": ["edit", "alpha", "pose", "armor", "clothing"],
+  "tags": ["standing", "a-pose", "full-body", "empty-hands"],
+  "description": "+ Keep the hands empty."
+}

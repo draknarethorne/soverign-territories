@@ -1,0 +1,32 @@
+{
+  "artId": "female-alpha-outfit-silk-kiss-audition",
+  "kind": "base-set",
+  "stage": "alpha",
+  "heroArt": "data/art/heroes/sovereign-females/female.json",
+  "template": "data/art/_templates/heroes/1_Alpha/alpha-reference-human.txt",
+  "output": "prompts/sovereign-females/Female/1_Alpha/4_Outfits/sets/Female_Alpha_4_Outfits_Silk_Kiss_Audition.txt",
+  "denoise": "~1.0",
+  "edit_name": "Source-color silk two-piece and kiss gesture",
+  "keyDetails": ["hair", "eyes", "skin"],
+  "components": {
+    "view": "data/art/studio/views/body/standing-hip-hand-gesture.json",
+    "gesture": "data/art/studio/gesture/blowing-kiss.json",
+    "background": "data/art/backgrounds/studio/light-grey-seamless.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "camera": "data/art/studio/framing/pullback-full-environment-film-still.json",
+    "edit_task": "data/art/edits/alpha/clear-props-for-outfit.json",
+    "result": "data/art/edits/policies/result-clear-props-and-jewelry.json",
+    "bust": "data/art/studio/figure/full-bust-natural.json",
+    "body": "data/art/studio/figure/runway-lean.json",
+    "likeness": "data/art/reference/appearance/preserve-face-shape.json",
+    "wearing": "data/art/reference/wardrobe/silk-two-piece-source-colors.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/simple-stiletto-heels.json",
+    "hair_policy": "data/art/reference/appearance/hair-down-swept-reference.json",
+    "makeup": "data/art/cosmetics/makeup/natural/soft-natural.json",
+    "gaze": "data/art/motion/gaze/eyes-to-camera.json",
+    "eye_detail": "data/art/studio/photography/eye-definition-wide.json",
+    "expression": "data/art/motion/expressions/playful/blowing-kiss.json"
+  },
+  "notes": "Separate source-inspired gesture and expression audition; preserve the existing Silk alternative."
+}

@@ -1,0 +1,27 @@
+{
+  "artId": "gavrielle-edit-background-basic",
+  "kind": "base-set",
+  "stage": "edit",
+  "heroArt": "data/art/heroes/angel-primes/female/gavrielle.json",
+  "template": "data/art/_templates/heroes/0_Edit/edit-cleanup-human.txt",
+  "output": "prompts/angel-primes/female/Gavrielle/0_Edit/background/Gavrielle_Edit_Background_Basic.txt",
+  "denoise": "~0.9",
+  "edit_name": "Character Background Basic",
+  "components": {
+    "view": "data/art/reference/pose/preserve-clear-hands.json",
+    "background": "data/art/backgrounds/studio/light-grey-seamless.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "edit_task": "data/art/edits/background/clean-seamless.json",
+    "result": "data/art/edits/policies/result-clear-props-and-jewelry.json",
+    "key_block": "Critical details:",
+    "bust": "data/art/studio/figure/full-bust-natural.json",
+    "body": "{{FIGURE_FRAME}}",
+    "skin_edit": "data/art/reference/appearance/preserve-skin-tone.json",
+    "likeness": "data/art/reference/appearance/preserve-features.json",
+    "wearing": "data/art/edits/policies/clothing-only-preserve-if-present.json",
+    "hair_policy": "data/art/edits/policies/hair-preserve.json",
+    "face_policy": "data/art/reference/appearance/preserve-face-expression-makeup.json"
+  },
+  "notes": "Character-specific Background Basic audition: the figure frame comes from Gavrielle's art identity, with a neutral reusable figure detail. Source hair, eye color, skin tone and facial likeness are preserved rather than forcing identity palette values, following the identity note's adaptive appearance intent. Preserve incoming clothing if present while clearing props and jewelry; synthetic output is not identity evidence."
+}

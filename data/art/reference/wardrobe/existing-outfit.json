@@ -1,0 +1,9 @@
+{
+  "id": "reference/wardrobe/existing-outfit",
+  "kind": "reference",
+  "name": "Existing outfit",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["reference", "outfit", "preserve-source"],
+  "description": "Keep the existing outfit, preserving its fabric, colors and coverage.",
+  "negatives": ["changed clothing"]
+}

@@ -1,0 +1,8 @@
+{
+  "id": "studio/figure/neck-long-elegant",
+  "kind": "figure",
+  "name": "Long elegant neck",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["figure", "neck"],
+  "description": "A long, elegant neck with a naturally poised posture."
+}

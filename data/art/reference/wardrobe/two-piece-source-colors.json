@@ -1,0 +1,9 @@
+{
+  "id": "reference/wardrobe/two-piece-source-colors",
+  "kind": "reference",
+  "name": "Two-piece swimsuit in source outfit colors",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["reference", "outfit", "swimwear"],
+  "description": "Replace the original outfit with a two-piece swimsuit in the original outfit's colors; show only the selected outfit without remnants of the original garments.",
+  "negatives": ["source outfit remnants", "extra clothing layers"]
+}

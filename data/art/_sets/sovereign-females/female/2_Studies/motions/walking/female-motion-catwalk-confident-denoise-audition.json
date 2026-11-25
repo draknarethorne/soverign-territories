@@ -1,0 +1,12 @@
+{
+  "artId": "female-motion-catwalk-confident-denoise-audition",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/sovereign-females/female.json",
+  "template": "data/art/_templates/heroes/2_Studies/motion-human.txt",
+  "output": "prompts/sovereign-females/Female/2_Studies/motions/walking/Female_Motion_Walking_CatwalkConfident_Denoise_Audition.txt",
+  "denoise": "~0.4-0.6",
+  "denoise_hint": "{{DENOISE}}",
+  "component": "data/art/motion/walking/catwalk-confident.json",
+  "notes": "Separate card-range denoise comparison; existing routing and reference workflows are preserved. Visual acceptance remains open."
+}

@@ -1,0 +1,40 @@
+=== Alpha Female · Armor: Half-Plate Armor (group: Armor) — Edit (img2img) ===
+Incoming image: an A-pose of Alpha Female (chosen hair) in the bikini underlayer. Apply the armor; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Background: a plain neutral light-grey seamless studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Critical details - these must be clearly visible:
+Hair: the exact hair colour of the reference image, unchanged, with natural shine.
+Bust: full, naturally rounded bust, softly enhanced - breasts lifted and centred with a gentle push-up-bra style contour, forming a narrow décolletage; soft, naturally rounded shape throughout.
+Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
+Skin: natural skin tone exactly as in the reference image, evenly toned.
+
+Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the breastplate or bodice is moulded over the bust, lifting and supporting it into a full, firm, rounded form with a crisp, clearly defined cleavage line at the centre; the waist is cinched and defined and the hips follow their natural curve.
+
+Wearing Soft Pearl White-toned half-plate: a polished breastplate and backplate, pauldrons and a waist guard over a quilted gold arming doublet, the arms and legs in leather with plate vambraces.
+
+Arms: bare arms.
+
+Jewelry: a simple gold necklace and small matching earrings.
+
+Back: the back of the armor fully visible.
+
+Legs & feet: bare feet.
+
+Holding empty hands relaxed at the sides.
+
+Overall, a clean studio presentation of the half-plate armor.
+
+Eyes: natural studio eyes.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, changed eye colour, recoloured eyes, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

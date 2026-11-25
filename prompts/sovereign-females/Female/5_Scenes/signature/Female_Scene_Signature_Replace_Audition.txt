@@ -1,0 +1,39 @@
+=== Alpha Female - Scene: Signature replacement audition - Edit (img2img) ===
+Incoming image: a selected reference image of Alpha Female. Create the selected scene, pose and outfit while preserving the incoming identity. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: A candid high-fashion editorial shot, confident power stance. Light breeze. standing tall, weight on one leg, shoulders squared to the camera. level, facing the camera directly. direct, confident eyes to camera. bold, confident, a hint of a smirk. one hand firmly on the hip, elbow out; the other arm relaxed at her side.
+
+Environment: Replace the incoming background with a sunlit white marble terrace with gold-veined columns, strong low sun streaming between them in clear shafts with a little dust in the air, warm light across the worn stone.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
+
+Photo-realistic full-body scene, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Edit the incoming image: Replace the previous outfit, accessories and setting with the selected scene and wardrobe.
+
+Wearing: Soft Pearl White-toned half-plate: a polished breastplate and backplate, pauldrons and a waist guard over a quilted gold arming doublet, the arms and legs in leather with plate vambraces.
+Jewelry: a simple gold necklace and small matching earrings.
+Back: a pair of large, softly layered white feathered wings spread behind the shoulders, every feather clearly defined with a soft pearl sheen at the tips.
+Legs and feet: bare feet, fine gold anklets.
+
+a faint gold glow lingers softly, ambient and understated.
+
+Eyes: a subtle gold glow near the pupils fades toward the incoming natural iris color, with the iris detail still visible.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Critical details - these must be clearly visible:
+Hair: the exact hair colour of the reference image, unchanged, with natural shine.
+Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
+Skin: natural skin tone exactly as in the reference image, evenly toned.
+
+Result: Preserve the person's recognizable face, figure, hair and colors. Show the selected scene and wardrobe without remnants of the previous outfit or background.
+
+----------------------------------------------------------------
+negative prompt:
+
+previous outfit, previous background, changed identity, changed hair color,
+extra people, extra limbs, extra digits, deformed hands, text, watermark, logo.

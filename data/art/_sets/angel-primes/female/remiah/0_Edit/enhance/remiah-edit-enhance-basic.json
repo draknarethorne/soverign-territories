@@ -1,0 +1,29 @@
+{
+  "artId": "remiah-edit-enhance-basic",
+  "kind": "base-set",
+  "stage": "edit",
+  "heroArt": "data/art/heroes/angel-primes/female/remiah.json",
+  "template": "data/art/_templates/heroes/0_Edit/edit-cleanup-human.txt",
+  "output": "prompts/angel-primes/female/Remiah/0_Edit/enhance/Remiah_Edit_Enhance_Basic.txt",
+  "denoise": "~1.0",
+  "edit_name": "Character Enhance Basic",
+  "components": {
+    "view": "data/art/reference/pose/preserve-clear-hands.json",
+    "background": "data/art/reference/background/preserve-scenery.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "camera": "data/art/studio/framing/pullback-full-film-still.json",
+    "edit_task": "data/art/edits/enhance/clear-props.json",
+    "result": "data/art/edits/policies/result-clear-props-and-jewelry.json",
+    "bust": "data/art/studio/figure/full-bust-natural.json",
+    "body": "{{FIGURE_FRAME}}",
+    "likeness": "data/art/reference/appearance/preserve-features.json",
+    "wearing": "data/art/edits/policies/clothing-continuation-if-present.json",
+    "eye_detail": "data/art/studio/photography/eye-definition-wide-open.json",
+    "face_policy": "data/art/reference/appearance/preserve-face-expression-makeup.json",
+    "key_block": "Critical details:",
+    "skin_edit": "data/art/reference/appearance/preserve-skin-tone.json",
+    "hair_policy": "data/art/edits/policies/hair-preserve.json"
+  },
+  "notes": "Character-specific enhancement audition: the figure frame comes from Remiah's art identity and a reusable neutral figure detail is selected separately. Preserve source hair, eye color, skin tone and facial likeness in accordance with the adaptive identity note. Preserve pose and scenery, allowing hand changes for prop removal. Continue incoming clothing if present; no replacement outfit is selected. Synthetic output is not identity evidence."
+}

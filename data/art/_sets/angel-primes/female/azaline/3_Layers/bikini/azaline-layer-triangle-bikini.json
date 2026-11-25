@@ -1,0 +1,13 @@
+{
+  "artId": "azaline-layer-triangle-bikini",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/female/azaline.json",
+  "template": "data/art/_templates/heroes/1_Alpha/pose-female-human.txt",
+  "output": "prompts/angel-primes/female/Azaline/3_Layers/bikini/Azaline_Layer_TriangleBikini.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/bikini/triangle-bikini.json"
+  },
+  "notes": "UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."
+}

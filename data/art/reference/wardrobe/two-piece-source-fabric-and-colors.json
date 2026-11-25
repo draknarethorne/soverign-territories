@@ -1,0 +1,12 @@
+{
+  "id": "reference/wardrobe/two-piece-source-fabric-and-colors",
+  "kind": "reference",
+  "name": "Two-piece adapted from source fabric and colors",
+  "includes": [
+    "data/art/reference/wardrobe/two-piece-outfit-source-colors.json",
+    "data/art/reference/wardrobe/preserve-source-fabric.json"
+  ],
+  "compatibleStages": ["alpha"],
+  "tags": ["reference", "outfit", "two-piece", "fabric"],
+  "negatives": ["extra clothing"]
+}

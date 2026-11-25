@@ -1,0 +1,8 @@
+{
+  "id": "studio/views/body/deluxe-resting-propped",
+  "kind": "view",
+  "name": "Resting pose propped on an elbow",
+  "compatibleStages": ["edit", "alpha", "pose"],
+  "tags": ["pose", "resting", "bedroom"],
+  "description": "Rest comfortably on the bed, supported on one elbow with that hand near the hair. Angle one leg toward the camera and rest the other foot on the bed with its knee bent. Rest the free hand on the thigh."
+}

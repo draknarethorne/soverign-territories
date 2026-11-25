@@ -1,0 +1,7 @@
+{
+  "id": "reference/appearance/hair-down-swept-reference",
+  "kind": "reference",
+  "name": "Hair down with swept-back front sections",
+  "extends": "data/art/reference/appearance/hair-down-reference.json",
+  "description": "+ Sweep the front sections slightly back, leaving the eyes, brows and temples clear."
+}

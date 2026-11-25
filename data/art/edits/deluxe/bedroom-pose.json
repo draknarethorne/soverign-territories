@@ -1,0 +1,17 @@
+{
+  "id": "edit-deluxe-bedroom-pose",
+  "kind": "edit",
+  "name": "Deluxe bedroom pose audition",
+  "extends": "data/art/edits/policies/clear-props-keep-jewelry.json",
+  "compatibleStages": ["edit"],
+  "sourceVariant": "0d_Deluxe",
+  "tags": ["deluxe", "bedroom", "pose"],
+  "status": "pilot",
+  "description": "{{BASE}} Create a neutral, full-length pose audition of the same person in the selected setting. Use ordinary relaxed body language and a neutral, non-suggestive pose.",
+  "negatives": [
+    "cropped subject",
+    "dramatic or suggestive posing",
+    "sexualized direction or anatomy"
+  ],
+  "notes": "A neutral scene and pose adaptation; source-specific exclusions and visual acceptance remain open."
+}

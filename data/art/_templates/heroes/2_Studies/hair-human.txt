@@ -1,5 +1,5 @@
 === {{HERO}} · Hairstyle (group: Hair) — Edit (img2img) ===
-Incoming image: an A-pose of {{HERO}}. Change ONLY the hairstyle; keep face, body, and outfit from the incoming image. Denoise ~0.7-0.8.
+Incoming image: an A-pose of {{HERO}}. Change ONLY the hairstyle; keep face, body, and outfit from the incoming image. Denoise {{DENOISE_HINT}}.
 
 ----------------------------------------------------------------
 prompt:

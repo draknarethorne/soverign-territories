@@ -1,0 +1,48 @@
+=== Angelo Prime - 1_Alpha - Character Prime A-pose audition ===
+Incoming image: the user-selected source photo or selected generated image.
+Denoise ~1.0.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: Standing A-pose, upright with feet apart and arms relaxed slightly away from the sides, open hands, level head facing the camera squarely and relaxed square shoulders; replace the incoming pose.
+
+Background: a plain neutral light-grey seamless studio backdrop
+Lighting: Even, soft, neutral frontal studio lighting with a flat, clean key light.
+Professional beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+
+Camera: Pull the camera back to reveal the complete figure and show the feet. Include the surrounding scene and extend it seamlessly as needed. Frame the surrounding scene as a wide environmental film still.
+
+Edit the incoming image: Remove logos, icons and overlays. Remove props and accessories, including purses, cups, glasses and items held in the hands. Remove jewelry. Crop top and bottom borders that are not part of the background; extend the selected background as needed.
+
+Result:
+Hands free of held items; the person is free of purses, accessories and jewelry.
+
+Critical details - these must be clearly visible:
+Hair: light ash-brown hair with soft champagne lights.
+Eyes: clear steel-grey irises with faint soft-gold striations and a pale champagne limbal ring.
+Skin: fair warm-neutral complexion, evenly toned.
+Body: athletic, broad-shouldered, well-proportioned build; defined, naturally muscular chest and core, toned and healthy; trim, athletic waist; long, strong, well-proportioned legs
+
+Likeness: Maintain strict fidelity to the reference person's facial features and bone structure.
+
+Wearing: only fitted mid-thigh swim trunks in Soft Pearl White with softly pearlescent pastel colour-blocked side panels in soft rose, sky blue, mint and lilac, gold waistband and a small gold feather emblem on the left hip; chest, abdomen, and lower legs bare; bare feet. Replace the incoming outfit without retaining its garments.
+Hair: left natural, loose and relaxed
+Eyes: Both eyes matched, level and symmetrical, wide open with crisp catchlights and natural lashes.
+Gaze: eyes to camera.
+Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth, the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open, chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely)
+
+----------------------------------------------------------------
+negative prompt:
+
+seated pose, cropped feet,
+colored studio backdrop, busy background,
+new or substituted props, cropped body, blurred,
+changed identity, altered facial features,
+source outfit remnants, extra clothing layers,
+wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, pout,
+blonde hair, black hair, red hair, grey hair, uniform flat one-tone hair,
+blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, red eyes, violet eyes,
+tanned skin, bronze skin, sun-weathered skin, ruddy skin,
+extra people, extra limbs, extra fingers, deformed hands, text, watermark,
+logo, illustration, painting, drawing, CGI, cartoon.

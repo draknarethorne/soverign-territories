@@ -51,8 +51,8 @@ class PrimeCompareTests(unittest.TestCase):
 
     def test_the_first_shot_experiments_are_extra_variants_with_their_own_labels(self):
         got = [(lab, name) for lab, name, _f, _e in pc.variants(CFG, "Alice", ("neutral", "bare"))]
-        self.assertEqual(got[0], ("Qwen P2 neutral", "Alice_Qwen_Alpha_1b_NeutralBase"))
-        self.assertIn(("FireRed P3 bare / alternate", "Alice_FireRed_Alpha_1b_BareBase_Alternate"), got)
+        self.assertEqual(got[0], ("Qwen P2 neutral", "Alice_Qwen_Alpha_2_NeutralBase"))
+        self.assertIn(("FireRed P3 bare / alternate", "Alice_FireRed_Alpha_2_BareBase_Alternate"), got)
         self.assertEqual(len(got), 8)
         self.assertEqual(len(pc.variants(CFG, "Alice", tuple(pc.SHOTS))), 12)
 
@@ -68,6 +68,15 @@ class PrimeCompareTests(unittest.TestCase):
             self.assertEqual([p.name for p in pc.renders(CFG, "Alice_Qwen_Alpha_1_Prime")], ["Alice_Qwen_Alpha_1_Prime_00002_.png"])
             self.assertEqual([p.name for p in pc.renders(CFG, "Alice_Qwen_Alpha_1_Prime_Alternate")], ["Alice_Qwen_Alpha_1_Prime_Alternate_00001_.png"])
             self.assertEqual(pc.renders(CFG, "Alice_FireRed_Alpha_1_Prime"), [])
+
+    def test_new_first_shot_name_finds_legacy_and_current_renders(self):
+        for name in ("Alice_Qwen_Alpha_1b_BareBase_00001_.png", "Alice_Qwen_Alpha_2_BareBase_00002_.png"):
+            (self.tmp / name).write_bytes(b"x")
+        with mock.patch.object(cw, "output_roots", return_value=[self.tmp]):
+            found = pc.renders(CFG, "Alice_Qwen_Alpha_2_BareBase", every=True)
+        self.assertEqual({p.name for p in found}, {
+            "Alice_Qwen_Alpha_1b_BareBase_00001_.png", "Alice_Qwen_Alpha_2_BareBase_00002_.png",
+        })
 
     def test_the_score_is_the_cosine_of_the_centred_faces_and_a_picture_without_a_face_has_none(self):
         faces = {"a.png": [1.0, 0.2, 0.0], "same.png": [0.9, 0.3, 0.0], "other.png": [0.0, 0.2, 1.0], "none.png": None}

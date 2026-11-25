@@ -1,0 +1,8 @@
+{
+  "id": "studio/gesture/jaw-framing",
+  "kind": "view",
+  "name": "Relaxed jaw-framing gesture",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["gesture", "hands", "jaw"],
+  "description": "Hold relaxed hands gently near the jawline, framing it without obscuring the face."
+}

@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/studio/light-grey-seamless",
+  "kind": "background",
+  "name": "Studio: light-grey seamless backdrop",
+  "description": "a plain neutral light-grey seamless studio backdrop",
+  "compatibleStages": ["edit", "alpha", "pose", "head", "hair", "motion", "armor", "clothing"],
+  "tags": ["studio", "grey"],
+  "negatives": ["colored studio backdrop", "busy background"]
+}

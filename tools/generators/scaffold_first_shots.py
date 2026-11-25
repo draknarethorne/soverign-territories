@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 """Add the first-shot experiment cards to every female hero that has a Prime card (re-runnable; existing cards are kept).
 
-The Prime (1_Prime) is one way to start from the original photo: a head-to-toe A-pose in her swimsuit. Two other ways are tested beside it, in 1_Alpha/1b_Experiments/<family>/
-(the same convention as 2b_Experiments/celestial), each with its own folder so the outputs in ComfyUI never mix:
+The Prime (1_Prime) is one way to start from the original photo: a head-to-toe A-pose in her swimsuit. Two other ways are tested in 1_Alpha/2_Bare/<family>/
+each with its own folder so the outputs in ComfyUI never mix:
 
-  bare-base      the bare figure straight from the photo, her own build from the art data (Alpha_1b_BareBase; wearing = the bare-skin study). It is the body master: no Bare Figure step after it.
-  neutral-base   a skin-tone base layer with the standard slender figure like the Prime (Alpha_1b_NeutralBase); Alpha 2 Bare Figure follows and sets her own build.
+  bare-base      the bare figure straight from the photo, her own build from the art data (Alpha_2_BareBase; wearing = the bare-skin study). It is the body master: no Bare Figure step after it.
+  neutral-base   a skin-tone base layer with the standard slender figure like the Prime (Alpha_2_NeutralBase); Alpha 2 Bare Figure follows and sets her own build.
 
 The winner is promoted to 1_Prime (git mv the card, template and prompt name) and the other is removed; see docs/plans/2026-10-11-first-shot-flows.md.
 
   python tools/generators/scaffold_first_shots.py            write the missing cards
   python tools/generators/scaffold_first_shots.py --check    list what would be written
-Then:  python tools/generators/gen_prompt.py ; python tools/workflows/comfy_workflows.py make --create --engine both --match Alpha_1b --apply
+Then generate prompts and use the workflow update launcher for the new base variants.
 
 What each card wears is not set here: the template's {{BARE_BASE}} and {{BASE_LAYER}} tags take their piece from the slot defaults in gen_prompt.py (SLOT_DEFAULTS), a hero's own
 art.defaultBareBase / art.defaultBaseLayer when she has one, and a card's components.<slot> when it sets one, like every other tag.
@@ -31,9 +31,9 @@ SETS = ROOT / "data/art/_sets"
 # (family, card suffix, prompt stem name, template, figure profile, note). The garment is a slot (see the module doc), not written into the card.
 KINDS = [
     ("bare-base", "bare-base", "BareBase", "base-bare-human.txt", None,
-     "Alpha 1b Bare Base (experiment P3): the first shot as a bare figure, her own build from the art data. It is the body master; no Bare Figure step after it."),
+     "Alpha Bare Base (experiment P3): the first shot as a bare figure, her own build from the art data. It is the body master; no Bare Figure step after it."),
     ("neutral-base", "neutral-base", "NeutralBase", "base-neutral-human.txt", "standard",
-     "Alpha 1b Neutral Base (experiment P2): a skin-tone base layer on the standard figure; Alpha 2 Bare Figure follows."),
+     "Alpha Neutral Base (experiment P2): a skin-tone base layer on the standard figure; Alpha 2 Bare Figure follows."),
 ]
 
 
@@ -58,12 +58,12 @@ def main(argv=None):
         slug = prime["artId"][: -len("-alpha-prime")]
         group, division, hero, _dirs, _file = art_layout.split_output(prime["output"])
         for family, suffix, stem, template, profile, note in KINDS:
-            art_id = f"{slug}-alpha-1b-{suffix}"
+            art_id = f"{slug}-alpha-{suffix}"
             card = {"artId": art_id, "kind": "base-set", "stage": "alpha", "heroArt": prime["heroArt"], "template": template_path(template),
                     "output": "", "denoise": "~1.0", "notes": note}
             if profile:
                 card["figureProfile"] = profile
-            card["output"] = art_layout.output_for(card, group, hero, f"{hero}_Alpha_1b_{stem}", ROOT, division)
+            card["output"] = art_layout.output_for(card, group, hero, f"{hero}_Alpha_2_{stem}", ROOT, division)
             path = slug_dir.joinpath(*art_layout.card_dirs(card, group, ROOT), f"{art_id}.json")
             if path.exists():
                 kept += 1

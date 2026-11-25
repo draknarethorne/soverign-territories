@@ -1,0 +1,10 @@
+{
+  "id": "wardrobe/swimwear/trunks/studio-pastel-trunks",
+  "kind": "wearing",
+  "name": "Pastel-panel studio swim trunks",
+  "extends": "data/art/heroes/angel-primes/male/angelo/wearing/angelic-pastel-trunks.json",
+  "compatibleStages": ["alpha", "pose"],
+  "tags": ["swimwear", "trunks", "studio"],
+  "description": "{{BASE}}. Replace the incoming outfit without retaining its garments.",
+  "negatives": ["source outfit remnants", "extra clothing layers"]
+}

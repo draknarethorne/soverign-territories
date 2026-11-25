@@ -1,0 +1,40 @@
+{
+  "artId": "draknisa-alpha-prime-ordered-audition",
+  "kind": "base-set",
+  "stage": "alpha",
+  "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
+  "template": "data/art/_templates/heroes/1_Alpha/alpha-reference-human.txt",
+  "output": "prompts/drakn-sisters/Draknisa/1_Alpha/1_Prime/Draknisa_Alpha_1_Prime_Ordered_Audition.txt",
+  "denoise": "~1.0",
+  "edit_name": "Character Prime A-pose audition",
+  "keyDetails": [
+    "hair",
+    "eyes",
+    "skin"
+  ],
+  "overrides": {
+    "palette": {
+      "lipColor": "natural"
+    }
+  },
+  "components": {
+    "view": "data/art/studio/views/body/standing-a-pose.json",
+    "background": "data/art/backgrounds/studio/light-grey-seamless.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "camera": "data/art/studio/framing/pullback-full-environment-film-still.json",
+    "edit_task": "data/art/edits/alpha/clear-props-for-outfit.json",
+    "result": "data/art/edits/policies/result-clear-props-and-jewelry.json",
+    "bust": "data/art/studio/figure/full-bust-natural.json",
+    "body": "{{FIGURE_FRAME}}",
+    "likeness": "data/art/reference/appearance/preserve-face-shape.json",
+    "wearing": "data/art/wardrobe/swimwear/bikini/studio-metallic-two-piece.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot-a-pose.json",
+    "hair_policy": "data/art/reference/appearance/hair-down-swept-reference.json",
+    "makeup": "data/art/cosmetics/makeup/natural/dewy-skin-no-makeup.json",
+    "gaze": "data/art/motion/gaze/eyes-to-camera.json",
+    "eye_detail": "data/art/studio/photography/eye-definition-wide.json",
+    "expression": "data/art/motion/expressions/studio/studio-soft-smile.json"
+  },
+  "notes": "Repository-only ordered Prime audition provisionally selects Draknisa's identity appearance and individual frame. It keeps incoming hair length with a hair-down direction and selects a neutral metallic two-piece adaptation, not every detail of her legacy underlayer or styling. Existing Prime sources and workflows remain unchanged; visual acceptance is open."
+}

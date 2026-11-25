@@ -1,0 +1,24 @@
+{
+  "artId": "draknava-edit-pose-grounded-three-quarter",
+  "kind": "base-set",
+  "stage": "edit",
+  "heroArt": "data/art/heroes/drakn-sisters/draknava-thorne.json",
+  "template": "data/art/_templates/heroes/0_Edit/edit-cleanup-human.txt",
+  "output": "prompts/drakn-sisters/Draknava/0_Edit/pose/Draknava_Edit_Pose_Grounded_Three_Quarter.txt",
+  "denoise": "~0.9-1.0",
+  "edit_name": "Grounded three-quarter audition",
+  "components": {
+    "edit_task": "data/art/edits/pose/pose-audition.json",
+    "likeness": "data/art/edits/policies/face-preserve.json",
+    "hair_policy": "data/art/edits/policies/hair-preserve.json",
+    "body": "data/art/edits/policies/body-preserve.json",
+    "view": "data/art/studio/views/body/grounded-three-quarter.json",
+    "camera": "data/art/edits/policies/framing-full-length.json",
+    "background": "data/art/backgrounds/studio/light-grey-seamless.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "result": "data/art/edits/policies/result-reference-audition.json",
+    "result_outfit": "data/art/edits/policies/clothing-preserve-if-present.json"
+  },
+  "notes": "Repository-only Sister pilot: preserve source physique, hair and facial identity while changing the pose and studio background. No outfit is selected; synthetic output is not identity evidence."
+}

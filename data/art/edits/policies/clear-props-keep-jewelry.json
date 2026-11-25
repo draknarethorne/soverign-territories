@@ -1,0 +1,9 @@
+{
+  "id": "edit-policy-clear-props-keep-jewelry",
+  "kind": "edit",
+  "name": "Clear props and borders while retaining jewelry",
+  "compatibleStages": ["edit"],
+  "tags": ["clear-props", "jewelry"],
+  "negatives": ["new or substituted props", "cropped body", "cropped feet", "blurred"],
+  "description": "Remove logos, icons and overlays. Remove props and non-jewelry accessories, including purses, cups, glasses and items held in the hands. Retain existing jewelry. Crop top and bottom borders that are not part of the background; extend the selected background as needed."
+}

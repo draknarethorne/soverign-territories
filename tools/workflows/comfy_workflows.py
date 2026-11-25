@@ -64,6 +64,7 @@ from jsonschema import Draft7Validator
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "generators"))
 import art_layout  # noqa: E402  (phase_path: the pipeline folders of a workflow and its output)
+import reference_prompt_bindings  # noqa: E402
 sys.path.insert(0, str(ROOT / "tools" / "art"))
 import temporary_storage  # noqa: E402
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
@@ -199,6 +200,11 @@ def validate_config(cfg):
             for error in errors[:8]
         )
         raise ValueError(f"invalid {CFG_PATH.name}: {detail}")
+    output_folders = cfg.get("paths", {}).get("outputFolders", {})
+    for group, heroes in cfg.get("outputNamespaces", {}).items():
+        for hero, namespace in heroes.items():
+            if namespace not in output_folders:
+                raise ValueError(f"outputNamespaces.{group}.{hero}: {namespace} has no outputFolders mapping")
     installs_root(cfg)
     comfy_input_root(cfg)
     comfy_output_root(cfg)
@@ -335,6 +341,11 @@ def output_home(cfg, group):
     """Where a set's images belong: <outputRoot>/<project folder>/<set>/ (the project comes from paths.outputFolders)."""
     project = cfg.get("paths", {}).get("outputFolders", {}).get(group)
     return output_root(cfg) / project / group if project else output_root(cfg) / group
+
+
+def output_namespace(cfg, group, hero):
+    """Output namespace for a source-group hero, without changing its source or home."""
+    return cfg.get("outputNamespaces", {}).get(group, {}).get(hero, group)
 
 
 def output_roots(cfg):
@@ -613,6 +624,8 @@ def home_workspaces(cfg, group, hero, stage=None):
             continue
         if "heroes" in r and hero not in r["heroes"]:
             continue
+        if hero in r.get("excludeHeroes", []):
+            continue
         if "class" in r and (stage is None or class_of(stage) != r["class"]):
             continue
         out.append(r["workspace"].format(hero=hero))
@@ -759,16 +772,24 @@ def hero_files(hero):
     return sorted((WF / g / hero).glob("*.json")) if g else []
 
 
-def install_files(cfg, ws, root=None):
-    """{name: path} for the workflows saved in a workspace (found by file name, whatever folder they sit in)."""
-    out = {}
+def iter_install_files(cfg, ws, root=None):
+    """All indexed workspace workflows, including duplicate names."""
     d = install_dir(cfg, ws, root)
     if d.is_dir():
         for p in sorted(d.rglob("*.json")):
             rel = p.relative_to(d)
+            if ws == cfg.get("referenceWorkspace") and rel.parts[0].casefold() == "reference":
+                continue
             if rel.parts[0] in (SHOTS_DIR, CANDIDATES_DIR, FINAL_DIR) or any(part.startswith((".", "_")) for part in rel.parts) or excluded(cfg, p.name) or is_capture(rel, p.name):
                 continue
-            out.setdefault(p.name, p)
+            yield p
+
+
+def install_files(cfg, ws, root=None):
+    """{name: path} for the workflows saved in a workspace (found by file name, whatever folder they sit in)."""
+    out = {}
+    for p in iter_install_files(cfg, ws, root):
+        out.setdefault(p.name, p)
     return out
 
 
@@ -777,7 +798,7 @@ def hero_of(name):
     return prefix if prefix in hero_groups() else None
 
 
-STAGE_WORDS = {"Edit": "edit", "Scene": "scene", "Hair": "hair", "Motion": "motion", "Armor": "armor", "Clothing": "clothing",
+STAGE_WORDS = {"Edit": "edit", "Scene": "scene", "Hair": "hair", "Motion": "motion", "Armor": "armor", "Clothing": "clothing", "Layer": "poses",
                "Head": "head", "View": "poses", "Video": "video", "Brand": "brand", "Card": "card", "Alpha": "alpha"}
 
 
@@ -1041,11 +1062,13 @@ def engine_prompt(cfg, item, pos):
     return pos
 
 
-PHOTO_STEMS = ("_Alpha_1_Prime", "_Alpha_1b_BareBase", "_Alpha_1b_NeutralBase")  # the first shots: the Prime and its two experiment bases
+EXPERIMENT_PHOTO_STEMS = ("_Alpha_2_BareBase", "_Alpha_2_NeutralBase",
+                          "_Alpha_1b_BareBase", "_Alpha_1b_NeutralBase")
+PHOTO_STEMS = ("_Alpha_1_Prime", "_Alpha_1_Prime_Audition") + EXPERIMENT_PHOTO_STEMS
 
 
 def takes_photo(item):
-    """True for a first shot, the only workflows that load the hero's source photo (Alpha 1 Prime and the 1b_Experiments bases)."""
+    """True for a first shot, including the original-photo base variants in 2_Bare."""
     return item["stage"] == "alpha" and item["stem"].endswith(PHOTO_STEMS)
 
 
@@ -1061,9 +1084,12 @@ def flow_photo(cfg, flow, hero):
 
 def prompt_index(cfg, engine="qwen"):
     out = []
+    reference_root = PROMPTS.joinpath(*pathlib.PurePosixPath(reference_prompt_bindings.PROMPT_ROOT).parts[1:])
+    reference_only = {reference_root.joinpath(*pathlib.PurePosixPath(path).parts)
+                      for path in reference_prompt_bindings.SHARED_PROMPTS.values()}
     for p in sorted(PROMPTS.glob("**/*.txt")):
         rel = p.relative_to(PROMPTS)
-        if "_archive" in rel.parts or len(rel.parts) < 4 or rel.parts[0] in cfg.get("skipGroups", []):
+        if p in reference_only or "_archive" in rel.parts or len(rel.parts) < 4 or rel.parts[0] in cfg.get("skipGroups", []):
             continue
         group, division, hero, dirs, _file = art_layout.split_under(rel.parts)
         stagedir, family = art_layout.parse_dirs(dirs)  # prompts sit in the pipeline phase folders, which are also the output folders
@@ -1073,8 +1099,11 @@ def prompt_index(cfg, engine="qwen"):
         if not stem.startswith(hero + "_"):
             continue
         name = f"{hero}_{ENGINES[engine]}_{stem[len(hero) + 1:]}"
+        namespace = output_namespace(cfg, group, hero)
+        if division and division not in art_layout.divisions(namespace):
+            raise ValueError(f"output namespace {namespace!r} does not declare division {division!r} for {p}")
         out.append({"path": p, "group": group, "hero": hero, "stage": stagedir, "family": family, "stem": stem, "name": name,
-                    "prefix": "/".join([group] + ([division] if division else []) + [hero] + dirs + [name])})
+                    "prefix": "/".join([namespace] + ([division] if division else []) + [hero] + dirs + [name])})
     # a flow is a second way to run the Prime: the same prompt, another incoming image (workspaces.json flows). Its workflow sits beside the normal one and carries the flow's name
     for flow in cfg.get("flows", {}):
         suffix = flow_suffix(flow)
@@ -1113,21 +1142,32 @@ def input_for(cfg, hero, stage):
     return conf or infer_input(hero) or f"{hero}_Qwen_X_Pose_00001_.png"
 
 
-def input_role(cfg, hero, stage, family):
+def input_role(cfg, hero, stage, family, workflow=None):
     """The role of a workflow's default incoming image (photo, apose or bare, from cfg inputRoles); None when the hero has no role inputs."""
     conf, roles = cfg.get("inputs", {}).get(hero), cfg.get("inputRoles", {})
+    overrides = cfg.get("inputRoleOverrides", {})
+    if workflow in overrides:
+        role = overrides[workflow]
+        selected = cfg.get("photos", {}).get(hero) if role == "photo" else conf.get(role) if isinstance(conf, dict) else None
+        if not isinstance(selected, str) or not selected.strip():
+            raise ValueError(f"inputRoleOverrides.{workflow}: no {role} input is configured for {hero}")
+        return role
     if not isinstance(conf, dict) or not roles:
         return None
+    # Legacy celestial edits use a Prime image, unlike photo-based outfits.
+    if (stage == "alpha" and family and family[:2] == ["outfits", "celestial"] and workflow
+            and any(stem in workflow for stem in ("_Alpha_2b_Celestial", "_Alpha_4_Outfits_Celestial"))):
+        return roles["alpha/bare"]
     if family and f"{stage}/{family[0]}" in roles:
         return roles[f"{stage}/{family[0]}"]  # e.g. alpha/bare
     key = stage + "/"
     return roles.get(key) if not family and key in roles else roles.get(stage, roles.get("default"))
 
 
-def default_input(cfg, hero, stage, family):
+def default_input(cfg, hero, stage, family, workflow=None):
     """The image a workflow loads by default, by role (cfg inputRoles): the original photo for the root of poses/, the barefoot A-pose for
     bare/head/motion, and the bare-skin A-pose for everything else. None when the hero has no role inputs configured (legacy behaviour)."""
-    role = input_role(cfg, hero, stage, family)
+    role = input_role(cfg, hero, stage, family, workflow)
     if role is None:
         return None
     if role == "photo":
@@ -1429,9 +1469,10 @@ def cmd_status(args):
             print("    lint: " + line)
 
 
-def record_backup_receipt(cfg, stamp, src, destination):
+def record_backup_receipt(cfg, stamp, src, destination, backup_root=None, sha256=None):
     storage_root_base = work_root(cfg)
-    backup_root = storage_root(cfg, "backup")
+    if backup_root is None:
+        backup_root = storage_root(cfg, "backup")
     run_root = backup_root / stamp
     receipt_path = run_root / "storage-configuration-receipt.json"
     storage_receipt = storage_configuration_receipt(
@@ -1458,6 +1499,8 @@ def record_backup_receipt(cfg, stamp, src, destination):
         "source": str(pathlib.Path(src).resolve()),
         "backupPath": str(pathlib.Path(destination).resolve()),
     }
+    if sha256 is not None:
+        backup_entry["sha256"] = sha256
     if backup_entry not in receipt["backups"]:
         receipt["backups"].append(backup_entry)
     with temporary_storage.staging_directory(run_root, ".backup-receipt-") as stage:
@@ -1476,12 +1519,111 @@ def backup(cfg, stamp, ws, name, src):
     record_backup_receipt(cfg, stamp, src, b)
 
 
+def workspace_backup_root(cfg, ws, root=None):
+    if pathlib.PurePath(ws).name != ws or ws in (".", ".."):
+        raise ValueError(f"workspace name must be a single folder name: {ws}")
+    installs = (
+        _configured_absolute_path(os.fspath(root), "install root override")
+        if root is not None else installs_root(cfg)
+    )
+    if is_reparse_point(installs):
+        raise ValueError(f"install root cannot be a junction or reparse point: {installs}")
+    result = _resolve_storage_root(installs / ws, "backup", ".sovereign/workflow-backups")
+    workflow_root = install_dir(cfg, ws, root).resolve()
+    if any(_roots_overlap(result, other.resolve()) for other in (
+        workflow_root, production_root(cfg), sandbox_work_root(cfg)
+    )):
+        raise ValueError(f"workspace backup root overlaps a protected root: {result}")
+    return result
+
+
+def workspace_backup(cfg, stamp, root, workflow_root, src):
+    relative = src.relative_to(workflow_root)
+    current = workflow_root
+    for part in ("", *relative.parts):
+        current /= part
+        if is_reparse_point(current):
+            raise ValueError(f"workspace source crosses a junction or reparse point: {current}")
+    target = root / stamp / relative
+    current = root
+    for part in (pathlib.Path(stamp) / relative).parts:
+        current /= part
+        if is_reparse_point(current):
+            raise ValueError(f"workspace backup cannot cross a junction or reparse point: {current}")
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with src.open("rb") as source:
+        with target.open("xb") as destination:
+            try:
+                shutil.copyfileobj(source, destination)
+            except OSError:
+                destination.close()
+                target.unlink()
+                raise
+    shutil.copystat(src, target)
+    with src.open("rb") as source, target.open("rb") as saved:
+        digest = hashlib.file_digest(source, "sha256").hexdigest()
+        if hashlib.file_digest(saved, "sha256").hexdigest() != digest:
+            raise ValueError(f"workspace backup differs from source: {src}")
+    record_backup_receipt(cfg, stamp, src, target, backup_root=root, sha256=digest)
+
+
+def cmd_backup_check(args):
+    cfg = load_cfg()
+    if args.workspace not in cfg["workspaces"]:
+        raise ValueError(f"unknown workspace: {args.workspace}")
+    if not re.fullmatch(r"\d{8}-\d{6}-\d{6}", args.run):
+        raise ValueError("invalid workspace backup run identifier")
+    root = workspace_backup_root(cfg, args.workspace, args.root)
+    run = root / args.run
+    receipt_path = run / "storage-configuration-receipt.json"
+    if is_reparse_point(run) or is_reparse_point(receipt_path):
+        raise ValueError(f"workspace backup receipt crosses a reparse point: {receipt_path}")
+    receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+    paths = receipt.get("storageConfigurationReceipt", {}).get("resolvedPaths", {})
+    if (paths.get("comfyWorkflowBackupRoot") != str(root)
+            or paths.get("comfyWorkflowBackupRun") != str(run)):
+        raise ValueError(f"workspace backup receipt does not match its location: {receipt_path}")
+    entries = receipt.get("backups")
+    if not isinstance(entries, list) or not entries:
+        raise ValueError(f"workspace backup receipt has no entries: {receipt_path}")
+    seen = set()
+    workflow_root = install_dir(cfg, args.workspace, args.root)
+    for entry in entries:
+        if not isinstance(entry, dict):
+            raise ValueError(f"invalid workspace backup entry: {receipt_path}")
+        path = pathlib.Path(entry.get("backupPath", ""))
+        digest = entry.get("sha256")
+        try:
+            relative = path.relative_to(run)
+        except ValueError as exc:
+            raise ValueError(f"backup path outside run: {path}") from exc
+        if not relative.parts or ".." in relative.parts or path in seen:
+            raise ValueError(f"invalid or duplicate backup path: {path}")
+        if entry.get("source") != str((workflow_root / relative).resolve()):
+            raise ValueError(f"backup source does not match its workspace path: {path}")
+        seen.add(path)
+        current = run
+        for part in relative.parts:
+            current /= part
+            if is_reparse_point(current):
+                raise ValueError(f"workspace backup crosses a reparse point: {current}")
+        if not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest):
+            raise ValueError(f"invalid backup digest: {path}")
+        with path.open("rb") as saved:
+            if hashlib.file_digest(saved, "sha256").hexdigest() != digest:
+                raise ValueError(f"workspace backup hash mismatch: {path}")
+    print(f"{args.workspace}: verified {len(entries)} workspace backup(s) in {run}")
+
+
 def cmd_deploy(args):
     cfg = load_cfg()
     repo = repo_files(cfg)
     if not args.templates and not (args.hero or args.group or args.stage or args.cls or args.match or args.all):
         sys.exit("Deploy needs a filter (--hero, --group, --stage, --class, --match) or --all, so a whole playground is never pushed by accident.")
-    stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    workspace_backups = getattr(args, "workspace_backups", False)
+    stamp = datetime.datetime.now().strftime(
+        "%Y%m%d-%H%M%S-%f" if workspace_backups else "%Y%m%d-%H%M%S"
+    )
     targets = pick_targets(cfg, args, "home")
     if args.workspace and not args.templates:
         for ws in targets:
@@ -1493,6 +1635,21 @@ def cmd_deploy(args):
         if not ready_or_skip(cfg, ws, args.root):
             continue
         dest = install_dir(cfg, ws, args.root)
+        local_backup = workspace_backup_root(cfg, ws, args.root) if workspace_backups else None
+        local_run_started = False
+        if local_backup is not None:
+            print(f"  workspace backups: {local_backup / stamp} (created only for updates)")
+
+        def backup_before_change(path):
+            nonlocal local_run_started
+            if local_backup is None:
+                backup(cfg, stamp, ws, path.name, path)
+            else:
+                if not local_run_started:
+                    (local_backup / stamp).mkdir(parents=True, exist_ok=False)
+                    local_run_started = True
+                workspace_backup(cfg, stamp, local_backup, dest, path)
+
         inst = install_files(cfg, ws, args.root)
         tally = collections.Counter()
         if args.templates:
@@ -1507,7 +1664,7 @@ def cmd_deploy(args):
                 elif args.overwrite:
                     print(f"  template {ws}/{name} (replace)")
                     if not args.dry_run:
-                        backup(cfg, stamp, ws, name, inst[name])
+                        backup_before_change(inst[name])
                         shutil.copy2(p, inst[name])
                     tally["updated"] += 1
                 else:
@@ -1529,6 +1686,9 @@ def cmd_deploy(args):
             if name in inst and getattr(args, "new_only", False):
                 tally["kept"] += 1
                 continue
+            if workspace_backups and name in inst and replace and p.read_bytes() == inst[name].read_bytes():
+                tally["aligned"] += 1
+                continue
             if name not in inst:
                 print(f"  new      {ws}/{name}")
                 if not args.dry_run:
@@ -1547,7 +1707,7 @@ def cmd_deploy(args):
                     continue
                 print(f"  {'size' if stale_size else 'seed'}     {ws}/{name}  ({'total pixels set to the standard size' if stale_size else 'seed set to randomize'}; prompt, seed value and input untouched)")
                 if not args.dry_run:
-                    backup(cfg, stamp, ws, name, inst[name])
+                    backup_before_change(inst[name])
                     swf = read_wf(inst[name])
                     align_size(swf, cfg)
                     if reseed:
@@ -1561,7 +1721,7 @@ def cmd_deploy(args):
                 continue
             print(f"  {'replace ' if replace else 'prompt  '} {ws}/{name}" + ("" if replace else f"  (keeps input {input_image(read_wf(inst[name]))})"))
             if not args.dry_run:
-                backup(cfg, stamp, ws, name, inst[name])
+                backup_before_change(inst[name])
                 if replace:
                     write_wf(inst[name], read_wf(p))
                 else:
@@ -1596,7 +1756,7 @@ def cmd_deploy(args):
                 elif args.overwrite:
                     print(f"  curated  {ws}/{name} (replace)")
                     if not args.dry_run:
-                        backup(cfg, stamp, ws, name, inst[name])
+                        backup_before_change(inst[name])
                         write_wf(inst[name], read_wf(p))
                     tally["curated"] += 1
                 else:
@@ -1618,7 +1778,7 @@ def cmd_deploy(args):
                 elif args.overwrite:
                     print(f"  shot     {ws}/{SHOTS_DIR}/{rel} (replace)")
                     if not args.dry_run:
-                        backup(cfg, stamp, ws, p.name, have)
+                        backup_before_change(have)
                         write_wf(have, read_wf(p))
                     tally["shots"] += 1
                 else:
@@ -1635,6 +1795,27 @@ def same_copy(a_path, b_path, master_path):
     except ValueError:
         return False
     return get_values(a) == get_values(b) == get_values(m) and input_image(a) == input_image(b)
+
+
+def same_with_output_prefix_map(source, destination, old_prefix, new_prefix):
+    """Compare entire graphs after the explicitly selected output-root transition."""
+    source_wf, destination_wf = read_wf(source), read_wf(destination)
+    nodes = list(source_wf.get("nodes", []))
+    for subgraph in source_wf.get("definitions", {}).get("subgraphs", []):
+        nodes.extend(subgraph.get("nodes", []))
+    changed = False
+    for node in nodes:
+        if node.get("type") not in {"SaveImage", "SaveImageAdvanced", "SaveVideo"}:
+            continue
+        values = node.get("widgets_values")
+        if not isinstance(values, list) or not values or not isinstance(values[0], str):
+            return False
+        prefix = values[0]
+        if prefix.startswith(old_prefix + "/"):
+            replacement = new_prefix + prefix[len(old_prefix):]
+            values[0] = replacement
+            changed = True
+    return changed and source_wf == destination_wf
 
 
 def cleanup_orphans(cfg, args):
@@ -1684,6 +1865,21 @@ def cmd_cleanup(args):
     Temporary copies you published on request (a set this workspace accepts but is not home for) are removed the same way once you are done.
     Empty folders are removed afterwards (never the top-level zz_ ones). Default is a preview; --apply moves the files to workflows/.sync/backup/ (nothing is deleted)."""
     cfg = load_cfg()
+    retire_planned = getattr(args, "retire_planned_home", False)
+    if retire_planned and (args.loose or args.orphans or args.prefix_map or
+                           not args.workspace_backups or not args.group or not args.hero):
+        sys.exit("--retire-planned-home requires --workspace-backups, --group and --hero; it cannot be combined with --loose, --orphans or --prefix-map")
+    prefix_map = None
+    if args.prefix_map:
+        if args.loose or args.orphans or not args.workspace_backups or not args.group or not args.hero:
+            sys.exit("--prefix-map requires --workspace-backups, --group and --hero; it cannot be combined with --loose or --orphans")
+        parts = args.prefix_map.split("=")
+        if (len(parts) != 2 or parts[0] == parts[1] or
+                any(not re.fullmatch(r"[A-Za-z0-9_-]+(?:/[A-Za-z0-9_-]+)*", part) for part in parts)):
+            sys.exit("--prefix-map requires two distinct relative output roots OLD=NEW")
+        prefix_map = parts
+    if args.workspace_backups and (args.orphans or args.loose):
+        sys.exit("--workspace-backups cannot be combined with --orphans or --loose")
     if args.orphans:
         return cleanup_orphans(cfg, args)
     if not args.workspace:
@@ -1697,7 +1893,11 @@ def cmd_cleanup(args):
     if not ok:
         sys.exit(f"{src}: {why}.")
     apply = args.apply and not args.dry_run
-    stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S-%f" if args.workspace_backups else "%Y%m%d-%H%M%S")
+    workflow_root = install_dir(cfg, src, args.root)
+    local_backup = workspace_backup_root(cfg, src, args.root) if args.workspace_backups else None
+    if local_backup:
+        print(f"  workspace backups: {local_backup / stamp} (created only for moves)")
     cache, tally, kept = {}, collections.Counter(), collections.defaultdict(list)
 
     def files_of(ws):
@@ -1725,6 +1925,9 @@ def cmd_cleanup(args):
             why = "not a generated workflow in the repo (yours, curated or renamed)"
         elif not dests:
             why = "no home workspace is configured for it"
+        elif retire_planned:
+            if any(cfg["workspaces"].get(w, {}).get("status") != "planned" for w in dests):
+                why = "not all destination homes are planned"
         else:
             for w in dests:
                 held = files_of(w)
@@ -1732,27 +1935,45 @@ def cmd_cleanup(args):
                     why = f"{w} is not an active workspace with an install yet"
                 elif name not in held:
                     why = f"not delivered to {w} yet"
-                elif not (same_copy(p, held[name], repo[name][2]) if args.loose else same_workflow(p, held[name])):
+                elif not (same_copy(p, held[name], repo[name][2]) if args.loose else
+                          same_workflow(p, held[name]) or
+                          (prefix_map and same_with_output_prefix_map(p, held[name], *prefix_map))):
                     why = f"differs from the copy in {w} (edited?)"
                 if why:
                     break
         if why:
             kept[why].append(name)
             continue
-        print(f"  {'remove ' if apply else 'would remove'}  {name}  (held by {', '.join(dests)})")
+        destination = f"planned homes: {', '.join(dests)}" if retire_planned else f"held by {', '.join(dests)}"
+        print(f"  {'remove ' if apply else 'would remove'}  {name}  ({destination})")
         tally["duplicates"] += 1
         gone.append(p)
         if apply:
-            b = storage_root(cfg, "backup") / stamp / (src + " (cleaned)") / name
-            b.parent.mkdir(parents=True, exist_ok=True)
-            shutil.move(str(p), str(b))
-            record_backup_receipt(cfg, stamp, p, b)
+            if local_backup:
+                with p.open("rb") as current:
+                    digest = hashlib.file_digest(current, "sha256").hexdigest()
+                workspace_backup(cfg, stamp, local_backup, workflow_root, p)
+                with p.open("rb") as current:
+                    if hashlib.file_digest(current, "sha256").hexdigest() != digest:
+                        raise ValueError(f"workspace workflow changed during backup: {p}")
+                if not retire_planned:
+                    for w in dests:
+                        held = install_files(cfg, w, args.root)
+                        if name not in held or not (same_workflow(p, held[name]) or
+                                (prefix_map and same_with_output_prefix_map(p, held[name], *prefix_map))):
+                            raise ValueError(f"home workflow changed during backup: {w}/{name}")
+                p.unlink()
+            else:
+                b = storage_root(cfg, "backup") / stamp / (src + " (cleaned)") / name
+                b.parent.mkdir(parents=True, exist_ok=True)
+                shutil.move(str(p), str(b))
+                record_backup_receipt(cfg, stamp, p, b)
     for why, names in kept.items():
         print(f"  KEEP {len(names):4}  {why}")
         for n in names[: args.show]:
             print(f"           {n}")
     d = install_dir(cfg, src, args.root)
-    for folder in (prune_empty_dirs(d, apply) if apply else empty_dirs(d, gone)):
+    for folder in ([] if local_backup else (prune_empty_dirs(d, apply) if apply else empty_dirs(d, gone))):
         print(f"  {'removed' if apply else 'would remove'} empty folder  {folder.relative_to(d).as_posix()}")
     print(f"{src}: {tally['duplicates']} workflow(s) this workspace is not home for " + ("moved to backup" if apply else "would be removed (preview; use --apply)")
           + f", {sum(map(len, kept.values()))} kept, {tally['home here']} home here and left alone")
@@ -1946,7 +2167,7 @@ def cmd_make(args):
         if engine == "firered" and not (args.stage or args.cls):
             # the class list limits what --create builds; a FireRed workflow that already exists (an Alpha test card, a Final) is always refreshed
             its = [i for i in its if class_of(i["stage"]) in cfg["engines"]["firered"].get("classes", ["scene"])
-                   or i.get("flow") or i["stem"].endswith(PHOTO_STEMS[1:]) or (engine_roots(cfg)["firered"] / i["group"] / i["hero"] / f"{i['name']}.json").exists()]
+                   or i.get("flow") or i["stem"].endswith(EXPERIMENT_PHOTO_STEMS) or (engine_roots(cfg)["firered"] / i["group"] / i["hero"] / f"{i['name']}.json").exists()]
         its = [i for i in its if engine in cfg.get("stageEngines", {}).get(i["stage"], [engine])]  # e.g. final is FireRed only
         items += its
     if args.group:
@@ -1996,7 +2217,7 @@ def cmd_make(args):
         if it["engine"] == "firered":
             set_turbo(wf, cfg["engines"]["firered"].get("turbo", True))
         if not is_text:
-            dn = denoise_for(cfg, it["path"].read_text(encoding="utf-8"), input_role(cfg, it["hero"], it["stage"], it["family"]))
+            dn = denoise_for(cfg, it["path"].read_text(encoding="utf-8"), input_role(cfg, it["hero"], it["stage"], it["family"], it["name"]))
             if dn is not None:
                 set_denoise(wf, dn)
         if not is_text:
@@ -2008,7 +2229,7 @@ def cmd_make(args):
         video = set_video(wf, it["path"].read_text(encoding="utf-8"), cfg["engines"]["minimax"]) if it["engine"] == "minimax" else None
         wf["id"] = str(uuid.uuid4())
         ln = node_of(wf, "LoadImage")
-        want = args.input or video or (flow_photo(cfg, it["flow"], it["hero"]) if it.get("flow") else None) or default_input(cfg, it["hero"], it["stage"], it["family"]) \
+        want = args.input or video or (flow_photo(cfg, it["flow"], it["hero"]) if it.get("flow") else None) or default_input(cfg, it["hero"], it["stage"], it["family"], it["name"]) \
             or (cfg.get("photos", {}).get(it["hero"]) if is_apose else input_for(cfg, it["hero"], it["stage"]))
         if ln and want:
             ln["widgets_values"][0] = want
@@ -2063,8 +2284,14 @@ def cmd_tidy(args):
         if not ready_or_skip(cfg, ws, args.root):
             continue
         d = install_dir(cfg, ws, args.root)
-        moved = 0
-        for name, p in install_files(cfg, ws, args.root).items():
+        moves = []
+        targets = set()
+        for p in iter_install_files(cfg, ws, args.root):
+            name = p.name
+            if not stage_ok(args, name):
+                continue
+            if args.group and (name not in repo or repo[name][0] != args.group):
+                continue
             top = p.relative_to(d).parts[0]
             if name in cur or name in tst:
                 if args.hero and (cur.get(name) or tst[name])[1].lower() != args.hero.lower():
@@ -2081,15 +2308,22 @@ def cmd_tidy(args):
                 want = d / workspace_subdir(ws, read_wf(repo[name][2])) / name
             if p == want:
                 continue
+            if want.exists() or want in targets:
+                raise ValueError(f"{ws}: refusing to move {p} over existing workflow {want}")
+            targets.add(want)
+            moves.append((p, want))
+        for p, want in moves:
             if args.verbose:
                 print(f"  {ws}: {p.relative_to(d).as_posix()} -> {want.relative_to(d).as_posix()}")
             if args.apply:
+                if want.exists():
+                    raise ValueError(f"{ws}: refusing to move {p} over existing workflow {want}")
                 want.parent.mkdir(parents=True, exist_ok=True)
                 shutil.move(str(p), str(want))
-            moved += 1
-        print(f"{ws}: {moved} workflow(s) {'moved' if args.apply else 'would move'}")
+        print(f"{ws}: {len(moves)} workflow(s) {'moved' if args.apply else 'would move'}")
         # moving leaves empty folders behind (an old layout), which ComfyUI would still list; zz_ folders are never removed
-        for folder in prune_empty_dirs(d, args.apply):
+        folders = [] if args.stage or args.cls or args.engine or args.hero or args.group else prune_empty_dirs(d, args.apply)
+        for folder in folders:
             print(f"  {'removed' if args.apply else 'would remove'} empty folder  {ws}: {folder.relative_to(d).as_posix()}")
     if not args.apply:
         print("Preview only: add --apply to move them. Reload the ComfyUI workflow list afterwards.")
@@ -2120,7 +2354,8 @@ def reset_inputs(cfg, args, workspaces=None, include_repo=True):
                 or (getattr(args, "match", None) and not name_matches(args.match, name)):
             return
         flow = flows.get(name[:-5] if name.endswith(".json") else name)
-        want = flow_photo(cfg, flow, hero) if flow else default_input(cfg, hero, stage, family)
+        workflow = name[:-5] if name.endswith(".json") else name
+        want = flow_photo(cfg, flow, hero) if flow else default_input(cfg, hero, stage, family, workflow)
         wf = read_wf(p)
         ln = node_of(wf, "LoadImage") if isinstance(wf, dict) else None
         if not want or not ln:
@@ -2269,7 +2504,7 @@ def input_choices(cfg, workspaces=None, root=None, hero=None):
                 h, role = legacy.group(1), "photo"
             elif base in idx and name in repo:
                 h, stage, family = idx[base]
-                role = input_role(cfg, h, stage, family)
+                role = input_role(cfg, h, stage, family, base)
             else:
                 continue
             if not role or (hero and h.lower() != hero.lower()) or is_hand_made(cfg, ws, p, root):
@@ -2558,7 +2793,7 @@ def denoise_plan(cfg):
             it["engine"] = engine
             if is_text_item(cfg, it):
                 continue
-            role = input_role(cfg, it["hero"], it["stage"], it["family"])
+            role = input_role(cfg, it["hero"], it["stage"], it["family"], it["name"])
             dn = denoise_for(cfg, it["path"].read_text(encoding="utf-8"), role)
             if dn is not None:
                 plan[it["name"]] = (it["hero"], it["stage"], it["family"], role, dn)
@@ -2788,14 +3023,20 @@ def final_image_source(cfg, wf, counter):
     return None
 
 
-def final_image_dest(parsed, master_wf):
+def final_image_dest(cfg, parsed, master_wf):
     s = save_node(master_wf)
-    return ASSETS / pathlib.PurePosixPath(s["widgets_values"][0]).parent / (parsed["stem"] + ".png") if s else None
+    if not s:
+        return None
+    parts = pathlib.PurePosixPath(s["widgets_values"][0]).parent.parts
+    group = hero_groups().get(parsed["hero"])
+    if group and parts and parts[0] == output_namespace(cfg, group, parsed["hero"]):
+        parts = (group, *parts[1:])
+    return ASSETS.joinpath(*parts, parsed["stem"] + ".png")
 
 
 def capture_final_image(cfg, wf, parsed, master_wf, stamp, dry_run):
     """Copy the render of a final into assets/art. An image it replaces is copied to backup first. Returns 'copied', 'same', 'no image' or 'no counter'."""
-    src, dst = final_image_source(cfg, wf, parsed["counter"]), final_image_dest(parsed, master_wf)
+    src, dst = final_image_source(cfg, wf, parsed["counter"]), final_image_dest(cfg, parsed, master_wf)
     if not parsed["counter"]:
         return "no counter"
     if not src or not dst:
@@ -3247,13 +3488,22 @@ def main(argv=None):
     s.add_argument("--include", help="extra kinds to deploy besides the generated workflows, comma separated: curated, shots, tests, staged (scenes held back by default), finals (candidates and finals kept in the repo)")
     s.add_argument("--mode", choices=["patch", "new", "existing", "overwrite"],
                    help="patch: only update prompt values in place (also in a legacy workspace); new: only add files the workspace lacks; existing: only refresh files it already has; overwrite: replace the whole file")
+    s.add_argument("--workspace-backups", action="store_true",
+                   help="back up deploy updates inside each workspace installation, outside its workflow tree")
     s.add_argument("--apply", action="store_true", help="really do it (default: preview only)")
     s.set_defaults(curated=False, tests=False, shots=False, staged=False, existing=False, patch_only=False, new_only=False, overwrite=False)
+    s = sub.add_parser("backup-check", help="verify one workspace-local deploy backup run")
+    s.add_argument("--root", help="override installsRoot (testing)")
+    s.add_argument("workspace")
+    s.add_argument("run", help="backup run identifier")
     s = sub.add_parser("cleanup")
     common(s, False, True)
     s.add_argument("-w", "--workspace", action="append", help="the workspace to clean (required): removes what it is not home for, once the home workspace holds an identical copy")
     s.add_argument("--apply", action="store_true", help="really move the files to backup (default: preview only)")
     s.add_argument("--loose", action="store_true", help="treat a file as an identical copy when prompts and input image match (ignores seeds and other run-to-run changes)")
+    s.add_argument("--workspace-backups", action="store_true", help="save verified copies within the source workspace before moving files")
+    s.add_argument("--retire-planned-home", action="store_true", help="retire generated copies before their planned home is installed; requires explicit group, hero and workspace-local backups")
+    s.add_argument("--prefix-map", help="compare complete graphs after an explicit output-root transition OLD=NEW; requires --workspace-backups, --group and --hero")
     s.add_argument("--show", type=int, default=5, help="names to list per kept reason")
     s.add_argument("--orphans", action="store_true", help="instead: move workflows no prompt defines any more (renamed or removed cards) to backup; needs --match, honours -w and --hero")
     s = sub.add_parser("fork")
@@ -3324,7 +3574,7 @@ def main(argv=None):
     s.add_argument("--use-as", choices=list(USE_AS_ROLES), help="with promote: also make this final's render the hero's default image for a role (prime feeds the Alpha 2 workflows, bare the footwear, apose head and motion); a plain promote changes no default")
     args = ap.parse_args(argv)
     previewed = normalise(args)
-    {"list": cmd_list, "status": cmd_status, "deploy": cmd_deploy, "cleanup": cmd_cleanup, "pull": cmd_pull, "make": cmd_make, "inputs": cmd_inputs, "denoise": cmd_denoise, "fork": cmd_fork, "tidy": cmd_tidy, "setup": cmd_setup,
+    {"list": cmd_list, "status": cmd_status, "deploy": cmd_deploy, "backup-check": cmd_backup_check, "cleanup": cmd_cleanup, "pull": cmd_pull, "make": cmd_make, "inputs": cmd_inputs, "denoise": cmd_denoise, "fork": cmd_fork, "tidy": cmd_tidy, "setup": cmd_setup,
      "finals": cmd_finals}[args.cmd](args)
     if args.cmd == "deploy" and args.finals:
         for ws in pick_targets(load_cfg(), args, "home"):

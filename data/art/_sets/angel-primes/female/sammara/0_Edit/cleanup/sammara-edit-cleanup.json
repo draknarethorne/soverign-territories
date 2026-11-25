@@ -1,0 +1,26 @@
+{
+  "artId": "sammara-edit-cleanup",
+  "kind": "base-set",
+  "stage": "edit",
+  "heroArt": "data/art/heroes/angel-primes/female/sammara.json",
+  "template": "data/art/_templates/heroes/0_Edit/edit-cleanup-human.txt",
+  "output": "prompts/angel-primes/female/Sammara/0_Edit/cleanup/Sammara_Edit_Cleanup.txt",
+  "denoise": "~0.9",
+  "edit_name": "Cleanup",
+  "components": {
+    "view": "data/art/reference/pose/preserve-clear-hands.json",
+    "background": "data/art/reference/background/preserve-scenery.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "edit_task": "data/art/edits/cleanup/basic.json",
+    "result": "data/art/edits/policies/result-clear-props-keep-jewelry.json",
+    "key_block": "Critical details:",
+    "bust": "data/art/studio/figure/full-bust-natural.json",
+    "body": "{{FIGURE_FRAME}}",
+    "skin_edit": "data/art/reference/appearance/skin-slightly-warmer-even.json",
+    "likeness": "data/art/reference/appearance/preserve-features.json",
+    "wearing": "data/art/reference/wardrobe/existing-fitted.json",
+    "hair_policy": "data/art/edits/policies/hair-preserve.json"
+  },
+  "notes": "Supported non-explicit Cleanup adaptation. Input is a selected photo or generated image; output is synthetic and never identity-core evidence. Character audition selects the identity frame and retains this family's other source-relative choices; the neutral figure detail and output need visual review."
+}

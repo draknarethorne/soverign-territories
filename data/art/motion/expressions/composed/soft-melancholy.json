@@ -1,0 +1,8 @@
+{
+  "id": "motion/expressions/composed/soft-melancholy",
+  "kind": "expression",
+  "name": "Soft melancholy",
+  "expression": "A gentle, contemplative expression with a subtle melancholy.",
+  "compatibleStages": ["edit", "alpha", "motion", "scene"],
+  "tags": ["expression", "melancholy", "contemplative"]
+}

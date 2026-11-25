@@ -1,0 +1,8 @@
+{
+  "id": "studio/figure/runner-lean",
+  "kind": "figure",
+  "name": "Lean runner figure",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["figure", "athletic", "runner"],
+  "description": "A lean runner's frame with long legs and a compact upper body."
+}

@@ -1,0 +1,8 @@
+{
+  "id": "edit-enhance-clear-props",
+  "kind": "edit",
+  "name": "Enhance with props cleared",
+  "extends": "data/art/edits/policies/clear-props-and-jewelry.json",
+  "compatibleStages": ["edit"],
+  "tags": ["enhance"]
+}

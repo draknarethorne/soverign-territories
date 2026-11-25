@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/effects/eyes/partial-glow-source-color",
+  "kind": "effects",
+  "name": "Eyes: partial glow over source color",
+  "description": "Eyes: a subtle {{MAGIC}} glow near the pupils fades toward the incoming natural iris color, with the iris detail still visible.",
+  "compatibleStages": ["scene"],
+  "tags": ["eyes", "glow", "preserve-source"]
+}

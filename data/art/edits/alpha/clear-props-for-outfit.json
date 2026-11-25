@@ -1,0 +1,8 @@
+{
+  "id": "edit-alpha-clear-props-for-outfit",
+  "kind": "edit",
+  "name": "Prepare a source for an outfit audition",
+  "extends": "data/art/edits/policies/clear-props-and-jewelry.json",
+  "compatibleStages": ["alpha"],
+  "tags": ["outfits", "alpha"]
+}

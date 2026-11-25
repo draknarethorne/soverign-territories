@@ -1,0 +1,8 @@
+{
+  "id": "studio/lighting/vanity-bulbs",
+  "kind": "lighting",
+  "name": "Warm vanity bulb light",
+  "description": "Warm vanity bulb light softly illuminates the subject.",
+  "compatibleStages": ["edit", "alpha", "pose", "head", "hair", "motion", "armor", "clothing", "showcase", "scene", "final"],
+  "tags": ["lighting", "vanity", "warm"]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "motion/dynamic/twirl-spin-preserve-outfit",
+  "kind": "motion",
+  "name": "Twirl preserving the selected outfit",
+  "extends": "data/art/motion/dynamic/twirl-spin.json",
+  "editorial": "A candid high-fashion editorial shot, dynamic spinning motion with natural hair and clothing movement.",
+  "body": "captured mid-twirl, torso rotating; any loose fabric moves naturally with the spin.",
+  "compatibleStages": ["motion"],
+  "tags": ["motion", "spin", "preserve-source"]
+}

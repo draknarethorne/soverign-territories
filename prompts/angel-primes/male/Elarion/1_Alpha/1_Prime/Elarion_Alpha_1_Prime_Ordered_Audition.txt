@@ -1,0 +1,48 @@
+=== Elarion Skyharrow - 1_Alpha - Character Prime A-pose audition ===
+Incoming image: the user-selected source photo or selected generated image.
+Denoise ~1.0.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: Standing A-pose, upright with feet apart and arms relaxed slightly away from the sides, open hands, level head facing the camera squarely and relaxed square shoulders; replace the incoming pose.
+
+Background: a plain neutral light-grey seamless studio backdrop
+Lighting: Even, soft, neutral frontal studio lighting with a flat, clean key light.
+Professional beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+
+Camera: Pull the camera back to reveal the complete figure and show the feet. Include the surrounding scene and extend it seamlessly as needed. Frame the surrounding scene as a wide environmental film still.
+
+Edit the incoming image: Remove logos, icons and overlays. Remove props and accessories, including purses, cups, glasses and items held in the hands. Remove jewelry. Crop top and bottom borders that are not part of the background; extend the selected background as needed.
+
+Result:
+Hands free of held items; the person is free of purses, accessories and jewelry.
+
+Critical details:
+Hair: Keep the incoming hair color unchanged.
+Eyes: Keep the incoming eye color.
+Skin: Keep the incoming skin tone and tan.
+Body: slim, agile, long-limbed build; light on his feet; lean, defined chest; long, lean, wiry arms; narrow waist; long, lean, springy legs
+
+Likeness: Maintain strict fidelity to the reference person's facial features and bone structure.
+
+Wearing: only a Storm Sky Blue fitted swim brief, low-rise and body-skimming fit; chest, abdomen, and legs bare; bare feet. Replace the incoming outfit without retaining its garments.
+Hair: swept back into a sleek, low ponytail at the nape of the neck
+Eyes: Keep the incoming eye color. Both eyes matched, level and symmetrical, wide open with crisp catchlights and natural lashes.
+Gaze: eyes to camera.
+Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth, the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open, chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely)
+
+----------------------------------------------------------------
+negative prompt:
+
+seated pose, cropped feet,
+colored studio backdrop, busy background,
+new or substituted props, cropped body, blurred,
+changed identity, altered facial features,
+source outfit remnants, extra clothing layers,
+wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, pout,
+changed hair color,
+changed eye color,
+changed skin tone,
+extra people, extra limbs, extra fingers, deformed hands, text, watermark,
+logo, illustration, painting, drawing, CGI, cartoon.

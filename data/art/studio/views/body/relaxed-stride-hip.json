@@ -1,0 +1,9 @@
+{
+  "id": "studio/views/body/relaxed-stride-hip",
+  "kind": "view",
+  "name": "Relaxed stride with hand on hip",
+  "compatibleStages": ["edit", "alpha", "pose"],
+  "tags": ["front", "full-body", "standing", "relaxed"],
+  "description": "Show a relaxed stride with the body turned slightly away and the torso facing the camera. Rest weight on one leg and step the other forward with toes touching the floor and its heel slightly raised. Place one hand on the hip and let the other arm move naturally with the stride, fingers apart. Keep the face visible toward the camera.",
+  "negatives": ["hidden face", "unbalanced stance"]
+}

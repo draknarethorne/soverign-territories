@@ -1,0 +1,37 @@
+=== Vexiel Nightshade - 0_Edit - Cleanup Basic ===
+Incoming image: the user-selected source photo or selected generated image.
+Denoise ~0.9.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: Keep the same overall pose, body position and angle; adapt the hands as needed to remove held objects.
+
+Background: Keep the original scenery detailed and clear.
+Lighting: Even, soft, neutral frontal studio lighting with a flat, clean key light.
+Professional beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+
+Edit the incoming image: Remove logos, icons and overlays. Remove props and non-jewelry accessories such as purses, cups and glasses, including items held in the hands. Crop top and bottom borders that are not part of the background; extend the existing scenery as needed.
+
+Result:
+Keep the existing outfit with a fitted silhouette and its existing coverage.
+Hands free of held items; the person is free of purses and non-jewelry accessories. Retain existing jewelry.
+
+Critical details:
+Body: lean, sinewy, sly build; fluid and predatory; lean, sinewy, sharply cut chest; lean, ropey, quick arms; narrow, lean waist; long, lean, quick legs
+Skin: Slightly increase the tan of visible skin consistently across the face and body.
+
+Likeness: Maintain strict fidelity to the reference person's facial features and bone structure; preserve expression and eye color.
+
+Wearing: Keep the existing outfit with a fitted silhouette and its existing coverage.
+Hair: Keep the incoming hairstyle, hair length, texture and color.
+
+----------------------------------------------------------------
+negative prompt:
+
+changed background,
+new or substituted props, cropped body, cropped feet, blurred,
+changed identity, changed eye color,
+changed hair,
+extra people, extra limbs, extra digits, deformed hands, text, watermark,
+logo.

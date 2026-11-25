@@ -1,0 +1,12 @@
+{
+  "id": "reference/wardrobe/halter-dress-source-fabric-and-colors",
+  "kind": "reference",
+  "name": "Halter dress adapted from source fabric and colors",
+  "includes": [
+    "data/art/reference/wardrobe/halter-dress-source-colors.json",
+    "data/art/reference/wardrobe/preserve-source-fabric.json"
+  ],
+  "compatibleStages": ["alpha"],
+  "tags": ["reference", "outfit", "dress", "halter", "fabric"],
+  "negatives": ["extra clothing"]
+}

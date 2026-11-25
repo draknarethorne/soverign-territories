@@ -1,0 +1,10 @@
+{
+  "id": "wardrobe/swimwear/trunks/studio-swim-brief",
+  "kind": "wearing",
+  "name": "Studio swim brief",
+  "extends": "data/art/wardrobe/swimwear/trunks/swim-brief.json",
+  "compatibleStages": ["alpha", "pose"],
+  "tags": ["swimwear", "brief", "studio"],
+  "description": "{{BASE}}. Replace the incoming outfit without retaining its garments.",
+  "negatives": ["source outfit remnants", "extra clothing layers"]
+}

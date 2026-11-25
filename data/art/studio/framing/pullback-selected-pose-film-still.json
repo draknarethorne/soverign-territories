@@ -1,0 +1,8 @@
+{
+  "id": "studio/framing/pullback-selected-pose-film-still",
+  "kind": "framing",
+  "name": "Selected pose in a wide environmental film still",
+  "extends": "data/art/studio/framing/pullback-full-selected-pose.json",
+  "tags": ["camera", "framing", "full-body", "environment"],
+  "description": "{{BASE}} Extend the legs as needed to show the feet. Frame the surrounding scene as a wide environmental film still."
+}

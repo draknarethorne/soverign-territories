@@ -1,0 +1,9 @@
+{
+  "id": "wardrobe/swimwear/bikini/studio-metallic-two-piece",
+  "kind": "wearing",
+  "name": "Metallic studio two-piece swimsuit",
+  "extends": "data/art/wardrobe/swimwear/bikini/studio-two-piece.json",
+  "compatibleStages": ["alpha", "pose"],
+  "tags": ["swimwear", "bikini", "studio", "metallic"],
+  "description": "{{BASE}} Use a subtle {{METAL}} sheen and fine {{METAL}} edging."
+}

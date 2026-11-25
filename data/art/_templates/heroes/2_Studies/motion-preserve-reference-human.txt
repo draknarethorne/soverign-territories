@@ -1,0 +1,27 @@
+=== {{HERO}} - Motion: {{NAME}} - Edit (img2img) ===
+Incoming image: a selected reference image of {{HERO}}. Apply the selected motion while preserving the incoming identity, outfit and setting. Denoise {{DENOISE}}.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: {{POSE}}
+Body: {{BODY}}
+Head: {{HEAD}}
+Gaze: {{GAZE}}
+Expression: {{EXPRESSION}}
+{{EXTRAS}}
+
+Background and lighting: Preserve the incoming setting and lighting.
+
+{{EDITORIAL}}
+{{BREEZE}}
+
+Edit the incoming image: Apply the selected motion and expression while keeping the existing outfit and hairstyle.
+
+Result: Preserve the person's recognizable face, figure, hair color, eye and skin colors, makeup and outfit. Show the complete figure in the selected motion.
+
+----------------------------------------------------------------
+negative prompt:
+
+changed identity, changed outfit, changed hair color, extra people, extra limbs,
+extra digits, deformed hands, text, watermark, logo.

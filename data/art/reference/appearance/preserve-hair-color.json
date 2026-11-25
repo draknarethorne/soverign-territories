@@ -1,0 +1,9 @@
+{
+  "id": "reference/appearance/preserve-hair-color",
+  "kind": "reference",
+  "name": "Preserve reference hair color",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["reference", "hair", "preserve-source"],
+  "description": "Keep the incoming hair color unchanged.",
+  "negatives": ["changed hair color"]
+}

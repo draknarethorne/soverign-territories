@@ -1,0 +1,40 @@
+=== Draknira Thorne - 0_Edit - Cleanup Enhance ===
+Incoming image: the user-selected source photo or selected generated image.
+Denoise ~0.9.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: Keep the same overall pose, body position and angle; adapt the hands as needed to remove held objects.
+
+Background: Keep the original scenery detailed and clear.
+Lighting: Even, soft, neutral frontal studio lighting with a flat, clean key light.
+Professional beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+
+Camera: Pull the camera back to reveal the complete figure, retaining the same pose and extending the legs to show the feet. Frame the surrounding scene as a wide environmental film still.
+
+Edit the incoming image: Remove logos, icons and overlays. Remove props and non-jewelry accessories such as purses, cups and glasses, including items held in the hands. Crop top and bottom borders that are not part of the background; extend the existing scenery as needed.
+
+Result:
+Adapt the existing outfit.
+Hands free of held items; the person is free of purses and non-jewelry accessories. Retain existing jewelry.
+
+Critical details:
+Bust: A full, naturally rounded bust with balanced proportions.
+Body: ethereal, crystalline high-elven build; ultra-slender, with delicate bone structure; completely flat stomach; tight, elegant waist tapering cleanly into the hips; very slender, delicate arms; paper-fine wrists and long, slender fingers; shapely feminine hips, gently curved, narrow and elegant; extremely long, smooth, slender legs
+Skin: Slightly increase the tan of visible skin consistently across the face and body.
+
+Likeness: Maintain strict fidelity to the reference person's facial features and bone structure; preserve expression and eye color.
+
+Wearing: Adapt the existing outfit.
+Hair: Keep the incoming hairstyle, hair length, texture and color.
+
+----------------------------------------------------------------
+negative prompt:
+
+changed background,
+new or substituted props, cropped body, cropped feet, blurred,
+changed identity, changed eye color,
+changed hair,
+extra people, extra limbs, extra digits, deformed hands, text, watermark,
+logo.

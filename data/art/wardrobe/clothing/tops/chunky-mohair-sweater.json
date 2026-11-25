@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/tops/chunky-mohair-sweater",
+  "kind": "wearing",
+  "name": "Chunky mohair sweater",
+  "description": "A cozy {{PRIMARY}} chunky-knit mohair sweater with a soft, tactile texture.",
+  "compatibleStages": ["edit", "alpha", "pose", "clothing", "scene", "showcase"],
+  "tags": ["clothing", "sweater", "knit", "mohair"]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "reference/appearance/preserve-eye-color-defined",
+  "kind": "reference",
+  "name": "Preserve source eye color with clear eye detail",
+  "extends": "data/art/reference/appearance/preserve-eye-color.json",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["reference", "eyes", "detail", "preserve-source"],
+  "description": "{{BASE}} Both eyes matched and symmetrical, open with crisp catchlights and natural lashes."
+}

@@ -1,0 +1,8 @@
+{
+  "id": "studio/views/body/deluxe-side-propped",
+  "kind": "view",
+  "name": "Side rest propped on an elbow",
+  "compatibleStages": ["edit", "alpha", "pose"],
+  "tags": ["pose", "reclining", "side", "bedroom"],
+  "description": "Rest on one side on the bed with the upper body turned toward the camera. Support the upper body on one elbow, with that hand near the hair and the other hand resting at the hip. Bend the legs comfortably, with one foot resting on the bed."
+}

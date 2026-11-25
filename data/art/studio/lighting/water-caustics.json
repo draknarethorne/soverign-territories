@@ -1,0 +1,8 @@
+{
+  "id": "studio/lighting/water-caustics",
+  "kind": "lighting",
+  "name": "Reflected water light",
+  "description": "Soft reflected water light creates rippling caustic patterns.",
+  "compatibleStages": ["edit", "alpha", "pose", "head", "hair", "motion", "armor", "clothing", "showcase", "scene", "final"],
+  "tags": ["lighting", "water", "caustics"]
+}

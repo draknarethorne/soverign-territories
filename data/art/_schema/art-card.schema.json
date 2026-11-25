@@ -12,6 +12,7 @@
     "template": {"type": "string", "pattern": "^data/art/_templates/.+\\.txt$"},
     "output": {"type": "string", "pattern": "^prompts/[^/]+/.+\\.txt$"},
     "denoise": {"type": "string"},
+    "denoise_hint": {"const": "{{DENOISE}}", "description": "Opt in to the card's denoise range in supported template headers."},
     "figureProfile": {"enum": ["standard", "individual"], "description": "standard = the hero's X Pose figure from _settings/phrases.json (cards fed the original photo); individual (default) = her own physique"},
     "notes": {"type": "string"},
     "keyDetails": {"type": "array", "items": {"enum": ["hair", "bust", "eyes", "skin", "legs"]}, "uniqueItems": true, "description": "Details called out up front in a Critical details block (and left out of the later lines); overrides the template default"},

@@ -1,0 +1,24 @@
+=== {{HERO}} - 1_Alpha / 3_Footwear - {{EDIT_NAME}} ===
+Incoming image: the selected Prime reference. Denoise {{DENOISE}}.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: Preserve the incoming full-figure pose and framing, adjusting the feet
+only as needed for the selected footwear.
+
+Background and lighting: Preserve the incoming setting and lighting.
+
+Edit the incoming image: Replace only the footwear with the selected result.
+Footwear: {{LEGS_FEET}}
+
+Result: Preserve the person's recognizable face, body proportions, hair, eye
+and skin colors, expression, makeup, clothing and accessories. Keep the
+same setting and pose except for the required foot adjustment.
+
+----------------------------------------------------------------
+negative prompt:
+
+?{{LEGS_FEET_NEG}},
+changed identity, changed outfit, changed hairstyle, extra people, extra
+limbs, extra feet, duplicate footwear, deformed hands, text, watermark, logo.

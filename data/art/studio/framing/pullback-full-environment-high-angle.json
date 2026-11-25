@@ -1,0 +1,7 @@
+{
+  "id": "studio/framing/pullback-full-environment-high-angle",
+  "kind": "framing",
+  "name": "High-angle full figure and surrounding scene",
+  "extends": "data/art/studio/framing/pullback-full-environment.json",
+  "description": "{{BASE}} Position the camera above the subject and angle it downward."
+}

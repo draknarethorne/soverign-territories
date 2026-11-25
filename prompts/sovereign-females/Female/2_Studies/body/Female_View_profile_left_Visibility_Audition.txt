@@ -1,0 +1,23 @@
+=== Alpha Female - Pose View: Profile left visibility audition (group: X_Pose) - Edit (img2img) ===
+Incoming image: the front-facing A-pose of Alpha Female. Turn the same subject to the selected view; keep the incoming identity, figure, hair and outfit. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: Standing A-pose, upright with feet apart, arms relaxed slightly away from the sides and open hands. View: full side profile, the whole body turned 90 degrees to face frame-left, the head in clean profile looking ahead toward frame-left; same A-pose arms and stance.
+
+Background: a plain neutral light-grey seamless studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
+
+Photo-realistic full-body studio shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Critical details - these must be clearly visible:
+Hair: the exact hair colour of the reference image, unchanged, with natural shine.
+
+Keep the exact outfit from the incoming image.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, studio equipment, props, extra limbs, extra fingers, deformed hands, extra feet, changed outfit, changed hairstyle, text, watermark, logo, illustration, painting, drawing, CGI, cartoon.

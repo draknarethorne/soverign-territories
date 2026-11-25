@@ -7,7 +7,7 @@ ComfyUI output folder all use the same folders:
   prompts/<group>/[<division>/]<Hero>/<phase folders...>/<Hero>_<Stage>_<Name>.txt
   ComfyUI output: <group>/[<division>/]<Hero>/<phase folders...>/<Hero>_<Engine>_<Stage>_<Name>_00001_.png
 
-(1_Alpha, 2_Studies, 3_Layers, 4_Wardrobe, 5_Scenes, 6_Finish, 7_Video, Bench; brand and card art keep <stage>/<family>.)
+(1_Alpha, 2_Studies, 3_Layers, 4_Wardrobe, 5_Scenes, 6_Finish, 7_Video; brand and card art keep <stage>/<family>.)
 A group listed in data/art/_settings/groups.json (angel-primes) has a division folder (female, male, pets, units ...) between the group and the hero.
 
 The family comes from the card, never from a hand-typed folder, so a new card cannot end up in the wrong place.
@@ -26,7 +26,7 @@ BRAND_FAMILIES = {"key-art": "key-art", "title": "title", "plate": "plate", "log
 # Sister scenes are grouped into a few broad buckets. A folder only exists to hold closely related cards: a shiny or
 # holo edition sits beside its signature card, and one-card groups stay flat in the stage folder.
 # The Angel Primes test bed follows the sisters (signature, glamour, story and one folder per theme).
-SCENE_GROUPS = {"drakn-sisters", "angel-primes"}
+SCENE_GROUPS = {"drakn-sisters", "angel-primes", "sovereign-females", "sovereign-males"}
 SCENE_BUCKETS = {
     "signature": ["signature", "lineup"],
     "glamour": ["glamour", "glamour-test", "elegant-casting", "robe"],
@@ -121,6 +121,22 @@ def wearing_family(card):
     return ["wardrobe"] if card["stage"] == "armor" else [parts[4]]
 
 
+def alpha_outfit_family(card, root):
+    """Keep general source outfits flat and group explicit outfit studies by family."""
+    art_id = card["artId"]
+    if "-alpha-outfit-celestial-" in art_id:
+        return ["outfits", "celestial"]
+    wear = card.get("components", {}).get("wearing", "")
+    if wear.startswith("data/art/wardrobe/"):
+        return ["outfits", *wearing_family(card)]
+    if wear.startswith("data/art/reference/wardrobe/"):
+        tags = set(json.loads((pathlib.Path(root) / wear).read_text(encoding="utf-8")).get("tags", []))
+        for tag, folder in (("gown", "gowns"), ("dress", "dresses"), ("two-piece", "sets")):
+            if tag in tags:
+                return ["outfits", folder]
+    return ["outfits"]
+
+
 # A-pose underlayer tests group by what the piece is (its tags, first match wins).
 UNDERLAYER_FAMILIES = [
     ("base", {"base"}),
@@ -161,14 +177,18 @@ def family(card, group, root=None):
             return []
         return next(([name] for name in ("cleanup", "background", "deluxe", "enhance", "full", "pose") if name in tags), [])
     if stage == "alpha":
-        # The creation chain of a hero: 1 Prime (from the original photo) at the root, 1b the experiments for the first shot (1b_Experiments/<family>: a different way to
-        # start from the photo, promoted to 1_Prime when it wins), 2 Bare (the figure; the celestial experiment 2b nested in bare/celestial), 3 Barefoot and Heels.
-        if art_id.endswith(("-alpha-barefoot", "-alpha-heels")):
+        # First-shot base variants retain their photo input even under 2_Bare.
+        if art_id.endswith(("-alpha-barefoot", "-alpha-heels",
+                            "-alpha-barefoot-prime-input-audition", "-alpha-heels-prime-input-audition")):
             return ["footwear"]
+        if "-alpha-outfit-" in art_id:
+            return alpha_outfit_family(card, root or ROOT)
+        if art_id.endswith(("-alpha-bare-base", "-alpha-neutral-base")):
+            return ["base", art_id.split("-alpha-", 1)[1]]
         if "-alpha-1b-" in art_id:
             return ["base", art_id.split("-alpha-1b-", 1)[1]]
         if "-alpha-2b-celestial" in art_id:
-            return ["bare", "celestial"]
+            return ["outfits", "celestial"]
         return ["bare"] if "-alpha-bare-" in art_id else []
     if stage == "pose":
         if "view" in comps:
@@ -177,7 +197,7 @@ def family(card, group, root=None):
     if stage == "showcase":
         return showcase_family(art_id)
     if stage == "head":
-        return [] if art_id.endswith("-x-head") else ["views"] if "view" in comps else ["closeups"]
+        return [] if art_id.endswith(("-head", "-head-denoise-audition")) else ["views"] if "view" in comps else ["closeups"]
     if stage in ("clothing", "armor"):
         return wearing_family(card)
     return []
@@ -188,7 +208,7 @@ def stage_folder(stage):
 
 
 # The pipeline, in order: a card file, its prompt, a workflow and its ComfyUI output all sit under <Hero>/<phase>/..., so the folders read like the
-# process. Motion is a bench, not a phase: a point-in-time test run on any phase's image.
+# process. Motion studies remain point-in-time tests on any selected phase's image.
 LAYER_TYPES = {"base", "backless", "lingerie", "athletic", "one-piece", "bikini", "swimwear"}
 
 
@@ -196,8 +216,10 @@ def phase_path(stage, family):
     """Folders below the hero for a workflow and its output, from the prompt's stage folder and family folders; None for stages outside the hero chain."""
     fam = list(family)
     if stage == "alpha":
+        if fam[:1] == ["outfits"]:
+            return ["1_Alpha", "4_Outfits", *fam[1:]]
         if fam[:1] == ["base"] and len(fam) > 1:
-            return ["1_Alpha", "1b_Experiments", fam[1]]
+            return ["1_Alpha", "2_Bare", *fam[1:]]
         if fam[:1] == ["bare"]:
             return ["1_Alpha", "2b_Experiments", fam[1]] if len(fam) > 1 else ["1_Alpha", "2_Bare"]
         return ["1_Alpha", "3_Footwear"] if fam[:1] == ["footwear"] else ["1_Alpha", "1_Prime"]
@@ -218,7 +240,7 @@ def phase_path(stage, family):
     if stage == "video":
         return ["7_Video", *fam]
     if stage == "motion":
-        return ["Bench", "motion", *fam]
+        return ["2_Studies", "motions", *fam]
     return None
 
 
@@ -243,11 +265,13 @@ def parse_dirs(dirs):
         if sub == "1b_Experiments":
             return "alpha", ["base", *tail]
         if sub == "2_Bare":
-            return "alpha", ["bare"]
+            return "alpha", (["base", *tail] if tail[:1] in (["bare-base"], ["neutral-base"]) else ["bare", *tail])
         if sub == "2b_Experiments":
             return "alpha", ["bare", *tail]
         if sub == "3_Footwear":
             return "alpha", ["footwear"]
+        if sub == "4_Outfits":
+            return "alpha", ["outfits", *tail]
     elif p == "0_Edit":
         return "edit", rest
     elif p == "2_Studies" and rest:
@@ -255,6 +279,8 @@ def parse_dirs(dirs):
             return "poses", ["views"]
         if rest[0] in ("head", "hair"):
             return rest[0], rest[1:]
+        if rest[0] == "motions":
+            return "motion", rest[1:]
     elif p == "3_Layers":
         return "poses", rest
     elif p == "4_Wardrobe" and rest:

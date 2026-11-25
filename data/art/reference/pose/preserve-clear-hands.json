@@ -1,0 +1,8 @@
+{
+  "id": "reference/pose/preserve-clear-hands",
+  "kind": "reference",
+  "name": "Preserve pose while clearing hands",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["reference", "pose", "preserve-source"],
+  "description": "Keep the same overall pose, body position and angle; adapt the hands as needed to remove held objects."
+}

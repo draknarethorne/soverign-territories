@@ -1,0 +1,30 @@
+{
+  "artId": "female-alpha-outfit-gown-source-fabric-and-colors",
+  "kind": "base-set",
+  "stage": "alpha",
+  "heroArt": "data/art/heroes/sovereign-females/female.json",
+  "template": "data/art/_templates/heroes/1_Alpha/alpha-reference-human.txt",
+  "output": "prompts/sovereign-females/Female/1_Alpha/4_Outfits/gowns/Female_Alpha_4_Outfits_Gown_Source_Fabric_And_Colors.txt",
+  "denoise": "~1.0",
+  "edit_name": "Source-fabric and color gown",
+  "keyDetails": ["hair", "eyes", "skin"],
+  "components": {
+    "view": "data/art/studio/views/body/standing-hip-reach.json",
+    "background": "data/art/backgrounds/studio/light-grey-seamless.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "camera": "data/art/studio/framing/pullback-full-environment-film-still.json",
+    "edit_task": "data/art/edits/alpha/clear-props-for-outfit.json",
+    "result": "data/art/edits/policies/result-clear-props-and-jewelry.json",
+    "bust": "data/art/studio/figure/full-bust-natural.json",
+    "body": "data/art/studio/figure/runway-lean.json",
+    "likeness": "data/art/reference/appearance/preserve-face-shape.json",
+    "wearing": "data/art/reference/wardrobe/gown-source-fabric-and-colors.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/simple-stiletto-heels.json",
+    "hair_policy": "data/art/reference/appearance/hair-down-swept-reference.json",
+    "makeup": "data/art/cosmetics/makeup/natural/soft-natural.json",
+    "gaze": "data/art/motion/gaze/eyes-to-camera.json",
+    "eye_detail": "data/art/studio/photography/eye-definition-wide.json"
+  },
+  "notes": "Gown adaptation that retains the incoming fabric and colors; visual preservation requires review."
+}

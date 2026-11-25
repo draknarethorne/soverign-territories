@@ -1,0 +1,9 @@
+{
+  "id": "wardrobe/swimwear/one-piece/studio-one-piece",
+  "kind": "wearing",
+  "name": "Studio one-piece swimsuit",
+  "compatibleStages": ["alpha", "pose"],
+  "tags": ["swimwear", "one-piece", "studio"],
+  "description": "A {{PRIMARY}} one-piece swimsuit with {{ACCENT_SOFT}} accents; replace the incoming outfit without retaining its garments.",
+  "negatives": ["source outfit remnants", "extra clothing layers"]
+}

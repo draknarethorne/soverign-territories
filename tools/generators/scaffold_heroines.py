@@ -3,7 +3,7 @@
 (heroId + name) and references paths that no longer exist (data/art/hair/). Identities now
 link to their gameplay card by cardId; see data/art/_schema/hero-identity.schema.json.
 
-Original purpose: generate art-hero defs + base-set X_Pose/X_Head cards for the
+Original purpose: generate art-hero defs + base-set X_Pose/Head cards for the
 9 remaining Drak sisters, mirroring the Drakness pattern. Run once, then regenerate
 prompts with gen_prompt.py. Safe to delete after running (kept only if reused later).
 """
@@ -140,10 +140,10 @@ for slug, h in HEROINES.items():
 
     for stage, tmpl, outdir, outname in [
         ("pose", "pose-female-human.txt", "poses", "X_Pose"),
-        ("head", "head-human.txt", "head", "X_Head"),
+        ("head", "head-human.txt", "head", "Head"),
     ]:
         base_set_card = {
-            "artId": f"{slug}-x-{stage}",
+            "artId": f"{slug}-x-pose" if stage == "pose" else f"{slug}-head",
             "kind": "base-set",
             "stage": stage,
             "heroArt": f"data/art/heroes/drakn-sisters/{slug}-thorne.json",
@@ -156,7 +156,7 @@ for slug, h in HEROINES.items():
             base_set_card["figureProfile"] = "standard"  # the X Pose from the original photo gets the standard figure
         if stage == "pose" and h.get("negativeRemove"):
             base_set_card["overrides"] = {"negativeRemove": h["negativeRemove"]}
-        card_path = ROOT / f"data/art/_sets/drakn-sisters/{slug}/{'/'.join(art_layout.dirs_for(outdir, []))}/{slug}-x-{stage}.json"
+        card_path = ROOT / f"data/art/_sets/drakn-sisters/{slug}/{'/'.join(art_layout.dirs_for(outdir, []))}/{base_set_card['artId']}.json"
         card_path.parent.mkdir(parents=True, exist_ok=True)
         card_path.write_text(json.dumps(base_set_card, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 

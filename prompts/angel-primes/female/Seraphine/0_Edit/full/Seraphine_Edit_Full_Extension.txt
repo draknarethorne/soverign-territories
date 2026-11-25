@@ -1,0 +1,43 @@
+=== Seraphine Solspire - 0_Edit - Full-length extension ===
+Incoming image: the user-selected source photo or selected generated image.
+Denoise ~1.0.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: Keep the same overall pose, body position and angle; adapt the hands as needed to remove held objects.
+
+Background: Keep the original scenery detailed and clear.
+Lighting: Even, soft, neutral frontal studio lighting with a flat, clean key light.
+Professional beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+
+Camera: Pull the camera back to reveal the complete figure, retaining the same pose and extending the legs to show the feet. Frame the surrounding scene as a wide environmental film still.
+
+Edit the incoming image: Remove logos, icons and overlays. Remove props and accessories, including purses, cups, glasses and items held in the hands. Remove jewelry. Crop top and bottom borders that are not part of the background; extend the selected background as needed. Extend the photograph to a full head-to-toe view, continuing the existing pose and outfit naturally. Newly visible regions are synthesized, not a reconstruction of hidden original details.
+
+Result:
+Hands free of held items; the person is free of purses, accessories and jewelry.
+
+Critical details:
+Hair: Keep the incoming hairstyle, hair length, texture and color.
+Bust: A full, naturally rounded bust with balanced proportions.
+Eyes: Keep the incoming eye color.
+Skin: Keep the incoming skin tone and tan.
+Body: tall, graceful, elegant build; long-limbed with a regal bearing; slim, softly defined waist; long, slender, graceful arms; shapely feminine hips, gently curved; very long, slender legs with a graceful line
+
+Likeness: Maintain strict fidelity to the reference person's facial features and bone structure; preserve expression and eye color.
+
+Wearing: Keep the existing outfit, preserving its fabric, colors and coverage.
+Eyes: Both eyes matched and symmetrical, wide open with crisp catchlights and natural lashes.
+Gaze: eyes to camera.
+Keep the original face, expression and makeup.
+
+----------------------------------------------------------------
+negative prompt:
+
+changed background,
+new or substituted props, cropped body, cropped feet, blurred, changed pose, disconnected limbs,
+changed identity, changed eye color,
+changed clothing,
+extra people, extra limbs, extra digits, deformed hands, text, watermark,
+logo.

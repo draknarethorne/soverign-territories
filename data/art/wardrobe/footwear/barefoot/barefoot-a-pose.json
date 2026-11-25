@@ -4,7 +4,7 @@
   "name": "Barefoot (A-pose)",
   "description": "bare feet planted flat on the floor, slightly apart with the toes pointing forward, natural relaxed toes",
   "negatives": ["shoes", "heels", "high heels", "sandals", "boots", "footwear", "socks", "stockings"],
-  "compatibleStages": ["pose"],
+  "compatibleStages": ["alpha", "pose"],
   "tags": ["footwear", "barefoot", "a-pose", "female"],
   "notes": "Fills {{FOOTWEAR}} inside the swimwear pieces. Used by the x-pose-barefoot cards, or for every A-pose when _settings/studio.json aPoseFootwear is 'barefoot'."
 }

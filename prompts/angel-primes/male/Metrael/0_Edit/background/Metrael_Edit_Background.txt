@@ -1,0 +1,33 @@
+=== Metrael Rimeward - 0_Edit - Background ===
+Incoming image: the user-selected source photo or selected generated image.
+Denoise ~0.9.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: Keep the same overall pose, body position and angle; adapt the hands as needed to remove held objects.
+
+Background: a plain neutral light-grey seamless studio backdrop
+Lighting: Even, soft, neutral frontal studio lighting with a flat, clean key light.
+Professional beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+
+Edit the incoming image: Remove logos, icons and overlays. Remove props and accessories, including purses, cups, glasses and items held in the hands. Remove jewelry. Crop top and bottom borders that are not part of the background; extend the selected background as needed.
+
+Result:
+Hands free of held items; the person is free of purses, accessories and jewelry.
+
+Likeness: Maintain strict fidelity to the reference person's facial features and bone structure; preserve expression and eye color.
+
+Wearing: Preserve the incoming clothing, if any, including its fabric, colors and coverage. Do not add clothing.
+Hair: Keep the incoming hairstyle, hair length, texture and color.
+
+----------------------------------------------------------------
+negative prompt:
+
+colored studio backdrop, busy background,
+new or substituted props, cropped body, cropped feet, blurred,
+changed identity, changed eye color,
+changed clothing, added clothing,
+changed hair,
+extra people, extra limbs, extra digits, deformed hands, text, watermark,
+logo.

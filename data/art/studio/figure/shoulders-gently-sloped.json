@@ -1,0 +1,8 @@
+{
+  "id": "studio/figure/shoulders-gently-sloped",
+  "kind": "figure",
+  "name": "Gently sloped shoulders",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["figure", "shoulders"],
+  "description": "Gently sloped shoulders with a relaxed, natural posture."
+}

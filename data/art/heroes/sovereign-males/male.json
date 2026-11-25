@@ -1,0 +1,40 @@
+{
+  "testBed": true,
+  "name": "Alpha Male",
+  "art": {
+    "palette": {
+      "primaryColor": "Soft Pearl White",
+      "accentColors": [
+        "Warm Champagne Gold",
+        "Dove Grey"
+      ],
+      "eyeColor": "the reference image's own eye colour, unchanged, in clear irises with crisp definition",
+      "eyeColorGlamour": "the reference image's own eye colour, unchanged, in clear irises with crisp definition",
+      "hairColor": "the exact hair colour of the reference image, unchanged, with natural shine",
+      "skinTone": "natural skin tone exactly as in the reference image, evenly toned",
+      "eyeColorNegatives": [
+        "changed eye colour",
+        "recoloured eyes"
+      ],
+      "skinColorNegatives": [],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/natural.json",
+      "lashColor": "natural",
+      "eyeshadowColor": "neutral",
+      "hairColorNegatives": [
+        "recoloured hair",
+        "dyed hair",
+        "changed hair colour",
+        "added highlights"
+      ]
+    },
+    "physique": {
+      "build": "Athletic, broad-shouldered, well-proportioned build",
+      "chest": "Defined, naturally muscular chest and core, toned and healthy",
+      "waist": "Trim, athletic waist",
+      "legs": "Long, strong, well-proportioned legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human — standard human presentation"
+    }
+  },
+  "notes": "Generic Male test identity, not an angel. Its eyes, hair and skin wording is adaptive to the reference photo. The physique and palette use the shared generic wardrobe scheme. Its active prompts, workflows and new renders use sovereign-males/Male, separate from named characters."
+}

@@ -1,0 +1,8 @@
+{
+  "id": "motion/expressions/playful/blowing-kiss",
+  "kind": "expression",
+  "name": "Blowing-kiss expression",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["expression", "kiss"],
+  "expression": "Gently purse the lips as if blowing a kiss."
+}

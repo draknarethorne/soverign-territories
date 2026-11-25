@@ -1,0 +1,26 @@
+{
+  "artId": "sammara-edit-deluxe-side-resting",
+  "kind": "base-set",
+  "stage": "edit",
+  "heroArt": "data/art/heroes/angel-primes/female/sammara.json",
+  "template": "data/art/_templates/heroes/0_Edit/edit-cleanup-human.txt",
+  "output": "prompts/angel-primes/female/Sammara/0_Edit/deluxe/Sammara_Edit_Deluxe_Side_Resting.txt",
+  "denoise": "~1.0",
+  "edit_name": "Deluxe bedroom: side resting",
+  "components": {
+    "edit_task": "data/art/edits/deluxe/bedroom-pose.json",
+    "face_policy": "data/art/edits/policies/face-preserve.json",
+    "likeness": "data/art/edits/policies/face-preserve.json",
+    "hair_policy": "data/art/edits/policies/hair-preserve.json",
+    "key_block": "Critical details:",
+    "bust": "data/art/studio/figure/full-bust-natural.json",
+    "body": "{{FIGURE_FRAME}}",
+    "view": "data/art/studio/views/body/deluxe-side-resting.json",
+    "camera": "data/art/edits/policies/framing-full-length.json",
+    "background": "data/art/backgrounds/modern/bedroom-neutral.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "result": "data/art/edits/policies/result-reference-audition.json"
+  },
+  "notes": "Select an appropriate original or chosen render as input. Output is synthetic and never identity-core evidence. Neutral scene and pose adaptation; no outfit instruction is selected. Source exclusions and visual acceptance remain open. Character audition selects the identity frame; the neutral figure detail and output need visual review."
+}

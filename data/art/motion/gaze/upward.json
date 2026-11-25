@@ -1,0 +1,8 @@
+{
+  "id": "motion/gaze/upward",
+  "kind": "gaze",
+  "name": "Upward gaze",
+  "gaze": "eyes looking upward.",
+  "compatibleStages": ["edit", "alpha", "head", "motion", "scene"],
+  "tags": ["gaze", "upward"]
+}

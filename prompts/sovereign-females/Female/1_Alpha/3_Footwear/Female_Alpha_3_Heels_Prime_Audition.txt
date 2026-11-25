@@ -1,0 +1,23 @@
+=== Alpha Female - 1_Alpha / 3_Footwear - Heels Prime-input audition ===
+Incoming image: the selected Prime reference. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: Preserve the incoming full-figure pose and framing, adjusting the feet
+only as needed for the selected footwear.
+
+Background and lighting: Preserve the incoming setting and lighting.
+
+Edit the incoming image: Replace only the footwear with the selected result.
+Footwear: high-heeled shoes
+
+Result: Preserve the person's recognizable face, body proportions, hair, eye
+and skin colors, expression, makeup, clothing and accessories. Keep the
+same setting and pose except for the required foot adjustment.
+
+----------------------------------------------------------------
+negative prompt:
+
+changed identity, changed outfit, changed hairstyle, extra people, extra
+limbs, extra feet, duplicate footwear, deformed hands, text, watermark, logo.

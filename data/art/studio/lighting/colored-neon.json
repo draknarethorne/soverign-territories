@@ -1,0 +1,8 @@
+{
+  "id": "studio/lighting/colored-neon",
+  "kind": "lighting",
+  "name": "Colored neon light",
+  "description": "Colored neon light casts vivid highlights and contrasting shadows.",
+  "compatibleStages": ["edit", "alpha", "pose", "head", "hair", "motion", "armor", "clothing", "showcase", "scene", "final"],
+  "tags": ["lighting", "neon", "colored"]
+}

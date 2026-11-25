@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/effects/ambient/dust-in-sunbeams",
+  "kind": "effects",
+  "name": "Dust in sunbeams",
+  "description": "Fine dust motes drift through shafts of sunlight.",
+  "compatibleStages": ["scene", "showcase"],
+  "tags": ["atmosphere", "dust", "sunlight"]
+}

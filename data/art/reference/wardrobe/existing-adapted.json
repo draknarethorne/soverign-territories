@@ -1,0 +1,8 @@
+{
+  "id": "reference/wardrobe/existing-adapted",
+  "kind": "reference",
+  "name": "Adapt the existing outfit",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["reference", "outfit"],
+  "description": "Adapt the existing outfit."
+}

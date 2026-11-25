@@ -1,0 +1,8 @@
+{
+  "id": "reference/appearance/preserve-skin-tone",
+  "kind": "reference",
+  "name": "Preserve source skin tone",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["reference", "skin", "preserve-source"],
+  "description": "Keep the incoming skin tone and tan."
+}

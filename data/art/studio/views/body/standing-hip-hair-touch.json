@@ -1,0 +1,9 @@
+{
+  "id": "studio/views/body/standing-hip-hair-touch",
+  "kind": "view",
+  "name": "Standing pose with hand on hip and hair",
+  "compatibleStages": ["edit", "alpha", "pose"],
+  "tags": ["three-quarter", "full-body", "standing", "relaxed"],
+  "description": "Stand at a slight angle toward the camera with one shoulder gently back and the weight on one leg. Step the other foot forward with its toes on the floor and its heel slightly raised. Rest one hand on the hip and touch the hair with the other. Keep the face visible toward the camera.",
+  "negatives": ["hidden face", "unbalanced stance"]
+}

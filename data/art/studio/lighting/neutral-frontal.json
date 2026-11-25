@@ -1,0 +1,8 @@
+{
+  "id": "studio/lighting/neutral-frontal",
+  "kind": "lighting",
+  "name": "Neutral frontal studio lighting",
+  "compatibleStages": ["edit", "alpha", "pose", "head", "hair", "motion", "armor", "clothing", "showcase", "scene", "final"],
+  "tags": ["lighting", "studio", "neutral"],
+  "description": "Even, soft, neutral frontal studio lighting with a flat, clean key light."
+}

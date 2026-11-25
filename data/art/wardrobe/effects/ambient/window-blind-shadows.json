@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/effects/ambient/window-blind-shadows",
+  "kind": "effects",
+  "name": "Window blind shadows",
+  "description": "Angled bands of shadow from window blinds fall across the scene.",
+  "compatibleStages": ["scene", "showcase"],
+  "tags": ["atmosphere", "shadow", "window"]
+}

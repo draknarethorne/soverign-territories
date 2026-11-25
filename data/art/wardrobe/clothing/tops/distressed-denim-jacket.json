@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/tops/distressed-denim-jacket",
+  "kind": "wearing",
+  "name": "Distressed denim jacket",
+  "description": "A {{PRIMARY}} denim jacket with a substantial weave and gently distressed finish.",
+  "compatibleStages": ["edit", "alpha", "pose", "clothing", "scene", "showcase"],
+  "tags": ["clothing", "jacket", "denim"]
+}

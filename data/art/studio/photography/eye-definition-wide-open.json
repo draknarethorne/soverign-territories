@@ -1,0 +1,7 @@
+{
+  "id": "studio/photography/eye-definition-wide-open",
+  "kind": "photography",
+  "name": "Clear wide-open eyes",
+  "extends": "data/art/studio/photography/eye-definition.json",
+  "description": "Both eyes matched and symmetrical, wide open with crisp catchlights and natural lashes."
+}

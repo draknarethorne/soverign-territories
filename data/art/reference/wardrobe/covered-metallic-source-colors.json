@@ -1,0 +1,9 @@
+{
+  "id": "reference/wardrobe/covered-metallic-source-colors",
+  "kind": "reference",
+  "name": "Covered metallic ensemble in source colors",
+  "compatibleStages": ["alpha"],
+  "tags": ["reference", "outfit", "metallic"],
+  "description": "Replace the incoming outfit completely with a covered celestial-inspired ensemble using its existing colors, with polished metallic fabric and reflective detailing. Do not retain details of the previous garments.",
+  "negatives": ["extra clothing"]
+}

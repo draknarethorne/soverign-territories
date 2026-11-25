@@ -1,0 +1,12 @@
+{
+  "artId": "female-motion-twirl-spin-denoise-audition",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/sovereign-females/female.json",
+  "template": "data/art/_templates/heroes/2_Studies/motion-human.txt",
+  "output": "prompts/sovereign-females/Female/2_Studies/motions/dynamic/Female_Motion_Dynamic_TwirlSpin_Denoise_Audition.txt",
+  "denoise": "~0.4-0.6",
+  "denoise_hint": "{{DENOISE}}",
+  "component": "data/art/motion/dynamic/twirl-spin.json",
+  "notes": "Separate card-range denoise comparison; existing routing and reference workflows are preserved. Visual acceptance remains open."
+}

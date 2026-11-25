@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/effects/ambient/gentle-breeze",
+  "kind": "effects",
+  "name": "Gentle breeze",
+  "description": "A gentle breeze moves a few strands of hair and lightly stirs the fabric of the outfit.",
+  "compatibleStages": ["scene", "showcase"],
+  "tags": ["atmosphere", "breeze"]
+}

@@ -8,7 +8,8 @@ Older work sits in the old shared output folder as <Hero>/<stage>/..., or in <se
   2. carries everything else (archive folders, hand-made files) along to the same place under <project>/<set>/<Hero>/.
 File names are kept (a file whose name is already taken in its destination gets a __2 suffix) and nothing is deleted. Folders that are
 not a hero's (Base, ST, Experimental ...) are left alone. It looks in the old shared output folder and the new root, so one run moves
-everything to its new home.
+everything to its new home. When a hero has an output namespace override,
+only its new namespace is scanned; legacy outputs are left untouched.
 
   python tools/workflows/organize_outputs.py                 # preview, all heroes
   python tools/workflows/organize_outputs.py --hero Drakness # preview one hero
@@ -53,14 +54,20 @@ def main():
     for hero, group in sorted(groups.items()):
         if args.hero and hero.lower() != args.hero.lower():
             continue
-        project = cfg.get("paths", {}).get("outputFolders", {}).get(group, "")
+        namespace = cw.output_namespace(cfg, group, hero)
+        project = cfg.get("paths", {}).get("outputFolders", {}).get(namespace, "")
         hero_dir = cw.hero_dir(hero)  # 'female/Seraphine' in a division group
         for root in search:
-            for folder in dict.fromkeys([root / hero, root / group / hero_dir, root / project / group / hero_dir if project else root / group / hero_dir]):
+            folders = [root / namespace / hero_dir]
+            if project:
+                folders.append(root / project / namespace / hero_dir)
+            if namespace == group and group not in cfg.get("isolatedOutputGroups", []):
+                folders.insert(0, root / hero)
+            for folder in dict.fromkeys(folders):
                 if folder.is_dir():
-                    sources.append((hero, group, folder))
-    for hero, group, folder in sources:
-        new_home = home(group) / cw.hero_dir(hero)
+                    sources.append((hero, namespace, folder))
+    for hero, namespace, folder in sources:
+        new_home = home(namespace) / cw.hero_dir(hero)
         for f in sorted(p for p in folder.rglob("*") if p.is_file()):
             rel = f.relative_to(folder)
             m = NAME.match(f.name)
@@ -69,7 +76,7 @@ def main():
             if sortable:
                 target = where.get(f"{hero}_{RENAMED.get(m['rest'], m['rest'])}")
                 if target:
-                    dest, how = home(group) / pathlib.PurePosixPath(target).relative_to(group), "sorted"
+                    dest, how = home(namespace) / pathlib.PurePosixPath(target).relative_to(namespace), "sorted"
             if f.parent != dest:
                 moves.append((f, dest, how))
 

@@ -1,0 +1,22 @@
+{
+  "artId": "drakness-edit-background",
+  "kind": "base-set",
+  "stage": "edit",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "template": "data/art/_templates/heroes/0_Edit/edit-cleanup-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/0_Edit/background/Drakness_Edit_Background.txt",
+  "denoise": "~0.9",
+  "edit_name": "Background",
+  "components": {
+    "view": "data/art/reference/pose/preserve-clear-hands.json",
+    "background": "data/art/backgrounds/studio/light-grey-seamless.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "edit_task": "data/art/edits/background/clean-seamless.json",
+    "result": "data/art/edits/policies/result-clear-props-and-jewelry.json",
+    "wearing": "data/art/edits/policies/clothing-only-preserve-if-present.json",
+    "likeness": "data/art/reference/appearance/preserve-features.json",
+    "hair_policy": "data/art/edits/policies/hair-preserve.json"
+  },
+  "notes": "Supported non-explicit Background adaptation. Source anatomical instructions are excluded; the selected backdrop replaces the source scenery. Character-named source-preserving audition; visual acceptance remains open. Repository-only Sister audition; appearance choices and result need review."
+}

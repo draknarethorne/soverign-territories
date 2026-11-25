@@ -1,0 +1,8 @@
+{
+  "id": "edit-policy-result-clear-props-and-jewelry",
+  "kind": "edit",
+  "name": "Clear props and jewelry",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["background", "result", "jewelry"],
+  "description": "Hands free of held items; the person is free of purses, accessories and jewelry."
+}

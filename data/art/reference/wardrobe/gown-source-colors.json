@@ -1,0 +1,9 @@
+{
+  "id": "reference/wardrobe/gown-source-colors",
+  "kind": "reference",
+  "name": "Gown adapted from source outfit",
+  "compatibleStages": ["alpha"],
+  "tags": ["reference", "outfit", "gown"],
+  "description": "Adapt the incoming outfit into a gown using its existing colors",
+  "negatives": ["extra clothing"]
+}

@@ -1,11 +1,11 @@
-=== {{HERO}} - 1_Alpha / 1_Prime - {{EDIT_NAME}} ===
+=== {{HERO}} - 1_Alpha / 4_Outfits - {{EDIT_NAME}} ===
 Incoming image: the exact user-selected source photo or selected generated image.
 Denoise {{DENOISE}}.
 
 ----------------------------------------------------------------
 prompt:
 
-Create a clothed Prime outfit reference from the incoming photograph.
+Create an outfit reference from the incoming photograph.
 Keep one person only, with realistic photographic detail and natural skin texture.
 
 {{EDIT_TASK}}
@@ -13,7 +13,7 @@ Keep one person only, with realistic photographic detail and natural skin textur
 Face: {{FACE_POLICY}}
 Hair: {{HAIR_POLICY}}
 Physique: {{BODY_POLICY}}
-Clothing: {{CLOTHING_POLICY}}
+Clothing: {{WEARING}}
 Pose: {{VIEW}}
 Framing: {{FRAMING}}
 Background and lighting: {{BACKGROUND}}
@@ -26,7 +26,7 @@ clothing or background is synthesized, not recovered from the original.
 negative prompt:
 
 {{EDIT_TASK_NEG}}, {{FACE_POLICY_NEG}}, {{HAIR_POLICY_NEG}},
-{{BODY_POLICY_NEG}}, {{CLOTHING_POLICY_NEG}}, {{VIEW_NEG}},
+{{BODY_POLICY_NEG}}, {{WEARING_NEG}}, {{VIEW_NEG}},
 {{FRAMING_NEG}}, {{BACKGROUND_NEG}}, extra people, extra limbs, extra fingers,
 distorted hands, text, watermark, logo, plastic skin, illustration, painting,
 drawing, CGI, cartoon.

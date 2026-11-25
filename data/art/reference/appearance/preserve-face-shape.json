@@ -1,0 +1,9 @@
+{
+  "id": "reference/appearance/preserve-face-shape",
+  "kind": "reference",
+  "name": "Preserve facial identity",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["reference", "face", "preserve-source"],
+  "description": "Maintain strict fidelity to the reference person's facial features and bone structure.",
+  "negatives": ["changed identity", "altered facial features"]
+}

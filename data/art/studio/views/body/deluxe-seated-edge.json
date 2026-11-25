@@ -1,0 +1,8 @@
+{
+  "id": "studio/views/body/deluxe-seated-edge",
+  "kind": "view",
+  "name": "Seated pose at bed edge",
+  "compatibleStages": ["edit", "alpha", "pose"],
+  "tags": ["pose", "seated", "bedroom"],
+  "description": "Sit near the edge of the bed with one leg hanging over the side and the other foot resting on the bed with its knee bent. Lean back comfortably on one hand and rest the other hand on the thigh."
+}

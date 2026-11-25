@@ -29,6 +29,7 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import art_layout  # noqa: E402
+import reference_prompt_bindings  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
@@ -281,7 +282,7 @@ SLOT_DEFAULTS = {
     "sheen": {
         "pose": {"female": "data/art/wardrobe/finishes/satin.json"},
     },
-    # The first-shot experiments (1_Alpha/1b_Experiments): what the first image wears. base_layer is the neutral skin-tone layer, bare_base the bare look (the bare-skin study).
+    # First-shot base variants in 2_Bare still start from the original photo.
     # A hero can carry her own (art.defaultBaseLayer, art.defaultBareBase); a card's components.<slot> wins over both.
     "base_layer": {
         "alpha": {"female": "data/art/wardrobe/swimwear/base/skin-tone-base-layer.json"},
@@ -336,12 +337,22 @@ def face_style(female, eyeshadow, blush, brow=None):
 # A card picks its own with "keyDetails"; a template without a card choice uses its default here (none = no block).
 # "bust" is the shared enlarging line (phrases.json bustKey); "ownBust" is the hero's own physique bust line.
 KEY_LABELS = {"hair": "Hair", "bust": "Bust", "ownBust": "Bust", "eyes": "Eyes", "skin": "Skin", "legs": "Legs"}
+DENOISE_HINT_DEFAULTS = {
+    "data/art/_templates/heroes/2_Studies/pose-view-human.txt": "~0.8-0.9",
+    "data/art/_templates/heroes/2_Studies/hair-human.txt": "~0.7-0.8",
+    "data/art/_templates/heroes/2_Studies/head-human.txt": "~0.7-0.8",
+    "data/art/_templates/heroes/4_Wardrobe/armor-human.txt": "~0.8-0.9",
+    "data/art/_templates/heroes/4_Wardrobe/clothing-human.txt": "~0.8-0.9",
+    "data/art/_templates/heroes/5_Scenes/scene-glamour-human.txt": "~0.8-0.9",
+    "data/art/_templates/heroes/5_Scenes/scene-with-outfit-human.txt": "~0.8-0.9",
+    "data/art/_templates/heroes/2_Studies/motion-human.txt": "~0.85-0.95",
+}
 TEMPLATE_KEY_DEFAULTS = {
     "pose-female-human.txt": ["hair", "bust", "eyes", "skin", "legs"],
     "bare-human.txt": ["hair", "ownBust", "eyes", "skin"],  # the Bare step re-asserts the likeness; the rest of the build is the Body line
     "celestial-experiment-human.txt": ["hair", "ownBust", "eyes", "skin"],
     "bare-male-human.txt": ["hair", "eyes", "skin"],
-    # the first-shot experiments (1_Alpha/1b_Experiments): the bare base states her own bust at once, the neutral base is the slender standard figure like the Prime
+    # The first-shot base variants retain their distinct figure profiles.
     "base-bare-human.txt": ["hair", "ownBust", "eyes", "skin"],
     "base-neutral-human.txt": ["hair", "bust", "eyes", "skin", "legs"],
 }
@@ -373,7 +384,7 @@ def apply_figure_profile(hero, profile):
     hero["art"]["physique"] = {**{k: v for k, v in phy.items() if k not in own or k == "bust"}, **std}
 
 
-def tokens_for(hero, keys=()):
+def tokens_for(hero, keys=(), split_key_details=False):
     pal = hero["art"]["palette"]
     phy = hero["art"]["physique"]
     primary = pal["primaryColor"]
@@ -384,6 +395,7 @@ def tokens_for(hero, keys=()):
     order = FIGURE_FIELDS_FEMALE if "bust" in phy else FIGURE_FIELDS_MALE
     shown = set(keys) | ({"bust"} if "ownBust" in keys else set())
     figure = "; ".join([decap(phy[k]) for k in order if phy.get(k) and k not in shown] + list(phy.get("distinguishingMarks", [])))
+    figure_frame = "; ".join([decap(phy[k]) for k in order if phy.get(k) and k not in shown and k != "bust"] + list(phy.get("distinguishingMarks", [])))
     skin = decap(pal["skinTone"])
     eye_neg = ", ".join(pal.get("eyeColorNegatives", []))
     skin_neg = ", ".join(pal.get("skinColorNegatives", []))
@@ -398,10 +410,15 @@ def tokens_for(hero, keys=()):
         "skin": pal["skinTone"],
         "legs": phy["legs"],
     }
-    key_lines = [f"{KEY_LABELS[k]}: {decap(key_text[k])}." for k in keys if key_text.get(k)]
+    key_lines = [(k, f"{KEY_LABELS[k]}: {decap(key_text[k])}.") for k in keys if key_text.get(k)]
+    split_at = next((i for i, (k, _) in enumerate(key_lines) if k in ("eyes", "skin")), len(key_lines))
+    before = key_lines[:split_at] if split_key_details else key_lines
+    after = key_lines[split_at:] if split_key_details else []
     hair_style = "{{HAIRSTYLE}}; " + decap(resolve_breeze(pal)).rstrip(".")
     return {
-        "KEY_BLOCK": ("Critical details - these must be clearly visible:\n" + "\n".join(key_lines)) if key_lines else "",
+        "KEY_BLOCK": ("Critical details - these must be clearly visible:\n" + "\n".join(line for _, line in key_lines)) if key_lines else "",
+        "KEY_BEFORE_BUST": ("Critical details - these must be clearly visible:\n" + "\n".join(line for _, line in before)).rstrip() if key_lines else "",
+        "KEY_AFTER_BUST": "\n".join(line for _, line in after),
         "EYE_COLOR_PART": "" if "eyes" in keys else "{{EYE}}, ",
         "SKIN_LINE": "" if "skin" in keys else skin,
         "HERO": hero["name"],
@@ -417,6 +434,7 @@ def tokens_for(hero, keys=()):
         "MAGIC": pal.get("magicColor", accent.split()[-1].lower()),
         "GEM": pal.get("gemColor", accent.split()[-1].lower()),
         "FIGURE": figure,
+        "FIGURE_FRAME": figure_frame,
         "SKIN": skin,
         "EYE": decap(pal["eyeColorGlamour"]),
         "EYE_SOFT": soft_eye(pal["eyeColorGlamour"]),
@@ -562,7 +580,7 @@ def _is_literal_ref(ref):
 _EXTEND_PREFIX = "+"
 
 
-def resolve_components_tokens(card):
+def resolve_components_tokens(card, negative_slot_order=()):
     """A base-set card may compose a prompt from SEVERAL named-slot pieces instead
     of one complete component -- 'components': {'wearing': '<path>', 'jewelry':
     '<path>', 'back': '<path>', ...}. This is how a full outfit (armor/clothing) is
@@ -644,6 +662,19 @@ def resolve_components_tokens(card):
             if canonical == slot and _FIELD_VOCAB.get(canonical, {}).get("overridable"):
                 overrides[canonical] = val
 
+    seen_negatives = set()
+    for slot in negative_slot_order:
+        content = piece_content.get(slot.lower())
+        if not content or "negatives" not in content:
+            continue
+        unique = []
+        for term in content["negatives"]:
+            key = " ".join(term.split()).casefold()
+            if key not in seen_negatives:
+                unique.append(term)
+                seen_negatives.add(key)
+        content["negatives"] = unique
+
     toks = {}
     for slot, content in piece_content.items():
         # A piece's 'negatives' list feeds a separate {{<SLOT>_NEG}} token, not the slot's own text.
@@ -708,8 +739,16 @@ def generate(card_path, tokens_only=False):
     unknown = [k for k in keys if k not in KEY_LABELS]
     if unknown:
         sys.exit(f"ERROR: {card_path}: unknown keyDetails {unknown}; use {sorted(KEY_LABELS)}")
+    split_key_details = False
     if "art" in hero:
-        toks = tokens_for(hero, keys)
+        components = card.get("components", {})
+        split_key_details = (
+            "{{KEY_AFTER_BUST}}" in template
+            and "{{BUST}}" in template
+            and bool(components.get("bust"))
+            and "key_block" not in components
+        )
+        toks = tokens_for(hero, keys, split_key_details=split_key_details)
     elif hero.get("kind") == "brand":
         toks = tokens_for_brand(hero, card)
     elif hero.get("kind") == "cardart":
@@ -717,8 +756,35 @@ def generate(card_path, tokens_only=False):
     else:
         toks = tokens_for_dragon(hero)
     toks.update(resolve_component_tokens(card))
-    toks.update(resolve_components_tokens(card))
+    negative_slot_order = ()
+    if card["template"] in {
+        "data/art/_templates/heroes/0_Edit/edit-cleanup-human.txt",
+        "data/art/_templates/heroes/1_Alpha/alpha-reference-human.txt",
+    }:
+        negative_section = template.split("negative prompt:", 1)[1]
+        negative_slot_order = re.findall(r"{{(\w+)_NEG}}", negative_section)
+    component_tokens = resolve_components_tokens(card, negative_slot_order)
+    if "{{WEARING}}" in template and "wearing" not in card.get("components", {}):
+        legacy = [slot for slot in ("clothing_policy", "clothing")
+                  if slot in card.get("components", {})]
+        if len(legacy) > 1:
+            sys.exit(f"ERROR: {card_path}: multiple legacy outfit slots; select components.wearing")
+        if legacy:
+            token = legacy[0].upper()
+            component_tokens["WEARING"] = component_tokens[token]
+            if token + "_NEG" in component_tokens:
+                component_tokens["WEARING_NEG"] = component_tokens[token + "_NEG"]
+    toks.update(component_tokens)
+    if "{{ORDERED_KEY_BLOCK}}" in template:
+        toks["ORDERED_KEY_BLOCK"] = toks.get("KEY_BEFORE_BUST", "") if split_key_details else toks.get("KEY_BLOCK", "")
     toks["DENOISE"] = card["denoise"]
+    if "denoise_hint" in card:
+        hint = re.fullmatch(r"~?(\d(?:\.\d+)?)(?:-(\d(?:\.\d+)?))?", card["denoise"])
+        if (card["template"] not in DENOISE_HINT_DEFAULTS or card["denoise_hint"] != "{{DENOISE}}"
+                or not hint or not 0 <= float(hint.group(1)) <= float(hint.group(2) or hint.group(1)) <= 1):
+            sys.exit(f"ERROR: {card_path}: denoise_hint requires a supported template and a valid denoise range from 0 to 1")
+    if card["template"] in DENOISE_HINT_DEFAULTS:
+        toks["DENOISE_HINT"] = DENOISE_HINT_DEFAULTS[card["template"]]
     for neg_token in ("FOOTWEAR_NEG", "UNDERLAYER_NEG", "WEARING_NEG", "EXPRESSION_NEG", "BASE_LAYER_NEG", "BARE_BASE_NEG"):
         if "{{" + neg_token + "}}" in template:
             toks.setdefault(neg_token, "")  # only a piece that carries negatives (barefoot, bareskin) fills it
@@ -814,11 +880,17 @@ def cleanup_orphans(expected_outputs, apply=False):
     weren't part of this run. Only DELETES when apply=True; otherwise a safe,
     side-effect-free preview. Never touches prompts/_archive/ (not generator-tracked)."""
     dirs_touched = {(ROOT / out).parent for out in expected_outputs}
+    protected = {
+        (pathlib.PurePosixPath(reference_prompt_bindings.PROMPT_ROOT) / path).as_posix()
+        for path in (*reference_prompt_bindings.SHARED_PROMPTS.values(), *reference_prompt_bindings.RETAINED_PROMPTS)
+    }
     found = []
     for d in dirs_touched:
         for txt in d.glob("*.txt"):
             rel = str(txt.relative_to(ROOT)).replace("\\", "/")
-            if rel not in expected_outputs:
+            if rel in protected and rel not in expected_outputs:
+                print(f"  KEEP retained prompt: {rel}")
+            elif rel not in expected_outputs:
                 found.append((rel, txt))
     if apply:
         for _, txt in found:

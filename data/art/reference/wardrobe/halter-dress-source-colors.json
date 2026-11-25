@@ -1,0 +1,9 @@
+{
+  "id": "reference/wardrobe/halter-dress-source-colors",
+  "kind": "reference",
+  "name": "Halter dress adapted from source outfit",
+  "compatibleStages": ["alpha"],
+  "tags": ["reference", "outfit", "dress", "halter"],
+  "description": "Adapt the incoming outfit into a halter dress using its existing colors",
+  "negatives": ["extra clothing"]
+}

@@ -1,0 +1,15 @@
+{
+  "artId": "female-view-back-visibility-audition",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/sovereign-females/female.json",
+  "name": "Back visibility audition",
+  "keyDetails": ["hair"],
+  "components": {
+    "view": "data/art/studio/views/body/back.json"
+  },
+  "template": "data/art/_templates/heroes/2_Studies/pose-direction-reference-human.txt",
+  "output": "prompts/sovereign-females/Female/2_Studies/body/Female_View_back_Visibility_Audition.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Separate back-view audition: preserve the incoming outfit and identity without requiring a visible face or expression. Denoise remains unvalidated."
+}

@@ -1,0 +1,7 @@
+{
+  "id": "reference/appearance/hair-down-reference",
+  "kind": "reference",
+  "name": "Natural hair down for reference",
+  "extends": "data/art/reference/appearance/hair-down-natural.json",
+  "description": "+ Keep the incoming hair length. Let longer hair fall forward over the shoulders, with the ends visible."
+}

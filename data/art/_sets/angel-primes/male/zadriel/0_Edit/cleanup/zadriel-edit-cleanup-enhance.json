@@ -1,0 +1,27 @@
+{
+  "artId": "zadriel-edit-cleanup-enhance",
+  "kind": "base-set",
+  "stage": "edit",
+  "heroArt": "data/art/heroes/angel-primes/male/zadriel.json",
+  "template": "data/art/_templates/heroes/0_Edit/edit-cleanup-human.txt",
+  "output": "prompts/angel-primes/male/Zadriel/0_Edit/cleanup/Zadriel_Edit_Cleanup_Enhance.txt",
+  "denoise": "~0.9",
+  "edit_name": "Cleanup Enhance",
+  "components": {
+    "view": "data/art/reference/pose/preserve-clear-hands.json",
+    "background": "data/art/reference/background/preserve-scenery.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "camera": "data/art/studio/framing/pullback-full-film-still.json",
+    "edit_task": "data/art/edits/cleanup/basic.json",
+    "result_outfit": "data/art/reference/wardrobe/existing-adapted.json",
+    "result": "data/art/edits/policies/result-clear-props-keep-jewelry.json",
+    "key_block": "Critical details:",
+    "body": "{{FIGURE_FRAME}}",
+    "skin_edit": "data/art/reference/appearance/skin-slightly-warmer-even.json",
+    "likeness": "data/art/reference/appearance/preserve-features.json",
+    "wearing": "data/art/reference/wardrobe/existing-adapted.json",
+    "hair_policy": "data/art/edits/policies/hair-preserve.json"
+  },
+  "notes": "Repository-only male Edit audition adapted from the corresponding source-informed character variant. The male identity frame is selected; other appearance and wardrobe policies follow the selected family. Newly synthesized details are not identity evidence; visual acceptance remains open."
+}

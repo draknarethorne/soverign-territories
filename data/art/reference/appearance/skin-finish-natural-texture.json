@@ -1,0 +1,8 @@
+{
+  "id": "reference/appearance/skin-finish-natural-texture",
+  "kind": "reference",
+  "name": "Natural skin texture",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["skin", "finish", "natural"],
+  "description": "Keep the selected skin tone and natural texture, including visible pores and any existing freckles."
+}

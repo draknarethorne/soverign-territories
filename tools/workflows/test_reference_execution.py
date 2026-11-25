@@ -36,6 +36,20 @@ def tiny_ui():
 
 
 class GraphTests(unittest.TestCase):
+    def test_active_generic_edit_outputs_do_not_overwrite_bound_reference_prompts(self):
+        root = base.ROOT
+        cards = root / "data" / "art" / "_sets" / "sovereign-females" / "female" / "0_Edit"
+        bound = {execution.SHARED_PROMPT_ROOT / path for path in execution.SHARED_PROMPTS.values()}
+        card_paths = list(cards.rglob("*.json"))
+        outputs = {
+            root / json.loads(card.read_text(encoding="utf-8"))["output"]
+            for card in card_paths
+        }
+        self.assertTrue(card_paths)
+        self.assertEqual(len(outputs), len(card_paths), "active assemblies must have distinct outputs")
+        self.assertFalse(outputs & bound, f"active assemblies would overwrite reference prompts: {outputs & bound}")
+        self.assertTrue(all(path.is_file() for path in bound))
+
     def test_reference_workspace_uses_the_shared_install_configuration(self):
         config = execution.workflows.load_cfg()
         expected = execution.workflows.install_dir(

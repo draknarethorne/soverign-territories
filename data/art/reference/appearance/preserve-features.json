@@ -1,0 +1,9 @@
+{
+  "id": "reference/appearance/preserve-features",
+  "kind": "reference",
+  "name": "Preserve reference facial likeness",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["reference", "face", "preserve-source"],
+  "description": "Maintain strict fidelity to the reference person's facial features and bone structure; preserve expression and eye color.",
+  "negatives": ["changed identity", "changed eye color"]
+}

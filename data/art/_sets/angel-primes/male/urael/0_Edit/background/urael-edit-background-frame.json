@@ -1,0 +1,25 @@
+{
+  "artId": "urael-edit-background-frame",
+  "kind": "base-set",
+  "stage": "edit",
+  "heroArt": "data/art/heroes/angel-primes/male/urael.json",
+  "template": "data/art/_templates/heroes/0_Edit/edit-cleanup-human.txt",
+  "output": "prompts/angel-primes/male/Urael/0_Edit/background/Urael_Edit_Background_Frame.txt",
+  "denoise": "~0.9",
+  "edit_name": "Background with character frame",
+  "components": {
+    "view": "data/art/reference/pose/preserve-clear-hands.json",
+    "background": "data/art/backgrounds/studio/light-grey-seamless.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "edit_task": "data/art/edits/background/clean-seamless.json",
+    "result": "data/art/edits/policies/result-clear-props-and-jewelry.json",
+    "wearing": "data/art/edits/policies/clothing-only-preserve-if-present.json",
+    "key_block": "Critical details:",
+    "likeness": "data/art/reference/appearance/preserve-features.json",
+    "hair_policy": "data/art/edits/policies/hair-preserve.json",
+    "face_policy": "data/art/reference/appearance/preserve-face-expression-makeup.json",
+    "body": "{{FIGURE_FRAME}}"
+  },
+  "notes": "Repository-only male Edit audition adapted from the corresponding source-informed character variant. The male identity frame is selected; other appearance and wardrobe policies follow the selected family. Newly synthesized details are not identity evidence; visual acceptance remains open. This is a frame-focused alternative, not a male equivalent of the source bust selection."
+}

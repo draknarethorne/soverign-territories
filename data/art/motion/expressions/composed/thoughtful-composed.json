@@ -1,0 +1,8 @@
+{
+  "id": "motion/expressions/composed/thoughtful-composed",
+  "kind": "expression",
+  "name": "Thoughtful and composed",
+  "expression": "A thoughtful, composed expression with relaxed features.",
+  "compatibleStages": ["edit", "alpha", "motion", "scene"],
+  "tags": ["expression", "thoughtful", "composed"]
+}

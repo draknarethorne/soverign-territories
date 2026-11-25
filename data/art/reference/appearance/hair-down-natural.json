@@ -1,0 +1,8 @@
+{
+  "id": "reference/appearance/hair-down-natural",
+  "kind": "reference",
+  "name": "Natural hair worn down",
+  "compatibleStages": ["edit", "alpha", "pose"],
+  "tags": ["hair", "natural", "down"],
+  "description": "Wear the hair down, retaining its natural texture and keeping the face clear."
+}

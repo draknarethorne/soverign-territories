@@ -1,0 +1,34 @@
+{
+  "artId": "female-alpha-prime",
+  "kind": "base-set",
+  "stage": "alpha",
+  "heroArt": "data/art/heroes/sovereign-females/female.json",
+  "template": "data/art/_templates/heroes/1_Alpha/alpha-reference-human.txt",
+  "output": "prompts/sovereign-females/Female/1_Alpha/1_Prime/Female_Alpha_1_Prime_Audition.txt",
+  "denoise": "~1.0",
+  "edit_name": "Prime A-pose",
+  "keyDetails": ["hair", "eyes", "skin"],
+  "overrides": {
+    "palette": {"lipColor": "natural"}
+  },
+  "components": {
+    "view": "data/art/studio/views/body/standing-a-pose.json",
+    "background": "data/art/backgrounds/studio/light-grey-seamless.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "camera": "data/art/studio/framing/pullback-full-environment-film-still.json",
+    "edit_task": "data/art/edits/alpha/clear-props-for-outfit.json",
+    "result": "data/art/edits/policies/result-clear-props-and-jewelry.json",
+    "bust": "data/art/studio/figure/full-bust-natural.json",
+    "body": "data/art/studio/figure/runway-lean.json",
+    "likeness": "data/art/reference/appearance/preserve-face-shape.json",
+    "wearing": "data/art/wardrobe/swimwear/bikini/studio-pastel-panel-two-piece.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot-a-pose.json",
+    "hair_policy": "data/art/reference/appearance/hair-down-swept-reference.json",
+    "makeup": "data/art/cosmetics/makeup/natural/dewy-skin-no-makeup.json",
+    "gaze": "data/art/motion/gaze/eyes-to-camera.json",
+    "eye_detail": "data/art/studio/photography/eye-definition-wide.json",
+    "expression": "data/art/motion/expressions/studio/studio-soft-smile.json"
+  },
+  "notes": "Supported Prime source adaptation: A-pose, source-relative appearance and selected studio outfit. Some saved-source details are omitted; render and visual acceptance remain open."
+}

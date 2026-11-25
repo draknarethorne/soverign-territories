@@ -1,0 +1,38 @@
+=== {{HERO}} - Scene: {{NAME}} - Edit (img2img) ===
+Incoming image: a selected reference image of {{HERO}}. Create the selected scene, pose and outfit while preserving the incoming identity. Denoise {{DENOISE}}.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: {{POSE}}
+
+Environment: Replace the incoming background with {{BACKGROUND}}.
+?Lighting: {{LIGHTING}}
+
+{{REALM}}.
+
+Photo-realistic full-body scene, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Edit the incoming image: Replace the previous outfit, accessories and setting with the selected scene and wardrobe.
+
+Wearing: {{WEARING}}.
+Jewelry: {{JEWELRY}}.
+Back: {{BACK}}.
+Legs and feet: {{LEGS_FEET}}.
+
+{{EFFECTS}}
+
+{{EYE_EFFECT}}
+
+{{KEEP_LINE}}
+
+?{{KEY_BLOCK}}
+
+Result: Preserve the person's recognizable face, figure, hair and colors. Show the selected scene and wardrobe without remnants of the previous outfit or background.
+
+----------------------------------------------------------------
+negative prompt:
+
+?{{LIGHTING_NEG}},
+previous outfit, previous background, changed identity, changed hair color,
+extra people, extra limbs, extra digits, deformed hands, text, watermark, logo.

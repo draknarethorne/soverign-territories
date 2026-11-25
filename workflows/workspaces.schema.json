@@ -120,6 +120,28 @@
       "minLength": 1,
       "description": "Legacy shared output directory; overridable by SOVEREIGN_TERRITORIES_SHARED_OUTPUT_ROOT."
     },
+    "outputNamespaces": {
+      "type": "object",
+      "description": "Optional source-group and hero overrides for generated output namespaces.",
+      "propertyNames": {"pattern": "^[a-z0-9][a-z0-9-]*$"},
+      "additionalProperties": {
+        "type": "object",
+        "propertyNames": {"pattern": "^[A-Za-z][A-Za-z0-9_-]*$"},
+        "additionalProperties": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"}
+      }
+    },
+    "isolatedOutputGroups": {
+      "type": "array",
+      "description": "Groups whose output organizer must not scan legacy unscoped hero folders.",
+      "items": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+      "uniqueItems": true
+    },
+    "inputRoleOverrides": {
+      "type": "object",
+      "description": "Optional exact generated workflow names mapped to their intended configured input role.",
+      "propertyNames": {"pattern": "^[A-Za-z][A-Za-z0-9_-]*$"},
+      "additionalProperties": {"enum": ["photo", "prime", "bare", "apose", "scene", "polish"]}
+    },
     "workspaces": {
       "type": "object",
       "minProperties": 1,
@@ -128,7 +150,17 @@
       }
     },
     "homes": {
-      "type": "array"
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "excludeHeroes": {
+            "type": "array",
+            "items": {"type": "string", "minLength": 1},
+            "uniqueItems": true
+          }
+        }
+      }
     }
   },
   "additionalProperties": true

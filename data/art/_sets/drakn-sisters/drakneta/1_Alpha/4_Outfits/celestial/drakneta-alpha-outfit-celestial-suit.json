@@ -1,0 +1,14 @@
+{
+  "artId": "drakneta-alpha-outfit-celestial-suit",
+  "kind": "base-set",
+  "stage": "alpha",
+  "heroArt": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
+  "name": "Bare edit: celestial skin suit (full body)",
+  "components": {
+    "wearing": "data/art/heroes/drakn-sisters/drakneta/armor/celestial-skin-suit.json"
+  },
+  "template": "data/art/_templates/heroes/1_Alpha/bare-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Drakneta/1_Alpha/4_Outfits/celestial/Drakneta_Alpha_4_Outfits_CelestialSuit.txt",
+  "notes": "Fork of the celestial core: the designs flow over the whole body as a suit."
+}

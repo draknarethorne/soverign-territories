@@ -1,0 +1,9 @@
+{
+  "id": "studio/framing/pullback-full-environment",
+  "kind": "framing",
+  "name": "Pull back to a full figure and surrounding scene",
+  "extends": "data/art/studio/framing/pullback-full-selected-pose.json",
+  "compatibleStages": ["edit", "alpha"],
+  "tags": ["camera", "framing", "full-body", "environment"],
+  "description": "{{BASE}} Include the surrounding scene and extend it seamlessly as needed."
+}

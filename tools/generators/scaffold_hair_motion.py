@@ -531,11 +531,11 @@ for family, entries in MOTION.items():
             "stage": "motion",
             "heroArt": HERO_ART,
             "component": f"data/art/motion/{family}/{slug}.json",
-            "template": "data/art/_templates/heroes/Bench/motion-human.txt",
-            "output": f"prompts/drakn-sisters/Drakness/Bench/motion/{family}/Drakness_Motion_{label_of(family)}_{label_of(slug)}.txt",
+            "template": "data/art/_templates/heroes/2_Studies/motion-human.txt",
+            "output": f"prompts/drakn-sisters/Drakness/2_Studies/motions/{family}/Drakness_Motion_{label_of(family)}_{label_of(slug)}.txt",
             "denoise": "~0.4-0.6",
         }
-        write_json(ROOT / f"data/art/_sets/drakn-sisters/{HERO_SLUG}/Bench/motion/{family}/{slug}.json", card)
+        write_json(ROOT / f"data/art/_sets/drakn-sisters/{HERO_SLUG}/2_Studies/motions/{family}/{slug}.json", card)
 
 print(f"Hair components: {len(hair_written)} (incl. 2 already-authored); cards written for new ones")
 print(f"Motion components: {len(motion_written)}; cards written")

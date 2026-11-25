@@ -1,0 +1,8 @@
+{
+  "id": "studio/views/body/deluxe-relaxed-edge",
+  "kind": "view",
+  "name": "Relaxed recline at bed edge",
+  "compatibleStages": ["edit", "alpha", "pose"],
+  "tags": ["pose", "reclining", "bedroom"],
+  "description": "Recline comfortably on the bed, supported by one hand with the elbow gently bent. Let one leg hang over the side and rest the other foot on the bed with its knee bent. Rest the free hand on the thigh."
+}

@@ -1,0 +1,22 @@
+=== {{HERO}} - Pose View: {{NAME}} (group: X_Pose) - Edit (img2img) ===
+Incoming image: the front-facing A-pose of {{HERO}}. Turn the same subject to the selected view; keep the incoming identity, figure, hair and outfit. Denoise {{DENOISE}}.
+
+----------------------------------------------------------------
+prompt:
+
+Pose: Standing A-pose, upright with feet apart, arms relaxed slightly away from the sides and open hands. {{VIEW}}
+
+Background: {{BACKGROUND}}.
+
+Photo-realistic full-body studio shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+{{KEEP_LINE}}
+
+?{{KEY_BLOCK}}
+
+Keep the exact outfit from the incoming image.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, studio equipment, props, extra limbs, extra fingers, deformed hands, extra feet, changed outfit, changed hairstyle, text, watermark, logo, illustration, painting, drawing, CGI, cartoon.

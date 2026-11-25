@@ -4,6 +4,7 @@
   "name": "Dewy Skin",
   "description": "a fresh, dewy finish - luminous skin, a soft cream blush on the cheeks, groomed natural brows, a touch of mascara and a sheer {{LIP}} lip balm",
   "compatibleStages": [
+    "alpha",
     "pose",
     "head",
     "hair",

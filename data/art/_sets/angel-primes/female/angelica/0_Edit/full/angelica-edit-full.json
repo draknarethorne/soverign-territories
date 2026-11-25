@@ -1,0 +1,32 @@
+{
+  "artId": "angelica-edit-full",
+  "kind": "base-set",
+  "stage": "edit",
+  "heroArt": "data/art/heroes/angel-primes/female/angelica.json",
+  "template": "data/art/_templates/heroes/0_Edit/edit-cleanup-human.txt",
+  "output": "prompts/angel-primes/female/Angelica/0_Edit/full/Angelica_Edit_Full_Extension.txt",
+  "denoise": "~1.0",
+  "edit_name": "Full-length extension",
+  "components": {
+    "view": "data/art/reference/pose/preserve-clear-hands.json",
+    "background": "data/art/reference/background/preserve-scenery.json",
+    "lighting": "data/art/studio/lighting/neutral-frontal.json",
+    "photo_style": "data/art/studio/photography/beauty-85mm.json",
+    "camera": "data/art/studio/framing/pullback-full-film-still.json",
+    "edit_task": "data/art/edits/full/extension.json",
+    "result": "data/art/edits/policies/result-clear-props-and-jewelry.json",
+    "key_block": "Critical details:\nHair: {{HAIR}}",
+    "key_after_bust": "Eyes: {{EYE}}\nSkin: {{SKIN}}",
+    "bust": "data/art/studio/figure/full-bust-natural.json",
+    "hair": "data/art/edits/policies/hair-preserve.json",
+    "eye": "data/art/reference/appearance/preserve-eye-color.json",
+    "skin": "data/art/reference/appearance/preserve-skin-tone.json",
+    "body": "{{FIGURE_FRAME}}",
+    "likeness": "data/art/reference/appearance/preserve-features.json",
+    "wearing": "data/art/reference/wardrobe/existing-outfit.json",
+    "eye_detail": "data/art/studio/photography/eye-definition-wide-open.json",
+    "gaze": "data/art/motion/gaze/eyes-to-camera.json",
+    "face_policy": "data/art/reference/appearance/preserve-face-expression-makeup.json"
+  },
+  "notes": "Supported Full adaptation preserves source scenery and appearance while extending the existing outfit. Newly visible areas are synthetic, never identity evidence. Character audition selects the identity frame; the neutral figure detail and output need visual review."
+}

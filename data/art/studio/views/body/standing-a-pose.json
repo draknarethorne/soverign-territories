@@ -1,0 +1,9 @@
+{
+  "id": "studio/views/body/standing-a-pose",
+  "kind": "view",
+  "name": "Standing A-pose",
+  "compatibleStages": ["edit", "alpha", "pose"],
+  "tags": ["standing", "a-pose", "full-body"],
+  "description": "Standing A-pose, upright with feet apart and arms relaxed slightly away from the sides, open hands, level head facing the camera squarely and relaxed square shoulders; replace the incoming pose.",
+  "negatives": ["seated pose", "cropped feet"]
+}

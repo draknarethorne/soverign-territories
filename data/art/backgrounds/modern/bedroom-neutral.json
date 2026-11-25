@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/modern/bedroom-neutral",
+  "kind": "background",
+  "name": "Simple neutral bedroom",
+  "description": "a simple, tidy, photorealistic bedroom with a neatly made bed, plain light-neutral bedding and an uncluttered softly rendered background",
+  "compatibleStages": ["edit", "alpha", "pose", "head", "hair", "motion", "armor", "clothing", "scene"],
+  "tags": ["bedroom", "photorealistic", "neutral"],
+  "negatives": ["grey studio backdrop", "busy decor", "clutter"]
+}
