@@ -1,23 +1,203 @@
 # Project Status
 
-**Updated:** 2026-11-23 · This is the one working document: where the project is, what has
+**Updated:** 2026-11-25 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
 ## Current checkpoint
 
+**Nov25 motion studies:** all 463 motion assemblies and prompts now use
+`2_Studies/motions`, as do their 463 generated Qwen and six existing FireRed
+graph prefixes. Prompt bytes and template semantics are preserved. The 489
+installed motion graphs in Sovereign Females, Angel Primes, Drakn Sisters and
+Drakness were patched with verified workspace-local backups and moved into
+Studies. Their selected inputs were preserved and repeat previews align. The
+40 old Male copies in Angel Primes were subsequently retired with a verified
+workspace-local backup; Sovereign Males remains planned and uninstalled. Old
+output images and manual work remain untouched. WFM1 owns visual acceptance; the
+[workflow runbook](../workflows/README.md#updating-existing-motion-installations)
+describes the procedure for future installations.
+
+**Nov25 phase organization:** first-shot and celestial families, Layers and
+Head names are aligned across their existing sources, generated files and
+active installed homes with verified local backups. Planned Male, Drakn Bound
+and Elder Dragons homes remain uninstalled; 20 Bound/Dragon Head assemblies
+had no repository graphs to migrate. Old images and manual work remain
+untouched. Female input availability and human render acceptance remain open.
+Inventory and evidence are in the [workflow plan](plans/2026-10-22-manual-prompts-to-art-library.md#nov-25-phase-organization-reset).
+
+**Nov25 generic namespace simplification:** 107 Female and 20 Male assemblies,
+their identities, active prompts and generated workflows use the dedicated
+groups without an `alpha` division. Sovereign Females has 132 relocated
+graphs with verified workspace-local backups. Sovereign Males remains planned;
+its 40-file clone was removed from Sovereign Females after comparison and a
+verified workspace-local backup. Reference prompts were moved byte-identically
+to the Female group and their consumers rebound; existing output images remain.
+The independent generic scaffold has preview/check/apply modes; Angel `--alpha`
+support was removed. The Female setup preview shows 132 aligned, none missing;
+it also proposes copying 34 historical candidates, so review before applying.
+The configured Female photo and Prime input are absent from its actual
+running input root. Evidence and remaining gates are in the
+[workflow plan](plans/2026-10-22-manual-prompts-to-art-library.md#nov-25-generic-namespace-simplification).
+
 **Nov23 machine split:** Harbor leads likeness, Gallery, studio, named-intake
 and image processing on the new machine; Beacon provides old-machine help
 only on Harbor's direct request. The
 [library planning handoff](handoffs/2026-11-23-library-studio-planning/README.md)
-preserves open decisions and existing owners. Beacon's separate, read-only
-WF1 companion prioritizes a source-first reset of `0_Edit` and `1_Alpha`
-planning before static rollout and later dynamic/custom workflow work.
-The user will provide the latest curated workflows; Drakness is the
-first intended static pilot for user verification after source mapping,
-implementation, validation and a reviewed workspace preview. The revised
-sources are not yet available; those gates remain open. See the
-[workflow plan](plans/2026-10-22-manual-prompts-to-art-library.md#nov-23-beacon-workflow-planning-companion)
+preserves open decisions and existing owners. Beacon's WF1 companion began
+as a source-first reset of `0_Edit` and `1_Alpha` planning; the user subsequently
+authorized the additive implementation described below.
+A local preliminary comparison covers selected `0_Edit` and `1_Prime`
+drafts; WFC1 Cleanup, five Background, three Enhance and Full adaptations
+are fixture-tested. The user removed the Deluxe manual-only gate; source
+exclusions and visual acceptance remain open. The user
+requests additive updates without removing existing generation and selects
+Sovereign Females and Angel Primes as initial publication targets.
+The original 18 generic Female Edit assemblies now select the shared ordered
+shell, including Deluxe and pose auditions; the
+[prompt structure](art/prompt-structure.md) records the approach and the
+bounded later-stage inventory. Older generated prompts remain unchanged.
+The user selected an A-pose for the conflicting Outfit source and
+`1_Alpha/4_Outfits` for outfit auditions. Generic Female Prime now uses
+the source-ordered Alpha template in its assembly and a separately generated
+audition, retaining the old Prime prompt. Source-outfit and source-color
+adaptations, relocated existing assemblies and photo-input/path routing are
+fixture-tested; Prime reference consumers now use their preserved prompts in
+the dedicated Female group.
+Seven outfit auditions now retain additional source-inspired pose cues in
+reusable view pieces; their installed prompt patches and backups were
+verified. The remaining source comparison and visual review are open.
+The target now includes shared vocabulary and `0_Edit` across the workspace
+suite, with generic Female in Sovereign Females and eventual republishing of
+impacted workspaces. Generic Female home routing and reference-job protection
+are fixture-tested. Opt-in workspace-local deploy backups and read-only
+receipt verification are fixture-tested; the additive installations below
+initially required no replacements or backups; later prompt patches have
+verified workspace-local backups. The initial 18 generic Edit, 13 Outfit and one Prime audition prompt and workflow
+have been generated and installed additively in Sovereign Females. Installed
+bytes, prompts, input names and new output
+prefixes were checked; the configured input photo is not present in the
+workspace. The older suite's `reference/manual` output images remain untouched;
+reference prompt bindings now use the dedicated Female group. An Angelica Enhance pilot using
+her identity-specific appearance and frame is installed and checked in Angel
+Primes; a Background Basic pilot uses identity appearance and frame while
+preserving any incoming clothing and clearing accessories. Grounded pose
+auditions are installed for all 11 female Angels, preserving source physique
+and any incoming clothing without selecting a new outfit. Background Basic auditions are also installed for all 11
+female Angels: the ten with adaptive identity notes use their individual
+frames while preserving source appearance, and Angelica selects her identity
+appearance. Enhance Basic likewise covers all 11 using the same
+identity-specific versus source-adaptive distinction. Standard Background,
+Background Bust and relaxed three-quarter pose are also installed for all
+11; the Bust adaptation selects a neutral reusable detail, not an
+identity-specific one. Cleanup, Cleanup Basic and Cleanup Enhance also
+cover all 11, each using its identity frame and the family's selected
+source-relative changes. Background Enhance and Background Plus now also
+cover all 11 using their identity frames; Enhance continues existing clothing
+when present, while Plus selects a replacement. Four Deluxe variants and Full
+extension also cover all 11 using their identity frames; Deluxe does not
+select an outfit. Enhance Plus and Pose now cover all 11 as well, preserving
+source appearance for the ten adaptive identities and selecting Angelica's
+appearance. The original 18-variant Edit suite is installed for
+each female Angel (198 workflows); all prompt pairs, configured photo
+selections and output prefixes were checked. All await visual review. Four new Deluxe workflows were installed before the user removed
+the former P18 manual-only gate; visual acceptance remains open. Full cross-character Edit coverage,
+remaining output-prefix migration, other Alpha families, character rollout
+and visual review remain open.
+Four additional generic Deluxe auditions now pair neutral source-inspired
+poses with a high-angle environmental camera. They were installed additively
+and their graph bytes, prompt pairs, input names and output prefixes checked;
+they do not replace the earlier four and have not been rendered or accepted.
+Those four variants now also exist for all 32 named Angels and Sisters
+(128 repository graphs). The 44 female-Angel graphs are installed and
+verified; 44 male-Angel and 40 Sister graphs remain repository-only. The
+male relaxed-edge and seated-edge auditions select heels for review.
+Two additional generic Layers auditions preserve the incoming person and
+pose while changing the selected outfit. Their installed graphs use a
+provisional configured Prime input and `0.7` denoise; bytes, prompt pairs
+and output prefixes were verified. Input availability, rendering and
+visual acceptance remain separate gates.
+One separate covered Alpha figure audition is also installed and verified;
+it uses the configured Prime input and does not replace the legacy Bare chain.
+Two separate footwear auditions likewise use the configured Prime input and
+preserve the existing outfit and setting; their installed graphs, `0.7`
+denoise and output prefixes were verified. The Prime input is absent and the
+legacy Bare-input footwear workflows remain intact.
+All ten Sisters have the original 18 Edit adaptations as generated prompts
+and repository workflows only (180 total); no Sister workspace was changed.
+Selected variants provisionally use each identity palette and frame, while
+source-preserving variants retain their source policies. Prompt pairs, input
+names and output prefixes were checked; source-policy interpretation and
+visual acceptance remain open.
+Each male Angel has the original 18 Edit auditions in the repository only: 17 generic
+suite counterparts and a separately named Background Frame alternative to
+the female Bust variant. Selected identity-frame variants use the male frame;
+the ten adaptive identities preserve source appearance where appropriate,
+while Angelo's fixed Prime appearance is provisional for Edit. The Plus
+variants select a source-color two-piece swimsuit; two Deluxe variants select
+heels. Configured male Angel photos were absent from the resolved input root.
+No male workspace was changed or render performed; wardrobe choices,
+source fidelity and visual acceptance remain open.
+Each of the 22 Angels and ten Sisters also has a separately named ordered
+Prime audition using their identity frame. The 11 female Angel workflows
+are installed in Angel Primes; male and Sister Prime graphs remain in the
+repository only. Adaptive Angels preserve source colors, while the Sisters'
+palette selection remains provisional. These auditions do not replace legacy
+Prime workflows or complete all Alpha variants; all await visual review.
+Covered-metallic Celestial and neutral silk-crouch outfit auditions are also
+installed in Sovereign Females as source-inspired alternatives, not source
+equivalents; their configured input is absent.
+The 18 existing later-phase generic graphs use protected `reference/manual`
+prefixes. Eighteen separately named alternatives are now installed in the
+Sovereign Females namespace: nine Studies auditions opt into their card
+denoise ranges and nine other phase auditions preserve existing prompts and
+settings. Configured inputs are absent; denoise discrepancies, phase
+normalization and visual acceptance remain open. The
+[workflow plan](plans/2026-10-22-manual-prompts-to-art-library.md#nov-24-source-comparison-and-integrated-workflow-work)
+records the counts and the transition gate.
+Seven additional card-range Wardrobe, Scene and Bench denoise comparisons and
+two visibility-compatible back/profile Studies auditions are installed
+additively. Existing workflows remain intact; all await inputs and visual
+review. Reusable high-angle framing and independent figure, lighting and gaze
+pieces were added without changing character identities or existing selections.
+The two source-photo Wardrobe replacements now select pose, background and
+lighting independently; their installed prompt patches and backup were
+verified. They still select an A-pose and await visual review.
+Further additive alternatives cover five directional Studies views, two hair
+styles, two source-photo Wardrobe looks, two source-photo Scenes and three
+Prime-input Bench motions. Their installed graphs and prompt bindings were
+checked; configured input availability and visual acceptance remain open.
+Independent hand-gesture pieces are available in the repository, and an
+opt-in Alpha Silk gesture audition is installed for review. It does not
+replace the smiling versions and still needs an input and visual review.
+Four independent neck/shoulder details are available as opt-in Edit and Alpha
+components; they do not change existing character selections.
+A separate Alpha Gown replacement audition retains source colors and fabric
+when present while requesting a new garment design; it remains unrendered.
+Six generic Edit variants and their corresponding named-character graphs now
+include a source-inspired environmental camera cue. The generic and 66
+female-Angel graph patches and backups were verified; male Angel and Sister
+graphs remain repository-only. Three generic Edit families and corresponding
+named auditions also select a source-inspired wide-open eye detail; generic
+and female-Angel patches were verified. The four additional generic Deluxe
+auditions now include the source's high-angle film-still framing, with
+verified prompt-only patches and backups. Fourteen generic Prime and outfit
+auditions also include film-still framing, with verified prompt-only patches
+and backups. The 32 named ordered Prime auditions now use the same framing
+and level, wide-open eye detail without changing their color policies; the
+11 female-Angel workspace patches and backups were verified, while male and
+Sister graphs remain repository-only. Visual acceptance remains open.
+The four newer Deluxe variants now also select a source-inspired flat frontal
+key for generic Female and all 32 named characters. Their 132 repository
+graphs and 48 installed generic/female-Angel patches and backups were
+verified; male and Sister graphs remain repository-only and visual
+acceptance remains open.
+The four original Deluxe variants now select the same key: another 132
+repository graphs and 48 installed patches and backups were verified.
+Twelve generic Alpha outfit auditions now select source-inspired slender
+heels; their installed patches and backup were verified, not visually accepted.
+See the
+[workflow plan](plans/2026-10-22-manual-prompts-to-art-library.md#nov-24-source-comparison-and-integrated-workflow-work)
 and [execution spine](plans/2026-11-05-priority-reset.md#execution-spine).
 
 **Nov22–23 new-PC Sandbox work:** the other-machine plan and recap report

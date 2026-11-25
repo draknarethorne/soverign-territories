@@ -69,20 +69,20 @@ own and why an issue in the Prime is caught at `2_Studies` or `3_Layers` and fix
 Skip any of them when you trust the result; they are kept because they make a problem cheap to find. Experiments that did not hold up (the bare-chest study and the covering
 experiments: pasties, contoured, paint) were dropped.
 
-**Installed first-shot experiments.** Two existing variants start from the same photo in `1_Alpha/1b_Experiments/`: `neutral-base` (P2, a skin-tone base layer) and `bare-base` (P3). Their current comparison commands remain in [prime-flows.md](prime-flows.md#comparing-prime-renders). The [manual migration plan](../plans/2026-10-22-manual-prompts-to-art-library.md) owns the remaining edit variants, revised Prime/Bare, and retiring `1b` only after replacements pass. It leaves `2b` untouched. Do not require another old winner comparison or regenerate/delete experiments merely because their plan was archived.
+**Installed first-shot experiments.** Two existing variants start from the same photo in `1_Alpha/2_Bare/`: `neutral-base` (P2, a skin-tone base layer) and `bare-base` (P3). Their current comparison commands remain in [prime-flows.md](prime-flows.md#comparing-prime-renders). The [manual migration plan](../plans/2026-10-22-manual-prompts-to-art-library.md) owns the remaining edit variants, revised Prime/Bare, and eventual retirement only after replacements pass. Celestial edits now live under `4_Outfits/celestial` and retain Prime input. Do not require another old winner comparison or regenerate/delete experiments merely because their plan was archived.
 
 | Phase | Folder (under `<Hero>/` in the workspace) | Incoming image | Produces |
 | --- | --- | --- | --- |
 | 0. Edit (optional) | `0_Edit/<family>` | the exact selected source image | a task-specific synthetic edit such as the generic Female cleanup pilot |
-| 1. Alpha | `1_Alpha/1_Prime`, `2_Bare`, `2b_Experiments`, `3_Footwear` | the original photo by default; a selected edit result only when the recipe/input contract supports it | the Prime (bikini, standard figure), the Bare image (her individual build and likeness; `Alpha_2_Bare_Figure` is the main step, your hand-made `Alpha_2_Bare_Skin` shot is temporary), then Barefoot and Heels: the three golden images |
-| 2. Studies | `2_Studies/head`, `hair`, `body` | the golden images | head close-ups, hair styles and turnaround views: the reference library for every later step |
+| 1. Alpha | `1_Alpha/1_Prime`, `2_Bare`, `3_Footwear`, `4_Outfits` | original photo for Prime and first-shot bases; other variants use their configured input roles | the Prime, Bare image, footwear and outfit tests |
+| 2. Studies | `2_Studies/head`, `hair`, `body`, `motions` | the golden images or another selected motion reference | head close-ups, hair styles, turnaround views and motion tests |
 | 3. Layers | `3_Layers/<type>` (bikini, lingerie, swimwear, athletic, one-piece, backless) | the Bare image, with the body contour line on | which underlayer reads best, so it can show under an outfit on purpose |
 | 4. Wardrobe | `4_Wardrobe/clothing`, `armor`, `showcase` | the Bare image, or a layer or pose you chose | her in the outfit or armor, and the showcase shots that check it |
 | 5. Scenes | `5_Scenes/<family>` | a complete image from phase 4, or an A-pose | the scene |
 | 6. Finish | `6_Finish/polish`, `final` (upscale is not built yet) | the chosen scene, then the polished image | a detail pass at low denoise, then the final look |
 | 7. Video | `7_Video/<family>` | a finished image | the animation |
 
-`Bench/motion` is not a phase: motions and poses are point-in-time tests of a piece, run on whichever phase's image you load, to validate a reusable motion or pose before a scene uses it.
+`2_Studies/motions` holds point-in-time motion tests, run on the image you select, to validate a reusable motion or pose before a scene uses it.
 The rows describe the established character-art flow, not a required chain for every request. The target
 Gallery flow lets the user choose an original, prepared image or explicitly selected result as the next input,
 without silently advancing the newest output. The target does not block unusual creative choices; the full
@@ -101,14 +101,14 @@ bikini or lingerie reads best.
 | --- | --- |
 | Bare (your shot `Alpha_2_Bare_Skin`, or `Alpha_2_Bare_Figure`) | cleanest outfits: nothing underneath bleeds through, and low-cut or sheer pieces are really low cut or sheer |
 | Bikini, lingerie or bodysuit A-pose | that layer shows under the outfit on purpose |
-| Celestial (`Alpha_2b_CelestialCore`, `_CelestialSuit`, `_CelestialPlate`, `_CelestialPlateFitted`) | her celestial form carries into the scene or the next outfit |
+| Celestial (`Alpha_4_Outfits_CelestialCore`, `_CelestialSuit`, `_CelestialPlate`, `_CelestialPlateFitted`) | her celestial form carries into the scene or the next outfit |
 | Pasties, contoured or paint | dropped (they bled into the wardrobe and swimwear shots); a minimal-coverage incoming image is better made as a layer in `3_Layers` |
 
 **The bare look** (an edit-only prompt in `data/art/_templates/heroes/1_Alpha/bare-human.txt`, one short removal instruction plus a result paragraph
 with each area on its own semicolon-separated clause, and "change nothing else"):
 `Alpha_2_Bare_Figure` sits flat in `1_Alpha/2_Bare/` beside your own `Alpha_2_Bare_Skin` shot (the bare-chest study was dropped: it was an experiment);
-the one experiment kept is Alpha 2b, nested beside it in `1_Alpha/2b_Experiments/celestial/`, because it becomes a type of body armor in the wardrobe. The celestial core paints only the three small designs; the suit forks it into an open-filigree
-design over the whole body; the plate versions are the original small plates, and `Alpha_2b_CelestialPlateFitted` shapes them to the body. Your own hand-written bare workflows are kept as shots (see below) and stay your own.
+the celestial edits now sit in `1_Alpha/4_Outfits/celestial/`, because they become a type of body armor in the wardrobe. The celestial core paints only the three small designs; the suit forks it into an open-filigree
+design over the whole body; the plate versions are the original small plates, and `Alpha_4_Outfits_CelestialPlateFitted` shapes them to the body. Your own hand-written bare workflows are kept as shots (see below) and stay your own.
 
 **Switches that apply to the whole chain** (`data/art/_settings/studio.json`, then regenerate):
 

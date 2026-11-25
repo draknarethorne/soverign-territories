@@ -10,6 +10,8 @@ motion}/**/*.json`, via a card's `component`/`components` field) + a stage templ
 `prompts/<group>/<Hero>/<phase>/<family>/`. Edit the **template / component / card**, never a
 generated `.txt` by hand — regenerate instead: `bin\prompts.cmd <card.json>`.
 See [`data/art/README.md`](../../data/art/README.md) for the full directory/architecture reference.
+For the current source-bound ordering and reuse approach, see
+[Prompt structure and shared vocabulary](prompt-structure.md).
 
 > The old hand-copied `[BRACKETS]`-per-hero system is retired; it is not a live production source.
 > Armor, Clothing, and Scene are now fully componentized (see the stage table below) —
@@ -107,7 +109,7 @@ hand-crafted reference text as a live template.
 | **X_Pose** (A-pose base) | source photo | likeness | build full base + figure + bikini underlayer | studio | ✅ componentized | [`pose-female-human.txt`](../../data/art/_templates/heroes/1_Alpha/pose-female-human.txt) / [`pose-male-human.txt`](../../data/art/_templates/heroes/1_Alpha/pose-male-human.txt) |
 | **X_Head** (close-up) | A-pose | face + hair | framing (chest-up) | studio | ✅ componentized | [`head-human.txt`](../../data/art/_templates/heroes/2_Studies/head-human.txt) |
 | **Hair** | A-pose | outfit + face + body | hairstyle only | studio | ✅ componentized (44 styles) | [`hair-human.txt`](../../data/art/_templates/heroes/2_Studies/hair-human.txt) |
-| **Motion** | A-pose (chosen hair) | outfit + hair + face | pose/motion only | studio | ✅ componentized (26 poses, 'faceless' — gaze/expression are their own overridable concern) | [`motion-human.txt`](../../data/art/_templates/heroes/Bench/motion-human.txt) |
+| **Motion** | A-pose (chosen hair) | outfit + hair + face | pose/motion only | studio | ✅ componentized (26 poses, 'faceless' — gaze/expression are their own overridable concern) | [`motion-human.txt`](../../data/art/_templates/heroes/2_Studies/motion-human.txt) |
 | **Clothing** | A-pose (bikini base) | face + body + hair | apply gown/dress | studio | ✅ componentized | [`clothing-human.txt`](../../data/art/_templates/heroes/4_Wardrobe/clothing-human.txt) |
 | **Armor** | A-pose (bikini base) | face + body + hair | apply armor + weapon | studio | ✅ componentized | [`armor-human.txt`](../../data/art/_templates/heroes/4_Wardrobe/armor-human.txt) |
 | **Scene** (final card art) | A-pose, or a prior stage's output | likeness (+ outfit, for the two-stage path) | full scene: background, pose, effects, weapon/companion | in-world | ✅ componentized — 6 template variants for different outfit shapes (outfit/+companion/minimal/combat/glamour/staged) | [`scene-with-outfit-human.txt`](../../data/art/_templates/heroes/5_Scenes/scene-with-outfit-human.txt), [`scene-with-companion-human.txt`](../../data/art/_templates/heroes/5_Scenes/scene-with-companion-human.txt), [`scene-minimal-human.txt`](../../data/art/_templates/heroes/5_Scenes/scene-minimal-human.txt), [`scene-combat-human.txt`](../../data/art/_templates/heroes/5_Scenes/scene-combat-human.txt), [`scene-glamour-human.txt`](../../data/art/_templates/heroes/5_Scenes/scene-glamour-human.txt), [`scene-staged-human.txt`](../../data/art/_templates/heroes/5_Scenes/scene-staged-human.txt) |

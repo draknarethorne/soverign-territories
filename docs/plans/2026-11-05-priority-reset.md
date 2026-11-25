@@ -2,7 +2,7 @@
 
 **Status:** active (execution spine: FAST likeness, LEAN/FULL acceptance, then character art)
 
-**Queue focus:** RA2d, RA2j, T29, T30, IU7, IU4, IU11, IU12, IU10, RA2o, IU3, IU5, WF1
+**Queue focus:** RA2d, RA2j, T29, T30, IU7, IU4, IU11, IU12, IU10, RA2o, IU3, IU5, WF1, WFR1, WFE2, WFA1, WFM1
 
 **Feedback rebase applied (Sandbox):** `feedback-rebase-20261122-02`
 applied rules (a)–(i): duplicates archived, band-aligned formation,
@@ -305,12 +305,12 @@ preserves its open decisions, dependencies and machine-specific evidence;
 it is not their completion or authorization to mutate Production. Harbor
 remains responsible for selecting holding tasks through this spine.
 
-Beacon's bounded companion is **workflow planning**, not a second library
+Beacon's bounded companion is **workflow integration**, not a second library
 milestone: prepare the static/dynamic ComfyUI direction against existing
 workflow and rendering contracts while Harbor's library work continues.
-Stop before prompt migration, template edits, generation, deployment or
-rendering until the relevant sources, task transfer and separate gates are
-selected. Coordinate shared workflow selections, source identity and Gallery
+Prompt and template edits require an explicitly selected source-backed slice;
+generation, deployment and rendering retain separate gates. Coordinate shared
+workflow selections, source identity and Gallery
 result/lineage interfaces with Harbor instead of building competing owners.
 
 - [ ] **P1 ai** WF1 Prepare a read-only ComfyUI workflow integration plan for
@@ -318,12 +318,153 @@ result/lineage interfaces with Harbor instead of building competing owners.
   on-demand jobs, identify gaps and user decisions for custom prompts and
   eventual `zz_shots` replacement, and specify the interface with Harbor's
   library/studio work. Reuse manual P14-P21 and rendering R16/R44; do not
-  duplicate or mark them delivered. The user's newer edit prompts are not
-  yet selected: preserve existing manual sources and wait for their reviewed
-  location/content before source-fidelity implementation. **Exit:** a
-  source-grounded current-versus-target map, ordered next slices, explicit
+  duplicate or mark them delivered. The user authorized source-inspired
+  implementation from the saved drafts, but the final source set is not
+  frozen: preserve existing manual sources and do not claim completed
+  source fidelity or human acceptance.
+  Preserve existing generation; later cleanup requires separate approval.
+  Include cross-stage vocabulary/duplication review, `0_Edit` across the
+  workspace suite, generic Female in Sovereign Females and eventual
+  republishing of impacted workspaces; Female home routing is fixture-tested,
+  while output migration and rollout remain open.
+  **Exit:** a source-grounded current-versus-target map, ordered next slices, explicit
   unresolved decisions and deployment/rendering gates in the existing
-  [manual workflow plan](2026-10-22-manual-prompts-to-art-library.md#nov-23-beacon-workflow-planning-companion).
+  [manual workflow plan](2026-10-22-manual-prompts-to-art-library.md#nov-24-source-comparison-and-integrated-workflow-work).
+
+- [ ] **P1 ai** WFM1 Move motion studies from `Bench/motion` to
+  `2_Studies/motions` across the existing art sets, generated prompts and
+  workflow routing. Preserve source wording, identities, manual work,
+  existing images and frozen evidence. Check scaffold and downstream
+  consumers; inventory installed workspaces and report safe migration and
+  cleanup steps separately. See the [motion migration contract](2026-10-22-manual-prompts-to-art-library.md#nov-25-motion-studies-migration).
+  **Nov25 rollout:** 489 installed graphs across four available homes were
+  patched, backed up, moved and verified; old empty Bench trees were removed.
+  The later WFO1 retirement removed the 40 old Male copies with a verified
+  backup. Female input availability and human render review remain open.
+
+- [x] **P1 ai** WFO1 Retire the 40 old Male copies in Angel Primes with
+  individually verified, recoverable preimages and no changes to `zz_` or
+  manual work; keep Sovereign Males planned and ready for later installation.
+  The user explicitly authorized cleanup without waiting for that home.
+  Supported opt-in retirement was previewed and fixture-tested; all 40
+  originals were backed up, receipt `20261125-105632-245153` was verified,
+  empty old folders removed and repeat preview found zero. The Male scaffold
+  check found all 20 baselines; the home remains planned and uninstalled.
+- [x] **P1 ai** WFO2 Move first-shot experiment families from `1b_Experiments`
+  into `1_Alpha/2_Bare` across assemblies, scaffolds, prompt and workflow
+  routing and installed homes. Preserve their original-photo input semantics,
+  names, variants, prompt text and references unless deliberately migrated;
+  protect existing outputs and manually maintained workflows.
+  The 44 assemblies and prompts and 88 repository graphs were verified against
+  preimages; only output paths/prefixes changed. The 92 installed graphs were
+  patched, backed up, verified and moved into `2_Bare`; repeat tidy found zero.
+  Workflow-scope tests and `bin\check.cmd` passed. Human render review remains
+  separate; the Female workspace's configured input remains unavailable locally.
+- [x] **P1 ai** WFO3 Integrate celestial experiments into organized
+  `1_Alpha/4_Outfits/celestial`, retain direct general outfit entries and group
+  other entries by existing wardrobe families. Review suitable existing outfit
+  variations across named and generic Female/Male sets; reuse definitions,
+  record coverage and omissions, and do not claim visual acceptance. Carry
+  changes through sources, templates, scaffolds, generated outputs and homes.
+  The 84 celestial edits and 11 generic outfit adaptations were relocated with
+  their input roles and prompt text intact; 187 installed graphs were backed
+  up and moved. Coverage and receipts are recorded in the organization
+  contract. Workflow-scope tests passed; visual acceptance remains open.
+- [x] **P1 ai** WFO4 Align current `X_Pose` naming in Layers and `X_Head`
+  naming across applicable phases, and audit JSON filenames across every phase, including
+  first-shot `1b` names under `2_Bare`, `2b` celestial names under `4_Outfits`
+  and Prime-input Female footwear names.
+  Preserve the distinct Prime-input audition semantics, stable references,
+  input selection and historical output compatibility; reconcile source IDs,
+  generated names, scaffolds and installed copies together. Verify collisions,
+  backups, regeneration and end-to-end rollout before human tests.
+  The filename audit and existing graph migrations are complete; 501 Layers
+  and Head workspace copies were verified against local backups, all 440
+  prompts match generation, and repeat tidy previews found zero moves.
+  Workflow-scope regression and routine checks passed. Planned homes and
+  human visual acceptance remain separate.
+  See the [organization contract](2026-10-22-manual-prompts-to-art-library.md#nov-25-phase-organization-reset).
+
+- [x] **P1 ai** WFC1 Implement the user-selected, supported `0c_Cleanup`
+  slice from manual-plan P14-P16: review and bind the three saved Cleanup
+  sources; adapt the shared ordered template and reusable data; retain all
+  existing pieces and generation; and verify the variant assemblies with
+  focused tests and art-data checks. This is a partial transfer only: P14-P16
+  remain open for all other families and acceptance. No manual workspace
+  writes, workflow regeneration, deployment, rendering or deletion is
+  authorized by this slice. Three assemblies are fixture-tested; the
+  37 focused tests, art validation and `bin\check.cmd` passed. No workflow
+  generation, deployment, render or visual acceptance occurred. See the
+  [mapping and exclusions](2026-10-22-manual-prompts-to-art-library.md#wfc1-cleanup-source-binding-and-approved-mapping).
+
+- [ ] **P1 ai** WFR1 Register Sovereign Females as the generic Female
+  workspace home, separate it from Angel Primes character routing, and
+  protect existing reference-job artifacts. Preserve existing workspace
+  copies and repository data paths; test routing and collision safeguards.
+  Publication remains contingent on completed source mapping and a fresh,
+  exact preview. Routing, reference collision and invalid configuration tests
+  pass; 334 selected workflow/shared tests and `bin\check.cmd` pass.
+  The earlier quality-inventory failure was repaired by registering the
+  tracked `tools/art/test_machine_tuning.py` in the validation launcher.
+  Its five tests and `bin\validate.cmd --scope workflow --check` now pass.
+  This partial transfer does not close P17/P19/P20 or R44.
+
+- [x] **P1 ai** WFR2 Implement and fixture-test opt-in workspace-local,
+  incremental deploy backups outside the active workflow tree, one location
+  per workspace. Preserve previous versions and receipts, report the target
+  during preview, protect against collisions, and leave all other operations'
+  existing backup behavior unchanged. No live workspace writes or publication
+  are authorized by this slice. The workflow, CLI, finals and reference
+  execution suites passed 171 tests; the new launchers were exercised against
+  disposable workspace fixtures, including hash verification and tampering.
+  No live backup or restore was tested. See the
+  [backup decision](2026-10-22-manual-prompts-to-art-library.md#nov-24-integrated-vocabulary-and-workspace-direction).
+
+- [x] **P1 ai** WFB1 Implement the supported, source-bound Background Basic
+  slice from manual-plan P14-P16: retain its existing output identity and
+  other variants, adapt the shared ordered edit template, select independent
+  backdrop and lighting pieces, and fixture-test cleanup, appearance,
+  negatives and section order. Exclude unsupported source clauses. This
+  partial transfer does not complete the other Background variants, visual
+  acceptance, generation or workspace publication. Fifty targeted generator
+  and workflow tests, art schema/link validation and the existing prompt
+  negation audit passed. Shared Cleanup prompts matched their pre-change
+  fixture renderings. No prompt or workflow files were generated.
+
+- [ ] **P1 ai** WFE2 Complete the agreed supported non-Bare `0_Edit` source
+  variants in bounded family batches. Bind saved sources, reuse shared
+  template vocabulary and pieces, preserve existing generation, and
+  fixture-test ordered prompts, identity selections and negatives. Explicitly
+  record source content or variants that cannot be supported; never replace
+  them with misleading duplicates. Include Background, Enhance, Deluxe and
+  Full. All 18 existing generic Female Edit cards now use the ordered shell;
+  source-specific details remain adapted or omitted. The user removed the
+  Deluxe manual-only gate; source review and visual acceptance remain open.
+  See the [fixture results and exclusions](2026-10-22-manual-prompts-to-art-library.md#supported-edit-family-fixture-results).
+  Eight previously missing generic Edit prompts and workflows have since been
+  created additively in the repository and their prompt, input and legacy
+  prefix checked. No existing generated files were overwritten by that batch. The clarified
+  [workspace and character direction](2026-10-22-manual-prompts-to-art-library.md#nov-24-generic-workspace-and-character-direction)
+  records subsequent additive installations, protected legacy outputs and
+  remaining input blockers.
+  Finish the remaining source comparison and review before closing this task.
+  Generation, publication and visual acceptance remain separate gates.
+
+- [ ] **P1 ai** WFA1 Integrate the user-selected `1_Alpha/4_Outfits` phase
+  and reconcile existing Alpha data, templates and consumers without dropping
+  prior generation. An A-pose source-outfit adaptation and family/photo-input
+  routing are fixture-tested. Generic Female Prime now has a separately
+  generated and installed ordered audition; the old generated Prime remains
+  protected. All 15 current generic outfit assemblies use the ordered Alpha
+  shell and have installed alternatives in Sovereign Females, including the
+  gesture and gown-replacement auditions. Legacy generated Prime prompts and
+  reference bindings remain in place pending a collision-safe compatibility
+  transition. Map the remaining
+  supported source variants, the [omissions ledger](../art/prompt-migration-omissions.md),
+  named identity/default-input behavior, cross-stage vocabulary and
+  Bench/Studies roles before further changes. Coordinate reference consumers
+  with Harbor. Generation, publication and visual acceptance remain separate
+  gates. See the [source and layout comparison](2026-10-22-manual-prompts-to-art-library.md#prime-source-comparison-and-next-decision).
 
 **Nov 16 focused continuation:** the
 [SIMPLE review, tuning and housekeeping contract](2026-11-16-simple-review-and-tuning.md)
@@ -1787,7 +1928,7 @@ Production/shared-workspace publication implied by restart permission.
 | M2 next | Trust Sister/Angel Gallery **and Review**, after M1's correctness/viewer evidence | C7, LY11, N7 and I60 results recorded with user acceptance and explicit unresolved cases; not blanket acceptance of all Models/Various or all recipe experiments |
 | M3 | Select inputs after trusted cast | Review selections, promotions/replacements and source validity; explicitly approve changes. Production comparison PR3 follows, but cutover does not block M4-M6 |
 | M4 | Restore current manual-source fidelity using verified sandbox inputs | Manual P14-P16/P21 and PR4 reconciliation, supported clauses/exclusions and human approval; no assumption an earlier pilot was faithful |
-| M5 | Establish generic Sovereign Females after fidelity approval | Manual P17/P19/P20 scoped female pilot, routing R44, checked links/inputs and visual acceptance; preserve cast/manual/curated sets, Males/Deluxe deferred |
+| M5 | Establish generic Sovereign Females after fidelity approval | Manual P17/P19/P20 scoped female pilot, routing R44, checked links/inputs and visual acceptance; preserve cast/manual/curated sets. The user removed the Deluxe manual-only gate; male workspace rollout remains separate |
 | M6 | Deliver character art after pilot acceptance | Cast workflow/lower-stage outfit/weapon coverage, representative different approaches through animation/video; full-roster final videos are not the first exit gate |
 | M7 | Reassess retained backlog after useful art | Deliberately choose automation, remaining named Various backlog beyond selected IU12, FULL/new-PC, Artists, classification, tooling or game data; no automatic activation of every holding plan |
 

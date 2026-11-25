@@ -68,6 +68,7 @@ it is not another working agreement or permission to change models.
 | Curation/recovery foundations | [art/likeness-curation-contract.md](art/likeness-curation-contract.md) | Stable metadata, core versus retention, Review/Reject/retirement and transaction safety, with explicit precedence over old delivery sketches. |
 | Installed sandbox evidence | [art/likeness-sandbox-trial.md](art/likeness-sandbox-trial.md) | Saved run/config/cache provenance, physical outcomes, diagnostics, residual moves and acceptance limits; not a second policy source. |
 | Prompt migration rationale | [art/prompt-migration-context.md](art/prompt-migration-context.md) | Pipeline boundaries, scoped render observations, label/token distinctions and unaccepted historical proposals. The active migration plan owns new work. |
+| Prompt structure | [art/prompt-structure.md](art/prompt-structure.md) | Source-ordered, phase-aware prompt composition, vocabulary reuse, deliberate anchors and migration verification. |
 | Face likeness and galleries | [art/likeness.md](art/likeness.md) | Current general/Artist entry points, identity inspection, matching evidence, gallery navigation, staged actions and supported recovery. Dated reorganisation reports are historical evidence, not command or policy sources. |
 | ComfyUI workflows and launchers | `../workflows/README.md` | Workspaces (one home per set, temporary copies on request, `zz_` guards), the Qwen, FireRed and MiniMax engines, hand-curated workflows, the common commands and `../bin/*.cmd`. |
 | Gallery-driven reference rendering | [Workflow runbook](../workflows/README.md#offline-reference-rendering-foundation) | Exact-source batch export, isolated Sovereign Females pilot execution, durable scoped receipts and explicit synthetic retention; not permanent stage/template migration. |
@@ -89,6 +90,8 @@ Use current runbooks for commands, not a dated experiment or a proposal:
 | Source photos, preparation, backups, selected inputs | [Original-photo runbook](art/original-photos.md#choose-the-right-flow) |
 | Inspection, prepared clean-start, galleries and staged actions | [Likeness guide](art/likeness.md) |
 | Create art/video JSON and run generation | [Art tutorial](art/tutorial-art.md), [video tutorial](art/tutorial-video.md), [workflow source of truth](../workflows/README.md) |
+| Organize and review prompt sections | [Prompt structure](art/prompt-structure.md) |
+| Review known omissions and adaptations | [Prompt migration omissions](art/prompt-migration-omissions.md) |
 | Select images, export rendering batches and review results | [Reference-rendering runbook](../workflows/README.md#offline-reference-rendering-foundation) |
 | Rules and acceptance limits | [Processing contract](art/likeness-processing-contract.md), [curation foundations](art/likeness-curation-contract.md), [ordered active work](plans/README.md#current-library-work-order-oct-23) |
 | Dated observations/rationale, not current commands | [Sandbox trial](art/likeness-sandbox-trial.md), [library context](art/library-reconciliation-context.md), [prompt migration context](art/prompt-migration-context.md), [pipeline design history](art/comfyui-art-pipeline.md), [template analysis](art/template-analysis-findings.md) |

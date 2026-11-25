@@ -7,18 +7,44 @@
 
 ## Open work, by priority
 
-### Either of us (3)
+### Your queue: needs your hands or a decision (2)
 
 **P1 (blocks other work, or cheap and valuable)**
 
+- [ ] P6 Render/review the pilot with the agreed source images and engines (Angelica, alpha/female, Drakness as appropriate). Record seed, input, denoise and prompt version; judge likeness, framing, intended body, skin, ... ([manual prompts to art library](plans/2026-10-22-manual-prompts-to-art-library.md))
+
+**P3 (later, or ideas)**
+
+- [ ] P10 Archive the manual source directory only after every selected statement is verified incorporated or explicitly retained/deferred, and the user confirms the working batch is no longer needed. ([manual prompts to art library](plans/2026-10-22-manual-prompts-to-art-library.md))
+
+### Either of us (6)
+
+**P1 (blocks other work, or cheap and valuable)**
+
+- [ ] P2 Resolve QP1-QP4 one at a time. Produce a source-line to existing/new token, component, identity field or template-static-text map. Separate visible labels from machine tokens and field names. Identify all existing consumers ... ([manual prompts to art library](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] RA2d Establish leakage-safe evaluation groups and agree numeric recovery/false-merge/reference-contamination/churn bounds before choosing or enabling a new member rule. Owns this evaluation/acceptance portion transferred from ... ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] IU4 Hand-picked Angelica core: tooling prepares `Various/Angelica/gallery` staging and candidates; the user selects; then run and compare per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md). ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] IU10 Reviewing grouping rules from universe evidence; the user decides per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-universe-testing-feedback). ([priority reset](plans/2026-11-05-priority-reset.md))
 
-### For the assistant, when you say go (10)
+**P2 (normal)**
+
+- [ ] P19 Verify the workspace inventory and old-to-new reference/collision map against the Nov 5 scope decisions below; bring remaining conflicts to the user one at a time: what Sovereign Females/Males contain versus Angel Primes ... ([manual prompts to art library](plans/2026-10-22-manual-prompts-to-art-library.md))
+- [ ] P9 Refresh tutorials, art structure/template references, help and selected downstream input roles. Confirm whether old alternate Prime-B work is fully obsolete; do not silently replace old input picks. ([manual prompts to art library](plans/2026-10-22-manual-prompts-to-art-library.md))
+
+### For the assistant, when you say go (29)
 
 **P1 (blocks other work, or cheap and valuable)**
 
+- [ ] P14 Complete the source-to-output fidelity ledger for the user-selected, revised `0_Edit` and `1_Alpha` source set after it is available and hashed. The old 31-file `prompts/_edit/female` inventory is historical comparison ... ([manual prompts to art library](plans/2026-10-22-manual-prompts-to-art-library.md))
+- [ ] P15 Reconcile manual labels with existing schemas/tokens before adding fields. Keep independently placed Bust and Body instructions where intended; map build/torso/arms/hips/legs, hair colour/style/texture, eyes/gaze, ... ([manual prompts to art library](plans/2026-10-22-manual-prompts-to-art-library.md))
+- [ ] P16 Implement and test supported source-faithful template families after P14/P15 mapping review, preserving the manual section order and independently emitted features. Test two deliberately different person-data fixtures plus ... ([manual prompts to art library](plans/2026-10-22-manual-prompts-to-art-library.md))
+- [ ] P17 Move the generic Female test-bed assembly from `data/art/_sets/angel-primes/alpha/female` to the user-requested `data/art/_sets/soverign-females/female`, retaining the supplied machine-path spelling while the workspace ... ([manual prompts to art library](plans/2026-10-22-manual-prompts-to-art-library.md))
+- [ ] P11 Define stage-input contracts that allow user-selected branch progression (original or generated) instead of a mandatory single-chain path. Document typical inputs without warning or blocking deliberate creative choices; ... ([manual prompts to art library](plans/2026-10-22-manual-prompts-to-art-library.md))
+- [ ] P12 Define promoted-output directory structure for selected generated images so Gallery lineage remains clear by stage and recipe while preserving existing identity-core/original boundaries. ([manual prompts to art library](plans/2026-10-22-manual-prompts-to-art-library.md))
+- [ ] P13 Inventory every remaining manual `0_Edit` variant and map its preservation/change intent, input role and component slots. Optimize supported instructions against the user-selected revised sources; the older three-quarter ... ([manual prompts to art library](plans/2026-10-22-manual-prompts-to-art-library.md))
+- [ ] P1 Snapshot the selected manual files and record hashes, intent, tested status, labels, input/output role, engine and source notes. Include naming/workflow notes; flag contradictory text and duplicates. The current source ... ([manual prompts to art library](plans/2026-10-22-manual-prompts-to-art-library.md))
+- [ ] P4 Define `0_Edit` stage/schema/layout and supported variants, assembly JSON, reusable pieces and template tokens in contract-first order. Update generator defaults, template lookup, scaffolds, denoise/header resolution, ... ([manual prompts to art library](plans/2026-10-22-manual-prompts-to-art-library.md))
+- [ ] P5 Implement one agreed `0_Edit` plus Prime/Bare pilot using selected manual references. Preserve the intended prompt section order and deduplicate statements through reusable data; explicitly test per-stage keep/reset ... ([manual prompts to art library](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] RA2j Restoring the normal FULL/LEAN/FAST intake flow and separating exclusive experimental execution. **Integrated completion follow-up:** the [selected ... ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] T29 Freeze same-machine representative generation/no-op, warm/cache phase baselines before runtime/path changes, with input/config/ code/resource IDs, timings, read/byte counts and output contracts. **Nov21:** maintain ... ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] T30 Remove established repeated work across phase and standalone/continuous boundaries; publish per-hotspot ownership, cost, cache dependencies/invalidation, tests and fixed/deferred/no-gain status. Coordinator decisions, ... ([priority reset](plans/2026-11-05-priority-reset.md))
@@ -28,9 +54,18 @@
 - [ ] IU3 Running at least two gate variations on the Angelica universe and comparing outcomes per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md). ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] IU5 Writing the universe findings and proposed configuration changes for user review before the next full rebase per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md). ([priority reset](plans/2026-11-05-priority-reset.md))
 - [ ] WF1 Prepare a read-only ComfyUI workflow integration plan for Beacon: map existing static stage templates and supported source-bound on-demand jobs, identify gaps and user decisions for custom prompts and eventual `zz_shots` ... ([priority reset](plans/2026-11-05-priority-reset.md))
+- [ ] WFR1 Register Sovereign Females as the generic Female workspace home, separate it from Angel Primes character routing, and protect existing reference-job artifacts. Preserve existing workspace copies and repository data paths; ... ([priority reset](plans/2026-11-05-priority-reset.md))
+- [ ] WFE2 Complete the agreed supported non-Bare `0_Edit` source variants in bounded family batches. Bind saved sources, reuse shared template vocabulary and pieces, preserve existing generation, and fixture-test ordered prompts, ... ([priority reset](plans/2026-11-05-priority-reset.md))
+- [ ] WFA1 Integrate the user-selected `1_Alpha/4_Outfits` phase and reconcile existing Alpha data, templates and consumers without dropping prior generation. An A-pose source-outfit adaptation and family/photo-input routing are ... ([priority reset](plans/2026-11-05-priority-reset.md))
+- [ ] WFM1 Move motion studies from `Bench/motion` to `2_Studies/motions` across the existing art sets, generated prompts and workflow routing. Preserve source wording, identities, manual work, existing images and frozen evidence. ... ([priority reset](plans/2026-11-05-priority-reset.md))
 
 **P2 (normal)**
 
+- [ ] P20 Add Sovereign Females first (Sovereign Males later, separately selected) to `workspaces.json` with scoped workflow selection (which templates or stages go to which workspace). Preview owned generated replacements while ... ([manual prompts to art library](plans/2026-10-22-manual-prompts-to-art-library.md))
+- [ ] P21 Compare the manual prompts' section order (pose, background, camera and other details) with every template family, and propose an ordering standard as part of P7. Gate: P14 ledger. ([manual prompts to art library](plans/2026-10-22-manual-prompts-to-art-library.md))
+- [ ] P3 Rationalize selected anatomy/vocabulary with existing art definitions: body versus pose, complexion versus skin finish, facial structure versus expression, hair color/texture versus style, camera versus lighting/background, ... ([manual prompts to art library](plans/2026-10-22-manual-prompts-to-art-library.md))
+- [ ] P7 Write the accepted prompt standard and recurring audit checklist, then migrate approved template families/identities incrementally. Verify token resolution, component inheritance and all unrelated outputs by bytes. Validate ... ([manual prompts to art library](plans/2026-10-22-manual-prompts-to-art-library.md))
+- [ ] P8 After replacements pass, retire `1b_Experiments` across cards, templates only if unused, scaffolds, prompts, generated workflows, comparisons and installed copies with caller/reference inventory and recovery. Preserve ... ([manual prompts to art library](plans/2026-10-22-manual-prompts-to-art-library.md))
 - [ ] IU11 Testing tighter universe selection (group yellow plus per-image check against the seed's top 9) per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-universe-testing-feedback). ([priority reset](plans/2026-11-05-priority-reset.md))
 
 <details>
@@ -53,7 +88,6 @@ Open tasks remain in their owning plans; holding is not completion. Use [Now / n
 | [2026-10-22-identity-family-naming.md](plans/2026-10-22-identity-family-naming.md) | holding | 7 |
 | [2026-10-22-library-upkeep.md](plans/2026-10-22-library-upkeep.md) | holding | 7 |
 | [2026-10-22-likeness-engine-acceptance.md](plans/2026-10-22-likeness-engine-acceptance.md) | holding | 23 |
-| [2026-10-22-manual-prompts-to-art-library.md](plans/2026-10-22-manual-prompts-to-art-library.md) | holding | 21 |
 | [2026-10-22-review-actions.md](plans/2026-10-22-review-actions.md) | holding | 10 |
 | [2026-10-23-cast-seeded-library-rebase.md](plans/2026-10-23-cast-seeded-library-rebase.md) | holding | 8 |
 | [2026-10-23-image-intake-preparation.md](plans/2026-10-23-image-intake-preparation.md) | holding | 56 |
@@ -123,13 +157,6 @@ Use the [archive guide](guidelines/ARCHIVE-GUIDE.md) for topic navigation. `drop
 | Verael | verael_photo | - | - | - | - |
 | Vexiel | vexiel_photo | - | - | - | - |
 | Zadriel | zadriel_photo | - | - | - | - |
-
-### Alpha test heroes (not angels) (2)
-
-| Hero | Photo | Prime | Bare | Golden pose | Heels | Other finals | Candidates |
-| --- | --- | --- | --- | --- | --- | ---: | ---: |
-| Female | 75007327845399~ | Q c33 | F c1 | - | - | - | 34 |
-| Male | alpha_male_pho~ | - | - | n/a | n/a | - | - |
 
 ### Drakn sisters (10)
 
