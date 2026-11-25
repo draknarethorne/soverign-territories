@@ -245,14 +245,14 @@ class LikenessTests(unittest.TestCase):
         (self.lib / "Various/gallery_94x110").mkdir()
         self.add("Angels", "Angelica", "ann", 3)
 
-        preview = self.run_tool("seed")
+        preview = self.run_tool("seed", "--no-match")
         self.assertIn("Various/Jane Doe -> Potentials/Jane Doe (NEW folder): 2 photo(s)", preview)
         self.assertIn("Various/Big Set -> Prospects/Big Set (NEW folder): 5 photo(s)", preview)
         self.assertIn("7 named-folder photo(s) would move", preview)
         self.assertNotIn("Various/review", preview)
         self.assertEqual(len(self.names("Various", "Jane Doe")), 2, "a preview moves nothing")
 
-        self.run_tool("seed", apply=True)
+        self.run_tool("seed", "--no-match", apply=True)
         self.assertEqual(self.names("Potentials", "Jane Doe"), ["jane_doe_image_1.jpg", "jane_doe_image_2.jpg"])
         self.assertEqual(len(self.names("Prospects", "Big Set")), 5)
         self.assertEqual(self.names("Various", "Jane Doe"), [])
@@ -281,6 +281,103 @@ class LikenessTests(unittest.TestCase):
 
     def test_seed_is_not_an_artist_command(self):
         self.assertIn("EXIT", self.run_tool("seed", artists=True))
+
+    def register(self, folder, names, protected=False):
+        path = self.lib / ".likeness-library.json"
+        catalog = json.loads(path.read_text(encoding="utf-8"))
+        person_id = "person_" + format(len(catalog["people"]) + 1, "032x")
+        catalog["people"][person_id] = {
+            "id": person_id, "displayName": folder.split("/")[-1], "folder": folder, "folderHistory": [],
+            "identityAnchors": [], "protected": protected, "names": names,
+        }
+        path.write_text(json.dumps(catalog), encoding="utf-8")
+        return person_id
+
+    def named_match_library(self, lia_source="catalogue-registration"):
+        self.seed_catalog()
+        self.add("Sisters", "Draknoxa", "drak", 3)
+        self.add("Potentials", "Lia Joyce", "lia", 3)
+        self.add("Prospects", "Other Person", "other", 3)
+        self.add("Various", "Sydney Sky", "lia", 2)
+        drak = self.register("Sisters/Draknoxa", {
+            "originalName": "Sydney Sky", "currentName": "Sydney Sky", "originalSource": "recorded-history"}, True)
+        lia = self.register("Potentials/Lia Joyce", {
+            "originalName": "Lia Joyce", "currentName": "Lia Joyce", "originalSource": lia_source})
+        self.register("Prospects/Other Person", {
+            "originalName": "Other Person", "currentName": "Other Person", "originalSource": "catalogue-registration"})
+        return drak, lia
+
+    def catalog(self):
+        return json.loads((self.lib / ".likeness-library.json").read_text(encoding="utf-8"))
+
+    def test_named_folder_matching_an_identity_corrects_its_name_and_swaps_the_holder(self):
+        drak, lia = self.named_match_library()
+        preview = self.run_tool("seed")
+        self.assertIn("Various/Sydney Sky clearly matches Potentials/Lia Joyce", preview)
+        self.assertIn("person name Lia Joyce -> Sydney Sky (folder Potentials/Lia Joyce -> Potentials/Sydney Sky)", preview)
+        self.assertIn("Sisters/Draknoxa held the name; it takes Lia Joyce (name swap)", preview)
+        self.assertTrue((self.lib / "Potentials/Lia Joyce").is_dir(), "a preview changes nothing")
+
+        self.run_tool("seed", apply=True)
+        self.assertEqual(len(self.names("Potentials", "Sydney Sky")), 5)
+        self.assertFalse((self.lib / "Potentials/Lia Joyce").exists())
+        self.assertEqual(len(self.names("Sisters", "Draknoxa")), 3, "the character folder and slot stay")
+        people = self.catalog()["people"]
+        self.assertEqual(people[lia]["folder"], "Potentials/Sydney Sky")
+        self.assertEqual(
+            {k: people[lia]["names"][k] for k in ("originalName", "currentName", "originalSource")},
+            {"originalName": "Sydney Sky", "currentName": "Sydney Sky", "originalSource": "named-intake"})
+        self.assertEqual(people[lia]["names"]["previousNames"][0]["currentName"], "Lia Joyce")
+        self.assertEqual(people[lia]["namedIntake"]["sourceFolder"], "Various/Sydney Sky")
+        self.assertEqual(people[drak]["folder"], "Sisters/Draknoxa")
+        self.assertEqual(
+            {k: people[drak]["names"][k] for k in ("originalName", "currentName", "originalSource")},
+            {"originalName": "Lia Joyce", "currentName": "Lia Joyce", "originalSource": "named-intake-swap"},
+            "the wrong original (the supplied name) is replaced; the old one stays in history")
+        self.assertEqual(people[drak]["names"]["previousNames"][0]["originalName"], "Sydney Sky")
+        history = (self.lib / "Potentials/Sydney Sky/gallery/z_sydney_sky.txt").read_text(encoding="utf-8")
+        self.assertIn("named intake Various/Sydney Sky: supplied name adopted", history)
+        self.assertIn("renamed from Lia Joyce (Potentials/Lia Joyce)", history)
+        self.assertIn("name: Lia Joyce", (self.lib / "Sisters/Draknoxa/gallery/z_lia_joyce.txt").read_text(encoding="utf-8"))
+
+        from likeness_library import actions
+        catalog_path = self.lib / ".likeness-library.json"
+        actions.undo_actions(self.catalog(), self.lib, self.cfg, "Various",
+                             save_fn=lambda data: L.metadata.save_catalog(data, catalog_path))
+        self.run_tool("undo", apply=True)
+        people = self.catalog()["people"]
+        self.assertEqual(people[lia]["folder"], "Potentials/Lia Joyce")
+        self.assertEqual(people[lia]["names"]["currentName"], "Lia Joyce")
+        self.assertNotIn("namedIntake", people[lia])
+        self.assertEqual(people[drak]["names"]["currentName"], "Sydney Sky")
+        self.assertEqual(len(self.names("Potentials", "Lia Joyce")), 3)
+        self.assertEqual(len(self.names("Various", "Sydney Sky")), 2)
+
+    def test_named_folder_without_a_reliable_old_name_gives_the_holder_a_generated_name(self):
+        drak, lia = self.named_match_library(lia_source="unavailable")
+        catalog = self.catalog()
+        catalog["people"][lia]["names"]["originalName"] = None
+        (self.lib / ".likeness-library.json").write_text(json.dumps(catalog), encoding="utf-8")
+        out = self.run_tool("seed", apply=True)
+        self.assertIn("Sisters/Draknoxa held the name; it gets the generated name", out)
+        people = self.catalog()["people"]
+        self.assertEqual(people[lia]["names"]["currentName"], "Sydney Sky")
+        generated = people[drak]["names"]
+        self.assertEqual(generated["originalSource"], "generated")
+        self.assertEqual(generated["originalName"], generated["currentName"])
+        self.assertNotIn(generated["currentName"], ("Sydney Sky", "Lia Joyce"))
+        self.assertEqual(len(self.names("Potentials", "Sydney Sky")), 5)
+
+    def test_named_folder_without_a_clear_match_becomes_a_new_identity(self):
+        self.seed_catalog()
+        blend("lia2", "lia", 0.95)
+        self.add("Potentials", "Lia Joyce", "lia", 3)
+        self.add("Potentials", "Lia Twin", "lia2", 3)
+        self.add("Various", "Sydney Sky", "lia", 2)
+        out = self.run_tool("seed", apply=True)
+        self.assertIn("Various/Sydney Sky: no clear match (best Potentials/Lia", out)
+        self.assertIn("Various/Sydney Sky -> Potentials/Sydney Sky (NEW folder)", out)
+        self.assertEqual(len(self.names("Potentials", "Lia Joyce")), 3)
 
     def setUp(self):
         (ROOT / "tmp").mkdir(exist_ok=True)

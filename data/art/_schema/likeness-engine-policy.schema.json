@@ -215,6 +215,10 @@
           "type": "number",
           "minimum": 0,
           "maximum": 2
+        },
+        "namedReviewMinimum": {
+          "$ref": "#/definitions/score",
+          "description": "Lower Review floor for an arrival whose best match is a user-named intake identity (with the photo-route margin); Review only, never a reference vote."
         }
       }
     },
@@ -277,6 +281,10 @@
         "intakeReleasePotentialMaxPhotos": {
           "type": "integer", "minimum": 0, "default": 1,
           "description": "Normal intake releases existing Potentials with at most this many Gallery photos so they are rescored with the incoming batch and can move upward or merge. 0 disables."
+        },
+        "formationLinkage": {
+          "enum": ["average", "centroid"], "default": "average",
+          "description": "New-identity formation merge rule at the yellow minimum: average pairwise similarity (default) or group-centroid similarity (IU10 trial)."
         }
       }
     },

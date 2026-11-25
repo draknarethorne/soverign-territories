@@ -200,6 +200,16 @@
       "properties": {
         "id": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"},
         "displayName": {"type": "string", "minLength": 1},
+        "namedIntake": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["recordedAt", "sourceFolder"],
+          "description": "User-named identity (Various/<Name> intake); retained across rebases unless a category release is forced.",
+          "properties": {
+            "recordedAt": {"type": "string", "format": "date-time"},
+            "sourceFolder": {"type": "string", "pattern": "^Various/[^/]+$"}
+          }
+        },
         "names": {
           "type": "object",
           "additionalProperties": false,
@@ -207,7 +217,23 @@
           "properties": {
             "originalName": {"type": ["string", "null"], "minLength": 1},
             "currentName": {"type": "string", "minLength": 1},
-            "originalSource": {"enum": ["recorded-history", "rename-history", "catalogue-registration", "unavailable"]}
+            "originalSource": {"enum": ["recorded-history", "rename-history", "catalogue-registration", "unavailable", "named-intake", "named-intake-swap", "generated"]},
+            "previousNames": {
+              "type": "array",
+              "description": "Names replaced by named-intake corrections, oldest first.",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["originalName", "currentName", "originalSource", "replacedAt", "reason"],
+                "properties": {
+                  "originalName": {"type": ["string", "null"]},
+                  "currentName": {"type": "string", "minLength": 1},
+                  "originalSource": {"type": "string", "minLength": 1},
+                  "replacedAt": {"type": "string", "format": "date"},
+                  "reason": {"type": "string", "minLength": 1}
+                }
+              }
+            }
           }
         },
         "family": {

@@ -1015,9 +1015,9 @@ def source_various_plan(folder, out_root, cfg):
 def workflow_selected_arrivals(images, cfg):
     """Arrivals whose stable ID is a workflow-selected photo and whose name is not yet ID-bearing.
 
-    The SIMPLE rebase refuses to move (rename) a workflow-selected photo, so
-    stable-ID filename normalization of such an arrival stops its preview.
-    This is reported only; the tool does not rename or skip anything.
+    Since IU7 the SIMPLE rebase moves and renames such a photo like any other
+    and records a replacement proposal. This is reported only; the tool does
+    not rename or skip anything.
     """
     from tools.art import originals
     from tools.art.likeness_library import normal_import
@@ -1073,9 +1073,9 @@ def _build_empty(args, cfg, out_root, staging, pristine_root, parameters, *, app
         for row in skipped[:20]:
             print(f"    {row['name']}: {row['reason']}")
         for row in selected_arrivals:
-            print(f"  WARNING workflow-selected photo {row['photoId']} ({row['workflowPhoto']}) arrives as "
-                  f"{row['name']}; a SIMPLE rebase refuses to rename it (protected or workflow-selected photo "
-                  f"cannot move), so hold it out of Various/gallery before the rebase or keep it in Production only")
+            print(f"  note: workflow-selected photo {row['photoId']} ({row['workflowPhoto']}) arrives as "
+                  f"{row['name']}; it moves like any photo and the rebase records a replacement proposal "
+                  "(IU7); workspaces.json is never changed")
     print(f"  preview {time.perf_counter() - started:.1f}s")
     if not apply:
         return 0

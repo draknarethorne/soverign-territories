@@ -385,6 +385,10 @@ def _small_potentials(api, cfg, root, catalog, metadata, originals, limit, updat
     protected_folders = {
         person["folder"] for person in catalog.get("people", {}).values() if person.get("protected")
     }
+    named_folders = {
+        person["folder"] for person in catalog.get("people", {}).values()
+        if person.get("namedIntake") and not person.get("mergedInto")
+    }
     anchors = {
         photo_id for person in catalog.get("people", {}).values()
         for photo_id in person.get("identityAnchors", ())
@@ -400,6 +404,7 @@ def _small_potentials(api, cfg, root, catalog, metadata, originals, limit, updat
         ids = [metadata.photo_id_from_name(path.name) for path in paths]
         reason = (
             "protected identity" if owner in protected_folders else
+            "user-named identity (IU16)" if owner in named_folders else
             "Gallery photo without a stable ID" if not all(ids) else
             "same-photo update target" if set(ids) & set(update_ids) else
             "protected or anchored photo" if any(

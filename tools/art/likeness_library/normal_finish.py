@@ -57,7 +57,9 @@ def check_batch(api, space, catalog, policy, moves, *, update_ids=()):
                 validate_move(move, policy)
             elif pathlib.PurePosixPath(move["destination"]).parent.name == "gallery" and move.get("destinationType") == "existing":
                 route = move["routingEvidence"]
-                rules = policy["categoryPolicies"][folder.split("/", 1)[0]]
+                # IU16 gate round 2: a named-intake arrival was admitted on the Potential bar.
+                gate = "Potentials" if move.get("namedIntakeGate") else folder.split("/", 1)[0]
+                rules = policy["categoryPolicies"][gate]
                 if route["winner"] != folder or route["score"] < rules["photoRouteMinimum"] or route["margin"] < rules["photoRouteMargin"]:
                     raise ValueError("bound normal Gallery admission does not satisfy its selected receiving gates")
             evidence.append({

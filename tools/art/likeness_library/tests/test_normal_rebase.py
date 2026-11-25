@@ -693,8 +693,8 @@ class NormalRebaseTests(unittest.TestCase):
             overridden_evidence = next(
                 row for row in overridden["releasedDecisionEvidence"] if row["photoId"] == bindings[0]["photoId"]
             )
-            self.assertTrue(overridden_evidence["workflowSelected"])
-            self.assertTrue(overridden_evidence["sourceProtectionOverride"])
+            # IU7: a workflow selection no longer protects or overrides; the photo routes normally.
+            self.assertFalse(overridden_evidence["workflowSelected"])
             self.assertEqual(overridden_evidence["decision"]["destination"], "Prospects/Owner")
             real_two_round = normal_rebase.normal_admission.two_round_plan
 
@@ -2724,8 +2724,80 @@ class NormalRebaseTests(unittest.TestCase):
             normal_rebase._parser().parse_args(["--preparation-workers", "3"]).preparation_workers, 3,
         )
 
+    def test_named_cohesion_flags_red_members_and_registry_round_trips(self):
+        from tools.art.likeness_library import named_intake
+
+        def photo(*vector):
+            return SimpleNamespace(vec=np.asarray(vector, dtype=float) / np.linalg.norm(vector))
+
+        raw = {f"Prospects/Fia/gallery/fia_image_{i}.jpg": photo(*v)
+               for i, v in enumerate(((1, 0, 0), (1, .1, 0), (1, 0, .1), (0, 0, 1)), start=1)}
+        active = [{"photoId": f"photo:image_{i}", "source": s} for i, s in enumerate(raw, start=1)]
+        report = normal_rebase._named_cohesion({"Fia"}, active, [], raw, normal_rebase.load_policy())
+        self.assertEqual(report[0]["identity"], "Prospects/Fia")
+        self.assertEqual([row["photoId"] for row in report[0]["possibleMixups"]], ["photo:image_4"])
+        self.assertEqual(normal_rebase._named_cohesion(set(), active, [], raw, normal_rebase.load_policy()), [])
+
+    def test_named_identities_are_marked_in_a_local_catalogue_and_force_release_by_category(self):
+        from tools.art.likeness_library import named_intake
+
+        sandbox_root = self.root.parent / "u" / "Sovereign Territories Sandbox" / "Working"
+        sandbox_root.mkdir(parents=True)
+        git_before = metadata.CATALOG_PATH.read_bytes()
+        path, marked = named_intake.mark(sandbox_root, [
+            {"source": "Various/Fia Hadley", "destination": "Potentials/Fia Hadley"},
+            {"source": "Various/Ava", "destination": "Angels/Ava"},
+        ])
+        self.assertEqual(path, sandbox_root / ".likeness-library.json")
+        self.assertEqual(marked, ["Potentials/Fia Hadley"])
+        self.assertEqual(metadata.CATALOG_PATH.read_bytes(), git_before)
+        catalog = metadata.load_catalog(path)
+        person = next(p for p in catalog["people"].values() if p["folder"] == "Potentials/Fia Hadley")
+        self.assertEqual(person["namedIntake"]["sourceFolder"], "Various/Fia Hadley")
+        person["folderHistory"].append(person["folder"])
+        person["folder"] = "Prospects/Fia Hadley"
+        self.assertEqual(named_intake.named_folders(catalog), {"Prospects/Fia Hadley"})
+        self.assertEqual(named_intake.named_folders(catalog, ["Prospects"]), set())
+        named_intake.mark(sandbox_root, [{"source": "Various/Fia Hadley", "destination": "Potentials/Fia Hadley"}])
+        again = metadata.load_catalog(path)
+        self.assertEqual(sum(1 for p in again["people"].values() if p.get("namedIntake")), 1)
+
+    def test_moved_workflow_photo_proposes_best_remaining_gallery_photo(self):
+        def photo(*vector):
+            return SimpleNamespace(vec=np.asarray(vector, dtype=float) / np.linalg.norm(vector))
+
+        raw = {
+            "Angels/A/gallery/a_image_1.jpg": photo(1, 0, 0),
+            "Angels/A/gallery/a_image_2.jpg": photo(1, .1, 0),
+            "Angels/A/gallery/a_image_3.jpg": photo(1, .6, 0),
+            "Various/gallery/x_image_4.jpg": photo(0, 1, 0),
+        }
+        active = [{"photoId": f"photo:image_{index}", "source": source}
+                  for index, source in enumerate(raw, start=1)]
+        moves = [{"photoId": "photo:image_1", "source": "Angels/A/gallery/a_image_1.jpg",
+                  "destination": "Potentials/P/review/p_image_1.jpg"}]
+        proposals = normal_rebase._workflow_replacement_proposals(
+            {"photo:image_1", "photo:image_4"}, active, moves, raw,
+        )
+        self.assertEqual(len(proposals), 1)
+        self.assertEqual(proposals[0]["identity"], "Angels/A")
+        self.assertEqual(proposals[0]["replacement"]["photoId"], "photo:image_2")
+        self.assertFalse(proposals[0]["configurationChanged"])
+        renamed = [{**moves[0], "destination": "Angels/A/gallery/a_image_1_new.jpg"}]
+        self.assertEqual(normal_rebase._workflow_replacement_proposals({"photo:image_1"}, active, renamed, raw), [])
+
     def test_unrequested_workers_follow_preview_or_this_machine(self):
         api = self.stub_api([])
+        with self.assertRaisesRegex(ValueError, "release categories differ from preview"):
+            normal_rebase._plan(self.root, "lean", "fixture", api=api, reuse_plan={
+                "releaseNamedCategories": ["Potentials"], "preparationWorkersRequested": 1,
+            }, release_named_categories=["Prospects"])
+        with self.assertRaisesRegex(ValueError, "accepts Models, Prospects or Potentials"):
+            normal_rebase._plan(self.root, "lean", "fixture", api=api, release_named_categories=["Angels"])
+        self.assertEqual(
+            normal_rebase._parser().parse_args(["--release-named-category", "Potentials"]).release_named_category,
+            ["Potentials"],
+        )
         seen = []
 
         def stop(*args, **kwargs):
@@ -3608,6 +3680,52 @@ class SettlePassTests(unittest.TestCase):
         self.assertEqual(_clusters[0]["photoIds"], ["w", "z"])
         self.assertNotIn("singlePhoto", _clusters[0])
         self.assertNotIn("singlePhoto", decisions["z"])
+
+    def test_original_low_member_leaves_only_for_a_clearly_better_established_rival(self):
+        stay = "existing member outside a release cohort; settle releases only photos this run placed"
+
+        def fixture(odd_vector, **extra):
+            return [
+                self.entry("a1", "Prospects/Alpha", (1, 0, 0)),
+                self.entry("a2", "Prospects/Alpha", (1, .05, 0)),
+                self.entry("a3", "Prospects/Alpha", (1, -.05, 0)),
+                self.entry("b1", "Potentials/Beta", (0, 1, .05)),
+                self.entry("b2", "Potentials/Beta", (0, 1, -.05)),
+                self.entry("odd", "Prospects/Alpha", odd_vector, stayExemptReason=stay, rivalRelease=True, **extra),
+            ]
+
+        decisions = {}
+        result, _ = self.settle(fixture((.1, .99, 0)), decisions)
+        self.assertEqual(decisions["odd"]["destination"], "Potentials/Beta")
+        self.assertEqual(decisions["odd"]["settle"]["releasedFrom"], "Prospects/Alpha")
+        # No clearly better rival (low everywhere): the original member stays home.
+        decisions = {}
+        result, _ = self.settle(fixture((.1, .1, .99)), decisions)
+        self.assertNotIn("odd", decisions)
+        self.assertEqual(result["passes"][0]["releasedCount"], 0)
+        # Without IU17 eligibility, or with a real protection, it is never released.
+        for extra in ({"rivalRelease": False}, {"exemptReason": "protected photo"}):
+            decisions = {}
+            entries = fixture((.1, .99, 0))
+            entries[-1].update(extra)
+            self.settle(entries, decisions)
+            self.assertNotIn("odd", decisions)
+
+    def test_member_above_its_category_bar_is_not_released_as_orange(self):
+        policy = copy.deepcopy(self.policy)
+        policy["categoryPolicies"]["Potentials"]["photoRouteMinimum"] = .25
+        entries = [
+            self.entry("p1", "Potentials/Pia", (1, 0, 0)),
+            self.entry("p2", "Potentials/Pia", (1, .05, 0)),
+            self.entry("p3", "Potentials/Pia", (1, -.05, 0)),
+            self.entry("x", "Various", (.27, .963, 0), sourceLocation=("Various", "gallery")),
+        ]
+        decisions = {"x": self.admitted("x", "Potentials/Pia")}
+        result, _timings = self.admission.settle_passes(
+            self.api, entries, decisions, [], {}, self.settings, policy, set(), max_passes=3,
+        )
+        self.assertEqual(result["passes"][0]["releasedCount"], 0)
+        self.assertEqual(decisions["x"]["destination"], "Potentials/Pia")
 
     def test_disabled_and_deterministic(self):
         entries, decisions = self.chain()

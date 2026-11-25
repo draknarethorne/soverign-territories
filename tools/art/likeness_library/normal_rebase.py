@@ -15,8 +15,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from tools.art import originals
 from tools.art.likeness_library import (
-    empty_retirement, face_quality, maintenance, metadata, normal_finish, normal_import, normal_products,
-    normal_transaction, normal_recap, reconciliation, rejections, normal_admission,
+    empty_retirement, face_quality, maintenance, metadata, named_intake, normal_finish, normal_import,
+    normal_products, normal_transaction, normal_recap, reconciliation, rejections, normal_admission,
     verification_reads,
 )
 from tools.art.likeness_library.policy import effective_settings, load_policy, settle_settings
@@ -151,7 +151,8 @@ def _released_candidate_roles(bindings, active, held, archived=()):
     return roles
 
 
-def _fresh_gallery_assessment(root, rows, active, held, photos, native_paths, catalog, settings, policy):
+def _fresh_gallery_assessment(root, rows, active, held, photos, native_paths, catalog, settings, policy,
+                              named_folders=()):
     """Build the selector's complete pre-retirement Gallery evidence from classified sources."""
     from tools.art.likeness_library import audit
 
@@ -220,7 +221,7 @@ def _fresh_gallery_assessment(root, rows, active, held, photos, native_paths, ca
             "sourceStatus": row["sourceStatus"], "standardName": row.get("standardName"),
         })
     duplicate_votes = _single_vote_per_content(inputs)
-    result = normal_admission.fresh_baseline_release_candidates(inputs, policy)
+    result = normal_admission.fresh_baseline_release_candidates(inputs, policy, named_folders)
     result["duplicateContentVotes"] = duplicate_votes
     if result["blockedBindings"]:
         raise ValueError("fresh source release has ambiguous, stale or unbindable Gallery selections: "
@@ -982,6 +983,83 @@ def _decision_ids(cfg, metadata_module):
     }
 
 
+def _identity_home(path):
+    parts = pathlib.PurePosixPath(path).parts
+    if len(parts) >= 4 and parts[0] in IDENTITY_ROOTS:
+        return "/".join(parts[:2]), parts[2]
+    return parts[0] if parts else "", None
+
+
+def _named_cohesion(named_names, active, moves, raw_photos, policy):
+    """Change 4 (report only): user-named members scoring red against their own Gallery."""
+    floor = (policy.get("scoreBands") or {}).get("orange", {}).get("minimum")
+    if not named_names or floor is None:
+        return []
+    final = {row["photoId"]: (row["source"], row["source"]) for row in active}
+    for move in moves:
+        final[move["photoId"]] = (final.get(move["photoId"], (move["source"],))[0], move["destination"])
+    members = collections.defaultdict(list)
+    for photo_id, (source, destination) in final.items():
+        owner, bucket = _identity_home(destination)
+        photo = raw_photos.get(source)
+        if (bucket == "gallery" and pathlib.PurePosixPath(owner).name in named_names
+                and photo is not None and getattr(photo, "vec", None) is not None):
+            members[owner].append((photo_id, destination, np.asarray(photo.vec, dtype=float)))
+    report = []
+    for owner, rows in sorted(members.items()):
+        if len(rows) < 3:
+            continue
+        flagged = []
+        for index, (photo_id, path, vector) in enumerate(rows):
+            others = nz(np.mean([row[2] for i, row in enumerate(rows) if i != index], axis=0))
+            score = float(vector @ others)
+            if score < floor:
+                flagged.append({"photoId": photo_id, "path": path, "score": round(score, 4)})
+        report.append({
+            "identity": owner, "galleryCount": len(rows), "flaggedBelow": floor,
+            "possibleMixups": sorted(flagged, key=lambda row: (row["score"], row["photoId"])),
+        })
+    return report
+
+
+def _workflow_replacement_proposals(selected_ids, active, moves, raw_photos):
+    """IU7: a moved workflow photo's identity proposes its best-matching remaining Gallery photo.
+
+    Proposal only: configuration (``workflows/workspaces.json``) is never changed.
+    """
+    final = {row["photoId"]: (row["source"], row["source"]) for row in active}
+    for move in moves:
+        source = final.get(move["photoId"], (move["source"],))[0]
+        final[move["photoId"]] = (source, move["destination"])
+    proposals = []
+    for photo_id in sorted(set(selected_ids) & set(final)):
+        source, destination = final[photo_id]
+        before, after = _identity_home(source), _identity_home(destination)
+        if before[1] is None or after == before:
+            continue
+        members = []
+        for other, (other_source, other_destination) in final.items():
+            photo = raw_photos.get(other_source)
+            if (other != photo_id and _identity_home(other_destination) == (before[0], "gallery")
+                    and photo is not None and getattr(photo, "vec", None) is not None):
+                members.append((other, other_destination, np.asarray(photo.vec, dtype=float)))
+        replacement = None
+        if members:
+            centroid = nz(np.mean([vector for _, _, vector in members], axis=0))
+            scored = sorted(
+                ((float(vector @ centroid), other, path) for other, path, vector in members),
+                key=lambda item: (-item[0], item[1]),
+            )
+            score, other, path = scored[0]
+            replacement = {"photoId": other, "finalPath": path, "ownScore": round(score, 4)}
+        proposals.append({
+            "photoId": photo_id, "identity": before[0], "currentPath": source, "finalPath": destination,
+            "replacement": replacement, "configurationChanged": False,
+            "basis": "highest similarity to the identity's remaining Gallery centroid after the plan; proposal only",
+        })
+    return proposals
+
+
 def _resolve_collision(root, entries, record, anchor_owners, chosen, workflow_selected, protected_folders):
     from tools.art import duplicates
 
@@ -1229,7 +1307,11 @@ def _classify_sources(root, rows, cfg, catalog, api, *, archive_collisions=False
     from tools.art import duplicates
 
     chosen = duplicates.chosen_stems(cfg)
-    workflow_ids = _decision_ids(cfg, metadata)
+    # IU7 (Nov 23): workflow-selected photos move like any other photo; the plan
+    # records a replacement proposal instead (see _workflow_replacement_proposals).
+    # Selections still pick the keeper among byte-identical copies.
+    workflow_ids = set()
+    selection_ids = _decision_ids(cfg, metadata)
     anchors = collections.defaultdict(set)
     for person_id, person in catalog.get("people", {}).items():
         for photo_id in person.get("identityAnchors", ()):
@@ -1318,7 +1400,7 @@ def _classify_sources(root, rows, cfg, catalog, api, *, archive_collisions=False
         if archive_collisions and len(entries) > 1:
             keeper = _resolve_collision(
                 root, entries, record, anchors.get(photo_id, set()), chosen,
-                photo_id in workflow_ids, protected_folders,
+                photo_id in selection_ids, protected_folders,
             )
             if keeper:
                 active.append(keeper)
@@ -1488,7 +1570,7 @@ def _classify_sources(root, rows, cfg, catalog, api, *, archive_collisions=False
     }
     if archive_collisions:
         _archive_retained_original_copies(
-            rows, active, user_ids | workflow_ids | set(anchors) | set(catalog.get("photos", {})), chosen,
+            rows, active, user_ids | selection_ids | set(anchors) | set(catalog.get("photos", {})), chosen,
         )
 
     by_digest = collections.defaultdict(list)
@@ -1505,7 +1587,7 @@ def _classify_sources(root, rows, cfg, catalog, api, *, archive_collisions=False
             row for row in same_content
             if pathlib.Path(row["originalName"]).stem.casefold() in chosen
         ]
-        workflow_rows = [row for row in same_content if row["photoId"] in workflow_ids]
+        workflow_rows = [row for row in same_content if row["photoId"] in selection_ids]
         protected_rows = [
             row for row in same_content
             if catalog.get("photos", {}).get(row["photoId"], {}).get("protected")
@@ -1697,7 +1779,8 @@ def _pre_settle_bindings(plan):
 
 def _settle_plan(api, report, *, rows, candidates, raw_photos, release_ids, folders, cores, catalog,
                  rejection_catalog, settings, policy, names_taken, locked, max_passes, fresh_assessment,
-                 candidate_quality=None, locked_ids=(), workflow_ids=(), protected_folders=()):
+                 candidate_quality=None, locked_ids=(), workflow_ids=(), protected_folders=(),
+                 named_folders=()):
     """Run bounded settle passes over the planned decisions.
 
     Returns ``(evidence, timings, bindings, settle_candidates)``. Every measured
@@ -1770,11 +1853,19 @@ def _settle_plan(api, report, *, rows, candidates, raw_photos, release_ids, fold
             vector = np.asarray(photo.vec, dtype=float)
             vector = nz(vector) if vector.ndim == 1 and np.isfinite(vector).all() and np.linalg.norm(vector) else None
         stay = None
+        rival_release = False
         if original(row):
             if fresh_assessment is None:
                 stay = "existing member outside a release cohort; settle releases only photos this run placed"
             elif not fresh_bindable(row):
                 stay = "existing member cannot be bound for release (ambiguous, stale or unbindable source)"
+            elif row["owner"] in named_folders and (assessed.get(photo_id) or {}).get("band") != "red":
+                stay = "user-named identity member above red; only truly low scores leave a named identity"
+            # IU17: a low original member of a non-cast identity may still leave for a clearly
+            # better established rival (multi-pass refinement), never to a fragment.
+            rival_release = row["group"] not in ("Sisters", "Angels") and (
+                fresh_assessment is None or fresh_bindable(row)
+            ) and not (candidate or {}).get("protected")
         exempt = None
         if candidate is not None and photo_id not in release_ids and not (
             fresh_assessment is not None and original(row) and stay is None
@@ -1798,6 +1889,7 @@ def _settle_plan(api, report, *, rows, candidates, raw_photos, release_ids, fold
             ),
             "scorable": bool(candidate.get("qualityEligible")) if candidate is not None else single,
             "exemptReason": exempt, "stayExemptReason": stay,
+            "rivalRelease": rival_release and row["owner"] not in protected_folders,
             "seedOf": seeds.get(photo_id), "candidateState": state, "candidate": candidate,
         })
     settle_candidates = {}
@@ -1831,8 +1923,7 @@ def _settle_plan(api, report, *, rows, candidates, raw_photos, release_ids, fold
     }
     evidence, timings = normal_admission.settle_passes(
         api, entries, decisions, report["clusters"], identity_meta, settings, policy, names_taken,
-        locked=locked, max_passes=max_passes,
-        candidate_for=candidate_for if fresh_assessment is not None else None,
+        locked=locked, max_passes=max_passes, candidate_for=candidate_for,
     )
     bindings = []
     for entry in entries:
@@ -1842,6 +1933,12 @@ def _settle_plan(api, report, *, rows, candidates, raw_photos, release_ids, fold
             continue
         # An original member that settle moved off its source location.
         if fresh_assessment is None or entry["stayExemptReason"]:
+            if entry.get("rivalRelease") and (decisions.get(entry["photoId"]) or {}).get("settle"):
+                # IU17: an unprotected original left for a clearly better established rival.
+                if fresh_assessment is not None:
+                    bindings.append({"photoId": row["photoId"], "currentPath": row["source"],
+                                     "sha256": row["sourceHash"]})
+                continue
             raise ValueError(f'{entry["photoId"]}: settle cannot release an original member outside a fresh release')
         bindings.append({"photoId": row["photoId"], "currentPath": row["source"], "sha256": row["sourceHash"]})
     report["assignments"] = sorted(
@@ -1857,6 +1954,7 @@ def _plan(
     root, profile, run_id, *, api, cache_path=None, policy_path=None,
     for_apply=False, reuse_plan=None, reuse_preparation=None,
     reuse_preparation_sha256=None, lock_cast_admission=False, preparation_workers=None,
+    release_named_categories=(),
     released_bindings=None, reconsider_holds=False, fresh_source_release=False,
 ):
     from tools.workflows import comfy_workflows as cw
@@ -1933,6 +2031,15 @@ def _plan(
             photo, settings, path=measured, redetect=redetect, framing=face_quality.derivative_framing,
         )
     catalog = metadata.load_catalog(metadata.path_for_root(root))
+    release_named_categories = sorted(set(release_named_categories))
+    if reuse_plan is not None and not release_named_categories:
+        release_named_categories = list(reuse_plan.get("releaseNamedCategories", []))
+    if set(release_named_categories) - set(named_intake.FORCEABLE):
+        raise ValueError("--release-named-category accepts Models, Prospects or Potentials")
+    if reuse_plan is not None and reuse_plan.get("releaseNamedCategories", []) != release_named_categories:
+        raise ValueError("forced named-identity release categories differ from preview")
+    # IU16: user-named identities are retained like Angels/Sisters unless a category is forced.
+    named = named_intake.named_folders(catalog, release_named_categories)
     phase_started = time.perf_counter()
     with verification_reads.session(root, label="SIMPLE source inventory"):
         rows, folders, prefixes = _hash_sources(root, cfg, api)
@@ -2128,6 +2235,7 @@ def _plan(
                 raise ValueError("fresh source measurement proof differs from preview")
             fresh_assessment = _fresh_gallery_assessment(
                 root, rows, active, held, raw_photos, native_paths, decision_catalog, settings, policy,
+                named_folders=named,
             )
             if reuse_plan is not None and reuse_plan.get("freshSourceAssessment") != fresh_assessment:
                 raise ValueError("fresh source assessment differs from preview")
@@ -2308,11 +2416,13 @@ def _plan(
                 api, scoring_candidates, cores,
                 reference_rows,
                 settings, policy, all_names, locked=lock_cast_admission,
+                named_folders=named & set(cores),
                 **({"released_bindings": [
                     binding for binding in released_bindings
                     if release_roles[binding["photoId"]] == "candidate"
                 ]} if released_bindings is not None else {}),
             )
+            report["namedIntakeIdentities"] = sorted(named & set(cores))
         else:
             report = normal_import._route_plan(
                 api, candidates, cores, settings, policy, all_names,
@@ -2552,7 +2662,7 @@ def _plan(
                 locked=lock_cast_admission, max_passes=settle_limit,
                 fresh_assessment=fresh_assessment if fresh_source_release else None,
                 candidate_quality=candidate_quality, locked_ids=locked_ids, workflow_ids=workflow_ids,
-                protected_folders=protected_folders,
+                protected_folders=protected_folders, named_folders=named,
             )
             report["settle"] = settle_evidence
             if settle_bindings:
@@ -2730,6 +2840,7 @@ def _plan(
         )
         report["preparationWorkersRequested"] = preparation_workers
         report["preparationWorkersSource"] = worker_source
+        report["releaseNamedCategories"] = release_named_categories
         primary_rows = [
             row for row in rows if row["group"] in IDENTITY_ROOTS | {"Various"}
         ]
@@ -3144,7 +3255,7 @@ def _plan(
         if fresh_source_release and fresh_assessment.get("castSeed"):
             report["freshCastSeed"] = _fresh_cast_seed_outcomes(
                 fresh_assessment, report["moves"], archives,
-                report.get("releasedDecisionEvidence", []), workflow_ids,
+                report.get("releasedDecisionEvidence", []), _decision_ids(cfg, metadata),
             )
             seed_summary = report["freshCastSeed"]["summary"]
             report["freshCastSeedIdentityCount"] = seed_summary["identityCount"]
@@ -3156,6 +3267,17 @@ def _plan(
             )
             if reuse_plan is not None and reuse_plan.get("freshCastSeed") != report["freshCastSeed"]:
                 raise ValueError("fresh cast seed outcomes differ from preview")
+        report["workflowReplacementProposals"] = _workflow_replacement_proposals(
+            _decision_ids(cfg, metadata), active,
+            [move for move in report["moves"] if not move.get("membershipOnly")], raw_photos,
+        )
+        if reuse_plan is not None and reuse_plan.get("workflowReplacementProposals", []) != report[
+                "workflowReplacementProposals"]:
+            raise ValueError("workflow replacement proposals differ from preview")
+        report["namedIntakeCohesion"] = _named_cohesion(
+            {pathlib.PurePosixPath(folder).name for folder in named}, active,
+            [move for move in report["moves"] if not move.get("membershipOnly")], raw_photos, policy,
+        )
         # Item (g): identity folders left with no Gallery/Review original are
         # retired inside the publication transaction; an emptied cast folder stops here.
         report["emptiedIdentityRetirement"] = {
@@ -3223,7 +3345,7 @@ def _plan(
         ]
         if permission_moves:
             maintenance._validate_permissions(
-                root, permission_moves, policy, cfg,
+                root, permission_moves, policy, cfg, workflow_selections_movable=True,
                 **({"released_bindings": released_bindings} if released_bindings is not None else {}),
             )
         report["publicationPermissionsVerified"] = True
@@ -3274,6 +3396,11 @@ def _parser():
         "--preparation-workers", type=int,
         help="FULL/LEAN preparation workers for a new preview (default: this machine's setting from "
              "bin\\machine-tuning.cmd show); apply reuses the preview's count",
+    )
+    parser.add_argument(
+        "--release-named-category", action="append", default=[], choices=("Models", "Prospects", "Potentials"),
+        help="force: treat this category's user-named identities as ordinary for this run (repeatable); "
+             "repeat on apply",
     )
     parser.add_argument("--run-id", help="stable receipt/run directory identifier")
     parser.add_argument("--receipt", help="receipt path; defaults to the configured reports root under runs/")
@@ -3578,6 +3705,7 @@ def main(argv=None):
             reuse_preparation_sha256=args.reuse_preparation_sha256,
             lock_cast_admission=args.lock_cast_admission,
             preparation_workers=args.preparation_workers,
+            release_named_categories=args.release_named_category,
             released_bindings=release_bindings,
             reconsider_holds=args.reconsider_holds,
             fresh_source_release=args.fresh_source_release,
@@ -3597,7 +3725,7 @@ def main(argv=None):
                 duplicate_archives=report.get("duplicateArchives", {}),
             )
             maintenance._validate_permissions(
-                root, relocations, policy, cfg,
+                root, relocations, policy, cfg, workflow_selections_movable=True,
                 **({"released_bindings": release_bindings} if release_bindings is not None else {}),
             )
             for row in ordinary:
@@ -3737,6 +3865,15 @@ def main(argv=None):
         print(f"emptied identity folders to retire inside apply: {len(retiring)}")
         for row in retiring:
             print(f"  RETIRE {row['source']} -> {row['destination']} ({len(row['photos'])} photo(s) leave it)")
+        for row in report.get("workflowReplacementProposals", []):
+            replacement = row["replacement"] or {}
+            print(f"  WORKFLOW PHOTO {row['photoId']} leaves {row['identity']} -> {row['finalPath']}; proposed "
+                  f"replacement {replacement.get('photoId', 'none')} (score {replacement.get('ownScore')}); "
+                  "workspaces.json unchanged")
+        for row in report.get("namedIntakeCohesion", []):
+            if row["possibleMixups"]:
+                print(f"  NAMED COHESION {row['identity']}: {len(row['possibleMixups'])} of {row['galleryCount']} "
+                      f"Gallery photo(s) score below {row['flaggedBelow']} against the rest (report only)")
         print("preview only; recap/audit reports written; no membership, catalogue, cache or source originals were changed")
         return 0
     except (OSError, ValueError, KeyError, TypeError) as exc:

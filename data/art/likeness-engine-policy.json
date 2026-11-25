@@ -74,7 +74,8 @@
     "reviewMinimum": 0.3,
     "automaticRouteMinimum": 0.4,
     "minimumMargin": 0.1,
-    "minimumOwnCoreLead": 0.1
+    "minimumOwnCoreLead": 0.1,
+    "namedReviewMinimum": 0.25
   },
   "identityActions": {
     "independentEvidenceMaximumSimilarity": 0.95,
@@ -88,7 +89,8 @@
     "splitMinimumMargin": 0.1,
     "splitMinimumIndependentPhotos": 2,
     "settlePassMaximum": 3,
-    "intakeReleasePotentialMaxPhotos": 1
+    "intakeReleasePotentialMaxPhotos": 1,
+    "formationLinkage": "centroid"
   },
   "lookalikeGroups": {
     "suggestionMinimumSimilarity": 0.3,

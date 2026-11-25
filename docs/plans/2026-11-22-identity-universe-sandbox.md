@@ -332,6 +332,409 @@ rebases, or Sandbox too, write IU7 replacements to `workflows/workspaces.json`.
 The user identified the current selection (`image_7513773530805044436`) as
 Petra Cole, a likely future character.
 
+**Answered Nov 23 17:09:** (1) yes: Angelica's selection is now
+`angelica_shot_20261019152053_944x1104.png` via `bin\inputs.cmd set`
+(only that `workspaces.json` line changed; ComfyUI `inputs reset --hero
+Angelica` deployment is left to the workflow side). (2) Sandbox runs must
+not touch Production `workspaces.json`; a separate Sandbox selection store
+is wanted (IU15). (3) Implement the identified fixes below, then rerun;
+gate changes (Prospect vs Potential) come after, unless a fix needs one.
+
+<!-- markdownlint-disable MD013 -->
+```text
+Here's my responses before I do actually leave.  1.  Yes, we can change the workflow for Angelica so that it doesn't cause issues with our runs and it's the best one.  2. Maybe we need a separate place for how we manage the workspaces.json so we don't conflate or confuse things between the Production runs and the Sandbox runs.  When running in a Sandbox we don't actually want to be touching the Production workspace.json as they are just a Sandbox for verification of the code changes prior to running the code against Production.  But if we need to for the short term - we can just update the workspaces.json to make it less of a problem for the Sandbox since I will not run anything in production until the Sandbox work is clean.  3.  Given what you know needs to be done and as long as it's written in the docs/plans - you can work on the defined fixes and we can do another run.  I do also want to adjust the gates around what constitutes a Prospects vs. Potential so that we minimize the fall-out we're seeing.  I can also drop more images in certain Various/named person folders once we see how it runs after this set of changes - so we minimize the amount of things happening at once.  But the few things you identified are what I see myself and need to be fixed/updated so they work as expected.  Then we can start to adjust gates (unless we need to fix a gate to fix the identified issue).
+```
+<!-- markdownlint-enable MD013 -->
+
+### Nov 23 named-core fix contract
+
+The named-core run showed four defects. Root cause: in each matching round
+an existing member whose best *other* match passes the Review gate leaves
+for that identity's Review, and every non-cast folder whose core contains a
+leaving photo is retired (`retiredLowerCores` in `normal_admission.py`);
+its remaining members then re-route without their own core.
+
+- **IU13 Recompute instead of switch-off (user-clarified Nov 23):** when a
+  member leaves an identity during matching, recompute that identity's core
+  from its remaining eligible members (the existing core minimum still
+  applies); never withdraw the whole core (`retiredLowerCores`). The
+  remaining members keep attracting photos. No identity, named or not, is
+  exempt from releasing low-scoring or misplaced photos.
+- **IU13a Beat-home rule for existing members (user-confirmed Nov 23):** an
+  existing member moves upward (to another identity's Gallery or Review)
+  only when the rival passes its normal destination gate **and** beats the
+  member's score against its own (home) core by the photo-route margin
+  (0.10); otherwise it stays. This applies to every destination including
+  Angels/Sisters, superseding the Nov 18 rule for the home score only
+  (other lower-category rivals still never veto cast entry). Low-at-home
+  members without a clear rival still leave through the existing settle
+  release (below yellow, groups of 4+/5+). Arrivals keep the normal gates.
+  The user accepts this for this iteration and will tune from results.
+
+Final release paths after this contract: (1) upward moves use the beat-home
+rule; (2) a departing member triggers core recompute, never a switch-off;
+(3) settle passes release below-yellow members; (4) Angels/Sisters release
+red/orange/unscored members (cast seeding off); (5) intake releases
+one-photo Potentials; (6) workflow-selected photos move like any photo with
+a replacement proposal only; (7) the user's Reject forces a new home.
+- **IU14 Review-rival audit:** the observed cases (Review placements whose
+  rival scored higher, some by 0.3) came from the core switch-off that IU13
+  removes. Measure remaining cases in the post-fix universe runs first;
+  enforce (reject the Review placement and keep the photo with the
+  higher-scoring identity or its Review) only if cases remain. Report them
+  in the run comparison.
+- **IU7 (revised scope):** workflow-selected photos move like any other
+  photo in every SIMPLE rebase. The receipt and recap record the identity's
+  highest-scoring remaining Gallery photo as the proposed replacement.
+  Sandbox and universe runs never write `workflows/workspaces.json`;
+  Production writing waits for IU15. Universe identical-copy swaps are no
+  longer needed.
+- **IU15 Separate Sandbox workflow selections:** design a Sandbox-local
+  selection store so Sandbox verification never changes Production
+  `workspaces.json`; coordinate the interface with Beacon (WF1,
+  Q-d01e8fdb3329-15) before implementing.
+- **Acceptance:** focused tests for each rule; full likeness suite and
+  `bin\check.cmd`; then rerun `B:\Most Wanted\Various` in a new universe
+  (no swap, `seed`, 4 x 8 workers) and compare with `most-wanted-seeded-02`:
+  Fia/Freya/Olivia members retained, no Review placement with a
+  higher-scoring rival beyond the margin, and the workflow photo moving with
+  a recorded replacement proposal. Gate tuning (IU10) follows separately.
+
+User clarification of IU13 (Nov 23, answering which option to take when a
+member leaves):
+
+<!-- markdownlint-disable MD013 -->
+```text
+I would have expected the group to recompute, but there must have been a reason it was switched off - but I don't know why that's working.  But if we do release a photo from an existing identity - the remaining ones can still attrack other images.  I guess I'm a little confused.  We don't want to excempt them from any really low scoring or mis-placed photos and we don't want to exclude them if we do release a photo.   Am I answering the question properly?
+```
+<!-- markdownlint-enable MD013 -->
+
+Beacon's partial answer to Q-d01e8fdb3329-15 (Nov 23 23:04 UTC) recommends
+exposing IU7 replacements as proposals only until the shared selection
+interface is agreed, which matches the revised IU7 scope.
+
+### Nov 23 post-fix universe runs (IU13, IU13a, IU7)
+
+Code: `a25342dc1` plus `ed73589c1` (SIMPLE rebases move workflow selections
+past the shared permission check). Full likeness suite 1,377 tests passed.
+All runs used LEAN, fresh preparation and 4 x 8 workers. Each preview,
+apply and check exited 0; no identical-copy swap was needed.
+
+| Run | Input | Identities | Single / pair groups | Review | Various | IU14 audit |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| `mw-named-iu13-01` | 13 named folders + 138 unsorted | 65 (8 Prospects) | 35 / 10 | 17 | 2 Gallery, 8 Review | 1 |
+| `most-wanted-seeded-02` (before fixes) | same | 66 (8 Prospects) | 36 / 12 | 18 | 5 Gallery, 4 Review | not measured |
+| `mw-flat-iu13-02` | 275 unsorted | 121 (2 Prospects) | 45 / 42 | 0 | 6 | 0 |
+| `angelica-green-iu13-02` | green band, 1 hop: 449 photos, 13 source identities | 104 (1 Prospect) | 30 / 27 | 0 | 5 | 0 |
+
+- **Named folders:** all 137 hand-sorted photos stayed (133 before). Fia
+  Hadley kept 4 of 4 and gained 1 Gallery and 1 Review photo; no core was
+  switched off or recomputed. Gains: Nadia Lora +14 (+5 Review), Cloe Reyes
+  +4, Zara Lane +3 (+4 Review), Angelica Vale +3 (+2 Review), Katia Duvanti
+  +3, Jacinta Alden +1 (+2 Review), Petra Cole +1 (+2 Review), Freya Hadley
+  +1, Amara Cross +1, Fia Hadley +1 (+1 Review). Angelica's 3 fewer Gallery
+  gains than before are borderline: two now sit in her own Review (0.36,
+  below the Gallery lead) and one was released by settle as orange and
+  went to Aurelia Monroe Review (0.33).
+- **IU14 audit:** one Review photo (`shot_20261023111219`) sits in Jacinta
+  Alden Review at 0.316 while Aurelia Finley, a group formed later in the
+  same run, scores 0.432. Enforcement is not yet needed; it is a
+  formation-order case for IU10.
+- **Flat run:** identical to `most-wanted-baseline-02` (121 identities,
+  same sizes). IU13/IU13a govern existing members only; fragmentation of
+  unsorted photos comes from new-identity formation (every member must
+  score yellow against the group), which IU10 owns.
+- **Angelica universe:** the green band cut the pull from about 1,200 to
+  449 photos but still brought all of Sisters/Drakniss through one shared
+  photo; Drakniss formed five pure groups (68, 18, 16, 13, 12). Angelica's
+  core formed one 45-photo group (34 of her originals plus 11 Various); her
+  99 original photos spread over 12 groups, including a mixed group of 19
+  (8 Angelica, 7 Jacinta Alden, 4 Fia Hadley). Trusted-core mode (IU4/IU11)
+  should exclude whole-identity pulls such as Drakniss.
+- The first flat preview stopped safely on a second workflow-protection
+  check (fixed in `ed73589c1`); the first Angelica preview stopped safely
+  because its reusable preparation predates today's configuration change,
+  so it ran with fresh preparation.
+
+Run logs and the summarizer are scratch in `tmp\iu13-runs\`. Next: user
+review of the three universes, then IU10 formation rules and the
+Prospect/Potential gates.
+
+### Nov 23 named-intake gate round (approved changes 1, 2, 4)
+
+Evidence from `mw-named-iu13-01`: of 65 photos left in small groups or
+Various, 13 scored 0.25-0.30 for one named person with a 0.10 lead (11
+Nadia Lora), 7 tied (>= 0.30, lead < 0.10) between two named people
+(mostly Nadia/Zara), and 3 cleared both gates but did not join (to trace).
+Named cohesion varies widely: Angelica Vale median own score 0.27 (8+
+below 0.15), Zara 0.35, Petra 0.32; Fia 0.73, Freya 0.68, Cloe 0.67. A
+face hidden behind a handwritten letter passed the face gate (later
+quality work).
+
+Implemented in `cad12ee46` (full likeness suite 1,379 tests passed):
+
+1. **Named near-miss Review:** an arrival whose best match is a user-named
+   identity, scoring from `photoRouting.namedReviewMinimum` (0.25, new
+   optional policy key) up to the review minimum with the 0.10 margin,
+   goes to that identity's Review. Review never votes.
+2. **Named tie Review:** an arrival at or above the Review floor whose top
+   two matches are both named identities but without the Review lead goes
+   to the higher one's Review with the runner-up recorded.
+4. **Named cohesion report:** the receipt and run output list named Gallery
+   members scoring below orange (0.15) against the rest; report only.
+
+`likeness.py seed --apply` now records named identities in
+`_likeness/named-intake.json` (by display name, so category moves keep
+them); only those identities get rules 1 and 2. Change 3 (named
+Prospects use the 0.30 Gallery bar) and change 5 (centroid formation,
+IU10) wait for these results. The user does not want Angelica split: many
+Most Wanted photos are her or a close lookalike; 3-5 blondes and 3-4
+brunettes are "the same but not the same" (eye colours differ, faces
+match).
+
+**Results (all previews, applies and checks exited 0; fresh preparation,
+4 x 8 workers):**
+
+| Run | Identities | Single / pair | Named Review | Various | IU14 audit |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `mw-named-r2-01` | 62 (8 Prospects) | 35 / 7 | 31 | 2 | 2 |
+| `mw-named-iu13-01` (previous) | 65 | 35 / 10 | 17 | 10 | 1 |
+| `mw-flat-r2-01` | 121 | 45 / 42 | 0 | 6 | 0 |
+| `angelica-green-r2-01` | 104 | 30 / 27 | 0 | 5 | 0 |
+
+- Named run: all 137 hand-sorted photos stayed. The new rules made 15
+  Review placements (8 ties, 7 near misses; Nadia Lora 8). Nadia's Review
+  now holds 13 for the user. Cohesion flags (below 0.15, report only):
+  Angelica 7 of 44, Zara 5 of 30, Lorelei 2 of 7, Katia 1 of 5, Cloe 1 of
+  10.
+- New audit case: a round-1 near miss went to Nadia Review (0.28) before a
+  better new group formed in round 2 (Fiorella Lowe, 0.51). Next: apply the
+  near-miss rule only in round 2.
+- Flat and Angelica runs are unchanged (no named identities); one-photo
+  groups (35 named, 45 flat, 30 Angelica) come from formation (IU10).
+- Traced exceptions from the previous run: a Zara arrival released by
+  settle as orange became a one-photo group; a two-photo group formed
+  before Katia's small core could claim it; a 0.31 Nadia arrival missed
+  the 0.35 Prospect bar (change 3 would place it).
+
+Proposed next round (not yet approved): near-miss only in round 2; change
+3 (named Prospects use the 0.30 Gallery bar); then IU10 centroid
+formation tested in the flat universe.
+
+### Nov 24 named-identity retention and gate round 2 (approved)
+
+The user requires a lasting safeguard: a user-named identity is retained
+across every rebase the way Angels/Sisters are; its photos are not released
+back unless a release is forced by category. More named identities will be
+added over time.
+
+<!-- markdownlint-disable MD013 -->
+```text
+So, during a normal rebase - if we did provide a named identity, we'd want to remember that we should not release all those photos back as well - unless a force is done to release them by category.  So what this would be building for lower level categories a person specific approach to attempting to retain that identity in the same way we are doing for angels/sisters - over time, I willl be bringing in more named person identities - so we'll need to ensure that safeguard is in place now.
+```
+
+```text
+Also, let's work on the near-miss rule and the other recommended changes agan.
+```
+<!-- markdownlint-enable MD013 -->
+
+- **IU16 Named-identity retention:**
+  - **Marker:** `likeness.py seed --apply` marks each named person in the
+    likeness catalogue (`namedIntake` on the person record). This replaces
+    the `_likeness/named-intake.json` register, which a Sandbox rebuild
+    drops. Production writes the git-tracked catalogue, so named people
+    survive Sandbox rebuilds; a Sandbox or universe without a local
+    catalogue first copies the current one locally (as the rebase does)
+    and never writes Production's.
+  - **Retention:** named identities are exempt from the intake release of
+    small Potentials; in a fresh-source release their members are released
+    only when scored red/orange (unscored members stay). Existing rules
+    still apply: recompute (never switch-off), beat-home, settle release of
+    below-yellow members and user Reject.
+  - **Force:** `normal-rebase.cmd --release-named-category CATEGORY`
+    (repeatable; Models, Prospects or Potentials) treats that category's
+    named identities as ordinary for one run; the receipt records it.
+- **Gate round 2:** (1) named near-miss and tie Review apply only in round
+  2, after new groups have formed; (3) arrivals to a named Prospect or Model
+  use the Potential Gallery bar (0.30 with the 0.10 margin); (5) IU10
+  formation: a new group's member must reach yellow against the group's
+  centroid without itself, instead of against every member; test on the
+  flat universe first, then rerun all three universes.
+
+**Results (code `cd545562d` + `412c9e5cf`; full likeness suite 1,384 tests
+passed; all previews, applies and checks exited 0):**
+
+| Run | Formation | Identities | Single / pair | Named Review | IU14 audit |
+| --- | --- | ---: | ---: | ---: | ---: |
+| `mw-named-r4-01` | average | 64 | 36 / 9 | 22 (8 tie, 6 near miss) | 1 |
+| `mw-named-c4-01` | centroid | 54 | 29 / 2 | 22 | 2 |
+| `mw-flat-c3-01` | centroid | 94 | 65 / 7 | 0 | 0 |
+| `angelica-green-c3-01` | centroid | 66 | 45 / 8 | 0 | 0 |
+
+- Seed marked all 13 named people in each universe's local catalogue; the
+  git catalogue was unchanged. The first named previews stopped safely
+  because the final admission check did not know the named Gallery bar
+  (fixed in `412c9e5cf`).
+- Named people kept all 137 photos. The named Prospect bar moved photos
+  from Review to Gallery: Nadia Lora +17 Gallery/+9 Review (was +14/+13),
+  Zara +5/+2, Petra +2/+1, Jacinta +2/+2.
+- Remaining audit cases are arrivals routed to Nadia Review before a
+  better new group formed in the same round (Fiorella Lowe 0.51; Petra
+  Moss 0.41 under centroid). A final re-check after formation would catch
+  them (next step).
+- **Answer-key score** (the user's 137 hand-sorted photos, flat input):
+  centroid formation put 70 photos in their person's largest group versus
+  48 for average, but merged lookalikes (Jacinta 10 + Fia 4 + Petra 4 +
+  Zara 2; Nadia 9 + Zara 7). An offline sweep on the saved vectors
+  reproduced both runs; no bar from 0.30 to 0.55 separates Nadia from Zara
+  while keeping recall (centroid 0.40: 57 together, Nadia 7/Zara 6 still
+  mixed; 0.45: 46 together, Fia/Jacinta mixed). The face model cannot
+  separate these lookalikes; named seeds can.
+- Angelica centroid: 59 of her 99 photos in one 118-photo group that also
+  absorbed Jacinta Alden 13, Freya Hadley 6 and Petra Wilde 4; Drakniss
+  formed pure groups (131, 69).
+
+Decision pending (user): adopt centroid formation in the shared policy
+(fewer fragments, more lookalike merging among unnamed people), or keep
+average formation and rely on named seeds. Scratch: `tmp\iu13-runs\`
+(`answer_key.py`, `sweep.py`, `policy-centroid.json`).
+
+**Decided Nov 24 (user):** do both: centroid formation is now the shared
+default (`identityActions.formationLinkage: "centroid"`), and named folders
+anchor lookalikes. A named folder's members must survive; only truly low
+scores leave it, and they are not absorbed elsewhere. Implemented: in a
+Sandbox fresh-source release a named member is released only when red
+(below 0.15) or explicitly rejected; orange members and evidence-less
+unscored members stay, and settle passes exempt named members above red.
+Ordinary rebases already never release original members. Next: the user
+reviews the final named + centroid results (`mw-named-c4-01`), then the
+Prospect/Potential category rules are revisited once more (IU10), plus a
+final re-check after formation for the remaining audit cases (IU14).
+
+### Nov 24 rival-backed release and 0.25 Potential trial
+
+The user saw red and negative own scores in named Angelica/Zara Galleries:
+ordinary rebases never released original members (settle only releases
+photos the run placed). Clarified intent: named photos that score red or
+orange after processing are released under the normal rules when a rival
+is clearly better; it may regroup and return; avoid churn; keep nothing
+obviously low that has a better home. Measured on `mw-named-c4-01`: 53
+named members are below yellow at home; 9 (3 red, 6 orange) have a rival
+of 2+ photos beating home by 0.10; 44 have no clear rival and stay.
+
+- **IU17 Rival-backed release (implemented):** in every SIMPLE rebase,
+  settle passes may release an original member of a non-cast, unprotected
+  identity (named or not) that is flagged red/orange when an established
+  rival (2+ photos, non-cast) reaches yellow and beats its home score by
+  the own-core lead (0.10). If the rematch does not land at that rival's
+  Gallery or Review, the photo stays home (no churn, no new fragment).
+  Real protections and cast rules are unchanged.
+- **Category-bar settle flagging:** a lower-category member is flagged
+  only below its category's Gallery bar, so a lower Potential bar cannot
+  cause release-and-return churn (no change at today's values).
+- **0.25 Potential bar trial:** the user is seeing many photos at
+  0.25-0.29 that may fit another Potential. Measured on the same run: 17
+  of 35 leftover photos score 0.25-0.30 against an established identity;
+  9 are near ties (lead below 0.08) and 8 have one clear target. Trialled
+  with a variant policy (Potentials Gallery and Review minimum 0.25), not
+  the shared policy.
+
+<!-- markdownlint-disable MD013 -->
+```text
+A quick peek at Angelica shows Core Similarity of red and even minus numbers - that's odd.  Wouldn't those have been handled during the audit and release them?  Seems like they want to land at a rival.  I see some of the same in other folders.  Is there something I answered that might I might have not understood that's driving this?  Same with Zara as well.  What I thought could happen is that if I did put images into a named folder and they scored red and orange after processing we would release them under the normal rules that supported that.  So even a protected identity can release things that truly don't belong.  It may group and then come back if those images do score properly.  I won't want to get into a churn over and over, but we also don't need to have obviously low scoring images being retained if they have a rival they belong to.  I'm also considering of the Potentials bar could even be 0.25 - as while that's in the orange range, I am seeing many images in the 0.25-0.29 range that might actually fit with another potential.  So, let's look at both those items and see what would happen if we can address those.  Because the first item to release images will likely have a significant impact on where images do land.  So the multi-pass processing will help refine the library organically in case I did make mistakes in my own visual formation of the images, even named folders I brought in.
+```
+<!-- markdownlint-enable MD013 -->
+
+<!-- markdownlint-disable MD013 -->
+```text
+I agree with the approach in how we can do both.  When I supply a named folder, that does mean I expect those to survive and be retained and only release any that truly score low against that core and not absorb them.  I'd also want to review the final results and see how it all turns out and whether or not having all the potentials is still correct or whether or not we re-look at those rules on the potentials as well as prospects one more time.  But this is a good sign so far.
+```
+<!-- markdownlint-enable MD013 -->
+
+<!-- markdownlint-disable MD013 -->
+```text
+Let's make your recommended changes and re-run all three just to see how things land.  For the most part, I feel like the Angelica photos are actually her in various settings and outfits and side views.  So not sure if splitting her up is a good thing or not as I am sure MANY of the images for Most Wanted are her or someone pretty must like her- lookalike with leeser breasts.  That's been the problem with Angelica and where I pulled all these Most Wanted photos.  I think 3-5 blondes and 3-4 bruntettes are the same but not the same.  Eye colors differ, but the face seems same.  That's been the challenge to sort out.
+```
+<!-- markdownlint-enable MD013 -->
+
+**Runs (IU17, commit `778acc282`):**
+
+| Universe | Policy | Identities | Singles | Named photos |
+|---|---|---|---|---|
+| `mw-named-c5` | shared (centroid, Potential 0.30) | 57 | - | 7 moved to a better rival, 7 kept by the no-churn rule |
+| `mw-named-p25` | Potential bar 0.25 | 54 | 29 | - |
+| `mw-flat-p25` | Potential bar 0.25 | 94 | - | identical to flat centroid (70 of 137) |
+
+The 0.25 Potential bar gives a small benefit on named intake and none on
+flat intake; it stays a variant until the user reviews `mw-named-c5` and
+the IU10 category rules.
+
+### Nov 24 named folder matching an existing identity (N12/N13)
+
+A named folder whose photos clearly match an existing identity (any
+category, including Sisters and Angels) corrects that identity's person
+name instead of creating a second identity. The contract is the
+[N12/N13 naming contract](2026-10-22-identity-family-naming.md#oct-30-named-and-unnamed-various-acceptance-contract);
+this round implements its clear-match core.
+
+- **Clear match (user choice: merge rule):** the named folder's centroid
+  scores at least `identityActions.autoMergeMinimum` (0.55) against one
+  identity's core and leads the next identity by
+  `autoMergeMinimumMargin` (0.10), with at least
+  `autoMergeMinimumIndependentPhotos` (2) usable named photos. Otherwise
+  the old behaviour applies (a new named Prospect/Potential) and the close
+  rival is shown.
+- **Correction:** the named photos join the matched identity. Its person
+  takes the supplied name as both original and current name
+  (`originalSource: named-intake`); previous names stay in
+  `names.previousNames`, the action record and the `z_` history. A
+  non-cast folder is renamed; a Sister/Angel character folder and slot
+  never change. The identity is marked `namedIntake`.
+- **Name collision:** if another identity holds the supplied name, the
+  names swap through the existing confirmed-swap path when the matched
+  identity's old name is a recorded full person name; otherwise the other
+  identity gets a generated random name labelled `generated`. The
+  displaced identity's original name is replaced only when it was the
+  supplied name; otherwise it is kept.
+- **Holds:** an occupied name held by several identities, a refused rename
+  (for example a non-cast identity holding a workflow-selected photo), or
+  an unregistered match holds the named folder in Various with the reason.
+- **Order and undo:** the named photos first join the matched identity
+  (a `likeness undo` batch); the correction is then re-planned against
+  the current files, must still be the previewed kind, and is applied as an
+  ordinary rename/swap action batch with a scoped catalogue/history backup.
+  Undo newest first: `bin\likeness-actions.cmd undo --root <Working> --apply`,
+  then `likeness undo`. A refused correction leaves the photos in the
+  matched identity under its old name and says so.
+- **Test (user choice: small universe):** a universe with `Sisters/Draknoxa`
+  (person name "Sydney Sky", wrong), `Potentials/Lia Joyce` (the real
+  Sydney Sky) and a sample of other identities plus look-alikes pulled from
+  the main Sandbox; `Various\Sydney Sky` built from Lia Joyce's photos must
+  rename Lia Joyce's identity to Sydney Sky and give Draknoxa's person
+  "Lia Joyce", leaving the Draknoxa slot unchanged.
+
+- [x] **P1 ai** IU18 Named-intake name correction for a clear match, with
+  swap/generated-name collision handling, holds and undo; verify in the
+  small Draknoxa/Sydney Sky universe.
+
+**IU18 result (`named-rename-01`, 18 identities copied from the main
+Sandbox: Draknoxa, Lia Joyce, 5 look-alikes of each, 6 random):**
+`Various/Sydney Sky` (3 of Lia Joyce's 5 Gallery photos) matched
+`Potentials/Lia Joyce` 0.67 against the next identity, `Prospects/Rachel
+Pizzilato`, at 0.57, exactly the 0.10 margin. Lia Joyce became
+`Potentials/Sydney Sky` (5 photos, `named-intake`, previous name kept);
+Draknoxa's person became Lia Joyce (`named-intake-swap`, "Sydney Sky" kept
+in `previousNames`), and the `Sisters/Draknoxa` folder and its 15 photos are
+unchanged. Both undos restored the exact starting state; the universe was
+then re-applied for review. Rachel Pizzilato's close score suggests checking
+whether she is the same person.
+
+<!-- markdownlint-disable MD013 -->
+```text
+There's one additional named person scenario we need to cover. If I bring in a named person and it is actually already assigned to an idenity (any of them, including Sisters and Angels, Models, etc...) what I expect is that it would then rename the existing Sister or Angel and update it's history and adapt the original name (especially if it was randomly generated).  I can test this in a scenario with a few identities that already exist in the full sandbox or we can construct a small universe for the testing.  I just want to make sure logic is in place to handle that potential scenario.  
+```
+<!-- markdownlint-enable MD013 -->
+
 ## Open decisions for the user
 
 - The default expansion band (yellow) and hop depth, after seeing the IU2

@@ -125,6 +125,25 @@ class FreshBaselineReleaseTests(unittest.TestCase):
         self.assertEqual({item["photoId"] for item in result["bindings"]},
                          {"photo:image_1", "photo:image_2", "photo:image_3"})
 
+    def test_named_identity_keeps_evidence_less_unscored_members_but_not_rejected_ones(self):
+        owner = "Potentials/Fia"
+        rows = [row(1, [1., 0.], owner=owner),
+                row(2, None, owner=owner),
+                row(3, [1., 0.], owner=owner, rejectedPersonIds=["person_example"]),
+                row(4, angle(.1), owner=owner),
+                row(5, [1., 0.], owner=owner, reference=True)]
+        named = normal_admission.fresh_baseline_release_candidates(rows, self.policy, {owner})
+        plain = self.assess(rows)
+        evidence = {item["photoId"]: item for item in named["assessment"]}
+        self.assertTrue(evidence["photo:image_2"]["namedRetained"])
+        self.assertEqual({item["photoId"] for item in named["bindings"]}, {"photo:image_3", "photo:image_4"})
+        self.assertEqual({item["photoId"] for item in plain["bindings"]},
+                         {"photo:image_2", "photo:image_3", "photo:image_4", "photo:image_5"})
+        orange = [row(6, angle(.2), owner=owner)]
+        self.assertEqual({item["photoId"] for item in normal_admission.fresh_baseline_release_candidates(
+            rows + orange, self.policy, {owner})["bindings"]}, {"photo:image_3", "photo:image_4"})
+        self.assertIn("photo:image_6", {item["photoId"] for item in self.assess(rows + orange)["bindings"]})
+
     def test_invalid_inputs_fail_closed_and_input_remains_unchanged(self):
         original = [row(1, [1., 0.], reference=True), row(2, [0., 1.])]
         saved = copy.deepcopy(original)

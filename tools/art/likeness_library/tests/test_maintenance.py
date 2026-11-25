@@ -63,6 +63,13 @@ class MaintenanceTests(unittest.TestCase):
         metadata.save_catalog(catalog, self.root / ".likeness-library.json")
         with self.assertRaisesRegex(ValueError, "protected or workflow-selected"):
             maintenance._validate_permissions(self.root, [row], self.policy, {})
+        catalog["photos"][row["photoId"]]["protected"] = False
+        metadata.save_catalog(catalog, self.root / ".likeness-library.json")
+        selected = {"photos": {"hero": pathlib.PurePosixPath(row["destination"]).name}}
+        with self.assertRaisesRegex(ValueError, "protected or workflow-selected"):
+            maintenance._validate_permissions(self.root, [row], self.policy, selected)
+        # IU7: SIMPLE rebases move workflow selections and only propose replacements.
+        maintenance._validate_permissions(self.root, [row], self.policy, selected, workflow_selections_movable=True)
 
     def test_journal_uses_configured_reports_root(self):
         row = self.move()

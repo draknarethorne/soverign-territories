@@ -55,6 +55,11 @@ class NormalAdmissionTests(unittest.TestCase):
         self.identity("Sisters/Drakness", self.axes[0], self.axes[3])
         self.api = SimpleNamespace(plan_reconciliation=plan_reconciliation, invent_name=stable_name)
 
+    def without_home_lead(self):
+        # Round/release mechanics fixtures move members their own core also matches;
+        # IU13a's beat-home rule is covered by its own tests.
+        self.policy["photoRouting"]["minimumOwnCoreLead"] = -2.
+
     def identity(self, folder, center, axis):
         rows = [
             {"photoId": f"{folder}:{index}",
@@ -414,6 +419,7 @@ class NormalAdmissionTests(unittest.TestCase):
                 )
 
     def test_final_nonvoting_references_remove_second_round_departures(self):
+        self.without_home_lead()
         seed, second, survivor, released, _ = self.residual_integration_fixture()
         candidates = [seed, second, released]
         report = self.admission.two_round_plan(
@@ -2248,14 +2254,123 @@ class NormalAdmissionTests(unittest.TestCase):
         self.assertEqual(len(report["assignments"]) + len(report["held"]), 2)
         self.assertTrue(all(row.get("destination") != source for row in report["assignments"]))
 
-    def test_exact_gallery_floor_ignores_higher_lower_rival_without_a_per_reference_floor(self):
+    def test_home_identity_retains_member_unless_beaten_by_own_core_lead(self):
+        # IU13a (Nov 23): an existing member's own core outscoring the cast rival keeps it home.
         vector = .5 * self.axes[0] + np.sqrt(.75) * self.axes[2]
         self.identity("Models/Fragment", vector, self.axes[4])
+        row = self.photo(vector, folder="Models/Fragment", bucket="Gallery", rebaseCandidate=True)
+        report = self.route([row])
+        self.assertEqual(report["assignments"], [])
+        self.assertTrue(report["held"][0]["preserveStaged"])
+        self.policy["photoRouting"]["minimumOwnCoreLead"] = -2.
+        self.assertEqual(self.route([row])["assignments"][0]["destination"], "Sisters/Drakness")
+
+    def test_named_intake_near_miss_and_tie_go_to_named_review(self):
+        self.identity("Potentials/Fia", self.axes[5], self.axes[6])
+        self.identity("Potentials/Gwen", self.axes[3], self.axes[6])
+
+        def route(score_fia, score_gwen, named=True, **extra):
+            rest = np.sqrt(1 - score_fia ** 2 - score_gwen ** 2)
+            row = self.photo(score_fia * self.axes[5] + score_gwen * self.axes[3] + rest * self.axes[4],
+                             folder="Various", bucket="Pool", **extra)
+            ctx = self.admission.context(self.cores, self.references, self.policy)
+            ctx["namedFolders"] = {"Potentials/Fia", "Potentials/Gwen"} if named else set()
+            return plan_reconciliation([row], self.cores, policy=self.policy, name_factory=stable_name,
+                                       admission_context=ctx)
+
+        def named_reviews(report):
+            return [row for row in report["held"] + report["assignments"] if row.get("namedIntakeReview")]
+
+        held = route(.27, .1)["held"][0]
+        self.assertEqual((held["reviewDestination"], held["namedIntakeReview"]), ("Potentials/Fia/review", "near-miss"))
+        self.assertEqual(named_reviews(route(.27, .1, named=False)), [])
+        self.assertEqual(named_reviews(route(.27, .2)), [])
+        tie = route(.34, .32)["held"][0]
+        self.assertEqual((tie["reviewDestination"], tie["namedIntakeReview"]), ("Potentials/Fia/review", "tie"))
+        self.assertEqual(tie["runnerUp"]["folder"], "Potentials/Gwen")
+        member = route(.27, .1, sourceFolder="Potentials/Gwen", sourceBucket="Gallery", rebaseCandidate=True)
+        self.assertEqual(named_reviews(member), [])
+
+    def test_centroid_linkage_joins_a_photo_that_matches_the_group_not_each_member(self):
+        from tools.art.likeness_library import reconciliation
+
+        def unit(*values):
+            vector = np.zeros(8)
+            vector[:len(values)] = values
+            return vector / np.linalg.norm(vector)
+
+        rows = [{"photoId": "photo:image_1", "vector": unit(1)},
+                {"photoId": "photo:image_2", "vector": unit(.4, .917)},
+                {"photoId": "photo:image_3", "vector": unit(.4, 0, .917)}]
+        ids = lambda groups: sorted(sorted(row["photoId"][-1] for row in group) for group in groups)  # noqa: E731
+        self.assertEqual(ids(reconciliation._average_linkage(rows, .30)), [["1", "2"], ["3"]])
+        self.assertEqual(ids(reconciliation._centroid_linkage(rows, .30)), [["1", "2", "3"]])
+        self.assertEqual(ids(reconciliation._centroid_linkage(list(reversed(rows)), .30)), [["1", "2", "3"]])
+        self.assertEqual(ids(reconciliation._centroid_linkage(rows, .45)), [["1"], ["2"], ["3"]])
+
+    def test_named_review_waits_for_round_two_and_named_prospects_use_potential_bar(self):
+        self.identity("Prospects/Nadia", self.axes[5], self.axes[6])
+        self.identity("Prospects/Other", self.axes[3], self.axes[6])
+
+        def route(score, named=True, defer=False):
+            rest = np.sqrt(1 - score ** 2)
+            row = self.photo(score * self.axes[5] + rest * self.axes[4], folder="Various", bucket="Pool")
+            ctx = self.admission.context(self.cores, self.references, self.policy)
+            ctx["namedFolders"] = {"Prospects/Nadia"} if named else set()
+            ctx["deferGrouping"] = defer
+            return plan_reconciliation([row], self.cores, policy=self.policy, name_factory=stable_name,
+                                       admission_context=ctx)
+
+        self.assertEqual(route(.32)["assignments"][0]["destination"], "Prospects/Nadia")
+        self.assertTrue(route(.32)["assignments"][0]["namedIntakeGate"])
+        self.assertEqual(route(.32, named=False)["assignments"], [])
+        self.assertEqual(route(.27)["held"][0]["namedIntakeReview"], "near-miss")
+        self.assertFalse(any(row.get("namedIntakeReview") for row in route(.27, defer=True)["held"]))
+
+        from tools.art.likeness_library import normal_finish
+
+        move = {"photoId": "photo:image_123", "normalAdmission": True, "destinationType": "existing",
+                "source": "Various/gallery/x_image_123.jpg", "destination": "Prospects/Nadia/gallery/n_image_123.jpg",
+                "routingEvidence": {"winner": "Prospects/Nadia", "score": .32, "margin": .2}}
+        with mock.patch.object(normal_finish, "cores", return_value=({}, [])):
+            with self.assertRaisesRegex(ValueError, "selected receiving gates"):
+                normal_finish.check_batch(None, SimpleNamespace(photos=[]), {"photos": {}}, self.policy, [move])
+            checked, _ = normal_finish.check_batch(
+                None, SimpleNamespace(photos=[]), {"photos": {}}, self.policy, [{**move, "namedIntakeGate": True}],
+            )
+        self.assertEqual(len(checked), 1)
+
+    def test_lower_upward_move_needs_to_beat_home_by_own_core_lead(self):
+        # IU13a (Nov 23): Fia-like Potential members stay unless a Prospect beats home by 0.10.
+        home, rival = self.axes[5], self.axes[3]
+        self.identity("Potentials/Fia", home, self.axes[6])
+        self.identity("Prospects/Jacinta", rival, self.axes[4])
+        for rival_score, home_score, expected in ((.65, .6, None), (.75, .5, "Prospects/Jacinta")):
+            with self.subTest(rival_score=rival_score, home_score=home_score):
+                rest = np.sqrt(1 - rival_score ** 2 - home_score ** 2)
+                row = self.photo(
+                    rival_score * rival + home_score * home + rest * self.axes[6],
+                    folder="Potentials/Fia", bucket="Gallery", rebaseCandidate=True,
+                )
+                report = self.route([row])
+                if expected is None:
+                    held = report["held"][0]
+                    self.assertIn("home identity retained", held["reason"])
+                    self.assertAlmostEqual(held["homeScore"], home_score, places=3)
+                    self.assertFalse(held.get("reviewDestination"))
+                else:
+                    self.assertEqual(report["assignments"][0]["destination"], expected)
+
+    def test_exact_gallery_floor_ignores_higher_non_home_lower_rival(self):
+        vector = .5 * self.axes[0] + np.sqrt(.75) * self.axes[2]
+        self.identity("Models/Fragment", self.axes[3], self.axes[4])
+        self.identity("Models/Rival", vector, self.axes[4])
         row = self.photo(vector, folder="Models/Fragment", bucket="Gallery", rebaseCandidate=True)
         report = self.route([row])
         result = report["assignments"][0]
         self.assertEqual(result["destination"], "Sisters/Drakness")
         self.assertAlmostEqual(result["castAdmission"]["score"], .5)
+        self.assertEqual(result["lowerCategoryEvidence"][0]["folder"], "Models/Rival")
         self.assertAlmostEqual(result["lowerCategoryEvidence"][0]["score"], 1.)
         self.assertEqual(result["independentSupportCount"], 2)
         self.assertTrue(all(float(vector @ ref["vector"]) < .5 for ref in self.references["Sisters/Drakness"]))
@@ -2383,6 +2498,7 @@ class NormalAdmissionTests(unittest.TestCase):
                 json.dumps(report, allow_nan=False)
 
     def test_review_cannot_bootstrap_other_review_and_old_source_votes_retire(self):
+        self.without_home_lead()
         rows = [
             self.photo(.48 * self.axes[0] + np.sqrt(1 - .48 ** 2) * self.axes[1], f"photo:image_{number}",
                        folder="Models/Fragment", bucket="Gallery", rebaseCandidate=True)
@@ -2405,7 +2521,8 @@ class NormalAdmissionTests(unittest.TestCase):
         )
         self.assertTrue(report["passCapReached"])
 
-    def test_pool_candidate_is_held_when_lower_core_loses_members_in_both_rounds(self):
+    def test_pool_candidate_joins_recomputed_lower_core_after_members_leave(self):
+        self.without_home_lead()
         seed = self.photo(
             .8 * self.axes[0] + .6 * self.axes[1], "seed",
             folder="Models/Fragment", bucket="Gallery", rebaseCandidate=True,
@@ -2430,22 +2547,22 @@ class NormalAdmissionTests(unittest.TestCase):
             self.api, [seed, second, released], self.cores, self.references,
             self.settings, self.policy, set(),
         )
-        self.assertEqual({row["photoId"] for row in report["assignments"]}, {"seed", "second"})
         self.assertEqual(
-            [row["retiredReferenceIds"] for row in report["matchingRounds"]], [["seed"], ["second"]],
+            {row["photoId"]: row["destination"] for row in report["assignments"]},
+            {"seed": "Sisters/Drakness", "second": "Sisters/Drakness", "released": "Models/Fragment"},
         )
+        self.assertEqual(
+            [row["retiredReferenceIds"] for row in report["matchingRounds"]], [["released", "seed"], ["second"]],
+        )
+        self.assertEqual([row["retiredLowerCores"] for row in report["matchingRounds"]], [[], []])
+        self.assertEqual([row["recomputedCores"] for row in report["matchingRounds"]],
+                         [["Models/Fragment"], ["Models/Fragment"]])
         self.assertEqual(
             report["referenceSnapshots"]["2"]["photoIds"]["Models/Fragment"], ["second", "survivor"],
         )
         self.assertEqual(report["clusters"], [])
-        self.assertEqual(len(report["held"]), 1)
-        self.assertEqual(report["held"][0]["photoId"], "released")
-        self.assertTrue(report["held"][0]["preserveStaged"])
-        self.assertEqual(
-            report["held"][0]["reason"],
-            "old lower core lost reference authority; hold instead of creating another fragment",
-        )
-        self.assertTrue(report["passCapReached"])
+        self.assertEqual(report["held"], [])
+        self.assertFalse(report["passCapReached"])
 
     def residual_integration_fixture(self):
         seed = self.photo(
@@ -2476,6 +2593,7 @@ class NormalAdmissionTests(unittest.TestCase):
         return seed, second, survivor, released, binding
 
     def test_bound_release_scores_final_residual_without_stale_votes_or_growth(self):
+        self.without_home_lead()
         seed, second, survivor, released, binding = self.residual_integration_fixture()
         original = copy.deepcopy(self.references)
         report = self.admission.two_round_plan(
@@ -2503,6 +2621,7 @@ class NormalAdmissionTests(unittest.TestCase):
                 self.assertEqual(before["photoId"], after["photoId"])
 
     def test_bound_release_excludes_duplicate_content_and_preserves_no_match(self):
+        self.without_home_lead()
         seed, second, survivor, released, binding = self.residual_integration_fixture()
         survivor["sha256"] = released["sha256"]
         report = self.admission.two_round_plan(
@@ -2521,6 +2640,7 @@ class NormalAdmissionTests(unittest.TestCase):
         self.assertIn(released["sha256"], result["residualScoring"]["excludedReferenceSHA256"])
 
     def test_multiple_guarded_releases_do_not_vote_for_each_other(self):
+        self.without_home_lead()
         seed, second, survivor, first, binding = self.residual_integration_fixture()
         other = self.photo(
             self.axes[1], "photo:image_127", folder="Various", bucket="Pool",
@@ -2553,6 +2673,7 @@ class NormalAdmissionTests(unittest.TestCase):
             ))
 
     def test_unbound_guarded_candidate_keeps_original_decision(self):
+        self.without_home_lead()
         seed, second, _, released, binding = self.residual_integration_fixture()
         ordinary = self.photo(
             self.axes[1], "photo:image_127", folder="Various", bucket="Pool",
@@ -2567,10 +2688,11 @@ class NormalAdmissionTests(unittest.TestCase):
             self.api, candidates, self.cores, self.references, self.settings, self.policy, set(),
             released_bindings=[binding],
         )
-        old = next(row for row in baseline["held"] if row["photoId"] == ordinary["photoId"])
-        current = next(row for row in selected["held"] if row["photoId"] == ordinary["photoId"])
+        old = next(row for row in baseline["assignments"] + baseline["held"] if row["photoId"] == ordinary["photoId"])
+        current = next(row for row in selected["assignments"] + selected["held"] if row["photoId"] == ordinary["photoId"])
         self.assertEqual(old, current)
-        self.assertTrue(current["preserveStaged"])
+        # IU13: an unbound arrival joins the recomputed lower core instead of being held.
+        self.assertEqual(current["destination"], "Models/Fragment")
 
     def test_bound_release_does_not_override_quality_or_stale_rejection(self):
         for change in ({"qualityEligible": False}, {"rejectionMetadataStale": True}):
@@ -2698,6 +2820,7 @@ class NormalAdmissionTests(unittest.TestCase):
             self.residual_single_assessment(released, binding)
 
     def test_release_residual_never_uses_an_earlier_departing_reference_hash(self):
+        self.without_home_lead()
         seed, second, survivor, released, binding = self.residual_integration_fixture()
         # A distinct ID retaining the first departure's bytes must not vote.
         survivor["sha256"] = seed["sha256"]

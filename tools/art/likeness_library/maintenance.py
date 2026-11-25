@@ -59,7 +59,7 @@ def proposed_moves(report, photos, root, *, duplicate_archives=None):
             "sha256": metadata.content_sha256(source), "reason": row["reason"],
             **{key: row[key] for key in (
                 "castAdmission", "referenceVersion", "referenceEligible", "supportPhotoIds",
-                "normalAdmission",
+                "normalAdmission", "namedIntakeGate",
                 "routingEvidence", "destinationType", "faceQuality", "singlePhoto",
             ) if key in row},
             **({"preparationOnly": True, "membershipOnly": True} if source == destination else {}),
@@ -156,7 +156,9 @@ def _backup(root, cfg):
     )
 
 
-def _validate_permissions(root, moves, policy, cfg, identity_actions=(), *, released_bindings=()):
+def _validate_permissions(root, moves, policy, cfg, identity_actions=(), *, released_bindings=(),
+                          workflow_selections_movable=False):
+    """``workflow_selections_movable``: SIMPLE rebases (IU7) move selections and only propose replacements."""
     release = {row["photoId"]: (row["currentPath"], row["sha256"]) for row in released_bindings}
     if len(release) != len(released_bindings):
         raise ValueError("ambiguous released permission bindings")
@@ -169,8 +171,8 @@ def _validate_permissions(root, moves, policy, cfg, identity_actions=(), *, rele
     protected_ids.update(
         photo_id for person in catalog["people"].values() for photo_id in person["identityAnchors"]
     )
-    selected_names = list(cfg.get("photos", {}).values())
-    for flow in cfg.get("flows", {}).values():
+    selected_names = [] if workflow_selections_movable else list(cfg.get("photos", {}).values())
+    for flow in ([] if workflow_selections_movable else cfg.get("flows", {}).values()):
         selected_names.extend(flow.get("photos", {}).values())
     protected_ids.update(
         photo_id for name in selected_names if isinstance(name, str)

@@ -306,6 +306,31 @@ def _average_linkage(candidates, threshold):
     return [[ordered[index] for index in groups[key]] for key in sorted(groups)]
 
 
+def _centroid_linkage(candidates, threshold):
+    """Merge the closest groups while their normalized centroids reach ``threshold`` (IU10 option).
+
+    A photo joins a group by matching the group's centroid, not by the mean of its
+    pairwise scores. Ties follow sorted source photo IDs.
+    """
+    ordered = sorted(candidates, key=_candidate_key)
+    if not ordered:
+        return []
+    groups = {index: [index] for index in range(len(ordered))}
+    sums = {index: np.asarray(ordered[index]["vector"], dtype=float) for index in groups}
+    while len(groups) > 1:
+        keys = sorted(groups)
+        centroids = np.asarray([nz(sums[key]) for key in keys])
+        similarities = centroids @ centroids.T
+        np.fill_diagonal(similarities, -2.)
+        first, second = np.unravel_index(int(np.argmax(similarities)), similarities.shape)
+        if similarities[first, second] < threshold:
+            break
+        left, right = sorted((keys[first], keys[second]))
+        groups[left] = sorted(groups[left] + groups.pop(right))
+        sums[left] = sums[left] + sums.pop(right)
+    return [[ordered[index] for index in groups[key]] for key in sorted(groups)]
+
+
 def _cluster_id(candidates):
     seed = "\n".join(sorted(candidate["photoId"] for candidate in candidates))
     return hashlib.sha256(seed.encode("utf-8")).hexdigest()[:16]
@@ -449,8 +474,12 @@ def plan_reconciliation(
     if policy is not None:
         from .planner import plan_candidates
 
+        linkage = (
+            _centroid_linkage if policy["identityActions"].get("formationLinkage", "average") == "centroid"
+            else _average_linkage
+        )
         result = plan_candidates(
-            prepared, cores, policy, name_factory, names_taken, _average_linkage,
+            prepared, cores, policy, name_factory, names_taken, linkage,
             admission_context=admission_context,
         )
         result["held"].extend(held)

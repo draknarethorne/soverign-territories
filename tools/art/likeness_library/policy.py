@@ -365,7 +365,7 @@ def validate_policy(policy):
             raise ValueError(f"categoryAssignmentRules/{index} cast score range is invalid")
 
     identity = policy["identityActions"]
-    if set(identity) - {"independentEvidenceMaximumSimilarity"} - SETTLE_KEYS != {
+    if set(identity) - {"independentEvidenceMaximumSimilarity", "formationLinkage"} - SETTLE_KEYS != {
         "matchReviewMinimum",
         "autoMergeMinimum",
         "autoMergeMinimumMargin",
@@ -377,6 +377,8 @@ def validate_policy(policy):
         "identityClusterMinimumSimilarity",
     }:
         raise ValueError("identityActions keys are incomplete or unsupported")
+    if identity.get("formationLinkage", "average") not in ("average", "centroid"):
+        raise ValueError("identityActions/formationLinkage must be average or centroid")
     if "independentEvidenceMaximumSimilarity" in identity:
         _number(identity["independentEvidenceMaximumSimilarity"], "independent evidence maximum similarity")
     merge_min = _number(identity["autoMergeMinimum"], "automatic merge minimum")
@@ -422,7 +424,7 @@ def validate_policy(policy):
         raise ValueError("lookalike minimumIndependentPhotos must be an integer >= 2")
 
     photo_routing = policy["photoRouting"]
-    if set(photo_routing) != {
+    if set(photo_routing) - {"namedReviewMinimum"} != {
         "reviewMinimum",
         "automaticRouteMinimum",
         "minimumMargin",
@@ -435,6 +437,9 @@ def validate_policy(policy):
         raise ValueError("automatic photo routing threshold must be at or above review minimum")
     _number(photo_routing["minimumMargin"], "photo route minimum margin", 0.0, 2.0)
     _number(photo_routing["minimumOwnCoreLead"], "photo route minimum own-core lead", 0.0, 2.0)
+    if "namedReviewMinimum" in photo_routing and _number(
+            photo_routing["namedReviewMinimum"], "named-intake Review minimum") > route_review:
+        raise ValueError("named-intake Review minimum must be at or below the review minimum")
 
     protection = policy["protection"]
     if set(protection) - {"automatic"} != {

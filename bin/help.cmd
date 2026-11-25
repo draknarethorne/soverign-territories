@@ -50,7 +50,8 @@ echo                                    this machine's parallel workers: command
 echo                                    else capacity from the shared baseline data\config\machine-tuning.json; never changes another machine
 echo    normal-rebase.cmd --root ABS_SANDBOX_WORKING --profile lean --run-id ID [--dry-run ^| --apply ^| --check]
 echo                                    SIMPLE whole-library composition, distinct from incremental library.cmd; preview can prepare/measure all selected inputs, without publishing assignments
-echo                                    --preparation-workers 1^|2^|3 opts into that many FULL/LEAN preparation workers; default 1, repeat on apply; validate per machine first
+echo                                    --preparation-workers N overrides this machine's setting (bin\machine-tuning.cmd show) for a new preview; apply reuses the preview's count
+echo                                    --release-named-category Models^|Prospects^|Potentials forces that category's user-named identities to be treated as ordinary for one run; repeat on apply
 echo                                    --repeat verifies applied receipt; --recover previews exact recovery, --recover-apply restores; draft apply requires --sandbox-apply-draft in Sandbox only
 echo                                    --measure-missing is post-apply local-model report-only; general-domain cache only, no fallback/cache/source/alignment writes or downloads
 echo                                    recoverable image errors produce an incomplete receipt and nonzero exit; core qualification is skipped

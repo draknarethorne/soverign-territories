@@ -812,11 +812,11 @@ def _restore_workflow_photos(plans, cfg):
         cw.repoint_photos(cfg, selections, False)
 
 
-def _create_action_backup(root, cfg, batch_id, *, rename_plan=None, reverse=False):
+def _create_action_backup(root, cfg, batch_id, *, rename_plan=None, reverse=False, scoped_rename=False):
     catalogue = metadata.path_for_root(root)
     if (
         rename_plan is not None and catalogue.is_file()
-        and (rename_plan.get("partner") or (
+        and (scoped_rename or rename_plan.get("partner") or (
             rename_plan["source"] == rename_plan["destination"]
             and rename_plan["source"].parent.name in person_rename.CAST_CATEGORIES
         ))
@@ -848,6 +848,8 @@ def _create_action_backup(root, cfg, batch_id, *, rename_plan=None, reverse=Fals
             "note": (
                 "Both identity trees move intact via private staging; only histories and catalogue bytes change."
                 if swap else "Fixed cast slot: only history and catalogue bytes change; images are guarded, not copied."
+                if rename_plan["source"] == rename_plan["destination"] else
+                "The identity tree is renamed intact; only history and catalogue bytes change."
             ),
         }
         if swap:
@@ -1013,7 +1015,7 @@ def _undo_retained(root, batch, reverse_plans, cfg=None):
     return transfers, (journal, data)
 
 
-def apply_actions(document, root, catalog, cfg, pool_folder, *, backup_fn=None, save_fn=None):
+def apply_actions(document, root, catalog, cfg, pool_folder, *, backup_fn=None, save_fn=None, scoped_rename=False):
     """Back up, revalidate, apply staged actions transactionally, and save an audit history."""
     root = pathlib.Path(root).resolve()
     if any(action["type"] in WORKFLOW_ACTIONS for action in document["actions"]):
@@ -1042,7 +1044,7 @@ def apply_actions(document, root, catalog, cfg, pool_folder, *, backup_fn=None, 
     rename_plan = next((plan for plan in plans if plan["type"] == person_rename.ACTION), None)
     backup = (
         backup_fn(root, cfg, batch_id) if backup_fn else
-        _create_action_backup(root, cfg, batch_id, rename_plan=rename_plan)
+        _create_action_backup(root, cfg, batch_id, rename_plan=rename_plan, scoped_rename=scoped_rename)
     )
     _revalidate_catalog(catalog_guard, catalog)
     retained_preparation.validate_transfers(root, transfers)

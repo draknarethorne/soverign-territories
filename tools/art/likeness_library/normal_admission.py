@@ -14,13 +14,20 @@ from .scoring import nz
 CAST = frozenset(("Sisters", "Angels"))
 
 
-def fresh_baseline_release_candidates(rows, policy):
+NAMED_RETAINED_UNSCORED = frozenset((
+    "no independent comparison reference", "independent comparison core unavailable",
+    "source does not meet the existing face-quality gate", "centered measurement unavailable",
+))
+
+
+def fresh_baseline_release_candidates(rows, policy, named_folders=()):
     """Assess a complete frozen named-Gallery inventory before identity formation.
 
     Selection is red/orange/unscored own scores plus, for Sisters/Angels only,
     scored members outside the configured cast seed (``castAdmission``
     ``seedTopCount``/``seedReleaseBelow``); cast seed members are exempt from
-    band release.
+    band release. Unscored members of user-named identities (``named_folders``,
+    IU16) are retained; their red/orange members are still released.
     The caller must bind each centered vector to its prepared measurement hash
     and the listed source bytes, establish quality/reference eligibility,
     effective trusted-anchor status and ambiguity from the initial source
@@ -165,8 +172,17 @@ def fresh_baseline_release_candidates(rows, policy):
                 reason = "no independent comparison reference"
         evidence["unavailableReason"] = reason
         reasons = []
+        named_owner = owner in set(named_folders)
         if evidence["score"] is None:
-            reasons.append("unscored")
+            # IU16: a named identity keeps members that are unscored only for lack of evidence;
+            # rejections, stale metadata and ambiguity still release them.
+            if named_owner and reason in NAMED_RETAINED_UNSCORED:
+                evidence["namedRetained"] = True
+            else:
+                reasons.append("unscored")
+        elif evidence["band"] == "orange" and named_owner:
+            # IU16 (user, Nov 24): only truly low (red) members leave a user-named identity.
+            evidence["namedRetained"] = True
         elif evidence["band"] in ("red", "orange"):
             reasons.append(f'band:{evidence["band"]}')
         evidence["selectionReasons"] = reasons
@@ -317,6 +333,32 @@ def context(cores, references, policy, *, locked=False):
     }
 
 
+def home_score(candidate, cores, admission):
+    """An existing Gallery member's score against its own core without itself; None otherwise."""
+    source = candidate.get("sourceFolder")
+    if (not candidate.get("rebaseCandidate") or candidate.get("sourceBucket") != "Gallery"
+            or source not in cores):
+        return None
+    rows = [
+        row for row in ((admission or {}).get("references") or {}).get(source, [])
+        if row["photoId"] != candidate["photoId"] and row["sha256"] != candidate.get("sha256")
+    ]
+    if rows:
+        vector = nz(np.mean([row["vector"] for row in rows], axis=0))
+    elif candidate["photoId"] in cores[source].get("corePhotoIds", ()):
+        return None
+    else:
+        vector = cores[source]["vector"]
+    if not np.linalg.norm(vector):
+        return None
+    return float(np.clip(candidate["vector"] @ vector, -1., 1.))
+
+
+def beats_home(score, home, policy):
+    """IU13a: an existing member moves only when the rival beats its home score by the own-core lead."""
+    return home is None or score >= home + policy["photoRouting"]["minimumOwnCoreLead"]
+
+
 def cast_route(candidate, cores, policy, admission):
     """Return one terminal cast decision, or None for ordinary lower routing."""
     if candidate["side"] != "Prospects":
@@ -352,6 +394,9 @@ def cast_route(candidate, cores, policy, admission):
     if not ranked or ranked[0][0] < settings["reviewMinimum"]:
         return None
     score, folder = ranked[0]
+    if not beats_home(score, home_score(candidate, cores, admission), policy):
+        # The home identity keeps the member; ordinary routing applies the same rule.
+        return None
     rules = policy["categoryPolicies"][folder.split("/", 1)[0]]
     lead = score - ranked[1][0] if len(ranked) > 1 else 2.
     floor = rules.get("galleryAdmissionMinimumSimilarity", rules["photoRouteMinimum"])
@@ -3141,7 +3186,7 @@ def unresolved_release_review(decision, comparisons, *, locked=False):
 
 
 def two_round_plan(api, candidates, cores, references, settings, policy, names_taken, *,
-                   locked=False, released_bindings=None):
+                   locked=False, released_bindings=None, named_folders=()):
     """Resolve members first; optionally rescore caller-verified released guard holds.
 
     The caller must verify each binding's source bytes and supply only voting
@@ -3183,12 +3228,13 @@ def two_round_plan(api, candidates, cores, references, settings, policy, names_t
     pending = list(candidates)
     for round_index in (1, 2):
         ctx = context(current, current_rows, policy, locked=locked)
+        ctx["namedFolders"] = set(named_folders)
         ctx["deferGrouping"] = round_index == 1
         snapshots[str(round_index)] = {
             "referenceVersion": ctx["referenceVersion"],
             "photoIds": {folder: list(core["corePhotoIds"]) for folder, core in sorted(current.items())},
         }
-        round_rows, retired_ids, retired_folders = [], set(), set()
+        round_rows, retired_ids, retired_folders, recomputed_folders = [], set(), set(), set()
         existing = [row for row in pending if not pool_candidate(row)]
         arrivals = [row for row in pending if pool_candidate(row)]
         deferred = []
@@ -3202,19 +3248,37 @@ def two_round_plan(api, candidates, cores, references, settings, policy, names_t
             [row for row in deferred if not pool_candidate(row)],
             [row for row in deferred if pool_candidate(row)],
         ):
-            retired_folders.update(
+            # IU13: a departing member's identity is recomputed from its remaining
+            # members; only an identity left with no members loses its core.
+            affected = {
                 folder for folder, core in current.items()
                 if folder.split("/", 1)[0] not in CAST and retired_ids.intersection(core["corePhotoIds"])
+            }
+            recomputed, recomputed_rows = refresh_references(
+                {folder: current[folder] for folder in affected},
+                {folder: current_rows.get(folder, []) for folder in affected},
+                retire_ids=retired_ids,
             )
-            retained = {folder: core for folder, core in current.items() if folder not in retired_folders}
+            retired_folders.update(affected - set(recomputed))
+            recomputed_folders.update(recomputed)
+            retained = {
+                folder: recomputed.get(folder, core) for folder, core in current.items()
+                if folder not in retired_folders
+            }
+            retained_rows = {
+                folder: recomputed_rows.get(folder, current_rows.get(folder, [])) for folder in retained
+            }
             eligible = []
             for candidate in batch:
+                # Bound releases never vote mid-run: a recomputed former home still
+                # sends them to the final residual assessment, as before IU13.
+                held_folders = retired_folders | (affected if candidate["photoId"] in release else set())
                 retired_score = max((
-                    float(candidate["vector"] @ current[folder]["vector"]) for folder in retired_folders
+                    float(candidate["vector"] @ current[folder]["vector"]) for folder in held_folders
                 ), default=-1.)
                 retained_score = max((
                     float(candidate["vector"] @ core["vector"]) for folder, core in retained.items()
-                    if folder.split("/", 1)[0] not in CAST
+                    if folder.split("/", 1)[0] not in CAST and folder not in held_folders
                 ), default=-1.)
                 if retired_score >= max(retained_score, policy["photoRouting"]["reviewMinimum"]):
                     round_rows.append({
@@ -3224,7 +3288,7 @@ def two_round_plan(api, candidates, cores, references, settings, policy, names_t
                     })
                 else:
                     eligible.append(candidate)
-            report = route(eligible, retained, {**ctx, "skipCast": True})
+            report = route(eligible, retained, {**ctx, "skipCast": True, "references": retained_rows})
             rows = report["assignments"] + report["held"]
             round_rows.extend(rows)
             retired_ids.update(leaving(rows))
@@ -3242,6 +3306,7 @@ def two_round_plan(api, candidates, cores, references, settings, policy, names_t
             "round": round_index, "candidateCount": len(pending),
             "existingFirst": True, "retiredReferenceIds": sorted(retired_ids),
             "retiredLowerCores": sorted(retired_folders),
+            "recomputedCores": sorted(recomputed_folders - retired_folders),
         })
         next_rows = {
             folder: [row for row in rows if row["photoId"] not in retired_ids]
@@ -3506,11 +3571,41 @@ def settle_passes(api, entries, decisions, clusters, identity_meta, settings, po
         return next((cluster for cluster in clusters if cluster.get("destination") == folder), None)
 
     members, voters, scores = assess()
+    lead = policy["photoRouting"]["minimumOwnCoreLead"]
+
+    def below_category_bar(pid):
+        # A member admitted on its category's Gallery bar is not released for clearing it.
+        folder = scores[pid]["identity"]
+        rules = policy["categoryPolicies"].get(folder.split("/", 1)[0], {})
+        bar = rules.get("photoRouteMinimum")
+        return folder.split("/", 1)[0] in CAST or bar is None or scores[pid]["score"] is None or scores[pid]["score"] < bar
+
+    def rival_target(pid, cores):
+        """IU17: an original member may leave only for a clearly better established rival."""
+        entry, row = by_id[pid], scores[pid]
+        if (not entry.get("rivalRelease") or entry.get("exemptReason") or entry.get("seedOf")
+                or row["score"] is None or entry["vector"] is None):
+            return None
+        sizes = {folder: len(rows) for folder, rows in members.items()}
+        rivals = [rival for rival in _settle_rivals(entry, cores, policy, locked=locked, exclude={row["identity"]})
+                  if sizes.get(rival["folder"], 0) >= 2 and rival["folder"].split("/", 1)[0] not in CAST]
+        if rivals and rivals[0]["score"] >= yellow and rivals[0]["score"] >= row["score"] + lead:
+            return rivals[0]["folder"]
+        return None
+
     for pass_index in range(1, max_passes + 1):
         started = clock()
         before = {entry["photoId"]: settle_location(entry, decisions.get(entry["photoId"])) for entry in entries}
-        flagged = sorted(pid for pid, row in scores.items() if row["band"] in SETTLE_RELEASE_BANDS)
-        release = [pid for pid in flagged if exempt(by_id[pid], scores[pid]["identity"]) is None]
+        flagged = sorted(pid for pid, row in scores.items()
+                         if row["band"] in SETTLE_RELEASE_BANDS and below_category_bar(pid))
+        pass_cores, _pass_refs = _settle_cores(voters, identity_meta)
+        rival_for = {}
+        for pid in flagged:
+            if exempt(by_id[pid], scores[pid]["identity"]) is not None and by_id[pid].get("rivalRelease"):
+                target = rival_target(pid, pass_cores)
+                if target:
+                    rival_for[pid] = target
+        release = [pid for pid in flagged if exempt(by_id[pid], scores[pid]["identity"]) is None or pid in rival_for]
         release_scores = {pid: dict(scores[pid]) for pid in release}
         record = {
             "pass": pass_index, "memberCount": len(scores),
@@ -3550,6 +3645,13 @@ def settle_passes(api, entries, decisions, clusters, identity_meta, settings, po
                 raise ValueError("settle rematch did not conserve its released photos")
             for pid in release:
                 row, entry = rows[pid], by_id[pid]
+                if pid in rival_for:
+                    landed = row.get("destination") or (row.get("reviewDestination") or "").rsplit("/", 1)[0]
+                    if landed != rival_for[pid]:
+                        # IU17: no churn; an original member stays home unless it lands at its rival.
+                        record.setdefault("rivalReleaseKept", []).append(
+                            {"photoId": pid, "identity": scores[pid]["identity"], "rival": rival_for[pid]})
+                        continue
                 previous = "/".join(before[pid])
                 decision = {
                     **row, "normalAdmission": True, "referenceVersion": ctx["referenceVersion"],

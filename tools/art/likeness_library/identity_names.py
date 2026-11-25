@@ -159,3 +159,26 @@ def renamed(person, name, folder):
         names = {"originalName": None, "currentName": name, "originalSource": "unavailable"}
     names["currentName"] = name
     return names
+
+
+def corrected(person, name, folder, source, *, asserted, today=None):
+    """Named-intake correction: ``name`` becomes original and current; earlier names go to ``previousNames``.
+
+    A displaced identity (``named-intake-swap`` or ``generated``) keeps its original name unless that
+    original was the ``asserted`` name now given to someone else.
+    """
+    before = snapshot(person, folder) or {}
+    names = {"originalName": name, "currentName": name, "originalSource": source}
+    kept = before.get("originalName")
+    if source != "named-intake" and kept and kept.casefold() != asserted.casefold():
+        names["originalName"], names["originalSource"] = kept, before["originalSource"]
+    previous = [dict(row) for row in before.get("previousNames", [])]
+    if before.get("currentName"):
+        previous.append({
+            "originalName": before.get("originalName"), "currentName": before["currentName"],
+            "originalSource": before.get("originalSource", "unavailable"),
+            "replacedAt": (today or datetime.date.today()).isoformat(), "reason": source,
+        })
+    if previous:
+        names["previousNames"] = previous
+    return names

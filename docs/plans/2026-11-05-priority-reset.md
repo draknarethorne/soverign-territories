@@ -2,7 +2,7 @@
 
 **Status:** active (execution spine: FAST likeness, LEAN/FULL acceptance, then character art)
 
-**Queue focus:** RA2d, RA2j, T29, T30, IU7, IU4, IU11, IU12, IU10, RA2o, IU3, IU5, WF1, WFR1, WFE2, WFA1, WFM1
+**Queue focus:** RA2d, RA2j, IU16, IU10, IU14, IU12, T29, T30, IU4, IU11, RA2o, IU15, IU3, IU5, WF1, WFR1, WFE2, WFA1, WFM1
 
 **Feedback rebase applied (Sandbox):** `feedback-rebase-20261122-02`
 applied rules (a)–(i): duplicates archived, band-aligned formation,
@@ -1177,14 +1177,27 @@ unresolved human identity acceptance remains open.
   its universe source and Working (first priority) per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-universe-testing-feedback).
   Done Nov 23: 70 copies moved to `B:\Most Wanted-duplicates`; baseline
   `most-wanted-baseline-02` applied.
-- [ ] **P1 ai** IU7 Auto-replacing a moved or renamed workflow photo with the
-  identity's highest-scoring Gallery photo per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-universe-testing-feedback).
+- [x] **P1 ai** IU7 Auto-replacing a moved or renamed workflow photo with the
+  identity's highest-scoring Gallery photo per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-universe-testing-feedback);
+  Nov 23 scope: photos move in every SIMPLE rebase, replacement recorded as a
+  proposal; Sandbox never writes `workspaces.json` ([revised scope](2026-11-22-identity-universe-sandbox.md#nov-23-named-core-fix-contract)).
 - [x] **P1 either** IU9 Running the user's named-core Most Wanted variation
   and comparing it with the blank run per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-iu9-named-core-most-wanted-run).
   Done Nov 23: `most-wanted-seeded-02` (66 identities vs 121); routed
   photos await the user's review.
 - [ ] **P1 ai** IU12 Taking `Various/<Name>` photos as native named intake in
   the SIMPLE rebase (no separate `seed` step) per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-iu9-named-core-most-wanted-run).
+- [x] **P1 ai** IU13 Recomputing an identity's core without a departing
+  member instead of switching the whole core off, and moving existing
+  members only when low at home and clearly higher elsewhere (all
+  identities, no exemptions) per the [named-core fix contract](2026-11-22-identity-universe-sandbox.md#nov-23-named-core-fix-contract).
+- [ ] **P1 ai** IU14 Auditing Review placements so no photo goes to Review
+  where a rival scores higher by the route margin, per the [named-core fix contract](2026-11-22-identity-universe-sandbox.md#nov-23-named-core-fix-contract).
+- [ ] **P2 either** IU15 Designing a Sandbox-local workflow selection store
+  (coordinated with Beacon/WF1) per the [named-core fix contract](2026-11-22-identity-universe-sandbox.md#nov-23-named-core-fix-contract).
+- [ ] **P1 ai** IU16 Retaining user-named identities across rebases (catalogue
+  marker, small-Potential and fresh-release exemptions, forced category
+  release) per the [retention contract](2026-11-22-identity-universe-sandbox.md#nov-24-named-identity-retention-and-gate-round-2-approved).
 - [ ] **P1 either** IU10 Reviewing grouping rules from universe evidence; the
   user decides per the [identity-universe contract](2026-11-22-identity-universe-sandbox.md#nov-23-universe-testing-feedback).
 - [ ] **P2 ai** IU11 Testing tighter universe selection (group yellow plus
