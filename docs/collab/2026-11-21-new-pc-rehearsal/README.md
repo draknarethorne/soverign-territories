@@ -31,13 +31,17 @@ reply files.
 
 ## Current state
 
-Reviewed through shared revision `12a28095e` at 2026-11-23 23:04 UTC.
+Reviewed through local merged revision `54d318706` at 2026-11-25 21:38 UTC;
+publication and Harbor's receipt of the following update remain unconfirmed.
 
 - Q-69b7d56fd547-02 is answered: Harbor acknowledged the handoff at
   `5814fb192` (all nine contract blob hashes match) and listed open
   interface decisions. Q-d01e8fdb3329-15 in the same discussion has Beacon's
   partial current-consumer answer; IU7's shared writer, consumer coverage and
   interface agreement remain open.
+- Q-c67234b7d95a-01 in the same discussion is open to Harbor: acknowledge
+  the workflow revision and file hashes, then report his workspace/input
+  inventory and whether a fresh deploy or reviewed migration is needed.
 - Q-69b7d56fd547-01 is answered: both new-machine copies of the snapshot
   verified (22,373 files, 6,048,648,202 bytes) and all three hashes match.
   No restore test was run; retiring the old-machine backup remains the
